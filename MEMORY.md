@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4` (pending)
-- next_action: Expose native inspection CLI and independent discovery over qualified public APIs, then MCP detail.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3` (pending)
+- next_action: Expose qualified VIAL inspection through its dedicated MCP tool, resource and capability section.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

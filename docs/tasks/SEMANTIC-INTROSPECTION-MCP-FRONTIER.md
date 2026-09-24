@@ -435,11 +435,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.1: select additive VIAL deep inspection`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected bounded public VIAL detail API and native inspection command.`
   Acceptance: `Decompose portable typed projection, filesystem adaptation and CLI into independently verifiable leaves before source changes. Use explicit public record constructors and closed field shapes, defensive fresh values, stable source identities and diagnostic behavior. Preserve base/lifecycle conditions, ordering, references and bounds with independent authored oracles; reject malformed invocation, unknown schema/family and incomplete projection. Reuse the existing bounded source loader without a second filesystem read, preserve old check/format/plan results and frozen capability hashes, and prove no artifacts or execution.`
-  Verification: `Decision 0105 and the inspection contract select the independent schema. Fault/model identity prerequisites are repaired; implementation is decomposed into closed base detail, lifecycle detail, public API, and CLI/discovery leaves.`
-  Commit: `pending`
+  Verification: `Closed base and complete lifecycle projection, prerequisite native semantic repairs, portable/filesystem APIs and native CLI/independent discovery are qualified through the child leaves. Captured-byte reuse, exact native checks, authored semantics, fail-closed boundaries and frozen capability hashes are guarded; MCP detail is next.`
+  Commit: `Completed through .31.3.2.3.2.1-.4 child commits`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4`
 
@@ -488,11 +488,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3: expose public VIAL source inspection APIs`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Add native VIAL inspection command and independent capability discovery.`
   Acceptance: `Implement inspect JSON CLI and separate machine-readable inspection contract without changing frozen tooling capabilities. Reject planning/runtime/publication options, prove complete CLI/API equality and actual version/style/import/error behavior, synchronize book and discovery guidance, and commit before MCP adaptation.`
-  Verification: `Pending public APIs.`
-  Commit: `pending`
+  Verification: `T1881 proves actual native CLI/API equality for both languages, normal/terse/imported/current lifecycle forms and failures; exact authored action/deadline detail; closed JSON-only options and exit codes; independent manifest discovery; fresh capability values and unchanged frozen v1/v2 hashes. Focused manifest/API/CLI/MCP-summary band and rendered/runnable book pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4: expose native VIAL inspection and discovery`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3`
   Status: `pending`
@@ -1197,9 +1197,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4` is next: expose native
-inspection CLI and independent discovery over the qualified public APIs, then
-MCP detail.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3` is next: expose the
+qualified public VIAL inspection API through the dedicated MCP tool, resource
+and capability section.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2434,3 +2434,39 @@ CLI/discovery and MCP remain separate pending leaves; summary queries and
 frozen tooling capabilities are unchanged. Task/book metadata admits only this
 owned interface; the existing knowledge card is compacted within its allowance.
 The inspection contract owns the API/error rationale without a duplicate ledger.
+
+## Acceptance Checklist — `.31.3.2.3.2.4` native inspection and discovery
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-implementation T1881 reports
+  `#   Failed test 'independent inspection capability API exists'` and
+  `#   at t/1881-vial-inspection-cli-discovery.t line 21.` The actual native
+  inspect command also fails at line 23. Public detail APIs exist, but native
+  CLI dispatch and independent machine-readable discovery do not expose them.
+- [x] **ADDRESSED (verified)** — The JSON-only native inspect branch delegates
+  to the public bounded filesystem API and rejects all unrelated options before
+  loading. Separate exported capability discovery and the manifest surface map
+  describe the public schemas, source groups, admitted family, limits and no
+  execution/publication effects. T1881 verifies full actual CLI/API equality,
+  authored reset/deadline values, normal/terse/imports, diagnostics and exit
+  codes, closed option refusal, no writes, fresh discovery and frozen v1/v2
+  capability hashes captured from the preceding committed APIs. Initial test
+  fixtures used a prohibited leading-dot source path; fixtures now use an
+  explicitly repository-local non-hidden temporary directory with cleanup.
+  Production path admission is unchanged.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1555-vial-public-source-tooling.t t/1806-vial-v2-public-foundation.t t/1870-vial-filesystem-source-query.t t/1871-semantic-introspection-mcp-vial.t t/1880-vial-public-source-inspection.t t/1881-vial-inspection-cli-discovery.t`
+  reports `All tests successful. Files=10, Tests=44` and `Result: PASS`.
+  `mdbook build docs/book -d .artifacts/inspection-cli-book`, rendered contract
+  assertions and the actual documented native lifecycle command pass. Exact
+  disposable rendered output is removed. No backend/spent producer or full CI
+  is run; browser visual qualification remains unavailable.
+
+Re-derivation: actual native subprocesses and public file/discovery APIs.
+Falsification: absent-command baseline, authored semantic values, complete API
+comparisons, frozen capability hashes, malformed/effect options, source/import
+and injected projection failures. Durability: T1881, exact baseline revision,
+tracked `vial-inspection-cli-qualification.json`, contract, book and fact card.
+The API/CLI parent is complete; MCP detail is the next leaf, with its tool and
+resource still unadvertised. README and root help gain only compact discovery
+wording. Task/book metadata records the owned interface; the existing fact card
+stays within its allowance. The public contract owns CLI/discovery rationale.

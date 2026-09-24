@@ -12,6 +12,7 @@ use Scalar::Util qw(blessed);
 use FSM::Support::VIALToolingContract qw(
     build_vial_tooling_contract
     build_vial_tooling_contract_v2
+    build_vial_source_inspection_contract
 );
 use FSM::VIAL::Backend::Runner;
 use FSM::VIAL::Backend::SVPortableVerilator;
@@ -25,6 +26,7 @@ our @EXPORT_OK = qw(
     check_vial_source_file
     inspect_vial_source
     inspect_vial_source_file
+    vial_source_inspection_capabilities
     vial_tool_capabilities
     vial_tool_capabilities_v2
 );
@@ -50,6 +52,11 @@ sub vial_tool_capabilities {
 sub vial_tool_capabilities_v2 {
     die "vial_tool_capabilities_v2 accepts no arguments\n" if @_;
     return _clone(build_vial_tooling_contract_v2());
+}
+
+sub vial_source_inspection_capabilities {
+    die "vial_source_inspection_capabilities accepts no arguments\n" if @_;
+    return _clone(build_vial_source_inspection_contract());
 }
 
 # Explicit filesystem adapter; the portable text request API remains separate.

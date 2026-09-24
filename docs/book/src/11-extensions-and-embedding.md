@@ -2847,8 +2847,8 @@ This VIAL report is a summary: it omits expression/action bodies and retains
 lifecycle family identity, revision and node count rather than node conditions,
 deadlines or service policies. Matching native and MCP summaries proves that
 transport preserves the report, not that an agent can inspect those details.
-The public typed source-inspection API supplies those details. Its native CLI
-and dedicated MCP route are the next integration steps and remain unshipped.
+The public typed source-inspection API and native `vial inspect` command supply
+those details. The dedicated MCP inspection route is the next integration step.
 
 The public typed projection covers base source meaning
 and `lifecycle_control@1`: it retains declaration bodies, expressions, nested
@@ -2880,8 +2880,28 @@ same meaning as adding `(requires (configured))`; authored `(requires (all))`
 remains invalid. Existing nonempty readiness conditions and their order remain
 unchanged.
 
-From the repository root, inspect the complete lifecycle source through the
-public filesystem API:
+Inspect the complete lifecycle source from the repository root:
+
+```bash
+./bin/fsmgen vial inspect --json --language-version 2 vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial
+```
+
+Inspection requires `--json` and accepts only one relative source, the version
+selector and optional `--style auto|normal|terse`. Planning, runtime, publication
+and quiet options are rejected. Success exits zero; source, limit or projection
+refusal exits one; invocation and host-path errors exit two. JSON failures keep
+the same inspection envelope and ordered public diagnostics.
+
+Discover coverage with `./bin/fsmgen --capability-manifest`, at
+`semantic_introspection.contract_surface_map.vial_source_inspection.inspection_contract`,
+or call exported `FSM::VIAL::Tool::vial_source_inspection_capabilities()` with
+no arguments. This separate contract names callable APIs, schemas, source
+styles, loading limits, base semantic groups and admitted intent families. It
+currently declares `lifecycle_control@1` for VIAL v2 and no family for v1.
+Frozen `vial capabilities` records retain their existing action lists; they
+are not the discovery route for this independent inspection feature.
+
+The equivalent public filesystem API is:
 
 ```bash
 perl -Iperl -MFSM::VIAL::Tool=inspect_vial_source_file -MJSON::PP -e '

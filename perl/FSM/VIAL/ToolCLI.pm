@@ -13,7 +13,7 @@ use Scalar::Util qw(blessed);
 
 use FSM::VIAL::ArtifactTransaction;
 use FSM::VIAL::SourceProjection;
-use FSM::VIAL::Tool qw(execute_vial_tool_request check_vial_source_file);
+use FSM::VIAL::Tool qw(execute_vial_tool_request check_vial_source_file inspect_vial_source_file);
 
 sub run {
     my ($class, $args) = @_;
@@ -32,6 +32,7 @@ sub run {
         print _usage();
         return $action eq '' ? 2 : 0;
     }
+    return _run_inspect(\@argv, $args->{repo_root}) if $action eq 'inspect';
     return _emit_cli_error($action, 0, 'unknown VIAL action', "unknown action '$action'")
         unless $action =~ /\A(?:capabilities|check|format|migrate|plan|run)\z/;
 
@@ -201,6 +202,35 @@ sub run {
         }
     }
     return _emit_result($result, $json, $quiet);
+}
+
+# Inspection has a closed JSON-only option surface, independent of the frozen
+# check/format/plan/run CLI. No execution option reaches source loading here.
+sub _run_inspect {
+    my ($argv, $root) = @_;
+    my ($json, $version, $style) = (0, '1', 'auto');
+    my $parsed;
+    {
+        local $Getopt::Long::ignorecase = 0;
+        local $Getopt::Long::autoabbrev = 0;
+        local $SIG{__WARN__} = sub { };
+        $parsed = GetOptionsFromArray($argv,
+            'json' => \$json, 'language-version=s' => \$version, 'style=s' => \$style);
+    }
+    my $invalid = sub {
+        my $checked = FSM::VIAL::Tool->_cli_error_result(
+            'check', 'VIAL_TOOL_INVOCATION_ERROR', $_[0], $version eq '2' ? 2 : 1);
+        return _emit_result(FSM::VIAL::Tool::_source_inspection_result($checked), $json, 0);
+    };
+    return $invalid->('inspect accepts only --json, --language-version and --style') unless $parsed;
+    return $invalid->('inspect requires --json') unless $json;
+    return $invalid->('--language-version must be 1 or 2') unless $version =~ /\A[12]\z/;
+    return $invalid->('--style must be auto, normal, or terse') unless $style =~ /\A(?:auto|normal|terse)\z/;
+    return $invalid->('inspect requires exactly one repository-relative SOURCE.vial') unless @$argv == 1;
+    return _emit_result(inspect_vial_source_file({
+        workspace_root => $root, source_id => $argv->[0],
+        language_version => $version, source_style => $style,
+    }), 1, 0);
 }
 
 sub _check_source_file_result {
@@ -549,6 +579,8 @@ Usage:
   ./bin/fsmgen vial capabilities [--language-version 1|2] [--json]
   ./bin/fsmgen vial check [--language-version 1|2]
     [--style auto|normal|terse] [--json] SOURCE.vial
+  ./bin/fsmgen vial inspect --json [--language-version 1|2]
+    [--style auto|normal|terse] SOURCE.vial
   ./bin/fsmgen vial format [--language-version 1|2]
     --style normal|terse SOURCE.vial
   ./bin/fsmgen vial migrate --language-version 2
@@ -572,6 +604,9 @@ staging stays repository-local and is removed before publication. All persisted
 paths are repository-root-relative. Version 2 exposes source tooling,
 non-mutating v1-to-v2 migration, empty-family planning, and lifecycle-control
 planning; its backend, run, complete-result, and parity routes are unavailable.
+Inspection returns typed source meaning without planning, execution or writes.
+Discover its separate contract through ./bin/fsmgen --capability-manifest at
+semantic_introspection.contract_surface_map.vial_source_inspection.inspection_contract.
 USAGE
 }
 

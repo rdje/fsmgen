@@ -585,7 +585,7 @@ FSM HDL Generator - Generate HDL code (SystemVerilog, Verilog, VHDL) from FSM sp
 Usage: ./bin/fsmgen [OPTIONS] <fsm_file>
 
 Subcommands:
-  vial            Public VIAL capabilities, check, and normal/terse formatting
+  vial            Public VIAL source tooling, typed inspection, planning and execution
                   Run './bin/fsmgen vial --help' for the source-tooling boundary
 
 Arguments:

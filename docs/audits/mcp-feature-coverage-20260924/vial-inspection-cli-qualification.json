@@ -1,0 +1,53 @@
+{
+  "baseline_revision": "a9a3bf5d39bcf894ac7c52532136af1ff39ec814",
+  "book_example_sha256": "d4723bfe3162df7fc941ea91674944e81f85301206f18aa5ec77564e05965a23",
+  "evidence_legs": {
+    "durability": "Exact Git baseline, tracked T1881 and qualification receipt, typed public contract, mdBook, knowledge card and owning task.",
+    "falsify": "Baseline rejects native inspect and lacks exported discovery. Exact authored action/deadline assertions, styles/imports, missing-source/import cases, closed planning/runtime/quiet/unknown option refusal, exit codes, injected projection failure and input tree snapshots guard output and effects. Frozen capability hashes were captured before implementation and remain exact.",
+    "rederive": "T1881 invokes actual native inspect/manifest subprocesses and compares complete results with exported file/discovery APIs. The documented lifecycle CLI example executes and exposes its authored deadline."
+  },
+  "frozen_capabilities_sha256": {
+    "v1": "42db05da519dffd97c3e40ec254c82d09b5f20ef53a849e53025b976f5aded4e",
+    "v2": "2efc33c476afc8617a43890b834c828efda0b5150f9c1fdf0e9e984142330dda"
+  },
+  "limits": [
+    "Dedicated MCP inspection tool/resource and exhaustive corpus guard remain subsequent leaves. Existing MCP summary schema snapshots and VIAL summary parity stay green.",
+    "No backend execution, full CI, performance or capacity claim. No spent producer is replayed.",
+    "The initial local test attempt used forbidden leading-dot source identities; only fixtures moved to an automatically cleaned non-hidden repository directory. Production admission did not change.",
+    "mdBook build, rendered assertions and actual example pass; browser visual audit remains unavailable."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4",
+  "schema": "fsmgen.vial_inspection_cli_qualification.v1",
+  "tests": {
+    "inspection-cli-band": {
+      "sha256": "bce33fa1fbed506ae904f6dc6823b40dec843e82fe72a86876b77e5453bc12e6",
+      "summary": [
+        "All tests successful.",
+        "Files=10, Tests=44, 38 wallclock secs ( 0.03 usr  0.02 sys + 35.24 cusr  1.64 csys = 36.93 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-cli-book": {
+      "sha256": "dfa67f46d4fc63faa19a8361db1c45da07209946d3226a1c75b36420a79ee77c",
+      "summary": [
+        " INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/inspection-cli-book`",
+        "Rendered CLI/discovery/pending-MCP assertions and actual documented deadline example: PASS"
+      ]
+    },
+    "inspection-cli-green": {
+      "sha256": "1080f1bcd3339a65c25e3a2aefdb6a3fb511064ea5edf2cd3608e4e813d3dbcf",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=5,  7 wallclock secs ( 0.01 usr  0.00 sys +  7.19 cusr  0.39 csys =  7.59 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-cli-red": {
+      "sha256": "b0c606c16b43485af4ca5d5fb2bfc8b3525b0a9adb5b6c5330238de4391f05c8",
+      "summary": [
+        "Files=1, Tests=2,  1 wallclock secs ( 0.00 usr  0.00 sys +  0.52 cusr  0.05 csys =  0.57 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}

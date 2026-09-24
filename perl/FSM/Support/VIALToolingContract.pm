@@ -17,6 +17,7 @@ our @EXPORT_OK = qw(
     build_vial_tooling_contract
     build_vial_tooling_contract_v2
     build_vial_source_file_check_contract
+    build_vial_source_inspection_contract
     vial_tooling_contract_keys
     vial_tooling_contract_v2_keys
     vial_tooling_contract_source
@@ -149,6 +150,39 @@ sub build_vial_source_file_check_contract {
 
 sub _source_loading_limits {
     return {source_bytes => 1_048_576, combined_source_bytes => 16_777_216, imported_sources => 64};
+}
+
+# Independent additive discovery: the legacy tooling records remain frozen.
+sub build_vial_source_inspection_contract {
+    return {
+        schema => 'fsmgen.vial_source_inspection_contract.v1', schema_version => 1,
+        status => 'bounded_public', contract_source => vial_tooling_contract_source(),
+        entrypoints => {
+            portable => 'FSM::VIAL::Tool::inspect_vial_source($invocation)',
+            filesystem => 'FSM::VIAL::Tool::inspect_vial_source_file($invocation)',
+            capabilities => 'FSM::VIAL::Tool::vial_source_inspection_capabilities()',
+            cli => 'fsmgen vial inspect --json [--language-version 1|2] [--style auto|normal|terse] SOURCE.vial',
+        },
+        invocations => {
+            portable => {required => [qw(source_id text)], optional => [qw(source_catalog language_version source_style)]},
+            filesystem => {required => [qw(workspace_root source_id)], optional => [qw(language_version source_style)]},
+        },
+        language_versions => [1, 2], source_styles => [qw(auto normal terse)],
+        defaults => {language_version => 1, source_style => 'auto', source_catalog => {}},
+        result_schema => 'fsmgen.vial_source_inspection.v1',
+        detail_schema => 'fsmgen.vial_source_semantics.v1',
+        intent_node_schema => 'fsmgen.vial_intent_node.v1',
+        semantic_groups => [qw(packages imports types transactions models scoreboards dut instances
+            coverage faults randomness scenarios expressions properties intent_families)],
+        intent_families => {1 => [], 2 => [{family_id => 'lifecycle_control', revision => 1}]},
+        loading_limits => _source_loading_limits(),
+        effects => {read_only => JSON::PP::true, planning => JSON::PP::false,
+            random_evaluation => JSON::PP::false, backend_execution => JSON::PP::false,
+            artifact_publication => JSON::PP::false},
+        error_behavior => {complete_native_check_retained => JSON::PP::true,
+            failure_detail => 'null', projection_code => 'VIAL_SOURCE_INSPECTION_ERROR',
+            cli_exit_codes => {success => 0, source_projection_or_limit_failure => 1, invocation_or_host_failure => 2}},
+    };
 }
 
 sub build_vial_tooling_contract_v2 {

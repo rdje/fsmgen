@@ -2,7 +2,7 @@
 
 Date: 2026-09-24
 Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`
-Status: public portable/filesystem APIs qualified; CLI/discovery and MCP pending
+Status: public APIs and native CLI/discovery implemented; MCP detail pending
 
 ## Purpose and compatibility
 
@@ -296,15 +296,43 @@ The projector never bypasses failed source admission. The internal base and
 lifecycle foundations and public facades are qualified. T1880 guards complete
 native check preservation, closed invocations, captured-byte reuse despite
 file/caller mutation, fresh results, bounded loading and sanitized projection
-failures. CLI and MCP advertisement remain separate pending qualifications.
+failures. T1881 qualifies native CLI and independent discovery; MCP detail
+remains a separate pending qualification.
 
 ## CLI and MCP selection
 
-Native `fsmgen vial inspect --json --language-version 1|2 SOURCE.vial` will
-return the independent inspection result. Source style selection matches the
-API. It accepts no planning, runtime or publication options. Inspection
-capability discovery is a new separate contract; frozen tooling capability
-records remain unchanged.
+Native `fsmgen vial inspect --json [--language-version 1|2]
+[--style auto|normal|terse] SOURCE.vial` returns the independent
+inspection result. JSON is required; quiet, planning, runtime and publication
+options are rejected. Source style/version defaults match the API. Exit status
+is zero for success, one for source/projection/limit refusal, and two for
+invocation or host-path failure. Invalid invocations with `--json` also return
+the independent inspection envelope.
+
+Independent discovery uses exported no-argument
+`vial_source_inspection_capabilities()` and manifest path
+`semantic_introspection.contract_surface_map.vial_source_inspection.inspection_contract`.
+The closed `fsmgen.vial_source_inspection_contract.v1` record declares schema
+version, bounded-public status, contract source, entrypoints, portable/filesystem
+invocation keys, language versions, source styles/defaults, result/detail/node
+schemas, semantic groups, admitted families by language, loading limits,
+read-only/no-plan/no-random/no-backend/no-publication flags and error behavior.
+Exact top-level fields are:
+
+```text
+schema, schema_version, status, contract_source, entrypoints, invocations,
+language_versions, source_styles, defaults, result_schema, detail_schema,
+intent_node_schema, semantic_groups, intent_families, loading_limits, effects, error_behavior
+```
+
+`entrypoints` names portable, filesystem, capabilities and CLI routes.
+`invocations` lists required/optional keys for each API; `intent_families` maps
+language versions to admitted family/revision pairs. `loading_limits` matches
+source checking. `effects` has read_only, planning, random_evaluation,
+backend_execution and artifact_publication booleans. `error_behavior` records
+complete_native_check_retained, failure_detail, projection_code and cli_exit_codes.
+Frozen tooling capability records and their advertised action lists stay exact.
+This leaf does not yet advertise an MCP inspection tool or resource.
 
 MCP will expose `fsmgen_vial_inspect` with closed `source_id`, optional
 `language_version` and optional `source_style` arguments, backed by the public
