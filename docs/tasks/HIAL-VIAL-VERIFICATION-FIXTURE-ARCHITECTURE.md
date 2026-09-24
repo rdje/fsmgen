@@ -3700,71 +3700,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4`
   Status: `done`
   Goal: `Join original accepted requests to aggregate gated job admission.`
-  Acceptance: `Retain each transferred request with its original peer and ledger grant before native preparation. Bind clipped request/ancestor deadlines and detached private context, then prepare/start only through existing per-allocation/per-fork checks. Advance tracked ACCEPT only for the matching ready gated job and retain partial failures until exact cleanup. Qualify real root/nested sockets, gated processes, signals and original ownership without exec release.`
-  Verification: `Children retain authenticated history, original grant/context/snapshot and request/peer association, then match ready gated jobs to tracked ACCEPT. Original token, native allocation/fork and each socket-write boundaries recheck retained ownership and original walls; interruption and peer/native failure preserve first cause and exact cleanup. T1849 through T1852 and the final selected aggregate band pass on Darwin. Commands remain gated after complete ACCEPT; final exec authorization and later streaming/root-loop qualification remain separately owned.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4: publish ACCEPT for original ready gated jobs`
-
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.1`
-  Status: `done`
-  Goal: `Retain completed transport-publication evidence before aggregate composition.`
-  Acceptance: `Authenticate the exact completed predecessor and acceptance suffix through the existing finite manifest. Preserve all original nodes, compact terminals and the live execution-scope correction. Independently reconstruct source/suffix digests and dimensions, reverify the predecessor manifest, and prove altered-digest refusal with the unchanged checker. No code, book behavior or ceiling changes.`
-  Verification: `The finite manifest authenticates exact 27cb2e8857a2a96eaf14d5ee653404142b440659: full source 7149 lines/1264035 bytes and completed four-section suffix 122 lines/8507 bytes. Independent git cat-file, awk, wc and shasum agree with source/suffix hashes; the source revision preserves the previous manifest and its reverified 1d5a47b73 source. Every original node and compact terminal stays live; only the aggregate parent gains its planned children, and the execution-scope correction stays unchanged. The production checker accepts the complete same-volume fixture and rejects only an altered suffix digest. Scratch sources/fixture are removed. Book/source behavior and all ceilings remain unchanged.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.1: retain completed transport publication history`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2`
-  Status: `done`
-  Goal: `Bind original grant contexts and snapshots before native job preparation.`
-  Acceptance: `Publish root/nested contexts only for original live ledger grants and recheck retained capacity and clipped deadlines at each token allocation. Retain original Service context preparation before entropy; bind monotonic identities in admission order. Apply the qualified pure replacement before native snapshot custody moves, preserving original execution bytes and first failure. Qualify actual entropy, original identity, resource credit and interruption/cleanup; decompose component hooks from aggregate integration as needed. No exec release.`
-  Verification: `Children .1 and .2 qualify effect-local token admission and original aggregate grant/context/snapshot binding. Token effects require original authority and separate retained scratch; transformed snapshots precede native custody and survive interrupted returns. T1849/T1850 and the selected aggregate band pass; accepted request association and command release remain separately owned.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2: bind original aggregate contexts and snapshots`
-
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.1`
-  Status: `done`
-  Goal: `Admit parent token effects through original retained authority.`
-  Acceptance: `Expose an optional allocation callback through Endpoint new_job_token and Service register_parent, preserving existing no-callback APIs. Invoke caller checks with original Service/parent and existing create/entropy operation labels under preparation masking before every open/read. Recheck original retained parent, endpoint and lifetime before and after caller checks. Refusal throws before the effect, retains first preparation failure and spent identity, and releases scoped entropy handles. Qualify real native reads, weak handle observations, short reads, creator signals, expiry/revocation and argument/owner refusals without printing authority bytes. This component does not establish aggregate grant or scratch-credit binding.`
-  Verification: `Endpoint new_job_token forwards its optional existing allocation check before every entropy open/read. Service register_parent supplies original Service/id and operation under preparation masking, with original retained-parent/endpoint/lifetime checks before and after caller admission; internal checks also run without an external callback. Checks refuse by throwing, preserving existing void-return semantics, first failure and spent identity. T1849 observes compiled actual sysreads with preserved aliases, weak native handles, bounded short reads, clock cuts/revocation, actual creator signals/masks and copied/inherited refusal. The identical isolated fixture loader passes; six defects reject with unchanged endpoint census. Final selected band passes Files=20, Tests=225. Aggregate grant and scratch-credit binding remain child .2.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.1: admit original parent token effects`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2`
-  Status: `done`
-  Goal: `Bind original aggregate grants to parent contexts and execution snapshots.`
-  Acceptance: `Use child .1 to check the original live ledger grant, monotonic admission identity, current run and separately retained scratch credit before every context entropy effect. Retain root/nested context and transformed snapshot before native preparation; preserve original invocation bytes and all inclusive bounds. Register nested identities in admission order and preserve original failure/cleanup on interrupted preparation or publication. Qualify actual entropy, root/nested grants, original/copy refusals, capacity/deadline cuts and exact closure; no exec release.`
-  Verification: `Coordinator open_run binds its root context/snapshot before publishing open state. reserve_job retains and registers nested contexts in original admission order, checking exact Service/grant/id, original walls, full job credit and separate retained scratch before every entropy open/read. Snapshot replacement preserves original bytes and inclusive bounds; copied context_state carries no authority. Fresh context checks guard native preparation, every pipe/fork and live advancement. T1850 independently observes literal snapshots, actual entropy, original masks/signals, reversed native start order, refused identities/credit/lifetimes, exact child waits, closed handles and no released output. Seven isolated defects reject; endpoint censuses remain unchanged. Final selected band passes Files=24, Tests=176. Accepted-request association and exec release remain later leaves.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2: bind original aggregate contexts and snapshots`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3`
-  Status: `done`
-  Goal: `Retain original accepted request and ledger-grant association.`
-  Acceptance: `Transfer each original Service request into its already retained aggregate peer record before admission effects. Join the original submitting parent grant, clipped request/admission walls and a fresh original child grant/context exactly once. Interrupted returns, repeated/foreign tickets, capacity refusal, expiry and peer closure retain first cause and exact peer/job ownership. Qualify actual sockets and original record identity; native preparation follows only after this association is retained.`
-  Verification: `Child .1 authenticates completed context-binding history. Child .2 joins each original transferred request and peer to its original parent and one retained child grant before token effects, preserving fixed walls, original failure and exact cleanup. T1851 and the selected aggregate band pass; matching gated readiness/ACCEPT remains sibling .4.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3.2: retain original request and grant association`
-
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3.2`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3.1`
-  Status: `done`
-  Goal: `Retain completed context-binding acceptance history before request association.`
-  Acceptance: `Authenticate the exact completed predecessor and acceptance suffix through the existing finite history manifest. Independently reconstruct source/suffix identities and dimensions, reverify the predecessor manifest, and prove altered-digest refusal with the unchanged checker. Preserve every original node/compact terminal and the live execution-scope correction. No source, book behavior or ceiling changes.`
-  Verification: `Finite history authenticates exact acb5b49ef2cf06f6235eea54cfe58f863e5f652d: source 7169 lines/1271616 bytes and completed three-section suffix 97 lines/7045 bytes. Independent git cat-file, awk, wc and shasum agree with both SHA-256 identities; the predecessor manifest and its exact 27cb2e885 source/suffix reverify. All original nodes/compact terminals and the live execution-scope correction remain, with only the request-association parent gaining planned children. The unchanged production checker accepts the complete fixture and rejects only an altered suffix digest. Scratch sources, fixture and runner are removed; code, book behavior and ceilings remain unchanged.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3.1: retain completed aggregate context history`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3.2`
-  Status: `done`
-  Goal: `Associate original retained requests and peers with one admitted child grant.`
-  Acceptance: `Transfer Service request custody directly into the original retained peer before further admission. Freshly join its submitting original parent grant and original clipped request/admission walls. Retain the peer/job/grant association before token effects or interrupted returns. Reject repeated/foreign tickets, capacity/expiry/revocation/closure with original failure and exact cleanup. Qualify real sockets, actual entropy, creator signals, literal snapshots and matching retained ownership; native preparation and ACCEPT composition remain the following sibling.`
-  Verification: `Coordinator admit_request transfers the original selected Service packet into its retained peer, joins the original active submitting grant, and publishes peer/child association before token effects. Original peer/packet/grant identity, fixed admission wall and clipped execution deadline guard token and later native boundaries; copied observations omit authority and release the redundant source snapshot after binding. Peer EOF/repetition/retirement reconciles into original child cancellation. Repeated or pre-mask reentrant callers cannot overwrite/cancel a completed association; thrown returns preserve original custody and first cause. T1851 qualifies literal root/nested sockets, actual token reads, native cleanup, creator signals, identity/clock/capacity cuts and inherited/copy refusal. Eight isolated defects reject with unchanged endpoint census; final band passes Files=26, Tests=258. Matching gated ACCEPT and exec remain later leaves.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3.2: retain original request and grant association`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4`
-  Status: `done`
-  Goal: `Prepare matching gated jobs and publish their tracked ACCEPT.`
-  Acceptance: `Prepare/start the original associated job through existing allocation/fork admission and fresh foreign descriptor inventories. Advance only its matching ready gated native job and retained Service publication under original request/ancestor walls. Reject partial publication, peer loss, cancellation and expiry without exec release; retain original process/peer cleanup and copied observations. Qualify actual gated processes, native sockets, signals and exact cleanup; do not wrap forks in preparation masks.`
-  Verification: `Coordinator start_request and advance_request join original associated jobs to ready-only tracked ACCEPT publication. Launch advancement stays outside outer masks; native command checks confirm the original exec mask/dispositions. Service advance accepts an optional original bound-write callback with boolean deferral, fresh post-check authority/walls and retained refusal. Each aggregate write rechecks the exact Service/ticket/job/grant and advances only an already-ready pair; native loss, EOF, decoded messages and expiry preserve failed prefixes and cancel the original job. Copied publication survives signals and exact cleanup; queue-expiry retains its precise first cause. T1852 uses literal sockets, actual children/writes, exact waits and output EOF witnesses. Eleven product defects and an inherited-fixture-client omission reject with unchanged endpoint census. Final selected band passes Files=31, Tests=297. Complete ACCEPT still leaves commands gated; final native exec authorization remains .5.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4: publish ACCEPT for original ready gated jobs`
+  Terminal: `version_object`
+  Revision: `d2d68b2e49c032ec4c73a838dd6adb811bc6479f`
+  Retrieval path: `docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`
+  Retrieved SHA256: `e3bfd1592cc67be81ca9131cb0e7a508004e37ea4d45f2ded964884b98a7f4ea`
+  Archived node count: `9`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact predecessor reconstructs all original completed parent-token/context, request-association and ready-gated ACCEPT children, original goals, closed topology and acceptance/verification/commit evidence. The flat subtree contains no earlier compact terminal or live claim owner. Active final release and all other original nodes remain live.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.1: retain completed admission topology and history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5`
   Status: `active`
@@ -3793,7 +3736,29 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Preserve original request lifetimes across admitted native execution.`
   Acceptance: `Retain the original admission deadline separately from the original clipped execution deadline. Before release, freshly inspect only the matching original bound peer, complete ACCEPT, original parent/job authority and bounded incoming control; partial control cannot silently authorize execution. After an original admitted native effect, retain the execution transition without renewing a clock or erasing admission/publication history. Preserve cancellation/EOF/protocol refusal, original failure and copied observations. Qualify literal sockets, exact walls and interrupted transitions; native effect authority remains with the aggregate owner.`
-  Verification: `Service currently keeps the admission wall after complete ACCEPT, and no execution-phase transport transition is implemented.`
+  Verification: `Child .1 retains completed native-gate acceptance and the flat completed ACCEPT subtree before the unchanged rollover milestone. Child .2 qualifies bounded read-only Connection inspection that cannot authorize partial control or write queues. Child .3 preserves original Service admission history and execution lifetime while retaining matching admitted effects; aggregate release remains the following sibling.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.1`
+  Status: `done`
+  Goal: `Retain completed admission topology and gate evidence before transport lifecycle work.`
+  Acceptance: `Authenticate the exact predecessor source and completed acceptance suffix, independently reconstruct identities and dimensions, and reverify the predecessor manifest chain. Compact only the completed flat ACCEPT subtree after a live claim-owner census. Preserve its original goal and all other original nodes/terminals, the live execution-scope correction and active ancestry. Falsify suffix and compact-source digest drift with the unchanged checker. Change no product behavior or ceilings.`
+  Verification: `Exact d2d68b2e49c032ec4c73a838dd6adb811bc6479f reconstructs the complete 7181-line/1280386-byte task and two-section completed suffix (63 lines/4732 bytes); independent git cat-file, awk, wc and shasum agree. The predecessor manifest and exact 8b8e903e2f source/suffix reverify. A complete flat nine-node ACCEPT subtree has no live claim owner or earlier compact terminal; all other original node bodies, compact terminals and the live execution-scope correction remain exact except the explicitly decomposed Service parent. The unchanged checker accepts the complete fixture and rejects separately altered suffix and compact-source digests. Current nodes, active ancestry and prior evidence remain retrievable without product/book behavior or ceiling changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.1: retain completed admission topology and history`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.2`
+  Status: `active`
+  Goal: `Inspect original incoming Connection control without writing queued output.`
+  Acceptance: `Expose a fresh bounded read-only inspection of the original Connection. Require original invocation/framing/delivery walls, at most one bounded read or peek, and explicit closed, pending or quiet state. Partial/complete queued control and interrupted reads cannot count as quiescence. Preserve the ordinary advance API, copied observations and creator identity. Qualify literal socket fragments, EOF, pending frames, no outgoing writes, native faults and exact deadlines.`
+  Verification: `Connection currently has bounded reads only inside combined read/write advance.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3`
+  Status: `pending`
+  Goal: `Retain matching Service execution admission and original lifetimes.`
+  Acceptance: `Freshly inspect only the original bound peer, complete original ACCEPT, live original parent/job authority and fixed admission wall; any pending control defers or refuses release. Retain admitted transport state so the trusted aggregate can publish an original confirmed native effect before or after an interrupted return, including historical effect after peer closure without reopening it. Preserve the original admission deadline separately from the original clipped execution lifetime; switch active checks without renewing clocks or erasing publication history. Qualify literal sockets, boundaries, cancellation/protocol refusal, copied authority and interruption. Native effect authority and root/nested integration remain with the aggregate sibling.`
+  Verification: `Pending read-only Connection inspection; Service currently keeps its admission wall after complete ACCEPT.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4`
@@ -4508,7 +4473,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3` separates the original admission and execution transport lifetimes without resetting either wall. Fresh matching-peer inspection must defer or refuse partial incoming control before E; retain execution transitions from original admitted effects. The native Pair gate is qualified, while aggregate root/nested release, streaming, fair composition and independent qualification remain open. Preserve live claim owners, execution-scope corrections, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.2` qualifies bounded read-only Connection inspection before Service execution admission and lifetime transitions. Partial or complete pending control cannot authorize E, and inspection writes no queued output. The native Pair gate is qualified; aggregate root/nested release, streaming, fair composition and independent qualification remain open. Preserve live claim owners, execution-scope corrections, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7116,66 +7081,34 @@ and push did not run. Exact predecessor evidence remains unchanged; this live
 correction supplies its proper scope and is reflected in the canonical fact/book.
 
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Gated-history rollover: `git log -S`
-  locates the first completed suffix heading at 1f292157fcf1ac82b79300a10b0b8b2a98ecf1ff.
-  Exact 8b8e903e2f has 7190 lines, near the unchanged 7200-line rollover milestone;
-  completed acceptance belongs in exact version history before further implementation.
-- [x] **ADDRESSED (verified)** — Gated-history re-derivation retrieves the
-  complete source (1276957 bytes) and three-section suffix (102 lines/7412
-  bytes). Independent git cat-file, awk, wc and shasum agree with manifest hashes
-  520449523e4172a9d8398ed4691cf270f6ea1638b46dbe151feff8123a96f01c
-  and 1d7433e18adbd027db404879d58e4571225d678890697326050076a9ef373650.
-  The source revision retains its predecessor manifest and the independently
-  reverified acb5b49ef source/suffix. All original nodes and compact terminals
-  remain unchanged except the final-exec parent's explicit decomposition. The
-  live execution-scope correction remains byte-for-byte present. Falsification:
-  the unchanged checker accepts the complete fixture and rejects only an altered
-  suffix digest. All results are consumed; exact sources, measurements, fixture
-  and runner are removed. Durability: current manifest, exact Git source and
-  predecessor chain; .artifacts/gated-history-* raw logs remain a named gap.
-- [x] **NO REGRESSION** — Gated-history `task-tree-integrity` confirms active
-  invariants (6 trees, 1517 nodes, 3 segments, 39 compact terminals and one
-  acceptance history); `knowledge-map: OK` confirms unchanged fact routes.
-  Claim census and staged doctrines verify synchronized metadata. Product code,
-  book behavior and all ceilings remain unchanged. No native producer, original
-  startup, full CI or push runs for this history-only slice.
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.1)
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Native E admission: the original fixture
-  rejects the expected copied-owner refusal because PID-only ownership accepts
-  a shallow Pair. GatedPair.pm queues E in release and writes it later in advance;
-  queue-time permission cannot admit that later irreversible operation. The first
-  focused run also exposed `Died at perl/FSM/Support/ProcessSupervisor/GatedPair.pm line 381`
-  on a hard write failure; the successful internal failure path now preserves the
-  legacy failed-state API. A real pending signal reproduced two queue-refusal
-  assertions: its handler saw ready state and an open gate before failure retention.
-- [x] **ADDRESSED (verified)** — Native E re-derivation: T1853 uses actual
-  gated children, literal stdout through EOF, original exec masks, weak descriptor
-  inventory and independently recorded positive fork/wait identities. It covers
-  copied/inherited pairs, original callbacks around every E attempt, false deferral,
-  EAGAIN/EINTR, malformed/throwing/reentrant checks, changed identity/reservation/
-  command/wall/handles, cancellation, retirement, exact dead-command waits and
-  native signals at queue/write/close. A lost write return retains explicit
-  uncertainty; a confirmed write survives a lost close return. Queue refusal now
-  revokes before signal delivery. Existing pure model fixtures declare their
-  identities explicitly; no model PID reaches native operations. Falsification:
-  identical copied positive passes; twelve isolated defects reject for copied
-  ownership (3), ignored callback (3), stale post-check (255), foreign reservation
-  (1), renewed wall (1), stale command (1), unmasked effect (2), unchecked retry
-  (1), missing uncertainty (1), late confirmed effect (2), retained callback (1)
-  and late queue refusal (1). These are fixture exit codes, not native signal
-  claims. Every endpoint census is unchanged. Durability: tracked source/T1853,
-  existing fixtures, book, fact and this owner; raw .artifacts/exec-admission-*
-  logs/JSON remain a named durability gap. Variant sources, runner and book output
-  are removed after consumption. Linux and browser visual evidence remain missing.
-- [x] **NO REGRESSION** — Native E band: `All tests successful`,
-  `Files=35, Tests=330`; selected T1812–T1814/T1817 and T1823–T1853 run under the
-  RAM guard. Syntax is OK and mdBook build/HTML inspection confirms the contract.
-  An initial protocol invocation used nonexistent filenames and ran no fixtures;
-  the corrected enumerated band supplies the evidence. Knowledge Map, claim
-  census and staged doctrines verify synchronized facts and metadata. This band
-  executes bounded fixture commands; original startup/proxy/compiler producers,
-  full CI and push remain gated. Aggregate execution permission is still open.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Transport-history containment: `git log -S`
+  locates the completed gated-admission subtree and native-gate checklist in exact
+  d2d68b2e49. Its task is 7181 lines, near the unchanged 7200-line rollover
+  milestone. Completed evidence belongs in authenticated version history before
+  Connection inspection and Service lifecycle implementation grow the live tree.
+- [x] **ADDRESSED (verified)** — Transport-history re-derivation independently
+  reconstructs the complete source (1280386 bytes) and completed suffix (63
+  lines/4732 bytes/two sections), with SHA-256 identities
+  e3bfd1592cc67be81ca9131cb0e7a508004e37ea4d45f2ded964884b98a7f4ea
+  and 6f5cecce750c7f4d42902ce0a728f7a414de695d185fdc49881768fea0f68de9.
+  Independent git cat-file, awk, wc and shasum agree; predecessor source/suffix
+  and its retained manifest reverify. The compact source reconstructs all nine
+  completed ACCEPT nodes with original goal/topology; a fresh registry census
+  finds no live claim owner in that flat subtree. All other original bodies and
+  terminals remain exact except the preowned Service decomposition; the live
+  execution-scope correction remains exact. Falsification: production checker
+  accepts the complete fixture and separately rejects altered history and compact
+  source digests. The compact runner first expected an extra word in its diagnostic;
+  the unchanged checker correctly refused, and the corrected exact oracle passes.
+  Durability: current manifest/terminal plus exact Git predecessors; raw
+  .artifacts/transport-history-* logs remain a named gap. Source/suffix copies,
+  measurements, scripts and fixture are removed after results are consumed.
+- [x] **NO REGRESSION** — Transport-history `knowledge-map: OK` confirms
+  unchanged fact routes; task-tree-integrity validates 6 trees/1512 nodes,
+  3 segments/40 compact terminals and one acceptance history. Claim inventory
+  and staged doctrines check paired metadata. Product source, tests, book behavior
+  and ceilings are unchanged. No native fixture, original producer, full CI or push
+  runs for this retention-only slice.
