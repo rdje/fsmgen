@@ -329,14 +329,14 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1: preserve generated enable identity`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve structured source-query failures and prevent MCP error path leakage.`
   Acceptance: `Decode valid public failure JSON independently of child exit status and expose original diagnostics without converting an expected compiler refusal into an opaque transport error. Keep invalid/non-JSON command failures distinct, bound and sanitize error messages including embedded absolute command paths, and preserve JSON-RPC codes/message-only error policy. Qualify actual catalogued invalid sources plus runner and workspace-escape controls; update public contracts, schemas, tests and book.`
-  Verification: `Actual strict check of fsm/mipicsi2_txccore_ulp.fsm returns structured diagnostic JSON with exit 1; MCP discards it and embeds absolute repository/executable/source paths in error.message. _run_fsmgen_json tests process success before decoding stdout; handle_jsonrpc_request strips only Perl location.`
-  Commit: `pending`
+  Verification: `Actual strict check of fsm/mipicsi2_txccore_ulp.fsm returns structured diagnostic JSON with exit 1; MCP discards it and embeds absolute repository/executable/source paths in error.message. _run_fsmgen_json previously tested process success before decoding stdout; handle_jsonrpc_request stripped only Perl location. T1868 now preserves actual native failure reports, rejects unrelated/non-JSON failures, sanitizes embedded paths and checks complete successful reports. See the acceptance evidence and repair receipt below.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2: preserve structured MCP failure diagnostics`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Expose all supported protocol source aliases in MCP discovery and query metadata.`
   Acceptance: `Drive applicable source family/query mappings from an owned public contract, include catalogued .axi/.apb/.ahb aliases with accurate check/semantic/schedule support, and retain existing path/filter/limit/safety behavior. Compare discovery with current native support catalog and actual semantic queries; prevent a new supported family from being silently omitted. Sync native introspection metadata, MCP schemas and book.`
   Verification: `Current manifest contains .axi/.apb/.ahb catalog entries and actual native/MCP semantic calls succeed; discover_sources returns zero for each alias family. _source_file_kind accepts only fsm/isf/ppif.`
@@ -1015,9 +1015,10 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2` repairs MCP failure diagnostics,
-then alias discovery and VIAL query exposure follow. Native enable identity,
-APB source repairs and bounded simulator qualification are committed;
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3` exposes supported protocol
+aliases through discovery and query metadata; `.31.2.4` then adds VIAL queries.
+Native enable identity, APB repairs, simulator qualification and structured
+MCP failure diagnostics are committed;
 `.31.3` qualifies coverage and ongoing parity after they pass.
 The read-only profile completed through `.30` remains historical evidence;
 it is not a claim that all later product features are covered.
@@ -1468,3 +1469,63 @@ path predates its move into the audit directory; receipt metadata names both.
 Missing leg: no upstream source repair or general simulator, four-state or
 scheduling certification is claimed. The APB original-source failure remains
 separately preserved in the `.31.2.5` receipt. Resume adapter diagnostics.
+
+## Failure Diagnostics Implementation Boundary — `.31.2.2`
+
+The native check and normalized-semantic producers each already emit a typed,
+versioned failure object with JSON `success: false`, original diagnostics and
+support metadata, then exit unsuccessfully. Schedule failures lack a selected
+structured failure contract. Decode captured stdout first, accepting nonzero
+execution only for the matching public failure identity/shape; never accept an
+arbitrary JSON scalar, unrelated object, success report or wrong-query report
+as an expected refusal. Preserve the existing injected decoded-report runner.
+Tool results retain text and structured report content and signal source
+failure with `isError: true`; resource reads retain the same report envelope.
+Transport errors remain code/message-only. Sanitize embedded root/path tokens
+in report strings and errors, omit raw command/stderr/decoder excerpts from
+execution failures, and bound public error messages. Check actual native/MCP
+check and semantic failures, unsupported/non-JSON/success-on-failure controls,
+workspace rejection before execution, preserved ordinary semantics/relative
+paths and embedded external paths. T1868 owns this public boundary regression.
+
+## Acceptance Checklist — `.31.2.2` source failure diagnostics
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual strict `--check --json` and
+  `--emit-semantic-json` refusals emit typed diagnostic reports with exit 1.
+  The adapter discarded stdout before decoding on unsuccessful execution;
+  its whole-string path sanitizer missed quoted paths inside diagnostic prose.
+  T1868 rejects the exact predecessor on report delivery, tool failure flags,
+  embedded paths and error boundaries, as captured in the repair receipt.
+- [x] **ADDRESSED (verified)** — Matching check/normalized-semantic v1 failure
+  identities survive failed execution and retain native diagnostic/support
+  truth. Tool results use `isError: true` with identical text/structured
+  content; resources return the same source envelope. Wrong-query, unrelated,
+  malformed and success-on-failed-exit controls remain adapter errors.
+  Public errors omit raw execution/decoder excerpts and bound messages;
+  report/error paths become relative or redacted. Actual one-shot CLI check
+  and semantic failure reports equal independent native projections after
+  only known-root normalization. Safety-policy metadata and book examples
+  advertise the same boundary; output envelope schemas remain compatible.
+- [x] **NO REGRESSION** — `All tests successful. Files=15, Tests=43` in the
+  selected actual-source, contract roundtrip, MCP protocol/CLI/schema/stdio,
+  root-authority and output band. Complete successful check/semantic reports
+  retain their contents. Syntax, Knowledge Map and mdBook/HTML checks pass;
+  staged doctrines and normal commit hooks remain required before commit.
+
+Claim legs: re-derivation uses actual native and MCP CLI/API calls and the
+selected suite; falsification uses the exact predecessor and isolated omitted
+failure decoding, report recognition, tool error flag, embedded-path and
+public-error controls; durability is T1868 plus the [repair receipt](../audits/mcp-feature-coverage-20260924/mcp-failure-repair.json)
+and this work-unit commit. No arbitrary native-tool JSON, schedule failure
+schema, all-feature coverage or execution/mutation capability is claimed.
+The official supported protocol's [tool error contract](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#error-handling)
+was checked before selecting the source-failure result flag.
+
+The first complete successful-report comparison caught an overbroad sanitizer
+redacting an HDL `//` comment. Narrowing path-token matching preserves that
+report and slash expressions/URIs. The first broader command also named a
+nonexistent test path; the final explicit band corrects it. The first mutation
+harness set FindBin from its `-e` launcher, so its positive control failed
+before qualification; that result was rejected. The final harness explicitly
+sets the test directory, preloads the selected adapter and fixes its canonical
+INC entry; its positive control passes and every incomplete repair fails.

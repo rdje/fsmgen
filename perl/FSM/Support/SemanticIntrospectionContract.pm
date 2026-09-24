@@ -501,6 +501,15 @@ sub semantic_introspection_safety_policy {
         default_access => 'read_only',
         workspace_root_restriction => 'the shipped adapter resolves source_id and paths under the caller-approved workspace root',
         source_bound_path_sanitization => 'workspace_or_repo_absolute_paths_return_relative_else_redacted',
+        source_query_failure_policy => {
+            check_and_semantic => 'matching_public_v1_failure_reports_preserved_on_nonzero_exit',
+            tool_result => 'isError_true_with_native_report_in_text_and_structuredContent',
+            resource_result => 'native_failure_report_in_source_query_envelope',
+            other_command_failures => 'message_only_adapter_error_without_raw_command_stderr_or_decoder_excerpt',
+            schedule => 'no_structured_failure_contract_selected',
+        },
+        embedded_diagnostic_path_sanitization => 'quoted_absolute_paths_and_unquoted_path_tokens_relative_or_redacted',
+        jsonrpc_error_message_max_characters => 2048,
         source_query_provenance => 'adapter_provenance records read_only transport, command shape, source identity policy, and no-shell policy without returning workspace roots',
         jsonrpc_error_code_policy => {
             parse_error => -32700,

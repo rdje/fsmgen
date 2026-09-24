@@ -2784,11 +2784,8 @@ are omitted from discovery. VIAL source checks and semantic reports are
 available through `fsmgen vial check --json`; MCP does not yet route VIAL
 queries to that API. Select `--language-version 2` for VIAL v2 sources.
 
-Expected compiler failures can currently become opaque MCP errors instead of
-returning the native structured diagnostics, and those errors can contain
-absolute command paths. These are tracked repairs in
-[the semantic coverage frontier](../../tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md),
-with source and adapter repairs preceding complete parity qualification.
+Remaining source-family repairs are owned by
+[the semantic coverage frontier](../../tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md).
 Successful profile tests alone do not establish coverage of every current feature.
 
 ### MCP Client Compatibility Matrix
@@ -2903,6 +2900,37 @@ the shipped `resources` and `tools` capabilities are advertised.
 JSON-RPC errors are message-only in the shipped profile. Clients can rely on
 the standard error `code` and a sanitized `message`; `error.data` remains
 absent until a stable, redacted data schema is selected.
+
+For source checks and normalized semantic exports, an expected compiler
+refusal is a **report**, even when the native command exits unsuccessfully.
+The adapter accepts the matching public failure schema and producer, retaining
+`success: false`, diagnostic codes/messages, source and support metadata.
+Tools return that envelope in both `structuredContent` and serialized text,
+with `isError: true`. Resource reads return the same report envelope. This
+follows the supported [MCP tool error contract](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#error-handling).
+
+For example, this catalogued legacy source is rejected in strict mode:
+
+```bash
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":10,"method":"tools/call","params":{"name":"fsmgen_check","arguments":{"source_id":"fsm/mipicsi2_txccore_ulp.fsm"}}}'
+```
+
+Read `result.structuredContent.report.diagnostics` to obtain the original
+`FSMGEN_STRICT_LEGACY_FSM_ROOT` diagnostic and migration guidance. An agent can
+then call `fsmgen_explain_diagnostic` with that code. Replacing the tool name
+with `fsmgen_semantic_introspect` returns the corresponding normalized-semantic
+failure report. A false `report.success` is never evidence that the source is
+valid, even though a report was successfully delivered.
+
+Non-JSON failures, unrelated JSON objects and success reports emitted by a
+failed command remain adapter errors (`-32000`); raw commands, stderr and JSON
+decoder excerpts are not returned. Schedule failures do not yet have a selected
+structured failure schema. Invalid stdio JSON uses `-32700` with a fixed parse
+message. Public JSON-RPC error messages are limited to 2048 characters with an
+explicit truncation marker. Quoted absolute paths and unquoted path tokens in
+reports and error prose become relative under the workspace/repository or are
+redacted; relative documentation links, URI schemes and HDL comments remain
+usable. `error.data` is still absent.
 
 The initialize response uses stable server identity metadata:
 `serverInfo.name` is `fsmgen-semantic-introspection`, `serverInfo.title` is

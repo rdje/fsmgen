@@ -269,7 +269,8 @@ sub call_tool {
             },
         ],
         structuredContent => $payload,
-        isError => JSON::PP::false,
+        isError => _is_source_failure_report($payload->{report}, $payload->{query_kind})
+            ? JSON::PP::true : JSON::PP::false,
     };
 }
 
@@ -319,7 +320,7 @@ sub handle_jsonrpc_request {
     } or do {
         my $error = "$@";
         chomp $error;
-        $error = _strip_perl_error_location($error);
+        $error = $self->_public_error_message($error);
         if ($error =~ s/\AFSMGEN_JSONRPC_METHOD_NOT_FOUND: /Unsupported JSON-RPC method: /) {
             return _jsonrpc_error_response($id, -32601, $error);
         }
@@ -359,15 +360,12 @@ sub run_stdio {
             $response = $self->handle_jsonrpc_request($request);
             1;
         } or do {
-            my $error = "$@";
-            chomp $error;
-            $error = _strip_perl_error_location($error);
             $response = {
                 jsonrpc => '2.0',
                 id => undef,
                 error => {
                     code => -32700,
-                    message => $error || 'Invalid JSON-RPC request',
+                    message => 'Invalid JSON-RPC request',
                 },
             };
         };
@@ -412,7 +410,7 @@ sub _source_query_payload {
         die "Unsupported source query kind: $kind";
     }
 
-    my $report = $self->_sanitize_public_payload($self->_run_fsmgen_json(\@command));
+    my $report = $self->_sanitize_public_payload($self->_run_fsmgen_json(\@command, $kind));
     return {
         source_id => $source_id,
         source_path => $source_id,
@@ -679,7 +677,7 @@ sub _bounded_limit {
 }
 
 sub _run_fsmgen_json {
-    my ($self, $command) = @_;
+    my ($self, $command, $kind) = @_;
 
     if ($self->{runner}) {
         return $self->{runner}->($command);
@@ -690,14 +688,40 @@ sub _run_fsmgen_json {
     );
 
     my $stdout = join('', @{$stdout_buf || []});
-    my $stderr = join('', @{$stderr_buf || []});
-    die "FSMGen command failed: $stderr$error_message"
-        unless $success;
-
     my $decoded = eval { JSON::PP->new->decode($stdout) };
-    die "FSMGen command did not emit JSON: $@"
-        if $@;
+    my $json_object = !$@ && ref($decoded) eq 'HASH';
+
+    # Native check/semantic refusals intentionally emit a public report and
+    # exit unsuccessfully. A JSON value alone is not evidence of that contract.
+    if (!$success) {
+        return $decoded if $json_object && _is_source_failure_report($decoded, $kind);
+        die "FSMGen command failed without a matching public failure report";
+    }
+    die "FSMGen command did not emit a JSON object" unless $json_object;
     return $decoded;
+}
+
+sub _is_source_failure_report {
+    my ($report, $kind) = @_;
+    return 0 unless ref($report) eq 'HASH' && defined($kind);
+    my %contracts = (
+        check => ['check_schema_version', 'FSM::Support::CheckDiagnostics', 'check'],
+        semantic => ['normalized_semantic_schema_version', 'FSM::Support::NormalizedSemanticReport', 'semantic_export'],
+    );
+    my $contract = $contracts{$kind} or return 0;
+    my ($version_key, $producer, $mode) = @$contract;
+    return 0 unless JSON::PP::is_bool($report->{success}) && !$report->{success};
+    return 0 unless defined($report->{$version_key}) && !ref($report->{$version_key})
+        && $report->{$version_key} eq '1';
+    return 0 unless ref($report->{producer}) eq 'HASH'
+        && ($report->{producer}{name} // '') eq 'FSMGen'
+        && ($report->{producer}{report_source} // '') eq $producer;
+    return 0 unless ref($report->{command}) eq 'HASH'
+        && ($report->{command}{mode} // '') eq $mode;
+    return 0 unless ref($report->{source}) eq 'HASH'
+        && ref($report->{diagnostics}) eq 'ARRAY' && @{$report->{diagnostics}};
+    return 0 if grep { ref($_) ne 'HASH' } @{$report->{diagnostics}};
+    return 1;
 }
 
 sub _manifest {
@@ -744,9 +768,38 @@ sub _sanitize_public_payload {
 
 sub _sanitize_public_string {
     my ($self, $value) = @_;
-    return $value unless File::Spec->file_name_is_absolute($value);
+    return $self->_sanitize_public_path($value)
+        if File::Spec->file_name_is_absolute($value);
 
-    my $path = abs_path($value) || File::Spec->canonpath($value);
+    # Keep relative references, URI schemes and HDL division expressions intact.
+    # Quoted paths are handled first so spaces in source/workspace names remain
+    # part of one path. Never expose file URIs as ambient filesystem authority.
+    $value =~ s{\bfile://[^\s"'<>(),;{}\[\]]+}{[absolute-path-redacted]}gi;
+    $value =~ s{(['"])((?:/|[A-Za-z]:[\\/]|\\\\)[^\r\n]*?)\1}
+        {$1 . $self->_sanitize_public_path($2) . $1}gex;
+    $value =~ s{
+        \b[A-Za-z][A-Za-z0-9+.-]*://[^\s"'<>(),;{}\[\]]+(*SKIP)(*F)
+        | (?<![\w./\\-])((?:/(?![/*])|[A-Za-z]:[\\/]|\\\\)[^\s"'<>(),;{}\[\]]+)
+    }{$self->_sanitize_public_path($1)}gex;
+    return $value;
+}
+
+sub _sanitize_public_path {
+    my ($self, $value) = @_;
+    return '[absolute-path-redacted]' if $value =~ m{\A(?:[A-Za-z]:[\\/]|\\\\)};
+
+    my $path = abs_path($value);
+    if (!defined $path) {
+        # canonpath on Unix deliberately preserves '..'. Collapse it here so
+        # a missing path cannot appear contained merely by its textual prefix.
+        my @parts;
+        for my $part (split m{/+}, $value) {
+            next if $part eq '' || $part eq '.';
+            if ($part eq '..') { pop @parts; }
+            else { push @parts, $part; }
+        }
+        $path = '/' . join('/', @parts);
+    }
     for my $root_key (qw(workspace_root repo_root)) {
         my $root = $self->{$root_key};
         next unless defined($root) && length($root);
@@ -756,8 +809,17 @@ sub _sanitize_public_string {
         $rel =~ s{\\}{/}g;
         return $rel;
     }
-
     return '[absolute-path-redacted]';
+}
+
+sub _public_error_message {
+    my ($self, $message) = @_;
+    $message = $self->_sanitize_public_string(_strip_perl_error_location($message));
+    $message =~ s/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]//g;
+    my $marker = ' [truncated]';
+    $message = substr($message, 0, 2048 - length($marker)) . $marker
+        if length($message) > 2048;
+    return $message;
 }
 
 sub _resource_descriptor {

@@ -57,6 +57,8 @@ answers:
   - "does FSMGen MCP echo unsupported protocol versions?"
   - "can client capabilities widen FSMGen MCP server capabilities?"
   - "does FSMGen MCP return JSON-RPC error.data?"
+  - "does MCP preserve failed source check and semantic diagnostics?"
+  - "how are embedded absolute paths removed from MCP errors?"
   - "are FSMGen MCP error messages sanitized?"
   - "what serverInfo title does FSMGen MCP expose?"
   - "what do FSMGen MCP initialize instructions advertise?"
@@ -125,9 +127,14 @@ The 2026-09-24 audit found limits that earlier profile tests did not expose:
 - Protocol alias sources accept semantic queries but are absent from discovery.
 - Native VIAL source tooling exposes JSON-safe semantic results, but MCP
   check/semantic routing uses the hardware CLI and cannot query those sources.
-- Expected compiler refusal JSON is discarded on a nonzero exit; the resulting
-  IPC error embeds absolute command paths. Error messages are therefore not
-  fully sanitized despite the earlier bounded mock tests.
+- `.31.2.2` preserves native check/semantic v1 failure JSON on nonzero exit
+  after matching public producer, mode and diagnostic shape. Tools return
+  `isError: true` with text/structured reports; resources carry the same
+  envelope. Unrelated/non-JSON failures stay message-only adapter errors;
+  raw command/stderr/decoder excerpts are omitted. Embedded path tokens are
+  sanitized and public error messages are bounded. T1868 compares complete
+  actual successful/failed native reports and exercises malformed-output,
+  error-path, comment/URI preservation and workspace controls.
 - The native case-folded enable collision is repaired under `.31.2.1`: shared,
   deterministic assignment-enable allocation keeps original driver identity.
   The recorded actual CLI/MCP reports agree after source-path normalization;
@@ -136,7 +143,8 @@ The 2026-09-24 audit found limits that earlier profile tests did not expose:
   `.31.2.5`: direct uppercase clears and removal of unused helper definitions
   preserve the declared ports. T1867 and assertion-enabled Verilator transfer
   checks guard behavior; native/MCP semantic results agree. An independent
-  Icarus concat/packed `$onehot0` discrepancy is owned by `.31.2.6`.
+  Icarus concat/packed `$onehot0` discrepancy is qualified under `.31.2.6`;
+  its tracked probe/checker document the exact tool-context limit.
 
 Durable capture and limits:
 `docs/audits/mcp-feature-coverage-20260924/evidence.json` and the `.31.1` task

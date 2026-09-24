@@ -1,0 +1,226 @@
+{
+  "actual_cli_queries": [
+    {
+      "diagnostic_codes": [
+        "FSMGEN_STRICT_LEGACY_FSM_ROOT"
+      ],
+      "embedded_repository_path_absent": true,
+      "isError": true,
+      "kind": "check",
+      "matched_support": {
+        "classification": "expected_failure",
+        "coverage": "strict_root_rejection_pipeline_cli",
+        "diagnostic_code": "FSMGEN_STRICT_LEGACY_FSM_ROOT",
+        "entry_id": "legacy.mipicsi2_txccore_ulp.strict_rejection",
+        "family": "legacy_fixture",
+        "matched": true,
+        "migration_hint_available": true
+      },
+      "mcp_exit": 0,
+      "mcp_report_sha256": "12f52aa033b0506ac705abf84ef2ef61721f99560453afbaefa1cd65fc409044",
+      "native_exit": 1,
+      "native_normalized_report_sha256": "12f52aa033b0506ac705abf84ef2ef61721f99560453afbaefa1cd65fc409044",
+      "normalization": "only the known repository-root prefix in string values",
+      "source": "fsm/mipicsi2_txccore_ulp.fsm",
+      "text_structured_equality": true
+    },
+    {
+      "diagnostic_codes": [
+        "FSMGEN_STRICT_LEGACY_FSM_ROOT"
+      ],
+      "embedded_repository_path_absent": true,
+      "isError": true,
+      "kind": "semantic",
+      "matched_support": {
+        "classification": "expected_failure",
+        "coverage": "strict_root_rejection_pipeline_cli",
+        "diagnostic_code": "FSMGEN_STRICT_LEGACY_FSM_ROOT",
+        "entry_id": "legacy.mipicsi2_txccore_ulp.strict_rejection",
+        "family": "legacy_fixture",
+        "matched": true,
+        "migration_hint_available": true
+      },
+      "mcp_exit": 0,
+      "mcp_report_sha256": "94448ef84b69a60482cbc333770ad264d2ef0ce8a2e633c9f7f819709a5767bd",
+      "native_exit": 1,
+      "native_normalized_report_sha256": "94448ef84b69a60482cbc333770ad264d2ef0ce8a2e633c9f7f819709a5767bd",
+      "normalization": "only the known repository-root prefix in string values",
+      "source": "fsm/mipicsi2_txccore_ulp.fsm",
+      "text_structured_equality": true
+    }
+  ],
+  "baseline": {
+    "adapter_sha256": "c8460889d240df6eba56744e31214671e9994aa4a530fbebf52c56ba5ba1adab",
+    "exit": 5,
+    "failure_oracles": [
+      "not ok 1 - real failed checks and semantic exports preserve native diagnostic reports",
+      "not ok 3 - unsuccessful commands require a matching public failure report",
+      "not ok 4 - embedded path sanitization preserves relative references and semantics",
+      "not ok 5 - public errors are bounded and sanitized before JSON-RPC serialization",
+      "not ok 6 - workspace escape is rejected before running a source query",
+      "#   Failed test 'check refusal is a tool result, not an opaque JSON-RPC error'",
+      "#   Failed test 'check marks the source failure as a tool execution error'",
+      "#   Failed test 'check preserves the entire native report except root paths'",
+      "#   Failed test 'check response has no embedded machine root'",
+      "#   Failed test 'semantic refusal is a tool result, not an opaque JSON-RPC error'",
+      "#   Failed test 'semantic marks the source failure as a tool execution error'",
+      "#   Failed test 'semantic preserves the entire native report except root paths'",
+      "#   Failed test 'semantic response has no embedded machine root'",
+      "#   Failed test 'real failed checks and semantic exports preserve native diagnostic reports'",
+      "#   Failed test 'plain stderr excludes raw execution/decoder details'",
+      "#   Failed test 'malformed JSON excludes raw execution/decoder details'",
+      "#   Failed test 'scalar JSON excludes raw execution/decoder details'",
+      "#   Failed test 'array JSON excludes raw execution/decoder details'",
+      "#   Failed test 'unrelated JSON excludes raw execution/decoder details'",
+      "#   Failed test 'wrong query excludes raw execution/decoder details'",
+      "#   Failed test 'matching failure survives nonzero execution'",
+      "#   Failed test 'success on failed exit excludes raw execution/decoder details'",
+      "#   Failed test 'non-Boolean failure excludes raw execution/decoder details'",
+      "#   Failed test 'wrong schema excludes raw execution/decoder details'",
+      "#   Failed test 'wrong producer excludes raw execution/decoder details'",
+      "#   Failed test 'wrong mode excludes raw execution/decoder details'",
+      "#   Failed test 'missing diagnostics excludes raw execution/decoder details'",
+      "#   Failed test 'malformed diagnostics excludes raw execution/decoder details'",
+      "#   Failed test 'successful invalid stdout remains distinct from failed execution'",
+      "#   Failed test 'unsuccessful commands require a matching public failure report'",
+      "#   Failed test 'diagnostic prose keeps useful relative references and slash expressions'",
+      "#   Failed test 'external or escaping path 1 is redacted'",
+      "#   Failed test 'path 1 has explicit redaction marker'",
+      "#   Failed test 'external or escaping path 2 is redacted'",
+      "#   Failed test 'path 2 has explicit redaction marker'",
+      "#   Failed test 'external or escaping path 3 is redacted'",
+      "#   Failed test 'path 3 has explicit redaction marker'",
+      "#   Failed test 'external or escaping path 4 is redacted'",
+      "#   Failed test 'path 4 has explicit redaction marker'",
+      "#   Failed test 'external or escaping path 5 is redacted'",
+      "#   Failed test 'path 5 has explicit redaction marker'",
+      "#   Failed test 'external or escaping path 6 is redacted'",
+      "#   Failed test 'path 6 has explicit redaction marker'",
+      "#   Failed test 'embedded path sanitization preserves relative references and semantics'",
+      "#   Failed test 'embedded paths and Perl location are absent'",
+      "#   Failed test 'public message has a fixed character bound'",
+      "#   Failed test 'truncation is explicit'",
+      "#   Failed test 'public errors are bounded and sanitized before JSON-RPC serialization'",
+      "#   Failed test 'escape error does not expose configured roots'",
+      "#   Failed test 'workspace escape is rejected before running a source query'"
+    ],
+    "revision": "8c26209164ca13fb27715c22d367cd1713eb03d7"
+  },
+  "capture_revision": "8c26209164ca13fb27715c22d367cd1713eb03d7",
+  "controls": [
+    {
+      "exit": 0,
+      "failure_oracles": [],
+      "name": "positive"
+    },
+    {
+      "exit": 2,
+      "failure_oracles": [
+        "not ok 1 - real failed checks and semantic exports preserve native diagnostic reports",
+        "not ok 3 - unsuccessful commands require a matching public failure report",
+        "#   Failed test 'check refusal is a tool result, not an opaque JSON-RPC error'",
+        "#   Failed test 'check marks the source failure as a tool execution error'",
+        "#   Failed test 'check preserves the entire native report except root paths'",
+        "#   Failed test 'semantic refusal is a tool result, not an opaque JSON-RPC error'",
+        "#   Failed test 'semantic marks the source failure as a tool execution error'",
+        "#   Failed test 'semantic preserves the entire native report except root paths'",
+        "#   Failed test 'real failed checks and semantic exports preserve native diagnostic reports'",
+        "#   Failed test 'matching failure survives nonzero execution'",
+        "#   Failed test 'unsuccessful commands require a matching public failure report'"
+      ],
+      "name": "discard_failure_json"
+    },
+    {
+      "exit": 1,
+      "failure_oracles": [
+        "not ok 3 - unsuccessful commands require a matching public failure report",
+        "#   Failed test 'unrelated JSON remains an adapter error'",
+        "#   Failed test 'wrong query remains an adapter error'",
+        "#   Failed test 'success on failed exit remains an adapter error'",
+        "#   Failed test 'non-Boolean failure remains an adapter error'",
+        "#   Failed test 'wrong schema remains an adapter error'",
+        "#   Failed test 'wrong producer remains an adapter error'",
+        "#   Failed test 'wrong mode remains an adapter error'",
+        "#   Failed test 'missing diagnostics remains an adapter error'",
+        "#   Failed test 'malformed diagnostics remains an adapter error'",
+        "#   Failed test 'unsuccessful commands require a matching public failure report'"
+      ],
+      "name": "accept_unrelated_failure_json"
+    },
+    {
+      "exit": 2,
+      "failure_oracles": [
+        "not ok 1 - real failed checks and semantic exports preserve native diagnostic reports",
+        "not ok 3 - unsuccessful commands require a matching public failure report",
+        "#   Failed test 'check marks the source failure as a tool execution error'",
+        "#   Failed test 'semantic marks the source failure as a tool execution error'",
+        "#   Failed test 'real failed checks and semantic exports preserve native diagnostic reports'",
+        "#   Failed test 'matching failure survives nonzero execution'",
+        "#   Failed test 'unsuccessful commands require a matching public failure report'"
+      ],
+      "name": "clear_tool_error_flag"
+    },
+    {
+      "exit": 4,
+      "failure_oracles": [
+        "not ok 1 - real failed checks and semantic exports preserve native diagnostic reports",
+        "not ok 4 - embedded path sanitization preserves relative references and semantics",
+        "not ok 5 - public errors are bounded and sanitized before JSON-RPC serialization",
+        "not ok 6 - workspace escape is rejected before running a source query",
+        "#   Failed test 'check preserves the entire native report except root paths'",
+        "#   Failed test 'check response has no embedded machine root'",
+        "#   Failed test 'semantic preserves the entire native report except root paths'",
+        "#   Failed test 'semantic response has no embedded machine root'",
+        "#   Failed test 'real failed checks and semantic exports preserve native diagnostic reports'",
+        "#   Failed test 'diagnostic prose keeps useful relative references and slash expressions'",
+        "#   Failed test 'external or escaping path 1 is redacted'",
+        "#   Failed test 'path 1 has explicit redaction marker'",
+        "#   Failed test 'external or escaping path 2 is redacted'",
+        "#   Failed test 'path 2 has explicit redaction marker'",
+        "#   Failed test 'external or escaping path 3 is redacted'",
+        "#   Failed test 'path 3 has explicit redaction marker'",
+        "#   Failed test 'external or escaping path 4 is redacted'",
+        "#   Failed test 'path 4 has explicit redaction marker'",
+        "#   Failed test 'external or escaping path 5 is redacted'",
+        "#   Failed test 'path 5 has explicit redaction marker'",
+        "#   Failed test 'external or escaping path 6 is redacted'",
+        "#   Failed test 'path 6 has explicit redaction marker'",
+        "#   Failed test 'embedded path sanitization preserves relative references and semantics'",
+        "#   Failed test 'embedded paths and Perl location are absent'",
+        "#   Failed test 'public errors are bounded and sanitized before JSON-RPC serialization'",
+        "#   Failed test 'escape error does not expose configured roots'",
+        "#   Failed test 'workspace escape is rejected before running a source query'"
+      ],
+      "name": "omit_embedded_path_sanitization"
+    },
+    {
+      "exit": 2,
+      "failure_oracles": [
+        "not ok 5 - public errors are bounded and sanitized before JSON-RPC serialization",
+        "not ok 6 - workspace escape is rejected before running a source query",
+        "#   Failed test 'embedded paths and Perl location are absent'",
+        "#   Failed test 'public message has a fixed character bound'",
+        "#   Failed test 'truncation is explicit'",
+        "#   Failed test 'public errors are bounded and sanitized before JSON-RPC serialization'",
+        "#   Failed test 'escape error does not expose configured roots'",
+        "#   Failed test 'workspace escape is rejected before running a source query'"
+      ],
+      "name": "omit_public_error_sanitization"
+    }
+  ],
+  "implementation_sha256": "9fc284e248571367e5538fa2832fc0ad578a4cdca30e15121981dc06ad89f27b",
+  "limits": [
+    "Native failure recognition covers the selected check/normalized-semantic v1 identities, not arbitrary tool JSON.",
+    "Schedule structured failures and remaining alias/VIAL coverage are not claimed.",
+    "The initial positive-report comparison rejected comment redaction; the corrected rule is included in these controls."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2",
+  "schema": "fsmgen.mcp_failure_repair.v1",
+  "selected_band": [
+    "All tests successful.",
+    "Files=15, Tests=43, 15 wallclock secs ( 0.04 usr  0.02 sys + 10.09 cusr  2.87 csys = 13.02 CPU)",
+    "Result: PASS"
+  ],
+  "test": "t/1868-semantic-introspection-mcp-source-failures.t",
+  "test_sha256": "0cd41a59249b3069af7cc69aff5272eb4bc6505ef666e21795a611597a84988a"
+}
