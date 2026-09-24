@@ -175,6 +175,26 @@ sub snapshot_request {
     return decode_frame('client', encode_frame('client', $snapshot));
 }
 
+# Syntax and bounded byte transformation only. The coordinator must obtain
+# this context from the original Service/grant and recheck live authority.
+# Never merge the coordinator's ENV into another invocation's snapshot.
+sub snapshot_with_context {
+    _fail('expected execution snapshot and private context') unless @_ == 2;
+    my ($snapshot, $context) = @_;
+    decode_context($context);
+    _fail('expected execution snapshot') unless ref($snapshot) eq 'HASH'
+        && ($snapshot->{type} // '') eq 'SPAWN';
+    my $copy = decode_frame('client', encode_frame('client', $snapshot));
+    my $key = 'FSMGEN_PROCESS_COORDINATOR_CONTEXT';
+    my @environment = grep { $_->[0] ne $key } @{$copy->{environment}};
+    push @environment, [$key, $context];
+    $copy->{environment} = [sort { $a->[0] cmp $b->[0] } @environment];
+    # Replacement can grow a formerly admitted snapshot or add a vector
+    # entry. Validate again before returning any transformed value.
+    encode_frame('client', $copy);
+    return $copy;
+}
+
 # Read four bytes first and admit the declared payload before body storage.
 # After the next two bytes, frame_size applies the type/direction-specific cap.
 sub payload_size {

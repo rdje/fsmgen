@@ -1002,8 +1002,30 @@ For example, expiry between token generation and context construction retains
 a timeout, not a ready authority. A lost native token return retains a host
 failure even though the OS read occurred. A signal observes the complete ready
 record and closed entropy handle before interrupting return. Context recovery
-still grants only submission under that logical parent. Original ledger binding,
-private snapshot replacement and command release remain subsequent steps.
+still grants only submission under that logical parent. Original ledger binding
+and command release remain subsequent steps.
+
+`Wire::snapshot_with_context($snapshot, $context)` now creates a detached SPAWN
+snapshot with exactly `FSMGEN_PROCESS_COORDINATOR_CONTEXT` inserted or replaced.
+It validates both the incoming snapshot and context syntax, normalizes execution
+scalars through the byte codec, then checks the complete transformed frame again.
+It preserves the original invocation start, arguments, cwd, umask and every
+unrelated environment entry in strict byte order. It never merges the
+coordinator's current environment into another invocation.
+
+For example, replacing an old private context leaves an empty argument, a
+newline-bearing environment value and a similarly prefixed environment key
+unchanged. Inserting a missing context needs an available environment slot;
+replacement at the full pair count does not add a slot. A longer context can
+exceed the aggregate execution-byte bound even when the original snapshot fits.
+Either refusal leaves the original snapshot and live environment untouched.
+
+This pure transformation checks syntax and byte bounds. A syntactically valid
+context is not evidence of live authority. The aggregate coordinator must obtain
+the original context from its admitted Service/grant and recheck those lifetimes
+before command release; that integration remains separately owned. Literal wire
+frames and inclusive count/byte boundaries qualify the helper without an endpoint
+or command process.
 
 Connection now offers `queue_accept($job)` for one tracked ACCEPT on the
 original connection, and `accept_publication` for a copied observation. The
@@ -1040,6 +1062,11 @@ publication, nested routing and complete subtree qualification
 still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
 Their tests exercise the current host; Linux qualification remains open.
+The component regression band includes existing ReservedJob tests that explicitly
+release and execute bounded fixture commands, as well as legacy-facade checks.
+The newer Connection/Service APIs grant no exec release; that narrower statement
+does not describe every test in the band. These controls do not run the retained
+original startup/proxy/compiler producers.
 Re-run the bounded component controls with:
 
 ```bash
@@ -1058,6 +1085,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1842-process-coordinator
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1843-process-accept-publication.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1844-process-retained-request-transfer.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1845-process-retained-parent-context.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1846-process-snapshot-context.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

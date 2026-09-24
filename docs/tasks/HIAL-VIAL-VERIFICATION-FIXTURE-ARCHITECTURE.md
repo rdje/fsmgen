@@ -3645,11 +3645,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.1: retain original request transfer before return`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain original parent contexts and private execution snapshot replacement.`
   Acceptance: `Make new parent authority/context publication recoverable under creator signals and original deadlines. Bind only original admitted identities; replace only the reserved private context environment entry in a detached execution snapshot while preserving all other bytes, order, cwd, umask and original invocation time. Validate inclusive encoded bounds after replacement and refuse stale/copied/reused authority. Qualify root and nested contexts without exec release.`
-  Verification: `Original request handoff and retained parent-context publication are qualified. The canonical contract names FSMGEN_PROCESS_COORDINATOR_CONTEXT and requires complete byte-ordered environment preservation. Children .1/.2 retain original Service authority and completed acceptance history; child .3 now adds bounded pure snapshot replacement. Aggregate grant binding remains sibling .4.`
-  Commit: `pending`
+  Verification: `Children .1/.2 retain original Service parent authority and exact completed history. Child .3 qualifies detached private context replacement with unchanged byte/vector/frame limits and original invocation time. These are component preparation facts, not original aggregate-grant admission or exec release; aggregate binding remains sibling .4.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3: preserve bounded private snapshot context`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3`
 
@@ -3668,11 +3668,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2: retain completed parent-publication history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Replace only private context in bounded detached execution snapshots.`
-  Acceptance: `Add a pure closed snapshot transformation for the exact reserved environment key. Validate context syntax and snapshot type, preserve original invocation time, argv/cwd/umask and every unrelated environment byte, replace or insert in strict byte order, and revalidate all inclusive vector/scalar/aggregate/frame bounds after substitution. Leave the input snapshot, live ENV and cwd untouched on success or failure. Qualify literal independent encoding and exact limit/excess cases; syntax is not live authority and no exec is released.`
-  Verification: `Pending retained parent contexts and bounded history. Native exec compatibility already has independent component owners; aggregate tests must later prove this transformed original snapshot reaches the actual gated command.`
-  Commit: `pending`
+  Acceptance: `Add a pure closed snapshot transformation for the exact reserved environment key. Validate context syntax and snapshot type, preserve original invocation time, argv/cwd/umask and every unrelated environment byte, replace or insert in strict byte order, and revalidate all inclusive vector/scalar/aggregate/frame bounds after substitution. Leave the input snapshot, live ENV and cwd untouched on success or failure. Qualify literal independent encoding and exact limit/excess cases; syntax is not live authority and the new helper releases no exec. Correct the discovered verification-scope wording: joined T1827 regression bands deliberately execute bounded fixture programs; preserve immutable predecessor evidence and distinguish new API behavior from existing regression execution.`
+  Verification: `Wire snapshot_with_context validates context syntax and incoming SPAWN before detaching through the existing codec, replaces only the exact private environment key in strict byte order, and revalidates the resulting frame. T1846 compares independent literal frames, original time/context, byte normalization, aliases, malformed inputs and inclusive environment-count/aggregate bounds. Six isolated controls reject missing syntax/input/output checks, aliased custody, broad prefix removal and changed invocation time. The selected band passes Files=14, Tests=184. Book/fact/live correction distinguish unchanged T1827 bounded command execution from the newer APIs that add no release. Original producers remain untouched; aggregate authority binding remains sibling .4.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3: preserve bounded private snapshot context`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3`
   Status: `pending`
@@ -4400,7 +4400,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3` replaces only the private context in detached execution snapshots. Original Service parent publication is qualified, and completed acceptance history is exactly version-retrievable. Original Service request transfer is qualified. Later children bind Service job/publication state, aggregate gated admission and final exec rechecks. Completed native-binding topology remains exactly version-retrievable; live claim owners remain visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3` binds retained Service requests/jobs to tracked ACCEPT publication. Original request transfer, parent-context recovery and pure snapshot replacement are qualified. Later children join aggregate gated admission and final exec rechecks. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6995,6 +6995,19 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 The manifest binds the completed acceptance suffix and independent reserved-process evidence join to their exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
+Verification-scope correction, owned by `.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3`: the
+preserved checklists for ACCEPT publication (`13bf045a3`), retained request
+transfer (`54571a18b`) and parent context (`1d5a47b73`) overstate no command
+exec/release across their complete selected bands. Each band includes unchanged
+`t/1827-process-reserved-job.t`, whose explicit release and captured command
+witnesses qualify real bounded fixture execution, including the legacy facade.
+The new Connection/Service APIs add no exec release; their focused T1843–T1845
+controls stay before command exec. Those narrower facts must not describe the
+whole regression band. The original startup/proxy/compiler producers, full CI
+and push did not run. Exact predecessor evidence remains unchanged; this live
+correction supplies its proper scope and is reflected in the canonical fact/book.
+
+
 
 ## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2)
 
@@ -7018,3 +7031,34 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   `knowledge-map: OK`, claim census and staged doctrines cover the resulting
   metadata. Book and product source remain accurate and unchanged. No native
   producer, original startup, full CI or push runs.
+
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub snapshot_request {'`
+  locates 971bc58e5cb0834e35fc53402413b00b01d77af2, the original bounded
+  wire codec. It captured execution state but had no detached private-context
+  replacement. Existing admitted snapshots can exceed limits after insertion.
+  Read-only source/history review also confirms that T1827 explicitly releases
+  fixture commands; three preserved checklist bands overstated no execution.
+- [x] **ADDRESSED (verified)** — Re-derivation: T1846 independently emits
+  literal SPAWN fields, compares original invocation/cwd/umask and unrelated
+  bytes, and verifies detached vectors without live ENV mutation. Count 4096
+  and aggregate 524288 bytes accept; their first excesses refuse after insertion
+  or context growth. Invalid incoming private entries cannot be silently repaired.
+  Falsification: six isolated variants omit context syntax, input validation,
+  source detachment or final bounds, remove a prefix, or change original start;
+  each fails the intended assertion with native exits 1, 2, 5, 2, 1 and 4.
+  All outcomes are consumed. Exact mutant directories, runner and book build
+  are removed; logs remain under .artifacts/snapshot-context-* as a named
+  raw-evidence durability gap. Tracked T1846, source, task/book/fact and Git
+  preserve the contract and deterministic re-derivation. Prior evidence stays
+  immutable; the live correction names its scope and exact predecessor commits.
+- [x] **NO REGRESSION** — The selected guarded component band reports
+  `All tests successful. Files=14, Tests=184`; both Perl syntax checks pass.
+  T1827 in that band executes bounded fixture commands and legacy checks.
+  The new pure helper adds no native effects or exec release. mdBook builds;
+  generated HTML contains both the helper contract and verification correction.
+  Visual QA remains blocked on browser runtime startup, separately owned.
+  Knowledge Map, claim census and staged doctrines cover synchronized metadata.
+  Original startup/proxy/compiler producers, full CI and push remain gated.
