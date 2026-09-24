@@ -3757,10 +3757,33 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2: bind accepted peers to original aggregate grants`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind accepted connection ownership to complete ACCEPT delivery before exec.`
   Acceptance: `After .2, extend private service/connection lifecycle with explicit retained job association, admission rechecks and complete publication observation. Register new parent authority and replace only the private environment context in the execution snapshot. Partial ACCEPT, EOF, cancellation, repeated/foreign messages and expired admission cancel the recorded gated job without release. Separate closing admission from final endpoint removal and preserve original execution versus bounded closure/delivery walls. Qualify actual sockets and command witnesses; no nested adapter routing.`
-  Verification: `Pending the preceding integration child.`
+  Verification: `Clean 3aca475f1 completes original native admission. Child .1 first proves retained ACCEPT frame-write completion without process release. Child .2 then compacts only the completed native-binding subtree after current book authority moves; live claim owners in .4.2.2 remain directly visible. Child .3 composes retained requests, job/context association, original admission rechecks and complete publication before exec. Streaming and fair result delivery remain later integration children.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.1`
+  Status: `done`
+  Goal: `Retain exact ACCEPT frame-write completion before publication returns.`
+  Acceptance: `Add a creator-bound, single-use tracked ACCEPT queue path and copied publication observation to Connection. Record the original job/frame before queueing, count only actual successful socket writes, and publish complete state under signals before returning. Preserve existing generic queue behavior, partial-frame ordering, encoded-byte bounds, original deadline and no-progress wall. Partial/failed writes and closure cannot forge completion; interrupted successful returns keep original observations. Qualify real sockets, byte-at-a-time writes, EAGAIN, peer closure, original masks, copied/inherited refusal and creator signals. This proves complete local frame write, not peer acknowledgement or exec release.`
+  Verification: `Connection retains one creator-bound ACCEPT record before queue admission; actual successful writes update only that frame under the preparation mask. Generic queue ordering and encoded capacity remain unchanged. Copied observations expose confirmed progress, not remote receipt or exec authority; partial closure and uncertain native/write-scope returns fail conservatively. T1843 compares literal bytes on real sockets, byte writes/EAGAIN, original walls, actual creator signals, restored dispositions/masks and exact inherited cleanup. Six isolated falsifiers reject omitted masking, requested-byte credit, early completion, copied ownership, stale readiness and missing closed-prefix failure. Final selected band passes Files=11, Tests=163. Remaining request/job/context binding is child .3.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.1: retain exact ACCEPT write publication`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.2`
+  Status: `pending`
+  Goal: `Seal completed native-binding topology without hiding live claim owners.`
+  Acceptance: `After .1 moves current book authority, freshly census all live registry owners and compact only eligible flat completed native-binding topology under .4.2.3 through an exact version object. Keep .4.2.2 claim owners and all active frontier nodes live; reject nested compact terminals. Prove source digest, goal/node/child closure and exact original evidence reconstruction, plus corruption refusal, with unchanged ceilings and checker. No product behavior changes.`
+  Verification: `Read-only census at clean 3aca475f1 finds live claim disposition/group owners in .4.2.2 and the current maintained-book authority under .4.2.3. The whole .4.2 subtree is therefore ineligible. Re-census after child .1; select .4.2.3 only when no live owner remains inside it. Preserve prior acceptance-history manifests and their exact revision chain.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3`
+  Status: `pending`
+  Goal: `Compose original request and gated-job ownership through complete ACCEPT publication.`
+  Acceptance: `After .1 and .2, retain original accepted request/job association, detached snapshots and clipped invocation/admission walls. Bind new parent context only through original grants and replace only the private environment context. Prepare/start the retained gated job, publish its matching ACCEPT completely, then recheck original admission, peer health and deadlines before exec release. Partial publication, EOF, repeated/foreign messages, cancellation and expiry clean the recorded native job without release. Preserve separate process, publication and closure facts; qualify actual sockets and execution witnesses. Decompose implementation further when the concrete interfaces require it; no nested caller routing.`
+  Verification: `Pending retained Connection publication proof and bounded native-history topology. Normal per-peer terminal delivery/acknowledgement and slot reuse must compose with streaming and fair owner advancement in later siblings, rather than imply a result-delivery guarantee from ACCEPT write completion.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.4`
@@ -4468,7 +4491,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3` binds original accepted requests and gated jobs to complete ACCEPT publication before exec. Bounded native admission, root/nested lifecycle and accepted-peer aggregate ownership are complete through .4.2. Streaming, fair composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.2` seals eligible completed native-binding topology after the current book authority moved. Keep live claim owners visible. Child .3 then composes accepted requests and gated jobs through the qualified Connection publication before exec. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7130,3 +7153,31 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   it now stops promptly and consumes the exact child wait independently.
   No gated command releases, original producer, full CI or push runs. Browser
   visual review, Linux, ACCEPT delivery and complete routing remain open.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _write_ready {'`
+  identifies ef450a2e618b91ffc7d767211cec5052e097854e as the original bounded
+  Connection I/O. Aggregate queue counts identify neither the original ACCEPT
+  nor its completed write, so they cannot supply the required publication fact.
+- [x] **ADDRESSED (verified)** — Re-derivation compares independently encoded
+  literal frames with actual socket bytes, exact partial counts, EAGAIN, EOF,
+  creator signals and original masks/dispositions. One retained original frame
+  publishes confirmed progress before handlers; uncertain native or SIGPIPE
+  restoration returns remain failed even when peer bytes exist. Closing a prefix
+  cannot complete it; a later close cannot erase a completed local-write fact.
+  Falsification: six isolated omissions corrupt masking, byte credit, completion,
+  identity, readiness rechecks or closed-prefix state and each fails its oracle.
+  The unmasked control initially left a test pre-mask signal armed into the next
+  case; clearing that trigger within its handler scope yields precise assertions
+  and normal nonzero exit. All controls are consumed and source variants removed.
+  Durability: Connection, T1843, task, book and canonical fact preserve derivation
+  and control loci; .artifacts/accept-publication*.log raw logs remain a gap.
+- [x] **NO REGRESSION** — Final selected native/transport/architecture band:
+  `All tests successful`, `Files=11, Tests=163`. A first band command mistyped
+  T1817's filename; the corrected exact inventory passes. Syntax, built-book
+  inspection, Knowledge Map, claims and staged doctrines cover this slice.
+  Literal frame ordering, inclusive encoded capacity, original/no-progress walls
+  and inherited cleanup remain qualified. Endpoint residue is empty. Browser
+  visual review and Linux remain open. No command exec, original producer,
+  full CI or push is run; Service/job binding remains separately owned.

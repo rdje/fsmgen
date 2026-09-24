@@ -951,6 +951,36 @@ The coordinator stores every original peer outcome before asking the service to
 consume it, so an interrupted consumption return remains recoverable through
 `peer_observation`. Copied observations grant no native authority.
 
+Connection now offers `queue_accept($job)` for one tracked ACCEPT on the
+original connection, and `accept_publication` for a copied observation. The
+original record exists before queue admission and retains its job, encoded
+frame size, confirmed byte count and state. Generic `queue` remains available;
+only the explicitly tracked frame updates this observation.
+
+For example, if READY precedes ACCEPT and a stream frame follows it, completing
+READY confirms no ACCEPT bytes. Completing ACCEPT publishes its own result even
+while the stream queue remains nonempty. An already partially written stream
+must finish first so the wire framing stays contiguous. Byte-at-a-time writes
+confirm each successful byte; EAGAIN confirms none. The final byte changes the
+state from `writing` to `written` and makes `published` true.
+
+Write effects, queue credit and the original publication record update under
+the preparation signal mask. A pending creator handler sees the complete
+retained result and restored SIGPIPE disposition before it can interrupt the
+return. Re-entry just before masking rechecks closure and the original walls.
+Queue activity cannot renew a no-progress deadline, and partial progress cannot
+extend the invocation deadline. The tracked frame uses the existing encoded
+control-queue capacity without a second transcript or growing receipt registry.
+
+A partial frame that closes becomes `failed`, retaining its first cause and
+confirmed prefix. An uncertain native write return or SIGPIPE restoration
+failure cannot confirm completion, even if an independent peer received bytes.
+A completed local-write fact remains observable after later closure. It proves
+neither remote acknowledgement nor current peer health or authority to execute.
+Copied and inherited Connection records cannot inspect or change the original
+publication; inherited cleanup closes only the child's descriptors. Binding this
+observation to original Service requests and gated jobs remains the next step.
+
 Normal callers retain the existing own-group supervisor. Execution
 publication, nested routing and complete subtree qualification
 still have separate open owners. These private components
@@ -971,6 +1001,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1839-process-coordinator
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1840-process-service-shared-endpoint.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1841-process-service-retained-accept.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1842-process-coordinator-accepted-peers.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1843-process-accept-publication.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

@@ -6,10 +6,11 @@ use warnings;
 use Errno qw(EAGAIN EINTR EPIPE EWOULDBLOCK);
 use IO::Select;
 use POSIX qw(SIGPIPE);
-use Scalar::Util qw(openhandle);
+use Scalar::Util qw(openhandle refaddr);
 use Socket qw(AF_UNIX MSG_PEEK SOCK_STREAM SOL_SOCKET SO_TYPE sockaddr_family);
 use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime);
 use FSM::Support::ProcessSupervisor::Endpoint ();
+use FSM::Support::ProcessSupervisor::Reservation ();
 use FSM::Support::ProcessSupervisor::Wire ();
 
 # Inactive, server-side mechanics only. The owner must consume each received
@@ -40,6 +41,7 @@ sub new_connection {
         queued_bytes => {control => 0, stream => 0},
         active => undef, progress_deadline => undef, closed => 0,
     }, __PACKAGE__;
+    $state->{owner_identity} = refaddr($state);
     my $sealed = eval { FSM::Support::ProcessSupervisor::Endpoint::_seal_handle($handle, 1); 1 };
     $state->_fail('host_error', 'cannot seal accepted descriptor') unless $sealed;
     return $state;
@@ -47,7 +49,8 @@ sub new_connection {
 
 sub _owner {
     my ($self) = @_;
-    _error('invalid connection handle') unless ref($self) eq __PACKAGE__;
+    _error('invalid or copied connection handle') unless ref($self) eq __PACKAGE__
+        && defined($self->{owner_identity}) && $self->{owner_identity} == refaddr($self);
     _error('inherited connection cannot be reused') unless $self->{owner_pid} == $$;
 }
 
@@ -75,6 +78,41 @@ sub queue {
     my $frame = eval { FSM::Support::ProcessSupervisor::Wire::encode_frame('coordinator', $message) };
     if ($@) { $self->_fail('protocol_error', 'invalid outgoing coordinator frame'); return 0; }
     my $kind = $message->{type} eq 'STDOUT' || $message->{type} eq 'STDERR' ? 'stream' : 'control';
+    return $self->_queue_encoded($kind, $frame);
+}
+
+# One tracked ACCEPT per original connection. This records successful local
+# socket writes, not remote acknowledgement or permission to release a job.
+sub queue_accept {
+    my ($self, $job) = @_;
+    _error('expected one ACCEPT job identity') unless @_ == 2;
+    _owner($self);
+    my $queued = 0;
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        _error('ACCEPT publication is single-use') if $self->{accept_publication};
+        return if $self->{closed};
+        my $frame = eval { FSM::Support::ProcessSupervisor::Wire::encode_frame(
+            'coordinator', {type => 'ACCEPT', job => $job}) };
+        if ($@) { $self->_fail('protocol_error', 'invalid ACCEPT job identity'); return; }
+        my $publication = $self->{accept_publication} = {
+            job => $job, state => 'queued', frame_bytes => length($frame), confirmed_bytes => 0,
+        };
+        $queued = $self->_queue_encoded('control', $frame, $publication);
+    });
+    return $queued;
+}
+
+sub accept_publication {
+    my ($self) = @_;
+    _error('unexpected ACCEPT publication arguments') unless @_ == 1;
+    _owner($self);
+    my $publication = $self->{accept_publication} or return;
+    return {%$publication, published => $publication->{state} eq 'written' ? 1 : 0,
+        failure => $publication->{failure} ? {%{$publication->{failure}}} : undef};
+}
+
+sub _queue_encoded {
+    my ($self, $kind, $frame, $publication) = @_;
     my $cap = $LIMIT->{$kind . '_queue'};
     if (length($frame) > $cap - $self->{queued_bytes}{$kind}) {
         # Stream pressure means the caller must retain its unaccepted chunk
@@ -82,7 +120,8 @@ sub queue {
         $self->_fail('control_queue_full', 'control queue exhausted') if $kind eq 'control';
         return 0;
     }
-    push @{$self->{queues}{$kind}}, $frame;
+    push @{$self->{queues}{$kind}}, $publication
+        ? {kind => $kind, bytes => $frame, publication => $publication} : $frame;
     $self->{queued_bytes}{$kind} += length($frame);
     $self->{progress_deadline} //= _now() + $LIMIT->{delivery_seconds};
     return 1;
@@ -165,11 +204,30 @@ sub _read_ready {
 }
 
 sub _write_ready {
+    my ($self) = @_;
+    _owner($self);
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        # A pre-mask handler may have closed or advanced this original owner.
+        return if $self->{closed};
+        my $now = _now();
+        if ($now >= $self->{deadline}) {
+            $self->_fail('timed_out', 'original invocation deadline expired'); return;
+        }
+        if (defined($self->{progress_deadline}) && $now >= $self->{progress_deadline}) {
+            $self->_fail('write_timeout', 'queued bytes made no delivery progress'); return;
+        }
+        $self->_write_ready_effect($now);
+    });
+    return;
+}
+
+sub _write_ready_effect {
     my ($self, $now) = @_;
     unless ($self->{active}) {
         for my $kind (qw(control stream)) {
             next unless @{$self->{queues}{$kind}};
-            $self->{active} = {kind => $kind, bytes => shift @{$self->{queues}{$kind}}};
+            my $frame = shift @{$self->{queues}{$kind}};
+            $self->{active} = ref($frame) ? $frame : {kind => $kind, bytes => $frame};
             last;
         }
     }
@@ -207,6 +265,10 @@ sub _write_ready {
     # newly queued control. Otherwise control priority would corrupt framing.
     substr($active->{bytes}, 0, $written, '');
     $self->{queued_bytes}{$active->{kind}} -= $written;
+    if (my $publication = $active->{publication}) {
+        $publication->{confirmed_bytes} += $written;
+        $publication->{state} = length($active->{bytes}) ? 'writing' : 'written';
+    }
     $self->{active} = undef unless length($active->{bytes});
     my $pending = $self->{queued_bytes}{control} + $self->{queued_bytes}{stream};
     $self->{progress_deadline} = $pending ? $now + $LIMIT->{delivery_seconds} : undef;
@@ -243,6 +305,13 @@ sub close {
     _owner($self);
     return $self->{close_ok} if $self->{closed};
     $self->{closed} = 1;
+    if (my $publication = $self->{accept_publication}) {
+        unless ($publication->{state} eq 'written') {
+            $publication->{state} = 'failed';
+            $publication->{failure} //= $self->{failure} ? {%{$self->{failure}}}
+                : {status => 'cancelled', diagnostic => 'connection closed before complete ACCEPT write'};
+        }
+    }
     $self->{close_ok} = CORE::close(delete $self->{handle}) ? 1 : 0;
     $self->{failure} //= {status => 'host_error', diagnostic => 'socket close failed'}
         unless $self->{close_ok};
@@ -257,7 +326,8 @@ sub close {
 sub discard_inherited {
     my ($self) = @_;
     _error('expected inherited connection') unless @_ == 1
-        && ref($self) eq __PACKAGE__ && $self->{owner_pid} != $$;
+        && ref($self) eq __PACKAGE__ && $self->{owner_pid} != $$
+        && defined($self->{owner_identity}) && $self->{owner_identity} == refaddr($self);
     CORE::close(delete $self->{handle}) if $self->{handle};
     $self->{closed} = 1;
     return;
