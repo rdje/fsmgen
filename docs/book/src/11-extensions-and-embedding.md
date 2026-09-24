@@ -2999,11 +2999,44 @@ Focus preserves catalog order and refuses empty, repeated or unknown identities.
 Source rows work with the existing hosted corpus partitioner, keeping a source's
 queries together. Public root VIAL examples require exact version registrations;
 separate runtime-qualification fixtures are outside this supported-source cohort.
-The selector is qualified; the reusable actual-query runner, independent semantic
-controls, CI integration and exhaustive run remain subsequent work. Selection
-alone proves accounting, not report parity or semantic completeness. Catalog
-entries for plans, backends or runtime retain their identities here but source
-inspection does not execute or qualify those operations.
+The actual-query regression uses `FSM::Test::SourceQueryRunner` to invoke native
+JSON commands, the public in-process MCP adapter and a real newline stdio
+process. VIAL also passes through its explicit public filesystem API. It compares
+complete reports and text/structured payloads, and checks source/module identity,
+schema, adapter provenance, source hashes and repository-bound producer hashes.
+Normalization removes only the current repository prefix, including prefixes in
+diagnostic text; it never drops report fields or diagnostic entries. ISF schedule
+reports name a scheduled FSM artifact; IAL2 protocol reports have their own named
+schemas and source-object provenance. They do not share a universal wrapper.
+
+Run the focused representative band, or select exact source identities:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/1884-semantic-source-query-runner.t
+FSMGEN_SOURCE_QUERY_SOURCES='["isf/storage_fields.isf","vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial"]' scripts/run_with_ram_guard.sh -- prove -Iperl t/1884-semantic-source-query-runner.t
+```
+
+The default is a focused band. `FSMGEN_SOURCE_QUERY_ALL=1` explicitly selects the
+full cohort and cannot be combined with a source filter. Hosted corpus shard
+selectors partition the selected source rows before execution, keeping all queries
+for each source together. This command lists the full query selection without
+executing a producer:
+
+```bash
+FSMGEN_SOURCE_QUERY_ALL=1 FSMGEN_HOSTED_CORPUS_LIST_ONLY=1 perl -Iperl t/1884-semantic-source-query-runner.t
+```
+
+For an execution receipt, set `FSMGEN_SOURCE_QUERY_RECEIPT` to a simple JSON
+basename. The existing repository-local `.artifacts/mcp-feature-coverage/`
+directory receives selected identities, per-query report/source/producer hashes
+and the test pass state. A source requiring extra search paths fails explicitly
+until MCP has a corresponding public contract; such paths are never discarded.
+
+Focused transport parity is qualified. Independent feature-semantic controls,
+CI registration and exhaustive execution remain separate tracked work. Selection
+alone proves accounting, and equal reports alone do not prove semantic completeness.
+Catalog entries for plans, backends or runtime retain their identities here but
+source inspection does not execute or qualify those operations.
 
 ### Existing VIAL Summary Queries
 

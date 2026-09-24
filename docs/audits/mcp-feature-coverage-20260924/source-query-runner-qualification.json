@@ -1,0 +1,409 @@
+{
+  "baseline_revision": "8a108d00929b43c636c2c46b6f677cc222ba902d",
+  "evidence_legs": {
+    "durability": "Tracked runner and T1884/T1869, exact baseline, complete selected query/hash receipt, raw log hashes, runnable book, fact card and owning task.",
+    "falsify": "Absent-runner baseline fails. Complete report and response comparisons retain diagnostics and scalar types; independent source/module/catalog and adapter provenance checks prevent flag-only parity. Large simultaneous output preserves refusal status; exact root normalization leaves external and semantic paths intact. Full list-only selection partitions completely without duplicate queries; invalid/empty/unknown/conflicting selection fails. The expanded alias test exposed and repaired its stale pre-inspection expectation.",
+    "rederive": "T1884 invokes actual native JSON commands, the public MCP adapter without an injected runner, explicit VIAL file APIs and an actual newline stdio process for each selected applicable query. Source and repository-bound public producer hashes are checked before and after execution."
+  },
+  "executed_source_queries": 25,
+  "guard_sha256": {
+    "t/1884-semantic-source-query-runner.t": "6095f44e0e11cfe2c67bda5a8f8cc6a7ab496fa5254fd5d063dc53b7c5357af2",
+    "t/lib/FSM/Test/SourceQueryCoverage.pm": "7aac9a8cd88183fe5bcd2d5cbeae4009d022bfb014c83b6d56f3b205834aa783",
+    "t/lib/FSM/Test/SourceQueryRunner.pm": "9ffbe9f2c2230639a2859edcc740c2245f4c0802105042203495e1c6ca4377dd"
+  },
+  "limits": [
+    "This focused execution qualifies only the recorded source/query set. It does not establish exhaustive catalog parity or independent completeness of every source feature.",
+    "ISF schedules and IAL2 protocol reports have distinct public shapes. Initial new-test assumptions about a universal schema and hash-valued scheduled_fsm were corrected against public reports and T1255.",
+    "Independent feature-semantic/negative controls, CI registration and exhaustive execution remain subsequent owned leaves.",
+    "Source queries do not execute backend/runtime operations represented by catalog memberships. Spent compiler/runtime producers and full CI were not replayed.",
+    "Actual book commands, rendered assertions and mdBook build pass; browser visual qualification remains unavailable."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.2",
+  "producer_sha256": {
+    "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+    "bin/fsmgen-mcp": "c2d2d6c3f8ee5d0cb0d1693ea664a8a46d464bd8381ba88dcb2df223f510e4f6",
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "bc8ae56fc30c4b4ad5efe80103a2eec46f7e797aeb9dadecc9eee6cfd1892f66",
+    "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+  },
+  "queries": [
+    {
+      "adapter_report_sha256": "69718f2de80900362e637bc9eaa24a03a5879b885c8cb923ca414a9395ec48f4",
+      "catalog_ids": [
+        "verification.vial_ahb_subordinate_base_output_arbitration",
+        "feature.vial_public_check_format",
+        "feature.vial_public_plan",
+        "feature.vial_sv_portable_verilator_runtime",
+        "feature.vial_ahb_base_output_runtime_parity",
+        "feature.vial_native_uvm_emission_foundation",
+        "feature.vial_vhdl_portable_semantics"
+      ],
+      "native_report_sha256": "69718f2de80900362e637bc9eaa24a03a5879b885c8cb923ca414a9395ec48f4",
+      "public_vial_api_report_sha256": "69718f2de80900362e637bc9eaa24a03a5879b885c8cb923ca414a9395ec48f4",
+      "query_kind": "check",
+      "source_id": "vial/ahb_subordinate_base_output_arbitration.vial",
+      "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+      "stdio_report_sha256": "69718f2de80900362e637bc9eaa24a03a5879b885c8cb923ca414a9395ec48f4"
+    },
+    {
+      "adapter_report_sha256": "69718f2de80900362e637bc9eaa24a03a5879b885c8cb923ca414a9395ec48f4",
+      "catalog_ids": [
+        "verification.vial_ahb_subordinate_base_output_arbitration",
+        "feature.vial_public_check_format",
+        "feature.vial_public_plan",
+        "feature.vial_sv_portable_verilator_runtime",
+        "feature.vial_ahb_base_output_runtime_parity",
+        "feature.vial_native_uvm_emission_foundation",
+        "feature.vial_vhdl_portable_semantics"
+      ],
+      "native_report_sha256": "69718f2de80900362e637bc9eaa24a03a5879b885c8cb923ca414a9395ec48f4",
+      "public_vial_api_report_sha256": "69718f2de80900362e637bc9eaa24a03a5879b885c8cb923ca414a9395ec48f4",
+      "query_kind": "semantic",
+      "source_id": "vial/ahb_subordinate_base_output_arbitration.vial",
+      "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+      "stdio_report_sha256": "69718f2de80900362e637bc9eaa24a03a5879b885c8cb923ca414a9395ec48f4"
+    },
+    {
+      "adapter_report_sha256": "75c59a91c4b3b687f0829b4d5a9d089c0537fa6b5569aa0956aa185d81efaaad",
+      "catalog_ids": [
+        "verification.vial_ahb_subordinate_base_output_arbitration",
+        "feature.vial_public_check_format",
+        "feature.vial_public_plan",
+        "feature.vial_sv_portable_verilator_runtime",
+        "feature.vial_ahb_base_output_runtime_parity",
+        "feature.vial_native_uvm_emission_foundation",
+        "feature.vial_vhdl_portable_semantics"
+      ],
+      "native_report_sha256": "75c59a91c4b3b687f0829b4d5a9d089c0537fa6b5569aa0956aa185d81efaaad",
+      "public_vial_api_report_sha256": "75c59a91c4b3b687f0829b4d5a9d089c0537fa6b5569aa0956aa185d81efaaad",
+      "query_kind": "inspection",
+      "source_id": "vial/ahb_subordinate_base_output_arbitration.vial",
+      "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+      "stdio_report_sha256": "75c59a91c4b3b687f0829b4d5a9d089c0537fa6b5569aa0956aa185d81efaaad"
+    },
+    {
+      "adapter_report_sha256": "87402a6ee8c3f670856f9f60772a461aea4c48a61531db94a6761aa5c87aebef",
+      "catalog_ids": [
+        "feature.vial_v2_public_source_migration",
+        "feature.vial_v2_public_empty_base_plan"
+      ],
+      "native_report_sha256": "87402a6ee8c3f670856f9f60772a461aea4c48a61531db94a6761aa5c87aebef",
+      "public_vial_api_report_sha256": "87402a6ee8c3f670856f9f60772a461aea4c48a61531db94a6761aa5c87aebef",
+      "query_kind": "check",
+      "source_id": "vial/ahb_subordinate_base_output_arbitration_v2.vial",
+      "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0",
+      "stdio_report_sha256": "87402a6ee8c3f670856f9f60772a461aea4c48a61531db94a6761aa5c87aebef"
+    },
+    {
+      "adapter_report_sha256": "87402a6ee8c3f670856f9f60772a461aea4c48a61531db94a6761aa5c87aebef",
+      "catalog_ids": [
+        "feature.vial_v2_public_source_migration",
+        "feature.vial_v2_public_empty_base_plan"
+      ],
+      "native_report_sha256": "87402a6ee8c3f670856f9f60772a461aea4c48a61531db94a6761aa5c87aebef",
+      "public_vial_api_report_sha256": "87402a6ee8c3f670856f9f60772a461aea4c48a61531db94a6761aa5c87aebef",
+      "query_kind": "semantic",
+      "source_id": "vial/ahb_subordinate_base_output_arbitration_v2.vial",
+      "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0",
+      "stdio_report_sha256": "87402a6ee8c3f670856f9f60772a461aea4c48a61531db94a6761aa5c87aebef"
+    },
+    {
+      "adapter_report_sha256": "2e34faf4ed1e524f63c6c188135321dda1c96504f6d37ac5adb7cb380b85cc30",
+      "catalog_ids": [
+        "feature.vial_v2_public_source_migration",
+        "feature.vial_v2_public_empty_base_plan"
+      ],
+      "native_report_sha256": "2e34faf4ed1e524f63c6c188135321dda1c96504f6d37ac5adb7cb380b85cc30",
+      "public_vial_api_report_sha256": "2e34faf4ed1e524f63c6c188135321dda1c96504f6d37ac5adb7cb380b85cc30",
+      "query_kind": "inspection",
+      "source_id": "vial/ahb_subordinate_base_output_arbitration_v2.vial",
+      "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0",
+      "stdio_report_sha256": "2e34faf4ed1e524f63c6c188135321dda1c96504f6d37ac5adb7cb380b85cc30"
+    },
+    {
+      "adapter_report_sha256": "ef2ebbd6318461b113c055d3a653a1f4af05d03b7cb80e2887d1946933d24bdb",
+      "catalog_ids": [
+        "feature.vial_v2_public_lifecycle_plan"
+      ],
+      "native_report_sha256": "ef2ebbd6318461b113c055d3a653a1f4af05d03b7cb80e2887d1946933d24bdb",
+      "public_vial_api_report_sha256": "ef2ebbd6318461b113c055d3a653a1f4af05d03b7cb80e2887d1946933d24bdb",
+      "query_kind": "check",
+      "source_id": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial",
+      "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+      "stdio_report_sha256": "ef2ebbd6318461b113c055d3a653a1f4af05d03b7cb80e2887d1946933d24bdb"
+    },
+    {
+      "adapter_report_sha256": "ef2ebbd6318461b113c055d3a653a1f4af05d03b7cb80e2887d1946933d24bdb",
+      "catalog_ids": [
+        "feature.vial_v2_public_lifecycle_plan"
+      ],
+      "native_report_sha256": "ef2ebbd6318461b113c055d3a653a1f4af05d03b7cb80e2887d1946933d24bdb",
+      "public_vial_api_report_sha256": "ef2ebbd6318461b113c055d3a653a1f4af05d03b7cb80e2887d1946933d24bdb",
+      "query_kind": "semantic",
+      "source_id": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial",
+      "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+      "stdio_report_sha256": "ef2ebbd6318461b113c055d3a653a1f4af05d03b7cb80e2887d1946933d24bdb"
+    },
+    {
+      "adapter_report_sha256": "f9726a9e5c9bb9f1979b1ae009654c3944f602858f3b38d71a714c05b53bc8b6",
+      "catalog_ids": [
+        "feature.vial_v2_public_lifecycle_plan"
+      ],
+      "native_report_sha256": "f9726a9e5c9bb9f1979b1ae009654c3944f602858f3b38d71a714c05b53bc8b6",
+      "public_vial_api_report_sha256": "f9726a9e5c9bb9f1979b1ae009654c3944f602858f3b38d71a714c05b53bc8b6",
+      "query_kind": "inspection",
+      "source_id": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial",
+      "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+      "stdio_report_sha256": "f9726a9e5c9bb9f1979b1ae009654c3944f602858f3b38d71a714c05b53bc8b6"
+    },
+    {
+      "adapter_report_sha256": "3e239cf85a2b8a44f2aec459c19b10bea40abeae2d9aa906bf57011a367cf10f",
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer"
+      ],
+      "native_report_sha256": "3e239cf85a2b8a44f2aec459c19b10bea40abeae2d9aa906bf57011a367cf10f",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "check",
+      "source_id": "ppif/apb_requester_transfer.apb",
+      "source_sha256": "d739cd380933ab00a651d093069db1ec879e2d06fabed8c6efd14f059a5ad5de",
+      "stdio_report_sha256": "3e239cf85a2b8a44f2aec459c19b10bea40abeae2d9aa906bf57011a367cf10f"
+    },
+    {
+      "adapter_report_sha256": "0a73096368dc62bac406c4646db57046f5703390fba0cac9012e452f8b8c7d67",
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer"
+      ],
+      "native_report_sha256": "0a73096368dc62bac406c4646db57046f5703390fba0cac9012e452f8b8c7d67",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "semantic",
+      "source_id": "ppif/apb_requester_transfer.apb",
+      "source_sha256": "d739cd380933ab00a651d093069db1ec879e2d06fabed8c6efd14f059a5ad5de",
+      "stdio_report_sha256": "0a73096368dc62bac406c4646db57046f5703390fba0cac9012e452f8b8c7d67"
+    },
+    {
+      "adapter_report_sha256": "e71a39a77408c4e907412f953dee98eb956fc576fdb243c63cfcbfebce215769",
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer"
+      ],
+      "native_report_sha256": "e71a39a77408c4e907412f953dee98eb956fc576fdb243c63cfcbfebce215769",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "schedule",
+      "source_id": "ppif/apb_requester_transfer.apb",
+      "source_sha256": "d739cd380933ab00a651d093069db1ec879e2d06fabed8c6efd14f059a5ad5de",
+      "stdio_report_sha256": "e71a39a77408c4e907412f953dee98eb956fc576fdb243c63cfcbfebce215769"
+    },
+    {
+      "adapter_report_sha256": "846f2890d2f01f7056cf4ed4611af23a37167b22f7e55d573d260cde47bf6848",
+      "catalog_ids": [
+        "intent.ppif_axi_aw_valid_ready"
+      ],
+      "native_report_sha256": "846f2890d2f01f7056cf4ed4611af23a37167b22f7e55d573d260cde47bf6848",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "check",
+      "source_id": "ppif/axi_aw_valid_ready.ppif",
+      "source_sha256": "831704fc3a793edb46dbbe582e5dfea77aa8006b282bb04c46e875d63b44d263",
+      "stdio_report_sha256": "846f2890d2f01f7056cf4ed4611af23a37167b22f7e55d573d260cde47bf6848"
+    },
+    {
+      "adapter_report_sha256": "2dfca5e4d9aa61970f5f57b970311c97ccbc91432165559bbfae32cb14888064",
+      "catalog_ids": [
+        "intent.ppif_axi_aw_valid_ready"
+      ],
+      "native_report_sha256": "2dfca5e4d9aa61970f5f57b970311c97ccbc91432165559bbfae32cb14888064",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "semantic",
+      "source_id": "ppif/axi_aw_valid_ready.ppif",
+      "source_sha256": "831704fc3a793edb46dbbe582e5dfea77aa8006b282bb04c46e875d63b44d263",
+      "stdio_report_sha256": "2dfca5e4d9aa61970f5f57b970311c97ccbc91432165559bbfae32cb14888064"
+    },
+    {
+      "adapter_report_sha256": "04df080f27a510247b4724d3b887285e05e30307667e31aaefea36d165f02056",
+      "catalog_ids": [
+        "intent.ppif_axi_aw_valid_ready"
+      ],
+      "native_report_sha256": "04df080f27a510247b4724d3b887285e05e30307667e31aaefea36d165f02056",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "schedule",
+      "source_id": "ppif/axi_aw_valid_ready.ppif",
+      "source_sha256": "831704fc3a793edb46dbbe582e5dfea77aa8006b282bb04c46e875d63b44d263",
+      "stdio_report_sha256": "04df080f27a510247b4724d3b887285e05e30307667e31aaefea36d165f02056"
+    },
+    {
+      "adapter_report_sha256": "91f8a7c51109f2828b40a2049605b29730dd488c0823ca201e60a24ab06befed",
+      "catalog_ids": [
+        "feature.isf_verification_observation_metadata",
+        "feature.isf_verification_observation_uvm_passive_monitor_skeleton",
+        "feature.isf_verification_observation_vhdl_package_skeleton"
+      ],
+      "native_report_sha256": "91f8a7c51109f2828b40a2049605b29730dd488c0823ca201e60a24ab06befed",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "check",
+      "source_id": "isf/verification_observation_metadata.isf",
+      "source_sha256": "43fab06c87254fd773666e0eb9d80a909a52a7f9137c0e506555d19d8c99d899",
+      "stdio_report_sha256": "91f8a7c51109f2828b40a2049605b29730dd488c0823ca201e60a24ab06befed"
+    },
+    {
+      "adapter_report_sha256": "b72641336f9329ebc95a4694484b8b01276b86f65ce837fe372080a63baf7590",
+      "catalog_ids": [
+        "feature.isf_verification_observation_metadata",
+        "feature.isf_verification_observation_uvm_passive_monitor_skeleton",
+        "feature.isf_verification_observation_vhdl_package_skeleton"
+      ],
+      "native_report_sha256": "b72641336f9329ebc95a4694484b8b01276b86f65ce837fe372080a63baf7590",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "semantic",
+      "source_id": "isf/verification_observation_metadata.isf",
+      "source_sha256": "43fab06c87254fd773666e0eb9d80a909a52a7f9137c0e506555d19d8c99d899",
+      "stdio_report_sha256": "b72641336f9329ebc95a4694484b8b01276b86f65ce837fe372080a63baf7590"
+    },
+    {
+      "adapter_report_sha256": "b017659071e3f2c82e48162db8b4e5a26dd6234a9cb3006a0e5ffff05e549ed0",
+      "catalog_ids": [
+        "feature.isf_verification_observation_metadata",
+        "feature.isf_verification_observation_uvm_passive_monitor_skeleton",
+        "feature.isf_verification_observation_vhdl_package_skeleton"
+      ],
+      "native_report_sha256": "b017659071e3f2c82e48162db8b4e5a26dd6234a9cb3006a0e5ffff05e549ed0",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "schedule",
+      "source_id": "isf/verification_observation_metadata.isf",
+      "source_sha256": "43fab06c87254fd773666e0eb9d80a909a52a7f9137c0e506555d19d8c99d899",
+      "stdio_report_sha256": "b017659071e3f2c82e48162db8b4e5a26dd6234a9cb3006a0e5ffff05e549ed0"
+    },
+    {
+      "adapter_report_sha256": "d9e60fd326f86abc9ae47f898a2cb002061bd3112aa46a8b8ca8ed11ca15a025",
+      "catalog_ids": [
+        "feature.isf_storage_field_metadata"
+      ],
+      "native_report_sha256": "d9e60fd326f86abc9ae47f898a2cb002061bd3112aa46a8b8ca8ed11ca15a025",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "check",
+      "source_id": "isf/storage_fields.isf",
+      "source_sha256": "7a583f66dc9acccd4b9b2158449b74505d2b8dc0267e405baa5dca474a0fb184",
+      "stdio_report_sha256": "d9e60fd326f86abc9ae47f898a2cb002061bd3112aa46a8b8ca8ed11ca15a025"
+    },
+    {
+      "adapter_report_sha256": "a5db560b56b835f06e93d437f04079e662dd07ace890517ddf74f7f1933084ce",
+      "catalog_ids": [
+        "feature.isf_storage_field_metadata"
+      ],
+      "native_report_sha256": "a5db560b56b835f06e93d437f04079e662dd07ace890517ddf74f7f1933084ce",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "semantic",
+      "source_id": "isf/storage_fields.isf",
+      "source_sha256": "7a583f66dc9acccd4b9b2158449b74505d2b8dc0267e405baa5dca474a0fb184",
+      "stdio_report_sha256": "a5db560b56b835f06e93d437f04079e662dd07ace890517ddf74f7f1933084ce"
+    },
+    {
+      "adapter_report_sha256": "785c2929518c9623c4f7549ed414ecf6f4d4e2670a6176e7d6ee629fd4ed7056",
+      "catalog_ids": [
+        "feature.isf_storage_field_metadata"
+      ],
+      "native_report_sha256": "785c2929518c9623c4f7549ed414ecf6f4d4e2670a6176e7d6ee629fd4ed7056",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "schedule",
+      "source_id": "isf/storage_fields.isf",
+      "source_sha256": "7a583f66dc9acccd4b9b2158449b74505d2b8dc0267e405baa5dca474a0fb184",
+      "stdio_report_sha256": "785c2929518c9623c4f7549ed414ecf6f4d4e2670a6176e7d6ee629fd4ed7056"
+    },
+    {
+      "adapter_report_sha256": "571a41daec978c7b30889584392d1348e7b96756bd97e4e159d8f3b8ff3934a2",
+      "catalog_ids": [
+        "feature.direct_size_expression_widths"
+      ],
+      "native_report_sha256": "571a41daec978c7b30889584392d1348e7b96756bd97e4e159d8f3b8ff3934a2",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "check",
+      "source_id": "t/corpus/direct_size_expression_widths.fsm",
+      "source_sha256": "512d76876a7da2fd2a2556219f41f7143bf15dbc0a7c6510a7001f17c8c94064",
+      "stdio_report_sha256": "571a41daec978c7b30889584392d1348e7b96756bd97e4e159d8f3b8ff3934a2"
+    },
+    {
+      "adapter_report_sha256": "93814972e883f125cabf80ec775766929ef8263b6fbc9f1c287d66a5998a5dbb",
+      "catalog_ids": [
+        "feature.direct_size_expression_widths"
+      ],
+      "native_report_sha256": "93814972e883f125cabf80ec775766929ef8263b6fbc9f1c287d66a5998a5dbb",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "semantic",
+      "source_id": "t/corpus/direct_size_expression_widths.fsm",
+      "source_sha256": "512d76876a7da2fd2a2556219f41f7143bf15dbc0a7c6510a7001f17c8c94064",
+      "stdio_report_sha256": "93814972e883f125cabf80ec775766929ef8263b6fbc9f1c287d66a5998a5dbb"
+    },
+    {
+      "adapter_report_sha256": "a5b4dc3163103144570b56e70e52da3804e9ae13ad22e494309455d8e9279cd2",
+      "catalog_ids": [
+        "feature.composition_intent_integer_literals"
+      ],
+      "native_report_sha256": "a5b4dc3163103144570b56e70e52da3804e9ae13ad22e494309455d8e9279cd2",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "check",
+      "source_id": "t/corpus/composition_intent_integer_literals.fsm",
+      "source_sha256": "4e9c097ef267e6ec6b518e83ca761a51b0c316dc0a72cfb5873b5c0f0166c216",
+      "stdio_report_sha256": "a5b4dc3163103144570b56e70e52da3804e9ae13ad22e494309455d8e9279cd2"
+    },
+    {
+      "adapter_report_sha256": "99e77682c1cc41f14a0071cece742ca79e3a1ed85f8335ae61406753d3202aff",
+      "catalog_ids": [
+        "feature.composition_intent_integer_literals"
+      ],
+      "native_report_sha256": "99e77682c1cc41f14a0071cece742ca79e3a1ed85f8335ae61406753d3202aff",
+      "public_vial_api_report_sha256": null,
+      "query_kind": "semantic",
+      "source_id": "t/corpus/composition_intent_integer_literals.fsm",
+      "source_sha256": "4e9c097ef267e6ec6b518e83ca761a51b0c316dc0a72cfb5873b5c0f0166c216",
+      "stdio_report_sha256": "99e77682c1cc41f14a0071cece742ca79e3a1ed85f8335ae61406753d3202aff"
+    }
+  ],
+  "schema": "fsmgen.source_query_runner_qualification.v1",
+  "selected_sources": [
+    "vial/ahb_subordinate_base_output_arbitration.vial",
+    "vial/ahb_subordinate_base_output_arbitration_v2.vial",
+    "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial",
+    "ppif/apb_requester_transfer.apb",
+    "ppif/axi_aw_valid_ready.ppif",
+    "isf/verification_observation_metadata.isf",
+    "isf/storage_fields.isf",
+    "t/corpus/direct_size_expression_widths.fsm",
+    "t/corpus/composition_intent_integer_literals.fsm"
+  ],
+  "tests": {
+    "query-runner-alias-red": {
+      "sha256": "b3e9c0a6621c2763b962543c64d8a3ca1222fd053e2fe09805e558e2dd9bd30d",
+      "summary": [
+        "Files=1, Tests=4, 20 wallclock secs ( 0.01 usr  0.00 sys + 16.90 cusr  3.57 csys = 20.48 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "query-runner-band": {
+      "sha256": "55310973061fa47fdf3216885a9e05dc9c34686f16be276ac8ad300000421657",
+      "summary": [
+        "All tests successful.",
+        "Files=6, Tests=54, 104 wallclock secs ( 0.07 usr  0.02 sys + 86.60 cusr 16.23 csys = 102.92 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-runner-book": {
+      "sha256": "3a9c037b56b432a747835c412060dcc9d007a17f666398bbce8a55803c050faf",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=9, 13 wallclock secs ( 0.01 usr  0.00 sys + 10.64 cusr  2.05 csys = 12.70 CPU)",
+        "Result: PASS",
+        "Actual filtered/list-only book commands, complete disjoint query partitions, invalid selection refusal and rendered scope: PASS"
+      ]
+    },
+    "query-runner-green": {
+      "sha256": "770e07dd9cf08ad0a577358faaf1db838b41871ba33cf94cd8d20d94f609a5ba",
+      "summary": [
+        "Files=1, Tests=28, 58 wallclock secs ( 0.02 usr  0.01 sys + 46.67 cusr 10.65 csys = 57.35 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "query-runner-red": {
+      "sha256": "c546c4636a55e0a3c411019a2a7666c1c2f9f273d9a14d67a26a6218896d7225",
+      "summary": [
+        "Files=1, Tests=1,  0 wallclock secs ( 0.00 usr  0.00 sys +  0.02 cusr  0.00 csys =  0.02 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}

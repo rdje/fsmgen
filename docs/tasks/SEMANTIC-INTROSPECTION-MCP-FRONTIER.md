@@ -421,17 +421,17 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.1: derive accounted source-query coverage cohorts`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Execute selected actual native/API/MCP source queries with complete report and provenance checks.`
   Acceptance: `Use the qualified selector and public native/API/MCP producers with explicit source/version/query mapping, documented root normalization only, complete report equality and no stub producer. Expose focused/list-only execution compatible with hosted source partitioning. Diagnose source/search-path/schema gaps through public interfaces and own any prerequisite repairs before widening coverage. Qualify representative direct, composition, ISF, protocol alias and VIAL sources without replaying spent runtime producers; exhaustive execution stays .31.3.3.`
-  Verification: `Pending .1 selector.`
-  Commit: `pending`
+  Verification: `T1884 executes actual native/public-adapter/newline queries plus explicit VIAL APIs, with complete report/text/structured equality, source/module/catalog/schema/provenance checks, exact root normalization and unchanged source/producer hashes. Focused execution and full producer-free list/partition controls pass. T1869's stale pre-inspection applicability expectation is corrected. Distinct ISF schedule and IAL2 protocol shapes are preserved. Independent semantics and exhaustive qualification remain subsequent leaves.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.2: execute actual source-query parity checks`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3`
   Status: `pending`
   Goal: `Guard independent feature semantics and representative failed source reports across adapters.`
   Acceptance: `Add authored ISF storage/observation, hardware source/module and VIAL base/lifecycle assertions to the selected query runner, with falsification that catches missing/wrong detail even when compared transports agree. Qualify representative structured failures, missing reports, unknown future families and schema/provenance mismatches. Retain exact focused evidence and update book/facts; leave complete corpus execution and CI/signoff integration to their explicit owners.`
-  Verification: `Pending .2 actual runner.`
+  Verification: `The actual runner is qualified; independent feature oracles and falsification are next.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2`
@@ -1220,9 +1220,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.2` is next: execute the
-qualified selected source/query cohort through actual public native/API/MCP
-producers, with complete report and provenance checks. Semantic controls follow.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3` is next: add independent
+feature-semantic oracles and representative failure controls to the qualified
+actual public native/API/MCP source-query runner.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2571,3 +2571,44 @@ qualification fixtures remain outside the supported-source cohort. Actual
 native/API/MCP execution is next under `.31.3.2.1.2`, followed by semantic controls
 and explicitly owned CI/exhaustive work. Task/book metadata records only this
 owned selector; the existing knowledge card is compacted without a wider budget.
+
+## Acceptance Checklist — `.31.3.2.1.2` actual query runner
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The absent-runner baseline reports
+  `#   Failed test 'actual source-query runner exists'` and
+  `#   at t/1884-semantic-source-query-runner.t line 9.` Selection alone cannot
+  prove execution or complete adapter parity. The expanded alias regression
+  also reports `#   at t/1869-semantic-introspection-mcp-protocol-aliases.t line 27.`:
+  its old expectation omitted the now-shipped VIAL inspection query.
+- [x] **ADDRESSED (verified)** — T1884 invokes actual native commands, the
+  public adapter without a stub, explicit VIAL file APIs and newline stdio.
+  Complete reports, text/structured results, response identity, diagnostics,
+  source/module/catalog/schema and adapter provenance agree. Typed JSON hashes
+  independently match across every recorded query; source and repository-bound
+  public producer hashes remain unchanged. Normalization preserves non-root
+  paths, semantic paths, scalar types and all fields; simultaneous large stdout
+  and stderr retain exact bytes and refusal status. Focus/list-only controls
+  preserve source partitions and reject malformed selection. Initial test-only
+  assumptions about universal schedule schemas and hash-valued `scheduled_fsm`
+  were corrected against the actual public IAL2 report and T1255's scalar
+  contract. T1869 now includes inspection; no product report is rewritten.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1884-semantic-source-query-runner.t t/1883-semantic-source-query-cohort.t t/1869-semantic-introspection-mcp-protocol-aliases.t t/1868-semantic-introspection-mcp-source-failures.t t/1871-semantic-introspection-mcp-vial.t t/1882-semantic-introspection-mcp-vial-inspection.t`
+  reports `All tests successful. Files=6, Tests=54` and `Result: PASS`.
+  Actual filtered/list-only book commands, complete disjoint query partitions,
+  invalid selection refusal, `mdbook build docs/book -d .artifacts/query-runner-book`
+  and rendered scope assertions pass. Disposable rendered output is removed.
+  Browser visual audit, runtime and full CI remain outside this qualification;
+  no spent producer is replayed.
+
+Re-derivation uses actual public producers with exact source/producer binding.
+Falsification uses the absent-runner/stale-alias baselines, complete typed report
+comparisons, independent source/module/catalog/provenance checks, normalization,
+pipe capture and selection controls. Durability is T1884, the reusable runner,
+T1869, exact baseline and tracked `source-query-runner-qualification.json`, book
+and knowledge card. Its selected query count describes only the recorded focused
+execution, not exhaustive or independent feature completeness. Independent
+semantic/negative controls are next, with CI integration and full execution still
+owned separately. The active index now points to the current frontier. Task/book
+metadata records this owned guard; fact-card allowance is unchanged. The book
+owns developer invocation rationale without a duplicate engineering ledger.

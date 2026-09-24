@@ -17,7 +17,7 @@ my $manifest = build_capability_manifest();
 my $adapter = FSM::Support::SemanticIntrospectionMCPAdapter->new(
     repo_root => $root, workspace_root => $root, manifest_builder => sub { $manifest },
 );
-my $expected = { fsm => [qw(check semantic)], vial => [qw(check semantic)],
+my $expected = { fsm => [qw(check semantic)], vial => [qw(check semantic inspection)],
     map { $_ => [qw(check semantic schedule)] } qw(isf ppif axi apb ahb) };
 
 subtest 'public query applicability covers current shipped suffixes' => sub {
