@@ -1467,12 +1467,34 @@ can fail or cancellation can revoke parent authority. Thus an actual E return
 loss, creator interruption, or returned native failure keeps its first cause;
 a later report error cannot replace it. Unavailable cleanup custody is recorded
 separately and cannot replace the original advancement exception. The fixture checks those
-boundaries and confirms actual invocation bytes and exact cleanup. Complete
-Service execution metadata in retained aggregate closed outcomes is the next
-boundary; the separate native-effect observation already survives consumption.
+boundaries and confirms actual invocation bytes and exact cleanup.
+
+Before consuming any closed Service record, the aggregate retains every peer's
+complete original outcome. A bound peer keeps its `job`; a reported execution
+also keeps the complete Service `execution` observation: original ticket, parent,
+job, fixed deadlines, first report, latest check, last admitted check and closure
+failure. The returned Service outcome must agree in every field, including nested
+values and the presence of optional keys. A mismatch fails close while preserving
+the original retained history and conservative resource credit for cleanup.
+
+For example, a confirmed E followed by socket EOF retains `peer_closed` alongside
+its original report. If a later admission check refused before the delayed report
+arrived, `latest` stays refused and `admitted` keeps the earlier positive check.
+Reporting after closure cannot overwrite that first failure or reopen the peer.
+An unexecuted bound job keeps its job ID without an `execution` report; an
+unauthenticated peer has no job and retains an undefined parent. Uncertain E
+history remains in the separate native-effect observation, without a fabricated
+Service confirmation.
+
+After whole-run close, read `$owner->peer_observation($ticket)->{outcome}` to recover
+this history. If Service consumed a record and then its return was interrupted,
+the complete outcome was already retained; retrying close skips that spent record
+and consumes only remaining peers. Public outcome copies detach the nested
+`report`, `latest`, `admitted` and `failure` hashes, so editing a copy cannot change
+later observations. These are historical observations, not execution authority.
 
 Normal callers retain the existing own-group supervisor. Nested execution
-release, complete closed-outcome retention, routing and subtree qualification
+release, routing and subtree qualification
 still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
 Their tests exercise the current host; Linux qualification remains open.
@@ -1510,6 +1532,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1860-process-native-cust
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1861-process-nested-execution-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1862-process-native-execution-report.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1863-process-execution-lifetime.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1864-process-closed-execution-outcome.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t

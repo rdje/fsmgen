@@ -252,7 +252,7 @@ sub peer_observation {
         execution => _copy_execution($entry->{execution}),
         admission => $entry->{grant} && !$entry->{retired}
             ? $self->{ledger}->describe_descriptors($entry->{grant}) : undef,
-        outcome => $entry->{outcome} ? {%{$entry->{outcome}}} : undef};
+        outcome => _copy_outcome($entry->{outcome})};
 }
 sub _copy_publication {
     my ($view) = @_; return undef unless $view;
@@ -264,6 +264,34 @@ sub _copy_execution {
     my ($view) = @_; return undef unless $view;
     return {native => {%{$view->{native}}},
         report => $view->{report} ? {%{$view->{report}}} : undef};
+}
+sub _copy_outcome {
+    my ($view) = @_; return undef unless $view;
+    my $copy = {%$view};
+    if (my $execution = $view->{execution}) {
+        $copy->{execution} = {%$execution};
+        for my $field (qw(report latest admitted failure)) {
+            $copy->{execution}{$field} = $execution->{$field} ? {%{$execution->{$field}}} : undef;
+        }
+    }
+    return $copy;
+}
+sub _same_outcome {
+    my ($expected, $actual) = @_;
+    return !defined($actual) unless defined($expected);
+    return 0 unless defined($actual);
+    # Closed observations contain only scalar values and nested hashes. Exact
+    # key sets distinguish an absent optional field from a present undef.
+    if (ref($expected) eq 'HASH') {
+        return 0 unless ref($actual) eq 'HASH' && keys(%$expected) == keys(%$actual);
+        for my $field (keys %$expected) {
+            return 0 unless exists($actual->{$field})
+                && _same_outcome($expected->{$field}, $actual->{$field});
+        }
+        return 1;
+    }
+    return 0 if ref($expected) || ref($actual);
+    return "$expected" eq "$actual";
 }
 sub admit_request {
     my ($self, $ticket) = @_; _owner($self);
@@ -700,10 +728,16 @@ sub _consume_closed_peers {
         my $observed = $entry->{transport};
         _error('accepted peer cleanup incomplete') unless $observed->{resources_closed}
             && $observed->{state} eq 'closed' && !$observed->{handles};
+        # A previous consumption may have succeeded before its return was lost.
+        # Never reread that spent Service record or replace its original history.
+        next if $entry->{outcome};
+        my $execution = $self->{service}->execution_observation($entry->{ticket});
         # Retain the complete original outcome before Service consumes it.
         # A thrown consumption return cannot strand even this pure metadata.
-        $entry->{outcome} //= {ticket => $entry->{ticket}, parent => $observed->{parent},
-            %{$observed->{failure}}, resources_closed => $observed->{resources_closed}};
+        $entry->{outcome} = {ticket => $entry->{ticket}, parent => $observed->{parent},
+            %{$observed->{failure}}, resources_closed => $observed->{resources_closed},
+            defined($observed->{job}) ? (job => $observed->{job}) : (),
+            $execution && $execution->{report} ? (execution => $execution) : ()};
     }
     for (1 .. $LIMIT->{connections}) {
         last unless @{$self->{service}->tickets};
@@ -711,12 +745,8 @@ sub _consume_closed_peers {
         _error('service has no consumable closed outcome') unless $outcome;
         my $entry = $self->{peers}{$outcome->{ticket}};
         _error('closed outcome lacks its original retained peer') unless $entry && $entry->{outcome};
-        for my $field (qw(ticket parent status diagnostic resources_closed)) {
-            my ($expected, $actual) = ($entry->{outcome}{$field}, $outcome->{$field});
-            _error('closed outcome disagrees with its original retained observation')
-                if defined($expected) != defined($actual)
-                    || (defined($expected) && "$expected" ne "$actual");
-        }
+        _error('closed outcome disagrees with its original retained observation')
+            unless _same_outcome($entry->{outcome}, $outcome);
     }
     _error('service retains unconsumed outcomes') if @{$self->{service}->tickets};
     return;

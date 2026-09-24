@@ -3678,11 +3678,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.1: retain final admission history before reconciliation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3`
-  Status: `active`
+  Status: `done`
   Goal: `Reconcile original nested native effects before transport consumption.`
   Acceptance: `Read confirmed or uncertain truth only through original retained native owners. Report confirmed E through the original Service grant before consuming closed outcomes, preserving report history through interrupted returns. Select request execution lifetime only from that original confirmed effect; preserve original admission history, first failure and cleanup. Qualify delayed reports, old admission expiry, cancellation/EOF, lost E returns and retained outcomes with exact native cleanup; do not expose request release yet.`
-  Verification: `Child .1 first retains the completed final-admission subtree and acceptance suffix before rollover. Child .2 then publishes original native-effect reports; child .3 joins execution-phase liveness and closed-peer consumption. Explicit request release remains outer child .4.`
-  Commit: `pending`
+  Verification: `Original native-effect reporting, aggregate lifetime reconciliation and complete closed-outcome retention are qualified by the owned children. T1862–T1864 preserve original grants, fixed clocks, first causes, uncertainty and exact native cleanup through interrupted returns. Explicit nested request release remains sibling .4; routing, Linux, original startup and full-CI/push qualification stay open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2: retain complete closed execution outcomes`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3`
 
@@ -3701,11 +3701,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.2: retain original nested native execution reports`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Join original execution lifetime and retained closed-peer outcomes.`
   Acceptance: `Reconcile original confirmed effects before any Service advancement, admission-lifetime check or closed-outcome consumption can discard them. Select execution lifetime solely from the retained confirmed native effect and original Service report; preserve admission history and fixed walls. Retain matching job/execution outcome metadata before Service consumption, including interrupted returns, cancellation and EOF. Qualify delayed reports, old admission expiry and exact native cleanup; keep explicit request release separate.`
-  Verification: `Original-effect publication is qualified. Child .1 retains its completed acceptance history before rollover; child .2 joins advancement and execution lifetime; child .3 retains complete closed outcomes.`
-  Commit: `pending`
+  Verification: `Original native-effect reporting, aggregate lifetime reconciliation and complete closed-outcome retention are qualified by the owned children. T1862–T1864 preserve original grants, fixed clocks, first causes, uncertainty and exact native cleanup through interrupted returns. Explicit nested request release remains sibling .4; routing, Linux, original startup and full-CI/push qualification stay open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2: retain complete closed execution outcomes`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3`
 
@@ -3724,11 +3724,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.2: reconcile native effects before aggregate lifetime checks`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Retain complete original execution metadata before closed-outcome consumption.`
   Acceptance: `Publish matching original job and Service execution outcome metadata before take_closed can consume it. Preserve full report and admission history through cancellation, EOF, delayed reporting and lost consumption returns. Returned copies cannot mutate retained outcomes. Qualify exact native cleanup and complete outcome agreement without exposing request release.`
-  Verification: `Lifetime reconciliation is qualified. Child .1 first retains completed native-component topology and acceptance history before rollover; child .2 then preserves complete closed-outcome metadata.`
-  Commit: `pending`
+  Verification: `Original native-effect reporting, aggregate lifetime reconciliation and complete closed-outcome retention are qualified by the owned children. T1862–T1864 preserve original grants, fixed clocks, first causes, uncertainty and exact native cleanup through interrupted returns. Explicit nested request release remains sibling .4; routing, Linux, original startup and full-CI/push qualification stay open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2: retain complete closed execution outcomes`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2`
 
@@ -3740,17 +3740,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.1: retain native components before outcome integration`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve complete original execution metadata before closed-outcome consumption.`
   Acceptance: `Retain matching original job and full Service execution observation before take_closed consumes the original record. Preserve first failure, admission and report history through cancellation, EOF and lost consumption returns. Returned copies cannot mutate retained nested metadata; verify complete outcome agreement and exact native cleanup. Keep explicit request release separate.`
-  Verification: `Native-component and acceptance-history retention is complete. Preserve complete original job/execution metadata before closed-outcome consumption next.`
-  Commit: `pending`
+  Verification: `T1864 passes nine groups using real E/output, sockets, creator signals and exact native cleanup. Before every destructive consumption, all original peer outcomes retain job and full reported execution metadata; distinct latest/admitted checks and first failure survive closure and lost returns. Deep public copies cannot alter history. Twelve isolated defects reject at intended oracles with closed native censuses; identical positive and the selected 46-file/432-group band pass. Complete scalar/hash agreement checks key presence and nested values. Book HTML and canonical fact are synchronized; browser visual qualification remains unavailable.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2: retain complete closed execution outcomes`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Expose and qualify explicit nested request execution release.`
   Acceptance: `After original admission and effect reconciliation are qualified, expose single-use release of the selected original ready request. Preserve first failure and retained owners through pre-mask reentry, creator signals and native return loss. Join actual nested invocation bytes/context, full matching ACCEPT, every final E check and subsequent Service lifetime under bounded cleanup. Refuse copied/foreign/reused/expired/revoked inputs; keep ordinary routed adapters inactive.`
-  Verification: `Pending effect-reconciliation child .3.`
+  Verification: `Original final admission, effect reporting, lifetime reconciliation and complete closed-outcome retention are qualified. Expose the explicit single-use original request release next, retaining the full ACCEPT and final E checks.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.4`
@@ -4458,7 +4458,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2` preserves complete original job/execution metadata before closed-outcome consumption. Outer .4 then exposes request release. Preserve original owners, walls, first failures, uncertainty, current-host qualification limits, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4` exposes and qualifies explicit single-use nested request release. Preserve full original ACCEPT, every final E check, original owners, walls, first failures, uncertainty, current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7091,3 +7091,38 @@ correction supplies its proper scope and is reflected in the canonical fact/book
 - [x] **NO REGRESSION** — Outcome-history task integrity and `knowledge-map: OK`
   preserve routing; staged doctrines qualify paired retention metadata. No native
   fixture, original producer, full CI or push runs in this history-only slice.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The new native outcome fixture reports
+  missing job/execution metadata at t/1864-process-closed-execution-outcome.t line 223.
+  Coordinator retained only scalar closure fields while Service take_closed
+  deleted the original record before returning its full execution observation.
+  The baseline also accepted an altered returned job instead of rejecting it.
+- [x] **ADDRESSED (verified)** — Re-derivation: T1864 compares every original
+  Service observation with aggregate metadata before destructive consumption;
+  actual E, binary output, literal socket traffic and exact positive waits
+  independently establish native effects and cleanup. Nine groups retain job,
+  fixed clocks, distinct latest/admitted checks and first failure through
+  cancellation, EOF, delayed reports, entry/return loss and a real creator signal.
+  Multiple peers are retained before any consumption; retries skip spent records.
+  Unbound peers and unreported/uncertain jobs fabricate no execution report.
+  Every nested public hash is detached, and exact returned key/value comparison
+  rejects missing, extra, changed and wrong-reference fields. Falsification:
+  twelve isolated defects reject at their intended oracles with closed native
+  censuses; an identical positive passes. Controls remove job/execution history,
+  share each nested hash, reread spent records, retain late, compare scalars only,
+  ignore extra keys/key presence, or replace the latest check with admission.
+  Durability: tracked source/test/book/fact and work-unit Git retain the contract.
+  Ignored .artifacts/closed-outcome-* logs/control JSON remain a named raw-evidence
+  gap owned by independent qualification .19.2.3.1.2.2.5.5.2.3.4.6. Consumed
+  control copies/runner and generated book output are removed. Initial fixture
+  assumptions about direct grant-refusal masking and Service peer ordering were
+  corrected against actual APIs; both failure runs closed their native censuses.
+  An ambiguous control mutation anchor failed before any control ran; its exact
+  anchor was corrected. No product failure is hidden by those fixture repairs.
+- [x] **NO REGRESSION** — Selected coordinator band: All tests successful.
+  Files=46, Tests=432. Source/test syntax and generated mdBook HTML checks pass.
+  Knowledge Map and staged doctrines qualify canonical routing and bounded
+  metadata. Browser visual review remains unavailable. Original startup/proxy/
+  compiler producers, Linux, full CI and push did not run; those gates stay open.
