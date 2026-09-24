@@ -3648,7 +3648,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Retain original parent contexts and private execution snapshot replacement.`
   Acceptance: `Make new parent authority/context publication recoverable under creator signals and original deadlines. Bind only original admitted identities; replace only the reserved private context environment entry in a detached execution snapshot while preserving all other bytes, order, cwd, umask and original invocation time. Validate inclusive encoded bounds after replacement and refuse stale/copied/reused authority. Qualify root and nested contexts without exec release.`
-  Verification: `Original request handoff is qualified. The canonical contract names FSMGEN_PROCESS_COORDINATOR_CONTEXT and requires complete byte-ordered environment preservation. Service currently returns new context from local state after token generation, without a retained preparation state or masked publication. Child .1 closes that boundary; .2 retains completed acceptance history before the existing rollover milestone; .3 adds bounded pure snapshot replacement. Aggregate grant binding remains sibling .4.`
+  Verification: `Original request handoff and retained parent-context publication are qualified. The canonical contract names FSMGEN_PROCESS_COORDINATOR_CONTEXT and requires complete byte-ordered environment preservation. Children .1/.2 retain original Service authority and completed acceptance history; child .3 now adds bounded pure snapshot replacement. Aggregate grant binding remains sibling .4.`
   Commit: `pending`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3`
@@ -3661,11 +3661,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.1: retain original parent context publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Retain completed acceptance history before snapshot composition.`
   Acceptance: `Authenticate the exact completed predecessor and acceptance suffix through the existing finite history manifest before reaching the unchanged live task rollover milestone. Preserve every current node, original version-object terminal and prior manifest chain. Independently reconstruct source/suffix digests and dimensions, then prove corruption refusal with the unchanged checker.`
-  Verification: `At clean 54571a18b the task is 7123 lines; context decomposition and its first completed leaf approach the existing 7200-line milestone. This child owns only completed acceptance prose, not another nested compact terminal.`
-  Commit: `pending`
+  Verification: `The finite existing manifest authenticates exact 1d5a47b73c4600490b893718afe6fca495b75d21: full source 7175 lines/1261792 bytes and completed six-section suffix 178 lines/12740 bytes. Independent Git retrieval and shasum agree with both stored SHA-256 values; the source revision retains the prior manifest and its reverified 0a9ea8d6b source. Every node ID and original compact terminal remains live; outside node bodies change only for this owner and its parent progress summary. The unchanged production checker accepts the complete same-volume fixture and rejects only an altered suffix digest. Fixtures are removed. Current claims, Knowledge Map and staged doctrines cover the bounded live result; no behavior, book, ceiling or checker changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2: retain completed parent-publication history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3`
   Status: `pending`
@@ -4400,7 +4400,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2` retains completed acceptance history before the existing live-task rollover milestone. Child .3 then replaces only the private context in detached execution snapshots; original Service parent context publication is qualified. Original Service request transfer is qualified. Later children bind Service job/publication state, aggregate gated admission and final exec rechecks. Completed native-binding topology remains exactly version-retrievable; live claim owners remain visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3` replaces only the private context in detached execution snapshots. Original Service parent publication is qualified, and completed acceptance history is exactly version-retrievable. Original Service request transfer is qualified. Later children bind Service job/publication state, aggregate gated admission and final exec rechecks. Completed native-binding topology remains exactly version-retrievable; live claim owners remain visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6995,181 +6995,26 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 The manifest binds the completed acceptance suffix and independent reserved-process evidence join to their exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` locates the newest completed
-  acceptance heading at exact 0a9ea8d6bc4f9eeda3de977a3422bb68bee4cbd8.
-  That task has 7154 lines before the owned decomposition, approaching its
-  existing 7200-line rollover milestone. Only completed evidence moves to Git.
-- [x] **ADDRESSED (verified)** — Independent Git-blob retrieval and shasum
-  reconstruct the full source (1268897 bytes) and its three-heading suffix
-  (105 lines/7638 bytes), matching both manifest SHA-256 values. All original
-  node IDs remain live, with two explicit new children. The source revision's
-  prior manifest retains the older exact history chain. Falsification: the
-  unchanged production checker accepts the complete same-volume fixture and
-  rejects only the altered suffix digest; the isolated fixture is removed.
-  Durability: exact source revision, current finite manifest, versioned prior
-  manifests, this task and the acceptance-history fact preserve reconstruction.
-  Local .artifacts/accepted-join-history-*.log files have a raw-log durability
-  gap. The first companion assertion expected ERROR instead of the checker's
-  actual FAIL label; corrected inspection confirms the sole intended mismatch.
-- [x] **NO REGRESSION** — `task-tree-integrity` confirms all active invariants,
-  and the Knowledge Map regeneration/check reports `knowledge-map: OK` for
-  current routing. Claims and staged doctrine gates cover the resulting tree.
-  All existing fact questions remain; three line joins make room for the new
-  query and retrieval explanation without increasing aggregate card lines.
-  Book content remains accurate and unchanged. No source behavior, threshold,
-  ceiling, original producer, full CI or push changes.
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2)
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub close {'` identifies
-  ea2424e72b0950f18b586f9d5ce44aff9b307b19 as the original Coordinator run
-  owner; its inventories and close originally covered run/jobs only. Service
-  now retains native peers, but no aggregate grants preceded their accept.
-  T1842 additionally reproduced callback expiry leaving a Service ticket with
-  no aggregate entry; recording that entry before liveness checks fixes it.
-- [x] **ADDRESSED (verified)** — Re-derivation uses actual accepted handles,
-  client EOF, real pending creator signals, original ledger grants, exact native
-  child waits, independent pipe EOF and endpoint census. Pre-effect peer credit
-  reconciles under the aggregate mask; copied observations confer no authority.
-  Full capacity defers effects, empty transients release only unused credit,
-  and partial grant/accept/constructor returns preserve conservative ownership.
-  Original expiry retains its resource-free failed ticket. A socket accepted
-  between native forks joins the later child inventory. Actual nested HELLO
-  authenticates an existing original Service parent; subtree cancellation
-  revokes transport authority before native cleanup. Automatic new-parent
-  context publication remains the next leaf. Closed peer slots retain credit
-  until whole-run close publishes outcomes before consumption and retires only
-  verified resources. Pending/uncertain peer closure keeps endpoint/charges;
-  even thrown transport cleanup cannot skip native cancellation or erase cause.
-  Falsification: omitted aggregate masking/reconciliation, outcome retention,
-  peer fork inventory, transport revocation, uncertainty checks or cancellation
-  after a transport exception each fails the matching independent oracle.
-  The foreign-handle child rejects with actual raw wait 23296 (exit 91).
-  All seven variant results are consumed, source variants removed and endpoint
-  residue empty. Durability: Coordinator, T1842, task, book, canonical fact and
-  this commit retain executable derivation and control loci; local
-  .artifacts/coordinator-peer*.log files have a raw-log durability gap.
-- [x] **NO REGRESSION** — The final sequential endpoint, transport, architecture,
-  admission, descriptor, run/job preparation, fork, cleanup, lifecycle and peer
-  band reports `All tests successful`, `Files=15, Tests=173`.
-  Perl syntax, inspected built book, Knowledge Map, claims and staged doctrines
-  cover the synchronized slice. Early fixture assertions referenced a nonexistent
-  stdout field and confused ledger closing with native cleanup; they now use
-  independent pipe EOF and the actual ReservedJob phase. The missing-inventory
-  control initially waited for its outer observer wall after retained failure;
-  it now stops promptly and consumes the exact child wait independently.
-  No gated command releases, original producer, full CI or push runs. Browser
-  visual review, Linux, ACCEPT delivery and complete routing remain open.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _write_ready {'`
-  identifies ef450a2e618b91ffc7d767211cec5052e097854e as the original bounded
-  Connection I/O. Aggregate queue counts identify neither the original ACCEPT
-  nor its completed write, so they cannot supply the required publication fact.
-- [x] **ADDRESSED (verified)** — Re-derivation compares independently encoded
-  literal frames with actual socket bytes, exact partial counts, EAGAIN, EOF,
-  creator signals and original masks/dispositions. One retained original frame
-  publishes confirmed progress before handlers; uncertain native or SIGPIPE
-  restoration returns remain failed even when peer bytes exist. Closing a prefix
-  cannot complete it; a later close cannot erase a completed local-write fact.
-  Falsification: six isolated omissions corrupt masking, byte credit, completion,
-  identity, readiness rechecks or closed-prefix state and each fails its oracle.
-  The unmasked control initially left a test pre-mask signal armed into the next
-  case; clearing that trigger within its handler scope yields precise assertions
-  and normal nonzero exit. All controls are consumed and source variants removed.
-  Durability: Connection, T1843, task, book and canonical fact preserve derivation
-  and control loci; .artifacts/accept-publication*.log raw logs remain a gap.
-- [x] **NO REGRESSION** — Final selected native/transport/architecture band:
-  `All tests successful`, `Files=11, Tests=163`. A first band command mistyped
-  T1817's filename; the corrected exact inventory passes. Syntax, built-book
-  inspection, Knowledge Map, claims and staged doctrines cover this slice.
-  Literal frame ordering, inclusive encoded capacity, original/no-progress walls
-  and inherited cleanup remain qualified. Endpoint residue is empty. Browser
-  visual review and Linux remain open. No command exec, original producer,
-  full CI or push is run; Service/job binding remains separately owned.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for the native-binding
-  goal locates b803ba26914a8e74b17b2d111d96332ee70ecc38. The exact predecessor
-  13bf045a3838d3ba04bbe5e639ef81a47ae57959 task reaches 7183 lines near its
-  existing 7200-line milestone. Fresh JSONL value census and all-doctrine text
-  search find no remaining live owner under .4.2.3; .4.2.2 remains live.
-- [x] **ADDRESSED (verified)** — Re-derivation retrieves the exact Git blob,
-  independently hashes it with shasum and reconstructs all 21 done nodes,
-  original goal, direct-child closure and closed acceptance/verification/commit
-  fields. The source is 1277540 bytes with SHA-256 recorded on the compact
-  terminal. Replacing 163 node lines with 12 preserves all outside nodes except
-  this active owner and its parent progress summary; current claim/book owners and the prior history manifest
-  remain unchanged. Falsification: the unchanged production checker accepts
-  the complete isolated fixture, then rejects altered digest, node count and
-  goal with exactly the intended single diagnostic in each case. Fixtures and
-  scratch source are removed. Durability: exact retained Git source/manifest,
-  compact terminal, existing retention contract and this task preserve all
-  evidence. .artifacts/native-binding-compact-*.log raw logs remain a gap.
-- [x] **NO REGRESSION** — `task-tree-integrity` reports all active invariants
-  hold; claim-verification retains all bounded registry/record invariants.
-  `knowledge-map: OK`, regenerated claim census and staged doctrines cover the
-  resulting metadata. Product source and mdBook behavior are unchanged. No
-  ceiling/checker change, original producer, full CI or push is involved.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub take_request {'`
-  identifies 5f8be37f1ac107cc486a9e9c435b33871391e796 as original Service
-  admission. Its return-local request transfer cannot publish custody into an
-  aggregate entry retained before the call. The new explicit target fills that
-  integration gap without altering the legacy return-value contract.
-- [x] **ADDRESSED (verified)** — Re-derivation uses literal authenticated socket
-  frames, exact detached-snapshot identity/bytes, actual pending creator signals,
-  restored masks, inclusive original wall boundaries, peer EOF, repeated SPAWN
-  and an exact inherited-child wait. Destination publication precedes source
-  deletion and handed state; read-only assignment failure preserves the source.
-  Empty untied scalar slots exclude arbitrary STORE callbacks. Pre-mask occupancy,
-  retirement and expiry cannot be overwritten. Falsification: six isolated
-  variants omit masking, release the source early, skip destination or wall
-  rechecks, omit creator validation or mark handed before assignment. Each fails
-  its named independent assertion and leaves no endpoint residue. The initial
-  shell runner rejected Perl's ordinary exit 255; a stdin-only guarded driver
-  produced no control receipts. Neither was credited as a complete run. The
-  saved file driver consumes native positive exit codes and matching assertions
-  for all six controls. Sources and scratch runner are removed. Durability:
-  Service, T1844, task, book and canonical fact retain derivation/control loci;
-  .artifacts/retained-request*.log raw logs remain a named gap.
-- [x] **NO REGRESSION** — Final selected native/transport/architecture band:
-  `All tests successful`, `Files=12, Tests=171`. Syntax, built-book inspection,
-  Knowledge Map, claims and staged doctrines cover the synchronized slice.
-  No job admission, command release, original producer, full CI or push runs.
-  Browser visual review, Linux and remaining context/job composition stay open.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub register_parent {'`
-  locates 5f8be37f1ac107cc486a9e9c435b33871391e796. Registration generated
-  authority before retaining a parent and returned context without masked
-  publication or a creator-bound recovery interface.
-- [x] **ADDRESSED (verified)** — Re-derivation uses real OS entropy/closed
-  handle observations, literal socket HELLO/READY or EOF, pending creator
-  signals, exact masks, original walls, capacity and exact inherited waits.
-  Preparing state and spent identity precede entropy; ready state follows fresh
-  token/context checks. Partial preparation retains host or timeout truth and
-  cannot authenticate; bounded slots release only on revocation. Original
-  ready context recovery creates no replacement token and rejects lost liveness.
-  Falsification: six isolated controls remove masking, identity consumption,
-  ready-only HELLO, post-effect checks, recovery checks or creator validation.
-  Each yields the intended assertion failure and empty endpoint residue; all
-  outcomes are consumed and control sources/runner removed. Durability: Service,
-  T1845, task, book and canonical fact preserve derivation and control loci;
-  .artifacts/parent-context*.log raw logs remain a named gap. Authority bytes
-  never enter these observations or diagnostics.
-- [x] **NO REGRESSION** — Final selected native/transport/architecture band:
-  `All tests successful`, `Files=13, Tests=179`. The first band caught changed
-  closed-root diagnostic wording; the original message is restored. Early
-  fixture syntax corrections fix lexical localization and an array reference
-  before native qualification. Syntax, inspected built book, Knowledge Map,
-  claims and staged doctrines cover the synchronized slice. Browser visual
-  review, Linux, snapshot replacement and aggregate binding remain open.
-  No command exec, original producer, full CI or push runs.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for the first live
+  acceptance heading identifies 3eb39b23187e42083c139a842d88ba015377521a.
+  Exact 1d5a47b73c4600490b893718afe6fca495b75d21 reaches 7175 lines near
+  the existing 7200-line rollover milestone; completed prose moves to Git.
+- [x] **ADDRESSED (verified)** — Re-derivation retrieves the exact full
+  source (1261792 bytes) and six-section completed suffix (178 lines/12740
+  bytes); independent shasum matches both manifest SHA-256 identities.
+  The revision-local prior manifest and its exact 0a9ea8d6b source reverify.
+  Every node ID and existing compact terminal remains live; only this owner
+  and its parent's progress summary change outside the completed suffix.
+  Falsification: the unchanged production checker accepts the complete fixture
+  and rejects the altered suffix digest with the sole intended diagnostic.
+  Same-volume fixtures/scratch blobs are removed. Durability: exact Git source,
+  current finite manifest, predecessor manifest chain, retained nodes and this
+  task preserve reconstruction; .artifacts/context-history-*.log raw logs
+  remain a named gap. No thresholds or checker semantics change.
+- [x] **NO REGRESSION** — `task-tree-integrity` confirms all active invariants;
+  `knowledge-map: OK`, claim census and staged doctrines cover the resulting
+  metadata. Book and product source remain accurate and unchanged. No native
+  producer, original startup, full CI or push runs.
