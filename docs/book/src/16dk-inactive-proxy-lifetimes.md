@@ -1075,6 +1075,29 @@ These changes create gated processes but do not release commands. Original
 accepted-request ownership now joins them through the admission and gated ACCEPT
 paths below; final exec release remains open.
 
+The aggregate also retains the identities of its original Endpoint, Service and
+job entries. Every later owner lookup checks the complete retained job inventory;
+a missing entry cannot silently remove its native descriptors from that inventory.
+Service separately retains the identity of the Endpoint it borrows. A different
+original Service exposing identical context bytes still cannot replace the
+Service that bound the invocation.
+
+Each job retains the exact context value used to transform its snapshot. Fresh
+context lookup requires both live Service authority and equality with that
+original value. For example, replacing a nested job's context with its parent's
+still-live context refuses preparation. Copying the job entry while keeping its
+original grant also refuses; grant identity alone does not establish entry custody.
+These checks preserve the original snapshot bytes and invocation deadlines.
+
+Native wrapper identity is retained before its first pipe allocation and remains
+required for observation, inventory and advancement. A different original wrapper,
+a shallow copy or a lost wrapper cannot substitute for the job already admitted.
+Creator signals see the completed owner/context associations before an interrupted
+return; cleanup retains the first failure. The focused controls restore deliberately
+substituted references before closing their original resources and independently
+check pipe EOF, exact child waits and endpoint removal. These private integrity
+checks add no aggregate execution-release API.
+
 `Coordinator::admit_request($ticket)` explicitly selects one original accepted
 peer. Under the preparation mask, it transfers that peer's validated request
 directly into its retained record, joins the submitting parent's original active
@@ -1361,6 +1384,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1847-process-write-admis
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1848-process-service-job-publication.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1849-process-parent-token-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1850-process-aggregate-context.t t/1851-process-request-association.t t/1852-process-gated-accept.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1858-process-aggregate-owners.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t

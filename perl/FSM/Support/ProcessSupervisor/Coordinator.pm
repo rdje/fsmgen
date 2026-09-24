@@ -27,6 +27,27 @@ sub _owner {
     _error('invalid or copied coordinator') unless ref($self) eq __PACKAGE__
         && defined($self->{identity}) && $self->{identity} == refaddr($self);
     _error('inherited coordinator cannot be reused') unless $self->{owner_pid} == $$;
+    for my $field (qw(run service)) {
+        my $identity = $self->{$field . '_identity'};
+        _error('lost or substituted original ' . ($field eq 'run' ? 'endpoint' : 'Service'))
+            unless defined($identity)
+                ? ref($self->{$field}) && refaddr($self->{$field}) == $identity
+                : !defined($self->{$field});
+    }
+    # Keep the original key set separately: an omitted job must not silently
+    # disappear from descriptor inventories or bounded cleanup.
+    _error('lost original job inventory') unless keys(%{$self->{jobs}}) == keys(%{$self->{job_identities}});
+    $self->_job_owner($_) for keys %{$self->{job_identities}};
+}
+sub _job_owner {
+    my ($self, $id) = @_;
+    my $entry = $self->{jobs}{$id};
+    _error('lost or substituted original job entry') unless ref($entry) eq 'HASH'
+        && refaddr($entry) == ($self->{job_identities}{$id} // 0);
+    _error('lost or substituted original native job') unless defined($entry->{native_identity})
+        ? ref($entry->{native}) && refaddr($entry->{native}) == $entry->{native_identity}
+        : !defined($entry->{native});
+    return $entry;
 }
 sub _failure {
     my ($self, $error) = @_;
@@ -43,6 +64,7 @@ sub prepare {
     my $self = bless {owner_pid => $$, phase => 'prepared', ledger => $ledger,
         jobs => {1 => {grant => $ledger->root, snapshot => $snapshot}}, peers => {}}, __PACKAGE__;
     $self->{identity} = refaddr($self);
+    $self->{job_identities} = {1 => refaddr($self->{jobs}{1})};
     return $self;
 }
 sub _begin_cleanup {
@@ -96,6 +118,7 @@ sub open_run {
                 $self->{run_grant} = $self->{ledger}->reserve_descriptors($COST->{steady_descriptors});
                 $self->{scratch_grant} = $self->{ledger}->reserve_descriptors($COST->{transient_descriptors});
                 $self->{run} = FSM::Support::ProcessSupervisor::Endpoint::prepare_run();
+                $self->{run_identity} = refaddr($self->{run});
                 $self->{run}->start_run(sub { $self->_before_run_allocation(@_) });
                 my $handles = $self->{run}->handles;
                 _error('native run inventory disagrees with reserved cost')
@@ -103,6 +126,7 @@ sub open_run {
                 $self->{ledger}->descriptors_prepared($self->{run_grant}, scalar @$handles);
                 $self->{service} = FSM::Support::ProcessSupervisor::Service::new_shared_service(
                     $self->{run}, $self->{ledger}->describe($self->{jobs}{1}{grant})->{deadline_ns});
+                $self->{service_identity} = refaddr($self->{service});
                 $self->_bind_context($self->{jobs}{1}{grant});
                 $self->{phase} = 'open';
                 1;
@@ -464,9 +488,9 @@ sub root {
     return $self->{ledger}->root;
 }
 sub _job {
-    my ($self, $grant) = @_;
+    my ($self, $grant) = @_; _owner($self);
     my $record = $self->{ledger}->describe($grant);
-    my $entry = $self->{jobs}{$record->{id}};
+    my $entry = $self->_job_owner($record->{id});
     _error('job grant has no original retained owner') unless $entry
         && refaddr($entry->{grant}) == refaddr($grant);
     return ($entry, $record);
@@ -496,6 +520,7 @@ sub _reserve_job {
                 map { $_ => $snapshot->{$_} } qw(started_ns timeout_seconds));
             my $id = $self->{ledger}->describe($grant)->{id};
             $self->{jobs}{$id} = {grant => $grant, snapshot => $snapshot};
+            $self->{job_identities}{$id} = refaddr($self->{jobs}{$id});
             if ($peer) {
                 # Both original owners precede token generation and any return.
                 $peer->{job_grant} = $grant; $peer->{job_id} = $id;
@@ -534,7 +559,10 @@ sub _bind_context {
         $self->{ledger}->check_live($grant);
         _error('original context changed during snapshot preparation')
             unless $self->{service}->parent_context($record->{id}) eq $context;
+        $self->_job($grant);
         $entry->{snapshot} = $snapshot;
+        # Later Service liveness cannot authorize a different context value.
+        $entry->{bound_context} = $context;
         $entry->{context_state} = 'ready';
         1;
     };
@@ -574,7 +602,11 @@ sub _context_live {
     _error('original job context is not prepared') unless ($entry->{context_state} // '') eq 'ready';
     $self->{ledger}->check_live($grant);
     $self->_request_live($entry->{peer}) if $entry->{peer};
-    return $self->{service}->parent_context($record->{id});
+    my $context = $self->{service}->parent_context($record->{id});
+    $self->_job($grant);
+    _error('original bound context changed or disappeared')
+        unless defined($context) && defined($entry->{bound_context}) && $context eq $entry->{bound_context};
+    return $context;
 }
 sub _job_failed {
     my ($self, $grant, $error) = @_;
@@ -630,6 +662,7 @@ sub prepare_job {
             $entry->{native} = FSM::Support::ProcessSupervisor::ReservedJob::prepare_record(
                 snapshot => $entry->{snapshot}, deadline => $record->{deadline_ns} / 1_000_000_000,
                 close_handles => $self->handles);
+            $entry->{native_identity} = refaddr($entry->{native});
             delete $entry->{snapshot};
             $entry->{native}->allocate(sub { $self->_before_job_allocation($grant) });
             $self->{ledger}->prepared($grant, scalar @{$entry->{native}->handles});

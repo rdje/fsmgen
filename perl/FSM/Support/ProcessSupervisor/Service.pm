@@ -42,6 +42,8 @@ sub _owner {
     _error('invalid or copied service handle') unless ref($self) eq __PACKAGE__
         && defined($self->{owner_identity}) && $self->{owner_identity} == refaddr($self);
     _error('inherited service cannot be reused') unless $self->{owner_pid} == $$;
+    _error('lost or substituted original service endpoint') unless ref($self->{run})
+        && refaddr($self->{run}) == ($self->{run_identity} // 0);
 }
 
 sub new_service {
@@ -70,6 +72,7 @@ sub _new_service {
         high_parent => 1, next_ticket => 1, records => {}, order => [], closed => 0,
     }, __PACKAGE__;
     $self->{owner_identity} = refaddr($self);
+    $self->{run_identity} = refaddr($run);
     return $self;
 }
 

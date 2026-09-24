@@ -3755,17 +3755,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.1: retain completed transport topology and wrapper history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain original aggregate execution-owner and context associations.`
   Acceptance: `Before root release, retain original endpoint, Service, job-entry, bound context and native wrapper identities before their effects. Later context/owner lookups must reject copied, substituted or lost original associations without allocating, forking or publishing further authority. Preserve original snapshot bytes, clipped deadlines, first failure, cancellation and shared cleanup. Qualify original versus foreign owners, changed contexts, later native substitution, actual handles/waits and creator interruption using the existing private interfaces; no execution release API or ordinary routing yet.`
-  Verification: `Source review finds later context lookup returns the currently assigned Service context without retaining its bound value, and job lookup authenticates grant identity but has no original entry/native association anchor. Reproduce through the private interfaces before classifying the gap, then repair this owned prerequisite; full root final release remains child .3.`
-  Commit: `pending`
+  Verification: `Original aggregate Endpoint/Service identities and a separately retained job-entry identity map now precede effects; complete inventory checks reject omitted or substituted owners. Each native wrapper is anchored before pipes. Service separately anchors its borrowed Endpoint. Bound context bytes are retained with the transformed snapshot and required at later live lookups. The exact predecessor probe exposes foreign Service, copied entry and changed-context acceptance, then closes both endpoints. T1858 verifies original/foreign/copied/lost owners, equal-byte foreign Service, nested publication before entropy, native identity before pipes, later ready-job refusal, actual creator signal publication and first failure; independent pipe EOF, exact waits and endpoint census close. Eight isolated guard defects fail their intended assertions, the copied positive passes and every native end census closes. Final selected band passes 40 files/367 tests; syntax, mdBook build/HTML and Knowledge Map pass. Task index now points to the live frontier. Root release remains next; original producers, Linux, visual browser qualification and full CI/push remain gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.2: retain original aggregate owner associations`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Release the original root job through fresh aggregate execution admission.`
   Acceptance: `After original associations are qualified, expose single-use root release through its original retained grant. Before each actual E require original open aggregate/root ledger, context and unchanged invocation wall, original native wrapper/Pair readiness and live command custody; refuse copied, foreign, nested, revoked or expired inputs. Retain original confirmed/uncertain native truth and first failure through retries and interrupted returns; qualify real command bytes/environment/context, no-exec controls and exact bounded cleanup. Keep ordinary adapters inactive and nested transport joining separate.`
-  Verification: `Pending association child .2.`
+  Verification: `Original association child .2 is qualified; next join single-use root release to fresh original grant/context/native checks without introducing nested release or ordinary routing.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4`
@@ -4480,7 +4480,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.2` reproduces and repairs original aggregate endpoint, Service, job-entry, context-value and native-owner association gaps before root E release. Keep original bytes/deadlines and ownership publication through creator interruptions; root final release remains child .3 and nested Service joining the outer sibling .4. Preserve spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.3` joins original root execution release to the now-retained aggregate owner/context/native associations. Require fresh original ledger, fixed invocation wall, native readiness and custody before every E attempt; preserve confirmed or uncertain native truth through interruptions. Nested Service joining remains outer sibling .4. Preserve spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7120,3 +7120,38 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   43 compact terminals. Claim inventory and staged doctrines verify paired
   metadata. Source, tests and book behavior are unchanged; no native fixture,
   original producer, full CI or push runs for this slice.
+
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Aggregate associations: the exact
+  7710fe7abed5876a944603ba8f3147dfdabce233 predecessor probe fails
+  `foreign original Service refuses context` at .artifacts/aggregate-owners-predecessor.pl line 19.
+  Copied-entry and changed-context refusals also fail at lines 21 and 23.
+  The ledger grant was original, but Coordinator retained neither entry/native
+  association identity nor the context value used to bind its snapshot.
+  Both original endpoints close; no command is prepared or released by this probe.
+- [x] **ADDRESSED (verified)** — Aggregate-owner re-derivation: T1858 checks
+  original versus copied/foreign/lost transport and job owners, matching bytes
+  from a different original Service, changed/lost context, nested entry retention
+  before entropy, native retention before pipes and later ready-job inventory.
+  Service also checks its original borrowed Endpoint. An actual creator signal
+  sees complete binding and retained identities before interrupting return;
+  first failure survives. Actual child waits, pipe EOF and endpoint census close.
+  Falsification: isolated endpoint, Service, entry, inventory, native, context-byte,
+  lost-context and borrowed-endpoint guard removals each fail their intended
+  assertions; exits are respectively 2, 255, 255, 1, 1, 1, 1, 1. The copied
+  positive exits zero. All nine runs print native-end-census: closed; 255 denotes
+  Perl fatal refusal after intended failed assertions, not a native signal.
+  Durability: committed T1858 and canonical source/book/fact retain the oracle
+  and reverify route. Ignored .artifacts/aggregate-owners-* raw logs/control JSON
+  remain an explicit durability gap; disposable probe, variant copies, runner
+  and rendered book are removed after consumption. No execution-release API
+  or ordinary routing is added. Existing context tests retain byte/deadline checks.
+- [x] **NO REGRESSION** — Aggregate-owner final guarded component band reports
+  All tests successful. Files=40, Tests=367. Coordinator, Service and T1858
+  syntax pass; mdBook builds and HTML contains the new association paragraphs.
+  Knowledge Map, claim inventory, task integrity and staged doctrines check
+  continuity. The active index is synchronized with the precise task frontier.
+  Linux and browser visual review remain unqualified. Original startup/proxy/
+  compiler producers, full CI and push did not run.
