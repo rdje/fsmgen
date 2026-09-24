@@ -23,10 +23,10 @@ date: 2026-09-24
 status: current
 tags: [vial, public-tooling, cli, api, terse, normal-form, artifacts, manifests, data-locality, compatibility]
 evidence: >-
-  t/1877-vial-source-inspection-lifecycle.t; t/1876-vial-declaration-order.t; t/1875-vial-source-inspection-base.t; t/1874-vial-fault-target-applicability.t; t/1873-vial-fault-target-identity.t; t/1872-vial-model-reference-identity.t; t/1870-vial-filesystem-source-query.t; perl/FSM/Support/SemanticIntrospectionContract.pm;
+  t/1878-vial-lifecycle-start-requirements.t; t/1875-vial-source-inspection-base.t; t/1874-vial-fault-target-applicability.t; t/1873-vial-fault-target-identity.t; t/1872-vial-model-reference-identity.t; t/1870-vial-filesystem-source-query.t; perl/FSM/Support/SemanticIntrospectionContract.pm;
   docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; perl/FSM/VIAL/SourceProjection.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/PlanBuilder.pm; perl/FSM/VIAL/ArtifactTransaction.pm; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/Runner.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm; perl/FSM/VIAL/Parity/AHBBaseOutput.pm; perl/FSM/Support/VIALToolingContract.pm; t/1555-vial-public-source-tooling.t; t/1556-vial-public-planning-artifacts.t; t/1557-vial-portable-sv-backend-emission.t; t/1558-vial-verilator-run-integration.t; t/1559-vial-ahb-runtime-parity.t; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md;
   docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md; docs/book/src/16dg-vial-public-lifecycle-reference.md; t/1797-hial-vial-public-lifecycle-reference.t; ROADMAP_V2.md
-reverify: ./bin/fsmgen vial capabilities --json && ./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial && prove -Iperl t/1877-vial-source-inspection-lifecycle.t t/1876-vial-declaration-order.t t/1875-vial-source-inspection-base.t t/1874-vial-fault-target-applicability.t t/1873-vial-fault-target-identity.t t/1872-vial-model-reference-identity.t t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1797-hial-vial-public-lifecycle-reference.t
+reverify: ./bin/fsmgen vial capabilities --json && ./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial && prove -Iperl t/1878-vial-lifecycle-start-requirements.t t/1877-vial-source-inspection-lifecycle.t t/1876-vial-declaration-order.t t/1875-vial-source-inspection-base.t t/1874-vial-fault-target-applicability.t t/1873-vial-fault-target-identity.t t/1872-vial-model-reference-identity.t t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1797-hial-vial-public-lifecycle-reference.t
 ---
 
 Decision `0039` owns `fsmgen vial capabilities|check|format|plan|run`.
@@ -64,14 +64,13 @@ exact/excess limits, closed invocation, native parity and no publication.
 Model reads retain `model_instance_id` plus state `semantic_id`, correcting
 false digest equality. Refresh caches; T1872 guards identity/style/migration.
 
-Faults retain declaration `transaction_id`; when aliases share it, explicit
-`transaction_binding_id` preserves selected scope. Unique bindings remain
-inferable with unchanged legacy IDs. T1873 guards v1/v2 style/import/migration
-and API/MCP parity; refresh affected caches. T1874 proves AHB rejects unmatched
-aliases, duplicate bridge references cannot bypass binding, and plain IAL1
-`declaration_order` is bridge metadata, not execution support. No runtime claim.
+Fault `transaction_id` stays; shared aliases add `transaction_binding_id`.
+Unique bindings remain inferable with unchanged IDs. T1873 guards version,
+style/import/migration and API/MCP parity; refresh affected caches. T1874 proves
+AHB refuses unmatched aliases/duplicate bridge refs; plain IAL1
+`declaration_order` is metadata, not execution support. No runtime claim.
 
 T1875/1877 guard internal base/lifecycle `SourceInspection`; API/MCP detail
-remains unshipped. Fix start_requires/empty readiness next:
-`.31.3.2.3.2.2.2/.3`. T1876 guards authored declaration order; refresh
+remains unshipped. T1878 repairs service start_requires; empty readiness is
+next (`.31.3.2.3.2.2.3`). T1876 guards authored declaration order; refresh
 affected digests. Contract: `docs/VIAL_SOURCE_INSPECTION_CONTRACT.md`.

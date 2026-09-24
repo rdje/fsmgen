@@ -1,0 +1,196 @@
+{
+  "after": {
+    "producer_path": "perl/FSM/VIAL/LifecycleControl.pm",
+    "producer_sha256": "b1db91f4e55859f811a1fd1671046140e526310f7dd402f3ce37aaca3c56339f",
+    "rows": [
+      {
+        "action": "check",
+        "compatibility_projection_sha256": "ab8c45d6db99b219192f5eedfa68e33c58ee2c6ee04643e634cce26712353db3",
+        "complete_report_sha256": "d9ea8a03ea7baaa6669c921a933844464e12cc49cefe6548a5e862b028f4d858",
+        "diagnostics": [],
+        "plan_id": null,
+        "selection": "base",
+        "semantic_projection_sha256": "4319f2583ad10d5c3409c50df22d80ae0d35cc86671a68b7500e991267129925",
+        "source_id": "start_requirements.vial",
+        "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+        "success": true
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": "ab8c45d6db99b219192f5eedfa68e33c58ee2c6ee04643e634cce26712353db3",
+        "complete_report_sha256": "6f64b5b9b81cd175ea8ccf9389a2c9262488f7c9703dda1422c0954be10b44b0",
+        "diagnostics": [],
+        "plan_id": "plan/8a2def2c91f4ea76f7df6bf847735cf977009f4309659f859d2bf7981aea3f5c",
+        "selection": "base",
+        "semantic_projection_sha256": "4319f2583ad10d5c3409c50df22d80ae0d35cc86671a68b7500e991267129925",
+        "source_id": "start_requirements.vial",
+        "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+        "success": true
+      },
+      {
+        "action": "check",
+        "compatibility_projection_sha256": "ab8c45d6db99b219192f5eedfa68e33c58ee2c6ee04643e634cce26712353db3",
+        "complete_report_sha256": "741ee2efab5a7f7cf7b6e83bedd7ee136afc75654021dad22f074249881b19e6",
+        "diagnostics": [],
+        "plan_id": null,
+        "selection": "start_requires",
+        "semantic_projection_sha256": "5c51c27aa3d02a3d557a44c5a948951c20288e2a63cde29c4f38999131bd7877",
+        "source_id": "start_requirements.vial",
+        "source_sha256": "e43317282116774a6811e68580f5abaf84efc0894c842c842994e5c3ca4407af",
+        "success": true
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": "ab8c45d6db99b219192f5eedfa68e33c58ee2c6ee04643e634cce26712353db3",
+        "complete_report_sha256": "473bb7f9a93a7d2b2d8f5eb3fe9127c60427b9fc7e5662b3bbeb8000578ef924",
+        "diagnostics": [],
+        "plan_id": "plan/e2a7315358bec2a6f13c4bd1b4a0aa328ab9a0ab5f7463481bbdbc1b0fd57d33",
+        "selection": "start_requires",
+        "semantic_projection_sha256": "5c51c27aa3d02a3d557a44c5a948951c20288e2a63cde29c4f38999131bd7877",
+        "source_id": "start_requirements.vial",
+        "source_sha256": "e43317282116774a6811e68580f5abaf84efc0894c842c842994e5c3ca4407af",
+        "success": true
+      }
+    ]
+  },
+  "baseline_compiler_blob": "9bace641ec708244ddea2b113a45f3fe57d561c6",
+  "baseline_revision": "bd18ad17cabdd81280101fe0d80117760cac097e",
+  "before": {
+    "producer_path": ".artifacts/mcp-feature-coverage/lifecycle-start-baseline-perl/FSM/VIAL/LifecycleControl.pm",
+    "producer_sha256": "f4d0c54939120921250574bea71bbf8368196788bc33b7fe1add447c63da3b9f",
+    "rows": [
+      {
+        "action": "check",
+        "compatibility_projection_sha256": "ab8c45d6db99b219192f5eedfa68e33c58ee2c6ee04643e634cce26712353db3",
+        "complete_report_sha256": "d9ea8a03ea7baaa6669c921a933844464e12cc49cefe6548a5e862b028f4d858",
+        "diagnostics": [],
+        "plan_id": null,
+        "selection": "base",
+        "semantic_projection_sha256": "4319f2583ad10d5c3409c50df22d80ae0d35cc86671a68b7500e991267129925",
+        "source_id": "start_requirements.vial",
+        "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+        "success": true
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": "ab8c45d6db99b219192f5eedfa68e33c58ee2c6ee04643e634cce26712353db3",
+        "complete_report_sha256": "6f64b5b9b81cd175ea8ccf9389a2c9262488f7c9703dda1422c0954be10b44b0",
+        "diagnostics": [],
+        "plan_id": "plan/8a2def2c91f4ea76f7df6bf847735cf977009f4309659f859d2bf7981aea3f5c",
+        "selection": "base",
+        "semantic_projection_sha256": "4319f2583ad10d5c3409c50df22d80ae0d35cc86671a68b7500e991267129925",
+        "source_id": "start_requirements.vial",
+        "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+        "success": true
+      },
+      {
+        "action": "check",
+        "compatibility_projection_sha256": null,
+        "complete_report_sha256": "57a1f3289e794a59f8b21e21ab4d91e943fe580a909248bebbf41e076d870c4f",
+        "diagnostics": [
+          {
+            "code": "VIAL_SEMANTIC_ERROR",
+            "message": "internal semantic validation failed closed",
+            "notes": [],
+            "phase": "semantic",
+            "schema": "fsmgen.vial_diagnostic.v2",
+            "schema_version": 2,
+            "semantic_path": "/",
+            "severity": "error",
+            "source_location": {
+              "end_byte_exclusive": 0,
+              "end_column": 1,
+              "end_line": 1,
+              "source_name": "start_requirements.vial",
+              "start_byte": 0,
+              "start_column": 1,
+              "start_line": 1
+            }
+          }
+        ],
+        "plan_id": null,
+        "selection": "start_requires",
+        "semantic_projection_sha256": null,
+        "source_id": "start_requirements.vial",
+        "source_sha256": "e43317282116774a6811e68580f5abaf84efc0894c842c842994e5c3ca4407af",
+        "success": false
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": null,
+        "complete_report_sha256": "31889586a246896eb1726457b068d499126ed00e86c9361599a311249fe019c7",
+        "diagnostics": [
+          {
+            "code": "VIAL_SEMANTIC_ERROR",
+            "message": "internal semantic validation failed closed",
+            "notes": [],
+            "phase": "semantic",
+            "schema": "fsmgen.vial_diagnostic.v2",
+            "schema_version": 2,
+            "semantic_path": "/",
+            "severity": "error",
+            "source_location": {
+              "end_byte_exclusive": 0,
+              "end_column": 1,
+              "end_line": 1,
+              "source_name": "start_requirements.vial",
+              "start_byte": 0,
+              "start_column": 1,
+              "start_line": 1
+            }
+          }
+        ],
+        "plan_id": null,
+        "selection": "start_requires",
+        "semantic_projection_sha256": null,
+        "source_id": "start_requirements.vial",
+        "source_sha256": "e43317282116774a6811e68580f5abaf84efc0894c842c842994e5c3ca4407af",
+        "success": false
+      }
+    ]
+  },
+  "evidence_legs": {
+    "durability": "Exact Git baseline, tracked probe/result, T1878, source/inspection contracts, mdBook and knowledge card.",
+    "falsify": "Complete canonical check and planning report hashes remain identical; legal start_requires changes from refusal to success. T1878 independently asserts exact conjunctions with/without dependencies, nested/reset conditions, imports, styles, native/API/MCP reports, plan propagation, and unchanged unknown/cyclic/excess refusal.",
+    "rederive": "Tracked public check/virtual-plan probe loads the exact baseline LifecycleControl Git object and verifies its module path/hash, then runs the same source IDs/bytes on the repaired compiler."
+  },
+  "limits": [
+    "VIAL v2 source-construction correction only. No backend execution, performance/capacity or full-CI claim.",
+    "Public source inspection facade and MCP detail remain unshipped. The separately reproduced empty-readiness defect is immediate next work under .31.3.2.3.2.2.3.",
+    "Canonical equality is established for the maintained lifecycle fixture with the same captured source identity, not every possible input.",
+    "mdBook build and rendered assertions pass; browser visual audit remains unavailable."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.2",
+  "schema": "fsmgen.vial_lifecycle_start_repair.v1",
+  "tests": {
+    "lifecycle-start-band": {
+      "sha256": "24196765e17d7313c4d241e6d9273ea27c966f32711fe0ec5ef7dc6ec5af2896",
+      "summary": [
+        "All tests successful.",
+        "Files=6, Tests=31, 47 wallclock secs ( 0.03 usr  0.01 sys + 40.00 cusr  2.43 csys = 42.47 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "lifecycle-start-book": {
+      "sha256": "bbde4adbef96a39919e4682d3000191cba6548153408ec036dcdd15e3e7c3e63",
+      "summary": [
+        " INFO HTML book written to `.artifacts/lifecycle-start-book`"
+      ]
+    },
+    "lifecycle-start-green": {
+      "sha256": "89dcb268b43d5c8d0010f120621123943951fa62a90a8ff876f9bd74af64a2b2",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=3, 13 wallclock secs ( 0.01 usr  0.01 sys + 10.78 cusr  0.51 csys = 11.31 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "lifecycle-start-red": {
+      "sha256": "01bf55089934456a598a25582cc8d58e425a6ef35f4fbb63a9b1766cabbfad61",
+      "summary": [
+        "Files=1, Tests=3,  1 wallclock secs ( 0.01 usr  0.00 sys +  0.88 cusr  0.04 csys =  0.93 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}

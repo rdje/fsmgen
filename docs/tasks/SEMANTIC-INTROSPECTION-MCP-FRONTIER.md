@@ -467,11 +467,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.1: project typed lifecycle source detail`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair native lifecycle service start_requires construction and qualify complete inspection coverage.`
   Acceptance: `Reproduce public rejection of legal configured/reset start requirements, root-cause the unparenthesized map consuming the optional condition as another dependency ID, and repair construction without weakening validation. Preserve canonical source/plan identities, verify exact additional conditions and references through normal/terse/import/native/API/MCP and typed inspection, and qualify other optional clauses. Keep unknown/cyclic/excess inputs fail-closed. Record controlled baseline/current evidence, update contract/book/facts and qualify this prerequisite before .3 closes the remaining empty-readiness gap. No spent runtime producers.`
-  Verification: `Public Parser::check_source rejects legal start_requires with VIAL_SEMANTIC_ERROR; direct first-party _build_ir diagnosis reports lifecycle condition /condition/operands/3 reference_id must be a stable non-empty identity. Default, ready_requires, quiescent_requires and stop_requires controls succeed. LifecycleControl::_build_program has an unparenthesized map over dependency IDs followed by _optional(start_additional), causing Perl to map the condition record as an ID. Raw diagnostic capture is inspection-lifecycle-start-diagnosis.log.`
-  Commit: `pending`
+  Verification: `Parenthesizing only the dependency map preserves authored start conditions. T1878 passes configured/reset/nested conditions with and without dependencies, imported scope, style and native/API/MCP parity, exact typed inspection and actual target-neutral planning. Unknown/cyclic/excess inputs still fail. Controlled baseline/current reports preserve canonical check/plan identities; the focused band and rendered book pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.2: preserve authored service start requirements`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3`
   Status: `pending`
@@ -1197,9 +1197,8 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.2` is next: repair native
-service start requirements, then `.2.2.3` repairs empty readiness before
-portable/filesystem API, native CLI/discovery and MCP.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3` is next: repair native
+empty readiness before portable/filesystem API, native CLI/discovery and MCP.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2321,3 +2320,40 @@ public facade shipped. The lifecycle parent stays active until they are fixed.
 Task/book metadata admits only this owned detail and truthful scope; knowledge
 card compaction keeps its existing allowance. Record definitions belong to the
 inspection contract, so no separate rationale ledger entry is needed.
+
+## Acceptance Checklist — `.31.3.2.3.2.2.2` service start requirements
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-repair T1878 reports
+  `#   Failed test 'legal (configured) checks with no_dependencies=0'`
+  and `#   at t/1878-vial-lifecycle-start-requirements.t line 83.` Public source
+  validation returns `VIAL_SEMANTIC_ERROR`. The prior tracked native diagnosis
+  exposes an object-valued dependency reference: Perl's unparenthesized map in
+  `LifecycleControl::_build_program` consumes the optional authored condition
+  as another dependency ID instead of appending it to the conjunction.
+- [x] **ADDRESSED (verified)** — Parentheses bound only the dependency-map
+  input. T1878 independently asserts configured, reset and nested additional
+  conditions with and without dependencies, exact scalar prerequisite IDs,
+  complete typed inspection, imported domain scope, normal/terse meaning and
+  complete portable/filesystem/native CLI/MCP report equality. The actual
+  public target-neutral plan retains the added reset condition unchanged.
+  Unknown domains/conditions, cyclic readiness, authored empty all and excess
+  operand count still fail specifically without partial reports or artifacts.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1555-vial-public-source-tooling.t t/1801-vial-v2-source-projections.t t/1806-vial-v2-public-foundation.t t/1808-vial-v2-lifecycle-compiler-phases.t t/1877-vial-source-inspection-lifecycle.t t/1878-vial-lifecycle-start-requirements.t`
+  reports `All tests successful. Files=6, Tests=31` and `Result: PASS`.
+  `mdbook build docs/book -d .artifacts/lifecycle-start-book` and rendered
+  service-start/remaining-prerequisite assertions pass; disposable output is
+  removed. Browser visual access, backend execution and full CI remain outside
+  this slice. No spent producer is replayed.
+
+Re-derivation uses the tracked public probe against the exact `bd18ad17` compiler
+blob and the repair, with loaded-module path/hash verification. Falsification
+uses identical source IDs/bytes: complete canonical check/plan reports and
+plan/meaning identities remain equal, while the authored reset-start source
+moves from refusal to success. T1878 supplies independent semantic and invalid
+input controls. Durability is the exact Git baseline, tracked
+`vial-lifecycle-start-repair.json`, test, probe, contracts/book/fact. The empty
+readiness failure remains immediately owned by `.2.2.3`; the lifecycle parent
+stays active and public inspection is unadvertised. Task/book metadata admits
+only this owned repair; knowledge-card allowance is unchanged. The source
+contract owns the construction invariant, so no rationale-ledger duplication.

@@ -244,6 +244,14 @@ delay a point but cannot make it precede its intrinsic predecessor. Duplicate
 or cyclic conditions fail before binding. Construction and configuration are
 compiler preconditions, not authored lifecycle records.
 
+A service may add `(start_requires (reset_inactive bus))` after its
+`target` clause. The normalized start conjunction retains configured status,
+each dependency as its own scalar-ID condition, then the authored reset
+condition with its domain ID. The native construction repair in
+`.31.3.2.3.2.2.2` admits this legal clause without changing canonical source or
+plan identities. T1878 verifies nested conjunctions, absent dependencies,
+imports, normal/terse views, public check/MCP parity and target-neutral planning.
+
 At each coordination-domain `check` seam, the controller evaluates eligible
 conditions against committed facts, then commits newly reachable milestones
 in topological rank, source rank, and semantic-ID order. A later-ranked point

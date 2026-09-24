@@ -2867,12 +2867,16 @@ with each array position matching its semantic path. Cached semantic and
 compatibility digests for sources affected by the former dependency-first
 ordering require refreshing; canonical base fixture reports remain unchanged.
 
-Qualification found two native lifecycle admission defects: legal service
-`start_requires` clauses and a lifecycle with both dependencies and services
-empty currently fail closed. Their immediate repair leaves are
-`.31.3.2.3.2.2.2` and `.31.3.2.3.2.2.3`. Inspection will not bypass source
-validation, and the API/MCP route will remain unadvertised until those repairs
-and public-interface qualification are complete.
+Service start requirements now check and plan correctly. For example, adding
+`(start_requires (reset_inactive bus))` after `(target fixture_background)`
+retains configured status and declared dependencies, then adds the reset
+condition with its domain identity. Typed inspection preserves that complete
+conjunction. Canonical check and planning reports remain unchanged by the fix.
+
+A lifecycle with both dependencies and services empty still fails native
+admission; `.31.3.2.3.2.2.3` owns the immediate repair. Inspection will not
+bypass source validation, and the API/MCP route remains unadvertised until
+that repair and public-interface qualification are complete.
 
 Select `language_version: 2` explicitly for VIAL v2, including the implemented
 lifecycle-control family. Omission selects v1; the adapter never guesses from

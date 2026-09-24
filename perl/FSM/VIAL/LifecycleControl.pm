@@ -463,7 +463,7 @@ sub _build_program {
     for my $record (@services) {
         my $start = _all(
             _configured_condition(),
-            map { _reference_condition('dependency_satisfied', $_) } @dependency_ids,
+            (map { _reference_condition('dependency_satisfied', $_) } @dependency_ids),
             _optional($record->{start_additional}),
         );
         my $ready = _all(
