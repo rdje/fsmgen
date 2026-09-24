@@ -2,7 +2,7 @@
 
 Date: 2026-09-24
 Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`
-Status: internal base/lifecycle projector qualified; public API and advertisement pending
+Status: public portable/filesystem APIs qualified; CLI/discovery and MCP pending
 
 ## Purpose and compatibility
 
@@ -25,9 +25,9 @@ They correct affected meaning digests in both language versions; cached values
 for those sources require refreshing. Inspection retains the corrected scope
 and order. Existing compiler bugs are not compatibility promises.
 
-## Selected entrypoints
+## Public entrypoints
 
-The following interfaces are selected, **not yet callable**:
+Both functions are exportable from `FSM::VIAL::Tool`:
 
 ```perl
 FSM::VIAL::Tool::inspect_vial_source({
@@ -71,6 +71,11 @@ the wrapper diagnostics equal those of the failed check. Successful inspection
 has an empty diagnostic list. An internal projection-contract failure must
 fail closed with a sanitized inspection diagnostic and null detail even if
 checking succeeded; it cannot publish partial data or a false success.
+The code is `VIAL_SOURCE_INSPECTION_ERROR`, with semantic path `/inspection`
+and message `source inspection could not construct its typed projection`.
+Versioned diagnostics follow the selected language; v2 uses phase `inspection`.
+The complete successful `check_result` remains available when projection fails;
+clients must test the outer `success` before consuming `inspection`.
 Invocation errors also return this result shape with an unsuccessful native
 check result. Existing source limits and diagnostic versioning remain in force.
 
@@ -288,8 +293,10 @@ or authored prerequisites retains the configured entry precondition as
 `all(configured)`, with empty relation lists and no invented service. Existing
 nonempty conditions remain unchanged; authored empty `all` remains invalid.
 The projector never bypasses failed source admission. The internal base and
-lifecycle foundations are qualified; the public facade remains unadvertised
-until its separate interface qualification.
+lifecycle foundations and public facades are qualified. T1880 guards complete
+native check preservation, closed invocations, captured-byte reuse despite
+file/caller mutation, fresh results, bounded loading and sanitized projection
+failures. CLI and MCP advertisement remain separate pending qualifications.
 
 ## CLI and MCP selection
 

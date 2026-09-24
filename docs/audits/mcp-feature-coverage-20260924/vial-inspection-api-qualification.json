@@ -1,0 +1,58 @@
+{
+  "baseline_revision": "93ef0d27698e59a79395b474fcc79a452023b7b4",
+  "book_example": {
+    "sha256": "d4723bfe3162df7fc941ea91674944e81f85301206f18aa5ec77564e05965a23",
+    "source_id": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial",
+    "success": true
+  },
+  "evidence_legs": {
+    "durability": "Exact Git baseline, tracked T1880 and qualification receipt, public contract, mdBook, existing knowledge card and owning task.",
+    "falsify": "The baseline lacks both callable APIs. T1880 rejects closed-argument violations, source/style/version/byte/path/symlink failures; file and caller mutation after check cannot alter captured detail; planning and publication traps stay untouched; injected projection exceptions preserve the successful native check but fail outer inspection with sanitized diagnostics. T1870 retains exact/excess loader and stream-growth controls.",
+    "rederive": "T1880 invokes exported portable/filesystem APIs on authored v1/v2, imported, terse, base and lifecycle sources; complete results equal independently invoked existing native checks. The actual mdBook file API example executes."
+  },
+  "limits": [
+    "CLI/discovery and MCP detail remain separate pending leaves. Existing summary queries and frozen tooling capabilities are unchanged.",
+    "No backend execution, full CI, performance or exhaustive corpus coverage claim. The facade reparses captured bytes without reopening sources.",
+    "mdBook build, rendered assertions and actual API example pass; browser visual audit remains unavailable."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3",
+  "schema": "fsmgen.vial_inspection_api_qualification.v1",
+  "tests": {
+    "inspection-api-band": {
+      "sha256": "078ec542c40a24e58de08a7876bb9635b5f92ee2d293c80d32f7678bf77177d0",
+      "summary": [
+        "All tests successful.",
+        "Files=9, Tests=49, 45 wallclock secs ( 0.04 usr  0.02 sys + 42.17 cusr  1.64 csys = 43.87 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-api-book": {
+      "sha256": "8788cdb2af48a2454a388cad42155be80d8cacd00058346ce69a5144a4b0e26c",
+      "summary": [
+        " INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/inspection-api-book`",
+        "Rendered API names, failure contract and pending MCP scope: PASS"
+      ]
+    },
+    "inspection-api-book-example": {
+      "sha256": "503946e30342d01cb3d78a129bf7faadc39bee0d780029de2e9f81fdb86d463a",
+      "summary": [
+        "Book example PASS: actual exported file API, full lifecycle deadline and inclusive bound."
+      ]
+    },
+    "inspection-api-green": {
+      "sha256": "6e58a15b8f65e4eadc82bbe7212afee445ea643e8fa6109501061a90477512e0",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=7,  6 wallclock secs ( 0.01 usr  0.00 sys +  6.00 cusr  0.06 csys =  6.07 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-api-red": {
+      "sha256": "7103eedeaf07d4fccfd7ae3cb7fd184079d514d9e05ab5eecf044da63dcb4d63",
+      "summary": [
+        "Files=1, Tests=2,  1 wallclock secs ( 0.00 usr  0.00 sys +  0.24 cusr  0.02 csys =  0.26 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}

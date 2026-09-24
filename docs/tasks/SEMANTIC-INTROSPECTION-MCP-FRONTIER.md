@@ -481,11 +481,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3: normalize empty lifecycle readiness`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Expose portable and bounded filesystem VIAL source inspection APIs.`
   Acceptance: `Implement the selected closed invocations and independent result envelope over captured source bytes and the qualified typed projector. Preserve complete native check results, diagnostics and null-on-failure detail. Reuse bounded filesystem loading without reopening after check, preserve version/style/import provenance, prove no planning/random/backend/provider/network/publication effects and fresh values, and document runnable API examples with exact admitted behavior.`
-  Verification: `Pending complete typed projection.`
-  Commit: `pending`
+  Verification: `T1880 qualifies exported portable/filesystem APIs, complete native checks/diagnostics, current base/lifecycle detail, closed invocations, captured-byte reuse under file/caller mutation, fresh values and no execution/publication effects. The focused loader/source/inspection band, runnable book API example and rendered book pass; CLI/discovery and MCP follow.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3: expose public VIAL source inspection APIs`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4`
   Status: `pending`
@@ -1197,9 +1197,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3` is next: expose portable
-and filesystem inspection APIs over captured bytes, then native CLI/discovery
-and MCP detail.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4` is next: expose native
+inspection CLI and independent discovery over the qualified public APIs, then
+MCP detail.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2398,3 +2398,39 @@ filesystem public facades are next, with CLI/MCP detail still unadvertised.
 Task, book and source-spec aggregate metadata records this owned repair; the
 knowledge-card allowance remains unchanged. The source spec owns the default
 normalization rationale, with no duplicate rationale-ledger entry.
+
+## Acceptance Checklist — `.31.3.2.3.2.3` public inspection APIs
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-implementation T1880 reports
+  `#   Failed test 'portable source inspection API exists'` and
+  `#   at t/1880-vial-public-source-inspection.t line 19.` The filesystem
+  counterpart also fails at line 20. The qualified internal projector has no
+  public facade; native check intentionally returns only a semantic summary.
+- [x] **ADDRESSED (verified)** — Exported portable/file inspection functions
+  construct the independent closed result, preserve the entire native check
+  and ordered diagnostics, and expose complete typed base/lifecycle detail.
+  T1880 compares complete reports, versions/styles/imports and repaired lifecycle
+  forms; checks closed arguments, limits and unsafe paths; mutates files and
+  caller values after check to prove captured-byte reuse; verifies fresh values
+  and absence of stdout/stderr/filesystem mutation; traps planning/publication;
+  and injects a projection exception to prove sanitized outer failure with an
+  intact successful native check. Existing check construction is unchanged;
+  detail reparses captured values without reopening sources.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1555-vial-public-source-tooling.t t/1801-vial-v2-source-projections.t t/1806-vial-v2-public-foundation.t t/1870-vial-filesystem-source-query.t t/1875-vial-source-inspection-base.t t/1877-vial-source-inspection-lifecycle.t t/1878-vial-lifecycle-start-requirements.t t/1879-vial-lifecycle-empty-readiness.t t/1880-vial-public-source-inspection.t`
+  reports `All tests successful. Files=9, Tests=49` and `Result: PASS`.
+  `mdbook build docs/book -d .artifacts/inspection-api-book`, rendered scope/error
+  assertions and the actual documented exported API example pass. Disposable
+  rendered output is removed. T1870 retains exact/excess import/stream limits.
+  Browser visual access, runtime and full CI remain outside this qualification;
+  no spent producer is replayed.
+
+Re-derivation uses actual exported APIs and the runnable book example;
+falsification uses baseline absence, exact native comparisons, authored values,
+closed/invalid admission, mutation/no-effect controls and injected projection
+failure. Durability is T1880, the exact Git baseline and tracked
+`vial-inspection-api-qualification.json`, public contract, book and fact card.
+CLI/discovery and MCP remain separate pending leaves; summary queries and
+frozen tooling capabilities are unchanged. Task/book metadata admits only this
+owned interface; the existing knowledge card is compacted within its allowance.
+The inspection contract owns the API/error rationale without a duplicate ledger.

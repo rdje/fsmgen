@@ -207,12 +207,27 @@ sub _check_source_file_result {
     my ($class, @call) = @_;
     die "filesystem source adaptation is private to FSM::VIAL::Tool\n"
         unless caller eq 'FSM::VIAL::Tool';
+    return _source_file_query('check', @call);
+}
+
+sub _inspect_source_file_result {
+    my ($class, @call) = @_;
+    die "filesystem source adaptation is private to FSM::VIAL::Tool\n"
+        unless caller eq 'FSM::VIAL::Tool';
+    return _source_file_query('inspect', @call);
+}
+
+sub _source_file_query {
+    my ($operation, @call) = @_;
+    my $finish_error = sub {
+        return $operation eq 'inspect' ? FSM::VIAL::Tool::_source_inspection_result($_[0]) : $_[0];
+    };
     my $args = $call[0];
     my $version = ref($args) eq 'HASH' && !blessed($args)
         && defined($args->{language_version}) && !ref($args->{language_version})
         && $args->{language_version} eq '2' ? 2 : 1;
     my $invalid = sub {
-        return FSM::VIAL::Tool->_cli_error_result('check', 'VIAL_TOOL_INVOCATION_ERROR', $_[0], $version);
+        return $finish_error->(FSM::VIAL::Tool->_cli_error_result('check', 'VIAL_TOOL_INVOCATION_ERROR', $_[0], $version));
     };
     return $invalid->('filesystem check requires exactly one unblessed invocation hash')
         unless @call == 1 && ref($args) eq 'HASH' && !blessed($args);
@@ -231,15 +246,19 @@ sub _check_source_file_result {
         unless defined($style) && !ref($style) && $style =~ /\A(?:auto|normal|terse)\z/;
     my ($root, $id) = @{$args}{qw(workspace_root source_id)};
     my ($text, $error, $code) = _read_repo_source($root, $id, 'vial');
-    return FSM::VIAL::Tool->_cli_error_result('check', $code // 'VIAL_HOST_ERROR', $error, $version)
+    return $finish_error->(FSM::VIAL::Tool->_cli_error_result('check', $code // 'VIAL_HOST_ERROR', $error, $version))
         if defined $error;
     my ($catalog, $catalog_error, $catalog_code) = _load_import_catalog($root, $id, $text, $version);
-    return FSM::VIAL::Tool->_cli_error_result('check', $catalog_code, $catalog_error, $version)
+    return $finish_error->(FSM::VIAL::Tool->_cli_error_result('check', $catalog_code, $catalog_error, $version))
         if defined $catalog_error;
-    return execute_vial_tool_request(_request(
+    my $request = _request(
         action => 'check', language_version => $version,
         source => _source_envelope($id, $text, 'vial'), source_style => $style,
-    ), {source_catalog => $catalog, artifact_sink => [], repository_root => $root});
+    );
+    my $environment = {source_catalog => $catalog, artifact_sink => [], repository_root => $root};
+    return $operation eq 'inspect'
+        ? FSM::VIAL::Tool::_inspect_source_request($request, $environment)
+        : execute_vial_tool_request($request, $environment);
 }
 
 sub _request {

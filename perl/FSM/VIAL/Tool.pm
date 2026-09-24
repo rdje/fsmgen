@@ -23,6 +23,8 @@ use FSM::VIAL::SourceProjection;
 our @EXPORT_OK = qw(
     execute_vial_tool_request
     check_vial_source_file
+    inspect_vial_source
+    inspect_vial_source_file
     vial_tool_capabilities
     vial_tool_capabilities_v2
 );
@@ -54,6 +56,91 @@ sub vial_tool_capabilities_v2 {
 sub check_vial_source_file {
     require FSM::VIAL::ToolCLI;
     return FSM::VIAL::ToolCLI->_check_source_file_result(@_);
+}
+
+sub inspect_vial_source {
+    my ($args) = @_;
+    my $version = ref($args) eq 'HASH' && !blessed($args)
+        && defined($args->{language_version}) && !ref($args->{language_version})
+        && $args->{language_version} eq '2' ? 2 : 1;
+    my $invalid = sub {
+        my $check = $version == 2
+            ? _v2_error_result('check', _v2_diagnostic('VIAL_TOOL_INVOCATION_ERROR', $_[0], 'invocation', undef, '/'))
+            : _error_result('check', _invocation_diagnostic($_[0]));
+        return _source_inspection_result($check);
+    };
+    return $invalid->('source inspection requires exactly one unblessed invocation hash')
+        unless @_ == 1 && ref($args) eq 'HASH' && !blessed($args);
+    my %allowed = map { $_ => 1 } qw(source_id text source_catalog language_version source_style);
+    return $invalid->('source inspection received an unknown invocation key')
+        if grep { !$allowed{$_} } keys %$args;
+    for my $key (qw(source_id text)) {
+        return $invalid->("source inspection requires scalar '$key'")
+            unless defined($args->{$key}) && !ref($args->{$key});
+    }
+    return $invalid->('language_version must be 1 or 2')
+        if exists($args->{language_version}) && (!defined($args->{language_version})
+            || ref($args->{language_version}) || $args->{language_version} !~ /\A[12]\z/);
+    my $style = exists($args->{source_style}) ? $args->{source_style} : 'auto';
+    return $invalid->('source_style must be auto, normal, or terse')
+        unless defined($style) && !ref($style) && $style =~ /\A(?:auto|normal|terse)\z/;
+    my $catalog = exists($args->{source_catalog}) ? $args->{source_catalog} : {};
+    return $invalid->('source_catalog must be one unblessed hash')
+        unless ref($catalog) eq 'HASH' && !blessed($catalog);
+    # Own the scalar source/catalog values before invoking any compiler phase.
+    # The established request validator checks names, byte limits and values.
+    my $id = $args->{source_id};
+    my $request = {
+        schema => "fsmgen.vial_tool_request.v$version", schema_version => $version, action => 'check',
+        vial_source => {source_id => $id, source_kind_hint => 'vial', text => $args->{text},
+            encoding => 'utf-8', origin => 'repository', display_name => $id,
+            canonical_id => undef, relative_path => $id, metadata => {}},
+        hial_source => undef,
+        options => {source_style => $style, output_style => undef, fixture_id => undef,
+            scenario_ids => [], execution_profile => undef, backend_profile => undef,
+            replay_manifest => undef, native_extension_catalogs => [], artifact_policy => undef,
+            quiet => JSON::PP::false},
+    };
+    return _inspect_source_request($request, {source_catalog => {%$catalog}, artifact_sink => []});
+}
+
+sub inspect_vial_source_file {
+    require FSM::VIAL::ToolCLI;
+    return FSM::VIAL::ToolCLI->_inspect_source_file_result(@_);
+}
+
+sub _inspect_source_request {
+    my ($request, $environment) = @_;
+    my $checked = execute_vial_tool_request($request, $environment);
+    return _source_inspection_result($checked) unless $checked->{success};
+    my $detail = eval {
+        # Reuse the captured bytes in memory; never reopen source files after
+        # checking. Keep the established check-result construction unchanged.
+        my $ir = FSM::VIAL::Parser->parse_source({
+            text => $request->{vial_source}{text}, source_name => $request->{vial_source}{source_id},
+            source_catalog => $environment->{source_catalog},
+        });
+        require FSM::VIAL::SourceInspection;
+        FSM::VIAL::SourceInspection->build($ir);
+    };
+    if (!defined($detail) || ref($detail) ne 'HASH' || blessed($detail)) {
+        my $code = 'VIAL_SOURCE_INSPECTION_ERROR';
+        my $message = 'source inspection could not construct its typed projection';
+        my $diagnostic = $request->{schema_version} == 2
+            ? _v2_diagnostic($code, $message, 'inspection', undef, '/inspection')
+            : _diagnostic($code, $message, [], '/inspection');
+        return _source_inspection_result($checked, undef, $diagnostic);
+    }
+    return _source_inspection_result($checked, $detail);
+}
+
+sub _source_inspection_result {
+    my ($checked, $detail, $projection_error) = @_;
+    my $diagnostics = defined($projection_error) ? [$projection_error] : $checked->{diagnostics};
+    my $success = $checked->{success} && defined($detail) && !@$diagnostics;
+    return _clone({schema => 'fsmgen.vial_source_inspection.v1', schema_version => 1,
+        success => $success ? JSON::PP::true : JSON::PP::false,
+        check_result => $checked, inspection => $success ? $detail : undef, diagnostics => $diagnostics});
 }
 
 sub execute_vial_tool_request {

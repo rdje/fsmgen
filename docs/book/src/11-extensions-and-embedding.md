@@ -2847,18 +2847,18 @@ This VIAL report is a summary: it omits expression/action bodies and retains
 lifecycle family identity, revision and node count rather than node conditions,
 deadlines or service policies. Matching native and MCP summaries proves that
 transport preserves the report, not that an agent can inspect those details.
-A separate typed source-inspection API and MCP route are selected under
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`, but are not yet shipped.
+The public typed source-inspection API supplies those details. Its native CLI
+and dedicated MCP route are the next integration steps and remain unshipped.
 
-The typed projection is now implemented internally for base source meaning
+The public typed projection covers base source meaning
 and `lifecycle_control@1`: it retains declaration bodies, expressions, nested
 actions, source locations, exact model/fault scope and complete lifecycle nodes.
 Its independent record definitions are in the
 [source-inspection contract](../../VIAL_SOURCE_INSPECTION_CONTRACT.md).
 Lifecycle detail preserves readiness prerequisites, all service conditions,
 intrinsic and added dependencies, inclusive deadlines and failure cleanup policy.
-Deadline and cleanup bounds appear as typed cycle counts. Callable inspection APIs remain in
-progress; current MCP summary queries have not gained those bodies. Unknown
+Deadline and cleanup bounds appear as typed cycle counts. Current MCP summary
+queries have not gained those bodies. Unknown
 family revisions and incomplete records cause projection refusal. The projection
 recovers authored declaration order from source locations. Native check and MCP
 summaries also preserve authored order after recursive type resolution. For
@@ -2878,8 +2878,51 @@ Its readiness condition then explicitly retains the configured entry
 precondition, with no invented dependency or service identity. This has the
 same meaning as adding `(requires (configured))`; authored `(requires (all))`
 remains invalid. Existing nonempty readiness conditions and their order remain
-unchanged. The internal base/lifecycle projection is qualified; the public
-API and MCP detail route remain in progress and unadvertised.
+unchanged.
+
+From the repository root, inspect the complete lifecycle source through the
+public filesystem API:
+
+```bash
+perl -Iperl -MFSM::VIAL::Tool=inspect_vial_source_file -MJSON::PP -e '
+  my $r = inspect_vial_source_file({
+    workspace_root => ".",
+    source_id => "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial",
+    language_version => 2, source_style => "auto",
+  });
+  print JSON::PP->new->canonical->pretty->encode($r);
+  exit($r->{success} ? 0 : 1);
+'
+```
+
+The result uses `fsmgen.vial_source_inspection.v1`, independently of language
+version. `check_result` retains the complete existing native check.
+`inspection.packages[].fixtures[].scenarios[].actions[]` exposes authored
+actions; `inspection.packages[].intent_families[].nodes[]` exposes lifecycle
+conditions and policy. A deadline node has `payload.detail.max_cycles`,
+`from`, `until` and `last_cycle_inclusive`; service and failure nodes retain
+their corresponding typed conditions and cleanup policy.
+
+An embedding host that already owns source bytes can avoid filesystem access:
+
+```perl
+use FSM::VIAL::Tool qw(inspect_vial_source);
+my $result = inspect_vial_source({
+    source_id => $relative_source_id, text => $source_bytes,
+    source_catalog => $relative_import_ids_to_bytes,
+    language_version => 2, source_style => 'auto',
+});
+```
+
+Both calls require a closed invocation hash and return fresh JSON-safe values
+without printing, planning, running a backend or publishing artifacts. Omitted
+version selects v1; omitted style selects `auto`. The portable catalog defaults
+to empty. The filesystem adapter applies the same bounded root/import loader
+as source checking, captures each source once and never reopens it after check.
+Source failures retain the ordered native diagnostics and null inspection.
+If typed projection itself fails, outer `success` is false, detail is null, and
+`VIAL_SOURCE_INSPECTION_ERROR` contains a fixed public message; the successful
+native check remains intact. Always test the outer success flag.
 
 Select `language_version: 2` explicitly for VIAL v2, including the implemented
 lifecycle-control family. Omission selects v1; the adapter never guesses from
