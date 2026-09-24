@@ -204,11 +204,33 @@ sub _read_ready {
 }
 
 sub _write_ready {
-    my ($self) = @_;
+    my ($self, $observed_now, $check) = @_;
     _owner($self);
     FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
         # A pre-mask handler may have closed or advanced this original owner.
         return if $self->{closed};
+        if ($check) {
+            my ($admitted, $error);
+            {
+                local $@;
+                eval {
+                    $admitted = $check->($self);
+                    _error('write admission must return a boolean') unless defined($admitted)
+                        && !ref($admitted) && "$admitted" =~ /\A[01]\z/;
+                    1;
+                } or $error = $@;
+            }
+            if (defined $error) {
+                # A failed callback cannot leave queued bytes eligible for an
+                # unguarded retry. Preserve its exception if cleanup also fails.
+                eval { $self->_fail('host_error', 'socket write admission failed'); 1 };
+                die $error;
+            }
+            return unless $admitted;
+            return if $self->{closed};
+        }
+        # The caller's authority check can consume time or close the owner.
+        # Neither callback success nor a stale readiness sample renews a wall.
         my $now = _now();
         if ($now >= $self->{deadline}) {
             $self->_fail('timed_out', 'original invocation deadline expired'); return;
@@ -275,8 +297,9 @@ sub _write_ready_effect {
 }
 
 sub advance {
-    my ($self) = @_;
-    _error('unexpected advancement arguments') unless @_ == 1;
+    my ($self, $check) = @_;
+    _error('expected optional socket write admission')
+        unless @_ == 1 || (@_ == 2 && ref($check) eq 'CODE');
     _owner($self);
     return if $self->{closed};
     my $now = _now();
@@ -295,7 +318,7 @@ sub advance {
     my $select = IO::Select->new($self->{handle});
     $self->_read_ready($now) if $select->can_read(0);
     return if $self->{closed};
-    $self->_write_ready($now) if $self->{progress_deadline} && $select->can_write(0);
+    $self->_write_ready($now, $check) if $self->{progress_deadline} && $select->can_write(0);
     return;
 }
 

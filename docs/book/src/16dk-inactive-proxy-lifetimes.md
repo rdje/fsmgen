@@ -1057,6 +1057,27 @@ Copied and inherited Connection records cannot inspect or change the original
 publication; inherited cleanup closes only the child's descriptors. Binding this
 observation to original Service requests and gated jobs remains the next step.
 
+`Connection::advance($write_check)` now optionally admits each socket write
+through a trusted owner's callback. It receives the original Connection under
+the preparation signal mask, after read progress and before the native write.
+Returning `0` defers output without consuming queue bytes or renewing the
+no-progress deadline. Returning `1` permits the attempt only after fresh closure
+and original invocation/no-progress checks. The guard applies to that advancement;
+an owner that requires admission must supply it on every pass.
+
+For example, an ACCEPT written one byte at a time requires admission for every
+attempt. A callback that closes the peer's record prevents the following write,
+even if it returns success. A callback that throws or returns anything except a
+boolean closes the connection, retains its first failure and propagates the
+refusal; a later unguarded call cannot release those queued bytes. Pending creator
+signals observe the completed write transaction and confirmed publication before
+interrupting the return. The no-callback API retains its existing behavior.
+
+This boundary allows Service to enforce its narrower original admission wall
+immediately before a write. Service job association and authority checks remain
+the next integration step; this callback alone proves no job admission or exec
+permission.
+
 Normal callers retain the existing own-group supervisor. Execution
 publication, nested routing and complete subtree qualification
 still have separate open owners. These private components
@@ -1086,6 +1107,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1843-process-accept-publ
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1844-process-retained-request-transfer.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1845-process-retained-parent-context.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1846-process-snapshot-context.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1847-process-write-admission.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

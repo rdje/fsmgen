@@ -3675,10 +3675,26 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3: preserve bounded private snapshot context`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind retained Service jobs to complete tracked ACCEPT publication.`
   Acceptance: `Associate an original handed request with its admitted job exactly once, retain the association before queueing tracked ACCEPT, and expose copied complete-publication observations. Preserve original authority/admission deadlines through partial writes. EOF, repeated/foreign messages, expiry and cancellation close the recorded peer without suggesting exec authority. Qualify actual socket bytes and interrupted returns; post-exec result streaming remains later work.`
-  Verification: `Pending retained request and context boundaries; use the qualified Connection record rather than aggregate queue emptiness.`
+  Verification: `Request/context components are qualified. Connection currently rechecks only its transport deadline at the masked write boundary; child .1 adds an optional original-owner write admission guard so Service can enforce its narrower fixed wall there. Child .2 then binds original requests/jobs to the existing tracked publication. Neither child releases exec.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.1`
+  Status: `done`
+  Goal: `Recheck original write admission at the masked socket boundary.`
+  Acceptance: `Add an optional bounded write-admission callback to Connection advancement, invoked with the original owner under preparation masking before any socket write. False defers without consuming queue bytes or renewing walls; malformed returns and exceptions refuse the write, preserve first failure and close the original connection. Recheck closure and original transport/no-progress deadlines after the callback. Preserve legacy no-callback behavior, read progress and private direct-write tests. Qualify literal real sockets, partial writes, original masks/signals, callback closure/expiry/errors and copied/inherited rejection; no Service binding or command release yet.`
+  Verification: `Connection advance optionally invokes one original-owner guard under preparation masking before each write attempt. False defers without queue/deadline renewal; malformed returns or exceptions close and rethrow while preserving first failure. Success rechecks closure and original invocation/no-progress walls. T1847 observes literal partial writes, input progress, actual signals/masks, stale clocks, callback closure/errors and copied/inherited refusal with exact cleanup. Six isolated defects reject at their intended assertions; omitting only the redundant post-callback closure check remains non-discriminating because close already empties the queue. Final selected band passes Files=15, Tests=191. Service must supply the callback on every advancement; job binding remains child .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.1: guard each original socket write admission`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2`
+  Status: `pending`
+  Goal: `Retain Service request/job association before tracked ACCEPT queueing.`
+  Acceptance: `Bind one original handed request and ready original job context exactly once before queueing its tracked ACCEPT. Preserve copied publication and closure observations, original request/parent/job walls and job identity through interrupted returns. Invoke child .1 admission at every write boundary; EOF, repeated/foreign messages, matching cancellation, revocation and expiry close the recorded peer without exec authority. Qualify actual literal sockets, creator signals and partial publication; aggregate ledger and native command binding remain sibling .4.`
+  Verification: `Pending the masked Connection admission boundary; avoid using queue emptiness as publication proof.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4`
@@ -4400,7 +4416,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3` binds retained Service requests/jobs to tracked ACCEPT publication. Original request transfer, parent-context recovery and pure snapshot replacement are qualified. Later children join aggregate gated admission and final exec rechecks. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2` binds retained Service request/job association to tracked ACCEPT through the qualified masked write admission boundary. Original request transfer, parent-context recovery and pure snapshot replacement are qualified. Later children join aggregate gated admission and final exec rechecks. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7062,3 +7078,36 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   Visual QA remains blocked on browser runtime startup, separately owned.
   Knowledge Map, claim census and staged doctrines cover synchronized metadata.
   Original startup/proxy/compiler producers, full CI and push remain gated.
+
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _write_ready {'`
+  locates ef450a2e618b91ffc7d767211cec5052e097854e; the fresh pre-mask
+  checks arrive in 13bf045a3838d3ba04bbe5e639ef81a47ae57959. Connection
+  checks its transport/no-progress walls but has no original Service admission
+  callback at the actual masked write boundary. A narrower owner wall must be
+  checked there before Service request/job publication can safely compose.
+- [x] **ADDRESSED (verified)** — Re-derivation: T1847 compares independent
+  literal ACCEPT bytes, byte-at-a-time writes and deferred native silence.
+  It observes original-owner callback identity, read progress, unchanged queue
+  credit/deadlines, original masks, actual pending/pre-mask creator signals,
+  inclusive expiry after callback, first failure and exact inherited-child wait.
+  Falsification: omitted guard, unmasked callback, malformed-return acceptance,
+  stale clock, open failure and copied owner each reject at the intended
+  assertion, with native exits 255, 3, 255, 255, 255 and 2; none is a signal.
+  An additional omitted closure-check variant passes because existing close
+  clears active/queued frames before returning. It proves no missed native-write
+  defect and receives no negative-control credit; its original result is kept.
+  All outcomes are consumed. Exact isolated sources/runner/book build are removed.
+  Durability: tracked source/test/book/fact and task preserve the contract and
+  rerun; .artifacts/write-admission-* raw logs are a named durability gap.
+- [x] **NO REGRESSION** — The selected guarded band reports
+  `All tests successful. Files=15, Tests=191`; focused T1847 and Perl syntax
+  pass. Initial fixture syntax warned about the built-in eof name; renaming
+  the helper to peer_eof removes the ambiguity before credited execution.
+  mdBook builds and generated HTML contains the per-advancement guard contract;
+  visual QA remains separately blocked on browser runtime startup. Knowledge
+  Map, claim census and staged doctrines cover synchronized metadata. T1827
+  executes bounded fixture commands; this API releases no new command. Original
+  startup/proxy/compiler producers, full CI and push remain gated.
