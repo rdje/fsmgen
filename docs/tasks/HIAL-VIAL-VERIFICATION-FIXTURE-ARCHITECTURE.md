@@ -3773,7 +3773,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Record original admitted execution effects without renewing transport clocks.`
   Acceptance: `After fresh Service admission is qualified, retain a trusted aggregate report of an original confirmed native effect under masking. Require original matching admission history; keep original admission deadline and clipped execution deadline separate. Switch active transport checks to execution lifetime, retain cancellation/EOF/protocol refusal and copied historical publication, and never reopen a closed peer. Reconcile interrupted reports idempotently without fabricating a native timestamp or effect. Qualify exact walls, root/parent/job expiry, closure, copies and real pending signals. Aggregate root/nested integration remains the following sibling.`
-  Verification: `Fresh admission is qualified; native effect authority belongs to the original aggregate Pair and cannot be inferred from a positive transport check.`
+  Verification: `Child .1 retains completed transport inspection/admission evidence before the unchanged rollover milestone. Child .2 records trusted reports of original confirmed native effects and switches active Service lifetime without renewing original walls; historical reporting must also survive peer closure without reopening it.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2.1`
+  Status: `done`
+  Goal: `Retain completed transport-admission checklists before execution lifetime work.`
+  Acceptance: `Authenticate the exact committed predecessor and completed acceptance suffix in the existing finite manifest. Independently reconstruct source/suffix identities and dimensions, reverify its predecessor chain, and falsify a changed suffix digest with the unchanged checker. Preserve all original nodes and compact terminals except explicit transition-parent decomposition; keep the live execution-scope correction exact. Change no product behavior, source, book contract or ceilings.`
+  Verification: `Exact 16a9e4b160de8d3dd0b82ea271e1539082ec9681 reconstructs the complete task (7196 lines/1277343 bytes) and three-section completed suffix (97 lines/7146 bytes). Independent git cat-file, awk, wc and shasum agree with both SHA-256 identities. Its predecessor manifest and exact d2d68b2e49 source/suffix reverify, including the earlier retained manifest. All original node bodies and compact terminals remain exact except the explicit transition-parent decomposition; the live execution-scope correction remains byte-for-byte present. The unchanged checker accepts the complete fixture and rejects only an altered suffix digest. Scratch sources, measurements, runner and fixture are removed. Product source/book behavior and ceilings remain unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2.1: retain completed transport admission history`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2.2`
+  Status: `active`
+  Goal: `Retain confirmed execution reports and switch only the active transport lifetime.`
+  Acceptance: `Provide a masked trusted-owner report of its original confirmed native effect after a matching retained positive transport check. The aggregate, not Service or a copied observation, proves the native effect. Preserve original admission history separately from the original request/job/ancestor-clipped execution deadline; subsequent transport checks use the execution lifetime and all original authority walls. Retain reports after peer closure without reopening it; repeated or interrupted reporting must preserve the first report, first failure and exact deadlines. Qualify real sockets, exact boundaries, post-exec cancellation/protocol/EOF, copied/inherited refusal and actual creator signals. Aggregate root/nested release remains the following sibling.`
+  Verification: `Positive Service admission currently keeps the original admission wall and contains no execution-effect report.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4`
@@ -4488,7 +4503,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2` records original admitted execution effects while retaining fixed admission history and switching active transport checks to the clipped execution lifetime. Keep closed peers closed and preserve original failure and interrupted report history. Native Pair admission, Connection input inspection and fresh Service checks are qualified; aggregate root/nested release, streaming, fair composition and independent qualification remain open. Preserve live claim owners, execution-scope corrections, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2.2` retains trusted reports of original confirmed native effects and switches only the active Service lifetime. Preserve original admission history, clipped execution/authority walls, first failure and idempotent interrupted reports; keep closed peers closed. Native effect proof belongs to the original aggregate Pair, whose root/nested integration remains the following sibling. Preserve live claim owners, execution-scope corrections, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7097,100 +7112,30 @@ correction supplies its proper scope and is reflected in the canonical fact/book
 
 
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Transport-history containment: `git log -S`
-  locates the completed gated-admission subtree and native-gate checklist in exact
-  d2d68b2e49. Its task is 7181 lines, near the unchanged 7200-line rollover
-  milestone. Completed evidence belongs in authenticated version history before
-  Connection inspection and Service lifecycle implementation grow the live tree.
-- [x] **ADDRESSED (verified)** — Transport-history re-derivation independently
-  reconstructs the complete source (1280386 bytes) and completed suffix (63
-  lines/4732 bytes/two sections), with SHA-256 identities
-  e3bfd1592cc67be81ca9131cb0e7a508004e37ea4d45f2ded964884b98a7f4ea
-  and 6f5cecce750c7f4d42902ce0a728f7a414de695d185fdc49881768fea0f68de9.
-  Independent git cat-file, awk, wc and shasum agree; predecessor source/suffix
-  and its retained manifest reverify. The compact source reconstructs all nine
-  completed ACCEPT nodes with original goal/topology; a fresh registry census
-  finds no live claim owner in that flat subtree. All other original bodies and
-  terminals remain exact except the preowned Service decomposition; the live
-  execution-scope correction remains exact. Falsification: production checker
-  accepts the complete fixture and separately rejects altered history and compact
-  source digests. The compact runner first expected an extra word in its diagnostic;
-  the unchanged checker correctly refused, and the corrected exact oracle passes.
-  Durability: current manifest/terminal plus exact Git predecessors; raw
-  .artifacts/transport-history-* logs remain a named gap. Source/suffix copies,
-  measurements, scripts and fixture are removed after results are consumed.
-- [x] **NO REGRESSION** — Transport-history `knowledge-map: OK` confirms
-  unchanged fact routes; task-tree-integrity validates 6 trees/1512 nodes,
-  3 segments/40 compact terminals and one acceptance history. Claim inventory
-  and staged doctrines check paired metadata. Product source, tests, book behavior
-  and ceilings are unchanged. No native fixture, original producer, full CI or push
-  runs for this retention-only slice.
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2.1)
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Input inspection: the exact predecessor
-  7338ff45dfcd46ce2299b10baf27a79511d2f3d1 has only combined read/write advance.
-  Its isolated native fixture reports `Can't locate object method "inspect_input"`
-  at .artifacts/input-inspection-predecessor/fixture.t line 86. Final E admission
-  needs a fresh bounded input observation that sends no output, and buffered or
-  interrupted control cannot silently authorize execution. Completing a read also
-  clears the old frame start, so post-read validation must retain that prior wall.
-- [x] **ADDRESSED (verified)** — Input re-derivation: T1854 independently
-  sends literal fragmented, pipelined and large frames; counts each native read/
-  peek and its bounded request; observes retained frames, queued bytes, real EOF,
-  exact walls and native signal masks. It separates actual empty reads from EINTR,
-  buffers and decoded frames, preserves first failure/copies, closes lost read
-  returns, rejects copied/inherited owners and consumes the exact inherited wait.
-  The first large sender expired against actual kernel backpressure; its driver
-  now interleaves bounded read-only inspection while sending, with unchanged
-  production limits. Falsification: identical copied positive passes; ten isolated
-  defects reject for cached input (255), empty EINTR (1), ignored fragments (1),
-  ignored frame (1), omitted post-read wall (255), erased completed-frame wall
-  (255), outgoing write (3), unmasked input (2), aliased failure (1) and lost-read
-  connection reuse (255). These are Perl fixture exits, not native signals.
-  Durability: tracked source/T1854, book, canonical fact and this task; raw
-  .artifacts/input-inspection-* logs/JSON remain a named gap. Exact predecessor,
-  variant sources, runner and generated book are removed after consumption.
-  Linux and browser visual qualification remain missing.
-- [x] **NO REGRESSION** — Input-inspection band reports `All tests successful`,
-  `Files=36, Tests=338` under the RAM guard: selected T1812–T1814/T1817 and
-  T1823–T1854. Syntax is OK; mdBook build and generated HTML inspection confirm
-  read-only states and fixed completed-frame lifetime. Knowledge Map, claim
-  inventory and staged doctrines verify synchronized metadata. This broader band
-  includes bounded command fixtures; original startup/proxy/compiler producers,
-  full CI and push remain gated. Service and aggregate execution integration
-  remain subsequent work.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Service execution admission: the exact
-  55758fd663370365eb5f9946716fb267353fbd7a fixture reports missing
-  `execution_observation` at .artifacts/service-execution-admission-variants/predecessor/fixture.t line 180.
-  Bound socket-write admission does not require quiet partial input or complete
-  ACCEPT; a distinct fresh transport check is needed before an original E attempt.
-- [x] **ADDRESSED (verified)** — Service re-derivation: T1855 sends literal
-  READY/SPAWN/ACCEPT/control through real sockets and observes only the matching
-  read, no new accepts/writes, unchanged walls, exact prefixes, EOF, retained
-  failure/history and closure. It covers pending/decoded control after a positive
-  check, unrelated backlog/peers, EINTR, inspection errors, parent/job/endpoint
-  revocation, inclusive walls before/after inspection/publication, copied/inherited
-  authority and native signals before/after retained publication. Positive checks
-  alone expire at the original admission wall. Falsification: identical copied
-  positive passes; twelve defects reject incomplete ACCEPT (1), ignored input (3),
-  cached input (5), foreign publication (1), stale post-inspection checks (2),
-  aliased positive history (1), aliased view (1), copied Service (1), unmasked
-  check (1), omitted refusal closure (2), stale return (1) and renewed wall (2).
-  Exact predecessor exits 255 for the missing API. These are Perl fixture exits;
-  every endpoint census is unchanged. Durability: source/T1855, book, fact and
-  this owner; raw .artifacts/service-execution-admission-* logs/JSON remain a named
-  gap. Predecessor/variant sources, runner and generated book are removed after
-  consumption. Linux and browser visual evidence remain missing.
-- [x] **NO REGRESSION** — Service execution band: `All tests successful`,
-  `Files=37, Tests=346`, selected T1812–T1814/T1817 and T1823–T1855 under the
-  RAM guard. Syntax is OK; mdBook build/HTML verifies the transport/native-effect
-  boundary. Knowledge Map, claim inventory and staged doctrines verify metadata.
-  The broader band runs bounded command fixtures; original startup/proxy/compiler
-  producers, full CI and push remain gated. Execution transition and aggregate
-  release remain open; this API neither executes a job nor extends its lifetime.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Execution-lifetime history: `git log -S`
+  locates the first suffix heading at 7338ff45dfcd46ce2299b10baf27a79511d2f3d1.
+  Exact 16a9e4b160 has 7196 task lines, near the unchanged 7200-line rollover
+  milestone; completed transport evidence belongs in authenticated Git history
+  before execution-lifetime implementation grows the live task.
+- [x] **ADDRESSED (verified)** — Execution-history re-derivation reconstructs
+  the full source (1277343 bytes) and completed suffix (97 lines/7146 bytes,
+  three sections). Independent git cat-file, awk, wc and shasum agree with
+  d2359b14853a7425852d16732184f292f23340d5a8f1ecd4e62620e950bb4acb
+  and 4edea367ded024545ff56367b69ff8db9332ebeb3294dcf29533d69609b04c79.
+  The predecessor manifest and exact d2d68b2e49 source/suffix reverify; that
+  revision retains its own earlier manifest. Original node bodies and compact
+  terminals remain exact except the preowned transition-parent decomposition,
+  and the live execution-scope correction remains unchanged. Falsification:
+  production checker accepts the complete fixture and rejects only an altered
+  suffix digest. Durability: current manifest plus exact Git source and chain;
+  raw .artifacts/execution-lifetime-history-* logs remain a named gap. Scratch
+  source/suffix copies, measurements, script and fixture are removed after
+  consuming all results. No product behavior or ceiling changes.
+- [x] **NO REGRESSION** — Execution-history `knowledge-map: OK` confirms
+  unchanged routes; task-tree-integrity validates 6 trees/1516 nodes, 3 segments,
+  40 compact terminals and one acceptance history. Claim inventory and staged
+  doctrines verify paired metadata. Source, tests and book behavior are unchanged;
+  no native fixture, original producer, full CI or push runs for this slice.
