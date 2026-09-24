@@ -3805,7 +3805,30 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Join original execution lifetime and retained closed-peer outcomes.`
   Acceptance: `Reconcile original confirmed effects before any Service advancement, admission-lifetime check or closed-outcome consumption can discard them. Select execution lifetime solely from the retained confirmed native effect and original Service report; preserve admission history and fixed walls. Retain matching job/execution outcome metadata before Service consumption, including interrupted returns, cancellation and EOF. Qualify delayed reports, old admission expiry and exact native cleanup; keep explicit request release separate.`
-  Verification: `Original-effect report publication child .2 is qualified. Join ordinary aggregate advancement, execution liveness and retained closed outcomes next.`
+  Verification: `Original-effect publication is qualified. Child .1 retains its completed acceptance history before rollover; child .2 joins advancement and execution lifetime; child .3 retains complete closed outcomes.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.1`
+  Status: `done`
+  Goal: `Retain original-effect acceptance history before lifetime integration.`
+  Acceptance: `Authenticate exact committed source and completed suffix with independent measurements; reverify prior versioned manifests. Preserve all existing node contracts except explicit integration decomposition, and preserve the execution-scope correction. Reject altered suffix and source digests with the unchanged checker; change no behavior or ceiling.`
+  Verification: `Exact 145e74e4e3b76dcf0c10ae0ba3a1d6712089be18 source and completed suffix match independent cat-file/awk/wc/shasum measurements. Three prior versioned source/suffix manifests reverify. Every original node field, including compact-source identity and retention metadata, and the execution-scope correction remain exact except the explicit integration-parent decomposition. The unchanged checker accepts the complete fixture and rejects altered suffix and source digests as sole failures. No executable behavior, book or ceiling changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.1: retain native-effect acceptance history`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.2`
+  Status: `active`
+  Goal: `Reconcile original effects before aggregate lifetime checks.`
+  Acceptance: `Report confirmed original effects before Service advancement, admission checks or closed consumption; retain uncertainty without confirmation or replay. Select fixed execution lifetime only from original native confirmation and original Service report. Preserve admission history, parent/context checks, first failures and cleanup through delayed reports and interruption; qualify real native effects without exposing request release.`
+  Verification: `Acceptance-history retention is complete; reconcile original effects before aggregate advancement and lifetime checks next.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3`
+  Status: `pending`
+  Goal: `Retain complete original execution metadata before closed-outcome consumption.`
+  Acceptance: `Publish matching original job and Service execution outcome metadata before take_closed can consume it. Preserve full report and admission history through cancellation, EOF, delayed reporting and lost consumption returns. Returned copies cannot mutate retained outcomes. Qualify exact native cleanup and complete outcome agreement without exposing request release.`
+  Verification: `Pending lifetime reconciliation child .2.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4`
@@ -4520,7 +4543,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3` joins original effect reporting into aggregate advancement, execution lifetime and retained closed outcomes. Outer .4 then exposes request release. Preserve original owners, walls, first failures, uncertainty, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.2` joins original effect reporting into aggregate advancement and execution lifetime. Child .3 then retains complete closed outcomes; outer .4 exposes request release. Preserve original owners, walls, first failures, uncertainty, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7127,63 +7150,26 @@ whole regression band. The original startup/proxy/compiler producers, full CI
 and push did not run. Exact predecessor evidence remains unchanged; this live
 correction supplies its proper scope and is reflected in the canonical fact/book.
 
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.1)
 
-
-
-
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Reconciliation-history `git log -S`
-  locates the first suffix heading at cbe847d4683f32b85a840707b13515d4cf79747b.
-  Exact 8f359f0c9 has 7195 task lines; completed final-admission evidence needs
-  exact bounded retention before original-effect integration grows the live tree.
-- [x] **ADDRESSED (verified)** — Reconciliation-history re-derivation reconstructs
-  source 1274137 bytes and suffix 57 lines/4098 bytes/two sections. Independent
-  git cat-file, awk, wc and shasum agree with full-source SHA-256
-  edb3a5b83f7f61698bf583406c4945c7c89f53b0559c9ab8e8391b91a0ab6157
-  and suffix 15dff4731bb46e4cb0cafb24e24c6235026c55c7309cbe615b3cf82cf2b20643.
-  Prior 7f693cc49e72 and 736da11ca746 manifests/source/suffixes reverify.
-  The complete tracked JSON/JSONL owner_task census admits the closed flat
-  five-node final-admission subtree; no live claim owner or earlier compact
-  terminal is contained. Original goal and exact source remain retrievable;
-  all other original nodes and the execution-scope correction stay exact except
-  explicit reconciliation-parent decomposition. Falsification: the unchanged
-  checker accepts the complete fixture and rejects changed suffix and compact
-  source digests separately as sole failures. Durability: committed manifest,
-  compact terminal and exact Git source preserve the history chain. Ignored
-  .artifacts/reconciliation-history-* logs are a named gap; consumed scratch
-  source/suffix copies, measurements, fixture and runner are removed. No product
-  code, test, book behavior or ceiling changes.
-- [x] **NO REGRESSION** — Reconciliation-history `knowledge-map: OK` retains
-  routing; task integrity and staged doctrines qualify paired retention metadata.
-  No native fixture, original producer, full CI or push runs in this slice.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Native-effect predecessor probe of exact
-  b49dd4da4 Coordinator source reports `original native-effect reporting is absent at -e line 1, <STDIN> chunk 1.`
-  Final admission retained an original grant but the aggregate had no independent
-  confirmed-effect reporter; native uncertainty cannot become Service confirmation.
-- [x] **ADDRESSED (verified)** — Native-effect re-derivation: T1862 passes twelve
-  groups using literal sockets, actual gated E and binary invocation output.
-  Original effect observation precedes Service calls; captured original owners
-  retain first reports before creator signals even after lost returns or failed
-  cleanup masks. Delayed reports preserve issue/execution walls after admission
-  expiry or closure; no report reopens a peer. Copies, inherited, substituted,
-  foreign and consumed grants refuse. Uncertainty neither reports nor replays E.
-  Falsification: nine isolated controls reject at intended oracles: uncertain
-  confirmation, skipped grant authentication, repeated report, late first failure,
-  stale post-mask grant, omitted return recovery, unmasked effect, shared public
-  view and recovery through substituted Service. Identical positive passes;
-  every native END census closes. Fixture corrections use ticket_observation and
-  original aggregate outcome consumption; both initial failures closed resources.
-  Durability: committed fixture, book, fact and exact source preserve contracts.
-  Ignored .artifacts/native-effect-* logs/control JSON are a named durability gap
-  owned by independent qualification .19.2.3.1.2.2.5.5.2.3.4.6; consumed variant
-  copies, runners and book output are removed. Advancement/liveness and retained
-  closed-outcome integration remain child .3; explicit release stays separate.
-- [x] **NO REGRESSION** — Native-effect selected band: `All tests successful.`
-  `Files=44, Tests=409`; syntax, mdBook build/HTML assertions and `knowledge-map: OK`
-  pass. Staged doctrines and normal hooks enforce this slice. Browser visual QA,
-  Linux, original startup producers, full CI and push retain their existing gates.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Effect-history `git log -S` locates the
+  first completed suffix heading at b49dd4da487c88dd8a11d952e8ab07ed5e01bbb2.
+  Exact 145e74e4e has 7189 task lines; completed reporting evidence needs bounded
+  retention before advancement and lifetime integration expands the live tree.
+- [x] **ADDRESSED (verified)** — Effect-history re-derivation reconstructs source
+  1271333 bytes and suffix 55 lines/4095 bytes/two sections. Independent git
+  cat-file, awk, wc and shasum agree: full source SHA-256
+  8a5c38ea75e09fb9f74c78ef7cd6d43e2deb98ee8a1aba072394dc6de2168ff9;
+  suffix 31d6f2edcd265afe963a01c978041e69ea16d7477400760c32f86e1cdd581e73.
+  Prior 8f359f0c93c8, 7f693cc49e72 and 736da11ca746 source/suffix/versioned
+  manifest chains reverify. Every original node field and execution-scope
+  correction remains exact except declared integration-parent decomposition;
+  three owned children distinguish history, lifetime and outcome retention.
+  Falsification: unchanged checker accepts the full fixture and rejects altered
+  suffix and source digests separately as sole failures. Durability: committed
+  manifest and exact Git sources preserve history; ignored .artifacts/effect-history-*
+  logs/control JSON are a named gap. Consumed source/suffix copies, measurements,
+  fixture and runner are removed. Product source, tests, book and ceilings stay exact.
+- [x] **NO REGRESSION** — Effect-history task integrity and `knowledge-map: OK`
+  preserve routing; staged doctrines verify paired retention metadata. No native
+  fixture, original producer, full CI or push runs for this history-only slice.
