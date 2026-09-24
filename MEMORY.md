@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3` (pending)
-- next_action: Execute the complete selected source/query cohort with independent guards and retained evidence; own any demonstrated gap.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2` (pending)
+- next_action: Restart complete source-query qualification with fresh receipts, preserve the interrupted attempt and own any demonstrated gap.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

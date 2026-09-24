@@ -44,7 +44,9 @@ sub new {
         manifest_builder => $args{manifest_builder} || \&build_capability_manifest,
         runner => $args{runner},
         json => JSON::PP->new->ascii->canonical->pretty,
-        json_compact => JSON::PP->new->ascii->canonical,
+        # Wire JSON is UTF-8. ASCII-only encoding of the embedded report text
+        # amplifies memory for large responses; the API text remains unchanged.
+        json_compact => JSON::PP->new->utf8->canonical,
     }, $class;
 }
 
@@ -388,7 +390,7 @@ sub run_stdio {
 
         my $response;
         eval {
-            my $request = JSON::PP->new->decode($line);
+            my $request = JSON::PP->new->utf8->decode($line);
             $response = $self->handle_jsonrpc_request($request);
             1;
         } or do {

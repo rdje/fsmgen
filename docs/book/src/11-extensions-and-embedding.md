@@ -2978,6 +2978,29 @@ expressions, actions, model-instance and fault-binding identities remain typed.
 These queries use the public filesystem inspection API without planning,
 random evaluation, backend execution, publication or the hardware command runner.
 
+### JSON Transport Encoding
+
+Both newline stdio and `--request-json` consume and emit UTF-8 JSON bytes.
+Literal Unicode and JSON Unicode escapes retain the same request identity and
+report values. Newline responses remain compact, with exactly one message per
+line; one-shot responses remain formatted. Tool text still carries the complete
+ASCII-escaped JSON payload alongside its equal `structuredContent` value.
+
+For example, these calls return the same Unicode request identity:
+
+```bash
+printf '%s\n' '{"jsonrpc":"2.0","id":"inspection-é","method":"ping"}' | perl bin/fsmgen-mcp --workspace-root .
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":"inspection-é","method":"ping"}'
+```
+
+The outer transport uses UTF-8 encoding to avoid excessive temporary memory
+when escaping large embedded report text. Reports are neither truncated nor
+filtered to fit a test budget. The resource regression exercises both actual
+CLI modes with a large synthetic report, Unicode identities and typed values;
+the complete source-query cohort separately qualifies real feature reports.
+This removes the demonstrated encoding amplification, not the ordinary memory
+needed to construct, retain and transmit a complete report.
+
 ### Feature Coverage Qualification
 
 Feature coverage is selected from the public supported-source catalog and query

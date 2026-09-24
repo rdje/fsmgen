@@ -119,7 +119,7 @@ sub _producers {
 
 sub _object {
     my ($text, $label) = @_;
-    my $value = eval {$json->decode($text)};
+    my $value = eval {JSON::PP->new->utf8->decode($text)};
     die "$label did not return one JSON object\n" if $@ || ref($value) ne 'HASH';
     return $value;
 }

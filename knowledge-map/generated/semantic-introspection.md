@@ -1,7 +1,7 @@
 # Knowledge Map: `semantic-introspection`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **72** uniquely owned question entries.
+> **1** facts · **73** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -77,6 +77,7 @@
 - q="which MCP tools are selected for FSMGen introspection?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="which MCP transports does FSMGen ship?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="which read-only MCP workflow examples are documented?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="why did large MCP reports exceed the RAM guard?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 
 ## Facts
 

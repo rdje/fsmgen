@@ -1,0 +1,228 @@
+{
+  "actual_source_query_receipt": {
+    "passing": true,
+    "queries": [
+      {
+        "adapter_report_sha256": "943829de34172352b0d46bb0b51fcb4cf99f765e2e1bf4a8134b2234cd02ecf5",
+        "catalog_ids": [
+          "intent.ppif_ahb_interconnect_two_subordinate_byte_lane_seq"
+        ],
+        "native_report_sha256": "943829de34172352b0d46bb0b51fcb4cf99f765e2e1bf4a8134b2234cd02ecf5",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "check",
+        "source_id": "ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif",
+        "source_sha256": "90e61a71977d6e15f703ee52c011879424245413c3d06d7a2839f56ab7947a04",
+        "stdio_report_sha256": "943829de34172352b0d46bb0b51fcb4cf99f765e2e1bf4a8134b2234cd02ecf5"
+      },
+      {
+        "adapter_report_sha256": "87940099a407de02cca15b610a3e5b5a3bb530f5b5dbf0d91dc3036e64556368",
+        "catalog_ids": [
+          "intent.ppif_ahb_interconnect_two_subordinate_byte_lane_seq"
+        ],
+        "native_report_sha256": "87940099a407de02cca15b610a3e5b5a3bb530f5b5dbf0d91dc3036e64556368",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "semantic",
+        "source_id": "ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif",
+        "source_sha256": "90e61a71977d6e15f703ee52c011879424245413c3d06d7a2839f56ab7947a04",
+        "stdio_report_sha256": "87940099a407de02cca15b610a3e5b5a3bb530f5b5dbf0d91dc3036e64556368"
+      },
+      {
+        "adapter_report_sha256": "131b3757c9cf28c18bbd15e5d817562035386dcd9ac2d3ba4a827d76eaac3c9b",
+        "catalog_ids": [
+          "intent.ppif_ahb_interconnect_two_subordinate_byte_lane_seq"
+        ],
+        "native_report_sha256": "131b3757c9cf28c18bbd15e5d817562035386dcd9ac2d3ba4a827d76eaac3c9b",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "schedule",
+        "source_id": "ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif",
+        "source_sha256": "90e61a71977d6e15f703ee52c011879424245413c3d06d7a2839f56ab7947a04",
+        "stdio_report_sha256": "131b3757c9cf28c18bbd15e5d817562035386dcd9ac2d3ba4a827d76eaac3c9b"
+      }
+    ],
+    "schema": "fsmgen.source_query_execution_receipt.v1",
+    "selected_sources": [
+      "ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif"
+    ]
+  },
+  "baseline_revision": "c42b112b15a351680ef918ec15a241aee3228b4a",
+  "corrected_sampler": {
+    "discarded": "Initial stage samples passed Perl magical $$ directly to list-open and sampled the forked ps command, not the intended parent. They are not memory evidence.",
+    "falsification": "A public ps pid=,rss=,command= probe showed parent=28745, direct-magic target=28746 (/bin/ps itself), copied-string target=28745 (Perl). Copying the PID before list-open corrects all verified stage samples. External time and RAM-guard readings are independent.",
+    "verified_stage_samples": [
+      "stage=before_read pid=29574 rss_kib=157088",
+      "stage=before_decode pid=29574 rss_kib=199232",
+      "stage=after_decode pid=29574 rss_kib=301584",
+      "stage=before_stdio pid=29574 rss_kib=301664",
+      "stage=before__encode_pretty pid=29574 rss_kib=356128",
+      "stage=after__encode_pretty pid=29574 rss_kib=971360",
+      "encoded=_encode_pretty bytes=45290152",
+      "stage=before__encode_compact pid=29574 rss_kib=971360",
+      "stage=after__encode_compact pid=29574 rss_kib=1406288",
+      "encoded=_encode_compact bytes=64790920",
+      "stage=after_stdio pid=29574 rss_kib=1406288"
+    ]
+  },
+  "evidence_legs": {
+    "durability": "Exact baseline, source and implementation hashes, per-query actual receipt, control input description/output hashes, measured maxima, failure and verification log hashes, T1886, task, book and knowledge card.",
+    "falsify": "Both real CLI modes fail the baseline tighter resource guard, then retain complete typed synthetic reports and Unicode identities under the same guard. Controlled encoders emit identical output bytes. Captured real native/MCP reports and text/structured content match completely; T1886 rejects invalid UTF-8 and preserves escaped/literal identities.",
+    "rederive": "Actual native semantic emission and captured-report stage isolation reproduce outer encoding amplification. Public JSON encoder modes isolate the cause without compiler, adapter or harness data retention. Actual native/API/newline source queries pass after UTF-8 wire repair."
+  },
+  "implementation_sha256": {
+    "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+    "t/1886-semantic-introspection-mcp-json-encoding.t": "6ffcf48b829e81fd475359c220f8b9de685faac5c1d01290685eb87cb7b2122f",
+    "t/lib/FSM/Test/SourceQueryRunner.pm": "e95b79f9f0b5510cd66da6ebe7d9475eb3516c308aed5f9ce89e3d7b7ead528c"
+  },
+  "initial_failure": {
+    "completed_partitions": 0,
+    "configured_cutoff_mib": 4096,
+    "guard_exit_code": 137,
+    "guard_reported_rss_mib": 4863.0,
+    "initial_input_sha256": {
+      "bin/ci-regression": "95b13d70215ba808c5a587819ac2f72b674afaa7ade03ed09950c3fc8de4b984",
+      "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+      "bin/fsmgen-mcp": "c2d2d6c3f8ee5d0cb0d1693ea664a8a46d464bd8381ba88dcb2df223f510e4f6",
+      "perl/FSM/Support/RegressionCorpus.pm": "39992271dd71c755e75fa58e32876d47cfc47d02a3f29fabbf1ecda539d38a0e",
+      "perl/FSM/Support/SemanticIntrospectionContract.pm": "c44200acbb36c03aa79f70cb5f306afc7e82b9b458a9312dd13fb6b91041167d",
+      "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "bc8ae56fc30c4b4ad5efe80103a2eec46f7e797aeb9dadecc9eee6cfd1892f66",
+      "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7",
+      "t/1884-semantic-source-query-runner.t": "5c67ba76d2d652a06e1cc91ad41a2488f983a62977f07f4592a23283adbc1179",
+      "t/lib/FSM/Test/HostedCorpusShard.pm": "8e52011ef7b5ff696445bad16f20c733cee2cd6a727b957813cbaf4f60b1f485",
+      "t/lib/FSM/Test/SourceQueryCoverage.pm": "7aac9a8cd88183fe5bcd2d5cbeae4009d022bfb014c83b6d56f3b205834aa783",
+      "t/lib/FSM/Test/SourceQueryOracle.pm": "075092e2dff505d64c081b0cb25ede681a080cd704f28169933af557415d4d87",
+      "t/lib/FSM/Test/SourceQueryRunner.pm": "9ffbe9f2c2230639a2859edcc740c2245f4c0802105042203495e1c6ca4377dd"
+    },
+    "query_identity_limit": "The interrupted run did not flush per-query TAP or write its partition receipt. The last sampled native child names the following semantic source; its captured public report independently reproduces the same outer-encoding guard failure.",
+    "state_sha256": "369cb8d7777448f4ff0ad115fa1040e5350fdeae5045f78306212bb5c893e3a1"
+  },
+  "limits": [
+    "Measurements are observed on this macOS host and installed JSON::PP, not a universal memory bound or throughput claim. Native construction, decoded objects, API text and whole response storage still consume memory.",
+    "A large synthetic native producer isolates actual MCP CLI wire paths; it does not claim compiler semantics. The separate actual AHB run qualifies all applicable source queries for the identified reproducer, not the complete cohort.",
+    "The interrupted complete cohort earns no finished partition result. Restart it under the next owned leaf; no full CI, hosted workflow, backend or spent producer was executed.",
+    "The initial diagnostic syntax error and missing guarded-stdin fixture were corrected before the final baseline; neither is counted as a product defect.",
+    "System Perl, /bin/ps and /usr/bin/time are required read-only OS/toolchain dependencies. Every diagnostic fixture, output, log and temporary workspace resides under the repository.",
+    "Book commands and rendered assertions pass; browser visual qualification remains unavailable."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.1",
+  "public_encoder_control": {
+    "input": "Eight MiB string from qq(a\\n) repeated 4*1024*1024 times; encode with JSON::PP allow_nonref in ascii, utf8, or ascii scalar chunks of 65536 characters. All outputs have identical bytes.",
+    "installed_json_pp": "4.06",
+    "measurements": {
+      "8m": {
+        "maximum_resident_set_bytes": 1890582528,
+        "output_bytes": 12582914,
+        "output_sha256": "8c1a913370e18eef7561b9d9fa093bb1c8993713921fa70d9a5e2734506ac72b"
+      },
+      "chunked": {
+        "maximum_resident_set_bytes": 40665088,
+        "output_bytes": 12582914,
+        "output_sha256": "8c1a913370e18eef7561b9d9fa093bb1c8993713921fa70d9a5e2734506ac72b"
+      },
+      "utf8": {
+        "maximum_resident_set_bytes": 51675136,
+        "output_bytes": 12582914,
+        "output_sha256": "8c1a913370e18eef7561b9d9fa093bb1c8993713921fa70d9a5e2734506ac72b"
+      }
+    }
+  },
+  "reproducer": {
+    "failing_phase": "outer compact MCP response encoding after successful public-report decoding, path sanitization and API text formatting",
+    "fixed_maximum_resident_set_bytes": 1440038912,
+    "fixed_wire_output_bytes": 64790921,
+    "fixed_wire_output_sha256": "eb5f47bab9770288fcc640f1504ebce54ca424a262f89d9e61d7c31f3abbb574",
+    "native_argv": [
+      "bin/fsmgen",
+      "--strict",
+      "--emit-semantic-json",
+      "ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif"
+    ],
+    "native_output_bytes": 43128932,
+    "native_output_sha256": "84ff01e71ab2d05ca0a27e27dccdf27ae3345ed1d081c02ced3c80a83bf452af",
+    "source_id": "ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif",
+    "source_sha256": "90e61a71977d6e15f703ee52c011879424245413c3d06d7a2839f56ab7947a04"
+  },
+  "schema": "fsmgen.source_query_memory_repair.v1",
+  "tests": {
+    "query-full-controls": {
+      "sha256": "2024a20e1ed3256c3e49788efe46ecd272b7da385cb22208b65c91399be390c9",
+      "summary": [
+        "All tests successful.",
+        "Files=2, Tests=11, 26 wallclock secs ( 0.04 usr  0.01 sys + 21.47 cusr  3.99 csys = 25.51 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-full-run": {
+      "sha256": "828e960986eab7bf502ca89be72af7b8b69fe99f7165023a71e254ecb2065a9e",
+      "summary": []
+    },
+    "query-memory-band": {
+      "sha256": "3471c6b7cac5bea7fc740442b2ec348aa029089af89e66da50fbbcc717914baa",
+      "summary": [
+        "All tests successful.",
+        "Files=7, Tests=22, 66 wallclock secs ( 0.02 usr  0.01 sys + 54.85 cusr 10.05 csys = 64.93 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-memory-baseline-final": {
+      "sha256": "c55b2fa40f0dd45ccb4b9fe9defb5904a68cd6587d40f43c1d74611c0b54f161",
+      "summary": [
+        "Files=1, Tests=2, 20 wallclock secs ( 0.01 usr  0.00 sys +  9.56 cusr  2.89 csys = 12.46 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "query-memory-book": {
+      "sha256": "905debf013ce46eb7f7d321b953ff46a8ef97d5772f992bf2d3b6c1b1ac95379",
+      "summary": [
+        "Actual UTF-8 book example: PASS",
+        "Actual UTF-8 book example: PASS",
+        "Rendered UTF-8 encoding, complete-report and pending qualification boundaries: PASS"
+      ]
+    },
+    "query-memory-final": {
+      "sha256": "4dc079956db4e1c5994f8acd49eeac95281fd87eec4959e92b0a25751abd381d",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=3, 22 wallclock secs ( 0.00 usr  0.00 sys + 22.68 cusr  2.15 csys = 24.83 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-memory-native-semantic": {
+      "sha256": "a9638c6a4c1eb09459868c07f43e396f03825e77a6db1fed53d18a8184de14e9",
+      "summary": []
+    },
+    "query-memory-real": {
+      "sha256": "f6d4393485bfd4dc39beb27190c2640b76b3d786bca2b2f3c030893f0670c959",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=6, 205 wallclock secs ( 0.01 usr  0.00 sys + 194.77 cusr  4.45 csys = 199.23 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-memory-stages": {
+      "sha256": "2ea97cc15a958ffdce65f3c52aec78a184141cb34a9b370118ebed98d441605e",
+      "summary": []
+    },
+    "query-memory-stages-verified": {
+      "sha256": "efa795a14ff4973063864fdc316686dc0845916dd3f563c490a43f42ef54fd40",
+      "summary": []
+    }
+  }
+}

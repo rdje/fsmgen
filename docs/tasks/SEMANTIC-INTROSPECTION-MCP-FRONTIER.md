@@ -569,10 +569,26 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7: preserve authored VIAL declaration order`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify the complete selected feature population and resume the roadmap from a clean durable handoff.`
   Acceptance: `After all owned repairs and the coverage guard pass, execute the selected actual feature queries, schema/provenance and negative controls. Update capability/book/fact guidance and feature signoff rules, state exact coverage and remaining intentional boundaries, and commit before resuming the existing bounded HIAL streaming frontier. Do not treat internal/native backend qualification as MCP execution authority or replay spent native compiler producers.`
-  Verification: `Selection, repaired public APIs, independent guards and CI integration are committed prerequisites. Execute the complete selected source/query cohort next, retain per-query evidence and own any demonstrated gap before closure; preserve spent runtime producers and full-CI/startup gates.`
+  Verification: `CI integration is committed at c42b112b15a351680ef918ec15a241aee3228b4a and the tree was verified clean. Execute each declared T1884 corpus partition sequentially through the actual CI entrypoint, retaining per-query receipts and per-partition logs. Independently join their disjoint union to the live cohort, source/catalog identities and typed report hashes; rerun named semantic/refusal controls. Stop and root-cause any failure before advancing. Preserve spent runtime producers and full-CI/startup gates.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.1`
+  Status: `done`
+  Goal: `Root-cause and repair excessive MCP memory use exposed by complete source-query qualification.`
+  Acceptance: `Retain the original guarded failure and identify the exact source/query/transport before changing implementation. Distinguish native report size, adapter expansion and harness retention with bounded public queries and measured evidence. Repair the demonstrated cause with complete report/type/provenance parity and meaningful regression controls, preserving public contracts and the configured resource cutoff. Do not hide the case, narrow the qualified cohort, or replay spent runtime producers. Commit the repair before restarting exhaustive qualification.`
+  Verification: `The interrupted full run earns no partition result. Its last sampled AHB semantic source independently reproduces the same resource failure specifically during outer response encoding. Public JSON encoder controls isolate ASCII-mode large-string amplification; UTF-8 wire encoding preserves complete values. T1886 qualifies both real CLI modes under a tighter guard, typed report equality, Unicode byte identities and invalid UTF-8 refusal. The actual implicated source passes all applicable native/API/newline queries under the original guard. Focused MCP regression, book commands/rendering and retained qualification evidence pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.1: prevent MCP wire encoding memory amplification`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2`
+  Status: `pending`
+  Goal: `Complete source-query qualification after the resource repair and resume the roadmap cleanly.`
+  Acceptance: `Execute every selected source/query through the repaired native/API/MCP paths, retain per-query evidence and independently prove disjoint complete catalog allocation and report hashes. Run semantic/refusal controls, synchronize the book and facts, and commit before resuming bounded HIAL streaming. Keep full-CI/startup and spent-producer boundaries intact.`
+  Verification: `The resource repair is qualified. Restart the complete selected population with fresh receipts and preserve the interrupted attempt; it earns no complete-cohort result.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -1220,8 +1236,8 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3` is next: execute the complete
-selected source/query cohort with independent guards and retained evidence.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2` is next: restart complete
+source-query execution after the qualified MCP wire-encoding resource repair.
 Own any demonstrated gap before returning to HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2698,3 +2714,55 @@ cards stay within their existing allowance. The workflow overview is compacted
 within its ancillary allowance after the gate caught duplicated wording growth.
 The book and task acceptance rules
 own signoff rationale without duplicate engineering-ledger narration.
+
+## Acceptance Checklist — `.31.3.3.1` MCP wire encoding resource repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The original full T1884 partition exits
+  137 under the unchanged RAM guard without a completed receipt. Native
+  `--emit-semantic-json ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif`
+  succeeds; replaying that exact captured public report reaches text formatting
+  and then trips the guard inside outer compact response encoding. Independent
+  public JSON::PP controls produce identical ASCII output bytes while isolating
+  excessive memory in ASCII-only encoding of a large string. Final baseline
+  T1886 reports `#   at t/1886-semantic-introspection-mcp-json-encoding.t line 63.`
+  for the guarded exit failure in both actual CLI modes. The initial full-run
+  query was not logged; this separately identified semantic report is a proved
+  reproducer, not a guessed complete reconstruction of the interrupted run.
+- [x] **ADDRESSED (verified)** — Newline and one-shot MCP wire encoding use
+  UTF-8 JSON bytes, with corresponding UTF-8 request decoding. Public API text
+  remains unchanged; complete reports, provenance, text/structured equality,
+  ordering and scalar types survive. The cohort runner decodes wire bytes
+  accordingly. T1886's actual CLI tests use a synthetic native producer with
+  many ordinary strings forming a large response, preserve literal and escaped
+  Unicode identities, reject invalid UTF-8, and pass the same tighter resource
+  guard that rejects the baseline. No report is truncated, query omitted,
+  source replaced or resource limit raised. The captured real report passes
+  both complete native/MCP and text/structured comparisons after root-prefix
+  normalization; the actual AHB source passes every applicable query.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1886-semantic-introspection-mcp-json-encoding.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1455-semantic-introspection-mcp-structured-tool-output.t t/1868-semantic-introspection-mcp-source-failures.t t/1885-semantic-source-query-oracles.t`
+  reports `All tests successful. Files=7, Tests=22` and `Result: PASS`.
+  Final T1886 adds escaped/invalid UTF-8 controls and passes. Actual T1884 for
+  the implicated source reports `Files=1, Tests=6` and `Result: PASS`; its receipt
+  retains all applicable queries. Exact Unicode book commands, mdBook build
+  and rendered encoding/qualification boundaries pass; disposable book output
+  is removed. Full CI, hosted execution, browser visual qualification and the
+  interrupted complete cohort remain unqualified; no spent producer is run.
+
+Re-derivation is the actual native report, stage-isolated encoding, public
+encoder comparison and actual native/API/newline rerun. Falsification is the
+original guard failure, both bounded baseline transport failures, identical
+control output hashes, complete typed comparisons and Unicode/refusal controls.
+Durability is T1886, the exact baseline/source/producer hashes and measurements
+in `source-query-memory-repair.json`, task, book and current fact card. Measured
+memory describes this host and these inputs, not a universal memory bound.
+Initial stage RSS samples accidentally addressed the forked ps process because
+Perl's magical PID scalar was passed directly to list-open; a public ps probe
+proved the discrepancy. Those samples are discarded, and a copied parent PID
+fixes the verified stage probe. RAM-guard readings and external time maxima are
+independent. An initial test syntax error and a guarded-stdin fixture mistake
+are retained as diagnostic history, not counted as product failure evidence.
+The native report is complete and large; ordinary report storage remains real.
+Task/book metadata owns this repair; knowledge prose is compacted within its
+existing allowance. Exhaustive qualification restarts under `.31.3.3.2` after
+this commit. The book owns the wire contract without duplicate ledger prose.

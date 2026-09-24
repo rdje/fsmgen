@@ -63,6 +63,7 @@ answers:
   - "does MCP discover axi apb ahb protocol aliases?"
   - "where is the public source query applicability map?"
   - "are FSMGen MCP error messages sanitized?"
+  - "why did large MCP reports exceed the RAM guard?"
   - "what serverInfo title does FSMGen MCP expose?"
   - "what do FSMGen MCP initialize instructions advertise?"
   - "is the immediate FSMGen MCP protocol-hardening pass exhausted?"
@@ -107,7 +108,7 @@ Discover current query families, tool/resource names and applicability through
 discovery never scans the workspace. Results retain relative identity and
 public API provenance.
 
-The current profile uses one-shot JSON-RPC or newline-delimited stdio with
+One-shot JSON-RPC and newline stdio use UTF-8 JSON with
 MCP protocol `2025-06-18` (no Content-Length framing). Unsupported requested
 versions do not widen that profile. `--workspace-root` is the source authority;
 client roots are not consumed. Tools return text JSON and `structuredContent`
@@ -143,16 +144,13 @@ The 2026-09-24 audit found limits that earlier profile tests did not expose:
   sanitized and public error messages are bounded. T1868 compares complete
   actual successful/failed native reports and exercises malformed-output,
   error-path, comment/URI preservation and workspace controls.
-- The native case-folded enable collision is repaired under `.31.2.1`: shared,
-  deterministic assignment-enable allocation keeps original driver identity.
-  The recorded actual CLI/MCP reports agree after source-path normalization;
-  this bounded check does not establish parity for all other features.
-- The APB sample completion/output-interface defect is repaired under
-  `.31.2.5`: direct uppercase clears and removal of unused helper definitions
-  preserve the declared ports. T1867 and assertion-enabled Verilator transfer
-  checks guard behavior; native/MCP semantic results agree. An independent
-  Icarus concat/packed `$onehot0` discrepancy is qualified under `.31.2.6`;
-  its tracked probe/checker document the exact tool-context limit.
+- `.31.2.1` repairs case-folded enable collisions with deterministic allocation
+  preserving driver identity. Actual CLI/MCP reports agree after normalization;
+  this does not qualify unrelated features.
+- `.31.2.5` repairs APB completion clears and unused helpers while preserving
+  ports. T1867/Verilator guard behavior and native/MCP reports agree.
+  `.31.2.6` separately qualifies the Icarus concat/packed `$onehot0` discrepancy
+  with its tracked public probe and exact tool-context limit.
 
 Durable capture and limits:
 `docs/audits/mcp-feature-coverage-20260924/evidence.json` and the `.31.1` task
@@ -167,6 +165,9 @@ T1883 accounts sources/queries. T1884 compares actual native/API/newline reports
 T1885 adds authored storage, observation and VIAL oracles, shared-corruption and
 failed-source controls. ISF/IAL2 report shapes stay distinct. CI partitions T1884;
 public features require API/MCP signoff. Exhaustive qualification remains owned.
+The full run exposed ASCII wire-encoding memory amplification.
+UTF-8 wire encoding removes that mechanism and preserves complete values;
+T1886 guards both CLI modes, Unicode identity and report/type equality.
 
 Current-feature query selection and its pilot are captured in
 `docs/audits/mcp-feature-coverage-20260924/feature-coverage-selection.json`.

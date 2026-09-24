@@ -49,9 +49,9 @@ my $adapter = FSM::Support::SemanticIntrospectionMCPAdapter->new(
 );
 
 if (length $request_json) {
-    my $request = JSON::PP->new->decode($request_json);
+    my $request = JSON::PP->new->utf8->decode($request_json);
     my $response = $adapter->handle_jsonrpc_request($request);
-    print JSON::PP->new->ascii->canonical->pretty->encode($response)
+    print JSON::PP->new->utf8->canonical->pretty->encode($response)
         if $response;
     exit 0;
 }
