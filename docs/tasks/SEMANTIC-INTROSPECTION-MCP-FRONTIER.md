@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
-- Status: `done`
+- Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-06-16`
+- Last updated: `2026-09-24`
 - Owner: repo-local workflow
 
 ## Goal
@@ -83,38 +83,9 @@ For FSMGen, the analogs are:
 ## Task Tree
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
-  Status: `done`
+  Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -325,6 +296,72 @@ For FSMGen, the analogs are:
   Acceptance: `Review the shipped read-only semantic-introspection surface after catalog-backed source discovery against roadmap priorities, mdBook coverage, Knowledge Map facts, and remaining active task-tree work; either select one exact next semantic-introspection leaf or return the active lane to the broader roadmap frontier; do not make behavior-bearing code changes in this audit unless a smaller owned leaf is created first.`
   Verification: `passed`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30: return to IAL2 frontier`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31`
+  Status: `active`
+  Goal: `Keep latest product features queryable through the public semantic API and MCP.`
+  Acceptance: `Audit current shipped feature families and repair missing public semantic or MCP exposure with bounded stable schemas, original diagnostic/support/provenance truth and direct/MCP parity. Provide usable external-agent queries and examples without claiming unsupported execution controls. Every actionable gap owns an implementation leaf; completion requires repairs and regression coverage, not only a findings list. Preserve the read-only default and separately proposed write horizon.`
+  Verification: `Director activated latest-feature coverage on 2026-09-24 after clean 5a44ad496c852b168c31d4021cfdb158001a47c7. Complete coverage has not yet been established.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.1`
+  Status: `done`
+  Goal: `Derive current feature-to-semantic-API/MCP coverage and select exact repairs.`
+  Acceptance: `Use the Knowledge Map, current capability contracts, canonical book and recent feature owners to census applicable public source/semantic families. Trace native query producers and MCP resources/tools/discovery, reverify uncertain coverage with real bounded read-only requests, and compare structured results/diagnostics. Record supported, missing and intentionally inapplicable boundaries with evidence. Decompose every actionable gap into ordered repair leaves under .31.2 before ending this audit; do not call existing profile-only tests proof of latest feature coverage.`
+  Verification: `The 2026-09-24 audit and tracked result projection below establish concrete native and adapter defects; child .31.2 owns their repairs. Full per-feature qualification remains .31.3, not claimed by this census.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.1: audit current semantic and MCP coverage`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2`
+  Status: `active`
+  Goal: `Implement current-feature semantic API and MCP coverage repairs.`
+  Acceptance: `After .31.1, create exact child leaves naming affected public contracts, API producers, MCP mappings, actual feature fixtures, failure cases and book sections before source changes. Repair native semantic contracts first where needed and project them through MCP; preserve bounded JSON-safe results, diagnostics, workspace authority and read-only defaults. Commit each verified repair separately and leave no discovered defect merely parked.`
+  Verification: `Actual current queries prove discovery omissions for protocol aliases/VIAL, failed VIAL routing, lost structured negative diagnostics and repository-path leakage. A direct/MCP ISF comparison also differs beyond source-path metadata and requires immediate causal investigation under child .1 before any semantic parity claim.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1`
+  Status: `active`
+  Goal: `Resolve unexpected native/MCP ISF semantic differences at their original producer.`
+  Acceptance: `Reproduce direct and MCP normalized semantics for isf/apb_requester.isf, distinguish path-derived metadata from seed/order or semantic differences, and root-cause every unexplained delta before accepting parity. Repair the owning public producer if defective; preserve authored meaning and source provenance. Use independent semantic comparisons and selected compiler regressions, then commit a precise native/API/MCP contract and evidence.`
+  Verification: `--debug=3 trace proves clean_signal_name case-folds PENABLE and penable into the same generated family name. Per-LHS collision tracking cannot separate them; FactorizationSupport::_build_context_to_ast_map overwrites the duplicate lhs_enable:penable_0_en key in hash-dependent feed order. The trace shows the original done-phase AST replaced with the setup-phase AST; no legitimate equivalence or OR simplification is involved. Same source bytes produced either driver under independent native executions.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2`
+  Status: `pending`
+  Goal: `Preserve structured source-query failures and prevent MCP error path leakage.`
+  Acceptance: `Decode valid public failure JSON independently of child exit status and expose original diagnostics without converting an expected compiler refusal into an opaque transport error. Keep invalid/non-JSON command failures distinct, bound and sanitize error messages including embedded absolute command paths, and preserve JSON-RPC codes/message-only error policy. Qualify actual catalogued invalid sources plus runner and workspace-escape controls; update public contracts, schemas, tests and book.`
+  Verification: `Actual strict check of fsm/mipicsi2_txccore_ulp.fsm returns structured diagnostic JSON with exit 1; MCP discards it and embeds absolute repository/executable/source paths in error.message. _run_fsmgen_json tests process success before decoding stdout; handle_jsonrpc_request strips only Perl location.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3`
+  Status: `pending`
+  Goal: `Expose all supported protocol source aliases in MCP discovery and query metadata.`
+  Acceptance: `Drive applicable source family/query mappings from an owned public contract, include catalogued .axi/.apb/.ahb aliases with accurate check/semantic/schedule support, and retain existing path/filter/limit/safety behavior. Compare discovery with current native support catalog and actual semantic queries; prevent a new supported family from being silently omitted. Sync native introspection metadata, MCP schemas and book.`
+  Verification: `Current manifest contains .axi/.apb/.ahb catalog entries and actual native/MCP semantic calls succeed; discover_sources returns zero for each alias family. _source_file_kind accepts only fsm/isf/ppif.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4`
+  Status: `pending`
+  Goal: `Project current public VIAL semantic tooling through the native introspection contract and MCP.`
+  Acceptance: `Select exact JSON-safe source query result/version contracts over the existing VIAL public API before implementation; expose applicable VIAL capabilities, source discovery, check and sanitized semantic reports with explicit v1/v2 selection and accurate query applicability. Preserve imported source catalogs, public diagnostics and workspace authority. Qualify actual v1/v2/invalid sources and direct/API/MCP parity; keep execution and mutation outside the existing read-only profile.`
+  Verification: `Native vial check --json succeeds for the documented v1/v2 base sources. MCP semantic/check calls invoke the hardware CLI route and fail; VIAL discovery is empty although the support catalog includes VIAL sources. Native language_surface.vial_tooling advertises its closed request/result APIs.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5`
+  Status: `pending`
+  Goal: `Repair the shipped APB requester completion-phase output targets.`
+  Acceptance: `Use the public drive-body assignment contract to correct done_phase in isf/apb_requester.isf so completion clears PSEL/PENABLE, with a lowered-output and generated-behavior regression. Do not invent nested drive-call semantics. Keep the separate compiler collision fixture so repairing the example cannot hide that native defect; synchronize support evidence and book.`
+  Verification: `Native lowering emits (<- (psel 0) <done_phase_start) and (<- (penable 0) <done_phase_start), while public outputs are uppercase PSEL/PENABLE. docs/isf-spec/02-interface-transactions.md defines body pairs as assignments, not nested drive calls. This source defect is independent of the generated-enable alias collision.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3`
+  Status: `pending`
+  Goal: `Qualify complete feature coverage and make API/MCP parity part of future feature signoff.`
+  Acceptance: `After repair leaves pass, run representative actual native and MCP queries for every applicable current feature family with negative and schema/provenance controls. Keep advertised resources/tools/discovery and book examples aligned with real capability. Add a maintainable coverage guard or feature-acceptance contract so future language/verification features must verify semantic API and MCP support or explicitly justify an owned boundary. Keep mutation/service expansion in its separate proposed owner and resume bounded stream work after this activity is complete.`
+  Verification: `Pending owned repairs.`
+  Commit: `pending`
 
 ## Implementation Notes From `.4`
 
@@ -890,13 +927,59 @@ For FSMGen, the analogs are:
 - Phase 5: AI workflows for diagnostic triage, support discovery, example
   matching, migration advice, and bug-report/reproducer packaging.
 
+## Latest-Feature Audit — `.31.1` (2026-09-24)
+
+Capture revision: `5a44ad496c852b168c31d4021cfdb158001a47c7`.
+The tracked [result projection](../audits/mcp-feature-coverage-20260924/evidence.json)
+retains exact commands, input hashes, failure diagnostics, discovery results,
+seed/path observations and decisive trace lines. Full raw reports remain in
+`.artifacts/mcp-feature-coverage/`; their absence after cleanup does not turn the
+projection into an exhaustive compiler report or a replay guarantee.
+
+Re-derivation: the current manifest census was compared with actual native and
+MCP queries for direct FSM, ISF, PPIF, protocol aliases, VIAL v1/v2 and an
+expected negative source. Native capability metadata includes the later VIAL
+public API, execution, bridge and backend contract sections; capability queries
+select existing top-level sections dynamically. Source-bound coverage does
+not follow automatically from that manifest visibility.
+
+Falsification: native success with empty discovery contradicts alias coverage;
+native VIAL JSON success with MCP hardware-route failure contradicts VIAL
+parity; the native negative check preserves diagnostics that MCP discards.
+Independent native runs with identical ISF bytes and varied hash seed/path
+spelling selected different driver dependencies. The debug trace identifies
+case-folded name collision and context replacement, separating this cause from
+path metadata or legitimate Boolean simplification. Public drive-body syntax
+and lowered completion assignments separately identify the APB source defect.
+
+Durability: this task and the tracked projection commit the decisive evidence.
+Missing leg: exhaustive feature-by-feature semantic qualification and repair
+negative controls remain owned by `.31.2` and `.31.3`; no percentage or complete
+coverage claim is earned here. Execution/service/mutation expansion is outside
+the current read-only profile. The internal native proxy still lacks selected
+routing/qualification, so it is not advertised as an MCP execution feature.
+
+Repair order: compiler name identity (`.31.2.1`), APB source (`.31.2.5`),
+structured failures (`.31.2.2`), alias discovery (`.31.2.3`), VIAL public
+source tooling (`.31.2.4`), then complete qualification (`.31.3`). Actual
+implementation leaves must refine their smallest safe test/contract boundary
+before editing code. No discovered defect is closed by this audit alone.
+
 ## Current Frontier
 
-| Order | Leaf | Status | Why next |
-| --- | --- | --- | --- |
-| 1 | `_none_` | `done` | `.30` closed the immediate semantic-introspection/MCP pass after catalog-backed source discovery; active roadmap priority returns to `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`. |
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1` repairs generated enable identity
+before adapter changes. The `.31.1` audit selected the ordered repair leaves;
+`.31.3` qualifies coverage and ongoing parity after they pass.
+The read-only profile completed through `.30` remains historical evidence;
+it is not a claim that all later product features are covered.
 
 ## Decisions
+
+- `2026-09-24`: The director requires deep semantic API and MCP coverage for
+  current and future features wherever applicable, maximizing useful external
+  AI/LLM access. Activate `.31` after the prior native-release slice is committed
+  and clean. Audit and repair this coverage before the next stream slice; retain
+  the completed read-only profile and separate proposed write-horizon boundary.
 
 - `2026-06-15`: User clarified that deep semantic introspection is a
   first-class FSMGen feature and everything meaningful in FSMGen must become
@@ -1176,3 +1259,20 @@ For FSMGen, the analogs are:
   semantic-introspection/MCP pass is exhausted after catalog-backed source
   discovery, no new semantic behavior leaf is selected, and active roadmap
   priority returns to `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
+
+## Acceptance Checklist — `.31.1` coverage audit
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--emit-semantic-json` results and
+  `--debug=3` trace capture identify duplicate `lhs_enable:penable_0_en`
+  contexts and replacement in `FactorizationSupport::_build_context_to_ast_map`.
+  The tracked audit projection preserves those trace lines and the actual
+  native/MCP discovery, VIAL and negative-diagnostic disagreements.
+- [x] **ADDRESSED (verified)** — This audit owns each demonstrated defect in
+  exact repair leaves, selects compiler identity first, and corrects current
+  coverage claims in the book and fact card. No implementation repair or full
+  coverage is claimed by the audit; the old profile chronology remains
+  recoverable at the exact predecessor named in the fact card.
+- [x] **NO REGRESSION** — `knowledge-map: OK`; task-tree integrity passes;
+  `mdbook build docs/book -d .artifacts/mcp-feature-audit-book` succeeds and the
+  rendered embedding chapter contains the coverage limits. Staged doctrines
+  remain required before this commit.

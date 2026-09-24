@@ -69,7 +69,7 @@ answers:
   - "is the immediate FSMGen MCP semantic-introspection pass complete?"
   - "what did SEMANTIC-INTROSPECTION-MCP-FRONTIER.30 select?"
   - "what is the active priority after FSMGen MCP source discovery?"
-date: 2026-06-16
+date: 2026-09-24
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
 evidence: >-
@@ -83,150 +83,60 @@ reverify: >-
   t/1459-semantic-introspection-mcp-jsonrpc-batch-envelope-boundary.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t
 ---
 
-FSMGen tracks first-class semantic introspection and future MCP exposure in
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER`; the immediate read-only pass is
-complete through `.30`.
+The director reactivated this tree for latest-feature semantic/API/MCP parity.
+Read `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` for the current leaf;
+`.31.1` owns the source-family audit and `.31.2` owns concrete repairs.
+The profile completed through `.30` is historical evidence, not proof that
+later product features are covered. Complete prior chronology is recoverable:
 
-The selected direction is stable semantic-introspection API first and MCP as a
-required adapter over that API. `.3` shipped the first manifest-advertised
-contract: `./bin/fsmgen --capability-manifest` now exposes a top-level
-`semantic_introspection` section owned by
-`FSM::Support::SemanticIntrospectionContract` and built by
-`FSM::Support::SemanticIntrospectionSection`.
+```sh
+git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md
+```
 
-That section advertises query domains, query families, schema/version fields,
-contract sources, provenance/support-accounting expectations, read-only
-defaults, workspace restrictions, safety policy, and MCP resource/tool
-mappings over the existing capability manifest, check JSON, normalized
-semantic JSON, schedule JSON, support accounting, diagnostics,
-documentation/example, embedding, and backend-validation surfaces.
+The canonical product contract and runnable client examples remain in
+`docs/book/src/11-extensions-and-embedding.md`; schemas are in
+`t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json`.
+`SemanticIntrospectionContract` and `SemanticIntrospectionSection` own the
+manifest section; `SemanticIntrospectionMCPAdapter` implements `bin/fsmgen-mcp`.
+Stable semantic API first, MCP adapter second remains the required design.
+No private Perl AST, scheduler, lowering, or generator hashes are public APIs.
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` shipped the first read-only local
-JSON-RPC stdio adapter over the contract: `bin/fsmgen-mcp`, backed by
-`FSM::Support::SemanticIntrospectionMCPAdapter`.
+Current query families are capabilities/contracts, diagnostics, support
+accounting, examples, catalog-backed sources, source check, normalized
+semantics and schedule preview. Tool and resource names are discoverable from
+`semantic_introspection` in `./bin/fsmgen --capability-manifest` and
+`tools/list`; source discovery never recursively scans the workspace.
+Successful source results carry relative identities and adapter provenance.
 
-The shipped first MCP resource families are `fsmgen://capabilities`,
-`fsmgen://contracts`, `fsmgen://diagnostics`,
-`fsmgen://support-accounting`, `fsmgen://examples`, `fsmgen://sources`,
-`fsmgen://source/{source_id}/check`,
-`fsmgen://source/{source_id}/semantic`, and
-`fsmgen://source/{source_id}/schedule`.
+The current profile uses one-shot JSON-RPC or newline-delimited stdio with
+MCP protocol `2025-06-18` (no Content-Length framing). Unsupported requested
+versions do not widen that profile. `--workspace-root` is the source authority;
+client roots are not consumed. Tools return text JSON and `structuredContent`
+with compact output schemas, `readOnlyHint: true`, and `openWorldHint: false`.
+Resources are static; list responses have no cursor. Prompts, completions,
+subscriptions, logging, sampling, elicitation, progress/cancellation sessions,
+Streamable HTTP and service mode remain unshipped. Batch/non-object envelopes
+are invalid. JSON-RPC errors have code/message and no error.data.
+Write/generation, arbitrary shell/network/filesystem access, mutation and
+commit/push tools remain separately owned future work.
 
-The shipped first MCP tool families are `fsmgen_capability_query`,
-`fsmgen_check`, `fsmgen_semantic_introspect`, `fsmgen_schedule_preview`,
-`fsmgen_discover_sources`, `fsmgen_find_examples`,
-`fsmgen_explain_diagnostic`, and `fsmgen_support_summary`.
+The 2026-09-24 audit found limits that earlier profile tests did not expose:
 
-The manifest reports `mcp_adapter_implemented: true` and
-`write_generation_tools_enabled: false`. Source-bound adapter responses
-normalize workspace/repo absolute paths to relative source identities and
-redact other absolute paths. `.5` hardens protocol/client behavior with
-JSON-RPC error-code policy, notification handling, malformed percent-encoding
-rejection, and non-leaking source-query `adapter_provenance`.
-`.6` adds bounded support-accounting summaries, support-aware example
-discovery, and diagnostic explanations linked to support-accounting examples.
-`.7` documents generic read-only client configuration with `perl
-/path/to/fsmgen/bin/fsmgen-mcp --workspace-root /path/to/workspace` and
-bounded one-shot JSON-RPC workflows for capabilities, support summaries,
-diagnostics, examples, strict check JSON, normalized semantic JSON, and
-schedule previews.
-`.8` adds `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json`
-and `t/1445-semantic-introspection-mcp-schema-snapshots.t` for bounded
-read-only adapter envelope snapshots. The mdBook compatibility matrix claims
-the one-shot JSON-RPC CLI and official MCP 2025-06-18 newline-delimited
-JSON-RPC stdio profile. `.9` adds
-`t/1446-semantic-introspection-mcp-stdio-framing.t` and records that MCP stdio
-does not require Content-Length framing; Streamable HTTP, client roots
-consumption, prompts, sampling, elicitation, completions, service mode, and
-write tools are future-owned work.
-`.10` selects explicit `--workspace-root` as the only shipped source authority:
-the adapter does not consume MCP client roots yet, does not expose `roots` as a
-server capability, treats client `roots/list` as unsupported, and rejects
-source escapes before invoking FSMGen.
-`.11` keeps MCP prompt templates unadvertised. Clients should use the
-structured resources/tools for semantic queries until a separate prompt
-contract is selected and snapshot-tested.
-`.12` keeps resources static: `resources.listChanged` is false, `subscribe` is
-not advertised, and `resources/subscribe` / `resources/unsubscribe` are
-unsupported until a resource-change contract is selected.
-`.13` keeps completion unsupported: the server does not advertise
-`completions`, and `completion/complete` returns method-not-found until bounded
-candidate providers are selected.
-`.14` keeps MCP logging unsupported: the server does not advertise `logging`,
-and `logging/setLevel` returns method-not-found until a bounded log-message
-contract is selected.
-`.15` keeps MCP list pagination unenabled for the shipped static profile:
-resource, resource-template, and tool list responses are bounded and emit no
-`nextCursor`, and client-supplied cursor params are invalid because the adapter
-has issued no cursor.
-`.16` keeps sampling and elicitation unsupported: FSMGen does not initiate
-`sampling/createMessage` model calls or `elicitation/create` user-input
-requests through MCP.
-`.17` keeps transport local: `bin/fsmgen-mcp` ships one-shot `--request-json`
-and newline-delimited JSON-RPC stdio only. Streamable HTTP, listener flags,
-port flags, and service mode remain unshipped.
-`.18` adds MCP `structuredContent` to read-only tool results. The existing
-serialized JSON text content remains present for compatibility. `.19` adds
-compact per-tool `outputSchema` metadata for stable public result-envelope
-fields while keeping volatile nested compiler reports, support catalogs, and
-manifest payloads schema-light.
-`.20` adds MCP `ToolAnnotations` for the read-only profile: every shipped tool
-advertises `readOnlyHint: true` and `openWorldHint: false`. `destructiveHint`
-and `idempotentHint` remain absent because they are meaningful for
-non-read-only tools, and FSMGen ships no write/generation MCP tools.
-`.21` keeps common MCP `Annotations` absent from resources, resource
-templates, resource-read content blocks, and tool-result text blocks. Tool
-results do not return `resource_link` content; stable audience, priority,
-last-modified, and resource-link contracts remain future work.
-`.22` keeps progress/cancellation session behavior unshipped. Request
-`_meta.progressToken` values do not emit `notifications/progress`; id-less
-`notifications/cancelled` messages remain silent notifications, and
-id-bearing cancellation requests are unsupported.
-`.23` keeps JSON-RPC batch arrays and non-object request envelopes unsupported
-with explicit `-32600 Invalid Request` errors. The stdio profile remains one
-compact JSON-RPC request object per line.
-`.24` locks initialize negotiation to the supported MCP protocol version
-`2025-06-18`; unsupported client protocol strings are not echoed. Client
-capabilities do not widen the server's minimal `resources` and `tools`
-capability map.
-`.25` keeps JSON-RPC errors message-only: stable `code`, sanitized `message`,
-and no `error.data` until a bounded, redacted error-data schema is selected.
-`.26` adds stable `serverInfo.title` metadata:
-`FSMGen Semantic Introspection`. Initialize instructions remain compact,
-read-only, and free of unshipped optional MCP feature claims.
-`.27` exhausts the immediate MCP protocol-hardening pass for the read-only
-profile. Remaining optional MCP feature families are either shipped, explicitly
-unsupported/deferred above, or require future exact owners. The next semantic
-frontier is read-only source/workspace discovery.
-`.28` selects catalog-backed source discovery over existing manifest,
-support-accounting, and example surfaces. It does not select arbitrary
-workspace traversal, hidden-file exposure, machine-local absolute paths, or
-write/network/shell authority.
-`.29` ships catalog-backed source discovery through `fsmgen://sources` and
-`fsmgen_discover_sources`. The adapter derives results from
-`support_accounting.catalog_entries`, filters unsafe catalog paths before
-response construction, and returns repo/workspace-relative source identities
-with file kind, source kind, available read-only query kinds, and bounded
-support metadata. Query controls are `query`, `limit`, `file_kind`,
-`source_kind`, and `classification`; discovery does not scan the workspace.
-`.30` closes the immediate read-only semantic-introspection/MCP pass after
-catalog-backed source discovery. No additional semantic-introspection behavior
-leaf was selected in that slice; active roadmap priority returned at that
-point to `IAL2-FEATURE-COMPLETENESS-FRONTIER.148`. The current IAL2 frontier
-is tracked by `ial2-feature-completeness-priority`.
-FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
-`HDLGenerator` compatibility hashes, or internal Perl references as public
-automation APIs. Write generation tools, HDL writing, service mode, network
-access, arbitrary filesystem traversal, mutation workflows, and commit/push
-actions remain deferred until separately task-tree-owned.
+- Protocol alias sources accept semantic queries but are absent from discovery.
+- Native VIAL source tooling exposes JSON-safe semantic results, but MCP
+  check/semantic routing uses the hardware CLI and cannot query those sources.
+- Expected compiler refusal JSON is discarded on a nonzero exit; the resulting
+  IPC error embeds absolute command paths. Error messages are therefore not
+  fully sanitized despite the earlier bounded mock tests.
+- Native ISF semantic reports can disagree because case-distinct LHS signals
+  receive the same generated enable name. AssignmentSupport tracks collisions
+  only within one LHS; FactorizationSupport overwrites the duplicate context.
+  This compiler defect must be fixed before claiming native/MCP parity.
+- The APB sample completion phase assigns lowercase internal signals rather
+  than its uppercase public outputs; this is a separate source repair.
 
-The RTL-simulator MCP analogy maps to FSMGen as follows: compile/elaborate/run
-maps to check/lower/semantic JSON/schedule JSON/generate HDL; hierarchy and
-waveform queries map to structured semantic/lowering/provenance/diagnostic
-queries; coverage closure maps to support-accounting and example-discovery
-workflows; assertion assistance maps to proposing verification-intent source
-that FSMGen then checks and lowers.
-
-The immediate semantic-introspection/MCP tree has no active leaf after `.30`.
-Future expansion requires a new exact task-tree leaf before code, tests,
-source artifacts, generated artifacts, or config changes.
+Durable capture and limits:
+`docs/audits/mcp-feature-coverage-20260924/evidence.json` and the `.31.1` task
+record. The existing reverify command above checks the historical shipped
+profile only; it is not an all-feature coverage oracle. `.31.3` owns stronger
+coverage qualification and ongoing feature-signoff integration after repairs.

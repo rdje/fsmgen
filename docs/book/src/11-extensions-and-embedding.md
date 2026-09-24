@@ -2767,6 +2767,23 @@ available read-only query kinds, and support metadata; it does not traverse the
 workspace. The source-bound requests return workspace-relative source identity and
 `adapter_provenance`; they do not return the configured workspace root.
 
+### Current Source Coverage Limits
+
+Catalog discovery currently recognizes `.fsm`, `.isf`, and `.ppif`. Protocol
+aliases `.axi`, `.apb`, and `.ahb` accept semantic queries by explicit path but
+are omitted from discovery. VIAL source checks and semantic reports are
+available through `fsmgen vial check --json`; MCP does not yet route VIAL
+queries to that API. Select `--language-version 2` for VIAL v2 sources.
+
+Expected compiler failures can currently become opaque MCP errors instead of
+returning the native structured diagnostics, and those errors can contain
+absolute command paths. A current compiler naming defect can also conflate
+enables for case-distinct signals; semantic JSON and generated HDL share that
+producer. These are tracked repairs in
+[the semantic coverage frontier](../../tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md),
+with the compiler repair preceding adapter parity qualification. Successful
+profile tests alone do not establish coverage of every current feature.
+
 ### MCP Client Compatibility Matrix
 
 The read-only adapter currently has a bounded client profile:

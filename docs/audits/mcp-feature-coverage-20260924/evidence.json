@@ -1,0 +1,614 @@
+{
+  "capture_date": "2026-09-24",
+  "limits": [
+    "Raw full reports remain ignored local artifacts; this tracked projection retains decisive result fields and input identities.",
+    "Seed/perturbation sampling demonstrates divergent outputs, not a statistical rate or exhaustive determinism proof.",
+    "No all-feature coverage claim; repair and qualification leaves remain open."
+  ],
+  "manifest_sha256": "509d2eda788411da1c8d22d364a558419ada966c6f616d28e12a9615bf793566",
+  "observations": [
+    {
+      "catalog_count": 216,
+      "discovery_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_discover_sources\",\"arguments\":{\"file_kind\":\"fsm\",\"limit\":1}}}"
+      ],
+      "discovery_matched_count": 216,
+      "family": "fsm",
+      "mcp_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"fsm/apb_requester.fsm\"}}}"
+      ],
+      "mcp_error": null,
+      "mcp_stdout_sha256": "c00c201e331cf4e57f113f986d5c43fb48d3d1139ff8c188a8ec9c2dab32ade2",
+      "native_command": [
+        "./bin/fsmgen",
+        "--strict",
+        "--emit-semantic-json",
+        "fsm/apb_requester.fsm"
+      ],
+      "native_exit": 0,
+      "native_result_keys": [
+        "command",
+        "diagnostic_summary",
+        "diagnostics",
+        "generated_output",
+        "generation_result_snapshot",
+        "normalized_semantic_schema_version",
+        "producer",
+        "semantic",
+        "source",
+        "success",
+        "support_accounting"
+      ],
+      "native_stdout_sha256": "6de765bccb6bd1b86e7a2d9019565524f9e594b1657526afe3d3a8fa1cc72c21",
+      "native_success": true,
+      "path": "fsm/apb_requester.fsm",
+      "source_sha256": "51003196327498b35a124257f7ce8ba0b452431589bd35321c928c6d2ae18278"
+    },
+    {
+      "catalog_count": 5,
+      "discovery_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_discover_sources\",\"arguments\":{\"file_kind\":\"isf\",\"limit\":1}}}"
+      ],
+      "discovery_matched_count": 5,
+      "family": "isf",
+      "mcp_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"isf/apb_requester.isf\"}}}"
+      ],
+      "mcp_error": null,
+      "mcp_stdout_sha256": "38791dd47ef0e8bcc4c63b169c913d15ee420700ffd0b0d0905165825892492d",
+      "native_command": [
+        "./bin/fsmgen",
+        "--strict",
+        "--emit-semantic-json",
+        "isf/apb_requester.isf"
+      ],
+      "native_exit": 0,
+      "native_result_keys": [
+        "command",
+        "diagnostic_summary",
+        "diagnostics",
+        "generated_output",
+        "generation_result_snapshot",
+        "normalized_semantic_schema_version",
+        "producer",
+        "semantic",
+        "source",
+        "success",
+        "support_accounting"
+      ],
+      "native_stdout_sha256": "bab3180a4fb932a4fcc96f21564a93b5143672dd2011eb28351c33064c78e4c7",
+      "native_success": true,
+      "path": "isf/apb_requester.isf",
+      "source_sha256": "f3498dd44b301b0b47af5bc5a60d9102ba2163811d42ce2d69be4284df27226e"
+    },
+    {
+      "catalog_count": 240,
+      "discovery_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_discover_sources\",\"arguments\":{\"file_kind\":\"ppif\",\"limit\":1}}}"
+      ],
+      "discovery_matched_count": 240,
+      "family": "ppif",
+      "mcp_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"ppif/ahb_requester.ppif\"}}}"
+      ],
+      "mcp_error": null,
+      "mcp_stdout_sha256": "e2e0f9949fbba55d505c342f983e47fb6dbac95e939cc8563d3d546cc144f690",
+      "native_command": [
+        "./bin/fsmgen",
+        "--strict",
+        "--emit-semantic-json",
+        "ppif/ahb_requester.ppif"
+      ],
+      "native_exit": 0,
+      "native_result_keys": [
+        "command",
+        "diagnostic_summary",
+        "diagnostics",
+        "generated_output",
+        "generation_result_snapshot",
+        "normalized_semantic_schema_version",
+        "producer",
+        "semantic",
+        "source",
+        "success",
+        "support_accounting"
+      ],
+      "native_stdout_sha256": "a71939130ebe588b57c224f3684ead1b87f5b0a492a78972bf0ff83e3d2f2d1e",
+      "native_success": true,
+      "path": "ppif/ahb_requester.ppif",
+      "source_sha256": "0a890bcf038dd164912ff338a802b8f06f6c9bbf6a24d0f12f1dec319e75db8b"
+    },
+    {
+      "catalog_count": 1,
+      "discovery_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_discover_sources\",\"arguments\":{\"file_kind\":\"axi\",\"limit\":1}}}"
+      ],
+      "discovery_matched_count": 0,
+      "family": "axi",
+      "mcp_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"ppif/axi_aw_valid_ready.axi\"}}}"
+      ],
+      "mcp_error": null,
+      "mcp_stdout_sha256": "d3324cc887771725f65a28751ab5cb36b185bdc0ab3f209a1e8c428fde9e93cb",
+      "native_command": [
+        "./bin/fsmgen",
+        "--strict",
+        "--emit-semantic-json",
+        "ppif/axi_aw_valid_ready.axi"
+      ],
+      "native_exit": 0,
+      "native_result_keys": [
+        "command",
+        "diagnostic_summary",
+        "diagnostics",
+        "generated_output",
+        "generation_result_snapshot",
+        "normalized_semantic_schema_version",
+        "producer",
+        "semantic",
+        "source",
+        "success",
+        "support_accounting"
+      ],
+      "native_stdout_sha256": "aeaa4acc13a1e942dc6eda958d1d77e839bf6b82fb7096b33071a9e785bed1fc",
+      "native_success": true,
+      "path": "ppif/axi_aw_valid_ready.axi",
+      "source_sha256": "831704fc3a793edb46dbbe582e5dfea77aa8006b282bb04c46e875d63b44d263"
+    },
+    {
+      "catalog_count": 57,
+      "discovery_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_discover_sources\",\"arguments\":{\"file_kind\":\"apb\",\"limit\":1}}}"
+      ],
+      "discovery_matched_count": 0,
+      "family": "apb",
+      "mcp_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"ppif/apb_requester_transfer.apb\"}}}"
+      ],
+      "mcp_error": null,
+      "mcp_stdout_sha256": "cedc3669975d258f84aeb5e3f185cb1289c5bc163b08b434fdcdf286e9174223",
+      "native_command": [
+        "./bin/fsmgen",
+        "--strict",
+        "--emit-semantic-json",
+        "ppif/apb_requester_transfer.apb"
+      ],
+      "native_exit": 0,
+      "native_result_keys": [
+        "command",
+        "diagnostic_summary",
+        "diagnostics",
+        "generated_output",
+        "generation_result_snapshot",
+        "normalized_semantic_schema_version",
+        "producer",
+        "semantic",
+        "source",
+        "success",
+        "support_accounting"
+      ],
+      "native_stdout_sha256": "78a80eac6c37a310668a1264454453040ef902aae3bba9bf9e60fbfa18d01f84",
+      "native_success": true,
+      "path": "ppif/apb_requester_transfer.apb",
+      "source_sha256": "d739cd380933ab00a651d093069db1ec879e2d06fabed8c6efd14f059a5ad5de"
+    },
+    {
+      "catalog_count": 28,
+      "discovery_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_discover_sources\",\"arguments\":{\"file_kind\":\"ahb\",\"limit\":1}}}"
+      ],
+      "discovery_matched_count": 0,
+      "family": "ahb",
+      "mcp_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"ppif/ahb_requester.ahb\"}}}"
+      ],
+      "mcp_error": null,
+      "mcp_stdout_sha256": "45889a81e033b415d2ce8f090812eed07afa1ef05f8ed003df8eb5a49bff6479",
+      "native_command": [
+        "./bin/fsmgen",
+        "--strict",
+        "--emit-semantic-json",
+        "ppif/ahb_requester.ahb"
+      ],
+      "native_exit": 0,
+      "native_result_keys": [
+        "command",
+        "diagnostic_summary",
+        "diagnostics",
+        "generated_output",
+        "generation_result_snapshot",
+        "normalized_semantic_schema_version",
+        "producer",
+        "semantic",
+        "source",
+        "success",
+        "support_accounting"
+      ],
+      "native_stdout_sha256": "5e0d44ffb8a74d3809612d0b449516adab5ce7d0612a36aba7e19d59850755bc",
+      "native_success": true,
+      "path": "ppif/ahb_requester.ahb",
+      "source_sha256": "0a890bcf038dd164912ff338a802b8f06f6c9bbf6a24d0f12f1dec319e75db8b"
+    },
+    {
+      "discovery_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_discover_sources\",\"arguments\":{\"file_kind\":\"vial\",\"limit\":1}}}"
+      ],
+      "discovery_matched_count": 0,
+      "family": "vial",
+      "language_version": 1,
+      "mcp_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"vial/ahb_subordinate_base_output_arbitration.vial\"}}}"
+      ],
+      "mcp_error": {
+        "code": -32000,
+        "message": "FSMGen command failed: '<repository>/bin/fsmgen --strict --emit-semantic-json <repository>/vial/ahb_subordinate_base_output_arbitration.vial' exited with value 1"
+      },
+      "mcp_stdout_sha256": "146cfee12e5d57ee4faa278220a4f2b1f9fba45d9cfb07cd34556499de9a36e4",
+      "native_command": [
+        "./bin/fsmgen",
+        "vial",
+        "check",
+        "--language-version",
+        "1",
+        "--json",
+        "vial/ahb_subordinate_base_output_arbitration.vial"
+      ],
+      "native_exit": 0,
+      "native_result_keys": [
+        "action",
+        "artifacts",
+        "bridge_manifest",
+        "capability_evidence",
+        "diagnostics",
+        "formatted_source",
+        "implementation",
+        "plan",
+        "result_manifest",
+        "schema",
+        "schema_version",
+        "semantic_report",
+        "source_identities",
+        "source_style",
+        "status",
+        "success",
+        "support_accounting",
+        "tool_manifest",
+        "verification_output_manifest"
+      ],
+      "native_stdout_sha256": "cf62747c391157c4d9ed73d941b4d778989f07163ed85406c90ae45b8455e151",
+      "native_success": true,
+      "path": "vial/ahb_subordinate_base_output_arbitration.vial",
+      "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd"
+    },
+    {
+      "discovery_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_discover_sources\",\"arguments\":{\"file_kind\":\"vial\",\"limit\":1}}}"
+      ],
+      "discovery_matched_count": 0,
+      "family": "vial",
+      "language_version": 2,
+      "mcp_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"vial/ahb_subordinate_base_output_arbitration_v2.vial\"}}}"
+      ],
+      "mcp_error": {
+        "code": -32000,
+        "message": "FSMGen command failed: '<repository>/bin/fsmgen --strict --emit-semantic-json <repository>/vial/ahb_subordinate_base_output_arbitration_v2.vial' exited with value 1"
+      },
+      "mcp_stdout_sha256": "dbfede63128671e809a4dbef99ca7f576121ad607c2e145113d3f13581953e2f",
+      "native_command": [
+        "./bin/fsmgen",
+        "vial",
+        "check",
+        "--language-version",
+        "2",
+        "--json",
+        "vial/ahb_subordinate_base_output_arbitration_v2.vial"
+      ],
+      "native_exit": 0,
+      "native_result_keys": [
+        "action",
+        "artifacts",
+        "bridge_manifest",
+        "capability_evidence",
+        "diagnostics",
+        "formatted_source",
+        "implementation",
+        "plan",
+        "result_manifest",
+        "schema",
+        "schema_version",
+        "semantic_report",
+        "source_identities",
+        "source_migration",
+        "source_style",
+        "status",
+        "success",
+        "support_accounting",
+        "tool_manifest",
+        "verification_output_manifest"
+      ],
+      "native_stdout_sha256": "9440d8b8d4a406e7a65ad27a8db668365842ea5b9667d6c4f97a3f70f9a0fad9",
+      "native_success": true,
+      "path": "vial/ahb_subordinate_base_output_arbitration_v2.vial",
+      "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0"
+    },
+    {
+      "discovery_matched_count": null,
+      "family": "negative_diagnostic",
+      "mcp_command": [
+        "perl",
+        "bin/fsmgen-mcp",
+        "--workspace-root",
+        ".",
+        "--request-json",
+        "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_check\",\"arguments\":{\"source_path\":\"fsm/mipicsi2_txccore_ulp.fsm\"}}}"
+      ],
+      "mcp_error": {
+        "code": -32000,
+        "message": "FSMGen command failed: '<repository>/bin/fsmgen --strict --check --json <repository>/fsm/mipicsi2_txccore_ulp.fsm' exited with value 1"
+      },
+      "mcp_stdout_sha256": "803556a38376143d0fb19a9cf900a38c0969ac4a9b14f8fefa79afe3f4beed36",
+      "native_command": [
+        "./bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "fsm/mipicsi2_txccore_ulp.fsm"
+      ],
+      "native_diagnostics": [
+        {
+          "classification": "expected_failure",
+          "code": "FSMGEN_STRICT_LEGACY_FSM_ROOT",
+          "coverage": "strict_root_rejection_pipeline_cli",
+          "expected_child_source_file": null,
+          "expected_rtl_metadata_file": null,
+          "family": "strict_mode",
+          "generated_child_source": null,
+          "matched_corpus_entry_id": "legacy.mipicsi2_txccore_ulp.strict_rejection",
+          "message": "Source file: '/Volumes/SSD/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm'\nStrict mode rejects the legacy '+fsm' root family for source '/Volumes/SSD/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm'. Use the modern '?fsm:module_name' root form instead of '+fsm', or re-run without strict mode if you need legacy compatibility. See docs/book/src/10-errors-strict-mode-and-troubleshooting.md for the current strict-mode boundary.",
+          "migration_hint_available": true,
+          "parent_composition_source": null,
+          "rtl_metadata_file": null,
+          "severity": "error",
+          "source_file": "/Volumes/SSD/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm",
+          "stability": "stable",
+          "summary": "Strict mode rejected a legacy +fsm root.",
+          "support_accounting": {
+            "classification": "expected_failure",
+            "coverage": "strict_root_rejection_pipeline_cli",
+            "diagnostic_code": "FSMGEN_STRICT_LEGACY_FSM_ROOT",
+            "entry_id": "legacy.mipicsi2_txccore_ulp.strict_rejection",
+            "family": "legacy_fixture",
+            "matched": true,
+            "migration_hint_available": true
+          }
+        }
+      ],
+      "native_exit": 1,
+      "native_result_keys": [
+        "check_schema_version",
+        "command",
+        "diagnostic_summary",
+        "diagnostics",
+        "generated_output",
+        "producer",
+        "source",
+        "success"
+      ],
+      "native_stdout_sha256": "c40dbe98dca0a675144aa8c42c26ce55222e81c26dba2bf10eb1cf8adb90181b",
+      "native_success": false,
+      "path": "fsm/mipicsi2_txccore_ulp.fsm",
+      "source_sha256": "08e2ad129570958dfb8f660873498e6bc847f0257977e393ed2575da85484882"
+    }
+  ],
+  "revision": "5a44ad496c852b168c31d4021cfdb158001a47c7",
+  "schema": "fsmgen.mcp_feature_coverage_audit.v1",
+  "scope": "Representative source-family audit; not exhaustive feature qualification",
+  "seed_probe": {
+    "command": [
+      "./bin/fsmgen",
+      "--strict",
+      "--emit-semantic-json",
+      "isf/apb_requester.isf"
+    ],
+    "environment": {
+      "PERL_PERTURB_KEYS": "2"
+    },
+    "observations": [
+      {
+        "absolute_argument": false,
+        "hdl_length": 28249,
+        "penable_0_en": "done_phase_penable_0_en",
+        "seed": "0"
+      },
+      {
+        "absolute_argument": true,
+        "hdl_length": 28249,
+        "penable_0_en": "done_phase_penable_0_en",
+        "seed": "0"
+      },
+      {
+        "absolute_argument": false,
+        "hdl_length": 28251,
+        "penable_0_en": "setup_phase_penable_0_en",
+        "seed": "1"
+      },
+      {
+        "absolute_argument": true,
+        "hdl_length": 28249,
+        "penable_0_en": "done_phase_penable_0_en",
+        "seed": "1"
+      },
+      {
+        "absolute_argument": false,
+        "hdl_length": 28249,
+        "penable_0_en": "done_phase_penable_0_en",
+        "seed": "2"
+      },
+      {
+        "absolute_argument": true,
+        "hdl_length": 28251,
+        "penable_0_en": "setup_phase_penable_0_en",
+        "seed": "2"
+      },
+      {
+        "absolute_argument": false,
+        "hdl_length": 28251,
+        "penable_0_en": "setup_phase_penable_0_en",
+        "seed": "3"
+      },
+      {
+        "absolute_argument": true,
+        "hdl_length": 28251,
+        "penable_0_en": "setup_phase_penable_0_en",
+        "seed": "3"
+      }
+    ],
+    "path_variants": "relative and runtime-derived absolute same source"
+  },
+  "trace": {
+    "command": [
+      "./bin/fsmgen",
+      "--strict",
+      "--debug=3",
+      "--trace-log=.artifacts/mcp-feature-coverage/isf-debug.log",
+      "--emit-semantic-json",
+      "isf/apb_requester.isf"
+    ],
+    "excerpt": [
+      {
+        "line": 7806,
+        "text": "[TRACE][HIGH][AssignmentSupport.pm:fsm_debug():723][INFO] \u2699\ufe0f         [AssignmentSupport.pm] LHS-level enable: penable_0_en = setup_phase_penable_0_en"
+      },
+      {
+        "line": 8119,
+        "text": "[TRACE][HIGH][AssignmentSupport.pm:fsm_debug():723][INFO] \u2699\ufe0f         [AssignmentSupport.pm] LHS-level enable: penable_0_en = done_phase_penable_0_en"
+      },
+      {
+        "line": 9874,
+        "text": "[TRACE][HIGH][FactorizationPolicySupport.pm:fsm_debug():258][INFO] \u2699\ufe0f       LHS 'penable' has 1 RHS groups"
+      },
+      {
+        "line": 10214,
+        "text": "[TRACE][HIGH][FactorizationPolicySupport.pm:fsm_debug():258][INFO] \u2699\ufe0f       LHS 'PENABLE' has 3 RHS groups"
+      },
+      {
+        "line": 12712,
+        "text": "[TRACE][HIGH][FactorizationSupport.pm:fsm_debug():459][INFO] \u2699\ufe0f       Context 'lhs_enable:penable_0_en' -> AST: done_phase_penable_0_en"
+      },
+      {
+        "line": 12775,
+        "text": "[TRACE][HIGH][FactorizationSupport.pm:fsm_debug():459][INFO] \u2699\ufe0f       Context 'lhs_enable:penable_0_en' -> AST: setup_phase_penable_0_en"
+      },
+      {
+        "line": 14055,
+        "text": "[TRACE][HIGH][FactorizationSupport.pm:fsm_debug():246][INFO] \u2699\ufe0f         Original:  done_phase_penable_0_en"
+      },
+      {
+        "line": 14056,
+        "text": "[TRACE][HIGH][FactorizationSupport.pm:fsm_debug():247][INFO] \u2699\ufe0f         Updated:   setup_phase_penable_0_en"
+      },
+      {
+        "line": 16559,
+        "text": "[TRACE][HIGH][FactorizationSupport.pm:fsm_debug():247][INFO] \u2699\ufe0f         Updated:   setup_phase_penable_0_en"
+      },
+      {
+        "line": 24273,
+        "text": "[TRACE][HIGH][EnableSupport.pm:fsm_debug():225][INFO] \u2699\ufe0f     GENERATE_DT_ENABLES: [LHS_RHS_COUNT] LHS 'PENABLE' has 3 RHS groups"
+      },
+      {
+        "line": 24701,
+        "text": "[TRACE][HIGH][EnableSupport.pm:fsm_debug():225][INFO] \u2699\ufe0f     GENERATE_DT_ENABLES: [LHS_RHS_COUNT] LHS 'penable' has 1 RHS groups"
+      },
+      {
+        "line": 27544,
+        "text": "[TRACE][HIGH][EnableSupport.pm:fsm_debug():335][INFO] \u2699\ufe0f       Generated LHS-level enable: penable_0_en = setup_phase_penable_0_en"
+      },
+      {
+        "line": 28418,
+        "text": "[TRACE][HIGH][EnableSupport.pm:fsm_debug():335][INFO] \u2699\ufe0f       Generated LHS-level enable: penable_0_en = setup_phase_penable_0_en"
+      }
+    ],
+    "sha256": "61f2dfa8111bb776f3531c590f9266e26d7b4f9552b9e87b40047b55d88a02be"
+  }
+}
