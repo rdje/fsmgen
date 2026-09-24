@@ -250,7 +250,7 @@ subtest 'fresh original grant is retained before each actual nested E attempt' =
     drive($grant,'finished');my $result=$native->finished_job->{result};
     is($result->{status},'success','actual nested command finishes successfully');
     is($result->{stdout},join('',map { bytes($_) } 'CHILD','',"arg\n\xff","env\n\xff",$owner->{jobs}{2}{bound_context}),'actual nested bytes retain the original bound context and binary invocation');
-    ok(!$owner->{service}->execution_observation($ticket)->{report},'this prerequisite adds no fabricated native-effect report');finish();
+    ok($owner->{service}->execution_observation($ticket)->{report},'aggregate advancement reports the actual confirmed native effect');finish();
 };
 
 subtest 'partial ACCEPT and pending input never borrow copied publication authority' => sub {

@@ -204,9 +204,11 @@ defined POSIX::sigprocmask(SIG_SETMASK,POSIX::SigSet->new(SIGUSR1),$saved_mask) 
 local $SIG{USR2}=sub { die "unexpected nested creator signal\n" };
 local $SIG{ALRM}=sub { die "nested effect fixture deadline\n" };alarm 90;
 
+# Advance the original wrapper directly to qualify reporting independently
+# from the aggregate advancement/lifetime integration exercised by T1863.
 sub released_request {
     ready_owner();my ($ticket,$client,$grant)=request();my ($peer,$native)=queue_check($ticket);
-    $owner->advance_job($grant);
+    $native->advance;
     is($native->observation->{command}{released},1,'original Pair confirms actual E');
     is($writes,1,'independent native syscall observer confirms E');
     return ($ticket,$client,$grant,$peer,$native);
@@ -219,12 +221,12 @@ subtest 'no effect and transient writes cannot fabricate confirmation' => sub {
     my $copy=$owner->job_observation($grant);$copy->{native}{command}{released}=1;
     is($owner->_record_request_execution($peer),0,'copied native confirmation grants no report');
     for my $fault ('EAGAIN','EINTR') {
-        $mode=$fault;$owner->advance_job($grant);
+        $mode=$fault;$native->advance;
         is($owner->_record_request_execution($peer),0,'returned transient attempt remains unconfirmed');
         ok(!$owner->peer_observation($ticket)->{execution},'transient attempt freezes no effect observation');
     }
     is($report_calls,0,'no Service report without confirmed E');is($writes,0,'transient attempts execute no E');
-    $mode='';$owner->advance_job($grant);
+    $mode='';$native->advance;
     is($owner->_record_request_execution($peer),1,'fresh confirmed E reports after transient attempts');
     is($report_calls,1,'confirmed retry issues its original report once');finish();
 };
@@ -268,7 +270,7 @@ subtest 'delayed reports preserve admission history after its wall or closure' =
 
 subtest 'uncertain actual E is observed without reporting or replaying it' => sub {
     ready_owner();my ($ticket,$client,$grant)=request();my ($peer,$native)=queue_check($ticket);$mode='lost-E';
-    like(error_from(sub { $owner->advance_job($grant) }),qr/lost nested native E return/,'actual E return loss remains explicit');
+    like(error_from(sub { $native->advance }),qr/lost nested native E return/,'actual E return loss remains explicit');
     is($writes,1,'selected syscall actually wrote E before losing its return');
     for (1..2) { is($owner->_record_request_execution($peer),0,'uncertain effect never reports confirmation'); }
     my $view=$owner->peer_observation($ticket)->{execution};
@@ -338,13 +340,15 @@ subtest 'report history survives failed restoration and unavailable cleanup mask
 
 subtest 'pre-report refusal retains native truth without fabricating report history' => sub {
     my ($ticket,$client,$grant,$peer,$native)=released_request();
-    no warnings 'redefine';
+    { no warnings 'redefine';
     local *FSM::Support::ProcessSupervisor::Service::record_execution=sub { die "original report entry refusal\n" };
     like(error_from(sub { $owner->_record_request_execution($peer) }),qr/original report entry refusal/,'selected entry refusal propagates');
     is($peer->{execution}{native}{state},'confirmed','actual confirmed effect precedes failed report entry');
     ok(!$peer->{execution}{report},'entry refusal fabricates no report');
     ok(!$owner->{service}->execution_observation($ticket)->{report},'original Service still has no report');
-    like($peer->{request_failure},qr/original report entry refusal/,'first report refusal remains retained');finish();
+    like($peer->{request_failure},qr/original report entry refusal/,'first report refusal remains retained');
+    }
+    finish();
 };
 
 subtest 'lost foreign and consumed grants cannot publish confirmed effects' => sub {
@@ -357,8 +361,9 @@ subtest 'lost foreign and consumed grants cannot publish confirmed effects' => s
             $peer->{execution_grant}=$other;$peer->{execution_grant_identity}=refaddr($other);
         }
         else { $owner->{service}->retire($ticket);$owner->_consume_closed_peers; }
+        my $before_reports=$report_calls;
         like(error_from(sub { $owner->_record_request_execution($peer) }),qr/(?:original Service grant|different original request|original peer admission)/,"$cut authority refuses reporting");
-        is($report_calls,0,'invalid original grant cannot report');
+        is($report_calls,$before_reports,'invalid original grant cannot report');
         $peer->{execution_grant}=$original;$peer->{execution_grant_identity}=refaddr($original);
         finish();
     }

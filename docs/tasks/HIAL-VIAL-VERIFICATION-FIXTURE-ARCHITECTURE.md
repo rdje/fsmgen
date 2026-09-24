@@ -3818,17 +3818,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.1: retain native-effect acceptance history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Reconcile original effects before aggregate lifetime checks.`
   Acceptance: `Report confirmed original effects before Service advancement, admission checks or closed consumption; retain uncertainty without confirmation or replay. Select fixed execution lifetime only from original native confirmation and original Service report. Preserve admission history, parent/context checks, first failures and cleanup through delayed reports and interruption; qualify real native effects without exposing request release.`
-  Verification: `Acceptance-history retention is complete; reconcile original effects before aggregate advancement and lifetime checks next.`
-  Commit: `pending`
+  Verification: `T1863 passes fourteen groups with actual E, binary output, delayed reports, original fixed walls, ancestor liveness, cancellation/EOF, uncertain writes and creator signals. Native return loss and already-retained native failure initially lost their first peer/job cause to revocation or report refusal; caught and retained causes now publish before recovery/cleanup. Eleven isolated defects reject with closed native censuses; the identical positive and final selected 45-file/423-group band pass. Cleanup custody cannot replace the original advancement exception; its failure is retained separately. Packet authentication preserves its established diagnostic. Complete closed-outcome metadata remains child .3.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.2: reconcile native effects before aggregate lifetime checks`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain complete original execution metadata before closed-outcome consumption.`
   Acceptance: `Publish matching original job and Service execution outcome metadata before take_closed can consume it. Preserve full report and admission history through cancellation, EOF, delayed reporting and lost consumption returns. Returned copies cannot mutate retained outcomes. Qualify exact native cleanup and complete outcome agreement without exposing request release.`
-  Verification: `Pending lifetime reconciliation child .2.`
+  Verification: `Lifetime reconciliation is qualified; preserve complete original job/execution metadata before closed-outcome consumption next.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4`
@@ -4543,7 +4543,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.2` joins original effect reporting into aggregate advancement and execution lifetime. Child .3 then retains complete closed outcomes; outer .4 exposes request release. Preserve original owners, walls, first failures, uncertainty, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3` retains complete original job/execution metadata before closed-outcome consumption. Outer .4 then exposes request release. Preserve original owners, walls, first failures, uncertainty, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7173,3 +7173,26 @@ correction supplies its proper scope and is reflected in the canonical fact/book
 - [x] **NO REGRESSION** — Effect-history task integrity and `knowledge-map: OK`
   preserve routing; staged doctrines verify paired retention metadata. No native
   fixture, original producer, full CI or push runs for this history-only slice.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Lifetime probes fail at t/1863-process-execution-lifetime.t line 294.
+  Actual E return loss became parent-authority revocation; the adjacent retained-cause probe
+  at t/1863-process-execution-lifetime.t line 399. observes later report refusal replacing native failure.
+- [x] **ADDRESSED (verified)** — Lifetime re-derivation: T1863 passes fourteen groups.
+  Reconcile before Service, request liveness and closed consumption, including lost native returns.
+  Original confirmed native truth and matching Service wall select unchanged execution lifetime;
+  admission/ancestor limits, cancellation/EOF and uncertainty remain authoritative.
+  Caught/retained native causes precede recovery/cleanup; cleanup failure cannot replace the original call error.
+  Actual E, binary output and creator signals qualify those boundaries. The packet-order
+  regression preserves the established original-packet diagnostic; all initial native censuses close.
+  Falsification: eleven isolated defects reject at intended oracles: Service ordering, omitted
+  native report, cached lifetime, Service-only authority, consumption ordering, late native cause,
+  omitted retained cause, later error precedence, skipped ancestor, unobserved lost return and cleanup error replacement.
+  Identical positive passes and every END census closes. Durability: committed tests/book/fact/source;
+  ignored .artifacts/execution-lifetime-* logs/control JSON are a named gap owned by independent
+  qualification .19.2.3.1.2.2.5.5.2.3.4.6. Consumed runners, copies and book output are removed.
+  Complete closed-outcome metadata and explicit request release retain their separate owners.
+- [x] **NO REGRESSION** — Lifetime final band: `All tests successful.` `Files=45, Tests=423`;
+  syntax, mdBook build/HTML assertions and `knowledge-map: OK` pass; staged doctrines/hooks apply.
+  Browser visual QA, Linux, original producers, full CI and push retain their existing gates.

@@ -209,6 +209,7 @@ sub advance_service {
         FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
             my $error;
             eval {
+                $self->_reconcile_execution;
                 $self->{ledger}->check_live($self->{jobs}{1}{grant});
                 $self->{service}->advance(sub { $self->_before_peer_accept(@_) },
                     sub { $self->_before_accept_write(@_) });
@@ -309,12 +310,14 @@ sub _request_live {
     _error('request lacks its original retained peer') unless $peer
         && $self->{peers}{$peer->{ticket}}
         && refaddr($self->{peers}{$peer->{ticket}}) == refaddr($peer);
-    _error('request admission is no longer live') unless $self->{phase} eq 'open'
-        && ($peer->{request_state} // '') =~ /\A(?:preparing|ready)\z/;
     my $packet = $peer->{request};
     _error('request lacks its original transferred packet') unless $packet
         && refaddr($packet) == ($peer->{request_identity} // 0)
         && $packet->{ticket} == $peer->{ticket};
+    my $executing = $peer->{job_grant} && !$peer->{outcome}
+        ? $self->_record_request_execution($peer) : 0;
+    _error('request admission is no longer live') unless $self->{phase} eq 'open'
+        && ($peer->{request_state} // '') =~ /\A(?:preparing|ready)\z/;
     my $transport = $self->{service}->ticket_observation($peer->{ticket});
     $peer->{transport} = $transport;
     my $matching = $transport->{state} eq 'handed'
@@ -324,14 +327,18 @@ sub _request_live {
         unless $matching && $transport->{handles} == 1
             && $transport->{parent} == $packet->{parent}
             && $transport->{wall_ns} eq $packet->{admission_deadline_ns};
+    my $wall = $executing ? $packet->{deadline_ns} : $packet->{admission_deadline_ns};
+    _error('request lifetime disagrees with original native execution truth')
+        unless $transport->{active_deadline_ns} eq $wall;
     my (undef, $parent) = $self->_job($peer->{parent_grant});
     _error('request parent is not its original active job')
         unless $parent->{id} == $packet->{parent} && $parent->{phase} eq 'active';
     $self->_context_live($peer->{parent_grant});
     my $now = Math::BigInt->new(_now_ns());
-    _error('original request admission deadline expired') if grep {
+    _error($executing ? 'original request execution deadline expired'
+        : 'original request admission deadline expired') if grep {
         $now->bcmp($_) >= 0
-    } $packet->{deadline_ns}, $packet->{admission_deadline_ns};
+    } $packet->{deadline_ns}, $wall;
     if ($peer->{job_grant}) {
         my ($job, $record) = $self->_job($peer->{job_grant});
         _error('request lacks its original child grant association') unless $job->{peer}
@@ -594,7 +601,15 @@ sub _record_request_execution {
     my $ok = eval {
         FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
             my (undef, $record) = $self->_request_effect_owner($peer);
-            my $command = $native->observation->{command};
+            my $observed = $native->observation;
+            if (my $failure = $observed->{first_failure}) {
+                # Liveness may discover a retained native failure before the
+                # next advance_job call. A later report error must not win.
+                my $cause = FSM::Support::ProcessSupervisor::_sanitize_control($failure->{diagnostic});
+                $entry->{failure} //= $cause;
+                $peer->{request_failure} //= $cause;
+            }
+            my $command = $observed->{command};
             return unless $command->{released} || $command->{release_uncertain};
             _error('native effect lacks its original execution attempt')
                 unless $peer->{release_requested} && $command->{release_attempted}
@@ -652,6 +667,18 @@ sub _record_request_execution {
     }
     return $reported;
 }
+
+sub _reconcile_execution {
+    my ($self) = @_; _owner($self);
+    for my $ticket (sort { $a <=> $b } keys %{$self->{peers}}) {
+        my $peer = $self->{peers}{$ticket};
+        # Consumed peers retain their effect history but their Service grant is
+        # spent. Every still-retained native effect must precede consumption.
+        next if !$peer->{job_grant} || $peer->{outcome};
+        $self->_record_request_execution($peer);
+    }
+    return;
+}
 sub retire_peer {
     my ($self, $ticket) = @_; _owner($self);
     _error('peer retirement requires one original ticket') unless @_ == 2;
@@ -667,6 +694,7 @@ sub retire_peer {
 sub _consume_closed_peers {
     my ($self) = @_;
     return unless $self->{service};
+    $self->_reconcile_execution;
     $self->_reconcile_peers;
     for my $entry (values %{$self->{peers}}) {
         my $observed = $entry->{transport};
@@ -1073,10 +1101,29 @@ sub advance_job {
         $self->cancel_job($grant, $entry->{failure} // 'job admission revoked')
             if $record->{phase} eq 'closing';
         if ($entry->{native}) {
-            $entry->{native}->advance;
+            my ($native_error, $report_error);
+            eval { $entry->{native}->advance; 1 } or $native_error = $@;
+            if (defined($native_error) && $entry->{peer}) {
+                # Report recovery can itself fail and cancel this subtree.
+                # Publish the earlier native cause before that cleanup path.
+                my $cause = FSM::Support::ProcessSupervisor::_sanitize_control($native_error);
+                $entry->{failure} //= $cause;
+                $entry->{peer}{request_failure} //= $cause;
+            }
+            # E may be confirmed or uncertain even when native advancement
+            # loses its return. Reconcile that truth before failure cleanup.
+            eval {
+                $self->_record_request_execution($entry->{peer})
+                    if $entry->{peer} && !$entry->{peer}{outcome};
+                1;
+            } or $report_error = $@;
+            die $native_error if defined $native_error;
+            die $report_error if defined $report_error;
             my $observed = $entry->{native}->observation;
             if ($observed->{first_failure} && $record->{phase} ne 'closing') {
-                $self->_job_failed($grant, $observed->{first_failure}{diagnostic});
+                my $error = $observed->{first_failure}{diagnostic};
+                $entry->{peer} ? $self->_request_failed($entry->{peer}, $error)
+                    : $self->_job_failed($grant, $error);
             }
             elsif ($observed->{phase} eq 'ready' && $record->{phase} eq 'starting') {
                 FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
@@ -1089,7 +1136,15 @@ sub advance_job {
         }
         1;
     };
-    unless ($ok) { my $error = $@; $self->_job_failed($grant, $error); die $error; }
+    unless ($ok) {
+        my $error = $@;
+        eval {
+            $entry->{peer} ? $self->_request_failed($entry->{peer}, $error)
+                : $self->_job_failed($grant, $error);
+            1;
+        } or $entry->{cleanup_error} //= FSM::Support::ProcessSupervisor::_sanitize_control($@);
+        die $error;
+    }
     return $self->job_observation($grant);
 }
 sub job_observation {

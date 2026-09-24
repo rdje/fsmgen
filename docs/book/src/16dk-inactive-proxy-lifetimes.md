@@ -1278,7 +1278,7 @@ leaving the peer closed. Its detached execution observation travels in the
 consumed closed outcome. The aggregate must reconcile the original native effect
 before consuming that outcome; afterward, the spent grant cannot report again.
 The Service fixture supplies trusted reports and literal socket traffic; actual
-native-effect reconciliation remains part of aggregate integration below.
+native-effect reconciliation is qualified through aggregate integration below.
 
 The aggregate now joins that boundary to the original ready gated process.
 `start_request($ticket)` prepares and starts its associated original grant;
@@ -1447,13 +1447,32 @@ the first request failure even when cleanup cannot acquire another mask. A
 successful report followed by creator interruption likewise keeps its original
 history. Copied, inherited, replaced, foreign and consumed owners refuse.
 
-This reporter is qualified independently with actual socket traffic, native E,
-invocation output, creator signals and exact resource closure. Integrating it
-into ordinary aggregate advancement and retained closed outcomes remains the
-next boundary; request liveness still applies its existing admission checks.
+The reporter is qualified independently with actual socket traffic, native E,
+invocation output, creator signals and exact resource closure. Ordinary aggregate
+advancement now reconciles those effects before Service advances, before request
+liveness applies a wall, and before closed Service custody is consumed. Native
+advancement reconciles even a lost return before starting aggregate cleanup.
+
+For example, after a confirmed E whose report was delayed, advancing Service at
+the original admission deadline first records that actual effect. The peer can
+remain bound until its unchanged execution deadline. Aggregate request liveness
+requires the original native confirmation and matching original Service wall;
+a Service report or copied view alone cannot extend it. Unreleased and transient
+attempts still expire on the admission wall. Uncertain writes remain uncertain.
+Parent admission, bound contexts, cancellation, EOF and execution expiry continue
+to apply, including an unexecuted nested parent whose own admission has expired.
+
+A native error is retained on the original job and peer before report recovery
+can fail or cancellation can revoke parent authority. Thus an actual E return
+loss, creator interruption, or returned native failure keeps its first cause;
+a later report error cannot replace it. Unavailable cleanup custody is recorded
+separately and cannot replace the original advancement exception. The fixture checks those
+boundaries and confirms actual invocation bytes and exact cleanup. Complete
+Service execution metadata in retained aggregate closed outcomes is the next
+boundary; the separate native-effect observation already survives consumption.
 
 Normal callers retain the existing own-group supervisor. Nested execution
-release and Service lifetime reconciliation, routing and complete subtree qualification
+release, complete closed-outcome retention, routing and subtree qualification
 still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
 Their tests exercise the current host; Linux qualification remains open.
@@ -1490,6 +1509,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1859-process-root-execut
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1860-process-native-custody.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1861-process-nested-execution-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1862-process-native-execution-report.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1863-process-execution-lifetime.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t
