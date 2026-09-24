@@ -1,7 +1,7 @@
 # Knowledge Map: `semantic-introspection`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **74** uniquely owned question entries.
+> **1** facts · **75** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -79,6 +79,7 @@
 - q="which read-only MCP workflow examples are documented?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="why did concatenation factorization change APB HDL across hash seeds?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="why did large MCP reports exceed the RAM guard?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="why do ISF width diagnostics name the authored source?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 
 ## Facts
 

@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2` (active)
-- next_action: Reproduce a declared but width-invalid ISF source and repair authored-source provenance/backend exception presentation under .32.1.2; preserve native/API/MCP diagnostics.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3` (active)
+- next_action: Repair generated multi-clock ISF slash-form wiring under .32.1.3; qualify strict artifact admission, real child diagnostics, event-crossing behavior and native/API/MCP reports.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

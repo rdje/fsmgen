@@ -1,0 +1,240 @@
+{
+  "baseline_check": {
+    "check_schema_version": 1,
+    "command": {
+      "json": true,
+      "mode": "check",
+      "strict_mode": true,
+      "target_language": "systemverilog"
+    },
+    "diagnostic_summary": {
+      "code_counts": {},
+      "codes": [],
+      "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+      "diagnostic_count": 1,
+      "diagnostic_summary_schema_version": 1,
+      "has_diagnostics": true,
+      "has_stable_codes": false,
+      "matched_support_accounting": false,
+      "report_source": "FSM::Support::SerializableDiagnosticSummary",
+      "severity_counts": {
+        "error": 1
+      },
+      "success": false,
+      "unique_codes": []
+    },
+    "diagnostics": [
+      {
+        "code": null,
+        "expected_child_source_file": null,
+        "expected_rtl_metadata_file": null,
+        "family": "unclassified",
+        "generated_child_source": null,
+        "message": "Source file: '.artifacts/tmp/ial1-lowering/fsmgen-4yXJE85T.fsm'\nError generating HDL: [OperandContractValidationSupport.pm][validate_pre_generation_operand_contract()] Pre-generation operand contract validation failed:\n  - assignment to 'B' uses RHS 'VALID' with incompatible width 8 for LHS width 1; the current contract blocks implicit truncation and requires an explicit width-aligned source expression before generation",
+        "migration_hint_available": false,
+        "parent_composition_source": null,
+        "rtl_metadata_file": null,
+        "severity": "error",
+        "source_file": ".artifacts/tmp/ial1-lowering/fsmgen-4yXJE85T.fsm",
+        "stability": "unclassified",
+        "summary": "Unclassified FSMGen failure.",
+        "support_accounting": {
+          "matched": false
+        }
+      }
+    ],
+    "generated_output": {
+      "emitted": false
+    },
+    "producer": {
+      "name": "FSMGen",
+      "report_source": "FSM::Support::CheckDiagnostics"
+    },
+    "source": {
+      "input": ".artifacts/specforge-width-diagnostics/declared-width-mismatch.isf",
+      "resolved_path": ".artifacts/tmp/ial1-lowering/fsmgen-4yXJE85T.fsm"
+    },
+    "success": false
+  },
+  "baseline_revision": "be25e7205c88f8b331c441f7c79754d99bd904f5",
+  "focused_test": [
+    "ok",
+    "All tests successful.",
+    "Files=1, Tests=5, 22 wallclock secs ( 0.01 usr  0.00 sys + 16.79 cusr  5.12 csys = 21.92 CPU)",
+    "Result: PASS"
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2",
+  "producer_sha256": {
+    "bin/fsmgen": "9d4f9920af7562ce7104785ea614feaf88fda1dd9ef2f03a07c522502513a7f1",
+    "perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm": "f6de5396f04e7e82fc4bdb2fe03d590858158bd19d8410c22ad93fc3d4acf2df",
+    "t/1889-authored-source-operand-diagnostics.t": "b6e466ddc875a88b89f4958c34081fd3beeb35e08bfc49d4bf8541dc976af3db"
+  },
+  "qualification_limits": [
+    "File-level source mapping only; no source line/column map.",
+    "The declared-width mismatch remains unclassified; existing direct concat width diagnostic code is preserved.",
+    "Multi-clock child width control uses compatibility mode; generated strict wiring repair is owned by .32.1.3.",
+    "PPIF failure context is exercised through the public extension hook, not a newly claimed product defect.",
+    "Full CI/hosted qualification and browser visual review are not included."
+  ],
+  "regression_band": [
+    "t/269-systemverilog-operand-contract-validation-support.t .... ok",
+    "t/270-systemverilog-assignment-width-contract-validation.t ... ok",
+    "t/243-composition-rtl-child-diagnostic-context.t ............. ok",
+    "t/244-composition-child-resolution-diagnostic-context.t ...... ok",
+    "t/255-composition-missing-rtl-metadata-diagnostic-context.t .. ok",
+    "t/1349-d-input-self-dependency-diagnostic-cleanup.t .......... ok",
+    "t/1868-semantic-introspection-mcp-source-failures.t .......... ok",
+    "t/1888-isf-rule-operand-admission.t .......................... ok",
+    "All tests successful.",
+    "Files=8, Tests=33, 41 wallclock secs ( 0.02 usr  0.01 sys + 31.41 cusr  9.21 csys = 40.65 CPU)",
+    "Result: PASS"
+  ],
+  "repaired_reports": {
+    "check": {
+      "command": [
+        "./bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        ".artifacts/specforge-width-diagnostics/declared-width-mismatch.isf"
+      ],
+      "exit_code": 1,
+      "report": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 1,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": true,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {
+            "error": 1
+          },
+          "success": false,
+          "unique_codes": []
+        },
+        "diagnostics": [
+          {
+            "code": null,
+            "expected_child_source_file": null,
+            "expected_rtl_metadata_file": null,
+            "family": "unclassified",
+            "generated_child_source": null,
+            "message": "Source file: '.artifacts/specforge-width-diagnostics/declared-width-mismatch.isf'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment to 'B' uses RHS 'VALID' with incompatible width 8 for LHS width 1; the current contract blocks implicit truncation and requires an explicit width-aligned source expression before generation",
+            "migration_hint_available": false,
+            "parent_composition_source": null,
+            "rtl_metadata_file": null,
+            "severity": "error",
+            "source_file": ".artifacts/specforge-width-diagnostics/declared-width-mismatch.isf",
+            "stability": "unclassified",
+            "summary": "Unclassified FSMGen failure.",
+            "support_accounting": {
+              "matched": false
+            }
+          }
+        ],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "source": {
+          "input": ".artifacts/specforge-width-diagnostics/declared-width-mismatch.isf",
+          "resolved_path": ".artifacts/specforge-width-diagnostics/declared-width-mismatch.isf"
+        },
+        "success": false
+      }
+    },
+    "semantic": {
+      "command": [
+        "./bin/fsmgen",
+        "--strict",
+        "--emit-semantic-json",
+        ".artifacts/specforge-width-diagnostics/declared-width-mismatch.isf"
+      ],
+      "exit_code": 1,
+      "report": {
+        "command": {
+          "json": true,
+          "mode": "semantic_export",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 1,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": true,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {
+            "error": 1
+          },
+          "success": false,
+          "unique_codes": []
+        },
+        "diagnostics": [
+          {
+            "code": null,
+            "expected_child_source_file": null,
+            "expected_rtl_metadata_file": null,
+            "family": "unclassified",
+            "generated_child_source": null,
+            "message": "Source file: '.artifacts/specforge-width-diagnostics/declared-width-mismatch.isf'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment to 'B' uses RHS 'VALID' with incompatible width 8 for LHS width 1; the current contract blocks implicit truncation and requires an explicit width-aligned source expression before generation",
+            "migration_hint_available": false,
+            "parent_composition_source": null,
+            "rtl_metadata_file": null,
+            "severity": "error",
+            "source_file": ".artifacts/specforge-width-diagnostics/declared-width-mismatch.isf",
+            "stability": "unclassified",
+            "summary": "Unclassified FSMGen failure.",
+            "support_accounting": {
+              "matched": false
+            }
+          }
+        ],
+        "generated_output": {
+          "emitted": false
+        },
+        "normalized_semantic_schema_version": 1,
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::NormalizedSemanticReport",
+          "semantic_layers": [
+            "intent_hir",
+            "lowered_rtl_ir",
+            "structural_rtl_ir"
+          ]
+        },
+        "source": {
+          "input": ".artifacts/specforge-width-diagnostics/declared-width-mismatch.isf",
+          "resolved_path": ".artifacts/specforge-width-diagnostics/declared-width-mismatch.isf"
+        },
+        "success": false,
+        "support_accounting": {
+          "matched": false
+        }
+      }
+    }
+  },
+  "source": {
+    "path": ".artifacts/specforge-width-diagnostics/declared-width-mismatch.isf",
+    "sha256": "d54c1e2745d3b6b7c2ae0287fa1d8ff37d45f4bb4335eebecda124e874541939",
+    "text": "(actor valid_demo\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input VALID (width 8))\n    (output A (width 8))\n    (output B (width 1))\n    (output done))\n  (rule r_a\n    (A VALID))\n  (rule r_b\n    (B VALID))\n  (transaction tx\n    (on start)\n    (complete done)))\n"
+  }
+}

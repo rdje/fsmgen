@@ -5,6 +5,13 @@ FSMGen must reject unsupported or malformed public ISF forms before emitting
 misleading scheduled artifacts. Downstream tools should surface diagnostics as
 source errors and should not assume a malformed form was partially accepted.
 
+Operand-contract failures after CLI lowering preserve the authored ISF path in
+the report and embedded source context, including registered generated domain
+children. Explicit `--outdir` retention does not change that origin; directly
+checking a retained FSM uses its physical path. Public check/semantic API and
+MCP queries preserve the same failure reason without backend module/method
+prefixes. This source mapping is file-level, not a line/column source map.
+
 Required fail-closed examples:
 
 - Unknown actor, transaction, rule, drive, storage, domain, or resource names

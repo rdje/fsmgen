@@ -5,6 +5,7 @@ use warnings;
 use feature qw(signatures postderef);
 use Getopt::Long;
 use JSON::PP ();
+use Cwd qw(abs_path);
 use File::Basename;
 use File::Spec;
 
@@ -143,6 +144,23 @@ sub shared_endpoint_binding_summary {
     my $binding = binding_signal_summary_text($entry, $target_language);
     return $endpoint unless length $binding;
     return $endpoint . ' <= ' . $binding;
+}
+
+# Only files written by this invocation have an authored-source origin. Do not
+# infer origins from directory names: real composition children keep their paths.
+sub register_lowered_source_origin {
+    my ($origins, $generated, $authored) = @_;
+    $origins->{$_} = $authored
+        for grep { defined } ($generated, File::Spec->rel2abs($generated), abs_path($generated));
+}
+
+sub project_lowered_source_diagnostic {
+    my ($error, $origins) = @_;
+    my $text = "$error";
+    # Project exact quoted source identities, including inline "in source"
+    # context. Unregistered child/metadata lookup targets remain physical paths.
+    $text =~ s{'([^'\n]+)'}{"'" . ($origins->{$1} // $1) . "'"}ge;
+    return $text;
 }
 
 sub normalize_cli_error_text {
@@ -880,6 +898,7 @@ if ($@) {
 # Convert to absolute path for consistency
 $fsm_file = File::Spec->rel2abs($fsm_file);
 my $public_source_file = $fsm_file;
+my %lowered_source_origins;
 
 if (my $unsupported_alias = unsupported_ial2_alias_suffix($fsm_file)) {
     my $display_error = emit_machine_failure_if_requested(
@@ -1081,6 +1100,7 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
             );
             print $fh $files->{$entry_basename};
             close $fh;
+            register_lowered_source_origin(\%lowered_source_origins, $tmp_path, $public_source_file);
             $fsm_file = $tmp_path;
         } else {
             ensure_project_output_directory($dir, label => '--outdir path');
@@ -1098,6 +1118,7 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
                 open my $fh, '>', $path or die "Cannot write $path: $!\n";
                 print $fh $files->{$fname};
                 close $fh;
+                register_lowered_source_origin(\%lowered_source_origins, $path, $public_source_file);
                 print "Wrote: $path\n" unless $machine_json_mode;
             }
 
@@ -1119,7 +1140,7 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
         if (!defined($entry_basename) || !defined($entry_text)) {
             my $display_error = emit_machine_failure_if_requested(
                 input => $fsm_input,
-                source_file => ($check_json_mode ? $public_source_file : $fsm_file),
+                source_file => $public_source_file,
                 target_language => $target_language,
                 strict_mode => $strict_mode,
                 emit_semantic_json => $emit_semantic_json,
@@ -1152,6 +1173,7 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
             );
             print $fh $entry_text;
             close $fh;
+            register_lowered_source_origin(\%lowered_source_origins, $tmp_path, $public_source_file);
             $fsm_file = $tmp_path;
         } else {
             ensure_project_output_directory($dir, label => '--outdir path');
@@ -1170,6 +1192,7 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
                 open my $fh, '>', $path or die "Cannot write $path: $!\n";
                 print $fh $files->{$fname};
                 close $fh;
+                register_lowered_source_origin(\%lowered_source_origins, $path, $public_source_file);
                 print "Wrote: $path\n" unless $machine_json_mode;
             }
             $fsm_file = File::Spec->catfile($dir, $entry_basename);
@@ -1229,7 +1252,7 @@ if ($fsm_file =~ /\.isf$/i) {
     if ($@) {
         my $display_error = emit_machine_failure_if_requested(
             input => $fsm_input,
-            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
+            source_file => $public_source_file,
             target_language => $target_language,
             strict_mode => $strict_mode,
             emit_semantic_json => $emit_semantic_json,
@@ -1242,7 +1265,7 @@ if ($fsm_file =~ /\.isf$/i) {
     if ($@) {
         my $display_error = emit_machine_failure_if_requested(
             input => $fsm_input,
-            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
+            source_file => $public_source_file,
             target_language => $target_language,
             strict_mode => $strict_mode,
             emit_semantic_json => $emit_semantic_json,
@@ -1262,7 +1285,7 @@ if ($fsm_file =~ /\.isf$/i) {
     if (!defined $entry_basename) {
         my $display_error = emit_machine_failure_if_requested(
             input => $fsm_input,
-            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
+            source_file => $public_source_file,
             target_language => $target_language,
             strict_mode => $strict_mode,
             emit_semantic_json => $emit_semantic_json,
@@ -1284,6 +1307,7 @@ if ($fsm_file =~ /\.isf$/i) {
         );
         print $fh $only_file;
         close $fh;
+        register_lowered_source_origin(\%lowered_source_origins, $tmp_path, $public_source_file);
         $fsm_file = $tmp_path;
     } else {
         # Keep implicit multi-file handoff artifacts temporary; only an
@@ -1295,6 +1319,7 @@ if ($fsm_file =~ /\.isf$/i) {
             open my $fh, '>', $path or die "Cannot write $path: $!\n";
             print $fh $files->{$fname};
             close $fh;
+            register_lowered_source_origin(\%lowered_source_origins, $path, $public_source_file);
             print "Wrote: $path\n" unless $machine_json_mode;
         }
         $fsm_file = File::Spec->catfile($dir, $entry_basename);
@@ -1364,7 +1389,7 @@ if ($@) {
     if ($emit_semantic_json) {
         my $report = build_normalized_semantic_failure_report(
             input => $fsm_input,
-            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
+            source_file => $public_source_file,
             target_language => $target_language,
             strict_mode => $strict_mode,
             message => $display_error,
@@ -1375,7 +1400,7 @@ if ($@) {
     if ($check_json_mode) {
         my $report = build_check_failure_report(
             input => $fsm_input,
-            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
+            source_file => $public_source_file,
             target_language => $target_language,
             strict_mode => $strict_mode,
             message => $display_error,
@@ -1393,13 +1418,15 @@ my $result = eval {
 
 if ($@) {
     my $error = $@;
-    my $failure_report = FSM::Composition::FailureReportBuilder->build_report($error);
-    my $display_error = normalize_cli_error_text($error);
+    my $display_error = normalize_cli_error_text(
+        project_lowered_source_diagnostic($error, \%lowered_source_origins),
+    );
+    my $failure_report = FSM::Composition::FailureReportBuilder->build_report($display_error);
 
     if ($emit_semantic_json) {
         my $report = build_normalized_semantic_failure_report(
             input => $fsm_input,
-            source_file => $fsm_file,
+            source_file => $public_source_file,
             target_language => $target_language,
             strict_mode => $strict_mode,
             message => $display_error,
@@ -1411,7 +1438,7 @@ if ($@) {
     if ($check_json_mode) {
         my $report = build_check_failure_report(
             input => $fsm_input,
-            source_file => $fsm_file,
+            source_file => $public_source_file,
             target_language => $target_language,
             strict_mode => $strict_mode,
             message => $display_error,

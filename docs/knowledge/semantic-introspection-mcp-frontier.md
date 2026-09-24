@@ -59,6 +59,7 @@ answers:
   - "can client capabilities widen FSMGen MCP server capabilities?"
   - "does FSMGen MCP return JSON-RPC error.data?"
   - "does MCP preserve failed source check and semantic diagnostics?"
+  - "why do ISF width diagnostics name the authored source?"
   - "how are embedded absolute paths removed from MCP errors?"
   - "does MCP discover axi apb ahb protocol aliases?"
   - "where is the public source query applicability map?"
@@ -83,14 +84,10 @@ evidence: >-
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/SemanticIntrospectionContract.pm; perl/FSM/Support/SemanticIntrospectionSection.pm; perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm; bin/fsmgen-mcp; https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle; https://modelcontextprotocol.io/specification/2025-06-18/basic/transports; https://modelcontextprotocol.io/specification/2025-06-18/client/roots; https://modelcontextprotocol.io/specification/2025-06-18/client/sampling;
   https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation; https://modelcontextprotocol.io/specification/2025-06-18/server/prompts; https://modelcontextprotocol.io/specification/2025-06-18/server/resources; https://modelcontextprotocol.io/specification/2025-06-18/server/tools; https://modelcontextprotocol.io/specification/2025-06-18/schema; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/completion; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/logging; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/pagination
 reverify: >-
-  scripts/run_with_ram_guard.sh -- prove -Iperl t/144*-semantic-introspection-mcp-*.t t/145*-semantic-introspection-mcp-*.t t/146*-semantic-introspection-mcp-*.t t/1868-semantic-introspection-mcp-source-failures.t t/1869-semantic-introspection-mcp-protocol-aliases.t t/1882-semantic-introspection-mcp-vial-inspection.t t/1883-semantic-source-query-cohort.t t/1884-semantic-source-query-runner.t t/1885-semantic-source-query-oracles.t t/1886-semantic-introspection-mcp-json-encoding.t t/1887-ast-factorization-structural-identity.t
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/144*-semantic-introspection-mcp-*.t t/145*-semantic-introspection-mcp-*.t t/146*-semantic-introspection-mcp-*.t t/1868-semantic-introspection-mcp-source-failures.t t/1869-semantic-introspection-mcp-protocol-aliases.t t/1882-semantic-introspection-mcp-vial-inspection.t t/1883-semantic-source-query-cohort.t t/1884-semantic-source-query-runner.t t/1885-semantic-source-query-oracles.t t/1886-semantic-introspection-mcp-json-encoding.t t/1887-ast-factorization-structural-identity.t t/1889-authored-source-operand-diagnostics.t
 ---
 
-Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. Earlier history:
-
-```sh
-git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md
-```
+Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. Earlier history: `git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md`.
 
 Product contract and client examples:
 `docs/book/src/11-extensions-and-embedding.md`; schemas are in
@@ -180,3 +177,8 @@ HDL behavior. The original APB module's differing driver was unused: an APB
 output failure is not established by that reproducer. Native size fields remain
 intact. Exact evidence is in
 `docs/audits/mcp-feature-coverage-20260924/source-query-identity-repair.json`.
+
+ISF/PPIF CLI failures project exact registered lowered-source identities to the
+authored source; direct FSM and external child paths stay physical. T1889 checks
+width reasons without backend module/method names, retained artifacts, domain
+children, and complete native/API/MCP equality. No line/column map is claimed.

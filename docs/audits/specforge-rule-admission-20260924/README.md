@@ -87,3 +87,10 @@ An initial Icarus attempt was unusable: the installed tool rejects a simple
 continuous assignment to a wire declared later, independently reproduced with
 a minimal module. It is not counted as HDL qualification. Verilator handles
 the actual SystemVerilog unchanged, with assertions enabled.
+
+`width-diagnostics.json` is owned by `.32.1.2`. It preserves the independently
+declared width-error control, before/after native reports, exact producer hashes
+and focused test receipts. Reverify with RAM-guarded `prove -Iperl -It/lib t/1889-authored-source-operand-diagnostics.t`.
+The test compares full API/newline MCP reports, retained/direct source identity,
+external children and compatibility-mode domain failures. Strict multi-domain
+wrapper wiring is a separately reproduced defect owned for repair by `.32.1.3`.

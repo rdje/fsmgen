@@ -172,8 +172,7 @@ sub validate_pre_generation_operand_contract ($self, $fsm_module, $prepared_bloc
 
     return unless @violations;
 
-    my $message = "[OperandContractValidationSupport.pm][validate_pre_generation_operand_contract()] "
-        . "Pre-generation operand contract validation failed:\n"
+    my $message = "Pre-generation operand contract validation failed:\n"
         . join('', map { "  - $_\n" } @violations);
     die $message;
 }

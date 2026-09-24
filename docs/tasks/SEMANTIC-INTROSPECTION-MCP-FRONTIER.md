@@ -619,10 +619,10 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Reject undeclared ISF rule operands before implicit input creation or width inference.`
   Acceptance: `Reproduce sf-isf-undeclared-rule-operand from its supplied primary, mixed-width and declared controls. Diagnose rule operand resolution, retain legitimate actor symbols, reject invalid reads with actor/rule/name provenance, and verify strict checks, semantic API/MCP and generated interfaces. Investigate and repair the report's related internal-path/stack diagnostic exposure if confirmed. Refine into safe leaves before implementation.`
-  Verification: `Caller bundle: ../specforge/docs/fsmgen-issues/sf-isf-undeclared-rule-operand/README.md; SPECFORGE owner FSMGEN-REQUESTS.2. Structural identity repair is committed as 45c0e579c23f3c693e7537de1693e5ef6a07cccd; clean tree, empty message file and derived ahead count verified before activation. Read supplied cases without changing SPECFORGE; preserve exact hashes when copying to task-owned local fixtures. Missing-operand reproduction and repair are complete under .32.1.1; the separate width-diagnostic repair remains active under .32.1.2.`
+  Verification: `Caller bundle: ../specforge/docs/fsmgen-issues/sf-isf-undeclared-rule-operand/README.md; SPECFORGE owner FSMGEN-REQUESTS.2. Structural identity repair is committed as 45c0e579c23f3c693e7537de1693e5ef6a07cccd; clean tree, empty message file and derived ahead count verified before activation. Read supplied cases without changing SPECFORGE; preserve exact hashes when copying to task-owned local fixtures. Missing-operand reproduction and repair are complete under .32.1.1; the width-diagnostic repair is complete under .32.1.2; the reproduced strict multi-domain wiring repair is active under .32.1.3.`
   Commit: `pending`
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.1`
   Status: `done`
@@ -634,10 +634,17 @@ For FSMGen, the analogs are:
   Compatibility prerequisite: `The first complete public-adapter census exposes generated AXI endpoint/composition rule reads of undeclared shared state. Endpoint generators and composition coordinators now declare those captured payloads, launch/arm handoffs, active/completion flags and expected response IDs as actor storage at their intended widths. No name whitelist or promotion of transaction-private values is used. Scheduled FSM differences are explicit size declarations; endpoint and composition SV is otherwise byte-identical after removing only date headers. Both component baselines and repairs pass the existing independent protocol behavior oracles. The complete ordinary public-adapter census passes; every affected endpoint and composition passes native/API/newline MCP check, semantic and schedule comparison. See the acceptance evidence and retained receipts below.`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve authored ISF source context in operand-contract failures without implementation diagnostics.`
   Acceptance: `Reproduce a declared but width-invalid ISF control independently of the missing-operand repair. Trace generated-to-authored source mapping and backend exception presentation, repair confirmed leaked implementation paths/names in public diagnostics, and qualify native/API/MCP error identity with targeted direct/ISF controls. Keep this boundary separate from successful actor admission.`
-  Verification: `The supplied mixed-width baseline reports its temporary ial1-lowering FSM as source_file and exposes OperandContractValidationSupport.pm plus validate_pre_generation_operand_contract() in the message. Reproduce the remaining width-error path after .32.1.1 before editing it.`
+  Verification: `The independently declared VALID width-8 control still fails at B width-1 on be25e7205. Native check JSON names the temporary ial1-lowering FSM in source.resolved_path, diagnostic.source_file and the embedded Source file line. bin/fsmgen saves public_source_file but its generation catch uses fsm_file; CheckDiagnostics extracts the embedded label before its fallback argument. OperandContractValidationSupport adds its module/method prefix at the producer. Repair the shared ISF/PPIF handoff using exact generated-file origin registration, preserve unrelated authored child and expected-lookup artifact paths, and remove the backend prefix at origin. Exact registered source identities now project to the authored source in both report fields and embedded messages; the producer prefix is removed. T1889 and the focused regression band pass. Durable before/after capture and limits: docs/audits/specforge-rule-admission-20260924/width-diagnostics.json.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2: preserve authored lowering failure context`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3`
+  Status: `active`
+  Goal: `Make generated multi-clock ISF top wiring strict-admissible and qualify native/API/MCP failures and success.`
+  Acceptance: `Repair the emitted legacy slash-link syntax at the multi-domain generator, not by relaxing strict validation. Qualify complete generated artifact admission, real child width failures with authored provenance, valid event-crossing behavior, and native/API/newline MCP parity. Synchronize exact supported boundaries in the book and task evidence; commit before bundle work.`
+  Verification: `T1889 development probe on .32.1.2 exposes strict rejection of /bus_start/source.bus_start/ in domain_width_control_top.fsm. perl/FSM/Scheduler/ISF.pm::_emit_multi_domain_wiring calls _link, which returns slash-delimited links at line 519. The generated wrapper fails before its intended child width error. Existing T1247 exercises partition structure rather than strict top admission. Initial failing TAP is .artifacts/specforge-width-diagnostics/focused.tap; no strict multi-domain qualification is claimed by .32.1.2.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.2`
@@ -1315,10 +1322,10 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2` is active: repair authored-source
-provenance in independently reproduced operand-width diagnostics. Admission
-repair `.32.1.1` is done; bundle provenance, generated-interconnect lowering
-and derived widths follow under `.32.2`, `.32.4` and `.32.3`.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3` is active: repair strict admission
+of generated multi-clock ISF wiring. Rule admission and width-error provenance
+are repaired under `.32.1.1` and `.32.1.2`; bundle provenance, generated
+interconnect lowering and derived widths follow under `.32.2`, `.32.4` and `.32.3`.
 Own any demonstrated gap before returning to HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2979,3 +2986,43 @@ The first staged doctrine pass accepts fresh task evidence but finds the new
 nested audit README outside existing document surfaces. The exact replay
 procedure is now registered as `isf_rule_admission_replay`, bounded separately
 without widening existing collection ceilings or hiding the Markdown file.
+
+## Acceptance Checklist — `.32.1.2` authored diagnostic provenance
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--strict --check --json` on
+  the independently declared width-8 VALID / width-1 B source fails correctly
+  but names an ephemeral lowered FSM. `bin/fsmgen` saves the authored source
+  yet its generation catch uses the lowered path; CheckDiagnostics extracts
+  the embedded Source file label before its fallback argument. The operand
+  validator itself prefixes its module/method names. Baseline and repaired
+  reports are retained in `width-diagnostics.json` in the rule-admission audit.
+- [x] **ADDRESSED (verified)** — The CLI registers origins only for FSM files
+  it writes, projects exact quoted identities in failure context, and uses the
+  authored source for failure reports. Inline source references and generated
+  domain parent context agree; real external child and expected lookup paths
+  stay physical. Directly rechecked retained artifacts name themselves.
+  Removing the prefix at the operand validator also cleans library exceptions.
+  T1889 proves actual width reasons, compatibility-mode domain children,
+  retained files, PPIF public-hook failures, complete native/API/newline MCP
+  equality and valid-source controls. No line/column mapping or universal
+  stable width-error classification is claimed.
+- [x] **NO REGRESSION** — RAM-guarded T1889 reports `All tests successful.`
+  and `Files=1, Tests=5`. The operand/width, real child/RTL/lookup context,
+  D-input cleanup, MCP source-failure and undeclared-rule band reports
+  `All tests successful. Files=8, Tests=33`. The mdBook build and rendered
+  contract assertions pass; the disposable rendered output is removed.
+
+Re-derivation uses the exact declared-source control and native check/semantic
+reports. Falsification covers real child paths, direct retained artifacts,
+width-aligned success and full transport equality. Durability is T1889,
+`docs/audits/specforge-rule-admission-20260924/width-diagnostics.json`, the book,
+ISF reference and semantic-introspection fact card. Initial test assumptions
+were corrected: human `--check` requires JSON, the historical concat fixture
+uses compatibility assignment syntax, and generated_child_source is a kind
+field rather than a combined kind/name. These are not product changes.
+
+The multi-domain control separately exposes emitted slash-form top wiring,
+which strict admission rejects before child validation. This is traced to
+`FSM::Scheduler::ISF::_link`, explicitly owned by `.32.1.3` and next for repair.
+The diagnostic slice does not call that strict path qualified. Full CI/push
+and browser visual review remain gated; spent native producers are untouched.

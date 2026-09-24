@@ -69,6 +69,22 @@ Typical causes:
 The pre-generation validation path exists specifically to catch these before
 emission.
 
+For an ISF rule assigning an explicitly declared eight-bit `VALID` input to a
+one-bit `B` output, the operand failure identifies `B`, `VALID`, both widths,
+and the need for an explicit width-aligned expression. It names the authored
+`.isf` in `source.resolved_path`, `diagnostics[].source_file`, and the message,
+even when the error arose in a generated domain child. The same source-origin
+projection applies to PPIF lowering and to explicitly retained `--outdir`
+files. Actual external child sources and unresolved lookup targets retain
+their own paths. Rechecking a retained `.fsm` directly reports that `.fsm`.
+
+The CLI, check/semantic JSON, and their API/MCP queries retain the operand
+reason without the validator's Perl module or method names. MCP projects
+repository paths to relative paths and preserves the complete failure report.
+A width error may still have an unclassified diagnostic code; use the report's
+failure status and reason, rather than assuming every width error has a stable
+code. Source-origin projection does not provide a source line or column.
+
 Illegal combinational self-dependency failures are reported as source-local
 diagnostics before HDL emission. The CLI, `--check-json`, and
 `--emit-semantic-json` surfaces keep the source context, the rejected `=`
