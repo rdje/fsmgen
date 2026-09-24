@@ -1,0 +1,5 @@
+(?fsm:enable_case
+  (+system (clock clk) (sreset reset))
+  (+size (OUT 1) (out 1) (UP 1) (DOWN 1))
+  (idle (<UP (<- (OUT> 1))) (<DOWN (<- (out> 1))))
+)

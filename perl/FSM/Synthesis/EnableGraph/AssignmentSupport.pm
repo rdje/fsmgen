@@ -76,7 +76,30 @@ sub build_unified_assignment_analysis ($self, $fsm_module = undef) {
     my $ctx = $self->{flattened_dt};
     fsm_debug("\n\n*** UNIFIED PHASE 1: BUILDING COMPLETE ASSIGNMENT ANALYSIS (AST WEB) ***", 3);
 
-    for my $lhs_name_key (keys %{$ctx->{all_lhs}}) {
+    # DT-local and LHS-level enables occupy the same module namespace. A
+    # per-LHS registry misses case/punctuation cleanup collisions between
+    # signals, and a per-family registry misses DT/LHS collisions. Keep this
+    # registry local to a complete build so rebuilding cannot consume old names.
+    $fsm_module //= $ctx->{fsm_module};
+    my %used_enable_names = map { $_ => 1 } keys %{$ctx->{all_lhs}};
+    if ($fsm_module) {
+        $used_enable_names{$_} = 1 for keys %{$fsm_module->signals || {}};
+        $used_enable_names{$_} = 1 for keys %{$fsm_module->parameters || {}};
+    }
+    my $system = $ctx->{enable_graph_module_planning_support}
+        ->effective_system_contract($fsm_module);
+    for my $port (qw(clock reset)) {
+        my $name = $system->{$port};
+        $used_enable_names{$name} = 1 if defined($name) && length($name);
+    }
+    for my $name (keys %{$ctx->{state_enables} || {}}, keys %{$ctx->{dt_enables} || {}}) {
+        $name =~ s/^-//;
+        $used_enable_names{"${name}_en"} = 1;
+    }
+
+    # Allocation order is part of deterministic generated identity. Authored
+    # names and top-level enables above are reserved before any family is built.
+    for my $lhs_name_key (sort keys %{$ctx->{all_lhs}}) {
         next unless $ctx->{lhs_assignments}->{$lhs_name_key};
 
         my $raw_lhs_ast = $ctx->{lhs_ast_map}->{$lhs_name_key};
@@ -100,7 +123,7 @@ sub build_unified_assignment_analysis ($self, $fsm_module = undef) {
         };
 
         $self->group_assignments_by_rhs($lhs_name_key);
-        $self->generate_complete_enable_structure($lhs_name_key);
+        $self->generate_complete_enable_structure($lhs_name_key, \%used_enable_names);
         $self->build_multiplexer_config($lhs_name_key);
 
         fsm_debug("  *** COMPLETED ANALYSIS FOR LHS AST: $lhs_name ***", 3);
@@ -608,7 +631,7 @@ LHS signal.
 
 =cut
 
-sub generate_complete_enable_structure ($self, $lhs) {
+sub generate_complete_enable_structure ($self, $lhs, $used_enable_names = {}) {
     my $ctx = $self->{flattened_dt};
     my $signal_support = $ctx->{enable_graph_signal_support};
     my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
@@ -659,7 +682,9 @@ sub generate_complete_enable_structure ($self, $lhs) {
 
             my $clean_rhs = $signal_support->clean_signal_name($rhs);
             my $clean_lhs = $signal_support->clean_signal_name($lhs);
-            my $dt_enable_name = "${clean_dt_name}_${clean_lhs}_${clean_rhs}_en";
+            my $dt_enable_name = $self->_allocate_enable_name(
+                "${clean_dt_name}_${clean_lhs}_${clean_rhs}_en", $used_enable_names,
+            );
 
             my $dt_enable_info = {
                 dt => $dt_name,
@@ -678,15 +703,9 @@ sub generate_complete_enable_structure ($self, $lhs) {
         }
     }
 
-    # CODEGEN-MULTI-EXPRESSION-SET-ALIAS: distinct RHS can collapse to the same generated
-    # LHS-level enable name (generate_rhs_based_enable_name strips the expr-namer's
-    # disambiguating suffix). Two expression `(set)`s to one register in different states
-    # would then share one `<lhs>_..._en` wire — the later `assign` overwrites it and the
-    # earlier write is silently dropped, while the onehot0 selector degenerates to the same
-    # name twice. Track names assigned for this LHS and disambiguate any collision so every
-    # distinct RHS group drives its own enable. Single-write registers never collide, so
-    # their names (and generated HDL) are unchanged.
-    my %used_enable_names;
+    # Distinct RHS expressions may also clean to the same readable candidate
+    # (CODEGEN-MULTI-EXPRESSION-SET-ALIAS). Use the same registry as DT enables
+    # and every other LHS, retaining the original name whenever it is available.
     for my $rhs (sort keys %{$lhs_analysis->{rhs_groups}}) {
         my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
 
@@ -702,14 +721,10 @@ sub generate_complete_enable_structure ($self, $lhs) {
             $lhs_enable_ast = FSM::AST::Utils::or_tree(@dt_enable_asts);
         }
 
-        my $lhs_enable_name = $signal_support->generate_rhs_based_enable_name($lhs, $rhs);
-        if ($used_enable_names{$lhs_enable_name}) {
-            (my $base = $lhs_enable_name) =~ s/_en$//;
-            my $n = 2;
-            $n++ while $used_enable_names{"${base}_${n}_en"};
-            $lhs_enable_name = "${base}_${n}_en";
-        }
-        $used_enable_names{$lhs_enable_name} = 1;
+        my $lhs_enable_name = $self->_allocate_enable_name(
+            $signal_support->generate_rhs_based_enable_name($lhs, $rhs),
+            $used_enable_names,
+        );
 
         $rhs_group->{lhs_level_enable} = {
             name => $lhs_enable_name,
@@ -722,6 +737,20 @@ sub generate_complete_enable_structure ($self, $lhs) {
             : 'UNAVAILABLE';
         fsm_debug("    [AssignmentSupport.pm] LHS-level enable: $lhs_enable_name = $debug_expr", 3);
     }
+}
+
+# Generated enables always end in _en. Probe the shared namespace, including
+# occupied suffixes, without changing the authored signal or expression identity.
+sub _allocate_enable_name ($self, $candidate, $used) {
+    my $name = $candidate;
+    (my $base = $candidate) =~ s/_en$//;
+    my $suffix = 2;
+    while ($used->{$name}) {
+        $name = "${base}_${suffix}_en";
+        $suffix++;
+    }
+    $used->{$name} = 1;
+    return $name;
 }
 
 =head2 build_multiplexer_config

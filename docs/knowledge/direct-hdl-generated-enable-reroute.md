@@ -6,11 +6,13 @@ answers:
   - "which direct HDL block is rerouted through StructuralRTLIR?"
   - "are generated enable assignments emitted from StructuralRTLIR?"
   - "does direct HDL rerouting parse emitted HDL text?"
-date: 2026-06-12
+  - "how are case-distinct generated enable name collisions prevented?"
+  - "why did PENABLE semantic drivers change across hash seeds?"
+date: 2026-09-24
 status: current
 tags: [direct-hdl, structural-rtl-ir, generated-enable, systemverilog]
 evidence: perl/FSM/Pipeline/DirectGenerationOrchestrator.pm; perl/FSM/Backend/GeneratedModuleEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm; perl/FSM/IR/StructuralRTLIRBuilder.pm; t/194-generated-module-emitter.t; t/293-systemverilog-post-flattening-assembly-support.t; t/163-forward-structural-rtl-ir-surface.t; t/1333-direct-structural-rtl-ir-projection.t; docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md
-reverify: prove -Iperl t/194-generated-module-emitter.t t/293-systemverilog-post-flattening-assembly-support.t t/163-forward-structural-rtl-ir-surface.t t/1333-direct-structural-rtl-ir-projection.t
+reverify: prove -Iperl t/1866-generated-enable-name-identity.t t/1405-codegen-multi-expression-set.t t/194-generated-module-emitter.t t/293-systemverilog-post-flattening-assembly-support.t t/163-forward-structural-rtl-ir-surface.t t/1333-direct-structural-rtl-ir-projection.t
 ---
 
 Direct SystemVerilog generation now reroutes only the top state and
@@ -27,3 +29,21 @@ parsed.
 DT-specific WEN/EN assignments, LHS-level enables, output-drive and
 always-block bodies, direct instances/links, VHDL emission, and full direct
 module emission remain outside this reroute slice.
+
+Assignment enable identity is allocated before factorization by
+`FSM::Synthesis::EnableGraph::AssignmentSupport`. One fresh registry per
+complete analysis build covers DT-local and LHS-level families, reserving
+module signals, effective system ports, parameters and top-level state/DT
+enable names. Sorted original LHS/DT/RHS
+traversal and suffix probing separate case/punctuation and cross-family
+collisions while preserving available readable candidates. Muxes, structural
+records and emitted HDL consume the allocated identity.
+
+The prior per-LHS registry allowed `PENABLE` and `penable` to share
+`penable_0_en`; duplicate factorization context keys then replaced one original
+condition with the other in hash-dependent order. T1866 guards this and related
+collisions; the prior expression-alias guard remains T1405. Exact baseline,
+isolated controls, actual CLI/MCP comparisons and HDL behavior evidence are in
+`docs/audits/mcp-feature-coverage-20260924/enable-identity-repair.json` under
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1`. This is an assignment-enable
+namespace contract, not a universal generated-identifier collision claim.

@@ -128,10 +128,10 @@ The 2026-09-24 audit found limits that earlier profile tests did not expose:
 - Expected compiler refusal JSON is discarded on a nonzero exit; the resulting
   IPC error embeds absolute command paths. Error messages are therefore not
   fully sanitized despite the earlier bounded mock tests.
-- Native ISF semantic reports can disagree because case-distinct LHS signals
-  receive the same generated enable name. AssignmentSupport tracks collisions
-  only within one LHS; FactorizationSupport overwrites the duplicate context.
-  This compiler defect must be fixed before claiming native/MCP parity.
+- The native case-folded enable collision is repaired under `.31.2.1`: shared,
+  deterministic assignment-enable allocation keeps original driver identity.
+  The recorded actual CLI/MCP reports agree after source-path normalization;
+  this bounded check does not establish parity for all other features.
 - The APB sample completion phase assigns lowercase internal signals rather
   than its uppercase public outputs; this is a separate source repair.
 

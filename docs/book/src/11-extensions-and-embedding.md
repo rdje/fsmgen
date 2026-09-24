@@ -2767,6 +2767,15 @@ available read-only query kinds, and support metadata; it does not traverse the
 workspace. The source-bound requests return workspace-relative source identity and
 `adapter_provenance`; they do not return the configured workspace root.
 
+Generated DT-local and grouped assignment enables use one deterministic
+namespace per module. Case-distinct signals such as `OUT` and `out` retain
+independent conditions and write selection even when their readable enable
+names would coincide. Authored signals, system ports, parameters and top-level enable names are
+reserved; generated collisions receive numeric suffixes. Clients should use
+`assignment_records[].provenance` to identify the original signal, RHS and DT,
+not infer those identities by splitting generated names. CLI semantic reports
+and MCP expose the same repaired producer.
+
 ### Current Source Coverage Limits
 
 Catalog discovery currently recognizes `.fsm`, `.isf`, and `.ppif`. Protocol
@@ -2777,12 +2786,12 @@ queries to that API. Select `--language-version 2` for VIAL v2 sources.
 
 Expected compiler failures can currently become opaque MCP errors instead of
 returning the native structured diagnostics, and those errors can contain
-absolute command paths. A current compiler naming defect can also conflate
-enables for case-distinct signals; semantic JSON and generated HDL share that
-producer. These are tracked repairs in
+absolute command paths. The APB ISF sample completion phase also still writes
+lowercase internal signals instead of clearing its uppercase bus outputs.
+These are tracked repairs in
 [the semantic coverage frontier](../../tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md),
-with the compiler repair preceding adapter parity qualification. Successful
-profile tests alone do not establish coverage of every current feature.
+with source and adapter repairs preceding complete parity qualification.
+Successful profile tests alone do not establish coverage of every current feature.
 
 ### MCP Client Compatibility Matrix
 

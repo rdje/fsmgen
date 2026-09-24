@@ -1,0 +1,507 @@
+{
+  "baseline_revision": "67c8b36d0a8080c59daf1449be00be4628b65af9",
+  "controls": [
+    {
+      "control": "baseline",
+      "exit": 6,
+      "failure_oracles": [
+        "one generated driver for idle_out_1_en",
+        "one generated driver for out_1_en",
+        "out <- 1 retains original condition DOWN after factorization",
+        "case-sensitive lexical order fixes readable name allocation",
+        "case-distinct outputs in one DT keep independent conditions",
+        "one generated driver for a_b_0_en",
+        "one generated driver for out_1_en",
+        "OUT <- 1 refers to its own DT-local enable",
+        "a_b <- 0 refers to its own DT-local enable",
+        "different DTs and repeated cleaning separators retain signal identity",
+        "one generated driver for idle_out_data_en",
+        "OUT <- DATA retains original condition UP after factorization",
+        "same-DT case-distinct RHSs keep separate write selection",
+        "one generated driver for first_foo_0_en",
+        "lhs_level_enable does not shadow authored/reserved foo_0_en",
+        "DT and LHS families share a namespace and skip occupied suffixes",
+        "one generated driver for out_1_out_1_en",
+        "one generated driver for out_1_en",
+        "lhs_level_enable does not shadow authored/reserved out_1_en",
+        "one generated driver for out_1_en",
+        "lhs_level_enable does not shadow authored/reserved out_1_en",
+        "out <- 1 retains original condition DOWN after factorization",
+        "top-level enables stay reserved and repeated analysis is stable",
+        "lhs_level_enable does not shadow authored/reserved out_1_en",
+        "system ports and parameters reserve generated enable candidates"
+      ],
+      "log_sha256": "e4b88d643980e48060df04ff9fbeb57c5b87e245df434f5f8819d19f1187c03a",
+      "module_sha256": "c6871c456e4592e5b443b233481ceeb21bb450e858317490a5fae52bcba8255e"
+    },
+    {
+      "control": "positive",
+      "exit": 0,
+      "failure_oracles": [],
+      "log_sha256": "d2f8eedd11c860cbfcecb9b3494c45757cb746f7fff65b3e484f8054845778f0",
+      "module_sha256": "5de4df0cc5daeebae556ea614ea6b9f80f46cfcd843a8bb9811b05a7b220bc92"
+    },
+    {
+      "control": "reverse_allocation_order",
+      "exit": 1,
+      "failure_oracles": [
+        "case-sensitive lexical order fixes readable name allocation",
+        "case-distinct outputs in one DT keep independent conditions"
+      ],
+      "isolated_change_from_fixed": [
+        "--- fixed",
+        "+++ reverse_allocation_order",
+        "@@ -99,7 +99,7 @@",
+        " ",
+        "     # Allocation order is part of deterministic generated identity. Authored",
+        "     # names and top-level enables above are reserved before any family is built.",
+        "-    for my $lhs_name_key (sort keys %{$ctx->{all_lhs}}) {",
+        "+    for my $lhs_name_key (reverse sort keys %{$ctx->{all_lhs}}) {",
+        "         next unless $ctx->{lhs_assignments}->{$lhs_name_key};",
+        " ",
+        "         my $raw_lhs_ast = $ctx->{lhs_ast_map}->{$lhs_name_key};"
+      ],
+      "log_sha256": "30ddca8f8ff8c2a1a68c27850e21d90f7cde8b2effd81a271f17e1e87e0d6f03",
+      "module_sha256": "309006ba68e0f0d9ecedcd39146a2d65c52425a862cd753deea5bd849c6725ec"
+    },
+    {
+      "control": "missing_dt_allocation",
+      "exit": 4,
+      "failure_oracles": [
+        "one generated driver for idle_out_1_en",
+        "OUT <- 1 retains original condition UP after factorization",
+        "case-distinct outputs in one DT keep independent conditions",
+        "one generated driver for idle_out_data_en",
+        "OUT <- data retains original condition DOWN after factorization",
+        "same-DT case-distinct RHSs keep separate write selection",
+        "one generated driver for first_foo_0_en",
+        "DT and LHS families share a namespace and skip occupied suffixes",
+        "one generated driver for out_1_out_1_en",
+        "out <- 1 retains original condition DOWN after factorization",
+        "top-level enables stay reserved and repeated analysis is stable"
+      ],
+      "isolated_change_from_fixed": [
+        "--- fixed",
+        "+++ missing_dt_allocation",
+        "@@ -682,9 +682,7 @@",
+        " ",
+        "             my $clean_rhs = $signal_support->clean_signal_name($rhs);",
+        "             my $clean_lhs = $signal_support->clean_signal_name($lhs);",
+        "-            my $dt_enable_name = $self->_allocate_enable_name(",
+        "-                \"${clean_dt_name}_${clean_lhs}_${clean_rhs}_en\", $used_enable_names,",
+        "-            );",
+        "+            my $dt_enable_name = \"${clean_dt_name}_${clean_lhs}_${clean_rhs}_en\";",
+        " ",
+        "             my $dt_enable_info = {",
+        "                 dt => $dt_name,"
+      ],
+      "log_sha256": "b4a8be8e54f613a904cd5cd05da16be32b38547529d3e43991ad9ce72551c124",
+      "module_sha256": "2d93b5f4ade51eed8581bce664924f362f55306d6f0b2a4a749d3af75d3b0b6b"
+    },
+    {
+      "control": "per_lhs_registry",
+      "exit": 5,
+      "failure_oracles": [
+        "one generated driver for idle_out_1_en",
+        "one generated driver for out_1_en",
+        "OUT <- 1 retains original condition UP after factorization",
+        "case-sensitive lexical order fixes readable name allocation",
+        "case-distinct outputs in one DT keep independent conditions",
+        "one generated driver for a_b_0_en",
+        "one generated driver for out_1_en",
+        "OUT <- 1 refers to its own DT-local enable",
+        "a__b <- 0 refers to its own DT-local enable",
+        "different DTs and repeated cleaning separators retain signal identity",
+        "one generated driver for first_foo_0_en",
+        "lhs_level_enable does not shadow authored/reserved foo_0_en",
+        "DT and LHS families share a namespace and skip occupied suffixes",
+        "one generated driver for out_1_out_1_en",
+        "one generated driver for out_1_en",
+        "lhs_level_enable does not shadow authored/reserved out_1_en",
+        "one generated driver for out_1_en",
+        "lhs_level_enable does not shadow authored/reserved out_1_en",
+        "out <- 1 retains original condition DOWN after factorization",
+        "top-level enables stay reserved and repeated analysis is stable",
+        "lhs_level_enable does not shadow authored/reserved out_1_en",
+        "system ports and parameters reserve generated enable candidates"
+      ],
+      "isolated_change_from_fixed": [
+        "--- fixed",
+        "+++ per_lhs_registry",
+        "@@ -123,7 +123,7 @@",
+        "         };",
+        " ",
+        "         $self->group_assignments_by_rhs($lhs_name_key);",
+        "-        $self->generate_complete_enable_structure($lhs_name_key, \\%used_enable_names);",
+        "+        $self->generate_complete_enable_structure($lhs_name_key);",
+        "         $self->build_multiplexer_config($lhs_name_key);",
+        " ",
+        "         fsm_debug(\"  *** COMPLETED ANALYSIS FOR LHS AST: $lhs_name ***\", 3);"
+      ],
+      "log_sha256": "73f6bbf5e805fc714f0374b23d950fd2f8c31886f6b3796aaddfb866097f9393",
+      "module_sha256": "656b6bd214b731fc5e149d8d1255bbddbaf805b137b4f1b9b2e2756a24ab435c"
+    },
+    {
+      "control": "missing_parameter_reservation",
+      "exit": 1,
+      "failure_oracles": [
+        "lhs_level_enable does not shadow authored/reserved out_1_3_en",
+        "system ports and parameters reserve generated enable candidates"
+      ],
+      "isolated_change_from_fixed": [
+        "--- fixed",
+        "+++ missing_parameter_reservation",
+        "@@ -84,7 +84,7 @@",
+        "     my %used_enable_names = map { $_ => 1 } keys %{$ctx->{all_lhs}};",
+        "     if ($fsm_module) {",
+        "         $used_enable_names{$_} = 1 for keys %{$fsm_module->signals || {}};",
+        "-        $used_enable_names{$_} = 1 for keys %{$fsm_module->parameters || {}};",
+        "+        ",
+        "     }",
+        "     my $system = $ctx->{enable_graph_module_planning_support}",
+        "         ->effective_system_contract($fsm_module);"
+      ],
+      "log_sha256": "e8c5fa3ed36dbbda0305a2eefa802e2f8c74b30a62d896e3459c9c72316530d1",
+      "module_sha256": "a80ac1d748d1b83caf9934320223d834d47f94fb0b273093a06e4e4ae6c9dec8"
+    },
+    {
+      "control": "missing_system_reservation",
+      "exit": 1,
+      "failure_oracles": [
+        "lhs_level_enable does not shadow authored/reserved out_1_en",
+        "system ports and parameters reserve generated enable candidates"
+      ],
+      "isolated_change_from_fixed": [
+        "--- fixed",
+        "+++ missing_system_reservation",
+        "@@ -90,7 +90,7 @@",
+        "         ->effective_system_contract($fsm_module);",
+        "     for my $port (qw(clock reset)) {",
+        "         my $name = $system->{$port};",
+        "-        $used_enable_names{$name} = 1 if defined($name) && length($name);",
+        "+        ",
+        "     }",
+        "     for my $name (keys %{$ctx->{state_enables} || {}}, keys %{$ctx->{dt_enables} || {}}) {",
+        "         $name =~ s/^-//;"
+      ],
+      "log_sha256": "addf1ccd76093cb2e6fefadcdb48b2d7e3ae0ebc99c36327045cce9b1b6cdc5e",
+      "module_sha256": "c45668020354276474e5fa3dcadf20cfa5784b68813983155af3f155bafa2a49"
+    },
+    {
+      "control": "missing_authored_reservation",
+      "exit": 1,
+      "failure_oracles": [
+        "lhs_level_enable does not shadow authored/reserved foo_0_en",
+        "DT and LHS families share a namespace and skip occupied suffixes"
+      ],
+      "isolated_change_from_fixed": [
+        "--- fixed",
+        "+++ missing_authored_reservation",
+        "@@ -83,7 +83,7 @@",
+        "     $fsm_module //= $ctx->{fsm_module};",
+        "     my %used_enable_names = map { $_ => 1 } keys %{$ctx->{all_lhs}};",
+        "     if ($fsm_module) {",
+        "-        $used_enable_names{$_} = 1 for keys %{$fsm_module->signals || {}};",
+        "+        ",
+        "         $used_enable_names{$_} = 1 for keys %{$fsm_module->parameters || {}};",
+        "     }",
+        "     my $system = $ctx->{enable_graph_module_planning_support}"
+      ],
+      "log_sha256": "4ee961cf38ce1d8fe78e02d63bcd63243f52698dd0e956fa7e40aa82207b9121",
+      "module_sha256": "92670faf2e2475e618afe4cc2da33fe4f75a0b3d3f0bac32e4f01ca9f93b8afa"
+    },
+    {
+      "control": "missing_top_enable_reservation",
+      "exit": 1,
+      "failure_oracles": [
+        "one generated driver for out_1_en",
+        "lhs_level_enable does not shadow authored/reserved out_1_en",
+        "top-level enables stay reserved and repeated analysis is stable"
+      ],
+      "isolated_change_from_fixed": [
+        "--- fixed",
+        "+++ missing_top_enable_reservation",
+        "@@ -94,7 +94,7 @@",
+        "     }",
+        "     for my $name (keys %{$ctx->{state_enables} || {}}, keys %{$ctx->{dt_enables} || {}}) {",
+        "         $name =~ s/^-//;",
+        "-        $used_enable_names{\"${name}_en\"} = 1;",
+        "+        ",
+        "     }",
+        " ",
+        "     # Allocation order is part of deterministic generated identity. Authored"
+      ],
+      "log_sha256": "a249e95b7c10e9eaac80708c7a41cca75edaabe50969ccbc61c2653035ac0380",
+      "module_sha256": "3b916eb9b57a7a95a3d303d2d25fb65c1394d94c24ebcfa99b5e25ef0c51e785"
+    },
+    {
+      "control": "missing_suffix_probe",
+      "exit": 3,
+      "failure_oracles": [
+        "lhs_level_enable does not shadow authored/reserved foo_0_2_en",
+        "DT and LHS families share a namespace and skip occupied suffixes",
+        "one generated driver for out_1_2_en",
+        "out <- 1 refers to its own DT-local enable",
+        "top-level enables stay reserved and repeated analysis is stable",
+        "lhs_level_enable does not shadow authored/reserved out_1_2_en",
+        "system ports and parameters reserve generated enable candidates"
+      ],
+      "isolated_change_from_fixed": [
+        "--- fixed",
+        "+++ missing_suffix_probe",
+        "@@ -745,7 +745,7 @@",
+        "     my $name = $candidate;",
+        "     (my $base = $candidate) =~ s/_en$//;",
+        "     my $suffix = 2;",
+        "-    while ($used->{$name}) {",
+        "+    if ($used->{$name}) {",
+        "         $name = \"${base}_${suffix}_en\";",
+        "         $suffix++;",
+        "     }"
+      ],
+      "log_sha256": "a931914173d27732332835d286ad226b68488552fa3098b80672389f3d2fb59d",
+      "module_sha256": "66c741f4b09ebf23a3ef2f06913d5c44e7b51f0c5d6d6f14c1b3a08a1a181018"
+    }
+  ],
+  "implementation_sha256": "5de4df0cc5daeebae556ea614ea6b9f80f46cfcd843a8bb9811b05a7b220bc92",
+  "limits": [
+    "Bounded generated assignment-enable namespace repair; not a proof of collision freedom for every generated backend identifier.",
+    "Parity covers the unchanged APB source across the recorded native/MCP seeds; complete current-feature coverage remains open.",
+    "The initial prove-based control selected the wrong module due to include-path precedence and was rejected. Final controls explicitly require the selected file and seed its canonical INC key before loading the test."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1",
+  "parity": {
+    "drivers": [
+      {
+        "kind": "continuous_assign",
+        "lhs": {
+          "kind": "signal_ref",
+          "name": "penable_0_en"
+        },
+        "provenance": {
+          "family": "generated_enable",
+          "lhs_signal": "PENABLE",
+          "rhs_value": "0",
+          "role": "lhs_level_enable"
+        },
+        "rendered": "  assign penable_0_en = setup_phase_penable_0_en;",
+        "rhs": {
+          "ast": {
+            "class": "FSM::AST::SignalRef",
+            "kind": "signal_ref",
+            "name": "setup_phase_penable_0_en"
+          },
+          "kind": "expression",
+          "language": "systemverilog",
+          "text": "setup_phase_penable_0_en"
+        }
+      },
+      {
+        "kind": "continuous_assign",
+        "lhs": {
+          "kind": "signal_ref",
+          "name": "penable_0_2_en"
+        },
+        "provenance": {
+          "family": "generated_enable",
+          "lhs_signal": "penable",
+          "rhs_value": "0",
+          "role": "lhs_level_enable"
+        },
+        "rendered": "  assign penable_0_2_en = done_phase_penable_0_en;",
+        "rhs": {
+          "ast": {
+            "class": "FSM::AST::SignalRef",
+            "kind": "signal_ref",
+            "name": "done_phase_penable_0_en"
+          },
+          "kind": "expression",
+          "language": "systemverilog",
+          "text": "done_phase_penable_0_en"
+        }
+      }
+    ],
+    "observations": [
+      {
+        "command": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "isf/apb_requester.isf"
+        ],
+        "kind": "native",
+        "normalized_report_sha256": "5519ab97de0d82b58813d09892f12947b2882f1496c7c0b69781d03e65f92a66",
+        "seed": "0",
+        "stdout_sha256": "25cf83e69b37e2413fa18e43f56f1378656170e8a9af5f292971c4df7590dd06"
+      },
+      {
+        "command": [
+          "perl",
+          "bin/fsmgen-mcp",
+          "--workspace-root",
+          ".",
+          "--request-json",
+          "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"isf/apb_requester.isf\"}}}"
+        ],
+        "kind": "mcp",
+        "normalized_report_sha256": "5519ab97de0d82b58813d09892f12947b2882f1496c7c0b69781d03e65f92a66",
+        "seed": "0",
+        "stdout_sha256": "f9d23434bb4aa9af3b123178ceb3fbea0de42d69a441e4084d5e67793df2066f"
+      },
+      {
+        "command": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "isf/apb_requester.isf"
+        ],
+        "kind": "native",
+        "normalized_report_sha256": "5519ab97de0d82b58813d09892f12947b2882f1496c7c0b69781d03e65f92a66",
+        "seed": "1",
+        "stdout_sha256": "25cf83e69b37e2413fa18e43f56f1378656170e8a9af5f292971c4df7590dd06"
+      },
+      {
+        "command": [
+          "perl",
+          "bin/fsmgen-mcp",
+          "--workspace-root",
+          ".",
+          "--request-json",
+          "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"isf/apb_requester.isf\"}}}"
+        ],
+        "kind": "mcp",
+        "normalized_report_sha256": "5519ab97de0d82b58813d09892f12947b2882f1496c7c0b69781d03e65f92a66",
+        "seed": "1",
+        "stdout_sha256": "f9d23434bb4aa9af3b123178ceb3fbea0de42d69a441e4084d5e67793df2066f"
+      },
+      {
+        "command": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "isf/apb_requester.isf"
+        ],
+        "kind": "native",
+        "normalized_report_sha256": "5519ab97de0d82b58813d09892f12947b2882f1496c7c0b69781d03e65f92a66",
+        "seed": "2",
+        "stdout_sha256": "25cf83e69b37e2413fa18e43f56f1378656170e8a9af5f292971c4df7590dd06"
+      },
+      {
+        "command": [
+          "perl",
+          "bin/fsmgen-mcp",
+          "--workspace-root",
+          ".",
+          "--request-json",
+          "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"isf/apb_requester.isf\"}}}"
+        ],
+        "kind": "mcp",
+        "normalized_report_sha256": "5519ab97de0d82b58813d09892f12947b2882f1496c7c0b69781d03e65f92a66",
+        "seed": "2",
+        "stdout_sha256": "f9d23434bb4aa9af3b123178ceb3fbea0de42d69a441e4084d5e67793df2066f"
+      },
+      {
+        "command": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "isf/apb_requester.isf"
+        ],
+        "kind": "native",
+        "normalized_report_sha256": "5519ab97de0d82b58813d09892f12947b2882f1496c7c0b69781d03e65f92a66",
+        "seed": "3",
+        "stdout_sha256": "25cf83e69b37e2413fa18e43f56f1378656170e8a9af5f292971c4df7590dd06"
+      },
+      {
+        "command": [
+          "perl",
+          "bin/fsmgen-mcp",
+          "--workspace-root",
+          ".",
+          "--request-json",
+          "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"isf/apb_requester.isf\"}}}"
+        ],
+        "kind": "mcp",
+        "normalized_report_sha256": "5519ab97de0d82b58813d09892f12947b2882f1496c7c0b69781d03e65f92a66",
+        "seed": "3",
+        "stdout_sha256": "f9d23434bb4aa9af3b123178ceb3fbea0de42d69a441e4084d5e67793df2066f"
+      }
+    ],
+    "source": "isf/apb_requester.isf",
+    "source_sha256": "f3498dd44b301b0b47af5bc5a60d9102ba2163811d42ce2d69be4284df27226e"
+  },
+  "regression": {
+    "selected": {
+      "command": [
+        "prove",
+        "-Iperl",
+        "t/10-ast-first-enable-structure.t",
+        "t/1333-direct-structural-rtl-ir-projection.t",
+        "t/1333-isf-interface-actor-param-widths.t",
+        "t/1405-codegen-multi-expression-set.t",
+        "t/1441-semantic-introspection-mcp-adapter.t",
+        "t/1442-fsmgen-mcp-jsonrpc-cli.t",
+        "t/1443-semantic-introspection-mcp-protocol-hardening.t",
+        "t/1444-semantic-introspection-mcp-support-queries.t",
+        "t/163-forward-structural-rtl-ir-surface.t",
+        "t/1866-generated-enable-name-identity.t",
+        "t/194-generated-module-emitter.t",
+        "t/201-systemverilog-ast-factorization-support.t",
+        "t/202-enable-graph-intermediate-signal-support.t",
+        "t/203-enable-graph-factorization-support.t",
+        "t/204-enable-graph-module-planning-support.t",
+        "t/205-enable-graph-assignment-support.t",
+        "t/206-enable-graph-enable-support.t",
+        "t/207-enable-graph-capture-support.t",
+        "t/208-enable-graph-ast-support.t",
+        "t/209-enable-graph-signal-support.t",
+        "t/210-enable-graph-factorization-policy-support.t",
+        "t/211-systemverilog-global-factorization-support.t",
+        "t/214-factorization-fixpoint-pass-support.t",
+        "t/217-factorization-fixpoint-pass-execution-support.t",
+        "t/218-factorization-fixpoint-loop-state-support.t",
+        "t/236-systemverilog-generation-enable-preparation-support.t",
+        "t/293-systemverilog-post-flattening-assembly-support.t"
+      ],
+      "log_sha256": "a0461d6ab9f3450ed6a8afcfe66f397f73b01f762afe420c202317d3e348a7fd",
+      "summary": [
+        "All tests successful.",
+        "Files=27, Tests=573, 18 wallclock secs ( 0.05 usr  0.03 sys + 13.11 cusr  4.54 csys = 17.73 CPU)",
+        "Result: PASS"
+      ]
+    }
+  },
+  "schema": "fsmgen.enable_name_identity_repair.v1",
+  "simulation": {
+    "reproduce_commands": [
+      "./bin/fsmgen --quiet --strict --output .artifacts/enable-case.sv t/fixtures/generated_enable_name_identity/independent_outputs.fsm",
+      "iverilog -g2012 -s tb -o .artifacts/enable-case.vvp .artifacts/enable-case.sv t/fixtures/generated_enable_name_identity/independent_outputs_tb.sv",
+      "vvp .artifacts/enable-case.vvp"
+    ],
+    "runs": [
+      {
+        "exit": 0,
+        "kind": "fixed",
+        "stderr": "",
+        "stdout": "independent case-distinct output behavior PASS\nt/fixtures/generated_enable_name_identity/independent_outputs_tb.sv:25: $finish called at 96 (1s)\n"
+      },
+      {
+        "exit": 1,
+        "kind": "baseline",
+        "stderr": "",
+        "stdout": "FATAL: .artifacts/mcp-feature-coverage/enable-case-tb.sv:11: independent write failed reset=0 UP=1 DOWN=0 OUT=1 out=1 expected=10\n       Time: 26  Scope: tb.tick\n"
+      }
+    ],
+    "source": "t/fixtures/generated_enable_name_identity/independent_outputs.fsm",
+    "source_sha256": "e8f85bcd47e15b1f40824688eebf58a3d896ba848b34dd8762322c7dd28bed1c",
+    "testbench": "t/fixtures/generated_enable_name_identity/independent_outputs_tb.sv",
+    "testbench_sha256": "b280c759926995a24e124e623d32584597249bcbad1f1b5150789fb6f568a8b4"
+  },
+  "system_port_repro": {
+    "after": "assign out_1_2_en = idle_out_1_en;",
+    "before": "assign out_1_en = idle_out_1_en;",
+    "oracle": "clock out_1_en remains an input clock, not an assignment target; T1866 extends this to reset/parameter suffix reservations.",
+    "source": "(?fsm:enable_system (+system (clock out_1_en) (sreset reset)) (+size (OUT 1) (UP 1)) (idle (<UP (<- (OUT> 1)))))"
+  },
+  "test_sha256": "4a1227312946e69258233e976bb13d9eaaeb603db4458b60b517b660149901d4"
+}

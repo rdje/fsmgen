@@ -316,17 +316,17 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Implement current-feature semantic API and MCP coverage repairs.`
   Acceptance: `After .31.1, create exact child leaves naming affected public contracts, API producers, MCP mappings, actual feature fixtures, failure cases and book sections before source changes. Repair native semantic contracts first where needed and project them through MCP; preserve bounded JSON-safe results, diagnostics, workspace authority and read-only defaults. Commit each verified repair separately and leave no discovered defect merely parked.`
-  Verification: `Actual current queries prove discovery omissions for protocol aliases/VIAL, failed VIAL routing, lost structured negative diagnostics and repository-path leakage. A direct/MCP ISF comparison also differs beyond source-path metadata and requires immediate causal investigation under child .1 before any semantic parity claim.`
+  Verification: `Actual current queries prove discovery omissions for protocol aliases/VIAL, failed VIAL routing, lost structured negative diagnostics and repository-path leakage. The native generated-enable collision found by direct/MCP comparison is repaired under child .1; current-source and adapter repairs remain required before complete coverage qualification.`
   Commit: `pending`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Resolve unexpected native/MCP ISF semantic differences at their original producer.`
   Acceptance: `Reproduce direct and MCP normalized semantics for isf/apb_requester.isf, distinguish path-derived metadata from seed/order or semantic differences, and root-cause every unexplained delta before accepting parity. Repair the owning public producer if defective; preserve authored meaning and source provenance. Use independent semantic comparisons and selected compiler regressions, then commit a precise native/API/MCP contract and evidence.`
   Verification: `--debug=3 trace proves clean_signal_name case-folds PENABLE and penable into the same generated family name. Per-LHS collision tracking cannot separate them; FactorizationSupport::_build_context_to_ast_map overwrites the duplicate lhs_enable:penable_0_en key in hash-dependent feed order. The trace shows the original done-phase AST replaced with the setup-phase AST; no legitimate equivalence or OR simplification is involved. Same source bytes produced either driver under independent native executions.`
-  Commit: `pending`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1: preserve generated enable identity`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2`
   Status: `pending`
@@ -350,7 +350,7 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Repair the shipped APB requester completion-phase output targets.`
   Acceptance: `Use the public drive-body assignment contract to correct done_phase in isf/apb_requester.isf so completion clears PSEL/PENABLE, with a lowered-output and generated-behavior regression. Do not invent nested drive-call semantics. Keep the separate compiler collision fixture so repairing the example cannot hide that native defect; synchronize support evidence and book.`
   Verification: `Native lowering emits (<- (psel 0) <done_phase_start) and (<- (penable 0) <done_phase_start), while public outputs are uppercase PSEL/PENABLE. docs/isf-spec/02-interface-transactions.md defines body pairs as assignments, not nested drive calls. This source defect is independent of the generated-enable alias collision.`
@@ -927,6 +927,27 @@ For FSMGen, the analogs are:
 - Phase 5: AI workflows for diagnostic triage, support discovery, example
   matching, migration advice, and bug-report/reproducer packaging.
 
+## Compiler Repair Boundary — `.31.2.1`
+
+The selected change is module-wide deterministic allocation of assignment
+DT-local and LHS-level enable names in `EnableGraph::AssignmentSupport`.
+Keep existing readable candidates when available; separate colliding families
+before factorization contexts, structural assignment records, mux consumers
+and HDL emission are built. Reserve authored signal and top-level state/DT
+enable names. Reset allocation on each analysis build, including rebuilds of
+a prepared backend; do not change authored case or merge distinct signals.
+
+`t/1866-generated-enable-name-identity.t` will exercise case-distinct LHSs
+in the same and different DTs, distinct RHSs with colliding cleaned names,
+DT/LHS cross-family collisions, authored/reserved suffix conflicts and rebuild
+stability. Actual semantic CLI/MCP comparisons across process hash seeds
+must preserve original driver provenance; generated HDL simulation provides
+an independent behavioral check. Keep the APB source unchanged in this slice;
+`.31.2.5` owns its independent correction. Selected enable/factorization,
+structural IR and previous expression-alias tests provide the broader band.
+Update the embedding book limitation and the canonical semantic fact only
+when the native repair and its controls have passed.
+
 ## Latest-Feature Audit — `.31.1` (2026-09-24)
 
 Capture revision: `5a44ad496c852b168c31d4021cfdb158001a47c7`.
@@ -967,8 +988,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1` repairs generated enable identity
-before adapter changes. The `.31.1` audit selected the ordered repair leaves;
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5` repairs the APB sample completion
+outputs after the committed native enable-identity repair. The audit selected
+the remaining source/adapter repair leaves;
 `.31.3` qualifies coverage and ongoing parity after they pass.
 The read-only profile completed through `.30` remains historical evidence;
 it is not a claim that all later product features are covered.
@@ -1276,3 +1298,51 @@ it is not a claim that all later product features are covered.
   `mdbook build docs/book -d .artifacts/mcp-feature-audit-book` succeeds and the
   rendered embedding chapter contains the coverage limits. Staged doctrines
   remain required before this commit.
+
+## Acceptance Checklist — `.31.2.1` generated enable identity
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The audit `--emit-semantic-json` and
+  `--debug=3` trace proves duplicate generated names replace original driver
+  conditions in the factorization context map. AssignmentSupport's old
+  per-LHS tracking missed case/punctuation, DT-local and cross-family
+  collisions. T1866 fails against the exact predecessor on original driver
+  identity, namespace uniqueness and occupied-name preservation.
+- [x] **ADDRESSED (verified)** — One build-local registry reserves authored
+  module signals, effective system ports, parameters and top-level enables, then
+  allocates both assignment-enable
+  families in sorted original-identity order with occupied-suffix probing.
+  Rebuilds are stable. The [repair receipt](../audits/mcp-feature-coverage-20260924/enable-identity-repair.json)
+  retains the baseline and isolated incomplete-repair failure oracles, positive
+  control, source/test hashes and actual CLI/MCP report hashes. Native and MCP
+  reports for the unchanged APB source agree across recorded process seeds
+  after only the documented resolved-source-path normalization.
+  Independent generated-HDL simulation passes separate upper/lower writes,
+  reset, both writes and holding; the original compiler instead changes both
+  outputs on an upper-only write. Tracked FSM/testbench fixtures preserve this
+  oracle. No APB sample edit is included; `.31.2.5` owns its separate defect.
+- [x] **NO REGRESSION** — `All tests successful. Files=27, Tests=573` in the
+  selected enable/factorization/structural IR/MCP band. The final band includes
+  T1866/T1405/T205 and system-port/parameter controls; syntax and mdBook HTML pass.
+  Full CI remains gated by its separate startup/parent qualification owner.
+  Staged doctrine and normal hook checks remain required before commit.
+
+Claim legs: re-derivation uses actual compiler/API reports and the selected
+suite; falsification uses the exact baseline, isolated omitted/reversed
+allocation controls and an independent HDL simulator; durability uses the
+tracked repair receipt, test/fixture files and this work-unit commit. Scope is
+assignment-enable identity and the recorded source queries, not universal
+identifier safety or complete feature coverage. The first control harness
+incorrectly let prove's include path select the current module; that result
+was rejected and retained locally. The final harness explicitly preloads the
+selected module and its canonical INC entry before the test. An unused-width
+fixture was corrected to reference actual reserved signals; the standalone
+simulation fixture was corrected to canonical strict syntax before comparison.
+
+Final namespace inspection found an additional concrete reserved-name gap:
+`--strict --output` for an authored `(clock out_1_en)` declares that clock
+input and also emits `assign out_1_en = idle_out_1_en`. Module `signals`
+does not contain every system port or parameter. The completed `.31.2.1`
+repair also reserves effective system clock/reset ports and module parameters.
+T1866 now covers this source boundary, and isolated missing-system/parameter
+controls fail. The final selected band and CLI/MCP comparison were repeated
+after that correction; the receipt supersedes intermediate qualification.
