@@ -80,11 +80,17 @@ FSMGen treats reset kind and polarity as intent:
 
 - `(sreset reset)` means synchronous active-high reset
 - `(areset rst_n)` means asynchronous active-low reset
+- an explicit modifier selects either polarity: `(sreset rst_n active_low)`
+  or `(areset reset active_high)`
 - omitting reset from `+system` emits reset-free sequential HDL
 - names ending in `_n` or `n` should be reserved for active-low reset signals
 
 Default mode still accepts some older compatibility spellings, but strict mode
 rejects misleading combinations such as `(sreset rstn)`.
+With an explicit `active_high` or `active_low` modifier, that literal determines
+polarity independently of the signal name; the keyword still determines reset
+timing. See [explicit reset polarity](03-decision-trees-and-fsms.md#explicit-reset-polarity)
+for the complete contract and a runnable example.
 
 ## What To Expect In The Output
 

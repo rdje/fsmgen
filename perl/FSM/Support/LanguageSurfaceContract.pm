@@ -225,6 +225,7 @@ sub language_surface_system_contracts_keys {
             canonical_clock
             canonical_synchronous_reset
             canonical_asynchronous_reset
+            explicit_reset_polarity_forms
             legacy_or_misleading_reset_forms_rejected_in_strict
         ),
     ];

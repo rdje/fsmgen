@@ -13,6 +13,12 @@ our @EXPORT_OK = qw(
 );
 
 my %DIAGNOSTIC_CODES = (
+    FSMGEN_LANGUAGE_SYSTEM_RESET_POLARITY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An explicit system reset polarity must be active_high or active_low.',
+    },
     FSMGEN_LANGUAGE_ISF_UNDECLARED_RULE_OPERAND => {
         severity => 'error',
         stability => 'stable',

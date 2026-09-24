@@ -949,7 +949,7 @@ sub parse_system_section($self, $system_ast) {
 
     Carp::confess
         "The active '+system' contract currently supports a shared system declaration ".
-        "with '(clock name)' and an optional reset declaration via '(sreset reset)' or '(areset rst_n)'. ".
+        "with '(clock name)' and an optional reset declaration via '(sreset NAME [active_high|active_low])' or '(areset NAME [active_high|active_low])'. ".
         supported_boundary_hint()
         unless ref($system_entries) eq 'ARRAY' && @$system_entries;
 
@@ -959,22 +959,43 @@ sub parse_system_section($self, $system_ast) {
     for my $entry (@$system_entries) {
         Carp::confess
             "Unsupported '+system' entry structure. ".
-            "The active contract currently supports only '(clock name)' plus at most one reset declaration via '(sreset reset)' or '(areset rst_n)' inside '+system'. ".
+            "The active contract currently supports only '(clock name)' plus at most one reset declaration via '(sreset NAME [active_high|active_low])' or '(areset NAME [active_high|active_low])' inside '+system'. ".
             supported_boundary_hint()
             unless ref($entry) eq 'ARRAY' && @$entry == 2;
 
-        my ($directive, $name) = @$entry;
-        my $resolved_name = $self->unwrap_scalar_token($name);
+        my ($directive, $payload) = @$entry;
+        my @arguments = ref($payload) eq 'ARRAY' ? @$payload : ($payload);
+        Carp::confess
+            "Unsupported '+system' entry structure. Expected one name and an optional reset polarity. " .
+            supported_boundary_hint()
+            unless @arguments == 1 || @arguments == 2;
+        my $resolved_name = $self->unwrap_scalar_token($arguments[0]);
+
+        # Only canonical reset declarations accept the optional literal level.
+        # Keep clock and compatibility-alias arity closed.
+        my $polarity;
+        if (@arguments == 2) {
+            Carp::confess
+                "Unsupported '+system' entry structure. " .
+                "Only sreset or areset accepts an explicit active_high/active_low polarity. " .
+                supported_boundary_hint()
+                unless defined($directive) && !ref($directive)
+                    && ($directive eq 'sreset' || $directive eq 'areset');
+            $polarity = $arguments[1];
+            die "Unsupported '+system' reset polarity; expected literal active_high or active_low.\n"
+                unless defined($polarity) && !ref($polarity)
+                    && ($polarity eq 'active_high' || $polarity eq 'active_low');
+        }
 
         Carp::confess
             "Unsupported '+system' entry '$directive'. ".
-            "The active contract currently supports only '(clock name)' plus optional '(sreset reset)' or '(areset rst_n)'. ".
+            "The active contract currently supports only '(clock name)' plus optional '(sreset NAME [active_high|active_low])' or '(areset NAME [active_high|active_low])'. ".
             supported_boundary_hint()
             unless defined $directive && !ref($directive);
 
         Carp::confess
             "Unsupported '+system' entry structure. ".
-            "The active contract currently supports only '(clock name)' plus at most one reset declaration via '(sreset reset)' or '(areset rst_n)' inside '+system'. ".
+            "The active contract currently supports only '(clock name)' plus at most one reset declaration via '(sreset NAME [active_high|active_low])' or '(areset NAME [active_high|active_low])' inside '+system'. ".
             supported_boundary_hint()
             unless defined $resolved_name && !ref($resolved_name);
 
@@ -1008,11 +1029,13 @@ sub parse_system_section($self, $system_ast) {
             $parsed{reset} = $resolved_name;
             $parsed{reset_keyword} = $directive;
             $parsed{reset_kind} = $directive eq 'sreset' ? 'sync' : 'async';
-            $parsed{reset_active_level} = $directive eq 'sreset' ? 1 : 0;
+            $parsed{reset_active_level} = defined($polarity)
+                ? ($polarity eq 'active_high' ? 1 : 0)
+                : ($directive eq 'sreset' ? 1 : 0);
         } else {
             Carp::confess
                 "Unsupported '+system' entry '$directive'. ".
-                "The active contract currently supports only '(clock name)' plus optional '(sreset reset)' or '(areset rst_n)'. ".
+                "The active contract currently supports only '(clock name)' plus optional '(sreset NAME [active_high|active_low])' or '(areset NAME [active_high|active_low])'. ".
                 supported_boundary_hint();
         }
     }

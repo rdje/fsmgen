@@ -9,6 +9,16 @@ our @EXPORT_OK = qw(regression_corpus_entries protocol_fixture_entries);
 
 my @REGRESSION_CORPUS = (
     {
+        id => 'contract.system_reset_polarity',
+        relpath => 't/corpus/system_reset_polarity.fsm',
+        family => 'language_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'language_contract_rejection_pipeline_cli',
+        source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_SYSTEM_RESET_POLARITY',
+        expected_error_pattern => qr/Unsupported '\+system' reset polarity; expected literal active_high or active_low\./,
+    },
+    {
         id => 'language.isf_undeclared_rule_operand.rejection',
         relpath => 't/corpus/isf_undeclared_rule_operand.isf',
         family => 'language_feature_fixture',

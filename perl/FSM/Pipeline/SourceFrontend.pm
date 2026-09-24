@@ -607,12 +607,16 @@ sub _strict_system_reset_contract_issue ($class, $node) {
         my ($directive, $name) = @$entry;
         next unless defined($directive) && !ref($directive);
         next unless $directive eq 'sreset' || $directive eq 'areset' || $directive eq 'asreset';
-        my $unwrapped_name = $class->_unwrap_scalar_token($name);
+        my @arguments = ref($name) eq 'ARRAY' ? @$name : ($name);
+        my $unwrapped_name = $class->_unwrap_scalar_token($arguments[0]);
         my $reset_name = defined($unwrapped_name) && !ref($unwrapped_name) ? $unwrapped_name : 'unknown';
         my $form = "($directive $reset_name)";
 
         return { form => $form, reason => 'legacy_asreset_alias' }
             if $directive eq 'asreset';
+        # Naming heuristics belong to the legacy two-token forms. Explicit
+        # polarity and malformed extended declarations are checked by the parser.
+        next if @$entry != 2 || @arguments != 1;
         return { form => $form, reason => 'active_high_name_looks_active_low' }
             if $directive eq 'sreset' && $class->_looks_active_low_reset_name($reset_name);
         return { form => $form, reason => 'active_low_name_does_not_look_active_low' }

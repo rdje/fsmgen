@@ -77,13 +77,62 @@ That contract emits `core_clk` as the generated SystemVerilog clock input and
 uses `always_ff @(posedge core_clk)` for the state and register flops. The
 reset spelling still matters: `(sreset reset)` is the canonical active-high
 synchronous reset form, while legacy reset-name combinations such as
-`(sreset rstn)` stay outside the strict-supported corpus.
+`(sreset rstn)` stay outside the strict-supported corpus unless an explicit
+polarity is supplied as described below.
 
 If a direct `?fsm` omits `+system`, FSMGen applies the implicit direct-root
 system default: clock `clk` plus asynchronous active-low reset `rst_n`. A
 sequential omitted-`+system` FSM emits `clk` and `rst_n` as generated
 SystemVerilog inputs, uses event controls such as
 `always_ff @(posedge clk or negedge rst_n)`, and tests reset with `!rst_n`.
+
+### Explicit Reset Polarity
+
+An optional literal modifier makes reset timing and polarity independent:
+
+| Declaration | Timing | Active level |
+| --- | --- | --- |
+| `(sreset NAME active_high)` | Synchronous | 1 |
+| `(sreset NAME active_low)` | Synchronous | 0 |
+| `(areset NAME active_high)` | Asynchronous | 1 |
+| `(areset NAME active_low)` | Asynchronous | 0 |
+
+Without the modifier, `sreset` still means synchronous active-high and `areset`
+still means asynchronous active-low. Strict naming checks continue to apply to
+those unmodified forms. With a modifier, the literal determines the active
+level even if the name suggests otherwise. Use clear names nevertheless.
+
+This complete FSM captures `DATA` on each rising clock edge and resets `Q` to
+three on a rising clock edge while `reset_n` is low:
+
+```lisp
+(?fsm:explicit_reset_polarity
+  (+system (clock clk) (sreset reset_n active_low))
+  (+size (Q 4 (reset 3)) (DATA 4))
+  (idle (<- (Q> DATA))))
+```
+
+Save it as `.artifacts/explicit_reset_polarity.fsm` and run:
+
+```bash
+./bin/fsmgen --strict --check --json .artifacts/explicit_reset_polarity.fsm
+./bin/fsmgen --strict --emit-semantic-json .artifacts/explicit_reset_polarity.fsm
+```
+
+Changing `sreset` to `areset` makes reset assertion asynchronous. The explicit
+forms work through SystemVerilog, Verilog and the supported VHDL backend.
+Polarity must be the literal `active_high` or `active_low`; expressions,
+parameters, nested forms and additional operands are rejected. The legacy
+`asreset` alias has no extended form and remains rejected in strict mode.
+Clock-only `+system` still creates no reset.
+
+Semantic introspection retains the same `system_contract` and
+`explicit_system_contract` fields: `reset_keyword`, `reset_kind` and
+`reset_active_level` report the resolved intent. Native semantic JSON, the
+public semantic API and `fsmgen_semantic_introspect` over MCP agree. Agents can
+discover the exact forms through `fsmgen_capability_query` with
+`section: "language_surface"`, under
+`system_contracts.explicit_reset_polarity_forms`.
 
 ## `?dt:name`
 

@@ -1070,6 +1070,7 @@ for my $required_id (qw(
     contract.system_malformed_entry_structure
     contract.system_bad_clock_identifier
     contract.system_bad_reset_identifier
+    contract.system_reset_polarity
     contract.malformed_fsm_source_name
     contract.malformed_empty_fsm_root_body
     contract.malformed_scalar_fsm_root_body_item
@@ -1534,8 +1535,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    165,
-    'catalog records expected failures including undeclared ISF rule reads',
+    166,
+    'catalog records expected failures including explicit reset polarity rejection',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

@@ -251,6 +251,10 @@ sub build_language_surface_section {
             canonical_clock => '(clock NAME), where NAME is an HDL identifier; examples use clk',
             canonical_synchronous_reset => '(sreset reset)',
             canonical_asynchronous_reset => '(areset rst_n)',
+            explicit_reset_polarity_forms => [
+                '(sreset NAME active_high)', '(sreset NAME active_low)',
+                '(areset NAME active_high)', '(areset NAME active_low)',
+            ],
             legacy_or_misleading_reset_forms_rejected_in_strict => [
                 '(asreset rstn)',
                 '(sreset rstn)',

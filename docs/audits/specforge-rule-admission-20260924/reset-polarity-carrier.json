@@ -1,0 +1,278 @@
+{
+  "baseline": {
+    "argv": [
+      "perl",
+      "bin/fsmgen",
+      "--strict",
+      "--check",
+      "--json",
+      ".artifacts/reset-polarity-carrier/sync-low.fsm"
+    ],
+    "report": {
+      "check_schema_version": 1,
+      "command": {
+        "json": true,
+        "mode": "check",
+        "strict_mode": true,
+        "target_language": "systemverilog"
+      },
+      "diagnostic_summary": {
+        "code_counts": {},
+        "codes": [],
+        "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+        "diagnostic_count": 1,
+        "diagnostic_summary_schema_version": 1,
+        "has_diagnostics": true,
+        "has_stable_codes": false,
+        "matched_support_accounting": false,
+        "report_source": "FSM::Support::SerializableDiagnosticSummary",
+        "severity_counts": {
+          "error": 1
+        },
+        "success": false,
+        "unique_codes": []
+      },
+      "diagnostics": [
+        {
+          "code": null,
+          "expected_child_source_file": null,
+          "expected_rtl_metadata_file": null,
+          "family": "unclassified",
+          "generated_child_source": null,
+          "message": "Source file: '.artifacts/reset-polarity-carrier/sync-low.fsm'\nStrict mode rejects the legacy or misleading '(sreset unknown)' +system spelling in source '.artifacts/reset-polarity-carrier/sync-low.fsm'. Use '(sreset reset)' for synchronous active-high reset or '(areset rst_n)' for asynchronous active-low reset, or re-run without strict mode if you need legacy compatibility. See docs/book/src/10-errors-strict-mode-and-troubleshooting.md for the current strict-mode boundary.",
+          "migration_hint_available": false,
+          "parent_composition_source": null,
+          "rtl_metadata_file": null,
+          "severity": "error",
+          "source_file": ".artifacts/reset-polarity-carrier/sync-low.fsm",
+          "stability": "unclassified",
+          "summary": "Unclassified FSMGen failure.",
+          "support_accounting": {
+            "matched": false
+          }
+        }
+      ],
+      "generated_output": {
+        "emitted": false
+      },
+      "producer": {
+        "name": "FSMGen",
+        "report_source": "FSM::Support::CheckDiagnostics"
+      },
+      "source": {
+        "input": ".artifacts/reset-polarity-carrier/sync-low.fsm",
+        "resolved_path": ".artifacts/reset-polarity-carrier/sync-low.fsm"
+      },
+      "success": false
+    }
+  },
+  "baseline_revision": "7761cc5032da7ab97e036bec4139f11c5bbb3428",
+  "book": {
+    "build": {
+      "argv": [
+        "mdbook",
+        "build",
+        "docs/book",
+        "--dest-dir",
+        "../../.artifacts/reset-polarity-carrier/book"
+      ],
+      "exit_code": 0,
+      "rendered_contract_assertions": "pass; browser visual review unavailable",
+      "stderr": " INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (14341902 bytes)\n INFO HTML book written to `../../.artifacts/reset-polarity-carrier/book`\n",
+      "stdout": ""
+    },
+    "example": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        ".artifacts/reset-polarity-carrier/book-example.fsm"
+      ],
+      "exit_code": 0,
+      "report": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 0,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": false,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {},
+          "success": true,
+          "unique_codes": []
+        },
+        "diagnostics": [],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "result": {
+          "composition_child_count": null,
+          "module_name": "explicit_reset_polarity",
+          "signal_count": 2,
+          "state_count": 1
+        },
+        "source": {
+          "input": ".artifacts/reset-polarity-carrier/book-example.fsm",
+          "resolved_path": ".artifacts/reset-polarity-carrier/book-example.fsm"
+        },
+        "success": true,
+        "support_accounting": {
+          "matched": false
+        }
+      },
+      "stderr": ""
+    }
+  },
+  "limits": [
+    "Direct FSM carrier only; ISF emission remains owned by .32.1.3.2.2.",
+    "No full CI, hosted execution or browser visual qualification.",
+    "Fresh generated HDL workspaces only; spent native producers were not rerun."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.1",
+  "producer_sha256": {
+    "perl/FSM/Adapter/FSMGenFull/Parser.pm": "cd4e5ed65087eee164e000bc357f6f3349c8096b9f4a1d9004caab58ea933737",
+    "perl/FSM/CoreAST.pm": "7fcc3e8a5f7ffb8abac7a99f775d66c06f0ec10a411a4d905f4bcf8e3018e14a",
+    "perl/FSM/Pipeline/SourceFrontend.pm": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512",
+    "perl/FSM/Support/DiagnosticCodes.pm": "ec3b8f8041367e2ce86d7c857bd998036bdc7d7b07ff881bf1ae3c9268b6d5ca",
+    "perl/FSM/Support/LanguageSurfaceContract.pm": "bb2c3fcc1d340a810320d8d63fa927d9ddd71a2e119ecaac4b5e1eb80d866b40",
+    "perl/FSM/Support/LanguageSurfaceSection.pm": "f1b5c17ac6f35d30a170d2547482fedfaeb6381c998fd96f7d305339bfb4de27",
+    "perl/FSM/Support/RegressionCorpus.pm": "44e79ca10f224bfc3b049e33e4dbf7e6844f139952df760a8a657aa9840b7a83",
+    "t/1891-explicit-system-reset-polarity.t": "c60b10568466a7da0f76e7b566f6b3ade0a620bf11e7495106a6ad03c96919e5",
+    "t/1892-explicit-reset-hdl-behavior.t": "e77fea34016558805de3e0f89e9426c665510f2527dd0399519e27ac0291fc25",
+    "t/corpus/system_reset_polarity.fsm": "2529975b521c4a6a68f5f62b670e2fbf8d84615552e6e7cfc769bc3f59104f4e"
+  },
+  "providers": [
+    {
+      "argv": [
+        "verilator",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n"
+    },
+    {
+      "argv": [
+        ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "GHDL 6.0.0 (6.0.0.r0.ge589c698c) [Dunoon edition]\n Compiled with GNAT Version: 14.2.0\n static elaboration, LLVM JIT code generator\nWritten by Tristan Gingold.\n\nCopyright (C) 2003 - 2026 Tristan Gingold.\nGHDL is free software, covered by the GNU General Public License.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+    }
+  ],
+  "repaired": {
+    "check": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        ".artifacts/reset-polarity-carrier/sync-low.fsm"
+      ],
+      "exit_code": 0,
+      "report": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 0,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": false,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {},
+          "success": true,
+          "unique_codes": []
+        },
+        "diagnostics": [],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "result": {
+          "composition_child_count": null,
+          "module_name": "reset_carrier",
+          "signal_count": 2,
+          "state_count": 1
+        },
+        "source": {
+          "input": ".artifacts/reset-polarity-carrier/sync-low.fsm",
+          "resolved_path": ".artifacts/reset-polarity-carrier/sync-low.fsm"
+        },
+        "success": true,
+        "support_accounting": {
+          "matched": false
+        }
+      },
+      "stderr": ""
+    },
+    "semantic": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--emit-semantic-json",
+        ".artifacts/reset-polarity-carrier/sync-low.fsm"
+      ],
+      "exit_code": 0,
+      "report_projection": {
+        "explicit_system_contract": {
+          "clock": "clk",
+          "reset": "reset_n",
+          "reset_active_level": 0,
+          "reset_keyword": "sreset",
+          "reset_kind": "sync"
+        },
+        "system_contract": {
+          "clock": "clk",
+          "declare_ports": 1,
+          "implicit": 0,
+          "reset": "reset_n",
+          "reset_active_level": 0,
+          "reset_keyword": "sreset",
+          "reset_kind": "sync"
+        }
+      },
+      "stderr": ""
+    }
+  },
+  "source": {
+    "path": ".artifacts/reset-polarity-carrier/sync-low.fsm",
+    "sha256": "3614874473db6c959964c38b8e85e7a63cfcf95a3ad7a46a6336da8d5bc5624c",
+    "text": "(?fsm:reset_carrier\n  (+system (clock clk) (sreset reset_n active_low))\n  (+size (Q 4 (reset 3)) (DATA 4))\n  (idle (<- (Q> DATA))))\n"
+  },
+  "verification": {
+    "feature_command": "FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 FSMGEN_RESET_GHDL=.artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl scripts/run_with_ram_guard.sh -- prove -v -Iperl -It/lib t/1891-explicit-system-reset-polarity.t t/1892-explicit-reset-hdl-behavior.t",
+    "feature_tap": "ram-guard: PID 55696; host 62.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nt/1891-explicit-system-reset-polarity.t .. \n# Subtest: sync active_low survives public semantics and source transports\n    ok 1 - authored name is retained\n    ok 2 - reset keyword is retained\n    ok 3 - reset kind is retained\n    ok 4 - explicit level is not overwritten by a keyword default\n    ok 5 - authored name is retained\n    ok 6 - reset keyword is retained\n    ok 7 - reset kind is retained\n    ok 8 - explicit level is not overwritten by a keyword default\n    ok 9 - check strict native query succeeds\n    ok 10 - machine report has no stderr\n    ok 11 - report declares success\n    ok 12 - public adapter reports success\n    ok 13 - complete native/API report equality\n    ok 14 - actual newline MCP succeeds\n    ok 15 - newline transport has no stderr\n    ok 16 - complete actual newline/API response equality\n    ok 17 - semantic strict native query succeeds\n    ok 18 - machine report has no stderr\n    ok 19 - report declares success\n    ok 20 - system_contract exposes authored kind\n    ok 21 - system_contract exposes authored active level\n    ok 22 - system_contract adds no result fields\n    ok 23 - explicit_system_contract exposes authored kind\n    ok 24 - explicit_system_contract exposes authored active level\n    ok 25 - explicit_system_contract adds no result fields\n    ok 26 - public adapter reports success\n    ok 27 - complete native/API report equality\n    ok 28 - actual newline MCP succeeds\n    ok 29 - newline transport has no stderr\n    ok 30 - complete actual newline/API response equality\n    1..30\nok 1 - sync active_low survives public semantics and source transports\n# Subtest: sync active_high survives public semantics and source transports\n    ok 1 - authored name is retained\n    ok 2 - reset keyword is retained\n    ok 3 - reset kind is retained\n    ok 4 - explicit level is not overwritten by a keyword default\n    ok 5 - authored name is retained\n    ok 6 - reset keyword is retained\n    ok 7 - reset kind is retained\n    ok 8 - explicit level is not overwritten by a keyword default\n    ok 9 - check strict native query succeeds\n    ok 10 - machine report has no stderr\n    ok 11 - report declares success\n    ok 12 - public adapter reports success\n    ok 13 - complete native/API report equality\n    ok 14 - actual newline MCP succeeds\n    ok 15 - newline transport has no stderr\n    ok 16 - complete actual newline/API response equality\n    ok 17 - semantic strict native query succeeds\n    ok 18 - machine report has no stderr\n    ok 19 - report declares success\n    ok 20 - system_contract exposes authored kind\n    ok 21 - system_contract exposes authored active level\n    ok 22 - system_contract adds no result fields\n    ok 23 - explicit_system_contract exposes authored kind\n    ok 24 - explicit_system_contract exposes authored active level\n    ok 25 - explicit_system_contract adds no result fields\n    ok 26 - public adapter reports success\n    ok 27 - complete native/API report equality\n    ok 28 - actual newline MCP succeeds\n    ok 29 - newline transport has no stderr\n    ok 30 - complete actual newline/API response equality\n    1..30\nok 2 - sync active_high survives public semantics and source transports\n# Subtest: async active_low survives public semantics and source transports\n    ok 1 - authored name is retained\n    ok 2 - reset keyword is retained\n    ok 3 - reset kind is retained\n    ok 4 - explicit level is not overwritten by a keyword default\n    ok 5 - authored name is retained\n    ok 6 - reset keyword is retained\n    ok 7 - reset kind is retained\n    ok 8 - explicit level is not overwritten by a keyword default\n    ok 9 - check strict native query succeeds\n    ok 10 - machine report has no stderr\n    ok 11 - report declares success\n    ok 12 - public adapter reports success\n    ok 13 - complete native/API report equality\n    ok 14 - actual newline MCP succeeds\n    ok 15 - newline transport has no stderr\n    ok 16 - complete actual newline/API response equality\n    ok 17 - semantic strict native query succeeds\n    ok 18 - machine report has no stderr\n    ok 19 - report declares success\n    ok 20 - system_contract exposes authored kind\n    ok 21 - system_contract exposes authored active level\n    ok 22 - system_contract adds no result fields\n    ok 23 - explicit_system_contract exposes authored kind\n    ok 24 - explicit_system_contract exposes authored active level\n    ok 25 - explicit_system_contract adds no result fields\n    ok 26 - public adapter reports success\n    ok 27 - complete native/API report equality\n    ok 28 - actual newline MCP succeeds\n    ok 29 - newline transport has no stderr\n    ok 30 - complete actual newline/API response equality\n    1..30\nok 3 - async active_low survives public semantics and source transports\n# Subtest: async active_high survives public semantics and source transports\n    ok 1 - authored name is retained\n    ok 2 - reset keyword is retained\n    ok 3 - reset kind is retained\n    ok 4 - explicit level is not overwritten by a keyword default\n    ok 5 - authored name is retained\n    ok 6 - reset keyword is retained\n    ok 7 - reset kind is retained\n    ok 8 - explicit level is not overwritten by a keyword default\n    ok 9 - check strict native query succeeds\n    ok 10 - machine report has no stderr\n    ok 11 - report declares success\n    ok 12 - public adapter reports success\n    ok 13 - complete native/API report equality\n    ok 14 - actual newline MCP succeeds\n    ok 15 - newline transport has no stderr\n    ok 16 - complete actual newline/API response equality\n    ok 17 - semantic strict native query succeeds\n    ok 18 - machine report has no stderr\n    ok 19 - report declares success\n    ok 20 - system_contract exposes authored kind\n    ok 21 - system_contract exposes authored active level\n    ok 22 - system_contract adds no result fields\n    ok 23 - explicit_system_contract exposes authored kind\n    ok 24 - explicit_system_contract exposes authored active level\n    ok 25 - explicit_system_contract adds no result fields\n    ok 26 - public adapter reports success\n    ok 27 - complete native/API report equality\n    ok 28 - actual newline MCP succeeds\n    ok 29 - newline transport has no stderr\n    ok 30 - complete actual newline/API response equality\n    1..30\nok 4 - async active_high survives public semantics and source transports\n# Subtest: malformed and unsupported extended reset declarations fail closed\n    ok 1 - (sreset reset active_middle) rejected in default mode\n    ok 2 - failure is explicit\n    ok 3 - failure retains authored source\n    ok 4 - invalid literal polarity has stable code\n    ok 5 - (sreset reset active_middle) rejected in strict mode\n    ok 6 - failure is explicit\n    ok 7 - failure retains authored source\n    ok 8 - invalid literal polarity has stable code\n    ok 9 - (sreset reset 0) rejected in default mode\n    ok 10 - failure is explicit\n    ok 11 - failure retains authored source\n    ok 12 - invalid literal polarity has stable code\n    ok 13 - (sreset reset 0) rejected in strict mode\n    ok 14 - failure is explicit\n    ok 15 - failure retains authored source\n    ok 16 - invalid literal polarity has stable code\n    ok 17 - (sreset reset (active_low)) rejected in default mode\n    ok 18 - failure is explicit\n    ok 19 - failure retains authored source\n    ok 20 - invalid literal polarity has stable code\n    ok 21 - (sreset reset (active_low)) rejected in strict mode\n    ok 22 - failure is explicit\n    ok 23 - failure retains authored source\n    ok 24 - invalid literal polarity has stable code\n    ok 25 - (sreset reset (+ 0 1)) rejected in default mode\n    ok 26 - failure is explicit\n    ok 27 - failure retains authored source\n    ok 28 - invalid literal polarity has stable code\n    ok 29 - (sreset reset (+ 0 1)) rejected in strict mode\n    ok 30 - failure is explicit\n    ok 31 - failure retains authored source\n    ok 32 - invalid literal polarity has stable code\n    ok 33 - (areset reset_n active_middle) rejected in default mode\n    ok 34 - failure is explicit\n    ok 35 - failure retains authored source\n    ok 36 - invalid literal polarity has stable code\n    ok 37 - (areset reset_n active_middle) rejected in strict mode\n    ok 38 - failure is explicit\n    ok 39 - failure retains authored source\n    ok 40 - invalid literal polarity has stable code\n    ok 41 - (sreset reset active_low extra) rejected in default mode\n    ok 42 - failure is explicit\n    ok 43 - failure retains authored source\n    ok 44 - (sreset reset active_low extra) rejected in strict mode\n    ok 45 - failure is explicit\n    ok 46 - failure retains authored source\n    ok 47 - (sreset) rejected in default mode\n    ok 48 - failure is explicit\n    ok 49 - failure retains authored source\n    ok 50 - (sreset) rejected in strict mode\n    ok 51 - failure is explicit\n    ok 52 - failure retains authored source\n    ok 53 - (sreset (reset active_low)) rejected in default mode\n    ok 54 - failure is explicit\n    ok 55 - failure retains authored source\n    ok 56 - (sreset (reset active_low)) rejected in strict mode\n    ok 57 - failure is explicit\n    ok 58 - failure retains authored source\n    ok 59 - (clock spare active_low) rejected in default mode\n    ok 60 - failure is explicit\n    ok 61 - failure retains authored source\n    ok 62 - (clock spare active_low) rejected in strict mode\n    ok 63 - failure is explicit\n    ok 64 - failure retains authored source\n    ok 65 - (asreset rst_n active_low) rejected in default mode\n    ok 66 - failure is explicit\n    ok 67 - failure retains authored source\n    ok 68 - (asreset rst_n active_low) rejected in strict mode\n    ok 69 - failure is explicit\n    ok 70 - failure retains authored source\n    ok 71 - (sreset reset active_high) (areset rst_n active_low) rejected in default mode\n    ok 72 - failure is explicit\n    ok 73 - failure retains authored source\n    ok 74 - (sreset reset active_high) (areset rst_n active_low) rejected in strict mode\n    ok 75 - failure is explicit\n    ok 76 - failure retains authored source\n    ok 77 - (sreset bad-name active_low) rejected in default mode\n    ok 78 - failure is explicit\n    ok 79 - failure retains authored source\n    ok 80 - (sreset bad-name active_low) rejected in strict mode\n    ok 81 - failure is explicit\n    ok 82 - failure retains authored source\n    1..82\nok 5 - malformed and unsupported extended reset declarations fail closed\n# Subtest: old forms retain their defaults and strict compatibility boundary\n    ok 1 - unmodified legacy kind\n    ok 2 - unmodified legacy level\n    ok 3 - strict naming/alias admission is unchanged\n    ok 4 - unmodified legacy kind\n    ok 5 - unmodified legacy level\n    ok 6 - strict naming/alias admission is unchanged\n    ok 7 - unmodified legacy kind\n    ok 8 - unmodified legacy level\n    ok 9 - strict naming/alias admission is unchanged\n    ok 10 - unmodified legacy kind\n    ok 11 - unmodified legacy level\n    ok 12 - strict naming/alias admission is unchanged\n    ok 13 - unmodified legacy kind\n    ok 14 - unmodified legacy level\n    ok 15 - strict naming/alias admission is unchanged\n    ok 16 - explicit clock-only source still passes\n    ok 17 - clock-only source gains no reset\n    1..17\nok 6 - old forms retain their defaults and strict compatibility boundary\n# Subtest: invalid polarity preserves the full native failure through API and MCP\n    ok 1 - check rejects the invalid literal\n    ok 2 - machine failure has no stderr\n    ok 3 - stable failure classification\n    ok 4 - public adapter reports a tool failure\n    ok 5 - complete native/API failure equality\n    ok 6 - newline server transports the tool failure normally\n    ok 7 - newline failure has no stderr\n    ok 8 - complete newline/API failure equality\n    ok 9 - semantic rejects the invalid literal\n    ok 10 - machine failure has no stderr\n    ok 11 - stable failure classification\n    ok 12 - public adapter reports a tool failure\n    ok 13 - complete native/API failure equality\n    ok 14 - newline server transports the tool failure normally\n    ok 15 - newline failure has no stderr\n    ok 16 - complete newline/API failure equality\n    1..16\nok 7 - invalid polarity preserves the full native failure through API and MCP\n# Subtest: capability discovery advertises every explicit form through API and MCP\n    ok 1 - public manifest advertises exact forms\n    ok 2 - API exposes the complete public language surface\n    ok 3 - newline capability query succeeds\n    ok 4 - actual newline/API capability equality\n    1..4\nok 8 - capability discovery advertises every explicit form through API and MCP\n1..8\nok\nt/1892-explicit-reset-hdl-behavior.t ..... \n# Subtest: systemverilog independently honors reset kind and polarity\n    ok 1 - sync_high generates through the real strict CLI\n    ok 2 - sync_low generates through the real strict CLI\n    ok 3 - async_high generates through the real strict CLI\n    ok 4 - async_low generates through the real strict CLI\n    ok 5 - Verilator builds the generated modules and independent oracle\n    ok 6 - Verilator reset behavior passes\n    ok 7 - independent Verilog-family oracle reaches completion\n    1..7\nok 1 - systemverilog independently honors reset kind and polarity\n# Subtest: verilog independently honors reset kind and polarity\n    ok 1 - sync_high generates through the real strict CLI\n    ok 2 - sync_low generates through the real strict CLI\n    ok 3 - async_high generates through the real strict CLI\n    ok 4 - async_low generates through the real strict CLI\n    ok 5 - Verilator builds the generated modules and independent oracle\n    ok 6 - Verilator reset behavior passes\n    ok 7 - independent Verilog-family oracle reaches completion\n    1..7\nok 2 - verilog independently honors reset kind and polarity\n# Subtest: vhdl independently honors reset kind and polarity\n    ok 1 - sync_high generates through the real strict CLI\n    ok 2 - sync_low generates through the real strict CLI\n    ok 3 - async_high generates through the real strict CLI\n    ok 4 - async_low generates through the real strict CLI\n    ok 5 - GHDL analyzes the generated modules and independent oracle\n    ok 6 - GHDL reset behavior passes\n    ok 7 - independent VHDL oracle reaches completion\n    1..7\nok 3 - vhdl independently honors reset kind and polarity\n1..3\nok\nAll tests successful.\nFiles=2, Tests=11, 85 wallclock secs ( 0.02 usr  0.01 sys + 58.43 cusr 18.70 csys = 77.16 CPU)\nResult: PASS\n",
+    "regression_tap": "ram-guard: PID 52487; host 74.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nt/80-language-contract-system-reset-name-boundary.t .............................................. ok\nt/254-strict-mode-asreset-boundary.t ............................................................. ok\nt/282-legacy-systemverilog-backend-reset-policy.t ................................................ ok\nt/336-normalized-semantic-system-contract.t ...................................................... ok\nt/337-normalized-semantic-explicit-system-contract.t ............................................. ok\nt/473-normalized-semantic-system-contract-defensive-copy-boundary-audit.t ........................ ok\nt/474-normalized-semantic-explicit-system-contract-defensive-copy-boundary-audit.t ............... ok\nt/1025-normalized-semantic-system-contract-full-surface-json-roundtrip-audit.t ................... ok\nt/1026-normalized-semantic-system-contract-full-surface-defensive-copy-audit.t ................... ok\nt/1027-normalized-semantic-explicit-system-contract-full-surface-json-roundtrip-audit.t .......... ok\nt/1028-normalized-semantic-explicit-system-contract-full-surface-defensive-copy-audit.t .......... ok\nt/317-language-surface-contract.t ................................................................ ok\nt/446-language-surface-contract-defensive-copy-boundary-audit.t .................................. ok\nt/958-capability-manifest-language-surface-contract-language-family-keys-json-roundtrip-audit.t .. ok\nt/963-capability-manifest-language-surface-contract-language-family-keys-defensive-copy-audit.t .. ok\nt/248-regression-corpus-accounting.t ............................................................. ok\nt/298-diagnostic-code-registry.t ................................................................. ok\nt/315-diagnostic-code-registry-contract.t ........................................................ ok\nAll tests successful.\nFiles=18, Tests=8324,  9 wallclock secs ( 0.17 usr  0.04 sys +  5.69 cusr  2.01 csys =  7.91 CPU)\nResult: PASS\n"
+  }
+}

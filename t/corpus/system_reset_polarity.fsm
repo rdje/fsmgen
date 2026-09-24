@@ -1,0 +1,3 @@
+(?fsm:system_reset_polarity
+  (+system (clock clk) (sreset reset active_middle))
+  (idle (<- (Q> DATA))))

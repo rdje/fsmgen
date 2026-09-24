@@ -2252,6 +2252,8 @@ package FSM::CoreAST::FSMModule;
             my ($reset_kind, $reset_active_level) = $has_reset
                 ? _reset_policy_from_keyword($reset_keyword)
                 : (undef, undef);
+            $reset_active_level = $explicit->{reset_active_level}
+                if $has_reset && defined($explicit->{reset_active_level});
             return {
                 clock => ($explicit->{clock} // 'clk'),
                 reset => ($has_reset ? $explicit->{reset} : undef),

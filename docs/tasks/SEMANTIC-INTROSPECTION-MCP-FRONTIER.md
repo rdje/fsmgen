@@ -660,6 +660,21 @@ For FSMGen, the analogs are:
   Goal: `Preserve authored ISF reset polarity through ordinary and multi-clock FSM lowering.`
   Acceptance: `Trace the full public reset carrier contract and repair polarity loss without combinational reset-tree glue or changing authored intent. Cover sync/async and active-high/active-low choices, flat-name defaults, explicit declarations, no-reset, report metadata and generated domain/CDC agreement. Prove actual reset behavior with independent HDL oracles; qualify API/MCP and update source/book contracts.`
   Verification: `Before any wiring repair, clock_domain_event_crossing.isf emits domain always_ff blocks with if (bus_rst_n)/if (core_rst_n), but its CDC module uses if (!source_reset)/if (!dest_reset) on the same nets. Parser::_parse_reset correctly infers active_low from _n; Scheduler::ISF::Emitter::FSM::_emit_system ignores polarity for sync and also emits areset for both async polarities. The core public contract says sreset is synchronous active-high and areset asynchronous active-low. Baseline design.sv and generated top metadata under .artifacts/isf-multiclock-strict/before/ preserve the contradiction. This affects more than strict syntax; do not qualify these reset-declared designs behaviorally until repaired.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.1`
+  Status: `done`
+  Goal: `Carry explicit reset polarity through the public FSM grammar, semantic contracts and hardware backends.`
+  Acceptance: `Add an optional literal active_high/active_low modifier to canonical sreset/areset declarations; preserve omitted-modifier defaults and existing strict legacy/name checks. An explicit modifier owns polarity independently of naming; invalid tokens, non-scalars, duplicate/malformed declarations and asreset extensions fail closed. Preserve reset kind/level in effective and explicit public semantic contracts without changing their bounded field shapes; advertise the additive source option in language-surface capabilities. Qualify all sync/async and high/low combinations through direct API, native/MCP reports, independent emitted-HDL reset behavior, and focused existing reset/contract regressions. Update book and decision record, then commit before changing ISF emission.`
+  Verification: `At 7761cc503, FSMGenFull::Parser::parse_system_section requires exactly two tokens and derives level from sreset/areset. CoreAST::FSMModule::effective_system_contract recomputes kind/level from the keyword even though the parser already records reset_kind/reset_active_level. Backend and ModulePlanningSupport consume those normalized fields. SourceFrontend::_strict_system_reset_contract_issue checks keyword/name conventions before parsing. The public normalized explicit-system contract already contains clock/reset/reset_keyword/reset_kind/reset_active_level; no new semantic result keys are needed. Decision 0106 owns the additive syntax and compatibility boundary. T1891 qualifies all combinations, legacy controls, malformed input, capabilities and complete native/API/newline equality; T1892 independently proves reset timing/level in SV, Verilog and VHDL with real providers. Exact reports, hashes and non-skipped TAP are in docs/audits/specforge-rule-admission-20260924/reset-polarity-carrier.json.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.1: preserve explicit reset polarity`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.2`
+  Status: `pending`
+  Goal: `Lower authored ISF reset kind/polarity faithfully through the qualified public FSM carrier.`
+  Acceptance: `Use the explicit modifier for combinations not represented by legacy keyword defaults, preserving supported existing output spellings. Cover flat-name inference, explicit sync/async high/low declarations, no-reset, ordinary and multi-clock actors, generated domain/CDC agreement, independent reset/event behavior, and complete native/API/MCP reports. Requalify original event-crossing fixture, update misleading book mappings and facts, and commit before naming/explicit-route repairs.`
+  Verification: `Depends on committed .32.1.3.2.1. The original contradictory HDL is retained in the .32.1.3.1 audit; successful syntax admission does not discharge its behavior obligation.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3`
@@ -1352,9 +1367,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2` is active: preserve ISF reset
-polarity through FSM lowering. Canonical multi-clock wiring is committed under
-`.32.1.3.1`; generated naming/explicit-route collisions follow under `.32.1.3.4`,
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.2` is next: preserve ISF reset
+polarity through the explicit FSM carrier qualified by `.32.1.3.2.1`. Canonical
+wiring is repaired; naming/explicit-route collisions follow under `.32.1.3.4`,
 then `.32.1.3.3` completes behavioral/API/MCP qualification. Rule admission and
 width provenance are repaired. Bundle provenance, generated interconnect
 lowering and derived widths follow under `.32.2`, `.32.4` and `.32.3`.
@@ -3106,3 +3121,53 @@ remain under `.artifacts/isf-multiclock-strict/`; successful evidence is
 The first staged gate found the bounded audit README over its normal pressure
 threshold. Its replay paragraphs are reflowed within the existing ceiling;
 no budget or lifecycle state is widened, and no technical content is removed.
+
+
+## Acceptance Checklist — `.32.1.3.2.1` explicit FSM reset polarity
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — At `7761cc503`, native strict
+  `--check --json` refuses `(sreset reset_n active_low)` as misleading
+  `(sreset unknown)`. The public Lispish AST carries name/polarity together;
+  FSMGenFull's system parser and SourceFrontend assumed a single name.
+  CoreAST recomputed the active level from the keyword instead of retaining
+  the parser's resolved level. Existing hardware consumers already use the
+  normalized kind/level. The retained before report and repaired
+  `--emit-semantic-json` projection identify the boundary precisely.
+- [x] **ADDRESSED (verified)** — Canonical sreset/areset accept one optional
+  literal polarity; explicit level overrides naming while omitted forms retain
+  defaults and strict checks. The effective contract preserves the resolved
+  level with unchanged semantic field families. Capabilities expose all forms;
+  invalid polarity has a stable catalogued diagnostic. T1891 covers the full
+  timing/level matrix, malformed/duplicate/legacy controls, capabilities and
+  complete native/API/actual newline MCP success and failure equality.
+  T1892 independently observes nonzero reset values, clocked updates and pulses
+  wholly between edges in SystemVerilog, Verilog and VHDL, with no tool skips.
+- [x] **NO REGRESSION** — RAM-guarded T1891/T1892 report
+  `All tests successful. Files=2, Tests=11` and `Result: PASS`. The existing
+  reset-name/alias/backend, normalized-contract/copy/roundtrip, language-surface,
+  corpus and diagnostic-registry band reports `Files=18, Tests=8324`, all
+  successful. The complete book example strict-checks, mdBook builds and
+  rendered contract assertions pass. Browser visual review remains unavailable.
+
+Re-derivation uses the exact source, public raw AST and native before/after
+reports. Falsification uses opposite-name explicit forms, old-default and
+no-reset controls, invalid declarations, complete transport equality and
+independent between-edge HDL observations. Durability is T1891/T1892,
+`docs/audits/specforge-rule-admission-20260924/reset-polarity-carrier.json`,
+decision 0106, the book and the explicit-system-reset-polarity fact card.
+The first development parser assumed a flat AST entry; public AST capture
+corrected that assumption before qualification. No dependency implementation
+was inspected. ISF emission is deliberately unchanged until `.32.1.3.2.2`;
+full CI/push and spent native producers remain outside this qualification.
+
+The ordinary new fact card uses decision 0064's explicit collection-measurement
+procedure despite unrelated per-card rollover debt; decision 0070 supplies one
+bounded measurement step. The new rationale file remains inside the existing
+collection file ceiling and byte/line allowances. No enforcement ceiling,
+per-file bound or historical baseline changes. Task/book aggregate authority
+records only this slice's measured documentation changes.
+
+The first staged doctrine pass identifies the reset table's binary active
+levels as new claim-review candidates. Each is now explicitly reviewed as an
+exact syntax value, backed by the semantic and independent HDL tests; no
+measured claim or missing evidence is hidden by that classification.

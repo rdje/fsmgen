@@ -21,6 +21,15 @@ Typical causes:
 
 These should now fail explicitly instead of falling through to vague behavior.
 
+`FSMGEN_LANGUAGE_SYSTEM_RESET_POLARITY` identifies an invalid explicit reset
+polarity, for example `(sreset reset active_middle)` or
+`(sreset reset (active_low))`. Use a literal `active_high` or `active_low` as
+the optional final operand of `sreset` or `areset`. The diagnostic and authored
+source are preserved in check/semantic JSON and MCP. Extra operands, duplicate
+resets, malformed declarations and extended `asreset` forms are also rejected;
+the polarity code does not classify every structural error. See
+[explicit reset polarity](03-decision-trees-and-fsms.md#explicit-reset-polarity).
+
 An empty source file is a source-read failure, not a Lisp parser failure. FSMGen
 reports the source path, says that the file is empty, and tells the user to
 provide a non-empty FSMGen source file. The pipeline, CLI, check JSON, and
