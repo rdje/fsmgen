@@ -7,7 +7,7 @@
 
 - q="does local ci-regression use hosted sharding?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
 - q="does one GitHub regression failure cancel the other shards?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
-- q="how are t296 t301 and t303 sharded on GitHub Actions?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
+- q="how are t296 t301 t303 and t1884 sharded on GitHub Actions?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
 - q="how does FSMGEN prevent a six-hour hosted regression timeout?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
 - q="how does hosted CI install and checksum mdBook without actions-mdbook?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
 - q="how is the full Perl regression sharded on GitHub Actions?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
@@ -20,7 +20,7 @@
 
 ### hosted-perl-regression-sharding
 
-_Hosted regression uses closed Perl partitions and checksummed mdBook tooling_
+_Closed hosted Perl partitions and checksummed mdBook_
 
-- **date:** 2026-08-27 · **status:** current
+- **date:** 2026-09-24 · **status:** current
 - **source and verification:** [`docs/knowledge/hosted-perl-regression-sharding.md`](../../docs/knowledge/hosted-perl-regression-sharding.md)

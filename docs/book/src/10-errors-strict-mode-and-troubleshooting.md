@@ -494,7 +494,7 @@ GitHub Actions is active under `.github/workflows/`. The hosted regression
 workflow runs the same `./bin/ci-regression` entrypoint on pushes to `main`,
 pull requests targeting `main`, and manual runs. Hosted execution uses 16
 disjoint ordinary-file shards, five dedicated long/provider-dependent tests,
-16 entry shards for each of three supported-corpus audits, and one isolated job
+16 entry shards for each of four supported-corpus audits, and one isolated job
 for each of the 68 cases in the large dynamic transaction-ID focused test. All
 four Perl matrices continue after individual failures. A final required result
 succeeds only when every shard, doctrine enforcement, the separate mdBook

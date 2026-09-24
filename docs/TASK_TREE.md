@@ -31,6 +31,9 @@ Before implementation starts:
   [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md).
 - Record enough acceptance criteria and verification scope that the slice can
   be reviewed and recovered after a crash.
+- Public source-feature leaves must record corpus/API/MCP applicability and
+  independent semantic evidence, or an explicit owned applicability boundary;
+  see [Future Feature Signoff](docs/book/src/11-extensions-and-embedding.md#future-feature-signoff).
 - If the work is too small for a multi-leaf breakdown, create a one-leaf tree
   or attach it to a clearly matching existing leaf before changing code.
 - Do not treat proposed backlog text as implementation permission. Activate
@@ -47,7 +50,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER` | `active` | `R13 / semantic API and MCP` | `.31.3.2.2` integrates guarded source-query CI partitions and future-feature signoff; exhaustive qualification follows. | [task](docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md) |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER` | `active` | `R13 / semantic API and MCP` | `.31.3.3` executes the complete guarded source-query cohort; demonstrated gaps must close before returning to HIAL streaming. | [task](docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | Complete ACCEPT and original root/nested release are qualified; `.19.2.3.1.2.2.5.5.2.3.4.4` owns bounded stream delivery next. Director API/MCP coverage follow-up precedes starting that implementation. Fair composition, routing and full qualification remain open; original startup, Linux and full-CI/push gates stay unchanged. | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `MDBOOK-PARAGRAPH-SPACING` | `active` | `rendered readability` | `.5.1` retains HTML candidates; `.5.2` is blocked on browser access and `.5.3` owns the resulting formatting repair | [task](docs/tasks/MDBOOK-PARAGRAPH-SPACING.md) |
 | `HOSTED-VIAL-REGRESSION-GATE-RESULT` | `active` | `verification architecture` | `.26` retains the failure census and `.28` fixes local/hosted Yosys selection. `.27` awaits exact hosted requalification after startup/full-CI gates and an authorized push | [task](docs/tasks/HOSTED-VIAL-REGRESSION-GATE-RESULT.md) |

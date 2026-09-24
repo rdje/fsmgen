@@ -1,19 +1,20 @@
 # GitHub Workflows
 
-This directory documents the public FSMGen repository's hosted automation.
-
 ## Regression CI
 
 `regression.yml` runs on `main` pushes, pull requests, and manual dispatch.
 Seven required families cover doctrine, mdBook, 16 ordinary Perl shards, five
-dedicated tests, 48 corpus-entry shards, 68 dynamic cases, and one unsharded
+dedicated tests, 64 corpus-entry shards, 68 dynamic cases, and one unsharded
 VIAL gate. All four matrices disable fail-fast; long jobs have a five-hour
 ceiling; final `build` requires every family.
 
-Ordinary shards partition every tracked `t/*.t` except nine separately owned
+Ordinary shards partition every tracked `t/*.t` except ten separately owned
 tests. Dedicated coordinates are `t/1436`, `t/1437`, `t/1598`, `t/1648`, and
-`t/1650`; `t/296`, `t/301`, and `t/303` each have 16 entry shards; `t/1438`
+`t/1650`; `t/296`, `t/301`, `t/303`, and `t/1884` each have 16 entry shards; `t/1438`
 has 68 case jobs. T1183 locks the complete disjoint inventory.
+Full CI and hosted T1884 force all-source selection, refusing ambient filters,
+list-only mode or shard coordinates before dispatch. T1885's bounded semantic
+and refusal controls stay ordinary.
 
 Ordinary jobs pin Ubuntu 24.04 plus Icarus 12.0-2build2, Verilator 5.020-1,
 and Yosys 0.33-5build2 and fetch full history. Dedicated t1436 retains its
@@ -30,9 +31,8 @@ unavailable-not-pass profiles, and 11/33/44 required versus 8/24/32 observed
 records. Always-cleanup removes its exact evidence, provider, result, and stage.
 This configures CI; it is not a completed hosted performance/support result.
 
-Test shards call `full --no-book` with repository-owned options; the VIAL job
-uses `vial-gate --no-book`; a separate job owns the book. Local unsharded
-`./bin/ci-regression` remains the full pre-push gate and builds the book.
+Hosted tests use repository shard options with `full --no-book`; one job owns
+mdBook. Local `./bin/ci-regression` retains the unsharded pre-push gate and book.
 Actions use immutable Node 24 pins and exact local mdBook 0.5.4; no insecure
 Node fallback is enabled.
 

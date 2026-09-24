@@ -3044,12 +3044,38 @@ Representative native hardware and VIAL refusals preserve their complete
 diagnostics through actual newline MCP, with `isError` and no partial success.
 These negative cases remain outside the supported-source cohort.
 
-Focused transport parity and these selected feature witnesses are qualified.
-CI registration and exhaustive execution remain separate tracked work. Selection
-alone proves accounting; independent witnesses cover named semantics, not every
-possible meaning in every report. Catalog entries for plans, backends or runtime
-retain their identities here but source inspection does not execute or qualify
-those operations.
+T1884 has its own hosted corpus partitions and is excluded from ordinary file
+shards. T1885 remains bounded ordinary regression. Local full regression and
+hosted T1884 dispatch force `FSMGEN_SOURCE_QUERY_ALL=1`; they reject ambient
+source filters, corpus list-only mode or shard coordinates before any command
+runs. Use direct `prove` for a focused developer run. Inspect CI dispatch without
+running the cohort:
+
+```bash
+./bin/ci-regression full --no-book --hosted-corpus-shard 1884:0/16 --dry-run
+```
+
+Focused transport parity and these selected feature witnesses are qualified;
+the exhaustive run remains separately tracked. Selection alone proves accounting;
+independent witnesses cover named semantics, not every possible meaning in every
+report. Catalog entries for plans, backends or runtime retain their identities
+here but source inspection does not execute or qualify those operations.
+
+### Future Feature Signoff
+
+Before closing a public source-feature task, record its supported corpus identity,
+explicit source/version/query applicability, clean public API and corresponding
+MCP route in the owning task. Add a source case when existing cases do not cover
+the feature. A new suffix, VIAL fixture or family needs explicit selector/oracle
+admission; adding a feature to an existing fixture still requires meaningful
+authored assertions for its new semantics. Transport equality alone is insufficient.
+
+Run focused native/API/MCP comparisons and independent semantic checks for the
+changed feature, plus a representative refusal when admission changes. Keep the
+capability contract and this book aligned. If a surface is intentionally
+inapplicable, state the exact public boundary and its owning task; do not count
+omission or a future repair as completed coverage. CI derives the whole supported
+cohort, but task acceptance still owns the feature-specific semantic argument.
 
 ### Existing VIAL Summary Queries
 

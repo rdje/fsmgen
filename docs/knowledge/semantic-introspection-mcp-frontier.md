@@ -165,8 +165,8 @@ inspection. `fsmgen_vial_inspect`, versioned `/inspection` and
 `vial_inspection` capabilities now use the clean public API (T1882).
 T1883 accounts sources/queries. T1884 compares actual native/API/newline reports;
 T1885 adds authored storage, observation and VIAL oracles, shared-corruption and
-failed-source controls. ISF/IAL2 report shapes stay distinct. CI and exhaustive
-coverage remain owned follow-ups.
+failed-source controls. ISF/IAL2 report shapes stay distinct. CI partitions T1884;
+public features require API/MCP signoff. Exhaustive qualification remains owned.
 
 Current-feature query selection and its pilot are captured in
 `docs/audits/mcp-feature-coverage-20260924/feature-coverage-selection.json`.

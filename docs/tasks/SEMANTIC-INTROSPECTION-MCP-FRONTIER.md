@@ -396,11 +396,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.1: select current-feature MCP qualification`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected current-feature parity guard and close coverage gaps.`
   Acceptance: `After .1 selects the population and observations, introduce a bounded maintainable guard that detects unaccounted public feature additions and tests actual native/MCP semantic parity with feature-specific assertions. Decompose every demonstrated gap into an exact repair leaf before code changes, commit repairs separately, and ensure new-feature acceptance requires API/MCP evidence or an explicit owned applicability boundary.`
-  Verification: `The selected guard exposed an intentional native VIAL summary boundary that does not satisfy deep feature inspection; .3 owns additive public detail before parity is called complete.`
-  Commit: `pending`
+  Verification: `Children qualify additive deep VIAL inspection and its semantic prerequisite repairs, live catalog/source/query accounting, actual native/API/newline parity with independent semantic/refusal controls, and closed CI partitions plus future-feature signoff. Existing summary contracts remain unchanged. Complete cohort execution remains .31.3.3 and is not inferred from focused qualification.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2: integrate source-query coverage into CI`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7`
 
@@ -435,11 +435,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3: guard independent source-query semantics`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate feature-query coverage with existing regression partitioning and future-feature signoff.`
   Acceptance: `Use the repository-owned CI/regression contracts to register the new corpus coverage without repeating a full cohort in unrelated file shards. Verify exact disjoint complete partitioning, list-only/source-filter behavior and focused developer commands. Require new public source features to carry a supported corpus case and semantic/schedule API/MCP evidence or an explicit owned applicability boundary. Update maintained workflow/book guidance, run focused integration checks, and leave the full cohort run to .31.3.3 before activity closure.`
-  Verification: `The selector, actual runner and independent semantic/negative controls are qualified. Register the guarded corpus with closed hosted partitioning and explicit future-feature signoff next.`
-  Commit: `pending`
+  Verification: `T1183 qualifies separate T1884 corpus ownership, exclusion from ordinary shards, complete disjoint query partitions, all-source full/hosted selection, actual argv/environment dispatch and pre-dispatch refusal of ambient narrowing. T1885 stays bounded ordinary regression. Workflow, rendered/runnable book, task/template signoff and current sharding facts agree; T1883 and relative-path checks pass. Configuration counts do not claim hosted or exhaustive runtime results.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2: integrate source-query coverage into CI`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`
   Status: `done`
@@ -572,7 +572,7 @@ For FSMGen, the analogs are:
   Status: `pending`
   Goal: `Qualify the complete selected feature population and resume the roadmap from a clean durable handoff.`
   Acceptance: `After all owned repairs and the coverage guard pass, execute the selected actual feature queries, schema/provenance and negative controls. Update capability/book/fact guidance and feature signoff rules, state exact coverage and remaining intentional boundaries, and commit before resuming the existing bounded HIAL streaming frontier. Do not treat internal/native backend qualification as MCP execution authority or replay spent native compiler producers.`
-  Verification: `Pending .1 and .2.`
+  Verification: `Selection, repaired public APIs, independent guards and CI integration are committed prerequisites. Execute the complete selected source/query cohort next, retain per-query evidence and own any demonstrated gap before closure; preserve spent runtime producers and full-CI/startup gates.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -1220,9 +1220,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2` is next: integrate the qualified
-source-query guard into closed CI partitions and future-feature signoff.
-Exhaustive qualification follows before HIAL
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3` is next: execute the complete
+selected source/query cohort with independent guards and retained evidence.
+Own any demonstrated gap before returning to HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
 
@@ -2651,3 +2651,50 @@ report. The guard parent is complete; CI partition/future-feature signoff and
 exhaustive execution remain separate next leaves. Task/book metadata admits
 only this owned guard; the fact card is compacted within its existing allowance.
 The book owns the verification boundary without duplicate ledger narration.
+
+## Acceptance Checklist — `.31.3.2.2` CI and future-feature signoff
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — T1183's missing-registration baseline
+  reports `#   at t/1183-ci-regression-tier-selection.t line 379.` for
+  `full mode explicitly selects the complete source-query cohort` and line 447
+  for the rejected hosted T1884 dry run. Full mode otherwise inherited the
+  runner's intentionally focused default, and T1884 still belonged to ordinary
+  file shards; neither path guaranteed complete feature-query execution.
+- [x] **ADDRESSED (verified)** — CI now owns T1884 as a separate supported
+  corpus audit and excludes it from all ordinary file shards. Full/local and
+  hosted T1884 explicitly select all sources, then apply only their declared
+  shard coordinates. T1183 proves complete disjoint workload and tracked-file
+  ownership, exact full/cohort dispatch, workflow matrix/aggregate closure and
+  pre-dispatch refusal of ambient source filters, list-only mode and shard
+  coordinates. An isolated executable fixture proves actual child environment
+  and argv with inherited all-source mode disabled; it executes no product
+  producer. T1885 remains bounded ordinary regression. Task rules/template and
+  book require a corpus case, public API/MCP applicability and meaningful
+  independent semantics for future public features, or an explicit owned
+  boundary. Current sharding facts now include the existing VIAL gate family.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1183-ci-regression-tier-selection.t` reports
+  `All tests successful. Files=1, Tests=18` and `Result: PASS`;
+  `prove -Iperl t/1883-semantic-source-query-cohort.t t/1414-docs-relative-paths-audit.t`
+  reports `All tests successful. Files=2, Tests=8` and `Result: PASS`.
+  `bash -n bin/ci-regression`, the actual documented hosted dry run,
+  `mdbook build docs/book -d .artifacts/query-ci-book` and rendered partition/
+  signoff assertions pass. Disposable rendered output is removed. Full CI,
+  actual hosted execution and spent runtime producers remain unexecuted;
+  browser visual access remains unavailable.
+
+Re-derivation reads actual workflow/CI declarations and obtains live workload
+lists. Falsification is the missing-registration baseline, exact disjoint/full
+inventory checks, actual isolated dispatch and rejected ambient narrowing.
+Durability is the exact baseline, tracked workflow/CI/tests and hashes in
+`source-query-ci-qualification.json`, book, task/template and knowledge cards.
+Recorded job counts describe configured topology, never completed hosted runs.
+The former corpus-count claim is rebound to its changed source-line identity
+with renewed workflow derivation and partition/dispatch falsification evidence;
+the claim inventory and disposition join pass without opening an evidence gap.
+The guard/repair parent is complete; exhaustive source-query execution is next
+under `.31.3.3`. Task/book metadata records this owned integration; knowledge
+cards stay within their existing allowance. The workflow overview is compacted
+within its ancillary allowance after the gate caught duplicated wording growth.
+The book and task acceptance rules
+own signoff rationale without duplicate engineering-ledger narration.

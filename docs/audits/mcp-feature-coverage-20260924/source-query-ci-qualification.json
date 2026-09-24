@@ -1,0 +1,107 @@
+{
+  "baseline_revision": "68a7381196271962054875412619100c61426c8e",
+  "configured_corpus_jobs": 64,
+  "configured_corpus_shard_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "configured_corpus_test_ids": [
+    296,
+    301,
+    303,
+    1884
+  ],
+  "evidence_legs": {
+    "durability": "Exact baseline, tracked workflow/CI/tests and hashes, qualification receipt and raw log hashes, book, current sharding/semantic facts, mandatory task guidance and template.",
+    "falsify": "Missing-registration baseline rejects hosted T1884 and omits full source selection. T1183 proves all hosted partitions disjoint and complete, excludes T1884 from every ordinary shard, and matches the complete live source/query inventory. Actual child dispatch with a repository-local prove/gate fixture overrides inherited all-source=0 with all-source=1 and exact coordinates. Source filters, list-only flags and ambient shard coordinates fail before command dispatch.",
+    "rederive": "Read the workflow corpus matrix, required aggregate families and exact CI nonordinary owner declarations. T1183 independently derives tracked ordinary-file membership and obtains every source-query workload through actual list-only test entrypoints."
+  },
+  "implementation_sha256": {
+    ".github/workflows/regression.yml": "bc71a70e525fc859d9f8862a7ee2fe6be2aadca9989062db201b520568fe58bf",
+    "bin/ci-regression": "95b13d70215ba808c5a587819ac2f72b674afaa7ade03ed09950c3fc8de4b984",
+    "t/1183-ci-regression-tier-selection.t": "ae9fc5df1e2503cfa4362574eb89feb849308625528a4a9877bb16ca9fb22ece",
+    "t/1884-semantic-source-query-runner.t": "5c67ba76d2d652a06e1cc91ad41a2488f983a62977f07f4592a23283adbc1179"
+  },
+  "limits": [
+    "Configured job counts describe workflow topology, not completed hosted runs or performance.",
+    "Actual dispatch tests use explicitly isolated executable stubs only to observe argv/environment; source-query producer correctness is separately qualified by T1884/T1885. No full CI or backend/runtime producer is executed.",
+    "Exhaustive source-query execution remains the next leaf; future-feature acceptance must supply its own meaningful semantic witness or an explicit owned applicability boundary.",
+    "Actual dry-run documentation command and rendered mdBook assertions pass; browser visual qualification remains unavailable."
+  ],
+  "nonordinary_perl_owners": [
+    "t/1436-ial2-ppif-parser-cli.t",
+    "t/1437-axi-ial2-manager-capacity-status-generator.t",
+    "t/1598-vial-vhdl-osvvm-emission.t",
+    "t/1648-vial-architecture-scale-backend-emission-osvvm.t",
+    "t/1650-vial-architecture-scale-backend-emission-family-qualification.t",
+    "t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t",
+    "t/296-regression-corpus-supported-behavior.t",
+    "t/301-check-json-supported-corpus.t",
+    "t/303-normalized-semantic-json-supported-corpus.t",
+    "t/1884-semantic-source-query-runner.t"
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2",
+  "required_workflow_families": [
+    "doctrines",
+    "book",
+    "perl_files",
+    "perl_dedicated",
+    "perl_corpus",
+    "perl_dynamic",
+    "vial_gate"
+  ],
+  "schema": "fsmgen.source_query_ci_partition_qualification.v1",
+  "tests": {
+    "query-ci-band": {
+      "sha256": "1f0c0df6e161437a34e57ebcca50e7ca607adbdb52eb6b154297702876d28422",
+      "summary": [
+        "All tests successful.",
+        "Files=2, Tests=8,  2 wallclock secs ( 0.04 usr  0.01 sys +  1.38 cusr  0.19 csys =  1.62 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-ci-book": {
+      "sha256": "476dcd4b80e06940689170f6f26493deae38089c706b8f0adc6a4986bca9b64a",
+      "summary": [
+        "Actual dry-run book command and rendered partition/signoff boundaries: PASS"
+      ]
+    },
+    "query-ci-final": {
+      "sha256": "128759f99f38309ceec1f0fe531178278bb8dbaaab391669a52cfe9076ed82b5",
+      "summary": [
+        "All tests successful.",
+        "Files=3, Tests=26, 53 wallclock secs ( 0.15 usr  0.03 sys + 32.00 cusr 14.89 csys = 47.07 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-ci-green": {
+      "sha256": "61169689453d6fcbb5f62fc09f2fdde384e13e9784cd6b4d5a8a3baffefe87cf",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=18, 53 wallclock secs ( 0.12 usr  0.03 sys + 31.28 cusr 15.53 csys = 46.96 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-ci-red": {
+      "sha256": "2aa38a91f82bbec5c4da9052d606b848751ef444b08806af6f73a53282958197",
+      "summary": [
+        "Files=1, Tests=16, 45 wallclock secs ( 0.11 usr  0.02 sys + 28.75 cusr 12.17 csys = 41.05 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}

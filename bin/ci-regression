@@ -27,6 +27,7 @@ HOSTED_DYNAMIC_TEST="t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t"
 HOSTED_CORPUS_TEST_296="t/296-regression-corpus-supported-behavior.t"
 HOSTED_CORPUS_TEST_301="t/301-check-json-supported-corpus.t"
 HOSTED_CORPUS_TEST_303="t/303-normalized-semantic-json-supported-corpus.t"
+HOSTED_CORPUS_TEST_1884="t/1884-semantic-source-query-runner.t"
 
 QUICK_TESTS=(
   t/01-regression.t
@@ -69,12 +70,14 @@ Options:
   --hosted-dynamic-shard I/N    Run case shard I of N from the dynamic
                                 transaction-ID focused test.
   --hosted-corpus-shard T:I/N   Run entry shard I of N from supported-corpus
-                                test T, where T is 296, 301, or 303.
+                                test T, where T is 296, 301, 303, or 1884.
   --list                        Print the concrete quick and ISF test lists.
   --help                        Show this help text.
 
 Hosted shard options are full-mode CI plumbing. They are zero-based, mutually
 exclusive, require --no-book, and bypass the unsharded local gate lifecycle.
+Full local regression and corpus test 1884 select every supported source query;
+ambient source filters, corpus list-only mode and shard coordinates are refused.
 USAGE
 }
 
@@ -178,8 +181,8 @@ validate_hosted_corpus_spec() {
   local test_id
   local shard_spec
 
-  if [[ ! "$spec" =~ ^(296|301|303):([0-9]+/[1-9][0-9]*)$ ]]; then
-    printf 'ci-regression: --hosted-corpus-shard requires T:I/N with T in 296,301,303: %s\n' "$spec" >&2
+  if [[ ! "$spec" =~ ^(296|301|303|1884):([0-9]+/[1-9][0-9]*)$ ]]; then
+    printf 'ci-regression: --hosted-corpus-shard requires T:I/N with T in 296,301,303,1884: %s\n' "$spec" >&2
     exit 2
   fi
 
@@ -193,6 +196,7 @@ hosted_corpus_test_file() {
     296) printf '%s\n' "$HOSTED_CORPUS_TEST_296" ;;
     301) printf '%s\n' "$HOSTED_CORPUS_TEST_301" ;;
     303) printf '%s\n' "$HOSTED_CORPUS_TEST_303" ;;
+    1884) printf '%s\n' "$HOSTED_CORPUS_TEST_1884" ;;
     *)
       printf 'ci-regression: unknown hosted corpus test id: %s\n' "$1" >&2
       exit 2
@@ -236,7 +240,8 @@ is_separately_hosted_test() {
     "$HOSTED_DYNAMIC_TEST"|\
     "$HOSTED_CORPUS_TEST_296"|\
     "$HOSTED_CORPUS_TEST_301"|\
-    "$HOSTED_CORPUS_TEST_303") return 0 ;;
+    "$HOSTED_CORPUS_TEST_303"|\
+    "$HOSTED_CORPUS_TEST_1884") return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -310,6 +315,15 @@ run_hosted_corpus_shard() {
   test_file="$(hosted_corpus_test_file "$test_id")"
   require_test_files "$test_file"
   require_tool env
+  if [[ "$test_id" == 1884 ]]; then
+    run_step "Perl supported-corpus test $test_id entry shard $shard_spec" \
+      env \
+      "FSMGEN_HOSTED_CORPUS_SHARD_INDEX=$index" \
+      "FSMGEN_HOSTED_CORPUS_SHARD_COUNT=$count" \
+      FSMGEN_SOURCE_QUERY_ALL=1 \
+      prove -I perl "$test_file"
+    return
+  fi
   run_step "Perl supported-corpus test $test_id entry shard $shard_spec" \
     env \
     "FSMGEN_HOSTED_CORPUS_SHARD_INDEX=$index" \
@@ -427,6 +441,20 @@ if (( hosted_shard_family_count > 0 )) && [[ "$RUN_BOOK" -ne 0 ]]; then
   exit 2
 fi
 
+# A full qualification must not inherit a developer's narrower source filter,
+# list-only shortcut, or stale shard coordinates. Explicit hosted coordinates
+# below are the sole authority for partitioning the complete query cohort.
+if [[ "$MODE" == full ]] && { (( hosted_shard_family_count == 0 )) || [[ "$HOSTED_CORPUS_SHARD" == 1884:* ]]; }; then
+  for source_query_selector in FSMGEN_SOURCE_QUERY_SOURCES FSMGEN_HOSTED_CORPUS_LIST_ONLY \
+      FSMGEN_HOSTED_CORPUS_SHARD_INDEX FSMGEN_HOSTED_CORPUS_SHARD_COUNT; do
+    if [[ -n "${!source_query_selector+x}" ]]; then
+      printf 'ci-regression: full source-query coverage refuses ambient %s; use direct focused prove for developer selection\n' \
+        "$source_query_selector" >&2
+      exit 2
+    fi
+  done
+fi
+
 if (( ! DRY_RUN )); then
   if [[ "$MODE" != "vial-gate" ]]; then
     require_tool prove
@@ -462,7 +490,8 @@ case "$MODE" in
     elif [[ -n "$HOSTED_CORPUS_SHARD" ]]; then
       run_hosted_corpus_shard "$HOSTED_CORPUS_SHARD"
     else
-      run_step "Perl regression suite" prove -I perl t
+      require_tool env
+      run_step "Perl regression suite" env FSMGEN_SOURCE_QUERY_ALL=1 prove -I perl t
       run_vial_regression_promotion_gate_lifecycle
     fi
     ;;

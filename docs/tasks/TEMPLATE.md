@@ -26,6 +26,9 @@ State the exact outcome this top-level task must deliver.
 
 - The behavior, documentation, or infrastructure outcome is implemented.
 - Focused validation passes.
+- Public source-feature changes carry a supported corpus case, public API/MCP
+  applicability and independent semantic evidence, or an explicit owned boundary;
+  follow `Future Feature Signoff` in `docs/book/src/11-extensions-and-embedding.md`.
 - Broader validation runs when the blast radius warrants it.
 - `scripts/check_task_tree_integrity.pl` passes while this tree is active.
 - The task index and bounded resume pointer are updated where project state

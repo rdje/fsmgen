@@ -7,6 +7,8 @@ use File::Path qw(make_path remove_tree);
 use File::Spec;
 use FindBin;
 use IPC::Cmd qw(run);
+use lib "$FindBin::Bin/../perl", "$FindBin::Bin/lib";
+use FSM::Test::SourceQueryCoverage qw(build_source_query_cohort);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $ci = File::Spec->catfile($repo_root, 'bin', 'ci-regression');
@@ -26,6 +28,7 @@ my %corpus_relpath = (
     296 => 't/296-regression-corpus-supported-behavior.t',
     301 => 't/301-check-json-supported-corpus.t',
     303 => 't/303-normalized-semantic-json-supported-corpus.t',
+    1884 => 't/1884-semantic-source-query-runner.t',
 );
 my %corpus_test = map {
     $_ => File::Spec->catfile($repo_root, split m{/}, $corpus_relpath{$_})
@@ -232,6 +235,9 @@ sub run_corpus_workload_list {
         or die "unknown corpus test id: $test_id";
 
     local $ENV{FSMGEN_HOSTED_CORPUS_LIST_ONLY} = 1;
+    local $ENV{FSMGEN_SOURCE_QUERY_ALL} = 1;
+    local $ENV{FSMGEN_SOURCE_QUERY_SOURCES};
+    delete $ENV{FSMGEN_SOURCE_QUERY_SOURCES};
     local $ENV{FSMGEN_HOSTED_CORPUS_SHARD_INDEX};
     local $ENV{FSMGEN_HOSTED_CORPUS_SHARD_COUNT};
     delete $ENV{FSMGEN_HOSTED_CORPUS_SHARD_INDEX};
@@ -372,6 +378,7 @@ subtest 'dry-run modes select the expected command families' => sub {
     is($full->{stderr}, '', 'full dry-run keeps stderr clean');
     like($full->{stdout}, qr/==> Perl regression suite/, 'full dry-run selects full suite');
     like($full->{stdout}, qr/\bprove\s+-I\s+perl\s+t\b/, 'full dry-run preserves default prove command');
+    like($full->{stdout}, qr/FSMGEN_SOURCE_QUERY_ALL=1\s+prove/, 'full mode explicitly selects the complete source-query cohort');
 };
 
 subtest 'selected and unsharded full modes own one ordered guarded gate lifecycle' => sub {
@@ -435,6 +442,7 @@ subtest 'focused modes and every hosted shard family stay gate-free' => sub {
         '--hosted-dedicated-shard=0/5',
         '--hosted-dynamic-shard=0/68',
         '--hosted-corpus-shard=301:0/16',
+        '--hosted-corpus-shard=1884:0/16',
     );
     for my $option (@hosted) {
         my $result = run_ci('full', '--dry-run', '--no-book', $option);
@@ -506,8 +514,8 @@ subtest 'hosted file shards form one exact disjoint full-suite inventory' => sub
 
     is(
         scalar(keys %separately_hosted_relpath),
-        9,
-        'nine exact tests have non-ordinary hosted ownership',
+        10,
+        'ten exact tests have non-ordinary hosted ownership',
     );
     is_deeply(
         [sort(@expected, keys(%separately_hosted_relpath))],
@@ -629,6 +637,11 @@ subtest 'hosted corpus shards cover every selected workload exactly once' => sub
         is($all->{stderr}, '', "unsharded corpus test $test_id workload inventory keeps stderr clean");
         my @all_workloads = grep { length } split /\n/, $all->{stdout};
         ok(@all_workloads, "corpus test $test_id exposes a non-empty workload inventory");
+        if ($test_id == 1884) {
+            my $rows = build_source_query_cohort();
+            is_deeply(\@all_workloads, [map {my $r = $_; map {"$_:$r->{source_id}"} @{$r->{query_kinds}}} @$rows],
+                'source-query inventory covers every applicable query for every supported source');
+        }
         if ($test_id == 301 || $test_id == 303) {
             unlike(
                 $all->{stdout},
@@ -673,6 +686,8 @@ subtest 'hosted corpus shards cover every selected workload exactly once' => sub
                 qr/\Q$corpus_relpath{$test_id}\E/,
                 "hosted corpus test $test_id shard $index/16 selects its exact file",
             );
+            like($dry_run->{stdout}, qr/FSMGEN_SOURCE_QUERY_ALL=1/, 'source-query shard forces complete cohort before partitioning')
+                if $test_id == 1884;
 
             my $listed = run_corpus_workload_list(
                 test_id => $test_id,
@@ -693,6 +708,47 @@ subtest 'hosted corpus shards cover every selected workload exactly once' => sub
             [sort @all_workloads],
             "sixteen hosted shards cover corpus test $test_id workloads exactly once",
         );
+    }
+};
+
+subtest 'source-query dispatch enforces complete selection in actual child environments' => sub {
+    my $fixture_ci = create_gate_fixture();
+    make_path(File::Spec->catdir($gate_fixture_root, 't'));
+    write_raw(File::Spec->catfile($gate_fixture_root, split m{/}, $corpus_relpath{1884}), "# Dispatch fixture only.\n");
+    my $prove = File::Spec->catfile($gate_fixture_root, 'bin', 'prove');
+    write_raw($prove, <<'PROVE');
+#!/usr/bin/env perl
+use strict;
+use warnings;
+print join('|', 'dispatch', $ENV{FSMGEN_SOURCE_QUERY_ALL} // '',
+    $ENV{FSMGEN_HOSTED_CORPUS_SHARD_INDEX} // '', $ENV{FSMGEN_HOSTED_CORPUS_SHARD_COUNT} // '', @ARGV), "\n";
+PROVE
+    chmod 0755, $prove or die "make dispatch stub executable: $!";
+    local $ENV{PATH} = File::Spec->catdir($gate_fixture_root, 'bin').":".$ENV{PATH};
+    local $ENV{FSMGEN_SOURCE_QUERY_ALL} = 0;
+    local $ENV{FSMGEN_CI_GATE_FIXTURE_LOG} = File::Spec->catfile($gate_fixture_root, 'dispatch-gate.log');
+    my $hosted = run_ci_at($fixture_ci, 'full', '--no-book', '--hosted-corpus-shard=1884:2/16');
+    ok($hosted->{success}, 'actual hosted dispatch succeeds without running a producer');
+    is($hosted->{stderr}, '', 'hosted dispatch stderr is clean');
+    like($hosted->{stdout}, qr{dispatch\|1\|2\|16\|-I\|perl\|t/1884-semantic-source-query-runner\.t},
+        'child receives all-source mode, exact shard and only the source-query test');
+    my $full = run_ci_at($fixture_ci, 'full', '--no-book');
+    ok($full->{success}, 'actual full dispatch and stub gate lifecycle succeed');
+    is($full->{stderr}, '', 'full dispatch stderr is clean');
+    like($full->{stdout}, qr{dispatch\|1\|\|\|-I\|perl\|t\b},
+        'full child receives all-source mode without stale shard coordinates');
+};
+
+subtest 'full source-query coverage refuses ambient narrowing before dispatch' => sub {
+    for my $variable (qw(FSMGEN_SOURCE_QUERY_SOURCES FSMGEN_HOSTED_CORPUS_LIST_ONLY
+        FSMGEN_HOSTED_CORPUS_SHARD_INDEX FSMGEN_HOSTED_CORPUS_SHARD_COUNT)) {
+        for my $extra ([], ['--hosted-corpus-shard=1884:0/16']) {
+            local $ENV{$variable} = $variable eq 'FSMGEN_SOURCE_QUERY_SOURCES' ? '[]' : '1';
+            my $result = run_ci('full', '--no-book', '--dry-run', @$extra);
+            ok(!$result->{success}, "$variable cannot narrow a full or hosted source-query claim");
+            is($result->{stdout}, '', 'refusal occurs before dispatching any command');
+            like($result->{stderr}, qr/coverage refuses ambient \Q$variable\E/, 'refusal names the exact narrowing control');
+        }
     }
 };
 
@@ -749,7 +805,7 @@ subtest 'hosted shard arguments fail closed' => sub {
     ok(!$unknown_corpus->{success}, 'unknown corpus test id fails');
     like(
         $unknown_corpus->{stderr},
-        qr/requires T:I\/N with T in 296,301,303/,
+        qr/requires T:I\/N with T in 296,301,303,1884/,
         'unknown corpus test diagnostic names the closed test set',
     );
 
@@ -920,8 +976,8 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
     );
     like(
         $corpus_job || '',
-        qr/test:\s+\[296, 301, 303\]/,
-        'workflow schedules all three supported-corpus tests',
+        qr/test:\s+\[296, 301, 303, 1884\]/,
+        'workflow schedules all four supported-corpus tests',
     );
     like(
         $corpus_job || '',
