@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -585,13 +585,67 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.1: prevent MCP wire encoding memory amplification`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Complete source-query qualification after the resource repair and resume the roadmap cleanly.`
   Acceptance: `Execute every selected source/query through the repaired native/API/MCP paths, retain per-query evidence and independently prove disjoint complete catalog allocation and report hashes. Run semantic/refusal controls, synchronize the book and facts, and commit before resuming bounded HIAL streaming. Keep full-CI/startup and spent-producer boundaries intact.`
-  Verification: `The resource repair is qualified. Restart the complete selected population with fresh receipts and preserve the interrupted attempt; it earns no complete-cohort result.`
+  Verification: `Repair commit 4d0beeb638223943e189431f89bae8c070ceade2 is clean with an empty commit-message file. Restart every declared source partition with explicit all-source selection, direct verbose prove for expanded per-query TAP, and at most two read-only partitions under one unchanged RAM guard. Stop new dispatch on a failure, consume every running result, retain per-partition evidence and independently qualify the complete union. Fresh query-complete-* artifacts preserve the interrupted query-full-* attempt, which earns no complete-cohort result.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2.1`
+  Status: `done`
+  Goal: `Preserve distinct concatenation identities in generated HDL and consistent native/API/MCP semantic reports.`
+  Acceptance: `Retain failed partition evidence and trace the original structural-identity/emission mechanism. Native seed-controlled reports and exact HDL prove the defect; repair its producer without dropping size metadata or normalizing away differences. Preserve ordered concatenation operands, literal representation and signal slices; leave unrecognized node kinds and containing expressions unfactored rather than merging class-only signatures. Allocate candidate names deterministically. Add reduced identity/substitution and seed-order regressions, plus an independent bounded generated-HDL behavioral oracle with differing inputs. A new isolated ordinary HDL simulation is allowed; historical native-proxy/compiler/runtime producers remain spent and untouched. Bound complete-response failure diagnostics without narrowing comparisons. Preserve contracts/resource limits, consume both partitions before changes, and commit before complete qualification.`
+  Verification: `T1887 fails against the isolated baseline and passes after complete supported-node signatures, conservative unknown-node handling and deterministic naming. Independent HDL simulation catches incorrect substitution with differing inputs. Original APB native reports now match across controlled seeds; HDL matches except its timestamp. The original APB differing driver was unused, so that example does not establish an output malfunction. All failed sources independently recovered from both retained partitions pass every applicable native/API/MCP query. Focused compiler/oracle bands, syntax, book/rendered assertions and exact receipt/hash qualification pass. Capture: docs/audits/mcp-feature-coverage-20260924/source-query-identity-repair.json. Complete cohort remains open.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2.1: preserve expression identity during factorization`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2.2`
+  Status: `pending`
+  Goal: `Finish complete source-query qualification after the report consistency repair.`
+  Acceptance: `Execute the complete accounted population after repair, retain all actual query receipts, independently check complete disjoint allocation and typed report hashes, synchronize book/facts and commit before HIAL resumption. Keep every discovered gap owned until fixed and preserve existing full-CI/startup and spent-producer gates.`
+  Verification: `Resume after the director-supplied SPECFORGE reports under .32 are resolved. The interrupted and failing attempts remain distinct retained evidence, not completed coverage.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32`
+  Status: `active`
+  Goal: `Resolve the SPECFORGE downstream reports while retaining deep semantic API/MCP coverage.`
+  Acceptance: `Read the caller-authorized bundles under ../specforge/docs/fsmgen-issues/ without modifying SPECFORGE or inspecting its submodules. Reproduce against current FSMGen in repository-local fixtures; fix confirmed defects and implement the bounded derived-width capability in separately committed leaves. Each product change includes native/API/MCP semantics and book contracts. Begin only after the active compiler repair is committed and clean; return to complete cohort qualification afterward.`
+  Verification: `All three README.md reports were read on 2026-09-24. Their historical measurements and reproduction claims are supplied evidence, not current-checkout verification. Do not run bundled scripts before checking their paths and locality defaults.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1`
+  Status: `pending`
+  Goal: `Reject undeclared ISF rule operands before implicit input creation or width inference.`
+  Acceptance: `Reproduce sf-isf-undeclared-rule-operand from its supplied primary, mixed-width and declared controls. Diagnose rule operand resolution, retain legitimate actor symbols, reject invalid reads with actor/rule/name provenance, and verify strict checks, semantic API/MCP and generated interfaces. Investigate and repair the report's related internal-path/stack diagnostic exposure if confirmed. Refine into safe leaves before implementation.`
+  Verification: `Caller bundle: ../specforge/docs/fsmgen-issues/sf-isf-undeclared-rule-operand/README.md; SPECFORGE owner FSMGEN-REQUESTS.2. Current reproduction pending.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.2`
+  Status: `pending`
+  Goal: `Prevent issue bundles from attributing an exported FSMGen copy to a foreign enclosing Git revision.`
+  Acceptance: `Reproduce sf-tool-issue-bundle-foreign-git-head in an isolated repository-local fixture. Require demonstrable FSMGen repository identity or unknown consistently in bundle records; qualify a real checkout, non-Git export nested in a foreign repository, and relevant environment/worktree controls. Preserve public helper/capability contracts. Document complete exact-revision export setup and known-good preflight before downstream differential censuses; never repair an old export with current-revision resources.`
+  Verification: `Caller bundle: ../specforge/docs/fsmgen-issues/sf-tool-issue-bundle-foreign-git-head/README.md; SPECFORGE owner FSMGEN-REQUESTS.3. Current reproduction pending; bundled default temporary-directory behavior must not be used.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.3`
+  Status: `pending`
+  Goal: `Support bounded derived actor width parameters with symbolic dependency preservation.`
+  Acceptance: `Audit existing public expression contracts, then decompose sf-isf-derived-width-parameter into bounded parameter resolution, symbolic lowering/emission, ceiling arithmetic and clog2, refusal diagnostics, and semantic/API/MCP qualification leaves. Verify default and overridden widths independently in emitted HDL; document derived-parameter override policy, integer division meaning and intentional optional inline-width boundary. Reject undeclared/later/cyclic/runtime operands, zero divisors and invalid widths. Preserve existing scalar/aggregate parameter behavior.`
+  Verification: `Caller bundle: ../specforge/docs/fsmgen-issues/sf-isf-derived-width-parameter/README.md; SPECFORGE owner FSMGEN-REQUESTS.1. Current reproduction and contract reconciliation pending. Reported corpus counts remain externally supplied claims.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
+
+Downstream intake note (2026-09-24): the director reports SPECFORGE's old-copy
+census failed because `specs/` was omitted, after an earlier missing
+`pplugin.spec` warning. `git ls-tree 5a44ad496c852b168c31d4021cfdb158001a47c7
+specs/pplugin.spec specs` confirms these are tracked exact-revision resources;
+the current tree also tracks them. The reported differences are setup-invalid,
+not established regressions. Their count is caller-supplied, not independently
+re-derived. `.32.2` owns complete-export/preflight guidance; SPECFORGE's rerun
+and all remaining ticket claims require fresh evidence.
 
 - `.4` ships a repo-local read-only JSON-RPC stdio adapter:
   `bin/fsmgen-mcp`, backed by
@@ -1236,8 +1290,8 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2` is next: restart complete
-source-query execution after the qualified MCP wire-encoding resource repair.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2.1` is done; commit cleanly,
+then activate `.32.1` to reproduce and repair SPECFORGE's undeclared rule operand.
 Own any demonstrated gap before returning to HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2766,3 +2820,69 @@ The native report is complete and large; ordinary report storage remains real.
 Task/book metadata owns this repair; knowledge prose is compacted within its
 existing allowance. Exhaustive qualification restarts under `.31.3.3.2` after
 this commit. The book owns the wire contract without duplicate ledger prose.
+
+## Acceptance Checklist — `.31.3.3.2.1` structural identity repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native
+  `--emit-semantic-json ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb`
+  differs only in `generation_result_snapshot.summary.hdl_code_length` across
+  controlled hash seeds. Actual emitted HDL assigns `concatenation_expr` from
+  different operands. `ASTFactorization::extract_ast_structure` represented
+  unrecognized kinds by class alone, while candidate names followed hash order.
+  Concatenations therefore merged regardless of operands. Existing literal
+  signatures also omitted width/radix and signal signatures omitted slices.
+  The isolated baseline fails T1887's identity and substitution assertions;
+  Icarus reports `FATAL: ... A distinct from B` from independently authored
+  expected values. The original APB driver has only a declaration and an
+  assignment, with no consumer: that reproducer proves incorrect identity and
+  report nondeterminism, not an observed APB output failure.
+- [x] **ADDRESSED (verified)** — Supported structural signatures retain
+  ordered concatenation operands, literal representation, signal slices and
+  aggregate paths. Unknown kinds and containing expressions remain inline;
+  no renderer string or object address substitutes for semantic identity.
+  Candidate allocation is sorted. T1887 preserves distinct drivers, genuine
+  sharing, operand order/multiplicity, nested operands, widths/radices/slices,
+  aggregate paths and conservative handling of other expression kinds. Seed
+  and insertion-order controls pass, and independent generated-expression HDL
+  behavior now matches differing input values. Original APB semantic reports
+  are byte-identical across the tested seeds; HDL differs only in its timestamp.
+  T1884 retains complete fields/types and uses canonical UTF-8 response hashes
+  plus structural comparisons to avoid enormous embedded-text failure dumps.
+- [x] **NO REGRESSION** — RAM-guarded factorization/defensive-copy regression
+  reports `All tests successful. Files=15, Tests=30` and `Result: PASS`.
+  The final T1887/T1866/T1867/T1883/T1885 band reports
+  `All tests successful. Files=5, Tests=25` and `Result: PASS`.
+  Actual T1884 for every failed source recovered from both retained partitions
+  reports `All tests successful. Files=1, Tests=18` and `Result: PASS`.
+  Its receipt contains every applicable check/semantic/schedule query and
+  matching native/API/newline hashes; an independent join checks the exact
+  source union, uniqueness, source bytes and producer identities. Perl syntax,
+  mdBook build, rendered identity/metadata guidance and Knowledge Map generation
+  pass. Disposable rendered output is removed. Browser visual qualification,
+  complete cohort, full CI and hosted execution remain unqualified; historical
+  spent producers remain untouched.
+
+Re-derivation uses seed-controlled native reports and exact emitted HDL, then
+recovers failed source identities independently from retained partition TAP.
+Falsification uses the isolated baseline factorizer with the same behavioral
+oracle, distinct input values, identity variations, complete report comparisons
+and exact receipt/source/producer joins. Durability is the tracked regression,
+implementation, book, current fact card and `source-query-identity-repair.json`.
+The simulation supplies an explicit two-bit context around factorizer-generated
+drivers and substitutions; it is not an APB protocol simulation. Early reduced
+source probes were refused for infix assignment or an unsupported guard shape;
+they are diagnostic attempts, not additional product defect claims.
+
+The director supplied three SPECFORGE tickets during this repair. `.32` owns
+their current-checkout reproduction and resolution without a dirty-tree pivot;
+the original reports remain caller-authorized read-only inputs. The missing
+old-export `specs/` concern is preserved under `.32.2`, including exact-revision
+resources and a known-good preflight before differential claims. After this
+commit, `.32.1` is next; complete cohort qualification follows those repairs.
+Task/book containment metadata records this slice. The fact card's duplicated
+reverify command is compacted within its existing allowance. Book and task
+records own the rationale without duplicate engineering-ledger prose.
+
+The staged doctrine gate caught a missing root child link and a pending status
+on the newly introduced `.32` container. Both are corrected; its implementation
+leaves remain pending until the clean handoff. No code verification changed.

@@ -161,6 +161,7 @@ sub build_ast_structural_map {
             
             # Get structural identity for this AST
             my $structural_id = $self->get_ast_structural_id($sub_ast);
+            next unless defined $structural_id;
             my $sub_sv = eval { $sub_ast->to_systemverilog() } || "[NO SV REPRESENTATION]";
             
             # Enhanced debugging for unary negations during mapping phase
@@ -220,18 +221,19 @@ sub build_ast_structural_map {
 
 =head2 get_ast_structural_id($ast)
 
-Generate structural identity for an AST that is independent of specific signal names.
-Uses tree structure, not string representation.
+Generate an identity retaining the operands and values of a supported AST.
+An undefined identity means the expression must remain unfactored.
 
 =cut
 
 sub get_ast_structural_id {
     my ($self, $ast) = @_;
     
-    return "null_ast" unless $ast && blessed($ast);
+    return undef unless $ast && blessed($ast);
     
     # Build structural signature based on AST tree shape and operators
     my $structure_data = $self->extract_ast_structure($ast);
+    return undef unless defined $structure_data;
     
     # Create deterministic hash from structure using Data::Dumper for stable serialization
     my $dumper = Data::Dumper->new([$structure_data]);
@@ -254,53 +256,66 @@ sub get_ast_structural_id {
 
 =head2 extract_ast_structure($ast)
 
-Extract structural information from AST without depending on specific signal names.
-Creates generic tree representation.
+Extract the semantic fields of known AST kinds. Unknown kinds, including a
+known expression containing an unknown child, are deliberately not shareable.
 
 =cut
 
 sub extract_ast_structure {
     my ($self, $ast) = @_;
     
-    return { type => "null" } unless $ast && blessed($ast);
-    
-    my $ast_type = ref($ast);
-    $ast_type =~ s/^.*:://;  # Remove package prefix
+    return undef unless $ast && blessed($ast);
     
     if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+        my $left = $self->extract_ast_structure($ast->left);
+        my $right = $self->extract_ast_structure($ast->right);
+        return undef unless defined $left && defined $right;
         return {
             type     => "binary_op",
-            operator => $ast->can('operator') ? ($ast->operator || "unknown_op") : "unknown_op",
-            left     => $self->extract_ast_structure($ast->can('left') ? $ast->left : undef),
-            right    => $self->extract_ast_structure($ast->can('right') ? $ast->right : undef),
+            operator => $ast->operator,
+            left     => $left,
+            right    => $right,
         };
     } elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+        my $operand = $self->extract_ast_structure($ast->operand);
+        return undef unless defined $operand;
         return {
             type     => "unary_op",
-            operator => $ast->can('operator') ? ($ast->operator || "unknown_op") : "unknown_op",
-            operand  => $self->extract_ast_structure($ast->can('operand') ? $ast->operand : undef),
+            operator => $ast->operator,
+            operand  => $operand,
         };
     } elsif ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
         return {
             type  => "literal",
-            value => $ast->can('value') ? ($ast->value || "unknown_value") : "unknown_value",
+            # Legacy boolean literals and unsized CoreAST integers render with
+            # different widths. Equal value text alone is insufficient.
+            class => ref($ast),
+            value => $ast->value,
+            width => $ast->can('width') ? $ast->width : undef,
+            radix => $ast->can('radix') ? $ast->radix : undef,
         };
     } elsif ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        # Include the actual signal name in the structural identity
-        my $signal_name = $self->extract_signal_name_from_ast_node($ast) || "unknown_signal";
+        my $signal_name = $self->extract_signal_name_from_ast_node($ast);
+        return undef unless defined $signal_name && length $signal_name;
         return { 
             type => "signal_ref",
-            signal => $signal_name  # This makes different signals have different structural IDs
+            signal => $signal_name,
+            slice => $ast->can('slice') ? $ast->slice : undef,
         };
     } elsif ($ast->isa('FSM::CoreAST::AggregateRef')) {
         return {
             type => "aggregate_ref",
-            signal => $self->extract_signal_name_from_ast_node($ast) || "unknown_signal",
-            path => eval { $ast->to_systemverilog() } || "unknown_path",
+            signal => $ast->signal->name,
+            path => $ast->path,
         };
-    } else {
-        return { type => lc($ast_type) };
+    } elsif ($ast->isa('FSM::CoreAST::Concatenation')) {
+        my @operands = map { $self->extract_ast_structure($_) } @{$ast->operands};
+        return undef if grep { !defined $_ } @operands;
+        return { type => 'concatenation', operands => \@operands };
     }
+    # A class name does not prove equivalent behavior. Do not merge unknown
+    # expressions or make renderer strings/object addresses an identity oracle.
+    return undef;
 }
 
 
@@ -531,7 +546,7 @@ sub generate_candidate_names {
     
     fsm_debug("AST-FACTOR-DEBUG: Generating names for factorization candidates", 3);
     
-    for my $structural_id (keys %{$self->{factorization_candidates}}) {
+    for my $structural_id (sort keys %{$self->{factorization_candidates}}) {
         my $candidate_info = $self->{factorization_candidates}{$structural_id};
         my $ast = $candidate_info->{ast};
         
@@ -911,6 +926,7 @@ sub substitute_ast_recursively {
     
     # Check if this entire AST should be replaced with an intermediate signal
     my $structural_id = $self->get_ast_structural_id($ast);
+    return $ast unless defined $structural_id;
     
     # Special debug for unary negations
     if (($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) && $ast->operator eq '!') {

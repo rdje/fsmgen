@@ -1,0 +1,481 @@
+{
+  "actual_source_query_receipt": {
+    "passing": true,
+    "queries": [
+      {
+        "adapter_report_sha256": "38a8af5e6994c798378ba05b80c78e6e0a558581b9200de6bc2533468808ec95",
+        "catalog_ids": [
+          "intent.apb_profile_alias_requester_transfer_sideband_data16_status_back_to_back"
+        ],
+        "native_report_sha256": "38a8af5e6994c798378ba05b80c78e6e0a558581b9200de6bc2533468808ec95",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "check",
+        "source_id": "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb",
+        "source_sha256": "f39c85c56846509fd914ca4b9ee35e408993b26abe777c673de2710bf9aed73e",
+        "stdio_report_sha256": "38a8af5e6994c798378ba05b80c78e6e0a558581b9200de6bc2533468808ec95"
+      },
+      {
+        "adapter_report_sha256": "382ba99545f01367afcbac02b2f9652bdaaa2cfa0ec8b676142ecb455def9642",
+        "catalog_ids": [
+          "intent.apb_profile_alias_requester_transfer_sideband_data16_status_back_to_back"
+        ],
+        "native_report_sha256": "382ba99545f01367afcbac02b2f9652bdaaa2cfa0ec8b676142ecb455def9642",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "semantic",
+        "source_id": "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb",
+        "source_sha256": "f39c85c56846509fd914ca4b9ee35e408993b26abe777c673de2710bf9aed73e",
+        "stdio_report_sha256": "382ba99545f01367afcbac02b2f9652bdaaa2cfa0ec8b676142ecb455def9642"
+      },
+      {
+        "adapter_report_sha256": "8a0b59a32b5c52ddd806256b32ca1aa0e0cb2ee001f33a34cb3298073c1b0df2",
+        "catalog_ids": [
+          "intent.apb_profile_alias_requester_transfer_sideband_data16_status_back_to_back"
+        ],
+        "native_report_sha256": "8a0b59a32b5c52ddd806256b32ca1aa0e0cb2ee001f33a34cb3298073c1b0df2",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "schedule",
+        "source_id": "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb",
+        "source_sha256": "f39c85c56846509fd914ca4b9ee35e408993b26abe777c673de2710bf9aed73e",
+        "stdio_report_sha256": "8a0b59a32b5c52ddd806256b32ca1aa0e0cb2ee001f33a34cb3298073c1b0df2"
+      },
+      {
+        "adapter_report_sha256": "450d3709b7cb37f3a062fe1fe777fa521412b1ed7b9eeb9ba48ae65027b78293",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_multi_register_sideband_status_back_to_back"
+        ],
+        "native_report_sha256": "450d3709b7cb37f3a062fe1fe777fa521412b1ed7b9eeb9ba48ae65027b78293",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "check",
+        "source_id": "ppif/apb_composition_multi_register_sideband_status_back_to_back.apb",
+        "source_sha256": "04da827d9df6a7e93bd80636e8d762920dcc73a6696d1c9f1f13e9e497821b04",
+        "stdio_report_sha256": "450d3709b7cb37f3a062fe1fe777fa521412b1ed7b9eeb9ba48ae65027b78293"
+      },
+      {
+        "adapter_report_sha256": "556c7538e9f6f8b165457c1b93d838b7769b9b5a1bc49fa7a9d6056d15eff0a4",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_multi_register_sideband_status_back_to_back"
+        ],
+        "native_report_sha256": "556c7538e9f6f8b165457c1b93d838b7769b9b5a1bc49fa7a9d6056d15eff0a4",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "semantic",
+        "source_id": "ppif/apb_composition_multi_register_sideband_status_back_to_back.apb",
+        "source_sha256": "04da827d9df6a7e93bd80636e8d762920dcc73a6696d1c9f1f13e9e497821b04",
+        "stdio_report_sha256": "556c7538e9f6f8b165457c1b93d838b7769b9b5a1bc49fa7a9d6056d15eff0a4"
+      },
+      {
+        "adapter_report_sha256": "0b2ee0b4370d9131c313c7a22f661ebe13cdf9940a79773b44f4f215b7810f7f",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_multi_register_sideband_status_back_to_back"
+        ],
+        "native_report_sha256": "0b2ee0b4370d9131c313c7a22f661ebe13cdf9940a79773b44f4f215b7810f7f",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "schedule",
+        "source_id": "ppif/apb_composition_multi_register_sideband_status_back_to_back.apb",
+        "source_sha256": "04da827d9df6a7e93bd80636e8d762920dcc73a6696d1c9f1f13e9e497821b04",
+        "stdio_report_sha256": "0b2ee0b4370d9131c313c7a22f661ebe13cdf9940a79773b44f4f215b7810f7f"
+      },
+      {
+        "adapter_report_sha256": "c50e4432dd7829d1fb09a84560d3d9d7b820d87e28edafbb4e9d7de3472c4d51",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back"
+        ],
+        "native_report_sha256": "c50e4432dd7829d1fb09a84560d3d9d7b820d87e28edafbb4e9d7de3472c4d51",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "check",
+        "source_id": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.apb",
+        "source_sha256": "0c8d5f09573a90887eb51a18918bef4f864f3e899df08c11437f014a4f16516c",
+        "stdio_report_sha256": "c50e4432dd7829d1fb09a84560d3d9d7b820d87e28edafbb4e9d7de3472c4d51"
+      },
+      {
+        "adapter_report_sha256": "88e40275414e343301f690004a5d0306d9b2113161072a6170e999541864d36e",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back"
+        ],
+        "native_report_sha256": "88e40275414e343301f690004a5d0306d9b2113161072a6170e999541864d36e",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "semantic",
+        "source_id": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.apb",
+        "source_sha256": "0c8d5f09573a90887eb51a18918bef4f864f3e899df08c11437f014a4f16516c",
+        "stdio_report_sha256": "88e40275414e343301f690004a5d0306d9b2113161072a6170e999541864d36e"
+      },
+      {
+        "adapter_report_sha256": "6ca05ef6e7218bb3a4653513dec1af32ca5bee3d8e7f4daa552fdb2ab52daf48",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back"
+        ],
+        "native_report_sha256": "6ca05ef6e7218bb3a4653513dec1af32ca5bee3d8e7f4daa552fdb2ab52daf48",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "schedule",
+        "source_id": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.apb",
+        "source_sha256": "0c8d5f09573a90887eb51a18918bef4f864f3e899df08c11437f014a4f16516c",
+        "stdio_report_sha256": "6ca05ef6e7218bb3a4653513dec1af32ca5bee3d8e7f4daa552fdb2ab52daf48"
+      },
+      {
+        "adapter_report_sha256": "78355c28dffdc067dc5c4233b57dad24c4b50d0cf6fcb4bc5e2477196b07316f",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back"
+        ],
+        "native_report_sha256": "78355c28dffdc067dc5c4233b57dad24c4b50d0cf6fcb4bc5e2477196b07316f",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "check",
+        "source_id": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.apb",
+        "source_sha256": "af0c1f853d6a0d7d5dd236cfdc1cf3f1f859fef3c99ebeef23a47c08cbe11acd",
+        "stdio_report_sha256": "78355c28dffdc067dc5c4233b57dad24c4b50d0cf6fcb4bc5e2477196b07316f"
+      },
+      {
+        "adapter_report_sha256": "de483a675c33db542308462bf93ae5a3f33859bae09bc41e9f757939f0454f2e",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back"
+        ],
+        "native_report_sha256": "de483a675c33db542308462bf93ae5a3f33859bae09bc41e9f757939f0454f2e",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "semantic",
+        "source_id": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.apb",
+        "source_sha256": "af0c1f853d6a0d7d5dd236cfdc1cf3f1f859fef3c99ebeef23a47c08cbe11acd",
+        "stdio_report_sha256": "de483a675c33db542308462bf93ae5a3f33859bae09bc41e9f757939f0454f2e"
+      },
+      {
+        "adapter_report_sha256": "ff15a9d44cc36f19d87c4e5eb95bc799e1188d0da275e61e1b0544c48be5c3a2",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back"
+        ],
+        "native_report_sha256": "ff15a9d44cc36f19d87c4e5eb95bc799e1188d0da275e61e1b0544c48be5c3a2",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "schedule",
+        "source_id": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.apb",
+        "source_sha256": "af0c1f853d6a0d7d5dd236cfdc1cf3f1f859fef3c99ebeef23a47c08cbe11acd",
+        "stdio_report_sha256": "ff15a9d44cc36f19d87c4e5eb95bc799e1188d0da275e61e1b0544c48be5c3a2"
+      },
+      {
+        "adapter_report_sha256": "c7e0d53042dd1d836402194c39f2b00c7f661fee4e27f44b938104fafe0ba777",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_sideband_status_back_to_back"
+        ],
+        "native_report_sha256": "c7e0d53042dd1d836402194c39f2b00c7f661fee4e27f44b938104fafe0ba777",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "check",
+        "source_id": "ppif/apb_composition_sideband_status_back_to_back.apb",
+        "source_sha256": "7617cdf36178537bc59488c28f5a07f9ccf36ef9447e5579baebb2a825d862cf",
+        "stdio_report_sha256": "c7e0d53042dd1d836402194c39f2b00c7f661fee4e27f44b938104fafe0ba777"
+      },
+      {
+        "adapter_report_sha256": "6d918116e573ef269d562c5ebf677c6de6c77922a3b5e71e9b10673af3743fd8",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_sideband_status_back_to_back"
+        ],
+        "native_report_sha256": "6d918116e573ef269d562c5ebf677c6de6c77922a3b5e71e9b10673af3743fd8",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "semantic",
+        "source_id": "ppif/apb_composition_sideband_status_back_to_back.apb",
+        "source_sha256": "7617cdf36178537bc59488c28f5a07f9ccf36ef9447e5579baebb2a825d862cf",
+        "stdio_report_sha256": "6d918116e573ef269d562c5ebf677c6de6c77922a3b5e71e9b10673af3743fd8"
+      },
+      {
+        "adapter_report_sha256": "2c757844a92c4d8b0a9889d200e4af777a8e6bfa466fc74a0c5b6c4b2268c62b",
+        "catalog_ids": [
+          "intent.apb_profile_alias_composition_sideband_status_back_to_back"
+        ],
+        "native_report_sha256": "2c757844a92c4d8b0a9889d200e4af777a8e6bfa466fc74a0c5b6c4b2268c62b",
+        "producer_sha256": {
+          "bin/fsmgen": "b0873f46425c0612609fd504cac18958d21f6a3a0d1b1f4702c3c91f4390888c",
+          "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+          "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "675ab301b2b8a7bf44f5ac4a8b3339233ebb038147aaa5bc092d184a324bce7d",
+          "perl/FSM/VIAL/Tool.pm": "9c8e77d04f7503083dc572eab4287aa527540c35ff253bc6eb2335ecf1d661b7"
+        },
+        "public_vial_api_report_sha256": null,
+        "query_kind": "schedule",
+        "source_id": "ppif/apb_composition_sideband_status_back_to_back.apb",
+        "source_sha256": "7617cdf36178537bc59488c28f5a07f9ccf36ef9447e5579baebb2a825d862cf",
+        "stdio_report_sha256": "2c757844a92c4d8b0a9889d200e4af777a8e6bfa466fc74a0c5b6c4b2268c62b"
+      }
+    ],
+    "schema": "fsmgen.source_query_execution_receipt.v1",
+    "selected_sources": [
+      "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb",
+      "ppif/apb_composition_multi_register_sideband_status_back_to_back.apb",
+      "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.apb",
+      "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.apb",
+      "ppif/apb_composition_sideband_status_back_to_back.apb"
+    ]
+  },
+  "after_native_seeds": {
+    "baseline_revision": "4d0beeb638223943e189431f89bae8c070ceade2",
+    "records": [
+      {
+        "argv": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb"
+        ],
+        "hdl_code_length": 64266,
+        "hdl_code_line_count": 1415,
+        "output_sha256": "29ee167324b691b7a7b06a6091eb4099301c82f3053b7f5abde192e43b0d1ef1",
+        "perturb_keys": 0,
+        "seed": 0
+      },
+      {
+        "argv": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb"
+        ],
+        "hdl_code_length": 64266,
+        "hdl_code_line_count": 1415,
+        "output_sha256": "29ee167324b691b7a7b06a6091eb4099301c82f3053b7f5abde192e43b0d1ef1",
+        "perturb_keys": 0,
+        "seed": 1
+      },
+      {
+        "argv": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb"
+        ],
+        "hdl_code_length": 64266,
+        "hdl_code_line_count": 1415,
+        "output_sha256": "29ee167324b691b7a7b06a6091eb4099301c82f3053b7f5abde192e43b0d1ef1",
+        "perturb_keys": 0,
+        "seed": 2
+      },
+      {
+        "argv": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb"
+        ],
+        "hdl_code_length": 64266,
+        "hdl_code_line_count": 1415,
+        "output_sha256": "29ee167324b691b7a7b06a6091eb4099301c82f3053b7f5abde192e43b0d1ef1",
+        "perturb_keys": 0,
+        "seed": 3
+      }
+    ],
+    "source_id": "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb",
+    "source_sha256": "f39c85c56846509fd914ca4b9ee35e408993b26abe777c673de2710bf9aed73e"
+  },
+  "baseline_factorizer_sha256": "a46d4cd0e488e3a9ef6c9bef9a835f09ebcb0d8fbb8ca9fb14bf7eff4deae61a",
+  "baseline_revision": "4d0beeb638223943e189431f89bae8c070ceade2",
+  "baseline_test_sha256": "f7de956266a6781d4836b62fc88a3bfe71eb6e8a1c76b917e5369275876cfe70",
+  "before_native_seeds": {
+    "baseline_revision": "4d0beeb638223943e189431f89bae8c070ceade2",
+    "records": [
+      {
+        "argv": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb"
+        ],
+        "hdl_code_length": 64380,
+        "hdl_code_line_count": 1417,
+        "output_sha256": "b036f46048661198d5cfaf94443e2deb81eec8fdc887c31e949f87b98f8a2d97",
+        "perturb_keys": 0,
+        "seed": 0
+      },
+      {
+        "argv": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb"
+        ],
+        "hdl_code_length": 64382,
+        "hdl_code_line_count": 1417,
+        "output_sha256": "25f69bd57bce3de734a37012a23cc194b2ac641311af5f41e3e2ec3832f5131e",
+        "perturb_keys": 0,
+        "seed": 1
+      },
+      {
+        "argv": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb"
+        ],
+        "hdl_code_length": 64382,
+        "hdl_code_line_count": 1417,
+        "output_sha256": "25f69bd57bce3de734a37012a23cc194b2ac641311af5f41e3e2ec3832f5131e",
+        "perturb_keys": 0,
+        "seed": 2
+      },
+      {
+        "argv": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb"
+        ],
+        "hdl_code_length": 64382,
+        "hdl_code_line_count": 1417,
+        "output_sha256": "25f69bd57bce3de734a37012a23cc194b2ac641311af5f41e3e2ec3832f5131e",
+        "perturb_keys": 0,
+        "seed": 3
+      }
+    ],
+    "source_id": "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb",
+    "source_sha256": "f39c85c56846509fd914ca4b9ee35e408993b26abe777c673de2710bf9aed73e"
+  },
+  "evidence_legs": {
+    "durability": "Tracked regression, implementation, book, fact card, task and this capture bind baseline/fixed evidence and the complete focused query receipt.",
+    "falsify": "The baseline factorizer fails identity, width/slice, unsupported-kind, ordering and independent HDL behavior controls. The fixed factorizer preserves distinct outputs for differing inputs. Complete typed report hashes, full structured comparisons and exact source/producer hashes must all agree.",
+    "rederive": "Seed-controlled public native semantic reports and emitted HDL isolate the class-only structural collision. All failed sources are independently recovered from retained TAP and joined to the exact repaired native/API/newline query receipt."
+  },
+  "evidence_sha256": {
+    ".artifacts/mcp-feature-coverage/query-consistency/actual-source-query.log": "8e11e9113d9a8b8b700283b68ce197a65ebf08e4e747da08e83f9b33321ada88",
+    ".artifacts/mcp-feature-coverage/query-consistency/book-rendered.log": "4b7268cf197cfd1f219b2af26dccddbfdd349e011c7beb067af82e34f7002f14",
+    ".artifacts/mcp-feature-coverage/query-consistency/book.log": "1c21ca195880fb2fa6c7647227eaece02b04905ef3f631573f2cbfc5a0df1940",
+    ".artifacts/mcp-feature-coverage/query-consistency/factorization-band.log": "8e260a3ca65153c0aeb3a7c3cc311d808029ef12a68ba77b938e9a5f305a745f",
+    ".artifacts/mcp-feature-coverage/query-consistency/identity-after.log": "92987e3e59d2f76f6d7320b6168f1dfaa1419cba72f942cee13e890a187d4d25",
+    ".artifacts/mcp-feature-coverage/query-consistency/identity-before.log": "731c213d2d3af17bf7468274bd5f9fafa020d379021e3afa6a6c951b3e5d79c6",
+    ".artifacts/mcp-feature-coverage/query-consistency/identity-behavior-after.log": "d54dbdd37c85c9d15e6edf9382d2dcad3f83ccce5c6117414dd360f3179b4be9",
+    ".artifacts/mcp-feature-coverage/query-consistency/identity-behavior-before.log": "3d52a863cab56a1e607e33756c70d1f6f1e4f3833c020a6ea084826d9525a4d9",
+    ".artifacts/mcp-feature-coverage/query-consistency/identity-final-band.log": "8487afc8d73ec10dc9ab74920e44f8e7c18c7d4f3698f537438c8fb20c0eb77e",
+    ".artifacts/mcp-feature-coverage/query-consistency/knowledge-map.log": "df4a7519d819aa22118c46757322e4f9289bb877339b648f49b16a10be7883be"
+  },
+  "failed_attempt": {
+    "cohort_sha256": "1bb3fa911c14de3a2558c5f120e8e5104bb1e2b074d6b48feffb75994fc01dd0",
+    "complete_cohort_qualified": false,
+    "failed_sources": [
+      "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.apb",
+      "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.apb",
+      "ppif/apb_composition_multi_register_sideband_status_back_to_back.apb",
+      "ppif/apb_composition_sideband_status_back_to_back.apb",
+      "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb"
+    ],
+    "partitions": [
+      {
+        "log_sha256": "6f9adb370f6adf802a20cd1138d9d9554be5063774f66d6d12ff79b4c9fa582c",
+        "partition": 0,
+        "passing": false,
+        "receipt_sha256": "50500ba8d35793141d0a1958ead13c85187bb59e766e76e8038b29be61383bbf"
+      },
+      {
+        "log_sha256": "bf17dd57cbef0647e9615ff61bfaa3a16209b15a9b314d6014f338b59d3b6244",
+        "partition": 1,
+        "passing": false,
+        "receipt_sha256": "c0706e42816f1add728e1306b3be3788788881286d8abe937c31752c92f1ccae"
+      }
+    ],
+    "state_sha256": "0b1bc2ddd62f70a6de3d12f72086442e5221e9c1bd8c277700983ea5e3c61305"
+  },
+  "focused_checks": {
+    "actual-source-query.log": "Files=1, Tests=18",
+    "factorization-band.log": "Files=15, Tests=30",
+    "identity-behavior-after.log": "Files=1, Tests=5",
+    "identity-final-band.log": "Files=5, Tests=25"
+  },
+  "implementation_sha256": {
+    "perl/FSM/HDL/ASTFactorization.pm": "9a2ab9b3830d14116c4708d03ae5306de16d52e46bd561f6a989e102fac1e4a0",
+    "t/1884-semantic-source-query-runner.t": "ff613abeb688b207ec453eff57f9fcac9468db82192ca8d73165847d45517776",
+    "t/1887-ast-factorization-structural-identity.t": "e31d8fd8d510ed2f8fa8dd5399969dd5bb1b9e5d6f2163c4d792bb93d5105689"
+  },
+  "independent_comparison": {
+    "after_hdl": "identical across seeds 0,1 after replacing exactly one Date header",
+    "after_semantic_reports": "byte-identical across seeds 0,1,2,3 with perturb_keys=0",
+    "before_typed_difference_paths": [
+      "/generation_result_snapshot/summary/hdl_code_length"
+    ],
+    "normalized_hdl_sha256": "10f901b6fdb7f44d90d7d3f09fac27fe053140e8ba85d38fe5bcb0e8c09fedf9",
+    "original_driver_use": "declaration and assignment only; no consumer in original APB HDL"
+  },
+  "limits": [
+    "The original APB concatenation driver had no consumers. Its HDL driver difference proves faulty identity/report nondeterminism, not an observed APB output malfunction.",
+    "Independent HDL simulation covers factorizer-generated expressions and substitutions in an explicitly two-bit wrapper; it is not a full APB bus simulation.",
+    "Unrecognized expression kinds and containing expressions remain inline. This does not add expression grammar or wider common-subexpression optimization support.",
+    "The native HDL comparison replaces exactly one generated Date header; semantic reports are byte-identical without that normalization.",
+    "Initial reduced full-source probes used non-strict infix assignment and an unsupported guard shape and were refused. They do not count as product failures. The corrected documented RHS probe generated successfully.",
+    "Icarus Verilog and Perl are existing read-only toolchain dependencies; test fixtures and build products remain repository-local.",
+    "The failed full-cohort partitions earn no complete qualification. Full CI, hosted runs, browser visual qualification and spent native producers remain unexecuted.",
+    "SPECFORGE tickets and export-setup concerns are accepted into the owning task tree, but their supplied reproduction claims have not yet been reverified here."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2.1",
+  "schema": "fsmgen.source_query_identity_repair.v1"
+}

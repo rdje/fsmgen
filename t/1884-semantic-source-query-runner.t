@@ -15,6 +15,7 @@ use FSM::Test::SourceQueryOracle qw(source_query_semantic_errors source_query_en
 my $repo = abs_path("$FindBin::Bin/..");
 chdir $repo or die "chdir repository: $!";
 my $json = JSON::PP->new->canonical;
+my $canonical_bytes = JSON::PP->new->canonical->utf8;
 my @focus = qw(
     t/corpus/direct_size_expression_widths.fsm
     t/corpus/composition_intent_integer_literals.fsm
@@ -83,8 +84,14 @@ for my $row (@$selected) {
                 'repository-bound public producers unchanged');
             like($receipt->{stdio}{stdout}, qr/\A[^\n]+\n\z/, 'one compact JSON response per newline');
             my $api = $receipt->{adapter_result};
-            is_deeply($receipt->{stdio}{response}, {jsonrpc => '2.0', id => 1, result => $api},
+            # Comparing the embedded text as a scalar can print an entire
+            # multi-megabyte report on failure. Hash every typed value, then
+            # retain a structural comparison that identifies the actual field.
+            is(sha256_hex($canonical_bytes->encode($receipt->{stdio}{response})),
+                sha256_hex($canonical_bytes->encode({jsonrpc => '2.0', id => 1, result => $api})),
                 'complete actual newline response equals public adapter result');
+            is_deeply($receipt->{stdio}{response}{result}{structuredContent}, $api->{structuredContent},
+                'complete newline structured result equals public adapter result');
             ok(!$api->{isError}, 'supported source is not a tool error');
             my $payload = $api->{structuredContent};
             is_deeply($json->decode($api->{content}[0]{text}), $payload, 'complete text/structured equality');
@@ -104,11 +111,11 @@ for my $row (@$selected) {
                 catalog_ids => [map {$_->{id}} @{$row->{catalog_entries}}],
                 source_sha256 => $receipt->{source_sha256_before},
                 producer_sha256 => $receipt->{producer_sha256_before},
-                native_report_sha256 => sha256_hex($json->encode($report)),
-                adapter_report_sha256 => sha256_hex($json->encode($payload->{report})),
-                stdio_report_sha256 => sha256_hex($json->encode($receipt->{stdio}{response}{result}{structuredContent}{report})),
+                native_report_sha256 => sha256_hex($canonical_bytes->encode($report)),
+                adapter_report_sha256 => sha256_hex($canonical_bytes->encode($payload->{report})),
+                stdio_report_sha256 => sha256_hex($canonical_bytes->encode($receipt->{stdio}{response}{result}{structuredContent}{report})),
                 public_vial_api_report_sha256 => defined($receipt->{vial_api_report})
-                    ? sha256_hex($json->encode($receipt->{vial_api_report})) : undef,
+                    ? sha256_hex($canonical_bytes->encode($receipt->{vial_api_report})) : undef,
             };
         };
     }

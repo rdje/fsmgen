@@ -3032,6 +3032,17 @@ diagnostic text; it never drops report fields or diagnostic entries. ISF schedul
 reports name a scheduled FSM artifact; IAL2 protocol reports have their own named
 schemas and source-object provenance. They do not share a universal wrapper.
 
+Generated HDL size remains part of `generation_result_snapshot.summary` and is
+included in those comparisons. Expression sharing preserves ordered operands:
+`(concat A A)` and `(concat B B)` cannot share a driver merely because both are
+concatenations. Literal widths and radices, signal slices and aggregate paths
+also distinguish expressions. Expression kinds without a complete structural
+identity remain inline, including expressions that contain them. Candidate
+names are allocated deterministically. This prevents false sharing without
+removing size metadata or hiding differences between native and MCP reports.
+Complete response comparisons use canonical UTF-8 JSON hashes to keep failure
+diagnostics bounded; structured comparisons still identify differing fields.
+
 Run the focused representative band, or select exact source identities:
 
 ```bash
