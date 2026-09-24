@@ -108,8 +108,8 @@ ISF
     like($top_fsm, qr/\A\(\?top:clock_domain_partition_top\b/, 'multi-domain lower emits a generated top artifact');
     like($top_fsm, qr/\(\?fsmc:core clock_domain_partition__domain_core\)/, 'generated top instantiates the core domain module');
     like($top_fsm, qr/\(\?fsmc:bus clock_domain_partition__domain_bus\)/, 'generated top instantiates the bus domain module');
-    unlike($top_fsm, qr{/clk/core\.clk/}, 'generated top leaves same-name core system ports to composition auto-wiring');
-    unlike($top_fsm, qr{/bus_clk/bus\.bus_clk/}, 'generated top leaves same-name bus system ports to composition auto-wiring');
+    unlike($top_fsm, qr{\(clk core\.clk\)}, 'generated top leaves same-name core system ports to composition auto-wiring');
+    unlike($top_fsm, qr{\(bus_clk bus\.bus_clk\)}, 'generated top leaves same-name bus system ports to composition auto-wiring');
 
     my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
     is($report->{scheduled_fsm}, 'clock_domain_partition_top.fsm', 'multi-domain report describes the generated top artifact');
@@ -496,9 +496,9 @@ ISF
 
     my $top_fsm = $lowered->{files}{'event_crossing_top_top.fsm'};
     like($top_fsm, qr/\(\?rtl:rx_done_cdc event_crossing_top__cdc_event_rx_done\)/, 'top names an explicit CDC RTL child');
-    like($top_fsm, qr{/bus\.rx_req/rx_done_cdc\.request/}, 'top wires the source request into the CDC child');
-    like($top_fsm, qr{/rx_done_cdc\.ready/bus\.rx_ready/}, 'top wires source ready back to the source domain');
-    like($top_fsm, qr{/rx_done_cdc\.pulse/core\.rx_pulse/}, 'top wires destination pulse into the destination domain');
+    like($top_fsm, qr{\(bus\.rx_req rx_done_cdc\.request\)}, 'top wires the source request into the CDC child');
+    like($top_fsm, qr{\(rx_done_cdc\.ready bus\.rx_ready\)}, 'top wires source ready back to the source domain');
+    like($top_fsm, qr{\(rx_done_cdc\.pulse core\.rx_pulse\)}, 'top wires destination pulse into the destination domain');
     like($top_fsm, qr/\(\?rtlif:event_crossing_top__cdc_event_rx_done[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the CDC child interface artifact');
     like($top_fsm, qr/\(FSMGEN_ISF_CDC_EVENT 0d1\)/, 'CDC interface metadata marks the generated ISF event primitive');
     like($top_fsm, qr/\(SOURCE_RESET_ACTIVE_HIGH 0d0\)/, 'CDC interface metadata carries source reset polarity');
@@ -597,10 +597,10 @@ subtest 'dual event-crossing fixture emits two CDC children and reports both dir
         qr/\(\?rtl:core_ack_cdc clock_domain_dual_event_crossing__cdc_event_core_ack\)/,
         'generated top instantiates core_ack CDC child',
     );
-    like($top_fsm, qr{/source\.req_seen_req/req_seen_cdc\.request/}, 'top wires source-to-core request into req_seen CDC child');
-    like($top_fsm, qr{/req_seen_cdc\.pulse/core\.req_seen_pulse/}, 'top wires req_seen destination pulse into the core domain');
-    like($top_fsm, qr{/core\.core_ack_req/core_ack_cdc\.request/}, 'top wires core-to-source request into core_ack CDC child');
-    like($top_fsm, qr{/core_ack_cdc\.pulse/source\.core_ack_pulse/}, 'top wires core_ack destination pulse into the source domain');
+    like($top_fsm, qr{\(source\.req_seen_req req_seen_cdc\.request\)}, 'top wires source-to-core request into req_seen CDC child');
+    like($top_fsm, qr{\(req_seen_cdc\.pulse core\.req_seen_pulse\)}, 'top wires req_seen destination pulse into the core domain');
+    like($top_fsm, qr{\(core\.core_ack_req core_ack_cdc\.request\)}, 'top wires core-to-source request into core_ack CDC child');
+    like($top_fsm, qr{\(core_ack_cdc\.pulse source\.core_ack_pulse\)}, 'top wires core_ack destination pulse into the source domain');
 
     my $req_seen_metadata_re = qr{
         \(\?rtlif:clock_domain_dual_event_crossing__cdc_event_req_seen
@@ -727,9 +727,9 @@ subtest 'no-reset event-crossing fixture emits reset-absent CDC metadata' => sub
         qr/\(\?rtl:req_seen_cdc clock_domain_no_reset_event_crossing__cdc_event_req_seen\)/,
         'generated top instantiates the no-reset CDC child',
     );
-    like($top_fsm, qr{/bus_clk/req_seen_cdc\.source_clk/}, 'top wires the source clock into the CDC child');
-    like($top_fsm, qr{/core_clk/req_seen_cdc\.dest_clk/}, 'top wires the destination clock into the CDC child');
-    unlike($top_fsm, qr{/[^/\s]*rst[^/\s]*/req_seen_cdc\.(?:source_reset|dest_reset)/},
+    like($top_fsm, qr{\(bus_clk req_seen_cdc\.source_clk\)}, 'top wires the source clock into the CDC child');
+    like($top_fsm, qr{\(core_clk req_seen_cdc\.dest_clk\)}, 'top wires the destination clock into the CDC child');
+    unlike($top_fsm, qr{\([^()\s]+ req_seen_cdc\.(?:source_reset|dest_reset)\)},
         'top does not wire absent domain resets into the CDC child');
     like(
         $top_fsm,

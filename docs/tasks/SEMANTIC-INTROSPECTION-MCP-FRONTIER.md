@@ -645,6 +645,36 @@ For FSMGen, the analogs are:
   Goal: `Make generated multi-clock ISF top wiring strict-admissible and qualify native/API/MCP failures and success.`
   Acceptance: `Repair the emitted legacy slash-link syntax at the multi-domain generator, not by relaxing strict validation. Qualify complete generated artifact admission, real child width failures with authored provenance, valid event-crossing behavior, and native/API/newline MCP parity. Synchronize exact supported boundaries in the book and task evidence; commit before bundle work.`
   Verification: `T1889 development probe on .32.1.2 exposes strict rejection of /bus_start/source.bus_start/ in domain_width_control_top.fsm. perl/FSM/Scheduler/ISF.pm::_emit_multi_domain_wiring calls _link, which returns slash-delimited links at line 519. The generated wrapper fails before its intended child width error. Existing T1247 exercises partition structure rather than strict top admission. Initial failing TAP is .artifacts/specforge-width-diagnostics/focused.tap; no strict multi-domain qualification is claimed by .32.1.2.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.1`
+  Status: `done`
+  Goal: `Emit canonical multi-clock top wiring and qualify strict admission without changing generated hardware.`
+  Acceptance: `Replace slash-form links at their generator. Exercise event, dual-event, no-reset and activation top routes; compare compatibility HDL before/after and strict HDL after. Qualify actual native/API/newline queries and strict child-width diagnostics; preserve direct strict rejection of authored legacy syntax. Commit independently of reset polarity repair.`
+  Verification: `At c6b8bc783 all three checked-in clock_domain_*_event_crossing fixtures fail strict check on generated slash links but emit compatibility HDL. Exact commands, failures and baseline artifacts are retained in .artifacts/isf-multiclock-strict/before/. T1890 qualifies independently strict-generated artifacts, same-source strict/compatibility HDL and complete native/API/newline check/semantic/schedule equality for event/dual-event/no-reset/activation controls with supported reset/name choices. Original fixture compatibility HDL is byte-identical after removing date headers. Strict original dual-event/no-reset checks pass; the single-event fixture progresses to its true reset-carrier refusal. Behavioral reset qualification is explicitly excluded here and owned by .32.1.3.2/.3 because baseline HDL reveals opposite domain/CDC reset polarity.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.1: emit canonical multi-clock wiring`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2`
+  Status: `active`
+  Goal: `Preserve authored ISF reset polarity through ordinary and multi-clock FSM lowering.`
+  Acceptance: `Trace the full public reset carrier contract and repair polarity loss without combinational reset-tree glue or changing authored intent. Cover sync/async and active-high/active-low choices, flat-name defaults, explicit declarations, no-reset, report metadata and generated domain/CDC agreement. Prove actual reset behavior with independent HDL oracles; qualify API/MCP and update source/book contracts.`
+  Verification: `Before any wiring repair, clock_domain_event_crossing.isf emits domain always_ff blocks with if (bus_rst_n)/if (core_rst_n), but its CDC module uses if (!source_reset)/if (!dest_reset) on the same nets. Parser::_parse_reset correctly infers active_low from _n; Scheduler::ISF::Emitter::FSM::_emit_system ignores polarity for sync and also emits areset for both async polarities. The core public contract says sreset is synchronous active-high and areset asynchronous active-low. Baseline design.sv and generated top metadata under .artifacts/isf-multiclock-strict/before/ preserve the contradiction. This affects more than strict syntax; do not qualify these reset-declared designs behaviorally until repaired.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3`
+  Status: `pending`
+  Goal: `Complete multi-clock behavioral and semantic-query qualification after syntax and reset repairs.`
+  Acceptance: `Run independent event/activation behavior and reset controls against repaired strict HDL, preserve exact native/API/newline reports and complete emitted-artifact admission, synchronize book/facts, then close .32.1.3 and return to .32.2.`
+  Verification: `Requires committed .32.1.3.1, .32.1.3.2 and .32.1.3.4; strict admission alone is insufficient.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4`
+  Status: `pending`
+  Goal: `Preserve logical domain and public signal identities through generated top naming and wiring.`
+  Acceptance: `Reproduce a public actor with domain bus, trace admission versus generated instance naming, and repair that boundary while preserving logical domain/report identities. Audit collisions and keyword/case variants; qualify actual generated tops and API/MCP behavior. Update book/facts and commit before .32.1.3.3 behavioral closure.`
+  Verification: `The .32.1.3.1 activation control parses and lowers domain bus, but strict and compatibility HDL both refuse generated ?fsmc:bus as reserved in VHDL. Parser::_parse_clock_domains admits scalar identifier-shaped names; Scheduler::ISF::_emit_domain_instance copies the logical name verbatim. Initial failing focused-final.tap under .artifacts/isf-multiclock-strict/ retains native/API failure evidence. The syntax-only control uses peripheral after this independent gap is owned; no bus-domain HDL support is claimed by .32.1.3.1.`
+  Collision extension: `After using portable domain peripheral, top input ready still fails despite an emitted explicit (ready peripheral.ready) link: CDC ready outputs form a mixed-direction same-name family. SameNameLinkBuilder::build_top_input_links computes explicit_sources/targets but rejects the direction family before using those exclusions. focused-verified.tap retains the public refusal. Decompose .32.1.3.4 into independent domain-name and explicit-route collision repairs before implementation; do not weaken portable identifiers or silently rename authored public ports. Syntax qualification uses work_ready to isolate this separate composition defect.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.2`
@@ -1322,13 +1352,14 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3` is active: repair strict admission
-of generated multi-clock ISF wiring. Rule admission and width-error provenance
-are repaired under `.32.1.1` and `.32.1.2`; bundle provenance, generated
-interconnect lowering and derived widths follow under `.32.2`, `.32.4` and `.32.3`.
-Own any demonstrated gap before returning to HIAL
-streaming. Preserve spent native compiler/startup evidence and the separate
-read-only/write horizon; source checks do not promote runtime support.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2` is active: preserve ISF reset
+polarity through FSM lowering. Canonical multi-clock wiring is committed under
+`.32.1.3.1`; generated naming/explicit-route collisions follow under `.32.1.3.4`,
+then `.32.1.3.3` completes behavioral/API/MCP qualification. Rule admission and
+width provenance are repaired. Bundle provenance, generated interconnect
+lowering and derived widths follow under `.32.2`, `.32.4` and `.32.3`.
+Preserve spent native compiler/startup evidence and the separate read-only/write
+horizon; source checks do not promote runtime support.
 
 ## Decisions
 
@@ -3026,3 +3057,52 @@ which strict admission rejects before child validation. This is traced to
 `FSM::Scheduler::ISF::_link`, explicitly owned by `.32.1.3` and next for repair.
 The diagnostic slice does not call that strict path qualified. Full CI/push
 and browser visual review remain gated; spent native producers are untouched.
+
+## Acceptance Checklist — `.32.1.3.1` canonical multi-clock wiring
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — At `c6b8bc783`, native strict
+  `--check --json` rejects each checked-in event/dual-event/no-reset source
+  on generated slash links. `Scheduler::ISF::_emit_multi_domain_wiring` routes
+  every domain and CDC connection through `_link`, whose return value is the
+  legacy slash token. Existing lowering tests matched that legacy spelling.
+  Exact original native reports and post-repair results are retained in
+  `docs/audits/specforge-rule-admission-20260924/multiclock-strict-wiring.json`.
+- [x] **ADDRESSED (verified)** — `_link` emits canonical endpoint pairs without
+  altering connection selection. Tests now assert those routes and T1890
+  independently strict-checks every generated artifact for event, dual-event,
+  no-reset and activation controls. Strict and compatibility HDL match except
+  date headers; complete native/API/newline check, semantic and schedule
+  reports agree. T1889 now reaches actual strict domain-child width failures
+  using explicit async active-low resets and preserves authored provenance.
+  Original dual-event/no-reset sources pass strict check; the single-event
+  source now reaches its separately owned reset-carrier error.
+- [x] **NO REGRESSION** — The RAM-guarded T1247/T1387/T1889/T1890/T411 band
+  reports `All tests successful. Files=5, Tests=39` and `Result: PASS`.
+  The original fixture compatibility HDL is byte-identical before/after after
+  removing only emitted date headers. T411 still rejects authored legacy
+  slash syntax; strict admission is not relaxed. The final mdBook build and
+  rendered canonical-wiring/reset/naming-limit checks pass; output is removed.
+
+Re-derivation is the native before/after report set and exact generated HDL.
+Falsification combines independent strict artifact admission, real child
+errors, unchanged complete hardware text, authored legacy rejection and full
+transport equality. Durability is the tracked audit JSON, T1890, extended
+T1889, existing route tests, book/spec and fact card. This is syntax and query
+qualification, not a reset/event behavioral claim. Full CI/push and browser
+visual review remain gated.
+
+Runtime review exposed a genuine baseline reset-polarity contradiction, owned
+by `.32.1.3.2`. Activation qualification additionally exposed reserved logical
+domain-name reuse and a public `ready` input's explicit-route collision, both
+owned for separately scoped repairs under `.32.1.3.4` before `.32.1.3.3`
+behavioral closure. Initial harness assumptions about every reset-declared
+fixture being faulty were corrected: the dual-event fixture already uses
+supported async active-low/sync active-high forms. The syntax control uses
+explicit supported resets, portable domain `peripheral` and input `work_ready`;
+no discovered gap is marked fixed by those choices. Failed development TAPs
+remain under `.artifacts/isf-multiclock-strict/`; successful evidence is
+`focused-complete.tap`, whose complete summary is in the tracked audit.
+
+The first staged gate found the bounded audit README over its normal pressure
+threshold. Its replay paragraphs are reflowed within the existing ceiling;
+no budget or lifecycle state is widened, and no technical content is removed.

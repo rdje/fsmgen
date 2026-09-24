@@ -28,13 +28,11 @@ my $source = <<'ISF';
   (transaction tx (on start) (complete done)))
 ISF
 my $single = write_source('width-control.isf', $source);
-# Strict wrapper admission is separately owned by .32.1.3; this control
-# reaches the real domain child in compatibility mode.
 my $multi = write_source('domain-width-control.isf', <<'ISF');
 (actor domain_width_control
   (clock-domains
-    (domain source (clock bus_clk) (reset bus_rst_n) :default)
-    (domain core (clock core_clk) (reset core_rst_n)))
+    (domain source (clock bus_clk) (reset (bus_rst_n async active_low)) :default)
+    (domain core (clock core_clk) (reset (core_rst_n async active_low))))
   (crossings
     (event byte_ready (from source byte_ready_req)
       (to core byte_ready_pulse) (ready byte_ready_ready)))
@@ -57,8 +55,7 @@ subtest 'lowered width failures retain authored source in all native modes' => s
             for my $kind (qw(check semantic human)) {
                 my @flags = $kind eq 'check' ? ('--check', '--json')
                     : $kind eq 'semantic' ? ('--emit-semantic-json') : ('--quiet', '--output', "$work/rejected.sv");
-                my @strict = $path eq $single ? ('--strict') : ();
-                my $result = $capture->([$^X, 'bin/fsmgen', @strict, @flags, @destination, $path], '');
+                my $result = $capture->([$^X, 'bin/fsmgen', '--strict', @flags, @destination, $path], '');
                 is($result->{exit_code}, 1, "$kind rejects declared width mismatch");
                 is($result->{signal}, 0, 'ordinary failure, not a terminated process');
                 if ($kind eq 'human') {
@@ -85,7 +82,7 @@ subtest 'lowered width failures retain authored source in all native modes' => s
 
 subtest 'API and actual newline MCP preserve complete native failures' => sub {
     my $adapter = FSM::Support::SemanticIntrospectionMCPAdapter->new(repo_root => $root, workspace_root => $root);
-    for my $path ($single) {
+    for my $path ($single, $multi) {
         my $relative = File::Spec->abs2rel($path, $root);
         for my $kind (qw(check semantic)) {
             my $request = {jsonrpc => '2.0', id => 1, method => 'tools/call', params => {

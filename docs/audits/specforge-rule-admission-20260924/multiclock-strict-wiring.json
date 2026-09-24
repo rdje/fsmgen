@@ -1,0 +1,553 @@
+{
+  "baseline_revision": "c6b8bc783252fe4179385e998c39d3e3ab4bd7e3",
+  "book_validation": "mdBook build and rendered canonical wiring/reset/naming limit assertions passed; disposable output removed.",
+  "commands": {
+    "after": {
+      "isf/clock_domain_dual_event_crossing.isf": [
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--strict",
+            "--check",
+            "--json",
+            "isf/clock_domain_dual_event_crossing.isf"
+          ],
+          "exit_code": 0
+        },
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--quiet",
+            "--outdir",
+            ".artifacts/isf-multiclock-strict/after/clock_domain_dual_event_crossing/lowered",
+            "--output",
+            ".artifacts/isf-multiclock-strict/after/clock_domain_dual_event_crossing/design.sv",
+            "isf/clock_domain_dual_event_crossing.isf"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "isf/clock_domain_event_crossing.isf": [
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--strict",
+            "--check",
+            "--json",
+            "isf/clock_domain_event_crossing.isf"
+          ],
+          "exit_code": 1
+        },
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--quiet",
+            "--outdir",
+            ".artifacts/isf-multiclock-strict/after/clock_domain_event_crossing/lowered",
+            "--output",
+            ".artifacts/isf-multiclock-strict/after/clock_domain_event_crossing/design.sv",
+            "isf/clock_domain_event_crossing.isf"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "isf/clock_domain_no_reset_event_crossing.isf": [
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--strict",
+            "--check",
+            "--json",
+            "isf/clock_domain_no_reset_event_crossing.isf"
+          ],
+          "exit_code": 0
+        },
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--quiet",
+            "--outdir",
+            ".artifacts/isf-multiclock-strict/after/clock_domain_no_reset_event_crossing/lowered",
+            "--output",
+            ".artifacts/isf-multiclock-strict/after/clock_domain_no_reset_event_crossing/design.sv",
+            "isf/clock_domain_no_reset_event_crossing.isf"
+          ],
+          "exit_code": 0
+        }
+      ]
+    },
+    "before": {
+      "isf/clock_domain_dual_event_crossing.isf": [
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--strict",
+            "--check",
+            "--json",
+            "isf/clock_domain_dual_event_crossing.isf"
+          ],
+          "exit_code": 1
+        },
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--quiet",
+            "--outdir",
+            ".artifacts/isf-multiclock-strict/before/clock_domain_dual_event_crossing/lowered",
+            "--output",
+            ".artifacts/isf-multiclock-strict/before/clock_domain_dual_event_crossing/design.sv",
+            "isf/clock_domain_dual_event_crossing.isf"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "isf/clock_domain_event_crossing.isf": [
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--strict",
+            "--check",
+            "--json",
+            "isf/clock_domain_event_crossing.isf"
+          ],
+          "exit_code": 1
+        },
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--quiet",
+            "--outdir",
+            ".artifacts/isf-multiclock-strict/before/clock_domain_event_crossing/lowered",
+            "--output",
+            ".artifacts/isf-multiclock-strict/before/clock_domain_event_crossing/design.sv",
+            "isf/clock_domain_event_crossing.isf"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "isf/clock_domain_no_reset_event_crossing.isf": [
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--strict",
+            "--check",
+            "--json",
+            "isf/clock_domain_no_reset_event_crossing.isf"
+          ],
+          "exit_code": 1
+        },
+        {
+          "command": [
+            "./bin/fsmgen",
+            "--quiet",
+            "--outdir",
+            ".artifacts/isf-multiclock-strict/before/clock_domain_no_reset_event_crossing/lowered",
+            "--output",
+            ".artifacts/isf-multiclock-strict/before/clock_domain_no_reset_event_crossing/design.sv",
+            "isf/clock_domain_no_reset_event_crossing.isf"
+          ],
+          "exit_code": 0
+        }
+      ]
+    }
+  },
+  "compatibility_hdl_comparison": [
+    {
+      "after_hdl_sha256": "772fd0f004ac6ea40596fe3d64563f7bddf23a955610470d38aac328159af186",
+      "before_hdl_sha256": "104f0d14649b3697f86fdedc1ddc47eb2a7db14059822c00040b79398b2e9d9c",
+      "date_free_hdl_sha256": "4839e6accf75e03500207d984e3f43ae1f44f4843a7e20cc8cfaf7f45e7650f0",
+      "date_header_count": 2,
+      "source": "isf/clock_domain_dual_event_crossing.isf"
+    },
+    {
+      "after_hdl_sha256": "752912947cb147c57cbdc57912407362b52dcea9aef8d8e6f4ebbe5cba53acc1",
+      "before_hdl_sha256": "875cf1e56c5291fbf12f52c07b0eb4f5e4b6ade7dc637f091b1e781b69995349",
+      "date_free_hdl_sha256": "0d98d595c705ed5905262bd1e8ddfb5a0552d5d5f4bbcb7790a63f60afda9d5d",
+      "date_header_count": 2,
+      "source": "isf/clock_domain_event_crossing.isf"
+    },
+    {
+      "after_hdl_sha256": "1fc099a33d87e3796db6b50b06fde6f4a4111b081160543098fbc5d282ee20e3",
+      "before_hdl_sha256": "0f268b2491dde3689709913f0ef808033efbaec926a81c409370fa054e90780a",
+      "date_free_hdl_sha256": "d1438b824c768ce3f7aa0e3c02fd5cbbc709a2a3c844022077b8b6c4a15e21f6",
+      "date_header_count": 2,
+      "source": "isf/clock_domain_no_reset_event_crossing.isf"
+    }
+  ],
+  "domain_name_defect": {
+    "diagnostic": "Composition top 'activation_wiring_top' ?fsmc child instance 'bus' is not a portable HDL child-instance identifier because it is reserved in VHDL; choose a non-keyword simple identifier",
+    "locus": "Scheduler::ISF::_emit_domain_instance copies Parser-admitted logical name verbatim.",
+    "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4",
+    "source": "(actor activation_wiring\n  (clock-domains\n    (domain core (clock clk) (reset (rst_n async active_low)) :default)\n    (domain bus (clock bus_clk) (reset (bus_rst_n async active_low))))\n  (crossings (activation worker (from core) (to bus)))\n  (interface (input start (domain core)) (output done (domain core))\n    (input ready (domain bus)) (output observed (domain bus)))\n  (transaction parent (domain core) (on start) (do worker) (complete done))\n  (transaction worker (domain bus) (await ready) (complete observed)))\n"
+  },
+  "explicit_route_collision": {
+    "conflicting_endpoints": [
+      "peripheral.ready[input]",
+      "worker_activation_start_cdc.ready[output]",
+      "worker_activation_done_cdc.ready[output]"
+    ],
+    "emitted_link": "(ready peripheral.ready)",
+    "evidence_log": ".artifacts/isf-multiclock-strict/focused-verified.tap",
+    "input": "ready",
+    "locus": "SameNameLinkBuilder::build_top_input_links validates directions before excluding explicit sources/targets.",
+    "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4"
+  },
+  "focused_tests": [
+    "t/1247-isf-clock-domain-partition.t ...................... ok",
+    "t/1387-isf-cross-domain-activation-handshake-lowering.t .. ok",
+    "t/1889-authored-source-operand-diagnostics.t ............. ok",
+    "t/1890-isf-multiclock-strict-wiring.t .................... ok",
+    "t/411-strict-mode-composition-wiring-slash-boundary.t .... ok",
+    "All tests successful.",
+    "Files=5, Tests=39, 117 wallclock secs ( 0.03 usr  0.01 sys + 85.14 cusr 25.33 csys = 110.51 CPU)",
+    "Result: PASS"
+  ],
+  "limits": [
+    "Wiring syntax only; original single-event fixture still fails strict reset admission.",
+    "T1890 changes only flat _n test resets to explicit async active_low; dual-event and no-reset source text remain unchanged.",
+    "Complete native/API/newline successful queries and strict child-width errors are covered; independent behavioral signoff follows reset repair.",
+    "Activation success control uses peripheral; the independently reproduced bus keyword admission/lowering gap remains owned by .32.1.3.4."
+  ],
+  "native_reports": {
+    "after": {
+      "isf/clock_domain_dual_event_crossing.isf": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 0,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": false,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {},
+          "success": true,
+          "unique_codes": []
+        },
+        "diagnostics": [],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "result": {
+          "composition_child_count": 4,
+          "module_name": "clock_domain_dual_event_crossing_top",
+          "signal_count": 8,
+          "state_count": 0
+        },
+        "source": {
+          "input": "isf/clock_domain_dual_event_crossing.isf",
+          "resolved_path": "isf/clock_domain_dual_event_crossing.isf"
+        },
+        "success": true,
+        "support_accounting": {
+          "matched": false
+        }
+      },
+      "isf/clock_domain_event_crossing.isf": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 1,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": true,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {
+            "error": 1
+          },
+          "success": false,
+          "unique_codes": []
+        },
+        "diagnostics": [
+          {
+            "code": null,
+            "expected_child_source_file": null,
+            "expected_rtl_metadata_file": null,
+            "family": "unclassified",
+            "generated_child_source": "?fsmc",
+            "message": "Source file: 'isf/clock_domain_event_crossing.isf'\nParent composition source: 'isf/clock_domain_event_crossing.isf'\nGenerated child source: '?fsmc' 'clock_domain_event_crossing__domain_source'\nStrict mode rejects the legacy or misleading '(sreset bus_rst_n)' +system spelling in source 'clock_domain_event_crossing__domain_source'. Use '(sreset reset)' for synchronous active-high reset or '(areset rst_n)' for asynchronous active-low reset, or re-run without strict mode if you need legacy compatibility. See docs/book/src/10-errors-strict-mode-and-troubleshooting.md for the current strict-mode boundary.",
+            "migration_hint_available": false,
+            "parent_composition_source": "isf/clock_domain_event_crossing.isf",
+            "rtl_metadata_file": null,
+            "severity": "error",
+            "source_file": "isf/clock_domain_event_crossing.isf",
+            "stability": "unclassified",
+            "summary": "Unclassified FSMGen failure.",
+            "support_accounting": {
+              "matched": false
+            }
+          }
+        ],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "source": {
+          "input": "isf/clock_domain_event_crossing.isf",
+          "resolved_path": "isf/clock_domain_event_crossing.isf"
+        },
+        "success": false
+      },
+      "isf/clock_domain_no_reset_event_crossing.isf": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 0,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": false,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {},
+          "success": true,
+          "unique_codes": []
+        },
+        "diagnostics": [],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "result": {
+          "composition_child_count": 3,
+          "module_name": "clock_domain_no_reset_event_crossing_top",
+          "signal_count": 4,
+          "state_count": 0
+        },
+        "source": {
+          "input": "isf/clock_domain_no_reset_event_crossing.isf",
+          "resolved_path": "isf/clock_domain_no_reset_event_crossing.isf"
+        },
+        "success": true,
+        "support_accounting": {
+          "matched": false
+        }
+      }
+    },
+    "before": {
+      "isf/clock_domain_dual_event_crossing.isf": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 1,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": true,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {
+            "error": 1
+          },
+          "success": false,
+          "unique_codes": []
+        },
+        "diagnostics": [
+          {
+            "code": null,
+            "expected_child_source_file": null,
+            "expected_rtl_metadata_file": null,
+            "family": "unclassified",
+            "generated_child_source": null,
+            "message": "Source file: 'isf/clock_domain_dual_event_crossing.isf'\nStrict mode rejects legacy '?wiring' slash-link token '/bus_start/source.bus_start/' in source 'isf/clock_domain_dual_event_crossing.isf'. Use the canonical '(bus_start source.bus_start)' form or verbose '(connect bus_start source.bus_start)' form for strict-mode composition wiring, or re-run without strict mode if you still need '/source/target/' compatibility. See docs/book/src/10-errors-strict-mode-and-troubleshooting.md for the current strict-mode boundary.",
+            "migration_hint_available": false,
+            "parent_composition_source": null,
+            "rtl_metadata_file": null,
+            "severity": "error",
+            "source_file": "isf/clock_domain_dual_event_crossing.isf",
+            "stability": "unclassified",
+            "summary": "Unclassified FSMGen failure.",
+            "support_accounting": {
+              "matched": false
+            }
+          }
+        ],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "source": {
+          "input": "isf/clock_domain_dual_event_crossing.isf",
+          "resolved_path": "isf/clock_domain_dual_event_crossing.isf"
+        },
+        "success": false
+      },
+      "isf/clock_domain_event_crossing.isf": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 1,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": true,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {
+            "error": 1
+          },
+          "success": false,
+          "unique_codes": []
+        },
+        "diagnostics": [
+          {
+            "code": null,
+            "expected_child_source_file": null,
+            "expected_rtl_metadata_file": null,
+            "family": "unclassified",
+            "generated_child_source": null,
+            "message": "Source file: 'isf/clock_domain_event_crossing.isf'\nStrict mode rejects legacy '?wiring' slash-link token '/bus_start/source.bus_start/' in source 'isf/clock_domain_event_crossing.isf'. Use the canonical '(bus_start source.bus_start)' form or verbose '(connect bus_start source.bus_start)' form for strict-mode composition wiring, or re-run without strict mode if you still need '/source/target/' compatibility. See docs/book/src/10-errors-strict-mode-and-troubleshooting.md for the current strict-mode boundary.",
+            "migration_hint_available": false,
+            "parent_composition_source": null,
+            "rtl_metadata_file": null,
+            "severity": "error",
+            "source_file": "isf/clock_domain_event_crossing.isf",
+            "stability": "unclassified",
+            "summary": "Unclassified FSMGen failure.",
+            "support_accounting": {
+              "matched": false
+            }
+          }
+        ],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "source": {
+          "input": "isf/clock_domain_event_crossing.isf",
+          "resolved_path": "isf/clock_domain_event_crossing.isf"
+        },
+        "success": false
+      },
+      "isf/clock_domain_no_reset_event_crossing.isf": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 1,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": true,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {
+            "error": 1
+          },
+          "success": false,
+          "unique_codes": []
+        },
+        "diagnostics": [
+          {
+            "code": null,
+            "expected_child_source_file": null,
+            "expected_rtl_metadata_file": null,
+            "family": "unclassified",
+            "generated_child_source": null,
+            "message": "Source file: 'isf/clock_domain_no_reset_event_crossing.isf'\nStrict mode rejects legacy '?wiring' slash-link token '/bus_start/source.bus_start/' in source 'isf/clock_domain_no_reset_event_crossing.isf'. Use the canonical '(bus_start source.bus_start)' form or verbose '(connect bus_start source.bus_start)' form for strict-mode composition wiring, or re-run without strict mode if you still need '/source/target/' compatibility. See docs/book/src/10-errors-strict-mode-and-troubleshooting.md for the current strict-mode boundary.",
+            "migration_hint_available": false,
+            "parent_composition_source": null,
+            "rtl_metadata_file": null,
+            "severity": "error",
+            "source_file": "isf/clock_domain_no_reset_event_crossing.isf",
+            "stability": "unclassified",
+            "summary": "Unclassified FSMGen failure.",
+            "support_accounting": {
+              "matched": false
+            }
+          }
+        ],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "source": {
+          "input": "isf/clock_domain_no_reset_event_crossing.isf",
+          "resolved_path": "isf/clock_domain_no_reset_event_crossing.isf"
+        },
+        "success": false
+      }
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.1",
+  "producer_sha256": {
+    "perl/FSM/Scheduler/ISF.pm": "8897a2571f7688debe7bbac70f6c8d3e846897346fc6be38ec6b792c8089b650",
+    "t/1889-authored-source-operand-diagnostics.t": "fc4b0d82f8b399446d67e07aa526f6e1ff55324643452b5220ba2db4a0eabe37",
+    "t/1890-isf-multiclock-strict-wiring.t": "fdd5598462cb38c5537fba43c41299c1a8d4baa644562031c880f89a449e0b78"
+  },
+  "reset_defect": {
+    "cdc_condition": "if (!source_reset)",
+    "cdc_metadata": "(SOURCE_RESET_ACTIVE_HIGH 0d0)",
+    "connected_net": ".source_reset(bus_rst_n)",
+    "domain_carrier": "(sreset bus_rst_n)",
+    "domain_condition": "if (bus_rst_n)",
+    "effect": "Domain and CDC reset senses disagree; no behavioral qualification claimed.",
+    "emitter_locus": "perl/FSM/Scheduler/ISF/Emitter/FSM.pm::_emit_system",
+    "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2",
+    "parser_intent": "Flat bus_rst_n/core_rst_n infer sync active_low.",
+    "source": "isf/clock_domain_event_crossing.isf"
+  }
+}

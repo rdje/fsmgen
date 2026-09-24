@@ -34,6 +34,24 @@ scheduled `.fsm` path using the declared domain clock/reset. Multi-domain
 actors emit validated per-domain scheduled `.fsm` artifacts named
 `<actor>__domain_<domain>.fsm` plus `<actor>_top.fsm` generated top wiring.
 
+Generated wiring uses canonical `(source destination)` pairs, so strict mode
+does not reject the wrapper for legacy slash links. Event, dual-event,
+no-reset and activation routes are checked through strict artifact admission
+and native/API/MCP queries using explicit supported reset forms.
+
+**Tracked reset limitation:** synchronous active-low resets in
+`isf/clock_domain_event_crossing.isf` still lower to active-high `sreset` in domain
+FSMs while the CDC metadata retains active-low intent. Strict mode rejects
+that misleading reset carrier. Compatibility-mode HDL emission is not proof
+of correct reset behavior. The polarity repair is owned by
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2`; behavioral qualification follows
+under `.32.1.3.3`. Logical domain names are currently reused as generated
+instance names, so a keyword such as `bus` also fails portable HDL admission;
+`.32.1.3.4` owns that boundary. Use portable non-keyword domain names.
+A public input named `ready` can also collide with CDC `ready` outputs despite
+its explicit link; the same repair owns this case. Use a distinct public name
+such as `work_ready` until that explicit-route collision is repaired.
+
 Accepted event crossings are represented as explicit CDC `?rtl`/`?rtlif`
 child interfaces in the generated top. Schedule reports expose the generated
 top scope, each domain artifact, and accepted event crossing metadata;
@@ -103,15 +121,15 @@ The generated top owns the inter-domain wiring:
   (?fsmc:core clock_domain_event_crossing__domain_core)
   (?rtl:byte_ready_cdc clock_domain_event_crossing__cdc_event_byte_ready)
   (?wiring:domain_wiring
-    /bus_start/source.bus_start/
-    /core.core_seen/core_seen/
-    /bus_clk/byte_ready_cdc.source_clk/
-    /core_clk/byte_ready_cdc.dest_clk/
-    /bus_rst_n/byte_ready_cdc.source_reset/
-    /core_rst_n/byte_ready_cdc.dest_reset/
-    /source.byte_ready_req/byte_ready_cdc.request/
-    /byte_ready_cdc.ready/source.byte_ready_ready/
-    /byte_ready_cdc.pulse/core.byte_ready_pulse/
+    (bus_start source.bus_start)
+    (core.core_seen core_seen)
+    (bus_clk byte_ready_cdc.source_clk)
+    (core_clk byte_ready_cdc.dest_clk)
+    (bus_rst_n byte_ready_cdc.source_reset)
+    (core_rst_n byte_ready_cdc.dest_reset)
+    (source.byte_ready_req byte_ready_cdc.request)
+    (byte_ready_cdc.ready source.byte_ready_ready)
+    (byte_ready_cdc.pulse core.byte_ready_pulse)
   )
 )
 ```

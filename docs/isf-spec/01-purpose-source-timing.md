@@ -1604,7 +1604,8 @@ Selected source model and current implementation status:
   validated internal domain partition, then public `lower(...)` returns
   domain-specific scheduled `.fsm` artifacts named
   `<actor>__domain_<domain>.fsm` and a generated `<actor>_top.fsm` top
-  artifact.
+  artifact. Generated top wiring uses canonical `(source destination)` pairs,
+  including event and activation CDC routes, without legacy slash links.
 - Schedule reports for multi-domain sources describe the generated top at the
   top level and expose each domain artifact through `clock_domains[]`; legal
   event crossings appear in `crossings[]`. The plain HDL path for accepted

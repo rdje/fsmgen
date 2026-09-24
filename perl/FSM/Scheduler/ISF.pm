@@ -516,7 +516,7 @@ sub _format_top_port_token($name, $direction, $width) {
 sub _link($from, $to) {
     confess "FSM::Scheduler::ISF->lower generated top wiring has an undefined endpoint\n"
         unless defined($from) && defined($to);
-    return "/$from/$to/";
+    return "($from $to)";
 }
 
 sub _scheduled_module_name($domain) {

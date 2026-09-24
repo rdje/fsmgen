@@ -734,7 +734,9 @@ in schedule JSON, and plain HDL generation for accepted event-crossing actors
 now emits the generated top plus concrete acknowledged-event CDC child modules
 for accepted crossings on SystemVerilog/Verilog-family targets when each
 emitted domain artifact satisfies the current scheduled `.fsm` HDL contract,
-including clock-only no-reset domains.
+including clock-only no-reset domains. Generated top links use strict canonical
+pairs. Reset-declared examples still have the [tracked polarity limitation](13h-lowering-reference.md);
+HDL emission alone does not qualify their reset behavior.
 
 The file-backed `isf/clock_domain_dual_event_crossing.isf` fixture now covers two
 opposite-direction event crossings in one top, proving repeated CDC child

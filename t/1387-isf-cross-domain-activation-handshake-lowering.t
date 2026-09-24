@@ -180,10 +180,10 @@ ISF
     my $top = $lowered->{files}{'xdom_top.fsm'};
     like($top, qr/\(\?rtl:worker_activation_start_cdc xdom__cdc_activation_worker_start\)/, 'top instantiates the start CDC child');
     like($top, qr/\(\?rtl:worker_activation_done_cdc xdom__cdc_activation_worker_done\)/, 'top instantiates the done CDC child');
-    like($top, qr{/core\.worker_start/worker_activation_start_cdc\.request/}, 'caller start drives the start CDC request');
-    like($top, qr{/worker_activation_start_cdc\.pulse/bus\.worker_start/}, 'start CDC pulses the child start');
-    like($top, qr{/bus\.worker_done/worker_activation_done_cdc\.request/}, 'child done drives the done CDC request');
-    like($top, qr{/worker_activation_done_cdc\.pulse/core\.worker_done/}, 'done CDC pulses the caller release');
+    like($top, qr{\(core\.worker_start worker_activation_start_cdc\.request\)}, 'caller start drives the start CDC request');
+    like($top, qr{\(worker_activation_start_cdc\.pulse bus\.worker_start\)}, 'start CDC pulses the child start');
+    like($top, qr{\(bus\.worker_done worker_activation_done_cdc\.request\)}, 'child done drives the done CDC request');
+    like($top, qr{\(worker_activation_done_cdc\.pulse core\.worker_done\)}, 'done CDC pulses the caller release');
 };
 
 subtest 'a declared-but-unused activation crossing fails closed at lower' => sub {
@@ -266,22 +266,22 @@ subtest 'multi-domain top emits and wires the two activation CDC children' => su
     like($top, qr/\(\?rtl:worker_activation_done_cdc act__cdc_activation_worker_done\)/, 'top instantiates the done CDC child');
 
     # start synchronizer: SRC (core) request -> DEST (bus) pulse, clk->source, bus_clk->dest.
-    like($top, qr{/core\.worker_start/worker_activation_start_cdc\.request/}, 'start CDC takes the SRC one-cycle request');
-    like($top, qr{/worker_activation_start_cdc\.pulse/bus\.worker_start/}, 'start CDC pulses the DEST start');
-    like($top, qr{/clk/worker_activation_start_cdc\.source_clk/}, 'start CDC source clock is the SRC domain clock');
-    like($top, qr{/bus_clk/worker_activation_start_cdc\.dest_clk/}, 'start CDC dest clock is the DEST domain clock');
+    like($top, qr{\(core\.worker_start worker_activation_start_cdc\.request\)}, 'start CDC takes the SRC one-cycle request');
+    like($top, qr{\(worker_activation_start_cdc\.pulse bus\.worker_start\)}, 'start CDC pulses the DEST start');
+    like($top, qr{\(clk worker_activation_start_cdc\.source_clk\)}, 'start CDC source clock is the SRC domain clock');
+    like($top, qr{\(bus_clk worker_activation_start_cdc\.dest_clk\)}, 'start CDC dest clock is the DEST domain clock');
 
     # done synchronizer: DEST (bus) request -> SRC (core) pulse (reversed clocks).
-    like($top, qr{/bus\.worker_done/worker_activation_done_cdc\.request/}, 'done CDC takes the DEST one-cycle done');
-    like($top, qr{/worker_activation_done_cdc\.pulse/core\.worker_done/}, 'done CDC pulses the SRC release');
-    like($top, qr{/bus_clk/worker_activation_done_cdc\.source_clk/}, 'done CDC source clock is the DEST domain clock');
-    like($top, qr{/clk/worker_activation_done_cdc\.dest_clk/}, 'done CDC dest clock is the SRC domain clock');
+    like($top, qr{\(bus\.worker_done worker_activation_done_cdc\.request\)}, 'done CDC takes the DEST one-cycle done');
+    like($top, qr{\(worker_activation_done_cdc\.pulse core\.worker_done\)}, 'done CDC pulses the SRC release');
+    like($top, qr{\(bus_clk worker_activation_done_cdc\.source_clk\)}, 'done CDC source clock is the DEST domain clock');
+    like($top, qr{\(clk worker_activation_done_cdc\.dest_clk\)}, 'done CDC dest clock is the SRC domain clock');
 
     # The CDC `ready` outputs are consumed: the caller awaits `<start>_ready`
     # before pulsing and the callee awaits `<done>_ready` before asserting done
     # (the event-crossing idiom; also satisfies the composition's consume rule).
-    like($top, qr{/worker_activation_start_cdc\.ready/core\.worker_start_ready/}, 'start CDC ready feeds the caller start-ready input');
-    like($top, qr{/worker_activation_done_cdc\.ready/bus\.worker_done_ready/}, 'done CDC ready feeds the callee done-ready input');
+    like($top, qr{\(worker_activation_start_cdc\.ready core\.worker_start_ready\)}, 'start CDC ready feeds the caller start-ready input');
+    like($top, qr{\(worker_activation_done_cdc\.ready bus\.worker_done_ready\)}, 'done CDC ready feeds the callee done-ready input');
 
     like($top, qr/\(\?rtlif:act__cdc_activation_worker_start[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the start CDC interface artifact');
     like($top, qr/\(\?rtlif:act__cdc_activation_worker_done[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the done CDC interface artifact');

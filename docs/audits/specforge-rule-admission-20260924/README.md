@@ -88,9 +88,14 @@ continuous assignment to a wire declared later, independently reproduced with
 a minimal module. It is not counted as HDL qualification. Verilator handles
 the actual SystemVerilog unchanged, with assertions enabled.
 
-`width-diagnostics.json` is owned by `.32.1.2`. It preserves the independently
-declared width-error control, before/after native reports, exact producer hashes
-and focused test receipts. Reverify with RAM-guarded `prove -Iperl -It/lib t/1889-authored-source-operand-diagnostics.t`.
-The test compares full API/newline MCP reports, retained/direct source identity,
-external children and compatibility-mode domain failures. Strict multi-domain
-wrapper wiring is a separately reproduced defect owned for repair by `.32.1.3`.
+`width-diagnostics.json` is owned by `.32.1.2`. It preserves the independently declared width-error control,
+before/after native reports, exact producer hashes and focused test receipts. Reverify with RAM-guarded `prove -Iperl
+-It/lib t/1889-authored-source-operand-diagnostics.t`. The test compares full API/newline MCP reports, retained/direct
+source identity, external children and domain failures. After the canonical wiring repair, T1889 uses strict mode with
+explicitly supported reset forms. The original width-diagnostic receipt preserves the earlier compatibility-mode
+boundary.
+
+`multiclock-strict-wiring.json` belongs to `.32.1.3.1`: original strict failures, post-repair outcomes and date-free
+compatibility HDL hashes. T1890 checks canonical event/activation wiring, generated artifacts and full API/MCP parity.
+The reset-polarity contradiction, domain `bus` keyword refusal and explicit `ready` route collision are retained with
+owners `.32.1.3.2` and `.32.1.3.4`; none is closed by syntax admission.
