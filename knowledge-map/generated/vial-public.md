@@ -20,7 +20,7 @@
 - q="what public VIAL command is selected?" · facts=[vial-public-tooling-v1-contract](../../docs/knowledge/vial-public-tooling-v1-contract.md)
 - q="where do VIAL artifacts live?" · facts=[vial-public-tooling-v1-contract](../../docs/knowledge/vial-public-tooling-v1-contract.md)
 - q="where is the public VIAL source to result lifecycle documented?" · facts=[vial-public-tooling-v1-contract](../../docs/knowledge/vial-public-tooling-v1-contract.md)
-- q="why did different VIAL model instances share a semantic digest?" · facts=[vial-public-tooling-v1-contract](../../docs/knowledge/vial-public-tooling-v1-contract.md)
+- q="why did different VIAL model instances or fault targets share a semantic digest?" · facts=[vial-public-tooling-v1-contract](../../docs/knowledge/vial-public-tooling-v1-contract.md)
 
 ## Facts
 

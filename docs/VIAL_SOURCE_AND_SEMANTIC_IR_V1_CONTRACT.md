@@ -387,6 +387,14 @@ one declared transaction field for the bounded interval after `(inject NAME)`.
 Omission, delay, corruption policies beyond substitution, endpoint force, raw
 HDL force/release, and probe mutation remain unsupported.
 
+The target selects a fixture transaction binding, not every binding of its
+transaction declaration. The typed fault retains `transaction_id` and
+`field_name`. When multiple fixture bindings share that declaration, it also
+retains `transaction_binding_id`; otherwise the unique binding is inferred.
+This preserves unambiguous legacy identities while distinguishing previously
+conflated targets. The same source rule applies to v2. Source acceptance does
+not establish a backend's ability to execute a particular binding arrangement.
+
 ### Randomness and replay identity
 
 ```text

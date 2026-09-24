@@ -1,0 +1,276 @@
+{
+  "after": {
+    "producer_path": "perl/FSM/VIAL/SemanticBuilder.pm",
+    "producer_sha256": "081ef5b0958edc296709347fd0403c98f806768677cc57fd25807acba2a9ab8a",
+    "rows": [
+      {
+        "complete_report_sha256": "e7a7e46fbd581d293b13d6c28965a9c1b9bf63b4495b783d4b9f5309b95299c7",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 1,
+        "selection": "base",
+        "semantic_projection_sha256": "fb4e7f49b68671609ecefb279e0033c35a6ef9f3ebc35b37e014f941055c3701",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "182f81d55232fbbf7a289119d8ef2237df4fefe74ce8fefe7d8d77a790bdfdeb",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 1,
+        "selection": "write",
+        "semantic_projection_sha256": "59a2ed47280254b174b2688481aac55160d88235a6380192f7cf603d6d0bdf3a",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "a15cdeffaa8985118ba135ced6df64aab798d61d056aa7e2bdb599fcbab07368",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "69ffb265d76021b60621b5a82a385d816bb8b0e7da01d5d4c484a47b61439707",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 1,
+        "selection": "alternate",
+        "semantic_projection_sha256": "3e59013adc34fdefe951dbd1d98397a3a3017de32208759918701b690abe5d67",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "bb907200373a15988febc2a6eb0ac52d18ae5b8172306a64f4b29bf3cc83473f",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "eb7e1ab06901c2ff89e87c88c012f7db944765516716cfd2d0103af745b7ac51",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 2,
+        "selection": "base",
+        "semantic_projection_sha256": "60ff9ad76350b433f7c235d7884ed272e1348b453a86082276af51a526c12c90",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "a4f221317bd6f3d0d56f2bc2bcc933c7c74be428b86ed5eb12d40cc24e01c374",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 2,
+        "selection": "write",
+        "semantic_projection_sha256": "604ad539fd3326ca2c8dfa8aa03649bba629ddc2b79667526575d7aa5b7d72a6",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "37740f3acc022027cf5ac2f5d283cb67926c02fec1b854c79ce20d65976250b3",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "0bfc193b2015f6181fef21694f35b1ec6a3155be17b3c7129a49a6393818045d",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 2,
+        "selection": "alternate",
+        "semantic_projection_sha256": "88174da978d5730531889602651c39fd9b15813e1a94695c85dd6dd85b0ee91f",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "abe724183dc0272a6b42ce3718e6e36b5a14615dd230163de966d9bf4828e304",
+        "success": true
+      }
+    ]
+  },
+  "baseline_compiler_blob": "cfb0cfe9ed4ce709273e66e501eba267c3f94ab6",
+  "baseline_revision": "552abf5c92bff90c3e9200ed218195f5a0e0fcb2",
+  "before": {
+    "producer_path": ".artifacts/mcp-feature-coverage/fault-identity-baseline-perl/FSM/VIAL/SemanticBuilder.pm",
+    "producer_sha256": "65f30df83f9b317a485509e0a70f048e46307c1263044928929e8e216c5154e7",
+    "rows": [
+      {
+        "complete_report_sha256": "e7a7e46fbd581d293b13d6c28965a9c1b9bf63b4495b783d4b9f5309b95299c7",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 1,
+        "selection": "base",
+        "semantic_projection_sha256": "fb4e7f49b68671609ecefb279e0033c35a6ef9f3ebc35b37e014f941055c3701",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "6fc4e0cd6306a2a3c4e2b15c9e139fff9e7a036ecd187cb2463df2838a85cefc",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 1,
+        "selection": "write",
+        "semantic_projection_sha256": "09f27b30d71a0075e7caa6383ee7b3cdf5e6cef416c330983e94878e3922e12c",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "a15cdeffaa8985118ba135ced6df64aab798d61d056aa7e2bdb599fcbab07368",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "d9f17058f94277cb1a1cdcf0af04fdccf31eed77430e46bd71ce1342436a1592",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 1,
+        "selection": "alternate",
+        "semantic_projection_sha256": "09f27b30d71a0075e7caa6383ee7b3cdf5e6cef416c330983e94878e3922e12c",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "bb907200373a15988febc2a6eb0ac52d18ae5b8172306a64f4b29bf3cc83473f",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "eb7e1ab06901c2ff89e87c88c012f7db944765516716cfd2d0103af745b7ac51",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 2,
+        "selection": "base",
+        "semantic_projection_sha256": "60ff9ad76350b433f7c235d7884ed272e1348b453a86082276af51a526c12c90",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "e9d5afc277e78e955ca71e8f51b2a4f6407fe70149926c2064c8372e37b2cbce",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 2,
+        "selection": "write",
+        "semantic_projection_sha256": "19761ea316b7013e0a40cfb955540dec3d0eecbd4f751e61a8f8995c8db93bd2",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "37740f3acc022027cf5ac2f5d283cb67926c02fec1b854c79ce20d65976250b3",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "41f229d8de4591a113bd4ebfd6309085abf8ab80f1e7f09fb1038a144c115e4e",
+        "diagnostics": [],
+        "fault_summary": {
+          "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+          "duration_cycles": 1,
+          "field_name": "size",
+          "name": "unsupported_size",
+          "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+          "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+        },
+        "language_version": 2,
+        "selection": "alternate",
+        "semantic_projection_sha256": "19761ea316b7013e0a40cfb955540dec3d0eecbd4f751e61a8f8995c8db93bd2",
+        "source_id": "fault_reference.vial",
+        "source_sha256": "abe724183dc0272a6b42ce3718e6e36b5a14615dd230163de966d9bf4828e304",
+        "success": true
+      }
+    ]
+  },
+  "evidence_legs": {
+    "durability": "Tracked probe/result, exact baseline Git object, T1873, source and inspection contracts, book and existing pinned cap/plan fixtures.",
+    "falsify": "Distinct write/alternate bindings formerly have equal meaning digests and now differ in both versions. Complete unchanged base reports and fault summary shapes remain identical. T1873 checks independent IDs, formats, imports, migration, invalid targets and native/API/MCP parity.",
+    "rederive": "Public check probe with exact baseline compiler Git object versus corrected compiler; identical source bytes and source identities. Probe verifies loaded module path and digest."
+  },
+  "limits": [
+    "Source semantic correction only; downstream binding/ExecutionIR/backend applicability is owned by .31.3.2.6.2. No backend execution, performance or capacity qualification.",
+    "Initial imported test retained a local enum literal for an imported transaction type and correctly failed type validation. The test was corrected to use lib.htrans_t.nonseq before the accepted baseline.",
+    "Only ambiguous fault targets gain transaction_binding_id. Unambiguous declaration-to-binding inference preserves legacy identities; new inspection must always resolve the exact binding."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.1",
+  "schema": "fsmgen.vial_fault_target_identity_repair.v1",
+  "tests": {
+    "fault-identity-band": {
+      "sha256": "90e455d61cc1cadcdae419ba86b9096872c783f79aa6fece49cd18ab7660c043",
+      "summary": [
+        "All tests successful.",
+        "Files=9, Tests=61, 99 wallclock secs ( 0.06 usr  0.02 sys + 86.55 cusr  5.31 csys = 91.94 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "fault-identity-green": {
+      "sha256": "49049001b2f23cdb204875e57b7d6fd1923b9c5ad133e1c0398db9724f819d6e",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=5,  7 wallclock secs ( 0.01 usr  0.01 sys +  6.38 cusr  0.18 csys =  6.58 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "fault-identity-red": {
+      "sha256": "157483681273b0204da74d77e7e287bcd60c9cb7814a7dbf19f48e69d84c5e1e",
+      "summary": [
+        "Files=1, Tests=3,  3 wallclock secs ( 0.01 usr  0.01 sys +  3.09 cusr  0.12 csys =  3.23 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "fault-identity-red-corrected": {
+      "sha256": "01db8751a73589067077fd0eb978fc0b887b78f7821775ebc4965c7078780d96",
+      "summary": [
+        "Files=1, Tests=5,  7 wallclock secs ( 0.01 usr  0.01 sys +  6.29 cusr  0.18 csys =  6.49 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}

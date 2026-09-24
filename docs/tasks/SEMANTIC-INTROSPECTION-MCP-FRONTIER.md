@@ -402,7 +402,7 @@ For FSMGen, the analogs are:
   Verification: `The selected guard exposed an intentional native VIAL summary boundary that does not satisfy deep feature inspection; .3 owns additive public detail before parity is called complete.`
   Commit: `pending`
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1`
   Status: `pending`
@@ -435,7 +435,7 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.1: select additive VIAL deep inspection`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2`
-  Status: `active`
+  Status: `pending`
   Goal: `Implement the selected bounded public VIAL detail API and native inspection command.`
   Acceptance: `Decompose portable typed projection, filesystem adaptation and CLI into independently verifiable leaves before source changes. Use explicit public record constructors and closed field shapes, defensive fresh values, stable source identities and diagnostic behavior. Preserve base/lifecycle conditions, ordering, references and bounds with independent authored oracles; reject malformed invocation, unknown schema/family and incomplete projection. Reuse the existing bounded source loader without a second filesystem read, preserve old check/format/plan results and frozen capability hashes, and prove no artifacts or execution.`
   Verification: `Pending .1 selection.`
@@ -461,6 +461,29 @@ For FSMGen, the analogs are:
   Acceptance: `Reproduce the actual public check digest collision between reads of distinct instances of one model declaration. Preserve both declaration-state and selected-instance identity in typed references, prove distinct meanings plus same-meaning style stability for v1/v2 and migration, and retain downstream propagation without backend execution. Treat changed digests for affected model reads as an explicit bug correction; do not change summary/result/capability shapes or unaffected frozen fixtures. Add authored independent identity assertions, missing-instance negative controls, public/native/MCP evidence, contract/book/fact updates and a separate commit before deep inspection resumes.`
   Verification: `The controlled old/current compiler probe reproduces then removes the v1/v2 digest collision with identical input bytes and source identities. Model references now retain model_instance_id plus the state semantic_id. T1872 independently verifies authored bindings, style/migration equivalence, execution propagation, complete native/filesystem/MCP parity and unknown-reference refusal. Unchanged base reports remain identical; the focused nine-file band passes.`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5: preserve VIAL model instance meaning identity`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6`
+  Status: `active`
+  Goal: `Preserve the selected transaction binding in VIAL fault target meaning.`
+  Acceptance: `Capture actual public source checks for distinct aliases of one transaction declaration and prove the current false digest equality. Select a compatibility-safe exact target representation before implementation, preserving unambiguous existing qualified fixtures where identity is derivable. Retain selected scope through semantic/compatibility and typed execution projections, qualify v1/v2 normal/terse/import/migration and API/MCP behavior, and require future source inspection to expose an exact resolved target. Verify runtime profile applicability without replaying spent producers or inferring runtime qualification from source checks. Own any real downstream gap before closure, update contracts/book/facts and commit separately.`
+  Verification: `A public v1 check accepts a fixture with write and alternate bindings of ahb_write. Changing only the fault target between those aliases preserves semantic_projection_sha256 06c48a44ab4ad9b78668edeaf9d94c20df2f9a887aed73c37a0face70ca11ca0 despite different source hashes. SemanticBuilder::_build_faults keeps declaration transaction_id but omits the selected binding. ExecutionBuilder::_build_faults merely normalizes that record. Durable capture, applicability and compatibility selection remain next.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.1`
+  Status: `done`
+  Goal: `Disambiguate source fault targets without invalidating unambiguous legacy identity.`
+  Acceptance: `Use the existing declaration transaction_id when exactly one fixture binding has that declaration; add transaction_binding_id when multiple bindings make the target otherwise ambiguous. The pair must resolve the authored binding exactly; new public inspection must always expose the resolved binding whether explicit or uniquely inferred. Qualify distinct aliases, same-meaning styles, versions/imports/migration, precise invalid-target rejection and complete native/API/MCP reports. Preserve exact canonical single-binding source/plan identities and cap fixtures. Retain raw source and declaration identities; do not widen the existing summary schema or infer runtime support. Record controlled before/after evidence and commit before downstream applicability qualification.`
+  Verification: `The controlled old/current public probe proves distinct fault targets now have distinct v1/v2 meaning digests, with identical complete base reports and unchanged summary shapes. T1873 independently qualifies binding/declaration IDs, formats, imports, migration, malformed targets and native/API/MCP equality. The nine-file focused band preserves pinned canonical fault/plan identities. Downstream applicability remains .2.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.1: preserve exact VIAL fault target identity`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2`
+  Status: `pending`
+  Goal: `Qualify downstream fault-target applicability and repair any admitted ambiguous behavior.`
+  Acceptance: `Trace the preserved target through binding and ExecutionIR into applicable public/backend contracts. Use exact admitted/rejected public-interface evidence; do not assume that source checking grants runtime support. Investigate emitter selection by field name and the bounded profile's actual admission. If a legal admitted case loses target scope, own and fix the exact route with negative controls before closure. Preserve unambiguous canonical identities and spent producer boundaries, and use documented dependency surfaces only. Close the fault parent only after target handling or explicit truthful unavailability is proved, then resume typed source inspection.`
+  Verification: `ExecutionBuilder::_build_faults normalizes the semantic record. Portable SV substitution currently selects armed faults by field name; native UVM requires one typed/bridge transaction. Actual route admission and VHDL/other applicability still require scoped verification; no runtime defect or support conclusion is claimed from source inspection alone.`
+  Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3`
   Status: `pending`
@@ -1114,11 +1137,11 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2` decomposes and implements
-additive typed VIAL inspection; `.31.3.2.3.3` adapts MCP, followed by the
-catalog guard, CI/signoff and exhaustive qualification before HIAL streaming.
-The model-instance identity and reference-test prerequisites are complete.
-Preserve spent native compiler/startup evidence and the read-only/write horizon.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2` qualifies downstream fault
+target applicability before additive typed inspection `.31.3.2.3.2` and MCP `.31.3.2.3.3`.
+The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
+streaming. Preserve spent native compiler/startup evidence and the separate
+read-only/write horizon; source checks do not promote runtime support.
 
 ## Decisions
 
@@ -2019,3 +2042,38 @@ as a repaired source compiler defect. Deep source inspection remains owned by
   rendered cache-refresh/runtime-scope statements pass. Frozen fixture/API
   metadata, loading and lifecycle routes pass. Visual browser inspection,
   broader runtime and full CI qualification are not claimed.
+
+## Acceptance Checklist — `.31.3.2.6.1` fault target identity
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Corrected pre-fix T1873 reports
+  `#   at t/1873-vial-fault-target-identity.t line 100.` with `got: undef`
+  for the selected binding and equal digests for distinct aliases.
+  `SemanticBuilder::_build_faults` resolved a binding but retained only its
+  shared declaration ID. The tracked public probe reproduces that information
+  loss with the exact baseline compiler Git object in both language versions.
+- [x] **ADDRESSED (verified)** — The source compiler now adds
+  `transaction_binding_id` only when multiple fixture bindings share the
+  declaration. Unique bindings retain their prior record/identity. T1873
+  independently checks authored scope, normal/terse and migration stability,
+  imported declaration identity, malformed binding/field diagnostics and
+  complete portable/filesystem/native/MCP reports without artifacts or source
+  mutation. Controlled before/after reports prove affected meanings differ
+  while complete unmodified base reports and summary shapes stay identical.
+  The source contract documents explicit-versus-inferred scope; the selected
+  inspection contract requires exact resolved scope in every public detail.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1550-vial-semantic-ir.t t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1633-vial-architecture-scale-checking-faults.t t/1714-vial-execution-fault-cardinality-preflight.t t/1801-vial-v2-source-projections.t t/1871-semantic-introspection-mcp-vial.t t/1872-vial-model-reference-identity.t t/1873-vial-fault-target-identity.t`
+  reports `All tests successful. Files=9, Tests=61` and `Result: PASS`.
+  Canonical source/evaluation/rerun/plan identities and exact/excess fault
+  guards pass. `mdbook build docs/book -d .artifacts/fault-identity-book`
+  and rendered identity/runtime-boundary assertions pass; browser visual
+  access remains unavailable. No backend runtime or full CI claim is made.
+
+Re-derivation is the identical-input public compiler comparison; falsification
+is distinct authored bindings plus same-meaning/unaffected controls; durability
+is T1873, the tracked probe/result, contracts/book and baseline Git object.
+The initial import fixture used a local enum member against the imported enum
+and correctly failed type validation. Correcting it to `lib.htrans_t.nonseq`
+produced the accepted failing baseline; both logs are hashed in the audit.
+Downstream execution admission and emitters remain owned by `.31.3.2.6.2`,
+so the source repair does not prematurely close the fault parent.

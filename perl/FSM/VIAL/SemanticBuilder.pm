@@ -981,6 +981,8 @@ sub _build_coverage {
 sub _build_faults {
     my ($self, $context, $fixture, $node, $path) = @_;
     my $items = _form($node, 'faults', 1, undef, $path);
+    my %binding_count;
+    $binding_count{$_->{transaction_id}}++ for @{$fixture->{dut}{transaction_bindings}};
     my (%names, @faults);
     for my $index (1 .. $#{$items}) {
         my $item_path = "$path/" . ($index - 1);
@@ -1008,6 +1010,10 @@ sub _build_faults {
             %{$self->_meta($item_path, $items->[$index])},
             semantic_id => "$fixture->{semantic_id}\::fault\::$name",
             name => $name, transaction_id => $binding->{transaction_id}, field_name => $field_name,
+            # A unique declaration already identifies its binding. Preserve that
+            # legacy identity, but retain explicit scope when aliases share it.
+            ($binding_count{$binding->{transaction_id}} > 1
+                ? (transaction_binding_id => $binding->{semantic_id}) : ()),
             substitute => $substitute, domain_id => $domain->{semantic_id}, duration_cycles => $duration,
         };
     }

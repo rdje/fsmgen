@@ -83,6 +83,13 @@ Root/import identities retain relative source names and content hashes. Package
 and member arrays retain authored order; required capabilities remain sorted.
 Bridge references are explicitly unresolved assertions, not HIAL facts.
 
+Fault detail must always expose the resolved `transaction_binding_id`. The
+native source record supplies it explicitly for ambiguous declarations; for a
+unique declaration binding the projection must resolve it from that fixture's
+bindings. Missing or non-unique inferred scope is a projection error, never a
+license to select the first binding. This requirement does not change legacy
+summary shapes or qualify runtime behavior.
+
 The implementation must use explicit constructors with closed, discriminated
 record shapes for the following semantic groups:
 
@@ -95,7 +102,7 @@ record shapes for the following semantic groups:
 | Scoreboards | Transaction reference, ordering policy and capacity |
 | DUT/instances | Opaque bridge references, domain/endpoint access and types, transaction/model/scoreboard bindings |
 | Coverage | Sample domains, typed expressions, bin matchers, cross point references and bounds |
-| Faults | Transaction field target, typed substitution and duration/domain |
+| Faults | Exact transaction binding and declaration, field target, typed substitution and duration/domain |
 | Randomness | Authored seed, choice type/identity, distribution and constraints; no chosen runtime value |
 | Scenarios | Timeout domain/bound, handles, ordered actions, nested fibers/repeats and their join semantics |
 | Expressions/properties | Kind/operator, normalized literal or resolved reference, result type, ordered operands and temporal bounds |

@@ -338,6 +338,14 @@ checking to refresh cached semantic or compatibility digests for affected
 sources. Public summary/result shapes are unchanged. This correction does not
 extend the bounded runtime backend profile.
 
+A fault target also selects a fixture binding. If `write` and `alternate`
+are aliases of the same transaction declaration, `(target (transaction write
+size))` and `(target (transaction alternate size))` mean different targets.
+Checking now distinguishes them in semantic and migration compatibility
+digests. Rerun checking for affected cached results; single-binding fixtures
+retain their existing identities and public summaries keep their shape. Source
+acceptance alone does not establish backend support for multiple bindings.
+
 ## Plan through a reviewable HIAL route
 
 VIAL source describes verification intent. `--dut` separately names the HIAL
