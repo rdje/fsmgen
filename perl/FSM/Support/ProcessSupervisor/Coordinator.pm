@@ -163,6 +163,7 @@ sub _reconcile_peers {
         }
         my $observed = $self->{service}->ticket_observation($ticket);
         $entry->{transport} = $observed;
+        $entry->{publication} = scalar $self->{service}->accept_publication($ticket);
         _error('accepted socket exceeds its original grant') if $observed->{handles} > 1;
         if ($observed->{handles}) {
             my $held = $self->{ledger}->describe_descriptors($entry->{grant});
@@ -184,7 +185,8 @@ sub advance_service {
             my $error;
             eval {
                 $self->{ledger}->check_live($self->{jobs}{1}{grant});
-                $self->{service}->advance(sub { $self->_before_peer_accept(@_) });
+                $self->{service}->advance(sub { $self->_before_peer_accept(@_) },
+                    sub { $self->_before_accept_write(@_) });
                 1;
             } or $error = $@;
             eval { $self->_reconcile_peers; 1 } or $error //= $@;
@@ -220,9 +222,16 @@ sub peer_observation {
             deadline_ns => $entry->{request} ? $entry->{request}{deadline_ns} : undef,
             admission_deadline_ns => $entry->{request} ? $entry->{request}{admission_deadline_ns} : undef,
         } : undef,
+        publication => _copy_publication($entry->{publication}),
         admission => $entry->{grant} && !$entry->{retired}
             ? $self->{ledger}->describe_descriptors($entry->{grant}) : undef,
         outcome => $entry->{outcome} ? {%{$entry->{outcome}}} : undef};
+}
+sub _copy_publication {
+    my ($view) = @_; return undef unless $view;
+    return {%$view, failure => $view->{failure} ? {%{$view->{failure}}} : undef,
+        write => $view->{write} ? {%{$view->{write}},
+            failure => $view->{write}{failure} ? {%{$view->{write}{failure}}} : undef} : undef};
 }
 sub admit_request {
     my ($self, $ticket) = @_; _owner($self);
@@ -277,8 +286,11 @@ sub _request_live {
         && $packet->{ticket} == $peer->{ticket};
     my $transport = $self->{service}->ticket_observation($peer->{ticket});
     $peer->{transport} = $transport;
-    _error($transport->{failure}{diagnostic} // 'original request peer is no longer handed')
-        unless $transport->{state} eq 'handed' && $transport->{handles} == 1
+    my $matching = $transport->{state} eq 'handed'
+        || ($transport->{state} eq 'bound' && defined($peer->{accept_state})
+            && defined($peer->{job_id}) && $transport->{job} == $peer->{job_id});
+    _error($transport->{failure}{diagnostic} // 'original request peer is no longer handed or bound')
+        unless $matching && $transport->{handles} == 1
             && $transport->{parent} == $packet->{parent}
             && $transport->{wall_ns} eq $packet->{admission_deadline_ns};
     my (undef, $parent) = $self->_job($peer->{parent_grant});
@@ -308,10 +320,102 @@ sub _request_failed {
     eval {
         $self->{service}->retire($peer->{ticket});
         $peer->{transport} = $self->{service}->ticket_observation($peer->{ticket});
+        $peer->{publication} = scalar $self->{service}->accept_publication($peer->{ticket});
         1;
     }
         or $peer->{cleanup_error} //= FSM::Support::ProcessSupervisor::_sanitize_control($@);
     return;
+}
+sub _request_peer {
+    my ($self, $ticket) = @_;
+    $self->peer_observation($ticket);
+    my $peer = $self->{peers}{$ticket};
+    _error('request has no completed original grant association')
+        unless ($peer->{request_state} // '') eq 'ready' && $peer->{job_grant};
+    return $peer;
+}
+sub start_request {
+    my ($self, $ticket) = @_; _owner($self);
+    _error('request start requires one original ticket') unless @_ == 2;
+    my $peer = $self->_request_peer($ticket);
+    _error('request start is single-use') if $peer->{start_requested};
+    my $started = 0;
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            $self->_request_live($peer);
+            _error('request start is single-use') if $peer->{start_requested};
+            $peer->{start_requested} = 1; $started = 1;
+        });
+        # No outer mask: start and later launch advancement must retain the
+        # caller's actual mask at both native fork boundaries.
+        $self->prepare_job($peer->{job_grant});
+        $self->start_job($peer->{job_grant});
+        1;
+    };
+    unless ($ok) { my $error = $@; $self->_request_failed($peer, $error) if $started; die $error; }
+    return;
+}
+sub _ready_request {
+    my ($self, $peer) = @_;
+    $self->_request_live($peer);
+    my $before = $self->job_observation($peer->{job_grant});
+    # This helper also runs under the socket-write mask. Never advance a
+    # launching pair here: that path can still create the command process.
+    _error('ACCEPT requires the original active ready gated job')
+        unless $before->{admission}{phase} eq 'active' && $before->{native}
+            && $before->{native}{phase} eq 'ready';
+    my $view = $self->advance_job($peer->{job_grant});
+    _error('original gated job lost readiness before ACCEPT')
+        unless $view->{admission}{phase} eq 'active' && $view->{native}{phase} eq 'ready'
+            && !$view->{native}{first_failure} && !$view->{native}{command}{released}
+            && $view->{native}{command}{command_pid} && !$view->{native}{command}{command_reaped}
+            && $view->{native}{reservation}{pid} && !$view->{native}{reservation}{reaped};
+    return;
+}
+sub advance_request {
+    my ($self, $ticket) = @_; _owner($self);
+    _error('request advancement requires one original ticket') unless @_ == 2;
+    my $peer = $self->_request_peer($ticket);
+    _error('request has not started its original gated job') unless $peer->{start_requested};
+    my $ok = eval {
+        $self->_request_live($peer);
+        # Launch advancement may fork; only the subsequent ready publication
+        # is a preparation transaction. Nothing in this method releases exec.
+        my $view = $self->advance_job($peer->{job_grant});
+        if ($view->{admission}{phase} eq 'active' && $view->{native}{phase} eq 'ready') {
+            FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+                $self->_ready_request($peer);
+                unless (defined($peer->{accept_state})) {
+                    $peer->{accept_state} = 'preparing';
+                    unless ($self->{service}->queue_accept($ticket, $peer->{job_id})) {
+                        my $transport = $self->{service}->ticket_observation($ticket);
+                        _error($transport->{failure}{diagnostic} // 'original ACCEPT queue refused');
+                    }
+                    $peer->{accept_state} = 'queued';
+                }
+                $self->_reconcile_peers;
+            });
+        }
+        elsif ($view->{admission}{phase} eq 'closing') {
+            _error($view->{failure} // 'original gated request failed');
+        }
+        $self->_reconcile_peers;
+        1;
+    };
+    unless ($ok) { my $error = $@; $self->_request_failed($peer, $error); die $error; }
+    return $self->peer_observation($ticket);
+}
+sub _before_accept_write {
+    my ($self, $service, $ticket, $job) = @_; _owner($self);
+    _error('ACCEPT write requires the original shared Service')
+        unless $self->{service} && refaddr($service) == refaddr($self->{service});
+    my $peer = $self->{peers}{$ticket};
+    _error('ACCEPT write lacks its original request/job association')
+        unless $peer && defined($peer->{accept_state}) && $peer->{job_grant}
+            && defined($peer->{job_id}) && $peer->{job_id} == $job;
+    my $ok = eval { $self->_ready_request($peer); 1 };
+    unless ($ok) { my $error = $@; $self->_request_failed($peer, $error); return 0; }
+    return 1;
 }
 sub retire_peer {
     my ($self, $ticket) = @_; _owner($self);

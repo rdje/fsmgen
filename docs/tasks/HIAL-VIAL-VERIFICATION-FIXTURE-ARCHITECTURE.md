@@ -3698,11 +3698,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2: retain Service job and ACCEPT association`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4`
-  Status: `active`
+  Status: `done`
   Goal: `Join original accepted requests to aggregate gated job admission.`
   Acceptance: `Retain each transferred request with its original peer and ledger grant before native preparation. Bind clipped request/ancestor deadlines and detached private context, then prepare/start only through existing per-allocation/per-fork checks. Advance tracked ACCEPT only for the matching ready gated job and retain partial failures until exact cleanup. Qualify real root/nested sockets, gated processes, signals and original ownership without exec release.`
-  Verification: `Service association/publication is qualified. Child .1 retains completed acceptance history before the unchanged rollover threshold. Child .2 binds original grant contexts and snapshots before native preparation, including entropy allocation checks. Child .3 joins original accepted request/peer ownership to ledger grants; child .4 then composes matching gated readiness and tracked ACCEPT. Keep fork masks independent from preparation/publication masks; no exec release here.`
-  Commit: `pending`
+  Verification: `Children retain authenticated history, original grant/context/snapshot and request/peer association, then match ready gated jobs to tracked ACCEPT. Original token, native allocation/fork and each socket-write boundaries recheck retained ownership and original walls; interruption and peer/native failure preserve first cause and exact cleanup. T1849 through T1852 and the final selected aggregate band pass on Darwin. Commands remain gated after complete ACCEPT; final exec authorization and later streaming/root-loop qualification remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4: publish ACCEPT for original ready gated jobs`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4`
 
@@ -3760,14 +3760,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3.2: retain original request and grant association`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare matching gated jobs and publish their tracked ACCEPT.`
   Acceptance: `Prepare/start the original associated job through existing allocation/fork admission and fresh foreign descriptor inventories. Advance only its matching ready gated native job and retained Service publication under original request/ancestor walls. Reject partial publication, peer loss, cancellation and expiry without exec release; retain original process/peer cleanup and copied observations. Qualify actual gated processes, native sockets, signals and exact cleanup; do not wrap forks in preparation masks.`
-  Verification: `Pending the owning implementation and independent qualification; preserve spent compiler evidence and original startup/full-CI/push gates.`
-  Commit: `pending`
+  Verification: `Coordinator start_request and advance_request join original associated jobs to ready-only tracked ACCEPT publication. Launch advancement stays outside outer masks; native command checks confirm the original exec mask/dispositions. Service advance accepts an optional original bound-write callback with boolean deferral, fresh post-check authority/walls and retained refusal. Each aggregate write rechecks the exact Service/ticket/job/grant and advances only an already-ready pair; native loss, EOF, decoded messages and expiry preserve failed prefixes and cancel the original job. Copied publication survives signals and exact cleanup; queue-expiry retains its precise first cause. T1852 uses literal sockets, actual children/writes, exact waits and output EOF witnesses. Eleven product defects and an inherited-fixture-client omission reject with unchanged endpoint census. Final selected band passes Files=31, Tests=297. Complete ACCEPT still leaves commands gated; final native exec authorization remains .5.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4: publish ACCEPT for original ready gated jobs`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Release only an original live job after complete ACCEPT publication.`
   Acceptance: `Recheck original aggregate grant, matching live peer/parent, complete original ACCEPT and all original walls immediately before releasing its gated command. Qualify actual execution witnesses and no-exec controls for partial publication, EOF, cancellation, repeated/foreign messages and expiry before/after release. Preserve first failure and exact bounded subtree cleanup; no nested adapter routing.`
   Verification: `Pending aggregate gated admission and complete publication ownership; root release and parent context must obey the same original-grant and deadline contract.`
@@ -4478,7 +4478,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4` joins original associated job readiness to matching retained ACCEPT publication under original peer/parent/grant walls. Original accepted request/grant association, context binding and transport publication are qualified independently. Final exec rechecks, bounded streaming, fair composition and independent qualification remain subsequent work. Completed history stays exactly retrievable; live claim owners and execution-scope corrections remain. Preserve original failures, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5` rechecks original live grant, peer/parent and complete ACCEPT immediately before the native exec-gate write, with matching root release qualification. Original gated readiness and tracked publication are qualified; complete ACCEPT alone releases no command. Bounded streaming, fair composition, independent qualification and nested routing remain subsequent work. Completed history stays exactly retrievable; live claim owners and execution-scope corrections remain. Preserve original failures, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7149,3 +7149,42 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   Native results are Darwin; Linux remains a later missing qualification leg.
   T1827 runs bounded fixture commands; T1851 keeps its native commands gated.
   Original startup/proxy/compiler producers, full CI and push remain gated.
+
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Gated ACCEPT composition: `git log -S`
+  locates Service write admission at 27cb2e8857a2a96eaf14d5ee653404142b440659.
+  Its transport/context checks needed original aggregate grant and native-ready
+  checks at each write. Launch advancement can fork; wrapping it in a publication
+  mask would corrupt the saved exec mask. A new exact queue-expiry cut also
+  reproduced the generic queue-refused error replacing the original timeout.
+- [x] **ADDRESSED (verified)** — Gated ACCEPT re-derivation: T1852 joins literal
+  HELLO/READY/SPAWN/ACCEPT sockets to actual root/nested gated processes, saved
+  exec masks, native writes, original grants and exact child waits. Single-byte
+  writes, creator signals, partial prefixes, actual command death, decoded
+  messages, EOF, expiry, deferral and queue faults preserve copied publication,
+  first cause and independent stdout EOF without command output. Queue expiry
+  now propagates its original Service diagnostic into retained request failure.
+  Falsification: the identical isolated loader passes; omitted owner check,
+  stale post-check wall, ignored deferral, late copy, outer launch mask, premature
+  publication, foreign job/Service, aliased view, stale native readiness and lost
+  queue cause reject intended assertions with native exits 3, 1, 2, 1, 255, 255,
+  1, 1, 1, 1 and 1. Fatal Perl exits are not native signal outcomes.
+  All endpoint censuses remain unchanged. The initial fixture assumed one-pass
+  message decoding and inherited its own client sockets into both child roles.
+  It now respects bounded prefix/body reads and discards only inherited fixture
+  client copies; an isolated omission reproduces the actual EOF failure (exit 1).
+  An early-publication observer initially required an unavailable capture handle;
+  it now observes only existing handles, exposing the intended readiness failure.
+  Initial failed controls receive no credit. Durability: source/test/book/fact/task
+  retain reruns; .artifacts/gated-accept-* raw logs remain a named gap. Exact
+  mutant/fixture sources, runner and disposable book build are removed.
+- [x] **NO REGRESSION** — Final gated ACCEPT selected guarded band reports
+  `All tests successful. Files=31, Tests=297`; Perl syntax and focused controls
+  pass. mdBook builds; HTML includes bound-write admission, original launch masks
+  and complete-but-unreleased ACCEPT. Knowledge Map, claim census and staged
+  doctrines cover metadata. Browser visual QA and Linux native qualification
+  remain separate missing legs. Existing band fixtures execute bounded commands;
+  T1852 keeps commands gated. Original startup/proxy/compiler producers, full CI
+  and push remain gated. Next is final authorization at the native exec-gate write.

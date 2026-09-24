@@ -342,9 +342,10 @@ sub _message {
 }
 
 sub advance {
-    _error('expected optional native accept admission')
-        unless @_ == 1 || (@_ == 2 && ref($_[1]) eq 'CODE');
-    my ($self, $check) = @_; _owner($self);
+    _error('expected optional native accept and bound-write admission')
+        unless @_ == 1 || (@_ == 2 && ref($_[1]) eq 'CODE')
+            || (@_ == 3 && ref($_[1]) eq 'CODE' && ref($_[2]) eq 'CODE');
+    my ($self, $check, $write_check) = @_; _owner($self);
     return if $self->{closed};
     my $now = _time(_now_ns());
     if ($now->bcmp($self->{deadline}) >= 0) {
@@ -373,7 +374,7 @@ sub advance {
             next;
         }
         if ($record->{state} eq 'bound') {
-            $record->{io}->advance(sub { $self->_write_admission($record, @_) });
+            $record->{io}->advance(sub { $self->_write_admission($record, $_[0], $write_check) });
         }
         else { $record->{io}->advance; }
         if (my $failure = $record->{io}->failure) {
@@ -504,7 +505,7 @@ sub _bound_live {
 }
 
 sub _write_admission {
-    my ($self, $record, $io) = @_; _owner($self);
+    my ($self, $record, $io, $check) = @_; _owner($self);
     _error('write admission requires the original retained peer')
         unless $self->{records}{$record->{ticket}}
             && refaddr($self->{records}{$record->{ticket}}) == refaddr($record)
@@ -515,6 +516,23 @@ sub _write_admission {
     if (my $message = $io->take_frame) {
         $self->_message($record, $message, _time(_now_ns()));
         return 0;
+    }
+    if ($check) {
+        my $admitted;
+        my $ok = eval {
+            $admitted = $check->($self, $record->{ticket}, $record->{job});
+            _error('bound-write admission must return a boolean') unless defined($admitted)
+                && !ref($admitted) && "$admitted" =~ /\A[01]\z/;
+            1;
+        };
+        unless ($ok) {
+            my $error = $@;
+            eval { $self->_fail_record($record, 'host_error', 'original bound-write admission failed'); 1 };
+            die $error;
+        }
+        # An owner check may consume the remaining wall or revoke this peer.
+        return 0 unless $self->_bound_live($record);
+        return $admitted;
     }
     return 1;
 }

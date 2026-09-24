@@ -974,7 +974,7 @@ that fills the destination or retires the peer before masking cannot be
 overwritten by stale state. Later EOF or repeated SPAWN closes the transport
 while the caller keeps any already-transferred packet for its own cleanup.
 This packet conveys data custody only. The aggregate now joins it to original
-peer/job admission as described below; ACCEPT/exec composition remains open.
+peer/job admission and gated ACCEPT as described below; exec release remains open.
 
 Parent registration now retains its original `preparing` record and spends
 its monotonic job identity before requesting a token from the OS random source.
@@ -1072,8 +1072,8 @@ the context bytes. Fresh authority checks also precede native preparation,
 each pipe, each fork and live advancement. Revocation refuses the next effect.
 The original native fork masks remain responsible for the eventual exec mask.
 These changes create gated processes but do not release commands. Original
-accepted-request ownership now joins them through the admission path below;
-matching gated readiness and ACCEPT/exec composition remain open.
+accepted-request ownership now joins them through the admission and gated ACCEPT
+paths below; final exec release remains open.
 
 `Coordinator::admit_request($ticket)` explicitly selects one original accepted
 peer. Under the preparation mask, it transfers that peer's validated request
@@ -1101,8 +1101,8 @@ When service advancement observes EOF or an unexpected repeated request, or the
 owner explicitly retires the peer, reconciliation fails its request and cancels
 the associated job before further preparation. Descriptor charges remain held
 until exact whole-run cleanup. This admission method creates no job pipes or
-children and queues no ACCEPT. The following composition must match native
-gated readiness to the original peer before publication and eventual exec.
+children and queues no ACCEPT. The explicit start/advance composition below
+matches native gated readiness to the original peer before publication.
 
 Connection now offers `queue_accept($job)` for one tracked ACCEPT on the
 original connection, and `accept_publication` for a copied observation. The
@@ -1174,14 +1174,38 @@ request is a protocol failure. EOF, revocation and expiry also close the origina
 peer. A partial write retains its confirmed prefix and cannot become published.
 A previously completed local write remains a historical fact after closure.
 
-Service owns this transport/context association. Its trusted aggregate caller
-must still join the original ledger grant and ready gated process, revoke and
-clean up the actual job on failure, and recheck authority before exec release.
-Neither the numeric job identity nor the copied publication view establishes
-those facts. Post-exec result streaming remains separately owned.
+Service also accepts `advance($accept_check, $bound_write_check)`. The second
+callback receives the original Service, ticket and bound job immediately before
+each native write. It returns a boolean: false defers without renewing a wall;
+true still requires fresh Service authority and lifetime checks after the callback.
+A thrown or malformed result closes the original peer and preserves the refusal.
+The existing zero-callback and accept-only forms retain their behavior.
+
+The aggregate now joins that boundary to the original ready gated process.
+`start_request($ticket)` prepares and starts its associated original grant;
+`advance_request($ticket)` advances native handoff and queues the matching ACCEPT
+only when both native roles are retained and ready. Native launch advancement
+stays outside the publication mask because it may still fork the command.
+Actual child checks verify the saved caller exec mask and dispositions.
+
+Each bound write rechecks the original peer/grant association and advances only
+an already-ready pair before permitting the attempt. This catches observed native
+loss between partial writes without starting a process under the write mask.
+For example, losing the gated command after an ACCEPT prefix leaves that prefix
+in the historical publication, cancels the matching job and writes no remainder.
+Original EOF, decoded cancellation/protocol failure and fixed-wall expiry also
+prevent further publication and retain exact bounded cleanup ownership.
+
+Copied peer observations now include the nested Service/Connection publication.
+Publication is retained before creator signals are unmasked, including a queued
+frame with no confirmed bytes, a partial write and a completed local write.
+An interrupted return preserves the matching job and first failure; later cleanup
+does not erase previously confirmed bytes. A complete ACCEPT still leaves the
+command gated. Neither its numeric job identity nor its copied publication grants
+exec permission; final live rechecks and post-exec result streaming remain open.
 
 Normal callers retain the existing own-group supervisor. Execution
-publication, nested routing and complete subtree qualification
+release, nested routing and complete subtree qualification
 still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
 Their tests exercise the current host; Linux qualification remains open.
@@ -1212,6 +1236,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1846-process-snapshot-co
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1847-process-write-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1848-process-service-job-publication.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1849-process-parent-token-admission.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1850-process-aggregate-context.t t/1851-process-request-association.t t/1852-process-gated-accept.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
