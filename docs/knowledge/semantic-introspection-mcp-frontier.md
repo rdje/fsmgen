@@ -85,11 +85,10 @@ reverify: >-
   %resources=map { $_=>1 } @{$m->{semantic_introspection}{mcp_resource_uri_templates}}; die "missing source discovery resource\n" unless $resources{"fsmgen://sources"}; print "semantic_introspection manifest adapter ok\n";' .artifacts/reverify/fsmgen_semantic_introspection_manifest.json && perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' >.artifacts/reverify/fsmgen_mcp_tools.json && perl -MJSON::PP=decode_json -0777 -ne 'my $r=decode_json($_); my %t=map { $_->{name}=>1 } @{$r->{result}{tools}}; die "missing semantic tool\n" unless $t{fsmgen_semantic_introspect}; die "missing source discovery tool\n" unless $t{fsmgen_discover_sources}; die "unexpected cursor\n" if exists $r->{result}{nextCursor}; print "fsmgen-mcp tools ok\n";' .artifacts/reverify/fsmgen_mcp_tools.json &&
   perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"fsmgen_discover_sources","arguments":{"query":"axi_aw","file_kind":"ppif","limit":2}}}' >.artifacts/reverify/fsmgen_mcp_sources.json && perl -MJSON::PP=decode_json -0777 -ne 'my $r=decode_json($_); my $p=$r->{result}{structuredContent}; die "bad source discovery kind\n" unless ($p->{query_kind}||"") eq "source_discovery"; die "source discovery traversed workspace\n" if $p->{path_policy}{recursive_workspace_traversal}; die "source discovery returned no sources\n" unless @{$p->{sources}||[]}; print "fsmgen-mcp source discovery ok\n";' .artifacts/reverify/fsmgen_mcp_sources.json && prove -Iperl t/1444-semantic-introspection-mcp-support-queries.t t/1445-semantic-introspection-mcp-schema-snapshots.t
   t/1446-semantic-introspection-mcp-stdio-framing.t t/1447-semantic-introspection-mcp-roots-boundary.t t/1448-semantic-introspection-mcp-prompts-boundary.t t/1449-semantic-introspection-mcp-resource-change-boundary.t t/1450-semantic-introspection-mcp-completion-boundary.t t/1451-semantic-introspection-mcp-logging-boundary.t t/1452-semantic-introspection-mcp-pagination-boundary.t t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t t/1454-semantic-introspection-mcp-transport-boundary.t t/1455-semantic-introspection-mcp-structured-tool-output.t t/1456-semantic-introspection-mcp-tool-annotations-boundary.t t/1457-semantic-introspection-mcp-content-resource-annotations-boundary.t t/1458-semantic-introspection-mcp-progress-cancellation-boundary.t
-  t/1459-semantic-introspection-mcp-jsonrpc-batch-envelope-boundary.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t t/1882-semantic-introspection-mcp-vial-inspection.t
+  t/1459-semantic-introspection-mcp-jsonrpc-batch-envelope-boundary.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t t/1882-semantic-introspection-mcp-vial-inspection.t t/1883-semantic-source-query-cohort.t
 ---
 
-Current ownership: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`.
-Earlier profile history:
+Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. Earlier history:
 
 ```sh
 git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md
@@ -103,12 +102,10 @@ manifest section; `SemanticIntrospectionMCPAdapter` implements `bin/fsmgen-mcp`.
 Stable semantic API first, MCP adapter second remains the required design.
 No private Perl AST, scheduler, lowering, or generator hashes are public APIs.
 
-Current query families are capabilities/contracts, diagnostics, support
-accounting, examples, catalog-backed sources, source check, normalized
-semantics and schedule preview. Tool and resource names are discoverable from
-`semantic_introspection` in `./bin/fsmgen --capability-manifest` and
-`tools/list`; source discovery never recursively scans the workspace.
-Successful source results carry relative identities and adapter provenance.
+Discover current query families, tool/resource names and applicability through
+`./bin/fsmgen --capability-manifest` and `tools/list`. Catalog-backed source
+discovery never scans the workspace. Results retain relative identity and
+public API provenance.
 
 The current profile uses one-shot JSON-RPC or newline-delimited stdio with
 MCP protocol `2025-06-18` (no Content-Length framing). Unsupported requested
@@ -164,9 +161,12 @@ coverage qualification and ongoing feature-signoff integration after repairs.
 
 VIAL summaries omit action bodies and lifecycle nodes by design. Decision
 `0105` and `docs/VIAL_SOURCE_INSPECTION_CONTRACT.md` select additive typed
-inspection. `fsmgen_vial_inspect`, the versioned `/inspection` resource and
+inspection. `fsmgen_vial_inspect`, versioned `/inspection` and
 `vial_inspection` capabilities now use the clean public API (T1882).
-Summary queries remain summaries; broader feature coverage is still in progress.
+Summary queries remain summaries. T1883 qualifies the catalog-derived
+`FSM::Test::SourceQueryCoverage` selector: complete ID/bucket allocation, explicit
+VIAL versions, strict admission, closed mappings and deterministic focus.
+Actual-query execution and exhaustive coverage remain subsequent work.
 
 Current-feature query selection and its pilot are captured in
 `docs/audits/mcp-feature-coverage-20260924/feature-coverage-selection.json`.

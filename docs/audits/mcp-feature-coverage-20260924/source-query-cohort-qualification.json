@@ -1,0 +1,60 @@
+{
+  "baseline_revision": "1f7a59d7e54200168c9efcaf0d64728efb6fe585",
+  "cohort_sha256": "1bb3fa911c14de3a2558c5f120e8e5104bb1e2b074d6b48feffb75994fc01dd0",
+  "counts": {
+    "coverage_buckets": 341,
+    "selected_source_queries": 1080,
+    "selected_sources": 374,
+    "supported_catalog_entries": 383
+  },
+  "evidence_legs": {
+    "durability": "Tracked selector and T1883, exact baseline and producer/output hashes, qualification receipt, runnable book example, knowledge card and owning task.",
+    "falsify": "T1883 independently groups the native supported catalog and proves complete source/ID allocation, exact ID-to-family/bucket mapping, real VIAL version admission, deterministic focus and disjoint/complete hosted partition compatibility. Unknown/missing queries, suffixes, versions, stale mappings, duplicate IDs, conflicting metadata, unsafe paths and malformed/empty selections fail.",
+    "rederive": "Default selector joins live RegressionCorpus and public applicability with explicit VIAL versions; exact producer hashes and output hash bind the recorded cohort."
+  },
+  "limits": [
+    "Counts describe selected source-query work and catalog coverage buckets, not independent product features or completed parity execution.",
+    "Root public VIAL examples are version-registered; separate runtime qualification fixtures and negative/legacy catalog populations are outside the selected supported source cohort.",
+    "Actual reusable query runner, semantic/negative controls, CI integration and exhaustive qualification remain explicitly owned subsequent leaves. No backend or spent producer is run.",
+    "mdBook build, rendered assertions and actual list-only example pass; browser visual audit remains unavailable."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.1",
+  "producer_sha256": {
+    "perl/FSM/Support/RegressionCorpus.pm": "39992271dd71c755e75fa58e32876d47cfc47d02a3f29fabbf1ecda539d38a0e",
+    "perl/FSM/Support/SemanticIntrospectionContract.pm": "c44200acbb36c03aa79f70cb5f306afc7e82b9b458a9312dd13fb6b91041167d",
+    "t/lib/FSM/Test/SourceQueryCoverage.pm": "7aac9a8cd88183fe5bcd2d5cbeae4009d022bfb014c83b6d56f3b205834aa783"
+  },
+  "schema": "fsmgen.semantic_source_query_cohort_qualification.v1",
+  "tests": {
+    "query-cohort-band": {
+      "sha256": "f07b4793259fc15a40001a8bb5fbec195c072f923263c3c900dc6721db8a0e4f",
+      "summary": [
+        "All tests successful.",
+        "Files=5, Tests=7136,  3 wallclock secs ( 0.14 usr  0.02 sys +  2.67 cusr  0.10 csys =  2.93 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-cohort-book": {
+      "sha256": "970c44afff176366f1cc86878ed3c25901ab211b0fc7550d1b5ed35d09d256d0",
+      "summary": [
+        " INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/query-cohort-book`",
+        "Actual list-only book command and rendered selection/qualification boundaries: PASS"
+      ]
+    },
+    "query-cohort-green": {
+      "sha256": "6785085a2f6eca7959780cbe2f04e9b1e3f6dab43ac52f36265ce1b368098833",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=6,  1 wallclock secs ( 0.03 usr  0.01 sys +  0.76 cusr  0.01 csys =  0.81 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-cohort-red": {
+      "sha256": "7790b6b3ec9751644f6d010aafdf3cabbdb7bd1a8ee9f59abe562305f22327ca",
+      "summary": [
+        "Files=1, Tests=1,  0 wallclock secs ( 0.00 usr  0.00 sys +  0.05 cusr  0.01 csys =  0.06 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}

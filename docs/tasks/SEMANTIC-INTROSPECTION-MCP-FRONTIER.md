@@ -405,10 +405,33 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement catalog-derived actual native/API/MCP source-query coverage and focused controls.`
   Acceptance: `Build a reusable test-side coverage selector over the native supported corpus and public query applicability map, retaining all contract IDs and deduplicating source work. Reject unknown query/source/version mappings and unaccounted VIAL fixtures. Execute actual public native and MCP producers, compare complete reports after only documented root normalization, and assert independent authored ISF and VIAL observations plus source/module provenance. Provide explicit focused selection and existing hosted corpus partition compatibility without calling a focused run exhaustive. Add fast malformed/new-family/missing-report controls, prove positive and known-bad outcomes, sync book/facts and commit before CI integration.`
-  Verification: `Pending implementation; .31.3.1 retains the selected population, pilot and intentional boundaries.`
+  Verification: `Deep VIAL inspection is qualified. Refine the guard into catalog/query selection, actual producer execution and semantic/negative controls so each independently verified unit is committed. .31.3.1 retains the historical selection and pilot; current selectors must derive live applicability including inspection.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.1`
+  Status: `done`
+  Goal: `Derive a complete bounded source-query cohort from the supported public catalog.`
+  Acceptance: `Implement reusable test-side selection retaining every supported catalog ID and coverage bucket while deduplicating source work. Join the public source-query applicability map, strict admission and source provenance; explicitly map VIAL language versions and reject unaccounted fixtures, unknown source/query kinds, conflicting duplicate metadata and malformed records. Provide deterministic focused selection and list-only data compatible with existing hosted partitioning, with independent complete-accounting and adversarial controls. Document precise selection boundaries and commit before executing the full query cohort.`
+  Verification: `T1883 independently accounts for every supported catalog identity and its exact source/family/bucket allocation, proves explicit live VIAL version admission and source deduplication, deterministic defensive focus and complete/disjoint hosted partition compatibility. Unknown/missing mappings, malformed records, stale versions, conflicting metadata and unsafe paths fail. Focused catalog/manifest tests and runnable/rendered book pass; selection is not actual-query parity qualification.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.1: derive accounted source-query coverage cohorts`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.2`
+  Status: `pending`
+  Goal: `Execute selected actual native/API/MCP source queries with complete report and provenance checks.`
+  Acceptance: `Use the qualified selector and public native/API/MCP producers with explicit source/version/query mapping, documented root normalization only, complete report equality and no stub producer. Expose focused/list-only execution compatible with hosted source partitioning. Diagnose source/search-path/schema gaps through public interfaces and own any prerequisite repairs before widening coverage. Qualify representative direct, composition, ISF, protocol alias and VIAL sources without replaying spent runtime producers; exhaustive execution stays .31.3.3.`
+  Verification: `Pending .1 selector.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3`
+  Status: `pending`
+  Goal: `Guard independent feature semantics and representative failed source reports across adapters.`
+  Acceptance: `Add authored ISF storage/observation, hardware source/module and VIAL base/lifecycle assertions to the selected query runner, with falsification that catches missing/wrong detail even when compared transports agree. Qualify representative structured failures, missing reports, unknown future families and schema/provenance mismatches. Retain exact focused evidence and update book/facts; leave complete corpus execution and CI/signoff integration to their explicit owners.`
+  Verification: `Pending .2 actual runner.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2`
@@ -1197,9 +1220,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1` is next: implement the
-catalog-derived actual native/API/MCP coverage guard, including the newly
-qualified VIAL inspection query and independent feature observations.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.2` is next: execute the
+qualified selected source/query cohort through actual public native/API/MCP
+producers, with complete report and provenance checks. Semantic controls follow.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2511,3 +2534,40 @@ public applicability map now includes inspection. Full corpus qualification and
 future-feature signoff remain active subsequent leaves, not inferred from this
 focused band. Task/book metadata admits this interface; fact cards are compacted
 within existing allowances. The public contract owns protocol rationale.
+
+## Acceptance Checklist — `.31.3.2.1.1` source-query cohort selection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-implementation T1883 reports
+  `#   Failed test 'source-query cohort selector exists'` and
+  `#   at t/1883-semantic-source-query-cohort.t line 13.` The earlier selection
+  capture is historical evidence; no reusable live-catalog selector protects
+  complete feature/source/query accounting after public inspection was added.
+- [x] **ADDRESSED (verified)** — The test-side selector derives supported rows
+  from canonical catalog/applicability records, preserves every ID with its
+  exact family/coverage/capability/phase/nonclaim allocation and source metadata,
+  deduplicates physical source work and registers VIAL versions explicitly.
+  T1883 independently accounts for the native supported set, confirms each
+  public VIAL source checks with its mapped version, proves deterministic fresh
+  focus and disjoint complete hosted source partition compatibility, and rejects
+  unknown/missing queries, source kinds/suffixes, versions, stale registrations,
+  duplicate IDs, conflicting metadata, unsafe paths and malformed/empty focus.
+  Expected-failure and legacy entries never become supported evidence.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1883-semantic-source-query-cohort.t t/248-regression-corpus-accounting.t t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t`
+  reports `All tests successful. Files=5, Tests=7136` and `Result: PASS`.
+  `mdbook build docs/book -d .artifacts/query-cohort-book`, rendered scope
+  assertions and the actual list-only developer command pass; disposable output
+  is removed. No backend, spent producer or full CI is run; browser visual audit
+  remains unavailable.
+
+Re-derivation is the default live selector with exact catalog/applicability/helper
+hashes. Falsification independently groups canonical supported identities and
+retains exact ID-to-bucket allocation, checks actual VIAL admission, partitions
+and hostile records. Durability is T1883, the helper, exact baseline and tracked
+`source-query-cohort-qualification.json`, book and knowledge card. The recorded
+cohort counts describe selection, not completed query execution or independent
+feature counts. Root public VIAL examples are accounted; separate runtime
+qualification fixtures remain outside the supported-source cohort. Actual
+native/API/MCP execution is next under `.31.3.2.1.2`, followed by semantic controls
+and explicitly owned CI/exhaustive work. Task/book metadata records only this
+owned selector; the existing knowledge card is compacted without a wider budget.

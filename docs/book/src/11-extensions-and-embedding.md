@@ -2978,6 +2978,33 @@ expressions, actions, model-instance and fault-binding identities remain typed.
 These queries use the public filesystem inspection API without planning,
 random evaluation, backend execution, publication or the hardware command runner.
 
+### Feature Coverage Qualification
+
+Feature coverage is selected from the public supported-source catalog and query
+applicability map. The test-side `FSM::Test::SourceQueryCoverage` helper retains
+every supported catalog ID with its family, coverage bucket, capability/phase
+metadata and nonclaims, while grouping shared physical sources. Hardware uses
+strict admission; VIAL source versions are explicitly registered and checked
+against the actual public fixtures. Unknown query/source mappings, unmapped or
+stale VIAL registrations, unsafe paths and conflicting shared-source metadata
+fail selection. Expected failures and legacy inputs remain separate populations.
+
+For a focused, list-only view from the repository root:
+
+```bash
+perl -Iperl -It/lib -MFSM::Test::SourceQueryCoverage=build_source_query_cohort,select_source_query_cohort -MJSON::PP -e 'print JSON::PP->new->canonical->pretty->encode(select_source_query_cohort({cohort=>build_source_query_cohort(),source_ids=>["isf/storage_fields.isf","vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial"]}))'
+```
+
+Focus preserves catalog order and refuses empty, repeated or unknown identities.
+Source rows work with the existing hosted corpus partitioner, keeping a source's
+queries together. Public root VIAL examples require exact version registrations;
+separate runtime-qualification fixtures are outside this supported-source cohort.
+The selector is qualified; the reusable actual-query runner, independent semantic
+controls, CI integration and exhaustive run remain subsequent work. Selection
+alone proves accounting, not report parity or semantic completeness. Catalog
+entries for plans, backends or runtime retain their identities here but source
+inspection does not execute or qualify those operations.
+
 ### Existing VIAL Summary Queries
 
 Select `language_version: 2` explicitly for VIAL v2, including the implemented
