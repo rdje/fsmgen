@@ -1190,7 +1190,8 @@ peer and preserves the association for cleanup and its eventual closed outcome.
 
 Every bound write rechecks the original request, submitting parent, job context,
 root and endpoint. The fixed admission wall remains in force after a complete
-local write; publication never renews it. A fully decoded matching CANCEL closes
+local write until an original admitted execution report; publication never renews
+it. A fully decoded matching CANCEL closes
 that peer before another write; an early ACK, foreign identity or repeated
 request is a protocol failure. EOF, revocation and expiry also close the original
 peer. A partial write retains its confirmed prefix and cannot become published.
@@ -1224,9 +1225,37 @@ positive check remains historical when a later check defers or the peer closes.
 Creator signals see the completed check before interrupting its return; ordinary
 return also rechecks any closure performed by a handler. These records contain
 transport-check times, not native execution timestamps. Positive admission alone
-changes no lifetime and establishes no execution effect. The trusted aggregate
-must join it to its original Pair; that release and the Service execution-phase
-transition remain subsequent work.
+changes no lifetime and establishes no execution effect.
+
+The optional `execution_admission($ticket, $job, \$grant)` form publishes one
+original grant into an empty untied scalar slot before creator signals resume.
+A deferred check leaves that slot empty. A later successful retry returns the
+same original grant without renewing its issue time. Even if a signal interrupts
+the return, the retained slot permits the aggregate to reconcile what happened;
+it does not prove that a native execution byte was written.
+
+Only after independently observing its original Pair's confirmed release may
+the trusted aggregate call `record_execution($grant)`. Service validates the
+original Service, grant and retained peer association, then retains the first
+report under masking. Copied observations, copied grants and matching numeric
+IDs cannot substitute for that handle. The report records its own reporting
+time, the original grant issue time and the execution deadline; its timestamp
+is not the command's native start time. Repeated reports preserve the first one.
+
+Reporting selects the execution deadline frozen when the job was bound, clipped
+to both the original request and job context. For example, a delayed report
+arriving after the admission window can keep a still-bound peer live until that
+original execution deadline. No report renews a clock. Observations retain the
+old admission deadline and expose `active_deadline_ns` separately. All original
+root, parent and job authority, cancellation, EOF and framing limits still apply.
+Further execution admission is refused once a report exists.
+
+A report arriving after closure preserves history and the first failure while
+leaving the peer closed. Its detached execution observation travels in the
+consumed closed outcome. The aggregate must reconcile the original native effect
+before consuming that outcome; afterward, the spent grant cannot report again.
+The Service fixture supplies trusted reports and literal socket traffic; actual
+native-effect reconciliation remains part of aggregate integration below.
 
 The aggregate now joins that boundary to the original ready gated process.
 `start_request($ticket)` prepares and starts its associated original grant;
@@ -1312,6 +1341,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1850-process-aggregate-c
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1856-process-service-execution-report.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

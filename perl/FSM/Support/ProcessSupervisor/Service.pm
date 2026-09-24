@@ -13,15 +13,17 @@ use FSM::Support::ProcessSupervisor::Endpoint ();
 use FSM::Support::ProcessSupervisor::Reservation ();
 use FSM::Support::ProcessSupervisor::Wire ();
 
-# Inactive transport admission only. A standalone service owns its endpoint;
+# Private transport admission and lifetime. A standalone service owns its endpoint;
 # a shared service borrows it until the aggregate native owner retires the run.
 # The trusted caller owns ledger admission, native readiness and exec release.
 # Service binds a handed request to its ready job context and tracked ACCEPT;
 # local publication and fresh execution admission keep the original admission
-# wall. Historical transport checks never establish a native execution effect.
-# This module provides no command launch or post-exec result lifecycle API.
+# wall until the trusted aggregate reports its original confirmed native effect.
+# Service retains that report and selects the original execution lifetime; it
+# neither proves the native effect nor launches a command or delivers its result.
 my $LIMIT = FSM::Support::ProcessSupervisor::Wire::limits();
 my $SECOND = 1_000_000_000;
+my $EXECUTION_GRANT = __PACKAGE__ . '::ExecutionAdmission';
 
 sub _error { die "private process service: $_[0]\n" }
 sub _now_ns { return sprintf('%.0f', clock_gettime(CLOCK_MONOTONIC) * $SECOND) }
@@ -370,8 +372,8 @@ sub advance {
             $self->_fail_record($record, 'host_error', 'accepted descriptor cleanup incomplete');
             next;
         }
-        if ($now->bcmp($record->{wall}) >= 0) {
-            $self->_fail_record($record, 'timed_out', 'fixed authentication or admission deadline expired');
+        if ($now->bcmp(_active_wall($record)) >= 0) {
+            $self->_fail_record($record, 'timed_out', _wall_diagnostic($record));
             next;
         }
         if ($record->{state} eq 'bound') {
@@ -385,8 +387,8 @@ sub advance {
         my $message = $record->{io}->take_frame;
         if ($message) {
             my $received = _time(_now_ns());
-            if ($received->bcmp($record->{wall}) >= 0) {
-                $self->_fail_record($record, 'timed_out', 'fixed authentication or admission deadline expired');
+            if ($received->bcmp(_active_wall($record)) >= 0) {
+                $self->_fail_record($record, 'timed_out', _wall_diagnostic($record));
                 next;
             }
             $self->_message($record, $message, $received);
@@ -462,6 +464,7 @@ sub queue_accept {
         # Spend the association before queue effects or a thrown return. The
         # ready context retains this ticket even after its outcome is consumed.
         $record->{job} = 0 + $job;
+        $record->{execution_deadline} = _minimum($record->{deadline}, $context->{deadline});
         $record->{state} = 'bound';
         $context->{request_ticket} = 0 + $ticket;
         my $ok = eval {
@@ -480,6 +483,16 @@ sub queue_accept {
     return $queued;
 }
 
+sub _active_wall {
+    my ($record) = @_;
+    return $record->{execution_report} ? $record->{execution_deadline} : $record->{wall};
+}
+sub _wall_diagnostic {
+    my ($record) = @_;
+    return $record->{execution_report} ? 'original execution deadline expired'
+        : 'fixed authentication or admission deadline expired';
+}
+
 sub _bound_live {
     my ($self, $record) = @_;
     return 0 if $record->{state} ne 'bound';
@@ -493,8 +506,9 @@ sub _bound_live {
     }
     my $now = _time(_now_ns());
     if (grep { $now->bcmp($_) >= 0 }
-        $record->{wall}, $record->{deadline}, $parent->{deadline}, $job->{deadline}, $self->{deadline}) {
-        $self->_fail_record($record, 'timed_out', 'original ACCEPT admission deadline expired');
+        _active_wall($record), $record->{deadline}, $parent->{deadline}, $job->{deadline}, $self->{deadline}) {
+        $self->_fail_record($record, 'timed_out', $record->{execution_report}
+            ? 'original execution deadline expired' : 'original ACCEPT admission deadline expired');
         return 0;
     }
     my $run = $self->{run}->observation;
@@ -541,12 +555,15 @@ sub _write_admission {
 # This is transport admission only. The aggregate must call it immediately
 # before its original native E attempt; historical observations grant no exec.
 sub execution_admission {
-    _error('expected original execution ticket and job') unless @_ == 3;
-    my ($self, $ticket, $job) = @_; _owner($self);
+    _error('expected original execution ticket and job, with optional retained grant slot')
+        unless @_ == 3 || @_ == 4;
+    my ($self, $ticket, $job, $target) = @_; _owner($self);
+    _execution_target($target) if @_ == 4;
     FSM::Support::ProcessSupervisor::Wire::_uint($_, '4294967295', 1) for $ticket, $job;
     my $record = $self->{records}{$ticket} or _error('unknown connection ticket');
     _error('execution admission requires the matching bound job')
         unless defined($record->{job}) && $record->{job} == $job;
+    _error('execution admission already consumed') if $record->{execution_report};
     my ($started, $admitted) = (0, 0);
     my $ok = eval {
         FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
@@ -554,6 +571,8 @@ sub execution_admission {
                 unless $self->{records}{$ticket}
                     && refaddr($self->{records}{$ticket}) == refaddr($record)
                     && $record->{job} == $job;
+            _execution_target($target) if defined $target;
+            _error('execution admission already consumed') if $record->{execution_report};
             my $check = $record->{execution_check} = {state => 'checking', checked_ns => _now_ns()};
             $started = 1;
             my $checked = eval {
@@ -595,6 +614,17 @@ sub execution_admission {
                 # Keep the last positive check separately from later deferrals
                 # or closure, for the aggregate's subsequent native-effect join.
                 $record->{execution_admission} = {%$check};
+                if (defined $target) {
+                    unless ($record->{execution_grant}) {
+                        my $grant = $record->{execution_grant} = bless {
+                            owner_pid => $$, owner_identity => refaddr($self),
+                            peer_identity => refaddr($record), ticket => $ticket, job => $job,
+                            issued_ns => _now_ns(),
+                        }, $EXECUTION_GRANT;
+                        $grant->{identity} = refaddr($grant);
+                    }
+                    $$target = $record->{execution_grant};
+                }
                 $admitted = 1;
                 1;
             };
@@ -619,6 +649,59 @@ sub execution_admission {
     return $admitted;
 }
 
+sub _execution_target {
+    my ($target) = @_;
+    _error('execution grant target must be an empty untied scalar slot')
+        unless ref($target) eq 'SCALAR' && !defined(tied($$target)) && !defined($$target);
+}
+
+sub _execution_grant_record {
+    my ($self, $grant) = @_; _owner($self);
+    _error('execution report requires an original admission grant')
+        unless ref($grant) eq $EXECUTION_GRANT
+            && ($grant->{identity} // 0) == refaddr($grant)
+            && ($grant->{owner_pid} // 0) == $$
+            && ($grant->{owner_identity} // 0) == refaddr($self);
+    my $record = $self->{records}{$grant->{ticket}};
+    _error('execution report lost original peer admission')
+        unless $record && refaddr($record) == $grant->{peer_identity}
+            && $record->{execution_grant} && refaddr($record->{execution_grant}) == refaddr($grant)
+            && $record->{job} == $grant->{job} && $record->{execution_admission}
+            && $record->{execution_admission}{state} eq 'admitted';
+    return $record;
+}
+
+# The trusted aggregate calls only AFTER independently observing its original
+# Pair's confirmed E write. This records that report; Service never proves or
+# performs the native effect. The grant ties the report to original admission,
+# including after peer closure, without turning copied observations into proof.
+sub record_execution {
+    _error('expected one original execution admission grant') unless @_ == 2;
+    my ($self, $grant) = @_; _owner($self);
+    my $record = $self->_execution_grant_record($grant);
+    my $started = 0;
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            $self->_execution_grant_record($grant);
+            $started = 1;
+            $record->{execution_report} //= {
+                reported_ns => _now_ns(), admission_issued_ns => $grant->{issued_ns},
+                deadline_ns => $record->{execution_deadline}->bstr,
+            };
+            # A delayed report may follow the admission wall or peer closure.
+            # Record history first, then validate only a still-bound lifetime.
+            $self->_bound_live($record) if $record->{state} eq 'bound';
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        eval { $self->_fail_record($record, 'host_error', 'execution report interrupted'); 1 } if $started;
+        die $error;
+    }
+    return 1;
+}
+
 sub execution_observation {
     _error('expected one retained execution ticket') unless @_ == 2;
     my ($self, $ticket) = @_; _owner($self);
@@ -627,6 +710,8 @@ sub execution_observation {
     return unless $record->{execution_check};
     return {ticket => $record->{ticket}, parent => $record->{parent}, job => $record->{job},
         deadline_ns => $record->{deadline}->bstr, admission_deadline_ns => $record->{wall}->bstr,
+        active_deadline_ns => _active_wall($record)->bstr,
+        report => $record->{execution_report} ? {%{$record->{execution_report}}} : undef,
         latest => {%{$record->{execution_check}}},
         admitted => $record->{execution_admission} ? {%{$record->{execution_admission}}} : undef,
         failure => $record->{failure} ? {%{$record->{failure}}} : undef};
@@ -686,6 +771,7 @@ sub take_closed {
             _error('closed outcome still owns native handles') if @{_record_handles($record)};
             $outcome = {ticket => $ticket, parent => $record->{parent}, %{$record->{failure}},
                 defined($record->{job}) ? (job => $record->{job}) : (),
+                $record->{execution_report} ? (execution => scalar $self->execution_observation($ticket)) : (),
                 resources_closed => $record->{close_failed} ? 0 : 1};
             $self->_forget_empty($record);
             last;
@@ -706,7 +792,8 @@ sub ticket_observation {
     my $record = $self->{records}{$ticket} or _error('unknown connection ticket');
     return {ticket => $record->{ticket}, state => $record->{state}, parent => $record->{parent},
         defined($record->{job}) ? (job => $record->{job}) : (),
-        wall_ns => $record->{wall}->bstr, handles => scalar @{_record_handles($record)},
+        wall_ns => $record->{wall}->bstr, active_deadline_ns => _active_wall($record)->bstr,
+        handles => scalar @{_record_handles($record)},
         resources_closed => $record->{state} eq 'closed' && !$record->{close_failed}
             && !@{_record_handles($record)} ? 1 : 0,
         failure => $record->{failure} ? {%{$record->{failure}}} : undef};
@@ -722,7 +809,7 @@ sub poll_delay {
     my $delay = $LIMIT->{idle_seconds};
     for my $record (values %{$self->{records}}) {
         next if $record->{state} eq 'closed';
-        $wall = _minimum($wall, $record->{wall});
+        $wall = _minimum($wall, _active_wall($record));
         my $io_delay = $record->{io}->poll_delay;
         $delay = $io_delay if $io_delay < $delay;
     }
