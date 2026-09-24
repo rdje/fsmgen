@@ -70,6 +70,24 @@
          "mimeType" : "application/json",
          "name" : "source_schedule",
          "uriTemplate" : "fsmgen://source/{source_id}/schedule"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "vial_capabilities",
+         "uriTemplate" : "fsmgen://vial/{language_version}/capabilities"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "vial_source_check",
+         "uriTemplate" : "fsmgen://vial/{language_version}/source/{source_id}/check"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "vial_source_semantic",
+         "uriTemplate" : "fsmgen://vial/{language_version}/source/{source_id}/semantic"
       }
    ],
    "resources" : [
@@ -126,7 +144,10 @@
                "fsmgen://sources",
                "fsmgen://source/{source_id}/check",
                "fsmgen://source/{source_id}/semantic",
-               "fsmgen://source/{source_id}/schedule"
+               "fsmgen://source/{source_id}/schedule",
+               "fsmgen://vial/{language_version}/capabilities",
+               "fsmgen://vial/{language_version}/source/{source_id}/check",
+               "fsmgen://vial/{language_version}/source/{source_id}/semantic"
             ],
             "mcp_tool_names" : [
                "fsmgen_capability_query",
@@ -569,10 +590,12 @@
          ],
          "output_schema_type" : "object",
          "property_names" : [
+            "language_version",
             "source_id",
             "source_path"
          ],
          "property_types" : {
+            "language_version" : "integer",
             "source_id" : "string",
             "source_path" : "string"
          },
@@ -604,10 +627,12 @@
          ],
          "output_schema_type" : "object",
          "property_names" : [
+            "language_version",
             "source_id",
             "source_path"
          ],
          "property_types" : {
+            "language_version" : "integer",
             "source_id" : "string",
             "source_path" : "string"
          },

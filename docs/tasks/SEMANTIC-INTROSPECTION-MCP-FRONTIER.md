@@ -313,11 +313,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.1: audit current semantic and MCP coverage`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement current-feature semantic API and MCP coverage repairs.`
   Acceptance: `After .31.1, create exact child leaves naming affected public contracts, API producers, MCP mappings, actual feature fixtures, failure cases and book sections before source changes. Repair native semantic contracts first where needed and project them through MCP; preserve bounded JSON-safe results, diagnostics, workspace authority and read-only defaults. Commit each verified repair separately and leave no discovered defect merely parked.`
-  Verification: `The audited native enable collision, APB source defect, simulator qualification gap, lost structured failures/path leakage and protocol-alias discovery omission are closed under children .1, .5, .6, .2 and .3. VIAL discovery/routing remains child .4 before complete coverage qualification.`
-  Commit: `pending`
+  Verification: `All audited repair children are complete: native enable identity, APB completion/interface, simulator qualification, structured MCP failures, protocol-alias discovery and bounded VIAL API/MCP exposure. Per-feature qualification remains .31.3 rather than being inferred from completed repairs.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.2: expose versioned VIAL inspection through MCP`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6`
 
@@ -343,11 +343,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3: expose protocol aliases through MCP discovery`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Project current public VIAL semantic tooling through the native introspection contract and MCP.`
   Acceptance: `Select exact JSON-safe source query result/version contracts over the existing VIAL public API before implementation; expose applicable VIAL capabilities, source discovery, check and sanitized semantic reports with explicit v1/v2 selection and accurate query applicability. Preserve imported source catalogs, public diagnostics and workspace authority. Qualify actual v1/v2/invalid sources and direct/API/MCP parity; keep execution and mutation outside the existing read-only profile.`
-  Verification: `Native vial check --json succeeds for the documented v1/v2 base sources. MCP semantic/check calls invoke the hardware CLI route and fail; VIAL discovery is empty although the support catalog includes VIAL sources. Native language_surface.vial_tooling advertises its closed request/result APIs.`
-  Commit: `pending`
+  Verification: `Children .1 and .2 expose the bounded public filesystem API and versioned MCP reports/resources/capability discovery. T1870 and T1871 qualify source admission, complete native parity and no publication; frozen v1 metadata remains unchanged. Full feature-level census and future signoff guard remain .31.3.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.2: expose versioned VIAL inspection through MCP`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.2`
 
@@ -359,11 +359,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.1: expose bounded VIAL filesystem checks`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Project the qualified VIAL check and semantic report through MCP and discovery.`
   Acceptance: `Use the clean filesystem source API from .1 for VIAL check and semantic queries; preserve the complete existing public result and semantic_report instead of inventing hardware-report shape. Add explicit validated language-version selection, truthful provenance/applicability, source discovery, applicable versioned resource/tool schemas and public capability guidance. Preserve import authority and structured failure reports/tool flags, qualify actual v1/v2/invalid/imported sources against native/API results, and keep scheduling, planning, backend execution and mutation unadvertised. Update tests/snapshots/book/facts and commit before .31.3 coverage qualification.`
-  Verification: `Pending the bounded native filesystem source interface.`
-  Commit: `pending`
+  Verification: `T1871 qualifies complete native/API/MCP reports for v1/v2/lifecycle/imported/invalid inputs, versioned capabilities/resources, source discovery, semantic paths, selector rejection and symlink/workspace authority. The selected fourteen-file band and final expanded focused tests pass; actual newline-stdio and book one-shot queries match native results. See the captured repair receipt and acceptance below.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.2: expose versioned VIAL inspection through MCP`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5`
   Status: `done`
@@ -380,7 +380,7 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6: qualify selector assertion simulation`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify complete feature coverage and make API/MCP parity part of future feature signoff.`
   Acceptance: `After repair leaves pass, run representative actual native and MCP queries for every applicable current feature family with negative and schema/provenance controls. Keep advertised resources/tools/discovery and book examples aligned with real capability. Add a maintainable coverage guard or feature-acceptance contract so future language/verification features must verify semantic API and MCP support or explicitly justify an owned boundary. Keep mutation/service expansion in its separate proposed owner and resume bounded stream work after this activity is complete.`
   Verification: `Pending owned repairs.`
@@ -1031,13 +1031,11 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.2` connects the qualified VIAL
-filesystem source API results to MCP with
-explicit language-version selection and applicable discovery. Native/APB repairs, simulator
-qualification, structured failures and protocol-alias discovery are committed;
-`.31.3` qualifies coverage and ongoing parity after they pass.
-The read-only profile completed through `.30` remains historical evidence;
-it is not a claim that all later product features are covered.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3` qualifies current feature coverage
+and introduces an ongoing semantic API/MCP parity signoff guard. The audited
+native, diagnostic, discovery and VIAL API/MCP repair leaves are committed.
+Preserve the separate read-only/write horizon and spent native compiler
+qualification boundaries; resume bounded HIAL streaming after this activity.
 
 ## Decisions
 
@@ -1669,3 +1667,67 @@ independent boundary controls falsify the unbounded/stat-only alternatives,
 and T1870 plus T1806 watch the public behavior and frozen capability boundary.
 MCP routing/version discovery remains `.31.2.4.2`; complete current-feature
 coverage remains `.31.3`. HIAL/JSON input-size limits are not claimed here.
+
+## Selected MCP VIAL Projection — `.31.2.4.2`
+
+Route `.vial` check/semantic calls through the qualified public filesystem
+facade and keep the complete native tool result under the existing MCP
+`report` envelope. Both query kinds perform native action check; neither
+plans or runs. Optional tool `language_version` accepts only 1/2, defaults
+to 1 for VIAL, and is rejected for hardware queries. Keep scheduling
+inapplicable to VIAL. Validate source-query arguments before invoking a
+producer; preserve the existing source_path/source_id aliases.
+
+Preserve existing unversioned resources and add explicit VIAL resources:
+`fsmgen://vial/{language_version}/capabilities`,
+`fsmgen://vial/{language_version}/source/{source_id}/check`, and
+`fsmgen://vial/{language_version}/source/{source_id}/semantic`. Publish their
+query domains and schemas through the native introspection contract. Expose
+complete public capability records through capability-query sections
+`vial_tooling_v1`/`vial_tooling_v2` using their public accessors, without
+modifying either record. Discovery advertises VIAL check/semantic support;
+version is caller-selected, never guessed from a filename.
+
+Keep original relative VIAL path components when delegating to the filesystem
+API: the hardware resolver canonicalizes symlinks and must not erase the
+VIAL facade's non-symlink boundary. Absolute in-root aliases may be converted
+lexically to relative paths; the public API still owns source/import admission.
+Reject versioned resources naming non-VIAL sources. Retain full public
+structured source failures with MCP isError, distinct from invalid request
+errors. T1871 will qualify actual v1/v2/lifecycle/imported/invalid results,
+versioned resources, capability parity, discovery, schema and path controls
+and absence of hardware runner invocation or artifact publication.
+
+## Acceptance Checklist — `.31.2.4.2` VIAL MCP projection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Initial T1871 rejected all source,
+  capability/discovery and selector subtests. Its captured output reports
+  `#   at t/1871-semantic-introspection-mcp-vial.t line 61.` for absent versioned
+  capability access; source calls reach the hardware runner rather than the
+  existing VIAL producer. The adapter source dispatcher, capability sections,
+  URI mappings and public applicability map omit the VIAL contracts.
+- [x] **ADDRESSED (verified)** — The same test now compares complete actual
+  native v1/v2/lifecycle results with tools and versioned resources. Imported
+  API results, original semantic paths, structured source failures and isError
+  survive unchanged; both versioned capability accessors and catalog discovery
+  are exposed. Original path components preserve the filesystem API's symlink
+  boundary. Invalid versions, hardware selectors, VIAL scheduling and action
+  expansion fail before a producer. Additional controls cover encoded URIs,
+  default-v1 refusal of a v2 filename, symlink directories/imports, workspace
+  escape, source size admission and no publication.
+- [x] **NO REGRESSION** — RAM-guarded T1871, T1870, T1869, T1868, T1438,
+  T1439, T1440, T1441, T1443, T1444, T1445, T1447, T1455 and T1806 report
+  `All tests successful`, `Files=14, Tests=55`, `Result: PASS`. The final
+  expanded T1871 and minimal schema snapshot also pass: `Files=2, Tests=6`.
+  New book commands execute through the actual CLI; the guide builds and its
+  rendered HTML anchor/examples exist. Browser visual access remains unavailable.
+
+`docs/audits/mcp-feature-coverage-20260924/vial-mcp-repair.json` binds the
+actual native CLI/newline-stdio comparisons and book commands to their inputs.
+T1871 re-derives full report and capability equality; baseline failures and
+negative inputs falsify missing routing, version guessing and authority
+widening. Tracked fixtures/tests, book examples and the reviewed schema
+additions retain the contract; T1869 now guards every shipped suffix and
+T1806 retains byte-exact v1 capability evidence. The first broader invocation
+used a nonexistent T1868 filename and was rejected; only the corrected band
+counts. Full current-feature qualification and future signoff remain `.31.3`.

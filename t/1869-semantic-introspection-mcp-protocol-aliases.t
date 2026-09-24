@@ -17,20 +17,20 @@ my $manifest = build_capability_manifest();
 my $adapter = FSM::Support::SemanticIntrospectionMCPAdapter->new(
     repo_root => $root, workspace_root => $root, manifest_builder => sub { $manifest },
 );
-my $expected = { fsm => [qw(check semantic)],
+my $expected = { fsm => [qw(check semantic)], vial => [qw(check semantic)],
     map { $_ => [qw(check semantic schedule)] } qw(isf ppif axi apb ahb) };
 
-subtest 'public query applicability covers current hardware suffixes' => sub {
+subtest 'public query applicability covers current shipped suffixes' => sub {
     my $contract = build_semantic_introspection_contract();
     my $section = build_semantic_introspection_section();
     is_deeply($contract->{source_query_kinds}, $expected, 'native contract declares exact source/query applicability');
     is_deeply($section->{source_query_kinds}, $expected, 'native section exposes applicability');
     is_deeply($manifest->{semantic_introspection}{source_query_kinds}, $expected, 'manifest exposes the same map');
     ok(grep { $_ eq 'source_query_kinds' } @{$contract->{public_top_level_presence_keys}}, 'public presence keys include applicability');
-    my @hardware = sort map { s/^\.//r } grep { $_ ne '.vial' }
+    my @shipped = sort map { s/^\.//r }
         @{$manifest->{language_surface}{file_surfaces}{shipped_suffixes}};
-    is_deeply([sort keys %{$contract->{source_query_kinds} || {}}], \@hardware,
-        'new shipped suffixes cannot be silently omitted; VIAL routing is explicitly owned separately');
+    is_deeply([sort keys %{$contract->{source_query_kinds} || {}}], \@shipped,
+        'new shipped suffixes cannot be silently omitted');
     my $accessor = FSM::Support::SemanticIntrospectionContract->can('semantic_introspection_source_query_kinds');
     ok($accessor, 'native applicability accessor is public');
     if ($accessor) {
@@ -73,7 +73,7 @@ subtest 'alias discovery keeps path exclusions and catalog filters' => sub {
     );
     my $resource = $local->read_resource('fsmgen://sources');
     my $payload = decode_json($resource->{contents}[0]{text});
-    is_deeply([map { $_->{source_id} } @{$payload->{sources}}], ['inputs/port.APB'], 'resource admits only the public supported alias');
+    is_deeply([map { $_->{source_id} } @{$payload->{sources}}], ['inputs/port.APB', 'inputs/case.vial'], 'resource admits supported alias and VIAL source families');
     my $filtered = $local->call_tool('fsmgen_discover_sources', {
         file_kind => 'apb', query => 'PORT', source_kind => 'protocol', classification => 'fixture', limit => 1,
     })->{structuredContent};

@@ -515,6 +515,9 @@ or the capability manifest at
 Its `loading_limits` gives the exact admitted bounds. The frozen v1 capability
 record and the portable text request API remain unchanged.
 
+The read-only MCP adapter exposes this API with explicit version selection;
+see [VIAL semantic queries](11-extensions-and-embedding.md#vial-semantic-queries-and-version-selection).
+
 ## Public reports and persisted schemas
 
 Use explicit schema fields rather than filenames or permissive key probing:

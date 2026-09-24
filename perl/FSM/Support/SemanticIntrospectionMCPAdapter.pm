@@ -9,6 +9,9 @@ use File::Basename qw(dirname);
 use File::Spec;
 use IPC::Cmd qw(run);
 use JSON::PP ();
+use Scalar::Util qw(blessed);
+
+use FSM::VIAL::Tool qw(check_vial_source_file vial_tool_capabilities vial_tool_capabilities_v2);
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::SemanticIntrospectionContract qw(semantic_introspection_source_query_kinds);
@@ -130,6 +133,14 @@ sub read_resource {
         $payload = $self->_examples_payload({});
     } elsif ($uri eq 'fsmgen://sources') {
         $payload = $self->_sources_payload({});
+    } elsif ($uri =~ m{\Afsmgen://vial/([^/]+)/capabilities\z}) {
+        $payload = _vial_capabilities(_vial_language_version($1));
+    } elsif ($uri =~ m{\Afsmgen://vial/([^/]+)/source/(.+)/(check|semantic)\z}) {
+        my ($version, $source_id, $kind) = ($1, _uri_decode($2), $3);
+        $version = _vial_language_version($version);
+        die "FSMGEN_JSONRPC_INVALID_PARAMS: versioned VIAL resources require a .vial source"
+            unless $source_id =~ /\.vial\z/i;
+        $payload = $self->_source_query_payload($kind, {source_id => $source_id, language_version => $version});
     } elsif ($uri =~ m{\Afsmgen://source/(.+)/(check|semantic|schedule)\z}) {
         my ($source_id, $kind) = (_uri_decode($1), $2);
         $payload = $self->_source_query_payload($kind, { source_id => $source_id });
@@ -157,7 +168,7 @@ sub list_tools {
                 'fsmgen_capability_query',
                 'Query the capability manifest, semantic-introspection contract, or a public manifest section.',
                 {
-                    section => { type => 'string', description => 'Optional section name: all, semantic_introspection, contracts, diagnostics, support_accounting, examples, embedding, backend_validation, language_surface.' },
+                    section => { type => 'string', description => 'Optional section name: all, semantic_introspection, contracts, diagnostics, support_accounting, examples, embedding, backend_validation, language_surface, vial_tooling_v1, vial_tooling_v2.' },
                 },
                 [],
                 _capability_query_output_schema(),
@@ -165,16 +176,16 @@ sub list_tools {
             ),
             _tool_descriptor(
                 'fsmgen_check',
-                'Run read-only strict check JSON for a workspace-contained source path.',
-                _source_tool_properties(),
+                'Check a workspace-contained hardware or VIAL source through its public report contract.',
+                _source_tool_properties(1),
                 [],
                 _source_query_output_schema(),
                 _read_only_closed_world_tool_annotations(),
             ),
             _tool_descriptor(
                 'fsmgen_semantic_introspect',
-                'Run read-only normalized semantic JSON for a workspace-contained source path.',
-                _source_tool_properties(),
+                'Inspect hardware normalized semantics or the complete public VIAL check result and semantic_report.',
+                _source_tool_properties(1),
                 [],
                 _source_query_output_schema(),
                 _read_only_closed_world_tool_annotations(),
@@ -193,7 +204,7 @@ sub list_tools {
                 {
                     query => { type => 'string', description => 'Optional case-insensitive substring matched against public catalog identity and support fields.' },
                     limit => { type => 'integer', description => 'Maximum number of sources to return; default 25.' },
-                    file_kind => { type => 'string', description => 'Optional exact source file kind: fsm, isf, ppif, axi, apb or ahb.' },
+                    file_kind => { type => 'string', description => 'Optional exact source file kind: fsm, isf, ppif, axi, apb, ahb or vial.' },
                     source_kind => { type => 'string', description => 'Optional exact support-catalog source_kind filter.' },
                     classification => { type => 'string', description => 'Optional exact support-catalog classification filter.' },
                 },
@@ -270,7 +281,8 @@ sub call_tool {
             },
         ],
         structuredContent => $payload,
-        isError => _is_source_failure_report($payload->{report}, $payload->{query_kind})
+        isError => (_is_source_failure_report($payload->{report}, $payload->{query_kind})
+            || _is_vial_check_failure_report($payload->{report}, $payload->{query_kind}))
             ? JSON::PP::true : JSON::PP::false,
     };
 }
@@ -378,6 +390,8 @@ sub run_stdio {
 sub _capability_query_payload {
     my ($self, $arguments) = @_;
     my $section = $arguments->{section} || 'semantic_introspection';
+    return {section => $section, payload => _vial_capabilities($1)}
+        if $section =~ /\Avial_tooling_v([12])\z/;
     my $manifest = $self->_manifest;
 
     return $manifest if $section eq 'all';
@@ -398,6 +412,26 @@ sub _capability_query_payload {
 
 sub _source_query_payload {
     my ($self, $kind, $arguments) = @_;
+    die "FSMGEN_JSONRPC_INVALID_PARAMS: source query arguments must be an object"
+        unless ref($arguments) eq 'HASH' && !blessed($arguments);
+    my %allowed = map { $_ => 1 } qw(source_path source_id language_version);
+    die "FSMGEN_JSONRPC_INVALID_PARAMS: unknown source query argument"
+        if grep { !$allowed{$_} } keys %$arguments;
+    for my $key (qw(source_path source_id)) {
+        die "FSMGEN_JSONRPC_INVALID_PARAMS: source identity must be a nonempty string"
+            if exists($arguments->{$key}) && (!defined($arguments->{$key})
+                || ref($arguments->{$key}) || !length($arguments->{$key}));
+    }
+    my $source = $arguments->{source_path} // $arguments->{source_id};
+    die "FSMGEN_JSONRPC_INVALID_PARAMS: source_path or source_id is required"
+        unless defined $source;
+    if ($source =~ /\.vial\z/i) {
+        die "FSMGEN_JSONRPC_INVALID_PARAMS: VIAL supports check and semantic queries only"
+            unless $kind eq 'check' || $kind eq 'semantic';
+        return $self->_vial_source_query_payload($kind, $source, $arguments);
+    }
+    die "FSMGEN_JSONRPC_INVALID_PARAMS: language_version applies only to VIAL source queries"
+        if exists $arguments->{language_version};
     my ($source_path, $source_id) = $self->_resolve_source_argument($arguments);
 
     my @command;
@@ -420,6 +454,50 @@ sub _source_query_payload {
         path_sanitization => {
             machine_local_absolute_paths => 'workspace_or_repo_absolute_paths_return_relative_else_redacted',
         },
+        report => $report,
+    };
+}
+
+sub _vial_language_version {
+    my ($version) = @_;
+    die "FSMGEN_JSONRPC_INVALID_PARAMS: VIAL language_version must be 1 or 2"
+        unless defined($version) && !ref($version) && $version =~ /\A[12]\z/;
+    return 0 + $version;
+}
+
+sub _vial_capabilities {
+    my ($version) = @_;
+    return $version == 2 ? vial_tool_capabilities_v2() : vial_tool_capabilities();
+}
+
+sub _vial_source_query_payload {
+    my ($self, $kind, $source, $arguments) = @_;
+    my $version = _vial_language_version(
+        exists($arguments->{language_version}) ? $arguments->{language_version} : 1);
+    # Preserve original components: resolving symlinks here would defeat the
+    # public filesystem facade's source and import authority checks.
+    my $source_id = File::Spec->file_name_is_absolute($source)
+        ? File::Spec->abs2rel($source, $self->{workspace_root}) : $source;
+    my $report = check_vial_source_file({
+        workspace_root => $self->{workspace_root}, source_id => $source_id,
+        language_version => $version,
+    });
+    return {
+        source_id => $source_id,
+        source_path => $source_id,
+        query_kind => $kind,
+        adapter_provenance => {
+            %{$self->_source_query_adapter_provenance($kind)},
+            command_shape => undef,
+            api_entrypoint => 'FSM::VIAL::Tool::check_vial_source_file',
+            language_version => $version,
+        },
+        path_sanitization => {
+            machine_local_absolute_paths => 'public_vial_relative_source_contract',
+            semantic_paths => 'preserved_public_semantic_paths',
+        },
+        # VIAL already returns a public sanitized projection. Generic path
+        # rewriting would corrupt its JSON-pointer-shaped semantic identities.
         report => $report,
     };
 }
@@ -718,6 +796,22 @@ sub _is_source_failure_report {
     return 1;
 }
 
+sub _is_vial_check_failure_report {
+    my ($report, $kind) = @_;
+    return 0 unless ref($report) eq 'HASH' && defined($kind)
+        && ($kind eq 'check' || $kind eq 'semantic');
+    return 0 unless JSON::PP::is_bool($report->{success}) && !$report->{success};
+    my $version = $report->{schema_version};
+    return 0 unless defined($version) && !ref($version) && $version =~ /\A[12]\z/;
+    return 0 unless ($report->{schema} // '') eq "fsmgen.vial_tool_result.v$version"
+        && ($report->{action} // '') eq 'check'
+        && ref($report->{implementation}) eq 'HASH'
+        && ($report->{implementation}{component} // '') eq 'FSM::VIAL::Tool'
+        && ref($report->{diagnostics}) eq 'ARRAY' && @{$report->{diagnostics}};
+    return 0 if grep { ref($_) ne 'HASH' } @{$report->{diagnostics}};
+    return 1;
+}
+
 sub _manifest {
     my ($self) = @_;
     return $self->{manifest_builder}->();
@@ -844,7 +938,12 @@ sub _tool_descriptor {
 }
 
 sub _source_tool_properties {
+    my ($with_vial_version) = @_;
     return {
+        ($with_vial_version ? (language_version => {
+            type => 'integer', enum => [1, 2],
+            description => 'VIAL only: explicit language version; omitted selects 1. Rejected for hardware sources.',
+        }) : ()),
         source_path => {
             type => 'string',
             description => 'Workspace-root-contained source path.',

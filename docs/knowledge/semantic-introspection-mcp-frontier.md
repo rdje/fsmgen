@@ -132,8 +132,14 @@ The 2026-09-24 audit found limits that earlier profile tests did not expose:
   semantic and schedule queries. T1869 compares all alias catalog records,
   native suffix coverage and actual native/MCP reports; availability does not
   promote a catalogued expected failure into support.
-- Native VIAL source tooling exposes JSON-safe semantic results, but MCP
-  check/semantic routing uses the hardware CLI and cannot query those sources.
+- `.31.2.4` exposes VIAL check/semantic reports through the bounded public
+  filesystem API. Select tool `language_version` explicitly for v2, or use
+  `fsmgen://vial/{language_version}/source/{source_id}/check|semantic`.
+  Versioned capabilities use `vial_tooling_v1`/`vial_tooling_v2` query sections
+  or `fsmgen://vial/{language_version}/capabilities`. Unversioned VIAL defaults
+  to v1; hardware selectors and VIAL scheduling fail closed. T1871 qualifies
+  native v1/v2/lifecycle/imported/invalid parity, original semantic paths,
+  symlink authority, discovery and no publication.
 - `.31.2.2` preserves native check/semantic v1 failure JSON on nonzero exit
   after matching public producer, mode and diagnostic shape. Tools return
   `isError: true` with text/structured reports; resources carry the same

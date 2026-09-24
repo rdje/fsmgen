@@ -2697,7 +2697,10 @@ The relevant manifest shape is:
       "fsmgen://sources",
       "fsmgen://source/{source_id}/check",
       "fsmgen://source/{source_id}/semantic",
-      "fsmgen://source/{source_id}/schedule"
+      "fsmgen://source/{source_id}/schedule",
+      "fsmgen://vial/{language_version}/capabilities",
+      "fsmgen://vial/{language_version}/source/{source_id}/check",
+      "fsmgen://vial/{language_version}/source/{source_id}/semantic"
     ],
     "mcp_tool_names": [
       "fsmgen_capability_query",
@@ -2718,9 +2721,10 @@ over this contract. Static resources expose capabilities, contracts,
 diagnostics, support accounting, examples, and catalog-backed source discovery.
 Source-bound resources/tools
 require a caller-approved workspace root and a source identity under that
-root; source-bound responses include `adapter_provenance`, normalize
-workspace/repo absolute paths to relative source identities, and redact other
-absolute paths. Protocol-level JSON-RPC failures use `-32700` for parse
+root; source-bound responses include `adapter_provenance`. Hardware reports
+normalize workspace/repo absolute paths and redact other absolute paths; VIAL
+uses its public relative-source result contract and preserves semantic paths.
+Protocol-level JSON-RPC failures use `-32700` for parse
 errors, `-32600` for invalid requests, `-32601` for unknown methods, and
 `-32000` for adapter call errors. Raw parser ASTs, private scheduler/lowering
 objects, `HDLGenerator` compatibility hashes, arbitrary shell output, network
@@ -2778,8 +2782,8 @@ and MCP expose the same repaired producer.
 
 ### Source Query Applicability
 
-Catalog discovery recognizes the supported hardware source families, including
-protocol aliases. Read `semantic_introspection.source_query_kinds` from the
+Catalog discovery recognizes hardware source families, protocol aliases and
+VIAL. Read `semantic_introspection.source_query_kinds` from the
 capability manifest, or `payload.source_query_kinds` from
 `fsmgen_capability_query` with `section: "semantic_introspection"`:
 
@@ -2787,6 +2791,7 @@ capability manifest, or `payload.source_query_kinds` from
 | --- | --- |
 | `fsm` | `check`, `semantic` |
 | `isf`, `ppif`, `axi`, `apb`, `ahb` | `check`, `semantic`, `schedule` |
+| `vial` | `check`, `semantic` |
 
 The native accessor
 `FSM::Support::SemanticIntrospectionContract::semantic_introspection_source_query_kinds()`
@@ -2807,15 +2812,47 @@ Use `file_kind: "axi"` or `"ahb"` for the other supported aliases. Discovery
 keeps catalog order, support identity, filtering and bounded limits; it does
 not scan arbitrary workspace directories or expose hidden/absolute paths.
 
-### Current Source Coverage Limits
+### VIAL Semantic Queries and Version Selection
 
-VIAL source checks and semantic reports are available through
-`fsmgen vial check --json`; MCP does not yet route VIAL queries to that API.
-Select `--language-version 2` for VIAL v2 sources.
+For `.vial` sources, `fsmgen_check` and `fsmgen_semantic_introspect` call the
+public `FSM::VIAL::Tool::check_vial_source_file` API. Both return the complete
+native check result under `report`, including `semantic_report`, source
+identities, capability/support evidence and structured diagnostics. The MCP
+query kind stays explicit, while native `report.action` remains `check`.
+No planning, backend execution or artifact publication occurs.
 
-Remaining source-family repairs are owned by
-[the semantic coverage frontier](../../tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md).
-Successful profile tests alone do not establish coverage of every current feature.
+Select `language_version: 2` explicitly for VIAL v2, including the implemented
+lifecycle-control family. Omission selects v1; the adapter never guesses from
+the filename. Version selectors are rejected on hardware queries, and VIAL
+does not support schedule preview. Source-query arguments are closed to
+`source_id`, its `source_path` alias, and the applicable `language_version`.
+Invalid selectors or inapplicable query kinds return JSON-RPC invalid params;
+source validation failures retain the public report and set tool `isError`.
+
+```bash
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":21,"method":"tools/call","params":{"name":"fsmgen_capability_query","arguments":{"section":"vial_tooling_v2"}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":22,"method":"tools/call","params":{"name":"fsmgen_discover_sources","arguments":{"file_kind":"vial","limit":5}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":23,"method":"tools/call","params":{"name":"fsmgen_semantic_introspect","arguments":{"source_id":"vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial","language_version":2}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":24,"method":"resources/read","params":{"uri":"fsmgen://vial/2/source/vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial/semantic"}}'
+```
+
+Capability-query sections `vial_tooling_v1` and `vial_tooling_v2` preserve the
+corresponding public capability records. The matching resource is
+`fsmgen://vial/{language_version}/capabilities`. Versioned source resources
+end in `/check` or `/semantic`; existing unversioned source resources also
+accept VIAL and default to v1. URI source identities may percent-encode `/`.
+Capabilities describe native tooling availability; a native `plan` capability
+does not advertise an MCP planning tool.
+
+The caller-approved workspace bounds VIAL sources and imports. The public API
+rejects symlink components and off-volume files and enforces source/import
+loading limits; see the
+[filesystem API contract](16dg-vial-public-lifecycle-reference.md#check-a-filesystem-source-from-an-embedding-host).
+MCP preserves semantic paths such as `/action` as semantic identities, rather
+than treating them as host filesystem paths. Provenance names `api_entrypoint`
+and the selected language version; `command_shape` is null because no hardware
+CLI command is invoked. Feature coverage still requires actual feature-level
+qualification; discovery alone is not a semantic or runtime support claim.
 
 ### MCP Client Compatibility Matrix
 

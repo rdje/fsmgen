@@ -1,0 +1,166 @@
+{
+  "book_example_results": [
+    {
+      "command": "perl bin/fsmgen-mcp --workspace-root . --request-json '{\"jsonrpc\":\"2.0\",\"id\":21,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_capability_query\",\"arguments\":{\"section\":\"vial_tooling_v2\"}}}'",
+      "exit_code": 0,
+      "id": 21,
+      "jsonrpc_error": false
+    },
+    {
+      "command": "perl bin/fsmgen-mcp --workspace-root . --request-json '{\"jsonrpc\":\"2.0\",\"id\":22,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_discover_sources\",\"arguments\":{\"file_kind\":\"vial\",\"limit\":5}}}'",
+      "exit_code": 0,
+      "id": 22,
+      "jsonrpc_error": false
+    },
+    {
+      "command": "perl bin/fsmgen-mcp --workspace-root . --request-json '{\"jsonrpc\":\"2.0\",\"id\":23,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_id\":\"vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial\",\"language_version\":2}}}'",
+      "exit_code": 0,
+      "id": 23,
+      "jsonrpc_error": false
+    },
+    {
+      "command": "perl bin/fsmgen-mcp --workspace-root . --request-json '{\"jsonrpc\":\"2.0\",\"id\":24,\"method\":\"resources/read\",\"params\":{\"uri\":\"fsmgen://vial/2/source/vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial/semantic\"}}'",
+      "exit_code": 0,
+      "id": 24,
+      "jsonrpc_error": false
+    }
+  ],
+  "capture_base_revision": "281f33dea1c2bfaf7068e98eede6e1555284bd33",
+  "evidence_legs": {
+    "durability": "Tracked capture_vial_mcp.py, T1871, native fixtures, schema snapshot and runnable book examples reproduce the captured contracts. File digests bind this capture; T1869 guards suffix membership and T1806 freezes native v1 metadata.",
+    "falsify": "Initial T1871 rejected missing versioned capabilities/resources, absent VIAL discovery, wrong hardware routing and unchecked selectors. Final controls reject wrong versions, hardware selectors, scheduling/action expansion, malformed source identities, symlink sources/directories/imports, workspace escape and over-limit inputs. Native v2 source without a selector remains a v1 failure.",
+    "rederive": "T1871 and the recorded actual CLI/stdio requests compare complete native public reports, not just success flags. Book commands exercise actual one-shot MCP capability, discovery, semantic and resource routes."
+  },
+  "file_sha256": {
+    "docs/audits/mcp-feature-coverage-20260924/capture_vial_mcp.py": "53d3b18f8982cc62ab71b25f0c947b3c8b352693dc8ca057c228b10c5f61400a",
+    "perl/FSM/Support/SemanticIntrospectionContract.pm": "ca737dcbe3e1bc8a861cea5da207f660a3861b834d9db48048ef4f5ca6472e57",
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "8d2e804a56b0984914de5e53130a80c076dd6dc534d26edd2acc43994ecda1f7",
+    "perl/FSM/VIAL/Tool.pm": "f20ae02bf57d9fd92eb52b82cc33145f2f27ce29b9b9f8627a66a4834ce6cb24",
+    "perl/FSM/VIAL/ToolCLI.pm": "3d48fff9de2d80f2104293a64786217233f4507ba2881cc106e6c1c1c78286e4",
+    "t/1869-semantic-introspection-mcp-protocol-aliases.t": "8f91b520dd4f5abf8d07676e205ce3dc0f910e3b15efe65b1e8347529aced648",
+    "t/1871-semantic-introspection-mcp-vial.t": "4e149663abdaed580af13edc5c25e237bce2bcace72f67f869b47a82c2de668c",
+    "t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json": "4f7ee2a5a2d369ede2ce4bd43d04f4d1849c5576214abd4d8e8b3c9291526199"
+  },
+  "limits": [
+    "Read-only source checking and semantic projection only; no MCP planning, backend run or mutation capability.",
+    "Complete feature-level coverage remains owned by .31.3; these are named real v1/v2/lifecycle fixtures and explicit negative controls.",
+    "The first selected band invocation named a nonexistent T1868 path and was rejected; only the corrected 14-file band is accepted.",
+    "Visual browser inspection remains unavailable; mdBook build and rendered HTML checks pass."
+  ],
+  "native_stdio_parity": [
+    {
+      "language_version": 1,
+      "native_command": [
+        "bin/fsmgen",
+        "vial",
+        "check",
+        "--json",
+        "--language-version",
+        "1",
+        "vial/ahb_subordinate_base_output_arbitration.vial"
+      ],
+      "native_mcp_equal": true,
+      "report_sha256": "69718f2de80900362e637bc9eaa24a03a5879b885c8cb923ca414a9395ec48f4",
+      "source": "vial/ahb_subordinate_base_output_arbitration.vial",
+      "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+      "stdio_request": {
+        "id": 1,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "language_version": 1,
+            "source_id": "vial/ahb_subordinate_base_output_arbitration.vial"
+          },
+          "name": "fsmgen_semantic_introspect"
+        }
+      },
+      "text_structured_equal": true
+    },
+    {
+      "language_version": 2,
+      "native_command": [
+        "bin/fsmgen",
+        "vial",
+        "check",
+        "--json",
+        "--language-version",
+        "2",
+        "vial/ahb_subordinate_base_output_arbitration_v2.vial"
+      ],
+      "native_mcp_equal": true,
+      "report_sha256": "87402a6ee8c3f670856f9f60772a461aea4c48a61531db94a6761aa5c87aebef",
+      "source": "vial/ahb_subordinate_base_output_arbitration_v2.vial",
+      "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0",
+      "stdio_request": {
+        "id": 1,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "language_version": 2,
+            "source_id": "vial/ahb_subordinate_base_output_arbitration_v2.vial"
+          },
+          "name": "fsmgen_semantic_introspect"
+        }
+      },
+      "text_structured_equal": true
+    },
+    {
+      "language_version": 2,
+      "native_command": [
+        "bin/fsmgen",
+        "vial",
+        "check",
+        "--json",
+        "--language-version",
+        "2",
+        "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial"
+      ],
+      "native_mcp_equal": true,
+      "report_sha256": "ef2ebbd6318461b113c055d3a653a1f4af05d03b7cb80e2887d1946933d24bdb",
+      "source": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial",
+      "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+      "stdio_request": {
+        "id": 1,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "language_version": 2,
+            "source_id": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial"
+          },
+          "name": "fsmgen_semantic_introspect"
+        }
+      },
+      "text_structured_equal": true
+    }
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.2",
+  "qualification_logs": {
+    "vial-mcp-band-corrected": {
+      "sha256": "2b46109bfd7089231fcb5ee25658dc9d1900d8b9ffba8232ac6bd055927106ab",
+      "summary": [
+        "All tests successful.",
+        "Files=14, Tests=55, 51 wallclock secs ( 0.03 usr  0.02 sys + 43.90 cusr  6.53 csys = 50.48 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "vial-mcp-baseline": {
+      "sha256": "833bf9e8b7dffa9675e3ae3144123ce5f0dccf7e9d524b8f6ca735db48365a10",
+      "summary": [
+        "Files=1, Tests=4,  2 wallclock secs ( 0.01 usr  0.01 sys +  1.69 cusr  0.12 csys =  1.83 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "vial-mcp-completion": {
+      "sha256": "9ecebadd2918976023605833a1f0cef2480125ae64ea07dd07878dc33b029cbd",
+      "summary": [
+        "All tests successful.",
+        "Files=2, Tests=6,  5 wallclock secs ( 0.01 usr  0.00 sys +  4.18 cusr  0.14 csys =  4.33 CPU)",
+        "Result: PASS"
+      ]
+    }
+  },
+  "schema": "fsmgen.vial_mcp_projection_repair.v1"
+}

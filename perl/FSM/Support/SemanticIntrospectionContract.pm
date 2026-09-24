@@ -136,6 +136,7 @@ sub semantic_introspection_mcp_adapter_entrypoints {
 sub semantic_introspection_source_query_kinds {
     my %kinds = (
         fsm => [qw(check semantic)],
+        vial => [qw(check semantic)],
         isf => [qw(check semantic schedule)],
         ppif => [qw(check semantic schedule)],
     );
@@ -161,6 +162,9 @@ sub semantic_introspection_query_domain_names {
             embedding
             backend_validation
             language_surface
+            vial_capabilities
+            vial_source_check
+            vial_source_semantic
         ),
     ];
 }
@@ -191,6 +195,9 @@ sub semantic_introspection_mcp_resource_uri_templates {
         'fsmgen://source/{source_id}/check',
         'fsmgen://source/{source_id}/semantic',
         'fsmgen://source/{source_id}/schedule',
+        'fsmgen://vial/{language_version}/capabilities',
+        'fsmgen://vial/{language_version}/source/{source_id}/check',
+        'fsmgen://vial/{language_version}/source/{source_id}/semantic',
     ];
 }
 
@@ -255,6 +262,15 @@ sub semantic_introspection_contract_surface_map {
             manifest_path => ['semantic_introspection'],
             contract_source => 'FSM::Support::SemanticIntrospectionMCPAdapter',
             current_entrypoints => semantic_introspection_mcp_adapter_entrypoints(),
+        },
+        vial_tool_capabilities => {
+            manifest_path => ['semantic_introspection', 'contract_surface_map', 'vial_tool_capabilities', 'versioned_entrypoints'],
+            contract_source => vial_tooling_contract_source(),
+            current_entrypoints => ['FSM::VIAL::Tool::vial_tool_capabilities()', 'FSM::VIAL::Tool::vial_tool_capabilities_v2()'],
+            versioned_entrypoints => {
+                1 => 'FSM::VIAL::Tool::vial_tool_capabilities()',
+                2 => 'FSM::VIAL::Tool::vial_tool_capabilities_v2()',
+            },
         },
         vial_source_file_check => {
             manifest_path => ['semantic_introspection', 'contract_surface_map', 'vial_source_file_check', 'file_query_contract'],
@@ -358,14 +374,14 @@ sub semantic_introspection_query_domains {
         ),
         _domain(
             'source_check',
-            'Run or read bounded check-JSON results for an explicit source identity.',
-            [qw(check_json diagnostics support_accounting generated_artifacts)],
+            'Read hardware check JSON or the public VIAL check result for an explicit source identity.',
+            [qw(check_json vial_source_file_check diagnostics support_accounting generated_artifacts)],
             'fsmgen://source/{source_id}/check',
         ),
         _domain(
             'source_semantic',
-            'Run or read bounded normalized semantic JSON for an explicit source identity.',
-            [qw(normalized_semantic_json semantic_exports support_accounting generated_artifacts)],
+            'Read hardware normalized semantics or the public VIAL check result including semantic_report.',
+            [qw(normalized_semantic_json vial_source_file_check semantic_exports support_accounting generated_artifacts)],
             'fsmgen://source/{source_id}/semantic',
         ),
         _domain(
@@ -398,6 +414,24 @@ sub semantic_introspection_query_domains {
             ['language_surface'],
             'fsmgen://contracts',
         ),
+        _domain(
+            'vial_capabilities',
+            'Read the complete public VIAL tooling capability record for an explicit language version.',
+            ['vial_tool_capabilities'],
+            'fsmgen://vial/{language_version}/capabilities',
+        ),
+        _domain(
+            'vial_source_check',
+            'Check a caller-rooted VIAL source with explicit language-version selection.',
+            ['vial_source_file_check'],
+            'fsmgen://vial/{language_version}/source/{source_id}/check',
+        ),
+        _domain(
+            'vial_source_semantic',
+            'Read the complete public VIAL check result and sanitized semantic_report for an explicit version.',
+            ['vial_source_file_check'],
+            'fsmgen://vial/{language_version}/source/{source_id}/semantic',
+        ),
     ];
 }
 
@@ -406,23 +440,23 @@ sub semantic_introspection_query_families {
         _query_family(
             'capability_query',
             'Manifest and contract discovery over repo-public metadata.',
-            [qw(capabilities contracts diagnostics support_accounting examples embedding backend_validation language_surface)],
+            [qw(capabilities contracts diagnostics support_accounting examples embedding backend_validation language_surface vial_capabilities)],
             'fsmgen_capability_query',
-            ['fsmgen://capabilities', 'fsmgen://contracts'],
+            ['fsmgen://capabilities', 'fsmgen://contracts', 'fsmgen://vial/{language_version}/capabilities'],
         ),
         _query_family(
             'check',
             'Bounded source checking with check JSON, diagnostics, support accounting, and generated-output inventory.',
-            ['source_check'],
+            [qw(source_check vial_source_check)],
             'fsmgen_check',
-            ['fsmgen://source/{source_id}/check'],
+            ['fsmgen://source/{source_id}/check', 'fsmgen://vial/{language_version}/source/{source_id}/check'],
         ),
         _query_family(
             'semantic_introspect',
             'Normalized semantic JSON inspection for source-bound semantic payloads.',
-            ['source_semantic'],
+            [qw(source_semantic vial_source_semantic)],
             'fsmgen_semantic_introspect',
-            ['fsmgen://source/{source_id}/semantic'],
+            ['fsmgen://source/{source_id}/semantic', 'fsmgen://vial/{language_version}/source/{source_id}/semantic'],
         ),
         _query_family(
             'schedule_preview',
@@ -471,17 +505,20 @@ sub semantic_introspection_mcp_resources {
         _resource('fsmgen://support-accounting', 'support_accounting', ['support_accounting'], support_accounting_contract_source()),
         _resource('fsmgen://examples', 'examples', ['documentation_examples'], documentation_contract_source()),
         _resource('fsmgen://sources', 'source_discovery', [qw(source_discovery support_accounting documentation_examples)], support_accounting_contract_source()),
-        _resource('fsmgen://source/{source_id}/check', 'source_check', [qw(check_json diagnostics support_accounting generated_artifacts)], check_diagnostics_contract_source(), JSON::PP::true),
-        _resource('fsmgen://source/{source_id}/semantic', 'source_semantic', [qw(normalized_semantic_json semantic_exports support_accounting generated_artifacts)], normalized_semantic_report_contract_source(), JSON::PP::true),
+        _resource('fsmgen://source/{source_id}/check', 'source_check', [qw(check_json vial_source_file_check diagnostics support_accounting generated_artifacts)], semantic_introspection_contract_source(), JSON::PP::true),
+        _resource('fsmgen://source/{source_id}/semantic', 'source_semantic', [qw(normalized_semantic_json vial_source_file_check semantic_exports support_accounting generated_artifacts)], semantic_introspection_contract_source(), JSON::PP::true),
         _resource('fsmgen://source/{source_id}/schedule', 'source_schedule', [qw(schedule_json generated_artifacts diagnostics)], isf_public_interface_contract_source(), JSON::PP::true),
+        _resource('fsmgen://vial/{language_version}/capabilities', 'vial_capabilities', ['vial_tool_capabilities'], vial_tooling_contract_source()),
+        _resource('fsmgen://vial/{language_version}/source/{source_id}/check', 'vial_source_check', ['vial_source_file_check'], vial_tooling_contract_source(), JSON::PP::true),
+        _resource('fsmgen://vial/{language_version}/source/{source_id}/semantic', 'vial_source_semantic', ['vial_source_file_check'], vial_tooling_contract_source(), JSON::PP::true),
     ];
 }
 
 sub semantic_introspection_mcp_tools {
     return [
         _tool('fsmgen_capability_query', 'capability_query', 'capabilities', 'capability manifest and section contracts'),
-        _tool('fsmgen_check', 'check', 'source_check', 'check JSON'),
-        _tool('fsmgen_semantic_introspect', 'semantic_introspect', 'source_semantic', 'normalized semantic JSON'),
+        _tool('fsmgen_check', 'check', 'source_check', 'hardware check JSON or complete public VIAL check result'),
+        _tool('fsmgen_semantic_introspect', 'semantic_introspect', 'source_semantic', 'hardware normalized semantics or complete VIAL check result with semantic_report'),
         _tool('fsmgen_schedule_preview', 'schedule_preview', 'source_schedule', 'schedule JSON'),
         _tool('fsmgen_discover_sources', 'discover_sources', 'source_discovery', 'catalog-backed source identities'),
         _tool('fsmgen_find_examples', 'find_examples', 'examples', 'repo-relative documentation and corpus examples'),
