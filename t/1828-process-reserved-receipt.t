@@ -67,6 +67,8 @@ sub model {
         state => $s, received => {}, original_receipt => $s->{receipt_observation},
         original_cleanup => $cleanup, original_stage => $stage,
         original_containment => 'fixture-group'}, 'FSM::Support::ProcessSupervisor::ReservedJob';
+    # This is an explicit closed identity model; no fake PID reaches a syscall.
+    $job->{identity} = refaddr($job); $job->{pair_identity} = refaddr($p);
     return ($job, $s->{receipt_observation});
 }
 

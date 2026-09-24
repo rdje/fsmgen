@@ -3761,17 +3761,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.1: retain completed Service topology and history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Require the original ReservedJob wrapper and forward final E admission.`
   Acceptance: `Anchor creator object identity before native effects and reject shallow copied or inherited wrappers across mutation and observation entrypoints. Preserve existing release behavior while forwarding an optional retained CODE check to the original Pair, publishing phase and failure safely through creator interruptions. Qualify actual gated commands, deferred and transient attempts, original callback identity, signals, copied/inherited rejection and exact cleanup; never fork under a preparation mask.`
-  Verification: `Pending history child .1. The pre-existing creator-PID-only wrapper guard permits shallow copies to reach the original Pair; this leaf owns the repair, not a parked finding.`
-  Commit: `pending`
+  Verification: `ReservedJob anchors original wrapper and Pair identity before native effects, forwards optional retained E admission and preserves no-callback behavior. Masked release queues publish phase and first failure before creator signals; interrupted returns revoke pending E without erasing original confirmed or uncertain native truth. Fresh wrapper phase/failure/fixed-wall checks surround every caller check. T1857 first exposed actual E after callback cancellation and then after mask-restoration plus remasking failure; both regressions now refuse E, with refusal publication requiring no further mask success. Literal binary output, original exec masks, copied/foreign/inherited refusal, transient retries, creator signals, first-failure and exact waits/pipes are qualified. Fourteen isolated defects reject at intended assertions; both copied positives pass, and every final native census closes. The exact predecessor accepts a copied resource-free wrapper. The explicit closed T1828 model gains original identities without fake PID syscalls. Final selected band passes 39 files/363 tests; syntax and mdBook build/HTML pass. Root/nested aggregate joining, Linux and browser visual qualification remain open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.2: guard original wrapper execution admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Join root execution release to original live aggregate ownership.`
   Acceptance: `Expose root release through its original retained job grant and Pair. Freshly require original root ledger/context, unchanged invocation wall, live native readiness and command custody immediately before every E attempt; retain native truth and first failure through deferred/retried/interrupted effects. Qualify actual command bytes/environment/context, copied/foreign/expired/revoked no-exec cuts and bounded cleanup without activating ordinary callers.`
-  Verification: `Pending original wrapper child .2.`
+  Verification: `Original native Pair, Service report and ReservedJob admission boundaries are qualified. Join only the original root aggregate grant/context/native owner at every E attempt; preserve native truth before handling interrupted returns. Decompose further if root release exceeds a safe slice; nested Service joining remains sibling .4.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4`
@@ -4486,7 +4486,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.2` fixes original ReservedJob object identity and forwards final retained E admission before root/nested aggregate integration. Preserve no-callback behavior, creator masks, original native truth, deadlines and exact bounded cleanup. Root checks and nested Service report reconciliation remain children .3/.4; preserve spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3` joins root execution release to original retained aggregate grant, context, native Pair and unchanged invocation wall at every E attempt. Keep launch forks outside preparation masks and retain original confirmed/uncertain native truth through interruptions. Nested Service admission and report reconciliation remain sibling .4; preserve spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7124,3 +7124,41 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   41 compact terminals. Claim inventory and staged doctrines verify the paired
   metadata. Product source, tests and mdBook behavior are unchanged; no native
   fixture, original producer, full CI or push runs for this slice.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original wrapper release: exact predecessor
+  00056915eccb7c0c66d4db0dd4c8bc0fc587d7ad accepts a copied resource-free wrapper;
+  the intended refusal assertion fails at .artifacts/reserved-execution-admission-variants/predecessor/fixture.t line 147.
+  The first native implementation run also reports one E attempt after callback
+  cancellation at t/1857-process-reserved-execution-admission.t line 179.
+  Direct forwarding checked Pair readiness but missed wrapper cleanup. A second
+  red cut reports one later E at t/1857-process-reserved-execution-admission.t line 259:
+  failed mask restoration plus unavailable remasking bypassed the error helper.
+- [x] **ADDRESSED (verified)** — Wrapper re-derivation: T1857 checks original
+  wrapper/Pair custody, callback deferral/retry, phase/failure/deadline changes,
+  actual binary command output and exec masks, real pending creator signals,
+  interrupted queue/E returns, exact waits and weak pipe closure. Both native
+  regressions now refuse E; failure publication works without another mask.
+  The closed T1828 model explicitly owns its identities and launches no fake PID.
+  Falsification: copied full/pure positives pass; fourteen isolated defects
+  reject copied wrappers, foreign pairs, ignored checks, stale before/after
+  checks, changed job walls, ignored first failure, unmasked queues, late inner
+  failure, retained pending E, overwritten first failure, late wrapper phase,
+  stale pre-mask phase and mask-dependent refusal. Each intended assertion fails;
+  every final variant reports closed exact-child and pipe inventories, including
+  fatal exits. Exit 255 is Perl fatal, not native signal. The disposable runner
+  initially assumed UTF-8 for raw binary assertion diagnostics; raw-byte logs
+  repair that harness error, and final controls preserve every result. Durability:
+  committed source, T1857/T1828, book/fact and this work-unit Git join; ignored
+  .artifacts/reserved-execution-admission-* raw logs and control JSON remain a
+  named evidence gap. Scratch variants/runner/book are removed after consuming
+  their results. Root/nested aggregate release and cross-platform/visual gaps
+  retain their separate owners; no ordinary adapter routing is activated.
+- [x] **NO REGRESSION** — Wrapper final component band reports
+  `All tests successful`, `Files=39, Tests=363`, with closed final native census.
+  ReservedJob, T1857 and T1828 syntax pass; mdBook builds and generated HTML
+  contains wrapper identity, callback refusal and mask-failure behavior. Knowledge
+  Map, claim inventory, task integrity and staged doctrines gate the commit.
+  This band executes bounded fixture commands. No original startup/proxy/compiler
+  producer, full CI or push is run by this slice.

@@ -1302,8 +1302,31 @@ return, `release_attempted` and `release_uncertain` preserve that ambiguity and
 prevent retries; `released == 0` then proves no absence of execution. The focused
 fixture independently observes command output, original exec masks, pipe EOF and
 exact child waits, including a deliberately lost return after a real byte.
-This native boundary is ready for the aggregate owner; connecting its checks to
-original root/nested grants and Service execution lifetime remains open.
+`ReservedJob::release($check)` now forwards a retained check to that original
+Pair while preserving the existing no-callback form. The wrapper and its Pair
+must both be the original objects; copied wrappers, inherited wrappers and a
+substituted original Pair cannot act for the job. Wrapper identity is retained
+before any native allocation.
+
+Release queuing publishes the wrapper's `releasing` phase under masking before
+calling Pair. A creator handler therefore sees both retained owners, and a
+handler's newer cleanup phase is never overwritten by the returning call. Queue
+failures retain the first cause and revoke pending E before signals resume;
+interrupted returns also revoke the queued byte. This refusal path works even
+when restoring or blocking signals fails; it needs no further successful mask
+operation. None of this queue work forks.
+
+Each actual attempt checks the original wrapper, Pair, releasing phase, first
+failure and unchanged invocation deadline before and after the caller's check.
+For example, a callback that cancels the wrapper and then returns `1` still
+refuses E: native Pair readiness alone cannot override wrapper cleanup. Deferral
+and transient retries keep the same deadlines and repeat the checks. Confirmed
+or uncertain native execution observations survive interrupted advancement.
+The fixture observes actual gate writes, binary command output, original exec
+masks, exact waits and closed pipe inventories, including its failure cleanup.
+
+This native/wrapper boundary is ready for the aggregate owner; connecting its
+checks to original root/nested grants and Service execution lifetime remains open.
 
 Normal callers retain the existing own-group supervisor. Aggregate execution
 release, nested routing and complete subtree qualification
@@ -1342,6 +1365,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admiss
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1856-process-service-execution-report.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1857-process-reserved-execution-admission.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

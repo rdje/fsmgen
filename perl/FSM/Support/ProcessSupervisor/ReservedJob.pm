@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use IO::Select;
+use Scalar::Util qw(refaddr);
 use FSM::Support::ProcessSupervisor ();
 use FSM::Support::ProcessSupervisor::GroupClosure ();
 
@@ -22,6 +23,10 @@ sub _owner {
     my ($self) = @_;
     _error('invalid or inherited job') unless ref($self) eq __PACKAGE__
         && $self->{owner_pid} == $$;
+    _error('invalid or copied job') unless ($self->{identity} // 0) == refaddr($self);
+    _error('job lost original pair') unless ref($self->{pair})
+        eq 'FSM::Support::ProcessSupervisor::GatedPair'
+        && ($self->{pair_identity} // 0) == refaddr($self->{pair});
 }
 
 sub prepare_record {
@@ -49,6 +54,8 @@ sub prepare_record {
             select => IO::Select->new, streams => {},
         },
     }, __PACKAGE__;
+    $self->{identity} = refaddr($self);
+    $self->{pair_identity} = refaddr($pair);
     $self->{original_cleanup} = $self->{state}{cleanup};
     $self->{original_stage} = $snapshot->{stage};
     $self->{original_containment} = $snapshot->{containment};
@@ -126,11 +133,69 @@ sub start {
 }
 
 sub release {
-    my ($self) = @_; _owner($self);
+    my ($self, $check) = @_; _owner($self);
     _error('release requires the ready published job')
-        unless @_ == 1 && $self->{state}{phase} eq 'ready';
-    $self->{pair}->release;
-    $self->{state}{phase} = 'releasing';
+        unless (@_ == 1 || (@_ == 2 && ref($check) eq 'CODE'))
+            && $self->{state}{phase} eq 'ready';
+    my $pair = $self->{pair};
+    my $started = 0;
+    my $ok = eval {
+        # This queues E on an already-ready pair; it cannot launch or fork.
+        # Publish the wrapper phase before Pair publication can be interrupted.
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            _owner($self);
+            _error('release requires the ready published job')
+                unless $self->{state}{phase} eq 'ready';
+            $started = 1;
+            $self->{state}{phase} = 'releasing';
+            my $queued = eval {
+                $pair->release(sub {
+                    my ($original_pair) = @_;
+                    $self->_release_live($original_pair);
+                    my $allow = $check ? $check->($original_pair) : 1;
+                    $self->_release_live($original_pair);
+                    return $allow;
+                });
+                1;
+            };
+            unless ($queued) {
+                my $error = $@;
+                eval { $self->_release_failed($pair, $error); 1 };
+                die $error;
+            }
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        eval { $self->_release_failed($pair, $error); 1 } if $started;
+        die $error;
+    }
+    return;
+}
+
+sub _release_live {
+    my ($self, $pair) = @_; _owner($self);
+    _error('execution admission lost original releasing job')
+        unless ref($pair) eq 'FSM::Support::ProcessSupervisor::GatedPair'
+            && refaddr($pair) == $self->{pair_identity}
+            && $self->{state}{phase} eq 'releasing' && !$self->{state}{first_failure};
+    _error('execution admission exceeded original job wall')
+        unless $self->{state}{deadline} == $pair->{original_deadline}
+            && _now() < $self->{state}{deadline};
+    return;
+}
+
+sub _release_failed {
+    my ($self, $pair, $error) = @_;
+    # This also runs after a fatal mask failure: refusal must not require a
+    # second successful mask. The latched failure itself blocks the E guard
+    # before native cancellation; ordinary queue errors already hold the mask.
+    $self->_latch('host_error', FSM::Support::ProcessSupervisor::_sanitize_control($error));
+    # Use the original retained pair even if a handler changed wrapper state.
+    # Cancellation revokes pending E but preserves confirmed release.
+    eval { $pair->cancel; 1 };
+    return;
 }
 
 sub _latch {
