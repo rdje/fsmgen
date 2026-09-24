@@ -132,6 +132,7 @@ my %exact_group = (
         docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md
         docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md
         docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md
+        docs/VIAL_SOURCE_INSPECTION_CONTRACT.md
     )],
     project_governance => [qw(
         docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md

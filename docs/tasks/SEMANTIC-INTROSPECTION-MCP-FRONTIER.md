@@ -399,7 +399,60 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Implement the selected current-feature parity guard and close coverage gaps.`
   Acceptance: `After .1 selects the population and observations, introduce a bounded maintainable guard that detects unaccounted public feature additions and tests actual native/MCP semantic parity with feature-specific assertions. Decompose every demonstrated gap into an exact repair leaf before code changes, commit repairs separately, and ensure new-feature acceptance requires API/MCP evidence or an explicit owned applicability boundary.`
+  Verification: `The selected guard exposed an intentional native VIAL summary boundary that does not satisfy deep feature inspection; .3 owns additive public detail before parity is called complete.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1`
+  Status: `pending`
+  Goal: `Implement catalog-derived actual native/API/MCP source-query coverage and focused controls.`
+  Acceptance: `Build a reusable test-side coverage selector over the native supported corpus and public query applicability map, retaining all contract IDs and deduplicating source work. Reject unknown query/source/version mappings and unaccounted VIAL fixtures. Execute actual public native and MCP producers, compare complete reports after only documented root normalization, and assert independent authored ISF and VIAL observations plus source/module provenance. Provide explicit focused selection and existing hosted corpus partition compatibility without calling a focused run exhaustive. Add fast malformed/new-family/missing-report controls, prove positive and known-bad outcomes, sync book/facts and commit before CI integration.`
+  Verification: `Pending implementation; .31.3.1 retains the selected population, pilot and intentional boundaries.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2`
+  Status: `pending`
+  Goal: `Integrate feature-query coverage with existing regression partitioning and future-feature signoff.`
+  Acceptance: `Use the repository-owned CI/regression contracts to register the new corpus coverage without repeating a full cohort in unrelated file shards. Verify exact disjoint complete partitioning, list-only/source-filter behavior and focused developer commands. Require new public source features to carry a supported corpus case and semantic/schedule API/MCP evidence or an explicit owned applicability boundary. Update maintained workflow/book guidance, run focused integration checks, and leave the full cohort run to .31.3.3 before activity closure.`
+  Verification: `Pending .1 guard.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`
+  Status: `active`
+  Goal: `Expose typed VIAL source details through a stable additive inspection API and MCP.`
+  Acceptance: `Root-cause the summary-only native contract before changing it. Keep existing v1/v2 tooling results and capability records unchanged. Select a separately versioned JSON-safe read-only projection, implement bounded portable/filesystem inspection and CLI exposure, then adapt MCP and qualify independent authored lifecycle/base semantics. Do not export private SemanticIR or require DUT binding, planning, execution or publication to inspect source meaning.`
+  Verification: `SemanticReport.pm intentionally projects names/counts; the v1 contract explicitly excludes action/expression bodies and v2 lifecycle summaries retain node_count only. Exact evidence and additive compatibility selection belong to .1.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.1`
+  Status: `done`
+  Goal: `Select the additive VIAL deep-inspection contract from verified missing public details.`
+  Acceptance: `Capture actual public summary output and independent authored lifecycle/base observations, verify intentional compatibility boundaries and record the precise additive API/result/CLI/MCP design. Decompose implementation into safe owned slices, update the book truthfully as selected rather than shipped, preserve frozen records, and commit selection before implementation.`
+  Verification: `Actual public CLI/newline MCP reports agree completely while excluding lifecycle nodes and base action/declaration bodies. The tracked probe and source assertions establish an intentional summary boundary; decision 0105 and the source-inspection contract select additive typed APIs and MCP without changing frozen records.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.1: select additive VIAL deep inspection`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2`
+  Status: `pending`
+  Goal: `Implement the selected bounded public VIAL detail API and native inspection command.`
+  Acceptance: `Decompose portable typed projection, filesystem adaptation and CLI into independently verifiable leaves before source changes. Use explicit public record constructors and closed field shapes, defensive fresh values, stable source identities and diagnostic behavior. Preserve base/lifecycle conditions, ordering, references and bounds with independent authored oracles; reject malformed invocation, unknown schema/family and incomplete projection. Reuse the existing bounded source loader without a second filesystem read, preserve old check/format/plan results and frozen capability hashes, and prove no artifacts or execution.`
   Verification: `Pending .1 selection.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3`
+  Status: `pending`
+  Goal: `Expose qualified VIAL detail inspection to external agents through MCP.`
+  Acceptance: `After .2, add discoverable explicitly versioned deep-inspection tool/resource contracts backed only by the clean public API. Preserve existing semantic summary queries and native/MCP parity, qualify actual v1/v2/imported/invalid/root-boundary sources and meaningful lifecycle/base detail assertions, update snapshots/book/facts and include the new query in the catalog-driven coverage guard. Keep execution and mutation outside this read-only slice.`
+  Verification: `Pending .2 API.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4`
+  Status: `active`
+  Goal: `Repair stale activation-equality assumptions in focused-document regression coverage.`
+  Acceptance: `T1569 must check maintained references against current structural/link contracts, and prove historical activation equality in a separately reconstructed repository-local fixture. Preserve the activation verifier and negative controls; do not revert legitimate downstream-book edits or loosen production validation. Demonstrate the failure predates this selection, retain exact activation reconstruction and corruption detection, run the repaired focused test and doctrines, then resume VIAL typed inspection.`
+  Verification: `Selection verification exposes activation mismatch at docs/isf-spec/13-downstream-diagnostics-conformance.md:759. Commit 0fc987bff intentionally replaced a link for mdBook inclusion, while T1569 still requires current prose to equal adoption bytes. Classification fixture membership is updated in the selection; historical/current separation remains this leaf.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3`
@@ -1054,11 +1107,11 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2` implements the selected
-catalog-driven native/API/MCP parity guard, with explicit VIAL version
-mapping and independent feature observations. `.31.3.3` then runs exhaustive
-qualification and resumes bounded HIAL streaming. Preserve spent native
-compiler/startup evidence and the separate read-only/write horizon.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4` repairs T1569's stale
+activation-equality assumption before `.31.3.2.3.2` implements additive VIAL
+inspection and `.31.3.2.3.3` adapts MCP. Then resume the catalog guard,
+CI/signoff integration and exhaustive qualification before HIAL streaming.
+Preserve spent native compiler/startup evidence and the read-only/write horizon.
 
 ## Decisions
 
@@ -1813,3 +1866,59 @@ qualified: `.31.3.2` owns the durable guard and `.31.3.3` its complete run.
   `All tests successful`, `Files=2, Tests=6`, `Result: PASS`. The mdBook
   builds and rendered report-selection guidance is present. No compiler or
   adapter behavior is changed by this selection slice.
+
+## Additive VIAL inspection selection — `.31.3.2.3.1`
+
+Independent feature assertions for the coverage guard exposed a depth gap, not
+an MCP transport defect. `probe_vial_summary.py` compares actual native check
+and newline MCP reports, asserts the exact family summary keys, and separately
+reads authored lifecycle deadlines, service target, seed and reset values.
+Its tracked `vial-summary-boundary.json` records the successful comparison and
+missing detail. The existing v1 contract deliberately excludes bodies; v2
+inherits that base boundary and adds only family identity/revision/count.
+T1808 independently confirms the typed compiler retains conditions and nodes.
+
+Decision `0105` and `docs/VIAL_SOURCE_INSPECTION_CONTRACT.md` select explicit
+public typed records behind independent portable/filesystem APIs, native CLI
+and MCP. Existing summaries and frozen capability records remain unchanged.
+`.31.3.2.3.2` owns implementation, then `.3.3` owns MCP; the guard and exhaustive
+qualification remain open. The book now states the actual summary limitation
+and labels the new route selected/unshipped. This is not feature closure.
+
+The knowledge card replaces historical routing prose with the current boundary;
+no fact-card allowance increases. The task, focused-contract and decision
+surfaces admit only their measured task-owned growth within existing ceilings;
+their debt states remain unchanged. The book aggregate change records only the
+corrected public scope. Browser visual inspection remains unavailable; the
+mdBook build and rendered HTML boundary statements pass.
+
+## Acceptance Checklist — `.31.3.2.3.1` inspection selection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'selected bounded summary fields' --format='%h %s' -- docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md`
+  returns `08f59167b HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: select spanned VIAL semantic contract`.
+  `SemanticReport::_package_summary`, `_named_summaries` and `_fixture_summary`
+  implement that deliberate omission. The actual public probe returns
+  `VIAL summary boundary and complete native/MCP equality: PASS`; its direct
+  source assertions falsify the assumption that equality implies detail.
+- [x] **ADDRESSED (verified)** — The owned selection adds a distinct typed
+  inspection schema/API plan and concrete implementation/MCP children without
+  widening frozen reports. `mdbook build docs/book -d .artifacts/vial-inspection-selection-book`
+  succeeds; rendered HTML assertions return
+  `Rendered HTML VIAL depth and selected/unshipped statements: PASS`.
+  Re-derivation is the actual CLI/MCP probe; falsification is independent
+  authored values plus exact summary-key exclusion; durability is the tracked
+  probe/result, decision, contract and existing T1808 semantic oracle.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1806-vial-v2-public-foundation.t t/1808-vial-v2-lifecycle-compiler-phases.t t/1871-semantic-introspection-mcp-vial.t`
+  reports `All tests successful. Files=3, Tests=15` and `Result: PASS`.
+  The immutable tooling and compiler/MCP routes remain unchanged. Full feature
+  qualification remains `.31.3.3`; no runtime or capacity conclusion follows.
+
+The new root contract is explicitly classified and added to the independent
+T1569 index fixture. Its first run caught that missing fixture member and an
+unrelated pre-existing activation-content mismatch. The latter originates in
+`0fc987bff`: the legitimate downstream book inclusion changed a link, while
+T1569 still compares evolving parts to adoption bytes. `.31.3.2.4` owns the
+immediate test repair; selection does not claim T1569 passes. Production index
+regeneration/check succeeds. No current-reference or activation checker is
+relaxed in this selection.

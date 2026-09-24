@@ -1,0 +1,257 @@
+{
+  "capture_base_revision": "add839d8e1fae12b86137df662dd19d833ade365",
+  "evidence_legs": {
+    "durability": "Tracked probe, source, output and owning task/decision retain the boundary and additive repair selection.",
+    "falsify": "Direct source-text assertions identify authored values absent from the family/scenario summary; exact public record keys exclude a hidden node carrier. T1808 separately guards their typed compiler semantics.",
+    "rederive": "Actual native CLI and newline MCP source reports compared completely."
+  },
+  "independent_authored_observations": {
+    "deadline_cycles": {
+      "startup": 32,
+      "total": 1024
+    },
+    "random_seed": "1",
+    "readiness_name": "ready",
+    "reset_cycles": 3,
+    "service_target": "fixture_background"
+  },
+  "limits": [
+    "This is a public projection gap against deep inspection, not lost compiler meaning or MCP truncation.",
+    "Existing summary contracts remain valid and frozen; the additive inspection route is selected, not implemented."
+  ],
+  "mcp_request": {
+    "id": 1,
+    "jsonrpc": "2.0",
+    "method": "tools/call",
+    "params": {
+      "arguments": {
+        "language_version": 2,
+        "source_id": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial"
+      },
+      "name": "fsmgen_semantic_introspect"
+    }
+  },
+  "native_command": [
+    "bin/fsmgen",
+    "vial",
+    "check",
+    "--json",
+    "--language-version",
+    "2",
+    "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial"
+  ],
+  "native_mcp_complete_report_equal": true,
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.1",
+  "public_package_projection": {
+    "fixtures": [
+      {
+        "choices": [
+          {
+            "decision_id": "success.wait_cycles",
+            "distribution": {
+              "high": {
+                "kind": "integer_value",
+                "signed": 0,
+                "value_decimal": 2,
+                "width": 4
+              },
+              "kind": "uniform",
+              "low": {
+                "kind": "integer_value",
+                "signed": 0,
+                "value_decimal": 1,
+                "width": 4
+              }
+            },
+            "name": "success_wait",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::choice::success_wait",
+            "type": {
+              "family": "u",
+              "four_state": 0,
+              "kind": "scalar",
+              "signed": 0,
+              "width": 4
+            }
+          }
+        ],
+        "coverpoints": [
+          {
+            "bin_count": 2,
+            "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+            "name": "stall_seen",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::coverpoint::stall_seen"
+          }
+        ],
+        "crosses": [],
+        "domains": [
+          {
+            "name": "bus",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus"
+          }
+        ],
+        "dut_name": "dut",
+        "endpoints": [
+          {
+            "access": "public_port",
+            "name": "ready_out",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::endpoint::ready_out",
+            "type": {
+              "family": "logic",
+              "four_state": 1,
+              "kind": "scalar",
+              "signed": 0,
+              "width": 1
+            }
+          },
+          {
+            "access": "public_port",
+            "name": "response",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::endpoint::response",
+            "type": {
+              "family": "logic",
+              "four_state": 1,
+              "kind": "scalar",
+              "signed": 0,
+              "width": 1
+            }
+          },
+          {
+            "access": "public_port",
+            "name": "read_data",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::endpoint::read_data",
+            "type": {
+              "family": "logic",
+              "four_state": 1,
+              "kind": "scalar",
+              "signed": 0,
+              "width": 32
+            }
+          },
+          {
+            "access": "verification_probe",
+            "name": "stored_data",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::endpoint::stored_data",
+            "type": {
+              "family": "logic",
+              "four_state": 1,
+              "kind": "scalar",
+              "signed": 0,
+              "width": 32
+            }
+          }
+        ],
+        "faults": [
+          {
+            "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+            "duration_cycles": 1,
+            "field_name": "size",
+            "name": "unsupported_size",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::fault::unsupported_size",
+            "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+          }
+        ],
+        "model_instances": [
+          {
+            "model_id": "ahb_subordinate_base_output_arbitration::model::event_counter",
+            "name": "accepts",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::model_instance::accepts"
+          },
+          {
+            "model_id": "ahb_subordinate_base_output_arbitration::model::event_counter",
+            "name": "completions",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::model_instance::completions"
+          }
+        ],
+        "name": "base_output_arbitration",
+        "scenarios": [
+          {
+            "action_count": 12,
+            "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+            "fiber_count": 2,
+            "name": "success",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success",
+            "timeout_cycles": 256
+          },
+          {
+            "action_count": 9,
+            "domain_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus",
+            "fiber_count": 0,
+            "name": "unsupported_size",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size",
+            "timeout_cycles": 256
+          }
+        ],
+        "scoreboard_instances": [
+          {
+            "name": "writes",
+            "scoreboard_id": "ahb_subordinate_base_output_arbitration::scoreboard::accepted_writes",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scoreboard_instance::writes",
+            "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+          }
+        ],
+        "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
+        "transaction_bindings": [
+          {
+            "name": "write",
+            "semantic_id": "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::transaction_binding::write",
+            "transaction_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+          }
+        ],
+        "unit_bridge_ref": "unit/ahb_lite_subordinate"
+      }
+    ],
+    "imports": [],
+    "intent_families": [
+      {
+        "family_id": "lifecycle_control",
+        "node_count": 12,
+        "revision": 1,
+        "semantic_id": "ahb_subordinate_base_output_arbitration::package::ahb_subordinate_base_output_arbitration::intent_family::lifecycle_control"
+      }
+    ],
+    "models": [
+      {
+        "name": "event_counter",
+        "semantic_id": "ahb_subordinate_base_output_arbitration::model::event_counter"
+      }
+    ],
+    "name": "ahb_subordinate_base_output_arbitration",
+    "scoreboards": [
+      {
+        "name": "accepted_writes",
+        "semantic_id": "ahb_subordinate_base_output_arbitration::scoreboard::accepted_writes"
+      }
+    ],
+    "semantic_id": "ahb_subordinate_base_output_arbitration::package::ahb_subordinate_base_output_arbitration",
+    "source_name": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial",
+    "transactions": [
+      {
+        "name": "ahb_write",
+        "semantic_id": "ahb_subordinate_base_output_arbitration::transaction::ahb_write"
+      }
+    ],
+    "types": [
+      {
+        "name": "htrans_t",
+        "semantic_id": "ahb_subordinate_base_output_arbitration::type::htrans_t"
+      },
+      {
+        "name": "address_t",
+        "semantic_id": "ahb_subordinate_base_output_arbitration::type::address_t"
+      },
+      {
+        "name": "data_t",
+        "semantic_id": "ahb_subordinate_base_output_arbitration::type::data_t"
+      }
+    ]
+  },
+  "root_cause": {
+    "contract": "docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md#sanitized-semantic-report",
+    "introduced_contract_commit": "08f59167b",
+    "mechanism": "_package_summary keeps only the family identity/revision/count; _named_summaries and _fixture_summary intentionally omit declaration and action bodies.",
+    "producer": "perl/FSM/VIAL/SemanticReport.pm"
+  },
+  "schema": "fsmgen.vial_summary_boundary_audit.v1",
+  "source_id": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial",
+  "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7"
+}

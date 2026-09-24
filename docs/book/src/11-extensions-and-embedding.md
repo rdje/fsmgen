@@ -2823,7 +2823,7 @@ questions. Use the public report that retains the authored information:
 | ISF scalar storage fields | `fsmgen_schedule_preview` | `report.inferred_storage[].fields` |
 | ISF passive observations | `fsmgen_schedule_preview` | `report.verification_observations[]` |
 | Protocol scheduling, ordering and generated runtime assertions | `fsmgen_schedule_preview` | The source's public schedule report and protocol metadata |
-| VIAL source meaning and lifecycle intent | `fsmgen_semantic_introspect` with the explicit version | `report.semantic_report` |
+| VIAL declarations and lifecycle family summaries | `fsmgen_semantic_introspect` with the explicit version | `report.semantic_report`; names and counts, not action bodies or lifecycle conditions |
 | Backend, planning or runtime availability | `fsmgen_capability_query` | The relevant public capability section; availability is not an MCP execution command |
 
 For example, query `isf/storage_fields.isf` with schedule preview to inspect
@@ -2842,6 +2842,13 @@ native check result under `report`, including `semantic_report`, source
 identities, capability/support evidence and structured diagnostics. The MCP
 query kind stays explicit, while native `report.action` remains `check`.
 No planning, backend execution or artifact publication occurs.
+
+This VIAL report is a summary: it omits expression/action bodies and retains
+lifecycle family identity, revision and node count rather than node conditions,
+deadlines or service policies. Matching native and MCP summaries proves that
+transport preserves the report, not that an agent can inspect those details.
+A separate typed source-inspection API and MCP route are selected under
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`, but are not yet shipped.
 
 Select `language_version: 2` explicitly for VIAL v2, including the implemented
 lifecycle-control family. Omission selects v1; the adapter never guesses from

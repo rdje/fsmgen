@@ -3,6 +3,7 @@ id: semantic-introspection-mcp-frontier
 title: Deep semantic introspection is an active first-class FSMGen feature
 answers:
   - "does FSMGen have an MCP task tree?"
+  - "does VIAL semantic inspection expose lifecycle conditions and action bodies?"
   - "what owns semantic introspection for AI automation?"
   - "should FSMGen be MCP-first?"
   - "what can FSMGen apply from an RTL simulator MCP design?"
@@ -87,11 +88,8 @@ reverify: >-
   t/1459-semantic-introspection-mcp-jsonrpc-batch-envelope-boundary.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t
 ---
 
-The director reactivated this tree for latest-feature semantic/API/MCP parity.
-Read `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` for the current leaf;
-`.31.1` owns the source-family audit and `.31.2` owns concrete repairs.
-The profile completed through `.30` is historical evidence, not proof that
-later product features are covered. Complete prior chronology is recoverable:
+Current ownership: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`.
+The earlier profile is not latest-feature coverage proof. Exact prior history:
 
 ```sh
 git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md
@@ -164,6 +162,10 @@ Durable capture and limits:
 record. The existing reverify command above checks the historical shipped
 profile only; it is not an all-feature coverage oracle. `.31.3` owns stronger
 coverage qualification and ongoing feature-signoff integration after repairs.
+
+VIAL summaries omit action bodies and lifecycle nodes by design. Decision
+`0105` and `docs/VIAL_SOURCE_INSPECTION_CONTRACT.md` select additive typed
+inspection; `.31.3.2.3` owns implementation. Summary parity is not deep coverage.
 
 Current-feature query selection and its pilot are captured in
 `docs/audits/mcp-feature-coverage-20260924/feature-coverage-selection.json`.
