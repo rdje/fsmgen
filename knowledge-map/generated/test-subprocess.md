@@ -1,7 +1,7 @@
 # Knowledge Map: `test-subprocess`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **164** uniquely owned question entries.
+> **1** facts · **165** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -53,6 +53,7 @@
 - q="how does a compiler stage carry its receipt role?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does a missing program return a private supervisor job?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does a sealed caller receive the finished private supervisor job?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="how does a shared service retain its endpoint through close?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does an executable program return a private job before fork?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does coordination admit a Python framework worker?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does fresh observation acquisition retain source snapshots?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)

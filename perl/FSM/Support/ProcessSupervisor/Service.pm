@@ -6,13 +6,16 @@ use warnings;
 use Errno qw(EAGAIN EINTR EWOULDBLOCK);
 use IO::Select;
 use Math::BigInt;
+use Scalar::Util qw(refaddr);
 use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime);
 use FSM::Support::ProcessSupervisor::Connection ();
 use FSM::Support::ProcessSupervisor::Endpoint ();
+use FSM::Support::ProcessSupervisor::Reservation ();
 use FSM::Support::ProcessSupervisor::Wire ();
 
-# Inactive transport admission only. The service takes ownership of its run;
-# the trusted caller owns job admission, child slots and any later ACCEPT/exec.
+# Inactive transport admission only. A standalone service owns its endpoint;
+# a shared service borrows it until the aggregate native owner retires the run.
+# The trusted caller owns job admission, child slots and any later ACCEPT/exec.
 # A taken request remains subject to its original admission wall. This module
 # deliberately provides no command launch or post-ACCEPT lifecycle API.
 my $LIMIT = FSM::Support::ProcessSupervisor::Wire::limits();
@@ -32,23 +35,36 @@ sub _minimum {
 sub _window { return $_[0]->copy->badd($LIMIT->{handshake_seconds} * $SECOND) }
 sub _owner {
     my ($self) = @_;
-    _error('invalid service handle') unless ref($self) eq __PACKAGE__;
+    _error('invalid or copied service handle') unless ref($self) eq __PACKAGE__
+        && defined($self->{owner_identity}) && $self->{owner_identity} == refaddr($self);
     _error('inherited service cannot be reused') unless $self->{owner_pid} == $$;
 }
 
 sub new_service {
     _error('expected endpoint run and original deadline') unless @_ == 2;
-    my ($run, $deadline_ns) = @_;
+    return _new_service(@_, 0);
+}
+
+sub new_shared_service {
+    _error('expected shared endpoint run and original deadline') unless @_ == 2;
+    return _new_service(@_, 1);
+}
+
+sub _new_service {
+    my ($run, $deadline_ns, $shared) = @_;
     _error('expected an owned endpoint run')
         unless ref($run) eq 'FSM::Support::ProcessSupervisor::Endpoint';
     my $context = FSM::Support::ProcessSupervisor::Wire::decode_context($run->context);
     my $deadline = _time($deadline_ns);
     _error('original deadline already expired') if $deadline->bcmp(_time(_now_ns())) <= 0;
-    return bless {
+    my $self = bless {
         owner_pid => $$, run => $run, identity => $context->{run}, deadline => $deadline,
+        shared_run => $shared,
         parents => {1 => {token => $context->{token}, deadline => $deadline->copy}},
         high_parent => 1, next_ticket => 1, records => {}, order => [], closed => 0,
     }, __PACKAGE__;
+    $self->{owner_identity} = refaddr($self);
+    return $self;
 }
 
 sub context {
@@ -298,8 +314,9 @@ sub counts {
         open => scalar grep { $_->{state} ne 'closed' } values %{$self->{records}}};
 }
 
-# The service owns the endpoint and accepted sockets, including peers whose
-# requests have been handed off. Closed outcomes retain slots but no handle.
+# Include the owned or borrowed run and all accepted sockets, including handed
+# requests. Closed peer outcomes retain slots but no handle. A closed shared
+# service can still report its aggregate owner's live endpoint handles.
 sub handles {
     _error('unexpected handles arguments') unless @_ == 1;
     my ($self) = @_; _owner($self);
@@ -315,23 +332,31 @@ sub failure {
 sub close {
     _error('unexpected close arguments') unless @_ == 1;
     my ($self) = @_; _owner($self);
-    return {%{$self->{cleanup}}} if $self->{closed};
-    $self->{closed} = 1;
-    $self->{parents} = {};
-    my $failure = $self->{failure} // {status => 'cancelled', diagnostic => 'private service closed'};
-    $self->_fail_record($_, $failure->{status}, $failure->{diagnostic}) for values %{$self->{records}};
-    $self->{cleanup} = $self->{run}->close;
-    if ($self->{descriptor_cleanup_failed}) {
-        $self->{cleanup}{ok} = 0;
-        $self->{cleanup}{diagnostic} = 'accepted descriptor cleanup incomplete; ' . $self->{cleanup}{diagnostic};
-    }
-    $self->{failure} //= {status => 'cleanup_failed', diagnostic => 'private endpoint cleanup failed'}
-        unless $self->{cleanup}{ok};
+    return {%{$self->{cleanup}}} if $self->{cleanup};
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        # A handler may have completed close before this mask took effect.
+        return if $self->{cleanup};
+        $self->{closed} = 1;
+        $self->{parents} = {};
+        my $failure = $self->{failure} // {status => 'cancelled', diagnostic => 'private service closed'};
+        $self->_fail_record($_, $failure->{status}, $failure->{diagnostic}) for values %{$self->{records}};
+        $self->{cleanup} = $self->{shared_run}
+            ? {ok => 1, endpoint_retained => 1, socket_removed => 0, directory_removed => 0,
+                diagnostic => 'shared endpoint retained by aggregate owner'}
+            : $self->{run}->close;
+        if ($self->{descriptor_cleanup_failed}) {
+            $self->{cleanup}{ok} = 0;
+            $self->{cleanup}{diagnostic} = 'accepted descriptor cleanup incomplete; ' . $self->{cleanup}{diagnostic};
+        }
+        $self->{failure} //= {status => 'cleanup_failed', diagnostic => 'private endpoint cleanup failed'}
+            unless $self->{cleanup}{ok};
+    });
     return {%{$self->{cleanup}}};
 }
 sub discard_inherited {
     _error('expected inherited service') unless @_ == 1
-        && ref($_[0]) eq __PACKAGE__ && $_[0]{owner_pid} != $$;
+        && ref($_[0]) eq __PACKAGE__ && $_[0]{owner_pid} != $$
+        && defined($_[0]{owner_identity}) && $_[0]{owner_identity} == refaddr($_[0]);
     my ($self) = @_;
     $_->{io}->discard_inherited for values %{$self->{records}};
     $self->{run}->discard_inherited;

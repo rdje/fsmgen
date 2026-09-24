@@ -879,6 +879,23 @@ before parents. Closed descriptors alone cannot release an incomplete native
 closure. In this pre-exec scope, cancelled outcomes keep their logical slots
 until whole-run close consumes them; result delivery belongs to later work.
 
+The transport service now has an explicit shared-endpoint constructor. Closing
+that service revokes parent authority and closes accepted sockets while leaving
+the original endpoint with the aggregate owner. Expiry, root revocation and a
+fatal accept use the same lifetime boundary. The standalone constructor still
+retires its own endpoint. A closed shared service reports the remaining borrowed
+endpoint handles until the aggregate owner retires them.
+
+For example, an accept failure can stop admission while gated native jobs still
+need cleanup; it must leave the listener and directory identities with their
+original owner. Service close masks signals until accepted-peer outcomes and
+the complete cleanup result are published. A pending creator handler can then
+interrupt return without stranding resources. Re-entry before masking rechecks
+completion, and a partial close with no completed result remains retryable.
+Uncertain accepted-socket cleanup stays failed even if the handles closed.
+Copied service records cannot retire the original owner's custody. Native
+accept-record publication and aggregate descriptor binding remain open.
+
 Normal callers retain the existing own-group supervisor. Accepted-peer
 accounting, publication, nested routing and complete subtree qualification
 still have separate open owners. These private components
@@ -896,6 +913,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1836-process-coordinator
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1837-process-admitted-forks.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1838-process-cleanup-wall-clipping.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1839-process-coordinator-lifecycle.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1840-process-service-shared-endpoint.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
