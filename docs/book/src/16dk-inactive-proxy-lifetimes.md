@@ -1203,6 +1203,31 @@ true still requires fresh Service authority and lifetime checks after the callba
 A thrown or malformed result closes the original peer and preserves the refusal.
 The existing zero-callback and accept-only forms retain their behavior.
 
+`Service::execution_admission($ticket, $job)` now checks the matching original
+bound peer before a native gate attempt. It rechecks retained parent/job authority
+and the original admission wall, inspects only that Connection, and requires
+complete matching ACCEPT plus quiet input. It accepts no other connection and
+writes no queued bytes. A partial ACCEPT or partial/interrupted client frame
+returns `0`; a decoded matching CANCEL closes the peer as cancellation, while
+foreign or repeated control closes it as a protocol failure. EOF and original
+expiry also prevent admission. Only a fresh successful check returns `1`.
+
+For example, a positive check followed by one new CANCEL byte requires deferral
+at the next attempt. An empty kernel buffer cannot bypass that retained byte.
+Once the full control message arrives, the check consumes it and closes the
+matching peer. A check that crosses its fixed wall or loses authority during
+inspection also refuses, without extending the deadline.
+
+`execution_observation($ticket)` returns copied `latest` and `admitted` checks,
+the original association and both deadlines, plus any retained failure. The last
+positive check remains historical when a later check defers or the peer closes.
+Creator signals see the completed check before interrupting its return; ordinary
+return also rechecks any closure performed by a handler. These records contain
+transport-check times, not native execution timestamps. Positive admission alone
+changes no lifetime and establishes no execution effect. The trusted aggregate
+must join it to its original Pair; that release and the Service execution-phase
+transition remain subsequent work.
+
 The aggregate now joins that boundary to the original ready gated process.
 `start_request($ticket)` prepares and starts its associated original grant;
 `advance_request($ticket)` advances native handoff and queues the matching ACCEPT
@@ -1286,6 +1311,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1849-process-parent-toke
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1850-process-aggregate-context.t t/1851-process-request-association.t t/1852-process-gated-accept.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

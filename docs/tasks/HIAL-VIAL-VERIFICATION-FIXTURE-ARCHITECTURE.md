@@ -3758,7 +3758,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Retain matching Service execution admission and original lifetimes.`
   Acceptance: `Freshly inspect only the original bound peer, complete original ACCEPT, live original parent/job authority and fixed admission wall; any pending control defers or refuses release. Retain admitted transport state so the trusted aggregate can publish an original confirmed native effect before or after an interrupted return, including historical effect after peer closure without reopening it. Preserve the original admission deadline separately from the original clipped execution lifetime; switch active checks without renewing clocks or erasing publication history. Qualify literal sockets, boundaries, cancellation/protocol refusal, copied authority and interruption. Native effect authority and root/nested integration remain with the aggregate sibling.`
-  Verification: `Read-only Connection inspection is qualified; Service currently keeps its admission wall after complete ACCEPT.`
+  Verification: `Child .1 qualifies fresh matching transport admission without changing a lifetime or claiming execution. Child .2 records a trusted aggregate report of its original confirmed native effect and switches active transport lifetime while retaining original admission history; the aggregate remains responsible for original native authority.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.1`
+  Status: `done`
+  Goal: `Freshly admit only a matching quiet bound peer with complete original ACCEPT.`
+  Acceptance: `Add an original Service execution-admission check for a matching ticket/job. Recheck retained Service/peer/context authority and fixed walls, inspect only that original Connection with no accepts or writes, consume completed cancellation/foreign control, and defer partial or interrupted input. Require complete matching original ACCEPT before permitting a native gate attempt; retain copied admission observations without granting native authority or renewing clocks. Qualify literal sockets, incomplete publication/input, EOF, invalid identity, deadline/callback cuts and interrupted observations. Leave effective execution lifetime unchanged.`
+  Verification: `Service execution_admission freshly inspects only the original matching bound peer, requiring complete matching ACCEPT, quiet input, retained parent/job authority and fixed walls. It accepts no connection and writes no bytes; fragments/EINTR defer, decoded cancellation/foreign control and EOF revoke. Original latest/last-positive checks remain copied historical observations through deferral, closure and signals, never a native effect or longer lifetime. T1855 qualifies literal sockets, partial publication/control, unrelated peers/backlog, native EOF, deadlines, authority loss, original failure, copied/inherited refusal and exact endpoint/wait cleanup. Twelve isolated defects reject and every endpoint census is unchanged. The selected bounded band passes 37 files/346 tests; syntax, mdBook build/HTML and doctrines pass. Linux and browser visual qualification remain open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.1: admit only matching quiet execution peers`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2`
+  Status: `active`
+  Goal: `Record original admitted execution effects without renewing transport clocks.`
+  Acceptance: `After fresh Service admission is qualified, retain a trusted aggregate report of an original confirmed native effect under masking. Require original matching admission history; keep original admission deadline and clipped execution deadline separate. Switch active transport checks to execution lifetime, retain cancellation/EOF/protocol refusal and copied historical publication, and never reopen a closed peer. Reconcile interrupted reports idempotently without fabricating a native timestamp or effect. Qualify exact walls, root/parent/job expiry, closure, copies and real pending signals. Aggregate root/nested integration remains the following sibling.`
+  Verification: `Fresh admission is qualified; native effect authority belongs to the original aggregate Pair and cannot be inferred from a positive transport check.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4`
@@ -4473,7 +4488,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3` qualifies matching Service execution admission and original lifetime transitions using fresh read-only input inspection. Retain original admission history separately from the clipped execution deadline, and record original confirmed effects without reopening closed peers. Native Pair admission and Connection inspection are qualified; aggregate root/nested release, streaming, fair composition and independent qualification remain open. Preserve live claim owners, execution-scope corrections, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.2` records original admitted execution effects while retaining fixed admission history and switching active transport checks to the clipped execution lifetime. Keep closed peers closed and preserve original failure and interrupted report history. Native Pair admission, Connection input inspection and fresh Service checks are qualified; aggregate root/nested release, streaming, fair composition and independent qualification remain open. Preserve live claim owners, execution-scope corrections, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7147,3 +7162,35 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   includes bounded command fixtures; original startup/proxy/compiler producers,
   full CI and push remain gated. Service and aggregate execution integration
   remain subsequent work.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Service execution admission: the exact
+  55758fd663370365eb5f9946716fb267353fbd7a fixture reports missing
+  `execution_observation` at .artifacts/service-execution-admission-variants/predecessor/fixture.t line 180.
+  Bound socket-write admission does not require quiet partial input or complete
+  ACCEPT; a distinct fresh transport check is needed before an original E attempt.
+- [x] **ADDRESSED (verified)** — Service re-derivation: T1855 sends literal
+  READY/SPAWN/ACCEPT/control through real sockets and observes only the matching
+  read, no new accepts/writes, unchanged walls, exact prefixes, EOF, retained
+  failure/history and closure. It covers pending/decoded control after a positive
+  check, unrelated backlog/peers, EINTR, inspection errors, parent/job/endpoint
+  revocation, inclusive walls before/after inspection/publication, copied/inherited
+  authority and native signals before/after retained publication. Positive checks
+  alone expire at the original admission wall. Falsification: identical copied
+  positive passes; twelve defects reject incomplete ACCEPT (1), ignored input (3),
+  cached input (5), foreign publication (1), stale post-inspection checks (2),
+  aliased positive history (1), aliased view (1), copied Service (1), unmasked
+  check (1), omitted refusal closure (2), stale return (1) and renewed wall (2).
+  Exact predecessor exits 255 for the missing API. These are Perl fixture exits;
+  every endpoint census is unchanged. Durability: source/T1855, book, fact and
+  this owner; raw .artifacts/service-execution-admission-* logs/JSON remain a named
+  gap. Predecessor/variant sources, runner and generated book are removed after
+  consumption. Linux and browser visual evidence remain missing.
+- [x] **NO REGRESSION** — Service execution band: `All tests successful`,
+  `Files=37, Tests=346`, selected T1812–T1814/T1817 and T1823–T1855 under the
+  RAM guard. Syntax is OK; mdBook build/HTML verifies the transport/native-effect
+  boundary. Knowledge Map, claim inventory and staged doctrines verify metadata.
+  The broader band runs bounded command fixtures; original startup/proxy/compiler
+  producers, full CI and push remain gated. Execution transition and aggregate
+  release remain open; this API neither executes a job nor extends its lifetime.

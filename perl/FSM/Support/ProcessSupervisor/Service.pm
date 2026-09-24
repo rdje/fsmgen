@@ -17,8 +17,9 @@ use FSM::Support::ProcessSupervisor::Wire ();
 # a shared service borrows it until the aggregate native owner retires the run.
 # The trusted caller owns ledger admission, native readiness and exec release.
 # Service binds a handed request to its ready job context and tracked ACCEPT;
-# local publication remains subject to the original admission wall. This module
-# provides no command launch or post-exec result lifecycle API.
+# local publication and fresh execution admission keep the original admission
+# wall. Historical transport checks never establish a native execution effect.
+# This module provides no command launch or post-exec result lifecycle API.
 my $LIMIT = FSM::Support::ProcessSupervisor::Wire::limits();
 my $SECOND = 1_000_000_000;
 
@@ -535,6 +536,100 @@ sub _write_admission {
         return $admitted;
     }
     return 1;
+}
+
+# This is transport admission only. The aggregate must call it immediately
+# before its original native E attempt; historical observations grant no exec.
+sub execution_admission {
+    _error('expected original execution ticket and job') unless @_ == 3;
+    my ($self, $ticket, $job) = @_; _owner($self);
+    FSM::Support::ProcessSupervisor::Wire::_uint($_, '4294967295', 1) for $ticket, $job;
+    my $record = $self->{records}{$ticket} or _error('unknown connection ticket');
+    _error('execution admission requires the matching bound job')
+        unless defined($record->{job}) && $record->{job} == $job;
+    my ($started, $admitted) = (0, 0);
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            _error('original execution peer is no longer retained')
+                unless $self->{records}{$ticket}
+                    && refaddr($self->{records}{$ticket}) == refaddr($record)
+                    && $record->{job} == $job;
+            my $check = $record->{execution_check} = {state => 'checking', checked_ns => _now_ns()};
+            $started = 1;
+            my $checked = eval {
+                unless ($self->_bound_live($record)) { $check->{state} = 'refused'; return 1; }
+                my $io = $record->{io};
+                _error('execution admission lost original accepted connection')
+                    unless defined($io->handle) && defined($record->{handle})
+                        && refaddr($io->handle) == refaddr($record->{handle});
+                my $input = $io->inspect_input;
+                if (my $failure = $io->failure) {
+                    $self->_fail_record($record, $failure->{status}, $failure->{diagnostic});
+                    $check->{state} = 'refused'; return 1;
+                }
+                if ($io->is_closed) {
+                    $self->_fail_record($record, 'peer_closed', 'original execution connection is closed');
+                    $check->{state} = 'refused'; return 1;
+                }
+                # Inspection can consume the wall or observe peer cancellation.
+                # Revalidate before classifying even a deferred attempt.
+                unless ($self->_bound_live($record)) { $check->{state} = 'refused'; return 1; }
+                if (my $message = $io->take_frame) {
+                    $self->_message($record, $message, _time(_now_ns()));
+                    $check->{state} = 'refused'; return 1;
+                }
+                if ($input->{state} ne 'quiet') {
+                    $check->{state} = 'pending'; $check->{reason} = 'input'; return 1;
+                }
+                my $publication = $io->accept_publication;
+                unless ($publication && $publication->{job} == $job) {
+                    $self->_fail_record($record, 'host_error', 'execution admission lost original ACCEPT');
+                    $check->{state} = 'refused'; return 1;
+                }
+                unless ($publication->{published} && !$publication->{failure}
+                    && $publication->{confirmed_bytes} == $publication->{frame_bytes}) {
+                    $check->{state} = 'pending'; $check->{reason} = 'publication'; return 1;
+                }
+                unless ($self->_bound_live($record)) { $check->{state} = 'refused'; return 1; }
+                $check->{state} = 'admitted';
+                # Keep the last positive check separately from later deferrals
+                # or closure, for the aggregate's subsequent native-effect join.
+                $record->{execution_admission} = {%$check};
+                $admitted = 1;
+                1;
+            };
+            unless ($checked) {
+                my $error = $@;
+                $check->{state} = 'refused';
+                eval { $self->_fail_record($record, 'host_error', 'execution admission interrupted'); 1 };
+                die $error;
+            }
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        eval { $self->_fail_record($record, 'host_error', 'execution admission interrupted'); 1 } if $started;
+        die $error;
+    }
+    if ($admitted && !$self->_bound_live($record)) {
+        $record->{execution_check}{state} = 'refused';
+        return 0;
+    }
+    return $admitted;
+}
+
+sub execution_observation {
+    _error('expected one retained execution ticket') unless @_ == 2;
+    my ($self, $ticket) = @_; _owner($self);
+    FSM::Support::ProcessSupervisor::Wire::_uint($ticket, '4294967295', 1);
+    my $record = $self->{records}{$ticket} or _error('unknown connection ticket');
+    return unless $record->{execution_check};
+    return {ticket => $record->{ticket}, parent => $record->{parent}, job => $record->{job},
+        deadline_ns => $record->{deadline}->bstr, admission_deadline_ns => $record->{wall}->bstr,
+        latest => {%{$record->{execution_check}}},
+        admitted => $record->{execution_admission} ? {%{$record->{execution_admission}}} : undef,
+        failure => $record->{failure} ? {%{$record->{failure}}} : undef};
 }
 
 sub accept_publication {
