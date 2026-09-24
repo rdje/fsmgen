@@ -47,6 +47,7 @@ answers:
   - "does a generated projection support deterministic shard collections?"
   - "where is the complete focused and ancillary document index?"
   - "how is the ISF reference partitioned?"
+  - "why did T1569 fail after a maintained ISF reference edit?"
   - "how are mechanically exact current-state fields contained?"
   - "when must a live-document value be derived on read?"
   - "how is a deliberately retained derived-state copy verified?"
@@ -341,7 +342,9 @@ source ranges, direct navigation, per-part bounds, and initial transformed
 content equality. The focused root collection falls below warning on every
 health axis with no enforcement-ceiling increase. The distinct live
 `BIN_FSMGEN_IMPORT_TREE.md` architecture role is retained and its pathological
-line representation is wrapped rather than deleted.
+line representation is wrapped rather than deleted. T1569 checks current
+structure; isolated Git reconstruction proves activation equality and rejects
+later content drift.
 
 Leaf `.11` independently retires the former achievement journal under decision
 `0048`, exact version retrieval, and live-path/consumer absence enforcement.

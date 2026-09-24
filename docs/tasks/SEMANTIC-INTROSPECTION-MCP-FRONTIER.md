@@ -435,7 +435,7 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.1: select additive VIAL deep inspection`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement the selected bounded public VIAL detail API and native inspection command.`
   Acceptance: `Decompose portable typed projection, filesystem adaptation and CLI into independently verifiable leaves before source changes. Use explicit public record constructors and closed field shapes, defensive fresh values, stable source identities and diagnostic behavior. Preserve base/lifecycle conditions, ordering, references and bounds with independent authored oracles; reject malformed invocation, unknown schema/family and incomplete projection. Reuse the existing bounded source loader without a second filesystem read, preserve old check/format/plan results and frozen capability hashes, and prove no artifacts or execution.`
   Verification: `Pending .1 selection.`
@@ -449,11 +449,11 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Repair stale activation-equality assumptions in focused-document regression coverage.`
   Acceptance: `T1569 must check maintained references against current structural/link contracts, and prove historical activation equality in a separately reconstructed repository-local fixture. Preserve the activation verifier and negative controls; do not revert legitimate downstream-book edits or loosen production validation. Demonstrate the failure predates this selection, retain exact activation reconstruction and corruption detection, run the repaired focused test and doctrines, then resume VIAL typed inspection.`
-  Verification: `Selection verification exposes activation mismatch at docs/isf-spec/13-downstream-diagnostics-conformance.md:759. Commit 0fc987bff intentionally replaced a link for mdBook inclusion, while T1569 still requires current prose to equal adoption bytes. Classification fixture membership is updated in the selection; historical/current separation remains this leaf.`
-  Commit: `pending`
+  Verification: `T1569 now checks current structural/link contracts and independently reconstructs exact declared Git activation sources in an isolated repository-local fixture. Historical equality passes before a controlled edit and rejects that edit afterward; current structure still passes and all live source hashes remain unchanged. T1560/T1561/T1569 and rendered book guidance pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4: separate live reference checks from activation equality`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3`
   Status: `pending`
@@ -1107,11 +1107,12 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4` repairs T1569's stale
-activation-equality assumption before `.31.3.2.3.2` implements additive VIAL
-inspection and `.31.3.2.3.3` adapts MCP. Then resume the catalog guard,
-CI/signoff integration and exhaustive qualification before HIAL streaming.
-Preserve spent native compiler/startup evidence and the read-only/write horizon.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2` decomposes and implements
+additive VIAL source inspection selected by decision `0105`; `.31.3.2.3.3`
+then adapts MCP. Resume the catalog guard, CI/signoff and exhaustive
+qualification afterward, before HIAL streaming. The reference-test prerequisite
+is complete. Preserve spent native compiler/startup evidence and the
+read-only/write horizon.
 
 ## Decisions
 
@@ -1922,3 +1923,32 @@ T1569 still compares evolving parts to adoption bytes. `.31.3.2.4` owns the
 immediate test repair; selection does not claim T1569 passes. Production index
 regeneration/check succeeds. No current-reference or activation checker is
 relaxed in this selection.
+
+## Acceptance Checklist — `.31.3.2.4` current versus activation reference checks
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The pre-repair T1569 run reports
+  `#   at t/1569-focused-document-containment.t line 36.` and
+  `activation content mismatch at docs/isf-spec/13-downstream-diagnostics-conformance.md:759`.
+  Current source/checker bytes equal their HEAD versions; the HEAD test
+  requests `--verify-activation-content` on evolving references. `git log -S`
+  and `0fc987bff` identify the legitimate earlier book-link change. This is a
+  stale test policy, not a corrupt activation source or defective book edit.
+- [x] **ADDRESSED (verified)** — T1569 now uses ordinary current-reference
+  checks for the live tree and link fixture. A separate repository-local
+  fixture reads exact manifest-declared Git objects, independently verifies
+  their hashes, and runs the existing activation materializer and equality
+  verifier. A controlled body edit passes structural checks but fails exact
+  historical equality at its precise path. Independent live-file hashes prove
+  the fixture does not alter current references. Original gap, digest, missing
+  link, stale index and unclassified-member controls remain. Production
+  checker, manifest and current ISF prose are unchanged.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1560-live-document-ceiling-authority.t t/1561-live-document-reference-authority.t t/1569-focused-document-containment.t`
+  returns `All tests successful. Files=3, Tests=19` and `Result: PASS`.
+  `mdbook build docs/book -d .artifacts/reference-activation-book` and
+  independent rendered current/historical guidance assertions pass.
+  Re-derive: declared Git hashes and materialized equality; falsify: the same
+  controlled edit under current versus historical checks plus preserved
+  negative controls; durability: T1569, the unchanged manifest/checker and
+  exact prior commit. Browser visual access remains unavailable. This repairs
+  verification and does not change product semantics or qualify full CI.

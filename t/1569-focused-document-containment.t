@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 use Cwd qw(abs_path);
+use Digest::SHA qw(sha256_hex);
 use File::Basename qw(dirname);
 use File::Path qw(make_path);
 use File::Spec;
@@ -22,7 +23,7 @@ my $partition = File::Spec->catfile(
 ok(-x $indexer, 'focused-document index verifier is executable');
 ok(-x $partition, 'ISF semantic-part verifier is executable');
 
-subtest 'real generated index and exact activation partition pass' => sub {
+subtest 'real generated index and maintained reference partition pass' => sub {
     my ($index_ok, $index_output) = run_command($indexer, '--root', $repo, 'check');
     ok($index_ok, 'repository focused-document index is current') or diag($index_output);
     like(
@@ -32,8 +33,8 @@ subtest 'real generated index and exact activation partition pass' => sub {
     );
 
     my ($part_ok, $part_output) = run_command(
-        $partition, '--root', $repo, '--verify-activation-content', 'check');
-    ok($part_ok, 'current semantic parts equal the exact transformed activation sources')
+        $partition, '--root', $repo, 'check');
+    ok($part_ok, 'current semantic parts satisfy maintained reference contracts')
         or diag($part_output);
     like($part_output, qr/3 exact sources map contiguously to 11 bounded semantic parts/,
         'success reports exact source and semantic-part coverage');
@@ -68,6 +69,64 @@ subtest 'generated index rejects stale and unclassified membership' => sub {
         'unclassified path is named');
 };
 
+subtest 'isolated activation reconstruction retains exact equality and detects drift' => sub {
+    my $fixture = create_project_tempdir(purpose => 'isf-partition-activation-tests');
+    seed_partition_current_fixture($fixture);
+    my @records = partition_records();
+    my @live_paths = map {
+        $_->{record_type} eq 'source' ? $_->{source_path}
+            : $_->{record_type} eq 'part' ? $_->{path} : ()
+    } @records;
+    my $live_before = {
+        map { $_ => sha256_hex(slurp(File::Spec->catfile($repo, split m{/}, $_))) }
+            @live_paths
+    };
+    for my $source (grep { $_->{record_type} eq 'source' } @records) {
+        open my $fh, '-|', 'git', '-C', $repo, 'show',
+            "$source->{revision}:$source->{source_path}"
+            or die "cannot read declared activation source: $!";
+        binmode $fh, ':raw';
+        my $bytes = do { local $/; <$fh> };
+        close $fh or die 'git could not read declared activation source';
+        is(sha256_hex($bytes), $source->{sha256},
+            "$source->{source_id} fixture uses the exact declared Git source");
+        write_file(File::Spec->catfile($fixture, split m{/}, $source->{source_path}), $bytes);
+    }
+
+    my ($materialize_ok, $materialize_output) = run_command(
+        $partition, '--root', $repo, '--current-root', $fixture, 'materialize');
+    ok($materialize_ok, 'activation materializes only inside the isolated fixture')
+        or diag($materialize_output);
+    return unless $materialize_ok;
+    my @parts = map { $_->{path} } grep { $_->{record_type} eq 'part' } @records;
+    seed_partition_links($fixture, \@parts);
+
+    my ($exact_ok, $exact_output) = run_command(
+        $partition, '--root', $repo, '--current-root', $fixture,
+        '--verify-activation-content', 'check');
+    ok($exact_ok, 'historical activation parts retain complete transformed equality')
+        or diag($exact_output);
+    like($exact_output, qr/with activation-content equality/,
+        'equality is verified explicitly rather than inferred from materialization');
+
+    append_file(File::Spec->catfile($fixture, split m{/}, $parts[0]),
+        "\nA controlled maintained-reference edit.\n");
+    my ($current_ok, $current_output) = run_command(
+        $partition, '--root', $repo, '--current-root', $fixture, 'check');
+    ok($current_ok, 'ordinary checks allow bounded content evolution')
+        or diag($current_output);
+    my ($drift_ok, $drift_output) = run_command(
+        $partition, '--root', $repo, '--current-root', $fixture,
+        '--verify-activation-content', 'check');
+    ok(!$drift_ok, 'the same edit fails historical activation equality');
+    like($drift_output, qr/activation content mismatch at \Q$parts[0]\E:/,
+        'historical equality failure names the changed semantic part');
+    is_deeply({
+        map { $_ => sha256_hex(slurp(File::Spec->catfile($repo, split m{/}, $_))) }
+            @live_paths
+    }, $live_before, 'activation reconstruction and drift control leave live references untouched');
+};
+
 subtest 'partition manifest rejects gaps and source-identity drift' => sub {
     my $gap = copied_manifest();
     mutate_manifest($gap->{path}, sub {
@@ -96,8 +155,7 @@ subtest 'partition link verification fails on a missing routed target' => sub {
     my $fixture = create_project_tempdir(purpose => 'isf-partition-link-tests');
     seed_partition_current_fixture($fixture);
     my ($baseline_ok, $baseline_output) = run_command(
-        $partition, '--root', $repo, '--current-root', $fixture,
-        '--verify-activation-content', 'check');
+        $partition, '--root', $repo, '--current-root', $fixture, 'check');
     ok($baseline_ok, 'isolated current-reference fixture passes') or diag($baseline_output);
 
     my $target = File::Spec->catfile(
@@ -188,9 +246,7 @@ sub copied_manifest {
 
 sub seed_partition_current_fixture {
     my ($fixture) = @_;
-    my @records = map { JSON::PP::decode_json($_) }
-        grep { $_ ne '' } split /\n/, slurp(File::Spec->catfile(
-            $repo, qw(doctrine live_document_size isf_reference_partitions.jsonl)));
+    my @records = partition_records();
     my %current_paths;
     for my $record (@records) {
         my $relative = ($record->{record_type} // '') eq 'source'
@@ -206,8 +262,19 @@ sub seed_partition_current_fixture {
         );
     }
 
-    for my $relative (sort keys %current_paths) {
-        my $contents = slurp(File::Spec->catfile($repo, split m{/}, $relative));
+    seed_partition_links($fixture, [sort keys %current_paths]);
+}
+
+sub partition_records {
+    return map { JSON::PP::decode_json($_) }
+        grep { $_ ne '' } split /\n/, slurp(File::Spec->catfile(
+            $repo, qw(doctrine live_document_size isf_reference_partitions.jsonl)));
+}
+
+sub seed_partition_links {
+    my ($fixture, $paths) = @_;
+    for my $relative (@{$paths}) {
+        my $contents = slurp(File::Spec->catfile($fixture, split m{/}, $relative));
         while ($contents =~ /\]\((?:<([^>]+)>|([^\s\)]+))(?:\s+[^\)]*)?\)/g) {
             my $destination = defined($1) ? $1 : $2;
             $destination =~ s/[?#].*\z//;
