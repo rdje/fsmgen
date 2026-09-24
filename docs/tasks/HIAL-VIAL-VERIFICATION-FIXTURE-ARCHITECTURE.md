@@ -3711,11 +3711,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.1: seal completed lifecycle acceptance history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain native accepted transport ownership through interruption.`
   Acceptance: `Retain the original ticket and socket owner before accept/sealing effects under a signal mask. Provide original-owner admission hooks before native accept and recoverable inventories through interrupted returns, transient accept failure and partial connection construction. Allow the aggregate coordinator to retain the shared endpoint until native jobs close; preserve standalone service behavior, original authentication walls and bounded closed outcomes. Qualify actual sockets and signals without command release.`
-  Verification: `Clean c0d254115 completes bounded history rollover. Current Service close, fatal accept and root expiry retire the endpoint immediately. Child .1 adds explicit shared endpoint lifetime and atomic close publication while preserving standalone behavior; child .2 then retains accepted socket/ticket publication and owner admission hooks. Aggregate ledger binding remains sibling .3.`
-  Commit: `pending`
+  Verification: `Both children are complete: explicit shared endpoint custody and atomic service close, then original ticket/raw socket retention before masked native accept and sealing. Actual socket/signal qualifications and selected regressions pass; partial failures stay recoverable and first causes remain intact. Aggregate accepted-peer ledger binding is the next sibling, with publication and routing still separate.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2.2: retain native accepted socket ownership`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2.2`
 
@@ -3727,11 +3727,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2.1: retain shared endpoints through service closure`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Retain accepted sockets and tickets before native accept and sealing.`
   Acceptance: `After .1, publish original bounded tickets and handle custody before native accept/sealing under a signal mask. Invoke original-owner admission hooks before every accept effect, retain partial/transient failures and recoverable inventories through interrupted returns, and preserve original authentication walls and closed outcome capacity. Qualify actual sockets, admission refusal and creator signals; no aggregate ledger binding or execution publication.`
-  Verification: `Next: retain the original raw accepted handle through connection construction and closure, rather than relying on a temporary accept local or a Connection field that is removed before CORE close. Original ticket/handle custody must survive signals and partial failures; a closed outcome cannot be consumed while its exact handle remains live. Use the qualified shared endpoint lifetime from child .1.`
-  Commit: `pending`
+  Verification: `Original monotonic tickets precede admission and native accept under the preparation mask; accept writes directly into retained raw custody before Connection sealing. Copied observations and complete inventories recover partial returns. Refusal and empty transient attempts spend identities without occupied slots; partial native handles remain owned. Raw aliases survive Connection field removal. Incomplete actual closes retry without replacing first failure; only resource-free outcomes can be consumed. T1841 independently observes actual sockets/EOF, creator signals, pre-mask revocation, original expiry, constructor/seal cuts, bounded slots and identity exhaustion. Six isolated falsifiers reject omitted masks/admission/raw custody, delayed publication, premature completion and unsafe outcome consumption. Final selected band passes Files=10, Tests=144; independent endpoint census is empty. Aggregate ledger binding remains sibling .3; no command release or routing.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2.2: retain native accepted socket ownership`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3`
   Status: `pending`
@@ -4452,7 +4452,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2.2` retains accepted sockets/tickets and original-owner admission hooks before native effects. Shared endpoint lifetime and atomic service close are complete in child .1; sibling .3 then binds aggregate grants and qualifies the native join. Publication, streaming, fair composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3` binds accepted sockets to original aggregate grants and qualifies the native join. Shared endpoint lifetime, atomic close and retained native accept ownership are complete. Publication, streaming, fair composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7110,3 +7110,45 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   question. The duplicate evidence-list field is removed: the runnable reverify
   retains current test paths and the exact history pointer retains earlier
   evidence metadata. All questions survive and the fact budget is unchanged.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _accept {'` identifies
+  5f8be37f1ac107cc486a9e9c435b33871391e796 as the original Service admission
+  implementation. Its local accept handle and post-construction ticket lose
+  retained ownership at partial-return boundaries. T1841 also reproduced a
+  completed-close cache retaining a live socket: repeat close skipped cleanup.
+- [x] **ADDRESSED (verified)** — Re-derivation uses T1841's independent actual
+  accepted handles, client EOF and original endpoint census. Tickets precede
+  the callback and syscall; sockets remain reachable before construction and
+  through native/constructor/sealing interruptions. Real pending creator
+  signals observe complete publication. False admission, original expiry,
+  revocation and invalid callbacks produce no accept; transient empty attempts
+  spend identities without occupying slots. Partial transient handles stay
+  retained. Raw custody survives Connection field removal, unresolved closes
+  retry without erasing failure, and live handles prevent outcome consumption.
+  Closed outcomes retain the inclusive connection capacity; explicit consumption
+  admits the next monotonic ticket, and exhausted identities fail before accept.
+  Falsification: six isolated variants omit masking, pre-effect publication,
+  admission, raw inventory, pending-close retry or consumption guards. Every
+  variant fails its corresponding native ownership/EOF or publication oracle.
+  Independent teardown closes original handles/endpoints even after deliberate
+  corruption; final endpoint residue is empty and source variants are removed.
+  Durability: Service, T1841, task, book, canonical fact and this commit preserve
+  executable derivation and control loci. Local .artifacts/service-accept-*.log
+  files have an explicit raw-log durability gap. Aggregate grants and return
+  consumption must be joined under their caller's mask in sibling .3; this
+  slice does not claim standalone recovery of a consumed pure metadata return.
+- [x] **NO REGRESSION** — Final selected endpoint/connection/service,
+  source-architecture, descriptors, retained endpoint, coordinator and shared
+  custody tests report `All tests successful`, `Files=10, Tests=144`.
+  Both changed Perl files report `syntax OK`. Book build/HTML inspection,
+  Knowledge Map, claims and staged doctrines cover the synchronized slice.
+  The first new fixture used Perl's builtin eof name and was corrected before
+  evidence collection. The initial selected band named a nonexistent T1813
+  path and supplied no band evidence; the exact discovered path passes above.
+  The inherited baseline initially used creator-only Connection inspection
+  after child discard; raw inherited handle cleanup now passes the original
+  native inheritance tests. The live-close retry failure was fixed, not waived.
+  No original producer, gated command release, full CI or push runs. Linux and
+  browser visual review remain separately open.

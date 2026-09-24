@@ -893,8 +893,33 @@ the complete cleanup result are published. A pending creator handler can then
 interrupt return without stranding resources. Re-entry before masking rechecks
 completion, and a partial close with no completed result remains retryable.
 Uncertain accepted-socket cleanup stays failed even if the handles closed.
-Copied service records cannot retire the original owner's custody. Native
-accept-record publication and aggregate descriptor binding remain open.
+Copied service records cannot retire the original owner's custody.
+
+Accept now creates the original ticket before invoking an optional admission
+callback. `advance($check)` calls that callback with the original service and
+ticket under the preparation signal mask, immediately before native accept.
+Returning false defers the effect; invalid returns or exceptions fail admission.
+The service rechecks its original wall and authority before the syscall. The
+socket is written directly into the retained ticket, and connection construction
+borrows that handle. Pending creator signals see complete sealing and ownership
+publication before they can interrupt the return.
+
+For example, a constructor exception after accepting a socket still leaves the
+original service holding that socket for cleanup. A transient accept with no
+socket can discard its empty record. Both deferred and transient attempts spend
+their ticket identities; they never reuse an identity. A partial accept with a
+live handle remains owned even if its return also reports a transient error.
+The original authentication wall is never extended by an admission callback.
+
+`tickets` and `ticket_observation` return copied observations; `handles` includes
+the retained raw socket even if Connection has already removed its own handle
+field. Closing retries any remaining actual socket without erasing an earlier
+failure. While native closure is pending, even a standalone service retains its
+endpoint. Closed outcomes occupy admission slots until explicitly consumed, and
+`take_closed` refuses any record that still owns a live handle. Its
+`resources_closed` flag also preserves an uncertain native close verdict.
+Aggregate descriptor binding and publication remain open; that integration must
+retain grants and consumed outcomes before unmasking their caller's return.
 
 Normal callers retain the existing own-group supervisor. Accepted-peer
 accounting, publication, nested routing and complete subtree qualification
@@ -914,6 +939,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1837-process-admitted-fo
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1838-process-cleanup-wall-clipping.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1839-process-coordinator-lifecycle.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1840-process-service-shared-endpoint.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1841-process-service-retained-accept.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

@@ -94,11 +94,41 @@ sub register_parent {
 
 sub _fail_record {
     my ($self, $record, $status, $diagnostic) = @_;
-    $record->{failure} //= $record->{io}->failure // {status => $status, diagnostic => $diagnostic};
-    delete $record->{request};
-    $record->{state} = 'closed';
-    $self->{descriptor_cleanup_failed} = 1 unless $record->{io}->close;
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        $record->{failure} //= ($record->{io} ? $record->{io}->failure : undef)
+            // {status => $status, diagnostic => $diagnostic};
+        delete $record->{request};
+        $record->{state} = 'closing';
+        my $error;
+        if ($record->{io}) {
+            my $ok = eval {
+                $record->{close_failed} = 1 unless $record->{io}->close;
+                delete $record->{close_interrupted};
+                1;
+            };
+            unless ($ok) { $error = $@; $record->{close_interrupted} = 1; }
+        }
+        # Retain the original accept handle even when Connection has removed
+        # its own field before close. Never substitute a remembered FD number.
+        for my $handle (@{_record_handles($record)}) {
+            my $ok = eval { $record->{close_failed} = 1 unless _close_once($handle); 1 };
+            unless ($ok) { $error //= $@; $record->{close_failed} = 1; }
+        }
+        $self->{descriptor_cleanup_failed} = 1 if $record->{close_failed};
+        $record->{state} = 'closed'
+            unless $record->{close_interrupted} || @{_record_handles($record)};
+        die $error if defined $error;
+    });
+    return;
 }
+
+sub _record_handles {
+    my ($record) = @_;
+    my %seen;
+    return [grep { defined($_) && defined(fileno($_)) && !$seen{refaddr($_)}++ }
+        $record->{handle}, $record->{io} ? $record->{io}->handle : ()];
+}
+sub _close_once { return CORE::close($_[0]) }
 
 sub _revoke {
     my ($self, $id, $status, $diagnostic) = @_;
@@ -126,37 +156,73 @@ sub revoke_parent {
 sub _accept_once { return accept(${$_[0]}, $_[1]) }
 
 sub _accept {
-    my ($self, $now) = @_;
-    # Closed outcomes still occupy their slots until the owner consumes them.
-    # At capacity, the kernel backlog remains unaccepted, never a job record.
-    return if @{$self->{order}} >= $LIMIT->{connections};
-    return unless IO::Select->new($self->{run}->listener)->can_read(0);
-    if ($self->{next_ticket} > 4_294_967_295) {
-        $self->{failure} //= {status => 'host_error', diagnostic => 'connection identity exhausted'};
-        $self->close;
-        return;
+    my ($self, $now, $check) = @_;
+    my $record;
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            # Recheck after any pre-mask handler. Closed outcomes still occupy
+            # slots; a saturated backlog receives no ticket or native effect.
+            return if $self->{closed} || @{$self->{order}} >= $LIMIT->{connections};
+            return unless IO::Select->new($self->{run}->listener)->can_read(0);
+            if ($self->{next_ticket} > 4_294_967_295) {
+                $self->{failure} //= {status => 'host_error', diagnostic => 'connection identity exhausted'};
+                $self->close;
+                return;
+            }
+            my $ticket = $self->{next_ticket}++;
+            $record = {ticket => $ticket, state => 'accepting',
+                wall => _minimum(_window($now), $self->{deadline})};
+            $self->{records}{$ticket} = $record;
+            push @{$self->{order}}, $ticket;
+            if ($check) {
+                my $admitted = $check->($self, $ticket);
+                _error('accept admission must return a boolean') unless defined($admitted)
+                    && !ref($admitted) && "$admitted" =~ /\A[01]\z/;
+                unless ($admitted) { $self->_forget_empty($record); return; }
+            }
+            _error('accept admission is no longer live') if $self->{closed}
+                || $record->{state} ne 'accepting' || !$self->{parents}{1};
+            _error('original accept admission wall expired')
+                if _time(_now_ns())->bcmp($record->{wall}) >= 0;
+            # Publish directly into the retained record. Construction borrows
+            # this handle; the record keeps custody through every close path.
+            my $peer = _accept_once(\$record->{handle}, $self->{run}->listener);
+            unless (defined $peer) {
+                my $transient = $! == EAGAIN || $! == EWOULDBLOCK || $! == EINTR;
+                if ($transient && !@{_record_handles($record)}) {
+                    $self->_forget_empty($record);
+                    return;
+                }
+                $self->{failure} //= {status => 'host_error', diagnostic => 'socket accept failed'};
+                $self->close;
+                return;
+            }
+            $record->{io} = FSM::Support::ProcessSupervisor::Connection::new_connection(
+                $record->{handle}, $self->{deadline}->numify / $SECOND);
+            $record->{state} = 'hello';
+            $self->_fail_record($record, 'host_error', 'accepted descriptor sealing failed')
+                if $record->{io}->failure;
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        $self->{failure} //= {status => 'host_error', diagnostic => 'accepted descriptor admission interrupted'};
+        # Preserve the original exception if cleanup also throws. The original
+        # service and raw handles remain inspectable and retryable by the owner.
+        my $closed = eval { $self->close; 1 };
+        $self->{cleanup_interruption} //= 'accepted descriptor cleanup interrupted' unless $closed;
+        die $error;
     }
-    my $peer = _accept_once(\my $handle, $self->{run}->listener);
-    unless (defined $peer) {
-        return if $! == EAGAIN || $! == EWOULDBLOCK || $! == EINTR;
-        $self->{failure} //= {status => 'host_error', diagnostic => 'socket accept failed'};
-        $self->close;
-        return;
-    }
-    my $io = eval { FSM::Support::ProcessSupervisor::Connection::new_connection(
-        $handle, $self->{deadline}->numify / $SECOND) };
-    unless ($io) {
-        CORE::close($handle);
-        $self->{failure} //= {status => 'host_error', diagnostic => 'accepted descriptor admission failed'};
-        $self->close;
-        return;
-    }
-    my $ticket = $self->{next_ticket}++;
-    my $record = {ticket => $ticket, io => $io, state => 'hello',
-        wall => _minimum(_window($now), $self->{deadline})};
-    $self->{records}{$ticket} = $record;
-    push @{$self->{order}}, $ticket;
-    $self->_fail_record($record, 'host_error', 'accepted descriptor sealing failed') if $io->failure;
+    return;
+}
+
+sub _forget_empty {
+    my ($self, $record) = @_;
+    _error('cannot forget a native accepted handle') if @{_record_handles($record)};
+    delete $self->{records}{$record->{ticket}};
+    @{$self->{order}} = grep { $_ != $record->{ticket} } @{$self->{order}};
+    return;
 }
 
 sub _message {
@@ -203,8 +269,9 @@ sub _message {
 }
 
 sub advance {
-    _error('unexpected advancement arguments') unless @_ == 1;
-    my ($self) = @_; _owner($self);
+    _error('expected optional native accept admission')
+        unless @_ == 1 || (@_ == 2 && ref($_[1]) eq 'CODE');
+    my ($self, $check) = @_; _owner($self);
     return if $self->{closed};
     my $now = _time(_now_ns());
     if ($now->bcmp($self->{deadline}) >= 0) {
@@ -216,7 +283,7 @@ sub advance {
         $self->_revoke($id, 'timed_out', 'parent invocation deadline expired')
             if $self->{parents}{$id}{deadline}->bcmp($now) <= 0;
     }
-    $self->_accept($now);
+    $self->_accept($now, $check);
     return if $self->{closed};
     # Rotate before every pass; each descriptor gets at most one bounded
     # advancement and one decoded message. There is no private waiting loop.
@@ -224,6 +291,10 @@ sub advance {
     for my $ticket (@{$self->{order}}) {
         my $record = $self->{records}{$ticket};
         next if $record->{state} eq 'closed';
+        if ($record->{state} eq 'closing') {
+            $self->_fail_record($record, 'host_error', 'accepted descriptor cleanup incomplete');
+            next;
+        }
         if ($now->bcmp($record->{wall}) >= 0) {
             $self->_fail_record($record, 'timed_out', 'fixed authentication or admission deadline expired');
             next;
@@ -278,14 +349,36 @@ sub retire {
 sub take_closed {
     _error('unexpected outcome arguments') unless @_ == 1;
     my ($self) = @_; _owner($self);
-    for my $ticket (@{$self->{order}}) {
-        my $record = $self->{records}{$ticket};
-        next unless $record->{state} eq 'closed';
-        delete $self->{records}{$ticket};
-        @{$self->{order}} = grep { $_ != $ticket } @{$self->{order}};
-        return {ticket => $ticket, parent => $record->{parent}, %{$record->{failure}}};
-    }
-    return;
+    my $outcome;
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        for my $ticket (@{$self->{order}}) {
+            my $record = $self->{records}{$ticket};
+            next unless $record->{state} eq 'closed';
+            _error('closed outcome still owns native handles') if @{_record_handles($record)};
+            $outcome = {ticket => $ticket, parent => $record->{parent}, %{$record->{failure}},
+                resources_closed => $record->{close_failed} ? 0 : 1};
+            $self->_forget_empty($record);
+            last;
+        }
+    });
+    return $outcome;
+}
+
+sub tickets {
+    _error('unexpected ticket inventory arguments') unless @_ == 1;
+    my ($self) = @_; _owner($self);
+    return [sort { $a <=> $b } keys %{$self->{records}}];
+}
+sub ticket_observation {
+    _error('expected one retained connection ticket') unless @_ == 2;
+    my ($self, $ticket) = @_; _owner($self);
+    FSM::Support::ProcessSupervisor::Wire::_uint($ticket, '4294967295', 1);
+    my $record = $self->{records}{$ticket} or _error('unknown connection ticket');
+    return {ticket => $record->{ticket}, state => $record->{state}, parent => $record->{parent},
+        wall_ns => $record->{wall}->bstr, handles => scalar @{_record_handles($record)},
+        resources_closed => $record->{state} eq 'closed' && !$record->{close_failed}
+            && !@{_record_handles($record)} ? 1 : 0,
+        failure => $record->{failure} ? {%{$record->{failure}}} : undef};
 }
 
 sub poll_delay {
@@ -320,8 +413,7 @@ sub counts {
 sub handles {
     _error('unexpected handles arguments') unless @_ == 1;
     my ($self) = @_; _owner($self);
-    return [@{$self->{run}->handles}, grep { defined($_) && defined(fileno($_)) }
-        map { $self->{records}{$_}{io}->handle } @{$self->{order}}];
+    return [@{$self->{run}->handles}, map { @{_record_handles($self->{records}{$_})} } @{$self->{order}}];
 }
 
 sub failure {
@@ -333,6 +425,7 @@ sub close {
     _error('unexpected close arguments') unless @_ == 1;
     my ($self) = @_; _owner($self);
     return {%{$self->{cleanup}}} if $self->{cleanup};
+    my $pending;
     FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
         # A handler may have completed close before this mask took effect.
         return if $self->{cleanup};
@@ -340,6 +433,15 @@ sub close {
         $self->{parents} = {};
         my $failure = $self->{failure} // {status => 'cancelled', diagnostic => 'private service closed'};
         $self->_fail_record($_, $failure->{status}, $failure->{diagnostic}) for values %{$self->{records}};
+        if (grep { $_->{state} ne 'closed' } values %{$self->{records}}) {
+            # A failed close can leave an actual handle alive. Keep the run
+            # and original records retryable; cache only completed cleanup.
+            $self->{failure} //= {status => 'cleanup_failed', diagnostic => 'accepted descriptor cleanup incomplete'};
+            $pending = {ok => 0, pending => 1, endpoint_retained => 1,
+                socket_removed => 0, directory_removed => 0,
+                diagnostic => 'accepted descriptor cleanup incomplete'};
+            return;
+        }
         $self->{cleanup} = $self->{shared_run}
             ? {ok => 1, endpoint_retained => 1, socket_removed => 0, directory_removed => 0,
                 diagnostic => 'shared endpoint retained by aggregate owner'}
@@ -351,14 +453,18 @@ sub close {
         $self->{failure} //= {status => 'cleanup_failed', diagnostic => 'private endpoint cleanup failed'}
             unless $self->{cleanup}{ok};
     });
-    return {%{$self->{cleanup}}};
+    return $pending // {%{$self->{cleanup}}};
 }
 sub discard_inherited {
     _error('expected inherited service') unless @_ == 1
         && ref($_[0]) eq __PACKAGE__ && $_[0]{owner_pid} != $$
         && defined($_[0]{owner_identity}) && $_[0]{owner_identity} == refaddr($_[0]);
     my ($self) = @_;
-    $_->{io}->discard_inherited for values %{$self->{records}};
+    for my $record (values %{$self->{records}}) {
+        $record->{io}->discard_inherited if $record->{io};
+        CORE::close($record->{handle})
+            if $record->{handle} && defined(fileno($record->{handle}));
+    }
     $self->{run}->discard_inherited;
     $self->{parents} = {};
     $self->{records} = {};
