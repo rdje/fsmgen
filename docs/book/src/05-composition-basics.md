@@ -529,6 +529,41 @@ composition report records those overrides and the common blocked cases, such
 as explicit child links preventing undeclared top-interface inference or an
 inferred internal carrier staying internal by default.
 
+For a whole top input routed by `?wiring`, explicit ownership is resolved
+before validating same-name candidates. The following complete composition
+passes strict source checking even though `noise.ready` is an output with a
+different width from the input `worker.ready`:
+
+```lisp
+(?top:explicit_ready
+  (?ports:public_io ready result> observed>8)
+  (?rtl:worker worker_if)
+  (?rtl:noise noise_if)
+  (?wiring:routes
+    (ready worker.ready)
+    (worker.done result)
+    (noise.ready observed)))
+(?rtlif:worker_if ready<:data done>:data)
+(?rtlif:noise_if ready>8:data)
+```
+
+The top input drives only `worker.ready`; `noise.ready` drives `observed`.
+Normal external RTL implementations supply these declared interfaces. Each
+explicit link still requires valid source/target directions, exact widths,
+compatible declared types and a single driver per target. Removing the
+explicit input route restores the mixed-family refusal. Routing a child
+endpoint alone does not claim an otherwise unrouted top input.
+
+The same rule allows an ISF activation actor to use a public input named
+`ready` even when generated CDC children also have `ready` outputs. The
+compiler's explicit route binds the authored input to its owning domain;
+independent HDL tests use an explicit transaction entry, hold that input low,
+release it, and repeat activations around reset. A body-first `await` in an
+externally activated worker has a separately tracked watchdog initialization
+defect; see the [current lowering limits](13h-lowering-reference.md).
+Native check/semantic reports and the MCP adapter retain the
+same complete success or failure result.
+
 What this does not mean:
 
 - no broad hidden child-to-child auto-wiring

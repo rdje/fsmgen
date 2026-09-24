@@ -41,6 +41,9 @@ sub build_top_input_links ($class, %args) {
         my $binding_mode = $top_port->binding_mode || 'explicit';
         next unless $binding_mode eq 'implicit_fanout' || ($binding_mode eq 'explicit' && ($top_port->direction || '') eq 'input');
         next if $system_port_names{$top_port->name};
+        # An explicitly routed top input has no same-name family to infer.
+        # LinkedPlanBuilder still resolves and validates its actual links.
+        next if $binding_mode eq 'explicit' && ($explicit_sources{$top_port->name} || $explicit_targets{$top_port->name});
 
         my @same_name_candidates = grep { $_->{port}->name eq $top_port->name } @candidate_endpoints;
         if ($binding_mode eq 'explicit' && @same_name_candidates) {
@@ -131,8 +134,6 @@ sub build_top_input_links ($class, %args) {
                 }
             }
         }
-
-        next if $binding_mode eq 'explicit' && ($explicit_sources{$top_port->name} || $explicit_targets{$top_port->name});
 
         for my $candidate (@same_name_candidates) {
             next unless ($candidate->{port}->direction || '') eq 'input';

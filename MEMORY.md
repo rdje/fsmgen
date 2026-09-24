@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.2` (pending)
-- next_action: Reproduce explicit top-input ready routing at the committed generated-name boundary; repair precedence without weakening actual explicit-link validation under .32.1.3.4.2.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.3` (pending)
+- next_action: Reproduce missing unused domain input endpoints and preserve the declared interface through lowering under .32.1.3.4.3; retain actual generated-artifact and API/MCP proof.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none after the owning commit workflow; verify Git state on resume.
 - in_flight_background: none.

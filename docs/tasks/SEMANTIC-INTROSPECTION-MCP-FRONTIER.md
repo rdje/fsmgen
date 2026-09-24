@@ -683,7 +683,7 @@ For FSMGen, the analogs are:
   Acceptance: `Run independent event/activation behavior and reset controls against repaired strict HDL, preserve exact native/API/newline reports and complete emitted-artifact admission, synchronize book/facts, then close .32.1.3 and return to .32.2.`
   Verification: `Requires committed .32.1.3.1, .32.1.3.2 and .32.1.3.4; strict admission alone is insufficient.`
   Commit: `children below`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.2`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1`
   Status: `pending`
@@ -696,7 +696,14 @@ For FSMGen, the analogs are:
   Status: `pending`
   Goal: `Complete broad multi-clock event/activation behavior and public-query qualification after the owned repairs.`
   Acceptance: `Execute the parent qualification scope with no missing repair dependency, retain independent behavior/reset controls and complete native/API/newline reports plus emitted-artifact admission, update book/facts and close the parent only from successful evidence.`
-  Verification: `Requires .32.1.3.3.1 and .32.1.3.4.3 as well as the existing wiring/reset/naming repairs; strict admission is not behavior qualification.`
+  Verification: `Requires .32.1.3.3.1, .32.1.3.3.3 and .32.1.3.4.3 as well as the existing wiring/reset/naming repairs; strict admission is not behavior qualification.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.3`
+  Status: `pending`
+  Goal: `Initialize external activation callee watchdogs before evaluating a leading await.`
+  Acceptance: `Reproduce premature completion with ready held low using the retained original ready/work_ready sources and pin-driven oracle. Repair watchdog initialization and rearming across synthetic callee entry without weakening timeouts. Cover leading-await, folded-sample and ordinary-entry controls, repeated activations, reset and actual timeout outcomes through generated artifacts, independent HDL behavior and native/API/MCP; update book/facts and commit before .32.1.3.3.2.`
+  Verification: `T1896 reports expected 0 activations, done=1 observed=0 for both original ready and unchanged work_ready controls. _inj_watchdog initializes the first state; _wire_external_activations later inserts worker_idle_ext without moving initialization. The emitted worker_await_0 tests reset worker_wd=0 in the same cycle that assigns limit-1, transitions through worker_timeout and acknowledges completion without observed. Exact baseline work_ready HDL and failing TAP are retained by .32.1.3.4.2; do not claim that original actor behavior is qualified.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4`
@@ -717,11 +724,11 @@ For FSMGen, the analogs are:
   Commit: `this commit; subject carries SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.1`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Honor explicit top-input routes before incompatible same-name inference.`
   Acceptance: `Reproduce the ready input collision after generated-name repair; make explicit-route ownership precede same-name family inference without weakening actual explicit-link direction/width/type/driver validation. Cover input/output name collisions, explicit source/target controls, ordinary inferred fanout and invalid explicit wiring; qualify the original activation topology and native/API/MCP success/failure identities. Preserve authored ports, synchronize book/facts and commit before broader .32.1.3.3 qualification.`
-  Verification: `SameNameLinkBuilder::build_top_input_links computes explicit_sources/targets, validates the complete same-name family first, and only later skips an explicitly routed top input. The prior generated (ready peripheral.ready) therefore fails on CDC ready outputs despite its explicit routing. Exact baseline is retained under .32.1.3.1; current reset-qualified reproduction remains pending.`
-  Commit: `pending`
+  Verification: `Current original ready/direct-composition strict checks and semantic queries fail before repair while work_ready passes; after moving explicit ownership ahead of same-name checks all original source queries pass. T175/T176 pass Files=2 Tests=15, preserving unrelated-family refusals and actual explicit-link width/type/direction/driver checks. T1896 passes Files=1 Tests=8 with full native/API/newline success/failure reports and non-skipped SystemVerilog/Verilog pin-driven activation controls using an ordinary entry. Existing composition/T1890 regression passes Files=5 Tests=22. Original work_ready HDL is unchanged except Date headers. The original leading-await runtime failure, folded-sample probe, explicit-entry passing control, exact reports, hashes and fresh book render are retained in docs/audits/specforge-rule-admission-20260924/explicit-input-routes.json; .32.1.3.3.3 owns the independent watchdog defect. Staged doctrines and normal hooks remain required before commit.`
+  Commit: `this commit; subject carries SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.3`
   Status: `pending`
@@ -1405,14 +1412,14 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.2` is next: repair explicit
-input-route precedence. Generated naming and case-safe artifact identities are
-qualified. Preserve unused domain interfaces under `.32.1.3.4.3`, then repair
-mixed activation/event reachability under `.32.1.3.3.1` before broader
-behavior/API/MCP signoff in `.32.1.3.3.2`. Bundle provenance, interconnect
-lowering and derived widths follow under `.32.2`, `.32.4` and `.32.3`.
-Preserve spent native compiler/startup evidence; source checks do not promote
-runtime support.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.3` is next: preserve unused
+public domain inputs in emitted interfaces. Generated naming and explicit
+whole top-input routing are qualified. Repair leading-await watchdog entry
+under `.32.1.3.3.3` and independent transaction reachability under
+`.32.1.3.3.1` before broader behavior/API/MCP signoff in `.32.1.3.3.2`.
+Bundle provenance, interconnect lowering and derived widths follow under
+`.32.2`, `.32.4` and `.32.3`. Preserve spent native compiler/startup evidence;
+source checks do not promote runtime support.
 
 ## Decisions
 
@@ -3368,3 +3375,71 @@ comparison; falsification is the baseline replacement/refusals, unchanged HDL
 controls and independent pin-driven behavior, plus retained negative controls;
 durability is the tracked audit, tests, knowledge card, book and this task.
 Full CI/push and broader multi-clock/runtime qualification remain gated.
+
+### `.32.1.3.4.2` scoped start
+
+Start from clean committed `c5b3caa37`; the commit brief is empty. Query-first
+reading found no canonical explicit-input precedence fact. The owning path is
+`SameNameLinkBuilder::build_top_input_links`: unlike its top-output peer, it
+checks every same-name child candidate before excluding a top input already
+owned by an explicit route. `LinkedPlanBuilder::build_plan` subsequently
+resolves every explicit endpoint and validates roles, widths, declared types
+and duplicate drivers; these checks must remain intact. Preserve implicit
+fanout and mixed-family refusals when no top input route exists. Do not broaden
+this repair to child-only routing or undeclared/implicit port inference.
+Baseline artifacts and bounded checks belong under
+`.artifacts/isf-explicit-input-routes/` before implementation.
+
+### `.32.1.3.4.2` independent leading-await watchdog defect
+
+The original source/query cases now pass, but the independent HDL oracle
+rejects premature completion on both `ready` and unmodified `work_ready`.
+Baseline HDL visibly initializes `worker_wd` in `worker_await_0`, whose timeout
+transition simultaneously tests its reset zero. Synthetic `worker_idle_ext`
+was added later with no initialization. Exact repair `.32.1.3.3.3` owns this
+before broad signoff; preserve the failed TAP and baseline HDL. The routing
+qualification must isolate this independent scheduling defect explicitly,
+without calling the original leading-await behavior correct.
+
+The ordinary-entry control passes the same independent activation-ready oracle
+(`ISF_ACTIVATION_READY_PASS`). Its generated `worker_idle_0` initializes the
+watchdog before `worker_await_1`. A leading sample was inspected and rejected
+as an isolation control because it folds into the await, leaving the same
+initialization hazard. The final routing regression uses the explicit entry;
+the original source and non-colliding control retain their recorded failure.
+
+## Acceptance Checklist — `.32.1.3.4.2` explicit input-route precedence
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `--strict --check --json` rejects an
+  original ISF `ready` input and direct C3 composition despite explicit routes;
+  the `work_ready` control passes. `SameNameLinkBuilder::build_top_input_links`
+  checks an unrelated mixed-direction family before consulting explicit top
+  ownership. The corresponding top-output path already skips early. Baseline
+  native check/semantic/schedule records bind `c5b3caa37` and exact sources.
+- [x] **ADDRESSED (verified)** — The existing explicit whole-top-input
+  exclusion now precedes same-name checks. Every original source query passes,
+  while `LinkedPlanBuilder` still validates actual roles, widths, declared
+  types and duplicate drivers. T1896 compares entire native/API/newline reports
+  for successes and malformed-link refusals, independently admits generated
+  domain artifacts, and passes a public-pin activation oracle in SystemVerilog
+  and Verilog with no skipped runtime checks. Runtime uses ordinary entries;
+  the original first-await form remains explicitly unqualified and owned by
+  `.32.1.3.3.3`. Fresh book rendering and the complete strict example pass;
+  browser visual qualification remains unavailable.
+- [x] **NO REGRESSION** — `All tests successful`: builder controls
+  `Files=2, Tests=15`; T1896 `Files=1, Tests=8`; existing implicit-port, explicit
+  diagnostic, declared-by-name and T1890 controls `Files=5, Tests=22`. Unowned
+  same-name families retain their refusals; child-only routes do not claim a
+  top input. Original `work_ready` HDL is unchanged except Date headers. The
+  changed module reports `syntax OK`. Independent baseline runtime failure
+  reports premature completion with no worker observation; emitted watchdog
+  initialization/timeout ordering explains it. The failed and passing control
+  sources, HDL, commands, logs and producer identities are retained in the
+  audit, so no unrelated defect is hidden by fixture isolation.
+
+Claim legs: re-derivation uses real native queries/artifacts and complete API/
+newline comparisons; falsification uses malformed links, unowned-family
+controls, unchanged HDL, the independent activation oracle and retained
+watchdog failure; durability uses the tracked audit/tests/book/facts and exact
+repair leaves. No source-expression ownership widening, full CI/push, or broad
+activation-runtime signoff is claimed.

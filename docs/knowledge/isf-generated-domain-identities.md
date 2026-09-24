@@ -41,8 +41,9 @@ public schedule/semantic identities. Its HDL oracle uses only public event
 pins and expected behavior. Runtime qualification requires an available,
 qualified Verilator provider; on Darwin the existing qualification is selected
 with `FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1`. A skipped runtime subtest does
-not qualify behavior. The separate explicit top-input `ready` inference defect
-is owned by `.32.1.3.4.2`; generated-name allocation does not repair that route.
+not qualify behavior. Explicit whole top-input `ready` route precedence is qualified separately
+under `.32.1.3.4.2`; see `composition-explicit-top-input-precedence.md`.
+Generated-name allocation alone does not establish that routing contract.
 
 Negative controls exposed two independent defects with owned repair leaves:
 `.32.1.3.4.3` preserves currently omitted unused domain inputs, and

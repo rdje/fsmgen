@@ -9,6 +9,7 @@ use File::Spec;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Composition::Port;
+use FSM::Composition::Link;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::SameNameLinkBuilder;
 
@@ -259,6 +260,35 @@ subtest 'same-name internal-carrier builder rejects conflicting declared type co
         qr/undeclared internal-carrier inference is blocked because same-name child ports disagree on declared type contract/s,
         'builder rejects inferred internal carriers across incompatible declared type contracts',
     );
+};
+
+subtest 'explicit whole top-input routes precede same-name family inference' => sub {
+    my @cases = (
+        ['direction', output_port('payload', 8)],
+        ['width', input_port('payload', 16)],
+        ['interface type', input_port('payload', 8, 'control')],
+        ['declared type', input_port('payload', 8, undef,
+            declared_type_name => 'packet_t',
+            declared_type_spec => record_spec(tag => bit_spec(), payload => bits_spec(7)))],
+    );
+    for my $case (@cases) {
+        my ($label, $other) = @$case;
+        my %args = (
+            ports => [input_port('payload', 8, 'data',
+                declared_type_name => 'byte_t', declared_type_spec => bits_spec(8))],
+            realized_instances => [realized_instance('other', $other)],
+            fsm_file => 'explicit-input.fsm', header => 'explicit_input',
+        );
+        my $links = eval { FSM::Composition::SameNameLinkBuilder->build_top_input_links(
+            %args, explicit_links => [FSM::Composition::Link->new(source => 'payload', target => 'sink.data')]); };
+        is($@, '', "$label mismatch outside the explicit route does not invoke inference");
+        is_deeply($links, [], "$label case adds no inferred route to the explicit top input");
+        eval { FSM::Composition::SameNameLinkBuilder->build_top_input_links(%args, explicit_links => []); };
+        like($@, qr/same-name top-input convention is blocked/, "$label conflict still rejects an unowned inferred family");
+        eval { FSM::Composition::SameNameLinkBuilder->build_top_input_links(%args,
+            explicit_links => [FSM::Composition::Link->new(source => 'another_input', target => 'other.payload')]); };
+        like($@, qr/same-name top-input convention is blocked/, "$label child-only route does not silently claim the top input");
+    }
 };
 
 done_testing();

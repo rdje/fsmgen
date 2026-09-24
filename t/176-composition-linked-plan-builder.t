@@ -302,6 +302,52 @@ subtest 'linked plan builder rejects explicit port-to-port links across incompat
     );
 };
 
+subtest 'explicit top-input ownership preserves actual link validation' => sub {
+    for my $case (qw(valid width declared_type target_role source_role duplicate_driver)) {
+        my $input = port('ready', 'input', 8, 'data',
+            declared_type_name => 'byte_t', declared_type_spec => bits_spec(8));
+        my $sink = port('ready', 'input', $case eq 'width' ? 16 : 8, 'data',
+            declared_type_name => $case eq 'declared_type' ? 'packet_t' : 'byte_t',
+            declared_type_spec => $case eq 'declared_type'
+                ? record_spec(tag => bit_spec(), payload => bits_spec(7)) : bits_spec(8));
+        my @ports = ($input, port('done', 'output', 8, 'data'), port('noise_seen', 'output', 8, 'data'));
+        my @links = (
+            FSM::Composition::Link->new(source => 'ready', target => 'sink.ready'),
+            FSM::Composition::Link->new(source => 'sink.done', target => 'done'),
+            FSM::Composition::Link->new(source => 'noise.ready', target => 'noise_seen'),
+        );
+        $links[0] = FSM::Composition::Link->new(source => 'ready', target => 'sink.done') if $case eq 'target_role';
+        $links[0] = FSM::Composition::Link->new(source => 'sink.ready', target => 'ready') if $case eq 'source_role';
+        push @links, FSM::Composition::Link->new(source => 'ready', target => 'sink.ready') if $case eq 'duplicate_driver';
+        my $plan = eval { FSM::Composition::LinkedPlanBuilder->build_plan(
+            lane => 'C3', composition_spec => composition_spec('explicit_ready'),
+            top => FSM::Composition::Top->new(name => 'explicit_ready'),
+            ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+            ports => \@ports, links => \@links,
+            realized_instances => [
+                realized_instance('sink', $sink, port('done', 'output', 8, 'data')),
+                realized_instance('noise', port('ready', 'output', 8, 'data')),
+            ], fsm_file => 'explicit-ready.fsm', header => 'explicit_ready'); };
+        my $error = $@;
+        if ($case eq 'valid') {
+            ok($plan, 'valid explicit input/output routes bypass the unrelated mixed family') or diag($error);
+            is_deeply([map { [$_->source, $_->target] } @{$plan ? $plan->resolved_links : []}],
+                [['ready','sink.ready'],['sink.done','done'],['noise.ready','noise_seen']],
+                'only the authored routes are resolved');
+        } else {
+            my %expected = (
+                width => qr/explicit link is blocked.*exact width agreement/,
+                declared_type => qr/explicit link is blocked.*incompatible declared type contracts/,
+                target_role => qr/explicit link is blocked.*child port is output instead of input/,
+                source_role => qr/explicit link is blocked.*child port is input instead of output/,
+                duplicate_driver => qr/explicit link is blocked.*target is already driven/,
+            );
+            ok(!$plan, "$case invalid explicit route fails");
+            like($error, $expected{$case}, "$case is checked by the actual explicit-link validator");
+        }
+    }
+};
+
 done_testing();
 
 sub composition_spec {

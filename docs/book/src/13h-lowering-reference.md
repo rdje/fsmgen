@@ -55,11 +55,13 @@ identities and receive portable generated names. See
 [logical domains and generated names](13a-actor-interface.md#logical-domains-and-generated-names)
 for allocation examples and the semantic/API/MCP identity join.
 
-**Tracked wiring limitation:** a public input named `ready` can collide with CDC `ready` outputs despite
-its explicit link; `.32.1.3.4.2` owns this case. Use a distinct public name
-such as `work_ready` until that explicit-route collision is repaired.
+Whole top-input explicit routes take precedence over same-name inference.
+A public input named `ready` therefore reaches its owning domain even when
+CDC children have unrelated `ready` outputs. Actual explicit-link validation
+still rejects bad directions, widths, declared types and duplicate drivers.
+See [composition conventions](05-composition-basics.md) for a complete example.
 
-Two additional limits are tracked before broader multi-clock signoff. An
+Additional limits are tracked before broader multi-clock signoff. An
 unused declared domain input may be omitted by inferred-port emission even
 though the top links it; `.32.1.3.4.3` owns preservation of that interface.
 An externally activated callee and an independently triggered event consumer
@@ -67,6 +69,15 @@ in the same domain can lower into disconnected state components: strict
 admission succeeds, but the consumer never runs. `.32.1.3.3.1` owns that
 scheduling defect. Keep these transactions in separate domain FSMs until the
 repair is qualified; the generated-name regression uses that explicit topology.
+
+An externally activated worker beginning directly with `await` can also time
+out immediately: its watchdog initializes in the await state while that state
+tests the counter's reset value. A synthetic activation entry currently does
+not move that initialization earlier. `.32.1.3.3.3` owns the repair, including
+rearming and real timeout behavior. The explicit-input routing oracle uses an
+ordinary transaction entry before the await; it does not qualify the defective
+body-first form. A leading sample can fold into the await and is not a reliable
+workaround.
 
 Accepted event crossings are represented as explicit CDC `?rtl`/`?rtlif`
 child interfaces in the generated top. Schedule reports expose the generated
