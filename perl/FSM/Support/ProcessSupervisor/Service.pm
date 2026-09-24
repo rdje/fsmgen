@@ -317,6 +317,53 @@ sub advance {
     return;
 }
 
+# The aggregate supplies a slot in its original retained peer entry BEFORE
+# calling. Publish into that slot before releasing Service custody; a creator
+# signal may interrupt the return but cannot strand the original snapshot.
+# This transfers data only, never job admission or permission to execute.
+sub transfer_request {
+    _error('expected original ticket and empty retained request slot') unless @_ == 3;
+    my ($self, $ticket, $target) = @_; _owner($self);
+    FSM::Support::ProcessSupervisor::Wire::_uint($ticket, '4294967295', 1);
+    _request_target($target);
+    my $transferred = 0;
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        # A pre-mask handler may have filled the destination, closed this
+        # peer or consumed its request. Never overwrite that newer state.
+        _request_target($target);
+        my $record = $self->{records}{$ticket} or _error('unknown connection ticket');
+        _error('ticket has no pending original request')
+            unless $record->{state} eq 'request' && $record->{request};
+        my $parent = $self->{parents}{$record->{parent}};
+        if ($self->{closed} || !$parent) {
+            $self->_fail_record($record, 'authority_revoked', 'parent authority is no longer live');
+            return;
+        }
+        my $now = _time(_now_ns());
+        if (grep { $now->bcmp($_) >= 0 }
+            $record->{wall}, $record->{deadline}, $parent->{deadline}, $self->{deadline}) {
+            $self->_fail_record($record, 'timed_out', 'original request admission deadline expired');
+            return;
+        }
+        $$target = {ticket => $ticket, parent => $record->{parent},
+            deadline_ns => $record->{deadline}->bstr,
+            admission_deadline_ns => $record->{wall}->bstr, request => $record->{request}};
+        delete $record->{request};
+        $record->{state} = 'handed';
+        $transferred = 1;
+    });
+    return $transferred;
+}
+
+sub _request_target {
+    my ($target) = @_;
+    # Native scalar custody only: a tied STORE is an arbitrary callback and
+    # cannot provide the same assignment-before-release guarantee.
+    _error('request target must be an empty untied scalar slot')
+        unless ref($target) eq 'SCALAR' && !defined(tied($$target)) && !defined($$target);
+    return;
+}
+
 sub take_request {
     _error('unexpected request arguments') unless @_ == 1;
     my ($self) = @_; _owner($self);

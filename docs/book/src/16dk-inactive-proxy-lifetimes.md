@@ -951,6 +951,31 @@ The coordinator stores every original peer outcome before asking the service to
 consume it, so an interrupted consumption return remains recoverable through
 `peer_observation`. Copied observations grant no native authority.
 
+Service now also offers `transfer_request($ticket, \$slot)` for a destination
+that its caller retained before the call. It transfers the selected original
+pending request into an empty, untied scalar slot. The packet carries the
+original ticket, parent, detached request, clipped execution `deadline_ns` and
+separate fixed `admission_deadline_ns`. This moves the existing snapshot; it
+does not create a second retained copy or reserve a job.
+
+For example, an aggregate owner can pass `\$peer->{request}` after retaining
+that peer entry. Service publishes the packet there before deleting its own
+snapshot and marking the ticket `handed`. A pending creator signal observes
+both completed custody changes. Even if that handler interrupts the return,
+the original peer entry still holds the full request. The legacy `take_request`
+API retains its existing return-value contract.
+
+Transfer rechecks destination occupancy, original ticket state, parent authority
+and all original walls after masking. An occupied or tied destination,
+unknown/repeated ticket or copied/inherited Service cannot transfer custody.
+If native scalar assignment fails, Service keeps its pending snapshot. Expiry
+returns false with an empty destination and retains the timeout cause. A signal
+that fills the destination or retires the peer before masking cannot be
+overwritten by stale state. Later EOF or repeated SPAWN closes the transport
+while the caller keeps any already-transferred packet for its own cleanup.
+This packet conveys data custody only; aggregate job admission, parent context
+binding and ACCEPT/exec composition remain separately owned.
+
 Connection now offers `queue_accept($job)` for one tracked ACCEPT on the
 original connection, and `accept_publication` for a copied observation. The
 original record exists before queue admission and retains its job, encoded
@@ -1002,6 +1027,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1840-process-service-sha
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1841-process-service-retained-accept.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1842-process-coordinator-accepted-peers.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1843-process-accept-publication.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1844-process-retained-request-transfer.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
