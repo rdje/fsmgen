@@ -239,6 +239,14 @@ intrinsic prerequisites. Omitted clauses normalize to these exact facts:
 | failure cleanup bound | 256 coordination-domain cycles |
 | failure diagnostics | `all`, in semantic-rank order |
 
+When both dependency and service collections are empty and readiness has no
+authored `requires`, its normalized condition is `all(configured)`: readiness
+can follow the already required configured lifecycle entry. No dependency or
+service identity is invented. Existing nonempty readiness conditions remain
+unchanged, and an authored `(requires (all))` is still invalid. T1879 proves
+this default has the same meaning as explicit `(requires (configured))` and
+survives source styles, imports, typed inspection and target-neutral planning.
+
 The mandatory chain cannot be reordered or weakened. Extra conditions can
 delay a point but cannot make it precede its intrinsic predecessor. Duplicate
 or cyclic conditions fail before binding. Construction and configuration are

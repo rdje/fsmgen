@@ -1,0 +1,292 @@
+{
+  "after": {
+    "producer_path": "perl/FSM/VIAL/LifecycleControl.pm",
+    "producer_sha256": "0da22379edc827485b1142182bb54566b29751c0f7abf52620468499ea681c23",
+    "rows": [
+      {
+        "action": "check",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "cf1a6cc42198e76d59671f7c0606dfa2160d0475ec9782aadfc739e26e1ed364",
+        "diagnostics": [],
+        "plan_id": null,
+        "selection": "base",
+        "semantic_projection_sha256": "11277e42264d088d856b399220fd8ecf528a1115df0514fc60d55104827acc00",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+        "success": true
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "12e4563eb1ed07df6f2f8818375d8375786416a4edc394e8277d764cf87d9129",
+        "diagnostics": [],
+        "plan_id": "plan/616d0ac2fe23bd5073eadd657de0d52d7c02c5d8f6cce00857fd5b2906f9d04c",
+        "selection": "base",
+        "semantic_projection_sha256": "11277e42264d088d856b399220fd8ecf528a1115df0514fc60d55104827acc00",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+        "success": true
+      },
+      {
+        "action": "check",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "00783bb948184c98d211bf0da8765d1dfa260bcdc5a0c6892532e9977517581a",
+        "diagnostics": [],
+        "plan_id": null,
+        "selection": "empty",
+        "semantic_projection_sha256": "250e15ee53cb448b5f27f48b52a8d9246cf9d049bbe9b147975d8b6e44b79093",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "2dd7b46f78b363f3d162bbba88d0be8324970b99e3898e1c321ca86a1e386e20",
+        "success": true
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "54a2ff88b960ab97d9a4f19d76e1f582bc816220da25549e42221d361f237756",
+        "diagnostics": [],
+        "plan_id": "plan/3a1b5ba465a646f4cc90b12c148b5ce2943ccef1edbe5338c5eb709b48679830",
+        "selection": "empty",
+        "semantic_projection_sha256": "250e15ee53cb448b5f27f48b52a8d9246cf9d049bbe9b147975d8b6e44b79093",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "2dd7b46f78b363f3d162bbba88d0be8324970b99e3898e1c321ca86a1e386e20",
+        "success": true
+      },
+      {
+        "action": "check",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "8b82ce25a417b74e945fcf162c9defedb4effcf36fa1ba730270adab109cc326",
+        "diagnostics": [],
+        "plan_id": null,
+        "selection": "explicit_reset",
+        "semantic_projection_sha256": "b90892e2d3f9fc56f150d937b9d3646bc2f2eb20c9fa22b4b23fda590f942347",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "0edc9a53626c3d0c01a1bffce4d6898235ebfa5f7bd3eaf19adba2062f78dfc8",
+        "success": true
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "574a1d2debfdf38d3c05b2432bf75c7f7413bdf575ed9bb4bc88bd28efd23905",
+        "diagnostics": [],
+        "plan_id": "plan/b18c6718352d6e217bc8956b9e1e80fd78b2ecfa5b5b629979c86e125fb564d0",
+        "selection": "explicit_reset",
+        "semantic_projection_sha256": "b90892e2d3f9fc56f150d937b9d3646bc2f2eb20c9fa22b4b23fda590f942347",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "0edc9a53626c3d0c01a1bffce4d6898235ebfa5f7bd3eaf19adba2062f78dfc8",
+        "success": true
+      },
+      {
+        "action": "check",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "db5fff46d89ae95da1626e78db9d8d49173b47b537abfa9b4be2e4ddad4d22f1",
+        "diagnostics": [],
+        "plan_id": null,
+        "selection": "explicit_configured",
+        "semantic_projection_sha256": "250e15ee53cb448b5f27f48b52a8d9246cf9d049bbe9b147975d8b6e44b79093",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "08f55e2035eeaa46d1842dbea574bb68fdbc45ce66b1f94761bbb9eb0205eeba",
+        "success": true
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "1524afac8fbbd20cae2716fc722a848463707ff162426b640fb5b566b1eac8c4",
+        "diagnostics": [],
+        "plan_id": "plan/3e69c3ff941296c1c398c42c4c86e24f3f76c33db42824abbac49037ac1ec9a5",
+        "selection": "explicit_configured",
+        "semantic_projection_sha256": "250e15ee53cb448b5f27f48b52a8d9246cf9d049bbe9b147975d8b6e44b79093",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "08f55e2035eeaa46d1842dbea574bb68fdbc45ce66b1f94761bbb9eb0205eeba",
+        "success": true
+      }
+    ]
+  },
+  "baseline_compiler_blob": "aaf40f740e1943bf1d9816ba63b42aefbd206ff3",
+  "baseline_revision": "9700c27341b6902ea134c989d49ed6eea1776c33",
+  "before": {
+    "producer_path": ".artifacts/mcp-feature-coverage/lifecycle-empty-baseline-perl/FSM/VIAL/LifecycleControl.pm",
+    "producer_sha256": "b1db91f4e55859f811a1fd1671046140e526310f7dd402f3ce37aaca3c56339f",
+    "rows": [
+      {
+        "action": "check",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "cf1a6cc42198e76d59671f7c0606dfa2160d0475ec9782aadfc739e26e1ed364",
+        "diagnostics": [],
+        "plan_id": null,
+        "selection": "base",
+        "semantic_projection_sha256": "11277e42264d088d856b399220fd8ecf528a1115df0514fc60d55104827acc00",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+        "success": true
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "12e4563eb1ed07df6f2f8818375d8375786416a4edc394e8277d764cf87d9129",
+        "diagnostics": [],
+        "plan_id": "plan/616d0ac2fe23bd5073eadd657de0d52d7c02c5d8f6cce00857fd5b2906f9d04c",
+        "selection": "base",
+        "semantic_projection_sha256": "11277e42264d088d856b399220fd8ecf528a1115df0514fc60d55104827acc00",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+        "success": true
+      },
+      {
+        "action": "check",
+        "compatibility_projection_sha256": null,
+        "complete_report_sha256": "c90a313d1a699fafc4095a855b8598874ac82a023103ea9261fa1a7f7012bc2b",
+        "diagnostics": [
+          {
+            "code": "VIAL_SEMANTIC_ERROR",
+            "message": "internal semantic validation failed closed",
+            "notes": [],
+            "phase": "semantic",
+            "schema": "fsmgen.vial_diagnostic.v2",
+            "schema_version": 2,
+            "semantic_path": "/",
+            "severity": "error",
+            "source_location": {
+              "end_byte_exclusive": 0,
+              "end_column": 1,
+              "end_line": 1,
+              "source_name": "empty_readiness.vial",
+              "start_byte": 0,
+              "start_column": 1,
+              "start_line": 1
+            }
+          }
+        ],
+        "plan_id": null,
+        "selection": "empty",
+        "semantic_projection_sha256": null,
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "2dd7b46f78b363f3d162bbba88d0be8324970b99e3898e1c321ca86a1e386e20",
+        "success": false
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": null,
+        "complete_report_sha256": "4a336dc7c53b2382a95bc41213b0ac5ef939fb9468e028746c5282556bcdf45c",
+        "diagnostics": [
+          {
+            "code": "VIAL_SEMANTIC_ERROR",
+            "message": "internal semantic validation failed closed",
+            "notes": [],
+            "phase": "semantic",
+            "schema": "fsmgen.vial_diagnostic.v2",
+            "schema_version": 2,
+            "semantic_path": "/",
+            "severity": "error",
+            "source_location": {
+              "end_byte_exclusive": 0,
+              "end_column": 1,
+              "end_line": 1,
+              "source_name": "empty_readiness.vial",
+              "start_byte": 0,
+              "start_column": 1,
+              "start_line": 1
+            }
+          }
+        ],
+        "plan_id": null,
+        "selection": "empty",
+        "semantic_projection_sha256": null,
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "2dd7b46f78b363f3d162bbba88d0be8324970b99e3898e1c321ca86a1e386e20",
+        "success": false
+      },
+      {
+        "action": "check",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "8b82ce25a417b74e945fcf162c9defedb4effcf36fa1ba730270adab109cc326",
+        "diagnostics": [],
+        "plan_id": null,
+        "selection": "explicit_reset",
+        "semantic_projection_sha256": "b90892e2d3f9fc56f150d937b9d3646bc2f2eb20c9fa22b4b23fda590f942347",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "0edc9a53626c3d0c01a1bffce4d6898235ebfa5f7bd3eaf19adba2062f78dfc8",
+        "success": true
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "574a1d2debfdf38d3c05b2432bf75c7f7413bdf575ed9bb4bc88bd28efd23905",
+        "diagnostics": [],
+        "plan_id": "plan/b18c6718352d6e217bc8956b9e1e80fd78b2ecfa5b5b629979c86e125fb564d0",
+        "selection": "explicit_reset",
+        "semantic_projection_sha256": "b90892e2d3f9fc56f150d937b9d3646bc2f2eb20c9fa22b4b23fda590f942347",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "0edc9a53626c3d0c01a1bffce4d6898235ebfa5f7bd3eaf19adba2062f78dfc8",
+        "success": true
+      },
+      {
+        "action": "check",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "db5fff46d89ae95da1626e78db9d8d49173b47b537abfa9b4be2e4ddad4d22f1",
+        "diagnostics": [],
+        "plan_id": null,
+        "selection": "explicit_configured",
+        "semantic_projection_sha256": "250e15ee53cb448b5f27f48b52a8d9246cf9d049bbe9b147975d8b6e44b79093",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "08f55e2035eeaa46d1842dbea574bb68fdbc45ce66b1f94761bbb9eb0205eeba",
+        "success": true
+      },
+      {
+        "action": "plan",
+        "compatibility_projection_sha256": "1943cd4649afbb5b5646ce025554252c450d73508473cfe78bd194fea433f8f0",
+        "complete_report_sha256": "1524afac8fbbd20cae2716fc722a848463707ff162426b640fb5b566b1eac8c4",
+        "diagnostics": [],
+        "plan_id": "plan/3e69c3ff941296c1c398c42c4c86e24f3f76c33db42824abbac49037ac1ec9a5",
+        "selection": "explicit_configured",
+        "semantic_projection_sha256": "250e15ee53cb448b5f27f48b52a8d9246cf9d049bbe9b147975d8b6e44b79093",
+        "source_id": "empty_readiness.vial",
+        "source_sha256": "08f55e2035eeaa46d1842dbea574bb68fdbc45ce66b1f94761bbb9eb0205eeba",
+        "success": true
+      }
+    ]
+  },
+  "evidence_legs": {
+    "durability": "Exact Git baseline, tracked probe/result, T1879, source/inspection contracts, mdBook, knowledge card and owning task.",
+    "falsify": "Canonical and explicit-reset/configured readiness complete report hashes stay equal before/after. Empty readiness moves from refusal to success and equals explicit configured readiness meaning. T1879 asserts exact native/inspection/plan condition, absent invented identities, imports/styles, API/CLI/MCP parity and authored empty/unknown/cyclic/excess refusal.",
+    "rederive": "Tracked public check/virtual-plan probe loads the exact baseline LifecycleControl Git object with module path/hash verification, then the repaired compiler, using identical source IDs/bytes."
+  },
+  "limits": [
+    "Only otherwise-empty readiness gains all(configured). Every nonempty intrinsic/authored conjunction retains its prior meaning and order; authored empty all still fails.",
+    "Internal inspection foundation is qualified; portable/filesystem public inspection APIs, CLI discovery and MCP detail remain separate pending leaves.",
+    "No backend execution, performance/capacity or full-CI claim. Canonical equality applies to the controlled fixtures, not every possible input.",
+    "mdBook build and rendered assertions pass; browser visual audit remains unavailable."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3",
+  "schema": "fsmgen.vial_lifecycle_empty_readiness_repair.v1",
+  "tests": {
+    "lifecycle-empty-band": {
+      "sha256": "da7ad06b242a89e3c63b331c5623d8ad7cc6669c6378df064b31c2ebdff4ca8f",
+      "summary": [
+        "All tests successful.",
+        "Files=7, Tests=34, 50 wallclock secs ( 0.03 usr  0.01 sys + 44.45 cusr  2.49 csys = 46.98 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "lifecycle-empty-book": {
+      "sha256": "2197abbebb2a8e665239dfb2c871a41b3e6e4462e00dd24f46f2ca95cceca04c",
+      "summary": [
+        " INFO HTML book written to `.artifacts/lifecycle-empty-book`"
+      ]
+    },
+    "lifecycle-empty-green": {
+      "sha256": "fa05c97c6caca9a40c1cacd3b1e7cd4ba0fb67e1a431f689116fbb804925f3be",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=3,  6 wallclock secs ( 0.00 usr  0.00 sys +  4.91 cusr  0.29 csys =  5.20 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "lifecycle-empty-red": {
+      "sha256": "43cceef565f951455781a351de25df40e8286c5d67e3fe683f3eff526a4c1013",
+      "summary": [
+        "Files=1, Tests=3,  1 wallclock secs ( 0.01 usr  0.00 sys +  0.75 cusr  0.04 csys =  0.80 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}

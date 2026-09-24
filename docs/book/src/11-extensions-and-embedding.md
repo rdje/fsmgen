@@ -2873,10 +2873,13 @@ retains configured status and declared dependencies, then adds the reset
 condition with its domain identity. Typed inspection preserves that complete
 conjunction. Canonical check and planning reports remain unchanged by the fix.
 
-A lifecycle with both dependencies and services empty still fails native
-admission; `.31.3.2.3.2.2.3` owns the immediate repair. Inspection will not
-bypass source validation, and the API/MCP route remains unadvertised until
-that repair and public-interface qualification are complete.
+A lifecycle may use `(dependencies)` and `(services)` with `(readiness ready)`.
+Its readiness condition then explicitly retains the configured entry
+precondition, with no invented dependency or service identity. This has the
+same meaning as adding `(requires (configured))`; authored `(requires (all))`
+remains invalid. Existing nonempty readiness conditions and their order remain
+unchanged. The internal base/lifecycle projection is qualified; the public
+API and MCP detail route remain in progress and unadvertised.
 
 Select `language_version: 2` explicitly for VIAL v2, including the implemented
 lifecycle-control family. Omission selects v1; the adapter never guesses from

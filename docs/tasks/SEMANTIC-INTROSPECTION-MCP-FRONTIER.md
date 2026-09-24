@@ -451,11 +451,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.1: construct closed VIAL base inspection records`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Project complete typed lifecycle-control source semantics.`
   Acceptance: `Extend the base projector with the selected public intent-node envelope and explicit lifecycle payload/condition/detail shapes. Preserve authored and intrinsic dependencies, service state conditions, deadlines and failure cleanup. Validate registered family/revision, reject unknown and incomplete records, prove independent authored values and complete source locations, and keep the API unadvertised until the facade ships.`
-  Verification: `Base projection and native ordering are committed. Implement closed lifecycle envelopes and family-specific payload constructors with independent authored condition, scope, deadline and failure-policy oracles.`
-  Commit: `pending`
+  Verification: `Closed lifecycle projection is qualified by T1877, with service-start and empty-readiness prerequisites repaired and qualified by T1878/T1879. All children are complete; public API exposure is next.`
+  Commit: `See committed children .1, .2 and .3.`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3`
 
@@ -474,11 +474,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.2: preserve authored service start requirements`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Admit configured readiness when a lifecycle has no dependencies or service.`
   Acceptance: `Reproduce the grammar-valid empty dependency/service case and repair only its vacuous readiness normalization, retaining the configured lifecycle-entry precondition and refusing authored empty all. Prove typed inspection, source styles, native/API/MCP and target-neutral planning; preserve canonical identities and all nonempty prerequisite order. Clarify the default in the spec/book and retain controlled evidence. Commit before closing lifecycle inspection or advertising its facade; no runtime producers.`
-  Verification: `Independent public Parser::check_source of the canonical lifecycle with dependencies/services both empty returns VIAL_SEMANTIC_ERROR. Direct _build_ir exposes lifecycle condition /condition all node requires at least one operand. Each collection can be omitted separately successfully in T1877. _build_program unconditionally applies _all to the empty readiness prerequisite list, although grammar permits both empty collections and configuration is already a lifecycle-entry precondition. Evidence: inspection-lifecycle-empty-diagnosis.log.`
-  Commit: `pending`
+  Verification: `T1879 proves legal empty readiness normalizes to all(configured), with no invented relations/services and the same meaning as explicit configured readiness. Native/inspection/plan conditions, styles/imports and API/CLI/MCP parity pass; invalid authored empty/unknown/cyclic/excess conditions still fail. Controlled reports preserve canonical and existing nonempty identities. The focused band and rendered book pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3: normalize empty lifecycle readiness`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3`
   Status: `pending`
@@ -1197,8 +1197,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3` is next: repair native
-empty readiness before portable/filesystem API, native CLI/discovery and MCP.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3` is next: expose portable
+and filesystem inspection APIs over captured bytes, then native CLI/discovery
+and MCP detail.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2357,3 +2358,43 @@ readiness failure remains immediately owned by `.2.2.3`; the lifecycle parent
 stays active and public inspection is unadvertised. Task/book metadata admits
 only this owned repair; knowledge-card allowance is unchanged. The source
 contract owns the construction invariant, so no rationale-ledger duplication.
+
+## Acceptance Checklist — `.31.3.2.3.2.2.3` empty readiness
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-repair T1879 reports
+  `#   Failed test 'legal empty dependency/service collections check'`
+  and `#   at t/1879-vial-lifecycle-empty-readiness.t line 75.` Public source
+  validation returns `VIAL_SEMANTIC_ERROR`; the earlier tracked direct native
+  diagnosis is `lifecycle condition /condition all node requires at least one operand`.
+  `_build_program` constructs an empty all for readiness when both permitted
+  optional collections and the authored requirement are absent, despite the
+  configured lifecycle-entry precondition already being mandatory.
+- [x] **ADDRESSED (verified)** — Only otherwise-empty readiness receives
+  `all(configured)`. T1879 independently asserts its complete native, inspection
+  and public-plan condition; empty relation lists; exact fixture/domain scope;
+  no invented service/dependency; and semantic equality with explicit configured
+  readiness. Normal/terse/imports and complete portable/filesystem/native CLI/MCP
+  reports agree. Existing nonempty reset readiness is untouched. Authored empty
+  all, unknown scope, cycles and excess operands remain specifically rejected
+  with no partial semantic report or artifact. The general condition validator
+  is unchanged.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1555-vial-public-source-tooling.t t/1801-vial-v2-source-projections.t t/1806-vial-v2-public-foundation.t t/1808-vial-v2-lifecycle-compiler-phases.t t/1877-vial-source-inspection-lifecycle.t t/1878-vial-lifecycle-start-requirements.t t/1879-vial-lifecycle-empty-readiness.t`
+  reports `All tests successful. Files=7, Tests=34` and `Result: PASS`.
+  `mdbook build docs/book -d .artifacts/lifecycle-empty-book` and rendered
+  semantics/unshipped-interface assertions pass; disposable output is removed.
+  Browser visual access, external runtime and full CI remain unqualified; no
+  spent producer is replayed.
+
+Re-derivation: tracked public check/virtual-plan probe with the exact `9700c273`
+compiler blob, module path/hash verification and identical source IDs/bytes.
+Falsification: canonical and explicit-reset/configured complete check/plan
+reports remain identical; only formerly failing empty readiness gains admission,
+with the same semantic digest as explicit configured readiness. T1879 adds
+independent condition, absence and invalid-source controls. Durability: exact
+Git baseline, tracked `vial-lifecycle-empty-readiness-repair.json`, probe/test,
+contracts/book/fact. The lifecycle projection parent is complete; portable and
+filesystem public facades are next, with CLI/MCP detail still unadvertised.
+Task, book and source-spec aggregate metadata records this owned repair; the
+knowledge-card allowance remains unchanged. The source spec owns the default
+normalization rationale, with no duplicate rationale-ledger entry.

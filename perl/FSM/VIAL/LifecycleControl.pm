@@ -532,6 +532,11 @@ sub _build_program {
         my ($record, $intrinsic_ids, $intrinsic_conditions) = @{$spec};
         my @conditions = (@{$intrinsic_conditions},
             _optional($record->{additional_condition}));
+        # Both optional prerequisite collections may be empty. In that case
+        # readiness retains the configured lifecycle-entry precondition;
+        # authored conditions and every nonempty conjunction stay unchanged.
+        push @conditions, _configured_condition()
+            if $record->{kind} eq 'readiness' && !@conditions;
         my $condition = _all(@conditions);
         push @records, {
             %{$record}, condition => $condition,

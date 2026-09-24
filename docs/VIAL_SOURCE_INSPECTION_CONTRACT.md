@@ -2,7 +2,7 @@
 
 Date: 2026-09-24
 Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`
-Status: internal base/lifecycle projector implemented; native lifecycle prerequisites and public API pending
+Status: internal base/lifecycle projector qualified; public API and advertisement pending
 
 ## Purpose and compatibility
 
@@ -281,12 +281,15 @@ Cycle bounds are positive and retain the existing lifecycle ceiling. Missing
 or unknown fields, kinds, policies, revisions, invalid condition bounds and
 inconsistent scope fail closed; no generic payload hash is copied into output.
 
-The independent T1877 oracle covers admitted source detail. T1878 also proves
-that service `start_requires` reaches complete typed inspection after the
-native dependency-construction repair (`.31.3.2.3.2.2.2`). An empty
-dependency/service pair still constructs invalid empty readiness; the immediate
-repair leaf is `.31.3.2.3.2.2.3`. The projector does not bypass failed source
-admission, and the public facade remains unadvertised until qualification.
+The independent T1877 oracle covers admitted source detail. T1878 proves that
+service `start_requires` reaches complete typed inspection after the native
+dependency-construction repair. T1879 proves that readiness with no intrinsic
+or authored prerequisites retains the configured entry precondition as
+`all(configured)`, with empty relation lists and no invented service. Existing
+nonempty conditions remain unchanged; authored empty `all` remains invalid.
+The projector never bypasses failed source admission. The internal base and
+lifecycle foundations are qualified; the public facade remains unadvertised
+until its separate interface qualification.
 
 ## CLI and MCP selection
 
