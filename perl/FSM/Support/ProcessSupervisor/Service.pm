@@ -54,13 +54,15 @@ sub _new_service {
     my ($run, $deadline_ns, $shared) = @_;
     _error('expected an owned endpoint run')
         unless ref($run) eq 'FSM::Support::ProcessSupervisor::Endpoint';
-    my $context = FSM::Support::ProcessSupervisor::Wire::decode_context($run->context);
+    my $encoded = $run->context;
+    my $context = FSM::Support::ProcessSupervisor::Wire::decode_context($encoded);
     my $deadline = _time($deadline_ns);
     _error('original deadline already expired') if $deadline->bcmp(_time(_now_ns())) <= 0;
     my $self = bless {
         owner_pid => $$, run => $run, identity => $context->{run}, deadline => $deadline,
         shared_run => $shared,
-        parents => {1 => {token => $context->{token}, deadline => $deadline->copy}},
+        parents => {1 => {state => 'ready', token => $context->{token},
+            context => $encoded, deadline => $deadline->copy}},
         high_parent => 1, next_ticket => 1, records => {}, order => [], closed => 0,
     }, __PACKAGE__;
     $self->{owner_identity} = refaddr($self);
@@ -72,24 +74,81 @@ sub context {
     my ($self) = @_; _owner($self);
     _error('root authority is no longer live') unless !$self->{closed} && $self->{parents}{1}
         && $self->{deadline}->bcmp(_time(_now_ns())) > 0;
-    return $self->{run}->context;
+    return $self->parent_context(1);
+}
+
+sub _check_parent_live {
+    my ($self, $id, $record) = @_;
+    _error('parent authority is no longer retained') unless !$self->{closed}
+        && $self->{parents}{1} && $self->{parents}{$id}
+        && refaddr($self->{parents}{$id}) == refaddr($record);
+    my $now = _time(_now_ns());
+    if ($now->bcmp($self->{deadline}) >= 0 || $now->bcmp($record->{deadline}) >= 0) {
+        $record->{failure} //= {status => 'timed_out', diagnostic => 'original parent lifetime expired'}
+            if $record->{state} eq 'preparing';
+        _error('original parent lifetime expired');
+    }
+    my $run = $self->{run}->observation;
+    _error('parent endpoint is no longer ready') unless $run->{phase} eq 'ready' && !$run->{closed};
+    return;
+}
+
+sub parent_context {
+    _error('expected one original parent identity') unless @_ == 2;
+    my ($self, $id) = @_; _owner($self);
+    FSM::Support::ProcessSupervisor::Wire::_uint($id, '4294967295', 1);
+    my $record = $self->{parents}{$id} or _error('unknown or revoked parent authority');
+    _error('parent authority preparation is not complete') unless $record->{state} eq 'ready';
+    $self->_check_parent_live($id, $record);
+    return $record->{context};
+}
+
+sub parent_observation {
+    _error('expected one retained parent identity') unless @_ == 2;
+    my ($self, $id) = @_; _owner($self);
+    FSM::Support::ProcessSupervisor::Wire::_uint($id, '4294967295', 1);
+    my $record = $self->{parents}{$id} or _error('unknown or revoked parent authority');
+    # Preparation state is a historical fact, not current submission authority.
+    # Inspecting it never exposes a token or replaces parent_context's checks.
+    return {parent => 0 + $id, state => $record->{state},
+        deadline_ns => $record->{deadline}->bstr,
+        failure => $record->{failure} ? {%{$record->{failure}}} : undef};
 }
 
 sub register_parent {
     _error('expected job identity and original ancestor-clipped deadline') unless @_ == 3;
     my ($self, $id, $deadline_ns) = @_; _owner($self);
-    _error('service is closed') if $self->{closed};
     FSM::Support::ProcessSupervisor::Wire::_uint($id, '4294967295', 1);
-    _error('parent identity is reused or out of order') if $id <= $self->{high_parent};
-    _error('live authority capacity exhausted') if keys(%{$self->{parents}}) >= $LIMIT->{jobs};
     my $deadline = _time($deadline_ns);
-    _error('invalid parent lifetime') if $deadline->bcmp(_time(_now_ns())) <= 0
-        || $deadline->bcmp($self->{deadline}) > 0 || !$self->{parents}{1};
-    my $token = FSM::Support::ProcessSupervisor::Endpoint::new_job_token();
-    my $context = $self->{run}->context_for($id, $token);
-    $self->{parents}{$id} = {token => $token, deadline => $deadline};
-    $self->{high_parent} = 0 + $id;
-    return $context;
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        # Validate before spending an identity, then retain the original record
+        # before entropy effects. Failed preparation consumes its bounded slot
+        # until explicit revocation, and the identity can never be reused.
+        _error('service is closed') if $self->{closed};
+        _error('parent identity is reused or out of order') if $id <= $self->{high_parent};
+        _error('live authority capacity exhausted') if keys(%{$self->{parents}}) >= $LIMIT->{jobs};
+        _error('invalid parent lifetime') if $deadline->bcmp(_time(_now_ns())) <= 0
+            || $deadline->bcmp($self->{deadline}) > 0 || !$self->{parents}{1};
+        my $record = $self->{parents}{$id} = {state => 'preparing', deadline => $deadline};
+        $self->{high_parent} = 0 + $id;
+        my $ok = eval {
+            $self->_check_parent_live($id, $record);
+            $record->{token} = FSM::Support::ProcessSupervisor::Endpoint::new_job_token();
+            $self->_check_parent_live($id, $record);
+            $record->{context} = $self->{run}->context_for($id, $record->{token});
+            $self->_check_parent_live($id, $record);
+            $record->{state} = 'ready';
+            1;
+        };
+        unless ($ok) {
+            my $error = $@;
+            $record->{state} = 'failed';
+            $record->{failure} //= {status => 'host_error', diagnostic => 'parent authority preparation failed'};
+            die $error;
+        }
+    });
+    # Fresh lookup also refuses closure/expiry from a pre-return handler.
+    return $self->parent_context($id);
 }
 
 sub _fail_record {
@@ -229,7 +288,7 @@ sub _message {
     my ($self, $record, $message, $now) = @_;
     if ($record->{state} eq 'hello' && $message->{type} eq 'HELLO') {
         my $parent = $self->{parents}{$message->{parent}};
-        unless ($message->{run} eq $self->{identity} && $parent
+        unless ($message->{run} eq $self->{identity} && $parent && $parent->{state} eq 'ready'
             && $message->{token} eq $parent->{token} && $parent->{deadline}->bcmp($now) > 0) {
             $self->_fail_record($record, 'invocation_error', 'invalid or expired parent authority');
             return;

@@ -976,6 +976,35 @@ while the caller keeps any already-transferred packet for its own cleanup.
 This packet conveys data custody only; aggregate job admission, parent context
 binding and ACCEPT/exec composition remain separately owned.
 
+Parent registration now retains its original `preparing` record and spends
+its monotonic job identity before requesting a token from the OS random source.
+Preparation and publication share the signal mask. The service rechecks the
+original parent/run deadlines and endpoint before and after token/context
+construction; only a fully `ready` record can authenticate HELLO.
+
+`parent_context($id)` recovers that same original ready context after checking
+current authority and lifetime. It creates no new token. For example, a pending
+creator handler can interrupt `register_parent` after publication; the original
+Service still holds the completed context for recovery. The original root
+context remains unchanged. `parent_observation($id)` copies the preparation
+state, deadline and failure without exposing a token. Its `ready` state records
+completed preparation; a later expired or closed endpoint still refuses context
+recovery and provides no live submission authority.
+
+A failed token or context return leaves a failed parent record and a spent
+identity. The record occupies its bounded logical slot until explicit revocation,
+and a partially constructed context cannot authenticate it. Revoking a failed
+slot permits a fresh higher identity; it cannot reuse the old one. Invalid
+lifetimes refuse before spending an identity or reading entropy. Pre-mask
+re-entry also cannot overwrite a registration completed by the handler.
+
+For example, expiry between token generation and context construction retains
+a timeout, not a ready authority. A lost native token return retains a host
+failure even though the OS read occurred. A signal observes the complete ready
+record and closed entropy handle before interrupting return. Context recovery
+still grants only submission under that logical parent. Original ledger binding,
+private snapshot replacement and command release remain subsequent steps.
+
 Connection now offers `queue_accept($job)` for one tracked ACCEPT on the
 original connection, and `accept_publication` for a copied observation. The
 original record exists before queue admission and retains its job, encoded
@@ -1028,6 +1057,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1841-process-service-ret
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1842-process-coordinator-accepted-peers.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1843-process-accept-publication.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1844-process-retained-request-transfer.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1845-process-retained-parent-context.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

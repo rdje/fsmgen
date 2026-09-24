@@ -3645,10 +3645,33 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.1: retain original request transfer before return`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain original parent contexts and private execution snapshot replacement.`
   Acceptance: `Make new parent authority/context publication recoverable under creator signals and original deadlines. Bind only original admitted identities; replace only the reserved private context environment entry in a detached execution snapshot while preserving all other bytes, order, cwd, umask and original invocation time. Validate inclusive encoded bounds after replacement and refuse stale/copied/reused authority. Qualify root and nested contexts without exec release.`
-  Verification: `Pending the original request handoff; inspect the canonical environment/context contract before selecting the exact retained API.`
+  Verification: `Original request handoff is qualified. The canonical contract names FSMGEN_PROCESS_COORDINATOR_CONTEXT and requires complete byte-ordered environment preservation. Service currently returns new context from local state after token generation, without a retained preparation state or masked publication. Child .1 closes that boundary; .2 retains completed acceptance history before the existing rollover milestone; .3 adds bounded pure snapshot replacement. Aggregate grant binding remains sibling .4.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.1`
+  Status: `done`
+  Goal: `Retain original Service parent context before publication returns.`
+  Acceptance: `Retain a bounded original parent record and spend its monotonic identity before token effects. Mask preparation and context publication; recheck original Service/root/parent lifetime before and after token/context construction. Expose creator-only recovery of the same ready context and copied preparation/failure observations. Partial preparation retains failure without usable authority; revoked/expired/failed parents cannot authenticate. Preserve legacy successful registration, invalid-lifetime refusal before identity consumption and original root context. Qualify real entropy, sockets, creator signals, capacity, stale re-entry and exact inherited cleanup without command exec.`
+  Verification: `Service retains preparing parent records and spends identities before actual entropy under the preparation mask. Fresh original deadline/endpoint checks bracket token and context effects. Only ready records authenticate; failed preparation keeps its bounded slot until revocation and cannot reuse its identity. parent_context recovers the same original ready authority without new entropy and refuses expired/revoked/closed endpoints; copied parent_observation exposes no token. Root context and the legacy closed-root diagnostic remain unchanged. T1845 observes actual entropy handle closure, literal sockets, creator signals/masks, partial token/context returns, original expiry, capacity, pre-mask re-entry and one exact inherited-child wait. Six isolated controls reject missing masks, unspent identities, failed-parent authentication, stale construction/recovery and copied views. All outcomes are consumed and endpoint residue is empty. Final selected band passes Files=13, Tests=179. Snapshot substitution and aggregate original-grant binding remain subsequent leaves.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.1: retain original parent context publication`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2`
+  Status: `pending`
+  Goal: `Retain completed acceptance history before snapshot composition.`
+  Acceptance: `Authenticate the exact completed predecessor and acceptance suffix through the existing finite history manifest before reaching the unchanged live task rollover milestone. Preserve every current node, original version-object terminal and prior manifest chain. Independently reconstruct source/suffix digests and dimensions, then prove corruption refusal with the unchanged checker.`
+  Verification: `At clean 54571a18b the task is 7123 lines; context decomposition and its first completed leaf approach the existing 7200-line milestone. This child owns only completed acceptance prose, not another nested compact terminal.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3`
+  Status: `pending`
+  Goal: `Replace only private context in bounded detached execution snapshots.`
+  Acceptance: `Add a pure closed snapshot transformation for the exact reserved environment key. Validate context syntax and snapshot type, preserve original invocation time, argv/cwd/umask and every unrelated environment byte, replace or insert in strict byte order, and revalidate all inclusive vector/scalar/aggregate/frame bounds after substitution. Leave the input snapshot, live ENV and cwd untouched on success or failure. Qualify literal independent encoding and exact limit/excess cases; syntax is not live authority and no exec is released.`
+  Verification: `Pending retained parent contexts and bounded history. Native exec compatibility already has independent component owners; aggregate tests must later prove this transformed original snapshot reaches the actual gated command.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3`
@@ -4377,7 +4400,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2` retains original parent contexts and private execution snapshot replacement. Original Service request transfer is qualified. Later children bind Service job/publication state, aggregate gated admission and final exec rechecks. Completed native-binding topology remains exactly version-retrievable; live claim owners remain visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2` retains completed acceptance history before the existing live-task rollover milestone. Child .3 then replaces only the private context in detached execution snapshots; original Service parent context publication is qualified. Original Service request transfer is qualified. Later children bind Service job/publication state, aggregate gated admission and final exec rechecks. Completed native-binding topology remains exactly version-retrievable; live claim owners remain visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7121,3 +7144,32 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   Knowledge Map, claims and staged doctrines cover the synchronized slice.
   No job admission, command release, original producer, full CI or push runs.
   Browser visual review, Linux and remaining context/job composition stay open.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub register_parent {'`
+  locates 5f8be37f1ac107cc486a9e9c435b33871391e796. Registration generated
+  authority before retaining a parent and returned context without masked
+  publication or a creator-bound recovery interface.
+- [x] **ADDRESSED (verified)** — Re-derivation uses real OS entropy/closed
+  handle observations, literal socket HELLO/READY or EOF, pending creator
+  signals, exact masks, original walls, capacity and exact inherited waits.
+  Preparing state and spent identity precede entropy; ready state follows fresh
+  token/context checks. Partial preparation retains host or timeout truth and
+  cannot authenticate; bounded slots release only on revocation. Original
+  ready context recovery creates no replacement token and rejects lost liveness.
+  Falsification: six isolated controls remove masking, identity consumption,
+  ready-only HELLO, post-effect checks, recovery checks or creator validation.
+  Each yields the intended assertion failure and empty endpoint residue; all
+  outcomes are consumed and control sources/runner removed. Durability: Service,
+  T1845, task, book and canonical fact preserve derivation and control loci;
+  .artifacts/parent-context*.log raw logs remain a named gap. Authority bytes
+  never enter these observations or diagnostics.
+- [x] **NO REGRESSION** — Final selected native/transport/architecture band:
+  `All tests successful`, `Files=13, Tests=179`. The first band caught changed
+  closed-root diagnostic wording; the original message is restored. Early
+  fixture syntax corrections fix lexical localization and an array reference
+  before native qualification. Syntax, inspected built book, Knowledge Map,
+  claims and staged doctrines cover the synchronized slice. Browser visual
+  review, Linux, snapshot replacement and aggregate binding remain open.
+  No command exec, original producer, full CI or push runs.
