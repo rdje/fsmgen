@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.41` (pending)
-- next_action: Correct residual reset wording under .41, then qualify aggregate/domain child read composition before writer handoffs.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2` (pending)
+- next_action: Repair aggregate typedef identity and qualify generated-child aggregate reads under .39.2.2.2.2, then domain child composition and writer handoffs.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

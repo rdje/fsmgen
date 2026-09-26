@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-09-26`
+- Last updated: `2026-09-27`
 - Owner: repo-local workflow
 
 ## Goal
@@ -1124,11 +1124,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40: preserve single-member aggregate types`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.41`
-  Status: `pending`
+  Status: `done`
   Goal: `Remove residual power-up claims from the ISF feature matrix's hardware reset descriptions.`
   Acceptance: `Immediately after .40, compare the scalar-storage and local-variable matrix rows with the qualified reset contract, replace powers-up wording with hardware-reset wording, census remaining maintained ISF descriptions, validate claims/book and commit before wider child composition.`
   Verification: `docs/book/src/13k-isf-feature-support-matrix.md scalar storage and local variables say powers up although their own evidence is an HDL reset block; .35 and .39 qualify reset behavior, not power-up initialization. This stale wording was exposed while selecting aggregate documentation.`
-  Commit: `pending`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.41: distinguish hardware reset from power-up`
 
 ## Implementation Notes From `.4`
 
@@ -1794,9 +1794,9 @@ Completed `.39.2.1` preserves ordinary/domain ISF storage and qualifies the
 retained CSR baseline. Completed `.39.2.2.1` retains generated-child storage evidence and decision
 0107. Completed `.39.2.2.2.1` routes live scalar/bank reads for ordinary and
 single-domain children and refuses unqualified aggregate/domain reads and writes.
-Completed `.40` repairs single-member type normalization. Next `.41` corrects
-residual reset wording, then `.39.2.2.2.2/.3`
-repair aggregate and multi-domain child composition before writer handoffs. After those repairs,
+Completed `.40` repairs single-member type normalization; `.41` aligns residual
+reset wording. Next `.39.2.2.2.2/.3` repair aggregate and multi-domain child
+composition before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -4408,3 +4408,30 @@ malformed/cyclic and constructor-named alias controls falsify over-flattening
 or shape guessing; T1905 and the new Knowledge Map card preserve the evidence.
 The already owned aggregate composition refusal remains in place. No wider
 backend or shared-child aggregate runtime qualification is claimed here.
+
+
+## Qualification — `.41`
+
+A maintained-ISF census finds reset/power-up conflation in the feature matrix
+and local-variable chapter. The actor-interface chapter already distinguishes
+hardware reset from pre-reset initialization. This slice aligns the remaining
+prose/comments with that qualified contract, preserving the same examples and
+all actual reset/default behavior. The canonical output/internal-role fact and
+T1901/T1902 own behavior evidence; a wording-only fix does not claim new HDL
+support. Validation: the terminology census retains only explicit statements
+distinguishing reset from power-up. Executable fenced examples compare exactly
+after comment removal. mdBook builds in a fresh, root-derived local destination;
+rendered matrix/local-variable text matches the corrected reset contract.
+Claim inventory/dispositions and staged doctrine gates remain commit requirements.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'its power-up state'` traces
+  the local-variable wording to `4d425d36c`; `git log -S 'register powers up'`
+  traces matrix wording to `92b1155c5` and `14ad74179`. Those reset-value docs
+  describe reset-block assignments but incorrectly equate them with power-up;
+  the qualified actor-interface contract explicitly excludes that guarantee.
+- [x] **ADDRESSED (verified)** — The maintained ISF census now finds power-up
+  only in explicit distinctions from reset. Fresh rendered chapter/matrix
+  markers agree, and executable fenced examples are unchanged after comments.
+- [x] **NO REGRESSION** — The current registered gate reports `knowledge-map: OK`
+  and `readme-entrypoint: all README entry-point invariants hold`; claim census
+  and dispositions pass. No compiler, example semantics or reset logic changed.

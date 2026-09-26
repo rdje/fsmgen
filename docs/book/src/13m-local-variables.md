@@ -48,20 +48,24 @@ synonym**. A transaction-local is re-initialized **each time the transaction run
 ### `(reset V)` — a hardware reset value
 
 `(default …)`/`(init …)` is **init-on-entry** — it runs each time the transaction starts.
-The value a register holds out of *hardware reset* (its power-up state) is a **separate**
+The value a register holds after *hardware reset* is a **separate**
 property, set with `(reset V)`:
 
 ```lisp
-(local mode (width 8) (reset 1))   ;; powers up at 1 on hardware reset (areset/sreset)
+(local mode (width 8) (reset 1))   ;; resets to 1 through hardware reset (areset/sreset)
 ```
 
 `(reset V)` emits the register's hardware reset value into the generated HDL reset block
 (`mode <= 1` instead of the default `mode <= 0`). It is especially useful for **register
-maps / control-status registers** that must power up at a specified default. `V` is a
+maps / control-status registers** that must reset to a specified default. `V` is a
 non-negative integer literal that fits in the width. `(reset V)` and `(default V)` are
-orthogonal — a local may carry both (`reset` = power-up value, `default` = re-init each
+orthogonal — a local may carry both (`reset` = hardware reset value, `default` = re-init each
 run). **When no `(reset V)` is given, the register resets to all-0s**, exactly as before
 (fully backward-compatible).
+
+This specifies behavior when hardware reset is applied; it does not promise a
+power-up value before a reset event. The actor's synchronous/asynchronous reset
+mode and active polarity determine when the reset takes effect.
 
 A `(local …)` fails closed if its name collides with an interface port, if the
 `(width N)` is missing or not a positive integer, or if a `(default V)` / `(init V)` /
