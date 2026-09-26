@@ -272,6 +272,11 @@ Imported files may also contain library roots:
 
 General source rules:
 
+- Actor interface-port options are closed: `width`, `type`, `domain`, and
+  output-only `reset`/`default`. Unknown names (including unsupported `present`)
+  and malformed option shapes fail through the shared parser in default and
+  strict modes, including native/API/MCP queries. Emit only documented options.
+
 - Names that identify actors, ports, storage, transactions, rules, drives,
   parameters, domains, and instances are scalar HDL identifiers. Current
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.

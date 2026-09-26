@@ -25,6 +25,9 @@ emit the same HDL as the clause-free control except its date header.
 `Parser::_parse_interface` ignores malformed option shapes and lacks a final
 unknown-option rejection. This is a validation defect; `.33.2` owns refusal
 through the shared parser and native/API/MCP surfaces.
+The repair is covered by `t/1898-isf-interface-option-validation.t`: unsupported
+options and malformed shapes now fail in default and strict modes while valid
+output metadata retains its meaning. The intake above describes the predecessor.
 
 The generic-width request is distinct from earlier derived widths (`.32.3`).
 An actual HDL override to 64 leaves the default-32 source's WDATA at 32 bits;

@@ -20,17 +20,17 @@ owned implementation work; they are not shipped capabilities yet.
 | --- | --- | --- |
 | Parameter-sized ports | Width references resolve to the default; an emitted HDL parameter does not make the port generic. | Preserve width dependencies through HDL and supported instance overrides. |
 | Parameter constraints | Scalar parameters carry defaults without declared legal or recommended sets. | Check legal values/ranges at defaults and overrides; report constraints and advisory recommendations. |
-| Optional interfaces | Zero widths are rejected; the unsupported `present` option is currently ignored. | Explicit presence, absent-input values and supported per-instance specialization. |
+| Optional interfaces | Zero widths are rejected; the unsupported `present` option is rejected. | Explicit presence, absent-input values and supported per-instance specialization. |
 | Actor invariants | Verification checks are written inside transactions; their existing meaning is always-on. | Actor-level `assert`/`assume`/`cover`, including actors without transactions. |
 | Known-value checks | `known` and `isunknown` are unsupported. | Verification-only knownness with independent X/Z behavior evidence. |
 | Transaction phase groups | Membership cannot be carried as checked transaction metadata. | Checked phase/member/role facts without invented values, order or behavior. |
 
-Silent acceptance of an unknown interface-port option is a **validation
-defect**, not an extension mechanism. A strict pass currently does not prove
-that such an option was understood. Separately, an undriven declared output
-can disappear during port inference even at a positive width. Both defects
-have repair owners; inspect realized semantic/HDL interfaces when evaluating
-presence. Declared unused inputs are already preserved.
+Unknown or malformed interface-port options are rejected in default and strict
+modes through native/API/MCP queries. This validation boundary does not add
+optional-port support. Separately, an undriven declared output can disappear
+during port inference even at a positive width; its repair remains owned.
+Inspect realized semantic/HDL interfaces when evaluating presence. Declared
+unused inputs are already preserved.
 
 The earlier derived-width request depends on genuine generic-width support;
 it is distinct from it. Exact request scopes, repair order, current

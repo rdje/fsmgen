@@ -1050,21 +1050,21 @@ FSMGen signoff evidence. Exact inputs, reports and controls are retained in
 
 ### Answer: unknown interface-port clauses must not be silently ignored
 
-**No, silent acceptance is not intended support.** The current parser accepts
+**No, silent acceptance is not intended support.** The intake parser accepted
 `(bogus-clause xyz)` and the unimplemented `(present PROT_Present)` port option,
-then drops them. The complete generated HDL matches the clause-free control
-except its date header. `_parse_interface` skips malformed property shapes and
-has no rejection after the recognized-option branches. This is a validation
-defect, owned by `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.2`.
+then dropped them. The captured generated HDL matches the clause-free control
+except its date header. At intake, `_parse_interface` skipped malformed
+property shapes and lacked rejection after the recognized-option branches.
+This validation defect is repaired by `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.2`.
 
-The repair will reject unsupported and malformed port options through the
+The `.33.2` repair rejects unsupported and malformed port options through the
 shared parser, including strict check, semantic/schedule queries and API/MCP.
-It will preserve supported `width`, `type`, `domain`, output `reset`/`default`
+It preserves supported `width`, `type`, `domain`, output `reset`/`default`
 and their existing validation. Rejecting `present` is not an implementation
 of optional ports. Until that feature ships, SPECFORGE should continue emitting
-only documented options; a successful check does not establish that an
-unimplemented clause was understood. This response records the defect and
-repair contract; the intake commit itself changes no parser behavior.
+only documented options. Default and strict modes now refuse unknown names,
+scalar options, empty lists and nested option names with a port-specific
+diagnostic. The original intake evidence remains historical.
 
 ### Owned feature work
 

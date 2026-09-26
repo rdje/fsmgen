@@ -16,6 +16,18 @@
   (output name (width N) (reset V) (default V)))
 ```
 
+Actor port options are a closed set: `(width N)`, `(type NAME)`,
+`(domain NAME)`, and output-only `(reset V)` / `(default V)`. Each option
+must be a non-empty list with a scalar name and its documented arguments.
+Unknown names (including the unimplemented `(present ...)`), scalar options,
+empty lists and nested option names fail in both default and strict modes.
+Diagnostics identify the port and offending option or malformed shape.
+Duplicate options and existing width/type/domain/value checks still apply.
+Native check, semantic and schedule queries, the API, and newline MCP all
+refuse the same invalid source at this shared parser boundary. Check and
+semantic API/MCP failures preserve diagnostics; schedule API/MCP failures
+retain the documented message-only adapter error.
+
 Default width is `1`. Interface entries lower into `.fsm` `+size` entries.
 Declared actor inputs additionally carry `+interface` input roles, preserving
 unused inputs in ordinary actor and partitioned domain module interfaces.

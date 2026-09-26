@@ -459,6 +459,18 @@ it is not optional-port support and must not be used as an absence mechanism.
 Assigned outputs retain their ordinary output roles. See the
 [current request boundaries](13k-isf-feature-support-matrix.md#requested-extensions-and-current-gaps).
 
+Actor port options are a closed set: `(width N)`, `(type NAME)`,
+`(domain NAME)`, and output-only `(reset V)` / `(default V)`. Each option
+must be a non-empty list with a scalar name and its documented arguments.
+Unknown names (including the unimplemented `(present ...)`), scalar options,
+empty lists and nested option names fail in both default and strict modes.
+Diagnostics identify the port and offending option or malformed shape.
+Duplicate options and existing width/type/domain/value checks still apply.
+Native check, semantic and schedule queries, the API, and newline MCP all
+refuse the same invalid source at this shared parser boundary. Check and
+semantic API/MCP failures preserve diagnostics; schedule API/MCP failures
+retain the documented message-only adapter error.
+
 Interface port names are unique across both input and output directions, and
 the interface block itself is a singleton actor clause.
 

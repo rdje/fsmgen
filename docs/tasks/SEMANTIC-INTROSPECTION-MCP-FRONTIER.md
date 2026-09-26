@@ -774,11 +774,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.1: answer SPECFORGE feature requests and strict-port question`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Reject unsupported or malformed actor interface-port options instead of silently discarding them.`
   Acceptance: `Answer sf-isf-strict-unknown-port-clause as a validation defect. Reproduce bogus-clause/present and malformed scalar/empty/nested option shapes through public parse, strict check, semantic and schedule queries. Reject unrecognized options at the shared parser boundary with named port/option diagnostics in default and strict modes; retain width/type/domain/reset/default behavior and targeted duplicate/arity/type errors. Census first-party producers and qualify unchanged valid controls. Do not accidentally implement optional presence while refusing its currently unsupported spelling. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed; T1898 native default/strict parser/check/semantic/schedule and real API/newline MCP controls, T1899 supported ISF/IAL2 producer census, existing width/type/domain/output metadata and public-contract band, T1414, syntax and fresh rendered mdBook. Schedule API failures retain the existing message-only boundary; no new schema or optional syntax.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.2: reject unknown and malformed actor port options`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3`
   Status: `active`
@@ -1629,10 +1629,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.1` is complete: the tracked SPECFORGE
-response answers the strict-port question and owns the requested extensions.
-Next activate `.33.2` to reject unknown/malformed port options, then `.33.9`
-to preserve declared outputs without invented values. Resume watchdog entry
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.2` is complete: shared parsing now
+rejects unknown/malformed port options with native/API/MCP refusal controls.
+Next activate `.33.9` to preserve declared outputs without invented values. Resume watchdog entry
 and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -1642,7 +1641,7 @@ the generic-width foundation, derived widths, legal sets and optional ports
 in dependency order; exact leaves are under `.33` and `.32.3`.
 Full-source API coverage and historical native qualification remain open.
 Preserve spent compiler/startup evidence; source checks do not promote runtime
-support. The intake commit changes no production compiler behavior.
+support. The remaining feature extensions are not implemented by the port-option repair.
 
 ## Decisions
 
@@ -3776,3 +3775,58 @@ The first staged doctrine pass rejected the focused-document collection's
 stale growth allowance after the response expanded. The declared allowance
 was refreshed from measured usage plus its existing ratchet step, within the
 unchanged ceiling and existing live owner. No limit or doctrine was bypassed.
+
+## Scoped implementation — `.33.2`
+
+Activate the shared `_parse_interface` validation repair at clean `5be6a3c08`.
+Reject scalar, empty and non-scalar-headed options and unknown option names;
+retain recognized-option diagnostics and output metadata semantics. T1898
+will exercise public parsing, native default/strict check and semantic/schedule
+queries, adapter API and actual newline MCP, plus independent valid fixtures.
+Census tracked first-party ISF/PPIF producers through focused corpus admission.
+Synchronize interface spec/downstream contract, book, response and fact card;
+existing diagnostic envelopes remain authoritative. No new optional syntax.
+Startup comparison finds the authorized PGEN claim template byte-identical to
+the retained reviewed template; local doctrine remains authoritative. The
+local README policy and containment adoption guide are already adopted.
+The missing cleanup record requires separately owned maintenance after this
+leaf; retained compiler/native-proxy evidence must survive it.
+
+The RED run at the original parser rejects the new test's expectations for
+all newly refused shapes. The first repaired run exposed a test-contract
+mismatch: schedule API failures intentionally have no selected structured
+failure schema (`source_query_failure_policy.schedule`). Native schedule
+stderr names the option; API/MCP preserve their bounded message-only refusal.
+T1898 now checks that exact boundary and full native/API check/semantic
+failure-report parity. No stderr exposure or new schedule schema is added.
+The initial sandbox guard refused process inspection before running tests;
+the approved guarded invocation supplied it without weakening RAM cutoffs.
+
+## Acceptance Checklist — `.33.2` closed interface options
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--strict --check --json`,
+  semantic and schedule controls reproduced silent acceptance at the two
+  `_parse_interface` skip branches and absent unknown-option refusal. T1898
+  was run RED before the parser edit; unsupported and malformed shapes
+  escaped as actors and successful native/API/MCP queries.
+- [x] **ADDRESSED (verified)** — T1898 now reports `All tests successful`.
+  Public parsing and native default/strict queries refuse unknown names,
+  scalars, empty lists and nested heads. Check/semantic API reports match
+  native reports in full after path normalization; actual newline MCP agrees
+  with the adapter API. Schedule retains its explicit message-only failure
+  contract. Independent expected metadata and valid native/API/MCP controls
+  preserve supported output width/reset/default values.
+- [x] **NO REGRESSION** — Existing T1476, T1333, T1338, T1353, T1247, T1112
+  and T1115 pass for reset/default, symbolic widths, domains and public
+  contracts. Parser and contract modules report `syntax OK`. T1414 reports
+  `All tests successful`. Fresh mdBook HTML includes the closed-option and
+  schedule-failure guidance; no interactive visual audit is claimed.
+
+Re-derivation uses actual public parser/native queries. Falsification is the
+pre-repair RED run and independent accepted/rejected option controls. Durability
+is the tracked regressions, public contract, spec, book and fact card; scratch
+logs are supplementary. No runtime behavior change or new report schema is
+claimed. T1899 completes successfully over the catalog-selected supported
+ISF/IAL2/profile source population; T1257 and T1259 retain scalar/aggregate
+type controls. The first docs-test invocation used an incorrect filename and
+ran no tests; the verified T1414 filename then passed. All jobs are consumed.

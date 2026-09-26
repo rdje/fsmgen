@@ -8642,16 +8642,18 @@ sub _parse_interface($self, $clause) {
             unless defined($name) && !ref($name) && length($name);
         confess "Error: duplicate interface port '$name'\n" if $seen_names{$name}++;
 
-        # Check for (width N) in remaining elements
+        # Interface options are closed: never discard an authored clause.
         my %seen_options;
         for my $j (2 .. $#$port) {
             my $prop = $port->[$j];
-            next unless ref($prop) eq 'ARRAY' && @$prop;
+            confess "Error: interface port '$name' option must be a non-empty list\n"
+                unless ref($prop) eq 'ARRAY' && @$prop;
             my $option_name = $prop->[0];
-            next unless defined($option_name) && !ref($option_name);
+            confess "Error: interface port '$name' option name must be a non-empty scalar\n"
+                unless defined($option_name) && !ref($option_name) && length($option_name);
             confess "Error: interface port '$name' has duplicate '$option_name' option\n"
                 if $seen_options{$option_name}++;
-            if (ref($prop) eq 'ARRAY' && $prop->[0] eq 'width') {
+            if ($option_name eq 'width') {
                 confess "Error: interface port '$name' width must be a positive integer, actor constant, actor scalar parameter, or qualified package scalar constant\n"
                     unless @$prop == 2
                         && defined($prop->[1])
@@ -8686,6 +8688,7 @@ sub _parse_interface($self, $clause) {
                 }
                 next;
             }
+            confess "Error: interface port '$name' has unsupported '$option_name' option\n";
         }
         confess "Error: interface port '$name' cannot specify both '(width ...)' and '(type ...)'\n"
             if defined($type) && exists($seen_options{width});
