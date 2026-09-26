@@ -1247,6 +1247,13 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
             (map { { name => $_->{name}, direction => 'output', width => $_->{width} } }
                 @{$actor->{interface}{outputs} || []}),
         ],
+        # Actor storage is owned by this parent/domain, regardless of whether
+        # it has ordinary reads or writes. Generated children select ownership
+        # separately; do not infer it from their copied width declarations.
+        explicit_internal_signals => [
+            map { map { $_->{name} } @{$_->{signals} || []} }
+                @{$actor->{storage} || []}
+        ],
         states     => \@states,
         dt_blocks  => \@dts,
         counters   => \%ctrs,

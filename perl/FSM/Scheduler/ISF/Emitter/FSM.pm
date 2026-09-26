@@ -43,7 +43,7 @@ sub emit($self, $ir) {
     }
     push @lines, $self->_emit_system($ir);
     push @lines, '';
-    if (@{$ir->{explicit_interface_ports} || []}) {
+    if (@{$ir->{explicit_interface_ports} || []} || @{$ir->{explicit_internal_signals} || []}) {
         push @lines, $self->_emit_interface($ir);
         push @lines, '';
     }
@@ -150,6 +150,9 @@ sub _emit_interface($self, $ir) {
         my $direction = $port->{direction};
         next unless defined($direction) && ($direction eq 'input' || $direction eq 'output');
         push @l, "    ($direction $port->{name})";
+    }
+    for my $name (@{$ir->{explicit_internal_signals} || []}) {
+        push @l, "    (internal $name)";
     }
     push @l, '  )';
     return join("\n", @l);

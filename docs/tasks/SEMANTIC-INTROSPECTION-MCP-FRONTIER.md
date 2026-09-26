@@ -1039,10 +1039,25 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.1: preserve explicit internal signal roles`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Carry declared ISF actor storage through the qualified internal-role substrate and close the retained caller defect.`
   Acceptance: `After .39.1, emit internal roles for declared scalar storage and scalarized bank elements in their owning ordinary/domain/child FSMs without exposing unrelated parent storage in children. Retain original baseline and whole-word-field controls, a nonzero reset, driven/no-reset/unused storage and domain/child cases. Prove exact authored external interfaces and actual reset/hold/readback behavior through both Verilog targets and supported VHDL; qualify native/API/newline inventories, support-producer controls and unchanged field metadata. Remove the known-gap documentation only after behavior proof and commit.`
   Verification: `Pending the direct internal-role substrate; .37 retains exact caller inputs and the incorrect public status input for falsification. Access-word metadata remains separately owned by .38.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.1`
+  Status: `done`
+  Goal: `Preserve declared internal storage in ordinary actor and domain FSMs, closing the retained scalar CSR baseline defect.`
+  Acceptance: `Carry explicit internal storage signals in parent/domain LoweringIR and emit their +interface roles without changing public port direction metadata. Include unused scalars, typed storage and scalarized bank elements; retain exact caller baseline/whole-word-field metadata controls. Qualify authored interfaces, reset/read/write/hold through both Verilog targets and supported VHDL, direct materialized-FSM replay, native/API/newline reports and existing storage/domain producers. No reset value or unavailable hardware reset invents no initialization. Keep generated-child adoption separately owned and document that boundary accurately; commit before it.`
+  Verification: `Pre-change .37 audit records status exported as input and missing reset. .39.1 is committed as 4447ca7a0 with qualified direct internal roles. Ordinary parent IR and domain partitions share _build_parent_ir; generated children use _build_child_ir, currently carrying every actor storage declaration. Limit this producer adoption to parent/domain ownership and qualify child isolation before enabling it there.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.1: retain internal actor storage ownership`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2`
+  Status: `pending`
+  Goal: `Select and repair generated-child storage ownership without duplicating or leaking unrelated actor state.`
+  Acceptance: `After .39.2.1, reproduce storage reads/writes across generated transaction children and their parent through public lowering and HDL. Determine shared actor-state ownership from source contracts; distinguish child-owned state, parent-owned state and explicitly routed data. Split routing/arbitration prerequisites when required rather than copying every actor declaration into independent registers. Qualify unused parent storage exclusion, child read/write/reset behavior, exact interfaces and native/API/MCP composition reports with independent runtime evidence. Track any unsupported or ambiguous sharing contract explicitly, update book/spec/facts and commit before closing .39.`
+  Verification: `Read-only inspection finds _build_child_ir copies _declared_storage_for_ir($actor) wholesale, whereas _build_child_ports handles public ports separately. Turning all those declarations into explicit internal registers without a usage/ownership analysis could duplicate actor state. No child behavior is changed by .39.2.1.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -1705,7 +1720,8 @@ interfaces survive ordinary/domain lowering without invented drive values.
 hold; native/API/MCP drive families match the qualified hardware behavior.
 Port-option validation and startup cleanup are complete.
 Completed `.39.1` provides direct internal roles and reset/hold behavior.
-Next `.39.2` adopts that carrier for ISF storage. The accepted storage-access baseline exposes read-only
+Completed `.39.2.1` preserves ordinary/domain ISF storage and qualifies the
+retained CSR baseline. Next `.39.2.2` owns generated-child storage identity. The accepted storage-access baseline exposes read-only
 actor-owned status as an HDL input and loses reset ownership. After that repair,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
@@ -4118,3 +4134,47 @@ ports, matching the existing public schema; structural ports check both.
 The initial clockless control exposed the generated-helper-only assumption
 in the operand gate. The explicit-source exception does not bypass its
 undeclared-operand check or relax generated-helper producer requirements.
+
+
+## Acceptance Checklist — `.39.2.1` ordinary/domain storage ownership
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — A fresh `--strict --emit-semantic-json`
+  replay of the exact retained SPECFORGE baseline at 4447ca7a0 reports input
+  `status` alongside `start` and `wdata`. Parent LoweringIR preserves storage
+  widths/reset metadata but emits explicit roles only for public ports;
+  read-only usage inference therefore overrides the actor-storage identity.
+  The direct internal carrier exists after `.39.1`, but the ISF producer does
+  not use it. Domain partitions share that parent construction path.
+- [x] **ADDRESSED (verified)** — Final T1903 reports `All tests successful`.
+  Parent/domain LoweringIR carries explicit internal names independently of
+  public port metadata, and the FSM emitter serializes those roles. Exact
+  retained baseline/whole-word-field sources, nonzero and unreset variants,
+  unused typed scalars, bank elements and named/multiple domains all qualify.
+  Direct FSM replay and complete native/API/newline reports agree. Independent
+  Verilator and GHDL simulate ordinary CSR reset/write/readback/hold; both
+  Verilog targets also simulate the generated domain composition top and
+  domain-local readback. Generated-child role production is unchanged.
+- [x] **NO REGRESSION** — `All tests successful` for T1232, T1236, T1247,
+  T1259, T1260, T1261, T1262, T1398, T1453 and T1112: existing scalar/bank,
+  domain, typed aggregate, reset, field metadata and public contracts hold.
+  T1376 and T248 also report `All tests successful`, checking the new book
+  example and support-accounted public corpus. Fresh mdBook HTML contains the
+  storage-readback example and precise reset boundary; browser visual audit
+  remains under its existing blocked owner. Full CI/push remain gated.
+
+Re-derivation: exact retained caller inputs through real native CLI, direct
+materialized FSM replay, API and newline MCP. Falsification: exact external
+interfaces and independent CSR reset/write/read/hold oracles, nonzero and
+unreset controls, unused typed signals, bank elements and domain isolation.
+Durability: T1903, parent/domain role production, book/spec/response and updated
+canonical intake fact, followed by this task-scoped commit.
+
+The first T1903 run passed ordinary cases and independent Verilator/GHDL CSR
+behavior, but made invalid assumptions about composed report placement. The
+actual multi-domain contract is retained: the composition top includes system
+ports, owns no internal storage or flattened inferred_storage detail, and
+clock_domains[].storage lists each domain's owned names. The corrected oracle
+checks those locations and semantic child data interfaces without adding a
+report schema. Detailed field metadata is compared on ordinary actor reports.
+Generated transaction-child adoption remains separately owned by `.39.2.2`;
+its copied declarations are not newly marked internal in this slice.

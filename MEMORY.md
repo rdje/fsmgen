@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2` (pending)
-- next_action: Adopt the qualified internal-role carrier for ISF storage under .39.2; verify ordinary, domain and child ownership before returning to watchdog work.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2` (pending)
+- next_action: Reproduce and select generated transaction-child storage ownership under .39.2.2 without duplicating actor state; split routing prerequisites if needed.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

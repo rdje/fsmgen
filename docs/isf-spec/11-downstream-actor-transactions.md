@@ -324,6 +324,11 @@ Rules:
   generated scheduler names.
 - Banks lower to deterministic scalar storage entries such as `data_0`,
   `data_1`, `data_2`, and `data_3`.
+- Ordinary/domain FSMs carry declared storage as explicit internal roles,
+  preserving read-only and unused scalars and bank elements without exporting
+  ports. Explicit reset-only scalars reset and hold; absent reset metadata or
+  hardware reset invents no initialization. Generated transaction-child
+  storage ownership remains separately unqualified.
 - Schedule reports expose declared storage through `inferred_storage`.
 - Scalar `(var ...)` / `(variable ...)` storage entries may carry optional
   `(fields (field NAME (bits HI LO) ...))` metadata. The first shipped slice is

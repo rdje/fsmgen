@@ -1179,10 +1179,15 @@ for this intake. The bundle's `commands.sh` was read but not executed because
 it writes into the foreign bundle; current commands used local copies.
 
 **Separate defect found during intake:** the accepted baseline's `status`
-variable is reported as actor storage by the scheduler but emitted as a public
-HDL input. Its reset metadata survives only in FSM `+size`, without an internal
-ownership marker or reset writer. `.39` owns this repair immediately after
-intake, before watchdog and the metadata queue. The retained audit includes
+variable was reported as actor storage by the scheduler but emitted as a public
+HDL input. Its reset metadata survived only in FSM `+size`, without an internal
+ownership marker or reset writer. `.39.1` adds the direct internal-role carrier;
+`.39.2.1` applies it to
+ordinary/domain actor storage, with native/API/MCP interface parity and
+independent reset/write/read/hold simulation. The baseline and whole-word-field
+controls now retain internal status ownership without changing field metadata.
+Generated-child storage ownership remains open under `.39.2.2`, before watchdog
+and the metadata queue. The retained audit includes
 materialized FSM, HDL and the realized semantic input entry. Future metadata
 comparisons must use the corrected baseline; preserving this erroneous input
 would not satisfy the actor-storage contract.

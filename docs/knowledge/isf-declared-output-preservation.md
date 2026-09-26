@@ -9,8 +9,8 @@ answers:
 date: 2026-09-26
 status: current
 tags: [isf, interface, internal, output, lowering, domains, semantics, mcp]
-evidence: t/1902-explicit-internal-signal-roles.t; perl/FSM/IR/IntentHIRBuilder.pm; perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm; perl/FSM/IR/LoweredRTLIRBuilder.pm; t/1901-reset-only-output-behavior.t; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1900-isf-declared-output-preservation.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/book/src/13a-actor-interface.md
-reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 FSMGEN_RESET_GHDL=.artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl scripts/run_with_ram_guard.sh -- prove -Iperl t/1900-isf-declared-output-preservation.t t/1901-reset-only-output-behavior.t t/1902-explicit-internal-signal-roles.t
+evidence: t/1903-isf-internal-storage-ownership.t; t/1902-explicit-internal-signal-roles.t; perl/FSM/IR/IntentHIRBuilder.pm; perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm; perl/FSM/IR/LoweredRTLIRBuilder.pm; t/1901-reset-only-output-behavior.t; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1900-isf-declared-output-preservation.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/book/src/13a-actor-interface.md
+reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 FSMGEN_RESET_GHDL=.artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl scripts/run_with_ram_guard.sh -- prove -Iperl t/1900-isf-declared-output-preservation.t t/1901-reset-only-output-behavior.t t/1902-explicit-internal-signal-roles.t t/1903-isf-internal-storage-ownership.t
 ---
 
 ISF parent/domain lowering carries declared input/output roles in
@@ -35,7 +35,8 @@ planning declares them without exporting ports, and IntentHIR port analysis
 excludes them. Reset-only planning also covers explicit internals. T1902
 qualifies unused/typed/read-only/written declarations, exact external ports,
 complete native/API/newline parity and independent reset/write/hold behavior.
-ISF producer adoption is separately owned by `.39.2` until qualified.
+Ordinary/domain ISF storage adoption is qualified by `.39.2.1`/T1903;
+generated-child storage ownership remains open under `.39.2.2`.
 
 No hardware reset means no invented initialization. T1901/T1902 keep clock-only
 Verilog controls and explicit VHDL refusal: `VHDL::_split_if_else_assignments`

@@ -547,10 +547,31 @@ domain to sample or drive the port directly.
   (bank data (width DATA_W) (depth DEPTH)))
 ```
 
-Known gap: a storage variable read without an ordinary writer can currently
-be inferred as an external input despite its actor-owned declaration, losing
-its reset behavior. This is an owned lowering defect, not intended storage
-semantics. Inspect realized interfaces until the storage-ownership repair ships.
+Ordinary actors and their clock-domain partitions preserve declared storage
+with explicit `(internal NAME)` roles in the generated FSM `+interface`.
+Read-only and unused storage stays internal; `+size` retains widths, types
+and authored reset metadata. Scalarized bank elements follow the same rule.
+The role survives independent replay of the generated `.fsm`, and native,
+API and MCP semantic inventories exclude these signals from public ports.
+Generated transaction-child storage ownership is a separate open repair;
+this qualification does not establish shared storage across module boundaries.
+
+A read-only reset register needs no dummy write to preserve its ownership:
+
+```lisp
+(actor storage_readback
+  (clock clk) (reset (rst_n async active_low))
+  (interface (input start) (output value (width 8)) (output done))
+  (storage (var status (width 8) (reset 19)))
+  (transaction read_status
+    (on start)
+    (update value status)
+    (complete done)))
+```
+
+After hardware reset, starting the transaction copies the authored status
+reset value to `value`. The module has no `status` port. Ordinary writes to
+other storage still use the existing register assignment path.
 
 The shipped actor-owned storage forms are fixed-width internal scalar
 variables and fixed-depth banks. The preferred scalar spelling is
@@ -582,22 +603,26 @@ lower through guarded scalarized entries.
 ### Storage reset values — register maps / CSRs
 
 A scalar storage `var` may carry a **hardware reset value** with an optional `(reset V)`,
-so a control/status register powers up at a specified default instead of all-0s — the
+so hardware reset sets a control/status register to a specified value — the
 common need for a **register map** (CSR block):
 
 ```lisp
 (storage
-  (var ctrl   (width 8) (reset 1))     ;; control register powers up enabled
+  (var ctrl   (width 8) (reset 1))     ;; hardware reset enables this register
   (var mode   (width 8) (reset 16))    ;; mode field's reset default
-  (var status (width 8)))              ;; status powers up at 0 (no (reset …))
+  (var status (width 8)))              ;; no reset-only driver without an ordinary writer
 ```
 
 `(reset V)` (a non-negative integer literal that fits the width) emits the `+size` carrier
 `(NAME width (reset V))`, and the generated HDL reset block assigns the register that value
-(`ctrl <= 1` instead of `ctrl <= 0`). When no `(reset V)` is given the register resets to
-all-0s, exactly as before (fully backward-compatible). `(reset V)` is a hardware power-up
-value — distinct from the transaction-local init-on-entry `(default V)`/`(init V)` on a
-`(local …)`. A per-element bank `(reset V)`, and an over-width or non-integer reset value,
+(`ctrl <= 1` instead of `ctrl <= 0`). A register with an ordinary writer
+uses the existing zero reset default when no `(reset V)` is given. An unwritten
+storage declaration without explicit reset metadata remains declared but undriven;
+neither its role nor field metadata supplies an initial value. An explicitly
+reset but unwritten scalar resets and holds, including when unused. A module
+without a hardware reset acquires no reset-only initialization. Hardware reset
+is distinct from power-up initialization and from transaction-local init-on-entry
+`(default V)`/`(init V)` on a `(local …)`. A per-element bank `(reset V)`, and an over-width or non-integer reset value,
 fail closed.
 
 A complete register-map actor — two CSRs that power up at their specified defaults and are

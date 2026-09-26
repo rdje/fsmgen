@@ -155,7 +155,15 @@ generated scheduler signal such as `can_accept`. Missing width/depth options,
 duplicate logical storage names, duplicate scalarized element names, and
 duplicate `(storage ...)` clauses fail closed before scheduler handoff.
 
-Lowering emits declared storage signals in scheduled `.fsm` `+size`. The
+Ordinary actor and domain lowering emits declared storage signals as explicit
+`(internal NAME)` roles in scheduled `.fsm` `+interface`, with widths/types and
+authored reset values in `+size`. Read-only and unused scalars and scalarized
+bank elements stay internal when replayed; semantic/API/MCP port inventories
+exclude them. An explicitly reset unwritten scalar resets and holds when the
+module has a hardware reset. Without a writer or explicit reset, it remains
+undriven; written registers keep their existing default reset behavior.
+Generated transaction-child storage ownership remains separately unqualified;
+this does not establish cross-module shared storage. The
 lowerer also carries their widths as normal width evidence so updates and data
 operations can reuse the existing expression and mux paths. Schedule reports
 include declared storage entries in `inferred_storage` with kind `register`,
