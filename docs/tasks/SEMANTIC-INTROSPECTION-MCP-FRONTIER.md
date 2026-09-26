@@ -1089,7 +1089,7 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.1: route shared scalar storage reads`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repair aggregate type declaration identity across generated composition modules and qualify shared aggregate storage reads.`
   Acceptance: `After .40 fixes one-member normalization, reproduce the retained multi-member record through native HDL generation and Verilator. Select collision-safe declaration identity or an exact shared declaration contract without hiding conflicting same-name types. Prove same/different nested record/list types, parent/child/top ports, independent live-read runtime and API/MCP parity before removing the aggregate read refusal.`
   Verification: `T1904 record control generated valid-looking HDL but Verilator rejected three compilation-unit typedef declarations named byte_t__fsmgen_t, emitted before parent, child and top modules. Reproduce with (type byte_t (record (payload (bits 7)) (flag bit))) and actor storage read in worker. Root is compilation-unit declaration reuse across generated modules, not width or storage route; read-refusal prevents claiming the unqualified combination.`
@@ -1105,11 +1105,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.1: scope aggregate typedefs by module`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify shared generated-child aggregate storage reads after backend declaration ownership is repaired.`
   Acceptance: `Remove only the aggregate read refusal after single/multiple/nested record/list reads, exact owner/child/top interfaces, post-spawn parent updates, repeated activations, independent runtime, direct replay and complete native/API/MCP reports pass. Keep multi-domain and writer boundaries separately owned; update book/spec/intake/facts and commit.`
-  Verification: `Depends on .39.2.2.2.2.1 and completed .40; T1904's retained record control becomes a positive runtime control only after type identity and ownership are proved together.`
-  Commit: `pending`
+  Verification: `T1911 qualifies single/multiple/nested record/list and scalar-leaf live reads, simultaneous aliases, reused instances, repeated activation, exact interfaces/reset ownership, scheduled replay and complete native/API/newline parity. T1904 record control is now a passing runtime case; focused type/leaf regressions and book audit pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.2: qualify aggregate child reads`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3`
   Status: `pending`
@@ -1845,8 +1845,8 @@ reset wording. Completed `.39.2.2.2.2.1` scopes aggregate typedefs by module.
 Completed `.42` shares verified repeated-source module definitions; `.43`
 retains child completion across joins and activations. Completed `.44` fixes
 even runtime wait counts. Completed `.45` qualifies typed VHDL comparisons
-and scalar wait timing. Next `.39.2.2.2.2.2` qualifies
-aggregate reads and `.39.2.2.2.3` repairs domain child composition
+and scalar wait timing. Completed `.39.2.2.2.2.2` qualifies
+aggregate live reads. Next `.39.2.2.2.3` repairs domain child composition
 before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
@@ -4722,3 +4722,46 @@ published-572ce6362e69a3a37290e40e revealed a misencoded multiplication symbol
 in their historical competing-hypothesis formula. This slice owns that small
 registry-text correction: use the unambiguous ASCII N*body+2 spelling, retain
 the meaning/evidence/owners, and serialize the registry canonically.
+
+
+## Qualification — `.39.2.2.2.2.2`
+
+The module typedef, definition reuse, completion-lifetime and runtime-wait
+repairs are committed. Qualify aggregate actor storage over the existing live
+read handoff, preserving its type on parent outputs and child inputs while
+keeping authored ISF ports scalar. Exercise one-member/multi-member records,
+lists, nested types and scalar leaves, simultaneous different storage types,
+reused child instances, post-spawn parent updates and repeated activations.
+The owner alone retains reset/state. Remove only the aggregate read refusal;
+keep the separately owned multi-domain realization and direct writer refusals.
+Use independent runtime, scheduled replay and complete native/API/newline
+reports, then update composition spec, downstream response, book and facts.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Retained native `--strict --check --json`
+  in `.artifacts/aggregate-child-reads/before-check.json` rejects the record
+  source at ChildStorageOwnership's explicit aggregate qualification refusal.
+  The typed read selection/connection path already preserves aliases and owner
+  state after the committed prerequisite repairs.
+- [x] **ADDRESSED (verified)** — Removing only that refusal makes T1904's record
+  case and T1911's packed/leaf runtime controls pass. T1911 checks independent
+  Verilator observations after owner updates and repeated activation, reused
+  worker instances, simultaneous different aliases, exact interfaces/reset
+  ownership, strict scheduled replay and complete native/API/newline reports.
+- [x] **NO REGRESSION** — T1904 reports `All tests successful` in
+  `.artifacts/aggregate-child-reads/storage-baseline.log`; T1911/T1905/T1906,
+  T280/T1260/T1262 report `All tests successful` in `focused.log` in that
+  directory. The updated book example lowers in T1376; mdBook builds and the
+  spec partition gate passes. Existing writer/domain refusals remain tested.
+
+The first nested-leaf fixture tried implicit widening into its packed-root
+width. The strict operand contract correctly rejected it. Aligning the output
+with the leaf width preserves that contract and passes the original independent
+packed-layout expectation. No widening rule was changed.
+
+This slice also owns a discovered stale composition-spec sentence: it still
+specified joins over raw done pulses after `.43` qualified retained completion.
+The spec now matches the implemented live-or-retained predicate and start-clear
+priority. Runtime coverage remains T1908; no scheduler behavior changed here.
+Book/type/spec/intake/fact updates distinguish internal generated aggregate
+handoffs from still-unsupported authored aggregate ports and banks. Live-doc
+budget deltas belong to this leaf and preserve their existing hard ceilings.

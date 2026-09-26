@@ -382,8 +382,10 @@ local, such as `byte`, or package-qualified, such as `shared.byte`.
 Unknown aliases fail closed. Resolved `list` or `record` aliases are accepted
 only on actor-owned storage variables, for example `(var frame (type
 frame_t))` or `(var frame (type shared.frame_t))`; the alias must resolve to a
-positive packed width through the existing `.fsm` `+types` machinery.
-Aggregate aliases on actor interface ports, transaction-local ports, storage
+positive packed width through the existing `.fsm` `+types` machinery. Generated
+transaction children in ordinary/single-domain actors read these owner-held
+values through typed internal handoffs, including packed whole values and scalar
+leaves; see the composition contract. Aggregate aliases on actor interface ports, transaction-local ports, storage
 banks, and other width-bearing declarations fail closed. Actor-local
 `(enums ...)` declarations are accepted and preserved into scheduled `.fsm` as
 `+enums`. Actor parameter defaults consume declared actor constants and earlier

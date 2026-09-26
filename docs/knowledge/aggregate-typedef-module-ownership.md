@@ -22,8 +22,9 @@ and port declarations share the module state, which Orchestrator resets per run.
 This is backend naming, not a change to semantic type equality or layout.
 T1906 checks distinct names, packed-value runtime for equal/different/nested
 record/list types, generator reuse, delimiter/sanitization collisions and
-same-width incompatible-type rejection. Broader generated-child aggregate
-storage routing remains separately qualified under `.39.2.2.2.2.2`.
+same-width incompatible-type rejection. Generated-child aggregate storage
+routing is qualified by T1911 under `.39.2.2.2.2.2`; see the
+[shared-read fact](isf-generated-child-aggregate-reads.md).
 
 Repeated instances of the same source also exposed duplicated module bodies:
 `.42` now collects exact agreeing definitions by module identity and preserves

@@ -121,8 +121,32 @@ and survive the scheduled `.fsm` replay. For example:
 Here the storage keeps its nested list/record shape while whole-value transfers
 use the packed representation. Empty aggregates, missing member types,
 duplicate field names, unknown aliases, and dependency cycles fail during type
-resolution. These declarations do not extend the generated-child aggregate
-read boundary described in [Composition](13f-composition.md).
+resolution. Generated transaction children in ordinary/single-domain actors
+read these same owner-held values through typed internal connections; they do
+not allocate private copies. Whole-value reads use the packed representation,
+and scalar leaf reads retain their exact leaf width. For example:
+
+```lisp
+(actor aggregate_child_read
+  (clock clk) (reset (rst_n async active_low))
+  (types (type status_t (record (payload (bits 7)) (flag bit))))
+  (interface (input start) (input data (width 8))
+             (output observed (width 7)) (output done))
+  (storage (var status (type status_t) (reset 0)))
+  (transaction worker
+    (ports (output result (width 7)))
+    (wait 4) (set result status.payload) (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0 (bind (output result observed)))
+    (wait 1) (set status data)
+    (await_all done) (complete done)))
+```
+
+The worker observes the owner's later payload value. The public ports stay
+scalar; the generated child receives the aggregate root with its type intact.
+See [Composition](13f-composition.md) for reset ownership, live-read timing and
+the remaining domain/write boundaries.
 
 ## Enum Values
 

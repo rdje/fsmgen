@@ -77,7 +77,7 @@ for my $case (
     {name=>'guard', source=>$guard, reads=>['status']},
     {name=>'guard_only', source=>$guard_only, reads=>['status']},
     {name=>'typed', source=>$typed, reads=>['status'], runtime=>1},
-    {name=>'record', source=>$record, reject=>qr/generated child aggregate storage read/},
+    {name=>'record', source=>$record, reads=>['status'], runtime=>1},
     {name=>'bank', source=>$bank, reads=>['slots_1'], runtime=>1},
     {name=>'dynamic_bank', source=>$dynamic, reads=>[qw(slots_0 slots_1)]},
     {name=>'named', source=>$named, reads=>['status']},

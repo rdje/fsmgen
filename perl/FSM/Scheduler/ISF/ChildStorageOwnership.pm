@@ -102,9 +102,6 @@ sub select_child_storage_reads {
     ];
     for my $signal (@{$ir->{actor_storage_reads}}) {
         my $name = $signal->{name};
-        my $type_kind = ($signal->{type_spec} || {})->{kind} // '';
-        confess "Transaction '$tx->{name}': generated child aggregate storage read '$name' requires qualified aggregate composition type declarations\n"
-            if $type_kind eq 'record' || $type_kind eq 'list';
         confess "Transaction '$tx->{name}': actor storage read '$name' conflicts with a child port\n"
             if grep { $_->{name} eq $name } @{$ir->{ports}};
         push @{$ir->{ports}}, { name => $name, direction => 'input', width => $signal->{width}, isf_handoff => 1 };

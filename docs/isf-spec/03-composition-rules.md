@@ -75,26 +75,30 @@ Current lowering:
 - `await_all` and `await_any` are structurally validated as
   `(await_all done_port)` and `(await_any done_port)` with one scalar done-port
   operand before sync-state emission.
-- `await_all` waits for all collected spawned done ports using one scheduled
-  transition suffix guarded by their logical AND, for example
-  `(-> parent_done <(& w0_done w1_done w2_done))`.
-- `await_any` emits one guard per collected spawned done port and advances when
-  any one of them fires.
+- `await_all` waits for all collected spawned completions. Each generated
+  child has a live-or-retained completion predicate, so staggered done pulses
+  remain available to the join until that child is started again.
+- `await_any` advances when any collected completion is live or retained.
+  Remaining pending children stay available to later joins. Starting a child
+  clears its retained completion, with start taking priority over capture.
 Focused regressions cover both synchronization forms.
 
 Ordinary/single-domain actor storage has one owner across generated transaction
 modules. Referenced
 storage is a live child input connected explicitly to a parent/domain output
 handoff; that handoff is internal to the generated top. Width/type identity is
-preserved for named scalar types and scalarized bank entries; the register/reset remains in
-the owner. Unreferenced actor storage is not copied into generated children.
+preserved for named scalar types, scalarized bank entries and packed record/list
+storage, including nested aggregate shapes and scalar leaves; the register/reset
+remains in the owner. Aggregate child inputs and owner outputs are generated
+internal handoffs, not authored ISF aggregate ports. Unreferenced actor storage
+is not copied into generated children.
 The child retains authored transaction ports even when unused and omits unread
 inherited actor inputs. Explicit ports and local variables keep their identities. Direct generated-child
 actor-storage writes are rejected until the original-edge write and arbitration
 contracts in decision `0107` are qualified; independent private copies are not
-a supported implementation of shared storage. Aggregate read composition and
-multi-domain generated-child storage reads fail closed pending their explicit
-qualification lanes under `.39.2.2.2`.
+a supported implementation of shared storage. Multi-domain generated-child
+storage reads fail closed pending their explicit qualification lane under
+`.39.2.2.2.3`.
 
 Top-level generated-child instantiation is now shipped for the covered
 spawn and parameterized blocking `do` fixture set. Spawn and generated `do`

@@ -196,9 +196,11 @@ Actor `(storage ...)` reads in a separately generated transaction child use
 explicit internal top wiring from the owner in ordinary/single-domain actors. These
 are live reads: a parent update after spawn is visible when the child later
 reads it. Only referenced storage is carried into the child interface;
-storage resets and actual registers remain in the owner. Scalar, named scalar type and
-scalarized bank-element reads follow this rule. Authored transaction ports remain
-present even when unused; unread inherited actor inputs are omitted, keeping
+storage resets and actual registers remain in the owner. Scalar, named scalar
+type, scalarized bank-element and packed aggregate reads follow this rule. Aggregate handoffs retain their authored record/list
+aliases, including nested shapes and scalar leaf reads. These generated internal
+ports do not extend the authored aggregate-port surface. Authored transaction
+ports remain present even when unused; unread inherited actor inputs are omitted, keeping
 emitted interfaces consistent with wiring.
 
 For example, this worker reads the parent's later value, without a public
@@ -220,8 +222,8 @@ For example, this worker reads the parent's later value, without a public
     (await_all done) (complete done)))
 ```
 
-Aggregate storage reads and generated-child storage reads in multi-domain
-actors are explicitly rejected pending their composition qualification.
+Generated-child storage reads in multi-domain actors are explicitly rejected
+pending their composition qualification.
 Direct generated-child writes to actor storage currently fail with a shared
 write-handoff diagnostic. Decision `0107` owns original-edge write transfer and
 the later competing-writer contract. Transaction-local variables and explicit

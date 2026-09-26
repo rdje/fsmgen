@@ -1589,6 +1589,9 @@ Rules:
 - Actor-owned storage variables may also use `(type NAME)` when `NAME`
   resolves to a packed aggregate `list` or `record` alias. The first aggregate
   carrier subset is anchored on declared actor-owned storage roots.
+  Generated transaction children in ordinary/single-domain actors receive live
+  typed read handoffs for these roots; storage and reset remain with the owner.
+  This internal wiring does not admit authored aggregate ports or child writes.
 - Transaction `(set target aggregate_leaf)` clauses may read scalar aggregate
   leaves from declared actor-owned aggregate storage, for example
   `frame.mode` or `lanes[0]`. The leaf path is resolved against the declared

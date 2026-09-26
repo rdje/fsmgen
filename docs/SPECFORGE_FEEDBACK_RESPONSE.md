@@ -1188,8 +1188,9 @@ independent reset/write/read/hold simulation. The baseline and whole-word-field
 controls now retain internal status ownership without changing field metadata.
 Generated-child scalar/bank reads in ordinary/single-domain actors now use live
 handoffs under `.39.2.2.2.1`, with register/reset ownership retained in the owner.
-Aggregate reads and multi-domain child-storage reads fail closed pending the
-owned composition repairs. Unqualified direct
+Packed aggregate and scalar-leaf child reads are also qualified under
+`.39.2.2.2.2.2`, preserving type identity, live updates and repeated activation.
+Multi-domain child-storage reads fail closed pending the owned composition repair. Unqualified direct
 child writers are rejected pending the original-edge write and arbitration
 lanes, before watchdog and the metadata queue. The retained audit includes
 materialized FSM, HDL and the realized semantic input entry. Future metadata
