@@ -547,6 +547,11 @@ domain to sample or drive the port directly.
   (bank data (width DATA_W) (depth DEPTH)))
 ```
 
+Known gap: a storage variable read without an ordinary writer can currently
+be inferred as an external input despite its actor-owned declaration, losing
+its reset behavior. This is an owned lowering defect, not intended storage
+semantics. Inspect realized interfaces until the storage-ownership repair ships.
+
 The shipped actor-owned storage forms are fixed-width internal scalar
 variables and fixed-depth banks. The preferred scalar spelling is
 `(var name (width N|PARAM|CONST))`; `(variable ...)` is the verbose alias.
@@ -666,6 +671,10 @@ Each field uses `(field NAME (bits HI LO) ...)`; names are unique HDL
 identifiers, ranges are literal and inclusive, gaps are allowed, and
 overlaps or ranges outside the parent width fail closed. Optional
 `(access ro|rw|wo|w1c|w0c|rc|rs|warl|wpri|reserved)` is metadata only.
+A storage word itself cannot yet carry `(access ...)`; checked word-level
+metadata is tracked separately from field access. A whole-word placeholder
+field would invent a source fact, so keep unrepresented register access in the
+caller model until word metadata support ships. No access-policy RTL is implied.
 Optional field `(reset V)` must match the corresponding bit slice of an
 explicit parent storage reset. Inline `(enum (NAME VALUE)...)` metadata is
 accepted when values fit the field width. Actor `(enums ...)` references,

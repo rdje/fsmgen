@@ -13,8 +13,8 @@ import sys
 
 def main():
     root = Path(__file__).resolve().parents[2]
-    if len(sys.argv) != 2:
-        raise SystemExit("usage: replay-specforge-feature-intake.py RELATIVE_NEW_DIRECTORY")
+    if len(sys.argv) not in (2, 3) or (len(sys.argv) == 3 and sys.argv[2] != "--storage-access"):
+        raise SystemExit("usage: replay-specforge-feature-intake.py RELATIVE_NEW_DIRECTORY [--storage-access]")
     requested = Path(sys.argv[1])
     destination = (root / requested).resolve()
     if requested.is_absolute() or not destination.is_relative_to(root) or destination == root:
@@ -26,7 +26,14 @@ def main():
         ancestor = ancestor.parent
     if ancestor.stat().st_dev != root.stat().st_dev:
         raise SystemExit("output directory must be on the repository volume")
-    audit = json.loads((root / "docs/audits/specforge-feature-intake-20260926.json").read_text())
+    storage_access = len(sys.argv) == 3
+    audit_name = ("specforge-storage-register-access-intake-20260926.json" if storage_access
+                  else "specforge-feature-intake-20260926.json")
+    audit = json.loads((root / "docs/audits" / audit_name).read_text())
+    tickets = ([dict(ticket="sf-isf-storage-register-access", cases=[
+        dict(source=case["source"], check=case["runs"]["check_strict"])
+        for case in audit["cases"]
+    ])] if storage_access else audit["tickets"])
     destination.mkdir(parents=True)
 
     def capture(argv):
@@ -36,7 +43,7 @@ def main():
                     stderr=run.stderr.replace(str(root) + "/", ""))
 
     results = []
-    for ticket in audit["tickets"]:
+    for ticket in tickets:
         directory = destination / ticket["ticket"]
         directory.mkdir()
         for case in ticket["cases"]:

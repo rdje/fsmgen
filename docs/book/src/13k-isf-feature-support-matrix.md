@@ -23,6 +23,7 @@ owned implementation work; they are not shipped capabilities yet.
 | Optional interfaces | Zero widths are rejected; the unsupported `present` option is rejected. | Explicit presence, absent-input values and supported per-instance specialization. |
 | Actor invariants | Verification checks are written inside transactions; their existing meaning is always-on. | Actor-level `assert`/`assume`/`cover`, including actors without transactions. |
 | Known-value checks | `known` and `isunknown` are unsupported. | Verification-only knownness with independent X/Z behavior evidence. |
+| Storage-word access | Only individual storage fields accept checked access metadata. Word-level `access` is rejected. | Independent checked scalar-word access in schedule/API/MCP metadata; bank access follows separately, with no access-policy RTL. |
 | Transaction phase groups | Membership cannot be carried as checked transaction metadata. | Checked phase/member/role facts without invented values, order or behavior. |
 
 Unknown or malformed interface-port options are rejected in default and strict

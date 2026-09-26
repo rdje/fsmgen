@@ -6,48 +6,45 @@ answers:
   - "does accepting an unknown interface-port clause mean it is supported?"
   - "do actor width parameters currently resize HDL ports on override?"
   - "why does an undriven positive-width actor output disappear?"
+  - "where is the SPECFORGE storage-register-access request owned?"
+  - "why does read-only actor storage status appear as an HDL input?"
 date: 2026-09-26
 status: current
-tags: [specforge, isf, parameters, interface, verification, semantic-api, mcp]
-evidence: docs/SPECFORGE_FEEDBACK_RESPONSE.md; docs/audits/specforge-feature-intake-20260926.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/replay-specforge-feature-intake.py .artifacts/specforge-intake-recheck-new
+tags: [specforge, isf, parameters, interface, verification, semantic-api, mcp, storage, register-access]
+evidence: docs/audits/specforge-storage-register-access-intake-20260926.json; docs/SPECFORGE_FEEDBACK_RESPONSE.md; docs/audits/specforge-feature-intake-20260926.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/replay-specforge-feature-intake.py .artifacts/specforge-intake-recheck-new && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/replay-specforge-feature-intake.py .artifacts/storage-access-recheck-new --storage-access
 ---
 
-The tracked response is `docs/SPECFORGE_FEEDBACK_RESPONSE.md`, under
-`2026-09-26: Configuration, Verification And Phase-Metadata Requests`.
-It gives intended scope, required versus optional slices, dependencies and
-execution order for all supplied packets. Parent `.33` in the semantic/API/MCP
-tree owns the work. Intake `.33.1` does not implement those features.
+`docs/SPECFORGE_FEEDBACK_RESPONSE.md`, under `2026-09-26: Configuration, Verification And
+Phase-Metadata Requests`, records required/optional scopes, dependencies and order for the supplied
+packets. Parent `.33` owns them; intake `.33.1` implements none of those features.
 
-At revision `a7bf398ac3c1008b996bf0a92bdd18c9464d9fda`, native strict checks
-accept unknown `bogus-clause` and unsupported `present` port properties, and
-emit the same HDL as the clause-free control except its date header.
-`Parser::_parse_interface` ignores malformed option shapes and lacks a final
-unknown-option rejection. This is a validation defect; `.33.2` owns refusal
-through the shared parser and native/API/MCP surfaces.
-The repair is covered by `t/1898-isf-interface-option-validation.t`: unsupported
-options and malformed shapes now fail in default and strict modes while valid
-output metadata retains its meaning. The intake above describes the predecessor.
+At `a7bf398ac3c1008b996bf0a92bdd18c9464d9fda`, native strict checks accepted `bogus-clause` and
+unsupported `present` port options and emitted the same HDL as the clause-free control except its
+date header. `_parse_interface` ignored malformed shapes and lacked final unknown-option rejection.
+`.33.2` repairs this defect through the shared parser/native/API/MCP boundary: T1898 rejects
+unsupported/malformed options in default and strict modes, preserving valid metadata.
 
-The generic-width request is distinct from earlier derived widths (`.32.3`).
-An actual HDL override to 64 leaves the default-32 source's WDATA at 32 bits;
-the separately generated default-64 control has 64 bits. The width dependency
-has already been resolved before emission. Generic preservation is owned by
-`.33.3`; parameter legality and optional interfaces depend on it.
+Generic widths differ from earlier derived widths (`.32.3`): overriding HDL to 64 left default-32
+WDATA at 32, while separately generating default-64 gave 64. Width dependencies were resolved before
+emission. `.33.3` owns preservation; parameter legality and optional interfaces depend on it.
 
-The optional-port packet's positive-width undriven AWMECID output is absent
-from emitted HDL and realized semantics. A literal-width control also loses
-it; a driven control preserves it. The FSM carries width but no output role,
-so unused-signal inference omits it. `.33.9` owns repair without inventing a
-drive value. The `.33.9` repair now carries both declared directions through
-`+interface`; `t/1900-isf-declared-output-preservation.t` qualifies native/API/MCP
-port inventories and HDL declarations. Reset-only behavior has a separately
-owned `.35` gap: retained reset metadata can lack an HDL assignment.
+The positive-width undriven AWMECID and literal control lost their output role; a driven control
+kept it. The FSM retained width but no role/drive marker, so unused-signal inference omitted it.
+`.33.9` now carries both directions through `+interface`; T1900 qualifies native/API/MCP inventories
+and HDL declarations. `.35` repairs the separate reset-only metadata-without-assignment gap, with
+T1901 runtime proof.
 
-The audit retains exact caller texts and hashes, native reports, output-role
-controls and an independent HDL width oracle. The replay driver uses retained
-inputs, requires a fresh repository-relative same-volume destination, and
-captures current outcomes rather than declaring changed behavior correct.
-Choose another fresh destination for each replay. Caller-wide impact counts
-were not independently measured; these bounded controls do not qualify a
-whole caller corpus, future features or four-state knownness.
+The storage-register-access packet is retained in
+`docs/audits/specforge-storage-register-access-intake-20260926.json`. Intake `.37` confirms
+word-access refusal; `.38.1` owns independent scalar metadata and `.38.2` optional banks. Immediate
+`.39` repairs the accepted baseline: read-only actor storage `status` becomes a semantic/HDL input
+and lacks a reset writer. Materialized FSM retains width/reset but no internal role; SignalAnalyzer
+infers INPUT from reads without assignments. The audit retains exact FSM/HDL evidence. The response
+records scope, priority and local replay.
+
+Audits retain exact caller bytes/hashes, native reports, output-role controls and the independent
+HDL width oracle. Replay uses retained inputs and a fresh repository-relative same-volume
+destination, capturing current outcomes without signing off changed behavior. Use a new destination
+each time. Caller-wide impact counts were not independently measured; controls qualify neither the
+whole caller corpus, future features nor four-state knownness.

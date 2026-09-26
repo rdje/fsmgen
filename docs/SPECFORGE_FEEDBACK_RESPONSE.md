@@ -1136,3 +1136,63 @@ parameter constraints and optional interfaces in dependency order. Every
 optional request has an explicit leaf; none is silently dropped or declared
 complete by this response. Full-source API coverage and historical native
 qualification remain live obligations after these repairs and extensions.
+
+
+## 2026-09-26: Storage-Register Access Metadata
+
+The `sf-isf-storage-register-access` packet is a valid additive feature request.
+Current rejection is consistent with the documented storage contract. Native
+checks, semantic queries and schedule queries accept the supplied baseline
+and whole-word-field control, and reject word-level access both with and
+without fields. The unknown-token control is also rejected. In-process API
+and newline MCP preserve these outcomes; check/semantic failures keep their
+native report while schedule failure keeps its existing message-only envelope.
+Exact source bytes, request text, provenance and current results are retained
+in `docs/audits/specforge-storage-register-access-intake-20260926.json`.
+
+Required scope is assigned to `.38.1` in the semantic/API/MCP task tree:
+
+- Width-based scalar `var` and `variable` entries may state `(access TOKEN)`
+  using exactly the existing field vocabulary: `ro`, `rw`, `wo`, `w1c`, `w0c`,
+  `rc`, `rs`, `warl`, `wpri`, `reserved`.
+- Word and field access are independent authored facts. Neither is inferred
+  from, copied into, or required to agree with the other. No synthetic field
+  is needed when the source describes only a register.
+- Schedule `inferred_storage[]` carries optional word `access` beside width
+  and fields, with applicable domain and API/MCP projections. Metadata changes
+  no scheduled FSM, HDL, hardware reset, write permissions or verification logic.
+- Unknown, duplicated and malformed metadata fails closed with contextual
+  diagnostics. Banks and typed storage remain outside this scalar slice.
+
+The optional bank request has a separate owner, `.38.2`, after scalar
+qualification and an explicit bank-report mapping. Both leaves follow the
+current watchdog/reachability and provenance/interconnect repair lanes, before
+the configuration extensions that depend on generic widths. This intake does
+not implement either feature. SPECFORGE retains its separate integration owner
+`FSMGEN-REQUESTS.5`; no external repository was modified or message sent.
+
+Caller-wide corpus quantities and historical revision results remain supplied
+context: they were not independently re-derived. No completion, support or
+capacity decision relies on those quantities. Current bounded reproduction,
+accepted controls, unknown-token refusal and retained bytes are the evidence
+for this intake. The bundle's `commands.sh` was read but not executed because
+it writes into the foreign bundle; current commands used local copies.
+
+**Separate defect found during intake:** the accepted baseline's `status`
+variable is reported as actor storage by the scheduler but emitted as a public
+HDL input. Its reset metadata survives only in FSM `+size`, without an internal
+ownership marker or reset writer. `.39` owns this repair immediately after
+intake, before watchdog and the metadata queue. The retained audit includes
+materialized FSM, HDL and the realized semantic input entry. Future metadata
+comparisons must use the corrected baseline; preserving this erroneous input
+would not satisfy the actor-storage contract.
+
+Replay current native outcomes without the external checkout:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/replay-specforge-feature-intake.py .artifacts/storage-access-recheck-new --storage-access
+```
+
+The destination must be fresh, repository-relative and on the repository
+volume. A replay captures changed outcomes; future feature tests must decide
+whether those changes meet the requested contract.

@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -996,6 +996,39 @@ For FSMGen, the analogs are:
   Verification: `Exact public reproduction in T1901: (?fsm:no_reset (+system (clock clk)) (+interface (output Q)) (+size (Q 5 (reset 19))) (idle (-> idle))). Both Verilog targets retain clock-only generation with no Q initialization. VHDL rejects the generated current_state <= next_state body in VHDL::_split_if_else_assignments because it requires an if/reset branch. This is outside docs/VHDL_SCOPE.md's reset-bearing process subset, not a regression caused by .35. T1901 owns the present fail-closed control. Priority: bounded VHDL completeness extension after SV IAL completion; do not pivot from the active runtime/semantic repair queue.`
   Commit: `deferred`
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.37`
+  Status: `done`
+  Goal: `Intake the director-supplied SPECFORGE sf-isf-storage-register-access request and assign exact repair/feature ownership.`
+  Acceptance: `Read the authorized external request bundle without mutation, preserve its request and exact source controls with provenance in repository-local tracked evidence, query canonical storage contracts, reproduce bounded current native/API/MCP results, and distinguish existing behavior from requested semantics. Own every confirmed defect and extension in dependency order, synchronize response/book/knowledge and resume pointers, run appropriate checks and commit before returning to the runtime repair queue.`
+  Verification: `Exact packet and controls retained in docs/audits/specforge-storage-register-access-intake-20260926.json from clean 851c252a2. Default/strict/native/API/newline results agree: baseline and whole-word-field pass, both word-access forms and unknown token fail. Local retained-source replay matches intake; existing-directory/escape/unknown-option refusals preserve prior results. T1453/T1112/T1376 pass, book renders and .38 owns all required and optional feature scopes. No feature implementation or external mutation occurred.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.37: intake storage register access request`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38`
+  Status: `active`
+  Goal: `Represent checked storage-word access independently of field access, without changing generated behavior.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.1`
+  Status: `pending`
+  Goal: `Implement required SPECFORGE storage-register-access R1-R3 for width-based scalar var and variable entries.`
+  Acceptance: `Accept exactly the existing lowercase field-access token set on scalar storage words, with or without fields; preserve independent word/field facts without inheritance or consistency constraints. Reject duplicate, malformed, unknown and bank/typed access forms with storage/token diagnostics. Project optional access beside width/fields wherever scalar storage is reported, including applicable domain views and API/MCP schedule projections. Retain original caller controls from the .37 audit; prove unchanged scheduled FSM and date-normalized generated HDL/reset behavior, unchanged baseline/whole-word-field reports, token/alias coverage and default/strict/native/API/newline negative controls. Update book/spec/public contract and support coverage before commit.`
+  Verification: `Current parser _parse_storage rejects access; existing _is_actor_storage_field_access defines the accepted vocabulary and field metadata reaches schedule inferred_storage only. Native/API/newline intake preserves both accepted controls and all refusals. Schedule semantic metadata must not be confused with runtime access enforcement. Schedule after the existing watchdog/reachability and .32.2/.32.4 repair lanes, before the generic-width-dependent configuration extensions; no dependency on generic widths.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.2`
+  Status: `pending`
+  Goal: `Select and implement the optional R4 storage-bank access metadata extension after scalar access is qualified.`
+  Acceptance: `Read scalarization/domain/report contracts after .38.1 and choose an unambiguous bank-level access projection without inventing per-field facts or access-policy RTL. Implement the same checked token set only if bank identity and element ownership survive every affected report; otherwise split the required report prerequisite into owned leaves. Prove unchanged generated FSM/HDL, unknown/duplicate/malformed refusal, native/API/newline parity and no implicit reset or access enforcement. Keep scalar metadata and unrelated bank boundaries unchanged; update book/spec and commit separately.`
+  Verification: `Caller labels R4 optional; it is retained as scheduled work after .38.1 rather than silently dropped. Until its qualified implementation, access on bank remains refused.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39`
+  Status: `pending`
+  Goal: `Preserve actor-owned storage identity and reset behavior when the source reads a register without ordinary data writes.`
+  Acceptance: `Immediately after .37, reproduce the retained baseline-good and whole-word-field sources: inferred_storage calls status actor_storage, but generated csr_access exposes input status and has no status reset assignment. Trace materialized FSM and inference, select a faithful ownership representation across scalar/domain/child boundaries, and split prerequisites if needed. Repair internal ownership without synthetic external ports or invented initialization for storage lacking reset; qualify explicit reset-and-hold behavior and driven storage controls with independent HDL simulation and native/API/newline reports. Preserve metadata-only field/access semantics, update book/spec/facts and commit before returning to watchdog and .38 metadata work.`
+  Verification: `Discovered in the .37 retained-source replay from 851c252a2: baseline-good.sv declares input wire [7:0] status and reads it into status_out_next, with no status assignment. Both baseline and whole-word-field schedule reports declare status kind register, role actor_storage, width 8; authored var reset is 0. Ordinary LoweringIR carries declared storage separately while +interface records only authored input/output roles; width-only inference can classify a read-only storage reference as input. Captured csr_access.fsm retains status reset in +size with no internal role; SignalAnalyzer::_classify_signal_role selects INPUT for referenced-without-assignment signals. Priority: immediate after .37, ahead of watchdog and new metadata extensions.`
+  Commit: `pending`
+
 ## Implementation Notes From `.4`
 
 Downstream intake note (2026-09-24): the director reports SPECFORGE's old-copy
@@ -1655,12 +1688,15 @@ interfaces survive ordinary/domain lowering without invented drive values.
 `.35` is complete: explicitly reset outputs without data writers reset and
 hold; native/API/MCP drive families match the qualified hardware behavior.
 Port-option validation and startup cleanup are complete.
-Next activate watchdog entry
-and rearming under `.32.1.3.3.3`, independent transaction reachability under
+Next activate `.39`: the accepted storage-access baseline exposes read-only
+actor-owned status as an HDL input and loses reset ownership. After that repair,
+resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
 Bundle provenance and executable interconnect lowering follow under `.32.2`
-and `.32.4`. Then implement actor checks, knownness and phase metadata before
+and `.32.4`. Required scalar access metadata and optional banks are owned by
+`.38.1` and `.38.2` after completed packet intake `.37`. Then implement actor
+checks, knownness and phase metadata before
 the generic-width foundation, derived widths, legal sets and optional ports
 in dependency order; exact leaves are under `.33` and `.32.3`.
 Full-source API coverage and historical native qualification remain open.
@@ -3977,3 +4013,47 @@ completion after the established SV IAL prerequisite. T1901 now explicitly
 requires this bounded refusal and absence of an emitted VHDL artifact rather
 than claiming clock-only VHDL behavior. Reset-bearing VHDL simulation already
 passes. No compiler policy or unsupported-input gate was relaxed.
+
+
+## Acceptance Checklist — `.37` storage-register-access intake
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--strict --check --json` and
+  `--emit-schedule-json` reject storage-word `access` in `_parse_storage`,
+  while field access is accepted by `_parse_actor_storage_fields_option` and
+  projected in `inferred_storage[].fields`. The packet requests an additive
+  metadata location, not enforcement or changed hardware. Existing scalar
+  contract and original caller controls confirm this is a missing feature.
+- [x] **ADDRESSED (verified)** — The local audit retains exact request/source
+  bytes and hashes, current native reports and complete matching API/newline
+  responses. Required scalar R1-R3 are owned by `.38.1`, optional bank R4 by
+  `.38.2`, with independent word/field facts and unchanged hardware contracts.
+  The existing replay driver gains an explicit storage-access selector and
+  reproduces retained inputs without reading the external checkout. Fresh
+  replay matches all intake outcomes; existing-directory, path-escape and
+  unknown-option refusals preserve the old result. Original mode is unchanged.
+- [x] **NO REGRESSION** — `All tests successful` for T1453, T1112 and T1376:
+  current field metadata, public interface contract and book examples remain
+  valid. Replay Python parses (`syntax OK`); fresh mdBook HTML contains the
+  requested-word-access boundary. Task integrity, staged doctrine and hooks
+  remain required before commit. No parser or generated-HDL behavior changed.
+
+Claim legs are distinct: re-derivation uses actual current native commands;
+falsification uses the accepted baseline/whole-word-field and unknown-token
+controls plus API/newline parity and replay refusal controls; durability uses
+the tracked packet, replay driver, task scopes and response/book/fact routing.
+Missing leg: SPECFORGE corpus quantities and its historical revision results
+remain caller-supplied and were not independently reproduced. They authorize
+no signoff or capacity claim. The foreign script was read only because its
+output paths would mutate the source bundle; local equivalents were used.
+The current intake fact also supersedes its stale reset-only gap sentence
+with the committed .35 behavior proof, retaining the original diagnosis.
+
+
+Intake extension: the accepted baseline is not hardware signoff. Its public
+schedule labels `status` actor storage, but semantic/HDL classify it as an
+input. The retained materialized FSM contains `(status 8 (reset 0))` only in
+`+size`; no internal ownership survives into ordinary read/no-write inference.
+`SignalAnalyzer::_classify_signal_role` consequently chooses INPUT, and there
+is no status reset assignment. The audit retains exact FSM/HDL bytes, hashes
+and semantic input entry. Immediate `.39` owns repair before watchdog and
+metadata work; `.38` must compare corrected hardware, not preserve this bug.
