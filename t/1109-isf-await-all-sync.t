@@ -46,12 +46,12 @@ ISF
     my $fsm    = $result->{files}{'await_all_parent.fsm'};
     my $block  = state_block($fsm, 'parent_await_all_4');
 
-    like($block, qr/\(-> parent_done_5 <\(& w0_done w1_done w2_done\)\)/,
+    like($block, qr/\(-> parent_done_5 <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all emits one transition guarded by the AND of all collected done ports');
-    unlike($block, qr/\(<w2_done\s+\(<w1_done\s+\(<w0_done/s,
+    unlike($block, qr/\(<isf_completion_w2_ready\s+\(<isf_completion_w1_ready\s+\(<isf_completion_w0_ready/s,
         'await_all no longer nests done-port guards before the transition');
-    for my $done_port (qw(w0_done w1_done w2_done)) {
-        like($block, qr/\b$done_port\b/, "await_all includes $done_port");
+    for my $instance (qw(w0 w1 w2)) {
+        like($block, qr/\bisf_completion_${instance}_ready\b/, "await_all includes retained $instance completion");
     }
 
     my @targets = ($block =~ /\(-> parent_done_5\b/g);
@@ -70,7 +70,7 @@ ISF
     );
     ok($fsm_module, 'await_all compound transition guard parses through the normal .fsm frontend');
     my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
-    like($hdl, qr/\bw0_done\s*&\s*w1_done\s*&\s*w2_done\b/, 'await_all compound guard reaches HDL as a logical AND');
+    like($hdl, qr/\bisf_completion_w0_ready\s*&\s*isf_completion_w1_ready\s*&\s*isf_completion_w2_ready\b/, 'await_all compound guard reaches HDL as a logical AND');
 };
 
 done_testing();

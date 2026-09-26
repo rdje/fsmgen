@@ -89,7 +89,7 @@ ISF
         'spawn starts w0 before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_all_\d+/s,
         'local do waits for helper_done before await_all');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<w0_done/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<isf_completion_w0_ready/s,
         'await_all drains w0_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
         'repeat re-entry returns to the spawn only after the drain');
@@ -149,7 +149,7 @@ ISF
         'both spawned children start before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_all_\d+/s,
         'local do waits for helper_done before draining spawned children');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\)/s,
         'await_all drains w0_done and w1_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
         'repeat re-entry returns to the first spawn only after the multi-pending drain');
@@ -197,7 +197,7 @@ ISF
         'all three spawned children start before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_all_\d+/s,
         'local do waits for helper_done before draining all spawned children');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\s*isf_completion_w2_ready\)/s,
         'await_all drains w0_done, w1_done, and w2_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
         'repeat re-entry returns to the first spawn only after the three-pending drain');
@@ -247,7 +247,7 @@ ISF
         'all four spawned children start before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_all_\d+/s,
         'local do waits for helper_done before draining all four spawned children');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\s*isf_completion_w2_ready\s*isf_completion_w3_ready\)/s,
         'await_all drains w0_done, w1_done, w2_done, and w3_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
         'repeat re-entry returns to the first spawn only after the four-pending drain');
@@ -280,7 +280,7 @@ ISF
 
     ok($multi_lowered, 'public lowering accepts the proof-generalized while five-pending local-do sequence') or diag($multi_err);
     my $fsm = $multi_lowered->{files}{'while_five_pending_spawn_local_do.fsm'};
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\s*w4_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\s*isf_completion_w2_ready\s*isf_completion_w3_ready\s*isf_completion_w4_ready\)/s,
         'await_all drains all five done ports before repeat_check');
     my $top = $multi_lowered->{files}{'while_five_pending_spawn_local_do_top.fsm'};
     like($top, qr/\(\?fsmc:w4 worker\b/s, 'generated top instantiates the fifth spawned child');

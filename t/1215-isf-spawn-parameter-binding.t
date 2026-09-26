@@ -71,7 +71,7 @@ ISF
         'repeat-spawn parent loads the repeat count once per loop entry');
     like($parent_fsm, qr/\(parent_spawn_2[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_await_all_3\)/,
         'repeat body spawn asserts the static child start and advances to await_all');
-    like($parent_fsm, qr/\(parent_await_all_3[\s\S]*\(-> parent_repeat_check_4 <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_3[\s\S]*\(-> parent_repeat_check_4 <isf_completion_w0_ready\)/,
         'repeat body await_all waits for the child done before the repeat check');
     like($parent_fsm, qr/\(parent_repeat_check_4[\s\S]*\(!=0 \(-> parent_spawn_2\)\)/,
         'repeat check can only loop after the await_all state');
@@ -218,7 +218,7 @@ ISF
     ok(defined($top_fsm), 'repeat-spawn binding generated top .fsm is emitted');
     like($parent_fsm, qr/\(parent_spawn_2[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_await_all_3\)/,
         'repeat body spawn binding still starts the static child and advances to await_all');
-    like($parent_fsm, qr/\(parent_await_all_3[\s\S]*\(-> parent_repeat_check_4 <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_3[\s\S]*\(-> parent_repeat_check_4 <isf_completion_w0_ready\)/,
         'repeat body spawn binding waits for child done before the repeat check');
     like($parent_fsm, qr/\(-w0_port_bindings\s+\(= \(w0_data> payload\)\)\s+\(= \(result> w0_resp\)\)\s+\)/s,
         'parent .fsm keeps repeat-spawn input and output bindings reviewable');
@@ -364,7 +364,7 @@ ISF
         'when-body nested spawn starts the static child before the following sample');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after nested spawn materializes before await_all');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'same-body await_all gates the nested repeat check on the spawned child done');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top applies nested repeat-spawn parameter overrides once');
@@ -476,7 +476,7 @@ ISF
         'second when-body nested spawn advances toward the sync path');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after when-body nested multiple spawns materializes before await_all');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'same-body await_all gates the nested repeat check on both spawned child done handoffs');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top applies first nested repeat-spawn parameter override once');
@@ -581,11 +581,11 @@ ISF
         'first when-body nested await_any drain spawn advances to the second spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second when-body nested await_any drain spawn advances to the observation point');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'multi-pending when-body nested await_any observes either generated child before continuing');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after when-body nested multi-pending await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'mandatory await_all drain gates the when-body nested repeat check on all pending generated children');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top applies first when-body nested await_any drain parameter override once');
@@ -693,7 +693,7 @@ ISF
         'first generated spawn still starts before the await_any observation');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second generated spawn advances to the await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'multi-pending await_any observes either generated child before the sample after await_any');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after multi-pending await_any materializes before the local do');
@@ -701,7 +701,7 @@ ISF
         'local do after await_any waits for a fresh local child done pulse');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after local do materializes before the mandatory generated-spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after local do drains both generated spawns before nested repeat re-entry');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the nested repeat local do start handoff');
@@ -822,7 +822,7 @@ ISF
         'first generated spawn starts before the second pre-do spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second pre-do generated spawn advances to the prior await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'prior await_any observes either pre-do generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after prior await_any materializes before the local do');
@@ -832,7 +832,7 @@ ISF
         'sample after local do materializes before the post-do generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'post-do generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the prior-await_any local do start handoff');
@@ -923,15 +923,15 @@ ISF
         'first generated spawn starts before the second pre-do spawn in the second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second pre-do generated spawn advances to the prior await_any observation in the second-await_any subset');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'prior await_any observes either pre-do generated child before the local do');
     like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(local_worker_start 1\)\)[\s\S]*<local_worker_done\s+\(-> parent_sample_\d+\)/,
         'local do completes before the later generated spawn in the second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'post-do generated spawn advances to the second await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w2_ready[\s\S]*\(-> parent_await_all_\d+\)/,
         'second await_any observes any pre-do or post-do generated child without draining the set');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all after the second await_any drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the prior-await_any second-await_any local do start handoff');
@@ -1017,7 +1017,7 @@ ISF
         'local do waits for fresh local child done while the generated spawn remains pending');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after local do materializes before the generated spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'await_all drain gates the nested repeat check on the pending generated spawn');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the nested repeat local do start handoff');
@@ -1112,7 +1112,7 @@ ISF
         'sample after local do materializes before the later generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'later generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all drains both pre-do and post-do generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the pre-do generated spawn parameter override');
@@ -1205,11 +1205,11 @@ ISF
         'sample after local do materializes before the later generated spawn in the post-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'later generated spawn advances to the local-do post-spawn await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'local-do post-spawn await_any observes either generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after local-do post-spawn await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after local-do post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the post-spawn await_any local do start handoff');
@@ -1305,11 +1305,11 @@ ISF
         'local do completes before the post-do await_any observation can run');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after local do materializes before the post-do await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'post-do await_any observes either generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after post-do await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after post-do await_any drains both generated spawns before nested repeat re-entry');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the post-do await_any local do start handoff');
@@ -1396,7 +1396,7 @@ ISF
         'generated-child do waits for its generated instance done while the spawn remains pending');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after generated-child do materializes before the pending spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'await_all drain gates the nested repeat check on the pending generated spawn');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the pending spawn instance');
@@ -1463,7 +1463,7 @@ ISF
         'sample after generated-child do materializes before the later generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'later generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the pre-do spawn instance');
@@ -1534,11 +1534,11 @@ ISF
         'sample after generated-child do materializes before the later generated spawn in the post-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'later generated spawn advances to the post-spawn await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'post-spawn await_any observes either generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after post-spawn await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the pre-do spawn instance for post-await_any subset');
@@ -1603,7 +1603,7 @@ ISF
         'first generated spawn starts before the await_any observation');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second generated spawn advances to the await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'multi-pending await_any observes either generated child before the generated-child do');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after multi-pending await_any materializes before the generated-child do');
@@ -1611,7 +1611,7 @@ ISF
         'generated-child do after await_any waits for its generated instance done');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after generated-child do materializes before the mandatory generated-spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after generated-child do drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first pending spawn instance');
@@ -1678,7 +1678,7 @@ ISF
         'first generated spawn starts before the second pre-do spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second pre-do generated spawn advances to the prior await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'prior await_any observes either pre-do generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after prior await_any materializes before the generated-child do');
@@ -1688,7 +1688,7 @@ ISF
         'sample after generated-child do materializes before the post-do generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'post-do generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first pre-do spawn instance');
@@ -1758,15 +1758,15 @@ ISF
         'first generated spawn starts before the second pre-do spawn in the generated-child second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second pre-do generated spawn advances to the prior await_any observation in the generated-child second-await_any subset');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'prior await_any observes either pre-do generated child before the generated-child do');
     like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
         'generated-child do completes before the later generated spawn in the second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'post-do generated spawn advances to the second await_any observation in the generated-child subset');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w2_ready[\s\S]*\(-> parent_await_all_\d+\)/,
         'second await_any observes any pre-do or post-do generated child without draining the set');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all after the second await_any drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first pre-do spawn instance for the generated-child second-await_any subset');
@@ -1839,11 +1839,11 @@ ISF
         'generated-child do completes before the post-do await_any observation can run');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after generated-child do materializes before the post-do await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'post-do await_any observes either generated child without draining the generated-spawn set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after generated-child post-do await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after generated-child post-do await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first pending spawn instance before generated-child post-do await_any');
@@ -1914,7 +1914,7 @@ ISF
         'parameterized generated do waits for its generated instance done while the spawn remains pending');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after parameterized generated do materializes before the pending spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'await_all drain gates the nested repeat check on the pending generated spawn after parameterized do');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the pending spawn instance for parameterized do');
@@ -1987,7 +1987,7 @@ ISF
         'sample after parameterized generated do materializes before the later generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'later generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the pre-do spawn instance for parameterized do');
@@ -2062,11 +2062,11 @@ ISF
         'sample after parameterized generated do materializes before the later generated spawn in the post-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'later generated spawn advances to the parameterized post-spawn await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'parameterized post-spawn await_any observes either generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after parameterized post-spawn await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after parameterized post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the pre-do spawn instance for parameterized post-await_any subset');
@@ -2137,7 +2137,7 @@ ISF
         'first generated spawn starts before the await_any observation for parameterized do');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second generated spawn advances to the await_any observation for parameterized do');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'multi-pending await_any observes either generated child before the parameterized generated do');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after multi-pending await_any materializes before the parameterized generated do');
@@ -2145,7 +2145,7 @@ ISF
         'parameterized generated do after await_any waits for its generated instance done');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after parameterized generated do materializes before the mandatory generated-spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after parameterized generated do drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first pending spawn instance for parameterized do after await_any');
@@ -2218,7 +2218,7 @@ ISF
         'first generated spawn starts before the second pre-do spawn for parameterized do');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second pre-do generated spawn advances to the prior await_any observation for parameterized do');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'prior await_any observes either pre-do generated child before parameterized do');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after prior await_any materializes before the parameterized generated do');
@@ -2228,7 +2228,7 @@ ISF
         'sample after parameterized generated do materializes before the post-do generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'post-do generated spawn advances directly to the mandatory drain for parameterized do');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all drains pre-do and post-do generated spawns for parameterized do');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first pre-do spawn instance for parameterized prior-await_any subset');
@@ -2304,15 +2304,15 @@ ISF
         'first generated spawn starts before the second pre-do spawn in the parameterized second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second pre-do generated spawn advances to the prior await_any observation in the parameterized second-await_any subset');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'prior await_any observes either pre-do generated child before the parameterized generated do');
     like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
         'parameterized generated do completes before the later generated spawn in the second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'post-do generated spawn advances to the second await_any observation in the parameterized subset');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w2_ready[\s\S]*\(-> parent_await_all_\d+\)/,
         'second await_any observes any pre-do or post-do generated child without draining the set');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all after the second await_any drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first pre-do spawn instance for the parameterized second-await_any subset');
@@ -2391,11 +2391,11 @@ ISF
         'parameterized generated do completes before the post-do await_any observation can run');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after parameterized generated do materializes before the post-do await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'post-do await_any observes either generated child without draining the generated-spawn set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after parameterized post-do await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after parameterized post-do await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first pending spawn instance before parameterized post-do await_any');
@@ -2506,7 +2506,7 @@ ISF
         'bound generated do waits for its generated instance done while the spawn remains pending');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after bound generated do materializes before the pending spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'await_all drain gates the nested repeat check on the pending generated spawn after bound do');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the pending spawn instance for bound do');
@@ -2642,7 +2642,7 @@ ISF
         'sample after bound generated do materializes before the later generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'later generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the pre-do spawn parameter override for bound do');
@@ -2784,11 +2784,11 @@ ISF
         'sample after bound generated do materializes before the later generated spawn in the post-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'later generated spawn advances to the bound post-spawn await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'bound post-spawn await_any observes either generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after bound post-spawn await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after bound post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the pre-do spawn parameter override for bound post-await_any subset');
@@ -2924,7 +2924,7 @@ ISF
         'first generated spawn starts before the await_any observation for bound do');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second generated spawn advances to the await_any observation for bound do');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'multi-pending await_any observes either generated child before the bound generated do');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after multi-pending await_any materializes before the bound generated do');
@@ -2934,7 +2934,7 @@ ISF
         'bound generated do after await_any waits for its generated instance done');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after bound generated do materializes before the mandatory generated-spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after bound generated do drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the first pending spawn instance for bound do after await_any');
@@ -3077,7 +3077,7 @@ ISF
         'first bound pre-do generated spawn starts before the second pre-do spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second bound pre-do generated spawn advances to the prior await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'prior await_any observes either pre-do generated child before bound do');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after prior await_any materializes before the bound generated do');
@@ -3089,7 +3089,7 @@ ISF
         'sample after bound generated do materializes before the post-do generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'post-do generated spawn advances directly to the mandatory drain for bound do');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all drains pre-do and post-do generated spawns for bound do');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the first pre-do spawn parameter override for bound prior-await_any subset');
@@ -3235,7 +3235,7 @@ ISF
         'when true path enters the prior-await_any bound second-await_any nested repeat region');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second pre-do generated spawn advances to the prior await_any observation for bound second-await_any');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'prior await_any observes either pre-do generated child before bound do');
     like($parent_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
         'bound generated do after prior await_any keeps input and output binding handoffs reviewable before second await_any');
@@ -3243,9 +3243,9 @@ ISF
         'bound generated do completes before the later generated spawn in the second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'post-do generated spawn advances to the second await_any observation for bound do');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w2_ready[\s\S]*\(-> parent_await_all_\d+\)/,
         'second await_any observes any pre-do or post-do generated child without draining the set for bound do');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all after the second await_any drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker\s+\(params\s+\(WIDTH 32\)\s+\)\s+\)/s,
         'generated top applies static parameter override to the bound generated do instance before later spawn and second await_any');
@@ -3387,11 +3387,11 @@ ISF
         'bound generated do completes before the post-do await_any observation can run');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after bound generated do materializes before the post-do await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'post-do await_any observes either generated child without draining the generated-spawn set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after bound post-do await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after bound post-do await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the first pending spawn instance before bound post-do await_any');
@@ -3541,11 +3541,11 @@ ISF
         'same-domain generated do completes before the post-do await_any observation can run');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after same-domain generated do materializes before the post-do await_any observation');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'post-do await_any observes either same-domain generated child without draining the generated-spawn set');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after same-domain post-do await_any materializes before the mandatory drain');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after same-domain post-do await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_before_await_any__domain_core\)/,
         'domain top instantiates the when pre-await_any core-domain scheduled artifact');
@@ -3692,7 +3692,7 @@ ISF
         'first same-domain generated spawn starts before the await_any observation');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second same-domain generated spawn advances to the await_any observation');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'multi-pending await_any observes either same-domain generated child before the domain generated do');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after multi-pending await_any materializes before the same-domain generated do');
@@ -3702,7 +3702,7 @@ ISF
         'same-domain generated do after await_any waits for its generated instance done');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after same-domain generated do materializes before the mandatory generated-spawn drain');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after same-domain generated do drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_after_await_any__domain_core\)/,
         'domain top instantiates the core-domain scheduled artifact');
@@ -3860,7 +3860,7 @@ ISF
         'first same-domain pre-do spawn starts before the second pre-do spawn');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second same-domain pre-do spawn advances to the prior await_any observation');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'prior await_any observes either same-domain pre-do generated child before domain do');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after prior await_any materializes before the same-domain generated do');
@@ -3872,7 +3872,7 @@ ISF
         'sample after same-domain generated do materializes before the post-do generated spawn');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'post-do same-domain generated spawn advances directly to the mandatory drain');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all drains pre-do and post-do same-domain generated spawns');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_after_await_any_then_spawn__domain_core\)/,
         'domain top instantiates the core-domain scheduled artifact');
@@ -4037,7 +4037,7 @@ ISF
         'when true path enters the prior-await_any domain second-await_any nested repeat region');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second same-domain pre-do generated spawn advances to the prior await_any observation for second-await_any');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'prior await_any observes either same-domain pre-do generated child before domain do');
     like($core_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
         'same-domain generated do after prior await_any keeps input and output binding handoffs reviewable before second await_any');
@@ -4045,9 +4045,9 @@ ISF
         'same-domain generated do completes before the later generated spawn in the second-await_any subset');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'post-do same-domain generated spawn advances to the second await_any observation');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w2_ready[\s\S]*\(-> parent_await_all_\d+\)/,
         'second await_any observes any pre-do or post-do same-domain generated child without draining the set');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all after the second await_any drains pre-do and post-do same-domain generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_after_await_any_then_spawn_second_await_any__domain_core\)/,
         'domain top instantiates the prior-await_any second-await_any core-domain scheduled artifact');
@@ -4185,7 +4185,7 @@ ISF
         'same-domain generated do keeps input and output binding handoffs reviewable while spawn is pending');
     like($core_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
         'same-domain generated do waits for its generated instance done while the spawn remains pending');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'await_all drain gates the nested repeat check on the pending generated spawn after same-domain do');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_while_spawn_pending__domain_core\)/,
         'domain top instantiates the core-domain scheduled artifact');
@@ -4336,7 +4336,7 @@ ISF
         'sample after same-domain generated do materializes before the later generated spawn');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'later same-domain generated spawn advances directly to the mandatory drain');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all drains both same-domain generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_then_spawn_before_drain__domain_core\)/,
         'domain top instantiates the core-domain scheduled artifact');
@@ -4491,11 +4491,11 @@ ISF
         'sample after same-domain generated do materializes before the later generated spawn in the post-await_any subset');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'later same-domain generated spawn advances to the post-spawn await_any observation');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'same-domain post-spawn await_any observes either generated child without draining the set');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after same-domain post-spawn await_any materializes before the mandatory drain');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after same-domain post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_then_spawn_before_await_any__domain_core\)/,
         'domain top instantiates the post-await_any core-domain scheduled artifact');
@@ -4599,7 +4599,7 @@ ISF
         'when-body nested await_any spawn starts the static child before the following sample');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after nested spawn materializes before await_any');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_repeat_check_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_repeat_check_\d+\)/,
         'single-pending await_any gates the nested repeat check on the spawned child done');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top applies nested repeat-spawn await_any parameter overrides once');
@@ -4698,7 +4698,7 @@ ISF
         'switch-branch nested spawn starts the static child before the following sample');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch nested spawn materializes before await_all');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'same-body await_all gates the switch nested repeat check on the spawned child done');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top applies switch nested repeat-spawn parameter overrides once');
@@ -4808,7 +4808,7 @@ ISF
         'sample between switch nested spawns materializes before the second spawn state');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_sample_\d+\)/,
         'second switch nested spawn advances toward the sync path');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'same-body await_all gates the switch nested repeat check on both spawned child done handoffs');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top applies first switch nested repeat-spawn parameter override once');
@@ -4918,11 +4918,11 @@ ISF
         'first switch nested await_any drain spawn advances to the second spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch nested await_any drain spawn advances to the observation point');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'multi-pending switch nested await_any observes either generated child before continuing');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch nested multi-pending await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'mandatory await_all drain gates the switch nested repeat check on all pending generated children');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top applies first switch nested await_any drain parameter override once');
@@ -5035,7 +5035,7 @@ ISF
         'first switch generated spawn still starts before the await_any observation');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch generated spawn advances to the await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'multi-pending switch await_any observes either generated child before the sample after await_any');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after switch multi-pending await_any materializes before the local do');
@@ -5043,7 +5043,7 @@ ISF
         'switch local do after await_any waits for a fresh local child done pulse');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch local do materializes before the mandatory generated-spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'switch await_all after local do drains both generated spawns before nested repeat re-entry');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the switch nested repeat local do start handoff');
@@ -5167,7 +5167,7 @@ ISF
         'first switch generated spawn starts before the second pre-do spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch pre-do generated spawn advances to the prior await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch prior await_any observes either pre-do generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after switch prior await_any materializes before the local do');
@@ -5177,7 +5177,7 @@ ISF
         'sample after switch local do materializes before the post-do generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'switch post-do generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'switch await_all drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the switch prior-await_any local do start handoff');
@@ -5273,15 +5273,15 @@ ISF
         'first switch generated spawn starts before the second pre-do spawn in the second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch pre-do generated spawn advances to the prior await_any observation in the second-await_any subset');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch prior await_any observes either pre-do generated child before the local do');
     like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(local_worker_start 1\)\)[\s\S]*<local_worker_done\s+\(-> parent_sample_\d+\)/,
         'switch local do completes before the later generated spawn in the second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'switch post-do generated spawn advances to the second await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w2_ready[\s\S]*\(-> parent_await_all_\d+\)/,
         'switch second await_any observes any pre-do or post-do generated child without draining the set');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'switch await_all after the second await_any drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the switch prior-await_any second-await_any local do start handoff');
@@ -5368,7 +5368,7 @@ ISF
         'switch-branch nested await_any spawn starts the static child before the following sample');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after switch nested spawn materializes before await_any');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_repeat_check_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_repeat_check_\d+\)/,
         'single-pending await_any gates the switch nested repeat check on the spawned child done');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top applies switch nested repeat-spawn await_any parameter overrides once');
@@ -5471,7 +5471,7 @@ ISF
         'switch local do waits for fresh local child done while the generated spawn remains pending');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch local do materializes before the generated spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'await_all drain gates the switch nested repeat check on the pending generated spawn');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the switch nested repeat local do start handoff');
@@ -5569,7 +5569,7 @@ ISF
         'sample after switch local do materializes before the later generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'later switch generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'switch await_all drains both pre-do and post-do generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the switch pre-do generated spawn parameter override');
@@ -5665,11 +5665,11 @@ ISF
         'sample after switch local do materializes before the later generated spawn in the post-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'later switch generated spawn advances to the local-do post-spawn await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch local-do post-spawn await_any observes either generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch local-do post-spawn await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch local-do post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the switch post-spawn await_any local do start handoff');
@@ -5770,11 +5770,11 @@ ISF
         'switch local do completes before the post-do await_any observation can run');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after switch local do materializes before the post-do await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch post-do await_any observes either generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch post-do await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'switch await_all after post-do await_any drains both generated spawns before nested repeat re-entry');
     like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
         'local child entry is rewired to the switch post-do await_any local do start handoff');
@@ -5864,7 +5864,7 @@ ISF
         'switch generated-child do waits for its generated instance done while the spawn remains pending');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch generated-child do materializes before the pending spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'await_all drain gates the switch nested repeat check on the pending generated spawn');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the switch pending spawn instance');
@@ -5934,7 +5934,7 @@ ISF
         'sample after switch generated-child do materializes before the later generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'later switch generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'switch await_all drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the switch pre-do spawn instance');
@@ -6008,11 +6008,11 @@ ISF
         'sample after switch generated-child do materializes before the later generated spawn in the post-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'later switch generated spawn advances to the post-spawn await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch post-spawn await_any observes either generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch post-spawn await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the switch pre-do spawn instance for post-await_any subset');
@@ -6080,7 +6080,7 @@ ISF
         'first switch generated spawn starts before the await_any observation');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch generated spawn advances to the await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch multi-pending await_any observes either generated child before the generated-child do');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after switch multi-pending await_any materializes before the generated-child do');
@@ -6088,7 +6088,7 @@ ISF
         'switch generated-child do after await_any waits for its generated instance done');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch generated-child do materializes before the mandatory generated-spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch generated-child do drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first switch pending spawn instance');
@@ -6158,7 +6158,7 @@ ISF
         'first switch generated spawn starts before the second pre-do spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch pre-do generated spawn advances to the prior await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch prior await_any observes either pre-do generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after switch prior await_any materializes before the generated-child do');
@@ -6168,7 +6168,7 @@ ISF
         'sample after switch generated-child do materializes before the post-do generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'switch post-do generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'switch await_all drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first switch pre-do spawn instance');
@@ -6241,15 +6241,15 @@ ISF
         'first switch generated spawn starts before the second pre-do spawn in the generated-child second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch pre-do generated spawn advances to the prior await_any observation in the generated-child second-await_any subset');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch prior await_any observes either pre-do generated child before the generated-child do');
     like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
         'switch generated-child do completes before the later generated spawn in the second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'switch post-do generated spawn advances to the second await_any observation in the generated-child subset');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w2_ready[\s\S]*\(-> parent_await_all_\d+\)/,
         'switch second await_any observes any pre-do or post-do generated child without draining the set');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'switch await_all after the second await_any drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first switch pre-do spawn instance for the generated-child second-await_any subset');
@@ -6325,11 +6325,11 @@ ISF
         'switch generated-child do completes before the post-do await_any observation can run');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after switch generated-child do materializes before the post-do await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch post-do await_any observes either generated child without draining the generated-spawn set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch generated-child post-do await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch generated-child post-do await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first switch pending spawn instance before generated-child post-do await_any');
@@ -6403,7 +6403,7 @@ ISF
         'switch parameterized generated do waits for its generated instance done while the spawn remains pending');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch parameterized generated do materializes before the pending spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'await_all drain gates the switch nested repeat check on the pending generated spawn after parameterized do');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the switch pending spawn instance for parameterized do');
@@ -6479,7 +6479,7 @@ ISF
         'sample after switch parameterized generated do materializes before the later generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'later switch generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all drains both switch generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the switch pre-do spawn instance for parameterized do');
@@ -6557,11 +6557,11 @@ ISF
         'sample after switch parameterized generated do materializes before the later generated spawn in the post-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'later switch generated spawn advances to the parameterized post-spawn await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch parameterized post-spawn await_any observes either generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch parameterized post-spawn await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch parameterized post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the switch pre-do spawn instance for parameterized post-await_any subset');
@@ -6635,7 +6635,7 @@ ISF
         'first switch generated spawn starts before the await_any observation for parameterized do');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch generated spawn advances to the await_any observation for parameterized do');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch multi-pending await_any observes either generated child before the parameterized generated do');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after switch multi-pending await_any materializes before the parameterized generated do');
@@ -6643,7 +6643,7 @@ ISF
         'switch parameterized generated do after await_any waits for its generated instance done');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch parameterized generated do materializes before the mandatory generated-spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch parameterized generated do drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first switch pending spawn instance for parameterized do after await_any');
@@ -6719,7 +6719,7 @@ ISF
         'first switch generated spawn starts before the second pre-do spawn for parameterized do');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch pre-do generated spawn advances to the prior await_any observation for parameterized do');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch prior await_any observes either pre-do generated child before parameterized do');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after switch prior await_any materializes before the parameterized generated do');
@@ -6729,7 +6729,7 @@ ISF
         'sample after switch parameterized generated do materializes before the post-do generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'switch post-do generated spawn advances directly to the mandatory drain for parameterized do');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'switch await_all drains pre-do and post-do generated spawns for parameterized do');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first switch pre-do spawn instance for parameterized prior-await_any subset');
@@ -6808,15 +6808,15 @@ ISF
         'first switch generated spawn starts before the second pre-do spawn in the parameterized second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch pre-do generated spawn advances to the prior await_any observation in the parameterized second-await_any subset');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch prior await_any observes either pre-do generated child before the parameterized generated do');
     like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
         'switch parameterized generated do completes before the later generated spawn in the second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'switch post-do generated spawn advances to the second await_any observation in the parameterized subset');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w2_ready[\s\S]*\(-> parent_await_all_\d+\)/,
         'switch second await_any observes any pre-do or post-do generated child without draining the set');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'switch await_all after the second await_any drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first switch pre-do spawn instance for the parameterized second-await_any subset');
@@ -6898,11 +6898,11 @@ ISF
         'switch parameterized generated do completes before the post-do await_any observation can run');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after switch parameterized generated do materializes before the post-do await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch post-do await_any observes either generated child without draining the generated-spawn set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch parameterized post-do await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch parameterized post-do await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top keeps the first switch pending spawn instance before parameterized post-do await_any');
@@ -7016,7 +7016,7 @@ ISF
         'switch bound generated do waits for its generated instance done while the spawn remains pending');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch bound generated do materializes before the pending spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'await_all drain gates the switch nested repeat check on the pending generated spawn after bound do');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the switch pending spawn instance for bound do');
@@ -7155,7 +7155,7 @@ ISF
         'sample after switch bound generated do materializes before the later generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'later switch generated spawn advances directly to the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all drains both switch generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the switch pre-do spawn parameter override for bound do');
@@ -7300,11 +7300,11 @@ ISF
         'sample after switch bound generated do materializes before the later generated spawn in the post-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'later switch generated spawn advances to the bound post-spawn await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch bound post-spawn await_any observes either generated child without draining the set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch bound post-spawn await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch bound post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the switch pre-do spawn parameter override for bound post-await_any subset');
@@ -7443,7 +7443,7 @@ ISF
         'first switch generated spawn starts before the await_any observation for bound do');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch generated spawn advances to the await_any observation for bound do');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch multi-pending await_any observes either generated child before the bound generated do');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after switch multi-pending await_any materializes before the bound generated do');
@@ -7453,7 +7453,7 @@ ISF
         'switch bound generated do after await_any waits for its generated instance done');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch bound generated do materializes before the mandatory generated-spawn drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch bound generated do drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the first pending spawn instance for switch bound do after await_any');
@@ -7599,7 +7599,7 @@ ISF
         'first switch bound pre-do generated spawn starts before the second pre-do spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch bound pre-do generated spawn advances to the prior await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch prior await_any observes either pre-do generated child before bound do');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after switch prior await_any materializes before the bound generated do');
@@ -7611,7 +7611,7 @@ ISF
         'sample after switch bound generated do materializes before the post-do generated spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'switch post-do generated spawn advances directly to the mandatory drain for bound do');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all drains switch pre-do and post-do generated spawns for bound do');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the first switch pre-do spawn parameter override for bound prior-await_any subset');
@@ -7760,7 +7760,7 @@ ISF
         'matching switch branch enters the prior-await_any bound second-await_any nested repeat region');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch pre-do generated spawn advances to the prior await_any observation for bound second-await_any');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch prior await_any observes either pre-do generated child before bound do');
     like($parent_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
         'switch bound generated do after prior await_any keeps input and output binding handoffs reviewable before second await_any');
@@ -7768,9 +7768,9 @@ ISF
         'switch bound generated do completes before the later generated spawn in the second-await_any subset');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'switch post-do generated spawn advances to the second await_any observation for bound do');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w2_ready[\s\S]*\(-> parent_await_all_\d+\)/,
         'switch second await_any observes any pre-do or post-do generated child without draining the set for bound do');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'switch await_all after the second await_any drains pre-do and post-do generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker\s+\(params\s+\(WIDTH 32\)\s+\)\s+\)/s,
         'generated top applies static parameter override to the switch bound generated do instance before later spawn and second await_any');
@@ -7915,11 +7915,11 @@ ISF
         'switch bound generated do completes before the post-do await_any observation can run');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after switch bound generated do materializes before the post-do await_any observation');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch post-do await_any observes either generated child without draining the generated-spawn set');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch bound post-do await_any materializes before the mandatory drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch bound post-do await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top keeps the first pending spawn instance before switch bound post-do await_any');
@@ -8072,11 +8072,11 @@ ISF
         'switch same-domain generated do completes before the post-do await_any observation can run');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'sample after switch same-domain generated do materializes before the post-do await_any observation');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch post-do await_any observes either same-domain generated child without draining the generated-spawn set');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch same-domain post-do await_any materializes before the mandatory drain');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch same-domain post-do await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_before_await_any__domain_core\)/,
         'domain top instantiates the switch pre-await_any core-domain scheduled artifact');
@@ -8228,7 +8228,7 @@ ISF
         'first switch same-domain generated spawn starts before the await_any observation');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch same-domain generated spawn advances to the await_any observation');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch multi-pending await_any observes either same-domain generated child before the domain generated do');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
         'sample after switch multi-pending await_any materializes before the same-domain generated do');
@@ -8238,7 +8238,7 @@ ISF
         'switch same-domain generated do after await_any waits for its generated instance done');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch same-domain generated do materializes before the mandatory generated-spawn drain');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch same-domain generated do drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_after_await_any__domain_core\)/,
         'domain top instantiates the switch core-domain scheduled artifact');
@@ -8377,7 +8377,7 @@ ISF
         'first switch same-domain pre-do spawn starts before the second pre-do spawn');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch same-domain pre-do spawn advances to the prior await_any observation');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch prior await_any observes either same-domain pre-do generated child before domain do');
     like($core_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
         'switch same-domain generated do after prior await_any keeps input and output binding handoffs reviewable');
@@ -8385,7 +8385,7 @@ ISF
         'switch same-domain generated do after prior await_any completes before the later generated spawn');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'switch post-do same-domain generated spawn advances directly to the mandatory drain');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'await_all drains switch pre-do and post-do same-domain generated spawns');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_after_await_any_then_spawn__domain_core\)/,
         'domain top instantiates the switch core-domain scheduled artifact');
@@ -8553,7 +8553,7 @@ ISF
         'matching switch branch enters the prior-await_any domain second-await_any nested repeat region');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second switch same-domain pre-do generated spawn advances to the prior await_any observation for second-await_any');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch prior await_any observes either same-domain pre-do generated child before domain do');
     like($core_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
         'switch same-domain generated do after prior await_any keeps input and output binding handoffs reviewable before second await_any');
@@ -8561,9 +8561,9 @@ ISF
         'switch same-domain generated do completes before the later generated spawn in the second-await_any subset');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w2_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'switch post-do same-domain generated spawn advances to the second await_any observation');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<w2_done[\s\S]*\(-> parent_await_all_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_await_all_\d+\)[\s\S]*<isf_completion_w2_ready[\s\S]*\(-> parent_await_all_\d+\)/,
         'switch second await_any observes any pre-do or post-do same-domain generated child without draining the set');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done w2_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'switch await_all after the second await_any drains pre-do and post-do same-domain generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_after_await_any_then_spawn_second_await_any__domain_core\)/,
         'domain top instantiates the switch prior-await_any second-await_any core-domain scheduled artifact');
@@ -8706,7 +8706,7 @@ ISF
         'switch same-domain generated do keeps input and output binding handoffs reviewable while spawn is pending');
     like($core_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
         'switch same-domain generated do waits for its generated instance done while the spawn remains pending');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <isf_completion_w0_ready\)/,
         'await_all drain gates the switch nested repeat check on the pending generated spawn after same-domain do');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_while_spawn_pending__domain_core\)/,
         'domain top instantiates the switch core-domain scheduled artifact');
@@ -8860,7 +8860,7 @@ ISF
         'sample after switch same-domain generated do materializes before the later generated spawn');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'later switch same-domain generated spawn advances directly to the mandatory drain');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all drains both switch same-domain generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_then_spawn_before_drain__domain_core\)/,
         'domain top instantiates the switch core-domain scheduled artifact');
@@ -9018,11 +9018,11 @@ ISF
         'sample after switch same-domain generated do materializes before the later generated spawn in the post-await_any subset');
     like($core_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'later switch same-domain generated spawn advances to the post-spawn await_any observation');
-    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($core_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'switch same-domain post-spawn await_any observes either generated child without draining the set');
     like($core_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after switch same-domain post-spawn await_any materializes before the mandatory drain');
-    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($core_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all after switch same-domain post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_then_spawn_before_await_any__domain_core\)/,
         'domain top instantiates the switch post-await_any core-domain scheduled artifact');
@@ -9088,7 +9088,7 @@ ISF
     ok(defined($top_fsm), 'repeat-spawn await_any generated top .fsm is emitted');
     like($parent_fsm, qr/\(parent_spawn_2[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_await_any_3\)/,
         'repeat body spawn advances to await_any');
-    like($parent_fsm, qr/\(parent_await_any_3[\s\S]*<w0_done[\s\S]*\(-> parent_repeat_check_4\)/,
+    like($parent_fsm, qr/\(parent_await_any_3[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_repeat_check_4\)/,
         'single-pending repeat-body await_any waits for the one child done before the repeat check');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top instantiates the repeat-spawn await_any child once');
@@ -9127,11 +9127,11 @@ ISF
         'first repeat-body spawn advances to the second spawn');
     like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
         'second repeat-body spawn advances to multi-pending await_any');
-    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<isf_completion_w1_ready[\s\S]*\(-> parent_sample_\d+\)/,
         'multi-pending await_any observes either spawned child before continuing');
     like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
         'sample after multi-pending await_any materializes before the drain');
-    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'mandatory await_all drain keeps all spawned children before the repeat check');
     like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top instantiates first multi-pending repeat child once');
@@ -9209,7 +9209,7 @@ ISF
         'repeat-body spawn advances to the explicit sample state');
     like($await_all_fsm, qr/\(parent_sample_3[\s\S]*\(<= \(seen status\)\)[\s\S]*\(-> parent_await_all_4\)/,
         'repeat-body sample after spawn materializes before await_all');
-    like($await_all_fsm, qr/\(parent_await_all_4[\s\S]*\(-> parent_repeat_check_5 <w0_done\)/,
+    like($await_all_fsm, qr/\(parent_await_all_4[\s\S]*\(-> parent_repeat_check_5 <isf_completion_w0_ready\)/,
         'await_all still gates the repeat check after the sample state');
 
     my $await_any_source = <<'ISF';
@@ -9235,7 +9235,7 @@ ISF
     my $await_any_fsm = $await_any->{files}{'repeat_spawn_sample_after_any.fsm'};
     like($await_any_fsm, qr/\(parent_sample_3[\s\S]*\(<= \(seen status\)\)[\s\S]*\(-> parent_await_any_4\)/,
         'repeat-body sample after spawn materializes before single-pending await_any');
-    like($await_any_fsm, qr/\(parent_await_any_4[\s\S]*<w0_done[\s\S]*\(-> parent_repeat_check_5\)/,
+    like($await_any_fsm, qr/\(parent_await_any_4[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_repeat_check_5\)/,
         'single-pending await_any still gates the repeat check after the sample state');
 
     my $sample_before_source = <<'ISF';
@@ -9263,7 +9263,7 @@ ISF
         'repeat-body sample before spawn materializes before the spawn state');
     like($sample_before_fsm, qr/\(parent_spawn_3[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_await_all_4\)/,
         'repeat-body spawn after sample still starts the static child before sync');
-    like($sample_before_fsm, qr/\(parent_await_all_4[\s\S]*\(-> parent_repeat_check_5 <w0_done\)/,
+    like($sample_before_fsm, qr/\(parent_await_all_4[\s\S]*\(-> parent_repeat_check_5 <isf_completion_w0_ready\)/,
         'await_all gates the repeat check after sample-before-spawn ordering');
 
     my $sample_before_any_source = <<'ISF';
@@ -9289,7 +9289,7 @@ ISF
     my $sample_before_any_fsm = $sample_before_any->{files}{'repeat_spawn_sample_before_any.fsm'};
     like($sample_before_any_fsm, qr/\(parent_sample_2[\s\S]*\(<= \(seen status\)\)[\s\S]*\(-> parent_spawn_3\)/,
         'repeat-body sample before spawn materializes before single-pending await_any spawn');
-    like($sample_before_any_fsm, qr/\(parent_await_any_4[\s\S]*<w0_done[\s\S]*\(-> parent_repeat_check_5\)/,
+    like($sample_before_any_fsm, qr/\(parent_await_any_4[\s\S]*<isf_completion_w0_ready[\s\S]*\(-> parent_repeat_check_5\)/,
         'single-pending await_any gates the repeat check after sample-before-spawn ordering');
 };
 

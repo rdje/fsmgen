@@ -161,11 +161,15 @@ name for an invalid clause.
 - Spawn targets must name declared transactions in the same actor
 - Parent `.fsm` declares per-instance `name_start`/`name_done` signals
 - Each spawn state asserts its matching `name_start` signal
-- `(await_all done)` → one transition guarded by the logical AND of all done
-  signals
-- `(await_any done)` → one guard per done signal, advancing on the first one
-  that fires
-Both synchronization forms have focused regressions.
+- The parent remembers each joined child's completion until that child's next
+  start; a live `done` pulse also satisfies the join on its current edge.
+- `(await_all done)` → one transition guarded by the logical AND of all
+  current-activation completion views.
+- `(await_any done)` → one guard per completion view, advancing when any child
+  has completed. With multiple pending children, a later `await_all` still
+  waits for the entire outstanding set.
+Both synchronization forms have independent runtime regressions, including
+non-overlapping pulses, completion before join entry, and repeated activation.
 
 Composition-top instantiation is shipped for the covered generated-child
 fixture set. Spawn parameter declaration, blocking `do` parameter declaration,
@@ -263,13 +267,16 @@ through `?fsmc` `(params ...)` blocks.
 
 ```lisp
 (parent_main_await_all_4
-  (-> parent_main_done_5 <(& w0_done w1_done w2_done))
+  (-> parent_main_done_5 <(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready))
 )
 ```
 
-The compact transition suffix above is equivalent to nested guards over the
-same done ports, but the scheduled `.fsm` artifact uses the direct conjunction
-so the all-done condition is visible at the transition site.
+The scheduled transition uses a direct conjunction of private completion
+views. Each view is the child's live `done` OR its retained completion bit.
+Generated names avoid authored identifiers; public start/done handoff ports
+and schedule provenance continue to name the original child signals. The
+schedule report identifies the added private logic as `child_completion`
+blocks in `dt_blocks`.
 
 ## `(await_all port)` / `(await_any port)`
 
@@ -282,11 +289,17 @@ The forms are exact: `(await_all done_port)` and `(await_any done_port)`, with
 one scalar done-port operand. Malformed missing, nested, or extra operands fail
 before sync-state emission.
 
-The current generated-child join has a known runtime defect: staggered
-one-cycle completion pulses can leave `await_all` waiting indefinitely because
-it does not yet retain each child's completion. The repair and the unchanged
-failing runtime oracle are owned by task `.43` in the semantic-introspection
-task tree; successful source checking alone does not qualify that behavior.
+For example, if `w0` completes while the parent is still executing a wait and
+`w1` completes after the parent enters `await_all`, the join retains `w0`'s
+completion and advances on the edge that observes `w1`'s live pulse. The
+children's `done` outputs remain pulses. Reset clears the retained bits;
+each child's next start clears its own bit before the next join can consume
+it. This reset behavior does not promise power-up initialization.
+
+A join followed by a dynamic wait still has a separately owned limitation:
+positive even counts can stall because the existing wait-entry predicate uses
+a bitwise count operand. Task `.44` owns the immediate repair; completion-memory
+qualification covers zero and odd counts until that repair is verified.
 
 ## Composition Architecture
 

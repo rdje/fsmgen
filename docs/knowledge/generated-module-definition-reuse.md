@@ -22,8 +22,7 @@ fail contextually. Instances, parameter overrides, bindings and provenance
 remain separate, so definition reuse does not share their registers.
 
 T1907 independently simulates repeated direct scalar/aggregate/parameterized
-instances and observes separate ISF worker-local results. Its normal/repeated
-ISF completion assertions currently remain explicit TODOs under immediate
-owner `.43`: workers pulse done on different cycles while sync_all tests their
-raw conjunction. `.42` repairs module assembly, not that lowering defect. The
-original completion oracle must pass before the TODO is removed.
+instances and separate ISF worker-local results, including normal and repeated
+completion. `.43` repairs staggered done-pulse joins with per-activation parent
+completion memory; the original runtime completion expectations now pass
+without TODOs. See `generated-child-completion-memory.md` for that behavior.

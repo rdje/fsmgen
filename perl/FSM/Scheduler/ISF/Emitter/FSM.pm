@@ -327,7 +327,7 @@ sub _emit_transitions($self, $state) {
         return map { $self->_emit_simple_transition($_) } @$txs
             if grep { $_->{condition} } @$txs;
 
-        my @ports = @{$state->{done_ports}};
+        my @ports = @{$state->{completion_ports} // $state->{done_ports}};
         my $target = $txs->[0]{target};
         if (!@ports) {
             push @lines, "    (-> $target)";
@@ -343,7 +343,7 @@ sub _emit_transitions($self, $state) {
             if grep { $_->{condition} } @$txs;
 
         my $target = $txs->[0]{target};
-        my @ports = @{$state->{done_ports}};
+        my @ports = @{$state->{completion_ports} // $state->{done_ports}};
         for my $p (@ports) {
             push @lines, "    (<$p";
             push @lines, "      (-> $target)";

@@ -1600,13 +1600,13 @@ ISF
     my $sync_all = state_block($fsm, 'parent_await_all_4');
     unlike($sync_all, qr/\(<= \(hold din\)\)/,
         'original await_all state does not double-sample after a positive wait');
-    like($sync_all, qr/\(-> parent_drive_5 <\(& w0_done w1_done\)\)/,
+    like($sync_all, qr/\(-> parent_drive_5 <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'original await_all state preserves the all-done transition');
 
     my $zero_clone = state_block($fsm, 'parent_wait_3_zero_sample');
     like($zero_clone, qr/\(<= \(hold din\)\)/,
         'await_all zero-count clone materializes the pending sample');
-    like($zero_clone, qr/\(-> parent_drive_5 <\(& w0_done w1_done\)\)/,
+    like($zero_clone, qr/\(-> parent_drive_5 <\(& isf_completion_w0_ready isf_completion_w1_ready\)\)/,
         'await_all zero-count clone preserves the all-done transition');
 
     is_deeply(
@@ -1672,17 +1672,17 @@ ISF
     my $sync_any = state_block($fsm, 'parent_await_any_4');
     unlike($sync_any, qr/\(<= \(hold din\)\)/,
         'original await_any state does not double-sample after a positive wait');
-    like($sync_any, qr/\(<w0_done\s+\(-> parent_drive_5\)\s+\)/,
+    like($sync_any, qr/\(<isf_completion_w0_ready\s+\(-> parent_drive_5\)\s+\)/,
         'original await_any state preserves the first any-done transition');
-    like($sync_any, qr/\(<w1_done\s+\(-> parent_drive_5\)\s+\)/,
+    like($sync_any, qr/\(<isf_completion_w1_ready\s+\(-> parent_drive_5\)\s+\)/,
         'original await_any state preserves the second any-done transition');
 
     $zero_clone = state_block($fsm, 'parent_wait_3_zero_sample');
     like($zero_clone, qr/\(<= \(hold din\)\)/,
         'await_any zero-count clone materializes the pending sample');
-    like($zero_clone, qr/\(<w0_done\s+\(-> parent_drive_5\)\s+\)/,
+    like($zero_clone, qr/\(<isf_completion_w0_ready\s+\(-> parent_drive_5\)\s+\)/,
         'await_any zero-count clone preserves the first any-done transition');
-    like($zero_clone, qr/\(<w1_done\s+\(-> parent_drive_5\)\s+\)/,
+    like($zero_clone, qr/\(<isf_completion_w1_ready\s+\(-> parent_drive_5\)\s+\)/,
         'await_any zero-count clone preserves the second any-done transition');
 
     is_deeply(
@@ -2030,11 +2030,11 @@ ISF
 
     $fsm = $lowered->{files}{'wait_dynamic_after_sync_all.fsm'};
     my $sync_all = state_block($fsm, 'parent_await_all_3');
-    like($sync_all, qr/\(<- \(parent_wait_4_cnt cycles\) <\(& w0_done w1_done cycles\)\)/,
+    like($sync_all, qr/\(<- \(parent_wait_4_cnt cycles\) <\(& isf_completion_w0_ready isf_completion_w1_ready cycles\)\)/,
         'await_all all-done edge samples the runtime count on the positive path');
-    like($sync_all, qr/\(-> parent_wait_4 <\(& w0_done w1_done cycles\)\)/,
+    like($sync_all, qr/\(-> parent_wait_4 <\(& isf_completion_w0_ready isf_completion_w1_ready cycles\)\)/,
         'await_all all-done edge enters the dynamic wait on a positive count');
-    like($sync_all, qr/\(-> parent_done_5 <\(& w0_done w1_done \(== cycles 0\)\)\)/,
+    like($sync_all, qr/\(-> parent_done_5 <\(& isf_completion_w0_ready isf_completion_w1_ready \(== cycles 0\)\)\)/,
         'await_all all-done edge bypasses the dynamic wait on zero');
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_sync_all');
 
@@ -2064,11 +2064,11 @@ ISF
 
     $fsm = $lowered->{files}{'wait_dynamic_after_sync_any.fsm'};
     my $sync_any = state_block($fsm, 'parent_await_any_3');
-    like($sync_any, qr/\(<- \(parent_wait_4_cnt cycles\) <\(& \(\| w0_done w1_done\) cycles\)\)/,
+    like($sync_any, qr/\(<- \(parent_wait_4_cnt cycles\) <\(& \(\| isf_completion_w0_ready isf_completion_w1_ready\) cycles\)\)/,
         'await_any any-done edge samples the runtime count on the positive path');
-    like($sync_any, qr/\(-> parent_wait_4 <\(& \(\| w0_done w1_done\) cycles\)\)/,
+    like($sync_any, qr/\(-> parent_wait_4 <\(& \(\| isf_completion_w0_ready isf_completion_w1_ready\) cycles\)\)/,
         'await_any any-done edge enters the dynamic wait on a positive count');
-    like($sync_any, qr/\(-> parent_done_5 <\(& \(\| w0_done w1_done\) \(== cycles 0\)\)\)/,
+    like($sync_any, qr/\(-> parent_done_5 <\(& \(\| isf_completion_w0_ready isf_completion_w1_ready\) \(== cycles 0\)\)\)/,
         'await_any any-done edge bypasses the dynamic wait on zero');
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_sync_any');
 };

@@ -91,7 +91,7 @@ ISF
         'spawn starts w0 before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_any_\d+/s,
         'local do waits for helper_done before await_any');
-    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_repeat_check_\d+\)/s,
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<isf_completion_w0_ready\s*\(->\s*parent_repeat_check_\d+\)/s,
         'await_any observes w0_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
         'repeat re-entry returns to the spawn only after the single-pending await_any');
@@ -132,7 +132,7 @@ ISF
         'spawn starts w0 before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_any_\d+/s,
         'local do waits for helper_done before await_any');
-    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_repeat_check_\d+\)/s,
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<isf_completion_w0_ready\s*\(->\s*parent_repeat_check_\d+\)/s,
         'await_any observes w0_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_until_check_\d+\)\)/s,
         'repeat re-entry returns to the spawn only after the single-pending await_any');
@@ -185,9 +185,9 @@ ISF
         'both spawned children start before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_any_\d+/s,
         'local do waits for helper_done before the multi-pending await_any');
-    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\)/s,
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<isf_completion_w0_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w1_ready\s*\(->\s*parent_await_all_\d+\)/s,
         'await_any observes either spawned done pulse before the await_all drain');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\)/s,
         'later await_all drains w0_done and w1_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
         'repeat re-entry returns to the first spawn only after the later await_all drain');
@@ -240,9 +240,9 @@ ISF
         'three spawned children start before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_any_\d+/s,
         'local do waits for helper_done before the three-spawn multi-pending await_any');
-    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\).*?<w2_done\s*\(->\s*parent_await_all_\d+\)/s,
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<isf_completion_w0_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w1_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w2_ready\s*\(->\s*parent_await_all_\d+\)/s,
         'three-spawn await_any observes any spawned done pulse before the await_all drain');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\s*isf_completion_w2_ready\)/s,
         'later await_all drains w0_done, w1_done, and w2_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
         'three-spawn repeat re-entry returns to the first spawn only after the later await_all drain');
@@ -280,9 +280,9 @@ ISF
         'four while spawned children start before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_any_\d+/s,
         'while local do waits for helper_done before the four-spawn multi-pending await_any');
-    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\).*?<w2_done\s*\(->\s*parent_await_all_\d+\).*?<w3_done\s*\(->\s*parent_await_all_\d+\)/s,
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<isf_completion_w0_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w1_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w2_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w3_ready\s*\(->\s*parent_await_all_\d+\)/s,
         'four-spawn while await_any observes any spawned done pulse before the await_all drain');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\s*isf_completion_w2_ready\s*isf_completion_w3_ready\)/s,
         'while later await_all drains w0_done, w1_done, w2_done, and w3_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
         'four-spawn while repeat re-entry returns to the first spawn only after the later await_all drain');
@@ -318,9 +318,9 @@ ISF
     my ($lowered, $err) = lower_actor($actor);
     ok($lowered, 'public lowering accepts the proof-generalized five-spawn while post-do await_any sequence') or diag($err);
     my $fsm = $lowered->{files}{'while_five_spawn_multi_pending_spawn_local_do_await_any.fsm'};
-    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\).*?<w2_done\s*\(->\s*parent_await_all_\d+\).*?<w3_done\s*\(->\s*parent_await_all_\d+\).*?<w4_done\s*\(->\s*parent_await_all_\d+\)/s,
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<isf_completion_w0_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w1_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w2_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w3_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w4_ready\s*\(->\s*parent_await_all_\d+\)/s,
         'five-spawn while await_any observes any spawned done pulse before the await_all drain');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\s*w4_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\s*isf_completion_w2_ready\s*isf_completion_w3_ready\s*isf_completion_w4_ready\)/s,
         'while later await_all drains all five done ports before repeat_check');
 };
 
@@ -367,9 +367,9 @@ ISF
         'until starts both spawned children before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_any_\d+/s,
         'until local do waits for helper_done before the multi-pending await_any');
-    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\)/s,
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<isf_completion_w0_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w1_ready\s*\(->\s*parent_await_all_\d+\)/s,
         'until await_any observes either spawned done pulse before the await_all drain');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\)/s,
         'until later await_all drains w0_done and w1_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_until_check_\d+\)\)/s,
         'until repeat re-entry returns to the first spawn only after the later await_all drain');
@@ -424,9 +424,9 @@ ISF
         'three until spawned children start before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_any_\d+/s,
         'until local do waits for helper_done before the three-spawn multi-pending await_any');
-    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\).*?<w2_done\s*\(->\s*parent_await_all_\d+\)/s,
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<isf_completion_w0_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w1_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w2_ready\s*\(->\s*parent_await_all_\d+\)/s,
         'three-spawn until await_any observes any spawned done pulse before the await_all drain');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\s*isf_completion_w2_ready\)/s,
         'until later await_all drains w0_done, w1_done, and w2_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_until_check_\d+\)\)/s,
         'three-spawn until repeat re-entry returns to the first spawn only after the later await_all drain');
@@ -466,9 +466,9 @@ ISF
         'four until spawned children start before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_any_\d+/s,
         'until local do waits for helper_done before the four-spawn multi-pending await_any');
-    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\).*?<w2_done\s*\(->\s*parent_await_all_\d+\).*?<w3_done\s*\(->\s*parent_await_all_\d+\)/s,
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<isf_completion_w0_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w1_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w2_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w3_ready\s*\(->\s*parent_await_all_\d+\)/s,
         'four-spawn until await_any observes any spawned done pulse before the await_all drain');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\s*isf_completion_w2_ready\s*isf_completion_w3_ready\)/s,
         'until later await_all drains w0_done, w1_done, w2_done, and w3_done before repeat_check');
     like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_until_check_\d+\)\)/s,
         'four-spawn until repeat re-entry returns to the first spawn only after the later await_all drain');
@@ -506,9 +506,9 @@ ISF
     my ($lowered, $err) = lower_actor($actor);
     ok($lowered, 'public lowering accepts the proof-generalized five-spawn until post-do await_any sequence') or diag($err);
     my $fsm = $lowered->{files}{'until_five_spawn_multi_pending_spawn_local_do_await_any.fsm'};
-    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\).*?<w2_done\s*\(->\s*parent_await_all_\d+\).*?<w3_done\s*\(->\s*parent_await_all_\d+\).*?<w4_done\s*\(->\s*parent_await_all_\d+\)/s,
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<isf_completion_w0_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w1_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w2_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w3_ready\s*\(->\s*parent_await_all_\d+\).*?<isf_completion_w4_ready\s*\(->\s*parent_await_all_\d+\)/s,
         'five-spawn until await_any observes any spawned done pulse before the await_all drain');
-    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\s*w4_done\)/s,
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*isf_completion_w0_ready\s*isf_completion_w1_ready\s*isf_completion_w2_ready\s*isf_completion_w3_ready\s*isf_completion_w4_ready\)/s,
         'until later await_all drains all five done ports before repeat_check');
 };
 

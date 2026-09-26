@@ -86,7 +86,7 @@ ISF
     my $result = $pipeline->generate_hdl_from_file($source);
     my @workers = $result->{hdl_code} =~ /^module worker\b/mg;
     is(scalar(@workers), 1, 'worker definition is emitted once');
-    my $worker_run = simulate($dir, $result->{hdl_code}, <<'SV', 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.43: staggered completion pulses require retained join state');
+    my $worker_run = simulate($dir, $result->{hdl_code}, <<'SV');
 module tb;
  logic clk=0, rst_n=1, start=0; logic [7:0] first_in=83, second_in=29;
  wire [7:0] first_out, second_out; wire done;
@@ -105,7 +105,7 @@ module tb;
  initial begin #2000;$fatal(1,"completion timeout");end
 endmodule
 SV
-    like($worker_run->{stdout}, qr/WORKER_VALUES_PASS/, 'worker-local values remain independent before the known join failure') if $worker_run;
+    like($worker_run->{stdout}, qr/WORKER_VALUES_PASS/, 'worker-local values remain independent during the first activation') if $worker_run;
     my $root = abs_path('.');
     my $relative = File::Spec->abs2rel($source, $root);
     my $api = FSM::Support::SemanticIntrospectionMCPAdapter->new(repo_root => $root, workspace_root => $root);
@@ -152,7 +152,7 @@ done_testing();
 sub instance { my ($instance, $module, $hdl) = @_; return FSM::Composition::RealizedInstance->new(instance_name => $instance, module_name => $module, hdl_code => $hdl); }
 sub collect { return FSM::Composition::ModuleDefinitionCollector->collect(instances => [@_], top_name => 'top'); }
 sub simulate {
-    my ($dir, $hdl, $tb, $known_runtime_failure) = @_;
+    my ($dir, $hdl, $tb) = @_;
     SKIP: {
         skip 'qualified Verilator runtime unavailable', 3 unless can_run('verilator') && darwin_verilator_runtime_qualified();
         my $sv = write_file("$dir/dut.sv", $hdl);
@@ -164,7 +164,6 @@ sub simulate {
         if (!$compile->{ok}) { fail('runtime compilation failed'); fail('runtime observation absent'); }
         else {
             my $run = run_generated_binary(["$obj/Vtb"]);
-            local $TODO = $known_runtime_failure if defined $known_runtime_failure;
             ok($run->{ok}, 'independent runtime preserves instance behavior') or diag($run->{diagnostic}, $run->{stdout}, $run->{stderr});
             like($run->{stdout}, qr/MODULE_INSTANCES_PASS/, 'independent observations completed');
             return $run;

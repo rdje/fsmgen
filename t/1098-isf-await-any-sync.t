@@ -37,10 +37,10 @@ ISF
     my $fsm    = $result->{files}{'await_any_parent.fsm'};
 
     like($fsm, qr/parent_await_any_4/, 'has await_any state');
-    like($fsm, qr/<w0_done\s+\(-> parent_done_5\)/, 'await_any watches w0_done');
-    like($fsm, qr/<w1_done\s+\(-> parent_done_5\)/, 'await_any watches w1_done');
-    like($fsm, qr/<w2_done\s+\(-> parent_done_5\)/, 'await_any watches w2_done');
-    unlike($fsm, qr/parent_await_any_4\s*\n\s*<w0_done\s+\(-> parent_done_5\)\s*\)/,
+    like($fsm, qr/<isf_completion_w0_ready\s+\(-> parent_done_5\)/, 'await_any watches isf_completion_w0_ready');
+    like($fsm, qr/<isf_completion_w1_ready\s+\(-> parent_done_5\)/, 'await_any watches isf_completion_w1_ready');
+    like($fsm, qr/<isf_completion_w2_ready\s+\(-> parent_done_5\)/, 'await_any watches isf_completion_w2_ready');
+    unlike($fsm, qr/parent_await_any_4\s*\n\s*<isf_completion_w0_ready\s+\(-> parent_done_5\)\s*\)/,
         'await_any is not limited to the first done port');
 };
 

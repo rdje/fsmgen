@@ -15,6 +15,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
 );
 use FSM::Scheduler::ISF::ControlFlowEffects;
 use FSM::Scheduler::ISF::ChildStorageOwnership qw(select_child_storage_reads connect_child_storage_reads);
+use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
@@ -1286,6 +1287,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         _apply_rule_priority_resolution($ir, $actor),
         _apply_rule_transaction_priority_resolution($ir, $actor),
     );
+    retain_child_completions($ir);
     _finalize_ir($ir);
     return $ir;
 }
@@ -5544,7 +5546,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef, $p
         }
         elsif ($k eq 'spawn')    { push @spc, _spawn_ref_from_clause($cl,$tn,$constant_values,$actor); push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
         elsif ($k eq 'await_all') { push @st, _ir_sync_all($tn,$si++,\@dps); @dps = (); }
-        elsif ($k eq 'await_any') { push @st, _ir_sync_any($tn,$si++,\@dps); @dps = (); }
+        elsif ($k eq 'await_any') { push @st, _ir_sync_any($tn,$si++,\@dps); @dps = () if @dps <= 1; }
     }
 
     if (@ps) { push @st, _ir_sample_state($tn, \@ps, $si++); }
@@ -9193,7 +9195,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
         elsif($bk eq'do'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $cond_ord=scalar(grep { ref($_)eq'HASH'&&$_->{branch_do} } @{$spawn_refs||[]});my $do_ref=_conditional_do_ref_from_clause($bc,$tn,$cond_ord,$constant_values||{},$actor,$generated_children,'when body');if($do_ref->{generated_child}){push @$spawn_refs,_clone_isf_value($do_ref) if ref($spawn_refs)eq'ARRAY';push @body_states,_ir_do($bc,$tn,$$ir++,$do_ref,'when body')}else{push @body_states,_ir_do($bc,$tn,$$ir++,undef,'when body')}}
         elsif($bk eq'spawn'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $sref=_spawn_ref_from_clause($bc,$tn,$constant_values,$actor,'when body');push @$spawn_refs,$sref if ref($spawn_refs)eq'ARRAY';push @dps,"$sref->{instance}_done";push @body_states,_ir_spawn($bc,$tn,$$ir++)}
         elsif($bk eq'await_all'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_sync_all($tn,$$ir++,\@dps);@dps=()}
-        elsif($bk eq'await_any'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_sync_any($tn,$$ir++,\@dps);@dps=()}
+        elsif($bk eq'await_any'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_sync_any($tn,$$ir++,\@dps);@dps=() if @dps <= 1}
         elsif($bk eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
         elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths,$actor)}
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
@@ -9243,7 +9245,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
             elsif($bk2 eq'do'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $cond_ord=scalar(grep { ref($_)eq'HASH'&&$_->{branch_do} } @{$spawn_refs||[]});my $do_ref=_conditional_do_ref_from_clause($bc2,$tn,$cond_ord,$constant_values||{},$actor,$generated_children,'switch branch');if($do_ref->{generated_child}){push @$spawn_refs,_clone_isf_value($do_ref) if ref($spawn_refs)eq'ARRAY';push @body_states,_ir_do($bc2,$tn,$$ir++,$do_ref,'switch branch')}else{push @body_states,_ir_do($bc2,$tn,$$ir++,undef,'switch branch')}}
             elsif($bk2 eq'spawn'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my $sref=_spawn_ref_from_clause($bc2,$tn,$constant_values,$actor,'switch branch');push @$spawn_refs,$sref if ref($spawn_refs)eq'ARRAY';push @dps,"$sref->{instance}_done";push @body_states,_ir_spawn($bc2,$tn,$$ir++)}
             elsif($bk2 eq'await_all'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_sync_all($tn,$$ir++,\@dps);@dps=()}
-            elsif($bk2 eq'await_any'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_sync_any($tn,$$ir++,\@dps);@dps=()}
+            elsif($bk2 eq'await_any'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_sync_any($tn,$$ir++,\@dps);@dps=() if @dps <= 1}
             elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref);push @body_states,@$ws}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
         push @branches,{value=>$val,body_start=>$body_states[0]{name}};
@@ -9348,7 +9350,7 @@ sub _expand_loop_body {
         } elsif ($bk eq 'await_any') {
             _push_sample_state(\@states, $tn, \@lp, $ir);
             push @states, _ir_sync_any($tn, $$ir++, \@dps);
-            @dps = ();
+            @dps = () if @dps <= 1;
         } elsif ($bk eq 'repeat') {
             my ($rs, $rc, $rw, $rdw) = _ir_repeat($bc, $tn, $ir, \@lp, $wd, $drives, $widths, $actor, $bank_accesses, $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref);
             push @states, @$rs;

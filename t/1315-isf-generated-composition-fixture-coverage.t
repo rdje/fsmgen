@@ -60,7 +60,7 @@ subtest 'generated-composition fixture lowers to scheduled parent, child, and to
     like($parent_fsm, qr/\(parent_main_spawn_3\n\s+\(= \(w2_start> 1\)\)/, 'parent asserts w2 start in the third spawn state');
     like(
         $parent_fsm,
-        qr/\(parent_main_await_all_4\n\s+\(-> parent_main_done_5 <\(& w0_done w1_done w2_done\)\)/,
+        qr/\(parent_main_await_all_4\n\s+\(-> parent_main_done_5 <\(& isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready\)\)/,
         'parent awaits all child done handoffs',
     );
     like($parent_fsm, qr/\(<1 \(done> 1\)\)/, 'parent completion remains a one-cycle delayed pulse');
@@ -231,8 +231,11 @@ sub assert_report_shape {
     );
     is_deeply(
         $report->{dt_blocks},
-        [{ name => 'rdata', kind => 'drive', assignments => 3 }],
-        'schedule report records the parent rdata fan-in drive block',
+        [
+            { name => 'rdata', kind => 'drive', assignments => 3 },
+            map { +{ name => "isf_completion_w${_}_seen", kind => 'child_completion', assignments => 3 } } 0 .. 2,
+        ],
+        'schedule report records fan-in and private completion blocks',
     );
 
     my $composition = $report->{generated_composition};

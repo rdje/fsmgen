@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1154,11 +1154,19 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.42: share verified generated module definitions`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.43`
-  Status: `pending`
+  Status: `done`
   Goal: `Diagnose and repair repeated-worker await_all runtime timeout found during module-definition qualification.`
   Acceptance: `Immediate blocker investigation within .42: trace the exact T1907 repeated_workers parent/worker state and completion signals; distinguish local-init, activation, completion, and join behavior. Fix a small direct cause in the current safe slice or schedule the isolated lowering repair immediately before aggregate-read qualification. Preserve independent worker local state and repeat activation oracles; do not hide the timeout by weakening await_all expectations.`
   Verification: `T1907 strict-admits two instances of worker, emits one worker definition after .42, and compiles independently, but its first or repeated await_all completion times out. The worker has local acc/default initialization, a payload assignment, a wait and a result assignment. Parent binds separate inputs/outputs and spawns sequentially. Exact source is repeated_workers in T1907; retained probe .artifacts/module-definitions/repeated-workers.isf. The trace proves first/second outputs 83/29 and non-overlapping done pulses while parent remains in its await_all state. FSM::_emit_transitions implements sync_all as a raw AND of done_ports; completion is emitted as a pulse. Add per-activation completion memory with exact reset/rearm and no added completion-edge latency.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.43: retain generated child completion across joins`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.44`
+  Status: `pending`
+  Goal: `Use boolean nonzero predicates for dynamic-wait counts so even counts enter and complete correctly.`
+  Acceptance: `Immediately after .43, repair dynamic-wait positive-count predicates that bitwise-AND a multi-bit count with scalar control. Reproduce a completed join followed by wait cycles with count 4: generated parent.sv uses completion_ready & cycles, making an even positive count false. Qualify zero, odd, even and maximum counts across predecessor forms with independent runtime; retain sampling/zero-bypass timing and focused regressions, sync the book, then commit.`
+  Verification: `.artifacts/completion-memory/dynamic.isf; .artifacts/completion-memory/parent.fsm; .artifacts/completion-memory/parent.sv; .artifacts/completion-memory/runtime-first.log; T1908 count-4 reproducer retained before .43 scopes its positive-count proof to odd counts.`
   Commit: `pending`
+
 
 ## Implementation Notes From `.4`
 
@@ -1826,8 +1834,9 @@ retained CSR baseline. Completed `.39.2.2.1` retains generated-child storage evi
 single-domain children and refuses unqualified aggregate/domain reads and writes.
 Completed `.40` repairs single-member type normalization; `.41` aligns residual
 reset wording. Completed `.39.2.2.2.2.1` scopes aggregate typedefs by module.
-Completed `.42` shares verified repeated-source module definitions. Next `.43`
-repairs staggered child-completion joins before `.39.2.2.2.2.2` qualifies
+Completed `.42` shares verified repeated-source module definitions; `.43`
+retains child completion across joins and activations. Next `.44` repairs
+dynamic-wait even-count predicates before `.39.2.2.2.2.2` qualifies
 aggregate reads and `.39.2.2.2.3` repairs domain child composition
 before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
@@ -4543,3 +4552,61 @@ normal/repeated-completion expectations under an explicit `.43` TODO, with a
 separate passing timed observation of independent worker-local results. No
 completion qualification is claimed by `.42`. `.43` is the immediate next leaf
 and must remove the TODO only after the original runtime oracle passes.
+
+
+## Qualification — `.43`
+
+Keep generated child done outputs as pulses. Parent/domain join lowering owns
+completion-seen state for the generated instances actually consumed by sync_all
+or sync_any. Clear a seen bit on its instance's next start, capture done when
+not starting, and expose live-done OR seen to join predicates. Preserve raw
+handoff metadata, make the generated storage/view internal and collision-safe,
+and rewrite already-materialized dynamic-wait predecessor guards as well as
+ordinary sync predicates. A live last completion must allow the existing exit
+edge without adding a latch cycle. The original T1907 completion assertions
+must pass with their TODO removed; qualify staggered/early/simultaneous pulses,
+rearm/reset, any-then-all observation, dynamic waits and ordinary binding/API
+contracts before closing this leaf.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--strict --check --json`
+  admits T1907 while the retained independent trace shows staggered done pulses
+  and a parent stuck in the raw-AND join. Ordinary multi-pending await_any also
+  cleared the pending set before its later drain, unlike repeat lowering.
+- [x] **ADDRESSED (verified)** — T1907's original completion/repeated-activation
+  oracles pass without TODOs. T1908 independently drives early, staggered and
+  simultaneous completion, checks reactivation/reset, any-then-all, private
+  collision-safe storage, raw metadata and unchanged live completion latency.
+  Zero/odd dynamic-wait joins pass; `.44` owns the proven even-count defect.
+- [x] **NO REGRESSION** — T1908/T1907 plus sync, dynamic-wait, loop/repeat,
+  binding/trigger and book-example regressions report `All tests successful`
+  in `.artifacts/completion-memory/focused.log`. A fresh mdBook build renders
+  completion retention and the scoped dynamic-wait limitation accurately.
+
+The `.43` independent parent test also proves that ordinary transaction and
+branch/loop lowerers cleared their pending set after multi-child await_any,
+so a later await_all had no operands and advanced prematurely. The repeat
+lowerer already retains that set. Apply the same observe-versus-drain rule
+through all sync collection paths under this leaf and preserve raw metadata.
+A positive even dynamic-wait count additionally timed out after a completed
+join. Investigate its generated counter-load predicate before making a claim
+about nonzero-count coverage; this finding remains owned by `.43` until its
+root cause and appropriately bounded repair are established.
+
+The dynamic-wait root cause is now reproduced in generated HDL: the load and
+entry enables use a bitwise conjunction of scalar completion-ready values
+with the multi-bit count itself. Count 4 has a clear low bit, so neither entry
+nor zero bypass fires. This pre-existing predicate defect is owned by `.44`,
+immediately after `.43`. The completion-memory slice qualifies zero and odd
+counts only; it does not claim general dynamic-wait correctness. Retained
+pre-repair source, scheduled FSM, HDL, test and runtime failure live under
+`.artifacts/completion-memory/`; tracked `.44` acceptance recreates the case.
+
+Final compatibility qualification: T1904 independently passes the retained
+scalar/bank storage readers in SystemVerilog and VHDL. Existing composition,
+port-binding, lifetime and storage-report tests pass. T1215/T1315 initially
+failed only their exact old raw-done join/DT inventory expectations; updated
+expectations retain every source/binding/provenance assertion and explicitly
+include the private child_completion blocks. Their rerun reports
+`All tests successful` in `compatibility-updated.log`; T1908 region coverage
+and T1255 schedule golden checks also pass in `regions.log`. No original
+completion assertion remains TODO. Full CI is reserved for the push gate.
