@@ -460,9 +460,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic.fsm'};
     my $idle = state_block($fsm, 'main_idle_0');
-    like($idle, qr/\(<- \(main_wait_1_cnt cycles\) <\(& start cycles\)\)/,
+    like($idle, qr/\(<- \(main_wait_1_cnt cycles\) <\(& start \(!= cycles 0\)\)\)/,
         'predecessor edge snapshots the runtime count only on the positive-count path');
-    like($idle, qr/\(-> main_wait_1 <\(& start cycles\)\)/,
+    like($idle, qr/\(-> main_wait_1 <\(& start \(!= cycles 0\)\)\)/,
         'positive runtime count enters the generated wait state');
     like($idle, qr/\(-> main_drive_2 <\(& start \(== cycles 0\)\)\)/,
         'zero runtime count bypasses the generated wait state');
@@ -516,9 +516,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_expression.fsm'};
     my $idle = state_block($fsm, 'main_idle_0');
-    like($idle, qr/\(<- \(main_wait_1_cnt \(\+ cycles bias\)\) <\(& start \(\+ cycles bias\)\)\)/,
+    like($idle, qr/\(<- \(main_wait_1_cnt \(\+ cycles bias\)\) <\(& start \(!= \(\+ cycles bias\) 0\)\)\)/,
         'predecessor edge snapshots the runtime expression only on the positive-count path');
-    like($idle, qr/\(-> main_wait_1 <\(& start \(\+ cycles bias\)\)\)/,
+    like($idle, qr/\(-> main_wait_1 <\(& start \(!= \(\+ cycles bias\) 0\)\)\)/,
         'positive runtime expression enters the generated wait state');
     like($idle, qr/\(-> main_drive_2 <\(& start \(== \(\+ cycles bias\) 0\)\)\)/,
         'zero runtime expression bypasses the generated wait state');
@@ -573,9 +573,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_sample.fsm'};
     my $idle = state_block($fsm, 'main_idle_0');
-    like($idle, qr/\(<- \(main_wait_1_cnt cycles\) <\(& start cycles\)\)/,
+    like($idle, qr/\(<- \(main_wait_1_cnt cycles\) <\(& start \(!= cycles 0\)\)\)/,
         'positive path samples the runtime count at activation');
-    like($idle, qr/\(-> main_wait_1 <\(& start cycles\)\)/,
+    like($idle, qr/\(-> main_wait_1 <\(& start \(!= cycles 0\)\)\)/,
         'positive path enters the generated wait state');
     like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
         'zero path bypasses to a sample-preserving clone of the following state');
@@ -1241,13 +1241,13 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_pair.fsm'};
     my $idle = state_block($fsm, 'main_idle_0');
-    like($idle, qr/\(<- \(main_wait_1_cnt first_cycles\) <\(& start first_cycles\)\)/,
+    like($idle, qr/\(<- \(main_wait_1_cnt first_cycles\) <\(& start \(!= first_cycles 0\)\)\)/,
         'first wait positive path samples the first runtime count at activation');
-    like($idle, qr/\(-> main_wait_1 <\(& start first_cycles\)\)/,
+    like($idle, qr/\(-> main_wait_1 <\(& start \(!= first_cycles 0\)\)\)/,
         'first wait positive path enters the first generated wait state');
-    like($idle, qr/\(<- \(main_wait_2_cnt second_cycles\) <\(& start \(== first_cycles 0\) second_cycles\)\)/,
+    like($idle, qr/\(<- \(main_wait_2_cnt second_cycles\) <\(& start \(== first_cycles 0\) \(!= second_cycles 0\)\)\)/,
         'first wait zero-bypass samples the second runtime count without an active first wait cycle');
-    like($idle, qr/\(-> main_wait_2 <\(& start \(== first_cycles 0\) second_cycles\)\)/,
+    like($idle, qr/\(-> main_wait_2 <\(& start \(== first_cycles 0\) \(!= second_cycles 0\)\)\)/,
         'first wait zero-bypass can enter the second wait directly');
     like($idle, qr/\(-> main_drive_3 <\(& start \(== first_cycles 0\) \(== second_cycles 0\)\)\)/,
         'both zero counts bypass both generated wait states on the activation edge');
@@ -1255,9 +1255,9 @@ ISF
     my $first_wait = state_block($fsm, 'main_wait_1');
     like($first_wait, qr/\(-- main_wait_1_cnt\)/,
         'first wait decrements only its sampled counter while active');
-    like($first_wait, qr/\(<- \(main_wait_2_cnt second_cycles\) <\(& \(== main_wait_1_cnt 1\) second_cycles\)\)/,
+    like($first_wait, qr/\(<- \(main_wait_2_cnt second_cycles\) <\(& \(== main_wait_1_cnt 1\) \(!= second_cycles 0\)\)\)/,
         'first wait final cycle samples the second runtime count on the positive second-count path');
-    like($first_wait, qr/\(-> main_wait_2 <\(& \(== main_wait_1_cnt 1\) second_cycles\)\)/,
+    like($first_wait, qr/\(-> main_wait_2 <\(& \(== main_wait_1_cnt 1\) \(!= second_cycles 0\)\)\)/,
         'first wait final cycle can enter the second wait without rereading the first count source');
     like($first_wait, qr/\(-> main_drive_3 <\(& \(== main_wait_1_cnt 1\) \(== second_cycles 0\)\)\)/,
         'first wait final cycle can bypass a zero second count');
@@ -1332,13 +1332,13 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_sample_pair.fsm'};
     my $idle = state_block($fsm, 'main_idle_0');
-    like($idle, qr/\(<- \(main_wait_1_cnt first_cycles\) <\(& start first_cycles\)\)/,
+    like($idle, qr/\(<- \(main_wait_1_cnt first_cycles\) <\(& start \(!= first_cycles 0\)\)\)/,
         'first wait positive path still samples the first runtime count at activation');
-    like($idle, qr/\(-> main_wait_1 <\(& start first_cycles\)\)/,
+    like($idle, qr/\(-> main_wait_1 <\(& start \(!= first_cycles 0\)\)\)/,
         'first wait positive path enters the original sample-carrying first wait');
-    like($idle, qr/\(<- \(main_wait_2_cnt second_cycles\) <\(& start \(== first_cycles 0\) second_cycles\)\)/,
+    like($idle, qr/\(<- \(main_wait_2_cnt second_cycles\) <\(& start \(== first_cycles 0\) \(!= second_cycles 0\)\)\)/,
         'first zero and second positive path samples the second runtime count');
-    like($idle, qr/\(-> main_wait_2_sample_from_main_wait_1 <\(& start \(== first_cycles 0\) second_cycles\)\)/,
+    like($idle, qr/\(-> main_wait_2_sample_from_main_wait_1 <\(& start \(== first_cycles 0\) \(!= second_cycles 0\)\)\)/,
         'first zero and second positive path enters a sample-preserving second-wait clone');
     like($idle, qr/\(-> main_wait_1_zero_sample_after_main_wait_2 <\(& start \(== first_cycles 0\) \(== second_cycles 0\)\)\)/,
         'both zero counts bypass to a final sample-preserving target clone');
@@ -1350,7 +1350,7 @@ ISF
     my $first_loop = state_block($fsm, 'main_wait_1_loop');
     unlike($first_loop, qr/\(<= \(hold din\)\)/,
         'first wait loop does not resample');
-    like($first_loop, qr/\(-> main_wait_2 <\(& \(== main_wait_1_cnt 1\) second_cycles\)\)/,
+    like($first_loop, qr/\(-> main_wait_2 <\(& \(== main_wait_1_cnt 1\) \(!= second_cycles 0\)\)\)/,
         'positive first wait enters the original second wait on a positive second count');
     unlike($first_loop, qr/main_wait_2_sample_from_main_wait_1/,
         'positive first wait does not use the carried-sample second-wait clone');
@@ -1877,9 +1877,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_after_await.fsm'};
     my $await = state_block($fsm, 'main_await_1');
-    like($await, qr/\(<- \(main_wait_2_cnt cycles\) <\(& ready cycles\)\)/,
+    like($await, qr/\(<- \(main_wait_2_cnt cycles\) <\(& ready \(!= cycles 0\)\)\)/,
         'await ready edge samples the runtime count on the positive path');
-    like($await, qr/\(-> main_wait_2 <\(& ready cycles\)\)/,
+    like($await, qr/\(-> main_wait_2 <\(& ready \(!= cycles 0\)\)\)/,
         'await ready edge enters the dynamic wait on a positive count');
     like($await, qr/\(-> main_drive_3 <\(& ready \(== cycles 0\)\)\)/,
         'await ready edge bypasses the dynamic wait on zero');
@@ -1907,7 +1907,7 @@ ISF
     $fsm = $lowered->{files}{'wait_dynamic_after_stage.fsm'};
     my $stage = state_block($fsm, 'main_stage_1');
     like($stage, qr/\(= \(valid> 1\)\)/, 'stage still drives valid while waiting for ready');
-    like($stage, qr/\(<- \(main_wait_2_cnt cycles\) <\(& ready cycles\)\)/,
+    like($stage, qr/\(<- \(main_wait_2_cnt cycles\) <\(& ready \(!= cycles 0\)\)\)/,
         'stage ready edge samples the runtime count on the positive path');
     like($stage, qr/\(-> main_done_3 <\(& ready \(== cycles 0\)\)\)/,
         'stage ready edge bypasses to the post-wait state on zero');
@@ -1934,7 +1934,7 @@ ISF
 
     $fsm = $lowered->{files}{'wait_dynamic_after_repeat.fsm'};
     my $repeat_check = state_block($fsm, 'main_repeat_check_3');
-    like($repeat_check, qr/\(<- \(main_wait_4_cnt cycles\) <\(& \(== main_cnt 0\) cycles\)\)/,
+    like($repeat_check, qr/\(<- \(main_wait_4_cnt cycles\) <\(& \(== main_cnt 0\) \(!= cycles 0\)\)\)/,
         'repeat exit edge samples the runtime count on the positive path');
     like($repeat_check, qr/\?main_cnt[\s\S]*\(!=0 \(-> main_drive_2\)\)/,
         'repeat loop-back edge is preserved');
@@ -1965,9 +1965,9 @@ ISF
     my $load = state_block($fsm, 'main_load_1');
     like($load, qr/\(<- \(out> data_0\) <\(== idx 0\)\)/,
         'bank load predecessor keeps the first guarded load assignment');
-    like($load, qr/\(<- \(main_wait_2_cnt cycles\) <cycles\)/,
+    like($load, qr/\(<- \(main_wait_2_cnt cycles\) <\(!= cycles 0\)\)/,
         'bank load predecessor samples the runtime count on the positive path');
-    like($load, qr/\(-> main_wait_2 <cycles\)/,
+    like($load, qr/\(-> main_wait_2 <\(!= cycles 0\)\)/,
         'bank load predecessor enters the dynamic wait on a positive count');
     like($load, qr/\(-> main_done_3 <\(== cycles 0\)\)/,
         'bank load predecessor bypasses the dynamic wait on zero');
@@ -1996,9 +1996,9 @@ ISF
     my $store = state_block($fsm, 'main_store_1');
     like($store, qr/\(<- \(data_0 value\) <\(== idx 0\)\)/,
         'bank store predecessor keeps the first guarded store assignment');
-    like($store, qr/\(<- \(main_wait_2_cnt cycles\) <cycles\)/,
+    like($store, qr/\(<- \(main_wait_2_cnt cycles\) <\(!= cycles 0\)\)/,
         'bank store predecessor samples the runtime count on the positive path');
-    like($store, qr/\(-> main_wait_2 <cycles\)/,
+    like($store, qr/\(-> main_wait_2 <\(!= cycles 0\)\)/,
         'bank store predecessor enters the dynamic wait on a positive count');
     like($store, qr/\(-> main_done_3 <\(== cycles 0\)\)/,
         'bank store predecessor bypasses the dynamic wait on zero');
@@ -2030,9 +2030,9 @@ ISF
 
     $fsm = $lowered->{files}{'wait_dynamic_after_sync_all.fsm'};
     my $sync_all = state_block($fsm, 'parent_await_all_3');
-    like($sync_all, qr/\(<- \(parent_wait_4_cnt cycles\) <\(& isf_completion_w0_ready isf_completion_w1_ready cycles\)\)/,
+    like($sync_all, qr/\(<- \(parent_wait_4_cnt cycles\) <\(& isf_completion_w0_ready isf_completion_w1_ready \(!= cycles 0\)\)\)/,
         'await_all all-done edge samples the runtime count on the positive path');
-    like($sync_all, qr/\(-> parent_wait_4 <\(& isf_completion_w0_ready isf_completion_w1_ready cycles\)\)/,
+    like($sync_all, qr/\(-> parent_wait_4 <\(& isf_completion_w0_ready isf_completion_w1_ready \(!= cycles 0\)\)\)/,
         'await_all all-done edge enters the dynamic wait on a positive count');
     like($sync_all, qr/\(-> parent_done_5 <\(& isf_completion_w0_ready isf_completion_w1_ready \(== cycles 0\)\)\)/,
         'await_all all-done edge bypasses the dynamic wait on zero');
@@ -2064,9 +2064,9 @@ ISF
 
     $fsm = $lowered->{files}{'wait_dynamic_after_sync_any.fsm'};
     my $sync_any = state_block($fsm, 'parent_await_any_3');
-    like($sync_any, qr/\(<- \(parent_wait_4_cnt cycles\) <\(& \(\| isf_completion_w0_ready isf_completion_w1_ready\) cycles\)\)/,
+    like($sync_any, qr/\(<- \(parent_wait_4_cnt cycles\) <\(& \(\| isf_completion_w0_ready isf_completion_w1_ready\) \(!= cycles 0\)\)\)/,
         'await_any any-done edge samples the runtime count on the positive path');
-    like($sync_any, qr/\(-> parent_wait_4 <\(& \(\| isf_completion_w0_ready isf_completion_w1_ready\) cycles\)\)/,
+    like($sync_any, qr/\(-> parent_wait_4 <\(& \(\| isf_completion_w0_ready isf_completion_w1_ready\) \(!= cycles 0\)\)\)/,
         'await_any any-done edge enters the dynamic wait on a positive count');
     like($sync_any, qr/\(-> parent_done_5 <\(& \(\| isf_completion_w0_ready isf_completion_w1_ready\) \(== cycles 0\)\)\)/,
         'await_any any-done edge bypasses the dynamic wait on zero');
@@ -2096,9 +2096,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_when.fsm'};
     my $branch = state_block($fsm, 'main_when_1');
-    like($branch, qr/\(<- \(main_wait_2_cnt cycles\) <\(& cond cycles\)\)/,
+    like($branch, qr/\(<- \(main_wait_2_cnt cycles\) <\(& cond \(!= cycles 0\)\)\)/,
         'when true edge samples the runtime count on the positive path');
-    like($branch, qr/\(-> main_wait_2 <\(& cond cycles\)\)/,
+    like($branch, qr/\(-> main_wait_2 <\(& cond \(!= cycles 0\)\)\)/,
         'when true edge enters the dynamic wait on a positive count');
     like($branch, qr/\(-> main_drive_3 <\(& cond \(== cycles 0\)\)\)/,
         'when true edge bypasses the dynamic wait on zero');
@@ -2157,9 +2157,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_when_sample.fsm'};
     my $branch = state_block($fsm, 'main_when_1');
-    like($branch, qr/\(<- \(main_wait_2_cnt cycles\) <\(& cond cycles\)\)/,
+    like($branch, qr/\(<- \(main_wait_2_cnt cycles\) <\(& cond \(!= cycles 0\)\)\)/,
         'when true edge samples the runtime count on the positive path');
-    like($branch, qr/\(-> main_wait_2 <\(& cond cycles\)\)/,
+    like($branch, qr/\(-> main_wait_2 <\(& cond \(!= cycles 0\)\)\)/,
         'when true edge enters the sample-carrying wait state');
     like($branch, qr/\(-> main_wait_2_zero_sample <\(& cond \(== cycles 0\)\)\)/,
         'when true zero path bypasses to a sample-preserving clone');
@@ -2238,9 +2238,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_repeat.fsm'};
     my $repeat_check = state_block($fsm, 'main_repeat_check_4');
-    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) cycles\)\)/,
+    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) \(!= cycles 0\)\)\)/,
         'repeat_check loop-back samples the runtime wait count on the positive path');
-    like($repeat_check, qr/\(-> main_wait_2 <\(& \(!= main_cnt 0\) cycles\)\)/,
+    like($repeat_check, qr/\(-> main_wait_2 <\(& \(!= main_cnt 0\) \(!= cycles 0\)\)\)/,
         'repeat_check positive path enters the leading dynamic wait');
     like($repeat_check, qr/\(-> main_drive_3 <\(& \(!= main_cnt 0\) \(== cycles 0\)\)\)/,
         'repeat_check positive zero-wait path bypasses to the following body state');
@@ -2294,9 +2294,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_repeat_sample.fsm'};
     my $repeat_check = state_block($fsm, 'main_repeat_check_4');
-    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) cycles\)\)/,
+    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) \(!= cycles 0\)\)\)/,
         'repeat_check reloads the carried-sample dynamic wait on the positive path');
-    like($repeat_check, qr/\(-> main_wait_2 <\(& \(!= main_cnt 0\) cycles\)\)/,
+    like($repeat_check, qr/\(-> main_wait_2 <\(& \(!= main_cnt 0\) \(!= cycles 0\)\)\)/,
         'positive path enters the sample-carrying wait state');
     like($repeat_check, qr/\(-> main_wait_2_zero_sample <\(& \(!= main_cnt 0\) \(== cycles 0\)\)\)/,
         'zero-wait path enters the sample-preserving body clone');
@@ -2353,9 +2353,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_switch.fsm'};
     my $switch = state_block($fsm, 'main_switch_4');
-    like($switch, qr/\(<- \(main_wait_1_cnt cycles\) <\(& \(== sel 0\) cycles\)\)/,
+    like($switch, qr/\(<- \(main_wait_1_cnt cycles\) <\(& \(== sel 0\) \(!= cycles 0\)\)\)/,
         'switch branch positive path samples the runtime wait count');
-    like($switch, qr/\(-> main_wait_1 <\(& \(== sel 0\) cycles\)\)/,
+    like($switch, qr/\(-> main_wait_1 <\(& \(== sel 0\) \(!= cycles 0\)\)\)/,
         'switch branch positive path enters the dynamic wait');
     like($switch, qr/\(-> main_drive_2 <\(& \(== sel 0\) \(== cycles 0\)\)\)/,
         'switch branch zero path bypasses to the following branch body state');
@@ -2415,9 +2415,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_switch_sample.fsm'};
     my $switch = state_block($fsm, 'main_switch_4');
-    like($switch, qr/\(<- \(main_wait_1_cnt cycles\) <\(& \(== sel 0\) cycles\)\)/,
+    like($switch, qr/\(<- \(main_wait_1_cnt cycles\) <\(& \(== sel 0\) \(!= cycles 0\)\)\)/,
         'switch selected case samples the runtime count on the positive path');
-    like($switch, qr/\(-> main_wait_1 <\(& \(== sel 0\) cycles\)\)/,
+    like($switch, qr/\(-> main_wait_1 <\(& \(== sel 0\) \(!= cycles 0\)\)\)/,
         'switch selected case enters the sample-carrying wait state');
     like($switch, qr/\(-> main_wait_1_zero_sample <\(& \(== sel 0\) \(== cycles 0\)\)\)/,
         'switch selected case zero path bypasses to a sample-preserving clone');
@@ -2719,7 +2719,7 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_repeat_sample_set.fsm'};
     my $repeat_check = state_block($fsm, 'main_repeat_check_5');
-    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) cycles\)\)/,
+    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) \(!= cycles 0\)\)\)/,
         'repeat_check reloads the leading dynamic wait before the setter body');
     like($repeat_check, qr/\(-> main_wait_2_zero_sample <\(& \(!= main_cnt 0\) \(== cycles 0\)\)\)/,
         'zero-wait path enters the sample-preserving setter clone');
@@ -2775,9 +2775,9 @@ ISF
 
     my $fsm = $lowered->{files}{'wait_dynamic_while.fsm'};
     my $entry = state_block($fsm, 'main_while_entry_1');
-    like($entry, qr/\(<- \(main_wait_2_cnt cycles\) <\(& keep cycles\)\)/,
+    like($entry, qr/\(<- \(main_wait_2_cnt cycles\) <\(& keep \(!= cycles 0\)\)\)/,
         'while entry true path samples the runtime wait count');
-    like($entry, qr/\(-> main_wait_2 <\(& keep cycles\)\)/,
+    like($entry, qr/\(-> main_wait_2 <\(& keep \(!= cycles 0\)\)\)/,
         'while entry true path enters the dynamic wait');
     like($entry, qr/\(-> main_drive_3 <\(& keep \(== cycles 0\)\)\)/,
         'while entry true zero path bypasses to the following body state');
@@ -2785,9 +2785,9 @@ ISF
         'while entry false path exits the loop');
 
     my $check = state_block($fsm, 'main_while_check_4');
-    like($check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& keep cycles\)\)/,
+    like($check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& keep \(!= cycles 0\)\)\)/,
         'while back-edge true path reloads the runtime wait count');
-    like($check, qr/\(-> main_wait_2 <\(& keep cycles\)\)/,
+    like($check, qr/\(-> main_wait_2 <\(& keep \(!= cycles 0\)\)\)/,
         'while back-edge true path re-enters the dynamic wait');
     like($check, qr/\(-> main_drive_3 <\(& keep \(== cycles 0\)\)\)/,
         'while back-edge true zero path bypasses the wait');
@@ -2835,9 +2835,9 @@ ISF
 
     $fsm = $lowered->{files}{'wait_dynamic_until.fsm'};
     my $idle = state_block($fsm, 'main_idle_0');
-    like($idle, qr/\(<- \(main_wait_1_cnt cycles\) <\(& start cycles\)\)/,
+    like($idle, qr/\(<- \(main_wait_1_cnt cycles\) <\(& start \(!= cycles 0\)\)\)/,
         'until initial entry samples the runtime wait count');
-    like($idle, qr/\(-> main_wait_1 <\(& start cycles\)\)/,
+    like($idle, qr/\(-> main_wait_1 <\(& start \(!= cycles 0\)\)\)/,
         'until initial entry enters the dynamic wait on positive count');
     like($idle, qr/\(-> main_drive_2 <\(& start \(== cycles 0\)\)\)/,
         'until initial entry bypasses the wait on zero count');
@@ -2845,9 +2845,9 @@ ISF
     my $until_check = state_block($fsm, 'main_until_check_3');
     like($until_check, qr/\(-> main_done_4 <stop\)/,
         'until true path exits the loop');
-    like($until_check, qr/\(<- \(main_wait_1_cnt cycles\) <\(& \(! stop\) cycles\)\)/,
+    like($until_check, qr/\(<- \(main_wait_1_cnt cycles\) <\(& \(! stop\) \(!= cycles 0\)\)\)/,
         'until false path reloads the runtime wait count');
-    like($until_check, qr/\(-> main_wait_1 <\(& \(! stop\) cycles\)\)/,
+    like($until_check, qr/\(-> main_wait_1 <\(& \(! stop\) \(!= cycles 0\)\)\)/,
         'until false path re-enters the dynamic wait on positive count');
     like($until_check, qr/\(-> main_drive_2 <\(& \(! stop\) \(== cycles 0\)\)\)/,
         'until false zero path bypasses the wait');
@@ -2895,9 +2895,9 @@ ISF
     my $loop_exit = state_block($fsm, 'main_while_check_3');
     like($loop_exit, qr/\(-> main_drive_2 <keep\)/,
         'while check true path still loops to the body');
-    like($loop_exit, qr/\(<- \(main_wait_4_cnt cycles\) <\(& \(! keep\) cycles\)\)/,
+    like($loop_exit, qr/\(<- \(main_wait_4_cnt cycles\) <\(& \(! keep\) \(!= cycles 0\)\)\)/,
         'while check false exit path can sample a following dynamic wait count');
-    like($loop_exit, qr/\(-> main_wait_4 <\(& \(! keep\) cycles\)\)/,
+    like($loop_exit, qr/\(-> main_wait_4 <\(& \(! keep\) \(!= cycles 0\)\)\)/,
         'while check false exit path can enter the following dynamic wait');
     like($loop_exit, qr/\(-> main_done_5 <\(& \(! keep\) \(== cycles 0\)\)\)/,
         'while check false exit path can bypass a following zero-count dynamic wait');
@@ -2932,9 +2932,9 @@ ISF
     my $exit_when = state_block($fsm, 'main_exit_when_2');
     like($exit_when, qr/\(-> main_done_6 <stop\)/,
         'exit-when true path still exits the loop');
-    like($exit_when, qr/\(<- \(main_wait_3_cnt cycles\) <\(& \(! stop\) cycles\)\)/,
+    like($exit_when, qr/\(<- \(main_wait_3_cnt cycles\) <\(& \(! stop\) \(!= cycles 0\)\)\)/,
         'exit-when false positive path samples the following runtime wait count');
-    like($exit_when, qr/\(-> main_wait_3 <\(& \(! stop\) cycles\)\)/,
+    like($exit_when, qr/\(-> main_wait_3 <\(& \(! stop\) \(!= cycles 0\)\)\)/,
         'exit-when false positive path enters the following dynamic wait');
     like($exit_when, qr/\(-> main_drive_4 <\(& \(! stop\) \(== cycles 0\)\)\)/,
         'exit-when false zero path bypasses to the following body state');
@@ -2984,9 +2984,9 @@ ISF
     my $continue_when = state_block($fsm, 'main_continue_when_2');
     like($continue_when, qr/\(-> main_while_check_5 <skip\)/,
         'continue-when true path still continues to the loop tail check');
-    like($continue_when, qr/\(<- \(main_wait_3_cnt cycles\) <\(& \(! skip\) cycles\)\)/,
+    like($continue_when, qr/\(<- \(main_wait_3_cnt cycles\) <\(& \(! skip\) \(!= cycles 0\)\)\)/,
         'continue-when false positive path samples the following runtime wait count');
-    like($continue_when, qr/\(-> main_wait_3 <\(& \(! skip\) cycles\)\)/,
+    like($continue_when, qr/\(-> main_wait_3 <\(& \(! skip\) \(!= cycles 0\)\)\)/,
         'continue-when false positive path enters the following dynamic wait');
     like($continue_when, qr/\(-> main_drive_4 <\(& \(! skip\) \(== cycles 0\)\)\)/,
         'continue-when false zero path bypasses to the following body state');
@@ -3184,9 +3184,9 @@ ISF
 
     $fsm = $lowered->{files}{'wait_dynamic_sample_repeat_check.fsm'};
     my $repeat_check = state_block($fsm, 'main_repeat_check_3');
-    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) cycles\)\)/,
+    like($repeat_check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& \(!= main_cnt 0\) \(!= cycles 0\)\)\)/,
         'repeat_check reloads the leading dynamic wait on the positive path');
-    like($repeat_check, qr/\(-> main_wait_2 <\(& \(!= main_cnt 0\) cycles\)\)/,
+    like($repeat_check, qr/\(-> main_wait_2 <\(& \(!= main_cnt 0\) \(!= cycles 0\)\)\)/,
         'repeat_check positive path enters the sample-carrying wait');
     like($repeat_check, qr/\(-> main_wait_2_zero_sample <\(& \(!= main_cnt 0\) \(== cycles 0\)\)\)/,
         'repeat_check zero-wait path enters the sample-preserving check clone');

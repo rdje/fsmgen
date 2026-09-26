@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1161,11 +1161,19 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.43: retain generated child completion across joins`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.44`
-  Status: `pending`
+  Status: `done`
   Goal: `Use boolean nonzero predicates for dynamic-wait counts so even counts enter and complete correctly.`
   Acceptance: `Immediately after .43, repair dynamic-wait positive-count predicates that bitwise-AND a multi-bit count with scalar control. Reproduce a completed join followed by wait cycles with count 4: generated parent.sv uses completion_ready & cycles, making an even positive count false. Qualify zero, odd, even and maximum counts across predecessor forms with independent runtime; retain sampling/zero-bypass timing and focused regressions, sync the book, then commit.`
   Verification: `.artifacts/completion-memory/dynamic.isf; .artifacts/completion-memory/parent.fsm; .artifacts/completion-memory/parent.sv; .artifacts/completion-memory/runtime-first.log; T1908 count-4 reproducer retained before .43 scopes its positive-count proof to odd counts.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.44: test the entire runtime wait count for nonzero`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.45`
+  Status: `pending`
+  Goal: `Emit type-correct VHDL dynamic-wait counter comparisons and qualify independent timing.`
+  Acceptance: `Immediately after .44, reproduce T1909 count_entry with GHDL: vector counter comparisons against scalar literal '1' fail analysis. Diagnose the owning comparison/literal emitter contract, repair without narrowing count or changing timing, and make the original complete-range and sampling VHDL oracle pass without TODO. Preserve SystemVerilog, typed comparison controls and public report parity, update docs and commit.`
+  Verification: `.artifacts/dynamic-wait-predicates/qualified.log records no function declarations for operator > and = for main_wait_1_cnt compared with scalar '1'. T1909 retains the exact analysis/runtime expectations; no VHDL timing qualification is claimed by .44. The shared AHB knowledge card independently records an older workaround for generic dynamic-wait comparison widths.`
   Commit: `pending`
+
 
 
 ## Implementation Notes From `.4`
@@ -1835,8 +1843,9 @@ single-domain children and refuses unqualified aggregate/domain reads and writes
 Completed `.40` repairs single-member type normalization; `.41` aligns residual
 reset wording. Completed `.39.2.2.2.2.1` scopes aggregate typedefs by module.
 Completed `.42` shares verified repeated-source module definitions; `.43`
-retains child completion across joins and activations. Next `.44` repairs
-dynamic-wait even-count predicates before `.39.2.2.2.2.2` qualifies
+retains child completion across joins and activations. Completed `.44` fixes
+even runtime wait counts in SystemVerilog. Next `.45` repairs VHDL counter
+comparisons before `.39.2.2.2.2.2` qualifies
 aggregate reads and `.39.2.2.2.3` repairs domain child composition
 before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
@@ -4610,3 +4619,42 @@ include the private child_completion blocks. Their rerun reports
 `All tests successful` in `compatibility-updated.log`; T1908 region coverage
 and T1255 schedule golden checks also pass in `regions.log`. No original
 completion assertion remains TODO. Full CI is reserved for the push gate.
+
+
+## Qualification — `.44`
+
+The preserved completion_dynamic source lowers wait cycles after sync_all to
+completion_ready AND cycles in both counter-load and entry predicates.
+A scalar true AND even multi-bit count is zero under the DSL's bitwise
+operator. `_link_dynamic_wait_entry_edge` owns every dynamic wait predecessor
+and recursively carries zero paths through consecutive waits. Convert only
+the count's predicate use to explicit nonzero; preserve the sampled RHS and
+count-source report metadata. Qualify the complete bounded runtime count range,
+entry/await/sync/consecutive paths, expression counts and sampling before
+closing the leaf. Existing exact scheduled-FSM expectations must express the
+new boolean predicate without weakening transition or count assertions.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--strict --check --json`
+  accepts T1909 count_entry, but pre-repair HDL ANDs the multi-bit count with
+  a scalar predecessor condition; the retained count-4 join stalls. The count
+  load/entry guard is constructed in `_link_dynamic_wait_entry_edge`.
+- [x] **ADDRESSED (verified)** — Explicit nonzero predicates preserve the
+  sampled RHS and reports. T1909 independently verifies the declared scalar
+  range, consecutive pairs, expressions, awaits/branches and post-entry input
+  changes in SystemVerilog. Complete native/API/newline reports agree. T1908
+  now passes the original even-count join case. VHDL analysis remains an
+  explicit `.45` TODO with its unchanged runtime oracle, not a timing pass.
+- [x] **NO REGRESSION** — Focused T1244/T1308/T1331/T1359/T1369 and book
+  examples report `All tests successful` in `lowering.log`. Exact positive
+  guards now expect boolean nonzero while zero/sample/state/report assertions
+  remain intact. T1908 and T1255 pass in the qualified log; `.45` separately
+  owns its VHDL analysis failure.
+
+The additional independent GHDL check exposed a separate backend type error:
+T1909's scalar-count entry actor emits a vector wait counter compared against
+scalar `'1'` for both greater-than and equality. GHDL cannot analyze these
+operators. `.45` owns the immediate repair after `.44`; the original analysis
+and bounded runtime assertions remain in T1909, with only the known analysis
+failure explicitly marked TODO until fixed. `.44` earns SystemVerilog timing
+and public report parity, not VHDL runtime qualification. This is separate
+from the boolean nonzero count-entry repair, whose predicate itself analyzes.

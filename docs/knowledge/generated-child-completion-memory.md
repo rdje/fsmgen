@@ -28,12 +28,11 @@ still drains every outstanding child. Single-pending await_any drains its set.
 T1907 proves real generated workers with independent local values and repeated
 activation. T1908 drives the standalone scheduled parent's public handshake
 ports with independent early/staggered/simultaneous pulses and checks reset,
-rearm, collision avoidance, any-then-all and zero/odd dynamic counts. These
+rearm, collision avoidance, any-then-all and zero/even dynamic counts. These
 are behavioral observations, not source-admission substitutes.
 
-A separate pre-existing dynamic-wait predicate defect is owned immediately by
-`.44`: bitwise AND with a multi-bit count makes positive even counts false.
-The completion-memory qualification explicitly excludes general count
-correctness until that repair passes. Source, emitted predicate and failing
-runtime are retained under `.artifacts/completion-memory/`; T1908 with count 4
-recreates the failure.
+`.44` repairs the separate dynamic-wait predicate defect: counter load and
+entry now use explicit nonzero comparisons, preserving multi-bit even counts.
+See `isf-dynamic-wait-count-predicates.md` for its runtime qualification. The
+original count-4 timeout is retained under `.artifacts/completion-memory/` and
+now passes in T1908.

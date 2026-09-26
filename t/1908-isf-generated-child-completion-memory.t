@@ -94,9 +94,8 @@ module tb;
   run_activation(0,0,repeated_latency);
   if(repeated_latency!=base_latency) \$fatal(1,"reactivation timing changed");
   run_activation(1,0,simultaneous_latency);
-  // Even-count predicate repair is owned by the immediate .44 leaf.
-  run_activation(0,3,delayed_latency);
-  if($dynamic && delayed_latency!=base_latency+3) \$fatal(1,"dynamic join count not sampled on completion edge");
+  run_activation(0,4,delayed_latency);
+  if($dynamic && delayed_latency!=base_latency+4) \$fatal(1,"dynamic join count not sampled on completion edge");
   // Reset between an early completion and its partner; the old completion
   // must not satisfy the next activation's join.
   launch;

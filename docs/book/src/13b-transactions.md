@@ -388,6 +388,19 @@ iterate any authored actions.
   same-transaction-parameter-zero divisors before scheduled `.fsm` emission;
   dynamic scalar divisors are accepted but are not proven nonzero yet.
 
+The runtime entry predicate tests whether the entire count is nonzero before
+combining it with the predecessor's advance condition. It does not test only
+the low bit: an input count of `2` or `4` enters the wait just as an odd count
+does. For `(wait cycles)`, changing `cycles` after the entry edge does not
+shorten or extend the already sampled wait. Expression counts use the same
+nonzero test, and consecutive waits sample their own counts on their own entry
+edges; an earlier zero bypass does not add a wait cycle.
+
+The independent runtime qualification currently covers SystemVerilog.
+Dynamic-wait VHDL still has a counter-comparison type defect: vector counters
+are compared with scalar literals, which GHDL rejects. Task `.45` owns its
+immediate repair and retained runtime oracle.
+
 Pending samples immediately before a positive static wait piggyback onto the
 first wait state, using the same sample materialization rule as drive/await
 piggybacking.

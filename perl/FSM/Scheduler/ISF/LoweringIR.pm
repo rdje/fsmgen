@@ -11940,7 +11940,9 @@ sub _link_dynamic_wait_entry_edge {
     my $counter = $wait_state->{wait_counter};
     my $enter_target = _dynamic_wait_entry_target($wait_state, $carried_sample_wait);
 
-    my $enter_condition = _combine_condition_exprs($base_condition, $source);
+    # '&' is bitwise in the scheduled DSL. Reduce the multi-bit count to a
+    # boolean before combining it with scalar predecessor conditions.
+    my $enter_condition = _combine_condition_exprs($base_condition, "(!= $source 0)");
     my $bypass_condition = _combine_condition_exprs($base_condition, "(== $source 0)");
 
     push @{$state->{assignments}}, {

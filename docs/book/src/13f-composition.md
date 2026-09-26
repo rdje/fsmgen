@@ -296,10 +296,12 @@ children's `done` outputs remain pulses. Reset clears the retained bits;
 each child's next start clears its own bit before the next join can consume
 it. This reset behavior does not promise power-up initialization.
 
-A join followed by a dynamic wait still has a separately owned limitation:
-positive even counts can stall because the existing wait-entry predicate uses
-a bitwise count operand. Task `.44` owns the immediate repair; completion-memory
-qualification covers zero and odd counts until that repair is verified.
+A join followed by a dynamic wait snapshots the runtime count on the join's
+advance edge. A zero count bypasses the wait; positive counts, including even
+counts, enter the wait and consume the sampled number of active wait cycles.
+For example, `(await_all done)` followed by `(wait cycles)` with `cycles=4`
+waits for every child and then runs the wait for the sampled count, even if
+`cycles` changes afterward. See [runtime waits](13b-transactions.md).
 
 ## Composition Architecture
 
