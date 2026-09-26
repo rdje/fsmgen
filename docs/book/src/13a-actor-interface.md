@@ -553,8 +553,11 @@ Read-only and unused storage stays internal; `+size` retains widths, types
 and authored reset metadata. Scalarized bank elements follow the same rule.
 The role survives independent replay of the generated `.fsm`, and native,
 API and MCP semantic inventories exclude these signals from public ports.
-Generated transaction-child storage ownership is a separate open repair;
-this qualification does not establish shared storage across module boundaries.
+Generated transaction-child storage ownership is a separate open repair:
+direct reads can escape as unintended top inputs, and direct writes can update
+a child-local copy instead of the actor register. Strict check alone does not
+prove shared storage across that boundary. Decision `0107` selects explicit
+live-read and write handoffs; those repair lanes are not yet shipped.
 
 A read-only reset register needs no dummy write to preserve its ownership:
 

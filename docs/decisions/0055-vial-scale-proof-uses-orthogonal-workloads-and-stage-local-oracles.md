@@ -17,29 +17,14 @@ timing without semantic or artifact oracles would also reward incorrect work.
 
 ## Decision
 
-1. Prove architecture scale through six orthogonal families: semantic catalog,
-   bridge fanout, execution graph, checking state, backend emission, and runtime
-   stream. Vary one primary axis at a time and use one separately named,
-   conservative balanced interaction workload.
-2. Give every axis reference, gate-candidate, qualification-candidate, exact-
-   limit, and over-limit levels. Candidate labels make no support claim before
-   implementation, measurement, and promotion.
-3. Require stage-local correctness, determinism, source-map, artifact, semantic-
-   result, failure, and cleanup oracles. A failed oracle invalidates the
-   performance sample.
-4. Keep architecture-scale evidence distinct from whole-product `big` /
-   `really_big`, multi-unit/domain, mixed-language, native-UVM runtime, full-
-   language, synthesis, and general-parity claims.
-5. Apply decision `0056` to measurement, resource safety, evidence-derived
-   budgets, graceful failure, project-data locality, cleanup, and promotion.
+Use the normative Selected Contract below: Authority And Scope fixes the
+claim boundary, each family fixes its axes, and Stage Oracles fixes validity.
+Decision `0056` owns measurement and bounded failure.
 
 ## Consequences
 
-- A failure names the stage and growing semantic family instead of merely
-  reporting that a large fixture failed.
-- Workload construction and correctness proof remain separate from measurement,
-  cap repair, and gate promotion.
-- Candidate profiles cannot become capacity claims by naming alone.
+Failures identify their stage and family; candidate names confer no support.
+Construction, measurement, cap repair and promotion retain separate owners.
 
 ## Execution Status
 
@@ -64,28 +49,9 @@ current authority.
 
 ## Outcome
 
-Architecture scale is proved with deterministic, orthogonal workload families,
-stage-local correctness oracles, and evidence-derived performance budgets. One
-large fixture is not sufficient evidence: it can hide which stage or semantic
-family grew, trigger an earlier unrelated cap, and turn a local regression into
-an uninterpretable whole-pipeline failure.
-
-The version-1 proof has six workload families:
-
-```text
-semantic_catalog_v1   -> parse, validate, VIALSemanticIR
-bridge_fanout_v1      -> canonical HIAL route, HIALVIALBridgeManifest
-execution_graph_v1    -> bind, elaborate, immutable VIALExecutionIR
-checking_state_v1     -> models, scoreboards, coverage, faults, decisions
-backend_emission_v1   -> portable SV/VHDL/OSVVM artifact graphs
-runtime_stream_v1     -> qualified compile, run, trace, result
-```
-
-Each generated workload varies one primary axis while retaining the smallest
-valid anchor for every other axis. A separately named balanced workload checks
-interactions at conservative cardinalities; it is not used to discover an
-individual limit. This avoids accidental Cartesian expansion and makes the
-first failing stage and resource attributable.
+The six named family sections below define orthogonal workloads, each varying
+one primary axis with minimal valid anchors. Balanced Candidate alone checks
+conservative interactions; it cannot discover an individual limit.
 
 This selection changes no parser, IR, bridge, emitter, tool, artifact,
 capability, support record, or scale claim. `.17.2` owns workload construction

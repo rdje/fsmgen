@@ -188,6 +188,16 @@ composition pipeline:
 - After completion, a spawned child returns to its `start`-guarded idle state
   and waits for the next start pulse.
 
+Known storage boundary: direct references to actor `(storage ...)` from a
+generated transaction child do not yet preserve shared ownership. A read can
+be exported as an extra top input, while a write can target a private child
+register. The strict-admitted counterexamples and independent runtime results
+are retained in the generated-child storage audit. Decision `0107` selects
+parent/domain ownership with explicit live-read and cycle-preserving write
+handoffs; the task tree owns their implementation and writer arbitration.
+Explicit transaction port bindings and transaction-local state are separate
+contracts and are not evidence that these implicit storage accesses work.
+
 Parameterized spawn and parameterized blocking `do` use one optional nested
 `params` block:
 

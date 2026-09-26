@@ -26,36 +26,16 @@ choose whichever number is convenient.
 
 ## Decision
 
-1. A performance sample exists only after every applicable stage-local
-   correctness oracle from decision `0055` passes.
-2. Retain fixed 88% host-memory and 4,096 MiB descendant safety guards plus the
-   selected stage timeouts. Derive performance budgets from immutable clean
-   calibration evidence and enforce them only on an exact pinned host/tool
-   profile.
-3. Record raw stage measurements and host/tool identity; exclude timing, RSS,
-   host paths, timestamps, and run ordinals from workload and semantic identity.
-4. Treat the earliest authoritative cap as the result. Host exhaustion,
-   external-tool crash, partial publication, or manual cleanup is not graceful
-   failure.
-5. Keep project-owned work repository-derived and same-volume, and require
-   atomic publication plus exact owned cleanup on success and failure.
-6. Promote only exact measured profiles with complete raw evidence and
-   nonclaims. Architecture scale never implies whole-product `big` /
-   `really_big`, multi-unit/domain, mixed-language, native-UVM runtime,
-   full-language, synthesis, or general-parity support.
-7. Use the Runner/normative 8-MiB/64-MiB capture limits as enforced truth;
-   repair the support snapshot under separate leaf `.17.6` before automation
-   consumes it.
+Apply the normative Selected Contract below: Measurement Record separates
+semantic identity from measurements; Safety Ceilings And Timeouts bounds runs;
+Calibration And Regression Budgets pins evidence; Graceful Failure,
+Repository Locality And Cleanup, and Promotion Gate And Nonclaims govern
+publication. Every applicable decision `0055` correctness oracle must pass.
 
 ## Consequences
 
-- Calibration is reproducible without making unmatched hosts flaky or allowing
-  a regression to move its own threshold.
-- Correctness, FSMGen-owned cost, external-tool cost, resource safety, failure,
-  publication, and cleanup remain independently visible.
-- Dominant earlier caps and unreachable nominal limits are reported honestly.
-- Measurement, cap repair, and stable promotion remain separate implementation
-  and rollback owners.
+Correctness, costs, safety, failure and cleanup remain independently visible.
+Measurement, cap repair and promotion retain independent rollback owners.
 
 ## Execution Status
 

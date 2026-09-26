@@ -1,0 +1,1423 @@
+{
+  "cases": [
+    {
+      "compile_succeeded": true,
+      "expectation": "child observes parent-written 53 with no external status input",
+      "generated_systemverilog": {
+        "path": ".artifacts/child-storage/reader.sv",
+        "sha256": "593c492935ad3fcebe3d9f02eedf8f66eaa0ce8b5455081e451f64e94831988c",
+        "text": "//=============================================================================\n// Flattened Decision Tree FSM: child_storage_reader\n// Generated using Enable-based Methodology with WEN/EN Signals\n// Date: Sat Sep 26 22:58:06 2026\n// \n// This implementation uses:\n// - Flattened decision tree approach\n// - Enable-based logic with assign statements\n// - Write Enable (WEN) and Enable (EN) signals for each LHS\n// - Flat Boolean expressions from DT traversal\n//=============================================================================\n\nmodule child_storage_reader (\n  input  wire clk,\n  input  wire rst_n,\n  input  wire start,\n  input  wire w0_done,\n  input  wire [7:0] w0_result,\n  output reg  done,\n  output reg  [7:0] observed,\n  output reg  w0_start\n,\n  output  wire shared_dp_export_done_1_en,\n  output  wire shared_dp_export_observed_w0_result_en,\n  output  wire shared_dp_export_w0_start_1_en\n);\n\n  // State encoding\n  localparam PARENT_IDLE_0 = 3'd0;\n  localparam PARENT_SET_1 = 3'd1;\n  localparam PARENT_SPAWN_2 = 3'd2;\n  localparam PARENT_AWAIT_ALL_3 = 3'd3;\n  localparam PARENT_DONE_4 = 3'd4;\n\n  // State registers\n  reg [2:0] current_state, next_state;\n\n  // State sequential logic\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      current_state <= PARENT_IDLE_0;\n    end else begin\n      current_state <= next_state;\n    end\n  end\n\n  // Internal signal declarations\n  reg can_accept;\n  reg [7:0] status;\n  reg [6:0] unrelated;\n  // Internal mux helper registers\n  reg done_pulse_delay_pipe;\n  reg [7:0] status_next;\n  reg [6:0] unrelated_next;\n  // Generated enable wires\n  wire can_accept_1_en;\n  wire done_1_en;\n  wire next_state_parent_await_all_3_en;\n  wire next_state_parent_done_4_en;\n  wire next_state_parent_idle_0_en;\n  wire next_state_parent_set_1_en;\n  wire next_state_parent_spawn_2_en;\n  wire observed_w0_result_en;\n  wire parent_await_all_3_en;\n  wire parent_await_all_3_next_state_parent_done_4_en;\n  wire parent_done_4_done_1_en;\n  wire parent_done_4_en;\n  wire parent_done_4_next_state_parent_idle_0_en;\n  wire parent_idle_0_can_accept_1_en;\n  wire parent_idle_0_en;\n  wire parent_idle_0_next_state_parent_set_1_en;\n  wire parent_set_1_en;\n  wire parent_set_1_next_state_parent_spawn_2_en;\n  wire parent_set_1_status__53_en;\n  wire parent_spawn_2_en;\n  wire parent_spawn_2_next_state_parent_await_all_3_en;\n  wire parent_spawn_2_w0_start_1_en;\n  wire status__53_en;\n  wire w0_port_bindings_en;\n  wire w0_port_bindings_observed_w0_result_en;\n  wire w0_start_1_en;\n\n  // State and DT Enable Conditions\n  assign parent_await_all_3_en = current_state == PARENT_AWAIT_ALL_3;\n  assign parent_done_4_en = current_state == PARENT_DONE_4;\n  assign parent_idle_0_en = current_state == PARENT_IDLE_0;\n  assign parent_set_1_en = current_state == PARENT_SET_1;\n  assign parent_spawn_2_en = current_state == PARENT_SPAWN_2;\n  assign w0_port_bindings_en = 1'b1;\n\n  // Unified WEN/EN Signal Generation from Phase 1 Analysis\n  // DT-Specific Enable Signals from Unified Analysis\n\n\n  // === DT: -w0_port_bindings ===\n  // observed\n  assign w0_port_bindings_observed_w0_result_en = w0_port_bindings_en;  // observed <- w0_result\n\n\n  // === DT: parent_await_all_3 ===\n  // next_state\n  assign parent_await_all_3_next_state_parent_done_4_en = parent_await_all_3_en & w0_done;  // next_state <- PARENT_DONE_4\n\n\n  // === DT: parent_done_4 ===\n  // done\n  assign parent_done_4_done_1_en = parent_done_4_en;  // done <- 1\n  // next_state\n  assign parent_done_4_next_state_parent_idle_0_en = parent_done_4_en;  // next_state <- PARENT_IDLE_0\n\n\n  // === DT: parent_idle_0 ===\n  // can_accept\n  assign parent_idle_0_can_accept_1_en = parent_idle_0_en;  // can_accept <- 1\n  // next_state\n  assign parent_idle_0_next_state_parent_set_1_en = parent_idle_0_en & start;  // next_state <- PARENT_SET_1\n\n\n  // === DT: parent_set_1 ===\n  // next_state\n  assign parent_set_1_next_state_parent_spawn_2_en = parent_set_1_en;  // next_state <- PARENT_SPAWN_2\n  // status\n  assign parent_set_1_status__53_en = parent_set_1_en;  // status <- 53\n\n\n  // === DT: parent_spawn_2 ===\n  // next_state\n  assign parent_spawn_2_next_state_parent_await_all_3_en = parent_spawn_2_en;  // next_state <- PARENT_AWAIT_ALL_3\n  // w0_start\n  assign parent_spawn_2_w0_start_1_en = parent_spawn_2_en;  // w0_start <- 1\n\n  // LHS-Level Enable Signals from Unified Analysis\n\n  // LHS-level enables for: can_accept\n  assign can_accept_1_en = parent_idle_0_can_accept_1_en;\n\n  // LHS-level enables for: done\n  assign done_1_en = parent_done_4_done_1_en;\n\n  // LHS-level enables for: next_state\n  assign next_state_parent_await_all_3_en = parent_spawn_2_next_state_parent_await_all_3_en;\n  assign next_state_parent_done_4_en = parent_await_all_3_next_state_parent_done_4_en;\n  assign next_state_parent_idle_0_en = parent_done_4_next_state_parent_idle_0_en;\n  assign next_state_parent_set_1_en = parent_idle_0_next_state_parent_set_1_en;\n  assign next_state_parent_spawn_2_en = parent_set_1_next_state_parent_spawn_2_en;\n\n  // LHS-level enables for: observed\n  assign observed_w0_result_en = w0_port_bindings_observed_w0_result_en;\n\n  // LHS-level enables for: status\n  assign status__53_en = parent_set_1_status__53_en;\n\n  // LHS-level enables for: unrelated\n\n  // LHS-level enables for: w0_start\n  assign w0_start_1_en = parent_spawn_2_w0_start_1_en;\n\n  // Unified Multiplexer Logic from Phase 1 Analysis\n\n  // Unified Multiplexer for LHS: can_accept\n  // Unified combinational mux for: can_accept\n  always_comb begin\n    can_accept = 1'b0;  // Default value\n    if (can_accept_1_en) begin\n      can_accept = 1;\n    end\n  end\n\n  // Unified Multiplexer for LHS: done\n  // Delayed pulse logic for: done (<1, exact Q+1)\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      done <= 1'b0;\n      done_pulse_delay_pipe <= 1'b0;\n    end else begin\n      done <= 1'b0;\n      if (done_pulse_delay_pipe) begin\n        done <= 1'b1;\n      end\n      done_pulse_delay_pipe <= done_1_en;\n    end\n  end\n\n  // Unified Multiplexer for LHS: next_state\n  // Unified combinational mux for: next_state\n  always_comb begin\n    next_state = current_state;  // Default value\n    if (next_state_parent_await_all_3_en) begin\n      next_state = PARENT_AWAIT_ALL_3;\n    end\n    if (next_state_parent_done_4_en) begin\n      next_state = PARENT_DONE_4;\n    end\n    if (next_state_parent_idle_0_en) begin\n      next_state = PARENT_IDLE_0;\n    end\n    if (next_state_parent_set_1_en) begin\n      next_state = PARENT_SET_1;\n    end\n    if (next_state_parent_spawn_2_en) begin\n      next_state = PARENT_SPAWN_2;\n    end\n  end\n\n  // Unified Multiplexer for LHS: observed\n  // Unified combinational mux for: observed\n  always_comb begin\n    observed = 8'b00000000;  // Default value\n    if (observed_w0_result_en) begin\n      observed = w0_result;\n    end\n  end\n\n  // Unified Multiplexer for LHS: status\n  // Unified flop with mux for: status (register_out assignment)\n  always_comb begin\n    status_next = status;  // Default value\n    if (status__53_en) begin\n      status_next = 53;\n    end\n  end\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      status <= 19;\n    end else begin\n      status <= status_next;\n    end\n  end\n\n  // Unified Multiplexer for LHS: unrelated\n  // Unified flop with mux for: unrelated (register_out assignment)\n  always_comb begin\n    unrelated_next = unrelated;  // Default value\n  end\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      unrelated <= 3;\n    end else begin\n      unrelated <= unrelated_next;\n    end\n  end\n\n  // Unified Multiplexer for LHS: w0_start\n  // Unified combinational mux for: w0_start\n  always_comb begin\n    w0_start = 1'b0;  // Default value\n    if (w0_start_1_en) begin\n      w0_start = 1;\n    end\n  end\n\n  `ifndef SYNTHESIS\n  always_comb begin\n    assert ($onehot0({next_state_parent_await_all_3_en, next_state_parent_done_4_en, next_state_parent_idle_0_en, next_state_parent_set_1_en, next_state_parent_spawn_2_en})) else $error(\"selector multi-value conflict: next_state\");\n  end\n  `endif\n  // Shared-datapath source-enable exports\n  assign shared_dp_export_done_1_en = done_1_en;\n  assign shared_dp_export_observed_w0_result_en = observed_w0_result_en;\n  assign shared_dp_export_w0_start_1_en = w0_start_1_en;\nendmodule\n\n\n//=============================================================================\n// Flattened Decision Tree FSM: worker\n// Generated using Enable-based Methodology with WEN/EN Signals\n// Date: Sat Sep 26 22:58:06 2026\n// \n// This implementation uses:\n// - Flattened decision tree approach\n// - Enable-based logic with assign statements\n// - Write Enable (WEN) and Enable (EN) signals for each LHS\n// - Flat Boolean expressions from DT traversal\n//=============================================================================\n\nmodule worker (\n  input  wire clk,\n  input  wire rst_n,\n  input  wire start,\n  input  wire [7:0] status,\n  output reg  done,\n  output reg  [7:0] result\n,\n  output  wire shared_dp_export_done_1_en,\n  output  wire shared_dp_export_result_status_en\n);\n\n  // State encoding\n  localparam WORKER_IDLE_0 = 2'd0;\n  localparam WORKER_SET_0 = 2'd1;\n  localparam WORKER_DONE_1 = 2'd2;\n\n  // State registers\n  reg [1:0] current_state, next_state;\n\n  // State sequential logic\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      current_state <= WORKER_IDLE_0;\n    end else begin\n      current_state <= next_state;\n    end\n  end\n\n  // Internal signal declarations\n  // Internal mux helper registers\n  reg done_pulse_delay_pipe;\n  reg [7:0] result_next;\n  // Generated enable wires\n  wire done_1_en;\n  wire next_state_worker_done_1_en;\n  wire next_state_worker_idle_0_en;\n  wire next_state_worker_set_0_en;\n  wire result_status_en;\n  wire worker_done_1_done_1_en;\n  wire worker_done_1_en;\n  wire worker_done_1_next_state_worker_idle_0_en;\n  wire worker_idle_0_en;\n  wire worker_idle_0_next_state_worker_set_0_en;\n  wire worker_set_0_en;\n  wire worker_set_0_next_state_worker_done_1_en;\n  wire worker_set_0_result_status_en;\n\n  // State and DT Enable Conditions\n  assign worker_done_1_en = current_state == WORKER_DONE_1;\n  assign worker_idle_0_en = current_state == WORKER_IDLE_0;\n  assign worker_set_0_en = current_state == WORKER_SET_0;\n\n  // Unified WEN/EN Signal Generation from Phase 1 Analysis\n  // DT-Specific Enable Signals from Unified Analysis\n\n\n  // === DT: worker_done_1 ===\n  // done\n  assign worker_done_1_done_1_en = worker_done_1_en;  // done <- 1\n  // next_state\n  assign worker_done_1_next_state_worker_idle_0_en = worker_done_1_en;  // next_state <- WORKER_IDLE_0\n\n\n  // === DT: worker_idle_0 ===\n  // next_state\n  assign worker_idle_0_next_state_worker_set_0_en = worker_idle_0_en & start;  // next_state <- WORKER_SET_0\n\n\n  // === DT: worker_set_0 ===\n  // next_state\n  assign worker_set_0_next_state_worker_done_1_en = worker_set_0_en;  // next_state <- WORKER_DONE_1\n  // result\n  assign worker_set_0_result_status_en = worker_set_0_en;  // result <- status\n\n  // LHS-Level Enable Signals from Unified Analysis\n\n  // LHS-level enables for: done\n  assign done_1_en = worker_done_1_done_1_en;\n\n  // LHS-level enables for: next_state\n  assign next_state_worker_done_1_en = worker_set_0_next_state_worker_done_1_en;\n  assign next_state_worker_idle_0_en = worker_done_1_next_state_worker_idle_0_en;\n  assign next_state_worker_set_0_en = worker_idle_0_next_state_worker_set_0_en;\n\n  // LHS-level enables for: result\n  assign result_status_en = worker_set_0_result_status_en;\n\n  // Unified Multiplexer Logic from Phase 1 Analysis\n\n  // Unified Multiplexer for LHS: done\n  // Delayed pulse logic for: done (<1, exact Q+1)\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      done <= 1'b0;\n      done_pulse_delay_pipe <= 1'b0;\n    end else begin\n      done <= 1'b0;\n      if (done_pulse_delay_pipe) begin\n        done <= 1'b1;\n      end\n      done_pulse_delay_pipe <= done_1_en;\n    end\n  end\n\n  // Unified Multiplexer for LHS: next_state\n  // Unified combinational mux for: next_state\n  always_comb begin\n    next_state = current_state;  // Default value\n    if (next_state_worker_done_1_en) begin\n      next_state = WORKER_DONE_1;\n    end\n    if (next_state_worker_idle_0_en) begin\n      next_state = WORKER_IDLE_0;\n    end\n    if (next_state_worker_set_0_en) begin\n      next_state = WORKER_SET_0;\n    end\n  end\n\n  // Unified Multiplexer for LHS: result\n  // Unified flop with mux for: result (register_out assignment)\n  always_comb begin\n    result_next = result;  // Default value\n    if (result_status_en) begin\n      result_next = status;\n    end\n  end\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      result <= 8'h00;\n    end else begin\n      result <= result_next;\n    end\n  end\n\n  `ifndef SYNTHESIS\n  always_comb begin\n    assert ($onehot0({next_state_worker_done_1_en, next_state_worker_idle_0_en, next_state_worker_set_0_en})) else $error(\"selector multi-value conflict: next_state\");\n  end\n  `endif\n  // Shared-datapath source-enable exports\n  assign shared_dp_export_done_1_en = done_1_en;\n  assign shared_dp_export_result_status_en = result_status_en;\nendmodule\n\n\nmodule child_storage_reader_top (\n    input clk,\n    input rst_n,\n    input start,\n    output done,\n    output [7:0] observed,\n    input [7:0] status\n);\n\n    wire comp_link_child_storage_reader_w0_start;\n    wire comp_link_w0_done;\n    wire [7:0] comp_link_w0_result;\n    wire child_storage_reader_done_1_src_en;\n    wire w0_done_1_src_en;\n    wire shared_dp_unused_child_storage_reader_shared_dp_export_observed_w0_result_en;\n    wire shared_dp_unused_child_storage_reader_shared_dp_export_w0_start_1_en;\n    wire shared_dp_unused_w0_shared_dp_export_result_status_en;\n    wire done_shared_en;\n    wire done_multi_value_conflict;\n    wire done_1_shared_en;\n    wire done_1_multi_src_conflict;\n\n  assign done_1_shared_en = child_storage_reader_done_1_src_en | w0_done_1_src_en;\n  assign done_1_multi_src_conflict = (child_storage_reader_done_1_src_en & w0_done_1_src_en);\n  assign done_shared_en = done_1_shared_en;\n  assign done_multi_value_conflict = 1'b0;\n\n    `ifndef SYNTHESIS\n    always_comb begin\n      assert (!done_1_multi_src_conflict) else $error(\"shared-datapath same-value conflict: done 1\");\n    end\n    `endif\n\n    child_storage_reader child_storage_reader (\n        .clk(clk),\n        .rst_n(rst_n),\n        .done(done),\n        .observed(observed),\n        .start(start),\n        .w0_done(comp_link_w0_done),\n        .w0_result(comp_link_w0_result),\n        .w0_start(comp_link_child_storage_reader_w0_start),\n        .shared_dp_export_done_1_en(child_storage_reader_done_1_src_en),\n        .shared_dp_export_observed_w0_result_en(shared_dp_unused_child_storage_reader_shared_dp_export_observed_w0_result_en),\n        .shared_dp_export_w0_start_1_en(shared_dp_unused_child_storage_reader_shared_dp_export_w0_start_1_en)\n    );\n\n    worker w0 (\n        .clk(clk),\n        .rst_n(rst_n),\n        .done(comp_link_w0_done),\n        .result(comp_link_w0_result),\n        .start(comp_link_child_storage_reader_w0_start),\n        .status(status),\n        .shared_dp_export_done_1_en(w0_done_1_src_en),\n        .shared_dp_export_result_status_en(shared_dp_unused_w0_shared_dp_export_result_status_en)\n    );\n\nendmodule\n"
+      },
+      "independent_testbench": {
+        "path": ".artifacts/child-storage/reader_tb.sv",
+        "sha256": "bdca566159a6330d991f95d478e26c7eaae4fa059d51587ed92bd17021d1fbbf",
+        "text": "`timescale 1ns/1ps\nmodule reader_tb;\n logic clk=0, rst_n=1, start=0;\n wire done; wire [7:0] observed;\n always #5 clk=~clk;\n child_storage_reader_top dut(.clk(clk),.rst_n(rst_n),.start(start),.done(done),.observed(observed),.status(8'd73));\n initial begin\n  #2; rst_n=0; #10; rst_n=1;\n  #8; start=1; #10; start=0;\n  wait(done); #1;\n  $display(\"child observed=%0d, expected parent write=53\", observed);\n  assert(observed === 8'd53) else $fatal(1,\"actor storage read became external input\");\n  $finish;\n end\n initial begin #500; $fatal(1,\"completion timeout\"); end\nendmodule\n"
+      },
+      "materialized_fsm": [
+        {
+          "path": ".artifacts/child-storage/reader-explicit/child_storage_reader.fsm",
+          "sha256": "8515e865a7ac92cccb69b29b5a06fd9724093da1ec899d50a6a91af79cccbc9e",
+          "text": "(?fsm:child_storage_reader\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+interface\n    (input start)\n    (output done)\n    (output observed)\n    (internal status)\n    (internal unrelated)\n  )\n\n  (+size\n    (start 1)\n    (done 1)\n    (observed 8)\n    (w0_start 1)\n    (w0_done 1)\n    (w0_result 8)\n    (status 8 (reset 19))\n    (unrelated 7 (reset 3))\n    (can_accept 1)\n  )\n\n  (parent_idle_0\n    (= (can_accept 1))\n    (<start\n      (-> parent_set_1)\n    )\n  )\n\n  (parent_set_1\n    (<- (status 53))\n    (-> parent_spawn_2)\n  )\n\n  (parent_spawn_2\n    (= (w0_start> 1))\n    (-> parent_await_all_3)\n  )\n\n  (parent_await_all_3\n    (-> parent_done_4 <w0_done)\n  )\n\n  (parent_done_4\n    (<1 (done> 1))\n    (-> parent_idle_0)\n  )\n\n  (-w0_port_bindings\n    (= (observed> w0_result))\n  )\n\n)\n"
+        },
+        {
+          "path": ".artifacts/child-storage/reader-explicit/child_storage_reader_top.fsm",
+          "sha256": "a7c112f727f500010875c0a40d17a5172ae7ecd78989af13d5bfc5db21628bf9",
+          "text": "(?top:child_storage_reader_top\n  (?ports:public_io\n    clk\n    rst_n\n    start\n    done>\n    observed>8\n  )\n  (?fsmc:child_storage_reader child_storage_reader)\n  (?fsmc:w0 worker)\n  (?wiring:isf_wiring\n    (start child_storage_reader.start)\n    (child_storage_reader.done done)\n    (child_storage_reader.observed observed)\n    (child_storage_reader.w0_start w0.start)\n    (w0.done child_storage_reader.w0_done)\n    (w0.result child_storage_reader.w0_result)\n  )\n)\n\n(?fsm:child_storage_reader\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+interface\n    (input start)\n    (output done)\n    (output observed)\n    (internal status)\n    (internal unrelated)\n  )\n\n  (+size\n    (start 1)\n    (done 1)\n    (observed 8)\n    (w0_start 1)\n    (w0_done 1)\n    (w0_result 8)\n    (status 8 (reset 19))\n    (unrelated 7 (reset 3))\n    (can_accept 1)\n  )\n\n  (parent_idle_0\n    (= (can_accept 1))\n    (<start\n      (-> parent_set_1)\n    )\n  )\n\n  (parent_set_1\n    (<- (status 53))\n    (-> parent_spawn_2)\n  )\n\n  (parent_spawn_2\n    (= (w0_start> 1))\n    (-> parent_await_all_3)\n  )\n\n  (parent_await_all_3\n    (-> parent_done_4 <w0_done)\n  )\n\n  (parent_done_4\n    (<1 (done> 1))\n    (-> parent_idle_0)\n  )\n\n  (-w0_port_bindings\n    (= (observed> w0_result))\n  )\n\n)\n\n(?fsm:worker\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+size\n    (start 1)\n    (done 1)\n    (result 8)\n    (status 8 (reset 19))\n    (unrelated 7 (reset 3))\n    (can_accept 1)\n  )\n\n  (worker_idle_0\n    (<start\n      (-> worker_set_0)\n    )\n  )\n\n  (worker_set_0\n    (<- (result> status))\n    (-> worker_done_1)\n  )\n\n  (worker_done_1\n    (<1 (done> 1))\n    (-> worker_idle_0)\n  )\n\n)\n"
+        },
+        {
+          "path": ".artifacts/child-storage/reader-explicit/worker.fsm",
+          "sha256": "bbde41ee8d3e1b1948033585bc518bbf2d62e248eaf3b0111a2a7b796a32b98a",
+          "text": "(?fsm:worker\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+size\n    (start 1)\n    (done 1)\n    (result 8)\n    (status 8 (reset 19))\n    (unrelated 7 (reset 3))\n    (can_accept 1)\n  )\n\n  (worker_idle_0\n    (<start\n      (-> worker_set_0)\n    )\n  )\n\n  (worker_set_0\n    (<- (result> status))\n    (-> worker_done_1)\n  )\n\n  (worker_done_1\n    (<1 (done> 1))\n    (-> worker_idle_0)\n  )\n\n)\n"
+        }
+      ],
+      "name": "reader",
+      "observed": "child observes injected external 73",
+      "runtime_correctness_succeeded": false,
+      "runtime_output": "ram-guard: PID 6252; host 34.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\ncompile_ok=1\nsupervised process completed successfully\n%Warning-TIMESCALEMOD: .artifacts/child-storage/reader.sv:13:8: Timescale missing on this module as other modules have it (IEEE 1800-2023 3.14.2.3)\n   13 | module child_storage_reader (\n      |        ^~~~~~~~~~~~~~~~~~~~\n                       .artifacts/child-storage/reader_tb.sv:2:8: ... Location of module with timescale\n    2 | module reader_tb;\n      |        ^~~~~~~~~\n                       ... For warning description see https://verilator.org/warn/TIMESCALEMOD?v=5.050\n                       ... Use \"/* verilator lint_off TIMESCALEMOD */\" and lint_on around source to disable this message.\n%Warning-TIMESCALEMOD: .artifacts/child-storage/reader.sv:276:8: Timescale missing on this module as other modules have it (IEEE 1800-2023 3.14.2.3)\n  276 | module worker (\n      |        ^~~~~~\n                       .artifacts/child-storage/reader_tb.sv:2:8: ... Location of module with timescale\n    2 | module reader_tb;\n      |        ^~~~~~~~~\n%Warning-TIMESCALEMOD: .artifacts/child-storage/reader.sv:423:8: Timescale missing on this module as other modules have it (IEEE 1800-2023 3.14.2.3)\n  423 | module child_storage_reader_top (\n      |        ^~~~~~~~~~~~~~~~~~~~~~~~\n                       .artifacts/child-storage/reader_tb.sv:2:8: ... Location of module with timescale\n    2 | module reader_tb;\n      |        ^~~~~~~~~\n\nrun_ok=0\nsupervised process exited nonzero\nchild observed=73, expected parent write=53\n[106000] %Fatal: reader_tb.sv:12: Assertion failed in reader_tb: actor storage read became external input\n%Error: .artifacts/child-storage/reader_tb.sv:12: Verilog $stop\nAborting...\n\n\n",
+      "runtime_runner": {
+        "path": ".artifacts/child-storage/reproduce-reader.pl",
+        "sha256": "fed4f19fbb369a70b59ddcb27d77c9c4d06bfecae7b161c8ad137770f254b2c0",
+        "text": "use strict;\nuse warnings;\nuse lib 'perl','t/lib';\nuse FSM::Test::ProjectDataLocality;\nuse FSM::Test::VerilatorRuntime qw(run_verilator_compile run_generated_binary);\nmy $compile = run_verilator_compile(['verilator','--binary','--timing','--assert','-Wno-fatal','-j','1','--top-module','reader_tb','--Mdir','.artifacts/child-storage/obj_reader','.artifacts/child-storage/reader.sv','.artifacts/child-storage/reader_tb.sv']);\nprint \"compile_ok=$compile->{ok}\\n$compile->{diagnostic}\\n$compile->{stderr}\\n\";\nexit 1 unless $compile->{ok};\nmy $run=run_generated_binary(['.artifacts/child-storage/obj_reader/Vreader_tb']);\nprint \"run_ok=$run->{ok}\\n$run->{diagnostic}\\n$run->{stdout}\\n$run->{stderr}\\n\";\nexit($run->{ok}?0:1);\n"
+      },
+      "source": {
+        "path": ".artifacts/child-storage/reader.isf",
+        "sha256": "e79bbab3af358bc4358ee40608ff3f56dbff86733ac984f388301cdeb1f9bc32",
+        "text": "(actor child_storage_reader\n (clock clk) (reset (rst_n async active_low))\n (interface (input start) (output done) (output observed (width 8)))\n (storage (var status (width 8) (reset 19)) (var unrelated (width 7) (reset 3)))\n (transaction worker (ports (output result (width 8))) (set result status) (complete done))\n (transaction parent (on start) (set status 53)\n  (spawn worker as w0 (bind (output result observed))) (await_all done) (complete done)))\n"
+      },
+      "strict_check": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 0,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": false,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {},
+          "success": true,
+          "unique_codes": []
+        },
+        "diagnostics": [],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "result": {
+          "composition_child_count": 2,
+          "module_name": "child_storage_reader_top",
+          "signal_count": 6,
+          "state_count": 0
+        },
+        "source": {
+          "input": ".artifacts/child-storage/reader.isf",
+          "resolved_path": ".artifacts/child-storage/reader.isf"
+        },
+        "success": true,
+        "support_accounting": {
+          "matched": false
+        }
+      }
+    },
+    {
+      "compile_succeeded": true,
+      "expectation": "parent observes child-written 37",
+      "generated_systemverilog": {
+        "path": ".artifacts/child-storage/writer.sv",
+        "sha256": "a4cca0bb1cb112adc8107e9414b4f6c925d5ffb3ef8fb996916cfab88cc61b8b",
+        "text": "//=============================================================================\n// Flattened Decision Tree FSM: child_storage_writer\n// Generated using Enable-based Methodology with WEN/EN Signals\n// Date: Sat Sep 26 22:55:43 2026\n// \n// This implementation uses:\n// - Flattened decision tree approach\n// - Enable-based logic with assign statements\n// - Write Enable (WEN) and Enable (EN) signals for each LHS\n// - Flat Boolean expressions from DT traversal\n//=============================================================================\n\nmodule child_storage_writer (\n  input  wire clk,\n  input  wire rst_n,\n  input  wire start,\n  input  wire w0_done,\n  output reg  done,\n  output reg  [7:0] observed,\n  output reg  w0_start\n,\n  output  wire shared_dp_export_done_1_en,\n  output  wire shared_dp_export_observed_status_en,\n  output  wire shared_dp_export_w0_start_1_en\n);\n\n  // State encoding\n  localparam PARENT_IDLE_0 = 3'd0;\n  localparam PARENT_SPAWN_1 = 3'd1;\n  localparam PARENT_AWAIT_ALL_2 = 3'd2;\n  localparam PARENT_UPDATE_3 = 3'd3;\n  localparam PARENT_DONE_4 = 3'd4;\n\n  // State registers\n  reg [2:0] current_state, next_state;\n\n  // State sequential logic\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      current_state <= PARENT_IDLE_0;\n    end else begin\n      current_state <= next_state;\n    end\n  end\n\n  // Internal signal declarations\n  reg can_accept;\n  reg [7:0] status;\n  reg [6:0] unrelated;\n  // Internal mux helper registers\n  reg done_pulse_delay_pipe;\n  reg [7:0] observed_next;\n  reg [7:0] status_next;\n  reg [6:0] unrelated_next;\n  // Generated enable wires\n  wire can_accept_1_en;\n  wire done_1_en;\n  wire next_state_parent_await_all_2_en;\n  wire next_state_parent_done_4_en;\n  wire next_state_parent_idle_0_en;\n  wire next_state_parent_spawn_1_en;\n  wire next_state_parent_update_3_en;\n  wire observed_status_en;\n  wire parent_await_all_2_en;\n  wire parent_await_all_2_next_state_parent_update_3_en;\n  wire parent_done_4_done_1_en;\n  wire parent_done_4_en;\n  wire parent_done_4_next_state_parent_idle_0_en;\n  wire parent_idle_0_can_accept_1_en;\n  wire parent_idle_0_en;\n  wire parent_idle_0_next_state_parent_spawn_1_en;\n  wire parent_spawn_1_en;\n  wire parent_spawn_1_next_state_parent_await_all_2_en;\n  wire parent_spawn_1_w0_start_1_en;\n  wire parent_update_3_en;\n  wire parent_update_3_next_state_parent_done_4_en;\n  wire parent_update_3_observed_status_en;\n  wire w0_start_1_en;\n\n  // State and DT Enable Conditions\n  assign parent_await_all_2_en = current_state == PARENT_AWAIT_ALL_2;\n  assign parent_done_4_en = current_state == PARENT_DONE_4;\n  assign parent_idle_0_en = current_state == PARENT_IDLE_0;\n  assign parent_spawn_1_en = current_state == PARENT_SPAWN_1;\n  assign parent_update_3_en = current_state == PARENT_UPDATE_3;\n\n  // Unified WEN/EN Signal Generation from Phase 1 Analysis\n  // DT-Specific Enable Signals from Unified Analysis\n\n\n  // === DT: parent_await_all_2 ===\n  // next_state\n  assign parent_await_all_2_next_state_parent_update_3_en = parent_await_all_2_en & w0_done;  // next_state <- PARENT_UPDATE_3\n\n\n  // === DT: parent_done_4 ===\n  // done\n  assign parent_done_4_done_1_en = parent_done_4_en;  // done <- 1\n  // next_state\n  assign parent_done_4_next_state_parent_idle_0_en = parent_done_4_en;  // next_state <- PARENT_IDLE_0\n\n\n  // === DT: parent_idle_0 ===\n  // can_accept\n  assign parent_idle_0_can_accept_1_en = parent_idle_0_en;  // can_accept <- 1\n  // next_state\n  assign parent_idle_0_next_state_parent_spawn_1_en = parent_idle_0_en & start;  // next_state <- PARENT_SPAWN_1\n\n\n  // === DT: parent_spawn_1 ===\n  // next_state\n  assign parent_spawn_1_next_state_parent_await_all_2_en = parent_spawn_1_en;  // next_state <- PARENT_AWAIT_ALL_2\n  // w0_start\n  assign parent_spawn_1_w0_start_1_en = parent_spawn_1_en;  // w0_start <- 1\n\n\n  // === DT: parent_update_3 ===\n  // next_state\n  assign parent_update_3_next_state_parent_done_4_en = parent_update_3_en;  // next_state <- PARENT_DONE_4\n  // observed\n  assign parent_update_3_observed_status_en = parent_update_3_en;  // observed <- status\n\n  // LHS-Level Enable Signals from Unified Analysis\n\n  // LHS-level enables for: can_accept\n  assign can_accept_1_en = parent_idle_0_can_accept_1_en;\n\n  // LHS-level enables for: done\n  assign done_1_en = parent_done_4_done_1_en;\n\n  // LHS-level enables for: next_state\n  assign next_state_parent_await_all_2_en = parent_spawn_1_next_state_parent_await_all_2_en;\n  assign next_state_parent_done_4_en = parent_update_3_next_state_parent_done_4_en;\n  assign next_state_parent_idle_0_en = parent_done_4_next_state_parent_idle_0_en;\n  assign next_state_parent_spawn_1_en = parent_idle_0_next_state_parent_spawn_1_en;\n  assign next_state_parent_update_3_en = parent_await_all_2_next_state_parent_update_3_en;\n\n  // LHS-level enables for: observed\n  assign observed_status_en = parent_update_3_observed_status_en;\n\n  // LHS-level enables for: status\n\n  // LHS-level enables for: unrelated\n\n  // LHS-level enables for: w0_start\n  assign w0_start_1_en = parent_spawn_1_w0_start_1_en;\n\n  // Unified Multiplexer Logic from Phase 1 Analysis\n\n  // Unified Multiplexer for LHS: can_accept\n  // Unified combinational mux for: can_accept\n  always_comb begin\n    can_accept = 1'b0;  // Default value\n    if (can_accept_1_en) begin\n      can_accept = 1;\n    end\n  end\n\n  // Unified Multiplexer for LHS: done\n  // Delayed pulse logic for: done (<1, exact Q+1)\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      done <= 1'b0;\n      done_pulse_delay_pipe <= 1'b0;\n    end else begin\n      done <= 1'b0;\n      if (done_pulse_delay_pipe) begin\n        done <= 1'b1;\n      end\n      done_pulse_delay_pipe <= done_1_en;\n    end\n  end\n\n  // Unified Multiplexer for LHS: next_state\n  // Unified combinational mux for: next_state\n  always_comb begin\n    next_state = current_state;  // Default value\n    if (next_state_parent_await_all_2_en) begin\n      next_state = PARENT_AWAIT_ALL_2;\n    end\n    if (next_state_parent_done_4_en) begin\n      next_state = PARENT_DONE_4;\n    end\n    if (next_state_parent_idle_0_en) begin\n      next_state = PARENT_IDLE_0;\n    end\n    if (next_state_parent_spawn_1_en) begin\n      next_state = PARENT_SPAWN_1;\n    end\n    if (next_state_parent_update_3_en) begin\n      next_state = PARENT_UPDATE_3;\n    end\n  end\n\n  // Unified Multiplexer for LHS: observed\n  // Unified flop with mux for: observed (register_out assignment)\n  always_comb begin\n    observed_next = observed;  // Default value\n    if (observed_status_en) begin\n      observed_next = status;\n    end\n  end\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      observed <= 8'h00;\n    end else begin\n      observed <= observed_next;\n    end\n  end\n\n  // Unified Multiplexer for LHS: status\n  // Unified flop with mux for: status (register_out assignment)\n  always_comb begin\n    status_next = status;  // Default value\n  end\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      status <= 19;\n    end else begin\n      status <= status_next;\n    end\n  end\n\n  // Unified Multiplexer for LHS: unrelated\n  // Unified flop with mux for: unrelated (register_out assignment)\n  always_comb begin\n    unrelated_next = unrelated;  // Default value\n  end\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      unrelated <= 3;\n    end else begin\n      unrelated <= unrelated_next;\n    end\n  end\n\n  // Unified Multiplexer for LHS: w0_start\n  // Unified combinational mux for: w0_start\n  always_comb begin\n    w0_start = 1'b0;  // Default value\n    if (w0_start_1_en) begin\n      w0_start = 1;\n    end\n  end\n\n  `ifndef SYNTHESIS\n  always_comb begin\n    assert ($onehot0({next_state_parent_await_all_2_en, next_state_parent_done_4_en, next_state_parent_idle_0_en, next_state_parent_spawn_1_en, next_state_parent_update_3_en})) else $error(\"selector multi-value conflict: next_state\");\n  end\n  `endif\n  // Shared-datapath source-enable exports\n  assign shared_dp_export_done_1_en = done_1_en;\n  assign shared_dp_export_observed_status_en = observed_status_en;\n  assign shared_dp_export_w0_start_1_en = w0_start_1_en;\nendmodule\n\n\n//=============================================================================\n// Flattened Decision Tree FSM: worker\n// Generated using Enable-based Methodology with WEN/EN Signals\n// Date: Sat Sep 26 22:55:43 2026\n// \n// This implementation uses:\n// - Flattened decision tree approach\n// - Enable-based logic with assign statements\n// - Write Enable (WEN) and Enable (EN) signals for each LHS\n// - Flat Boolean expressions from DT traversal\n//=============================================================================\n\nmodule worker (\n  input  wire clk,\n  input  wire rst_n,\n  input  wire start,\n  output reg  done\n,\n  output  wire shared_dp_export_done_1_en\n);\n\n  // State encoding\n  localparam WORKER_IDLE_0 = 2'd0;\n  localparam WORKER_SET_0 = 2'd1;\n  localparam WORKER_DONE_1 = 2'd2;\n\n  // State registers\n  reg [1:0] current_state, next_state;\n\n  // State sequential logic\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      current_state <= WORKER_IDLE_0;\n    end else begin\n      current_state <= next_state;\n    end\n  end\n\n  // Internal signal declarations\n  reg [7:0] status;\n  // Internal mux helper registers\n  reg done_pulse_delay_pipe;\n  reg [7:0] status_next;\n  // Generated enable wires\n  wire done_1_en;\n  wire next_state_worker_done_1_en;\n  wire next_state_worker_idle_0_en;\n  wire next_state_worker_set_0_en;\n  wire status__37_en;\n  wire worker_done_1_done_1_en;\n  wire worker_done_1_en;\n  wire worker_done_1_next_state_worker_idle_0_en;\n  wire worker_idle_0_en;\n  wire worker_idle_0_next_state_worker_set_0_en;\n  wire worker_set_0_en;\n  wire worker_set_0_next_state_worker_done_1_en;\n  wire worker_set_0_status__37_en;\n\n  // State and DT Enable Conditions\n  assign worker_done_1_en = current_state == WORKER_DONE_1;\n  assign worker_idle_0_en = current_state == WORKER_IDLE_0;\n  assign worker_set_0_en = current_state == WORKER_SET_0;\n\n  // Unified WEN/EN Signal Generation from Phase 1 Analysis\n  // DT-Specific Enable Signals from Unified Analysis\n\n\n  // === DT: worker_done_1 ===\n  // done\n  assign worker_done_1_done_1_en = worker_done_1_en;  // done <- 1\n  // next_state\n  assign worker_done_1_next_state_worker_idle_0_en = worker_done_1_en;  // next_state <- WORKER_IDLE_0\n\n\n  // === DT: worker_idle_0 ===\n  // next_state\n  assign worker_idle_0_next_state_worker_set_0_en = worker_idle_0_en & start;  // next_state <- WORKER_SET_0\n\n\n  // === DT: worker_set_0 ===\n  // next_state\n  assign worker_set_0_next_state_worker_done_1_en = worker_set_0_en;  // next_state <- WORKER_DONE_1\n  // status\n  assign worker_set_0_status__37_en = worker_set_0_en;  // status <- 37\n\n  // LHS-Level Enable Signals from Unified Analysis\n\n  // LHS-level enables for: done\n  assign done_1_en = worker_done_1_done_1_en;\n\n  // LHS-level enables for: next_state\n  assign next_state_worker_done_1_en = worker_set_0_next_state_worker_done_1_en;\n  assign next_state_worker_idle_0_en = worker_done_1_next_state_worker_idle_0_en;\n  assign next_state_worker_set_0_en = worker_idle_0_next_state_worker_set_0_en;\n\n  // LHS-level enables for: status\n  assign status__37_en = worker_set_0_status__37_en;\n\n  // Unified Multiplexer Logic from Phase 1 Analysis\n\n  // Unified Multiplexer for LHS: done\n  // Delayed pulse logic for: done (<1, exact Q+1)\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      done <= 1'b0;\n      done_pulse_delay_pipe <= 1'b0;\n    end else begin\n      done <= 1'b0;\n      if (done_pulse_delay_pipe) begin\n        done <= 1'b1;\n      end\n      done_pulse_delay_pipe <= done_1_en;\n    end\n  end\n\n  // Unified Multiplexer for LHS: next_state\n  // Unified combinational mux for: next_state\n  always_comb begin\n    next_state = current_state;  // Default value\n    if (next_state_worker_done_1_en) begin\n      next_state = WORKER_DONE_1;\n    end\n    if (next_state_worker_idle_0_en) begin\n      next_state = WORKER_IDLE_0;\n    end\n    if (next_state_worker_set_0_en) begin\n      next_state = WORKER_SET_0;\n    end\n  end\n\n  // Unified Multiplexer for LHS: status\n  // Unified flop with mux for: status (register_out assignment)\n  always_comb begin\n    status_next = status;  // Default value\n    if (status__37_en) begin\n      status_next = 37;\n    end\n  end\n  always_ff @(posedge clk or negedge rst_n) begin\n    if (!rst_n) begin\n      status <= 19;\n    end else begin\n      status <= status_next;\n    end\n  end\n\n  `ifndef SYNTHESIS\n  always_comb begin\n    assert ($onehot0({next_state_worker_done_1_en, next_state_worker_idle_0_en, next_state_worker_set_0_en})) else $error(\"selector multi-value conflict: next_state\");\n  end\n  `endif\n  // Shared-datapath source-enable exports\n  assign shared_dp_export_done_1_en = done_1_en;\nendmodule\n\n\nmodule child_storage_writer_top (\n    input clk,\n    input rst_n,\n    input start,\n    output done,\n    output [7:0] observed\n);\n\n    wire comp_link_child_storage_writer_w0_start;\n    wire comp_link_w0_done;\n    wire child_storage_writer_done_1_src_en;\n    wire w0_done_1_src_en;\n    wire shared_dp_unused_child_storage_writer_shared_dp_export_observed_status_en;\n    wire shared_dp_unused_child_storage_writer_shared_dp_export_w0_start_1_en;\n    wire done_shared_en;\n    wire done_multi_value_conflict;\n    wire done_1_shared_en;\n    wire done_1_multi_src_conflict;\n\n  assign done_1_shared_en = child_storage_writer_done_1_src_en | w0_done_1_src_en;\n  assign done_1_multi_src_conflict = (child_storage_writer_done_1_src_en & w0_done_1_src_en);\n  assign done_shared_en = done_1_shared_en;\n  assign done_multi_value_conflict = 1'b0;\n\n    `ifndef SYNTHESIS\n    always_comb begin\n      assert (!done_1_multi_src_conflict) else $error(\"shared-datapath same-value conflict: done 1\");\n    end\n    `endif\n\n    child_storage_writer child_storage_writer (\n        .clk(clk),\n        .rst_n(rst_n),\n        .done(done),\n        .observed(observed),\n        .start(start),\n        .w0_done(comp_link_w0_done),\n        .w0_start(comp_link_child_storage_writer_w0_start),\n        .shared_dp_export_done_1_en(child_storage_writer_done_1_src_en),\n        .shared_dp_export_observed_status_en(shared_dp_unused_child_storage_writer_shared_dp_export_observed_status_en),\n        .shared_dp_export_w0_start_1_en(shared_dp_unused_child_storage_writer_shared_dp_export_w0_start_1_en)\n    );\n\n    worker w0 (\n        .clk(clk),\n        .rst_n(rst_n),\n        .done(comp_link_w0_done),\n        .start(comp_link_child_storage_writer_w0_start),\n        .shared_dp_export_done_1_en(w0_done_1_src_en)\n    );\n\nendmodule\n"
+      },
+      "independent_testbench": {
+        "path": ".artifacts/child-storage/writer_tb.sv",
+        "sha256": "58d5bc3c28fc140cef79b0d24e8a9141e82b554c55b8415a26f0380bf03a3aba",
+        "text": "`timescale 1ns/1ps\nmodule writer_tb;\n logic clk=0, rst_n=1, start=0;\n wire done; wire [7:0] observed;\n always #5 clk=~clk;\n child_storage_writer_top dut(.clk(clk),.rst_n(rst_n),.start(start),.done(done),.observed(observed));\n initial begin\n  #2; rst_n=0; #10; rst_n=1;\n  #8; start=1; #10; start=0;\n  wait(done); #1;\n  $display(\"parent observed=%0d, expected shared child write=37\", observed);\n  assert(observed === 8'd37) else $fatal(1,\"actor storage write did not cross child boundary\");\n  $finish;\n end\n initial begin #500; $fatal(1,\"completion timeout\"); end\nendmodule\n"
+      },
+      "materialized_fsm": [
+        {
+          "path": ".artifacts/child-storage/writer/child_storage_writer.fsm",
+          "sha256": "47742c37eb0d2282b092a36f104fbe6bb2297722e90d211eba15f9ddd05d6dbc",
+          "text": "(?fsm:child_storage_writer\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+interface\n    (input start)\n    (output done)\n    (output observed)\n    (internal status)\n    (internal unrelated)\n  )\n\n  (+size\n    (start 1)\n    (done 1)\n    (observed 8)\n    (w0_start 1)\n    (w0_done 1)\n    (status 8 (reset 19))\n    (unrelated 7 (reset 3))\n    (can_accept 1)\n  )\n\n  (parent_idle_0\n    (= (can_accept 1))\n    (<start\n      (-> parent_spawn_1)\n    )\n  )\n\n  (parent_spawn_1\n    (= (w0_start> 1))\n    (-> parent_await_all_2)\n  )\n\n  (parent_await_all_2\n    (-> parent_update_3 <w0_done)\n  )\n\n  (parent_update_3\n    (<- (observed> status))\n    (-> parent_done_4)\n  )\n\n  (parent_done_4\n    (<1 (done> 1))\n    (-> parent_idle_0)\n  )\n\n)\n"
+        },
+        {
+          "path": ".artifacts/child-storage/writer/child_storage_writer_top.fsm",
+          "sha256": "d73555e92a1996537e46cc7b8319455462200dd21bae5164cc4ff84b75bfd71f",
+          "text": "(?top:child_storage_writer_top\n  (?ports:public_io\n    clk\n    rst_n\n    start\n    done>\n    observed>8\n  )\n  (?fsmc:child_storage_writer child_storage_writer)\n  (?fsmc:w0 worker)\n  (?wiring:isf_wiring\n    (start child_storage_writer.start)\n    (child_storage_writer.done done)\n    (child_storage_writer.observed observed)\n    (child_storage_writer.w0_start w0.start)\n    (w0.done child_storage_writer.w0_done)\n  )\n)\n\n(?fsm:child_storage_writer\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+interface\n    (input start)\n    (output done)\n    (output observed)\n    (internal status)\n    (internal unrelated)\n  )\n\n  (+size\n    (start 1)\n    (done 1)\n    (observed 8)\n    (w0_start 1)\n    (w0_done 1)\n    (status 8 (reset 19))\n    (unrelated 7 (reset 3))\n    (can_accept 1)\n  )\n\n  (parent_idle_0\n    (= (can_accept 1))\n    (<start\n      (-> parent_spawn_1)\n    )\n  )\n\n  (parent_spawn_1\n    (= (w0_start> 1))\n    (-> parent_await_all_2)\n  )\n\n  (parent_await_all_2\n    (-> parent_update_3 <w0_done)\n  )\n\n  (parent_update_3\n    (<- (observed> status))\n    (-> parent_done_4)\n  )\n\n  (parent_done_4\n    (<1 (done> 1))\n    (-> parent_idle_0)\n  )\n\n)\n\n(?fsm:worker\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+size\n    (start 1)\n    (done 1)\n    (status 8 (reset 19))\n    (unrelated 7 (reset 3))\n    (can_accept 1)\n  )\n\n  (worker_idle_0\n    (<start\n      (-> worker_set_0)\n    )\n  )\n\n  (worker_set_0\n    (<- (status 37))\n    (-> worker_done_1)\n  )\n\n  (worker_done_1\n    (<1 (done> 1))\n    (-> worker_idle_0)\n  )\n\n)\n"
+        },
+        {
+          "path": ".artifacts/child-storage/writer/worker.fsm",
+          "sha256": "dde6903a1a96846fee53a374aa87602f320c5cad08b2dfc90c12b0de3a996be1",
+          "text": "(?fsm:worker\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+size\n    (start 1)\n    (done 1)\n    (status 8 (reset 19))\n    (unrelated 7 (reset 3))\n    (can_accept 1)\n  )\n\n  (worker_idle_0\n    (<start\n      (-> worker_set_0)\n    )\n  )\n\n  (worker_set_0\n    (<- (status 37))\n    (-> worker_done_1)\n  )\n\n  (worker_done_1\n    (<1 (done> 1))\n    (-> worker_idle_0)\n  )\n\n)\n"
+        }
+      ],
+      "name": "writer",
+      "observed": "parent retains reset 19",
+      "runtime_correctness_succeeded": false,
+      "runtime_output": "ram-guard: PID 62989; host 50.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\ncompile_ok=1\nsupervised process completed successfully\n%Warning-TIMESCALEMOD: .artifacts/child-storage/writer.sv:13:8: Timescale missing on this module as other modules have it (IEEE 1800-2023 3.14.2.3)\n   13 | module child_storage_writer (\n      |        ^~~~~~~~~~~~~~~~~~~~\n                       .artifacts/child-storage/writer_tb.sv:2:8: ... Location of module with timescale\n    2 | module writer_tb;\n      |        ^~~~~~~~~\n                       ... For warning description see https://verilator.org/warn/TIMESCALEMOD?v=5.050\n                       ... Use \"/* verilator lint_off TIMESCALEMOD */\" and lint_on around source to disable this message.\n%Warning-TIMESCALEMOD: .artifacts/child-storage/writer.sv:270:8: Timescale missing on this module as other modules have it (IEEE 1800-2023 3.14.2.3)\n  270 | module worker (\n      |        ^~~~~~\n                       .artifacts/child-storage/writer_tb.sv:2:8: ... Location of module with timescale\n    2 | module writer_tb;\n      |        ^~~~~~~~~\n%Warning-TIMESCALEMOD: .artifacts/child-storage/writer.sv:414:8: Timescale missing on this module as other modules have it (IEEE 1800-2023 3.14.2.3)\n  414 | module child_storage_writer_top (\n      |        ^~~~~~~~~~~~~~~~~~~~~~~~\n                       .artifacts/child-storage/writer_tb.sv:2:8: ... Location of module with timescale\n    2 | module writer_tb;\n      |        ^~~~~~~~~\n\nrun_ok=0\nsupervised process exited nonzero\nparent observed=19, expected shared child write=37\n[106000] %Fatal: writer_tb.sv:12: Assertion failed in writer_tb: actor storage write did not cross child boundary\n%Error: .artifacts/child-storage/writer_tb.sv:12: Verilog $stop\nAborting...\n\n\n",
+      "runtime_runner": {
+        "path": ".artifacts/child-storage/reproduce.pl",
+        "sha256": "9e0df27d83385ed3e6cb2e902116064c1874d4d9cc1e7e7cc9c682f0f9b445eb",
+        "text": "use strict;\nuse warnings;\nuse lib 'perl','t/lib';\nuse FSM::Test::ProjectDataLocality;\nuse FSM::Test::VerilatorRuntime qw(run_verilator_compile run_generated_binary);\nmy $compile = run_verilator_compile(['verilator','--binary','--timing','--assert','-Wno-fatal','-j','1','--top-module','writer_tb','--Mdir','.artifacts/child-storage/obj','.artifacts/child-storage/writer.sv','.artifacts/child-storage/writer_tb.sv']);\nprint \"compile_ok=$compile->{ok}\\n$compile->{diagnostic}\\n$compile->{stderr}\\n\";\nexit 1 unless $compile->{ok};\nmy $run=run_generated_binary(['.artifacts/child-storage/obj/Vwriter_tb']);\nprint \"run_ok=$run->{ok}\\n$run->{diagnostic}\\n$run->{stdout}\\n$run->{stderr}\\n\";\nexit($run->{ok}?0:1);\n"
+      },
+      "source": {
+        "path": ".artifacts/child-storage/writer.isf",
+        "sha256": "2f84909f7a663cc6c4ef7733b1e86a57b670e7adfeaa03229123907c8dc46a9e",
+        "text": "(actor child_storage_writer\n (clock clk) (reset (rst_n async active_low))\n (interface (input start) (output done) (output observed (width 8)))\n (storage (var status (width 8) (reset 19)) (var unrelated (width 7) (reset 3)))\n (transaction worker (set status 37) (complete done))\n (transaction parent (on start)\n  (spawn worker as w0) (await_all done) (update observed status) (complete done)))\n"
+      },
+      "strict_check": {
+        "check_schema_version": 1,
+        "command": {
+          "json": true,
+          "mode": "check",
+          "strict_mode": true,
+          "target_language": "systemverilog"
+        },
+        "diagnostic_summary": {
+          "code_counts": {},
+          "codes": [],
+          "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+          "diagnostic_count": 0,
+          "diagnostic_summary_schema_version": 1,
+          "has_diagnostics": false,
+          "has_stable_codes": false,
+          "matched_support_accounting": false,
+          "report_source": "FSM::Support::SerializableDiagnosticSummary",
+          "severity_counts": {},
+          "success": true,
+          "unique_codes": []
+        },
+        "diagnostics": [],
+        "generated_output": {
+          "emitted": false
+        },
+        "producer": {
+          "name": "FSMGen",
+          "report_source": "FSM::Support::CheckDiagnostics"
+        },
+        "result": {
+          "composition_child_count": 2,
+          "module_name": "child_storage_writer_top",
+          "signal_count": 5,
+          "state_count": 0
+        },
+        "source": {
+          "input": ".artifacts/child-storage/writer.isf",
+          "resolved_path": ".artifacts/child-storage/writer.isf"
+        },
+        "success": true,
+        "support_accounting": {
+          "matched": false
+        }
+      }
+    }
+  ],
+  "claim_legs": {
+    "durability": "Exact accepted sources, generated artifacts, testbench/runner bytes, runtime output, decision 0107 and scheduled repair leaves.",
+    "falsify": "Independent runtime oracles require parent-to-child 53 and child-to-parent 37; actual external 73 and retained reset 19 violate those requirements.",
+    "rederive": "Strict native checks, standalone worker semantic input inventory and complete materialized artifacts."
+  },
+  "date": "2026-09-26",
+  "direct_worker_semantic": {
+    "command": {
+      "json": true,
+      "mode": "semantic_export",
+      "strict_mode": true,
+      "target_language": "systemverilog"
+    },
+    "diagnostic_summary": {
+      "code_counts": {},
+      "codes": [],
+      "contract_source": "FSM::Support::SerializableDiagnosticSummary",
+      "diagnostic_count": 0,
+      "diagnostic_summary_schema_version": 1,
+      "has_diagnostics": false,
+      "has_stable_codes": false,
+      "matched_support_accounting": false,
+      "report_source": "FSM::Support::SerializableDiagnosticSummary",
+      "severity_counts": {},
+      "success": true,
+      "unique_codes": []
+    },
+    "diagnostics": [],
+    "generated_output": {
+      "emitted": false
+    },
+    "generation_result_snapshot": {
+      "contract_source": "FSM::Support::SerializableGenerationResultSnapshot",
+      "generation_result_snapshot_schema_version": 1,
+      "present": true,
+      "raw_shell_presence": {
+        "composition_plan": {
+          "present": false,
+          "value_ref": null
+        },
+        "composition_report": {
+          "present": false,
+          "value_ref": null
+        },
+        "composition_spec": {
+          "present": false,
+          "value_ref": null
+        },
+        "fsm_module": {
+          "present": true,
+          "value_ref": "FSM::CoreAST::FSMModule"
+        },
+        "raw_ast": {
+          "present": true,
+          "value_ref": "ARRAY"
+        },
+        "resolved_package_imports": {
+          "present": true,
+          "value_ref": "HASH"
+        }
+      },
+      "report_source": "FSM::Support::SerializableGenerationResultSnapshot",
+      "semantic_layer_presence": {
+        "intent_hir": true,
+        "lowered_rtl_ir": true,
+        "structural_rtl_ir": true
+      },
+      "source_summary": {
+        "header": "?fsm:worker",
+        "kind": "fsm",
+        "package_import_count": 0,
+        "package_import_names": []
+      },
+      "stable_summary_presence": {
+        "module_info": true,
+        "source_info": true,
+        "statistics": true
+      },
+      "statistics_summary": {
+        "factoring_enabled": false,
+        "global_expressions": 0,
+        "intermediate_signals": 0
+      },
+      "summary": {
+        "composition_child_count": 0,
+        "hdl_code_length": 4632,
+        "hdl_code_line_count": 151,
+        "hdl_code_present": true,
+        "module_name": "worker",
+        "module_signal_count": 4,
+        "module_state_count": 3,
+        "source_root_kind": "fsm",
+        "target_language": "systemverilog"
+      },
+      "top_level_keys": [
+        "fsm_module",
+        "hdl_code",
+        "intent_hir",
+        "lowered_rtl_ir",
+        "module_info",
+        "raw_ast",
+        "resolved_package_imports",
+        "source_info",
+        "statistics",
+        "structural_rtl_ir"
+      ]
+    },
+    "normalized_semantic_schema_version": 1,
+    "producer": {
+      "name": "FSMGen",
+      "report_source": "FSM::Support::NormalizedSemanticReport",
+      "semantic_layers": [
+        "intent_hir",
+        "lowered_rtl_ir",
+        "structural_rtl_ir"
+      ]
+    },
+    "semantic": {
+      "explicit_system_contract": {
+        "clock": "clk",
+        "reset": "rst_n",
+        "reset_active_level": 0,
+        "reset_keyword": "areset",
+        "reset_kind": "async"
+      },
+      "forward_ir": {
+        "intent_hir": {
+          "explicit_system_contract": {
+            "clock": "clk",
+            "reset": "rst_n",
+            "reset_active_level": 0,
+            "reset_keyword": "areset",
+            "reset_kind": "async"
+          },
+          "module_name": "worker",
+          "parameter_count": 0,
+          "parameter_names": [],
+          "regular_state_count": 3,
+          "regular_state_names": [
+            "worker_idle_0",
+            "worker_set_0",
+            "worker_done_1"
+          ],
+          "requires_implicit_system_ports": 1,
+          "signal_analysis": {
+            "inputs": [
+              {
+                "direction": "input",
+                "name": "start",
+                "signed": 0,
+                "width": 1
+              },
+              {
+                "direction": "input",
+                "name": "status",
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "multi_bit": [
+              {
+                "direction": "output",
+                "name": "result",
+                "signed": 0,
+                "width": 8
+              },
+              {
+                "direction": "input",
+                "name": "status",
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "outputs": [
+              {
+                "direction": "output",
+                "name": "done",
+                "signed": 0,
+                "width": 1
+              },
+              {
+                "direction": "output",
+                "name": "result",
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "single_bit": [
+              {
+                "direction": "output",
+                "name": "done",
+                "signed": 0,
+                "width": 1
+              },
+              {
+                "direction": "input",
+                "name": "start",
+                "signed": 0,
+                "width": 1
+              }
+            ]
+          },
+          "signal_count": 4,
+          "signal_names": [
+            "done",
+            "result",
+            "start",
+            "status"
+          ],
+          "source_root_kind": "fsm",
+          "standalone_dt_count": 0,
+          "standalone_dt_enable_families": [],
+          "standalone_dt_module_enable_family": {
+            "dt_names": [],
+            "enable_signals": []
+          },
+          "standalone_dt_names": [],
+          "state_count": 3,
+          "symbol_contract": null,
+          "system_contract": {
+            "clock": "clk",
+            "declare_ports": 1,
+            "implicit": 0,
+            "reset": "rst_n",
+            "reset_active_level": 0,
+            "reset_keyword": "areset",
+            "reset_kind": "async"
+          }
+        },
+        "lowered_rtl_ir": {
+          "module_name": "worker",
+          "output_drive_families": [
+            {
+              "default_value": "done",
+              "driver_blocks": [
+                "worker_done_1"
+              ],
+              "driver_count": 1,
+              "driver_enable_signals": [
+                "worker_done_1_done_1_en"
+              ],
+              "family_enable_signals": [
+                "done_1_en"
+              ],
+              "multiplexer_type": "flop",
+              "reset_value": "1'b0",
+              "rhs_enable_families": [
+                {
+                  "driver_blocks": [
+                    "worker_done_1"
+                  ],
+                  "driver_enable_signals": [
+                    "worker_done_1_done_1_en"
+                  ],
+                  "family_enable_signal": "done_1_en",
+                  "rhs_value": "1"
+                }
+              ],
+              "rhs_values": [
+                "1"
+              ],
+              "signal_name": "done",
+              "width": 1
+            },
+            {
+              "default_value": "result",
+              "driver_blocks": [
+                "worker_set_0"
+              ],
+              "driver_count": 1,
+              "driver_enable_signals": [
+                "worker_set_0_result_status_en"
+              ],
+              "family_enable_signals": [
+                "result_status_en"
+              ],
+              "multiplexer_type": "flop",
+              "reset_value": "8'h00",
+              "rhs_enable_families": [
+                {
+                  "driver_blocks": [
+                    "worker_set_0"
+                  ],
+                  "driver_enable_signals": [
+                    "worker_set_0_result_status_en"
+                  ],
+                  "family_enable_signal": "result_status_en",
+                  "rhs_value": "status"
+                }
+              ],
+              "rhs_values": [
+                "status"
+              ],
+              "signal_name": "result",
+              "width": 8
+            }
+          ],
+          "output_drive_family_count": 2,
+          "selector_conflict_target_count": 1,
+          "selector_conflict_targets": [
+            {
+              "family_enable_signals": [
+                "next_state_worker_done_1_en",
+                "next_state_worker_idle_0_en",
+                "next_state_worker_set_0_en"
+              ],
+              "multi_value_assertion": {
+                "input_count": 3,
+                "input_enable_signals": [
+                  "next_state_worker_done_1_en",
+                  "next_state_worker_idle_0_en",
+                  "next_state_worker_set_0_en"
+                ],
+                "kind": "onehot0",
+                "target_signal": "next_state"
+              },
+              "multiplexer_type": "comb",
+              "rhs_enable_families": [
+                {
+                  "driver_enable_signals": [
+                    "worker_set_0_next_state_worker_done_1_en"
+                  ],
+                  "family_enable_signal": "next_state_worker_done_1_en",
+                  "rhs_value": "WORKER_DONE_1",
+                  "same_value_assertion": {
+                    "input_count": 1,
+                    "input_enable_signals": [
+                      "worker_set_0_next_state_worker_done_1_en"
+                    ],
+                    "kind": "onehot0",
+                    "rhs_value": "WORKER_DONE_1",
+                    "target_signal": "next_state"
+                  }
+                },
+                {
+                  "driver_enable_signals": [
+                    "worker_done_1_next_state_worker_idle_0_en"
+                  ],
+                  "family_enable_signal": "next_state_worker_idle_0_en",
+                  "rhs_value": "WORKER_IDLE_0",
+                  "same_value_assertion": {
+                    "input_count": 1,
+                    "input_enable_signals": [
+                      "worker_done_1_next_state_worker_idle_0_en"
+                    ],
+                    "kind": "onehot0",
+                    "rhs_value": "WORKER_IDLE_0",
+                    "target_signal": "next_state"
+                  }
+                },
+                {
+                  "driver_enable_signals": [
+                    "worker_idle_0_next_state_worker_set_0_en"
+                  ],
+                  "family_enable_signal": "next_state_worker_set_0_en",
+                  "rhs_value": "WORKER_SET_0",
+                  "same_value_assertion": {
+                    "input_count": 1,
+                    "input_enable_signals": [
+                      "worker_idle_0_next_state_worker_set_0_en"
+                    ],
+                    "kind": "onehot0",
+                    "rhs_value": "WORKER_SET_0",
+                    "target_signal": "next_state"
+                  }
+                }
+              ],
+              "rhs_values": [
+                "WORKER_DONE_1",
+                "WORKER_IDLE_0",
+                "WORKER_SET_0"
+              ],
+              "signal_name": "next_state"
+            }
+          ],
+          "source_root_kind": "fsm",
+          "standalone_dt_multi_drive_target_count": 0,
+          "standalone_dt_multi_drive_targets": [],
+          "target_language": "systemverilog"
+        },
+        "structural_rtl_ir": {
+          "assignment_record_count": 13,
+          "assignment_records": [
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "worker_done_1_en"
+              },
+              "provenance": {
+                "family": "generated_enable",
+                "role": "top_state_enable",
+                "state_name": "worker_done_1"
+              },
+              "rendered": "  assign worker_done_1_en = current_state == WORKER_DONE_1;",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::BinaryOp",
+                  "kind": "binary_op",
+                  "left": {
+                    "class": "FSM::AST::SignalRef",
+                    "kind": "signal_ref",
+                    "name": "current_state"
+                  },
+                  "operator": "==",
+                  "right": {
+                    "class": "FSM::AST::Literal",
+                    "kind": "literal",
+                    "value": "WORKER_DONE_1"
+                  }
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "current_state == WORKER_DONE_1"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "worker_idle_0_en"
+              },
+              "provenance": {
+                "family": "generated_enable",
+                "role": "top_state_enable",
+                "state_name": "worker_idle_0"
+              },
+              "rendered": "  assign worker_idle_0_en = current_state == WORKER_IDLE_0;",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::BinaryOp",
+                  "kind": "binary_op",
+                  "left": {
+                    "class": "FSM::AST::SignalRef",
+                    "kind": "signal_ref",
+                    "name": "current_state"
+                  },
+                  "operator": "==",
+                  "right": {
+                    "class": "FSM::AST::Literal",
+                    "kind": "literal",
+                    "value": "WORKER_IDLE_0"
+                  }
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "current_state == WORKER_IDLE_0"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "worker_set_0_en"
+              },
+              "provenance": {
+                "family": "generated_enable",
+                "role": "top_state_enable",
+                "state_name": "worker_set_0"
+              },
+              "rendered": "  assign worker_set_0_en = current_state == WORKER_SET_0;",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::BinaryOp",
+                  "kind": "binary_op",
+                  "left": {
+                    "class": "FSM::AST::SignalRef",
+                    "kind": "signal_ref",
+                    "name": "current_state"
+                  },
+                  "operator": "==",
+                  "right": {
+                    "class": "FSM::AST::Literal",
+                    "kind": "literal",
+                    "value": "WORKER_SET_0"
+                  }
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "current_state == WORKER_SET_0"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "worker_done_1_done_1_en"
+              },
+              "provenance": {
+                "dt_name": "worker_done_1",
+                "dte_gate_signal": "worker_done_1_en",
+                "family": "generated_enable",
+                "lhs_signal": "done",
+                "rhs_value": "1",
+                "role": "dt_specific_enable"
+              },
+              "rendered": "  assign worker_done_1_done_1_en = worker_done_1_en;  // done <- 1",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::SignalRef",
+                  "kind": "signal_ref",
+                  "name": "worker_done_1_en"
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "worker_done_1_en"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "worker_done_1_next_state_worker_idle_0_en"
+              },
+              "provenance": {
+                "dt_name": "worker_done_1",
+                "dte_gate_signal": "worker_done_1_en",
+                "family": "generated_enable",
+                "lhs_signal": "next_state",
+                "rhs_value": "WORKER_IDLE_0",
+                "role": "dt_specific_enable"
+              },
+              "rendered": "  assign worker_done_1_next_state_worker_idle_0_en = worker_done_1_en;  // next_state <- WORKER_IDLE_0",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::SignalRef",
+                  "kind": "signal_ref",
+                  "name": "worker_done_1_en"
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "worker_done_1_en"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "worker_idle_0_next_state_worker_set_0_en"
+              },
+              "provenance": {
+                "dt_name": "worker_idle_0",
+                "dte_gate_signal": "worker_idle_0_en",
+                "family": "generated_enable",
+                "lhs_signal": "next_state",
+                "rhs_value": "WORKER_SET_0",
+                "role": "dt_specific_enable"
+              },
+              "rendered": "  assign worker_idle_0_next_state_worker_set_0_en = worker_idle_0_en & start;  // next_state <- WORKER_SET_0",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::BinaryOp",
+                  "kind": "binary_op",
+                  "left": {
+                    "class": "FSM::AST::SignalRef",
+                    "kind": "signal_ref",
+                    "name": "worker_idle_0_en"
+                  },
+                  "operator": "&&",
+                  "right": {
+                    "class": "FSM::AST::SignalRef",
+                    "kind": "signal_ref",
+                    "name": "start"
+                  }
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "worker_idle_0_en & start"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "worker_set_0_next_state_worker_done_1_en"
+              },
+              "provenance": {
+                "dt_name": "worker_set_0",
+                "dte_gate_signal": "worker_set_0_en",
+                "family": "generated_enable",
+                "lhs_signal": "next_state",
+                "rhs_value": "WORKER_DONE_1",
+                "role": "dt_specific_enable"
+              },
+              "rendered": "  assign worker_set_0_next_state_worker_done_1_en = worker_set_0_en;  // next_state <- WORKER_DONE_1",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::SignalRef",
+                  "kind": "signal_ref",
+                  "name": "worker_set_0_en"
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "worker_set_0_en"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "worker_set_0_result_status_en"
+              },
+              "provenance": {
+                "dt_name": "worker_set_0",
+                "dte_gate_signal": "worker_set_0_en",
+                "family": "generated_enable",
+                "lhs_signal": "result",
+                "rhs_value": "status",
+                "role": "dt_specific_enable"
+              },
+              "rendered": "  assign worker_set_0_result_status_en = worker_set_0_en;  // result <- status",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::SignalRef",
+                  "kind": "signal_ref",
+                  "name": "worker_set_0_en"
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "worker_set_0_en"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "done_1_en"
+              },
+              "provenance": {
+                "family": "generated_enable",
+                "lhs_signal": "done",
+                "rhs_value": "1",
+                "role": "lhs_level_enable"
+              },
+              "rendered": "  assign done_1_en = worker_done_1_done_1_en;",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::SignalRef",
+                  "kind": "signal_ref",
+                  "name": "worker_done_1_done_1_en"
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "worker_done_1_done_1_en"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "next_state_worker_done_1_en"
+              },
+              "provenance": {
+                "family": "generated_enable",
+                "lhs_signal": "next_state",
+                "rhs_value": "WORKER_DONE_1",
+                "role": "lhs_level_enable"
+              },
+              "rendered": "  assign next_state_worker_done_1_en = worker_set_0_next_state_worker_done_1_en;",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::SignalRef",
+                  "kind": "signal_ref",
+                  "name": "worker_set_0_next_state_worker_done_1_en"
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "worker_set_0_next_state_worker_done_1_en"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "next_state_worker_idle_0_en"
+              },
+              "provenance": {
+                "family": "generated_enable",
+                "lhs_signal": "next_state",
+                "rhs_value": "WORKER_IDLE_0",
+                "role": "lhs_level_enable"
+              },
+              "rendered": "  assign next_state_worker_idle_0_en = worker_done_1_next_state_worker_idle_0_en;",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::SignalRef",
+                  "kind": "signal_ref",
+                  "name": "worker_done_1_next_state_worker_idle_0_en"
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "worker_done_1_next_state_worker_idle_0_en"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "next_state_worker_set_0_en"
+              },
+              "provenance": {
+                "family": "generated_enable",
+                "lhs_signal": "next_state",
+                "rhs_value": "WORKER_SET_0",
+                "role": "lhs_level_enable"
+              },
+              "rendered": "  assign next_state_worker_set_0_en = worker_idle_0_next_state_worker_set_0_en;",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::SignalRef",
+                  "kind": "signal_ref",
+                  "name": "worker_idle_0_next_state_worker_set_0_en"
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "worker_idle_0_next_state_worker_set_0_en"
+              }
+            },
+            {
+              "kind": "continuous_assign",
+              "lhs": {
+                "kind": "signal_ref",
+                "name": "result_status_en"
+              },
+              "provenance": {
+                "family": "generated_enable",
+                "lhs_signal": "result",
+                "rhs_value": "status",
+                "role": "lhs_level_enable"
+              },
+              "rendered": "  assign result_status_en = worker_set_0_result_status_en;",
+              "rhs": {
+                "ast": {
+                  "class": "FSM::AST::SignalRef",
+                  "kind": "signal_ref",
+                  "name": "worker_set_0_result_status_en"
+                },
+                "kind": "expression",
+                "language": "systemverilog",
+                "text": "worker_set_0_result_status_en"
+              }
+            }
+          ],
+          "auxiliary_assignment_count": 13,
+          "auxiliary_assignments": [
+            "  assign worker_done_1_en = current_state == WORKER_DONE_1;",
+            "  assign worker_idle_0_en = current_state == WORKER_IDLE_0;",
+            "  assign worker_set_0_en = current_state == WORKER_SET_0;",
+            "  assign worker_done_1_done_1_en = worker_done_1_en;  // done <- 1",
+            "  assign worker_done_1_next_state_worker_idle_0_en = worker_done_1_en;  // next_state <- WORKER_IDLE_0",
+            "  assign worker_idle_0_next_state_worker_set_0_en = worker_idle_0_en & start;  // next_state <- WORKER_SET_0",
+            "  assign worker_set_0_next_state_worker_done_1_en = worker_set_0_en;  // next_state <- WORKER_DONE_1",
+            "  assign worker_set_0_result_status_en = worker_set_0_en;  // result <- status",
+            "  assign done_1_en = worker_done_1_done_1_en;",
+            "  assign next_state_worker_done_1_en = worker_set_0_next_state_worker_done_1_en;",
+            "  assign next_state_worker_idle_0_en = worker_done_1_next_state_worker_idle_0_en;",
+            "  assign next_state_worker_set_0_en = worker_idle_0_next_state_worker_set_0_en;",
+            "  assign result_status_en = worker_set_0_result_status_en;"
+          ],
+          "declared_link_count": 0,
+          "declared_links": [],
+          "instance_count": 0,
+          "instances": [],
+          "module_name": "worker",
+          "net_count": 15,
+          "nets": [
+            {
+              "name": "done_pulse_delay_pipe",
+              "signed": 0,
+              "source": null,
+              "targets": [],
+              "width": 1
+            },
+            {
+              "name": "result_next",
+              "signed": 0,
+              "source": null,
+              "targets": [],
+              "width": 8
+            },
+            {
+              "name": "worker_done_1_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "worker_done_1_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "top_state_enable"
+              },
+              "targets": [
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "worker_done_1_done_1_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "dt_specific_enable"
+                },
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "worker_done_1_next_state_worker_idle_0_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "dt_specific_enable"
+                }
+              ],
+              "width": 1
+            },
+            {
+              "name": "worker_idle_0_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "worker_idle_0_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "top_state_enable"
+              },
+              "targets": [
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "worker_idle_0_next_state_worker_set_0_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "dt_specific_enable"
+                }
+              ],
+              "width": 1
+            },
+            {
+              "name": "worker_set_0_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "worker_set_0_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "top_state_enable"
+              },
+              "targets": [
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "worker_set_0_next_state_worker_done_1_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "dt_specific_enable"
+                },
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "worker_set_0_result_status_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "dt_specific_enable"
+                }
+              ],
+              "width": 1
+            },
+            {
+              "name": "worker_done_1_done_1_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "worker_done_1_done_1_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "dt_specific_enable"
+              },
+              "targets": [
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "done_1_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "lhs_level_enable"
+                }
+              ],
+              "width": 1
+            },
+            {
+              "name": "done_1_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "done_1_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "lhs_level_enable"
+              },
+              "targets": [],
+              "width": 1
+            },
+            {
+              "name": "worker_set_0_next_state_worker_done_1_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "worker_set_0_next_state_worker_done_1_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "dt_specific_enable"
+              },
+              "targets": [
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "next_state_worker_done_1_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "lhs_level_enable"
+                }
+              ],
+              "width": 1
+            },
+            {
+              "name": "next_state_worker_done_1_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "next_state_worker_done_1_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "lhs_level_enable"
+              },
+              "targets": [],
+              "width": 1
+            },
+            {
+              "name": "worker_done_1_next_state_worker_idle_0_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "worker_done_1_next_state_worker_idle_0_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "dt_specific_enable"
+              },
+              "targets": [
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "next_state_worker_idle_0_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "lhs_level_enable"
+                }
+              ],
+              "width": 1
+            },
+            {
+              "name": "next_state_worker_idle_0_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "next_state_worker_idle_0_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "lhs_level_enable"
+              },
+              "targets": [],
+              "width": 1
+            },
+            {
+              "name": "worker_idle_0_next_state_worker_set_0_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "worker_idle_0_next_state_worker_set_0_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "dt_specific_enable"
+              },
+              "targets": [
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "next_state_worker_set_0_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "lhs_level_enable"
+                }
+              ],
+              "width": 1
+            },
+            {
+              "name": "next_state_worker_set_0_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "next_state_worker_set_0_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "lhs_level_enable"
+              },
+              "targets": [],
+              "width": 1
+            },
+            {
+              "name": "worker_set_0_result_status_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "worker_set_0_result_status_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "dt_specific_enable"
+              },
+              "targets": [
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "result_status_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "lhs_level_enable"
+                }
+              ],
+              "width": 1
+            },
+            {
+              "name": "result_status_en",
+              "signed": 0,
+              "source": {
+                "assignment_kind": "continuous_assign",
+                "assignment_lhs": "result_status_en",
+                "family": "generated_enable",
+                "kind": "assignment_record_driver",
+                "role": "lhs_level_enable"
+              },
+              "targets": [],
+              "width": 1
+            }
+          ],
+          "port_count": 6,
+          "ports": [
+            {
+              "direction": "input",
+              "name": "start",
+              "signed": 0,
+              "targets": [
+                {
+                  "assignment_kind": "continuous_assign",
+                  "assignment_lhs": "worker_idle_0_next_state_worker_set_0_en",
+                  "family": "generated_enable",
+                  "kind": "assignment_record_rhs_dependency",
+                  "role": "dt_specific_enable"
+                }
+              ],
+              "type": "wire",
+              "width": 1
+            },
+            {
+              "direction": "input",
+              "name": "status",
+              "signed": 0,
+              "type": "wire",
+              "width": 8
+            },
+            {
+              "direction": "output",
+              "name": "done",
+              "signed": 0,
+              "source": {
+                "driver_blocks": [
+                  "worker_done_1"
+                ],
+                "driver_count": 1,
+                "driver_enable_signals": [
+                  "worker_done_1_done_1_en"
+                ],
+                "family_enable_signals": [
+                  "done_1_en"
+                ],
+                "kind": "lowered_output_drive_family",
+                "multiplexer_type": "flop",
+                "rhs_values": [
+                  "1"
+                ],
+                "signal_name": "done"
+              },
+              "type": "wire",
+              "width": 1
+            },
+            {
+              "direction": "output",
+              "name": "result",
+              "signed": 0,
+              "source": {
+                "driver_blocks": [
+                  "worker_set_0"
+                ],
+                "driver_count": 1,
+                "driver_enable_signals": [
+                  "worker_set_0_result_status_en"
+                ],
+                "family_enable_signals": [
+                  "result_status_en"
+                ],
+                "kind": "lowered_output_drive_family",
+                "multiplexer_type": "flop",
+                "rhs_values": [
+                  "status"
+                ],
+                "signal_name": "result"
+              },
+              "type": "wire",
+              "width": 8
+            },
+            {
+              "direction": "input",
+              "name": "clk",
+              "signed": 0,
+              "type": "clock",
+              "width": 1
+            },
+            {
+              "direction": "input",
+              "name": "rst_n",
+              "signed": 0,
+              "type": "reset",
+              "width": 1
+            }
+          ],
+          "resolved_link_count": 0,
+          "resolved_links": [],
+          "source_root_kind": "fsm",
+          "target_language": "systemverilog"
+        }
+      },
+      "module": {
+        "name": "worker",
+        "output_drive_family_count": 2,
+        "parameter_count": 0,
+        "parameter_names": [],
+        "regular_state_count": 3,
+        "regular_state_names": [
+          "worker_idle_0",
+          "worker_set_0",
+          "worker_done_1"
+        ],
+        "requires_implicit_system_ports": true,
+        "signal_count": 4,
+        "signal_names": [
+          "done",
+          "result",
+          "start",
+          "status"
+        ],
+        "source_root_kind": "fsm",
+        "standalone_dt_count": 0,
+        "standalone_dt_multi_drive_target_count": 0,
+        "standalone_dt_names": [],
+        "state_count": 3,
+        "target_language": "systemverilog"
+      },
+      "signal_analysis": {
+        "inputs": [
+          {
+            "direction": "input",
+            "name": "start",
+            "signed": 0,
+            "width": 1
+          },
+          {
+            "direction": "input",
+            "name": "status",
+            "signed": 0,
+            "width": 8
+          }
+        ],
+        "multi_bit": [
+          {
+            "direction": "output",
+            "name": "result",
+            "signed": 0,
+            "width": 8
+          },
+          {
+            "direction": "input",
+            "name": "status",
+            "signed": 0,
+            "width": 8
+          }
+        ],
+        "outputs": [
+          {
+            "direction": "output",
+            "name": "done",
+            "signed": 0,
+            "width": 1
+          },
+          {
+            "direction": "output",
+            "name": "result",
+            "signed": 0,
+            "width": 8
+          }
+        ],
+        "single_bit": [
+          {
+            "direction": "output",
+            "name": "done",
+            "signed": 0,
+            "width": 1
+          },
+          {
+            "direction": "input",
+            "name": "start",
+            "signed": 0,
+            "width": 1
+          }
+        ]
+      },
+      "system_contract": {
+        "clock": "clk",
+        "declare_ports": 1,
+        "implicit": 0,
+        "reset": "rst_n",
+        "reset_active_level": 0,
+        "reset_keyword": "areset",
+        "reset_kind": "async"
+      }
+    },
+    "source": {
+      "input": ".artifacts/child-storage/reader-explicit/worker.fsm",
+      "resolved_path": ".artifacts/child-storage/reader-explicit/worker.fsm"
+    },
+    "success": true,
+    "support_accounting": {
+      "matched": false
+    }
+  },
+  "mechanisms": [
+    "LoweringIR::_build_child_ir copies actor declared_storage and resets into each generated child; writes produce independent registers without parent storage links.",
+    "Read-only child status is inferred INPUT; CompositionTop emits no storage handoff. PlanBuilder calls TopPortInferenceBuilder::augment_undeclared_top_inputs, adding a public status input and binding it to the worker.",
+    "SourceFrontend creates a fresh SignalManager for every semantic module; a hypothesized cross-root attribute leak is not the cause."
+  ],
+  "next": "Implement live read handoffs under .39.2.2.2; then qualify full-width sole-writer handoffs and wider writer ownership/arbitration under .39.2.2.3/.4.",
+  "normalization": "Repository absolute prefixes in reports are replaced with repository-relative paths; source/FSM/HDL/testbench/runner text is unchanged and sha256 binds original bytes.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.1",
+  "revision": "a929fe719b6202798f65413b36a1c07474ea7706",
+  "schema_version": 1,
+  "scope": "Generated transaction children within one actor; no external repository or submodule access.",
+  "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701"
+}

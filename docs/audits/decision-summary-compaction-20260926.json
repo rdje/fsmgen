@@ -1,0 +1,27 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.1",
+  "source_revision": "a929fe719b6202798f65413b36a1c07474ea7706",
+  "kind": "duplicate-summary-compaction",
+  "files": [
+    {
+      "path": "docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md",
+      "before_sha256": "79adc2e5390eaa35197871d4b60cefea1890f728832a88cb0e65814a2170acc9",
+      "after_sha256": "0ccad5944557079bd504508344e9dfeb5f1dba0da1cb8b451154483d62111412",
+      "removed_lines": 34,
+      "removed_bytes": 1900,
+      "unchanged_contract_from": "## Authority And Scope",
+      "contract_sha256": "d777c7687c5dd3708d2669978d20d4146be08c7a29a5c5abbf26bbabb1610f02",
+      "preserved": "Complete detailed contract and execution-status bytes; contexts, source metadata and ownership unchanged. Only duplicate summaries replaced by pointers."
+    },
+    {
+      "path": "docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md",
+      "before_sha256": "13601f7c3fe987ec4b562760189063abb0125242e76d4a3aa0fc6d99b0a98422",
+      "after_sha256": "1949534921f68d50dbc1de835acf9551428204fa27f79015ecb2529e171429f1",
+      "removed_lines": 20,
+      "removed_bytes": 1185,
+      "unchanged_contract_from": "## Measurement Record",
+      "contract_sha256": "369596e6992185e0c82fd98880a73fcf0b893d26b10775a50ea686ea42b768ad",
+      "preserved": "Complete detailed contract and execution-status bytes; contexts, source metadata and ownership unchanged. Only duplicate summaries replaced by pointers."
+    }
+  ]
+}

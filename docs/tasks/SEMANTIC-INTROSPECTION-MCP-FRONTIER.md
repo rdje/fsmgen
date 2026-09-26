@@ -1054,10 +1054,40 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.1: retain internal actor storage ownership`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Select and repair generated-child storage ownership without duplicating or leaking unrelated actor state.`
   Acceptance: `After .39.2.1, reproduce storage reads/writes across generated transaction children and their parent through public lowering and HDL. Determine shared actor-state ownership from source contracts; distinguish child-owned state, parent-owned state and explicitly routed data. Split routing/arbitration prerequisites when required rather than copying every actor declaration into independent registers. Qualify unused parent storage exclusion, child read/write/reset behavior, exact interfaces and native/API/MCP composition reports with independent runtime evidence. Track any unsupported or ambiguous sharing contract explicitly, update book/spec/facts and commit before closing .39.`
   Verification: `Read-only inspection finds _build_child_ir copies _declared_storage_for_ir($actor) wholesale, whereas _build_child_ports handles public ports separately. Turning all those declarations into explicit internal registers without a usage/ownership analysis could duplicate actor state. No child behavior is changed by .39.2.1.`
+  Findings: `Public strict check accepts child_storage_writer, but independent Verilator simulation reports parent observed=19 after the child writes 37. Generated HDL has separate status registers in parent and worker and no storage wiring; this is incorrect shared actor-state behavior, owned immediately here. A reader with canonical transaction output binding also passes composition despite no status wiring; compare direct worker semantic inventory to composed realization before selecting a repair. Exact probes and runtime output are under .artifacts/child-storage pending a tracked evidence receipt. Initial reader controls without explicit output binding and with shorthand bind syntax correctly failed their documented boundaries and are not signoff cases.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.1`
+  Status: `done`
+  Goal: `Retain the generated-child storage defects and select a single-owner handoff contract before changing module boundaries; remove duplicated decision-summary narration as its bounded documentation prerequisite.`
+  Acceptance: `Retain exact accepted reader/writer sources, strict reports, materialized FSM/HDL, independent runtime oracles and results. Explain why reads escape through generic top-input inference and writes use separate registers. Record actor/domain ownership and explicit live-read/write-handoff semantics, leaving transaction-local state and separately instantiated actors distinct. Schedule read, single-writer and wider writer lanes, update known-boundary book/facts, and commit the diagnosis before implementation.`
+  Verification: `Writer simulation completes the transaction but parent readback remains reset value 19 instead of child-written 37. Reader simulation observes external input 73 instead of parent-written 53. Direct worker semantic inventory includes status input; emitted top exposes and binds it through TopPortInferenceBuilder::augment_undeclared_top_inputs. SourceFrontend creates fresh signal managers per module; no cross-root attribute leak is involved. Both accepted sources pass strict check, so check success is not behavior signoff.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.1: select shared child-storage ownership`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2`
+  Status: `pending`
+  Goal: `Route generated-child actor-storage reads from their owning parent/domain without external port leakage or copied state.`
+  Acceptance: `Use the selected contract to classify lowered child storage reads and writes. Add explicit live read handoffs with collision-safe names, exact widths/types and per-instance top wiring; keep the actual register/reset in the parent/domain and exclude unrelated declarations from child hardware. Qualify scalar, typed, bank-element, guard/expression and repeated-activation reads, parent updates, multiple readers, domains, direct replay and complete native/API/MCP parity with independent runtime evidence. Until qualified writer lanes exist, refuse unsupported generated-child actor-storage writes explicitly rather than emit independent copies. Preserve explicit transaction port bindings and local child state. Update book/spec/facts and commit.`
+  Verification: `Immediate repair after .39.2.2.1; retained reader should observe the parent write with no public status input. Generic direct-composition top-input inference is a valid separate contract and must not be disabled globally.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3`
+  Status: `pending`
+  Goal: `Implement full-width scalar actor-storage writes from a sole generated-child writer with unchanged cycle timing.`
+  Acceptance: `After read ownership, add per-instance write-data and write-enable handoffs feeding the owning parent/domain register on the original assignment edge. Child reads remain live; do not add payload-register latency or defer writes to child completion. Start with one statically owned full-width scalar writer and prove explicit/default resets, repeated activations, conditional writes and parent readback in independent simulation and API/MCP reports. Reject unqualified partial/aggregate/bank or competing writers with contextual diagnostics and explicit next ownership; update docs and commit.`
+  Verification: `Retained writer must change parent readback from 19 to 37 through one shared register. Existing rule-only storage_port arbitration does not supply generated-child writer policy.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4`
+  Status: `pending`
+  Goal: `Complete the remaining generated-child storage writer surface under explicit partial-update and arbitration contracts.`
+  Acceptance: `Audit partial/sliced/typed aggregate writes, dynamic bank stores, parent-versus-child writers and multiple generated instances after the single-writer lane. Split independently verifiable ownership/merge/arbitration prerequisites before implementation. Preserve source assignment ordering, original clock edges, reset ownership and declared domain boundaries; use existing roadmap resource-arbitration requirements instead of inventing silent priority. Keep unsupported combinations fail-closed and task-owned until implemented, prove adversarial concurrent behavior with independent runtime and full report parity, then close .39 only when the selected writer surface and documentation agree.`
+  Verification: `Scheduled after .39.2.2.3; current public resource guidance explicitly defers generated-child storage arbitration. This is owned completion work, not a claim of current support.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -1721,7 +1751,9 @@ hold; native/API/MCP drive families match the qualified hardware behavior.
 Port-option validation and startup cleanup are complete.
 Completed `.39.1` provides direct internal roles and reset/hold behavior.
 Completed `.39.2.1` preserves ordinary/domain ISF storage and qualifies the
-retained CSR baseline. Next `.39.2.2` owns generated-child storage identity. The accepted storage-access baseline exposes read-only
+retained CSR baseline. Completed `.39.2.2.1` retains generated-child storage evidence and decision
+0107. Next `.39.2.2.2` implements live reads and refuses unqualified writers;
+writer handoffs and arbitration remain explicit follow-up leaves. The accepted storage-access baseline exposes read-only
 actor-owned status as an HDL input and loses reset ownership. After that repair,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
@@ -4178,3 +4210,59 @@ checks those locations and semantic child data interfaces without adding a
 report schema. Detailed field metadata is compared on ordinary actor reports.
 Generated transaction-child adoption remains separately owned by `.39.2.2`;
 its copied declarations are not newly marked internal in this slice.
+
+
+## Evidence and selection — `.39.2.2.1`
+
+`docs/audits/generated-child-storage-ownership-20260926.json` retains the exact
+accepted reader/writer sources, strict-check reports, emitted FSM/HDL, direct
+worker semantic report, independent testbenches/runners and simulator output
+from a929fe719. Both strict checks succeed and both Verilator compilations
+succeed. Both behavioral assertions fail: the reader observes external 73
+instead of parent-written 53, and the parent observes reset 19 instead of
+child-written 37. These are deliberately failing reproduction oracles, not
+passing regression or maturity claims. Source/artifact SHA-256 records and
+JSON structure are checked before commit.
+
+Root cause is separate state/no handoff in LoweringIR::_build_child_ir and
+CompositionTop. Read-only inference creates the worker input; PlanBuilder and
+TopPortInferenceBuilder::augment_undeclared_top_inputs legitimately extend the
+generic composition top, so ISF's missing ownership route leaks externally.
+Fresh per-module SignalManagers disprove the initially considered attribute-
+leak explanation. Initial malformed/unbound reader probes were corrected to
+canonical explicit transaction output bindings before capturing admitted cases.
+
+Decision 0107 selects the faithful single actor/domain owner, live reads,
+original-edge writes, no hidden completion latency, no copied unrelated state,
+and explicit writer arbitration. `.39.2.2.2` owns live reads and interim writer
+refusal; `.3` owns sole-writer full-width scalars; `.4` owns wider updates and
+competing writer prerequisites. The book now states the actual known boundary.
+This slice closes diagnosis/contract selection only; implementation remains open.
+
+Claim legs: re-derivation is public strict check/semantic/artifact capture;
+falsification is the independent runtime value distinction; durability is the
+tracked receipt, decision, current guidance and scheduled repair children.
+No caller corpus coverage or cross-domain writer support is inferred.
+
+Containment prerequisite: the rationale collection rejected this append at its
+owned rollover allowance. No allowance or ceiling was raised. Duplicated
+summary narration in decisions 0055/0056 was replaced with pointers to the
+unchanged full contracts in the same files. The preservation receipt is
+`docs/audits/decision-summary-compaction-20260926.json`; source revision and
+before/after hashes bind the review, while exact suffix comparisons prove
+all detailed contract and execution-status bytes remain intact. Index 0107's
+summary was shortened without changing membership. This is duplicate removal,
+not archive or deletion of recorded contract facts; rollover debt remains owned.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--strict --check --json`
+  succeeds for both retained child cases; independent Verilator execution
+  fails the expected-value assertions. LoweringIR copies storage without a
+  shared ownership route; generic composition infers the dangling read input.
+- [x] **ADDRESSED (verified)** — Diagnosis is bound to exact sources, HDL,
+  reports and failing runtime oracles in the tracked audit. Decision 0107 and
+  the ordered repair leaves select and own the fix; no behavior repair is
+  claimed here. JSON/hash checks and exact contract-suffix comparisons pass.
+- [x] **NO REGRESSION** — `knowledge-map: OK` from the registered gate;
+  mdBook build and rendered known-boundary markers pass. Source implementation
+  is unchanged. Both detailed decision contracts and execution-status blocks
+  compare byte-for-byte after duplicated summary removal.
