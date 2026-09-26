@@ -1035,3 +1035,98 @@ parent reset, and inline enum values, then publishes the result through
 optional `inferred_storage[].fields`. This does not change generated `.fsm`,
 HDL, access behavior, reset derivation, banks, aggregate carriers, packet/flit
 layouts, or existing runtime field/data operations.
+
+## 2026-09-26: Configuration, Verification And Phase-Metadata Requests
+
+The director supplied the packets under
+`../specforge/docs/upstream/fsmgen/sf-isf-*/`. Their README requirements and
+minimal ISF sources were read in full. FSMGen reproduced the supplied cases
+using exact source copies inside its own repository and the complete current
+checkout at `a7bf398ac3c1008b996bf0a92bdd18c9464d9fda`. No SPECFORGE file or
+submodule implementation was changed, and no foreign bundle script was run.
+Caller corpus-impact counts remain caller claims, not independently measured
+FSMGen signoff evidence. Exact inputs, reports and controls are retained in
+[the intake audit](audits/specforge-feature-intake-20260926.json).
+
+### Answer: unknown interface-port clauses must not be silently ignored
+
+**No, silent acceptance is not intended support.** The current parser accepts
+`(bogus-clause xyz)` and the unimplemented `(present PROT_Present)` port option,
+then drops them. The complete generated HDL matches the clause-free control
+except its date header. `_parse_interface` skips malformed property shapes and
+has no rejection after the recognized-option branches. This is a validation
+defect, owned by `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.2`.
+
+The repair will reject unsupported and malformed port options through the
+shared parser, including strict check, semantic/schedule queries and API/MCP.
+It will preserve supported `width`, `type`, `domain`, output `reset`/`default`
+and their existing validation. Rejecting `present` is not an implementation
+of optional ports. Until that feature ships, SPECFORGE should continue emitting
+only documented options; a successful check does not establish that an
+unimplemented clause was understood. This response records the defect and
+repair contract; the intake commit itself changes no parser behavior.
+
+### Owned feature work
+
+FSMGen intends to implement all six requested feature families. Required
+capabilities are acceptance criteria. Optional extensions have separate
+slices, so the first supported subset will not imply that every optional form
+already works.
+
+All owners below belong to the
+[semantic/API/MCP task tree](tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md).
+Each has bounded child slices and requires synchronized public contracts,
+capability/diagnostic discovery, semantic/schedule reports, native/API/newline
+MCP parity, book examples and appropriate independent HDL evidence.
+
+| Packet | Required work and scope | Owner |
+| --- | --- | --- |
+| `sf-isf-generic-port-widths` | Preserve authored width dependencies through ports, registers, constants and resets; recompute supported library/activation/top shapes on override. Qualify actual external HDL overrides and illegal settings. | `.33.3` |
+| `sf-isf-parameter-value-set` | Validate integer value/range unions at defaults and every supported override; report legal sets. Separate optional recommendations/warnings and HDL legality checks have their own children. | `.33.4` |
+| `sf-isf-optional-signal` | Define zero-width/presence and absent-input value rules before lowering; remove absent endpoints and replace permitted reads faithfully. Instance-specialized presence has a separate child. | `.33.5` |
+| `sf-isf-actor-level-assertion` | Allow always-on actor `assert`/`assume`/`cover`, including actors without transactions, without invented scheduling. Preserve current transaction-check meaning; explicit multi-domain placement is separately owned. | `.33.6` |
+| `sf-isf-known-value-predicate` | Add verification-only knownness, with separate direct-unknown/grouped forms and independent four-state qualification. Knownness means absence of X/Z, not every protocol-specific notion of a valid value. | `.33.7` |
+| `sf-isf-transaction-phase-groups` | Check phase/member/role/provenance facts and expose them as metadata without drive values, order or HDL behavior. Declaration-only transactions have a separate contract/implementation child. | `.33.8` |
+
+The generic-width request is **not a duplicate** of the earlier derived-width
+request (`.32.3`). Current actor width references resolve to the default before
+emission; the module still declares the parameter. The generic foundation must
+preserve that dependency before a derived width can truthfully claim to follow
+an HDL or use-site override. Current width-dependent HDL remains fixed at the
+resolved default until the relevant implementation is qualified.
+An independent HDL instantiation with `DATA_WIDTH=64` still observes a
+32-bit `WDATA` for the default-32 source; the separately generated default-64
+control observes 64 bits. The audit retains both compile/runtime receipts.
+
+The earlier phase-membership guidance remains valid: do not manufacture a
+drive value or body order from membership alone. `.33.8` now owns the requested
+checked metadata implementation; selection is not a claim that it ships.
+
+### Additional defect in the optional-port positive control
+
+The packet's positive-width `baseline-good.isf` passes strict check but its
+undriven `AWMECID` output is absent from HDL. Replacing the parameter with a
+literal positive width still loses it; adding a real assignment preserves it.
+The scheduled FSM retains `+size (AWMECID 16)` without an output role or drive
+marker, so ordinary signal inference omits it. Schedule declaration counts and
+realized semantic output inventories therefore differ. The input-role repair
+in `a7bf398ac` intentionally covered inputs; it does not repair this output case.
+
+`.33.9` owns the output-interface repair without inventing a drive value.
+Optional-port qualification must independently inventory the realized ports:
+comparing two files that both omit a supposedly present output proves nothing
+about presence. The original caller fixture remains unchanged in the audit;
+literal-width and driven controls are separately identified.
+
+### Execution order
+
+Commit intake, then repair unknown port options (`.33.2`) and declared output
+loss (`.33.9`). Resume the already owned watchdog and transaction-reachability
+repairs (`.32.1.3.3.3`, `.32.1.3.3.1`) and broader behavior signoff, followed by
+bundle provenance and executable interconnect lowering (`.32.2`, `.32.4`).
+The feature queue then takes actor-level verification, knownness and checked
+phase metadata, followed by the generic-width foundation, derived widths,
+parameter constraints and optional interfaces in dependency order. Every
+optional request has an explicit leaf; none is silently dropped or declared
+complete by this response. Full-source API coverage and historical native
+qualification remain live obligations after these repairs and extensions.

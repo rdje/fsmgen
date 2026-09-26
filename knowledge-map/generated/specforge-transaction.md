@@ -18,5 +18,5 @@
 
 _SPECFORGE transaction phase membership stays ISF metadata, not fabricated behavior_
 
-- **date:** 2026-06-16 · **status:** current
+- **date:** 2026-09-26 · **status:** current
 - **source and verification:** [`docs/knowledge/specforge-transaction-phase-membership-response.md`](../../docs/knowledge/specforge-transaction-phase-membership-response.md)

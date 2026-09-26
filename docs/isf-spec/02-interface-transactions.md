@@ -45,6 +45,10 @@ If an inferred scheduler storage name matches a declared interface port, the
 declared port entry is kept and the inferred duplicate is suppressed.
 Output ports are marked as public outputs by the `.fsm` emitter when assigned
 from drive/rule output paths.
+An undriven declared output may currently be omitted during FSM port inference.
+This is an owned interface-preservation defect (`.33.9` in the semantic/API/MCP
+task tree), not a supported optional-port spelling; strict source acceptance
+alone does not prove that declared and realized output inventories agree.
 
 Output entries may carry `(reset V)` and `(default V)` metadata when `V` is a
 non-negative integer literal that fits the resolved positive integer output

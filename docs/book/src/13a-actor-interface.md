@@ -424,7 +424,7 @@ See [Transactions](13b-transactions.md) for per-await semantics.
   (output PADDR (width 32)))
 ```
 
-Ports become `.fsm` `+size` declarations and module ports. Inferred scheduler
+Port widths become `.fsm` `+size` declarations. Inferred scheduler
 storage is not emitted a second time when it shares a name with a declared port.
 
 Declared inputs remain public even when no transaction or rule reads them.
@@ -452,6 +452,12 @@ domain's `scheduled_fsm` to its semantic composition child to inspect the
 realized interface, including crossing handoffs. `fsmgen_check`,
 `fsmgen_semantic_introspect` and `fsmgen_schedule_preview` expose the same
 native reports through the API and newline MCP adapter.
+
+An undriven declared output can currently be omitted by signal inference,
+even with a positive width. This is an owned interface-preservation defect;
+it is not optional-port support and must not be used as an absence mechanism.
+Assigned outputs retain their ordinary output roles. See the
+[current request boundaries](13k-isf-feature-support-matrix.md#requested-extensions-and-current-gaps).
 
 Interface port names are unique across both input and output directions, and
 the interface block itself is a singleton actor clause.

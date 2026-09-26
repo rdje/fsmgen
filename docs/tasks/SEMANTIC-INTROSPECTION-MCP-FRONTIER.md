@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-09-25`
+- Last updated: `2026-09-26`
 - Owner: repo-local workflow
 
 ## Goal
@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -747,7 +747,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.3`
   Status: `pending`
   Goal: `Support bounded derived actor width parameters with symbolic dependency preservation.`
-  Acceptance: `Audit existing public expression contracts, then decompose sf-isf-derived-width-parameter into bounded parameter resolution, symbolic lowering/emission, ceiling arithmetic and clog2, refusal diagnostics, and semantic/API/MCP qualification leaves. Verify default and overridden widths independently in emitted HDL; document derived-parameter override policy, integer division meaning and intentional optional inline-width boundary. Reject undeclared/later/cyclic/runtime operands, zero divisors and invalid widths. Preserve existing scalar/aggregate parameter behavior.`
+  Acceptance: `Coordinate the generic-width foundation under .33.3, audit existing public expression contracts, then decompose sf-isf-derived-width-parameter into bounded parameter resolution, symbolic lowering/emission, ceiling arithmetic and clog2, refusal diagnostics, and semantic/API/MCP qualification leaves. Verify default and overridden widths independently in emitted HDL; document derived-parameter override policy, integer division meaning and intentional optional inline-width boundary. Reject undeclared/later/cyclic/runtime operands, zero divisors and invalid widths. Preserve existing scalar/aggregate parameter behavior.`
   Verification: `Caller bundle: ../specforge/docs/fsmgen-issues/sf-isf-derived-width-parameter/README.md; SPECFORGE owner FSMGEN-REQUESTS.1. Current reproduction and contract reconciliation pending. Reported corpus counts remain externally supplied claims.`
   Commit: `pending`
 
@@ -756,6 +756,223 @@ For FSMGen, the analogs are:
   Goal: `Repair emitted protocol ISF artifacts that bypass executable IAL1 lowering.`
   Acceptance: `Before derived-width feature work, audit generated ISF round-trip admission against published artifact contracts. Root-cause every refusal and decompose repairs by protocol and safe lowering boundary. Require generated ISF to be executable through the public ISF parser/scheduler where advertised, preserve protocol-specific behavior with independent HDL oracles, remove parallel handwritten IAL0 bypasses, and synchronize report/API/MCP/book claims. Do not introduce IAL2-only syntax into ISF or relabel executable artifacts as mere review prose to close the defect.`
   Verification: `The .32.1.1 compatibility probe obtains ahb_interconnect.isf from the public PPIF adapter for ppif/ahb_interconnect.ppif; ISF admission fails at unknown actor clause address-map. AhbInterconnect::_build_ahb_interconnect_artifacts separately calls _build_ahb_interconnect_isf and _build_ahb_interconnect_fsm; the first emits address-map/decode/behavior clauses unsupported by Parser::_build_actor, while normal source generation uses the separately built FSM. Existing knowledge calls these review artifacts, but docs/book/src/14i-ahb-and-integration.md claims lowering through ISF and IAL2-FEATURE-COMPLETENESS-FRONTIER forbids bypassing that chain. This is a pre-existing architecture/documentation gap, not evidence that the new operand validator rejects valid rules. Root-cause evidence is retained under docs/audits/specforge-rule-admission-20260924/; full artifact census and repair remain owned here.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33`
+  Status: `active`
+  Goal: `Deliver SPECFORGE configuration, verification and phase-metadata requests with complete public semantic API/MCP coverage.`
+  Acceptance: `Read the director-supplied packets, reproduce current public behavior, answer the strict-port question, and own each required/optional request through bounded implementation leaves. Preserve existing runtime repair obligations and the derived-width dependency; no request is closed by intake or parser acceptance alone.`
+  Verification: `Caller-authorized read-only inputs: ../specforge/docs/upstream/fsmgen/sf-isf-{actor-level-assertion,generic-port-widths,known-value-predicate,optional-signal,parameter-value-set,strict-unknown-port-clause,transaction-phase-groups}/README.md. All README texts and minimal sources read; fresh native reproduction and independent controls retained in docs/audits/specforge-feature-intake-20260926.json. Caller corpus quantities are not independently verified.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.9`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.1`
+  Status: `done`
+  Goal: `Reproduce and integrate the new SPECFORGE requests, answer the strict-port question, and establish ordered repair/feature leaves.`
+  Acceptance: `Use complete current FSMGen resources and repository-local copied caller fixtures, never execute foreign bundle scripts or modify SPECFORGE. Retain exact source/request hashes and native strict reports, diagnose silent acceptance at its code locus, reconcile phase guidance and generic/derived widths, and assign every requirement a concrete owner with report/API/MCP and independent behavior evidence requirements. Update book, bounded resume pointer and durable response, then commit before implementation.`
+  Verification: `passed; exact caller inputs, native strict checks/generation, literal/driven output controls and real HDL width-override oracle retained in docs/audits/specforge-feature-intake-20260926.json. Final replay captures all retained sources with unchanged check outcomes; negative destination controls reject before writes. Fresh mdBook render and T1414 docs-path checks pass. Six feature families and required/optional children owned; question answered in the existing tracked response. Caller-wide impact and future feature implementation are not qualified.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.1: answer SPECFORGE feature requests and strict-port question`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.2`
+  Status: `pending`
+  Goal: `Reject unsupported or malformed actor interface-port options instead of silently discarding them.`
+  Acceptance: `Answer sf-isf-strict-unknown-port-clause as a validation defect. Reproduce bogus-clause/present and malformed scalar/empty/nested option shapes through public parse, strict check, semantic and schedule queries. Reject unrecognized options at the shared parser boundary with named port/option diagnostics in default and strict modes; retain width/type/domain/reset/default behavior and targeted duplicate/arity/type errors. Census first-party producers and qualify unchanged valid controls. Do not accidentally implement optional presence while refusing its currently unsupported spelling. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3`
+  Status: `active`
+  Goal: `Deliver generic parameter-dependent port widths and safe shape overrides; coordinate the earlier derived-width request.`
+  Acceptance: `Complete the exact child slices; active denotes an owned container, not shipped capability or simultaneous implementation.`
+  Verification: `pending; caller request and fresh baseline owned by .33.1`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3.1`
+  Status: `pending`
+  Goal: `Define and preserve authored width dependencies separately from resolved default widths.`
+  Acceptance: `For sf-isf-generic-port-widths R1/R4, audit existing IAL0 parameterized-size and IAL1 width contracts; preserve symbolic dependency and resolved width without guessing from equal numeric values. Cover actor, transaction and library parameter scopes, parameter/constant distinction, type references, resets, parameter aliases and public report schema evolution. Document the currently fixed-default HDL behavior immediately; a misleading unused parameter must not imply supported shape configurability. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3.2`
+  Status: `pending`
+  Goal: `Emit generic port, register, expression and reset widths consistently.`
+  Acceptance: `After .3.1, implement symbolic width propagation for supported HDL backends through the public IAL1-to-IAL0 path. Every dependent port, temporary/register, reset and width-sensitive constant follows the parameter; unrelated equal-width signals remain independent. Prove an actual HDL DATA_WIDTH override to 64 changes the port and matches separately generated default-64 behavior, while the fixed-width baseline remains unchanged. Unsupported backend shapes fail closed; no textual HDL post-processing. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3.3`
+  Status: `pending`
+  Goal: `Re-specialize parameter-driven interfaces at library, activation and generated-top use sites.`
+  Acceptance: `For R2, recompute per-instance widths from explicit/inherited overrides before binding validation, preserving instance independence and stable identities. Cover exact-width binding and stale default-width refusal, nested supported scopes, generated tops and existing transaction parameter behavior. Coordinate .32.3 derived dependencies and .33.4 legality constraints without bypassing those contracts. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.3.4`
+  Status: `pending`
+  Goal: `Qualify generic-width legality and the complete parameter-to-HDL contract.`
+  Acceptance: `Reject nonpositive/noninteger width settings at source/use-site and exposed HDL elaboration boundaries where applicable. Exercise independent elaboration/runtime overrides, constant/reset sizing and direct/derived width controls; expose authored dependency, default and specialized shape to agents. Resolve R3 explicitly: ship real generic behavior or clearly bound any still-fixed surface without silently presenting a configurable width. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.4`
+  Status: `active`
+  Goal: `Carry legal parameter value sets and recommendations through defaults, overrides and reports.`
+  Acceptance: `Complete the exact child slices; active denotes an owned container, not shipped capability or simultaneous implementation.`
+  Verification: `pending; caller request and fresh baseline owned by .33.1`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.4.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.4.1`
+  Status: `pending`
+  Goal: `Parse and validate scalar parameter value sets and inclusive ranges.`
+  Acceptance: `For sf-isf-parameter-value-set R1, define union semantics for values/range clauses and validate integer members, inclusive bounds, nonempty sets, scalar-only use and default membership. Preserve plain NAME/value and existing aggregate defaults. Reject illegal defaults, reversed ranges, malformed/duplicate clauses and runtime operands with parameter/value/set context. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.4.2`
+  Status: `pending`
+  Goal: `Enforce parameter sets at every supported override and expose the contract.`
+  Acceptance: `For R2/R3, preserve declared constraints through library use, activation and generated-top overrides and check the effective value at each existing specialization boundary. Cover inherited/explicit valid and invalid overrides. Add bounded actor/instance parameter constraint fields and corresponding capability/schema, semantic/schedule and actual MCP parity tests. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.4.3`
+  Status: `pending`
+  Goal: `Add advisory recommended parameter values and ranges.`
+  Acceptance: `For optional R4, preserve recommended values/ranges separately from legal sets. Defaults and overrides outside recommendations warn rather than fail, while illegal values still fail. Define warning identity/provenance and recommendation consistency, expose both sets to agents, and verify that advice cannot silently change a chosen value. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.4.4`
+  Status: `pending`
+  Goal: `Validate exposed HDL parameter instantiations against declared sets.`
+  Acceptance: `For optional R5 and generic-width coordination, emit supported elaboration-time legality checks without changing legal synthesized behavior. Qualify legal/illegal external instantiations with an independent HDL oracle; document and fail closed at backend boundaries that cannot carry the chosen contract. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.5`
+  Status: `active`
+  Goal: `Represent optional input/output presence and absent-input values faithfully.`
+  Acceptance: `Complete the exact child slices; active denotes an owned container, not shipped capability or simultaneous implementation.`
+  Verification: `pending; caller request and fresh baseline owned by .33.1`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.5.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.5.1`
+  Status: `pending`
+  Goal: `Define optional-port width, presence and tie-off semantics before lowering.`
+  Acceptance: `For sf-isf-optional-signal R1-R3, reconcile zero-width absence with logical value width and tie-off fit checks, nonzero presence parameters, absent output no-op writes, and reads of absent inputs. Require an explicit static contract for undeclared/non-scalar presence, negative/noninteger widths, nonliteral/too-wide tie-offs and output tie-offs. Resolve how logical width is known for zero-width inputs rather than inventing a fit rule; preserve positive-width behavior. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.5.2`
+  Status: `pending`
+  Goal: `Lower resolved optional ports and expose declared versus realized interfaces.`
+  Acceptance: `After .5.1, remove absent formal ports, routes, drivers and width-dependent storage; replace allowed absent-input reads with the declared tie-off and reject a read without one. Qualify both presence values, zero/positive widths, domain ownership, reset and expression use with independent HDL behavior. Keep declaration/presence/resolved value/provenance discoverable through public reports without manufacturing a live input. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.5.3`
+  Status: `pending`
+  Goal: `Re-evaluate optional presence at supported instance-specialization boundaries.`
+  Acceptance: `For optional R4, coordinate generic-width and parameter-set work so each library/activation override independently determines presence. Define supported HDL elaboration versus generated-specialization boundaries explicitly; require actual emitted interface inventories and binding/runtime controls for both absent and present configurations. No placeholder zero-width vectors or silently ignored presence clauses may stand in for absence. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.6`
+  Status: `active`
+  Goal: `Allow always-on actor-level assertion, assumption and coverage intent.`
+  Acceptance: `Complete the exact child slices; active denotes an owned container, not shipped capability or simultaneous implementation.`
+  Verification: `pending; caller request and fresh baseline owned by .33.1`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.6.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.6.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.6.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.6.1`
+  Status: `pending`
+  Goal: `Parse and lower actor-level assert/assume/cover without a hosting transaction.`
+  Acceptance: `For sf-isf-actor-level-assertion R1/R2, reuse the existing verification property language on ordinary actors, including no transactions. Preserve clock/reset policy, verification-only guards and always-on semantics; do not invent a trigger/completion or silently gate by an unrelated transaction state. Qualify signal/operator/window errors and existing transaction-level property equivalence. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.6.2`
+  Status: `pending`
+  Goal: `Qualify actor-level verification reports, backend behavior and placement guidance.`
+  Acceptance: `Expose checked actor invariants and source placement in bounded semantic/schedule contracts where meaningful, with full API/MCP parity and capability discovery. Prove emitted properties and independent supported simulation outcomes, reset suppression, malformed inputs and unchanged ordinary behavior. State transaction-level checks remain always-on; any future transaction-scoped meaning requires a distinct contract. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.6.3`
+  Status: `pending`
+  Goal: `Support explicit domain ownership for actor-level checks.`
+  Acceptance: `For optional R3, choose a bounded domain annotation, resolve every referenced signal to that domain, preserve each clock/reset and refuse illegal cross-domain references or ambiguous ownership. Qualify actual domain artifacts and properties; do not treat multiple declared clocks as an implicit CDC verification rule. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.7`
+  Status: `active`
+  Goal: `Add verification-only known/unknown value predicates with real four-state evidence.`
+  Acceptance: `Complete the exact child slices; active denotes an owned container, not shipped capability or simultaneous implementation.`
+  Verification: `pending; caller request and fresh baseline owned by .33.1`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.7.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.7.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.7.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.7.1`
+  Status: `pending`
+  Goal: `Add a verification-only known signal predicate.`
+  Acceptance: `For sf-isf-known-value-predicate R1, define known(SIG) as every bit being 0 or 1 and lower through the existing property path to the supported backend equivalent of !$isunknown. Validate declared scalar/vector signals and refuse rule guards/drive values or malformed arity. Preserve stable/changed/rose/fell/past behavior and synthesis exclusion. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.7.2`
+  Status: `pending`
+  Goal: `Add the direct unknown predicate and grouped known-value form.`
+  Acceptance: `For optional R2/R3, define isunknown(SIG) and known(A B C) as the exact negative/conjunction contracts. Preserve diagnostics and expression precedence, require every member to resolve, and expose normalized public semantics without confusing knownness with numeric validity, protocol validity or stability. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.7.3`
+  Status: `pending`
+  Goal: `Qualify knownness using an independent four-state oracle.`
+  Acceptance: `Prove 0/1 inputs pass and X/Z-containing vectors fail in the qualified property context, including guards and resets. A two-state simulator or emitted system-function string alone cannot prove this claim. Identify a supported oracle or an explicit unqualified boundary; synchronize capability, API/MCP and book evidence without promoting compile success to four-state behavior. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.8`
+  Status: `active`
+  Goal: `Carry checked transaction phase memberships without invented values or order.`
+  Acceptance: `Complete the exact child slices; active denotes an owned container, not shipped capability or simultaneous implementation.`
+  Verification: `pending; caller request and fresh baseline owned by .33.1`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.8.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.8.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.8.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.8.1`
+  Status: `pending`
+  Goal: `Define checked transaction phase-group metadata and validation.`
+  Acceptance: `For sf-isf-transaction-phase-groups R1/R2, follow the existing June response: preserve authored transaction/phase names, member signals, actor-relative roles and optional provenance as metadata. Resolve members to actor ports and roles to directions; reject duplicate/malformed/empty phases and unknown signals. Membership creates no drive, sample, order, schedule edge or HDL behavior. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.8.2`
+  Status: `pending`
+  Goal: `Expose phase memberships through public contracts and prove behavior preservation.`
+  Acceptance: `For R3, add bounded discoverable phase/member/role/provenance report fields to semantic/schedule APIs and MCP, including lossless round-trip/defensive-copy where applicable. Compare generated HDL for baseline and metadata-enriched behavior sources, and qualify every malformed-member refusal through native/API/newline queries. Update the canonical SPECFORGE response and book examples. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.8.3`
+  Status: `pending`
+  Goal: `Support metadata-only transactions without synthesizing transaction behavior.`
+  Acceptance: `For optional R4, establish the declaration-only transaction contract, including whether names can be activation targets, report presence, reset/system requirements and interaction with ordinary transactions. Preserve phase facts without invented entry, completion or state machinery; unsupported behavioral use fails closed and actual artifacts demonstrate the absence of added behavior. Every shipped slice synchronizes supported syntax, capability/diagnostic contracts, semantic and schedule API/MCP reports, book/examples and independent positive/negative checks before its commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.9`
+  Status: `pending`
+  Goal: `Repair loss of declared but undriven actor output interfaces and qualify optional-port presence controls.`
+  Acceptance: `Reproduce the optional-signal packet's positive-width baseline missing AWMECID despite strict success, with literal-width and driven-output controls. Reconcile public declaration, schedule and realized interface contracts; preserve declared output identity through generated artifacts where supported without inventing a drive value, or fail closed at an explicitly unsupported emission boundary. Cover ordinary/domain and relevant generated-child paths, actual HDL port inventories and native/API/MCP parity. Update the book and the optional-signal qualification to require actual present/absent endpoints, not just strict status or byte comparisons between already-missing ports. Commit before optional-port implementation.`
+  Verification: `Fresh .33.1 current-revision native check accepts optional-signal/baseline-good.isf, but HDL contains done only: positive-width AWMECID is undriven and omitted. The literal-width control also omits AWMECID; a real assignment restores it. Exported FSM has +size but no output role or drive marker; SignalAnalyzer classifies unused names as INTERNAL_DEFAULT, so the interface omits them. Complete native semantic/schedule/export/HDL evidence is retained in docs/audits/specforge-feature-intake-20260926.json; repair remains pending.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -1412,14 +1629,20 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.3` is next: initialize and
-rearm the external-callee watchdog before a leading await. Generated naming,
-explicit whole top-input routing and declared actor input preservation are
-qualified; `.32.1.3.4` is closed. Repair independent transaction reachability
-under `.32.1.3.3.1` before broader behavior/API/MCP signoff in `.32.1.3.3.2`.
-Bundle provenance, interconnect lowering and derived widths follow under
-`.32.2`, `.32.4` and `.32.3`. Preserve spent native compiler/startup evidence;
-source checks do not promote runtime support.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.1` is complete: the tracked SPECFORGE
+response answers the strict-port question and owns the requested extensions.
+Next activate `.33.2` to reject unknown/malformed port options, then `.33.9`
+to preserve declared outputs without invented values. Resume watchdog entry
+and rearming under `.32.1.3.3.3`, independent transaction reachability under
+`.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
+Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
+Bundle provenance and executable interconnect lowering follow under `.32.2`
+and `.32.4`. Then implement actor checks, knownness and phase metadata before
+the generic-width foundation, derived widths, legal sets and optional ports
+in dependency order; exact leaves are under `.33` and `.32.3`.
+Full-source API coverage and historical native qualification remain open.
+Preserve spent compiler/startup evidence; source checks do not promote runtime
+support. The intake commit changes no production compiler behavior.
 
 ## Decisions
 
@@ -3513,3 +3736,43 @@ uses this owner, tracked tests, audit, synchronized book/spec and fact card.
 All verification jobs are consumed. Complete the staged doctrine and normal
 commit hooks before starting the watchdog leaf. Full CI/push and historical
 startup/native qualification remain gated and are not claimed by this slice.
+
+## Acceptance Checklist — `.33.1` SPECFORGE intake and response
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Exact caller copies run through native
+  `--strict --check --json` and generation at `a7bf398ac`. Unknown port clauses
+  succeed with HDL identical to the baseline except Date. `_parse_interface`
+  skips malformed shapes and has no final unknown-option refusal. Separate
+  `--emit-semantic-json`, schedule and exported FSM controls locate lost
+  undriven outputs at missing output roles; literal widths reproduce it and
+  a real assignment preserves the output. Actual HDL instantiation proves the
+  default-resolved width survives an external parameter override incorrectly.
+- [x] **ADDRESSED (verified)** — The existing tracked SPECFORGE response now
+  answers the question, states each feature's intended scope and current
+  limits, distinguishes optional extensions, and gives execution order.
+  `.33.2` through `.33.9` own every requested family and discovered defect;
+  `.32.3` remains the distinct derived-width owner. Each implementation requires
+  public contracts/reports, API/MCP parity, book examples and appropriate
+  independent behavior evidence. This is intake completion, not a claim that
+  compiler defects or requested features are already implemented.
+- [x] **NO REGRESSION** — Final retained-input replay captures 28 sources with
+  zero changed strict-check outcomes. The replay driver rejects absolute,
+  escaping, root and existing destinations before output creation. T1414:
+  `All tests successful`, `Files=1, Tests=2`. Fresh mdBook build and rendered
+  gap/interface markers pass; no interactive visual audit is claimed.
+
+The audit retains complete input identities, reports, HDL and independent
+width/output controls. Re-derivation is native capture and local replay;
+falsification uses clause-free HDL, literal/driven output controls and actual
+HDL width instantiation; durability is the tracked audit, replay driver,
+response, task owners, book/spec and canonical fact card. Caller-wide corpus
+counts remain unverified. The first book marker probe expected packet/signal
+names absent from the authored prose; its build succeeded but the probe failed.
+Corrected exact authored markers pass in a fresh build; no product change was
+made to satisfy the mistaken probe. All probe jobs are consumed. Complete the
+staged doctrine and normal commit hooks before beginning `.33.2`.
+
+The first staged doctrine pass rejected the focused-document collection's
+stale growth allowance after the response expanded. The declared allowance
+was refreshed from measured usage plus its existing ratchet step, within the
+unchanged ceiling and existing live owner. No limit or doctrine was bypassed.

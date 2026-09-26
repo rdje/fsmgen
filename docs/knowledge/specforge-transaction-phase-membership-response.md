@@ -8,7 +8,7 @@ answers:
   - "should bare drive be a participation marker?"
   - "what is .val for in verification generation?"
   - "where is the SPECFORGE phase membership response?"
-date: 2026-06-16
+date: 2026-09-26
 status: current
 tags: [specforge, isf, verification, val, phase-metadata]
 evidence: docs/SPECFORGE_FEEDBACK_RESPONSE.md; docs/tasks/ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md
@@ -27,10 +27,15 @@ guidance is:
 - do not fabricate output drive values or transaction-body order;
 - use transaction bodies only for grounded implementation behavior;
 - keep ungrounded phase membership in SPECFORGE IntentIR metadata/residuals
-  until FSMGen selects checked transaction phase-group metadata;
+  until checked transaction phase-group metadata ships;
 - keep `.isf` as SPECFORGE's synthesizable target;
 - treat `.val`, if ever selected, as a future verification artifact/layer
   derived from `.isf` or schedule reports, not as a replacement for `.isf`.
 
 Any future checked transaction phase-group metadata implementation must have
 its own task-tree owner before parser/report/code changes.
+
+The director's September packet now selects that implementation under
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.8`, with distinct validation, public
+report/API/MCP and metadata-only transaction leaves. It remains unimplemented;
+the June prohibition on invented drive values and ordering still applies.
