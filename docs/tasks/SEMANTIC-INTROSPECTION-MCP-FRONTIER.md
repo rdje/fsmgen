@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1147,10 +1147,17 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.41: distinguish hardware reset from power-up`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.42`
-  Status: `pending`
+  Status: `done`
   Goal: `Emit a realized generated module definition once when multiple instances reference the same source.`
-  Acceptance: `Immediately after .39.2.2.2.2.1 and before aggregate child-read qualification, reproduce a canonical C2 top with two ?dtc instances of reader_src. Locate generated-artifact assembly, distinguish identical reusable module definitions from conflicting same-name realizations/parameter specialization, and repair at the semantic artifact boundary. Prove duplicate-source direct composition and multiple ISF worker instances with independent HDL/runtime, preserve mismatched-module diagnostics, docs and public reports, then commit.`
+  Acceptance: `Immediately after .39.2.2.2.2.1 and before aggregate child-read qualification, reproduce a canonical C2 top with two ?dtc instances of reader_src. Locate generated-artifact assembly, distinguish identical reusable module definitions from conflicting same-name realizations/parameter specialization, and repair at the semantic artifact boundary. Prove duplicate-source direct composition with independent HDL/runtime and preserve every ISF worker instance, binding and local value. The independently exposed staggered-completion join defect is owned by .43 immediately next; retain its exact failing runtime assertions explicitly rather than claim join completion. Preserve mismatched-module diagnostics, docs and public reports, then commit.`
   Verification: `The strict-admitted aggregate_top probe emits module reader_src twice for reader and copy_reader instances, plus its top. GenerationOrchestrator maps hdl_code from every realized instance into child_segments without grouping by module identity; GeneratedChildRealizer constructs a full emitted module per instance. This is separate from duplicate alias-derived typedefs: scoping typedefs cannot fix repeated module definitions. Reproducer retained in .artifacts/aggregate-typedefs/duplicate-module.fsm; the source is a canonical two-instance pass-through with shared reader_src and top fanout.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.42: share verified generated module definitions`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.43`
+  Status: `pending`
+  Goal: `Diagnose and repair repeated-worker await_all runtime timeout found during module-definition qualification.`
+  Acceptance: `Immediate blocker investigation within .42: trace the exact T1907 repeated_workers parent/worker state and completion signals; distinguish local-init, activation, completion, and join behavior. Fix a small direct cause in the current safe slice or schedule the isolated lowering repair immediately before aggregate-read qualification. Preserve independent worker local state and repeat activation oracles; do not hide the timeout by weakening await_all expectations.`
+  Verification: `T1907 strict-admits two instances of worker, emits one worker definition after .42, and compiles independently, but its first or repeated await_all completion times out. The worker has local acc/default initialization, a payload assignment, a wait and a result assignment. Parent binds separate inputs/outputs and spawns sequentially. Exact source is repeated_workers in T1907; retained probe .artifacts/module-definitions/repeated-workers.isf. The trace proves first/second outputs 83/29 and non-overlapping done pulses while parent remains in its await_all state. FSM::_emit_transitions implements sync_all as a raw AND of done_ports; completion is emitted as a pulse. Add per-activation completion memory with exact reset/rearm and no added completion-edge latency.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -1819,8 +1826,9 @@ retained CSR baseline. Completed `.39.2.2.1` retains generated-child storage evi
 single-domain children and refuses unqualified aggregate/domain reads and writes.
 Completed `.40` repairs single-member type normalization; `.41` aligns residual
 reset wording. Completed `.39.2.2.2.2.1` scopes aggregate typedefs by module.
-Next `.42` repairs repeated-source module emission, then `.39.2.2.2.2.2`
-qualifies aggregate reads and `.39.2.2.2.3` repairs domain child composition
+Completed `.42` shares verified repeated-source module definitions. Next `.43`
+repairs staggered child-completion joins before `.39.2.2.2.2.2` qualifies
+aggregate reads and `.39.2.2.2.3` repairs domain child composition
 before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
@@ -4499,3 +4507,39 @@ aggregate read refusal stays in place until `.39.2.2.2.2.2` qualifies routing.
   failures were incorrectly escaped namespace regex updates in T280/T282;
   their corrected assertions preserve alias/shape checks. Fresh mdBook output
   contains the scoped example and semantic-compatibility explanation.
+
+
+## Qualification — `.42`
+
+The realized-instance plan retains each instance's complete generated HDL;
+GenerationOrchestrator concatenates all payloads, even when module identity is
+shared. Collect definitions at that realized-artifact boundary: preserve every
+instance/provenance/binding, emit the first definition per module, and require
+later definitions to agree. Ignore only the known generated scaffold header's
+informational Date line for comparison; retain the emitted first payload
+unchanged. No global text deduplication or arbitrary comment normalization is
+allowed. Conflicting same-name definitions and collisions with the generated
+top fail explicitly. VHDL name comparison remains case-insensitive.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--strict --check --json` admits
+  repeated sources; retained Verilator output reports MODDUP and duplicate
+  typedefs after each realized instance contributed the same full module to
+  GenerationOrchestrator child_segments.
+- [x] **ADDRESSED (verified)** — T1907 proves one emitted definition, both
+  instance records, independent scalar/aggregate/parameter runtime, preserved
+  worker-local values and complete check/semantic/schedule API/newline parity.
+  Definition/top-name conflicts fail contextually. The unchanged completion
+  expectations remain explicit `.43` TODOs; they are not runtime passes.
+- [x] **NO REGRESSION** — T1907/T189/T292/T1906 report `All tests successful`
+  with only the explicitly owned `.43` completion TODOs. T114/T281 also report
+  `All tests successful`; mdBook builds and rendered reuse/limitation markers
+  match the qualified scope.
+
+
+The `.43` trace establishes a separate lowering defect: independent child
+results are correct, but their completion pulses occur on different edges and
+the parent sync predicate is their raw conjunction. T1907 retains the exact
+normal/repeated-completion expectations under an explicit `.43` TODO, with a
+separate passing timed observation of independent worker-local results. No
+completion qualification is claimed by `.42`. `.43` is the immediate next leaf
+and must remove the TODO only after the original runtime oracle passes.

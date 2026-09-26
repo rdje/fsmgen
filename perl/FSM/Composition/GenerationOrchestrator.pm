@@ -26,6 +26,7 @@ use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Backend::VHDL::StructuralRTLIREmitter;
 use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::Composition::ChildExportBuilder;
+use FSM::Composition::ModuleDefinitionCollector;
 use FSM::Composition::PackageImportResolver;
 use FSM::Composition::PlanBuilder;
 use FSM::Composition::ProvenanceReportBuilder;
@@ -111,7 +112,11 @@ sub generate_from_source ($class, %args) {
         target_language => $target_language,
     );
 
-    my @child_segments = grep { defined && length } map { $_->hdl_code } @{$composition_plan->instances};
+    my @child_segments = @{FSM::Composition::ModuleDefinitionCollector->collect(
+        instances => $composition_plan->instances,
+        top_name => $composition_plan->top_name,
+        target_language => $target_language,
+    )};
     my @segments = @child_segments;
     if (($target_language // '') eq 'vhdl') {
         confess

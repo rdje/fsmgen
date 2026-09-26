@@ -418,6 +418,10 @@ Generated typedef identifiers include the owning module's identity, so separate
 modules may reuse an alias name without colliding at compilation-unit scope.
 These backend names are implementation details; semantic compatibility still
 uses the declared type shape rather than the emitted spelling or width alone.
+Repeated instances of a generated module share its emitted definition while
+retaining separate bindings, parameter overrides and hardware state. Conflicting
+definitions under the same module name fail explicitly. Reusing a definition
+does not merge instances or relax their type contracts.
 
 That means SystemVerilog may emit shapes like:
 

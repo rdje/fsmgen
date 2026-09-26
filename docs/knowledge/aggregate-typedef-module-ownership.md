@@ -26,6 +26,6 @@ same-width incompatible-type rejection. Broader generated-child aggregate
 storage routing remains separately qualified under `.39.2.2.2.2.2`.
 
 Repeated instances of the same source also exposed duplicated module bodies:
-GenerationOrchestrator currently concatenates each instance's full HDL. That
-separate defect is owned by `.42`; scoped typedefs do not repair it. Ownership:
+`.42` now collects exact agreeing definitions by module identity and preserves
+every instance; `.43` separately owns staggered-completion join state. Ownership:
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.1`.

@@ -282,6 +282,12 @@ The forms are exact: `(await_all done_port)` and `(await_any done_port)`, with
 one scalar done-port operand. Malformed missing, nested, or extra operands fail
 before sync-state emission.
 
+The current generated-child join has a known runtime defect: staggered
+one-cycle completion pulses can leave `await_all` waiting indefinitely because
+it does not yet retain each child's completion. The repair and the unchanged
+failing runtime oracle are owned by task `.43` in the semantic-introspection
+task tree; successful source checking alone does not qualify that behavior.
+
 ## Composition Architecture
 
 ```text
