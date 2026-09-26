@@ -23,8 +23,6 @@ subtest 'parameterized rule trigger lowers through a generated child activation 
     (input fire)
     (input req_addr (width 8))
     (output done))
-  (storage
-    (var seen (width 8)))
   (transaction parent
     (on fire)
     (complete done))
@@ -33,6 +31,7 @@ subtest 'parameterized rule trigger lowers through a generated child activation 
       (WIDTH 8))
     (ports
       (input addr (width 8)))
+    (local seen (width 8))
     (update seen addr)
     (complete done))
   (rule launch fire
@@ -183,8 +182,6 @@ subtest 'generated rule trigger output bindings copy child output on done observ
     (input req_addr (width 8))
     (output done)
     (output data (width 8)))
-  (storage
-    (var scratch (width 8)))
   (transaction parent
     (on fire)
     (complete done))
@@ -194,6 +191,7 @@ subtest 'generated rule trigger output bindings copy child output on done observ
     (ports
       (input addr (width 8))
       (output data (width 8)))
+    (local scratch (width 8))
     (update scratch addr)
     (update data scratch)
     (complete done))

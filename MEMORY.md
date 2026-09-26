@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2` (pending)
-- next_action: Implement explicit live reads of parent/domain actor storage from generated transaction children under .39.2.2.2, with unqualified writers refused and separately owned.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40` (pending)
+- next_action: Repair single-member aggregate normalization under .40, then qualify wider child read composition before writer handoffs.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

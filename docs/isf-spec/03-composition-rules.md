@@ -82,6 +82,20 @@ Current lowering:
   any one of them fires.
 Focused regressions cover both synchronization forms.
 
+Ordinary/single-domain actor storage has one owner across generated transaction
+modules. Referenced
+storage is a live child input connected explicitly to a parent/domain output
+handoff; that handoff is internal to the generated top. Width/type identity is
+preserved for named scalar types and scalarized bank entries; the register/reset remains in
+the owner. Unreferenced actor storage is not copied into generated children.
+The child retains authored transaction ports even when unused and omits unread
+inherited actor inputs. Explicit ports and local variables keep their identities. Direct generated-child
+actor-storage writes are rejected until the original-edge write and arbitration
+contracts in decision `0107` are qualified; independent private copies are not
+a supported implementation of shared storage. Aggregate read composition and
+multi-domain generated-child storage reads fail closed pending their explicit
+qualification lanes under `.39.2.2.2`.
+
 Top-level generated-child instantiation is now shipped for the covered
 spawn and parameterized blocking `do` fixture set. Spawn and generated `do`
 parameter declaration, validation, scheduled child `+params` emission,

@@ -12,7 +12,7 @@ answers:
 date: 2026-09-26
 status: current
 tags: [specforge, isf, parameters, interface, verification, semantic-api, mcp, storage, register-access]
-evidence: docs/audits/generated-child-storage-ownership-20260926.json; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md; t/1903-isf-internal-storage-ownership.t; docs/audits/specforge-storage-register-access-intake-20260926.json; docs/SPECFORGE_FEEDBACK_RESPONSE.md; docs/audits/specforge-feature-intake-20260926.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: t/1904-isf-generated-child-storage-reads.t; docs/audits/generated-child-storage-ownership-20260926.json; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md; t/1903-isf-internal-storage-ownership.t; docs/audits/specforge-storage-register-access-intake-20260926.json; docs/SPECFORGE_FEEDBACK_RESPONSE.md; docs/audits/specforge-feature-intake-20260926.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/replay-specforge-feature-intake.py .artifacts/specforge-intake-recheck-new && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/replay-specforge-feature-intake.py .artifacts/storage-access-recheck-new --storage-access
 ---
 
@@ -42,10 +42,10 @@ word-access refusal; `.38.1` owns independent scalar metadata and `.38.2` option
 `.39.2.1` repairs ordinary/domain storage using the `.39.1` internal-role carrier. T1903 checks the
 retained controls, direct FSM replay, exact interfaces, complete native/API/MCP parity, typed/unused
 storage, bank elements and independent reset/write/read/hold behavior. The audit keeps the original
-input/reset defect for falsification. Generated-child ownership remains open under `.39.2.2`:
-its retained audit proves exported child reads and independent child writes despite strict success.
-Decision `0107` keeps actor/domain ownership and selects explicit live-read/write handoffs; the
-separate child repair lanes must qualify timing and writer arbitration before claiming support.
+input/reset defect for falsification. T1904 qualifies ordinary/single-domain scalar/bank live reads,
+exact interfaces and repeat activation. Aggregate/multi-domain read composition remains refused and
+owned by .39.2.2.2.2/.3; shared writes by .39.2.2.3/.4. Resolved reset widths reject overflow without
+warnings. Explicit bindings and local state remain separate; decision `0107` owns shared semantics.
 
 Audits retain exact caller bytes/hashes, native reports, output-role controls and the independent
 HDL width oracle. Replay uses retained inputs and a fresh repository-relative same-volume

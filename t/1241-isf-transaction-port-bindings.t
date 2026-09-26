@@ -141,7 +141,6 @@ subtest 'activation input bindings accept expression-valued runtime payloads' =>
     (output done))
   (storage
     (var local_sink (width 8))
-    (var spawn_sink (width 8))
     (var work_sink (width 8)))
   (transaction local_child
     (ports
@@ -152,6 +151,7 @@ subtest 'activation input bindings accept expression-valued runtime payloads' =>
   (transaction spawned_child
     (ports
       (input addr (width 8)))
+    (local spawn_sink (width 8))
     (update spawn_sink addr)
     (complete done))
   (transaction work
@@ -214,8 +214,6 @@ subtest 'explicit input binding timing syntax accepts current timing classes' =>
     (output done))
   (storage
     (var local_sink (width 8))
-    (var generated_sink (width 8))
-    (var spawn_sink (width 8))
     (var work_sink (width 8)))
   (transaction local_child
     (ports
@@ -228,11 +226,13 @@ subtest 'explicit input binding timing syntax accepts current timing classes' =>
       (WIDTH 8))
     (ports
       (input addr (width 8)))
+    (local generated_sink (width 8))
     (update generated_sink addr)
     (complete done))
   (transaction spawned_child
     (ports
       (input addr (width 8)))
+    (local spawn_sink (width 8))
     (update spawn_sink addr)
     (complete done))
   (transaction work

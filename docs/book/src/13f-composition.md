@@ -188,15 +188,42 @@ composition pipeline:
 - After completion, a spawned child returns to its `start`-guarded idle state
   and waits for the next start pulse.
 
-Known storage boundary: direct references to actor `(storage ...)` from a
-generated transaction child do not yet preserve shared ownership. A read can
-be exported as an extra top input, while a write can target a private child
-register. The strict-admitted counterexamples and independent runtime results
-are retained in the generated-child storage audit. Decision `0107` selects
-parent/domain ownership with explicit live-read and cycle-preserving write
-handoffs; the task tree owns their implementation and writer arbitration.
-Explicit transaction port bindings and transaction-local state are separate
-contracts and are not evidence that these implicit storage accesses work.
+Actor `(storage ...)` reads in a separately generated transaction child use
+explicit internal top wiring from the owner in ordinary/single-domain actors. These
+are live reads: a parent update after spawn is visible when the child later
+reads it. Only referenced storage is carried into the child interface;
+storage resets and actual registers remain in the owner. Scalar, named scalar type and
+scalarized bank-element reads follow this rule. Authored transaction ports remain
+present even when unused; unread inherited actor inputs are omitted, keeping
+emitted interfaces consistent with wiring.
+
+For example, this worker reads the parent's later value, without a public
+`status` input or a private `status` register in the worker:
+
+```lisp
+(actor live_child_read
+  (clock clk) (reset (rst_n async active_low))
+  (interface (input start) (input wdata (width 8))
+             (output observed (width 8)) (output done))
+  (storage (var status (width 8) (reset 19)))
+  (transaction worker
+    (ports (output result (width 8)))
+    (wait 4) (set result status) (complete done))
+  (transaction parent
+    (on start) (set status 53)
+    (spawn worker as w0 (bind (output result observed)))
+    (wait 1) (set status wdata)
+    (await_all done) (complete done)))
+```
+
+Aggregate storage reads and generated-child storage reads in multi-domain
+actors are explicitly rejected pending their composition qualification.
+Direct generated-child writes to actor storage currently fail with a shared
+write-handoff diagnostic. Decision `0107` owns original-edge write transfer and
+the later competing-writer contract. Transaction-local variables and explicit
+port bindings retain their existing semantics. Generated-composition VHDL
+support remains limited to its documented composition shapes; separately
+generated parent/child VHDL modules can be explicitly wired by the caller.
 
 Parameterized spawn and parameterized blocking `do` use one optional nested
 `params` block:

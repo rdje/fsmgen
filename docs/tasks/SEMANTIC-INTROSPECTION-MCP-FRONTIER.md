@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1070,10 +1070,36 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.1: select shared child-storage ownership`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Route generated-child actor-storage reads from their owning parent/domain without external port leakage or copied state.`
+  Findings: `T1904's parent-only wdata input exposes a child-interface mismatch: _build_child_ports declares it and CompositionTop wires w0.wdata, but implicit IAL0 inference drops the unused child input. Preserving all inherited inputs then exposed unconnected trigger and expression-binding inputs. The exact repair prunes unread inherited actor inputs from child IR and preserves authored transaction ports; wiring and emitted declarations must agree.`
+  Additional defect: `The typed reset control emits an uninitialized-width warning in Parser::_parse_storage before named-type resolution. Guard the literal-width precheck with definedness here and verify resolved-width overflow still rejects; the required named-type path must not warn.`
+  Reset falsifier: `Strict check unexpectedly accepted a named 8-bit type with reset 256. Root cause: the literal-width check runs before type/parameter resolution, and the later reset-fit check is conditional on fields. Own a resolved-storage reset-fit check here, with exact fit/overflow controls; typed or symbolic widths must not bypass reset validation.`
+  Fixture migration: `T1241/T1248 payload-binding tests used actor-storage sinks written only inside generated children. The old tests silently relied on private copies, not shared-state runtime evidence. Preserve their payload checks using explicit transaction-local sinks and retain actor-writer refusal separately in T1904; original shared writes stay owned by .39.2.2.3/.4.`
   Acceptance: `Use the selected contract to classify lowered child storage reads and writes. Add explicit live read handoffs with collision-safe names, exact widths/types and per-instance top wiring; keep the actual register/reset in the parent/domain and exclude unrelated declarations from child hardware. Qualify scalar, typed, bank-element, guard/expression and repeated-activation reads, parent updates, multiple readers, domains, direct replay and complete native/API/MCP parity with independent runtime evidence. Until qualified writer lanes exist, refuse unsupported generated-child actor-storage writes explicitly rather than emit independent copies. Preserve explicit transaction port bindings and local child state. Update book/spec/facts and commit.`
   Verification: `Immediate repair after .39.2.2.1; retained reader should observe the parent write with no public status input. Generic direct-composition top-input inference is a valid separate contract and must not be disabled globally.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.1`
+  Status: `done`
+  Goal: `Qualify scalar, named scalar type and scalarized bank live reads in ordinary/single-domain generated children, with truthful unsupported boundaries.`
+  Acceptance: `Route only actual reads to one owner; preserve explicit transaction ports and prune unread inherited actor inputs. Prove post-spawn updates and repeated reads independently in Verilator and separately wired GHDL, exact interfaces, direct replay and native/API/MCP parity. Refuse unqualified writers, aggregate read composition and multi-domain child read composition. Repair resolved reset overflow and preserve binding/local-state controls. Commit this bounded slice before wider composition repairs.`
+  Verification: `T1904 positive reader cases and adversarial boundary controls; broader storage/domain/contract/book suite. Scope split because independent qualification exposed pre-existing aggregate typedef duplication and missing multi-domain child artifacts; those repairs have immediate owners below instead of extending this slice without bound.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.1: route shared scalar storage reads`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2`
+  Status: `pending`
+  Goal: `Repair aggregate type declaration identity across generated composition modules and qualify shared aggregate storage reads.`
+  Acceptance: `After .40 fixes one-member normalization, reproduce the retained multi-member record through native HDL generation and Verilator. Select collision-safe declaration identity or an exact shared declaration contract without hiding conflicting same-name types. Prove same/different nested record/list types, parent/child/top ports, independent live-read runtime and API/MCP parity before removing the aggregate read refusal.`
+  Verification: `T1904 record control generated valid-looking HDL but Verilator rejected three compilation-unit typedef declarations named byte_t__fsmgen_t, emitted before parent, child and top modules. Reproduce with (type byte_t (record (payload (bits 7)) (flag bit))) and actor storage read in worker. Root is compilation-unit declaration reuse across generated modules, not width or storage route; read-refusal prevents claiming the unqualified combination.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3`
+  Status: `pending`
+  Goal: `Materialize and wire generated transaction children inside multi-domain actors without exporting internal handshakes or storage handoffs.`
+  Acceptance: `After .39.2.2.2.2, repair Scheduler::_emit_multi_domain_scheduled_artifacts and top wiring for generated child modules and per-domain activations, including children with no storage reads. Preserve module/instance collision policy and domain clocks/resets; qualify public interfaces, independent runtime and API/MCP reports before removing the multi-domain child-storage read refusal.`
+  Verification: `T1904's core+aux actor strict-admits but exports w0_done instead of keeping a closed generated child: the multi-domain artifact loop emits only each domain parent FSM and the outer top, omitting each domain IR's children and its generated composition. T1247's historical three-file inventory codifies that omission without child runtime evidence. This is owned for actual child composition, not waived by schedule domain metadata.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3`
@@ -1088,6 +1114,13 @@ For FSMGen, the analogs are:
   Goal: `Complete the remaining generated-child storage writer surface under explicit partial-update and arbitration contracts.`
   Acceptance: `Audit partial/sliced/typed aggregate writes, dynamic bank stores, parent-versus-child writers and multiple generated instances after the single-writer lane. Split independently verifiable ownership/merge/arbitration prerequisites before implementation. Preserve source assignment ordering, original clock edges, reset ownership and declared domain boundaries; use existing roadmap resource-arbitration requirements instead of inventing silent priority. Keep unsupported combinations fail-closed and task-owned until implemented, prove adversarial concurrent behavior with independent runtime and full report parity, then close .39 only when the selected writer surface and documentation agree.`
   Verification: `Scheduled after .39.2.2.3; current public resource guidance explicitly defers generated-child storage arbitration. This is owned completion work, not a claim of current support.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
+  Status: `pending`
+  Goal: `Repair one-member aggregate type normalization exposed by the child-read qualification.`
+  Acceptance: `Immediately after .39.2.2.2.1, reproduce (type byte_t (record (payload (bits 8)))) through the public ISF/direct-type routes. Distinguish a one-member definition from a wrapped member sequence in DeclarativeTypeSupport and DeclarativeTypeResolver without consulting submodule implementation. Prove single/multiple/nested members, aliases/dependencies and invalid shapes; update contracts/book/facts and commit before generated-child writer work.`
+  Verification: `T1904's first record probe failed before storage lowering: normalized record body has one member array, but the generic single-array flattening treats that member's name/type as separate members; canonicalize_type_spec then rejects the scalar name. The resolver repeats the same flattening in dependency collection. This is a parser defect, not evidence that child record read routing is unsupported. The retained failing transcript is .artifacts/child-storage/final-focused.log; source shape and mechanism are preserved here.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -1752,9 +1785,10 @@ Port-option validation and startup cleanup are complete.
 Completed `.39.1` provides direct internal roles and reset/hold behavior.
 Completed `.39.2.1` preserves ordinary/domain ISF storage and qualifies the
 retained CSR baseline. Completed `.39.2.2.1` retains generated-child storage evidence and decision
-0107. Next `.39.2.2.2` implements live reads and refuses unqualified writers;
-writer handoffs and arbitration remain explicit follow-up leaves. The accepted storage-access baseline exposes read-only
-actor-owned status as an HDL input and loses reset ownership. After that repair,
+0107. Completed `.39.2.2.2.1` routes live scalar/bank reads for ordinary and
+single-domain children and refuses unqualified aggregate/domain reads and writes.
+Next `.40` repairs single-member type normalization, then `.39.2.2.2.2/.3`
+repair aggregate and multi-domain child composition before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -4266,3 +4300,59 @@ not archive or deletion of recorded contract facts; rollover debt remains owned.
   mdBook build and rendered known-boundary markers pass. Source implementation
   is unchanged. Both detailed decision contracts and execution-status blocks
   compare byte-for-byte after duplicated summary removal.
+
+## Qualification — `.39.2.2.2.1`
+
+The bounded read slice uses `ChildStorageOwnership` to walk emitted operands,
+keep actor storage/register/reset ownership in the parent, and construct one
+collision-safe combinational read handoff per used signal with per-instance
+links. Unrelated declarations disappear from child storage. Authored transaction
+ports remain explicit; copied actor inputs are retained only when read. The
+parent's assignment provenance is rebuilt only when a new handoff exists.
+
+Qualification split the parent `.39.2.2.2` after discovering two independently
+owned composition defects: duplicate aggregate typedefs and omitted domain
+child artifacts. This slice refuses those unqualified read combinations and
+shared child writers. `.40` repairs single-member type normalization next;
+`.39.2.2.2.2/.3` then qualify aggregate and multi-domain composition before
+`.39.2.2.3/.4` qualify original-edge writes and arbitration. No unsupported
+combination is counted as a runtime pass.
+
+T1904 covers post-spawn parent updates and repeated activations in independent
+Verilator simulations for scalar, signed scalar type and bank reads. Separately
+generated owner/child VHDL is wired by an independent GHDL testbench; this does
+not promote the wider generated-composition VHDL scope. Other controls cover
+expression/guard-only reads, dynamic banks, a named single domain, generated
+name collisions, local state, explicit payload bindings, multiple readers,
+unused declarations, literals, exact public ports and materialized FSM replay.
+Native check/semantic/schedule and API/newline routes are compared completely.
+Rejected check/semantic cases preserve public failure reports; schedule keeps
+its existing generic non-report error envelope, with no fabricated result.
+
+The typed-reset falsifier also identified an undefined literal-width warning
+and an accepted overflowing reset after named-type resolution. The parser now
+checks integer bit length after every storage width resolves. T1904 uses zero,
+maximum-fitting and overflowing values across literal/type/parameter/constant
+widths; the numeric book sentence has a three-leg derived-gate disposition in
+the canonical general-book claim group. Reset prose now consistently says
+hardware reset, including the CSR example comments, rather than power-up.
+
+Earlier test failures were acted on: the input filter needed emitted guard
+operands; the public multi-form parser must be assigned in scalar context before
+normalization. Direct scanner probes distinguish dynamic index reads, numeric
+literal suffixes and state_active identities. T1241/T1248 payload fixtures now
+use local sinks instead of depending on the old private actor-storage copies.
+The original admission-only expectation for a sliced set was corrected to its
+existing earlier scalar-target diagnostic. Scope/refusal controls are explicit.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Retained native `--strict --check --json`
+  and independent runtime evidence prove the original exported read/private
+  write defect; new controls isolate copied declarations, inferred interfaces,
+  expression-context loss, and reset validation before width resolution.
+- [x] **ADDRESSED (verified)** — T1904/T1241/T1248 report `All tests successful`
+  with qualified Verilator and GHDL enabled. Exact public interfaces, complete
+  report parity, live/repeated reads and reset-fit boundary controls pass.
+- [x] **NO REGRESSION** — Broader T1232/T1236/T1247/T1255/T1900/T1397/T1391/
+  T1376/T1112/T1262 reports `All tests successful`; mdBook builds and rendered
+  scope markers match. Knowledge Map, inventory and disposition checks pass.
+  The mandatory staged doctrine gate and commit hook remain required.

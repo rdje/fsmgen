@@ -2804,6 +2804,13 @@ sub _finalize_actor_type_references($self, $actor) {
             "actor '$actor_name' storage '$entry->{name}'",
             allow_aggregate => (($entry->{kind} // '') eq 'var' ? 1 : 0),
         );
+        # Literal, parameter and named-type widths are now all resolved. A
+        # reset must fit even when the declaration has no field metadata.
+        if (defined $entry->{reset_value}) {
+            my $reset_bits = length(Math::BigInt->new($entry->{reset_value})->as_bin) - 2;
+            confess "Error: actor '$actor_name' storage var '$entry->{name}' reset value $entry->{reset_value} does not fit in $entry->{width} bit(s)\n"
+                if $reset_bits > $entry->{width};
+        }
         for my $signal (@{$entry->{signals} || []}) {
             $signal->{width} = $entry->{width};
             $signal->{type} = $entry->{type} if exists $entry->{type};
@@ -8824,7 +8831,7 @@ sub _parse_storage($self, $clause, $actor_name) {
             # Width-fit check when the width is a literal (a param/constant width is checked
             # downstream once resolved).
             confess "Error: actor '$actor_name' storage var '$name' reset value $reset does not fit in $width bit(s)\n"
-                if !ref($width) && $width =~ /\A[1-9][0-9]*\z/ && $reset >= (2 ** ($width + 0));
+                if defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/ && $reset >= (2 ** ($width + 0));
         }
         my @signals;
         if ($kind eq 'var') {

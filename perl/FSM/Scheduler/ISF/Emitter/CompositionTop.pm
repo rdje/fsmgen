@@ -223,6 +223,13 @@ sub _emit_wiring_block {
             );
         }
 
+        for my $read (@{$spawn->{actor_storage_reads} || []}) {
+            push @links, _link(
+                $actor_name . ".$read->{parent_port}",
+                $instance . ".$read->{child_port}",
+            );
+        }
+
         push @links, _link($actor_name . ".${instance}_start", $instance . '.start');
         push @links, _link($instance . '.done', $actor_name . ".${instance}_done");
 

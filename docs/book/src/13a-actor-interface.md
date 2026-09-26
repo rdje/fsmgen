@@ -553,11 +553,16 @@ Read-only and unused storage stays internal; `+size` retains widths, types
 and authored reset metadata. Scalarized bank elements follow the same rule.
 The role survives independent replay of the generated `.fsm`, and native,
 API and MCP semantic inventories exclude these signals from public ports.
-Generated transaction-child storage ownership is a separate open repair:
-direct reads can escape as unintended top inputs, and direct writes can update
-a child-local copy instead of the actor register. Strict check alone does not
-prove shared storage across that boundary. Decision `0107` selects explicit
-live-read and write handoffs; those repair lanes are not yet shipped.
+Generated transaction children in ordinary/single-domain actors read storage through
+explicit live handoffs. Reads do not create public top inputs or private child
+register copies; unrelated storage is absent from the child. Parent updates
+remain visible after activation, including scalarized bank elements. Explicit
+transaction ports and transaction-local storage retain their separate roles.
+Direct generated-child writes to actor storage are currently rejected: the
+original-edge write handoffs and writer arbitration selected by decision `0107`
+remain separately owned extensions. Aggregate reads and generated-child storage
+reads inside multi-domain actors also fail closed pending wider composition
+qualification; named scalar types and scalarized banks are covered.
 
 A read-only reset register needs no dummy write to preserve its ownership:
 
@@ -626,9 +631,10 @@ reset but unwritten scalar resets and holds, including when unused. A module
 without a hardware reset acquires no reset-only initialization. Hardware reset
 is distinct from power-up initialization and from transaction-local init-on-entry
 `(default V)`/`(init V)` on a `(local …)`. A per-element bank `(reset V)`, and an over-width or non-integer reset value,
-fail closed.
+fail closed. Reset fit is checked after resolving literal, parameter, constant
+and named-type widths; an 8-bit type rejects reset `256` just like `(width 8)`.
 
-A complete register-map actor — two CSRs that power up at their specified defaults and are
+A complete register-map actor — two CSRs that reset to their specified values and are
 written/read by a transaction (this lowers cleanly and passes Verilator/Yosys):
 
 ```lisp
@@ -642,8 +648,8 @@ written/read by a transaction (this lowers cleanly and passes Verilator/Yosys):
     (output ctrl_out (width 8))
     (output mode_out (width 8)))
   (storage
-    (var ctrl (width 8) (reset 1))      ;; control register powers up at 1
-    (var mode (width 8) (reset 16)))    ;; mode register powers up at 16
+    (var ctrl (width 8) (reset 1))      ;; control register resets to 1
+    (var mode (width 8) (reset 16)))    ;; mode register resets to 16
   (transaction main
     (on start)
     (set ctrl wdata)

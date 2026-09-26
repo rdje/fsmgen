@@ -14,6 +14,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
     mark_atl_data_link_child_interface_ports
 );
 use FSM::Scheduler::ISF::ControlFlowEffects;
+use FSM::Scheduler::ISF::ChildStorageOwnership qw(select_child_storage_reads connect_child_storage_reads);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
@@ -90,6 +91,12 @@ sub build_module($self, $actor) {
         next unless $ct;
         $child_irs{$cname} = $self->_build_child_ir($ct, $actor, $cname);
     }
+    if ($domain_partition && ($domain_partition->{kind} // '') eq 'multi_domain') {
+        for my $cname (sort keys %generated_children) {
+            confess "Transaction '$cname': generated child actor-storage reads in a multi-domain actor require qualified domain child composition\n"
+                if @{$child_irs{$cname}{actor_storage_reads} || []};
+        }
+    }
 
     my @library_instances;
     for my $use (@{$actor->{library_uses} || []}) {
@@ -120,6 +127,7 @@ sub build_module($self, $actor) {
     mark_atl_data_link_child_interface_ports(\%child_irs, \@atl_top_instances);
 
     my $parent_ir = $self->_build_parent_ir($actor, \%generated_children, \%pruned_static_zero_children);
+    _finalize_ir($parent_ir) if connect_child_storage_reads($parent_ir, \%child_irs);
     $parent_ir->{children} = \%child_irs;
     $parent_ir->{library_uses} = \@library_instances;
     $parent_ir->{atl_top_instances} = \@atl_top_instances;
@@ -191,6 +199,9 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         immediate_assertions => ($asserts || []),
         bank_accesses => $bank_accesses,
     };
+
+    select_child_storage_reads($ir, $tx, $actor);
+    $ir->{explicit_interface_ports} = [map { { %$_ } } @{$ir->{ports}}];
 
     # Inject entry state if missing (spawn targets need start handshake)
     if (!(grep { $_->{kind} eq 'entry' } @{$ir->{states}})) {
