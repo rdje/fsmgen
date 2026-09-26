@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -969,11 +969,11 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.9`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair loss of declared but undriven actor output interfaces and qualify optional-port presence controls.`
   Acceptance: `Reproduce the optional-signal packet's positive-width baseline missing AWMECID despite strict success, with literal-width and driven-output controls. Reconcile public declaration, schedule and realized interface contracts; preserve declared output identity through generated artifacts where supported without inventing a drive value, or fail closed at an explicitly unsupported emission boundary. Cover ordinary/domain and relevant generated-child paths, actual HDL port inventories and native/API/MCP parity. Update the book and the optional-signal qualification to require actual present/absent endpoints, not just strict status or byte comparisons between already-missing ports. Commit before optional-port implementation.`
-  Verification: `Fresh .33.1 current-revision native check accepts optional-signal/baseline-good.isf, but HDL contains done only: positive-width AWMECID is undriven and omitted. The literal-width control also omits AWMECID; a real assignment restores it. Exported FSM has +size but no output role or drive marker; SignalAnalyzer classifies unused names as INTERNAL_DEFAULT, so the interface omits them. Complete native semantic/schedule/export/HDL evidence is retained in docs/audits/specforge-feature-intake-20260926.json; repair remains pending.`
-  Commit: `pending`
+  Verification: `passed; T1900 native/API/newline MCP output inventories, materialized FSM/Verilog-family/direct-VHDL declarations, no invented assignments, Verilator correct/wrong-width controls and repository-local GHDL analysis. T1897/T1896/T1476 preservation, exact updated T1330 child roles, T1376 book lowering, T1112 contract and T1899 supported-producer census pass. Fresh book render and syntax pass. Reset-only value semantics remain separately owned by immediate .35.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.9: preserve declared output interfaces`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.34`
   Status: `done`
@@ -981,6 +981,13 @@ For FSMGen, the analogs are:
   Acceptance: `Inventory repository-local disposable session output and Rust target release/deps/incremental log/bin candidates without following links or inspecting dependency implementation. Remove only known regenerated .33.2 scratch outputs after their evidence is committed; preserve spent compiler/native-proxy and all ambiguously retained evidence. Write only the latest dated cleanup record in docs/ARTIFACT_CLEANUP.md, verify deleted paths are absent, refresh generated discovery and doctrine data, and commit before output-interface work resumes.`
   Verification: `Known .33.2 scratch logs and mdBook render removed only after same-volume, non-symlink and untracked checks; exact deleted paths absent afterward. Root target paths and rust/target/release absent; rust/target/debug/deps and incremental contain no log/bin candidates. Retained native-proxy evidence remains present; all other evidence untouched. T1414 documentation audit passes; generated focused-document index refreshed.`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.34: record safe artifact cleanup`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.35`
+  Status: `pending`
+  Goal: `Honor an explicitly authored reset on an otherwise undriven output, or reject an unsupported reset-only boundary before emission.`
+  Acceptance: `After .33.9, reproduce reset-only actor and direct FSM outputs with literal widths and reset values; locate why retained +size reset metadata does not create HDL reset behavior without an ordinary writer. Select faithful reset/hold semantics from existing contracts, repair common/backend planning without inventing values for outputs without a reset, and qualify actual reset behavior plus native/API/MCP reports, both Verilog-family targets and supported VHDL. Preserve driven reset/default and plain undriven-output controls; update book, specs and knowledge and commit separately.`
+  Verification: `Discovered during .33.9: change the retained optional-signal baseline output to (output AWMECID (width 16) (reset 3)). Native --strict --check --json and generation succeed; materialized mecid_demo.fsm retains (output AWMECID) and (AWMECID 16 (reset 3)), but emitted SystemVerilog only declares AWMECID and never assigns the authored reset. The native capture is under .artifacts/output-preservation/reset-only*; the exact baseline is tracked in docs/audits/specforge-feature-intake-20260926.json. The common AssignmentSupport::build_unified_assignment_analysis iterates all_lhs and skips signals without captured lhs_assignments; reset emission is downstream of those assignment families, so declaration-only reset metadata gets no writer. Priority: immediate after .33.9, before watchdog continuation; implementation remains pending.`
+  Commit: `pending`
 
 ## Implementation Notes From `.4`
 
@@ -1636,10 +1643,12 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.2` is complete: shared parsing now
-rejects unknown/malformed port options with native/API/MCP refusal controls.
-Startup cleanup `.34` is complete. Next activate `.33.9` to preserve declared
-outputs without invented values. Resume watchdog entry
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.9` is complete: declared output
+interfaces survive ordinary/domain lowering without invented drive values.
+Next activate `.35` to honor explicitly authored resets on otherwise undriven
+outputs; native intake retains the metadata but emitted HDL lacks a writer.
+Port-option validation and startup cleanup are complete.
+Resume watchdog entry
 and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -3855,3 +3864,66 @@ ran no tests; the verified T1414 filename then passed. All jobs are consumed.
   receipt result directory still exists; cleanup touched no other artifacts.
   Generated focused-document discovery includes the new record. Product
   behavior and mdBook content are unchanged by this maintenance slice.
+
+## Scoped implementation — `.33.9` output preservation
+
+Resume from clean `495e394d1`. The retained intake and input-preservation fact
+locate missing output roles in parent `explicit_interface_ports`; the existing
+emitter and FSM parser already carry both input/output directions. Extend
+authored role preservation without adding assignments or propagating unrelated
+parent ports to transaction children. T1900 will retain the positive-width
+caller source, literal/driven controls, ordinary/named-domain/multi-domain
+outputs, real materialized FSM/HDL inventories and full native/API/newline MCP
+parity. Compare declared-spare and absent-spare controls to ensure no invented
+drive or changed existing assignments. Run supported backend boundaries and
+independent HDL admission where available, plus the existing input/route band.
+Synchronize spec/downstream contract, book, response, knowledge and public
+interface guidance; keep generic widths and optional presence separately owned.
+
+The pre-repair T1900 RED run loses caller/literal/named/domain outputs and
+parent-only child-boundary roles; the driven control passes. The fixed T1900
+passes, including independent Verilator named-port and wrong-width controls.
+GHDL is absent from PATH, so its optional analysis subtest explicitly skips:
+VHDL emission/width/no-assignment checks pass, but external VHDL qualification
+is not claimed. `.35` owns the next backend behavior qualification.
+The broader band exposed stale T1330 exact interface expectations: resolved
+children now also declare their authored `done` output. Update those exact
+expected role lists to include `done`; do not weaken them to partial matches.
+
+GHDL follow-up: the Knowledge Map identifies an existing qualified local
+provider outside PATH. T1900 now accepts the existing `FSMGEN_RESET_GHDL`
+selector, and the provider-backed rerun passes external VHDL analysis without
+installing or inspecting dependency implementation. Its earlier skip is not
+counted as evidence. T1330 passes with exact output-role expectations. One
+broader invocation then stopped at an incorrect book-test filename; the
+verified T1376 path and T1112 were run separately and both pass.
+
+## Acceptance Checklist — `.33.9` declared output roles
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Retained caller and literal controls
+  pass native `--strict --check --json` while `--emit-semantic-json` and HDL
+  omit AWMECID. Pre-repair T1900 fails for every undriven role path but passes
+  the driven control. Parent LoweringIR carries only inputs in
+  `explicit_interface_ports`; `+size` alone does not preserve output roles.
+- [x] **ADDRESSED (verified)** — T1900: `All tests successful`. Both authored
+  directions now reach the existing `+interface` emitter. Caller, literal,
+  scalar, named-domain, multi-domain and unrelated-child controls retain exact
+  semantic outputs and widths. Materialized FSMs match public lowering; full
+  native/API/newline MCP check/semantic/schedule reports agree. No spare-port
+  value assignment is emitted. Verilator named-port and wrong-width controls
+  plus repository-local GHDL declaration analysis pass.
+- [x] **NO REGRESSION** — T1897, T1896 and T1476 pass for input preservation,
+  top-route precedence and authored driven reset/default behavior. T1330
+  passes after its exact expected child roles add their declared done output.
+  T1376 and T1112 report `All tests successful`; the new book example lowers
+  and the public contract remains valid. LoweringIR reports `syntax OK`.
+  Fresh mdBook build and exact rendered output/reset-only markers pass.
+
+Re-derivation is native lowering/report/HDL generation. Falsification uses the
+original RED run, driven controls, exact semantic inventories and external
+wrong-width admission. Durability is the retained caller input, T1900/T1330,
+public contract, book/spec and canonical output fact. The distinct reset-only
+value gap is diagnosed and immediately owned by `.35`; interface presence
+does not qualify it. T1899 completes with `All tests successful` for the
+catalog-selected supported ISF/IAL2/profile producer population. All jobs
+are consumed; no broader runtime claim is inferred from producer admission.

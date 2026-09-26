@@ -29,8 +29,8 @@ semantic API/MCP failures preserve diagnostics; schedule API/MCP failures
 retain the documented message-only adapter error.
 
 Default width is `1`. Interface entries lower into `.fsm` `+size` entries.
-Declared actor inputs additionally carry `+interface` input roles, preserving
-unused inputs in ordinary actor and partitioned domain module interfaces.
+Declared actor inputs and outputs additionally carry `+interface` roles, preserving
+unused inputs and undriven outputs in ordinary actor and partitioned domain module interfaces.
 Their presence does not depend on a scheduled read. Generated domain-top
 routes therefore retain their declared endpoints. Width resolution remains
 owned by `+size`; this does not export inferred storage or unrelated generated
@@ -55,12 +55,15 @@ rejected before the parser returns an actor shell.
 are rejected instead of merged or overwritten.
 If an inferred scheduler storage name matches a declared interface port, the
 declared port entry is kept and the inferred duplicate is suppressed.
-Output ports are marked as public outputs by the `.fsm` emitter when assigned
-from drive/rule output paths.
-An undriven declared output may currently be omitted during FSM port inference.
-This is an owned interface-preservation defect (`.33.9` in the semantic/API/MCP
-task tree), not a supported optional-port spelling; strict source acceptance
-alone does not prove that declared and realized output inventories agree.
+Authored outputs remain public independently of drive/rule assignments.
+The emitter carries their output roles without synthesizing an assignment or
+inventing a value. Ordinary/domain module outputs, generated-top routes and
+realized semantic output inventories preserve that boundary. Transaction
+children do not acquire unrelated parent-only outputs. SystemVerilog, Verilog
+and supported direct VHDL output declarations retain their resolved widths.
+An explicit reset-only output remains a separate known gap: reset metadata can
+reach the FSM without an HDL reset assignment; `.35` in the semantic/API/MCP
+tree owns this immediate follow-up. Plain undriven outputs imply no value.
 
 Output entries may carry `(reset V)` and `(default V)` metadata when `V` is a
 non-negative integer literal that fits the resolved positive integer output

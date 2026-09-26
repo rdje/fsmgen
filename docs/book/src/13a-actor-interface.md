@@ -453,11 +453,34 @@ realized interface, including crossing handoffs. `fsmgen_check`,
 `fsmgen_semantic_introspect` and `fsmgen_schedule_preview` expose the same
 native reports through the API and newline MCP adapter.
 
-An undriven declared output can currently be omitted by signal inference,
-even with a positive width. This is an owned interface-preservation defect;
-it is not optional-port support and must not be used as an absence mechanism.
-Assigned outputs retain their ordinary output roles. See the
-[current request boundaries](13k-isf-feature-support-matrix.md#requested-extensions-and-current-gaps).
+Declared outputs likewise remain public even without a transaction or rule
+assignment. For example, this output has a fixed resolved width and no
+invented value:
+
+```lisp
+(actor output_boundary
+  (params (MECID_WIDTH 16))
+  (clock clk) (reset rst_n)
+  (interface (input start) (output AWMECID (width MECID_WIDTH)) (output done))
+  (transaction work (on start) (complete done)))
+```
+
+The scheduled FSM carries `(output AWMECID)` in `+interface` and its width
+in `+size`. Semantic `signal_analysis.outputs` and generated HDL retain the
+port; no data assignment is synthesized for it. This preserves interface
+identity, not a defined runtime value. Ordinary and named-domain actors use
+the same role path; multi-domain tops wire each output from its owning domain.
+Parent-only spare outputs do not become unrelated transaction-child ports.
+Native check/semantic/schedule queries and their API/MCP projections agree.
+SystemVerilog, Verilog and the supported direct VHDL subset preserve the
+undriven declaration. Generic width overrides and optional presence remain
+separate unsupported extensions.
+
+An explicit `(reset V)` on an otherwise undriven output currently reaches
+FSM reset metadata but can lack the HDL reset assignment. This reset-only
+behavior has a separate repair owner; port-preservation evidence does not
+qualify its reset value. Driven reset/default controls keep their existing
+behavior. See the [current request boundaries](13k-isf-feature-support-matrix.md#requested-extensions-and-current-gaps).
 
 Actor port options are a closed set: `(width N)`, `(type NAME)`,
 `(domain NAME)`, and output-only `(reset V)` / `(default V)`. Each option

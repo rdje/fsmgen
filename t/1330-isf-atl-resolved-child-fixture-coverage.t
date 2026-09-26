@@ -157,7 +157,7 @@ subtest 'ATL pin-ingress fixture lowers scalar top input through parent into res
     my $child = $files->{'atl_resolved_child_pin_ingress_pipeline__worker.fsm'};
     like($child, qr/\A\(\?fsm:atl_resolved_child_pin_ingress_pipeline__worker\b/,
         'pin-ingress child uses the resolved child module name');
-    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(input payload\)\s+\)/s,
+    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(input payload\)\s+\(output done\)\s+\)/s,
         'pin-ingress child preserves the declared payload input as an explicit generated interface role');
     like($child, qr/\(payload 1\)/, 'pin-ingress child keeps the payload size declaration');
     like($child, qr/\(process_start 1\)/, 'pin-ingress child keeps its authored process_start input');
@@ -207,7 +207,7 @@ subtest 'ATL pin-ingress vector fixture lowers exact-width top input through par
     my $child = $files->{'atl_resolved_child_pin_ingress_vector_pipeline__worker.fsm'};
     like($child, qr/\A\(\?fsm:atl_resolved_child_pin_ingress_vector_pipeline__worker\b/,
         'pin-ingress vector child uses the resolved child module name');
-    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(input payload\)\s+\)/s,
+    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(input payload\)\s+\(output done\)\s+\)/s,
         'pin-ingress vector child preserves the declared payload input as an explicit generated interface role');
     like($child, qr/\(payload 8\)/, 'pin-ingress vector child keeps the payload size declaration');
     like($child, qr/\(process_start 1\)/, 'pin-ingress vector child keeps its authored process_start input');
@@ -270,7 +270,7 @@ subtest 'ATL pin-ingress vector multi-route fixture lowers exact-width top input
     my $child = $files->{'atl_resolved_child_pin_ingress_vector_multi_pipeline__worker.fsm'};
     like($child, qr/\A\(\?fsm:atl_resolved_child_pin_ingress_vector_multi_pipeline__worker\b/,
         'pin-ingress vector multi-route child uses the resolved child module name');
-    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(input payload\)\s+\(input sideband\)\s+\)/s,
+    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(input payload\)\s+\(input sideband\)\s+\(output done\)\s+\)/s,
         'pin-ingress vector multi-route child preserves both routed inputs as explicit generated interface roles');
     like($child, qr/\(payload 8\)/, 'pin-ingress vector multi-route child keeps the payload size declaration');
     like($child, qr/\(sideband 4\)/, 'pin-ingress vector multi-route child keeps the sideband size declaration');
@@ -336,7 +336,7 @@ subtest 'ATL pin-ingress mixed route fixture lowers scalar and vector top inputs
     my $child = $files->{'atl_resolved_child_pin_ingress_mixed_pipeline__worker.fsm'};
     like($child, qr/\A\(\?fsm:atl_resolved_child_pin_ingress_mixed_pipeline__worker\b/,
         'pin-ingress mixed-route child uses the resolved child module name');
-    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(input payload\)\s+\(input valid\)\s+\)/s,
+    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(input payload\)\s+\(input valid\)\s+\(output done\)\s+\)/s,
         'pin-ingress mixed-route child preserves both routed inputs as explicit generated interface roles');
     like($child, qr/\(payload 8\)/,
         'pin-ingress mixed-route child keeps the payload size declaration');
@@ -402,7 +402,7 @@ subtest 'ATL pin-ingress multi-route fixture lowers multiple top inputs through 
     my $child = $files->{'atl_resolved_child_pin_ingress_multi_pipeline__worker.fsm'};
     like($child, qr/\A\(\?fsm:atl_resolved_child_pin_ingress_multi_pipeline__worker\b/,
         'pin-ingress multi-route child uses the resolved child module name');
-    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(input payload\)\s+\(input sideband\)\s+\)/s,
+    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(input payload\)\s+\(input sideband\)\s+\(output done\)\s+\)/s,
         'pin-ingress multi-route child preserves both routed inputs as explicit generated interface roles');
     like($child, qr/\(payload 1\)/, 'pin-ingress multi-route child keeps the payload size declaration');
     like($child, qr/\(sideband 1\)/, 'pin-ingress multi-route child keeps the sideband size declaration');
@@ -458,7 +458,7 @@ subtest 'ATL pin-egress fixture lowers scalar resolved child output through pare
     my $child = $files->{'atl_resolved_child_pin_egress_pipeline__worker.fsm'};
     like($child, qr/\A\(\?fsm:atl_resolved_child_pin_egress_pipeline__worker\b/,
         'pin-egress child uses the resolved child module name');
-    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(output payload\)\s+\)/s,
+    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(output payload\)\s+\(output done\)\s+\)/s,
         'pin-egress child preserves the declared payload output as an explicit generated interface role');
     like($child, qr/\(payload 1\)/, 'pin-egress child keeps the payload size declaration');
     like($child, qr/\(process_start 1\)/, 'pin-egress child keeps its authored process_start input');
@@ -510,7 +510,7 @@ subtest 'ATL pin-egress vector fixture lowers exact-width child output through p
     my $child = $files->{'atl_resolved_child_pin_egress_vector_pipeline__worker.fsm'};
     like($child, qr/\A\(\?fsm:atl_resolved_child_pin_egress_vector_pipeline__worker\b/,
         'pin-egress vector child uses the resolved child module name');
-    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(output payload\)\s+\)/s,
+    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(output payload\)\s+\(output done\)\s+\)/s,
         'pin-egress vector child preserves the declared payload output as an explicit generated interface role');
     like($child, qr/\(payload 8\)/, 'pin-egress vector child keeps the payload size declaration');
     like($child, qr/\(process_start 1\)/, 'pin-egress vector child keeps its authored process_start input');
@@ -577,7 +577,7 @@ subtest 'ATL pin-egress vector multi-route fixture lowers multiple exact-width c
     my $child = $files->{'atl_resolved_child_pin_egress_vector_multi_pipeline__worker.fsm'};
     like($child, qr/\A\(\?fsm:atl_resolved_child_pin_egress_vector_multi_pipeline__worker\b/,
         'pin-egress vector multi-route child uses the resolved child module name');
-    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(output payload\)\s+\(output status\)\s+\)/s,
+    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(output payload\)\s+\(output status\)\s+\(output done\)\s+\)/s,
         'pin-egress vector multi-route child preserves both routed outputs as explicit generated interface roles');
     like($child, qr/\(payload 8\)/,
         'pin-egress vector multi-route child keeps the payload size declaration');
@@ -649,7 +649,7 @@ subtest 'ATL pin-egress mixed route fixture lowers scalar and vector child outpu
     my $child = $files->{'atl_resolved_child_pin_egress_mixed_pipeline__worker.fsm'};
     like($child, qr/\A\(\?fsm:atl_resolved_child_pin_egress_mixed_pipeline__worker\b/,
         'pin-egress mixed-route child uses the resolved child module name');
-    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(output payload\)\s+\(output valid\)\s+\)/s,
+    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(output payload\)\s+\(output valid\)\s+\(output done\)\s+\)/s,
         'pin-egress mixed-route child preserves both routed outputs as explicit generated interface roles');
     like($child, qr/\(payload 8\)/,
         'pin-egress mixed-route child keeps the payload size declaration');
@@ -717,7 +717,7 @@ subtest 'ATL pin-egress multi-route fixture lowers multiple child outputs throug
     my $child = $files->{'atl_resolved_child_pin_egress_multi_pipeline__worker.fsm'};
     like($child, qr/\A\(\?fsm:atl_resolved_child_pin_egress_multi_pipeline__worker\b/,
         'pin-egress multi-route child uses the resolved child module name');
-    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(output payload\)\s+\(output status\)\s+\)/s,
+    like($child, qr/\(\+interface\s+\(input process_start\)\s+\(output payload\)\s+\(output status\)\s+\(output done\)\s+\)/s,
         'pin-egress multi-route child preserves both routed outputs as explicit generated interface roles');
     like($child, qr/\(payload 1\)/, 'pin-egress multi-route child keeps the payload size declaration');
     like($child, qr/\(status 1\)/, 'pin-egress multi-route child keeps the status size declaration');
@@ -938,7 +938,7 @@ subtest 'ATL two-child data fixture lowers a scalar generated-child actor-to-act
     my $reader = $files->{'atl_two_child_data_pipeline__reader.fsm'};
     like($reader, qr/\A\(\?fsm:atl_two_child_data_pipeline__reader\b/,
         'two-child data reader child uses the resolved reader module name');
-    like($reader, qr/\(\+interface\s+\(input capture_start\)\s+\(output payload\)\s+\)/s,
+    like($reader, qr/\(\+interface\s+\(input capture_start\)\s+\(output payload\)\s+\(output done\)\s+\)/s,
         'two-child data reader child preserves payload as an explicit generated output interface role');
     like($reader, qr/\(payload 1\)/, 'two-child data reader keeps the payload size declaration');
     like($reader, qr/\(capture_start 1\)/, 'two-child data reader keeps its authored capture_start input');
@@ -947,7 +947,7 @@ subtest 'ATL two-child data fixture lowers a scalar generated-child actor-to-act
     my $writer = $files->{'atl_two_child_data_pipeline__writer.fsm'};
     like($writer, qr/\A\(\?fsm:atl_two_child_data_pipeline__writer\b/,
         'two-child data writer child uses the resolved writer module name');
-    like($writer, qr/\(\+interface\s+\(input emit_start\)\s+\(input payload\)\s+\)/s,
+    like($writer, qr/\(\+interface\s+\(input emit_start\)\s+\(input payload\)\s+\(output done\)\s+\)/s,
         'two-child data writer child preserves payload as an explicit generated input interface role');
     like($writer, qr/\(payload 1\)/, 'two-child data writer keeps the payload size declaration');
     like($writer, qr/\(emit_start 1\)/, 'two-child data writer keeps its authored emit_start input');
@@ -1009,14 +1009,14 @@ subtest 'ATL two-child vector data fixture lowers an exact-width generated-child
     my $reader = $files->{'atl_two_child_vector_data_pipeline__reader.fsm'};
     like($reader, qr/\A\(\?fsm:atl_two_child_vector_data_pipeline__reader\b/,
         'two-child vector data reader child uses the resolved reader module name');
-    like($reader, qr/\(\+interface\s+\(input capture_start\)\s+\(output payload\)\s+\)/s,
+    like($reader, qr/\(\+interface\s+\(input capture_start\)\s+\(output payload\)\s+\(output done\)\s+\)/s,
         'two-child vector data reader child preserves payload as an explicit generated output interface role');
     like($reader, qr/\(payload 8\)/, 'two-child vector data reader keeps the payload size declaration');
 
     my $writer = $files->{'atl_two_child_vector_data_pipeline__writer.fsm'};
     like($writer, qr/\A\(\?fsm:atl_two_child_vector_data_pipeline__writer\b/,
         'two-child vector data writer child uses the resolved writer module name');
-    like($writer, qr/\(\+interface\s+\(input emit_start\)\s+\(input payload\)\s+\)/s,
+    like($writer, qr/\(\+interface\s+\(input emit_start\)\s+\(input payload\)\s+\(output done\)\s+\)/s,
         'two-child vector data writer child preserves payload as an explicit generated input interface role');
     like($writer, qr/\(payload 8\)/, 'two-child vector data writer keeps the payload size declaration');
 
@@ -1084,7 +1084,7 @@ subtest 'ATL two-child multi-data fixture lowers multiple same-source same-sink 
     my $reader = $files->{'atl_two_child_multi_data_pipeline__reader.fsm'};
     like($reader, qr/\A\(\?fsm:atl_two_child_multi_data_pipeline__reader\b/,
         'two-child multi-data reader child uses the resolved reader module name');
-    like($reader, qr/\(\+interface\s+\(input capture_start\)\s+\(output payload\)\s+\(output sideband\)\s+\)/s,
+    like($reader, qr/\(\+interface\s+\(input capture_start\)\s+\(output payload\)\s+\(output sideband\)\s+\(output done\)\s+\)/s,
         'two-child multi-data reader child preserves both routed outputs as explicit generated interface roles');
     like($reader, qr/\(payload 1\)/, 'two-child multi-data reader keeps the payload size declaration');
     like($reader, qr/\(sideband 1\)/, 'two-child multi-data reader keeps the sideband size declaration');
@@ -1092,7 +1092,7 @@ subtest 'ATL two-child multi-data fixture lowers multiple same-source same-sink 
     my $writer = $files->{'atl_two_child_multi_data_pipeline__writer.fsm'};
     like($writer, qr/\A\(\?fsm:atl_two_child_multi_data_pipeline__writer\b/,
         'two-child multi-data writer child uses the resolved writer module name');
-    like($writer, qr/\(\+interface\s+\(input emit_start\)\s+\(input payload\)\s+\(input sideband\)\s+\)/s,
+    like($writer, qr/\(\+interface\s+\(input emit_start\)\s+\(input payload\)\s+\(input sideband\)\s+\(output done\)\s+\)/s,
         'two-child multi-data writer child preserves both routed inputs as explicit generated interface roles');
     like($writer, qr/\(payload 1\)/, 'two-child multi-data writer keeps the payload size declaration');
     like($writer, qr/\(sideband 1\)/, 'two-child multi-data writer keeps the sideband size declaration');

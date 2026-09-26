@@ -39,7 +39,10 @@ The optional-port packet's positive-width undriven AWMECID output is absent
 from emitted HDL and realized semantics. A literal-width control also loses
 it; a driven control preserves it. The FSM carries width but no output role,
 so unused-signal inference omits it. `.33.9` owns repair without inventing a
-drive value. The prior input-role repair does not cover outputs.
+drive value. The `.33.9` repair now carries both declared directions through
+`+interface`; `t/1900-isf-declared-output-preservation.t` qualifies native/API/MCP
+port inventories and HDL declarations. Reset-only behavior has a separately
+owned `.35` gap: retained reset metadata can lack an HDL assignment.
 
 The audit retains exact caller texts and hashes, native reports, output-role
 controls and an independent HDL width oracle. The replay driver uses retained

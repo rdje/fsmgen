@@ -1238,12 +1238,14 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         params     => _actor_param_declarations($actor),
         actor_network => _actor_network_for_ir($actor),
         ports      => \@ports,
-        # +size carries width, not interface ownership. Keep authored inputs
-        # even when no scheduled state reads them (including domain partitions).
+        # +size carries width, not interface ownership. Keep authored ports
+        # even when unused or undriven (including domain partitions).
         # Do not expose inferred storage or unrelated generated-child signals.
         explicit_interface_ports => [
-            map { { name => $_->{name}, direction => 'input', width => $_->{width} } }
-            @{$actor->{interface}{inputs} || []}
+            (map { { name => $_->{name}, direction => 'input', width => $_->{width} } }
+                @{$actor->{interface}{inputs} || []}),
+            (map { { name => $_->{name}, direction => 'output', width => $_->{width} } }
+                @{$actor->{interface}{outputs} || []}),
         ],
         states     => \@states,
         dt_blocks  => \@dts,

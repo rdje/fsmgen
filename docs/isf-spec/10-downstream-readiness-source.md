@@ -272,6 +272,11 @@ Imported files may also contain library roots:
 
 General source rules:
 
+- Declared actor output roles survive lowering even when undriven; inspect
+  realized semantic/HDL outputs rather than inferring presence from drives.
+  No value is invented. Reset-only undriven outputs retain a separately owned
+  HDL reset-assignment gap; this is not optional-port or generic-width support.
+
 - Actor interface-port options are closed: `width`, `type`, `domain`, and
   output-only `reset`/`default`. Unknown names (including unsupported `present`)
   and malformed option shapes fail through the shared parser in default and

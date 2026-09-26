@@ -27,10 +27,11 @@ owned implementation work; they are not shipped capabilities yet.
 
 Unknown or malformed interface-port options are rejected in default and strict
 modes through native/API/MCP queries. This validation boundary does not add
-optional-port support. Separately, an undriven declared output can disappear
-during port inference even at a positive width; its repair remains owned.
-Inspect realized semantic/HDL interfaces when evaluating presence. Declared
-unused inputs are already preserved.
+optional-port support. Declared inputs and outputs now retain their interface
+roles even when unused or undriven. Output preservation adds no value assignment.
+A reset-only output can still lose its authored HDL reset assignment; that
+separate defect is scheduled immediately next. Inspect realized semantic/HDL
+interfaces and behavior when evaluating presence or reset semantics.
 
 The earlier derived-width request depends on genuine generic-width support;
 it is distinct from it. Exact request scopes, repair order, current

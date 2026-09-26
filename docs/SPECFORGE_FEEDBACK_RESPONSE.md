@@ -1104,15 +1104,18 @@ checked metadata implementation; selection is not a claim that it ships.
 
 ### Additional defect in the optional-port positive control
 
-The packet's positive-width `baseline-good.isf` passes strict check but its
-undriven `AWMECID` output is absent from HDL. Replacing the parameter with a
-literal positive width still loses it; adding a real assignment preserves it.
-The scheduled FSM retains `+size (AWMECID 16)` without an output role or drive
-marker, so ordinary signal inference omits it. Schedule declaration counts and
-realized semantic output inventories therefore differ. The input-role repair
+At intake, the packet's positive-width `baseline-good.isf` passed strict check
+but its undriven `AWMECID` output was absent from HDL. A literal-width control
+also lost it; adding a real assignment preserved it. The captured FSM retained
+`+size (AWMECID 16)` without an output role or drive marker, so ordinary signal
+inference omitted it. Schedule and realized output inventories differed. The input-role repair
 in `a7bf398ac` intentionally covered inputs; it does not repair this output case.
 
-`.33.9` owns the output-interface repair without inventing a drive value.
+`.33.9` now preserves declared output roles without inventing a drive value.
+Ordinary/domain artifacts, generated tops and native/API/MCP inventories retain
+these outputs. A separate reset-only gap surfaced: `(reset V)` on an otherwise
+undriven output can retain FSM metadata without an HDL reset assignment.
+`.35` owns its repair immediately after interface preservation.
 Optional-port qualification must independently inventory the realized ports:
 comparing two files that both omit a supposedly present output proves nothing
 about presence. The original caller fixture remains unchanged in the audit;
@@ -1121,7 +1124,8 @@ literal-width and driven controls are separately identified.
 ### Execution order
 
 Commit intake, then repair unknown port options (`.33.2`) and declared output
-loss (`.33.9`). Resume the already owned watchdog and transaction-reachability
+loss (`.33.9`), then the discovered reset-only output gap (`.35`). Resume the
+already owned watchdog and transaction-reachability
 repairs (`.32.1.3.3.3`, `.32.1.3.3.1`) and broader behavior signoff, followed by
 bundle provenance and executable interconnect lowering (`.32.2`, `.32.4`).
 The feature queue then takes actor-level verification, knownness and checked
