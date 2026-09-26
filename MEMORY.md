@@ -7,8 +7,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.9` (pending)
-- next_action: Activate .33.9 and preserve declared output interfaces without invented drive values, with native/API/MCP controls; first complete the startup-required, task-owned artifact cleanup.
+- next_action: Activate .33.9 and preserve declared output interfaces without invented drive values, with native/API/MCP controls.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
-- in_flight_uncommitted: none after the .33.2 commit workflow.
+- in_flight_uncommitted: none after the .34 commit workflow.
 - in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated. mdBook visual audit still lacks browser runtime access after the director enabled full CDP, Computer Use and the Chrome extension; fresh runtime checks still fail before browser discovery.

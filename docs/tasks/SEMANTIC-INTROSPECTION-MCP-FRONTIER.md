@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -975,6 +975,13 @@ For FSMGen, the analogs are:
   Verification: `Fresh .33.1 current-revision native check accepts optional-signal/baseline-good.isf, but HDL contains done only: positive-width AWMECID is undriven and omitted. The literal-width control also omits AWMECID; a real assignment restores it. Exported FSM has +size but no output role or drive marker; SignalAnalyzer classifies unused names as INTERNAL_DEFAULT, so the interface omits them. Complete native semantic/schedule/export/HDL evidence is retained in docs/audits/specforge-feature-intake-20260926.json; repair remains pending.`
   Commit: `pending`
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.34`
+  Status: `done`
+  Goal: `Complete startup-required safe artifact cleanup and restore the bounded latest-cleanup record.`
+  Acceptance: `Inventory repository-local disposable session output and Rust target release/deps/incremental log/bin candidates without following links or inspecting dependency implementation. Remove only known regenerated .33.2 scratch outputs after their evidence is committed; preserve spent compiler/native-proxy and all ambiguously retained evidence. Write only the latest dated cleanup record in docs/ARTIFACT_CLEANUP.md, verify deleted paths are absent, refresh generated discovery and doctrine data, and commit before output-interface work resumes.`
+  Verification: `Known .33.2 scratch logs and mdBook render removed only after same-volume, non-symlink and untracked checks; exact deleted paths absent afterward. Root target paths and rust/target/release absent; rust/target/debug/deps and incremental contain no log/bin candidates. Retained native-proxy evidence remains present; all other evidence untouched. T1414 documentation audit passes; generated focused-document index refreshed.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.34: record safe artifact cleanup`
+
 ## Implementation Notes From `.4`
 
 Downstream intake note (2026-09-24): the director reports SPECFORGE's old-copy
@@ -1631,7 +1638,8 @@ before editing code. No discovered defect is closed by this audit alone.
 
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.2` is complete: shared parsing now
 rejects unknown/malformed port options with native/API/MCP refusal controls.
-Next activate `.33.9` to preserve declared outputs without invented values. Resume watchdog entry
+Startup cleanup `.34` is complete. Next activate `.33.9` to preserve declared
+outputs without invented values. Resume watchdog entry
 and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -3830,3 +3838,20 @@ claimed. T1899 completes successfully over the catalog-selected supported
 ISF/IAL2/profile source population; T1257 and T1259 retain scalar/aggregate
 type controls. The first docs-test invocation used an incorrect filename and
 ran no tests; the verified T1414 filename then passed. All jobs are consumed.
+
+## Acceptance Checklist — `.34` startup artifact cleanup
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Startup found the required
+  `docs/ARTIFACT_CLEANUP.md` absent; `git log -S 'Latest artifact cleanup'
+  over that exact path returns no creation record. Completed `.33.2` renders
+  and scratch logs are regenerable from committed tests and source.
+- [x] **ADDRESSED (verified)** — Removed only `.artifacts/mdbook-port-options`
+  and the session's exact `port-options-` log set (commit, doc-gate, doc-tests,
+  doctrines-final, doctrines, final, green, producers, red, types), after
+  checking untracked identity, same volume and absence of symlinks. The exact
+  deletion list is absent afterward. The bounded cleanup record contains the
+  latest UTC timestamp and removal summary. No Rust log/bin deletion was needed.
+- [x] **NO REGRESSION** — T1414: `All tests successful`. The retained native
+  receipt result directory still exists; cleanup touched no other artifacts.
+  Generated focused-document discovery includes the new record. Product
+  behavior and mdBook content are unchanged by this maintenance slice.
