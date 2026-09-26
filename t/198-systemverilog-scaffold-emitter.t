@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 use Test::More;
+
+my $type_scope = qr/fsmgen_m[1-9][0-9]*_[A-Za-z_][A-Za-z0-9_]*__/;
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
@@ -57,10 +59,10 @@ FSM
         'scaffold emitter rebuilds the same regular-state prefix as the direct backend output',
     );
     like($scaffold, qr/localparam\s+IDLE\s*=\s*1'd0;/, 'regular-state scaffold keeps the state encoding block');
-    like($scaffold, qr/typedef struct packed \{\n\s+logic \[3:0\] tag;\n\s+logic flag;\n\} frame_t__fsmgen_t; \/\/ frame_t\s*\n\s*module/s, 'regular-state scaffold emits aggregate port typedefs before the module header');
+    like($scaffold, qr/typedef struct packed \{\n\s+logic \[3:0\] tag;\n\s+logic flag;\n\} ${type_scope}frame_t__fsmgen_t; \/\/ frame_t\s*\n\s*module/s, 'regular-state scaffold emits aggregate port typedefs before the module header');
     like($scaffold, qr/input\s+logic\s+signed\s+\[7:0\]\s+IN\b/s, 'regular-state scaffold keeps explicit four-state signed module-port declarations from semantic types');
-    like($scaffold, qr/input\s+frame_t__fsmgen_t\s+IN_FRAME\b/s, 'regular-state scaffold uses aggregate typedefs on direct input ports');
-    like($scaffold, qr/output\s+frame_t__fsmgen_t\s+FRAME\b/s, 'regular-state scaffold uses aggregate typedefs on direct output ports');
+    like($scaffold, qr/input\s+${type_scope}frame_t__fsmgen_t\s+IN_FRAME\b/s, 'regular-state scaffold uses aggregate typedefs on direct input ports');
+    like($scaffold, qr/output\s+${type_scope}frame_t__fsmgen_t\s+FRAME\b/s, 'regular-state scaffold uses aggregate typedefs on direct output ports');
     like($scaffold, qr/always_ff\s*@\(posedge clk\)\s*begin\s+if\s*\(rstn\)/s, 'regular-state scaffold keeps synchronous active-high sreset behavior');
 };
 

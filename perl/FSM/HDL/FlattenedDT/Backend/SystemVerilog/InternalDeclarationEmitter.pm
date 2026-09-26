@@ -50,7 +50,9 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
     my %enable_decls = _enable_wire_declarations($ctx, \%signal_decls, \%aux_decls);
 
     return "" unless (%signal_decls || %aux_decls || %enable_decls);
-    $ctx->{verilog_family_typedef_state} //= FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state;
+    $ctx->{verilog_family_typedef_state} //= FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state(
+        module_name => $fsm_module->name,
+    );
 
     my @typed_declaration_entries = (
         _typed_declaration_entries(\%signal_decls, \%signal_signed, \%signal_state_model, \%signal_declared_type_name, \%signal_declared_type_spec),

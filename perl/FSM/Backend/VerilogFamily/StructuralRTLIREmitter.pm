@@ -43,7 +43,10 @@ sub emit_module ($class, $structural_rtl_ir) {
     my @instances = @{$structural->{instances} || []};
     my @auxiliary_assignments = @{$structural->{auxiliary_assignments} || []};
     my ($typedef_lines, $aggregate_typedef_lookup) =
-        FSM::Backend::VerilogFamily::TypeDeclarationSupport->collect_declared_aggregate_typedefs([@ports, @nets]);
+        FSM::Backend::VerilogFamily::TypeDeclarationSupport->collect_declared_aggregate_typedefs(
+            [@ports, @nets],
+            FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state(module_name => $top_name),
+        );
 
     my @port_lines = map { _render_port_line($_, $aggregate_typedef_lookup) } @ports;
 

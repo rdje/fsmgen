@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1089,10 +1089,26 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.1: route shared scalar storage reads`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Repair aggregate type declaration identity across generated composition modules and qualify shared aggregate storage reads.`
   Acceptance: `After .40 fixes one-member normalization, reproduce the retained multi-member record through native HDL generation and Verilator. Select collision-safe declaration identity or an exact shared declaration contract without hiding conflicting same-name types. Prove same/different nested record/list types, parent/child/top ports, independent live-read runtime and API/MCP parity before removing the aggregate read refusal.`
   Verification: `T1904 record control generated valid-looking HDL but Verilator rejected three compilation-unit typedef declarations named byte_t__fsmgen_t, emitted before parent, child and top modules. Reproduce with (type byte_t (record (payload (bits 7)) (flag bit))) and actor storage read in worker. Root is compilation-unit declaration reuse across generated modules, not width or storage route; read-refusal prevents claiming the unqualified combination.`
+  Commit: `children below`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.1`
+  Status: `done`
+  Goal: `Give emitted aggregate typedefs collision-safe module ownership without changing semantic type compatibility.`
+  Acceptance: `Reproduce duplicate compilation-unit typedefs through public direct composition. Scope backend-owned identifiers by the actual module identity in both direct and structural emitters, preserve per-module type lookup and name collision handling, and prove same-name equal/different nested record/list types with independent HDL admission/runtime. Preserve type-mismatch refusals, direct generator reuse and portable-target boundaries. Update book/fact evidence and commit before removing the ISF aggregate-read refusal.`
+  Verification: `ScaffoldEmitter and StructuralRTLIREmitter emit compilation-unit declarations, but TypeDeclarationSupport allocates alias-derived names only within each module's fresh typedef_state. Orchestrator resets this state per generation. A scoped identifier fixes the name collision without text deduplication or silently equating same-width different types.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.1: scope aggregate typedefs by module`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Qualify shared generated-child aggregate storage reads after backend declaration ownership is repaired.`
+  Acceptance: `Remove only the aggregate read refusal after single/multiple/nested record/list reads, exact owner/child/top interfaces, post-spawn parent updates, repeated activations, independent runtime, direct replay and complete native/API/MCP reports pass. Keep multi-domain and writer boundaries separately owned; update book/spec/intake/facts and commit.`
+  Verification: `Depends on .39.2.2.2.2.1 and completed .40; T1904's retained record control becomes a positive runtime control only after type identity and ownership are proved together.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3`
@@ -1129,6 +1145,13 @@ For FSMGen, the analogs are:
   Acceptance: `Immediately after .40, compare the scalar-storage and local-variable matrix rows with the qualified reset contract, replace powers-up wording with hardware-reset wording, census remaining maintained ISF descriptions, validate claims/book and commit before wider child composition.`
   Verification: `docs/book/src/13k-isf-feature-support-matrix.md scalar storage and local variables say powers up although their own evidence is an HDL reset block; .35 and .39 qualify reset behavior, not power-up initialization. This stale wording was exposed while selecting aggregate documentation.`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.41: distinguish hardware reset from power-up`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.42`
+  Status: `pending`
+  Goal: `Emit a realized generated module definition once when multiple instances reference the same source.`
+  Acceptance: `Immediately after .39.2.2.2.2.1 and before aggregate child-read qualification, reproduce a canonical C2 top with two ?dtc instances of reader_src. Locate generated-artifact assembly, distinguish identical reusable module definitions from conflicting same-name realizations/parameter specialization, and repair at the semantic artifact boundary. Prove duplicate-source direct composition and multiple ISF worker instances with independent HDL/runtime, preserve mismatched-module diagnostics, docs and public reports, then commit.`
+  Verification: `The strict-admitted aggregate_top probe emits module reader_src twice for reader and copy_reader instances, plus its top. GenerationOrchestrator maps hdl_code from every realized instance into child_segments without grouping by module identity; GeneratedChildRealizer constructs a full emitted module per instance. This is separate from duplicate alias-derived typedefs: scoping typedefs cannot fix repeated module definitions. Reproducer retained in .artifacts/aggregate-typedefs/duplicate-module.fsm; the source is a canonical two-instance pass-through with shared reader_src and top fanout.`
+  Commit: `pending`
 
 ## Implementation Notes From `.4`
 
@@ -1795,8 +1818,10 @@ retained CSR baseline. Completed `.39.2.2.1` retains generated-child storage evi
 0107. Completed `.39.2.2.2.1` routes live scalar/bank reads for ordinary and
 single-domain children and refuses unqualified aggregate/domain reads and writes.
 Completed `.40` repairs single-member type normalization; `.41` aligns residual
-reset wording. Next `.39.2.2.2.2/.3` repair aggregate and multi-domain child
-composition before writer handoffs. After those repairs,
+reset wording. Completed `.39.2.2.2.2.1` scopes aggregate typedefs by module.
+Next `.42` repairs repeated-source module emission, then `.39.2.2.2.2.2`
+qualifies aggregate reads and `.39.2.2.2.3` repairs domain child composition
+before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -4435,3 +4460,42 @@ Claim inventory/dispositions and staged doctrine gates remain commit requirement
 - [x] **NO REGRESSION** — The current registered gate reports `knowledge-map: OK`
   and `readme-entrypoint: all README entry-point invariants hold`; claim census
   and dispositions pass. No compiler, example semantics or reset logic changed.
+
+## Qualification — `.39.2.2.2.2.1`
+
+The public canonical C2 reproducer strict-admits distinct reader modules and
+an aggregate top, but the retained pre-repair HDL fails Verilator with duplicate
+`frame_t__fsmgen_t` declarations. Both scaffold and structural emitters put
+port types at compilation-unit scope; their alias-only allocators previously
+knew only the local module. The fix passes actual module identity into the
+shared typedef state and prefixes names with an unambiguous length-delimited
+module identifier. Existing local alias sanitization/collision handling remains.
+Internal and port declarations share state; Orchestrator resets it per emission.
+
+T1906 independently compares packed output values for distinct equal/different/
+nested record/list types, verifies unique global typedef identifiers, reuses a
+pipeline, probes namespace/alias delimiter collisions, and rejects same-width
+incompatible semantic types. Existing emitter tests retain exact alias suffix,
+shape, field, port and carrier assertions while accepting the private module
+prefix. No text deduplication or semantic type erasure is used.
+
+The initial source used legacy links/assignments and then a single generated
+child; strict mode and the documented C2 minimum rejected those probes. The
+canonical multi-child source is the reproducer used for HDL diagnosis. Reusing
+one child source then exposed duplicated module bodies; `.42` owns the verified
+assembly cause and is immediate after this commit, before aggregate read
+qualification. Distinct modules isolate the current typedef repair. The ISF
+aggregate read refusal stays in place until `.39.2.2.2.2.2` qualifies routing.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--strict --check --json` admits
+  the canonical source; retained pre-repair Verilator output reports duplicate
+  frame_t__fsmgen_t declarations from distinct modules. Both port emitters
+  publish local-allocator names at compilation-unit scope.
+- [x] **ADDRESSED (verified)** — T1906 passes with qualified Verilator runtime:
+  composed equal/different/nested type channels retain independently driven
+  packed values, global names stay distinct, and incompatible types still fail.
+- [x] **NO REGRESSION** — T280/T282/T281/T1905 report `All tests successful`;
+  T114/T167/T198/T288/T1321 and the new runtime test pass. The only initial
+  failures were incorrectly escaped namespace regex updates in T280/T282;
+  their corrected assertions preserve alias/shape checks. Fresh mdBook output
+  contains the scoped example and semantic-compatibility explanation.

@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 use Test::More;
+
+my $type_scope = qr/fsmgen_m[1-9][0-9]*_[A-Za-z_][A-Za-z0-9_]*__/;
 use File::Spec;
 use File::Temp qw(tempdir);
 use IPC::Cmd qw(run);
@@ -53,7 +55,7 @@ FSM
     is($ports{payload}->width, 4, 'aggregate member path width leaves a four-bit remainder for payload');
 
     my $hdl = $result->{hdl_code};
-    like($hdl, qr/\binput\s+frame_t__fsmgen_t\s+in_frame\b/s, 'generated HDL keeps the declared aggregate top input');
+    like($hdl, qr/\binput\s+${type_scope}frame_t__fsmgen_t\s+in_frame\b/s, 'generated HDL keeps the declared aggregate top input');
     like($hdl, qr/\binput\s+\[3:0\]\s+payload\b/s, 'generated HDL exposes the inferred remainder input with exact width');
     like($hdl, qr/\.data_in\(\{in_frame\.tag,\s*payload\}\)/s, 'generated HDL binds the aggregate path plus inferred operand concat');
 
@@ -132,7 +134,7 @@ FSM
         is($ports{in_frame}->width, 5, "$case->{name}: inferred aggregate root keeps its packed width");
         ok($ports{payload}, "$case->{name}: remaining whole top-port concat operand is inferred");
         is($ports{payload}->width, 4, "$case->{name}: aggregate path leaves a four-bit remainder for payload");
-        like($hdl, qr/\binput\s+frame_t__fsmgen_t\s+in_frame\b/s, "$case->{name}: generated HDL exposes inferred aggregate input with typedef");
+        like($hdl, qr/\binput\s+${type_scope}frame_t__fsmgen_t\s+in_frame\b/s, "$case->{name}: generated HDL exposes inferred aggregate input with typedef");
         like($hdl, qr/\.data_in\(\{in_frame\.tag,\s*payload\}\)/s, "$case->{name}: generated HDL binds inferred aggregate path plus payload concat");
     }
 };
@@ -189,7 +191,7 @@ FSM
     is($ports{in_frame}->width, 5, 'same-name inferred aggregate root keeps its packed width');
     ok($ports{payload}, 'same-name aggregate root still allows the concat remainder operand to be inferred');
     is($ports{payload}->width, 4, 'same-name aggregate root leaves a four-bit remainder for payload');
-    like($hdl, qr/\binput\s+frame_t__fsmgen_t\s+in_frame\b/s, 'generated HDL exposes the same-name inferred aggregate input with typedef');
+    like($hdl, qr/\binput\s+${type_scope}frame_t__fsmgen_t\s+in_frame\b/s, 'generated HDL exposes the same-name inferred aggregate input with typedef');
     like($hdl, qr/\.in_frame\(in_frame\)/s, 'generated HDL keeps the same-name child input fanout binding');
     like($hdl, qr/\.data_in\(\{in_frame\.tag,\s*payload\}\)/s, 'generated HDL binds concat source through the same-name inferred aggregate root');
     like($hdl, qr/\.nibble\(in_frame\.tag\)/s, 'generated HDL binds direct member source through the same-name inferred aggregate root');

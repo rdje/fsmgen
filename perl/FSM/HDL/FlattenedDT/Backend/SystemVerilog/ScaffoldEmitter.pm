@@ -50,7 +50,9 @@ sub generate_header ($self, $fsm_module) {
 sub generate_module_declaration ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     my $module_plan = $ctx->{enable_graph_module_planning_support}->build_module_declaration_plan($fsm_module);
-    $ctx->{verilog_family_typedef_state} //= FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state;
+    $ctx->{verilog_family_typedef_state} //= FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state(
+        module_name => $fsm_module->name,
+    );
     my ($typedef_lines, $aggregate_typedef_lookup) =
         FSM::Backend::VerilogFamily::TypeDeclarationSupport->collect_declared_aggregate_typedefs(
             [ @{$module_plan->{base_ports} || []}, @{$module_plan->{inputs} || []}, @{$module_plan->{outputs} || []} ],

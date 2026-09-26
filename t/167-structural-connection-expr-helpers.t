@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 use Test::More;
+
+my $type_scope = qr/fsmgen_m[1-9][0-9]*_[A-Za-z_][A-Za-z0-9_]*__/;
 use File::Spec;
 use FindBin;
 
@@ -1077,27 +1079,27 @@ subtest 'aggregate declared-type ports and nets emit packed typedefs through the
     my $rendered = FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     like(
         $rendered,
-        qr/typedef struct packed \{\n\s+bit flag;\n\s+logic \[7:0\] payload;\n\} frame_t__fsmgen_t; \/\/ frame_t/s,
+        qr/typedef struct packed \{\n\s+bit flag;\n\s+logic \[7:0\] payload;\n\} ${type_scope}frame_t__fsmgen_t; \/\/ frame_t/s,
         'structural backend emits a packed struct typedef for declared record aliases',
     );
     like(
         $rendered,
-        qr/typedef struct packed \{\n\s+bit item_0;\n\s+logic \[3:0\] item_1;\n\} status_t__fsmgen_t; \/\/ status_t/s,
+        qr/typedef struct packed \{\n\s+bit item_0;\n\s+logic \[3:0\] item_1;\n\} ${type_scope}status_t__fsmgen_t; \/\/ status_t/s,
         'structural backend emits a deterministic packed struct typedef for declared list aliases',
     );
     like(
         $rendered,
-        qr/module structural_typed_aggregate_top \(\n\s+input frame_t__fsmgen_t in_frame,\n\s+output status_t__fsmgen_t out_status\n\);/s,
+        qr/module structural_typed_aggregate_top \(\n\s+input ${type_scope}frame_t__fsmgen_t in_frame,\n\s+output ${type_scope}status_t__fsmgen_t out_status\n\);/s,
         'structural backend reuses the generated aggregate typedefs on typed module ports',
     );
     like(
         $rendered,
-        qr/wire frame_t__fsmgen_t frame_bus;/s,
+        qr/wire ${type_scope}frame_t__fsmgen_t frame_bus;/s,
         'structural backend reuses aggregate typedefs on typed wire nets',
     );
     like(
         $rendered,
-        qr/status_t__fsmgen_t status_q;/s,
+        qr/${type_scope}status_t__fsmgen_t status_q;/s,
         'structural backend reuses aggregate typedefs on typed variable-style nets',
     );
 };

@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 use Test::More;
+
+my $type_scope = qr/fsmgen_m[1-9][0-9]*_[A-Za-z_][A-Za-z0-9_]*__/;
 use File::Spec;
 use File::Temp qw(tempdir);
 use IPC::Cmd qw(run);
@@ -47,22 +49,22 @@ FSM
 
     like(
         $hdl,
-        qr/typedef struct packed \{\n\s+logic \[3:0\] tag;\n\s+logic flag;\n\} fsmgen_inferred_OUT_FRAME__fsmgen_t; \/\/ fsmgen_inferred_OUT_FRAME/s,
+        qr/typedef struct packed \{\n\s+logic \[3:0\] tag;\n\s+logic flag;\n\} ${type_scope}fsmgen_inferred_OUT_FRAME__fsmgen_t; \/\/ fsmgen_inferred_OUT_FRAME/s,
         'pipeline emits an inferred packed record typedef for the aggregate constant target',
     );
     like(
         $hdl,
-        qr/typedef struct packed \{\n\s+logic \[1:0\] item_0;\n\s+logic \[2:0\] item_1;\n\} fsmgen_inferred_OUT_LANES__fsmgen_t; \/\/ fsmgen_inferred_OUT_LANES/s,
+        qr/typedef struct packed \{\n\s+logic \[1:0\] item_0;\n\s+logic \[2:0\] item_1;\n\} ${type_scope}fsmgen_inferred_OUT_LANES__fsmgen_t; \/\/ fsmgen_inferred_OUT_LANES/s,
         'pipeline emits an inferred packed list typedef for the aggregate constant target',
     );
     like(
         $hdl,
-        qr/\boutput\s+fsmgen_inferred_OUT_FRAME__fsmgen_t\s+OUT_FRAME\b/s,
+        qr/\boutput\s+${type_scope}fsmgen_inferred_OUT_FRAME__fsmgen_t\s+OUT_FRAME\b/s,
         'pipeline exposes the inferred record target through the generated module port',
     );
     like(
         $hdl,
-        qr/\boutput\s+fsmgen_inferred_OUT_LANES__fsmgen_t\s+OUT_LANES\b/s,
+        qr/\boutput\s+${type_scope}fsmgen_inferred_OUT_LANES__fsmgen_t\s+OUT_LANES\b/s,
         'pipeline exposes the inferred list target through the generated module port',
     );
 
@@ -77,7 +79,7 @@ FSM
     unlike($combined_output, qr/aggregate contract|whole aggregate RHS/s, 'successful CLI run does not report aggregate-contract failures');
     like(
         $output_text,
-        qr/\boutput\s+fsmgen_inferred_OUT_FRAME__fsmgen_t\s+OUT_FRAME\b/s,
+        qr/\boutput\s+${type_scope}fsmgen_inferred_OUT_FRAME__fsmgen_t\s+OUT_FRAME\b/s,
         'CLI output preserves the inferred record target typedef',
     );
 };
@@ -163,22 +165,22 @@ FSM
 
     like(
         $hdl,
-        qr/typedef struct packed \{\n\s+logic item_0;\n\s+logic \[1:0\] item_1;\n\} fsmgen_inferred_OUT__fsmgen_t; \/\/ fsmgen_inferred_OUT/s,
+        qr/typedef struct packed \{\n\s+logic item_0;\n\s+logic \[1:0\] item_1;\n\} ${type_scope}fsmgen_inferred_OUT__fsmgen_t; \/\/ fsmgen_inferred_OUT/s,
         'pipeline emits an inferred packed list typedef for a direct RHS concat target',
     );
     like(
         $hdl,
-        qr/typedef struct packed \{\n\s+struct packed \{\n\s+logic item_0;\n\s+logic \[1:0\] item_1;\n\s+\} item_0;\n\s+logic \[3:0\] item_1;\n\} fsmgen_inferred_NESTED__fsmgen_t; \/\/ fsmgen_inferred_NESTED/s,
+        qr/typedef struct packed \{\n\s+struct packed \{\n\s+logic item_0;\n\s+logic \[1:0\] item_1;\n\s+\} item_0;\n\s+logic \[3:0\] item_1;\n\} ${type_scope}fsmgen_inferred_NESTED__fsmgen_t; \/\/ fsmgen_inferred_NESTED/s,
         'pipeline emits an inferred nested packed list typedef for a nested direct RHS concat target',
     );
     like(
         $hdl,
-        qr/\boutput\s+fsmgen_inferred_OUT__fsmgen_t\s+OUT\b/s,
+        qr/\boutput\s+${type_scope}fsmgen_inferred_OUT__fsmgen_t\s+OUT\b/s,
         'pipeline exposes the inferred concat list target through the generated module port',
     );
     like(
         $hdl,
-        qr/\boutput\s+fsmgen_inferred_NESTED__fsmgen_t\s+NESTED\b/s,
+        qr/\boutput\s+${type_scope}fsmgen_inferred_NESTED__fsmgen_t\s+NESTED\b/s,
         'pipeline exposes the inferred nested concat list target through the generated module port',
     );
 
@@ -193,7 +195,7 @@ FSM
     unlike($combined_output, qr/aggregate contract|whole aggregate RHS/s, 'successful CLI run does not report concat aggregate-contract failures');
     like(
         $output_text,
-        qr/\boutput\s+fsmgen_inferred_OUT__fsmgen_t\s+OUT\b/s,
+        qr/\boutput\s+${type_scope}fsmgen_inferred_OUT__fsmgen_t\s+OUT\b/s,
         'CLI output preserves the inferred concat list target typedef',
     );
 };

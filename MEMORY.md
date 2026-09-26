@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2` (pending)
-- next_action: Repair aggregate typedef identity and qualify generated-child aggregate reads under .39.2.2.2.2, then domain child composition and writer handoffs.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.42` (pending)
+- next_action: Repair repeated-source generated module emission under .42, then qualify aggregate reads, domain child composition and writer handoffs.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
-- in_flight_uncommitted: none.
+- in_flight_uncommitted: .39.2.2.2.2.1 aggregate typedef ownership repair.
 - in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated. mdBook visual audit still lacks browser runtime access after the director enabled full CDP, Computer Use and the Chrome extension; fresh runtime checks still fail before browser discovery.

@@ -414,6 +414,10 @@ checks can use more than width alone. On the SystemVerilog path, direct
 generated modules and composition tops also preserve that identity into the
 emitted declaration surface by synthesizing backend-owned packed typedefs for
 declared aggregate aliases instead of flattening them back to raw vectors.
+Generated typedef identifiers include the owning module's identity, so separate
+modules may reuse an alias name without colliding at compilation-unit scope.
+These backend names are implementation details; semantic compatibility still
+uses the declared type shape rather than the emitted spelling or width alone.
 
 That means SystemVerilog may emit shapes like:
 
@@ -425,7 +429,7 @@ typedef struct packed {
     logic [3:0] item_0;
     logic [3:0] item_1;
   } payload;
-} frame_t__fsmgen_t;
+} fsmgen_m10_frame_demo__frame_t__fsmgen_t;
 ```
 
 Record members keep authored field names. List members use deterministic

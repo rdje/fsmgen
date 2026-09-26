@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 use Test::More;
+
+my $type_scope = qr/fsmgen_m[1-9][0-9]*_[A-Za-z_][A-Za-z0-9_]*__/;
 use File::Spec;
 use File::Temp qw(tempdir);
 use IPC::Cmd qw(run);
@@ -226,7 +228,7 @@ RTLIF
     is($binding_by_port{nibble}{connection_expr}{kind}, 'member_access', 'structural binding keeps projected child list item as a member-access expression');
     is($binding_by_port{nibble}{connection_expr}{member_name}, 'item_1', 'structural binding lowers projected child list item to the generated packed-list field');
     is($binding_by_port{nibble}{connection_type_spec}{width}, 4, 'structural binding preserves projected child list item width');
-    like($hdl, qr/\bframe_t__fsmgen_t\s+comp_link_producer_OUT_FRAME\b/s, 'generated HDL declares the projected child carrier with its aggregate typedef');
+    like($hdl, qr/\b${type_scope}frame_t__fsmgen_t\s+comp_link_producer_OUT_FRAME\b/s, 'generated HDL declares the projected child carrier with its aggregate typedef');
     like($hdl, qr/\.OUT_FRAME\(comp_link_producer_OUT_FRAME\)/s, 'generated HDL binds the producer aggregate output to the shared carrier');
     like($hdl, qr/assign tag_out = comp_link_producer_OUT_FRAME\.tag;/s, 'generated HDL assigns from the projected child aggregate record member');
     like($hdl, qr/\.nibble\(comp_link_producer_OUT_FRAME\.payload\.item_1\)/s, 'generated HDL binds the projected child aggregate list item through the packed-list field');

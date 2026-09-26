@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 use Test::More;
+
+my $type_scope = qr/fsmgen_m[1-9][0-9]*_[A-Za-z_][A-Za-z0-9_]*__/;
 use File::Spec;
 use File::Temp qw(tempdir);
 use IPC::Cmd qw(run);
@@ -80,10 +82,10 @@ FSM
     is($symbol_contract->{types}{pair_t}{kind}, 'list', 'direct aggregate symbol contract preserves list type shape');
     is($symbol_contract->{types}{pair_t}{width}, 6, 'direct aggregate symbol contract preserves packed list width');
     is_deeply($module_info->{symbol_contract}, $symbol_contract, 'module_info mirrors direct aggregate symbol contracts');
-    like($hdl, qr/typedef struct packed \{\n\s+logic \[3:0\] tag;\n\s+logic flag;\n\s+struct packed \{\n\s+logic \[3:0\] item_0;\n\s+logic \[3:0\] item_1;\n\s+\} payload;\n\s+\} local_frame__fsmgen_t; \/\/ local_frame/s, 'generated HDL emits a packed typedef for direct aggregate record signals');
-    like($hdl, qr/typedef struct packed \{\n\s+logic item_0;\n\s+logic \[3:0\] item_1;\n\s+logic item_2;\n\s+\} pair_t__fsmgen_t; \/\/ pair_t/s, 'generated HDL emits a packed typedef for direct aggregate list signals');
-    like($hdl, qr/\blocal_frame__fsmgen_t\s+FRAME_OUT\b/s, 'generated HDL declares direct aggregate record signals through their typedef');
-    like($hdl, qr/\bpair_t__fsmgen_t\s+PAIR_OUT\b/s, 'generated HDL declares direct aggregate list signals through their typedef');
+    like($hdl, qr/typedef struct packed \{\n\s+logic \[3:0\] tag;\n\s+logic flag;\n\s+struct packed \{\n\s+logic \[3:0\] item_0;\n\s+logic \[3:0\] item_1;\n\s+\} payload;\n\s+\} ${type_scope}local_frame__fsmgen_t; \/\/ local_frame/s, 'generated HDL emits a packed typedef for direct aggregate record signals');
+    like($hdl, qr/typedef struct packed \{\n\s+logic item_0;\n\s+logic \[3:0\] item_1;\n\s+logic item_2;\n\s+\} ${type_scope}pair_t__fsmgen_t; \/\/ pair_t/s, 'generated HDL emits a packed typedef for direct aggregate list signals');
+    like($hdl, qr/\b${type_scope}local_frame__fsmgen_t\s+FRAME_OUT\b/s, 'generated HDL declares direct aggregate record signals through their typedef');
+    like($hdl, qr/\b${type_scope}pair_t__fsmgen_t\s+PAIR_OUT\b/s, 'generated HDL declares direct aggregate list signals through their typedef');
 
     my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $fsm_path);
     my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
@@ -341,11 +343,11 @@ FSM
     is($symbol_contract->{types}{lane_t}{members}{head}{width}, 8, 'composition symbol contract preserves imported nested list member width');
     is($symbol_contract->{types}{lane_t}{width}, 10, 'composition symbol contract preserves packed local record width');
     is_deeply($module_info->{symbol_contract}, $symbol_contract, 'module_info mirrors composition aggregate symbol contracts');
-    like($hdl, qr/typedef struct packed \{\n\s+logic \[3:0\] tag;\n\s+logic flag;\n\s+struct packed \{\n\s+logic \[3:0\] item_0;\n\s+logic \[3:0\] item_1;\n\s+\} payload;\n\} shared_types__frame_t__fsmgen_t; \/\/ shared_types\.frame_t/s, 'generated top HDL emits a packed typedef for the imported aggregate alias');
-    like($hdl, qr/typedef struct packed \{\n\s+struct packed \{\n\s+logic \[3:0\] item_0;\n\s+logic \[3:0\] item_1;\n\s+\} head;\n\s+struct packed \{\n\s+logic item_0;\n\s+logic item_1;\n\s+\} tail;\n\} lane_t__fsmgen_t; \/\/ lane_t/s, 'generated top HDL emits a packed typedef for the local aggregate alias');
-    like($hdl, qr/input shared_types__frame_t__fsmgen_t in_frame\b/s, 'generated top HDL uses the imported aggregate typedef on input ports');
-    like($hdl, qr/output frame_t__fsmgen_t out_frame\b/s, 'generated top HDL uses the local aggregate typedef on output ports');
-    like($hdl, qr/output lane_t__fsmgen_t out_lane\b/s, 'generated top HDL uses the local aggregate typedef on output ports');
+    like($hdl, qr/typedef struct packed \{\n\s+logic \[3:0\] tag;\n\s+logic flag;\n\s+struct packed \{\n\s+logic \[3:0\] item_0;\n\s+logic \[3:0\] item_1;\n\s+\} payload;\n\} ${type_scope}shared_types__frame_t__fsmgen_t; \/\/ shared_types\.frame_t/s, 'generated top HDL emits a packed typedef for the imported aggregate alias');
+    like($hdl, qr/typedef struct packed \{\n\s+struct packed \{\n\s+logic \[3:0\] item_0;\n\s+logic \[3:0\] item_1;\n\s+\} head;\n\s+struct packed \{\n\s+logic item_0;\n\s+logic item_1;\n\s+\} tail;\n\} ${type_scope}lane_t__fsmgen_t; \/\/ lane_t/s, 'generated top HDL emits a packed typedef for the local aggregate alias');
+    like($hdl, qr/input ${type_scope}shared_types__frame_t__fsmgen_t in_frame\b/s, 'generated top HDL uses the imported aggregate typedef on input ports');
+    like($hdl, qr/output ${type_scope}frame_t__fsmgen_t out_frame\b/s, 'generated top HDL uses the local aggregate typedef on output ports');
+    like($hdl, qr/output ${type_scope}lane_t__fsmgen_t out_lane\b/s, 'generated top HDL uses the local aggregate typedef on output ports');
 
     my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $composition_path);
     my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);

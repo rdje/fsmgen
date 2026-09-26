@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 use Test::More;
+
+my $type_scope = qr/fsmgen_m[1-9][0-9]*_[A-Za-z_][A-Za-z0-9_]*__/;
 use File::Spec;
 use File::Temp qw(tempdir);
 use IPC::Cmd qw(run);
@@ -1065,7 +1067,7 @@ like(
 );
 like(
     $aggregate_structural_sv_result->{hdl_code},
-    qr/\binput\s+frame_t__fsmgen_t\s+in_frame\b/s,
+    qr/\binput\s+${type_scope}frame_t__fsmgen_t\s+in_frame\b/s,
     'pipeline SystemVerilog generation exposes the declared aggregate top port',
 );
 

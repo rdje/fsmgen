@@ -22,10 +22,15 @@ no warnings 'experimental::signatures';
 
 use FSM::Package::PayloadTypeSupport;
 
-sub typedef_state ($class) {
+sub typedef_state ($class, %args) {
+    my $module_name = $args{module_name};
+    confess "Aggregate typedef scope requires a simple module identifier"
+        if defined($module_name)
+            && (ref($module_name) || $module_name !~ /\A[A-Za-z_][A-Za-z0-9_]*\z/);
     return {
         lookup => {},
         used_typedef_names => {},
+        module_name => $module_name,
     };
 }
 
@@ -46,7 +51,9 @@ sub collect_declared_aggregate_typedefs ($class, $entries, $state = undef) {
         my $key = $class->_aggregate_typedef_lookup_key($declared_type_name, $declared_type_spec);
         next if exists $state->{lookup}{$key};
 
-        my $typedef_name = $class->_unique_typedef_name($declared_type_name, $state->{used_typedef_names});
+        my $typedef_name = $class->_unique_typedef_name(
+            $declared_type_name, $state->{used_typedef_names}, $state->{module_name},
+        );
         $state->{lookup}{$key} = $typedef_name;
         push @typedef_lines, $class->_render_aggregate_typedef_lines($typedef_name, $declared_type_name, $declared_type_spec), "";
     }
@@ -100,11 +107,15 @@ sub _aggregate_typedef_lookup_key ($class, $declared_type_name, $declared_type_s
     return join("\n", $declared_type_name, FSM::Package::PayloadTypeSupport->type_spec_label($declared_type_spec));
 }
 
-sub _unique_typedef_name ($class, $declared_type_name, $used_typedef_names) {
+sub _unique_typedef_name ($class, $declared_type_name, $used_typedef_names, $module_name = undef) {
     my $base = $declared_type_name;
     $base =~ s/[^A-Za-z0-9_]+/__/g;
     $base = "_$base" if $base !~ /\A[A-Za-z_]/;
     $base .= '__fsmgen_t';
+    # Port typedefs live at compilation-unit scope. Encode the module-name
+    # length so underscores in module/type names cannot blur the boundary.
+    $base = 'fsmgen_m' . length($module_name) . '_' . $module_name . '__' . $base
+        if defined $module_name;
 
     my $candidate = $base;
     my $suffix = 2;
@@ -175,6 +186,9 @@ __END__
 =head2 typedef_state
 
 Creates one reusable typedef collection state for a module emission run.
+C<module_name> gives compilation-unit declarations an injective module scope;
+real module emitters always supply it. Unscoped collection remains available
+for isolated declaration rendering.
 
 =head2 collect_declared_aggregate_typedefs
 
