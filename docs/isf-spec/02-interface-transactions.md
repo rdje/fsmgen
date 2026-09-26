@@ -17,6 +17,13 @@
 ```
 
 Default width is `1`. Interface entries lower into `.fsm` `+size` entries.
+Declared actor inputs additionally carry `+interface` input roles, preserving
+unused inputs in ordinary actor and partitioned domain module interfaces.
+Their presence does not depend on a scheduled read. Generated domain-top
+routes therefore retain their declared endpoints. Width resolution remains
+owned by `+size`; this does not export inferred storage or unrelated generated
+transaction-child inputs. Semantic input analysis reflects the realized
+interface, and native/API/MCP check, semantic and schedule queries agree.
 Accepted parser output exposes the interface handoff as `inputs` and `outputs`
 arrays with unique non-empty scalar port `name` and positive integer `width`
 entries. `N` is a positive integer literal. `PARAM` may name an actor-local

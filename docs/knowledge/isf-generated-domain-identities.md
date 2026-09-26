@@ -6,7 +6,7 @@ answers:
   - "how are domain and CDC child naming collisions resolved?"
   - "can case-only ISF domain names overwrite exported files?"
   - "how do agents join logical domains to generated children through semantic API and MCP?"
-date: 2026-09-25
+date: 2026-09-26
 status: current
 tags: [isf, clock-domains, composition, naming, artifacts, semantics, mcp]
 evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF.pm; t/1895-isf-generated-domain-names.t; docs/book/src/13a-actor-interface.md; docs/audits/specforge-rule-admission-20260924/generated-domain-names.json
@@ -45,11 +45,12 @@ not qualify behavior. Explicit whole top-input `ready` route precedence is quali
 under `.32.1.3.4.2`; see `composition-explicit-top-input-precedence.md`.
 Generated-name allocation alone does not establish that routing contract.
 
-Negative controls exposed two independent defects with owned repair leaves:
-`.32.1.3.4.3` preserves currently omitted unused domain inputs, and
-`.32.1.3.3.1` repairs unreachable independent event consumers beside an external
-activation callee. The initial mixed-destination oracle fails even without a
-naming collision. The naming test consumes its suffix-reserving inputs and
-places the callee in a separate domain; this isolates naming qualification
-without claiming either independent defect fixed. Exact failing sources,
-generated state components and runtime/control receipts remain in the audit.
+Negative controls exposed independent defects beyond naming. Unused actor
+inputs are now preserved by `.32.1.3.4.3`; see
+`isf-declared-input-preservation.md` for ordinary/domain artifact and public
+query qualification. `.32.1.3.3.1` still owns unreachable independent event
+consumers beside an external activation callee. The original mixed-destination
+oracle fails without a naming collision. The naming regression's separate
+callee domain isolates naming qualification from that unresolved behavior.
+Exact original failing sources, state components and runtime/control receipts
+remain in the naming audit.

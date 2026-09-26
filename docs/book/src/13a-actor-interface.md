@@ -427,6 +427,32 @@ See [Transactions](13b-transactions.md) for per-await semantics.
 Ports become `.fsm` `+size` declarations and module ports. Inferred scheduler
 storage is not emitted a second time when it shares a name with a declared port.
 
+Declared inputs remain public even when no transaction or rule reads them.
+The scheduled FSM carries their roles in `+interface`; `+size` carries their
+widths. This applies to ordinary actors, a named single domain, and each
+partitioned domain module. A generated top routes each input to its owning
+domain without requiring a dummy read to keep the endpoint alive.
+
+For example, `spare_bus` is an unused input that still appears as a vector
+port in generated HDL:
+
+```lisp
+(actor single_unused (clock clk) (reset rst_n)
+ (interface (input start) (input spare_bus (width 9)) (output done))
+ (transaction work (on start) (complete done)))
+```
+
+Save this source as `.artifacts/single_unused.isf`, then inspect it with
+`./bin/fsmgen --strict --emit-semantic-json .artifacts/single_unused.isf`.
+`semantic.signal_analysis.inputs` includes `spare_bus` with direction `input`
+and width `9`. The schedule report counts declared inputs, including unused
+ones. Multi-domain top counts also include clock/reset pins; per-domain
+`ports.inputs` lists the authored inputs owned by that domain. Join each
+domain's `scheduled_fsm` to its semantic composition child to inspect the
+realized interface, including crossing handoffs. `fsmgen_check`,
+`fsmgen_semantic_introspect` and `fsmgen_schedule_preview` expose the same
+native reports through the API and newline MCP adapter.
+
 Interface port names are unique across both input and output directions, and
 the interface block itself is a singleton actor clause.
 

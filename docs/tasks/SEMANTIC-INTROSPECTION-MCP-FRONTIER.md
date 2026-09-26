@@ -707,7 +707,7 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve logical domain and public signal identities through generated top naming and wiring.`
   Acceptance: `Reproduce a public actor with domain bus, trace admission versus generated instance naming, and repair that boundary while preserving logical domain/report identities. Audit collisions and keyword/case variants; qualify actual generated tops and API/MCP behavior. Update book/facts and commit before .32.1.3.3 behavioral closure.`
   Verification: `The .32.1.3.1 activation control parses and lowers domain bus, but strict and compatibility HDL both refuse generated ?fsmc:bus as reserved in VHDL. Parser::_parse_clock_domains admits scalar identifier-shaped names; Scheduler::ISF::_emit_domain_instance copies the logical name verbatim. Initial failing focused-final.tap under .artifacts/isf-multiclock-strict/ retains native/API failure evidence. The syntax-only control uses peripheral after this independent gap is owned; no bus-domain HDL support is claimed by .32.1.3.1.`
@@ -731,11 +731,11 @@ For FSMGen, the analogs are:
   Commit: `this commit; subject carries SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.3`
-  Status: `pending`
-  Goal: `Preserve authored unused domain interface inputs through generated artifacts.`
-  Acceptance: `Reproduce missing unused input endpoints using collision-free domains; preserve public interface ownership in generated domain modules without changing used-port behavior. Qualify strict materialization, semantic/API/MCP and unchanged controls, synchronize the book and commit before broader runtime closure.`
-  Verification: `T1895 suffix fixture exposes top links to bus_instance_3.bus_instance while the domain FSM only has a +size declaration; signal inference omits an unused input. The non-colliding extra_one/extra_two control and exact diagnostics are retained by .32.1.3.4.1. Existing ATLGeneratedTop::mark_atl_data_link_child_interface_ports uses the explicit +interface carrier for analogous endpoints; inspect that public contract before repair.`
-  Commit: `pending`
+  Status: `done`
+  Goal: `Preserve authored unused actor interface inputs through generated artifacts.`
+  Acceptance: `Reproduce missing unused input endpoints using collision-free domains and the shared ordinary actor lowering path; preserve authored input interface ownership in parent/domain modules without changing used-port behavior or exporting unrelated generated-child inputs. Qualify strict materialization, scalar/vector and symbolic-width declarations, semantic/API/MCP identities and unchanged controls, synchronize the book and commit before broader runtime closure.`
+  Verification: `T1897 passes Files=1 Tests=6 with actual strict exports, ordinary/named-single/domain scalar/vector/symbolic input identity, complete native/API/newline MCP equality, unrelated-child exclusion and non-skipped SystemVerilog/Verilog event/reset behavior while unused pins toggle. Used-input HDL is unchanged except Date headers. The selected regression found stale T1330 interface-role lists and pre-existing T1215 slash-route expectations; baseline-overlay proof and corrected reruns pass Files=1 Tests=66 and Files=1 Tests=100, while the other eight selected files passed unchanged. Exact baseline/repaired reports, artifacts, commands, failed/passing TAP, producer hashes and fresh book render are retained in docs/audits/specforge-rule-admission-20260924/declared-input-preservation.json. Staged doctrine and normal hook gates remain required before commit.`
+  Commit: `this commit; subject carries SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.2`
   Status: `pending`
@@ -1412,11 +1412,11 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.3` is next: preserve unused
-public domain inputs in emitted interfaces. Generated naming and explicit
-whole top-input routing are qualified. Repair leading-await watchdog entry
-under `.32.1.3.3.3` and independent transaction reachability under
-`.32.1.3.3.1` before broader behavior/API/MCP signoff in `.32.1.3.3.2`.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.3` is next: initialize and
+rearm the external-callee watchdog before a leading await. Generated naming,
+explicit whole top-input routing and declared actor input preservation are
+qualified; `.32.1.3.4` is closed. Repair independent transaction reachability
+under `.32.1.3.3.1` before broader behavior/API/MCP signoff in `.32.1.3.3.2`.
 Bundle provenance, interconnect lowering and derived widths follow under
 `.32.2`, `.32.4` and `.32.3`. Preserve spent native compiler/startup evidence;
 source checks do not promote runtime support.
@@ -3443,3 +3443,73 @@ controls, unchanged HDL, the independent activation oracle and retained
 watchdog failure; durability uses the tracked audit/tests/book/facts and exact
 repair leaves. No source-expression ownership widening, full CI/push, or broad
 activation-runtime signoff is claimed.
+
+### `.32.1.3.4.3` scoped start and shared-path reproduction
+
+Clean baseline `354844fe1019d2db1e413dd54f8c4a5ae9eb398b`; no outstanding jobs.
+Knowledge Map queries for ISF unused/explicit interface inputs returned no
+canonical repair fact. Read the public interface/spec, generated ATL role
+carrier, domain partition/emitter and FSM parser/analyzer before editing.
+The RAM-guarded `.artifacts/isf-unused-domain-inputs/capture.py before` reproduces
+missing `spare_flag`/`spare_bus` domain endpoints: strict check and semantic
+queries fail while schedule succeeds. An ordinary `single_unused` actor passes
+strict check, but its nine-bit `spare_bus` is absent from generated HDL and
+semantic input analysis. Both paths retain only `+size`, which does not assert
+port ownership. This same-locus scope extension is owned here, before repair:
+carry declared actor input roles through parent IR, including partitioned
+actors, without making inferred internal signals or unrelated child ports public.
+Exact sources, reports, emitted artifacts and HDL are retained in the probe;
+ordinary strict success is not interface-preservation evidence.
+
+The first repaired T1897 run passed the independent SV/Verilog event oracles
+but failed its multi-domain semantic/count expectations: the test omitted the
+established generated-top clock/reset inputs. The public report contract in
+`docs/isf-spec/22-public-interface-reports-evolution.md` explicitly includes
+those pins. Corrected the test expectation without changing production reports;
+retain the initial failed TAP alongside the final rerun. The previous session's
+post-repair capture was not executed because automatic approval review hit a
+usage limit. The director resumed; the same guarded approval path succeeded,
+and all before/after capture jobs have now been consumed.
+
+## Acceptance Checklist — `.32.1.3.4.3` declared input preservation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Baseline native `--strict --check --json`
+  and `--emit-semantic-json` reject unused domain endpoints, while an ordinary
+  actor passes but loses its declared vector input in HDL. Schedule still
+  counts that input. `LoweringIR::_build_parent_ir` supplies only widths to
+  `+size`; the FSM analyzer requires a read or an explicit role to retain the
+  input. The existing parser/emitter `+interface` carrier owns that role.
+  Exact baseline source, reports, exported artifacts and HDL bind `354844fe1`.
+- [x] **ADDRESSED (verified)** — Parent IR retains declared input roles;
+  ordinary and partitioned actors emit `+interface` alongside `+size`.
+  T1897 passes `Files=1, Tests=6`, with strict real materialization, independent
+  artifact admission, authored scalar/vector/symbolic widths and domain
+  ownership, complete native/API/newline MCP reports and generated-child
+  isolation. SystemVerilog and Verilog public-pin oracles pass without skips
+  while unused pins toggle across event transfers and reset controls. The
+  used-input control HDL is identical except Date headers. Fresh book render
+  and the exact documented source pass; browser visual audit is unavailable.
+- [x] **NO REGRESSION** — `All tests successful` for corrected T1330
+  `Files=1, Tests=66` and T1215 `Files=1, Tests=100`. The initial selected
+  ten-file run passed the other eight files, including public interface,
+  domain partition, parameter/constant widths, output defaults/reset, rule
+  admission, canonical wiring and activation-route API/HDL checks. T1330's
+  exact role lists now include its already-declared start inputs. T1215's
+  legacy slash-route expectations fail identically with the committed
+  LoweringIR module preloaded from an isolated repository-local overlay;
+  corrected canonical `(core.resp resp)` expectations pass. This is a
+  changed-module control with unchanged other production components, not a
+  complete old-revision export. No unrelated production repair was needed.
+
+The immutable `declared-input-preservation.json` audit retains complete
+before/after reports, source/artifact/HDL text, initial/final TAP and producer
+identities, including both independently diagnosed stale-test corrections.
+The first publisher attempt only misparsed aligned prove-summary whitespace;
+it wrote no evidence or book, and the corrected publisher completed normally.
+Re-derivation uses actual public queries and materialized artifacts;
+falsification uses the missing-role baseline, unchanged used-input HDL,
+child-boundary exclusion and independent changing-pin event oracle; durability
+uses this owner, tracked tests, audit, synchronized book/spec and fact card.
+All verification jobs are consumed. Complete the staged doctrine and normal
+commit hooks before starting the watchdog leaf. Full CI/push and historical
+startup/native qualification remain gated and are not claimed by this slice.

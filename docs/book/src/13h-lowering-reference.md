@@ -61,9 +61,12 @@ CDC children have unrelated `ready` outputs. Actual explicit-link validation
 still rejects bad directions, widths, declared types and duplicate drivers.
 See [composition conventions](05-composition-basics.md) for a complete example.
 
-Additional limits are tracked before broader multi-clock signoff. An
-unused declared domain input may be omitted by inferred-port emission even
-though the top links it; `.32.1.3.4.3` owns preservation of that interface.
+Declared actor inputs now survive lowering even when unused. Ordinary and
+domain FSMs carry explicit input roles alongside widths, preserving generated
+top routes and semantic/API/MCP input identity. See
+[actor interfaces](13a-actor-interface.md#interface) for a runnable example.
+
+Additional limits are tracked before broader multi-clock signoff.
 An externally activated callee and an independently triggered event consumer
 in the same domain can lower into disconnected state components: strict
 admission succeeds, but the consumer never runs. `.32.1.3.3.1` owns that

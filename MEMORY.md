@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.3` (pending)
-- next_action: Reproduce missing unused domain input endpoints and preserve the declared interface through lowering under .32.1.3.4.3; retain actual generated-artifact and API/MCP proof.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.3` (pending)
+- next_action: Reproduce the retained leading-await activation timeout; initialize and rearm the callee watchdog before waiting under .32.1.3.3.3, preserving real timeouts and actual HDL/API/MCP proof.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none after the owning commit workflow; verify Git state on resume.
 - in_flight_background: none.

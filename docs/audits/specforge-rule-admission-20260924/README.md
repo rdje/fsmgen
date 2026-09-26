@@ -99,4 +99,4 @@ The reset-polarity contradiction, domain `bus` keyword refusal and explicit `rea
 owners `.32.1.3.2` and `.32.1.3.4`; none is closed by syntax admission. `reset-polarity-carrier.json` records the
 `.32.1.3.2.1` public FSM extension and its native/API/MCP/HDL oracles. `isf-reset-polarity.json` records `.32.1.3.2.2` ISF
 emission, matching domain/CDC policy, independent reset/event before→after controls and complete public query equality.
-Generated-name and routing qualification: `generated-domain-names.json`, `explicit-input-routes.json` (owners and independent defects inside).
+Naming, routes and inputs: `generated-domain-names.json`, `explicit-input-routes.json`, `declared-input-preservation.json` (owners/limits inside).

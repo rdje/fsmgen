@@ -3549,7 +3549,7 @@ ISF
         'await_all after same-domain post-do await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_before_await_any__domain_core\)/,
         'domain top instantiates the when pre-await_any core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the when pre-await_any core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -3706,7 +3706,7 @@ ISF
         'await_all after same-domain generated do drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_after_await_any__domain_core\)/,
         'domain top instantiates the core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -3876,7 +3876,7 @@ ISF
         'await_all drains pre-do and post-do same-domain generated spawns');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_after_await_any_then_spawn__domain_core\)/,
         'domain top instantiates the core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -4051,7 +4051,7 @@ ISF
         'await_all after the second await_any drains pre-do and post-do same-domain generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_after_await_any_then_spawn_second_await_any__domain_core\)/,
         'domain top instantiates the prior-await_any second-await_any core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the prior-await_any second-await_any core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -4189,7 +4189,7 @@ ISF
         'await_all drain gates the nested repeat check on the pending generated spawn after same-domain do');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_while_spawn_pending__domain_core\)/,
         'domain top instantiates the core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -4340,7 +4340,7 @@ ISF
         'await_all drains both same-domain generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_then_spawn_before_drain__domain_core\)/,
         'domain top instantiates the core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -4499,7 +4499,7 @@ ISF
         'await_all after same-domain post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core when_repeat_domain_do_then_spawn_before_await_any__domain_core\)/,
         'domain top instantiates the post-await_any core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the post-await_any core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -8080,7 +8080,7 @@ ISF
         'await_all after switch same-domain post-do await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_before_await_any__domain_core\)/,
         'domain top instantiates the switch pre-await_any core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the switch pre-await_any core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -8242,7 +8242,7 @@ ISF
         'await_all after switch same-domain generated do drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_after_await_any__domain_core\)/,
         'domain top instantiates the switch core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the switch core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -8389,7 +8389,7 @@ ISF
         'await_all drains switch pre-do and post-do same-domain generated spawns');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_after_await_any_then_spawn__domain_core\)/,
         'domain top instantiates the switch core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the switch core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -8567,7 +8567,7 @@ ISF
         'switch await_all after the second await_any drains pre-do and post-do same-domain generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_after_await_any_then_spawn_second_await_any__domain_core\)/,
         'domain top instantiates the switch prior-await_any second-await_any core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the switch prior-await_any second-await_any core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -8710,7 +8710,7 @@ ISF
         'await_all drain gates the switch nested repeat check on the pending generated spawn after same-domain do');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_while_spawn_pending__domain_core\)/,
         'domain top instantiates the switch core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the switch core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -8864,7 +8864,7 @@ ISF
         'await_all drains both switch same-domain generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_then_spawn_before_drain__domain_core\)/,
         'domain top instantiates the switch core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the switch core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
@@ -9026,7 +9026,7 @@ ISF
         'await_all after switch same-domain post-spawn await_any drains both generated spawns before nested repeat re-entry');
     like($top_fsm, qr/\(\?fsmc:core switch_repeat_domain_do_then_spawn_before_await_any__domain_core\)/,
         'domain top instantiates the switch post-await_any core-domain scheduled artifact');
-    like($top_fsm, qr{/core\.resp/resp/},
+    like($top_fsm, qr/\(core\.resp resp\)/,
         'domain top exposes the switch post-await_any core-domain do output handoff result');
 
     my %ir_domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};

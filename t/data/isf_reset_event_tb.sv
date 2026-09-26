@@ -8,9 +8,18 @@ module reset_event_tb;
   always #7 core_clk = !core_clk;
   reg bus_rst_n = ACTIVE, core_rst_n = ACTIVE;
   reg bus_start = 0;
+`ifdef UNUSED_DOMAIN_INPUTS
+  reg spare_flag = 0;
+  reg [8:0] spare_bus = 0;
+  always #11 spare_flag = !spare_flag;
+  always #13 spare_bus = spare_bus + 9'd1;
+`endif
   wire core_seen;
   integer observed = 0;
   clock_domain_event_crossing_top dut(
+`ifdef UNUSED_DOMAIN_INPUTS
+    .spare_flag(spare_flag), .spare_bus(spare_bus),
+`endif
 `ifdef EXTRA_WORKER_DOMAIN
     .worker_clk(core_clk), .worker_rst_n(core_rst_n),
 `endif

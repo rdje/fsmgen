@@ -16,5 +16,5 @@
 
 _ISF logical domains retain identity through portable generated names and case-safe artifacts_
 
-- **date:** 2026-09-25 · **status:** current
+- **date:** 2026-09-26 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-generated-domain-identities.md`](../../docs/knowledge/isf-generated-domain-identities.md)
