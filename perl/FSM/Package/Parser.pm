@@ -353,12 +353,13 @@ sub resolve_pending_package_symbols ($self, $package_name, $symbols, $symbol_man
     return 1;
 }
 
-sub resolve_pending_package_types ($self, $package_name, $symbols, $symbol_manager, $type_entries) {
+sub resolve_pending_package_types ($self, $package_name, $symbols, $symbol_manager, $type_entries, %options) {
     $type_entries ||= [];
     return 1 unless @$type_entries;
 
     FSM::Package::DeclarativeTypeResolver->resolve_types(
         type_entries => $type_entries,
+        type_ast_layout => $options{type_ast_layout} // 'lispish',
         unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
         unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
         is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
@@ -367,6 +368,7 @@ sub resolve_pending_package_types ($self, $package_name, $symbols, $symbol_manag
                 package_name => $package_name,
                 type_name => $entry->{name},
                 spec_ast => $entry->{spec_ast},
+                type_ast_layout => $options{type_ast_layout} // 'lispish',
                 symbols => $symbols,
                 signal_manager => $symbol_manager,
             );
@@ -388,10 +390,10 @@ sub resolve_pending_package_types ($self, $package_name, $symbols, $symbol_manag
                 "type '" . ($_->{name} // 'unknown') . "'";
             } @{ $cycle{chain} || [] };
 
-            confess
+            die
                 "Package '$package_name' contains a declarative type dependency cycle, ".
                 "but package type scope now resolves normal non-cyclic type aliases without depending on declaration order and still blocks cycles explicitly. ".
-                "Cycle: ".join(' -> ', @chain).".";
+                "Cycle: ".join(' -> ', @chain).".\n";
         },
     );
 
@@ -448,6 +450,7 @@ sub canonicalize_package_type_spec ($self, %args) {
 
     my $resolved_spec = FSM::Package::DeclarativeTypeSupport->canonicalize_type_spec(
         spec_ast => $spec_ast,
+        type_ast_layout => $args{type_ast_layout} // 'lispish',
         unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
         unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
         is_contract_type_reference => sub ($value) { return $self->is_contract_type_reference($value) },
@@ -476,9 +479,9 @@ sub canonicalize_package_type_spec ($self, %args) {
     );
     return $resolved_spec if $resolved_spec;
 
-    confess
+    die
         "Package '$package_name' contains malformed '+types' entry for type '$type_name', ".
-        "but the first active '+types' lane supports 'bit', '(bits N)', '(bits WIDTH_SYMBOL)', '(signed bit)', '(signed (bits N))', '(signed (bits WIDTH_SYMBOL))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local/imported types.";
+        "but the first active '+types' lane supports 'bit', '(bits N)', '(bits WIDTH_SYMBOL)', '(signed bit)', '(signed (bits N))', '(signed (bits WIDTH_SYMBOL))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local/imported types.\n";
 }
 
 sub canonicalize_package_symbol_literal_payload ($self, %args) {

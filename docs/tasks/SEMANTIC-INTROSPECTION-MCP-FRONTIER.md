@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1117,10 +1117,17 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair one-member aggregate type normalization exposed by the child-read qualification.`
   Acceptance: `Immediately after .39.2.2.2.1, reproduce (type byte_t (record (payload (bits 8)))) through the public ISF/direct-type routes. Distinguish a one-member definition from a wrapped member sequence in DeclarativeTypeSupport and DeclarativeTypeResolver without consulting submodule implementation. Prove single/multiple/nested members, aliases/dependencies and invalid shapes; update contracts/book/facts and commit before generated-child writer work.`
   Verification: `T1904's first record probe failed before storage lowering: normalized record body has one member array, but the generic single-array flattening treats that member's name/type as separate members; canonicalize_type_spec then rejects the scalar name. The resolver repeats the same flattening in dependency collection. This is a parser defect, not evidence that child record read routing is unsupported. The retained failing transcript is .artifacts/child-storage/final-focused.log; source shape and mechanism are preserved here.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40: preserve single-member aggregate types`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.41`
+  Status: `pending`
+  Goal: `Remove residual power-up claims from the ISF feature matrix's hardware reset descriptions.`
+  Acceptance: `Immediately after .40, compare the scalar-storage and local-variable matrix rows with the qualified reset contract, replace powers-up wording with hardware-reset wording, census remaining maintained ISF descriptions, validate claims/book and commit before wider child composition.`
+  Verification: `docs/book/src/13k-isf-feature-support-matrix.md scalar storage and local variables say powers up although their own evidence is an HDL reset block; .35 and .39 qualify reset behavior, not power-up initialization. This stale wording was exposed while selecting aggregate documentation.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -1787,7 +1794,8 @@ Completed `.39.2.1` preserves ordinary/domain ISF storage and qualifies the
 retained CSR baseline. Completed `.39.2.2.1` retains generated-child storage evidence and decision
 0107. Completed `.39.2.2.2.1` routes live scalar/bank reads for ordinary and
 single-domain children and refuses unqualified aggregate/domain reads and writes.
-Next `.40` repairs single-member type normalization, then `.39.2.2.2.2/.3`
+Completed `.40` repairs single-member type normalization. Next `.41` corrects
+residual reset wording, then `.39.2.2.2.2/.3`
 repair aggregate and multi-domain child composition before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
@@ -4356,3 +4364,47 @@ existing earlier scalar-target diagnostic. Scope/refusal controls are explicit.
   T1376/T1112/T1262 reports `All tests successful`; mdBook builds and rendered
   scope markers match. Knowledge Map, inventory and disposition checks pass.
   The mandatory staged doctrine gate and commit hook remain required.
+
+
+## Qualification — `.40`
+
+Public Lispish calls confirm distinct layouts: raw record bodies wrap their
+member sequence, while the ISF adapter returns a flat sequence. The shared
+canonicalizer and dependency walker unconditionally expand a sole array body,
+splitting a normalized member or structured list item. This is a caller-layout
+contract mismatch, not a defect in the submodule parser. Explicit layout must
+flow from the ISF package-resolution call to both shared consumers; preserve
+raw direct/package/composition parsing, including aliases named like type
+constructors, without shape guesses. The first public negative parity test exposed Carp stack frames and process-specific
+addresses in the package type-cycle diagnostic. Own the contextual type-cycle
+and malformed-spec failure paths in this slice: end expected input errors with
+a newline and omit internal stack traces, then prove complete negative parity.
+Regression controls own single, nested,
+forward-reference, multi-member and malformed/cyclic types here.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--strict --check --json` rejected
+  the retained single-record actor with malformed +types. Public Lispish and
+  adapter outputs isolate wrapper-versus-member expansion in both shared
+  consumers; negative report comparisons identify process-specific Carp frames.
+- [x] **ADDRESSED (verified)** — T1905 reports `All tests successful`: exact
+  independently specified type shapes match ISF parsing, direct generation and
+  scheduled replay; complete native/API/newline positive and negative reports
+  agree. Imported raw packages coexist with normalized local types.
+- [x] **NO REGRESSION** — T279/T280/T281/T285/T1257/T1259/T1260/T1261/
+  T1262/T1376 report `All tests successful`, including the new complete book
+  example. mdBook builds and rendered example markers match.
+
+
+The initial broader command referenced nonexistent test filenames; corrected
+paths were enumerated before the signoff rerun. The mdBook destination was
+interpreted relative to invocation, creating output outside the repository on
+the same volume. The exact generated output was copied into the repository,
+all file hashes compared, and the misplaced output plus its empty task directory
+removed. No external output remains; the qualified HTML lives under
+`.artifacts/aggregate-layout/book`. No visual-browser claim is made.
+
+Claim legs: exact parser/type/replay comparisons re-derive aggregate identity;
+malformed/cyclic and constructor-named alias controls falsify over-flattening
+or shape guessing; T1905 and the new Knowledge Map card preserve the evidence.
+The already owned aggregate composition refusal remains in place. No wider
+backend or shared-child aggregate runtime qualification is claimed here.

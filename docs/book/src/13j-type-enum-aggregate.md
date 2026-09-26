@@ -96,6 +96,34 @@ Aggregate interface ports, transaction-local ports, storage banks, and other
 aggregate carriers are not shipped yet. They require separate ownership,
 port-binding, and partial-update contracts.
 
+Single-member records and single-item lists also preserve their aggregate
+identity. Nested forms and forward local aliases work in actor declarations
+and survive the scheduled `.fsm` replay. For example:
+
+```lisp
+(actor single_payload
+  (types
+    (type payload_t (list (record (payload byte_t))))
+    (type byte_t (bits 8)))
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input data (width 8))
+    (output result (width 8)))
+  (storage (var value (type payload_t) (reset 0)))
+  (transaction main
+    (on start)
+    (set value data)
+    (set result value)))
+```
+
+Here the storage keeps its nested list/record shape while whole-value transfers
+use the packed representation. Empty aggregates, missing member types,
+duplicate field names, unknown aliases, and dependency cycles fail during type
+resolution. These declarations do not extend the generated-child aggregate
+read boundary described in [Composition](13f-composition.md).
+
 ## Enum Values
 
 Enum members may be local, such as `mode.BUSY`, or package-qualified, such as

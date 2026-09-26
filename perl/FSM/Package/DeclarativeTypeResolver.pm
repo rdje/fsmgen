@@ -4,6 +4,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use FSM::Package::DeclarativeTypeSupport;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
@@ -73,10 +74,9 @@ sub resolve_types ($class, %args) {
             }
 
             if ($head eq 'list') {
-                my @body_items = @{$cursor}[1 .. $#$cursor];
-                if (@body_items == 1 && ref($body_items[0]) eq 'ARRAY') {
-                    @body_items = @{ $body_items[0] };
-                }
+                my @body_items = FSM::Package::DeclarativeTypeSupport->aggregate_body_items(
+                    $cursor, $args{type_ast_layout} // 'lispish',
+                );
                 for my $item_ast (@body_items) {
                     $collect_dependencies->($item_ast);
                 }
@@ -84,10 +84,9 @@ sub resolve_types ($class, %args) {
             }
 
             if ($head eq 'record') {
-                my @body_items = @{$cursor}[1 .. $#$cursor];
-                if (@body_items == 1 && ref($body_items[0]) eq 'ARRAY') {
-                    @body_items = @{ $body_items[0] };
-                }
+                my @body_items = FSM::Package::DeclarativeTypeSupport->aggregate_body_items(
+                    $cursor, $args{type_ast_layout} // 'lispish',
+                );
                 for my $member_ast (@body_items) {
                     next unless ref($member_ast) eq 'ARRAY' && @$member_ast >= 2;
                     my $member_spec_ast = @$member_ast == 2

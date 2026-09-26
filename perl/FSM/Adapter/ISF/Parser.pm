@@ -1849,6 +1849,7 @@ sub _resolve_actor_local_symbols($self, $actor) {
         $symbols,
         $signal_manager,
         \@type_entries,
+        type_ast_layout => 'flat',
     );
     $parser->resolve_pending_package_symbols(
         "ISF actor '$actor_name'",

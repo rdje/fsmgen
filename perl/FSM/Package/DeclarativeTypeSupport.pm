@@ -7,6 +7,19 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+# Raw Lispish forms wrap the aggregate body; ISF's normalized forms do not.
+# A sole array can be either that wrapper or an actual member/type expression,
+# so the caller must identify its layout rather than infer it from the contents.
+sub aggregate_body_items ($class, $cursor, $layout = 'lispish') {
+    confess "Unknown declarative type AST layout '$layout'"
+        unless $layout eq 'lispish' || $layout eq 'flat';
+    my @items = @{$cursor}[1 .. $#$cursor];
+    if ($layout eq 'lispish' && @items == 1 && ref($items[0]) eq 'ARRAY') {
+        @items = @{ $items[0] };
+    }
+    return @items;
+}
+
 sub canonicalize_type_spec ($class, %args) {
     my $spec_ast = $args{spec_ast};
     my $unwrap_scalar_token = $args{unwrap_scalar_token}
@@ -101,10 +114,9 @@ sub canonicalize_type_spec ($class, %args) {
 
     if (ref($cursor) eq 'ARRAY' && @$cursor >= 2) {
         my $head = $unwrap_scalar_token->($cursor->[0]);
-        my @body_items = @{$cursor}[1 .. $#$cursor];
-        if (@body_items == 1 && ref($body_items[0]) eq 'ARRAY') {
-            @body_items = @{ $body_items[0] };
-        }
+        my @body_items = $class->aggregate_body_items(
+            $cursor, $args{type_ast_layout} // 'lispish',
+        );
 
         if (defined($head) && !ref($head) && $head eq 'list') {
             my @items;

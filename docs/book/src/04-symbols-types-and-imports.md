@@ -389,6 +389,13 @@ The first shipped aggregate type aliases are:
 - `(list TYPE TYPE ...)`
 - `(record (field TYPE) ...)`
 
+Both forms allow a single item or member, including a nested type expression:
+`(list (bits 8))`, `(record (payload byte_t))`, and
+`(list (record (payload byte_t)))`. Local aliases may be declared later in the
+same type scope; dependency cycles, empty aggregates, unknown aliases, and
+duplicate record member names are rejected. A single-member aggregate retains
+its list or record identity rather than becoming a scalar alias.
+
 Example:
 
 ```lisp
