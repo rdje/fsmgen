@@ -166,6 +166,18 @@ lowering, vector numeric-literal addition/subtraction
 emitted by compound update/shorthand forms, and same-width
 addition/subtraction/multiplication, division/modulo, and XOR RHS/chain
 lowering.
+
+Unsigned vector comparisons with sized numeric literals preserve numeric
+meaning in either operand order. A narrower operand is zero-extended to the
+common width: comparing a four-bit input with `1'b1` uses a vector value of
+one, while comparing it with `8'h10` extends the input instead of truncating
+the literal. Equality, inequality and relational results become typed logic
+zero/one values in concurrent and procedural assignments. For example, a
+four-bit input value of `2` is less than `8'h10`, and a three-bit destination
+receiving that comparison result holds `3'b001`. Scalar comparison controls
+retain scalar types. Independent GHDL truth-table and dynamic-wait tests
+qualify these bounded cases.
+
 Scalar division/modulo remains an explicit fail-closed direct VHDL boundary.
 Aggregate-output direct roots also remain explicit fail-closed direct VHDL
 boundaries.
@@ -173,11 +185,11 @@ Composition/top VHDL is also fail-closed: `?top` sources are parsed into typed
 composition IR, then `target_language => 'vhdl'` or `--language vhdl` is
 rejected with the composition target-support diagnostic instead of emitting a
 VHDL top.
-VHDL validation with GHDL is intentionally deferred until a separate GHDL
-validation lane is runnable, documented, support-accounted, and regression-backed. The current
-regression gate is a focused SystemVerilog smoke, not yet a claim that every
-historical sample in `fsm/` is externally warning-clean. Both deferred items
-are tracked in [Feature Backlog](14-feature-backlog.md).
+A general GHDL lane for CLI `--verify-hdl` remains deferred; the independent
+GHDL regressions above qualify their specific runtime cases. The CLI
+regression gate remains a focused SystemVerilog smoke, without a claim that
+every historical sample in `fsm/` is externally warning-clean. The broader
+validation work is tracked in [Feature Backlog](14-feature-backlog.md).
 
 The focused smoke currently includes `fsm/lte_dif_pmaster.fsm`, every current
 MIPI sample under `fsm/`, the warning-clean historical direct samples

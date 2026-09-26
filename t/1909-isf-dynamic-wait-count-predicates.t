@@ -164,10 +164,7 @@ VHDL
             bounds => {timeout_seconds => 60, capture_limit_bytes => 1_048_576},
             containment => 'test_runtime_process_group', cwd => $dir, argv => $_[0]) };
         my $compile = $run->([$ghdl, '-a', '--std=08', '--workdir='.$dir, $dut, $tb]);
-        {
-            local $TODO = 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.45: VHDL counter comparison width';
-            ok($compile->{ok}, 'GHDL analysis') or diag($compile->{diagnostic}, $compile->{stderr});
-        }
+        ok($compile->{ok}, 'GHDL analysis') or diag($compile->{diagnostic}, $compile->{stderr});
         return unless $compile->{ok};
         my $result = $run->([$ghdl, '--elab-run', '--std=08', '--workdir='.$dir, 'count_tb', '--assert-level=error', '--stop-time=10000ns']);
         ok($result->{ok}, 'VHDL independent count and sampling oracle passes') or diag($result->{diagnostic}, $result->{stdout}, $result->{stderr});

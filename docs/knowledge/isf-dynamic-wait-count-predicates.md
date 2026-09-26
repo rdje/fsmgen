@@ -22,10 +22,9 @@ forms including transaction entry, awaits, joins, branches and loop decisions.
 
 T1909 independently checks elapsed clock cycles over the complete declared
 four-bit scalar range, consecutive pairs, expression counts, branches, awaits,
-and input changes after sampling. Its VHDL entry oracle is retained but cannot
-yet run: GHDL rejects vector counter comparisons against scalar `'1'`. The
-analysis expectation is an explicit `.45` TODO; that immediate leaf owns
-repair and the unchanged scalar-range/snapshot runtime oracle. Complete
+and input changes after sampling. After `.45` repairs typed VHDL comparison
+operands and results, its GHDL scalar-range/snapshot oracle also passes without
+TODOs. See `vhdl-unsigned-comparison-literals.md` for the backend contract. Complete
 native/API/newline check, semantic and schedule reports agree. T1908 restores
 the original even-count join case. T1244 retains exact scheduled-transition,
 zero-bypass, pending-sample and metadata assertions with explicit nonzero

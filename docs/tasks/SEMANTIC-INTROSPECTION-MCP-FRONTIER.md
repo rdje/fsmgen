@@ -1168,11 +1168,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.44: test the entire runtime wait count for nonzero`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.45`
-  Status: `pending`
+  Status: `done`
   Goal: `Emit type-correct VHDL dynamic-wait counter comparisons and qualify independent timing.`
   Acceptance: `Immediately after .44, reproduce T1909 count_entry with GHDL: vector counter comparisons against scalar literal '1' fail analysis. Diagnose the owning comparison/literal emitter contract, repair without narrowing count or changing timing, and make the original complete-range and sampling VHDL oracle pass without TODO. Preserve SystemVerilog, typed comparison controls and public report parity, update docs and commit.`
   Verification: `.artifacts/dynamic-wait-predicates/qualified.log records no function declarations for operator > and = for main_wait_1_cnt compared with scalar '1'. T1909 retains the exact analysis/runtime expectations; no VHDL timing qualification is claimed by .44. The shared AHB knowledge card independently records an older workaround for generic dynamic-wait comparison widths.`
-  Commit: `pending`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.45: preserve VHDL comparison types and unsigned widths`
 
 
 
@@ -1844,8 +1844,8 @@ Completed `.40` repairs single-member type normalization; `.41` aligns residual
 reset wording. Completed `.39.2.2.2.2.1` scopes aggregate typedefs by module.
 Completed `.42` shares verified repeated-source module definitions; `.43`
 retains child completion across joins and activations. Completed `.44` fixes
-even runtime wait counts in SystemVerilog. Next `.45` repairs VHDL counter
-comparisons before `.39.2.2.2.2.2` qualifies
+even runtime wait counts. Completed `.45` qualifies typed VHDL comparisons
+and scalar wait timing. Next `.39.2.2.2.2.2` qualifies
 aggregate reads and `.39.2.2.2.3` repairs domain child composition
 before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
@@ -4658,3 +4658,67 @@ and bounded runtime assertions remain in T1909, with only the known analysis
 failure explicitly marked TODO until fixed. `.44` earns SystemVerilog timing
 and public report parity, not VHDL runtime qualification. This is separate
 from the boolean nonzero count-entry repair, whose predicate itself analyzes.
+
+
+## Qualification — `.45`
+
+The direct VHDL backend renders the scheduler's unsigned vector counter
+against a scalar one-bit literal. Its concurrent-assignment wrapper recognizes
+only `==` as boolean; greater-than therefore also attempts to drive std_logic
+with a boolean. `_sv_condition_to_vhdl` similarly detects boolean comparison
+results through `=` alone. Repair comparison-result handling for supported
+comparison operators and contextualize known one-bit binary constants against
+unsigned vector operands in either operand order. Preserve literal width and
+signedness outside that proven conversion; do not narrow counters or invent
+scheduler cycles. Qualify GHDL timing and direct comparison truth tables,
+including equality/inequality, relational directions and scalar controls.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — T1909 native `--strict --check --json`
+  accepts the runtime-wait actor, while GHDL rejects vector counter comparisons
+  against scalar literals. Direct backend result wrapping covered concurrent
+  equality only. T1910 additionally proves DATA=2 incorrectly fails comparison
+  with the wider literal 16 under unequal-length vector ordering.
+- [x] **ADDRESSED (verified)** — T1909's original GHDL count/snapshot oracle
+  now passes without TODO. T1910 passes independent integer truth tables for
+  all selected comparison operators, both operand orders, narrow/wide/equal
+  literals, scalar controls and wider result destinations. Shared expression
+  emission preserves typed logic results; unsigned operands extend to their
+  common width without truncating the literal.
+- [x] **NO REGRESSION** — T1910/T1909/T1420/T1543 report `All tests successful`
+  in `.artifacts/vhdl-wait-comparisons/focused.log`; the added wider-result
+  control also passes in `typed-results.log`. T1543's original reduction
+  expectations remain intact after correcting the first implementation's
+  redundant coercion. Native/API/newline reports still agree in T1909.
+
+T1910's direct comparison controls additionally expose procedural assignment
+results passed through as VHDL booleans into std_logic outputs. The same
+comparison-result conversion must cover procedural RHS emission, with typed
+zero/one results for the destination. The first test source incorrectly grouped
+multiple assignments inside one `=` action and was rejected before backend
+qualification; the corrected source uses one canonical action per assignment.
+T1543 caught redundant boolean coercion of existing reduction conditions;
+restore their converted-equality recognition before closing this slice.
+
+After result typing, T1910 GHDL runs and exposes a numeric mismatch:
+`DATA < 8'h10` is false at DATA=2 because unequal-length std_logic_vector
+comparison is lexicographic without unsigned extension. This is the same
+comparison operand-normalization boundary, now proved at runtime. Extend the
+smaller operand to the maximum unsigned operand width, in both orders, and
+preserve exact literal validity before padding. Include narrow, wide,
+equal-width, reversed and scalar controls in this leaf's truth-table gate.
+
+The final book adds explicit operand/result-width examples. The general-book
+claim-disposition gate required fresh reviewed entries for those source-line
+identities. `.45` owns the updates under the registry's mandated general-book
+owner: re-derive from the backend's typed width normalization, falsify with
+T1910's independently executed integer truth table and observed pre-fix
+DATA=2/16 failure, and retain the tracked test plus source-identity disposition
+watcher. No numeric example was removed or exempted to evade the gate.
+
+Claim-registry serialization initially escaped existing non-ASCII strings in a
+form different from the checker canonicalization. During that correction,
+existing records published-46a796038b0326b4f51a4995 and
+published-572ce6362e69a3a37290e40e revealed a misencoded multiplication symbol
+in their historical competing-hypothesis formula. This slice owns that small
+registry-text correction: use the unambiguous ASCII N*body+2 spelling, retain
+the meaning/evidence/owners, and serialize the registry canonically.

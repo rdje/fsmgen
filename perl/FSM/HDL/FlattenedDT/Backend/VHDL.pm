@@ -665,13 +665,8 @@ sub _render_vhdl (%args) {
 
     for my $assign (@{$args{assigns}}) {
         my $expr = $assign->{expr};
-        if ($expr =~ /==/) {
-            push @lines, '  ' . $assign->{lhs} . " <= '1' when "
-                . _sv_condition_to_vhdl($expr, { decls_by_name => $args{decls_by_name} }) . " else '0';";
-        } else {
-            push @lines, '  ' . $assign->{lhs} . ' <= '
-                . _sv_expr_to_vhdl($expr, { decls_by_name => $args{decls_by_name}, target_lhs => $assign->{raw_lhs} }) . ';';
-        }
+        push @lines, '  ' . $assign->{lhs} . ' <= '
+            . _sv_expr_to_vhdl($expr, { decls_by_name => $args{decls_by_name}, target_lhs => $assign->{raw_lhs} }) . ';';
     }
 
     push @lines, '' if @{$args{assigns}} && @{$args{processes}};
@@ -724,12 +719,19 @@ sub _sv_condition_to_vhdl ($expr, $ctx = {}) {
     }
 
     my $converted = _sv_expr_to_vhdl($trimmed, {%$ctx, boolean_context => 1});
-    return $converted if $converted =~ /=/;
+    return $converted if $converted =~ /=/ || _has_comparison_operator($trimmed);
     return "($converted) = '1'";
 }
 
 sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     my $trimmed = _trim($expr);
+    if (!$ctx->{boolean_context} && _has_comparison_operator($trimmed)) {
+        my $decl = _decl_for_lvalue($ctx->{target_lhs}, $ctx->{decls_by_name} || {});
+        my ($true, $false) = $decl
+            ? map { _vhdl_decimal_equality_literal($_, $decl) } (1, 0)
+            : ("'1'", "'0'");
+        return $true . ' when ' . _sv_condition_to_vhdl($trimmed, $ctx) . ' else ' . $false;
+    }
     $trimmed = _sv_reduction_expressions_to_vhdl($trimmed, $ctx);
     my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $ctx->{decls_by_name} || {});
     if ($target_decl && $target_decl->{scalar} && $trimmed =~ /^-?\d+$/) {
@@ -746,6 +748,10 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     return _simple_arithmetic_to_vhdl($trimmed, $ctx)
         if _has_arithmetic_operator($trimmed);
 
+    $trimmed = _sv_unsigned_vector_comparison_literals_to_vhdl(
+        $trimmed,
+        $ctx->{decls_by_name} || {},
+    );
     $trimmed = _sv_decimal_equality_literals_to_vhdl(
         $trimmed,
         $ctx->{decls_by_name} || {},
@@ -774,6 +780,50 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     confess _unsupported("arithmetic expression '$expr' is outside the direct VHDL scaffold")
         if $arithmetic_residue =~ /[+\-*\/%]/ || $arithmetic_residue =~ /\bmod\b/i;
     return _trim($converted);
+}
+
+sub _has_comparison_operator ($expr) {
+    return $expr =~ /==|!=|<=|>=|(?<![<])<(?![<])|(?<![>])>(?![>])/;
+}
+
+# SystemVerilog zero-extends unsigned comparison operands to their common
+# width. VHDL's unequal-length vector comparison is lexicographic instead,
+# and a one-bit character literal has no vector comparison overload.
+sub _sv_unsigned_vector_comparison_literals_to_vhdl ($expr, $decls_by_name) {
+    my $identifier = qr/[A-Za-z_][A-Za-z0-9_]*/;
+    my $operator = qr/(?:==|!=|<=|>=|<|>)/;
+    my $literal = qr/[0-9]+'[bBdDhH][0-9A-Fa-f_]+/;
+    my $operands = sub {
+        my ($name, $text) = @_;
+        my $decl = $decls_by_name->{$name};
+        return ($name, $text) unless $decl && !$decl->{scalar} && !$decl->{signed};
+        my $parsed = _parse_sized_literal($text);
+        # Validate the authored literal at its own width before extending it.
+        my $bits = _literal_bits_value($parsed, force_vector => 1);
+        my $signal_width = _decl_width($decl);
+        if ($signal_width >= $parsed->{width}) {
+            substr($bits, 1, 0, '0' x ($signal_width - $parsed->{width}));
+        } else {
+            $name = "std_logic_vector(resize(unsigned($name), $parsed->{width}))";
+        }
+        return ($name, $bits);
+    };
+    my $converted = $expr;
+    $converted =~ s{
+        \b($identifier)\b(\s*$operator\s*)($literal)(?![A-Za-z0-9_])
+    }{
+        my ($name, $op, $text) = ($1, $2, $3);
+        my ($signal, $value) = $operands->($name, $text);
+        $signal . $op . $value;
+    }gex;
+    $converted =~ s{
+        (?<![A-Za-z0-9_])($literal)(\s*$operator\s*)\b($identifier)\b
+    }{
+        my ($text, $op, $name) = ($1, $2, $3);
+        my ($signal, $value) = $operands->($name, $text);
+        $value . $op . $signal;
+    }gex;
+    return $converted;
 }
 
 sub _sv_decimal_equality_literals_to_vhdl ($expr, $decls_by_name) {

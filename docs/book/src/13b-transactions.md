@@ -396,10 +396,10 @@ shorten or extend the already sampled wait. Expression counts use the same
 nonzero test, and consecutive waits sample their own counts on their own entry
 edges; an earlier zero bypass does not add a wait cycle.
 
-The independent runtime qualification currently covers SystemVerilog.
-Dynamic-wait VHDL still has a counter-comparison type defect: vector counters
-are compared with scalar literals, which GHDL rejects. Task `.45` owns its
-immediate repair and retained runtime oracle.
+Independent SystemVerilog and GHDL tests qualify scalar runtime wait counts,
+including even values and changes to the input after sampling. The VHDL
+counter comparisons retain vector operand types and produce logic-valued
+results; they do not narrow the counter to a scalar.
 
 Pending samples immediately before a positive static wait piggyback onto the
 first wait state, using the same sample materialization rule as drive/await
