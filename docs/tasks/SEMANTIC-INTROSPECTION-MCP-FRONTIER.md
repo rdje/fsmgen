@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -983,11 +983,18 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.34: record safe artifact cleanup`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.35`
-  Status: `pending`
-  Goal: `Honor an explicitly authored reset on an otherwise undriven output, or reject an unsupported reset-only boundary before emission.`
+  Status: `done`
+  Goal: `Honor explicitly authored hardware reset and hold behavior on outputs without ordinary data writers.`
   Acceptance: `After .33.9, reproduce reset-only actor and direct FSM outputs with literal widths and reset values; locate why retained +size reset metadata does not create HDL reset behavior without an ordinary writer. Select faithful reset/hold semantics from existing contracts, repair common/backend planning without inventing values for outputs without a reset, and qualify actual reset behavior plus native/API/MCP reports, both Verilog-family targets and supported VHDL. Preserve driven reset/default and plain undriven-output controls; update book, specs and knowledge and commit separately.`
-  Verification: `Discovered during .33.9: change the retained optional-signal baseline output to (output AWMECID (width 16) (reset 3)). Native --strict --check --json and generation succeed; materialized mecid_demo.fsm retains (output AWMECID) and (AWMECID 16 (reset 3)), but emitted SystemVerilog only declares AWMECID and never assigns the authored reset. The native capture is under .artifacts/output-preservation/reset-only*; the exact baseline is tracked in docs/audits/specforge-feature-intake-20260926.json. The common AssignmentSupport::build_unified_assignment_analysis iterates all_lhs and skips signals without captured lhs_assignments; reset emission is downstream of those assignment families, so declaration-only reset metadata gets no writer. Priority: immediate after .33.9, before watchdog continuation; implementation remains pending.`
-  Commit: `pending`
+  Verification: `T1901 passes exact native/API/newline MCP reports and independent Verilator/GHDL reset timing, polarity and hold behavior for both source layers and both Verilog targets plus reset-bearing VHDL. Plain undriven outputs have no writer; explicit clock-only Verilog has no invented reset; clock-only VHDL refusal is owned by .36. T1892/T1476/T1900/T1376/T1112 and T156/T170/T1033/T1392 pass. Detailed root cause, negative controls and claim legs are in the .35 acceptance checklist.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.35: honor reset-only output behavior`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.36`
+  Status: `deferred`
+  Goal: `Support clock-only direct VHDL sequential processes after the established SV-backed IAL completeness prerequisite.`
+  Acceptance: `After R11-DIRECT-STRUCTURAL-VHDL-REROUTING.2 readiness permits VHDL expansion, select common/structural clock-only sequential lowering and qualify direct FSM and ISF generation plus independent GHDL behavior. Preserve the reset-bearing subset and do not synthesize a reset or initialization that the source does not request. Update native/API/MCP capability boundaries and book.`
+  Verification: `Exact public reproduction in T1901: (?fsm:no_reset (+system (clock clk)) (+interface (output Q)) (+size (Q 5 (reset 19))) (idle (-> idle))). Both Verilog targets retain clock-only generation with no Q initialization. VHDL rejects the generated current_state <= next_state body in VHDL::_split_if_else_assignments because it requires an if/reset branch. This is outside docs/VHDL_SCOPE.md's reset-bearing process subset, not a regression caused by .35. T1901 owns the present fail-closed control. Priority: bounded VHDL completeness extension after SV IAL completion; do not pivot from the active runtime/semantic repair queue.`
+  Commit: `deferred`
 
 ## Implementation Notes From `.4`
 
@@ -1645,10 +1652,10 @@ before editing code. No discovered defect is closed by this audit alone.
 
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.9` is complete: declared output
 interfaces survive ordinary/domain lowering without invented drive values.
-Next activate `.35` to honor explicitly authored resets on otherwise undriven
-outputs; native intake retains the metadata but emitted HDL lacks a writer.
+`.35` is complete: explicitly reset outputs without data writers reset and
+hold; native/API/MCP drive families match the qualified hardware behavior.
 Port-option validation and startup cleanup are complete.
-Resume watchdog entry
+Next activate watchdog entry
 and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -3927,3 +3934,46 @@ value gap is diagnosed and immediately owned by `.35`; interface presence
 does not qualify it. T1899 completes with `All tests successful` for the
 catalog-selected supported ISF/IAL2/profile producer population. All jobs
 are consumed; no broader runtime claim is inferred from producer admission.
+
+## Acceptance Checklist — `.35` reset-only output behavior
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained reset-only caller passes
+  `--strict --check --json` and preserves `+size` reset metadata but emits no
+  reset assignment. Pre-fix T1901 fails each direct-FSM/ISF HDL target's driver
+  assertions. `AssignmentSupport::build_unified_assignment_analysis` only
+  considers captured data-write LHS families. `LoweredRTLIRBuilder` likewise
+  drops a family without data-driver blocks or RHS values.
+- [x] **ADDRESSED (verified)** — Outputs with an authored reset, no captured
+  data writer and an effective hardware reset now use the shared registered
+  output plan with feedback default and empty data/RHS/enable lists. The
+  existing emitter owns reset kind/polarity and hold logic. T1901 verifies
+  exact semantic drive families and complete native/API/newline MCP parity.
+  Independent Verilator and GHDL oracles exercise reset-only scalar and vector
+  outputs, zero/nonzero resets, synchronous/asynchronous timing, active levels,
+  between-edge pulses and post-reset hold. Plain undriven outputs acquire no
+  assignment. T1901 reports `All tests successful`; the explicit clock-only
+  Verilog no-initialization and VHDL refusal/no-artifact controls pass.
+- [x] **NO REGRESSION** — Existing T1892, T1476 and T1900 pass with independent
+  runtimes for authored driven resets, idle defaults and retained undriven
+  interfaces. T1376 and T1112 pass, including lowering the new book example.
+  T156, T170, T1033 and T1392 report `All tests successful`, preserving forward
+  IR helpers, public contract serialization and existing register resets.
+  Changed implementation modules report `syntax OK`; fresh mdBook HTML
+  contains the reset-only example and clock-only boundary. Full CI/push remain
+  gated by the existing historical startup/parent qualification owners.
+
+Re-derivation: actual CLI artifacts, semantic drive-family content, API/MCP
+parity and selected existing regressions. Falsification: the pre-fix missing
+sequential-driver failures, unreset undriven/clock-only controls and independent
+simulator assertions distinguishing asynchronous pulses from synchronous
+clocked reset. Durability: T1901, shared plan/report changes, public guidance,
+book/spec, updated output fact and this task-scoped commit.
+
+The first added clock-only VHDL success expectation was invalid for the
+current reset-bearing process subset. Its failure is retained in
+`.artifacts/reset-only-final.log`: VHDL rejects the generated state-register
+assignment in `_split_if_else_assignments`. `.36` owns clock-only VHDL
+completion after the established SV IAL prerequisite. T1901 now explicitly
+requires this bounded refusal and absence of an emitted VHDL artifact rather
+than claiming clock-only VHDL behavior. Reset-bearing VHDL simulation already
+passes. No compiler policy or unsupported-input gate was relaxed.

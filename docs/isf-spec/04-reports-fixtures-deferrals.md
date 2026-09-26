@@ -1264,6 +1264,7 @@ Focused tests:
 - [t/1898-isf-interface-option-validation.t](../../t/1898-isf-interface-option-validation.t)
 - [t/1899-isf-interface-option-producers.t](../../t/1899-isf-interface-option-producers.t)
 - [t/1900-isf-declared-output-preservation.t](../../t/1900-isf-declared-output-preservation.t)
+- [t/1901-reset-only-output-behavior.t](../../t/1901-reset-only-output-behavior.t)
 - [t/1510-isf-multibit-loop-predicate-truthiness.t](../../t/1510-isf-multibit-loop-predicate-truthiness.t)
 - [t/1542-isf-rule-transaction-named-drive-priority-readiness.t](../../t/1542-isf-rule-transaction-named-drive-priority-readiness.t)
 - [t/1544-isf-assert-nested-bitwise-precedence-readiness.t](../../t/1544-isf-assert-nested-bitwise-precedence-readiness.t)

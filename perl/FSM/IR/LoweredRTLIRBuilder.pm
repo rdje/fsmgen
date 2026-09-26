@@ -177,7 +177,9 @@ sub build_output_drive_family_metadata ($class, %args) {
 
         my @driver_blocks = sort keys %driver_blocks;
         my @rhs_values = sort keys %rhs_values;
-        next unless @driver_blocks || @rhs_values;
+        # Reset-only registers still have a hardware drive family, with no
+        # authored data-driver blocks or RHS alternatives.
+        next unless @driver_blocks || @rhs_values || $lhs_analysis->{reset_only};
 
         my $reset_value = $hdl_generator
             ? $hdl_generator->{enable_graph_signal_support}->get_reset_value_from_ast($lhs_analysis->{lhs_ast})

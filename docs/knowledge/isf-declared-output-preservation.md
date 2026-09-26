@@ -8,8 +8,8 @@ answers:
 date: 2026-09-26
 status: current
 tags: [isf, interface, output, lowering, domains, semantics, mcp]
-evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1900-isf-declared-output-preservation.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/book/src/13a-actor-interface.md
-reverify: FSMGEN_RESET_GHDL=.artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl scripts/run_with_ram_guard.sh -- prove -Iperl t/1900-isf-declared-output-preservation.t
+evidence: perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm; perl/FSM/IR/LoweredRTLIRBuilder.pm; t/1901-reset-only-output-behavior.t; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1900-isf-declared-output-preservation.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/book/src/13a-actor-interface.md
+reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 FSMGEN_RESET_GHDL=.artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl scripts/run_with_ram_guard.sh -- prove -Iperl t/1900-isf-declared-output-preservation.t t/1901-reset-only-output-behavior.t
 ---
 
 Parent lowering now places both declared input and output roles in
@@ -28,13 +28,18 @@ evidence. Direct VHDL emission retains the declaration and passes analysis
 with the existing repository-local GHDL provider selected explicitly through
 `FSMGEN_RESET_GHDL`. The initial PATH-only run skipped that analysis; the
 provider-backed rerun closes this declaration-analysis gap.
-No runtime value is claimed for an undriven output, and no assignment is added.
+The reset-only output gap discovered during interface repair is superseded by
+`.35`. `AssignmentSupport` now adds reset-and-hold plans for output signals
+with explicit reset metadata, no data writer and an effective hardware reset.
+The existing register emitter owns timing and polarity. LoweredRTLIR keeps
+these drive families with zero data-driver blocks and no RHS/enable families.
+T1901 qualifies native/API/newline parity and actual reset/hold behavior in both
+Verilog targets and supported direct VHDL. T1900 qualifies interface identity;
+plain undriven ports imply no value or assignment. Generic widths and optional
+presence remain separately owned extensions.
 
-Reset-only output behavior remains a separate gap owned by immediate leaf
-`.35`: replace the retained baseline output with
-`(output AWMECID (width 16) (reset 3))`. Native strict admission succeeds and
-the FSM retains that reset, but generated SystemVerilog can have no reset
-assignment for the otherwise undriven port. T1900 qualifies interface identity,
-not this authored reset's runtime behavior. The task records the exact
-reproduction and required behavior repair. Generic widths and optional
-presence likewise remain separately owned extensions.
+T1901's explicit clock-only control confirms no register initialization is
+invented. Direct VHDL rejects the state process without a reset branch in
+`VHDL::_split_if_else_assignments`; `.36` owns that extension after the
+existing SV-backed IAL completeness prerequisite. This is separate from the
+qualified reset-bearing VHDL output behavior.

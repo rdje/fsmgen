@@ -1113,9 +1113,11 @@ in `a7bf398ac` intentionally covered inputs; it does not repair this output case
 
 `.33.9` now preserves declared output roles without inventing a drive value.
 Ordinary/domain artifacts, generated tops and native/API/MCP inventories retain
-these outputs. A separate reset-only gap surfaced: `(reset V)` on an otherwise
-undriven output can retain FSM metadata without an HDL reset assignment.
-`.35` owns its repair immediately after interface preservation.
+these outputs. The separate reset-only gap is repaired under `.35`: an output
+with `(reset V)` and no ordinary writer now uses reset-and-hold hardware logic.
+Its semantic family exposes reset/feedback values and no data-driver blocks.
+Independent timing/polarity and hold behavior is qualified through the bounded
+Verilator/GHDL regression, separately from interface-preservation evidence.
 Optional-port qualification must independently inventory the realized ports:
 comparing two files that both omit a supposedly present output proves nothing
 about presence. The original caller fixture remains unchanged in the audit;
@@ -1123,8 +1125,8 @@ literal-width and driven controls are separately identified.
 
 ### Execution order
 
-Commit intake, then repair unknown port options (`.33.2`) and declared output
-loss (`.33.9`), then the discovered reset-only output gap (`.35`). Resume the
+Intake, unknown port options (`.33.2`), declared output loss (`.33.9`), and
+reset-only output behavior (`.35`) are repaired. Resume the
 already owned watchdog and transaction-reachability
 repairs (`.32.1.3.3.3`, `.32.1.3.3.1`) and broader behavior signoff, followed by
 bundle provenance and executable interconnect lowering (`.32.2`, `.32.4`).

@@ -129,6 +129,31 @@ sub build_unified_assignment_analysis ($self, $fsm_module = undef) {
         fsm_debug("  *** COMPLETED ANALYSIS FOR LHS AST: $lhs_name ***", 3);
     }
 
+    # Reset-only outputs have no captured data writes. Preserve that distinction:
+    # add a register plan with feedback, not a fabricated DT assignment/enable.
+    # An absent hardware reset cannot initialize a register, and an output with
+    # no authored reset must remain undriven.
+    if ($fsm_module && defined($system->{reset}) && length($system->{reset})) {
+        my $signals = $fsm_module->signals || {};
+        for my $name (sort keys %$signals) {
+            next if $ctx->{assignment_analysis}{$name};
+            my $signal = $signals->{$name};
+            next unless ($signal->get_attribute('signal_role') // '') eq 'OUTPUT';
+            next unless defined $signal->get_attribute('reset_value');
+            $ctx->{assignment_analysis}{$name} = {
+                reset_only => 1,
+                assignments => [],
+                rhs_groups => {},
+                lhs_ast => FSM::CoreAST::SignalRef->new($signal),
+                multiplexer => {
+                    type => 'flop',
+                    enables => [],
+                    default_value => $name,
+                },
+            };
+        }
+    }
+
     fsm_debug("\n*** UNIFIED PHASE 1 COMPLETE (AST WEB) ***", 3);
 }
 
@@ -1124,6 +1149,7 @@ Classify one analyzed LHS family into its normalized assignment contract.
 =cut
 
 sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
+    return 'register_out' if $lhs_analysis->{reset_only};
     my $assignments = $lhs_analysis->{assignments};
     unless ($assignments && @$assignments) {
         fsm_warn("No assignments found for LHS '$lhs', defaulting to 'mux_out'");
@@ -1224,6 +1250,7 @@ sub get_driven_signals ($self) {
     for my $lhs (keys %{$ctx->{assignment_analysis} || {}}) {
         my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
         next unless $lhs_analysis;
+        $driven_signals{$lhs} = 1;
         my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
 
         if ($assignment_type eq 'register_out_dual') {

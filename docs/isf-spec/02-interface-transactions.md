@@ -61,9 +61,13 @@ inventing a value. Ordinary/domain module outputs, generated-top routes and
 realized semantic output inventories preserve that boundary. Transaction
 children do not acquire unrelated parent-only outputs. SystemVerilog, Verilog
 and supported direct VHDL output declarations retain their resolved widths.
-An explicit reset-only output remains a separate known gap: reset metadata can
-reach the FSM without an HDL reset assignment; `.35` in the semantic/API/MCP
-tree owns this immediate follow-up. Plain undriven outputs imply no value.
+An output with an explicit reset and no data writer uses a resettable register
+that holds its value between reset events. Its reset timing and polarity follow
+the module system contract; no pre-reset value is promised. Plain undriven
+outputs without reset metadata imply no value. A system with no hardware reset
+does not gain one from signal metadata. Semantic output-drive families include
+reset-only registers with feedback defaults, reset values and empty data-driver
+and enable lists, identically through native/API/MCP queries.
 
 Output entries may carry `(reset V)` and `(default V)` metadata when `V` is a
 non-negative integer literal that fits the resolved positive integer output

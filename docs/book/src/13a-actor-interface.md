@@ -476,11 +476,38 @@ SystemVerilog, Verilog and the supported direct VHDL subset preserve the
 undriven declaration. Generic width overrides and optional presence remain
 separate unsupported extensions.
 
-An explicit `(reset V)` on an otherwise undriven output currently reaches
-FSM reset metadata but can lack the HDL reset assignment. This reset-only
-behavior has a separate repair owner; port-preservation evidence does not
-qualify its reset value. Driven reset/default controls keep their existing
-behavior. See the [current request boundaries](13k-isf-feature-support-matrix.md#requested-extensions-and-current-gaps).
+An explicit `(reset V)` on an otherwise undriven output creates a register
+that takes `V` on the module's hardware reset and holds it after reset. No
+power-up value is promised before a reset event. Synchronous resets act on
+the clock edge; asynchronous resets also act on the configured reset edge.
+Both active levels follow the actor reset declaration. For example:
+
+```lisp
+(actor reset_only_output
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output tag (width 5) (reset 19))
+    (output ready_flag (reset 1))
+    (output done))
+  (transaction tx (on start) (complete done)))
+```
+
+Here `tag` becomes 19 and `ready_flag` becomes 1 when reset is asserted; both
+hold their values while transactions run. Adding `(default V)` instead adds
+idle/quiescent writes, as documented above. Omitting both a reset and a writer
+leaves an output undriven. Reset metadata does not create a hardware reset
+port when the module's system contract has none. Clock-only sequential
+processes currently generate in the Verilog targets but fail closed in the
+direct VHDL converter; they are outside its reset-bearing process subset.
+
+The shared register plan drives SystemVerilog, Verilog and the supported
+direct VHDL subset. Native semantic reports and API/MCP projections include
+reset-only `output_drive_families`: `multiplexer_type` is `flop`,
+`default_value` is the signal itself (hold), `reset_value` carries the effective reset value,
+and `driver_count` is zero because there are no authored data-driver blocks.
+Empty RHS/enable lists distinguish these from ordinary data-driven outputs.
 
 Actor port options are a closed set: `(width N)`, `(type NAME)`,
 `(domain NAME)`, and output-only `(reset V)` / `(default V)`. Each option
