@@ -905,25 +905,25 @@ sub parse_interface_section($self, $interface_ast) {
 
     Carp::confess
         "Malformed '+interface' section. ".
-        "The active contract supports '+interface' only as a list of '(input signal)' or '(output signal)' role entries. ".
+        "The active contract supports '+interface' only as a list of '(input signal)', '(output signal)', or '(internal signal)' role entries. ".
         supported_boundary_hint()
         unless ref($interface_entries) eq 'ARRAY';
 
     for my $entry (@$interface_entries) {
         Carp::confess
             "Malformed '+interface' entry. ".
-            "Each '+interface' entry must be '(input signal)' or '(output signal)'. ".
+            "Each '+interface' entry must be '(input signal)', '(output signal)', or '(internal signal)'. ".
             supported_boundary_hint()
             unless ref($entry) eq 'ARRAY' && @$entry == 2;
 
         my ($direction, $signal_name) = map { $self->unwrap_scalar_token($_) } @$entry;
         Carp::confess
             "Malformed '+interface' entry. ".
-            "The interface role must be 'input' or 'output'. ".
+            "The interface role must be 'input', 'output', or 'internal'. ".
             supported_boundary_hint()
             unless defined($direction)
                 && !ref($direction)
-                && ($direction eq 'input' || $direction eq 'output');
+                && ($direction eq 'input' || $direction eq 'output' || $direction eq 'internal');
         my $display_signal = defined($signal_name)
             ? (ref($signal_name) ? ref($signal_name) : $signal_name)
             : 'undef';
@@ -934,6 +934,12 @@ sub parse_interface_section($self, $interface_ast) {
             unless defined($signal_name)
                 && !ref($signal_name)
                 && $signal_name =~ /\A[A-Za-z_]\w*\z/;
+
+        my $existing = $self->{signal_manager}->get_signal($signal_name);
+        my $previous_role = $existing ? $existing->get_attribute('explicit_port_role') : undef;
+        Carp::confess "Conflicting explicit roles for signal '$signal_name': "
+            .$previous_role." and ".uc($direction).". ".supported_boundary_hint()
+            if defined($previous_role) && $previous_role ne uc($direction);
 
         $self->{signal_manager}->register_signal(
             $signal_name,

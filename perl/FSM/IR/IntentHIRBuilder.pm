@@ -352,6 +352,10 @@ sub analyze_signals ($class, $signals) {
         my $signal_role = $signal && $signal->can('get_attribute')
             ? ($signal->get_attribute('signal_role') // '')
             : '';
+        # These signals remain in the module for declaration/reset planning,
+        # but are not part of its external interface or width buckets.
+        next if $signal && $signal->can('get_attribute')
+            && ($signal->get_attribute('explicit_port_role') // '') eq 'INTERNAL';
         my $is_intermediate = (
             ($signal_role && $signal_role eq 'INTERNAL_INTERMEDIATE')
             || (

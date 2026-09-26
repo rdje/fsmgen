@@ -129,16 +129,19 @@ sub build_unified_assignment_analysis ($self, $fsm_module = undef) {
         fsm_debug("  *** COMPLETED ANALYSIS FOR LHS AST: $lhs_name ***", 3);
     }
 
-    # Reset-only outputs have no captured data writes. Preserve that distinction:
+    # Reset-only outputs and explicit internals have no captured data writes.
+    # Preserve that distinction:
     # add a register plan with feedback, not a fabricated DT assignment/enable.
-    # An absent hardware reset cannot initialize a register, and an output with
+    # An absent hardware reset cannot initialize a register, and a signal with
     # no authored reset must remain undriven.
-    if ($fsm_module && defined($system->{reset}) && length($system->{reset})) {
+    if ($fsm_module && ($system->{declare_ports} // 1)
+            && defined($system->{reset}) && length($system->{reset})) {
         my $signals = $fsm_module->signals || {};
         for my $name (sort keys %$signals) {
             next if $ctx->{assignment_analysis}{$name};
             my $signal = $signals->{$name};
-            next unless ($signal->get_attribute('signal_role') // '') eq 'OUTPUT';
+            next unless ($signal->get_attribute('signal_role') // '') eq 'OUTPUT'
+                || ($signal->get_attribute('explicit_port_role') // '') eq 'INTERNAL';
             next unless defined $signal->get_attribute('reset_value');
             $ctx->{assignment_analysis}{$name} = {
                 reset_only => 1,

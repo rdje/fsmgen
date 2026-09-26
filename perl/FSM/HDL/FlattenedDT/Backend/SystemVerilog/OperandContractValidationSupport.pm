@@ -45,9 +45,10 @@ sub new ($class, %args) {
 =head2 validate_pre_generation_operand_contract
 
 Validate that AST operands referenced by the prepared direct-backend
-generation flow are either top-level signals or backed by declared and
-assigned internal generation inventory, and that assignment families have not
-already relied on hidden width adaptation before emission begins.
+generation flow are top-level signals, explicitly authored internal signals,
+or backed by declared and assigned internal generation inventory. Check that
+assignment families have not already relied on hidden width adaptation before
+emission begins.
 
 =cut
 
@@ -207,6 +208,10 @@ sub build_operand_contract_inventory ($self, $fsm_module, $prepared_block = unde
         %{$internal_plan->{signal_decls} || {}},
         %{$internal_plan->{aux_decls} || {}},
     );
+    my $signals = $fsm_module->signals || {};
+    my %explicit_internal_signals = map {$_ => 1} grep {
+        ($signals->{$_}->get_attribute('explicit_port_role') // '') eq 'INTERNAL'
+    } keys %$signals;
     my %assigned_internal_signals;
     my %localparam_names = map { ($_->{localparam_name} => 1) } @{$state_plan->{encodings} || []};
     my %parameter_names = $fsm_module && $fsm_module->can('parameters')
@@ -281,6 +286,7 @@ sub build_operand_contract_inventory ($self, $fsm_module, $prepared_block = unde
     return {
         top_level_signals => \%top_level_signals,
         declared_internal_signals => \%declared_internal_signals,
+        explicit_internal_signals => \%explicit_internal_signals,
         assigned_internal_signals => \%assigned_internal_signals,
         localparam_names => \%localparam_names,
         parameter_names => \%parameter_names,
@@ -454,6 +460,10 @@ sub _validate_named_ast ($self, $label, $ast, $inventory, $violations) {
             next;
         }
 
+        # An authored internal may intentionally have no writer or reset.
+        # Generated helpers still require a producer; neither case permits
+        # referencing an undeclared signal.
+        next if $inventory->{explicit_internal_signals}{$signal_name};
         unless ($inventory->{assigned_internal_signals}{$signal_name}) {
             push @$violations,
                 "$label references internal operand '$signal_name' that is declared but not backed by any internal assignment";

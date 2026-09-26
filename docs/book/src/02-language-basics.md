@@ -19,6 +19,7 @@ You are usually writing:
 - `?dt:name`: standalone decision-tree root
 - `+system`: clock declaration section with optional reset policy
 - `+size`: width/type declaration section
+- `+interface`: explicit `input`, `output`, or `internal` signal roles
 - `+constants`, `+enums`, `+types`: symbol and type sections
 - `:=`: init/reset directive
 - `<...`: guard suffix
@@ -81,6 +82,39 @@ decimal or binary. Write `0b00001110` for intrinsic-width binary,
 
 Positive-width slots keep the existing decimal compatibility, so
 `(+size (DATA 10))` still means decimal ten.
+
+## Explicit Signal Roles
+
+Use `+interface` when a signal's role must not depend on whether the source
+reads or writes it. Each entry is `(input NAME)`, `(output NAME)`, or
+`(internal NAME)`. Widths, named types and reset values remain in `+size`.
+For example, save this as `internal_status.fsm`:
+
+```lisp
+(?fsm:internal_status
+  (+system (clock clk) (areset rst_n active_low))
+  (+interface (internal status) (output observed))
+  (+size (status 8 (reset 19)) (observed 8))
+  (idle
+    (= (observed> status))
+    (-> idle)))
+```
+
+Run `bin/fsmgen --strict internal_status.fsm`. The generated module exposes
+`clk`, `rst_n`, and `observed`; `status` stays internal. Its authored reset
+sets the register, which then holds its value without fabricated data writes.
+An internal signal with an ordinary writer uses the usual assignment and
+reset rules. An unused internal declaration retains its width and type.
+Without an authored reset value or an effective hardware reset, an unwritten
+internal signal acquires no initialization or data driver.
+
+Internal signals are excluded from semantic input/output inventories and
+structural ports. Repeating the same role is accepted. Conflicting roles,
+an output marker on an internal signal, or an internal declaration for an
+active system clock/reset port are rejected. Names must be HDL-compatible
+identifiers. Signals without explicit roles keep ordinary usage inference.
+The reset-bearing behavior is qualified for both Verilog targets and the
+supported direct VHDL subset; clock-only VHDL remains separately bounded.
 
 ## Init/Reset Defaults
 

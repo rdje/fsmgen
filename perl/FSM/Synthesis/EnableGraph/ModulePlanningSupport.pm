@@ -238,6 +238,18 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
         $declared_ports{next_state} = 1;
     }
 
+    # Explicit internal declarations exist independently of captured writes.
+    for my $name (sort keys %signals) {
+        my $signal = $signals{$name};
+        next unless ($signal->get_attribute('explicit_port_role') // '') eq 'INTERNAL';
+        next if $declared_ports{$name};
+        $signal_decls{$name} = $signal->width;
+        $signal_signed{$name} = _signal_signed($signal);
+        $signal_state_model{$name} = _signal_state_model($signal);
+        $signal_declared_type_name{$name} = _signal_declared_type_name($signal);
+        $signal_declared_type_spec{$name} = _signal_declared_type_spec($signal);
+    }
+
     for my $lhs (sort keys %{$ctx->{assignment_analysis} || {}}) {
         my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
         next unless $lhs_analysis;
@@ -366,14 +378,14 @@ sub build_module_declaration_plan ($self, $fsm_module) {
     my %driven_signals = $ctx->{enable_graph_assignment_support}->get_driven_signals();
 
     for my $sig_name (sort keys %$signals) {
+        my $signal = $signals->{$sig_name};
+        next if ($signal->get_attribute('explicit_port_role') // '') eq 'INTERNAL';
         if ($seen_signals{$sig_name}) {
             fsm_debug("HDL Signal Processing: SKIPPING duplicate signal '$sig_name'", 3)
                 if $trace_signal_detail;
             next;
         }
         $seen_signals{$sig_name} = 1;
-
-        my $signal = $signals->{$sig_name};
 
         my $is_intermediate = 0;
         if ($signal->can('get_attribute')) {

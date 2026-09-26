@@ -37,6 +37,14 @@ sub analyze_signal_roles($self, $fsm_module) {
         
         my $role = $self->_explicit_port_role($signal)
             // $self->_classify_signal_role($fsm_module, $signal_name, $usage);
+        if ($role eq 'INTERNAL' && $self->_explicit_port_role($signal)) {
+            confess "Internal signal '$signal_name' cannot carry an output marker"
+                if $usage->{has_output_marker};
+            my $system = $fsm_module->effective_system_contract;
+            confess "Internal signal '$signal_name' conflicts with a system port"
+                if ($system->{declare_ports} // 1)
+                    && grep {defined($_) && $_ eq $signal_name} @{$system}{qw(clock reset)};
+        }
         $signal->set_attribute('signal_role', $role);
         
         my $contexts_str = join(',', @{$usage->{contexts} || []});
@@ -273,6 +281,7 @@ sub _explicit_port_role($self, $signal) {
 
     return 'INPUT'  if $role eq 'INPUT';
     return 'OUTPUT' if $role eq 'OUTPUT';
+    return 'INTERNAL' if $role eq 'INTERNAL';
     return undef;
 }
 
@@ -333,6 +342,10 @@ sub generate_fsm_interface($self, $fsm_module) {
             $intermediate_count++;
             fsm_debug("  Added INTERMEDIATE signal to FSM module: $signal_name", 3);
         } else {
+            # Explicit internal ownership must survive even without an AST
+            # reference or data writer, so declaration/reset planning can see it.
+            $fsm_module->add_signal($signal)
+                if ($self->_explicit_port_role($signal) // '') eq 'INTERNAL';
             $internal_count++;
             fsm_debug("  Kept INTERNAL: $signal_name (role: $role)", 3);
         }

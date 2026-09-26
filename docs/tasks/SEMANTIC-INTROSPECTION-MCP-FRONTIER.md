@@ -1023,10 +1023,26 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve actor-owned storage identity and reset behavior when the source reads a register without ordinary data writes.`
   Acceptance: `Immediately after .37, reproduce the retained baseline-good and whole-word-field sources: inferred_storage calls status actor_storage, but generated csr_access exposes input status and has no status reset assignment. Trace materialized FSM and inference, select a faithful ownership representation across scalar/domain/child boundaries, and split prerequisites if needed. Repair internal ownership without synthetic external ports or invented initialization for storage lacking reset; qualify explicit reset-and-hold behavior and driven storage controls with independent HDL simulation and native/API/newline reports. Preserve metadata-only field/access semantics, update book/spec/facts and commit before returning to watchdog and .38 metadata work.`
   Verification: `Discovered in the .37 retained-source replay from 851c252a2: baseline-good.sv declares input wire [7:0] status and reads it into status_out_next, with no status assignment. Both baseline and whole-word-field schedule reports declare status kind register, role actor_storage, width 8; authored var reset is 0. Ordinary LoweringIR carries declared storage separately while +interface records only authored input/output roles; width-only inference can classify a read-only storage reference as input. Captured csr_access.fsm retains status reset in +size with no internal role; SignalAnalyzer::_classify_signal_role selects INPUT for referenced-without-assignment signals. Priority: immediate after .37, ahead of watchdog and new metadata extensions.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.1`
+  Status: `done`
+  Goal: `Add an explicit internal signal role to the existing IAL0 +interface carrier, preserving internal declarations and reset-only register behavior.`
+  Acceptance: `Extend the closed +interface role vocabulary with (internal NAME), preserving widths/types/reset metadata in +size and rejecting malformed or contradictory role declarations. Explicit internal signals must never become ports, including read-only/unused and data-driven cases. Carry their CoreAST ownership through classification, internal declaration planning and shared reset/hold planning without inventing an initialization when no reset is authored or available. Qualify strict/default native/API/newline semantic inventory and independent Verilator/GHDL behavior in the supported reset-bearing subset; preserve existing input/output and inferred internal behavior. Document the public role carrier and commit before ISF producer adoption.`
+  Verification: `Selected because ownership must survive the materialized FSM artifact; a private ISF-only pipeline hint would lose the repair on replay, and synthetic data assignments would misrepresent authored writers. Existing +interface already owns explicit signal-direction decisions; internal is an explicit exclusion from port inference. SignalAnalyzer currently keeps other internal signals outside FSMModule::signals, so new explicit internal signals also require declaration planning and port exclusion rather than only a classifier change.`
+  Additional defect: `A clockless ?dt with +size reset metadata emits always_ff on undeclared clk/rst_n: AssignmentSupport checks reset name but ignores effective_system_contract.declare_ports. Reproduced in .artifacts/internal-role/clockless.sv through strict emission. This leaf owns the small shared-plan fix and clockless internal/output negative controls before commit; no system or initialization may be invented.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.1: preserve explicit internal signal roles`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2`
+  Status: `pending`
+  Goal: `Carry declared ISF actor storage through the qualified internal-role substrate and close the retained caller defect.`
+  Acceptance: `After .39.1, emit internal roles for declared scalar storage and scalarized bank elements in their owning ordinary/domain/child FSMs without exposing unrelated parent storage in children. Retain original baseline and whole-word-field controls, a nonzero reset, driven/no-reset/unused storage and domain/child cases. Prove exact authored external interfaces and actual reset/hold/readback behavior through both Verilog targets and supported VHDL; qualify native/API/newline inventories, support-producer controls and unchanged field metadata. Remove the known-gap documentation only after behavior proof and commit.`
+  Verification: `Pending the direct internal-role substrate; .37 retains exact caller inputs and the incorrect public status input for falsification. Access-word metadata remains separately owned by .38.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -1688,7 +1704,8 @@ interfaces survive ordinary/domain lowering without invented drive values.
 `.35` is complete: explicitly reset outputs without data writers reset and
 hold; native/API/MCP drive families match the qualified hardware behavior.
 Port-option validation and startup cleanup are complete.
-Next activate `.39`: the accepted storage-access baseline exposes read-only
+Completed `.39.1` provides direct internal roles and reset/hold behavior.
+Next `.39.2` adopts that carrier for ISF storage. The accepted storage-access baseline exposes read-only
 actor-owned status as an HDL input and loses reset ownership. After that repair,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
@@ -4057,3 +4074,47 @@ input. The retained materialized FSM contains `(status 8 (reset 0))` only in
 is no status reset assignment. The audit retains exact FSM/HDL bytes, hashes
 and semantic input entry. Immediate `.39` owns repair before watchdog and
 metadata work; `.38` must compare corrected hardware, not preserve this bug.
+
+
+## Acceptance Checklist — `.39.1` explicit internal roles
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained caller baseline and direct
+  `--strict --check --json` probes show no explicit internal ownership carrier:
+  the old parser refuses `(internal Q)`, and usage inference exports read-only
+  storage. T1902 fails before implementation. Merely retaining CoreAST signals
+  also exposed IntentHIR's non-output-as-input assumption; the exact native
+  semantic inventory test caught it. A clockless DT reset control separately
+  reproduced sequential logic on undeclared `clk`/`rst_n`: AssignmentSupport
+  tested the default reset name without checking `declare_ports`.
+- [x] **ADDRESSED (verified)** — T1902 reports `All tests successful` with
+  qualified Verilator and local GHDL. Explicit internal roles survive parsing,
+  classification, typed declarations and semantic/structural port exclusion.
+  Independent simulations check synchronous/asynchronous active-high/low
+  reset, readback, ordinary writes and hold. Native/API/newline complete
+  reports agree; malformed/conflicting roles and system/output-marker
+  collisions fail in default and strict modes. Clock-only and clockless
+  controls invent no reset or data driver. The operand gate distinguishes
+  explicitly authored internals from compiler helpers, retaining declaration
+  proof for both. No public report schema was widened.
+- [x] **NO REGRESSION** — T1901, T1897, T1900, T172, T279 and T338 each
+  report `ok` for existing resets, interface preservation, typed declarations
+  and semantic contracts. The focused run's old T1902 clockless failure is
+  superseded by the final T1902/T269 `All tests successful` run after the
+  operand-gate fix. T521/T1889 also report `All tests successful`, preserving
+  expression and authored diagnostic contracts. T269 retains undeclared and
+  unassigned generated-helper rejection. T1376 and T1112 pass;
+  the new direct book example separately passes strict native check, and the
+  rendered mdBook contains the role section and example. Browser visual
+  qualification remains blocked under its existing owner.
+
+Re-derivation: real direct CLI emission and complete semantic/API/MCP reports.
+Falsification: original parser refusal, exact port sets, independent HDL
+reset/write/hold oracles, role contradictions and missing-hardware-reset
+controls. Durability: T1902, shared parser/planners/report filter/operand gate,
+book example, updated canonical role fact and this owning task-scoped commit.
+The first compound assignment fixture was corrected to separate canonical
+assignments. The report oracle now checks data ports separately from system
+ports, matching the existing public schema; structural ports check both.
+The initial clockless control exposed the generated-helper-only assumption
+in the operand gate. The explicit-source exception does not bypass its
+undeclared-operand check or relax generated-helper producer requirements.
