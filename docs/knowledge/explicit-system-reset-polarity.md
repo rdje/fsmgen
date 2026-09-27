@@ -8,7 +8,8 @@ answers:
   - "what defaults and strict checks apply when reset polarity is omitted?"
   - "does ISF lowering preserve synchronous active-low and asynchronous active-high reset?"
   - "why do generated domain resets agree with CDC metadata?"
-date: 2026-09-25
+  - "why did T1974 fail its reset check at time 311?"
+date: 2026-09-28
 status: current
 tags: [fsm, isf, reset, polarity, semantics, mcp, systemverilog, verilog, vhdl]
 evidence: docs/decisions/0106-reset-polarity-is-an-explicit-system-carrier.md; docs/book/src/03-decision-trees-and-fsms.md; t/1891-explicit-system-reset-polarity.t; t/1892-explicit-reset-hdl-behavior.t; docs/audits/specforge-rule-admission-20260924/reset-polarity-carrier.json; docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json; t/1893-isf-reset-polarity-lowering.t; t/1894-isf-domain-reset-event-behavior.t
@@ -53,3 +54,14 @@ oracles; repaired HDL passes the identical oracles. Capture boundaries,
 producer hashes and unchanged control HDL are retained in the ISF audit.
 No generated-top VHDL support, reset-tree glue or broader activation-runtime
 qualification is implied.
+
+
+T1974's flat `(reset rst_n)` selects synchronous active-low reset. Its original
+mid-run bench asserted reset at a falling edge and checked one time unit later,
+before any reset-active rising edge. The actual failure at time 311 is therefore
+a test-oracle error, not evidence of a production reset defect. The correction
+waits through a rising edge before checking and releasing reset. Parsed/carrier
+expectations and an independent saved event-order model qualify the static fix;
+corrected actual execution remains separately owned. Inspect the complete failed
+observation and public metadata/HDL witness with
+`python3 -B docs/audits/priority-reset-oracle-20260928/verify.py`.

@@ -70,6 +70,10 @@ subtest 'each conflicting contributor remains in the target-local mask' => sub {
     for my $case (@cases) {
         my $name = $case->{name};
         my $ir = $case->{ir};
+        is_deeply($case->{actor}{reset}, {name => 'rst_n', kind => 'sync', polarity => 'active_low'},
+            "$name fixture explicitly uses a synchronous active-low reset");
+        like($case->{carrier}, qr/\(sreset rst_n active_low\)/,
+            "$name carrier preserves the fixture's clocked reset contract");
         is_deeply($ir->{conflict_issues}, [], "$name strict lowering has no unresolved conflict");
         my ($fallback) = grep {$_->{name} eq 'fallback'} @{$ir->{dt_blocks}};
         my ($out) = grep {$_->{lhs} eq 'out'} @{$fallback->{assignments}};
@@ -139,6 +143,23 @@ subtest 'complete native, API, newline and strict carrier products agree' => sub
     }
 };
 
+my $broken_carrier;
+subtest 'negative control restores only the original missing-contributor defect' => sub {
+    my $original = $cases[0]{ir};
+    my $before = dclone($original);
+    my $broken = dclone($original);
+    my ($fallback) = grep {$_->{name} eq 'fallback'} @{$broken->{dt_blocks}};
+    my ($out) = grep {$_->{lhs} eq 'out'} @{$fallback->{assignments}};
+    is_deeply($out->{guard}, {expr => $union}, 'negative control starts from the repaired actual producer');
+    $out->{guard} = {expr => '(! (state_active main_set_2))'};
+    $broken_carrier = $scheduler->{fsm_emitter}->emit($broken);
+    my $expected = $cases[0]{carrier};
+    my $changed = $expected =~ s/\Q$union\E/(! (state_active main_set_2))/g;
+    is($changed, 1, 'the independent carrier mutation changes exactly one assignment predicate');
+    is($broken_carrier, $expected, 'the whole negative carrier differs only by the known missing contributor');
+    is_deeply($original, $before, 'negative fixture leaves the positive producer unchanged');
+};
+
 subtest 'both HDL targets preserve target priority, progress and reset across repeated requests' => sub {
     plan skip_all => 'qualified Verilator runtime unavailable'
         unless can_run('verilator') && darwin_verilator_runtime_qualified();
@@ -189,8 +210,9 @@ module tb;
   #2; rst_n=0; repeat(2) @(negedge clk); #1; check_reset(); rst_n=1;
   repeat(2) @(negedge clk);
   run_lap(); run_lap();
-  @(negedge clk); rst_n=0; #1; check_reset();
-  @(negedge clk); rst_n=1; repeat(2) @(negedge clk);
+  // A synchronous reset must span a rising edge before outputs are checked.
+  @(negedge clk); rst_n=0;
+  @(negedge clk); #1; check_reset(); rst_n=1; repeat(2) @(negedge clk);
   run_lap();
   $display("PRIORITY_CONTRIBUTOR_UNION_PASS"); $finish;
  end
@@ -225,6 +247,50 @@ SV
         die "runtime oracle failed; retained result requires diagnosis\n" unless $run->{ok};
         like($run->{stdout}, qr/PRIORITY_CONTRIBUTOR_UNION_PASS/, "$language completes every declared control");
     }
+
+    # Restore the original defect only in a cloned test carrier. Its real
+    # backend assertion must reject out=2 and out=9 selecting concurrently.
+    my $negative_source = write_file('missing_contributor.fsm', $broken_carrier);
+    my $negative_hdl = write_file('missing_contributor.sv', '');
+    my $emit = $capture->([$^X, 'bin/fsmgen', '--strict', '--quiet', '--language', 'systemverilog',
+        '--output', $negative_hdl, $negative_source], '');
+    is($emit->{exit_code}, 0, 'deliberately incomplete mask emits through the production backend')
+        or diag($emit->{stdout}, $emit->{stderr});
+    die "negative HDL emission failed\n" if $emit->{exit_code};
+    my $negative_tb = write_file('negative_tb.sv', <<'SV');
+module tb;
+ logic clk=0, rst_n=1, start=0;
+ wire done; wire [7:0] out_value, side, auxiliary;
+ always #5 clk=~clk;
+ priority_multi dut (.clk(clk), .rst_n(rst_n), .start(start),
+  .override_req(1'b1), .peer_req(1'b0), .done(done),
+  .out(out_value), .side(side), .auxiliary(auxiliary));
+ initial begin
+  #2; rst_n=0; repeat(2) @(negedge clk); rst_n=1;
+  repeat(2) @(negedge clk); start=1;
+  @(negedge clk); start=0;
+  repeat(8) @(negedge clk);
+  $display("MISSING_DIFFERENT_VALUE_ASSERTION"); $finish;
+ end
+ initial begin #500; $fatal(1,"negative fixture timed out"); end
+endmodule
+SV
+    my $object_dir = "$work/obj_negative";
+    my $build = run_verilator_compile(['verilator', '--binary', '--timing', '--assert', '-Wno-fatal',
+        '-j', '1', '--top-module', 'tb', '--Mdir', $object_dir, $negative_hdl, $negative_tb]);
+    ok($build->{ok}, 'different-value negative oracle builds') or diag($json->encode($build));
+    die "native admission failed before negative compile execution\n" if $build->{exec_failed};
+    die "negative HDL compile failed; retained result requires diagnosis\n" unless $build->{ok};
+    my $run = run_generated_binary(["$object_dir/Vtb"]);
+    my $expected_rejection = !$run->{ok} && !$run->{exec_failed}
+        && !$run->{timed_out} && !$run->{output_limited} && !$run->{signal}
+        && $run->{status} eq 'nonzero_exit' && $run->{exit_code} != 0
+        && $run->{stdout} =~ /Assertion failed in tb\.dut: selector multi-value conflict: out\n/
+        && $run->{stdout} !~ /MISSING_DIFFERENT_VALUE_ASSERTION/;
+    ok($expected_rejection, 'enabled different-value assertion rejects the deliberately lost contributor')
+        or diag($json->encode($run));
+    die "native admission failed before negative generated execution\n" if $run->{exec_failed};
+    die "unexpected negative runtime result; retained result requires diagnosis\n" unless $expected_rejection;
 };
 
 done_testing();

@@ -401,12 +401,16 @@ allowed equal-value sources triggered `selector same-value conflict`, although
 the actual data-family enable ORed those sources. Decision `0111` corrects the
 metadata/emission contract to `compatible_fanin` while preserving different-value
 `onehot0` checks. Static selector, report and separate ownership controls qualify
-that correction. Observed positive/negative execution and full two-target signoff
-remain SEM `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3`; no corrected runtime pass is
-claimed yet. The first run stopped before Verilog with successful native process
-admission. Its complete evidence remains in
-`docs/audits/priority-contributor-repair-20260928/`, and the original condition-loss
-baseline remains in `docs/audits/priority-contributors-20260927/`.
+that correction. The subsequent run reaches a testbench reset check before the
+required rising edge for its synchronous reset. The bench now waits across that
+edge; its static correction and complete failed observation are retained in
+`docs/audits/priority-reset-oracle-20260928/`. Complete positive/negative execution
+and two-target signoff remain SEM `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.2`; no
+corrected runtime pass is claimed yet. Both observations stopped before Verilog
+with successful native process admission. The first assertion failure and the
+original condition-loss baseline remain in
+`docs/audits/priority-contributor-repair-20260928/` and
+`docs/audits/priority-contributors-20260927/`.
 
 - Actor-level priority also covers a rule assignment that conflicts with a
   data assignment in a uniquely owned named drive. For

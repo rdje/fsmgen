@@ -418,7 +418,12 @@ Reset name convention: `*_n` or `*_b` suffix → `active_low`. Otherwise `active
 
 If a legacy single-clock actor omits `(reset ...)`, the parser normalizes its
 reset to asynchronous active-low `rst_n`. Explicit flat `(reset name)` keeps
-the shipped synchronous reset shorthand.
+the shipped synchronous reset shorthand. A testbench using that shorthand must
+hold reset active across a rising clock edge before checking registered outputs.
+For example, assert `rst_n=0` at a falling edge, wait for the next falling edge
+(which spans a rising edge), then check outputs before releasing reset. Checking
+one time unit after assertion without a rising edge assumes asynchronous
+behavior and does not test this contract.
 
 **Lowering to .fsm**:
 | ISF | .fsm |

@@ -1,0 +1,38 @@
+{
+  "after": {
+    "perl/FSM/Backend/GeneratedModuleEmitter.pm": {
+      "git_blob": "c9f3165db7e4d80f267acad879d8faad3c377810",
+      "sha256": "79f3094b802338ba0a2262325c5d6cb3e1913fcc6602618aef2475637eb9eab2"
+    },
+    "perl/FSM/IR/LoweredRTLIRBuilder.pm": {
+      "git_blob": "3ef3dd3acd6db766f1fb1072b8d74b4018f3086d",
+      "sha256": "97b80c3cc99a97db9a9a34dcf0be38b9024b9d0da1210b01f60398fdb38d084b"
+    },
+    "perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm": {
+      "git_blob": "a24e2861b25542254126d7ae189cad8d7b9db693",
+      "sha256": "a4b289d1528c2ef89e4f3bcace309bcdd91fc6cea508b97318cf3d6b7eff721e"
+    },
+    "t/1974-isf-priority-contributor-union.t": {
+      "git_blob": "26afe89c121a3bd63ed0cbecbaaae1eb7ebe4109",
+      "sha256": "a4b3aacc536a08f849716df984ec827d7f686b82fefde9cdb61a1baae742de35"
+    }
+  },
+  "before": {
+    "perl/FSM/Backend/GeneratedModuleEmitter.pm": {
+      "git_blob": "c9f3165db7e4d80f267acad879d8faad3c377810",
+      "sha256": "79f3094b802338ba0a2262325c5d6cb3e1913fcc6602618aef2475637eb9eab2"
+    },
+    "perl/FSM/IR/LoweredRTLIRBuilder.pm": {
+      "git_blob": "3ef3dd3acd6db766f1fb1072b8d74b4018f3086d",
+      "sha256": "97b80c3cc99a97db9a9a34dcf0be38b9024b9d0da1210b01f60398fdb38d084b"
+    },
+    "perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm": {
+      "git_blob": "a24e2861b25542254126d7ae189cad8d7b9db693",
+      "sha256": "a4b289d1528c2ef89e4f3bcace309bcdd91fc6cea508b97318cf3d6b7eff721e"
+    },
+    "t/1974-isf-priority-contributor-union.t": {
+      "git_blob": "26afe89c121a3bd63ed0cbecbaaae1eb7ebe4109",
+      "sha256": "a4b3aacc536a08f849716df984ec827d7f686b82fefde9cdb61a1baae742de35"
+    }
+  }
+}

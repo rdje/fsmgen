@@ -1,0 +1,8 @@
+{
+  "native_pid_absence": "not independently measured; successful native calls intentionally produce no context records",
+  "observed_utc": "2026-09-27T23:04:21.843106+00:00",
+  "selected_command_residue": [],
+  "stage_cleanup": "retained complete supervisor cleanup in each stage",
+  "work": ".artifacts/tmp/tests/j_L9rHIIGD",
+  "workspace_absent": true
+}

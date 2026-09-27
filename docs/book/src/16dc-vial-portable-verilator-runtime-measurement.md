@@ -1234,8 +1234,13 @@ complete stages, their original limits and cleanup, unchanged admitted inputs
 and an empty native-failure capture. This is a backend assertion failure after
 execution, not another `setpgid` rejection. Verilog has not run; corrected
 qualification remains separately owned, as does the historical native cause.
-Decision `0111` now qualifies the static compatible-fan-in correction; it does
-not supply the pending corrected runtime result.
+After decision `0111` corrects compatible fan-in, the next observation reaches
+a testbench reset failure at time 311. Its flat `reset rst_n` is synchronous,
+but the bench checked before a reset-active rising edge. The bench correction
+is statically qualified; complete runtime is still pending. Both observed
+compile/runtime pairs retain original bounds and complete cleanup with no native
+failure event or input drift. The second complete record and reset diagnosis
+are in `docs/audits/priority-reset-oracle-20260928/`.
 The first temporary workspace and exact selected commands are absent. Individual
 successful-child PIDs were not independently recorded by the failure-only hook;
 the retained supervisor results supply stage process-cleanup evidence.

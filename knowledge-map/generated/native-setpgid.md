@@ -15,5 +15,5 @@
 
 _Native setpgid EPERM needs same-call group and session evidence_
 
-- **date:** 2026-09-27 · **status:** current
+- **date:** 2026-09-28 · **status:** current
 - **source and verification:** [`docs/knowledge/native-setpgid-causal-frontier.md`](../../docs/knowledge/native-setpgid-causal-frontier.md)

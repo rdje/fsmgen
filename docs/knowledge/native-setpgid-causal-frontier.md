@@ -5,7 +5,7 @@ answers:
   - "what caused the T1972 pre-exec setpgid EPERM?"
   - "do parent and child setpgid timing controls explain the original failure?"
   - "can a correct process group coexist with native setpgid EPERM?"
-date: 2026-09-27
+date: 2026-09-28
 status: current
 tags: [process, supervision, containment, native, diagnosis]
 evidence: docs/audits/native-group-tracing-capability-20260927/administrator/manifest.json; docs/audits/native-group-tracing-capability-20260927/manifest.json; docs/audits/native-group-host-correlation-20260927/manifest.json; docs/audits/native-group-witness-20260927/manifest.json; docs/audits/native-group-witness-20260927/original/manifest.json; docs/audits/native-group-discriminator-20260927/manifest.json; docs/audits/native-group-discriminator-20260927/result.jsonl; docs/audits/native-group-discriminator-20260927/probe.c; docs/audits/native-group-discriminator-20260927/verify.py; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
@@ -105,4 +105,11 @@ Both retained stages report complete cleanup, source identities stay unchanged,
 and native failure capture is empty. The generated workspace and exact commands
 are independently absent; individual successful-child PIDs were not captured.
 No historical native repair follows from this result. Child .11.3 observes the
-corrected priority qualification after the separately owned backend assertion fix.
+next genuine priority qualification after the backend assertion fix: compilation
+passes, then the bench checks its synchronous reset too early and fails at time
+311. It stops before Verilog and the negative fixture, with unchanged admitted
+and extra producer identities, complete retained cleanup and no native event.
+The independent workspace/command census is empty; successful-child PIDs were
+not independently captured. SEM owns the static bench correction; HIAL .11.4
+observes its next genuine qualification. Complete records and hostile verification
+are in docs/audits/priority-reset-oracle-20260928/. Historical cause stays open.

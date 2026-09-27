@@ -1,0 +1,291 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More;
+use Cwd qw(abs_path);
+use File::Temp qw(tempdir);
+use IPC::Cmd qw(can_run);
+use JSON::PP;
+use Storable qw(dclone);
+use lib 'perl', 't/lib';
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::SourceQueryRunner;
+use FSM::Test::VerilatorRuntime qw(darwin_verilator_runtime_qualified run_verilator_compile run_generated_binary);
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
+use FSM::Support::SemanticIntrospectionMCPAdapter;
+
+my $work = tempdir(CLEANUP => 1);
+my $root = abs_path('.');
+my $json = JSON::PP->new;
+my $capture = \&FSM::Test::SourceQueryRunner::_capture;
+my $scheduler = FSM::Scheduler::ISF->new;
+my $union = '(! (| (state_active main_set_1) (state_active main_set_2)))';
+my @cases = (
+    {name => 'multi', values => [2, 3], guard => $union, trace => [2, 3]},
+    {name => 'reversed', values => [3, 2], guard => $union, trace => [3, 2]},
+    {name => 'rule_first', values => [2, 3], guard => $union, trace => [2, 3], rule_first => 1},
+    {name => 'opposite', values => [2, 3], guard => undef, trace => [], opposite => 1},
+    {name => 'compatible', values => [9, 3], guard => '(! (state_active main_set_2))', trace => [3]},
+    {name => 'named', values => [2, 3], guard => '(! (| (state_active main_set_1) drive_three_start))', trace => [2, 3], drive => 1},
+    {name => 'equal_states', values => [2, 2], guard => $union, trace => [2, 2]},
+    {name => 'resource', values => [2, 3], guard => $union, trace => [2, 3], resource => 1},
+    {name => 'single', values => [2], guard => '(! (state_active main_set_1))', trace => [2]},
+);
+
+sub write_file {
+    my ($name, $text) = @_;
+    open my $fh, '>', "$work/$name" or die $!;
+    print {$fh} $text or die $!;
+    close $fh or die $!;
+    return "$work/$name";
+}
+
+for my $case (@cases) {
+    my $module = "priority_$case->{name}";
+    my $transaction = '(transaction main (on start) '
+        . join(' ', map {"(set out $_)"} @{$case->{values}}) . ' (complete done))';
+    $transaction =~ s/\(set out 3\)/(drive drive_three)/ if $case->{drive};
+    my $rule = '(rule fallback (when override_req) (set out 9) (set side 7))';
+    my $resource = $case->{resource} ? <<'ISF' : '';
+ (priority peer over fallback)
+ (resources (resource shared_slot (kind rule_slot) (arbiter priority) (users peer fallback)))
+ (rule peer (when peer_req) (set auxiliary 6))
+ISF
+    my $source = "(actor $module (clock clk) (reset rst_n)\n"
+        . ' (interface (input start) (input override_req) (input peer_req) (output done)'
+        . ' (output out (width 8)) (output side (width 8)) (output auxiliary (width 8)))' . "\n"
+        . ($case->{opposite} ? ' (priority fallback over main)' : ' (priority main over fallback)') . "\n"
+        . ($case->{drive} ? " (drive drive_three (out 3))\n" : '') . $resource
+        . ($case->{rule_first} ? "$rule\n$transaction" : "$transaction\n$rule") . ")\n";
+    $case->{module} = $module;
+    $case->{source} = write_file("$module.isf", $source);
+    $case->{actor} = FSM::Adapter::ISF->new->parse_source($source, $case->{source});
+    $case->{ir} = $scheduler->{ir}->build_module($case->{actor});
+    $case->{carrier} = $scheduler->{fsm_emitter}->emit($case->{ir});
+    $case->{carrier_path} = write_file("$module.fsm", $case->{carrier});
+}
+
+subtest 'each conflicting contributor remains in the target-local mask' => sub {
+    for my $case (@cases) {
+        my $name = $case->{name};
+        my $ir = $case->{ir};
+        is_deeply($ir->{conflict_issues}, [], "$name strict lowering has no unresolved conflict");
+        my ($fallback) = grep {$_->{name} eq 'fallback'} @{$ir->{dt_blocks}};
+        my ($out) = grep {$_->{lhs} eq 'out'} @{$fallback->{assignments}};
+        my ($side) = grep {$_->{lhs} eq 'side'} @{$fallback->{assignments}};
+        is_deeply($out->{guard}, defined($case->{guard}) ? {expr => $case->{guard}} : undef,
+            "$name retains the independently declared contributor union");
+        is_deeply($out->{priority_suppressed_by} // [], $case->{opposite} ? [] : ['main'],
+            "$name preserves unique owner metadata");
+        ok(!defined($side->{guard}) && !@{$side->{priority_suppressed_by} // []},
+            "$name priority does not mask unrelated rule output");
+        is_deeply($fallback->{dte_guard}, $case->{resource}
+            ? {expr => '(& override_req (! peer_req))'} : {port => 'override_req'},
+            "$name preserves original rule/resource activation");
+        for my $state (@{$ir->{states}}) {
+            for my $assignment (@{$state->{assignments}}) {
+                next unless $assignment->{lhs} eq 'out';
+                is_deeply($assignment->{guard}, $case->{opposite} ? {expr => '(! override_req)'} : undef,
+                    "$name masks only the losing direction");
+            }
+        }
+        my $expected = '(<- (out> 9)' . (defined($case->{guard}) ? ' <' . $case->{guard} : '') . ')';
+        like($case->{carrier}, qr/\Q$expected\E/, "$name actual emitted fallback has the full predicate");
+        my $before = dclone($ir);
+        is($scheduler->{fsm_emitter}->emit($ir), $case->{carrier}, "$name repeated emission is deterministic");
+        is_deeply($ir, $before, "$name emission preserves original IR");
+    }
+    my %by_name = map {$_->{name} => $_} @cases;
+    my $first = $by_name{multi}{carrier};
+    my $reordered = $by_name{rule_first}{carrier};
+    $reordered =~ s/priority_rule_first/priority_multi/g;
+    is($reordered, $first, 'declaration order does not change the complete scheduled carrier');
+};
+
+subtest 'complete native, API, newline and strict carrier products agree' => sub {
+    my $api = FSM::Support::SemanticIntrospectionMCPAdapter->new(repo_root => $root, workspace_root => $root);
+    for my $case (@cases) {
+        my $name = $case->{name};
+        for my $contract (
+            [[qw(--strict --check --json)], 'fsmgen_check'],
+            [[qw(--strict --emit-semantic-json)], 'fsmgen_semantic_introspect'],
+            [['--emit-schedule-json'], 'fsmgen_schedule_preview'],
+        ) {
+            my ($flags, $method) = @$contract;
+            my $native = $capture->([$^X, 'bin/fsmgen', @$flags, $case->{source}], '');
+            is($native->{exit_code}, 0, "$name $method native succeeds") or diag($native->{stdout}, $native->{stderr});
+            next if $native->{exit_code};
+            my $expected = FSM::Test::SourceQueryRunner::normalize_repository_paths($json->decode($native->{stdout}), $root);
+            my $source_id = $case->{source}; $source_id =~ s{\A\Q$root\E/}{};
+            my $request = {jsonrpc => '2.0', id => 1, method => 'tools/call',
+                params => {name => $method, arguments => {source_id => $source_id}}};
+            my $response = $api->handle_jsonrpc_request($request);
+            ok(!$response->{error} && !$response->{result}{isError}, "$name $method API succeeds");
+            is_deeply($response->{result}{structuredContent}{report}, $expected, "$name complete native/API report");
+            my $wire = $capture->([$^X, 'bin/fsmgen-mcp', '--workspace-root', '.'], $json->encode($request) . "\n");
+            is($wire->{exit_code}, 0, "$name $method newline succeeds");
+            is_deeply($json->decode($wire->{stdout}), $response, "$name complete API/newline response");
+        }
+        my $check = $capture->([$^X, 'bin/fsmgen', '--strict', '--check', '--json', $case->{carrier_path}], '');
+        is($check->{exit_code}, 0, "$name exported carrier strict-checks") or diag($check->{stdout}, $check->{stderr});
+        my @semantic;
+        for my $path ($case->{source}, $case->{carrier_path}) {
+            my $result = $capture->([$^X, 'bin/fsmgen', '--strict', '--emit-semantic-json', $path], '');
+            is($result->{exit_code}, 0, "$name native/carrier semantic query succeeds");
+            push @semantic, $json->decode($result->{stdout})->{semantic};
+        }
+        is_deeply($semantic[0], $semantic[1], "$name complete semantic products survive carrier replay");
+    }
+};
+
+my $broken_carrier;
+subtest 'negative control restores only the lost first-state suppressor' => sub {
+    my $original = $cases[0]{ir};
+    my $before = dclone($original);
+    my $broken = dclone($original);
+    my ($fallback) = grep {$_->{name} eq 'fallback'} @{$broken->{dt_blocks}};
+    my ($out) = grep {$_->{lhs} eq 'out'} @{$fallback->{assignments}};
+    is_deeply($out->{guard}, {expr => $union}, 'negative control starts from the repaired actual producer');
+    $out->{guard} = {expr => '(! (state_active main_set_2))'};
+    $broken_carrier = $scheduler->{fsm_emitter}->emit($broken);
+    my $expected = $cases[0]{carrier};
+    my $changed = $expected =~ s/\Q$union\E/(! (state_active main_set_2))/g;
+    is($changed, 1, 'the independent carrier mutation changes exactly one assignment predicate');
+    is($broken_carrier, $expected, 'the whole negative carrier differs only by the known missing contributor');
+    is_deeply($original, $before, 'negative fixture leaves the positive producer unchanged');
+};
+
+subtest 'both HDL targets preserve target priority, progress and reset across repeated requests' => sub {
+    plan skip_all => 'qualified Verilator runtime unavailable'
+        unless can_run('verilator') && darwin_verilator_runtime_qualified();
+    my ($instances, $checks, $finish) = ('', '', '');
+    for my $index (0 .. $#cases) {
+        my $case = $cases[$index];
+        my $name = $case->{name};
+        $instances .= "$case->{module} dut_$index (.clk(clk), .rst_n(rst_n), .start(start),"
+            . " .override_req(override_req), .peer_req(peer_req), .done(done[$index]),"
+            . " .out(observed[$index]), .side(side[$index]), .auxiliary(auxiliary[$index]));\n";
+        $checks .= "if (side[$index] !== 7) \$fatal(1, \"$name unrelated output was suppressed\");\n"
+            . "completed[$index] = completed[$index] | done[$index];\n"
+            . "if (observed[$index] !== 9) begin\n case (seen[$index])\n";
+        for my $step (0 .. $#{$case->{trace}}) {
+            my $value = $case->{trace}[$step];
+            $checks .= "$step: if (observed[$index] !== $value) \$fatal(1, \"$name writer order/value changed\");\n";
+        }
+        $checks .= "default: \$fatal(1, \"$name unexpected writer value or duration\");\n"
+            . "endcase\n seen[$index] = seen[$index] + 1;\nend\n";
+        my $count = @{$case->{trace}};
+        $finish .= "if (seen[$index] != $count || !completed[$index] || observed[$index] !== 9)"
+            . " \$fatal(1, \"$name lost a writer, transaction progress or fallback resumption\");\n";
+    }
+    my $last = $#cases;
+    my $bench = <<'SV';
+module tb;
+ logic clk=0, rst_n=1, start=0, override_req=1, peer_req=0;
+ wire [7:0] observed[0:LAST], side[0:LAST], auxiliary[0:LAST];
+ wire done[0:LAST];
+ integer seen[0:LAST]; bit completed[0:LAST];
+ always #5 clk=~clk;
+ INSTANCES
+ task automatic check_reset;
+  for (integer i=0; i<=LAST; i=i+1)
+   if (observed[i] !== 0 || side[i] !== 0 || auxiliary[i] !== 0 || done[i] !== 0)
+    $fatal(1,"reset did not clear public outputs");
+ endtask
+ task automatic run_lap;
+  for (integer i=0; i<=LAST; i=i+1) begin seen[i]=0; completed[i]=0; end
+  @(negedge clk); start=1;
+  for (integer cycle=0; cycle<12; cycle=cycle+1) begin
+   @(negedge clk); #1; start=0;
+   CHECKS
+  end
+  FINISH
+ endtask
+ initial begin
+  #2; rst_n=0; repeat(2) @(negedge clk); #1; check_reset(); rst_n=1;
+  repeat(2) @(negedge clk);
+  run_lap(); run_lap();
+  @(negedge clk); rst_n=0; #1; check_reset();
+  @(negedge clk); rst_n=1; repeat(2) @(negedge clk);
+  run_lap();
+  $display("PRIORITY_CONTRIBUTOR_UNION_PASS"); $finish;
+ end
+ initial begin #1000; $fatal(1,"priority fixture timed out"); end
+endmodule
+SV
+    $bench =~ s/\bLAST\b/$last/g;
+    $bench =~ s/INSTANCES/$instances/;
+    $bench =~ s/CHECKS/$checks/;
+    $bench =~ s/FINISH/$finish/;
+    my $tb = write_file('tb.sv', $bench);
+    for my $language (qw(systemverilog verilog)) {
+        my @designs;
+        for my $case (@cases) {
+            my $hdl = write_file("$case->{module}_$language.sv", '');
+            my $emit = $capture->([$^X, 'bin/fsmgen', '--strict', '--quiet', '--language', $language,
+                '--output', $hdl, $case->{source}], '');
+            is($emit->{exit_code}, 0, "$case->{name} $language production emission")
+                or diag($emit->{stdout}, $emit->{stderr});
+            die "HDL emission failed before runtime\n" if $emit->{exit_code};
+            push @designs, $hdl;
+        }
+        my $object_dir = "$work/obj_$language";
+        my $build = run_verilator_compile(['verilator', '--binary', '--timing', '--assert', '-Wno-fatal',
+            '-j', '1', '--top-module', 'tb', '--Mdir', $object_dir, @designs, $tb]);
+        ok($build->{ok}, "$language public-pin oracle builds") or diag($json->encode($build));
+        die "native admission failed before compile execution\n" if $build->{exec_failed};
+        die "HDL compile failed; retained result requires diagnosis\n" unless $build->{ok};
+        my $run = run_generated_binary(["$object_dir/Vtb"]);
+        ok($run->{ok}, "$language independent priority/progress/reset oracle passes") or diag($json->encode($run));
+        die "native admission failed before generated execution\n" if $run->{exec_failed};
+        die "runtime oracle failed; retained result requires diagnosis\n" unless $run->{ok};
+        like($run->{stdout}, qr/PRIORITY_CONTRIBUTOR_UNION_PASS/, "$language completes every declared control");
+    }
+
+    # Restore the original defect only in a cloned test carrier. Its real
+    # backend assertion must reject out=2 and out=9 selecting concurrently.
+    my $negative_source = write_file('missing_contributor.fsm', $broken_carrier);
+    my $negative_hdl = write_file('missing_contributor.sv', '');
+    my $emit = $capture->([$^X, 'bin/fsmgen', '--strict', '--quiet', '--language', 'systemverilog',
+        '--output', $negative_hdl, $negative_source], '');
+    is($emit->{exit_code}, 0, 'deliberately incomplete mask emits through the production backend')
+        or diag($emit->{stdout}, $emit->{stderr});
+    die "negative HDL emission failed\n" if $emit->{exit_code};
+    my $negative_tb = write_file('negative_tb.sv', <<'SV');
+module tb;
+ logic clk=0, rst_n=1, start=0;
+ wire done; wire [7:0] out_value, side, auxiliary;
+ always #5 clk=~clk;
+ priority_multi dut (.clk(clk), .rst_n(rst_n), .start(start),
+  .override_req(1'b1), .peer_req(1'b0), .done(done),
+  .out(out_value), .side(side), .auxiliary(auxiliary));
+ initial begin
+  #2; rst_n=0; repeat(2) @(negedge clk); rst_n=1;
+  repeat(2) @(negedge clk); start=1;
+  @(negedge clk); start=0;
+  repeat(8) @(negedge clk);
+  $display("MISSING_DIFFERENT_VALUE_ASSERTION"); $finish;
+ end
+ initial begin #500; $fatal(1,"negative fixture timed out"); end
+endmodule
+SV
+    my $object_dir = "$work/obj_negative";
+    my $build = run_verilator_compile(['verilator', '--binary', '--timing', '--assert', '-Wno-fatal',
+        '-j', '1', '--top-module', 'tb', '--Mdir', $object_dir, $negative_hdl, $negative_tb]);
+    ok($build->{ok}, 'different-value negative oracle builds') or diag($json->encode($build));
+    die "native admission failed before negative compile execution\n" if $build->{exec_failed};
+    die "negative HDL compile failed; retained result requires diagnosis\n" unless $build->{ok};
+    my $run = run_generated_binary(["$object_dir/Vtb"]);
+    my $expected_rejection = !$run->{ok} && !$run->{exec_failed}
+        && !$run->{timed_out} && !$run->{output_limited} && !$run->{signal}
+        && $run->{status} eq 'nonzero_exit' && $run->{exit_code} != 0
+        && $run->{stdout} =~ /Assertion failed in tb\.dut: selector multi-value conflict: out\n/
+        && $run->{stdout} !~ /MISSING_DIFFERENT_VALUE_ASSERTION/;
+    ok($expected_rejection, 'enabled different-value assertion rejects the deliberately lost contributor')
+        or diag($json->encode($run));
+    die "native admission failed before negative generated execution\n" if $run->{exec_failed};
+    die "unexpected negative runtime result; retained result requires diagnosis\n" unless $expected_rejection;
+};
+
+done_testing();

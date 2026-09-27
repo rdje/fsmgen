@@ -170,7 +170,10 @@ fd3317ef93c8ea5901c53fd507ce2f2cf9672b3d. Decision 0111 now tags these families
 compatible_fanin under the legacy same_value_assertion key and omits their
 invalid source-exclusivity check. Different-value onehot0 and separate ownership
 checks remain. Child .2 qualifies that metadata/emission repair; child .3 still
-owns observed positive/negative execution and both HDL targets. Overall signoff
-remains open.
+owns observed positive/negative execution and both HDL targets. Its next run
+reaches an incorrectly early synchronous-reset bench check, now statically
+corrected under .3.1; .3.2 owns actual completion. The exact failed observation,
+public reset-contract witness and corrected event model are retained under
+docs/audits/priority-reset-oracle-20260928/. Overall signoff remains open.
 Verify saved evidence without a runtime with
 `python3 -B docs/audits/priority-contributor-repair-20260928/verify.py`.

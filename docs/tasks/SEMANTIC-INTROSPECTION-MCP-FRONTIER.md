@@ -923,10 +923,26 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Complete observed two-target priority runtime qualification after the assertion contract repair.`
-  Acceptance: `Consume committed .1/.2 and the qualified native observer. Complete every T1974 source/priority/resource/drive/order/compatible/reset/repeated/progress oracle for SystemVerilog and Verilog, retaining first attempts, full stage evidence, source identities and cleanup. A native rejection requires diagnosis before further execution. Close the priority contributor parent only after all acceptance holds; a successful run cannot close historical native causality.`
-  Verification: `Static assertion contract repair is qualified under .2; pending genuine observed runtime and deliberate different-value-mask negative control.`
+  Acceptance: `Consume committed .1/.2 and the qualified native observer. Complete every T1974 source/priority/resource/drive/order/compatible/reset/repeated/progress oracle for SystemVerilog and Verilog, retaining first attempts, full stage evidence, source identities and cleanup. Add an independent negative fixture by restoring the previously lost first-state mask on a cloned actual carrier: the retained different-value assertion must reject that overlap with its precise diagnostic. Keep runtime assertions enabled. A native rejection or unexpected HDL outcome requires diagnosis before further execution. Close the priority contributor parent only after all acceptance holds; a successful run cannot close historical native causality.`
+  Verification: `Active from clean 69ae18454c52a51079da17edd7c31c423ef66bb5. Consume committed contributor and assertion repairs plus unchanged fixed observer; qualify the negative fixture statically, then predeclare three compile and three runtime stages for two positive targets and the deliberate SystemVerilog negative. Bind affected backend/report producers before and after the observation in addition to the fixed observer admission. First corrected observation compiles SystemVerilog, then fails the public reset check at time 311 after two completed laps. Native events are empty and stage cleanup completes; no Verilog or negative stage was attempted. Child .1 owns immediate reset-contract diagnosis and test/production correction before child .2 resumes actual qualification. Historical native causality remains open.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.1`
+  Status: `done`
+  Goal: `Diagnose and correct the first post-repair reset-oracle failure before further runtime.`
+  Acceptance: `Retain the complete first corrected observation, unchanged identities and cleanup. Reproduce the reset timing contract through public metadata/emission and inspect exact test event ordering. Distinguish test-oracle mismatch from production defect; fix only the proved cause with independent timing controls. Preserve every priority/value/progress oracle, runtime assertions and native admission. Commit static repair/evidence before .2 executes again. No runtime pass is claimed by this leaf.`
+  Verification: `At time 311 check_reset fails after the bench asserts rst_n at a falling edge and waits one time unit. The initial check had waited through rising edges. Root cause proved by canonical explicit-system-reset-polarity and book13a: flat reset rst_n is synchronous active-low. The retained full public semantic system contract says sync/sreset/active-level-zero, and emitted state/output registers use only posedge clk. The mid-run bench checked at falling-edge+1 before any reset-active rising edge, unlike its initial reset. Fix only the bench to span the next rising edge; add independent parsed/carrier reset expectations. Production code and observer stay unchanged; no retry executed. The negative fixture restores exactly one missing contributor in a cloned actual carrier and preserves its positive source. Static T1974/T1211 passes All tests successful, Files=2, Tests=7, with native runtime skipped. The saved event-order model derives the failing check at 311 before any reset-active rising edge and the corrected check at 321 after one, independently of the runtime oracle. Full prior/preflight/observed/corrected test sources, complete logs, two stage records, additional backend identities and hostile saved verification are sealed under docs/audits/priority-reset-oracle-20260928/. The original temporary HDL/binary are removed by normal cleanup; the unchanged-backend public reconstruction is labeled as such. No full two-target or negative execution result is claimed. Public sync scope: fixture and qualification documentation only; source syntax, production lowering/reset behavior, reports, facade and capability metadata unchanged.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Finish observed two-target and negative runtime after reset-contract correction.`
+  Acceptance: `Consume all committed failures and static repairs, then use a fresh admitted failure-only observation for actual T1974. Require full positive and deliberate different-value rejection oracles, source identity, original bounds and cleanup. Stop and diagnose any unexpected result before further execution. Historical native cause cannot close on a pass.`
+  Verification: `pending .1`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3`
@@ -2804,8 +2820,8 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3`, complete observed priority runtime after
-contributor-union implementation and static same-value assertion repair,
+`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.2`, complete observed priority runtime after
+contributor-union, static same-value assertion and synchronous reset-oracle repairs,
 after literal-guard repair and independently retained runtime qualification, after
 exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
@@ -4727,3 +4743,17 @@ uses exact logs, old/current artifacts and recoverable producer blobs in
 `docs/audits/same-value-selector-repair-20260928/`. Corrected runtime and historical
 native causality remain missing and separately owned. No source grammar, source
 admission, scheduling, public keys, facade method or capability key changes.
+
+
+## Acceptance — priority reset-oracle repair `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The observed SystemVerilog run reports `[311] %Fatal: tb.sv:20: Assertion failed in tb.check_reset.unnamedblk1: reset did not clear public outputs`. Public --emit-semantic-json reports sync/sreset/active-level-zero for the flat reset rst_n source, and the emitted state/output blocks are sensitive only to posedge clk. The bench introduced with a7fc9a98d1217d98f817c8d4c84448a8e1a762cc checked falling-edge+1 before a reset-active rising edge. The saved independent event-order model derives the exact failing time without further native execution.
+- [x] **ADDRESSED (verified)** — The bench now holds reset across the next rising edge and checks after the following falling edge before deassertion. Independent parsed/carrier expectations pin the authored synchronous contract. The separately prepared negative fixture changes only the known missing-contributor guard in a cloned complete carrier; actual negative execution remains pending. The failed observation, full test versions, original stage limits/results, unchanged producer identities and independent workspace/command absence are sealed. No production or observer policy changed.
+- [x] **NO REGRESSION** — Guarded T1974/T1211 reports `All tests successful`, `Files=2, Tests=7`, with runtime skipped. Complete native/API/newline/carrier products and selector-policy controls pass. The saved verifier rejects wrong failure attribution, disabled assertions, false cleanup, changed admitted inputs and invented stage completion. Book/spec/downstream, reset/native fact cards, task frontier, map and census accompany the staged doctrine gate.
+
+Re-derivation joins the actual failure to the public reset contract and exact
+bench event ordering; falsification uses the old-versus-corrected event model,
+independent parsed/carrier expectations and hostile saved records; durability
+uses `docs/audits/priority-reset-oracle-20260928/` with complete logs and source
+identities. Corrected actual runtime and original native causality remain missing
+and separately owned. This correction does not claim a production reset defect.
