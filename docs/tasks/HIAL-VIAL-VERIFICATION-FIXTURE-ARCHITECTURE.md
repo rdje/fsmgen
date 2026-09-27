@@ -1,12 +1,12 @@
 # HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE: Hardware And Verification Intent Architecture
-  Verification: `Clean registry commit 6927bfcfb owns the twelve selected family namespaces and clean activation c7685a046 owns this isolated adapter slice. The required Knowledge Map query returned no common v2 backend-adapter answer. Git history traces the independent native-UVM v1 schema guard to 5a1805f52, portable-VHDL capability list to ab8b1af24, and portable-SV registry entry to 6927bfcfb. Decisions 0050/0051 require distinct public portable-SV, review-only native-UVM, private portable-VHDL, and private OSVVM states. FSM::Support::VIALSemanticFamilyBackendAdapter now publishes one closed content-addressed four-route authority for exact emitter, target mechanism, typed ExecutionIR boundary, accepted v1 schema/profile, output/source-map schemas, atomic artifact model, and independent emission/compile/runtime/result/parity/public maturity. The family registry maps every selected family to all four profiles while every mapping remains unavailable. All four emitters preflight the exact typed/version-consistent IR and complete family/revision/capability/effect set before target rendering; OSVVM rejects before portable delegation or provider verification. T1804 covers deterministic/defensive registry shape, exact maturity isolation, target-mechanism absence from ExecutionIR, untyped/inconsistent/unknown-profile rejection, complete hostile v2 requirement reporting, zero provider/delegation calls, and zero artifact output. Existing successful v1 emitter result shapes remain unchanged, and the public tooling JSON remains exact at SHA-256 42db05da519dffd97c3e40ec254c82d09b5f20ef53a849e53025b976f5aded4e. The final RAM-guarded eighteen-file compiler/backend/reader band passes Files=18/Tests=224, with only the two existing explicit Darwin runtime skips. Every mdBook chapter tests; the inspected repository-local build has 98 files/22,088 KiB and is removed exactly. Knowledge Map parity is 1,160/6,300/6,471/138; claim dispositions close 1,896/1,896 candidates with 316 records, 979 gates, 601 reviewed, and zero gaps/open owners. Containment authorizes the exact 63-file/57,778-line/3,150,863-byte book and 3-file/535-line/29,616-byte VIAL reference, adjusts only existing transition allowances by their prescribed ratchet steps, and raises no ceiling. Final task/path/locality/README/claim/Knowledge/containment/staged-acceptance/doctrine gates and task-local residue checks pass. No family implementation, accepted v2 emission, new compile/runtime/result/parity, public v2 tooling, provider access, support promotion, or HIAL behavior ships.`
+
 ## Metadata
 
 - Tree ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-09-24`
+- Last updated: `2026-09-27`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -1801,7 +1801,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Preserve .2.9's failed control_wait result and missing PID/syscall evidence. Query the map, inspect source/history and native contract, then use bounded independently observed fork/group controls to separate setpgid return, actual membership and stale diagnostic errno. Select the smallest causal repair; if evidence needs new instrumentation, qualify and commit that separately before further original observation. Every actual owned child/group must settle; preserve rejection of false-success/undefined/negative/throwing admission, fixed limits and original failure. No retry-as-repair, host security change or unrelated recurrence campaign. Update book/fact and commit each verified slice.`
   Verification: `New .2.9 failure is in the asynchronous control_wait outer before exec; the current combined eval reports ambient $! after either syscall or membership failure. The source review identifies ambiguity, not a proved syscall failure or cause. Active at clean fe2dd2f2e3592cb043dc3daa1740254cb6f1a424. Read-only source/native-contract review and bounded independently observed fork/group controls are owned here; scratch outputs/workspaces stay under .artifacts/logs/containment-diagnosis-20260909/ and .artifacts/tmp/containment-diagnosis/. Six held native controls prove the combined message conflates a real EPERM session-leader syscall failure with a false-success membership failure; successful calls can retain EPERM too. All native identities/groups and cleanup are independently checked. This proves diagnostic ambiguity, not the original cause. Child .10.1 owns precise failure provenance and focused qualification; any remaining causal experiment is selected only after that child commits.`
   Commit: `pending causal failure diagnosis after precise diagnostic qualification`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2`
   Status: `done`
   Goal: `Discriminate native parent/child group timing from session-leader rejection after the T1972 EPERM.`
@@ -1810,9 +1810,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4`
-  Status: `active`
+  Status: `done`
   Goal: `Roll over completed task evidence before extending native causal investigation.`
-  Acceptance: `Task-evidence maximum crossed the existing rollover threshold. Retain exact Git-backed recovery for a bounded completed acceptance block, verify source bytes/hash and preserve active contracts, canonical routing and pending failure ownership. Reduce the actual maximum without raising any ceiling. Commit the verified rollover before native witness implementation.`
+  Acceptance: `Task-evidence maximum crossed the existing rollover threshold. Retain exact Git-backed recovery for a bounded completed acceptance block, verify source bytes/hash and preserve active contracts, canonical routing and pending failure ownership. Reduce the actual maximum without raising any ceiling. Also trace and remove the misplaced final .19.1.5 Verification paragraph before Metadata, preserving its exact source and original node recovery. Commit the verified rollover before native witness implementation.`
+  Verification: `The manifest authenticates complete predecessor cbc94d53d6ae409eb1698a78eb8296e510f9e047 and its suffix from .18.1. Only completed .18 checklists and the recent completed acceptance tail leave the live file; intervening active contracts and unresolved failures remain unchanged. Exact source recovery also preserves the misplaced final .19.1.5 preamble, introduced at 94356f17514427a0f18127d798f2e193f4bd69ce while the original node kept its earlier summary. This was not a byte-identical duplicate. Fresh gates verify source/suffix identities and current node topology; the measured task surface returns below rollover pressure with no ceiling increase.`
+  Commit: `this commit`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5`
+  Status: `active`
+  Goal: `Complete the due repository-local generated artifact cleanup before witness qualification.`
+  Acceptance: `Remove only the completed generated mdBook output roots .artifacts/writer-guards/book, .artifacts/native-group-discriminator/book and .artifacts/native-task-rollover/book after checking repository containment, no symlinks and ignored/untracked-output ownership. Retain all native and guard failure logs, sealed evidence and spent compiler/proxy workspaces. Census Rust release/deps/incremental log/bin paths without deleting ambiguous outputs. Replace docs/ARTIFACT_CLEANUP.md with the latest dated summary, synchronize the book/resume pointer and commit exact residue checks.`
   Verification: `pending`
   Commit: `pending`
 
@@ -4494,7 +4501,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4` rolls over completed evidence before `.10.3.1` qualifies native syscall context capture. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5` performs the due completed-book artifact cleanup before `.10.3.1` qualifies native syscall context capture. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -5590,167 +5597,6 @@ leaf is `.19.2.3.1.2.2.4`, bounded Rust parity policy selection.
   derives the current bounded registry result exactly at three shards, 53
   records, 52 published claims, and one fixture; its hostile finite-set,
   ordering, tracking, duplicate, and cap controls are unchanged.
-
-## Acceptance Checklist (.18.1, enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` locates the `.15` parent definition at architecture-selection commit `2e2f7d25e`; all seven later child nodes are `done`, but no later closure changed the parent from `active`. The audit's exact numeric evidence also changed a claim-inventory source, so the derived inventory required regeneration rather than hand-editing.
-- [x] **ADDRESSED (verified)** — `.15` is now closed with its exact VHDL/GHDL/OSVVM evidence and nonclaims; `.18.1` carries the complete disposition/owner matrix; the existing HIAL/VIAL card is compacted and rerouted; and the generated Knowledge Map and claim inventory match the staged source tree without a ceiling or allowance increase.
-- [x] **NO REGRESSION** — `knowledge-map: OK` reports 1,160 facts, 6,290 unique questions, 6,462 occurrences, and 138 shards; the staged task, Memory, relative-path, claim, containment, locality, README, and `[doctrine] all doctrine checks passed` gates are green.
-
-## Acceptance Checklist (.18.2, enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — the reader-facing entrypoints encoded an implementation timeline instead of a current product model: README commit `ecd29b6a4` routed its short manual list to the implementation blueprint; SUMMARY commit `2e2f7d25e` flattened the HIAL/VIAL overview beside specialist evidence; and `git log -S` for the stale `.15`-active sentence traces the contradictory book wording to `9729f1f0c` and its later duplicate to `6a489464d`, after every VHDL child had closed.
-- [x] **ADDRESSED (verified)** — README and SUMMARY now route one Start Here overview with nested specialist evidence; the backlog is future-only; the overview opens with public/private/review/unavailable/evidence availability classes and stable navigation; the existing Knowledge Card points at that route; and the 13 removed duplicate quantitative candidates are retired from the exact claim-disposition join rather than left stale.
-- [x] **NO REGRESSION (machine truth, book, and containment)** — t1796 and the guarded capability/scale/entry-path band each report `All tests successful.` at `Files=1, Tests=4` and `Files=5, Tests=28`; hostile category removal is covered. Every mdBook chapter tests, the repository-local HTML build succeeds, and the claim inventory/disposition join closes without gaps. The staged Knowledge Map, relative-path, task-integrity, containment, README, locality, and `[doctrine] all doctrine checks passed` gates are green; no product or support claim changes.
-
-## Acceptance Checklist (.18.3, enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — the public source-to-result lifecycle was
-  implemented but not available as one task-oriented user reference. `git log
-  -S'# VIAL Public Tooling Version-1 Contract'` identifies selection commit
-  `d34da3254`, while `git log -S'## Shipped public source, planning, and
-  execution tooling'` identifies closeout commit `dfe87f536` as the long
-  architecture-chapter workflow origin. The required Knowledge Map query
-  returned no direct lifecycle answer, confirming the reader still had to
-  reconstruct the path across the overview and normative contracts.
-- [x] **ADDRESSED (verified)** — selected 16dg now owns the runnable public
-  lifecycle; the architecture overview routes to it instead of duplicating
-  workflow prose; SUMMARY and the public-tooling Knowledge Card expose the
-  route; and t1797 derives and executes its source, review, plan, schema,
-  artifact, diagnostic, atomicity, cleanup, private-boundary, and runtime-gate
-  claims from current machine contracts. The one deleted chronology candidate
-  is retired from the exact claim-disposition join, and maintained-reference
-  growth is authorized without raising a ceiling.
-- [x] **NO REGRESSION (public contract, book, and residue)** — t1797 and the
-  guarded six-file focused band report `All tests successful.` at `Files=1,
-  Tests=6` and `Files=6, Tests=30`; the full runtime integration keeps its
-  intentional Darwin qualification guard. Every mdBook chapter tests and the
-  repository-local HTML build succeeds. Generated book/test roots, public-plan
-  targets, collision fixtures, and VIAL staging residue are absent. Knowledge
-  Map, claims, containment, relative paths, task integrity, staged acceptance,
-  locality, README, and doctrines remain required before commit; no product or
-  support claim expands.
-
-## Acceptance Checklist (.18.4, enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` locates the public portable
-  runtime at commit `dfe87f536`, the handwritten AHB parity closure at
-  `c95160d53`, the portable-VHDL gallery at `ab8b1af24`, and the OSVVM gallery
-  at `4f350f29c`; required Knowledge Map queries returned those specialist
-  authorities but no direct checked-source AHB tutorial. The shipped path was
-  therefore executable yet required readers to reconstruct one workflow from
-  four separately introduced evidence families.
-- [x] **ADDRESSED (verified)** — selected 16dh starts from the checked AHB HIAL
-  and `.vial` sources, gives runnable check/normal/terse/plan/public-run
-  commands and exact outputs, explains the IAL2-to-IAL1-to-IAL0 review route,
-  typed observations and logical time, compares the two normalized outcomes,
-  enumerates the exact nineteen handwritten parity paths, and keeps portable
-  VHDL and OSVVM inspection/qualification distinct. T1798 executes or
-  byte-checks every promised path, checks atomic replay and cleanup, and rejects
-  hostile documentation mutations without widening public support.
-- [x] **NO REGRESSION (runtime, qualification, book, and residue)** — t1798 and
-  the entry/lifecycle/tutorial band report `All tests successful.` at `Files=1,
-  Tests=6` and `Files=3, Tests=16`; the guarded eleven-file runtime/parity/VHDL/
-  OSVVM/documentation band reports `All tests successful.` at `Files=11,
-  Tests=64`, with only the existing exact-provider qualification guards skipped.
-  Both VHDL gallery refresh checks pass, every mdBook chapter tests, and the
-  repository-local HTML build succeeds before exact removal. Knowledge Map,
-  claims, containment, relative paths, task integrity, staged acceptance,
-  locality, README, and `[doctrine] all doctrine checks passed` remain required
-  before commit; no command, schema, backend, runtime, parity, capability,
-  support, or product behavior changes.
-
-## Acceptance Checklist (.18.5, enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — required Knowledge Map queries returned no
-  direct legacy-to-VIAL migration answer. `git log -S` locates IAL1 observation
-  selection at `f3fa55646`, the UVM passive-monitor implementation at
-  `d867815f3`, the VHDL observation-package implementation at `ab06754e7`, and
-  the handwritten AHB parity closure at `c95160d53`. Those independently stable
-  surfaces had exact specialist evidence but no single consumer-safe migration
-  policy joining retain, parallel-successor, behavioral migration, and rollback.
-- [x] **ADDRESSED (verified)** — selected 16di gives an exact four-row state
-  matrix, executes the retained schedule/UVM/VHDL commands, distinguishes the
-  native-UVM and portable-VHDL/OSVVM successors, maps legacy observation shapes
-  to typed bridge endpoints/probes and logical-time behavior, preserves the
-  handwritten AHB oracle, and defines side-by-side rollout, rollback, cleanup,
-  and nonclaims. T1799 derives public legacy target/manifest truth, executes the
-  typed VIAL plan and unavailable-backend failure, checks all three galleries,
-  binds the parity source/producer/watcher, and rejects hostile prose changes.
-- [x] **NO REGRESSION (legacy, bridge, reader path, and residue)** — t1799 and
-  the guarded seven-file legacy/entry/lifecycle/tutorial/migration band report
-  `All tests successful.` at `Files=1, Tests=5` and `Files=7, Tests=28`.
-  The guarded full HIAL/VIAL contract/backend/documentation band reports
-  `All tests successful.` at `Files=18, Tests=103`; only the two explicit
-  Darwin runtime qualification guards skip. Every mdBook chapter tests, the
-  repository-local HTML build succeeds before exact removal, and all three
-  successor gallery checks pass. Knowledge Map is current, claim dispositions
-  close 1,895/1,895 with zero gaps, and containment accepts the authorized book
-  delta without a ceiling or allowance rise. Relative-path, task-integrity,
-  staged-acceptance, locality, README, and all 12 registered doctrine checks
-  are green; no legacy byte, public command, source, schema, manifest,
-  backend, runtime, parity, capability, support, or product behavior changes.
-
-## Acceptance Checklist (.18.6, enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — required Knowledge Map queries returned no
-  direct consolidated VIAL backend/capability/parity/scale/troubleshooting
-  answer. `git log -S` traces public tooling to `c95160d53`, native-UVM matrix
-  truth to `7725789a4`, qualified VHDL truth to `895ea33bd`, and public
-  scale-regression capability truth to `2d16175c4`; no history exists for the
-  selected 16dj reference. Readers therefore had exact specialist authorities
-  but no bounded support matrix or diagnostic route joining them.
-- [x] **ADDRESSED (verified)** — selected 16dj derives seven exact profiles and
-  seven support-accounting rows from current machine contracts, distinguishes
-  public, private-qualified, review-only, experimental, unavailable, and
-  regression evidence, preserves every compile/runtime/result/parity and
-  capacity nonclaim, and gives galleries, provider behavior, diagnostic phases,
-  decision routes, cleanup, and specialist links. T1800 independently derives
-  the profiles, stages, diagnostic vocabulary, gallery/provider/scale behavior,
-  and cleanup coordinates, then rejects hostile availability, version, support,
-  parity, provider, and residue mutations.
-- [x] **NO REGRESSION (machine truth, readers, claims, and containment)** —
-  standalone t1800 and the five-file reader band report `All tests successful.`
-  at `Files=1, Tests=5` and `Files=5, Tests=26`. The guarded full HIAL/VIAL
-  contract/backend/scale/documentation band reports `All tests successful.` at
-  `Files=19, Tests=7,189`; only the two explicit Darwin runtime qualification
-  guards skip. Every mdBook chapter tests, the repository-local HTML build
-  succeeds before exact removal, and all three gallery checks pass. Knowledge
-  Map is current, claim dispositions close 1,895/1,895 with zero gaps, and
-  containment accepts the authorized book delta without a ceiling or allowance
-  rise. Relative-path, task-integrity, staged-acceptance, locality, README, and
-  all 12 registered doctrine checks are green; no public or product behavior
-  changes.
-
-## Acceptance Checklist (.18.7, enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — after the committed five-reader suite
-  passed, a separate exact phrase search found six activation-era progress
-  claims still presented in deep 16d architecture prose. `git log -S` traces
-  them to generator, backend-cap, cross-family-cap, cap-parent, and measurement
-  activation commits `125e4981e`, `f6b2f8504`, `02768a427`, `4ee0dc12a`, and
-  `897c72532`; the existing entry-path watcher checked only the stale `.15`
-  parent sentence. Strengthening t1796 first produced the expected RED at its
-  machine/human availability join.
-- [x] **ADDRESSED (verified)** — the six sentences now state the completed
-  generator, backend/runtime cap, cross-family closeout, and measurement state
-  without changing any technical contract or support boundary. T1796 retains
-  an exact six-phrase negative oracle. Independent local-destination and anchor
-  checks close every selected reader link, while the existing lifecycle,
-  tutorial, migration, and capability watchers continue deriving commands,
-  schemas, results, profiles, diagnostics, parity, scale, providers, and
-  cleanup from machine authorities.
-- [x] **NO REGRESSION (independent activity closeout)** — post-repair t1796
-  passes at `Files=1, Tests=4`; the final guarded 19-file HIAL/VIAL band reports
-  `All tests successful.` at `Files=19, Tests=7,189`, with only two explicit
-  Darwin runtime qualification guards skipped. Every mdBook chapter tests and
-  the HTML build succeeds before exact removal. Knowledge Map remains current;
-  claim dispositions close 1,895/1,895 with zero gaps; containment records only
-  the authorized 0/+3/+50 book delta and no ceiling increase; exact manual,
-  build, staging, log, binary, Git, and watcher residue checks are clean.
-  Relative-path, task-integrity, staged-acceptance, locality, README, and
-  all 12 registered doctrine checks are green; no public or product behavior
-  changes.
 
 ## Acceptance Checklist (.19, enforced)
 
@@ -7087,7 +6933,13 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the completed acceptance suffix and independent reserved-process evidence join to their exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+The manifest binds the complete predecessor and its suffix beginning at .18.1.
+Completed .18.1–.18.7 checklists and the latest completed execution/native-control
+acceptance bodies are recovered there. Intervening live contracts and unresolved
+qualification evidence remain here unchanged. The source retains the previous
+manifest chain and the misplaced final .19.1.5 paragraph at its document top;
+that paragraph is historical evidence, not live task metadata. Node contracts
+remain authoritative.
 
 Verification-scope correction, owned by `.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3`: the
 preserved checklists for ACCEPT publication (`13bf045a3`), retained request
@@ -7101,147 +6953,24 @@ whole regression band. The original startup/proxy/compiler producers, full CI
 and push did not run. Exact predecessor evidence remains unchanged; this live
 correction supplies its proper scope and is reflected in the canonical fact/book.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.1)
+## Acceptance — exact task evidence rollover `.3.2.10.4`
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Outcome-history `git log -S` locates the
-  first suffix heading at ee83fbe92f42b9ab782a6ea42c83a367bd11e94b.
-  Exact d48451015 has 7198 task lines; completed native-component topology and
-  lifetime evidence need exact bounded retention before outcome integration.
-- [x] **ADDRESSED (verified)** — Outcome-history re-derivation reconstructs source
-  1274794 bytes and suffix 46 lines/3756 bytes/two sections. Independent git
-  cat-file, awk, wc and shasum agree with source SHA-256
-  dabfc36567ed0d1b6b6236a9936b54b96da328e5bb2e677abd5851cf8914c2ef
-  and suffix 09d95aa1b9eab8a9e834e7d9d21f23b067283997df4b52e0842f214e38ad6bc0.
-  Prior 145e74e4e3b7, 8f359f0c93c8 and 7f693cc49e72 versioned source/suffix
-  manifest chains reverify. The complete tracked JSON/JSONL owner_task census
-  admits the closed flat fifteen-node native-component subtree; no live claim
-  owner or earlier compact terminal is contained. Original goal, source identity
-  and current-host-only qualification limits are retained. All other original
-  node fields and the execution-scope correction stay exact except explicit
-  outcome-parent decomposition. Falsification: unchanged checker accepts the full
-  fixture and rejects changed suffix and compact-source digests as sole failures.
-  Durability: committed compact terminal, manifest and exact Git sources preserve
-  history. Ignored .artifacts/outcome-history-* logs/control JSON are a named gap;
-  consumed source/suffix copies, measurements, fixture and runner are removed.
-  Product source, tests, book behavior and containment ceilings remain unchanged.
-- [x] **NO REGRESSION** — Outcome-history task integrity and `knowledge-map: OK`
-  preserve routing; staged doctrines qualify paired retention metadata. No native
-  fixture, original producer, full CI or push runs in this history-only slice.
+- [x] **ROOT CAUSE (WHY + WHERE)** — The size gate required rollover_debt
+  at the actual task-file threshold. `git log -S` and blame identify the misplaced
+  final .19.1.5 Verification at 94356f17514427a0f18127d798f2e193f4bd69ce;
+  its earlier node summary remained different. The header was historical final
+  evidence, not a byte-identical duplicate and not current metadata.
+- [x] **ADDRESSED (verified)** — The bounded existing history manifest now
+  authenticates complete cbc94d53d6ae409eb1698a78eb8296e510f9e047 and its
+  suffix from .18.1. Completed .18 checklists and the recent completed tail
+  leave the live file; intervening live contracts, unresolved failures and
+  archived-node references remain intact. Complete-source recovery preserves
+  the removed preamble exactly and retains the earlier manifest chain.
+- [x] **NO REGRESSION** — Task integrity checks complete-source/suffix hashes,
+  byte/line/section identities, the live pointer and current node topology.
+  `knowledge-map: OK` preserves canonical routing. The mdBook build and staged
+  doctrine gates qualify the rollover; no product or runtime behavior changes.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The new native outcome fixture reports
-  missing job/execution metadata at t/1864-process-closed-execution-outcome.t line 223.
-  Coordinator retained only scalar closure fields while Service take_closed
-  deleted the original record before returning its full execution observation.
-  The baseline also accepted an altered returned job instead of rejecting it.
-- [x] **ADDRESSED (verified)** — Re-derivation: T1864 compares every original
-  Service observation with aggregate metadata before destructive consumption;
-  actual E, binary output, literal socket traffic and exact positive waits
-  independently establish native effects and cleanup. Nine groups retain job,
-  fixed clocks, distinct latest/admitted checks and first failure through
-  cancellation, EOF, delayed reports, entry/return loss and a real creator signal.
-  Multiple peers are retained before any consumption; retries skip spent records.
-  Unbound peers and unreported/uncertain jobs fabricate no execution report.
-  Every nested public hash is detached, and exact returned key/value comparison
-  rejects missing, extra, changed and wrong-reference fields. Falsification:
-  twelve isolated defects reject at their intended oracles with closed native
-  censuses; an identical positive passes. Controls remove job/execution history,
-  share each nested hash, reread spent records, retain late, compare scalars only,
-  ignore extra keys/key presence, or replace the latest check with admission.
-  Durability: tracked source/test/book/fact and work-unit Git retain the contract.
-  Ignored .artifacts/closed-outcome-* logs/control JSON remain a named raw-evidence
-  gap owned by independent qualification .19.2.3.1.2.2.5.5.2.3.4.6. Consumed
-  control copies/runner and generated book output are removed. Initial fixture
-  assumptions about direct grant-refusal masking and Service peer ordering were
-  corrected against actual APIs; both failure runs closed their native censuses.
-  An ambiguous control mutation anchor failed before any control ran; its exact
-  anchor was corrected. No product failure is hidden by those fixture repairs.
-- [x] **NO REGRESSION** — Selected coordinator band: All tests successful.
-  Files=46, Tests=432. Source/test syntax and generated mdBook HTML checks pass.
-  Knowledge Map and staged doctrines qualify canonical routing and bounded
-  metadata. Browser visual review remains unavailable. Original startup/proxy/
-  compiler producers, Linux, full CI and push did not run; those gates stay open.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The exact b9f98e2fc baseline refuses the new
-  fixture with Can't locate object method "release_request"
-  at .artifacts/request-release-control-copies/baseline-no-api/release.t line 248.
-  The original final E check existed, but no aggregate request entrypoint joined
-  it to explicit single-use intent and complete ACCEPT before leaving readiness.
-- [x] **ADDRESSED (verified)** — Re-derivation: T1865 passes twelve native groups.
-  Literal socket ACCEPT/CANCEL, actual E/output, binary argv/environment/context,
-  cwd/umask/exec masks, real parent loss, positive waits and endpoint/pipe censuses
-  establish execution and cleanup independently. Release returns deferred while
-  publication/input is partial; the original wrapper stays ready and later ACCEPT
-  can finish. Full fresh admission queues once without E/fork/pipe allocation;
-  the preflight issues no lasting E grant. Every actual attempt uses the original
-  final callback. Pre-mask winners survive, first job/peer causes precede creator
-  signals, and unavailable cleanup or failed remasking cannot erase refusal.
-  Confirmed/uncertain E and matching complete outcomes survive interrupted returns.
-  Falsification: exact no-API baseline plus eleven isolated defects reject with
-  intended oracles and closed native censuses; identical positive passes. Defects
-  omit preflight, post-return checks, final callback, reentry guard, early intent,
-  early/pure first causes, creator masking or public intent, and consume deferred
-  intent or overwrite the first cause. Durability: tracked source/test/book/fact
-  and this work-unit Git commit retain the contract. Ignored
-  .artifacts/request-release-* logs/control JSON remain a named raw-evidence gap
-  owned by independent qualification .19.2.3.1.2.2.5.5.2.3.4.6; consumed control
-  copies/runner and generated book output are removed. The first fixture assumed
-  one read consumed a fragmented CANCEL; corrected bounded polling preserves
-  the original no-E assertion. A non-unique mutation anchor failed before any
-  controls ran and was made exact. The book's earlier broad no-release statement
-  is corrected to gated preparation plus the current explicit entrypoints.
-- [x] **NO REGRESSION** — Selected coordinator band: All tests successful.
-  Files=47, Tests=444. Source/test syntax and generated mdBook HTML pass; Knowledge
-  Map and staged doctrines qualify canonical routing and bounded metadata.
-  The initial doctrine gate caught an eight-byte fact collection overrun; concise
-  wording restores the original allowance without a ceiling change. Browser
-  visual review remains unavailable. Original startup/proxy/compiler
-  producers, Linux, full CI and push did not run; those gates remain open.
-
-Director follow-up (2026-09-24): after this slice is committed and clean, select
-task-tree ownership for auditing recent product features against the public deep
-semantic-introspection API and its MCP exposure. Implement and verify owned gaps;
-feature completion must include structured external-agent access wherever the
-public contract supports it. Distinguish inspection from invocable controls, keep
-the mdBook accurate, and do not claim coverage before the audit. This direction
-takes priority over starting the next stream implementation slice.
-
-
-## Acceptance — native group timing discriminator `.3.2.10.2`
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies
-  a055d3a28a30b10d029c82ca5e4831da069ee108 as the precise admission diagnostic
-  repair. T1972 now identifies setpgid undef/EPERM at child 43538, but retains
-  no group/session observations for that spent child. The native cause is still
-  unknown; this slice owns the missing causal discriminator, not a guessed fix.
-- [x] **ADDRESSED (verified)** — The predeclared native controls capture immediate
-  errno plus child/parent PGID/SID around the call and hold children for independent
-  parent queries. Ordinary timing controls succeed; the actual session-leader
-  control fails with EPERM despite the correct group. Exact wait-zero and ESRCH
-  observations settle every trial. verify.py validates retained source hashes,
-  ordered membership, native identities, outcomes and cleanup; deliberate corrupt
-  records are rejected. No production change or original-test retry occurred.
-- [x] **NO REGRESSION** — Native compilation passes -Wall -Wextra -Werror. The
-  retained-data verifier and mutation controls pass. Knowledge Map regeneration
-  and `knowledge-map: OK` qualify routing; mdBook and staged doctrine checks
-  qualify documentation. Product tests are unchanged and T1972 remains blocked.
-
-Durable evidence: `docs/audits/native-group-discriminator-20260927/` retains the
-source, predeclared recipe, complete result, source/result/verifier hash manifest
-and independent verifier. Re-derivation is the fixed native experiment;
-falsification is intentional native session-leader EPERM plus independent parent
-queries and corrupt-record rejection; durability is the tracked sealed evidence
-and verifier. Installed Darwin 27.0.0 reports xnu-13432.1.9; reviewed published
-Apple source is useful contract evidence but not a matching-kernel attestation.
-The known native session cause must not be attributed to original child 43538.
-Child .3.1 qualifies native context instrumentation before .3.2 observes one
-original test. Broad startup, nested containment and full CI remain separate.
-
-The first staged gate rejected the task collection's per-file line allowance.
-The existing ceiling is unchanged; the transition allowance is refreshed from
-the actual maximum alongside the aggregate census. The next gate correctly
-requires rollover_debt at the crossed threshold; .10.4 owns exact recovery and
-reduction before more investigation evidence is added.
+Re-derivation retrieves the exact predecessor; falsification compares independent
+source/suffix hashes and retained live contract spans; durability is the existing
+manifest checker and immutable Git recovery. The native EPERM cause remains open.

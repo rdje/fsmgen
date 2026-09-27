@@ -1139,7 +1139,9 @@ An intentional session leader supplies a real EPERM despite its correct group;
 independent parent queries confirm that control's session identity. This does
 not establish that the failed T1972 child was a session leader. Its original
 PGID/SID were not retained. Native syscall context capture is being qualified
-before another observed original run; no containment repair is claimed.
+before another observed original run; no containment repair is claimed. Completed investigation checklists
+remain exactly recoverable through the task history manifest; active causal
+contracts and unresolved failures remain in the live task tree.
 
 The updated full T1669 qualification still fails both Rust startup modes and
 legacy main-entry checks, while the new diagnostic controls and production HDL
