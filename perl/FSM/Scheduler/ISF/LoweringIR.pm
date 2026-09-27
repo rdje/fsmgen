@@ -6017,6 +6017,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef, $p
     $ct{can_accept} = 1;
     for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
     $_->{transaction} = $tn for @st;
+    $_->{source_owner} = {kind => 'transaction', name => $tn} for @dt;
     return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} }, \%storage_roles, \@bank_accesses, \%reset_values, \@asserts);
 }
 
@@ -12993,6 +12994,7 @@ sub _build_rules {
         push @d, {
             name            => $r->{name},
             kind            => 'rule',
+            source_owner    => {kind => 'rule', name => $r->{name}},
             dte_guard       => $c,
             dte_guard_terms => $terms,
             assignments     => \@a,
@@ -13225,6 +13227,7 @@ sub _build_drive_dts {
         push @$dts, {
             name                      => $name,
             kind                      => 'drive',
+            source_owner              => {kind => 'drive', name => $name},
             local_transaction_callers => \@local_callers,
             generated_call_sources    => \@generated_call_sources,
             assignments               => \@assignments,

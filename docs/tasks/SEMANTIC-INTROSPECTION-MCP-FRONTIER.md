@@ -824,9 +824,24 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Attach explicit state and transaction/rule/drive producer ownership.`
   Acceptance: `Use actual source-owned transaction and rule/drive records rather than state or helper prefixes. Preserve activation guards, caller identities and grant/suppression evidence. Split producer families further before changing code if needed; require unchanged reports and carriers.`
+  Verification: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.1`
+  Status: `done`
+  Goal: `Attach and qualify source identities for transaction auxiliary, rule and named-drive DTs.`
+  Acceptance: `Retain existing explicit state.transaction ownership and attach private source_owner records at the actual transaction/rule/drive producers. Resolve source ownership against declared source records and actual module/domain identity without prefix parsing. Do not treat transaction-created auxiliary DTs as state-exclusive. Qualify parent/generated/domain modules, source permutations, missing/malformed records, detached results and unchanged reports/carriers. Exact caller/activation associations remain the next child.`
+  Verification: `T1970 qualifies private transaction/rule/drive DT source_owner records and existing state.transaction identities against actual declarations, parent/generated/domain modules, private-formal preparation and source permutations. Renamed containers cannot change source ownership; missing/malformed/unknown identities are refused. Exact emitted carriers and schedules ignore private metadata; complete native/API/newline check/semantic/schedule reports agree and exported carriers strict-check. T1924/T1197/T1943 and mdBook build pass. Source identity does not imply activation or mutual exclusion; exact caller/guard collection remains .2.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2`
+  Status: `pending`
+  Goal: `Qualify source-writer activation and exact named-drive caller associations.`
+  Acceptance: `After .1, collect actual state/container/assignment guards and existing grants without replacing them with source-owner assumptions. Attach per-assignment local/generated named-drive invocation associations at the actual producer so multi-caller and mixed generated/local sources remain conservative. Preserve resource and priority predicates, and prove missing/malformed/caller mutation controls and public carrier/report parity before completing this source-producer parent.`
   Verification: `pending`
   Commit: `pending`
 
@@ -2676,8 +2691,8 @@ before editing code. No discovered defect is closed by this audit alone.
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3`, explicit source-producer ownership after declaration
-and implicit whole-root qualification, following
+`.32.1.3.3.1.3.3.2.2.3.2`, exact source activation/caller associations after
+source identities, declaration and implicit whole-root qualification, following
 the physical target resolver and retained admission baseline. Conservative admission precedes independent controllers and local-call
 timing under the following sibling leaves. `.49.2.3` qualifies direct-call runtime;
 `.49.3` owns explicit-local physical scope. These remain prerequisites to the
@@ -4409,3 +4424,35 @@ falsification changes inferred widths/order and removes layouts or corrupts
 coverage; durability is T1969, the canonical writer card, book and this tree.
 Whole-root coverage proves overlap only; it does not infer a width, partial
 layout, ownership, mutual exclusion or arbitration grant.
+
+## Acceptance — source writer identities `.32.1.3.3.1.3.3.2.2.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The complete native
+  `--emit-schedule-json` fixture exposes latency/monitor DTs through existing
+  generated-name provenance; source identity is not an explicit DT contract.
+  _build_transaction knows the creating transaction, _build_rules knows the
+  authored rule, and _build_drive_dts knows the drive definition. States already
+  retain explicit transaction membership. These producer sites supply identity
+  without reverse-parsing names or changing legacy public provenance.
+- [x] **ADDRESSED (verified)** — Producers attach private source_owner records;
+  SourceWriterOwners resolves declared source/module/domain/container tuples.
+  T1970 proves source-order and container-renaming independence, private-formal
+  preparation, generated children and actual clock-domain modules. Missing,
+  malformed and unknown owner controls refuse fabricated membership. Detached
+  IR/source/result checks pass. Transaction-created auxiliary DTs remain DTs,
+  and shared drives retain multiple callers. Exact carrier/schedule comparisons
+  with private metadata removed pass, as do complete native/API/newline check,
+  semantic and schedule reports plus exported-carrier strict replay.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1970/T1924/T1197/T1943. The mdBook build passes. Staged doctrines and normal
+  hooks qualify the slice. Exact activation and per-assignment drive caller
+  associations remain .3.2.2.3.2; generated helper ownership and complete shadow
+  coverage remain later children. No executable writer admission is enabled.
+
+Evidence: `.artifacts/source-writer-owners/`. Re-derivation joins actual source
+producers and complete public reports; falsification removes/corrupts owners,
+renames containers and permutes declarations; durability is T1970, the source
+owner resolver, canonical writer card, book and this task. Source ownership is
+not a grant or a state-exclusion claim. The initial test fixture's named-drive
+syntax was corrected to the existing published positional-call grammar before
+qualification; no language acceptance change was made.

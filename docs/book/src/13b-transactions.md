@@ -67,6 +67,15 @@ or controller storage and does not change emitted execution. This prepares
 scoped binding and writer checks; it does not yet make sibling transactions
 concurrent or repair local calls.
 
+Private source-owner records now also identify the transaction that created a
+latency or monitor DT, the rule that created a rule DT, and the definition behind
+a named drive. State ownership continues to use the explicit transaction field.
+These identities survive source ordering and module/domain realization without
+parsing generated names. A transaction-owned monitor remains a DT with its own
+guards; its source identity alone does not prove state-based mutual exclusion.
+Shared drives retain all callers. Public reports and emitted carriers keep their
+existing contract while exact activation/caller association is qualified next.
+
 Scope repair now has separately tested expression, clause and binding resolution. It
 keeps caller values distinct from callee formal ports, retains generated-child
 public ports, and preserves state names, point labels and aggregate members.

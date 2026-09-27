@@ -8,11 +8,12 @@ answers:
   - "where are physical writer packed ranges resolved?"
   - "which ISF widths are explicit physical declarations?"
   - "how do implicit ISF assignment targets participate in physical overlap?"
+  - "where do lowered source-writer identities originate?"
   - "where is the direct writer admission baseline?"
 date: 2026-09-27
 status: current
 tags: [isf, controllers, writers, storage, conflicts, ownership]
-evidence: t/1969-isf-implicit-write-targets.t; perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
+evidence: perl/FSM/Scheduler/ISF/SourceWriterOwners.pm; t/1970-isf-source-writer-owners.t; t/1969-isf-implicit-write-targets.t; perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
 reverify: scripts/run_with_ram_guard.sh perl docs/audits/direct-writer-admission-20260927/reproduce.pl; compare .artifacts/direct-writer-admission/current.json with the retained result.json. This is a dated admission baseline, not an expected future safety contract.
 ---
 
@@ -100,3 +101,20 @@ under width and state-order variants. Mutation, missing-layout and actual siblin
 writer controls keep overlap conservative. Reverify with guarded prove on T1969.
 Explicit source/generated producer ownership remains .3.2.2.3/.3.2.2.4 before
 shadow attachment; no production admission consumer is installed yet.
+
+LoweringIR now attaches private source_owner records at the transaction auxiliary
+DT, rule DT and named-drive DT producers. States retain their existing explicit
+transaction field. SourceWriterOwners resolves those identities against authored
+transaction/rule/drive records and the actual module/domain, rejecting missing,
+unknown or malformed owners, unsupported DT families and mixed pre-partition
+module views. It returns detached source/container tuples without parsing names.
+A transaction-created monitor/latency DT remains a DT; source ownership does not
+supply an execution guard or state-exclusion proof. Shared named drives retain
+all callers rather than selecting one as their source owner.
+
+T1970 covers private-formal preparation, declaration permutations, renamed
+containers, generated children and realized domains, malformed/omitted records,
+complete native/API/newline reports and unchanged strict carriers. Reverify with
+guarded prove on T1970. Legacy public assignment provenance remains unchanged;
+exact activation/per-assignment caller association is .3.2.2.3.2 and generated
+handoff/completion/helper ownership is .3.2.2.4 before complete shadow attachment.
