@@ -1652,7 +1652,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Retain named-completion readback and outer domain reservation products.`
   Acceptance: `Collect actual named-completion declaration plans after storage connections, qualify library-readback declaration preservation and outer domain realization, then complete the reservation integration gate without weakening executable ownership or report contracts.`
-  Verification: `Storage-read products and allocator scope are closed by sibling .1. Named-completion child .1 is qualified; next child .2 verifies library readback, followed by .3 outer-domain realization.`
+  Verification: `Storage-read products and allocator scope are closed by sibling .1. Named-completion child .1 and library-readback child .2 are qualified; next child .3 verifies outer-domain realization.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3`
   Commit: `children below`
 
@@ -1664,11 +1664,11 @@ For FSMGen, the analogs are:
   Commit: `73d4047be; qualification closure in this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify library readback namespace preservation after completion connections.`
   Acceptance: `Observe real library readback ownership admission and emitted interface adaptation, prove declaration namespace preservation across legal and rejected cases, retain any actual missing products if found, and preserve strict/native/API/MCP behavior.`
-  Verification: `T1954 observes real source/projected readback and finalization calls: complete effects are interface direction/storage role only, with no declaration additions/removals and no uncovered prepared names. Ordinary, typed, observed, direct-formal, mixed completion and no-library controls pass; writer/reset/default/duplicate/completion refusals preserve namespace and propagate original errors. Broader independent library/domain/report qualification is in flight.`
-  Commit: `pending`
+  Verification: `T1954 observes real source/projected readback and finalization calls: complete effects are interface direction/storage role only, with no declaration additions/removals and no uncovered prepared names. Ordinary, typed, observed, direct-formal, mixed completion and no-library controls pass; writer/reset/default/duplicate/completion refusals preserve namespace and propagate original errors. T1914/T1915 independent library/domain execution and T1947 reusable-product checks each pass; the canonical T1255 schedule matrix and T1376 book examples pass separately. The aggregate invocation exits on a mistyped nonexistent final selector after all real selected tests pass; this harness error is recorded without claiming a successful aggregate exit.`
+  Commit: `8ca4fe501; qualification closure in this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3`
   Status: `pending`
@@ -3575,3 +3575,35 @@ library tests remain running, and the canonical T1255 filename discovered
 from the repository passed separately with T1376. Consume every actual
 result; the invalid selector is not a product regression. No duplicate
 DEVELOPMENT_NOTES rationale is warranted.
+
+## Acceptance — library readback qualification closure `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies 8ca4fe501 as
+  the commit retaining the pending library/domain/reusable confirmation.
+  regression.log now reports ok for each real selected test (T1954, T1914,
+  T1915 and T1947), then exits nonzero because the final T1255 selector was
+  mistyped. report-book.log supplies the successful canonical T1255 result.
+- [x] **ADDRESSED (verified)** — consume all job results, explicitly separate
+  the failed aggregate invocation from its completed successful tests, and
+  close the readback leaf using those exact results plus the separately
+  passing schedule/book cohort. No job remains and no source changed after
+  these qualifications. Advance the durable pointer to outer domains.
+- [x] **NO REGRESSION** — report-book.log reports `All tests successful` for
+  canonical T1255/T1376; test.log reports the same for T1954. regression.log
+  records ok for T1914/T1915 with independent runtime opted in and for T1947.
+  The previous book build covers unchanged prose; staged doctrines and the
+  normal hook qualify this evidence-only closure.
+
+Evidence: `.artifacts/formal-library-readback/`. Re-derivation consumes the
+actual test outputs; falsification retains FIFO queue/readback/reset/domain
+observations, ownership refusals and complete native/API/newline comparisons;
+durability is T1954/T1914/T1915/T1947/T1255, the canonical card and task history.
+The aggregate selector failure is an invocation mistake, not a passing exit
+or a product defect. No successful test is rerun solely to replace that log.
+
+The first closure doctrine gate correctly rejected a refreshed shipped-book
+aggregate authority with no book aggregate change. The evidence-only closure
+now retains the existing authority; no ceiling or verifier was relaxed.
+The follow-up gate caught task-evidence allowance drift after that note was
+added. Refreshing the existing owned transition allowance after the final
+task edit corrects it; enforcement ceilings remain unchanged.
