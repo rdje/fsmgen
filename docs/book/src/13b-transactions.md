@@ -55,9 +55,14 @@ rule `isf_port` triggering `main` with input `payload` produces the same
 `isf_port_main_payload` candidate even when no transaction body uses that name.
 Detached rewrites now retain the formal's source identity separately, so the
 rule payload helper keeps its authored name while the destination uses the
-private physical formal. This inventory is still partial: child
-storage/completion connections, later module processing and domain wiring need
-coverage. It does not enable independent direct-transaction storage yet.
+private physical formal. Preparation also runs the actual local-call and external
+activation wiring routines on detached products. Cross-domain calls add ready
+ports and request states after transaction lowering; those names now participate
+in the inventory when preparing an actual projected domain. A generated ready
+port can otherwise collide with a proposed private formal just like a rule
+payload. This inventory is still partial: later point/priority/resource processing,
+child storage/completion connections, library/ATL and final domain composition
+need coverage. It does not enable independent direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both

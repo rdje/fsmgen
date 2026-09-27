@@ -1484,10 +1484,25 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Close remaining actual module child and domain reservation producers.`
   Acceptance: `Cover local/external activation wiring, priority/resource processing, generated child storage/completion, library/ATL and domain realization using actual producer outputs and stable source/physical projections. Preserve raw conflict refusals in executable lowering and do not infer physical names from guessed patterns. Qualify representative real declarations and separate namespaces before the final completeness gate .3.2.2.3.`
   Verification: `Transaction and parent activation/rule/shared-drive products are qualified; these later producer phases remain uncovered.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.1`
+  Status: `done`
+  Goal: `Retain actual local and external activation wiring products before allocation.`
+  Acceptance: `Collect real local-call and external caller/callee states, counters and ports without merging conflicting transaction width/role maps. Compare with production wiring, prove detached inputs and stable names across formal projection, retain raw conflict refusal and canonical malformed-activation diagnostics. Qualify real projected domains without claiming complete domain composition or controller runtime support.`
+  Verification: `T1942 compares actual local and projected domain wiring, previously absent external ready/request/entry names, exact/case-folded candidate collision avoidance, physical helper stability, strict carriers, source/product isolation, generated/pruned exclusions and raw/invalid-source refusals. The focused admission/identity/cross-domain/controller-shadow/schedule/book cohort passes. Later processing and final composition remain .2.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Close priority resource child ownership library ATL and final domain producers.`
+  Acceptance: `Retain actual later module priority/resource products, generated child storage/completion connections, library/ATL and domain realization identities with stable source/physical projections. Preserve strict executable admission; split independently reviewable producer boundaries as needed before complete gate .3.2.2.3.`
+  Verification: `Local/external activation wiring is owned separately by .1; remaining phases are still uncovered.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -2722,3 +2737,39 @@ complete collision census. Full module/backend validation of the projected
 actor remains mandatory. There is no automatic production rewrite or runtime
 scope promotion; .3.2.2.2.3 and .3.2.2.3 retain remaining producer and completeness
 obligations. No duplicate DEVELOPMENT_NOTES rationale is needed.
+
+## Acceptance — activation wiring products `.49.2.2.3.2.2.2.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` on
+  t/data/logical-controller-shadow/crossing.isf identifies the worker activation,
+  both domain artifacts and start/done crossings. The independent before.json
+  probe runs those real domain projections and finds ready/request/entry state
+  and ready-port names missing from transaction/activation products. The locus
+  is the later _wire_do_children and _wire_external_activations producer stage.
+- [x] **ADDRESSED (verified)** — parent_wiring_products invokes those same
+  routines on cloned retained direct states and activation ports. Handshake
+  additions have a separate counter map; unresolved source widths/roles are
+  never merged into an executable IR. after.json has no missing names in the
+  same domain-state/port probe. T1942 compares production state/port/counter
+  products, qualifies source-order membership, raw-product isolation, actual
+  projected domains, exact/case-folded late ready-port candidate collisions,
+  stable physical helper/state names and strict carriers. Generated/pruned
+  bodies are excluded; raw width conflicts, bad roles and fixed ready-port
+  width conflicts retain canonical refusals.
+- [x] **NO REGRESSION** — test.log and regression.log report
+  `All tests successful`; the cohort includes T1942, T1941 admission, T1938
+  parent products, T1939 source identities, T1387 external wiring, T1924 logical
+  controller shadow, T1255 schedule goldens and T1376 book fixtures. book.log
+  builds the synchronized guidance. Staged doctrine and commit hooks apply.
+
+Evidence is under `.artifacts/formal-wiring-products/`. Re-derivation uses the
+native schedule and independently realized before/after domains; falsification
+uses the old-inventory collision, case variants, permutations, detached mutation,
+source conflicts and malformed producer inputs; durability is T1942, the wiring
+card, book and this task. Returned states stop after activation wiring: point
+resolution, defaults, priority/resource processing and child ownership can still
+alter later products. Library/ATL and final domain/outer composition are not
+covered. Preparation remains source-only; executable admission and controller
+runtime semantics are unchanged. The .2 continuation owns those remaining
+producer phases before the complete .3.2.2.3 gate. Rationale belongs here and in
+the fact card; DEVELOPMENT_NOTES needs no duplicate entry.

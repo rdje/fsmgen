@@ -213,26 +213,46 @@ sub prepare_formal_source($self, $source_actor) {
             named_drives => { %drives },
         };
     }
+    my $activation_products = $self->_formal_parent_activation_products(
+        $actor, $generated, \%products);
     return {
         actor => $actor,
         generated_children => { %$generated },
         pruned_transactions => { %$pruned },
         domain_partition => _clone_isf_value($partition),
         transactions => \%contexts,
-        # Partial producer boundary only: later module/child/domain wiring is
-        # absent. This is not the complete reserved_names set for allocation.
+        # Partial producer boundary only: later module processing and child/domain
+        # composition remain absent. This is not a complete reservation set.
         transaction_products => \%products,
         # These products are not executable IR. A projected actor must pass
         # build_module, including collision checks, before any emission.
         deferred_formal_collisions => \%deferred,
-        parent_activation_products => $self->_formal_parent_activation_products(
-            $actor, $generated, \%products),
+        parent_activation_products => $activation_products,
+        parent_wiring_products => $self->_formal_parent_wiring_products(
+            $actor, $generated, \%products, $activation_products),
         actor_context => {
             locals => {}, static_symbols => { %$static },
             static_count_symbols => { %$static }, pruned_repeats => {},
             named_drives => { %drives },
         },
     };
+}
+
+sub _formal_parent_wiring_products($self, $actor, $generated, $products, $activation_products) {
+    my @states;
+    for my $tx (@{$actor->{transactions}}) {
+        my $name = $tx->{name};
+        next if $generated->{$name} || !exists $products->{$name};
+        push @states, @{_clone_isf_value($products->{$name}{states})};
+    }
+    my $ports = _clone_isf_value($activation_products->{ports});
+    # These producers only add/promote handshake counters; they do not read
+    # counter widths. Keep their additions separate from the still-unallocated
+    # transaction maps instead of merging potentially conflicting declarations.
+    my %counters;
+    $self->_wire_do_children(\@states, \%counters, $actor, $generated);
+    $self->_wire_external_activations(\@states, $ports, \%counters, $actor);
+    return _clone_isf_value({states => \@states, ports => $ports, counters => \%counters});
 }
 
 sub _formal_parent_activation_products($self, $actor, $generated, $products) {
