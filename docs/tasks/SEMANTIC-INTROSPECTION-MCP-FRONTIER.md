@@ -1180,10 +1180,47 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.2: qualify domain scalar writers`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Complete the remaining generated-child storage writer surface under explicit partial-update and arbitration contracts.`
   Acceptance: `Audit partial/sliced/typed aggregate writes, dynamic bank stores, parent-versus-child writers and multiple generated instances after the single-writer lane. Split independently verifiable ownership/merge/arbitration prerequisites before implementation. Preserve source assignment ordering, original clock edges, reset ownership and declared domain boundaries; use existing roadmap resource-arbitration requirements instead of inventing silent priority. Keep unsupported combinations fail-closed and task-owned until implemented, prove adversarial concurrent behavior with independent runtime and full report parity, then close .39 only when the selected writer surface and documentation agree.`
   Verification: `Scheduled after .39.2.2.3; current public resource guidance explicitly defers generated-child storage arbitration. This is owned completion work, not a claim of current support.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.1`
+  Status: `done`
+  Goal: `Audit broader generated-child writer contracts, split safe implementation leaves and repair stale actor-storage documentation.`
+  Acceptance: `Review decision 0107, parser/lowering contracts, published resource arbitration, relevant tests and book. Preserve the sole-owner boundary while ordering whole aggregates, partial updates, banks and explicit contention contracts. Record the source of stale read/write refusal wording, correct it against completed qualification and run book checks before committing.`
+  Verification: `The actor-storage paragraph in docs/book/src/13a-actor-interface.md still says all child writes and aggregate/multi-domain reads are refused despite completed T1911/T1916/T1917/T1918 qualification; reproduce by reading its Actor-Owned Storage section. git log -S traces it to 5c0f802646c69108d15995f7e8cd7e29c32ebdf5. The introduction now matches qualified behavior and links the detailed composition contract. T1261/T1403/T1218/T1376, reference partitions and mdBook build pass in .artifacts/writer-contract-audit/checks.log.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.1: split broader writer contracts`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.2`
+  Status: `pending`
+  Goal: `Qualify full-width packed aggregate writes from a sole generated-child instance.`
+  Acceptance: `Extend only whole-record/list register handoffs, preserving exact aliases, widths, reset ownership and live reads without extra cycle latency. Cover nested/local/imported types, spawn/generated do, independent domains, repeated/guarded updates, source replay, exact interfaces and full native/API/MCP reports. Keep member/partial/bank and competing writes fail-closed until their leaves; sync docs and commit.`
+  Verification: `Whole-value assignment needs no partial merge; current ChildStorageOwnership explicitly restricts the resolved type to bits. Existing typed read routing and aggregate module typedef ownership are prerequisites already qualified.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.3`
+  Status: `pending`
+  Goal: `Preserve partial and aggregate scalar-leaf updates through sole-writer child handoffs.`
+  Acceptance: `Audit accepted slice/member/extract LHS shapes and their backend merge semantics first. Implement only source-supported updates using explicit target/mask information or owner-side partial assignments; never overwrite untouched bits with a zero-filled root. Preserve ordered writes and original edges with no competing owner, prove adjacent/overlapping fields and whole-plus-partial sequences independently, exact interfaces/replay/reports, and commit synced docs. Keep unsupported parser shapes explicit and task-owned.`
+  Verification: `T1261 preserves scalar leaf LHS paths in scheduled assignments; T1403 set-field is already a whole-register masked read-modify-write and must not be conflated with physical partial writes.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.4`
+  Status: `pending`
+  Goal: `Qualify generated-child scalarized bank stores under explicit element ownership.`
+  Acceptance: `Audit static/dynamic index guards, out-of-range behavior, same-edge load/store semantics and resource membership before permitting writes. Preserve original scalarized element updates and owner resets with no memory backend or hidden port policy. Qualify sole-child stores, live reads, repeats, independent domains and exact reports; reject competing element owners pending .4.5 and commit synced docs.`
+  Verification: `Published banks lower to concrete scalar entries; storage_port members name entries rather than bank roots and currently arbitrate rule users only.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.5`
+  Status: `pending`
+  Goal: `Define and implement explicit generated-child storage contention contracts without silent priority.`
+  Acceptance: `After sole-writer surfaces, select roadmap-aligned ownership/merge/arbitration semantics for parent-versus-child and multiple generated writers. Separate static exclusion, concurrent disjoint updates and true contention; define request retention, grant visibility and whether denied transactions stall before any implementation. Reuse published resource priorities only through a declared extension, split safe leaves, prove adversarial concurrency/runtime/report parity and keep all unqualified combinations rejected. Ask only if repository direction cannot resolve a required policy decision.`
+  Verification: `Existing storage_port priority/round_robin gates whole rule DTs for a cycle; its rule-only users do not define generated-child denial or progress semantics. Decision 0107 forbids silent priority.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
@@ -1909,7 +1946,8 @@ system bindings and empty-domain artifacts. Completed `.39.2.2.2.3.2` qualifies
 domain live storage reads and generated-do inherited-input wiring. Completed
 `.39.2.2.3.1` qualifies sole full-width scalar writer handoffs in ordinary/single-domain actors.
 Completed `.39.2.2.3.2` qualifies independent-domain scalar writer handoffs.
-Next `.39.2.2.4` splits and qualifies broader storage writers. After those repairs,
+Completed `.39.2.2.4.1` splits broader writer contracts and repairs stale actor-storage
+documentation. Next `.39.2.2.4.2` qualifies sole whole-aggregate writers. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -5340,3 +5378,34 @@ zero updates, repeated calls and forbidden ownership/crossing controls.
 Durability is carried by T1918, migrated T1917/T1916, book/spec/facts and staged
 gates. Competing writers and physical partial/aggregate/bank writes remain owned
 by .39.2.2.4; this slice does not invent arbitration for them.
+
+
+## Contract audit — `.39.2.2.4.1`
+
+Read decision 0107, R13/R14 direction, ChildStorageOwnership, parser aggregate
+path/resource validation, LoweringIR bank assignment/report generation and the
+actor/type/data/composition/resource book contracts. Whole aggregate transfers
+need typed whole-value handoffs; partial writes must retain untouched bits;
+bank stores must retain index guards and concrete-element ownership; competing
+writers need a declared progress contract before arbitration. These are separate
+owned leaves, ordered .4.2 through .4.5. This audit changes no writer admission.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The actor-storage introduction still
+  published the earlier all-writes and aggregate/domain-read refusals. git log -S
+  attributes that paragraph to 5c0f802646c69108d15995f7e8cd7e29c32ebdf5; subsequent
+  qualifications updated the composition chapter but missed this introduction.
+- [x] **ADDRESSED (verified)** — The introduction now describes qualified
+  reads/scalar writes and links the detailed current boundary. The contract
+  frontier fact card makes resource-user and partial-write distinctions
+  searchable. The task leaves preserve the implementation order and boundaries.
+- [x] **NO REGRESSION** — .artifacts/writer-contract-audit/checks.log reports
+  All tests successful for T1261/T1403/T1218/T1376, then passes reference
+  partitions and mdBook build. The first staged gate requires these fresh
+  acceptance boxes because the document budget registry is a governed config
+  path. The gate also caught an unnecessary isf_reference authority refresh
+  with no reference-text change; restore that unchanged HEAD record. The final
+  staged gate owns signoff.
+Re-derivation uses the named parser/lowering functions and published contracts;
+falsification uses existing invalid-path/resource-user/field-shape test controls;
+durability uses split task leaves, the fact card, corrected book and staged gates.
+No new runtime support or visual book audit is claimed.

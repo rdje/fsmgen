@@ -598,16 +598,22 @@ Read-only and unused storage stays internal; `+size` retains widths, types
 and authored reset metadata. Scalarized bank elements follow the same rule.
 The role survives independent replay of the generated `.fsm`, and native,
 API and MCP semantic inventories exclude these signals from public ports.
-Generated transaction children in ordinary/single-domain actors read storage through
-explicit live handoffs. Reads do not create public top inputs or private child
-register copies; unrelated storage is absent from the child. Parent updates
-remain visible after activation, including scalarized bank elements. Explicit
-transaction ports and transaction-local storage retain their separate roles.
-Direct generated-child writes to actor storage are currently rejected: the
-original-edge write handoffs and writer arbitration selected by decision `0107`
-remain separately owned extensions. Aggregate reads and generated-child storage
-reads inside multi-domain actors also fail closed pending wider composition
-qualification; named scalar types and scalarized banks are covered.
+Generated transaction children read scalar, packed aggregate and scalarized
+bank storage through explicit live handoffs, including inside independent
+clock domains. Reads create neither public top inputs nor private child register
+copies; unrelated storage is absent from the child. Updates remain visible
+after activation. Full-width scalar writes from a sole generated instance use
+combinational data/enable handoffs and update the owning register on the original
+assignment edge. The owner alone holds its register and reset; domain crossings
+are not implicit. Explicit transaction ports and transaction-local storage keep
+their separate roles.
+
+Generated-child aggregate/member and bank writes, plus competing parent/child
+or multiple-child writers, remain refused while their contracts are qualified.
+The existing `storage_port` resource arbitrates rule users; it does not supply
+an implicit priority or stall policy for child transactions. See
+[generated-child storage ownership](13f-composition.md) for executable examples
+and the current boundaries selected by decision `0107`.
 
 A read-only reset register needs no dummy write to preserve its ownership:
 

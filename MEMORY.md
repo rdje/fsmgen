@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4` (pending)
-- next_action: Audit and split broader storage writer contracts under .39.2.2.4 before implementation.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.2` (pending)
+- next_action: Qualify sole full-width aggregate generated-child writes under .39.2.2.4.2.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
