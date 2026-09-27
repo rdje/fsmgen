@@ -98,3 +98,11 @@ Verify saved source/result/manifest and hostile checks with
 `python3 -B docs/audits/native-group-witness-20260927/priority-observer/verify.py`.
 No HDL compiler runs in these controls. Child .11.2 owns consumption of the first
 genuine priority runtime; original causality and broader startup remain open.
+
+Child .11.2 consumes the first genuine T1974 observation: SystemVerilog compile
+succeeds, then a compatible-value selector assertion rejects during execution.
+Both retained stages report complete cleanup, source identities stay unchanged,
+and native failure capture is empty. The generated workspace and exact commands
+are independently absent; individual successful-child PIDs were not captured.
+No historical native repair follows from this result. Child .11.3 observes the
+corrected priority qualification after the separately owned backend assertion fix.

@@ -1,0 +1,142 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More;
+use Cwd qw(abs_path);
+use File::Temp qw(tempdir);
+use IPC::Cmd qw(can_run);
+use JSON::PP;
+use Storable qw(dclone);
+use lib 'perl', 't/lib';
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::SourceQueryRunner;
+use FSM::Test::VerilatorRuntime qw(darwin_verilator_runtime_qualified run_verilator_compile run_generated_binary);
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
+use FSM::Support::SemanticIntrospectionMCPAdapter;
+
+my $work = tempdir(CLEANUP => 1);
+my $root = abs_path('.');
+my $json = JSON::PP->new;
+my $capture = \&FSM::Test::SourceQueryRunner::_capture;
+my $scheduler = FSM::Scheduler::ISF->new;
+my $union = '(! (| (state_active main_set_1) (state_active main_set_2)))';
+my @cases = (
+    {name => 'multi', values => [2, 3], guard => $union, trace => [2, 3]},
+    {name => 'reversed', values => [3, 2], guard => $union, trace => [3, 2]},
+    {name => 'rule_first', values => [2, 3], guard => $union, trace => [2, 3], rule_first => 1},
+    {name => 'opposite', values => [2, 3], guard => undef, trace => [], opposite => 1},
+    {name => 'compatible', values => [9, 3], guard => '(! (state_active main_set_2))', trace => [3]},
+    {name => 'named', values => [2, 3], guard => '(! (| (state_active main_set_1) drive_three_start))', trace => [2, 3], drive => 1},
+    {name => 'equal_states', values => [2, 2], guard => $union, trace => [2, 2]},
+    {name => 'resource', values => [2, 3], guard => $union, trace => [2, 3], resource => 1},
+    {name => 'single', values => [2], guard => '(! (state_active main_set_1))', trace => [2]},
+);
+
+sub write_file {
+    my ($name, $text) = @_;
+    open my $fh, '>', "$work/$name" or die $!;
+    print {$fh} $text or die $!;
+    close $fh or die $!;
+    return "$work/$name";
+}
+
+for my $case (@cases) {
+    my $module = "priority_$case->{name}";
+    my $transaction = '(transaction main (on start) '
+        . join(' ', map {"(set out $_)"} @{$case->{values}}) . ' (complete done))';
+    $transaction =~ s/\(set out 3\)/(drive drive_three)/ if $case->{drive};
+    my $rule = '(rule fallback (when override_req) (set out 9) (set side 7))';
+    my $resource = $case->{resource} ? <<'ISF' : '';
+ (priority peer over fallback)
+ (resources (resource shared_slot (kind rule_slot) (arbiter priority) (users peer fallback)))
+ (rule peer (when peer_req) (set auxiliary 6))
+ISF
+    my $source = "(actor $module (clock clk) (reset rst_n)\n"
+        . ' (interface (input start) (input override_req) (input peer_req) (output done)'
+        . ' (output out (width 8)) (output side (width 8)) (output auxiliary (width 8)))' . "\n"
+        . ($case->{opposite} ? ' (priority fallback over main)' : ' (priority main over fallback)') . "\n"
+        . ($case->{drive} ? " (drive drive_three (out 3))\n" : '') . $resource
+        . ($case->{rule_first} ? "$rule\n$transaction" : "$transaction\n$rule") . ")\n";
+    $case->{module} = $module;
+    $case->{source} = write_file("$module.isf", $source);
+    $case->{actor} = FSM::Adapter::ISF->new->parse_source($source, $case->{source});
+    $case->{ir} = $scheduler->{ir}->build_module($case->{actor});
+    $case->{carrier} = $scheduler->{fsm_emitter}->emit($case->{ir});
+    $case->{carrier_path} = write_file("$module.fsm", $case->{carrier});
+}
+
+subtest 'each conflicting contributor remains in the target-local mask' => sub {
+    for my $case (@cases) {
+        my $name = $case->{name};
+        my $ir = $case->{ir};
+        is_deeply($ir->{conflict_issues}, [], "$name strict lowering has no unresolved conflict");
+        my ($fallback) = grep {$_->{name} eq 'fallback'} @{$ir->{dt_blocks}};
+        my ($out) = grep {$_->{lhs} eq 'out'} @{$fallback->{assignments}};
+        my ($side) = grep {$_->{lhs} eq 'side'} @{$fallback->{assignments}};
+        is_deeply($out->{guard}, defined($case->{guard}) ? {expr => $case->{guard}} : undef,
+            "$name retains the independently declared contributor union");
+        is_deeply($out->{priority_suppressed_by} // [], $case->{opposite} ? [] : ['main'],
+            "$name preserves unique owner metadata");
+        ok(!defined($side->{guard}) && !@{$side->{priority_suppressed_by} // []},
+            "$name priority does not mask unrelated rule output");
+        is_deeply($fallback->{dte_guard}, $case->{resource}
+            ? {expr => '(& override_req (! peer_req))'} : {port => 'override_req'},
+            "$name preserves original rule/resource activation");
+        for my $state (@{$ir->{states}}) {
+            for my $assignment (@{$state->{assignments}}) {
+                next unless $assignment->{lhs} eq 'out';
+                is_deeply($assignment->{guard}, $case->{opposite} ? {expr => '(! override_req)'} : undef,
+                    "$name masks only the losing direction");
+            }
+        }
+        my $expected = '(<- (out> 9)' . (defined($case->{guard}) ? ' <' . $case->{guard} : '') . ')';
+        like($case->{carrier}, qr/\Q$expected\E/, "$name actual emitted fallback has the full predicate");
+        my $before = dclone($ir);
+        is($scheduler->{fsm_emitter}->emit($ir), $case->{carrier}, "$name repeated emission is deterministic");
+        is_deeply($ir, $before, "$name emission preserves original IR");
+    }
+    my %by_name = map {$_->{name} => $_} @cases;
+    my $first = $by_name{multi}{carrier};
+    my $reordered = $by_name{rule_first}{carrier};
+    $reordered =~ s/priority_rule_first/priority_multi/g;
+    is($reordered, $first, 'declaration order does not change the complete scheduled carrier');
+};
+
+subtest 'complete native, API, newline and strict carrier products agree' => sub {
+    my $api = FSM::Support::SemanticIntrospectionMCPAdapter->new(repo_root => $root, workspace_root => $root);
+    for my $case (@cases) {
+        my $name = $case->{name};
+        for my $contract (
+            [[qw(--strict --check --json)], 'fsmgen_check'],
+            [[qw(--strict --emit-semantic-json)], 'fsmgen_semantic_introspect'],
+            [['--emit-schedule-json'], 'fsmgen_schedule_preview'],
+        ) {
+            my ($flags, $method) = @$contract;
+            my $native = $capture->([$^X, 'bin/fsmgen', @$flags, $case->{source}], '');
+            is($native->{exit_code}, 0, "$name $method native succeeds") or diag($native->{stdout}, $native->{stderr});
+            next if $native->{exit_code};
+            my $expected = FSM::Test::SourceQueryRunner::normalize_repository_paths($json->decode($native->{stdout}), $root);
+            my $source_id = $case->{source}; $source_id =~ s{\A\Q$root\E/}{};
+            my $request = {jsonrpc => '2.0', id => 1, method => 'tools/call',
+                params => {name => $method, arguments => {source_id => $source_id}}};
+            my $response = $api->handle_jsonrpc_request($request);
+            ok(!$response->{error} && !$response->{result}{isError}, "$name $method API succeeds");
+            is_deeply($response->{result}{structuredContent}{report}, $expected, "$name complete native/API report");
+            my $wire = $capture->([$^X, 'bin/fsmgen-mcp', '--workspace-root', '.'], $json->encode($request) . "\n");
+            is($wire->{exit_code}, 0, "$name $method newline succeeds");
+            is_deeply($json->decode($wire->{stdout}), $response, "$name complete API/newline response");
+        }
+        my $check = $capture->([$^X, 'bin/fsmgen', '--strict', '--check', '--json', $case->{carrier_path}], '');
+        is($check->{exit_code}, 0, "$name exported carrier strict-checks") or diag($check->{stdout}, $check->{stderr});
+        my @semantic;
+        for my $path ($case->{source}, $case->{carrier_path}) {
+            my $result = $capture->([$^X, 'bin/fsmgen', '--strict', '--emit-semantic-json', $path], '');
+            is($result->{exit_code}, 0, "$name native/carrier semantic query succeeds");
+            push @semantic, $json->decode($result->{stdout})->{semantic};
+        }
+        is_deeply($semantic[0], $semantic[1], "$name complete semantic products survive carrier replay");
+    }
+};
+
+done_testing();

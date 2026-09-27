@@ -1,0 +1,5 @@
+(actor priority_compatible (clock clk) (reset rst_n)
+ (interface (input start) (input override_req) (input peer_req) (output done) (output out (width 8)) (output side (width 8)) (output auxiliary (width 8)))
+ (priority main over fallback)
+(transaction main (on start) (set out 9) (set out 3) (complete done))
+(rule fallback (when override_req) (set out 9) (set side 7)))

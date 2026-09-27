@@ -1227,6 +1227,17 @@ not qualify T1974 or explain the historical failure. Inspect the sealed evidence
 python3 -B docs/audits/native-group-witness-20260927/priority-observer/verify.py
 ```
 
+The first genuine T1974 observation compiles SystemVerilog and reaches its
+public-pin oracle. Execution then fails an emitted same-value selector assertion
+for an admitted compatible rule/transaction overlap. The observer retains both
+complete stages, their original limits and cleanup, unchanged admitted inputs
+and an empty native-failure capture. This is a backend assertion failure after
+execution, not another `setpgid` rejection. Verilog has not run; corrected
+qualification remains separately owned, as does the historical native cause.
+The first temporary workspace and exact selected commands are absent. Individual
+successful-child PIDs were not independently recorded by the failure-only hook;
+the retained supervisor results supply stage process-cleanup evidence.
+
 The administrator report and exact limits are retained under
 `docs/audits/native-group-tracing-capability-20260927/administrator/`; verify
 that saved evidence without privileged execution:

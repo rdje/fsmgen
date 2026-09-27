@@ -327,13 +327,31 @@ The `state_active` guard is internal scheduled `.fsm` review syntax. It lowers
 to a `current_state == MAIN_UPDATE_1` comparison without creating fake module
 input ports for `current_state`, `MAIN_UPDATE_1`, or `main_update_1_en`.
 
-Current P1 limitation: when the same higher-priority transaction writes a target
-in multiple states, suppression currently retains only its last writer condition.
-The earlier state's write can overlap the lower-priority rule even though strict
-checking admits the source. The single-state case is separately qualified.
-Repair is owned by SEM `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2`; complete static evidence
-is retained in `docs/audits/priority-contributors-20260927/`. Runtime repair
-qualification is pending. This does not alter the intended target-local contract.
+Priority suppression retains the union of every conflicting writer condition
+from each higher-priority owner. For a transaction writing `out` in two states,
+the lower rule now carries the following scheduled `.fsm` guard:
+
+```lisp
+(<- (out> 9) <(! (| (state_active main_set_1) (state_active main_set_2))))
+```
+
+The condition set is deduplicated and ordered deterministically. A named drive's
+activation condition participates alongside direct state writers. Suppression
+stays local to the conflicting target; unrelated rule outputs, transaction
+progress and the rule's resource grant remain separate. Same-value writes remain
+compatible in source admission and do not acquire a priority mask merely because
+their owners share a priority relation.
+
+T1974 qualifies emitted predicates and complete native/API/newline/carrier
+products. Two-target runtime signoff is still open: the first SystemVerilog
+execution exposed a separate P1 assertion defect, where allowed equal-value
+sources trigger `selector same-value conflict`. The backend currently requires
+`$onehot0` within that value family even though its data enable is their OR.
+SEM `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.2` owns that correction, and sibling `.3`
+owns final runtime qualification. The first run stopped before Verilog; native
+process admission succeeded. Complete red/green and first-failure evidence is
+retained in `docs/audits/priority-contributor-repair-20260928/`. The original
+condition-loss baseline remains in `docs/audits/priority-contributors-20260927/`.
 
 Generated SystemVerilog now adds verification-only selector assertions for the
 analyzed muxes that reach HDL generation. These checks are wrapped in

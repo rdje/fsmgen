@@ -11009,7 +11009,9 @@ sub _suppress_priority_assignment {
     my ($lower, $higher, $resolutions) = @_;
     my $higher_owner = _priority_record_owner($higher);
     my $lower_owner = _priority_record_owner($lower);
-    $lower->{suppressed_by}{$higher_owner} = _priority_record_condition($higher);
+    # One owner can contribute distinct state or drive predicates to this target.
+    # Preserve every conflicting writer instead of replacing the earlier one.
+    $lower->{suppressed_by}{$higher_owner}{_priority_record_condition($higher)} = 1;
     push @$resolutions, {
         target      => $lower->{target},
         winner      => $higher_owner,
@@ -11033,7 +11035,7 @@ sub _apply_rule_assignment_suppressions {
         $assignment->{priority_suppressed_by} = [sort keys %merged];
         $assignment->{guard} = _combine_assignment_guard_with_priority_suppressors(
             $assignment->{guard},
-            [ map { $suppressed_by->{$_} } @higher_rules ],
+            [ map { _expr_or(sort keys %{$suppressed_by->{$_}}) } @higher_rules ],
         );
     }
 }

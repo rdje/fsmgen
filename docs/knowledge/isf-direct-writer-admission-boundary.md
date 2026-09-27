@@ -148,13 +148,25 @@ The helper is private and detached; it proves neither ownership nor exclusion.
 Resource/priority/invocation evidence and complete producer/public parity remain
 children .2/.3 of SEM .32.1.3.3.1.3.3.2.2.3.2.2.2. Reverify with guarded T1973.
 
-P1 discovered during grant evidence collection: priority suppressors overwrite a
-condition when multiple higher writers share one owner. An admitted transaction
-writing out in main_set_1/main_set_2 leaves the lower rule masked only in the
-second state, regardless of write-value order. The single-state control succeeds;
+The P1 baseline from grant evidence collection overwrote a priority condition
+when multiple higher writers shared one owner. An admitted transaction writing
+out in main_set_1/main_set_2 left the lower rule masked only in the second state,
+regardless of write-value order. The single-state control passed;
 complete public check/schedule/carrier/selector evidence and a saved verifier are
 in docs/audits/priority-contributors-20260927/. Transaction-winner exposure began
 at 7a3222a1a465e165d14569f1229f6887d6709f2f; the owner-key storage mechanism is
 older. SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.2 owns repair before metadata integration.
-HIAL .3.2.10.11.1 qualifies failure-only observation before genuine runtime;
-static overlap is proved, executed HDL failure/repair remains unmeasured.
+Child .1 now retains distinct conditions per owner and negates their deterministic
+union. T1974 checks multi-state/value/declaration ordering, opposite priority,
+compatible values, named drives, resource composition and unrelated targets;
+complete native/API/newline/carrier and existing focused controls pass.
+The first observed SystemVerilog compile succeeds, then runtime rejects admitted
+equal-value overlap through the backend same-value onehot0 assertion. Native
+admission and retained stage cleanup succeed; no native failure event occurs.
+GeneratedModuleEmitter consumes unconditional same_value_assertion metadata from
+LoweredRTLIRBuilder, although the actual data-family enable ORs those sources.
+T1211 tests emission text but never executes this admitted overlap. The assertion
+origin is fd3317ef93c8ea5901c53fd507ce2f2cf9672b3d. Child .2 owns this P1 contract
+repair before child .3 completes both HDL targets; overall signoff remains open.
+Verify saved evidence without a runtime with
+`python3 -B docs/audits/priority-contributor-repair-20260928/verify.py`.

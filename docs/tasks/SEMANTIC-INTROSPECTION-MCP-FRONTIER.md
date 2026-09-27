@@ -900,10 +900,33 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Repair confirmed priority contributor loss with independent emitted and runtime oracles.`
   Acceptance: `After .1 establishes the actual defect, preserve every relevant higher writer condition without broadening suppression to unrelated targets or transaction progress. Keep deterministic output, same-value compatibility, priority/resource composition and native/API/newline parity. Qualify multi-state same-owner, source ordering, opposite priority, unrelated-target, reset/repeated and both HDL-target controls. Use legal override_req in runtime fixtures; .58 separately owns the baseline input force keyword boundary. Before runtime consume separately committed HIAL .3.2.10.11 observer integration; never weaken native admission. Update book/spec/downstream contracts and close only after signoff evidence.`
-  Verification: `pending confirmed baseline`
+  Verification: `Contributor collection and full emitted/public-report qualification pass under .1. The first observed runtime reaches execution but exposes an admitted same-value selector assertion failure. Child .2 owns its root cause and repair; child .3 owns complete two-target runtime. Parent signoff remains open. No native-cause repair or completed Verilog run is claimed.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.1`
+  Status: `done`
+  Goal: `Commit the qualified contributor-union implementation and first runtime blocker evidence.`
+  Acceptance: `Retain the red static regression and exact repair; qualify all emitted predicates, existing priority/resource/invocation controls and complete native/API/newline/carrier products. Preserve the first observed HDL failure and source/observer identities, exact stage results and cleanup. Document the admitted same-value assertion blocker without claiming complete runtime or native-cause repair. Commit this independently verified implementation/evidence slice before changing the assertion policy.`
+  Verification: `Red static control fails exactly the lost contributor cases; focused suite passes five files and 29 top-level tests with HDL skipped. First genuine observation compiles SystemVerilog, then runtime exits one at time 55: selector same-value conflict: out 9 in priority_compatible. Native events are empty and both completed stages retain successful process cleanup. The independent saved verifier retains exact red/green logs, test versions, production blob identities, first admission/results and reconstructed public check/semantic/RTL products. It rejects false runtime completion, native-failure attribution, changed bounds, lost admission and false cleanup. Native PID absence is not independently measured on the intentionally silent success path; exact workspace and selected-command residue are independently absent. Its initial expected-stage oracle assumed strings; the actual canonical admission uses integers, and the corrected reader passes without changing producer evidence. Diagnosis belongs to .2; remaining runtime qualification belongs to .3.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Resolve admitted same-value overlap rejected by the emitted SystemVerilog selector assertion.`
+  Acceptance: `P1 prerequisite for this repair: reproduce through the existing compatible T1974 source; root-cause the accepted source versus emitted selector contract before further runtime. Inspect public compatibility rules, actual selector origins and relevant history. Preserve genuine different-value conflict checks and established compatible-write behavior. Qualify the smallest correction with independent allowed-overlap and forbidden-conflict controls; never disable runtime assertions or weaken process admission. Retain complete source/evidence and synchronize book/spec/downstream before commit.`
+  Verification: `Root cause traced without further execution: GeneratedModuleEmitter::selector_conflict_assertion_runtime_lines emits onehot0 for every multi-source same-value family from LoweredRTLIRBuilder. The admitted compatible source ORs fallback_out__9_en with main_set_1_out__9_en; both are enabled at main_set_1 with override_req=1. The independent emitted-equation witness confirms this allowed overlap, while the first runtime fails that assertion at time 55. git log -S traces assertion introduction to fd3317ef93c8ea5901c53fd507ce2f2cf9672b3d. T1211 checks emission text, not execution of the compatible case. Complete first evidence and public reconstruction are in docs/audits/priority-contributor-repair-20260928/. No second target or retry ran. Backend correction is next after .1 commits.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3`
+  Status: `pending`
+  Goal: `Complete observed two-target priority runtime qualification after the assertion contract repair.`
+  Acceptance: `Consume committed .1/.2 and the qualified native observer. Complete every T1974 source/priority/resource/drive/order/compatible/reset/repeated/progress oracle for SystemVerilog and Verilog, retaining first attempts, full stage evidence, source identities and cleanup. A native rejection requires diagnosis before further execution. Close the priority contributor parent only after all acceptance holds; a successful run cannot close historical native causality.`
+  Verification: `pending prerequisite assertion repair`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3`
@@ -2781,8 +2804,8 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2`, confirmed same-owner priority
-contributor repair after fixed observer qualification under HIAL .3.2.10.11.1
+`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.2`, the admitted same-value selector assertion
+repair after contributor-union implementation and first observed runtime,
 after literal-guard repair and independently retained runtime qualification, after
 exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
@@ -4681,3 +4704,11 @@ Re-derivation uses actual lowering and emitted carrier queries; falsification us
 - [x] **NO REGRESSION** — Saved baseline verification passes; `knowledge-map: OK`, task-tree/claim checks, book build and staged doctrines qualify publication. Production source is unchanged. The book, ISF spec and downstream handoff expose the same known limitation instead of advertising complete multi-writer priority coverage.
 
 Re-derivation uses actual admitted public queries and source/history inspection; falsification uses the single-state and reversed-value controls, independent carrier/selector joins and corrupted records; durability is complete tracked evidence, producer, verifier and Git identities. Runtime repair evidence remains explicitly missing and scheduled, with native failure-only observation required first.
+
+## Acceptance — priority contributor union and first runtime blocker `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The red regression reports failure `#   at t/1974-isf-priority-contributor-union.t line 104`: LoweringIR::_suppress_priority_assignment overwrites earlier writer conditions under one owner key. Six multi-contributor cases lose their required emitted guard, while single/opposite/compatible controls and complete public-report parity pass.
+- [x] **ADDRESSED (verified)** — Distinct per-owner conditions are retained and deterministically ORed before suppression. The focused matrix preserves target locality, unrelated progress, same-value admission, resource grants and exact native/API/newline/carrier products. The first genuine observed runtime compiles SystemVerilog then exposes the separate backend onehot0/compatible-fan-in contradiction. Complete failure and source/cleanup evidence is sealed, its exact cause is traced, and child .2 owns correction before child .3 completes runtime. No overall runtime signoff is claimed.
+- [x] **NO REGRESSION** — Guarded T1974/T1210/T1218/T1219/T1971 reports `All tests successful`, `Files=5, Tests=29` with HDL skipped; the observed current T1974 separately passes its full static/report subtests before the retained runtime assertion failure. Saved hostile checks protect incomplete-stage, native-attribution, admission, bound and cleanup limits. Book/spec/downstream, map, claim census and staged doctrines qualify this implementation/evidence commit.
+
+Re-derivation uses red/green actual lowering and full public products; falsification uses independent literal predicates, ordered public-pin runtime controls, the emitted-equation witness, exact workspace/command absence and corrupt saved records; durability uses tracked test versions, full logs/stages/reports, producer Git blobs and the saved verifier. Runtime completion and historical native causality remain missing and separately owned. No source schema keys or assertion policy change in this slice.
