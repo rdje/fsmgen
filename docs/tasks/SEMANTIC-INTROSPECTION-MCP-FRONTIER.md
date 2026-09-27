@@ -1514,10 +1514,25 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Close arbitration child ownership and final composition reservation coverage.`
   Acceptance: `Qualify actual priority/resource products, child storage/completion connections, library/ATL and final domain realization identities with stable source/physical projections. Preserve executable admission and explicit separate namespaces; split producer boundaries when warranted before complete gate .3.2.2.3.`
   Verification: `Parent point/default processing is separately owned by .1; later phases remain uncovered.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.1`
+  Status: `done`
+  Goal: `Retain actual resource pointer declaration products without premature physical admission.`
+  Acceptance: `Share the canonical round-robin declaration producer between executable arbitration and detached preparation. Retain potential name/width/role products for selected resource kinds with users; prove real production equality, source-formal collision separation, source/permutation isolation and unchanged resource admission failures. Do not claim grants, priority resolution or complete reservations from a declaration inventory.`
+  Verification: `T1944 compares shared declarations with actual supported-kind counters/roles and grant updates, independent width boundaries, source order and mutation controls, formal-shadow separation and strict carriers. Fixed/user/overlap/name/unsupported-kind refusals remain executable checks. Exact native schedule before/after is unchanged; resource/priority/identity/point/schedule regressions pass. Potential declaration inventory does not qualify grants or full reservations.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2`
+  Status: `pending`
+  Goal: `Qualify remaining priority/grant child ownership and final composition coverage.`
+  Acceptance: `Complete actual priority/grant product coverage and child storage/completion, library/ATL and final domain realization names with stable source/physical projections. Preserve strict executable admission, distinct scopes and the final fail-closed completeness gate .3.2.2.3; split remaining producer boundaries as needed.`
+  Verification: `Resource declaration products are separately owned by .1; grant/priority processing and child/final composition remain open.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -2382,7 +2397,9 @@ actual transaction reservation products; `.3.2.2.1` adds actual rule, activation
 and shared-drive products. `.3.2.2.2.1` retains stable source rule helpers.
 `.55` repairs empty terminal wait/point/phase carriers. `.3.2.2.2.2` retains
 source-only direct-formal monitor obligations without weakening production.
-Next `.3.2.2.2.3` closes remaining producer coverage; `.3.2.2.3` gates completeness. Local payload, shared-writer and
+Actual local/external wiring, parent point/default products and resource pointer
+declarations are now retained. Next `.3.2.2.2.3.2.2.2` closes remaining grant/priority,
+child ownership and library/ATL/domain producer coverage; `.3.2.2.3` gates completeness. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -2824,3 +2841,42 @@ point scopes, arbitration, ownership connections and library/ATL/domain closure
 retain their later producer obligations. No automatic production rewrite or
 controller runtime change is claimed. Rationale belongs here and in the fact
 card; DEVELOPMENT_NOTES needs no duplicate entry.
+
+## Acceptance — resource pointer declarations `.49.2.2.3.2.2.2.3.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` exposes
+  isf_rr_shared_bus_turn with resource_round_robin_pointer role and width 2.
+  before.json independently extracts that actual production declaration and
+  proves its absence from transaction/activation/wiring/point products. The
+  declaration is created later by _apply_round_robin_rule_user_resource_grants;
+  raw formal aliases meet its strict physical collision guard before renaming.
+- [x] **ADDRESSED (verified)** — _round_robin_pointer_declaration now owns
+  the actual name, width and role consumed by both executable arbitration and
+  resource_signal_products. Preparation collects potential declarations only
+  for selected round-robin kinds with users, sorted by source resource name;
+  malformed generated names fail through the shared canonical check. It does
+  not fabricate grants or perform resource user/member/physical admission.
+  after.json finds the actual declaration. T1944 compares supported resource
+  kinds with real counters, roles and grant update targets, checks independent
+  width boundaries and source-order/snapshot isolation, preserves identity
+  through formal projection and strict carriers, and keeps raw formal/fixed
+  symbol/user-overlap/unknown-user/name/unsupported-kind refusals executable.
+- [x] **NO REGRESSION** — test.log and regression.log report
+  `All tests successful`; the latter includes T1944, T1943 points, T1939 helper
+  identity, T1218 resource arbitration, T1210/T1219 priorities, T1316 resource
+  fixtures and T1255 schedule goldens. Exact native schedule-before.json and
+  schedule-after.json compare equal. book-fixtures.log passes T1376; book.log
+  builds synchronized guidance. Staged doctrine and commit hooks apply.
+
+Evidence is under `.artifacts/formal-resource-products/`. Re-derivation uses the
+native schedule and independently extracted actual declarations; falsification
+uses missing old inventory, independent capacity boundaries, real grant targets,
+raw versus projected aliases, invalid resource controls and detached mutations;
+durability is T1944, the resource-products card, book and this task. Unused,
+priority and unsupported-kind resources add no potential pointer declaration.
+Collection is not admission: an unknown or overlapping user or fixed-symbol
+collision can still have a potential declaration and must fail actual lowering.
+The executable validation order and report remain intact. Grant/priority product
+coverage, child ownership and library/ATL/domain composition remain .2 before
+the complete reservation gate. No automatic production rewriting or controller
+runtime support is claimed; DEVELOPMENT_NOTES needs no duplicate rationale.

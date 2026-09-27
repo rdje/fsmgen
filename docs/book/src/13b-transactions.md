@@ -63,7 +63,11 @@ port can otherwise collide with a proposed private formal just like a rule
 payload. Preparation also retains the actual active signals generated for
 `(at NAME)` checks and the actor output defaults added to entry states. Named
 points and activation labels keep their source identities after formal rewriting.
-This inventory is still partial: later priority/resource processing,
+Potential round-robin pointer names, widths and roles also come from the same
+declaration producer used by normal arbitration. This collection does not prove
+that the resource users, members or grants are valid; actual lowering still
+checks those contracts and rejects physical collisions. The inventory is still
+partial: later priority/grant processing,
 child storage/completion connections, library/ATL and final domain composition
 need coverage. It does not enable independent direct-transaction storage yet.
 

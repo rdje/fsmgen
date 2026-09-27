@@ -233,12 +233,30 @@ sub prepare_formal_source($self, $source_actor) {
         parent_wiring_products => $wiring_products,
         parent_point_products => $self->_formal_parent_point_products(
             $actor, $generated, \%products, $wiring_products, \%points),
+        resource_signal_products => _formal_resource_signal_products($actor),
         actor_context => {
             locals => {}, static_symbols => { %$static },
             static_count_symbols => { %$static }, pruned_repeats => {},
             named_drives => { %drives },
         },
     };
+}
+
+sub _formal_resource_signal_products {
+    my ($actor) = @_;
+    my @declarations;
+    for my $resource (@{$actor->{resources} || []}) {
+        next unless ($resource->{arbiter} // '') eq 'round_robin'
+            && _resource_kind_supports_round_robin_rule_users($resource->{kind})
+            && @{$resource->{users} || []};
+        push @declarations, {
+            resource => $resource->{name}, kind => $resource->{kind},
+            declaration => _round_robin_pointer_declaration($resource->{name}, $resource->{users}),
+        };
+    }
+    # Potential declarations only. User/member/grant and physical collision
+    # admission still belong to executable arbitration; no grants are fabricated.
+    return _clone_isf_value([sort {$a->{resource} cmp $b->{resource}} @declarations]);
 }
 
 sub _formal_parent_point_products($self, $actor, $generated, $products, $wiring_products, $points) {
@@ -9968,11 +9986,11 @@ sub _apply_round_robin_rule_user_resource_grants {
     my $resource_name = $resource->{name} // '<unnamed>';
     my @users = @$users;
 
-    _validate_round_robin_rule_user_resource($ir, $resource_name, \@users, $round_robin_user_resource);
-    my $pointer = _round_robin_pointer_name($resource_name);
-    my $pointer_width = _repeat_count_width_for_integer($#users);
-    _register_counter_width($ir->{counters}, $pointer, $pointer_width);
-    $ir->{storage_roles}{$pointer} = 'resource_round_robin_pointer'
+    my $declaration = _validate_round_robin_rule_user_resource(
+        $ir, $resource_name, \@users, $round_robin_user_resource);
+    my $pointer = $declaration->{name};
+    _register_counter_width($ir->{counters}, $pointer, $declaration->{width});
+    $ir->{storage_roles}{$pointer} = $declaration->{storage_role}
         if ref($ir->{storage_roles}) eq 'HASH';
 
     my @grants;
@@ -10020,12 +10038,7 @@ sub _apply_round_robin_rule_user_resource_grants {
 
 sub _validate_round_robin_rule_user_resource {
     my ($ir, $resource_name, $users, $round_robin_user_resource) = @_;
-
-    _resource_arbitration_error(
-        'isf_resource_round_robin_name_shape',
-        $resource_name,
-        "round_robin resource names must be HDL identifiers because FSMGen generates pointer storage from the resource name",
-    ) unless _is_hdl_identifier($resource_name);
+    my $declaration = _round_robin_pointer_declaration($resource_name, $users);
 
     for my $user (@$users) {
         my $previous = $round_robin_user_resource->{$user};
@@ -10037,7 +10050,7 @@ sub _validate_round_robin_rule_user_resource {
         $round_robin_user_resource->{$user} = $resource_name;
     }
 
-    my $pointer = _round_robin_pointer_name($resource_name);
+    my $pointer = $declaration->{name};
     my %reserved = _ir_reserved_signal_names($ir);
     _resource_arbitration_error(
         'isf_resource_round_robin_pointer_collision',
@@ -10045,7 +10058,21 @@ sub _validate_round_robin_rule_user_resource {
         "generated round_robin pointer '$pointer' collides with an existing actor symbol",
     ) if $reserved{$pointer};
 
-    return 1;
+    return $declaration;
+}
+
+sub _round_robin_pointer_declaration {
+    my ($resource_name, $users) = @_;
+    _resource_arbitration_error(
+        'isf_resource_round_robin_name_shape',
+        $resource_name,
+        "round_robin resource names must be HDL identifiers because FSMGen generates pointer storage from the resource name",
+    ) unless _is_hdl_identifier($resource_name);
+    return {
+        name => _round_robin_pointer_name($resource_name),
+        width => _repeat_count_width_for_integer($#$users),
+        storage_role => 'resource_round_robin_pointer',
+    };
 }
 
 sub _round_robin_pointer_name {

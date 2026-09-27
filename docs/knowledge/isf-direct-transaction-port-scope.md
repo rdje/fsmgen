@@ -131,8 +131,10 @@ waits exposed a separate empty-state carrier defect, repaired under .55; see
 below. Actual local/external activation wiring is now retained under
 .3.2.2.2.3.1; see [wiring products](isf-formal-wiring-products.md). Later
 priority/resource, child ownership and library/ATL/domain composition remain
-.3.2.2.2.3.2.2. Parent point/default products are separately retained by
-.3.2.2.2.3.2.1; see [point products](isf-formal-point-products.md).
+.3.2.2.2.3.2.2.2. Parent point/default products are separately retained by
+.3.2.2.2.3.2.1; see [point products](isf-formal-point-products.md). Potential
+resource pointer declarations now use the shared actual producer; see the
+[resource product boundary](isf-formal-resource-products.md).
 
 The paired parser audit retains the former width-lookup defect: a wider formal
 was rejected and a narrower formal admitted an out-of-range bit against an
