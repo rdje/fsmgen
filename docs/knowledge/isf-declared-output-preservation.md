@@ -38,8 +38,8 @@ complete native/API/newline parity and independent reset/write/hold behavior.
 Ordinary/domain ISF storage is qualified by T1903; T1904 adds explicit child
 scalar/bank/record live reads and exact child ports; T1911 extends aggregate
 shape/runtime coverage. T1916 qualifies domain live reads and reset isolation;
-T1917 qualifies ordinary/single-domain sole scalar child writes. Domain and
-competing or bank/aggregate writers remain owned separately.
+T1917/T1918 qualify sole scalar child writes in ordinary and independent-domain
+actors. Competing or bank/aggregate writers remain owned separately.
 
 No hardware reset means no invented initialization. T1901/T1902 keep clock-only
 Verilog controls and explicit VHDL refusal: `VHDL::_split_if_else_assignments`

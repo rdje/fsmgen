@@ -33,7 +33,7 @@ my $base=<<'ISF';
  (transaction parent (on start)
   (spawn worker as w0 (bind (output result child_seen))) (await_all done) (complete done)))
 ISF
-for my $name (qw(scalar typed default_reset read_modify named_domain collision field_metadata generated_do two_scalars)) {
+for my $name (qw(scalar typed default_reset read_modify named_domain collision field_metadata generated_do two_scalars domains)) {
     subtest $name => sub {
         my $work="$workspace/$name";mkdir $work or die $!;
         my $text=$base;
@@ -45,6 +45,7 @@ for my $name (qw(scalar typed default_reset read_modify named_domain collision f
         $text =~ s/\(set status data\)/(update status (+ status data))/ if $name eq 'read_modify';
         $text =~ s/\(clock clk\) \(reset \(rst_n async active_low\)\)/(clock-domains (domain core (clock clk) (reset (rst_n async active_low))))/ if $name eq 'named_domain';
         $text =~ s/\(interface/(interface (input w0_isf_write_status_data (width 8))/ if $name eq 'collision';
+        $text =~ s/\(clock clk\) \(reset \(rst_n async active_low\)\)/(clock-domains (domain core (clock clk) (reset (rst_n async active_low)) :default) (domain aux (clock aux_clk)))/ if $name eq 'domains';
         if ($name eq 'field_metadata') {
             $text =~ s/\(var status \(width 8\) \(reset 19\)\)/(var status (width 8) (reset 19) (fields (field value (bits 7 0) (access rw))))/;
         }
@@ -95,7 +96,7 @@ for my $name (qw(scalar typed default_reset read_modify named_domain collision f
             is_deeply($json->decode($wire->{stdout}),$response,"complete newline/API $kind parity");
             if ($kind eq 'semantic') {
                 is_deeply([sort map {$_->{name}} @{$report->{semantic}{signal_analysis}{inputs}}],
-                    [sort qw(clk rst_n start enable data),($name eq 'collision' ? 'w0_isf_write_status_data' : ())], 'no public storage or write handoff inputs');
+                    [sort qw(clk rst_n start enable data),($name eq 'collision' ? 'w0_isf_write_status_data' : ()),($name eq 'domains' ? 'aux_clk' : ())], 'no public storage or write handoff inputs');
                 is_deeply([sort map {$_->{name}} @{$report->{semantic}{signal_analysis}{outputs}}],
                     [sort qw(done observed child_seen),($name eq 'two_scalars' ? 'extra' : ())],'exact authored outputs');
             }
@@ -104,6 +105,7 @@ for my $name (qw(scalar typed default_reset read_modify named_domain collision f
         my $next=$name eq 'read_modify' ? '(expected+payload)&255' : 'payload';
         my $extra=$name eq 'collision' ? 'logic [7:0] w0_isf_write_status_data=0;' : '';
         $extra='wire [6:0] extra;integer expected_extra=3;' if $name eq 'two_scalars';
+        $extra='logic aux_clk=0;always #7 aux_clk=~aux_clk;' if $name eq 'domains';
         my $child_check=$name eq 'generated_do' ? 'sampled_seen' : 'child_seen';
         my $monitor=$name eq 'generated_do' ? 'logic [7:0] sampled_seen; always @(posedge clk) if(child_seen!=0) sampled_seen=child_seen;' : '';
         my $extra_check=$name eq 'two_scalars' ? 'if(extra!==((cycle>=7 && do_write) ? (payload&127) : expected_extra)) $fatal(1,"second scalar original edge");' : '';
@@ -183,14 +185,12 @@ subtest 'unqualified writers remain rejected' => sub {
     my $multiple=$base;$multiple =~ s/\(await_all done\)/(spawn worker as w1 (bind (output result child_seen))) (await_all done)/;
     my $aggregate=$base;$aggregate =~ s/\(storage/(types (type rec_t (record (payload (bits 8))))) (storage/;
     $aggregate =~ s/\(var status \(width 8\)/(var status (type rec_t)/;
-    my $domains=$base;$domains =~ s/\(clock clk\) \(reset \(rst_n async active_low\)\)/(clock-domains (domain core (clock clk) (reset (rst_n async active_low)) :default) (domain aux (clock aux_clk)))/;
     my $bank=$base;$bank =~ s/\(storage/(storage (bank slots (width 8) (depth 2))/;
     $bank =~ s/\(set status data\)/(store slots 1 data)/;
     for my $case (['parent',$parent,qr/parent writer and generated child writer/],
                   ['multiple',$multiple,qr/competing generated child writers/],
                   ['aggregate',$aggregate,qr/only full-width scalar sequential writes are qualified/],
-                  ['bank',$bank,qr/only full-width scalar sequential writes are qualified/],
-                  ['domains',$domains,qr/multi-domain actor require qualified domain writer handoffs/]) {
+                  ['bank',$bank,qr/only full-width scalar sequential writes are qualified/]) {
         my ($name,$text,$error)=@$case;my $path=write_file("$workspace/$name.isf",$text);
         my $r=$capture->([$^X,'bin/fsmgen','--strict','--check','--json',$path],'');
         isnt($r->{exit_code},0,"$name refused");like($r->{stdout}.$r->{stderr},$error,"$name exact ownership boundary");

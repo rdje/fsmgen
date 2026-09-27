@@ -44,8 +44,8 @@ retained controls, direct FSM replay, exact interfaces, complete native/API/MCP 
 storage, bank elements and independent reset/write/read/hold behavior. The audit keeps the original
 input/reset defect for falsification. T1904 qualifies ordinary/single-domain scalar/bank live reads,
 exact interfaces and repeat activation. T1911 qualifies aggregate shapes; T1916 qualifies
-independent-domain live reads and reset isolation. T1917 qualifies ordinary/single-domain sole
-scalar child writes; domain and broader writer qualification remain owned by .39.2.2.3.2/.4.
+independent-domain live reads and reset isolation. T1917/T1918 qualify sole scalar child writes
+including independent domains; broader writer qualification remains owned by .39.2.2.4.
 Resolved reset widths reject overflow without
 warnings. Explicit bindings and local state remain separate; decision `0107` owns shared semantics.
 

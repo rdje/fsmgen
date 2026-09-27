@@ -303,8 +303,8 @@ Stopping or resetting a sibling domain does not advance or reset that state.
 Scalar aliases, packed aggregates and scalarized bank-element reads use the
 same internal routing. Direct reads from a sibling domain are rejected with a
 clock-domain ownership diagnostic.
-Ordinary and single-domain actors also support full-width scalar writes from
-one generated child instance per register. The child sends combinational write
+Actor and domain owners also support full-width scalar writes from one
+generated child instance per register. The child sends combinational write
 data and an enable while executing the authored assignment. The parent owns
 the register and applies the write on that same clock edge. No payload register,
 extra state, or wait until child completion is introduced. Later child reads
@@ -334,13 +334,40 @@ completion-gated output binding semantics.
 
 The ownership check rejects a parent writer or another generated instance
 writing the same register, even if the author expects them to be exclusive.
-Multiple scalar targets are permitted when each has one writer. Bank writes,
-aggregate/member writes, and multi-domain generated-child writes remain
-unqualified and fail explicitly. Source operations that lower to a full-width
+Multiple scalar targets are permitted when each has one writer. Bank and
+aggregate/member writes remain unqualified and fail explicitly. Source operations that lower to a full-width
 scalar assignment retain that whole-register meaning; this does not introduce
-partial-write arbitration. Decision `0107` owns the later domain and competing
-writer contracts. Transaction-local variables and explicit port bindings retain
-their existing semantics. Generated-composition VHDL
+partial-write arbitration. Decision `0107` owns the remaining competing-writer
+and broader storage contracts. Transaction-local variables and explicit port bindings retain
+their existing semantics.
+
+In a multi-domain actor, the generated writer and its storage must belong to
+the same domain. Only that owner's clock advances the register, and only that
+domain's reset applies. The handoff introduces no implicit crossing. For example,
+this nondefault `io` writer updates its domain-owned register while `idle` has
+an independent clock:
+
+```lisp
+(actor domain_shared_writer
+  (clock-domains
+    (domain idle (clock aux_clk) :default)
+    (domain io (clock clk) (reset (rst_n async active_low))))
+  (interface (input start (domain io)) (output done (domain io))
+    (output observed (width 8) (domain io)))
+  (storage (var status (width 8) (reset 19) (domain io)))
+  (rule observe (domain io) 1 (observed status))
+  (transaction worker (domain io)
+    (wait 2) (set status 37) (complete done))
+  (transaction parent (domain io) (on start)
+    (spawn worker as writer)
+    (await_all done) (complete done)))
+```
+
+Repeated assignments can read the same owner's updated value. Resetting or
+stopping a sibling domain neither resets nor advances this register. Direct
+reads/writes of sibling-domain storage remain rejected.
+
+Generated-composition VHDL
 support remains limited to its documented composition shapes; separately
 generated parent/child VHDL modules can be explicitly wired by the caller.
 

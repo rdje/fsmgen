@@ -181,7 +181,7 @@ SV
         simulate($work,$hdl,$tb);
         for my $case (
             ['cross_read', '(set scalar_result aux_status)', qr/clock-domain violation: transaction 'worker'.*read signal 'aux_status' owned by domain 'aux' from domain 'core' without a crossing primitive/],
-            ['writer', '(set status 37)', qr/multi-domain actor require qualified domain writer handoffs/],
+            ['writer', '(set status 37)', qr/parent writer and generated child writer/],
         ) {
             my ($name,$replacement,$error)=@$case;my $bad=$text;
             $bad =~ s/\(set scalar_result status\)/$replacement/;

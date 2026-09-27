@@ -96,13 +96,6 @@ sub build_module($self, $actor) {
         $child_irs{$cname} = $self->_build_child_ir($ct, $actor, $cname);
     }
 
-    if ($domain_partition && ($domain_partition->{kind} // '') eq 'multi_domain') {
-        for my $cname (sort keys %generated_children) {
-            confess "Transaction '$cname': generated child actor-storage writes in a multi-domain actor require qualified domain writer handoffs\n"
-                if @{$child_irs{$cname}{actor_storage_writes} || []};
-        }
-    }
-
     my @library_instances;
     for my $use (@{$actor->{library_uses} || []}) {
         my $module = $use->{module};

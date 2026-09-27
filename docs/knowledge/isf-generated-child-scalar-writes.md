@@ -8,8 +8,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, storage, writers, composition, ownership, reset, mcp]
-evidence: perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm; t/1917-isf-generated-child-scalar-writes.t; docs/audits/generated-child-storage-ownership-20260926.json; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md
-reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1917-isf-generated-child-scalar-writes.t
+evidence: perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm; t/1917-isf-generated-child-scalar-writes.t; t/1918-isf-domain-child-scalar-writes.t; docs/audits/generated-child-storage-ownership-20260926.json; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md
+reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1917-isf-generated-child-scalar-writes.t t/1918-isf-domain-child-scalar-writes.t
 ---
 
 The retained writer once updated a private child status register while its
@@ -37,8 +37,12 @@ readback, explicit/default reset and repeated activation. It covers scalar
 aliases, read-modify-write, field metadata, generated do and distinct targets,
 and checks exact interfaces, scheduled replay and full native/API/newline reports.
 The exact retained defect source is replayed independently. This qualifies
-ordinary/single-domain SystemVerilog runtime. Multi-domain writers, competing
+SystemVerilog runtime. T1918 qualifies independent domains with distinct reset
+policies, repeated read-modify-write edges, zero-valued intermediate updates,
+stopped clocks, reset isolation, generated do, scalar aliases and a different
+default domain. Domain partitioning uses the same handoff and ownership checks;
+there is no alternate writer implementation or implicit crossing. Competing
 writers, bank/aggregate/member writes and wider VHDL composition remain outside
-this slice; their task owners remain explicit.
+this qualification; their task owners remain explicit.
 
-Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.1.
+Owners: SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.1 and .39.2.2.3.2.

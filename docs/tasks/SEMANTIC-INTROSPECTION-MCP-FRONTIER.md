@@ -1157,10 +1157,10 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.48: bind libraries to selected domains`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement full-width scalar actor-storage writes from a sole generated-child writer with unchanged cycle timing.`
   Acceptance: `After read ownership, add per-instance write-data and write-enable handoffs feeding the owning parent/domain register on the original assignment edge. Child reads remain live; do not add payload-register latency or defer writes to child completion. Start with one statically owned full-width scalar writer and prove explicit/default resets, repeated activations, conditional writes and parent readback in independent simulation and API/MCP reports. Reject unqualified partial/aggregate/bank or competing writers with contextual diagnostics and explicit next ownership; update docs and commit.`
-  Verification: `Retained writer must change parent readback from 19 to 37 through one shared register. Existing rule-only storage_port arbitration does not supply generated-child writer policy.`
+  Verification: `T1917/T1918 qualify sole scalar writer handoffs in ordinary and independent-domain actors, preserving original assignment edges, live reads, owner resets, exact interfaces and full reports. The retained parent readback now changes from 19 to 37. Broader writers remain owned by .39.2.2.4.`
   Commit: `children below`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.2`
@@ -1173,11 +1173,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.1: route sole scalar child writes`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify sole scalar generated-child writer handoffs inside independent clock domains.`
   Acceptance: `After .3.1, remove only the temporary multi-domain writer boundary after independent clocks/reset isolation, original-edge owner reads, repeated activations, exact interfaces, scheduled replay and native/API/MCP reports pass. Preserve same-domain ownership and refusal of unowned crossings or competing writers; synchronize docs and commit before broader writer arbitration.`
-  Verification: `Pending .3.1 implementation.`
-  Commit: `pending`
+  Verification: `T1918 qualifies independent-domain writes on original edges, late payloads, repeated live updates including zero, guarded holds, stopped clocks, reset isolation, signed aliases, generated do and default-domain changes. Exact interfaces, strict replay and complete native/API/MCP reports pass. T1917/T1916 and executable book checks pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.2: qualify domain scalar writers`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4`
   Status: `pending`
@@ -1908,7 +1908,8 @@ FIFO ownership/readbacks. Completed `.48` qualifies selected-domain library
 system bindings and empty-domain artifacts. Completed `.39.2.2.2.3.2` qualifies
 domain live storage reads and generated-do inherited-input wiring. Completed
 `.39.2.2.3.1` qualifies sole full-width scalar writer handoffs in ordinary/single-domain actors.
-Next `.39.2.2.3.2` qualifies independent-domain writer handoffs. After those repairs,
+Completed `.39.2.2.3.2` qualifies independent-domain scalar writer handoffs.
+Next `.39.2.2.4` splits and qualifies broader storage writers. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -5301,3 +5302,41 @@ The first staged gate exceeded the existing focused-doc total-line transition
 allowance by one line. Remove redundant watchdog/metadata-queue narration in the
 feedback response; preserve the scope and evidence. No hard ceiling or transition
 allowance increase is needed for that surface. The final gate owns signoff.
+
+
+## Qualification — `.39.2.2.3.2`
+
+The same private data/enable handoff applies after domain partitioning. Remove
+only LoweringIR's temporary multi-domain writer admission guard; same-domain
+validation, sole-writer checks and parent reset ownership remain unchanged.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained before.json from
+  `--strict --check --json` rejects aux_worker with "generated child actor-storage
+  writes in a multi-domain actor require qualified domain writer handoffs".
+  LoweringIR applies this qualification guard before connecting otherwise valid
+  per-domain child requests. T1918 checks the resulting child IR has only its
+  domain's scalar read/write interfaces and no copied register or reset.
+- [x] **ADDRESSED (verified)** — initial-runtime.log reports `All tests successful`
+  for T1918 with qualified Verilator enabled. Independent edge oracles check
+  writes on edges 5 and 8, followed by sequential owner observation on edges
+  6 and 9. Late payload changes, zero-valued first writes, repeated live updates,
+  guarded holds, reset isolation and stopped clocks pass for spawn, generated do
+  and signed aliases with the other domain selected as default. Strict replay,
+  exact public pins and complete native/API/newline reports pass. Cross-domain
+  reads, parent writers and duplicate child writer instances remain rejected.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1917/T1916. T1917 includes a writer in a multi-domain actor with an empty second
+  domain; T1916's writer negative now asserts the real parent/child contention.
+  book.log reports `All tests successful` for T1376 and passes exact reference
+  partitions plus mdBook build. Evidence is under `.artifacts/domain-scalar-writes/`.
+  The new nondefault-domain writer book example lowers cleanly. No visual audit
+  or generated VHDL composition qualification is claimed.
+
+Re-derivation uses domain-partitioned IR and emitted scheduled/HDL interfaces,
+owner-only register/reset declarations and full source-backed reports.
+Falsification uses independently stepped clocks, distinct async/sync reset
+policies, changing payloads immediately before writes, edge-specific observation,
+zero updates, repeated calls and forbidden ownership/crossing controls.
+Durability is carried by T1918, migrated T1917/T1916, book/spec/facts and staged
+gates. Competing writers and physical partial/aggregate/bank writes remain owned
+by .39.2.2.4; this slice does not invent arbitration for them.
