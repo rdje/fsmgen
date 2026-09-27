@@ -16,6 +16,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
 use FSM::Scheduler::ISF::ControlFlowEffects;
 use FSM::Scheduler::ISF::ChildStorageOwnership qw(select_child_storage_reads connect_child_storage_reads);
 use FSM::Scheduler::ISF::ChildActivation qw(guard_child_activation);
+use FSM::Scheduler::ISF::ChildCompletionOutputs qw(prepare_child_completion_outputs connect_child_completion_outputs);
 use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -129,7 +130,9 @@ sub build_module($self, $actor) {
     mark_atl_data_link_child_interface_ports(\%child_irs, \@atl_top_instances);
 
     my $parent_ir = $self->_build_parent_ir($actor, \%generated_children, \%pruned_static_zero_children);
-    _finalize_ir($parent_ir) if connect_child_storage_reads($parent_ir, \%child_irs);
+    my $connected = connect_child_storage_reads($parent_ir, \%child_irs);
+    $connected += connect_child_completion_outputs($parent_ir, \%child_irs);
+    _finalize_ir($parent_ir) if $connected;
     $parent_ir->{children} = \%child_irs;
     $parent_ir->{library_uses} = \@library_instances;
     $parent_ir->{atl_top_instances} = \@atl_top_instances;
@@ -202,6 +205,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         bank_accesses => $bank_accesses,
     };
 
+    prepare_child_completion_outputs($ir, $tx, $actor);
     select_child_storage_reads($ir, $tx, $actor);
     $ir->{explicit_interface_ports} = [map { { %$_ } } @{$ir->{ports}}];
 

@@ -579,7 +579,10 @@ scheduled `.fsm` emission.
 3. In idle: `can_accept=1` is asserted
 
 The current ISF lowering uses the `.fsm` delayed-pulse operator so the
-completion port rests low except for the generated one-cycle pulse.
+completion port rests low except for the generated one-cycle pulse. Hardware
+completion targets are one bit wide, including named bit aliases. A generated
+child completing a noncanonical actor output also emits its activation `done`
+handshake at the same terminal edge; see [named completion outputs](13f-composition.md#named-completion-outputs-in-generated-children).
 
 **Generated .fsm**:
 ```lisp

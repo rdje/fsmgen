@@ -659,6 +659,8 @@ FSM
             normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys(),
             "$label output_drive_family keeps the existing bounded output-drive schema",
         );
+        is($contributor->{output_drive_family}{pulse_delay_cycles}, undef,
+            "$label ordinary shared-register drive has no invented pulse delay");
         if (@{$contributor->{output_drive_family}{rhs_enable_families} || []}) {
             assert_exact_keys(
                 $contributor->{output_drive_family}{rhs_enable_families}[0],

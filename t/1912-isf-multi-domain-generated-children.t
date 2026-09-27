@@ -96,6 +96,31 @@ module tb;
  initial begin #5000;$fatal(1,"domain child timeout");end
 endmodule
 SV
+my $named_tb = <<'SV';
+module tb;
+ logic clk=0,aux_clk=0,rst_n=1,aux_rst_n=1,start=0,aux_start=0,core__w0=0;
+ logic [7:0] data=91,aux_data=166;
+ wire [7:0] observed,again,aux_observed;wire core_done,aux_done;
+ always #7 aux_clk=~aux_clk;
+ domain_children_top dut(.*);
+ initial begin
+  #2;rst_n=0;aux_rst_n=0;#14;rst_n=1;aux_rst_n=1;
+  repeat(2) begin
+   @(negedge aux_clk);aux_start=1;
+   for(integer cycle=0;cycle<15;cycle=cycle+1) begin
+    @(posedge aux_clk);#1;
+    if(aux_done!==(cycle==7 || cycle==10)) $fatal(1,"named domain pulse cycle=%d done=%d",cycle,aux_done);
+    if(aux_observed!==((cycle==7) ? aux_data : 0)) $fatal(1,"domain payload edge cycle=%d",cycle);
+    if(core_done!==0) $fatal(1,"completion escaped its domain");
+    @(negedge aux_clk);aux_start=0;
+   end
+   aux_data=3;
+  end
+  $display("DOMAIN_CHILD_PASS");$finish;
+ end
+ initial begin #5000;$fatal(1,"named domain timeout");end
+endmodule
+SV
 my $cdc_await_tb = <<'SV';
 module tb;
  logic bus_clk=0,core_clk=0,bus_rst_n=1,core_rst_n=1,bus_start=0,core_start=0;
@@ -160,6 +185,8 @@ $library =~ s/\)\s*\z/ (transaction aux_tx (domain aux) (on aux_start) (complete
 my $module_collision = $dual;
 $module_collision =~ s/\bdomain aux\b/domain core__child_worker/g;
 for my $case (
+    ['named', $named_completion, $named_tb, [qw(aux_clk aux_data aux_rst_n aux_start clk core__w0 data rst_n start)],
+        [qw(again aux_done aux_observed core_done observed)]],
     ['dual', $dual, $dual_tb, [qw(aux_clk aux_data aux_rst_n aux_start clk core__w0 data rst_n start)],
         [qw(again aux_done aux_observed core_done observed)]],
     ['module_collision', $module_collision, $dual_tb, [qw(aux_clk aux_data aux_rst_n aux_start clk core__w0 data rst_n start)],
@@ -248,13 +275,6 @@ subtest 'library parent interfaces remain owned by .47' => sub {
     isnt($check->{exit_code}, 0, 'unqualified library interfaces are not called successful');
     like($check->{stdout}, qr/leaves child port 'core\.data_in' unconnected/,
         'retain the domain form of the unchanged T1238 interface failure');
-};
-subtest 'named completion remains owned by .46' => sub {
-    my $source = write_file("$work/named-completion.isf", $named_completion);
-    my $check = $capture->([$^X, 'bin/fsmgen', '--strict', '--check', '--json', $source], '');
-    isnt($check->{exit_code}, 0, 'unqualified named child completion is not called successful');
-    like($check->{stdout}, qr/leaves child port 'aux__aux_parent_aux_worker_do_0\.aux_done' unconnected/,
-        'retain exact original named completion failure for the immediate repair');
 };
 done_testing();
 sub simulate {

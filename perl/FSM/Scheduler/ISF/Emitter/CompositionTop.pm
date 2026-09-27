@@ -249,11 +249,20 @@ sub _emit_wiring_block {
             );
         }
 
+        for my $output (@{$spawn->{actor_completion_outputs} || []}) {
+            push @links, _link($instance . ".$output->{child_port}", $actor_name . ".$output->{parent_port}");
+        }
+
         push @links, _link($actor_name . ".${instance}_start", $instance . '.start');
         push @links, _link($instance . '.done', $actor_name . ".${instance}_done");
 
+        my %completion_outputs = map { $_->{child_port} => 1 }
+            @{$spawn->{actor_completion_outputs} || []};
         for my $port_name (sort keys %$child_ports) {
             next if $port_name eq 'done';
+            # Actor completion routing has its own allocated input. An authored
+            # public port with the old suffix is not an implicit second binding.
+            next if $completion_outputs{$port_name};
             my $port = $child_ports->{$port_name};
             next unless ($port->{direction} || '') eq 'output';
             my $parent_handoff = "${instance}_${port_name}";

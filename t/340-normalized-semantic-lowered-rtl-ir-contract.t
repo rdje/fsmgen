@@ -96,6 +96,7 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
                 driver_enable_signals
                 family_enable_signals
                 multiplexer_type
+                pulse_delay_cycles
                 reset_value
                 rhs_enable_families
                 rhs_values

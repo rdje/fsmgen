@@ -186,6 +186,13 @@ sub build_candidates ($class, %args) {
         } @{$group->{contributors} || []};
         next unless @contributors >= 2;
 
+        # Delayed pulses are independent event channels. A shared holding
+        # register or same-name exclusivity assertion cannot preserve their
+        # delay, automatic return level, or simultaneous completion semantics.
+        next if grep {
+            defined(($_->{output_drive_family} || {})->{pulse_delay_cycles})
+        } @contributors;
+
         my @contributor_ports = @{$group->{contributor_ports} || []};
         my %typed_declared_type_signatures = map {
             my $signature = FSM::Composition::InterfacePortBuilder->declared_type_signature($_);

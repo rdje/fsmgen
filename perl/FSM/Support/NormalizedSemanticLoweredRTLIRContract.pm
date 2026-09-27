@@ -150,6 +150,7 @@ sub normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys {
             driver_enable_signals
             family_enable_signals
             multiplexer_type
+            pulse_delay_cycles
             reset_value
             rhs_enable_families
             rhs_values

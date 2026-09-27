@@ -2208,8 +2208,12 @@ declarations lower into child `+params` blocks, and override lists are
 validated, preserved in the parent lowerer IR, and applied through generated
 `?fsmc` `(params ...)` blocks in the top. The generated top wires parent start
 outputs, parent done inputs, child `start`/`done` ports, explicit port-binding
-handoffs, and named-drive handoff signals through the existing composition
-pipeline. Schedule reports expose actor-level parameter defaults directly
+handoffs, named actor-completion inputs, and named-drive handoff signals
+through the existing composition pipeline. A noncanonical child completion
+pulses its authored output and canonical activation `done` together. The parent
+combines the already-delayed named pulses, including its own completion when
+present, without adding another register stage. Explicit transaction-local
+completion ports continue to use output bindings. Schedule reports expose actor-level parameter defaults directly
 through `actor_params[]` entries with `name` and JSON-safe default `value`;
 use-site overrides remain reported by the generated-composition and
 library-use binding summaries.

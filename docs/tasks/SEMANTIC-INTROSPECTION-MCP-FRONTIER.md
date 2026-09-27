@@ -1135,11 +1135,11 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.46`
-  Status: `pending`
+  Status: `done`
   Goal: `Honor named completion pulses in generated transaction children alongside their activation handshake.`
   Acceptance: `Immediately after .39.2.2.2.3.1 and before domain storage-read qualification, reproduce a generated worker completing an actor output other than done through ordinary and multi-domain compositions. Select explicit named-output and canonical child-done routing without double-driving parent outputs or losing the authored pulse. Preserve strict interfaces, repeated activation and independent runtime; retain the original failing dual-domain source, update contracts/book/facts and commit.`
-  Verification: `T1912 dual source with aux_worker completing aux_done fails strict check: generated child aux_done is unconnected. _build_child_ports always adds done while _ir_complete assigns only the authored name; CompositionTop routes non-done child outputs only when a matching parent handoff exists. This defect also affects ordinary generated children and is not caused by flat domain naming.`
-  Commit: `pending`
+  Verification: `T1913 qualifies exact named/canonical pulse edges, shared and coincident outputs, spawn/do/reuse, repeated activation, named bit aliases, local shadowing/bindings, private/public suffix collisions, mixed-writer refusal, scheduled replay and full native/API/newline parity. T1912 qualifies the retained domain source. Pulse metadata remains nullable under T311/T340/T354; ordinary shared-datapath regressions pass. The unrelated watchdog TODO remains owned by .32.1.3.3.3.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.46: preserve generated child named completion`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.47`
   Status: `pending`
@@ -1877,8 +1877,9 @@ retains child completion across joins and activations. Completed `.44` fixes
 even runtime wait counts. Completed `.45` qualifies typed VHDL comparisons
 and scalar wait timing. Completed `.39.2.2.2.2.2` qualifies
 aggregate live reads. Completed `.39.2.2.2.3.1` realizes domain transaction
-children and prevents held-start reexecution. Next `.46` repairs named child
-completion, then `.47` repairs library parent interfaces, followed by
+children and prevents held-start reexecution. Completed `.46` preserves named
+child completion and excludes delayed events from inferred datapath sharing.
+Next `.47` repairs library parent interfaces, followed by
 `.39.2.2.2.3.2` domain storage reads before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
@@ -4892,3 +4893,111 @@ lifetime fix: accept an assertion of start only once, rearm when start is low,
 and reset the private start history with the child's own reset. Preserve the
 existing state sequence, accepted start edge and done timing. T1912's original
 exact payload count stays unchanged; ordinary pulse-start suites must pass.
+
+
+## Qualification — `.46`
+
+Preserve each authored named completion pulse in the child and add its canonical
+activation done pulse at the same terminal state. For noncanonical actor output
+completion names, route per-instance pulses into the parent/domain and expose
+their union without another clocked stage. If the parent also completes that
+output, keep its original delayed pulse in private local state and combine the
+already-delayed pulses combinationally. This preserves their original edges;
+it does not turn a completion into a delayed commit of arbitrary storage.
+Transaction-local completion ports retain explicit binding semantics. Preserve
+canonical done behavior and reject mixed non-completion writers instead of
+inventing priority. Qualify separate and shared named outputs, reused instances,
+parent/child completion, repeated activation, widths/types/reset timing,
+ordinary/domain artifacts and complete native/API/MCP reports.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `bin/fsmgen --strict --check --json`
+  against the retained before.isf reports unconnected w0.worker_done. Child
+  ports always include canonical done but complete emits only its authored
+  target; CompositionTop lacks named actor-completion wiring. The initial
+  T1913 runtime then reports shared-datapath multi-value conflict: notice.
+  `--emit-semantic-json` shows pulse outputs summarized only as flops;
+  same-name candidate inference mistakes independent events for shared state.
+  Evidence: before-check.json, before-check.log, first-runtime.log and
+  semantic.json in `.artifacts/named-child-completion/`.
+- [x] **ADDRESSED (verified)** — complete-runtime.log reports `All tests successful`
+  for final T1913, including suffix collision and local shadow controls. Named
+  child pulses and canonical done share the terminal edge; private parent
+  views preserve delayed edges and merge coincident/adjacent events. T1912
+  passes in domain-runtime.log and qualified-final.log, retaining the original
+  named-domain source and exact pulse/payload oracle. Its unrelated watchdog
+  TODO remains explicit. Full native/API/newline reports and strict scheduled
+  replay pass. pulse_delay_cycles is numeric for pulses and null otherwise;
+  shared candidate inference excludes those event families. All evidence is
+  under `.artifacts/named-child-completion/`.
+- [x] **NO REGRESSION** — shared-regression.log reports `All tests successful`
+  for T139–T153/T178/T183/T340, preserving ordinary shared-register,
+  combinational and assertion behavior. qualified-final.log reports
+  `All tests successful` for T1913/T1912/T311/T354 after the corrected domain
+  oracle and nullable schema. T1907/T1908 each report ok in final-runtime.log;
+  that earlier combined invocation is not an overall pass because it retained
+  the subsequently repaired oracle/schema failures. Book example audit and
+  reference partition checks pass in book-complete.log; finalized mdBook builds
+  in book-handoff.log. Logs are under `.artifacts/named-child-completion/`.
+
+T1913's unchanged spawn timing oracle reproduces a blocking composition assertion:
+`shared-datapath multi-value conflict: notice` at the first child terminal edge.
+The generated top groups the child notice pulse and parent notice forwarding
+view by bare local name, despite their distinct physical nets. `.46` owns this
+blocking repair before named-completion signoff. Inspect candidate construction
+and physical connection ownership; retain real shared-target conflict checks
+and independently test coincident same-name child outputs. Evidence:
+`.artifacts/named-child-completion/first-runtime.log` and its emitted spawn RTL.
+
+The shared-datapath root cause is pulse-type erasure in LoweredRTLIRBuilder's
+output-drive summary. It reports the hardware mux as flop without its delayed
+event semantics, so same-name inference can impose exclusivity or holding
+register behavior on independent completions. This leaf adds nullable public
+pulse_delay_cycles through the existing runtime assignment helper and excludes
+any candidate family containing delayed pulses. The original holding-register
+and combinational contract is retained; the shared-datapath regression set
+passes unchanged. T1913 adds coincident completions as an independent falsifier.
+The original typed test attempt used a vector completion target; delayed-pulse
+hardware explicitly requires one bit. Qualification uses a named bit alias,
+matching that existing contract, rather than broadening vector pulse semantics.
+
+The first positive named-domain oracle omitted the authored `(set result data)`
+state after `(wait 3)`. Scheduled aux child evidence shows wait states, then the
+set state, terminal state and delayed pulse. Relative to parent start at cycle
+zero, the child pulse/payload is cycle seven and parent pulse is cycle ten.
+T1912 corrects only those oracle constants; no implementation timing changes.
+The first combined run remains retained as a failed invocation; the corrected
+T1912 rerun must pass before this leaf closes.
+
+The bounded output-drive key contract is a presence contract, as T311/T354
+independently enforce. pulse_delay_cycles is therefore always present: an
+integer for delayed pulses, JSON null for ordinary drives. This preserves exact
+key-set checks without inventing a delay for non-pulse signals. The first
+combined regression correctly rejected the initial optional-field shape.
+
+Re-derivation: native scheduled replay and full check/semantic/schedule reports
+expose the authored pulse, canonical handshake, private completion view and
+nullable delay field. Falsification: T1913 independently predicts exact cycles,
+coincident/adjacent events, repeats, mixed-writer refusal and exact public pins;
+T1912 predicts domain-local pulses and payloads with the other clock stopped.
+Durability: the regression sources, contract helper, book, fact cards and this
+owning leaf retain those oracles; generated inventory and staged doctrines are
+required before commit. Existing watchdog TODO remains explicitly unqualified.
+The early book command used a nonexistent guessed test filename; it failed
+before running tests. The discovered T1376 test and final book build pass in
+book-complete.log; book.log is retained as the failed command, not green evidence.
+
+Final collision probing found another `.46` blocker: a public input named
+w0_worker_done receives both its authored top input and child worker_done via
+CompositionTop's legacy suffix-based output lookup. The strict check rejects
+that duplicate driver in handoff-collision.json. Automatic named completion
+routing must suppress that legacy lookup; explicit transaction-local bindings
+remain on their separate declared-port path. Extend T1913 with the public suffix collision and a nonlocal explicit
+output-binding control; preserve transaction-local binding behavior.
+
+The first nonlocal output-binding control was invalid: activation bindings
+require declared transaction ports. Declaring the same name makes it a local
+port, which shadows the actor output and deliberately bypasses automatic actor
+completion routing. T1913 now tests that valid shadowing contract: mirrored
+receives the local pulse and the untouched actor notice stays low. The emitter
+therefore skips legacy lookup for automatic actor completions unconditionally;
+explicit transaction-local bindings retain their existing separate path.

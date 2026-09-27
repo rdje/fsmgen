@@ -185,7 +185,14 @@ sub build_output_drive_family_metadata ($class, %args) {
             ? $hdl_generator->{enable_graph_signal_support}->get_reset_value_from_ast($lhs_analysis->{lhs_ast})
             : undef;
 
+        my $assignment_support = $hdl_generator->{enable_graph_assignment_support};
+        my $pulse_delay = $assignment_support
+            && $assignment_support->get_signal_assignment_type($lhs, $lhs_analysis) eq 'pulse_delayed'
+                ? $assignment_support->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis)
+                : undef;
+
         push @drive_families, {
+            pulse_delay_cycles => (defined($pulse_delay) ? 0 + $pulse_delay : undef),
             signal_name => $lhs,
             width => $output_widths{$lhs},
             multiplexer_type => ($lhs_analysis->{multiplexer}{type} // 'unknown'),

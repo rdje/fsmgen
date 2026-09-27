@@ -177,7 +177,7 @@ _Normalized semantic JSON advertises optional semantic children explicitly_
 
 _Normalized semantic lowered RTL advertises output-drive entry schemas_
 
-- **date:** 2026-06-05 · **status:** current
+- **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/normalized-semantic-output-drive-entry-schema.md`](../../docs/knowledge/normalized-semantic-output-drive-entry-schema.md)
 
 ### normalized-semantic-public-source-identity

@@ -69,6 +69,13 @@ Current lowering:
   drive calls inside a spawned child expose drive handoff outputs such as
   `<drive>_start` and `<drive>_<param>` instead of directly exporting the
   actor output driven by that drive body.
+- A generated child completing a noncanonical actor output retains that delayed
+  pulse and emits canonical activation `done` at the same terminal state.
+  Private per-instance parent inputs forward named actor completions without
+  another register stage. Shared named completions, including the parent's
+  own delayed completion, are OR-combined; mixed non-completion writers are
+  rejected. Explicit transaction-local completion ports keep binding semantics.
+  Targets remain one bit wide. Domain-local children preserve their clock/reset.
 - The parent exposes per-instance `instance_start` outputs and
   `instance_done` inputs for generated-top wiring. Each spawn state asserts
   its matching `instance_start` signal.

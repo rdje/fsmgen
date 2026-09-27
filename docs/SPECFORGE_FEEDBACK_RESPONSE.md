@@ -1192,8 +1192,10 @@ Packed aggregate and scalar-leaf child reads are also qualified under
 `.39.2.2.2.2.2`, preserving type identity, live updates and repeated activation.
 Multi-domain generated transaction artifacts and flat internal wiring are now
 realized under `.39.2.2.2.3.1`; domain storage reads retain their qualification
-refusal. Named child completion, library parent interfaces and child-await
-watchdog behavior remain separately owned before the metadata queue. Unqualified direct
+refusal. Named child completion is qualified under `.46`: authored pulses
+retain their edges alongside canonical activation handshakes, including shared
+names and independently clocked domains. Library parent interfaces and
+child-await watchdog behavior remain separately owned before the metadata queue. Unqualified direct
 child writers are rejected pending the original-edge write and arbitration
 lanes, before watchdog and the metadata queue. The retained audit includes
 materialized FSM, HDL and the realized semantic input entry. Future metadata

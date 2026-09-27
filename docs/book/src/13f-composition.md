@@ -117,6 +117,45 @@ same child transaction is already emitted as a generated child because of
 spawn or a parameterized `do`, a plain `do` to that child also uses a generated
 activation instance so the parent never targets a skipped local child body.
 
+### Named completion outputs in generated children
+
+A generated worker may complete a public actor output other than `done`:
+
+```lisp
+(actor named_completion
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (output notice) (output done))
+  (transaction worker (wait 2) (complete notice))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (await_all done)
+    (complete done)))
+```
+
+The worker emits its authored `notice` pulse and its canonical activation
+`done` pulse from the same terminal state. The parent receives the handshake
+for its join and forwards `notice` through a private completion input, without
+adding a register stage. Generated blocking `do` uses the same contract.
+
+If several generated instances complete the same actor output, their delayed
+pulses are OR-combined. Coincident pulses appear as one asserted cycle;
+adjacent pulses can keep the output high across adjacent cycles. If the parent
+also completes that output, its own delayed pulse joins the same view. Mixing
+these completions with a non-completion writer is rejected rather than given
+an implicit priority. Canonical child `done` remains a private activation
+handshake. Transaction-local named
+completion ports use explicit output bindings instead of automatic actor-output
+forwarding. A transaction-local port shadows a same-name actor output.
+An unrelated public input resembling an old generated handoff name remains
+independent; its spelling does not create another completion connection. Completion targets must be one-bit signals; named bit aliases work.
+
+The same routing applies within an owning clock domain: pulses retain that
+domain's clock and reset. Inferred shared-datapath lifting excludes delayed
+pulse families, so equal local port names cannot merge independent event
+channels into a shared holding register or impose exclusivity on them.
+
 ## `(spawn child as name)` — Parallel Fork
 
 ```lisp

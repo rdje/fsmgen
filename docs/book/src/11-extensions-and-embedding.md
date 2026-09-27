@@ -1856,6 +1856,12 @@ The same rule applies to lowered summary projections such as
 `internal_net_names` and `instance_names`: they start equivalent to the embedded
 `lowered_rtl_ir` mirrors without sharing mutable containers.
 
+A delayed-pulse entry in `output_drive_families[]` carries the integer
+`pulse_delay_cycles`, taken from the authored delayed-pulse operator. Ordinary
+holding-register and combinational entries carry JSON null. Composition candidate
+inference uses this timing distinction to preserve independent event channels;
+the public key manifest advertises the nullable field.
+
 Direct-generation lowered summaries such as `output_drive_families`,
 `selector_conflict_targets`, and `standalone_dt_multi_drive_targets` are audited
 the same way: initially equivalent to their embedded `lowered_rtl_ir` mirrors,

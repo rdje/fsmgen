@@ -337,6 +337,12 @@ If both `left_src` and `right_src` drive an output named `status_bus` with the
 same width and type, FSMGen records one shared-datapath candidate for that
 family.
 
+Delayed-pulse outputs (`<N`) are excluded from inferred shared-datapath
+families. Their independently timed events and automatic return level cannot
+be represented by a shared holding register. A same-name family containing a
+delayed-pulse contributor therefore retains its original wiring and has no
+inferred cross-instance exclusivity assertion.
+
 ### Candidate Metadata
 
 Each candidate is reported through the composition result metadata and the
