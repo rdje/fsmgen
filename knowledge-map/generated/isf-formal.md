@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-formal`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **11** facts · **33** uniquely owned question entries.
+> **12** facts · **36** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -21,11 +21,13 @@
 - q="does collecting parent write handoffs admit competing storage writers?" · facts=[isf-formal-parent-write-products](../../docs/knowledge/isf-formal-parent-write-products.md)
 - q="does formal preparation bypass production monitor collision checks?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
 - q="does formal preparation preserve reusable parameters and ATL child data ports?" · facts=[isf-formal-reusable-products](../../docs/knowledge/isf-formal-reusable-products.md)
+- q="does formal preparation reserve external activation ready and request declarations?" · facts=[isf-formal-domain-source-products](../../docs/knowledge/isf-formal-domain-source-products.md)
 - q="does parent IR finalization add declarations before child storage connections?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
 - q="does planning named completion admit mixed parent writers?" · facts=[isf-formal-named-completion-products](../../docs/knowledge/isf-formal-named-completion-products.md)
 - q="how are completion seen and ready names owned before formal allocation?" · facts=[isf-formal-completion-products](../../docs/knowledge/isf-formal-completion-products.md)
 - q="how does read planning reserve completion and write handoffs?" · facts=[isf-formal-parent-read-products](../../docs/knowledge/isf-formal-parent-read-products.md)
 - q="what does deferred_formal_collisions mean in prepared source?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
+- q="what does domain_source_products retain?" · facts=[isf-formal-domain-source-products](../../docs/knowledge/isf-formal-domain-source-products.md)
 - q="what does generated_child_products include in source preparation?" · facts=[isf-formal-child-products](../../docs/knowledge/isf-formal-child-products.md)
 - q="what does parent_completion_products include in source preparation?" · facts=[isf-formal-completion-products](../../docs/knowledge/isf-formal-completion-products.md)
 - q="what does parent_named_completion_products retain?" · facts=[isf-formal-named-completion-products](../../docs/knowledge/isf-formal-named-completion-products.md)
@@ -38,6 +40,7 @@
 - q="what qualifies the resource priority namespace boundary?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
 - q="why can a generated ready port collide with a private direct formal?" · facts=[isf-formal-wiring-products](../../docs/knowledge/isf-formal-wiring-products.md)
 - q="why did preparing a direct formal fail on a generated monitor name before allocation?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
+- q="why does monolithic preparation miss domain activation helpers?" · facts=[isf-formal-domain-source-products](../../docs/knowledge/isf-formal-domain-source-products.md)
 
 ## Facts
 
@@ -61,6 +64,13 @@ _Parent completion products retain actual instance allocation and join views_
 
 - **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-formal-completion-products.md`](../../docs/knowledge/isf-formal-completion-products.md)
+
+### isf-formal-domain-source-products
+
+_Formal preparation retains actual independent domain source products_
+
+- **date:** 2026-09-27 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-formal-domain-source-products.md`](../../docs/knowledge/isf-formal-domain-source-products.md)
 
 ### isf-formal-named-completion-products
 

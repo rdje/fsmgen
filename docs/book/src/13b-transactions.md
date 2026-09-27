@@ -115,8 +115,16 @@ admit those conflicting writers or merge raw formal storage contracts.
 Independent named-completion runtime and public report checks preserve the
 existing pulse timing, reset and repeated-activation behavior through this
 planning boundary.
-Library-readback connections and outer domain composition still need coverage
-before the inventory is complete. It does not enable independent direct-transaction storage yet.
+Library readback has been checked to preserve declaration names while adapting
+only the importing FSM's interface direction and ownership role. Preparation now
+also constructs each actual domain source and retains its independent products.
+For example, an activation crossing introduces `worker_start_ready` in the caller
+and `worker_idle_ext` in the callee; a monolithic actor inventory alone misses
+those declarations. Domain products keep the logical domain identity, local
+transaction order and injected crossing contracts, without merging raw formal
+widths into an executable parent. Outer composition identities and the complete
+reservation integration check remain pending. This does not enable independent
+direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both

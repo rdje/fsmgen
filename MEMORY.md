@@ -7,7 +7,7 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2` (active)
-- next_action: Qualify actual domain source shells, local products and outer identities under .49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2; follow domain and formal-product cards before complete reservation integration.
+- next_action: Audit outer domain module/file/flat-instance/wiring/CDC identity reservations under .49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.2, following the domain-source and generated-identity cards.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

@@ -16,6 +16,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
 );
 use FSM::Scheduler::ISF::ControlFlowEffects;
 use FSM::Scheduler::ISF::LogicalControllers;
+use FSM::Scheduler::ISF::DomainSource qw(_domain_actor_for_scheduled_artifact);
 use FSM::Scheduler::ISF::ChildStorageOwnership qw(prepare_child_storage_writes connect_child_storage_writes plan_child_storage_write_handoffs select_child_storage_reads connect_child_storage_reads plan_child_storage_read_handoffs);
 use FSM::Scheduler::ISF::ChildActivation qw(guard_child_activation);
 use FSM::Scheduler::ISF::LibraryPortOwnership qw(connect_library_output_readbacks);
@@ -261,14 +262,30 @@ sub prepare_formal_source($self, $source_actor) {
     my $named_completion_products = plan_child_completion_outputs(
         $actor->{actor_name}, $activation_products->{spawn_instances},
         $child_products->{children}, \%connection_names, $local_completions);
+    my %domain_products;
+    if ($partition && ($partition->{kind} // '') eq 'multi_domain') {
+        for my $domain (@{$partition->{domains}}) {
+            my $domain_actor = _domain_actor_for_scheduled_artifact(
+                $actor, $domain, $partition->{default_domain});
+            # The canonical constructor clears clock_domains, so preparation
+            # terminates at this independent module scope. Keep its real local
+            # transaction ordinals and injected external-activation products.
+            $domain_products{$domain->{name}} = {
+                identity => ['actor_domain', $actor->{actor_name}, $domain->{name}],
+                domain => _clone_isf_value($domain),
+                preparation => $self->prepare_formal_source($domain_actor),
+            };
+        }
+    }
     return {
         actor => $actor,
         generated_children => { %$generated },
         pruned_transactions => { %$pruned },
         domain_partition => _clone_isf_value($partition),
+        domain_source_products => \%domain_products,
         transactions => \%contexts,
-        # Partial producer boundary only: later module processing and child/domain
-        # composition remain absent. This is not a complete reservation set.
+        # Partial producer boundary only: outer composition identities and the
+        # final integration proof remain separate. This is not a complete reservation set.
         transaction_products => \%products,
         # These products are not executable IR. A projected actor must pass
         # build_module, including collision checks, before any emission.

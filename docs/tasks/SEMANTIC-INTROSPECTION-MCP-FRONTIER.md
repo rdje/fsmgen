@@ -1686,10 +1686,39 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify actual domain source shells, local products and outer identities.`
   Acceptance: `Observe real domain-specific parent/child/CDC/top realization against prepared products, retain missing canonical producers before complete reservation integration, and preserve strict/native/API/MCP contracts without fabricated parent merges.`
-  Verification: `Resume after the stale capability paragraph is repaired and committed.`
+  Verification: `Public activation lowering succeeds, but activation-before.json shows missing caller ready/request states and ready port, plus callee idle/ready/request declarations. Ordinary event fixtures show no omission. Own actual per-domain preparation under child .1 before outer namespace child .2; integration child .3 follows. A stale parser-test support comment is repaired under child .4.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.4`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.1`
+  Status: `done`
+  Goal: `Retain actual detached per-domain source preparation products.`
+  Acceptance: `Share the production domain source constructor with formal preparation, retaining per-domain contexts and declarations without executing a fabricated parent merge. Qualify actual source and namespace equality, activation/event crossings, domain ordinals, generated/library children, ownership, collisions, isolation and report stability.`
+  Verification: `Reproduce with .artifacts/formal-domain-products/activation.isf and probe.pl: executable caller/callee declarations are absent from monolithic preparation despite successful --emit-schedule-json. Impact: future formal allocation could collide with external-activation helpers. The shared domain source constructor now supplies detached local preparation; activation-after.json has no missing names and native schedules compare byte-identically. T1955 and the full T1247/T1387/T1924/T1942/T1945/T1912 cohort pass, including independent domain runtime and public reports. Book fixtures/build and staged doctrine pass.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.2`
+  Status: `pending`
+  Goal: `Retain or prove outer domain composition identity reservations.`
+  Acceptance: `Cover actual module/file/flat-instance/wiring/CDC declaration namespaces from domain realization and top emission using canonical producers. Keep separate module scopes and logical/public identities explicit; no fabricated parent execution.`
+  Verification: `Pending per-domain preparation child .1.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.3`
+  Status: `pending`
+  Goal: `Qualify complete domain reservation integration.`
+  Acceptance: `Join prepared domain products and outer composition identities against real lowering, formal projection, portable collisions and native/API/MCP reports, retaining independent domain runtime and existing refusal boundaries.`
+  Verification: `Pending producer children .1 and .2.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.4`
+  Status: `pending`
+  Goal: `Correct stale activation parser-test support commentary.`
+  Acceptance: `Align T1386 header with its actual unused-crossing refusal and T1387 supported used-crossing contract; run both focused tests without changing admission.`
+  Verification: `The header still says every well-formed activation crossing fails because routing has not shipped. Its actual test now rejects only unused crossings, and T1387 covers supported routing. Low-priority documentation defect scheduled after domain producer qualification.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -3649,3 +3678,46 @@ refusal claim with the supported T1916/T1913/T1914/T1915 contracts and preserves
 unqualified limits; durability is the corrected book and this defect-owning
 leaf. The finding was surfaced before repair. DEVELOPMENT_NOTES needs no
 additional copy of these established contracts.
+
+## Acceptance — actual domain source products `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `--emit-schedule-json` succeeds for
+  activation.isf, but activation-before.json identifies actual caller
+  parent_do_1_ready, parent_do_1_req and worker_start_ready plus callee
+  worker_idle_ext, worker_done_ready and worker_done_req absent from
+  monolithic preparation. The scheduler alone constructed filtered domain
+  actors and injected external_activations before local lowering. Ordinary
+  event/no-reset controls have no missing baseline declaration.
+- [x] **ADDRESSED (verified)** — extract the unchanged canonical domain
+  source constructor and its helpers into DomainSource, retaining imported
+  scheduler helper identities for existing consumers. Formal preparation
+  invokes the same constructor and retains domain_source_products with typed
+  actor/domain identity, detached partition metadata and complete independent
+  local preparation. Clearing clock_domains terminates recursion; no parent
+  merge or fabricated executable IR is used. activation-after.json has no
+  missing names. T1955 compares actual source construction and local products,
+  checks emitted declaration coverage and strict composition, projects portable
+  formal/helper aliases, verifies ownership and snapshot isolation, forbids
+  build_module during preparation and preserves unused-crossing refusal.
+- [x] **NO REGRESSION** — qualified-final.log reports `All tests successful`
+  for T1955; schedule-before.json and schedule-after.json compare byte-identically.
+  regression.log reports All tests successful for the complete
+  T1955/T1247/T1387/T1924/T1942/T1945/T1912 cohort with independent domain
+  runtime and public-report confirmation enabled. Every job result is consumed.
+  T1376 book fixtures and synchronized book build pass. Fresh staged doctrine
+  and normal hook qualify the implementation commit before final closure.
+
+Evidence: `.artifacts/formal-domain-products/`. Re-derivation observes actual
+production domain sources and declarations plus native reports; falsification
+uses the missing activation baseline, event controls, case-only domains,
+portable helper/formal aliases, forbidden parent merge, empty/no-domain controls,
+source/sibling mutation isolation and unused-crossing refusal; durability is
+T1955, the domain-source card, book and this task. The initial test used a
+nonexistent source path for library resolution; it now uses the real public
+FIFO fixture path. A subsequent case-only test-label directory collision was
+fixed with unique ordinal artifact directories on the case-insensitive volume.
+These harness corrections did not alter library resolution or source admission.
+Outer composition identities remain child .2, integration child .3, and the
+previously observed stale activation-test header child .4. No production formal
+rewriting or new controller/runtime semantics are claimed. No additional
+DEVELOPMENT_NOTES rationale is needed beyond the canonical fact and task.
