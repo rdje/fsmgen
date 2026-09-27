@@ -1537,11 +1537,11 @@ For FSMGen, the analogs are:
   Commit: `children below`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Retain actual independently built generated transaction child products.`
   Acceptance: `Collect canonical generated child IR from cloned child source, including activation history, child storage read/write interfaces, named completion and child point resolution, without requiring a conflicting parent merge. Compare actual production children, helper collision allocations, source/physical identity stability, reused/domain ownership, strict carriers and source isolation. Preserve child validation and statically pruned exclusions; parent connection and final composition names remain later obligations.`
-  Verification: `Implementation is qualified by T1945 and independent before/after child products; book fixtures/build pass. The running broader cohort has passed T1945/T1936/T1938/T1934; T1904/T1917/T1255 remain pending. Commit verified implementation with that explicit pending state, consume the cohort, then close this leaf before .2.`
-  Commit: `pending`
+  Verification: `T1945 qualifies complete actual child products, physical/source identity stability, helper collisions, reused/domain scopes, strict carriers and source controls. The complete T1945/T1936/T1938/T1934/T1904/T1917/T1255 cohort passes; native schedule before/after is byte-identical. Book fixtures/build and implementation doctrines/hooks pass. Broader qualification is now consumed; .2 owns remaining parent connection, grant/priority and final composition coverage.`
+  Commit: `b5990b98a implementation; this slice consumes qualification`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2`
   Status: `pending`
@@ -2914,13 +2914,14 @@ runtime support is claimed; DEVELOPMENT_NOTES needs no duplicate rationale.
   resolution, source/product isolation, reused definitions, real domain scopes
   and strict carriers. Raw parent conflicts, child unknown-anchor/bank-write
   refusals and zero-pruned bodies retain their canonical boundaries.
-- [x] **NO REGRESSION** — qualified.log reports `All tests successful`
-  for T1945, including complete actual child IR, physical/source scope and
-  strict-carrier controls. The in-flight regression.log already reports
-  T1945/T1936/T1938/T1934 successful; T1904/T1917/T1255 and the cohort summary
-  are still pending, not passed. book-fixtures.log passes T1376 and book.log
-  builds synchronized guidance. Commit this verified implementation with the
-  broader qualification explicitly pending; staged doctrine and hooks apply.
+- [x] **NO REGRESSION** — qualified.log and the completed regression.log
+  report `All tests successful`. The cohort covers T1945 products, T1936 source
+  contexts, T1938 parent products, T1934 generated pin shadows, T1904 storage
+  reads, T1917 scalar writes and T1255 schedule goldens. The run did not opt into
+  new Darwin runtime qualification. Exact native schedule.json/schedule-after.json
+  comparison is byte-identical. book-fixtures.log passes T1376 and book.log builds
+  synchronized guidance. Implementation doctrine/commit.log passed before the
+  longer regression finished; this qualification commit consumes that result.
 
 Evidence is under `.artifacts/formal-child-products/`. Initial test.log contains
 an incorrect negative-control expectation for set-bit. The set-bit-probe.json
@@ -2940,10 +2941,34 @@ and no new controller/storage runtime qualification is claimed. Existing runtime
 and historical containment obligations remain separate. DEVELOPMENT_NOTES needs
 no duplicate rationale.
 
-Pending qualification recovery: the guarded prove command runs T1945, T1936,
-T1938, T1934, T1904, T1917 and T1255 in that order, with exact filenames in
-regression.log and this slice's reverify records. Preserve and consume
-`.artifacts/formal-child-products/regression.log`; if the owned process is lost,
-rerun that focused cohort under the RAM guard before closing this active leaf.
-This run does not opt into new Darwin HDL runtime qualification. The separate
-historical containment occurrence remains open under its existing owner.
+Qualification follow-up: b5990b98a committed the verified implementation while
+its broader confirmation ran, with an explicit active resume pointer. The
+completed regression.log is now consumed and no owned process remains in flight.
+The command was scripts/run_with_ram_guard.sh prove -Iperl with
+`t/1945-isf-formal-child-products.t`, `t/1936-isf-formal-source-context.t`,
+`t/1938-isf-formal-parent-products.t`, `t/1934-isf-generated-pin-shadow.t`,
+`t/1904-isf-generated-child-storage-reads.t`, `t/1917-isf-generated-child-scalar-writes.t`
+and `t/1255-isf-schedule-report-golden-matrix.t` in that order. No new Darwin HDL
+runtime qualification is inferred. The separate historical containment
+occurrence remains open under its existing owner.
+
+## Acceptance — child qualification closure `.49.2.2.3.2.2.2.3.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` on the focused regression
+  pointer in MEMORY.md identifies b5990b98a as the intentional pending-result
+  commit. The owned cohort now reports All tests successful, and the native
+  `--emit-schedule-json` before/after files compare byte-identically. Keeping
+  the active pending pointer would misstate the consumed qualification state.
+  The initial closure doctrine run also requires fresh acceptance for changed
+  inventory and size-registry declarations under change_paths.tsv.
+- [x] **ADDRESSED (verified)** — the task records the completed cohort,
+  source/report evidence and unchanged runtime boundary; MEMORY.md advances to
+  the remaining reservation leaf with no background work. The book and fact
+  card describe the qualified reused/domain child scope. This fresh closure
+  checklist covers the co-staged generated inventory and measured book/task
+  declarations; no production source or test implementation changes here.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  the complete focused cohort. book-qualification.log rebuilds the final prose;
+  runnable examples were unchanged after the passing book-fixtures.log audit.
+  doctrine-qualification.log retains the initial freshness failure; the renewed
+  staged doctrine run and commit hook verify the corrected closure index.

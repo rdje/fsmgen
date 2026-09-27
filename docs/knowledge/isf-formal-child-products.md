@@ -31,7 +31,10 @@ T1945 compares complete production children across spawn, generated do and trigg
 physical parent projection, reused definitions and actual domain scopes. Exact
 and case-folded public-port collisions exercise real helper allocation without
 guessing suffixes. Strict child carriers and source/product mutation controls
-pass. Raw parent conflicts, unknown child anchors, unsupported bank writes and
+pass. The complete source/context/pin-shadow/storage-read/scalar-write/schedule
+cohort passes, and the native schedule is byte-identical across the builder
+extraction. These checks do not add Darwin HDL runtime qualification.
+Raw parent conflicts, unknown child anchors, unsupported bank writes and
 pruned-body controls retain their existing boundaries. A set-bit negative-control
 assumption was corrected by inspecting normalized source: it is a whole-word
 read/modify/write and uses the qualified full-width handoff, not a partial LHS.

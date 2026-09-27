@@ -69,8 +69,9 @@ that the resource users, members or grants are valid; actual lowering still
 checks those contracts and rejects physical collisions. Preparation now also
 retains independently built generated-child modules, including their start
 history, storage read/write interfaces, named completion outputs and point-active
-signals. Child public ports keep their own module scope through parent formal
-rewriting. The inventory is still partial: later priority/grant processing,
+signals. Tests compare complete child modules before and after parent formal
+rewriting, including reused definitions and projected clock domains; child public
+ports keep their own module scope. The inventory is still partial: later priority/grant processing,
 parent storage/completion connections, library/ATL and final domain composition
 need coverage. It does not enable independent direct-transaction storage yet.
 
