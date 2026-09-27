@@ -54,15 +54,17 @@ compatible in source admission and do not acquire a priority mask merely because
 their owners share a priority relation.
 
 T1974 qualifies emitted predicates and complete native/API/newline/carrier
-products. Two-target runtime signoff is still open: the first SystemVerilog
-execution exposed a separate P1 assertion defect, where allowed equal-value
-sources trigger `selector same-value conflict`. The backend currently requires
-`$onehot0` within that value family even though its data enable is their OR.
-SEM `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.2` owns that correction, and sibling `.3`
-owns final runtime qualification. The first run stopped before Verilog; native
-process admission succeeded. Complete red/green and first-failure evidence is
-retained in `docs/audits/priority-contributor-repair-20260928/`. The original
-condition-loss baseline remains in `docs/audits/priority-contributors-20260927/`.
+products. Its first SystemVerilog execution exposed a separate assertion defect:
+allowed equal-value sources triggered `selector same-value conflict`, although
+the actual data-family enable ORed those sources. Decision `0111` corrects the
+metadata/emission contract to `compatible_fanin` while preserving different-value
+`onehot0` checks. Static selector, report and separate ownership controls qualify
+that correction. Observed positive/negative execution and full two-target signoff
+remain SEM `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3`; no corrected runtime pass is
+claimed yet. The first run stopped before Verilog with successful native process
+admission. Its complete evidence remains in
+`docs/audits/priority-contributor-repair-20260928/`, and the original condition-loss
+baseline remains in `docs/audits/priority-contributors-20260927/`.
 
 - The same actor-level rule/transaction priority covers a named drive with
   exactly one distinct local transaction caller and no generated caller.

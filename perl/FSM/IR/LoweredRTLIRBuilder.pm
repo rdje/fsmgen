@@ -308,7 +308,9 @@ sub selector_conflict_assertion_metadata ($class, %args) {
     } @{$args{input_enable_signals} || []};
 
     my $metadata = {
-        kind => 'onehot0',
+        # Same-RHS source enables are OR-coalesced. The legacy assertion key
+        # describes that compatible policy without imposing source exclusivity.
+        kind => exists($args{rhs_value}) ? 'compatible_fanin' : 'onehot0',
         target_signal => ($args{target_signal} // ''),
         input_count => scalar(@inputs),
         input_enable_signals => \@inputs,

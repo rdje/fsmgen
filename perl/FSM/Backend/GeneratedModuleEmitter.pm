@@ -298,6 +298,9 @@ sub selector_conflict_assertion_runtime_lines ($class, %args) {
         for my $family (@{$target->{rhs_enable_families} || []}) {
             next unless ref($family) eq 'HASH';
             my $assertion = $family->{same_value_assertion} || {};
+            # Concurrent sources in this policy select one identical RHS value.
+            # Explicit exclusivity metadata still retains its original check.
+            next if ($assertion->{kind} // '') eq 'compatible_fanin';
             next unless ($assertion->{input_count} || 0) > 1;
 
             my @inputs = @{$assertion->{input_enable_signals} || []};

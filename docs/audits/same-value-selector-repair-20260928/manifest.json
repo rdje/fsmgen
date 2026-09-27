@@ -1,0 +1,39 @@
+{
+  "baseline_revision": "a7fc9a98d1217d98f817c8d4c84448a8e1a762cc",
+  "comparison": "Complete semantic product differs only by the declared same-value policy kinds. Complete HDL differs only by removal of the exact invalid assertion and one generated Date comment; both original date lines remain retained. No corrected runtime is executed.",
+  "corrected_runtime": "pending_separately_owned_observation",
+  "prior_evidence_sha256": "98797fc34b2988dc7cede70011ea72a1b01b1943601056441d551238a4fdcdde",
+  "producers": {
+    "perl/FSM/Backend/GeneratedModuleEmitter.pm": {
+      "git_blob": "c9f3165db7e4d80f267acad879d8faad3c377810",
+      "sha256": "79f3094b802338ba0a2262325c5d6cb3e1913fcc6602618aef2475637eb9eab2"
+    },
+    "perl/FSM/IR/LoweredRTLIRBuilder.pm": {
+      "git_blob": "3ef3dd3acd6db766f1fb1072b8d74b4018f3086d",
+      "sha256": "97b80c3cc99a97db9a9a34dcf0be38b9024b9d0da1210b01f60398fdb38d084b"
+    },
+    "perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm": {
+      "git_blob": "a24e2861b25542254126d7ae189cad8d7b9db693",
+      "sha256": "a4b289d1528c2ef89e4f3bcace309bcdd91fc6cea508b97318cf3d6b7eff721e"
+    },
+    "t/1211-isf-runtime-selector-conflict-instrumentation.t": {
+      "git_blob": "032b5e01280befa39d7709eb3c0c442649e70b1f",
+      "sha256": "2623f992a5a307483dff9e6250ac7fc71446e21137f011e03ad824d8af2307b8"
+    },
+    "t/1974-isf-priority-contributor-union.t": {
+      "git_blob": "c97b1eae619b39344af91064b6e89f2695724b34",
+      "sha256": "2ba8f020a4cdba4821e1aac19e8a5260f92ce7c52edb8323c2c0ef5d11d2e56e"
+    }
+  },
+  "schema": "fsmgen.same_value_selector_static_repair.v1",
+  "sha256": {
+    "focused-result.json": "0d5c30546141253106b371d8af16b7549ad3141cca1fd9d6ac51aac7bd1e4c89",
+    "hdl.json": "d82deedaf997c6c3d96eddaae618858f9e09ff570ae5abe7593aac6995a8facf",
+    "public-contract-result.json": "57cd76058a39a14731f6d755255770d5bf51b09bc0f4ceb3d224d24da71ac702",
+    "public-producer.log": "9940298fef678d7e774806bee2f11854cfb202fc2b664a2bac830a4b0d11bd8a",
+    "red-result.json": "3a60d2781f55a2d44f6b1a893a3725aa96fa203000ad60087f5e3e6494c4d13a",
+    "red-test.t.source": "578bca9266207e19f7f1eb0c4b110a4ef3389d0d426d516b72d593cf4b2b6d5e",
+    "semantic.json": "0df0c1744f2923055be6e7cc53ccfb85859931207a17332475be2acfb40618c1",
+    "verify.py": "bbc97c98c68811b84183a8513011ddfffdecff29857d9c0ad0ca90aa81d53f43"
+  }
+}

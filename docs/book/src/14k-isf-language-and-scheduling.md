@@ -275,9 +275,11 @@ assignment-level conflict resolution, not the broader `named_drive` resource
 kind and lifetime/fairness policy listed above.
 
 Generated SystemVerilog now includes verification-only selector assertions
-derived from backend assignment analysis: same-value source selectors and
-whole-mux value selectors are checked with `$onehot0` under
-`` `ifndef SYNTHESIS``. Transaction/transaction priority, broader shared-drive
+derived from backend assignment analysis: distinct whole-mux value selectors
+are checked with `$onehot0` under `` `ifndef SYNTHESIS``. Same-RHS sources
+remain compatible OR fan-in; their legacy `same_value_assertion` descriptor
+uses `kind: compatible_fanin` and imposes no source-exclusivity check
+(decision `0111`). Transaction/transaction priority, broader shared-drive
 arbitration/lifetime policy, and broader resource arbitration remain backlog
 items.
 

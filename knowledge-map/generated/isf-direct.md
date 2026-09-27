@@ -46,5 +46,5 @@ _Direct transaction formal identity plan and remaining scope integration_
 
 _Direct writer admission needs physical overlap and explicit controller ownership_
 
-- **date:** 2026-09-27 · **status:** current
+- **date:** 2026-09-28 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-direct-writer-admission-boundary.md`](../../docs/knowledge/isf-direct-writer-admission-boundary.md)

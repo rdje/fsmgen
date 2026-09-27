@@ -99,6 +99,7 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
             'The output-drive family and rhs-enable-family key families describe the current nested entry schemas emitted in output_drive_families[].',
             'Reset-only output registers retain flop drive families with a feedback default and reset value, but zero data-driver blocks and empty RHS/enable families.',
             'The selector-conflict target, rhs-enable-family, and assertion key families describe the current nested entry schemas emitted in selector_conflict_targets[].',
+            'Within selector_conflict_targets, the legacy same_value_assertion key uses kind compatible_fanin for OR-coalesced same-RHS sources; it does not require source exclusivity. The different-value multi_value_assertion retains kind onehot0. Entry presence alone does not imply an emitted exclusivity assertion.',
             'The standalone-DT multi-drive target and assertion key families describe the current nested entry schemas emitted in standalone_dt_multi_drive_targets[].',
             'The composition shared-datapath candidate key families describe the current nested entry schemas emitted in composition_shared_datapath_candidates[], including contributor drive-intent projections and their rhs-enable-family entries. Nested contributor child IR summaries remain delegated to their existing bounded contracts.',
             'Use the grouped presence_key_family_map to discover the bounded core and composition-only lowered_rtl_ir key families without collecting those key-family lists separately.',

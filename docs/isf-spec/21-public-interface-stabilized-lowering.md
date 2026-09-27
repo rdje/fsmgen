@@ -546,9 +546,13 @@ invoking-transaction provenance do not widen the public schedule-report or
 normalized-semantic schemas.
 After scheduled `.fsm` reaches the HDL backend, generated SystemVerilog now
 adds verification-only selector assertions derived from backend assignment
-analysis. Same-value source selectors for one `LHS`/`VAL` selector and
-different-value selectors for one `LHS` mux are checked with `$onehot0` under
-`` `ifndef SYNTHESIS``. Verilog emission remains free of those assertions.
+analysis. Different-value selectors for one `LHS` mux are checked with
+`$onehot0` under `` `ifndef SYNTHESIS``. Same-RHS source enables are compatible
+OR fan-in, represented under the legacy `same_value_assertion` key with
+`kind => compatible_fanin`; no source-exclusivity assertion follows from that
+policy. Explicit `onehot0` metadata retains its obligation. Report key families
+and separate standalone/composition checks remain unchanged. Verilog emission
+remains free of SystemVerilog selector assertions.
 This does not widen the successful public ISF schedule-report schema; the
 selector metadata lives in the downstream HDL-generation/lowered-RTL result
 surface, whose full hash remains outside the ISF public contract.

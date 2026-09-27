@@ -11,7 +11,7 @@ answers:
   - "where do lowered source-writer identities originate?"
   - "how are exact local and generated named-drive invocation sources retained?"
   - "where is the direct writer admission baseline?"
-date: 2026-09-27
+date: 2026-09-28
 status: current
 tags: [isf, controllers, writers, storage, conflicts, ownership]
 evidence: perl/FSM/Scheduler/ISF/DriveInvocationSources.pm; t/1971-isf-drive-invocation-sources.t; perl/FSM/Scheduler/ISF/SourceWriterOwners.pm; t/1970-isf-source-writer-owners.t; t/1969-isf-implicit-write-targets.t; perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
@@ -165,8 +165,12 @@ equal-value overlap through the backend same-value onehot0 assertion. Native
 admission and retained stage cleanup succeed; no native failure event occurs.
 GeneratedModuleEmitter consumes unconditional same_value_assertion metadata from
 LoweredRTLIRBuilder, although the actual data-family enable ORs those sources.
-T1211 tests emission text but never executes this admitted overlap. The assertion
-origin is fd3317ef93c8ea5901c53fd507ce2f2cf9672b3d. Child .2 owns this P1 contract
-repair before child .3 completes both HDL targets; overall signoff remains open.
+The earlier T1211 only tested emission text. The assertion origin is
+fd3317ef93c8ea5901c53fd507ce2f2cf9672b3d. Decision 0111 now tags these families
+compatible_fanin under the legacy same_value_assertion key and omits their
+invalid source-exclusivity check. Different-value onehot0 and separate ownership
+checks remain. Child .2 qualifies that metadata/emission repair; child .3 still
+owns observed positive/negative execution and both HDL targets. Overall signoff
+remains open.
 Verify saved evidence without a runtime with
 `python3 -B docs/audits/priority-contributor-repair-20260928/verify.py`.

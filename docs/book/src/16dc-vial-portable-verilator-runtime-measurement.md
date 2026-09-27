@@ -1234,6 +1234,8 @@ complete stages, their original limits and cleanup, unchanged admitted inputs
 and an empty native-failure capture. This is a backend assertion failure after
 execution, not another `setpgid` rejection. Verilog has not run; corrected
 qualification remains separately owned, as does the historical native cause.
+Decision `0111` now qualifies the static compatible-fan-in correction; it does
+not supply the pending corrected runtime result.
 The first temporary workspace and exact selected commands are absent. Individual
 successful-child PIDs were not independently recorded by the failure-only hook;
 the retained supervisor results supply stage process-cleanup evidence.

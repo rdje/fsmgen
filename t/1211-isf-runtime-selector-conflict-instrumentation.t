@@ -5,14 +5,16 @@ use Test::More;
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
+use Storable qw(dclone);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::ISF;
+use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Pipeline::HDLGenerator;
 use FSM::Scheduler::ISF;
 
-subtest 'same-value rule fan-in emits verification-only source selector assertions' => sub {
+subtest 'same-value rule fan-in remains compatible without source exclusivity' => sub {
     my $result = generate_from_isf(
         'same_value_selector_probe',
         <<'ISF',
@@ -44,19 +46,34 @@ ISF
     is_deeply(
         $one_family->{same_value_assertion},
         {
-            kind => 'onehot0',
+            kind => 'compatible_fanin',
             target_signal => 'valid',
             rhs_value => '1',
             input_count => 2,
             input_enable_signals => ['r0_valid_1_en', 'r1_valid_1_en'],
         },
-        'lowered metadata records the same-value selector assertion over per-rule source enables',
+        'legacy metadata key explicitly identifies compatible source fan-in',
+    );
+    unlike(
+        $result->{hdl_code},
+        qr/assert \(\$onehot0\(\{r0_valid_1_en, r1_valid_1_en\}\)\) else \$error\("selector same-value conflict: valid 1"\);/,
+        'SystemVerilog does not forbid admitted same-value source overlap',
     );
     like(
         $result->{hdl_code},
-        qr/assert \(\$onehot0\(\{r0_valid_1_en, r1_valid_1_en\}\)\) else \$error\("selector same-value conflict: valid 1"\);/,
-        'SystemVerilog HDL emits the same-value selector assertion',
+        qr/assign valid_1_en = r0_valid_1_en \| r1_valid_1_en;/,
+        'the actual value-family selector still ORs both source enables',
     );
+    my $explicit = dclone($result->{module_info});
+    my ($target) = grep {$_->{signal_name} eq 'valid'} @{$explicit->{selector_conflict_targets}};
+    my ($family) = grep {$_->{rhs_value} eq '1'} @{$target->{rhs_enable_families}};
+    $family->{same_value_assertion}{kind} = 'onehot0';
+    my $lines = join "\n", FSM::Backend::GeneratedModuleEmitter->selector_conflict_assertion_runtime_lines(
+        module_info => $explicit, target_language => 'systemverilog');
+    like($lines, qr/\$onehot0\(\{r0_valid_1_en, r1_valid_1_en\}\)/,
+        'an explicitly declared exclusive-source policy still emits its check');
+    is($one_family->{same_value_assertion}{kind}, 'compatible_fanin',
+        'the explicit-policy control does not mutate the actual producer contract');
 };
 
 subtest 'priority-resolved rule conflicts still emit whole-mux value selector assertions' => sub {

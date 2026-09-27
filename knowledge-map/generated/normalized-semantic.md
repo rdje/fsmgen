@@ -191,7 +191,7 @@ _Normalized semantic JSON preserves public source identity for lowered inputs_
 
 _Normalized semantic lowered RTL advertises selector-conflict entry schemas_
 
-- **date:** 2026-06-05 · **status:** current
+- **date:** 2026-09-28 · **status:** current
 - **source and verification:** [`docs/knowledge/normalized-semantic-selector-conflict-entry-schema.md`](../../docs/knowledge/normalized-semantic-selector-conflict-entry-schema.md)
 
 ### normalized-semantic-shared-datapath-candidate-entry-schema

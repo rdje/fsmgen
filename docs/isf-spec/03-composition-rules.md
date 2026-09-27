@@ -396,15 +396,17 @@ compatible in source admission and do not acquire a priority mask merely because
 their owners share a priority relation.
 
 T1974 qualifies emitted predicates and complete native/API/newline/carrier
-products. Two-target runtime signoff is still open: the first SystemVerilog
-execution exposed a separate P1 assertion defect, where allowed equal-value
-sources trigger `selector same-value conflict`. The backend currently requires
-`$onehot0` within that value family even though its data enable is their OR.
-SEM `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.2` owns that correction, and sibling `.3`
-owns final runtime qualification. The first run stopped before Verilog; native
-process admission succeeded. Complete red/green and first-failure evidence is
-retained in `docs/audits/priority-contributor-repair-20260928/`. The original
-condition-loss baseline remains in `docs/audits/priority-contributors-20260927/`.
+products. Its first SystemVerilog execution exposed a separate assertion defect:
+allowed equal-value sources triggered `selector same-value conflict`, although
+the actual data-family enable ORed those sources. Decision `0111` corrects the
+metadata/emission contract to `compatible_fanin` while preserving different-value
+`onehot0` checks. Static selector, report and separate ownership controls qualify
+that correction. Observed positive/negative execution and full two-target signoff
+remain SEM `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3`; no corrected runtime pass is
+claimed yet. The first run stopped before Verilog with successful native process
+admission. Its complete evidence remains in
+`docs/audits/priority-contributor-repair-20260928/`, and the original condition-loss
+baseline remains in `docs/audits/priority-contributors-20260927/`.
 
 - Actor-level priority also covers a rule assignment that conflicts with a
   data assignment in a uniquely owned named drive. For
@@ -420,15 +422,16 @@ condition-loss baseline remains in `docs/audits/priority-contributors-20260927/`
   private caller/source metadata and drive-assignment provenance retains its
   invoking transactions; successful public schedule-report schemas are not
   widened.
-- Generated SystemVerilog includes verification-only selector assertions for
-  analyzed muxes after ISF lowers through scheduled `.fsm`. Same-value
-  `LHS`/`VAL` source selectors and whole-`LHS` value selectors are checked
-  with `$onehot0` under `` `ifndef SYNTHESIS``; Verilog emission stays free of
-  SystemVerilog assertions. The checks are derived from backend assignment
-  analysis, so they cover internal generated muxes such as `next_state` as
-  well as ISF-authored data targets. Standalone DT roots keep their existing
-  standalone-DT multi-drive assertions rather than receiving duplicate
-  selector blocks.
+- Generated SystemVerilog checks different-value selectors for each analyzed
+  `LHS` mux with `$onehot0` under `` `ifndef SYNTHESIS``. Same-RHS source
+  enables remain compatible OR fan-in; the legacy `same_value_assertion`
+  metadata key now uses `kind => compatible_fanin` and imposes no source
+  exclusivity. `multi_value_assertion.kind` remains `onehot0`, and explicit
+  one-hot metadata still emits its obligation. Verilog emits no SystemVerilog
+  assertions. Backend assignment analysis also supplies checks for generated
+  muxes such as `next_state`. Standalone DT and shared-composition ownership
+  assertions retain their separate contracts; the selector correction does
+  not relax those obligations or change report key families.
 - `(trigger transaction)` lowers as a `<1` one-cycle delayed pulse inside the
   guarded non-state DT to a generated per-rule/per-transaction source named
   `rule_transaction`, so a rule trigger is a pulse rather than a sticky

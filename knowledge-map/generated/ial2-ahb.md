@@ -1724,7 +1724,7 @@ _AHB subordinate BUSY-in-burst parking readiness audit selects a contract select
 
 _Generated AHB subordinate output arbitration is assertion-clean_
 
-- **date:** 2026-07-29 · **status:** current
+- **date:** 2026-09-28 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-ahb-subordinate-default-phase-output-arbitration-behavior.md`](../../docs/knowledge/ial2-ahb-subordinate-default-phase-output-arbitration-behavior.md)
 
 ### ial2-ahb-subordinate-default-phase-output-arbitration-contract-selection
