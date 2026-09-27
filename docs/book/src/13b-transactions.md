@@ -88,12 +88,19 @@ comparisons and monitor expressions retain assignment suffixes.
 Actual repeat-counter decrements have no emitted assignment guard. The collector
 refuses invented guarded-decrement forms instead of using a dropped condition as
 exclusion evidence. It validates raw/structured predicate consistency and returns
-detached records. This helper is not attached to production admission; resource,
-priority and complete generated-writer evidence remain the following slices.
+detached records. These helpers remain detached from production admission.
+A resource-grant collector now cross-checks authored resource users against
+module grants and explicitly owned rule-DT grant records. It catches missing
+records even when both lowered copies omit them, preserves resource members and
+priority/round-robin policy, and joins through source identity after a DT rename.
+Priority `higher` entries describe fixed higher users; round-robin entries name
+potential blocking peers. Neither list alone proves exclusion. Actual grant
+conditions, target-local suppressors, invocation joins and complete generated
+writer evidence remain the following slices.
 The focused carrier and malformed-evidence checks run without HDL simulation:
 
 ```sh
-scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1973-isf-writer-activation-predicates.t
+scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1973-isf-writer-activation-predicates.t t/1975-isf-writer-resource-grants.t
 ```
 
 Scope repair now has separately tested expression, clause and binding resolution. It

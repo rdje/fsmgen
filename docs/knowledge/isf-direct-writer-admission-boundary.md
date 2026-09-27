@@ -11,10 +11,12 @@ answers:
   - "where do lowered source-writer identities originate?"
   - "how are exact local and generated named-drive invocation sources retained?"
   - "where is the direct writer admission baseline?"
+  - "how are resource grants checked for writer admission?"
+  - "where are detached writer activation predicates collected?"
 date: 2026-09-28
 status: current
 tags: [isf, controllers, writers, storage, conflicts, ownership]
-evidence: perl/FSM/Scheduler/ISF/DriveInvocationSources.pm; t/1971-isf-drive-invocation-sources.t; perl/FSM/Scheduler/ISF/SourceWriterOwners.pm; t/1970-isf-source-writer-owners.t; t/1969-isf-implicit-write-targets.t; perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
+evidence: perl/FSM/Scheduler/ISF/WriterResourceGrants.pm; t/1975-isf-writer-resource-grants.t; perl/FSM/Scheduler/ISF/DriveInvocationSources.pm; t/1971-isf-drive-invocation-sources.t; perl/FSM/Scheduler/ISF/SourceWriterOwners.pm; t/1970-isf-source-writer-owners.t; t/1969-isf-implicit-write-targets.t; perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
 reverify: scripts/run_with_ram_guard.sh perl docs/audits/direct-writer-admission-20260927/reproduce.pl; compare .artifacts/direct-writer-admission/current.json with the retained result.json. This is a dated admission baseline, not an expected future safety contract.
 ---
 
@@ -179,3 +181,18 @@ Historical native causality remains open; the next SEM leaf .2.3 joins detached
 grant/suppression/invocation evidence before any general admission promotion.
 Verify saved evidence without a runtime with
 `python3 -B docs/audits/priority-runtime-qualified-20260928/verify.py`.
+
+
+WriterResourceGrants::collect now joins actual actor declarations, module
+resource_arbitration grants and rule-DT resource_grants through explicit source
+ownership. It catches missing/extra/duplicate/malformed rows, inconsistent
+policy/member/mirror fields and omitted round-robin peers. Authored users remain
+an independent completeness witness if both lowered copies omit a grant. It
+preserves member and peer ordering and supports unbound declarations, multiple
+resources and DT renames, with deeply detached output. Priority ordering and
+actual grant predicates are not rederived here; no list of owners proves
+exclusion. T1975 covers all supported resource kinds and both arbiters with
+independent expected records, hostile omissions, unchanged carriers and public
+parity. The helper has no production caller; next child .2 of SEM
+.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3 owns grant-condition and priority-suppression joins.
+Reverify using guarded prove on T1975/T1973/T1970/T1218.

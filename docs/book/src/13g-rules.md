@@ -342,6 +342,15 @@ progress and the rule's resource grant remain separate. Same-value writes remain
 compatible in source admission and do not acquire a priority mask merely because
 their owners share a priority relation.
 
+A private collector preparing writer admission now checks correspondence between
+authored resource users, module grant records and rule-DT grant records. It
+preserves declared member order and distinguishes priority suppressors from
+round-robin peers. Missing, duplicate or inconsistent records fail collection,
+including deletion from both lowered copies. Source ownership provides the rule
+identity even if the DT is renamed. The collector returns detached evidence;
+actual grant-condition proof and production writer admission remain separately
+owned. It introduces no new source form or public report keys.
+
 T1974 qualifies emitted predicates and complete native/API/newline/carrier
 products. Its observed SystemVerilog and Verilog runs preserve ordered writes,
 opposite priority, compatible equal-value overlap, named-drive writes,

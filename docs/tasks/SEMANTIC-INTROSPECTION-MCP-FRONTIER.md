@@ -946,10 +946,33 @@ For FSMGen, the analogs are:
   Commit: `this commit closes qualified children`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Join qualified grant, suppression and invocation evidence after contributor repair.`
   Acceptance: `After .1/.2, complete the parent resource/priority/invocation association contract against actual producer records and effective predicates, preserving all contributors and rejecting omitted/malformed evidence. Split further if necessary; no metadata-only exclusion proof or production admission promotion.`
-  Verification: `pending`
+  Verification: `Scoped from clean 588028b01271a706ec78c0f66a4b5e1a00bd0b70 after complete priority repair. Qualify declaration/root/DT grant correspondence first, then predicate/suppression semantics and invocation integration. No production attachment or native runtime in the first child.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.1`
+  Status: `done`
+  Goal: `Collect detached resource grants with complete declaration/root/DT correspondence.`
+  Acceptance: `Add a private collector joining actual actor resource/user declarations, module resource_arbitration grants and explicitly owned rule DT resource_grants. Preserve resource kind, arbiter, user, higher/peer lists and members without treating those names as an exclusion proof. Reject missing/extra/duplicate/malformed grants, unknown users and inconsistent DT mirrors, including simultaneous root/DT omission caught by declarations. Support priority and round_robin plus unbound declarations, actual source identity after DT rename, and detached/nonmutating records. Qualify real emitted carriers and public report parity with independent expected records. This child does not rederive priority ordering, prove grant predicates, attach assignment annotations or change production admission; child .2 owns those remaining semantic joins. No supervised HDL runtime belongs here.`
+  Verification: `WriterResourceGrants::collect receives the actual actor as its independent declaration witness, validates complete module grant rows and explicitly owned rule-DT mirrors, and returns detached grant/owner records. It preserves resource policy, member ordering and higher/peer lists; round-robin completeness follows the declared user order. Declared users catch simultaneous root/DT deletion. Unknown/duplicate/missing/malformed records, wrong policy/members, self/unknown suppressors and inconsistent mirrors reject. T1975 covers every currently supported resource kind with both arbiters, unbound backlog declarations, multiple resources, reordered authored rules, renamed DTs, deep detachment and exact unchanged carriers. Every fixture strict-checks and has complete native/carrier semantic equality; priority/round-robin rule-slot schedules additionally agree through native/API/newline. Guarded focused T1975 passes All tests successful, Files=1, Tests=3; related T1973/T1970/T1218 passes Files=3, Tests=22. Initial authoring errors used name instead of the parser actor_name field and omitted the mandatory arbiter on the unbound fixture; both were corrected from the actual parser contract before these passing runs. Only T1975 imports the new private helper. No priority ordering re-derivation, effective-grant proof, legacy assignment annotation completeness or production attachment is claimed. Public sync scope: private helper/test and book/spec/downstream/fact/task; source syntax, scheduler emission, public schema/facade/capability metadata remain unchanged. Child .2 owns semantic joins.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Join validated grants and priority suppressors to actual assignment predicates.`
+  Acceptance: `After .1, qualify actual grant condition and target-local suppression semantics against producer records, authored requests and emitted guards. Preserve multiple resources, priority/round_robin distinctions, both priority directions and all higher contributors. Keep source annotations separate from effective container/assignment guards; qualify generated assignments added after arbitration without inventing complete legacy annotations. Reject omitted or inconsistent evidence before attachment; no metadata-only exclusion proof. Split further if needed before code changes.`
+  Verification: `pending .1`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.3`
+  Status: `pending`
+  Goal: `Integrate exact invocation associations with qualified grant/suppression evidence.`
+  Acceptance: `After .1/.2, retain actual local/generated invocation associations and require complete explicit assignment coverage with detached immutable output, source permutations, omitted/mutated associations and full native/API/newline/carrier parity. No shadow admission promotion before the separate whole-collector qualification leaf.`
+  Verification: `pending .1/.2`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.3`
@@ -2820,8 +2843,8 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3`, detached grant/suppression/invocation
-evidence integration after complete observed priority qualification,
+`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2`, grant-condition and target-local
+priority-suppression semantics after complete observed priority qualification,
 after literal-guard repair and independently retained runtime qualification, after
 exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
@@ -4771,3 +4794,18 @@ rejection plus independent cleanup and corrupted evidence controls; durability
 uses the committed test, full original stage/log records, admitted/extra source
 identities and saved verifier. No historical EPERM cause follows from silent
 successful native calls. That missing causal leg remains owned by HIAL .3.2.10.11.5.
+
+
+## Acceptance — detached resource-grant correspondence `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual --emit-schedule-json and LoweringIR resource_arbitration expose grants whose rule DTs retain resource_grants mirrors. Those lowered copies alone cannot establish completeness when both omit a resource/user. T1975's independent declared user matrix and simultaneous-copy deletion control establish why the actor declaration witness is required. SourceWriterOwners supplies the authored rule identity independently of the generated DT spelling.
+- [x] **ADDRESSED (verified)** — The private WriterResourceGrants collector joins actual declarations, complete module rows and DT mirrors; validates policy/members/peer identity and duplicate/missing/malformed boundaries; and returns detached records. Independent expected records cover supported kinds and both arbiters, unbound declarations, multiple resources, declaration order and DT rename. It does not infer an exclusion proof or attach itself to production admission.
+- [x] **NO REGRESSION** — Guarded T1975 reports `All tests successful`, `Files=1, Tests=3`; T1973/T1970/T1218 reports `All tests successful`, `Files=3, Tests=22`. Complete carrier identity, strict checks, native/carrier semantic parity and both arbiter schedule native/API/newline products pass. Book/spec/downstream, canonical fact, map and claim census accompany staged doctrine qualification; no HDL runtime was needed for this detached metadata slice.
+
+Re-derivation uses actual parsed/lowered fixtures and independent literal expected
+grant records; falsification removes or corrupts either/both lowered copies,
+authored declarations and ownership while healthy/unbound controls still pass;
+durability uses the permanent T1975 regression, tracked collector and canonical
+fact/task records. Full grant-condition, priority-suppression and invocation
+semantics remain the following owned children; these records alone prove no
+mutual exclusion. No additional decision or rationale-ledger entry is needed.
