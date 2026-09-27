@@ -128,11 +128,19 @@ valid during the child's completion pulse, as described in
 [Composition](13f-composition.md). Transaction-local payload ports take
 precedence over same-name actor signals during domain validation.
 
-Generated-child storage reads in multi-domain actors remain explicitly refused
-pending their separate ownership qualification. Named child completion outputs
-other than the canonical `done`, library parent-interface ownership, and child
-await watchdog initialization have tracked repair owners; artifact realization
-does not qualify those behaviors.
+Generated children can read live actor storage when the child and storage owner
+share a domain. Scalar, signed, packed record/list and selected bank reads use
+internal owner-to-child handoffs; the owner retains the register and its reset.
+These reads remain live after activation. Unowned sibling-domain access is
+rejected instead of introducing an implicit crossing.
+
+[Named child completion outputs](13f-composition.md#named-completion-outputs-in-generated-children)
+also retain their authored pulses alongside the canonical activation handshake.
+Library-owned outputs feed the importing FSM through readback inputs, with the
+library selected into its declared domain; see [Composition](13f-composition.md).
+Independent clock/reset and report qualification covers these supported paths.
+Child await watchdog initialization, plain local-call reachability and
+multi-domain VHDL remain separate qualification boundaries.
 
 For example, the file-backed `clock_domain_event_crossing` actor uses the
 portable domain names `source` and `core` and emits these review artifacts:

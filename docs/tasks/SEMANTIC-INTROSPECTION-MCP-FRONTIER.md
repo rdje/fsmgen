@@ -1671,10 +1671,25 @@ For FSMGen, the analogs are:
   Commit: `8ca4fe501; qualification closure in this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify outer-domain declaration realization before complete reservation integration.`
   Acceptance: `Trace actual domain-specific parent/child/CDC/top realization against prepared products and source identities. Own any missing producer before declaring reservation coverage complete; preserve domain and public report contracts.`
-  Verification: `Remains after named-completion and library-readback closure; no whole-namespace completeness claim yet.`
+  Verification: `Domain chapter retains stale refusal/deferred prose from initial artifact realization. Child .1 repairs this observed documentation defect; child .2 next audits actual domain declarations; no whole-namespace completeness claim yet.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.1`
+  Status: `done`
+  Goal: `Repair stale domain chapter storage/completion/library capability limits.`
+  Acceptance: `Trace the refusal paragraph to its introducing commit and current canonical qualification; replace obsolete limits with supported same-domain storage reads, named completions and library readback, preserving the independently pending watchdog/local-call/VHDL limits. Verify book examples and build.`
+  Verification: `Reproduce by reading the paragraph after domain_child_read in docs/book/src/13a-actor-interface.md: it contradicts T1916 storage reads, T1913 named completion and T1914/T1915 library contracts. Impact: the user-facing book falsely denies shipped capabilities. Repaired with current ownership/readback/completion contracts and retained independent watchdog/local-call/VHDL limits. T1376 and book build pass.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Qualify actual domain source shells, local products and outer identities.`
+  Acceptance: `Observe real domain-specific parent/child/CDC/top realization against prepared products, retain missing canonical producers before complete reservation integration, and preserve strict/native/API/MCP contracts without fabricated parent merges.`
+  Verification: `Resume after the stale capability paragraph is repaired and committed.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -3607,3 +3622,30 @@ now retains the existing authority; no ceiling or verifier was relaxed.
 The follow-up gate caught task-evidence allowance drift after that note was
 added. Refreshing the existing owned transition allowance after the final
 task edit corrects it; enforcement ceilings remain unchanged.
+
+## Acceptance — domain capability prose `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` traces the storage-read
+  refusal paragraph in 13a-actor-interface.md to 01718f524, the initial
+  domain-child artifact realization. Later qualification under .39.2.2.2.3.2,
+  .46, .47 and .48 changed supported behavior without updating this summary.
+  The current domain/storage/completion/library fact cards and their task
+  evidence contradict that paragraph's storage refusal and deferred ownership.
+- [x] **ADDRESSED (verified)** — replace the obsolete limits with live
+  same-domain scalar/signed/packed aggregate/selected-bank reads, owner-held
+  registers/resets, named completion forwarding and domain-selected library
+  readback. Keep sibling-domain refusal and independently pending watchdog,
+  local-call and VHDL boundaries explicit. Link to maintained composition
+  detail instead of duplicating its examples or acceptance history.
+- [x] **NO REGRESSION** — book-fixtures.log reports `All tests successful`
+  for T1376; book.log records a successful synchronized mdBook build.
+  Existing canonical cards retain their dated independent runtime/report
+  qualifications; this prose-only slice changes no implementation or fixture
+  and does not claim a new runtime run. Staged doctrine and normal hook apply.
+
+Evidence: `.artifacts/domain-capability-docs/`. Re-derivation joins exact Git
+history and canonical qualified behavior; falsification compares the prior
+refusal claim with the supported T1916/T1913/T1914/T1915 contracts and preserves
+unqualified limits; durability is the corrected book and this defect-owning
+leaf. The finding was surfaced before repair. DEVELOPMENT_NOTES needs no
+additional copy of these established contracts.
