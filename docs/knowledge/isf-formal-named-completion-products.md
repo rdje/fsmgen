@@ -41,8 +41,10 @@ still fail executable admission. The full selected reader/completion/schedule
 cohort passes, including T1913 independent named pulse timing and complete
 native/API/newline report qualification.
 
-Library-readback and outer domain realization remain separate coverage gates
-before complete reservations and automatic production formal rewriting.
+Library readback preserves declaration names, as qualified in
+[isf-library-parent-port-ownership](isf-library-parent-port-ownership.md).
+Outer domain realization remains a separate coverage gate before complete
+reservations and automatic production formal rewriting.
 Canonical event behavior remains in
 [isf-generated-child-named-completion](isf-generated-child-named-completion.md).
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.1.

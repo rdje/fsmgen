@@ -1664,10 +1664,10 @@ For FSMGen, the analogs are:
   Commit: `73d4047be; qualification closure in this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify library readback namespace preservation after completion connections.`
   Acceptance: `Observe real library readback ownership admission and emitted interface adaptation, prove declaration namespace preservation across legal and rejected cases, retain any actual missing products if found, and preserve strict/native/API/MCP behavior.`
-  Verification: `LibraryPortOwnership changes explicit parent interface direction and storage role without currently allocating helper names; qualify this actual boundary rather than infer completeness from code inspection alone.`
+  Verification: `T1954 observes real source/projected readback and finalization calls: complete effects are interface direction/storage role only, with no declaration additions/removals and no uncovered prepared names. Ordinary, typed, observed, direct-formal, mixed completion and no-library controls pass; writer/reset/default/duplicate/completion refusals preserve namespace and propagate original errors. Broader independent library/domain/report qualification is in flight.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3`
@@ -3539,3 +3539,39 @@ the complete retained cohort; falsification includes exact independent pulse
 cycles, reset/repeated activation and actual mixed-writer refusals; durability
 is T1953/T1913, the formal completion card, book and committed task history.
 This is bounded completion qualification, not whole-domain namespace closure.
+
+## Acceptance — library readback namespace `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `--emit-schedule-json` on the public
+  fifo_library_use fixture succeeds and retains authored library output
+  bindings. The remaining reservation question is whether executable
+  LibraryPortOwnership or its following finalization adds declarations.
+  T1954 observes those actual LoweringIR calls, delegating each call once;
+  full parent snapshots expose direction/role adaptation without allocation.
+- [x] **ADDRESSED (verified)** — T1954 compares the complete before/after IR
+  against only the admitted explicit-interface direction and storage-role
+  changes. Actual declarations remain covered by prepared source/products
+  before and after formal projection. Typed, observed, direct-formal,
+  generated-completion and absent-library controls preserve public contracts
+  and strict emitted carriers. Rejected writers, reset/default ownership,
+  duplicate drivers and generated completions introduce no name, propagate
+  the original exception and prevent re-finalization. No production change
+  or additional synthetic reservation product is necessary.
+- [x] **NO REGRESSION** — test.log reports `All tests successful` for T1954;
+  the synchronized mdBook build passes. Independent library/domain execution
+  and reusable-product confirmation are pending in regression.log; the
+  canonical schedule matrix and runnable examples report All tests successful
+  in report-book.log. Consume the remaining runtime job before closing this leaf. Fresh staged
+  doctrine and the normal commit hook remain mandatory.
+
+Evidence: `.artifacts/formal-library-readback/`. Re-derivation observes real
+lowering snapshots, stage order and native schedule bindings; falsification
+uses ownership refusals, mixed generated completion, absent-library control
+and formal projection; durability is T1954, the library ownership card,
+composition book and this task. Outer-domain realization remains separately
+owned; this does not claim whole-namespace closure or production rewriting.
+The initial cohort command names a nonexistent T1255 suffix; its selected
+library tests remain running, and the canonical T1255 filename discovered
+from the repository passed separately with T1376. Consume every actual
+result; the invalid selector is not a product regression. No duplicate
+DEVELOPMENT_NOTES rationale is warranted.

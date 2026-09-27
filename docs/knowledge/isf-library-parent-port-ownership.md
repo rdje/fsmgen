@@ -8,8 +8,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, libraries, interfaces, ownership, fifo, domains, mcp]
-evidence: perl/FSM/Scheduler/ISF/LibraryPortOwnership.pm; perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm; t/1238-isf-fifo-library-hdl-generation.t; t/1914-isf-library-parent-interfaces.t; t/1912-isf-multi-domain-generated-children.t; t/1915-isf-library-domain-system-bindings.t; perl/FSM/Adapter/ISF/Parser.pm; docs/ISF_LIBRARY_CATALOG.md
-reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1238-isf-fifo-library-hdl-generation.t t/1914-isf-library-parent-interfaces.t t/1915-isf-library-domain-system-bindings.t
+evidence: perl/FSM/Scheduler/ISF/LibraryPortOwnership.pm; perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm; t/1238-isf-fifo-library-hdl-generation.t; t/1914-isf-library-parent-interfaces.t; t/1912-isf-multi-domain-generated-children.t; t/1915-isf-library-domain-system-bindings.t; t/1954-isf-formal-library-readback-namespace.t; perl/FSM/Adapter/ISF/Parser.pm; docs/ISF_LIBRARY_CATALOG.md
+reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1954-isf-formal-library-readback-namespace.t t/1238-isf-fifo-library-hdl-generation.t t/1914-isf-library-parent-interfaces.t t/1915-isf-library-domain-system-bindings.t
 ---
 
 Explicit interface preservation kept all importing-actor inputs and outputs in
@@ -50,4 +50,16 @@ reset kind/polarity and absence with independent HDL observations, rejects
 wrong-domain bindings and incompatible inference, and preserves explicit policy
 remapping. No implicit domain crossing is introduced.
 
-Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.47 and .48.
+T1954 observes the real readback call and parent finalization before and after
+formal projection. Complete parent snapshots differ only in explicit interface
+direction and storage role. Public port names, widths, types and directions
+remain unchanged; no declaration name is allocated or removed. Actual prepared
+source/product reservations cover these stage declarations for ordinary,
+typed, observed, direct-formal and generated-completion compositions. Rejected
+writers, resets/defaults, duplicate owners and generated completion conflicts
+also introduce no declaration name; their original exceptions propagate and
+prevent re-finalization. This closes the library-readback reservation boundary,
+not outer-domain realization or automatic production formal rewriting.
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, .48 and
+.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2.
