@@ -128,6 +128,29 @@ valid during the child's completion pulse, as described in
 [Composition](13f-composition.md). Transaction-local payload ports take
 precedence over same-name actor signals during domain validation.
 
+A domain that contains generated children or a library instance can also use
+an explicit activation crossing. Its start, done and ready handshakes stay
+internal to the domain components and CDC children. The component boundary
+honors those declared routes even though ordinary local child handoffs are
+private. For example, the parent can join a local worker and then call a
+transaction in another domain:
+
+```lisp
+(actor composed_activation
+ (clock-domains
+  (domain core (clock clk) (reset (rst_n async active_low)) :default)
+  (domain aux (clock aux_clk) (reset (aux_rst_n async active_low))))
+ (interface (input start) (output core_done) (output local_seen) (output aux_seen (domain aux)))
+ (crossings (activation remote (from core) (to aux)))
+ (transaction worker (wait 1) (complete local_seen))
+ (transaction parent (on start) (spawn worker as job) (await_all done) (do remote) (complete core_done))
+ (transaction remote (domain aux) (wait 2) (complete aux_seen)))
+```
+
+The auxiliary clock may be stopped while the local worker runs; the parent
+completes only after the declared remote activation crosses and returns.
+Reset and repeated activation retain the existing handshake behavior.
+
 Generated children can read live actor storage when the child and storage owner
 share a domain. Scalar, signed, packed record/list and selected bank reads use
 internal owner-to-child handoffs; the owner retains the register and its reset.

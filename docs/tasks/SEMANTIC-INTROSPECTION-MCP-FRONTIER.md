@@ -1708,11 +1708,11 @@ For FSMGen, the analogs are:
   Commit: `fc19fb1f5; qualification closure in this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify complete domain reservation integration.`
   Acceptance: `Join prepared domain products and outer composition identities against real lowering, formal projection, portable collisions and native/API/MCP reports, retaining independent domain runtime and existing refusal boundaries.`
-  Verification: `Pending producer children .1 and .2.`
-  Commit: `pending`
+  Verification: `T1957 qualifies combined domain resources, priorities, private/storage shadows, declaration permutations, case-folded conflicts, generated reads/writes and completion sharing against actual lowering. The discovered composed-domain CDC handoff loss is repaired by honoring explicit direction-matching boundary maps. T1958 strict/native/API/newline reports and independent SystemVerilog/Verilog stopped-clock/reset/repeated-activation oracles pass. Full focused regression, book examples and book build pass; all jobs consumed.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.4`
   Status: `pending`
@@ -3778,3 +3778,55 @@ cohort outputs; falsification includes real namespace collisions, case-safe
 materialization, public-only HDL oracles and explicit ATL refusal; durability
 is T1956/T1895 and the canonical naming card/task. This does not close domain
 integration or the separately owned watchdog/local-call/containment issues.
+
+### Discovered blocking defect — composed-domain activation handoff
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.3.
+Reproduction: T1957 activation_composed in
+`.artifacts/formal-domain-integration/qualified-combined.log` lowers successfully,
+then strict-checking its exported top rejects unconnected core.remote_done.
+Impact: composing a generated child and an external domain activation drops an
+explicit CDC handoff and prevents hardware admission. Priority: immediate,
+blocking this integration leaf. Resolved: the isf_handoff filter discarded explicit
+outer sources/targets routes already removed from outer-only wiring. Preserve
+direction-matching mapped handoffs; strict public admission and independent
+SystemVerilog/Verilog execution now pass (acceptance below).
+
+
+## Acceptance — combined domain integration and activation handoff repair `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.3`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--check --json` reports
+  success false and unconnected core.remote_done for composed-activation.isf.
+  handoff-before.json observes actual external activation ports marked
+  isf_handoff and their explicit direction-specific sources/targets maps.
+  CompositionTop skipped those ports after the outer emitter transferred their
+  CDC routes to the maps. The minimal public reproduction needs no formal
+  projection; this is a shipped composition routing defect exposed by T1957.
+- [x] **ADDRESSED (verified)** — retain explicitly mapped input/output
+  handoffs at the component boundary while leaving unmapped child handoffs
+  internal. composed-after.json reports success true. T1958 checks exact CDC
+  routes, strict exported replay, private public interfaces and complete native,
+  API and newline check/semantic/schedule equality for composed caller,
+  composed caller/callee and library-composed caller. Independent SystemVerilog
+  and Verilog public-pin oracles verify stopped destination clock, reset,
+  repeated activation and no replay for the generated-child cases. T1957 joins
+  actual domain products, physical projection, width/shadow/resource/priority
+  ownership, generated reads/writes, shared completion and collision controls.
+- [x] **NO REGRESSION** — runtime.log and qualified-fixed.log report
+  `All tests successful` for T1958 and T1957. regression.log reports the same
+  for T1957/T1955/T1956/T1948/T1949/T1953/T1954/T1387/T1255. Book fixtures
+  T1376 and synchronized mdBook build pass. All results are consumed; staged
+  doctrines and the normal hook cover this slice before commit.
+
+Evidence: `.artifacts/formal-domain-integration/`. Re-derivation observes actual
+prepared and executable products, boundary maps and strict public reports;
+falsification uses the failing pre-fix source, stopped-clock independent HDL
+oracles, declaration permutations, exact/case-folded conflicts and retained
+competing-writer refusal; durability is T1957/T1958, the composed-handoff and
+domain-source fact cards, runnable book example and this defect-owning leaf.
+Harness corrections parenthesized a Perl grep before the assertion label and
+removed an unbound formal from the control-only activation fixture. Neither
+changed production admission. The global fail-closed reservation contract and
+automatic production formal rewrite remain subsequent leaves. Existing
+watchdog/local-call/containment issues remain separately owned. Engineering
+rationale is owned by the canonical card; no duplicate ledger entry is needed.

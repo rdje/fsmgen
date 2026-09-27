@@ -125,8 +125,13 @@ transaction order and injected crossing contracts, without merging raw formal
 widths into an executable parent. Outer emission preserves the complete domain
 and child IR: module/file names, flat child instances, wiring labels and CDC
 interfaces belong to separate scopes. Detached formal projection preserves
-those outer identities and public ports. The complete reservation integration
-check remains pending. This does not enable independent
+those outer identities and public ports. Combined domain checks now cover
+same-spelled private formals with different widths, actor-storage shadows,
+declaration-order changes, domain-local arbitration, generated reads/writes,
+named completion and control-only activation crossings. The prepared products
+plus allocated formal identities cover the actual domain declarations in these
+cases; competing storage writers remain rejected. The complete reservation
+contract and production rewrite integration remain pending. This does not enable independent
 direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated

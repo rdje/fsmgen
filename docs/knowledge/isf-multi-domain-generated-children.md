@@ -51,6 +51,10 @@ outside this qualification. A retained plain local-do case starts in the untrigg
 loop and leaves caller states unreachable; `.32.1.3.3.1` owns that scheduling
 repair. Generated-call qualification does not close the local-call boundary.
 
+Composed-domain external activation start/done/ready routes remain explicit;
+see [composed activation handoffs](isf-composed-domain-activation-handoffs.md)
+for the repaired private-handoff filter and independent execution evidence.
+
 Detached formal preparation now shares the actual domain source constructor;
 see [domain source products](isf-formal-domain-source-products.md) for the
 private reservation boundary and its remaining outer-identity qualification.

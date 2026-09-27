@@ -52,3 +52,15 @@ unchanged local IR across their realization. Complete reservation integration
 remains a separate gate. Related execution contract:
 [isf-multi-domain-generated-children](isf-multi-domain-generated-children.md).
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.1.
+
+T1957 joins raw prepared reservations with allocated private formal identities
+against real projected domain lowering. Different-width same-spelled formals,
+actor-storage shadows, transaction/domain/rule declaration permutations,
+portable candidate conflicts and filtered domain resource users/priorities
+retain complete tested declaration coverage. Generated reads and sole writes,
+shared named completion and control-only activation crossings compose; potential
+write products do not admit competing parent writers. No parent merge occurs
+during preparation. This is domain integration qualification, not the future
+global completeness contract or automatic production rewriting. Its combined
+crossing case exposed an emitter defect repaired and independently qualified in
+[composed domain handoffs](isf-composed-domain-activation-handoffs.md).

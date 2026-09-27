@@ -201,8 +201,11 @@ sub _emit_wiring_block {
     my %atl_internal_parent_port = _atl_internal_parent_port_map($atl_top_instances || []);
 
     for my $port (@{$ir->{ports} || []}) {
-        next if $port->{isf_handoff};
         my $name = $port->{name};
+        my $boundary = $port->{direction} eq 'input' ? 'sources' : 'targets';
+        # Local child handoffs stay internal. An explicit outer domain route
+        # promotes an activation handoff to this component's boundary.
+        next if $port->{isf_handoff} && !exists(($names->{$boundary} || {})->{$name});
         next if $atl_internal_parent_port{$name};
         next if $library_output_parent{$name};
         if ($port->{direction} eq 'output') {
