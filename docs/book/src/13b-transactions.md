@@ -28,6 +28,16 @@ writes. Decision `0109` defines that implementation contract; it does not mark
 the current reachability failures repaired. Production runtime and public-report
 qualification remain required before the warning above can be removed.
 
+The shared-writer prerequisite is still open. Strict admission currently accepts
+siblings that write different values to the same actor register or output;
+transaction/transaction priority does not create a grant. The planned check must
+compare physical targets: two `set-field` operations on disjoint masks still
+perform whole-register read-modify-write, a bank store selects scalar entries,
+and two calls to a named drive can contend on its shared payload helper.
+Private formals remain separate from these shared targets. The retained direct
+writer baseline records these cases without claiming concurrent execution or
+silently selecting a winner.
+
 The lowerer now records private transaction/domain membership, initial states
 and typed state references as a checked shadow model. It adds no public ports
 or controller storage and does not change emitted execution. This prepares

@@ -1,0 +1,21 @@
+{
+  "command": "scripts/run_with_ram_guard.sh perl docs/audits/direct-writer-admission-20260927/reproduce.pl",
+  "date": "2026-09-27",
+  "limits": [
+    "Admission and physical provenance only; independent controllers remain unimplemented.",
+    "No new arbitration or concurrent writer safety is claimed.",
+    "Existing unclassified check diagnostics retain their message tokens; stable diagnostic codes are not claimed."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.1",
+  "repository_revision": "18b23da3a47a1dce3c084d09c7a29ec48f130dd5",
+  "result_path": "docs/audits/direct-writer-admission-20260927/result.json",
+  "schema_version": 1,
+  "sha256": {
+    "docs/audits/direct-writer-admission-20260927/cases.json": "bcadc94662a4508b82dbf23be02231281c4b92609cb68a8656a4a36a8011aeef",
+    "docs/audits/direct-writer-admission-20260927/reproduce.pl": "b899d44328d5b4bc49b0f5e081fb9f853669fbf1de9efbd11159b8d7c667b9ed",
+    "docs/audits/direct-writer-admission-20260927/result.json": "71e8398e15abf7f522144c8915687555b6ae8364b1653acbea474188f39b5d1c",
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": "62cf49134806bd2bd214f79f5d4275817d40bd10c16e2ff5a1cf853d4dd9b033",
+    "perl/FSM/Scheduler/ISF/FormalLowering.pm": "cc93dd6441f8613341e9a8bdbda030ba0deff7ad99fd7af1c1fbfeafc6cb10c5",
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": "c08dac3ce9346deeb5054a39aae9e7629b6d733712f412c7476a44622b9928f5"
+  }
+}

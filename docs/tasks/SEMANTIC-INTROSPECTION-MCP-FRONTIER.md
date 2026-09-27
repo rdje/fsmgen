@@ -772,9 +772,31 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Establish shared-write admission for independently active direct controllers.`
   Acceptance: `After .1/.2 and .49.2.2, derive physical target ownership from scoped identities and typed effects. Inventory data, completion, binding, named-drive and generated-handoff contributors. Preserve proved fan-in, rule priority and resource grants; refuse unproved overlapping controller writes with actionable diagnostics before runtime promotion. Do not treat shared encoded-state exclusion or parsed transaction priority as a proof. Qualify disjoint targets, equal/pulse compatibility boundaries, guarded conflicts and existing priority behavior; split implementation if needed.`
+  Verification: `Select the bounded baseline first, then a detached physical writer inventory and conservative admission integration. Do not promote independent execution from the old encoded-state exclusivity assumption.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.3`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.1`
+  Status: `done`
+  Goal: `Retain current direct-writer admission and physical ownership baseline.`
+  Acceptance: `Reproduce direct scalar/output/bank and named-drive writer overlaps through actual strict/check/schedule paths with disjoint/private, same-value and completion-pulse controls. Trace the current admission/provenance locus and relevant history without redoing the known controller runtime audit. Record exact actual physical targets/owners and bounded implementation obligations, including generated handoffs, source guards and domain isolation. No execution promotion or new arbitration is claimed.`
+  Verification: `The retained source-hashed baseline at 18b23da3a confirms strict admission and empty compile issues for direct scalar/output, bank-entry, aggregate whole/member, masked and shared-drive overlaps. Parsed transaction priority creates no resolution; separate private formals, disjoint/same-value writes and completion fan-in remain controls. Rule/rule and unordered rule/transaction controls reject with exact current message tokens. Actual final writer records retain explicit state owners alongside legacy provenance. The tracked reproducer regenerates result.json exactly. T1209/T1219/T1261/T1403 and the mdBook build pass; no production behavior or independent execution is changed.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2`
+  Status: `pending`
+  Goal: `Build a complete detached physical writer inventory from admitted production IR.`
+  Acceptance: `After .1, inventory every state/DT assignment using explicit source ownership and actual physical target structure. Cover private formals, actor scalars/outputs, aggregate leaves/masked updates, scalarized banks, drives, binding copies, generated handoffs, completion fan-in and internal helpers. Preserve module/domain boundaries and actual grant/suppression predicates; never infer owners from prefixes or treat entry guards as body-wide exclusion. Prove completeness, deterministic detached products, malformed/omission controls and unchanged native/API/MCP/carriers before admission changes. Split producer families into safe children if needed.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.3`
+  Status: `pending`
+  Goal: `Require sound physical writer compatibility before independent-controller promotion.`
+  Acceptance: `After .2, integrate conservative admission using physical overlap, same-controller state exclusion, qualified equal-value/pulse compatibility and actual disjoint predicates/grants. Refuse unproved cross-controller data overlap or ambiguous activation ownership with actionable public diagnostics. Preserve generated-child ownership boundaries and existing rule/resource behavior; parsed transaction priority alone is not a grant. Qualify source/declaration permutations, complete native/API/newline failures and success reports, strict carriers and relevant regression/book gates before enabling independent execution in .4.`
   Verification: `pending`
   Commit: `pending`
 
@@ -2603,8 +2625,9 @@ before editing code. No discovered defect is closed by this audit alone.
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. The next leaf is
-`.32.1.3.3.1.3.3`, shared-write admission before independent controllers and
-local-call timing under the following sibling leaves. `.49.2.3` qualifies direct-call runtime;
+`.32.1.3.3.1.3.3.2`, detached physical writer inventory after the admission
+baseline. Conservative admission precedes independent controllers and local-call
+timing under the following sibling leaves. `.49.2.3` qualifies direct-call runtime;
 `.49.3` owns explicit-local physical scope. These remain prerequisites to the
 SPECFORGE storage/register-access feature in `.38.1` and optional banks `.38.2`.
 Packet intake `.37` is complete; it does not implement those reports.
@@ -4206,3 +4229,38 @@ and reset abort; durability is T1966, the source/testbench fixtures, retention
 card, updated decision consequence and mdBook. The owned parent .2 closes;
 shared-write admission .3 is next. No independent-controller, VHDL runtime,
 local-call or requested storage/register-access metadata completion is claimed.
+
+## Acceptance — direct writer baseline `.32.1.3.3.1.3.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `--strict --check --json` admits
+  direct scalar/output overlaps and `--emit-schedule-json` reports no compile
+  issue or transaction-priority resolution. Actual final IR writers show the
+  shared physical targets. `_build_conflict_issues` compares equal target strings
+  and handles rule/rule errors and rule/drive warnings; the separate priority
+  pass handles rule/transaction pairs. Relevant introduction history is
+  f657a6c89c9ce1771cc8f02f1d90bd958739203d and
+  49711b6dbee775600d924da3f92819136c52c567. Existing state provenance/priority
+  recovers owners from spellings despite explicit state.transaction membership.
+- [x] **ADDRESSED (verified)** — The source-hashed baseline retains current
+  checks, schedule findings, actual physical writers and explicit state owners.
+  It distinguishes private formals, disjoint/equal scalars, scalar bank entries,
+  aggregate whole/member/disjoint leaves, full-register masked updates, named
+  drive payload helpers and completion fan-in. Existing rule rejection messages
+  are preserved as unclassified diagnostics, not promoted to stable codes.
+  The manifest authenticates source/producer/reproducer/result files at the
+  recorded revision; replay regenerates result.json exactly. Children .2/.3
+  own a complete detached writer inventory and conservative admission before
+  independent-controller execution. No new arbitration or safety is claimed.
+- [x] **NO REGRESSION** — focused.log reports `All tests successful` for
+  T1209/T1219/T1261/T1403. The mdBook build passes; the tracked reproducer
+  completes with exact retained output and all jobs are consumed. Staged
+  doctrines and normal hooks qualify the evidence commit. Production code,
+  source admission and emitted execution are unchanged by this baseline slice.
+
+Evidence: `docs/audits/direct-writer-admission-20260927/` and
+`.artifacts/direct-writer-admission/`. Re-derivation joins native check/schedule
+outcomes to actual lowered writers and relevant history; falsification uses
+separate/private/same-value/pulse controls and current rejecting rule pairs;
+durability is the authenticated baseline/reproducer, canonical writer-boundary
+card, task decomposition and mdBook. The known direct-controller runtime audit
+remains authoritative and is not re-run as an admission proof.

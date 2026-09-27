@@ -1,0 +1,72 @@
+[
+  {
+    "case_id": "scalar_overlap",
+    "source": "(actor scalar_overlap (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (storage (var value_reg (width 8)))\n (transaction first  (on a) (set value_reg 3) (complete done_a))\n (transaction second  (on b) (set value_reg 5) (complete done_b))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "scalar_equal",
+    "source": "(actor scalar_equal (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (storage (var value_reg (width 8)))\n (transaction first  (on a) (set value_reg 3) (complete done_a))\n (transaction second  (on b) (set value_reg 3) (complete done_b))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "scalar_disjoint",
+    "source": "(actor scalar_disjoint (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (storage (var left_value (width 8)) (var right_value (width 8)))\n (transaction first  (on a) (set left_value 3) (complete done_a))\n (transaction second  (on b) (set right_value 5) (complete done_b))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "private_formals",
+    "source": "(actor private_formals (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n \n (transaction first (ports (input payload (width 8))) (on a) (set payload 3) (complete done_a))\n (transaction second (ports (input payload (width 8))) (on b) (set payload 5) (complete done_b))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "output_overlap",
+    "source": "(actor output_overlap (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n \n (transaction first  (on a) (set observed 3) (complete done_a))\n (transaction second  (on b) (set observed 5) (complete done_b))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "parsed_transaction_priority",
+    "source": "(actor parsed_transaction_priority (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (storage (var value_reg (width 8)))\n (transaction first  (on a) (set value_reg 3) (complete done_a))\n (transaction second  (on b) (set value_reg 5) (complete done_b))\n (priority first over second))\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "bank_overlap",
+    "source": "(actor bank_overlap (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (storage (bank ram (width 8) (depth 4)))\n (transaction first  (on a) (store ram 0 3) (complete done_a))\n (transaction second  (on b) (store ram 0 5) (complete done_b))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "aggregate_overlap",
+    "source": "(actor aggregate_overlap (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (types (type frame_t (record (mode (bits 2)) (flag bit)))) (storage (var frame (type frame_t)))\n (transaction first  (on a) (set frame 3) (complete done_a))\n (transaction second  (on b) (set frame.mode 2) (complete done_b))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "aggregate_disjoint_leaves",
+    "source": "(actor aggregate_disjoint_leaves (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (types (type frame_t (record (mode (bits 2)) (flag bit)))) (storage (var frame (type frame_t)))\n (transaction first  (on a) (set frame.mode 2) (complete done_a))\n (transaction second  (on b) (set frame.flag 1) (complete done_b))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "masked_updates",
+    "source": "(actor masked_updates (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (storage (var value_reg (width 8)))\n (transaction first  (on a) (set-field value_reg (bits 3 0) 3) (complete done_a))\n (transaction second  (on b) (set-field value_reg (bits 7 4) 5) (complete done_b))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "named_drive_overlap",
+    "source": "(actor named_drive_overlap (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (drive (put payload) (observed payload))\n (transaction first  (on a) (drive put 3) (complete done_a))\n (transaction second  (on b) (drive put 5) (complete done_b))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "completion_fanin",
+    "source": "(actor completion_fanin (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n \n (transaction first  (on a) (wait 1) (complete done_a))\n (transaction second  (on b) (wait 1) (complete done_a))\n )\n",
+    "expected_admission": "admitted"
+  },
+  {
+    "case_id": "rule_conflict",
+    "source": "(actor rule_conflict (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (storage (var value_reg (width 8)))\n (transaction first  (on a) (wait 1) (complete done_a))\n (transaction second  (on b) (wait 1) (complete done_b))\n (rule r0 a (set value_reg 3)) (rule r1 b (set value_reg 5)))\n",
+    "expected_admission": "rejected"
+  },
+  {
+    "case_id": "rule_transaction_conflict",
+    "source": "(actor rule_transaction_conflict (clock clk) (reset (rst_n async active_low))\n (interface (input a) (input b) (output done_a) (output done_b) (output observed (width 8)))\n (storage (var value_reg (width 8)))\n (transaction first  (on a) (set value_reg 3) (complete done_a))\n (transaction second  (on b) (wait 1) (complete done_b))\n (rule r0 b (set value_reg 5)))\n",
+    "expected_admission": "rejected"
+  }
+]

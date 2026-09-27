@@ -1,0 +1,2041 @@
+{
+   "cases" : [
+      {
+         "case_id" : "scalar_overlap",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "first_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "second_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "ce9663063e09dc683006fd92a421a03ee9ec27a337f692c064f1a7a5a4451a69",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "<-",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "3",
+               "source_kind" : "set",
+               "target" : "value_reg"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "<-",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "5",
+               "source_kind" : "set",
+               "target" : "value_reg"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            }
+         ]
+      },
+      {
+         "case_id" : "scalar_equal",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [
+            {
+               "domain" : "data",
+               "kind" : "same_target_value",
+               "operator" : "<-",
+               "rhs" : "3",
+               "sources" : [
+                  {
+                     "domain" : "data",
+                     "operator" : "<-",
+                     "owner" : "first",
+                     "owner_kind" : "transaction",
+                     "rhs" : "3",
+                     "source_kind" : "set",
+                     "target" : "value_reg"
+                  },
+                  {
+                     "domain" : "data",
+                     "operator" : "<-",
+                     "owner" : "second",
+                     "owner_kind" : "transaction",
+                     "rhs" : "3",
+                     "source_kind" : "set",
+                     "target" : "value_reg"
+                  }
+               ],
+               "target" : "value_reg"
+            }
+         ],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "first_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "second_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "0c014c1fdd2026e0550bb723ae2e7c932fbbc7156e2ca5bcfe66c36ad6139109",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "<-",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "3",
+               "source_kind" : "set",
+               "target" : "value_reg"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "<-",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "3",
+               "source_kind" : "set",
+               "target" : "value_reg"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            }
+         ]
+      },
+      {
+         "case_id" : "scalar_disjoint",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "first_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "second_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "7923c377aa8da129ce3477a7b637d3ad16985f2d3eaf22b0ad547176c0b4dd83",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "<-",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "3",
+               "source_kind" : "set",
+               "target" : "left_value"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "<-",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "5",
+               "source_kind" : "set",
+               "target" : "right_value"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            }
+         ]
+      },
+      {
+         "case_id" : "private_formals",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "first_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "second_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [
+            {
+               "identity" : [
+                  "transaction_port",
+                  "private_formals",
+                  "first",
+                  "payload"
+               ],
+               "physical_name" : "isf_port_first_payload"
+            },
+            {
+               "identity" : [
+                  "transaction_port",
+                  "private_formals",
+                  "second",
+                  "payload"
+               ],
+               "physical_name" : "isf_port_second_payload"
+            }
+         ],
+         "source_sha256" : "8b8f1bf885f69c5b79e9530be71395f85c97530044dd2ac01659c56f938070f1",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "<-",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "3",
+               "source_kind" : "set",
+               "target" : "isf_port_first_payload"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "<-",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "5",
+               "source_kind" : "set",
+               "target" : "isf_port_second_payload"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            }
+         ]
+      },
+      {
+         "case_id" : "output_overlap",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "first_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "second_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "c250a780774d6f5b15d62a58bbb559310a82746778f06f8a1075b779a8ec153a",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "<-",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "3",
+               "source_kind" : "set",
+               "target" : "observed"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "<-",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "5",
+               "source_kind" : "set",
+               "target" : "observed"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            }
+         ]
+      },
+      {
+         "case_id" : "parsed_transaction_priority",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "first_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "second_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "d0456d539c27327cf9a0140b476fd0d4e0a518a2b5105e1840d87e75a6b70463",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "<-",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "3",
+               "source_kind" : "set",
+               "target" : "value_reg"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "<-",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "5",
+               "source_kind" : "set",
+               "target" : "value_reg"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            }
+         ]
+      },
+      {
+         "case_id" : "bank_overlap",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "bank_store",
+                     "name" : "first_store_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "bank_store",
+                     "name" : "second_store_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "f24be4bde736aaba348045491e4c224d12f030344111fafa99780a4b146bd117",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_store_1",
+                  "state_guard" : null,
+                  "state_kind" : "bank_store"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "<-",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "3",
+               "source_kind" : "bank_store",
+               "target" : "ram_0"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_store_1",
+                  "state_guard" : null,
+                  "state_kind" : "bank_store"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "<-",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "5",
+               "source_kind" : "bank_store",
+               "target" : "ram_0"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            }
+         ]
+      },
+      {
+         "case_id" : "aggregate_overlap",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "first_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "second_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "7fce864c5da0dc2a366fdbb2da4d365038380ff6ea12e9c98bc82f1bdc5cff5c",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "<-",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "3",
+               "source_kind" : "set",
+               "target" : "frame"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "<-",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "2",
+               "source_kind" : "set",
+               "target" : "frame.mode"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            }
+         ]
+      },
+      {
+         "case_id" : "aggregate_disjoint_leaves",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "first_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "second_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "5e3cd2447770e378da617e1483a8da14049f9c67cc03b4d0e1031faa1feaaa3d",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "<-",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "2",
+               "source_kind" : "set",
+               "target" : "frame.mode"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "<-",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "1",
+               "source_kind" : "set",
+               "target" : "frame.flag"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            }
+         ]
+      },
+      {
+         "case_id" : "masked_updates",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "first_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "second_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "fea8798239727c37cb448e13e2a3b52462c0caaa5c8166b1a2d8572eb99822ad",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "<-",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "(| (& value_reg 8'd240) 8'd3)",
+               "source_kind" : "set",
+               "target" : "value_reg"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_set_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "<-",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "(| (& value_reg 8'd15) 8'd80)",
+               "source_kind" : "set",
+               "target" : "value_reg"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            }
+         ]
+      },
+      {
+         "case_id" : "named_drive_overlap",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [
+            {
+               "domain" : "request",
+               "kind" : "request",
+               "sources" : [
+                  {
+                     "domain" : "request",
+                     "operator" : "=",
+                     "owner" : "first",
+                     "owner_kind" : "transaction",
+                     "rhs" : 1,
+                     "source_kind" : "drive_call_start",
+                     "target" : "put_start"
+                  },
+                  {
+                     "domain" : "request",
+                     "operator" : "=",
+                     "owner" : "second",
+                     "owner_kind" : "transaction",
+                     "rhs" : 1,
+                     "source_kind" : "drive_call_start",
+                     "target" : "put_start"
+                  }
+               ],
+               "target" : "put_start"
+            }
+         ],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "first_drive_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "second_drive_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "71aa8a0ec5f4fbc7ca712935b29a8c5d7b121958fdfdff304fcb2202af810a35",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_drive_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "request",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "drive_call_start",
+               "target" : "put_start"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_drive_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : "3",
+               "source_kind" : "drive_call_param",
+               "target" : "put_payload"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_drive_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "request",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "drive_call_start",
+               "target" : "put_start"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_drive_1",
+                  "state_guard" : null,
+                  "state_kind" : "sequential"
+               },
+               "domain" : "data",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : "5",
+               "source_kind" : "drive_call_param",
+               "target" : "put_payload"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_b"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : {
+                     "port" : "put_start"
+                  },
+                  "container_kind" : "dt",
+                  "container_name" : "put",
+                  "dt_kind" : "drive",
+                  "dte_guard" : null
+               },
+               "domain" : "data",
+               "operator" : "<-",
+               "owner" : "put",
+               "owner_kind" : "drive",
+               "rhs" : "put_payload",
+               "source_kind" : "drive_body",
+               "target" : "observed"
+            }
+         ]
+      },
+      {
+         "case_id" : "completion_fanin",
+         "check_exit" : 0,
+         "check_success" : true,
+         "compatible_fanin_groups" : [
+            {
+               "domain" : "pulse",
+               "kind" : "pulse",
+               "operator" : "<1",
+               "rhs" : "1",
+               "sources" : [
+                  {
+                     "domain" : "pulse",
+                     "operator" : "<1",
+                     "owner" : "first",
+                     "owner_kind" : "transaction",
+                     "rhs" : 1,
+                     "source_kind" : "complete_pulse",
+                     "target" : "done_a"
+                  },
+                  {
+                     "domain" : "pulse",
+                     "operator" : "<1",
+                     "owner" : "second",
+                     "owner_kind" : "transaction",
+                     "rhs" : 1,
+                     "source_kind" : "complete_pulse",
+                     "target" : "done_a"
+                  }
+               ],
+               "target" : "done_a"
+            }
+         ],
+         "compile_issues" : [],
+         "controllers" : [
+            {
+               "initial_state" : "first_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "first_idle_0"
+                  },
+                  {
+                     "kind" : "wait",
+                     "name" : "first_wait_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "first_done_2"
+                  }
+               ],
+               "transaction" : "first"
+            },
+            {
+               "initial_state" : "second_idle_0",
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "second_idle_0"
+                  },
+                  {
+                     "kind" : "wait",
+                     "name" : "second_wait_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "second_done_2"
+                  }
+               ],
+               "transaction" : "second"
+            }
+         ],
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [],
+         "priority_resolutions" : [],
+         "private_formals" : [],
+         "source_sha256" : "8fa3c1e06de3afb4a29f7c85502153a41ce66dd490925b4422d455e373844409",
+         "writers" : [
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_idle_0",
+                  "state_guard" : {
+                     "port" : "a"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "first",
+               "operator" : "=",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "first_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "first",
+               "operator" : "<1",
+               "owner" : "first",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_idle_0",
+                  "state_guard" : {
+                     "port" : "b"
+                  },
+                  "state_kind" : "entry"
+               },
+               "domain" : "helper",
+               "explicit_state_owner" : "second",
+               "operator" : "=",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "scheduler_can_accept",
+               "target" : "can_accept"
+            },
+            {
+               "activation" : {
+                  "assignment_guard" : null,
+                  "container_kind" : "state",
+                  "container_name" : "second_done_2",
+                  "state_guard" : null,
+                  "state_kind" : "terminal"
+               },
+               "domain" : "pulse",
+               "explicit_state_owner" : "second",
+               "operator" : "<1",
+               "owner" : "second",
+               "owner_kind" : "transaction",
+               "rhs" : 1,
+               "source_kind" : "complete_pulse",
+               "target" : "done_a"
+            }
+         ]
+      },
+      {
+         "case_id" : "rule_conflict",
+         "check_exit" : 1,
+         "check_success" : false,
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [
+            "ISF conflict 'isf_conflicting_rule_writes' on target 'value_reg': overlapping rule data writes select different values; rule 'r0' (rule_action, <- 3) conflicts with rule 'r1' (rule_action, <- 5)"
+         ],
+         "source_sha256" : "6d6ba720ce0bd3bddb85c3670f21fd2a882fcd5f18a5b7f52cd74674025756a9"
+      },
+      {
+         "case_id" : "rule_transaction_conflict",
+         "check_exit" : 1,
+         "check_success" : false,
+         "diagnostic_codes" : [],
+         "diagnostic_messages" : [
+            "ISF conflict 'isf_conflicting_rule_transaction_writes' on target 'value_reg': overlapping rule/transaction data writes need actor-level priority; rule 'r0' (rule_action, <- 5) conflicts with transaction 'first' (set, <- 3)"
+         ],
+         "source_sha256" : "4f6769b388e01e91e9f3de699dc8e1a97183942893900f8463a8554ed449ca6b"
+      }
+   ],
+   "schema_version" : 1,
+   "scope" : "admission_and_physical_provenance_only"
+}
