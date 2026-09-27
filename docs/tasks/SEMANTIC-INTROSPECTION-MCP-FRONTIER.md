@@ -1477,11 +1477,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Separate lexical source admission from generated-helper physical collision checks.`
   Acceptance: `Reproduce helper-looking formal names against monitor/counter preparation. Resolve the pre-allocation validation cycle without weakening actual executable admission, losing collision evidence or accepting a fabricated final IR. Preserve explicit-local/static and source grammar checks; qualify source-only versus post-allocation behavior and failure controls.`
-  Verification: `Monitor lowering currently rejects names in counters/widths before formal allocation; exact reproduction and repair remain required.`
-  Commit: `pending`
+  Verification: `T1941 qualifies source-only deferral for monitor collisions solely with unprojected direct input/output formals, retaining typed source/declaration and actual helper/role/width/state evidence. Raw production still rejects, while explicit projection passes with separate widths and strict carriers. Fixed actor/local/generated/projected identities remain strict; malformed source and snapshot controls pass. Surrounding source/local/monitor/schedule/book regressions pass. Remaining producer closure is .3.2.2.2.3.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3`
   Status: `pending`
@@ -2350,9 +2350,9 @@ exact retrieval. `.3.1.2.1` repairs malformed explicit-local admission;
 `.3.1.2.2` qualifies source contexts and count-role rewriting. `.3.2.1` retains
 actual transaction reservation products; `.3.2.2.1` adds actual rule, activation
 and shared-drive products. `.3.2.2.2.1` retains stable source rule helpers.
-`.55` repairs empty terminal wait/point/phase carriers. Next `.3.2.2.2.2` resolves
-pre-allocation helper admission and `.3.2.2.2.3` closes remaining producer
-coverage; `.3.2.2.3` gates completeness. Local payload, shared-writer and
+`.55` repairs empty terminal wait/point/phase carriers. `.3.2.2.2.2` retains
+source-only direct-formal monitor obligations without weakening production.
+Next `.3.2.2.2.3` closes remaining producer coverage; `.3.2.2.3` gates completeness. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -2685,3 +2685,40 @@ or automatic direct-controller repair is claimed. Zero-wait region erasure and
 dynamic-wait successor policy are unchanged. Resume .49.2.2.3.2.2.2.2 before
 remaining producer closure and the complete reservation gate. Rationale belongs
 here and in the fact card; DEVELOPMENT_NOTES needs no duplicate entry.
+
+## Acceptance — pre-allocation monitor admission `.49.2.2.3.2.2.2.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — probe.log derives main_assert_1_age
+  from an actual monitor product. Both raw preparation and raw production fail
+  with the recorded diagnostic ` at perl/FSM/Scheduler/ISF/LoweringIR.pm line 9297`:
+  the generated monitor signal collides with an existing signal. Explicit
+  detached projection instead preserves separate declared formal and generated
+  monitor widths. _ir_monitor_check was enforcing an unresolved physical alias
+  before preparation could supply the names needed for allocation.
+- [x] **ADDRESSED (verified)** — prepare_formal_source alone supplies the
+  narrow pre-allocation context. Only an unprojected direct formal still marked
+  transaction_port, absent from fixed actor names, can defer a monitor collision.
+  deferred_formal_collisions retains the typed source identity, detached formal
+  declaration and actual helper role/width/state. T1941 qualifies monitor roles
+  with input/output formals, strict raw production refusal, actual projected
+  widths and strict carriers, no remaining deferral after projection, actor
+  storage/interface/constant/clock/reset, local/generated/projected refusals,
+  malformed source checks and independent snapshots. after.log confirms the
+  original source preparation succeeds while raw production still fails.
+- [x] **NO REGRESSION** — test.log and regression.log report
+  `All tests successful`. The latter covers T1941/T1939/T1938/T1937/T1936,
+  T1935 local source checks, T1413 monitors/anchors and T1255 schedule goldens.
+  book-fixtures.log passes T1376 and book.log builds the updated boundary.
+  Staged doctrine and commit-hook gates qualify the final index.
+
+Evidence is under `.artifacts/formal-preallocation-admission/`. Re-derivation
+uses actual monitor products and physical lowering; falsification uses strict
+raw/fixed/local/generated/projected failures, malformed source, separate widths
+and snapshot controls; durability is T1941, the dedicated admission card,
+book and this task. This context is never stored on the source actor or lowerer,
+and executable build_module callers never pass it. Returned source products may
+still overlap under raw names and are inventory inputs, not executable IR or a
+complete collision census. Full module/backend validation of the projected
+actor remains mandatory. There is no automatic production rewrite or runtime
+scope promotion; .3.2.2.2.3 and .3.2.2.3 retain remaining producer and completeness
+obligations. No duplicate DEVELOPMENT_NOTES rationale is needed.

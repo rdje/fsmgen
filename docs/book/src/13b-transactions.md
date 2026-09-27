@@ -59,6 +59,13 @@ private physical formal. This inventory is still partial: child
 storage/completion connections, later module processing and domain wiring need
 coverage. It does not enable independent direct-transaction storage yet.
 
+Source preparation can retain a monitor-name collision with an unallocated
+direct formal as pending physical work. The collision stays recorded with both
+identities; these preparation products are not executable modules. Fixed actor
+names, explicit locals, generated public ports and already renamed declarations
+keep their collision checks. Normal compilation still rejects the raw alias;
+the separately projected actor must pass those checks before emission.
+
 Today the task-like port model is shipped for `(ports ...)` bindings on `do`,
 `spawn`, and rule `trigger` activation sites.
 

@@ -153,24 +153,41 @@ sub build_module($self, $actor) {
 }
 
 # Prepare the detached lexical resolver's inputs from parsed source. Run the
-# same module admission and per-transaction lowering checks used in production,
-# without a parent merge that would conflate still-unallocated formal names.
+# production module admission and per-transaction lowering checks without a
+# parent merge that would conflate still-unallocated formal names. A monitor
+# collision solely with an unprojected direct formal is retained as a deferred
+# physical obligation; executable builds always apply the strict collision check.
 # This is not physical reservation, backend validation or production rewriting.
 sub prepare_formal_source($self, $source_actor) {
     my $actor = _clone_isf_value($source_actor);
     my ($generated, $pruned, $partition) = $self->_prepare_module_source($actor);
     my $static = _formal_expression_static_symbols($actor);
     my %drives = map { $_ => 1 } keys %{$actor->{drives} || {}};
-    my (%contexts, %products);
+    my (%contexts, %products, %deferred);
+    my %fixed_names = map { $_ => 1 } (
+        keys %{_build_signal_width_map($actor, {clauses => []})}, keys %$static,
+        map {$_->{name}} @{$self->_build_ports($actor)},
+    );
+    $fixed_names{$actor->{clock}} = 1 if defined($actor->{clock}) && !ref($actor->{clock});
+    $fixed_names{$actor->{reset}{name}} = 1
+        if ref($actor->{reset}) eq 'HASH' && defined($actor->{reset}{name});
     my %points;
     my $ordinal = 0;
     for my $tx (@{$actor->{transactions} || []}) {
         my $name = $tx->{name};
         next if $pruned->{$name};
         my %child_points;
+        my %unprojected = map { $_->{name} => _clone_isf_value($_) }
+            grep { !exists $_->{_isf_formal_identity} }
+            map { @{($tx->{ports} || {})->{$_} || []} } qw(inputs outputs);
+        my $preallocation = $generated->{$name} ? undef : {
+            formals => \%unprojected, fixed_names => \%fixed_names, collisions => [],
+        };
         my @products = $self->_build_transaction($tx, $actor, $generated->{$name} ? 0 : $ordinal++,
             $generated->{$name} ? undef : $generated,
-            $generated->{$name} ? \%child_points : \%points);
+            $generated->{$name} ? \%child_points : \%points, $preallocation);
+        $deferred{$name} = _clone_isf_value($preallocation->{collisions})
+            if $preallocation && @{$preallocation->{collisions}};
         my @fields = qw(states counters dt_blocks local_do_refs spawn_refs
             temporal_contracts signal_widths storage_roles bank_accesses reset_values
             immediate_assertions);
@@ -205,6 +222,9 @@ sub prepare_formal_source($self, $source_actor) {
         # Partial producer boundary only: later module/child/domain wiring is
         # absent. This is not the complete reserved_names set for allocation.
         transaction_products => \%products,
+        # These products are not executable IR. A projected actor must pass
+        # build_module, including collision checks, before any emission.
+        deferred_formal_collisions => \%deferred,
         parent_activation_products => $self->_formal_parent_activation_products(
             $actor, $generated, \%products),
         actor_context => {
@@ -5595,7 +5615,7 @@ sub _repeat_count_width_for_integer {
 }
 
 # --- Transaction → IR states ---
-sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef, $point_bindings = undef) {
+sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef, $point_bindings = undef, $preallocation = undef) {
     my $tn  = $tx->{name};
     my $wd  = _watchdog_limit_cycles($actor->{watchdog}, $actor, $tn, 'actor watchdog');
     my $drives = $actor->{drives} || {};
@@ -5686,7 +5706,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef, $p
                 # at this position + a monitor DT, asserting the monitor never fails (ISF-TRIGGER-ANCHOR).
                 _push_sample_state(\@st, $tn, \@ps, \$si);
                 my ($ms, $mdt, $massert) =
-                    _ir_monitor_check($cl, $tn, $si++, $actor, $widths, \%ct, \%storage_roles);
+                    _ir_monitor_check($cl, $tn, $si++, $actor, $widths, \%ct, \%storage_roles, $preallocation);
                 push @st, $ms;
                 push @dt, $mdt;
                 push @asserts, $massert;
@@ -9254,7 +9274,7 @@ sub _is_monitor_check {
 }
 
 sub _ir_monitor_check {
-    my ($cl, $tn, $i, $actor, $widths, $counters, $storage_roles) = @_;
+    my ($cl, $tn, $i, $actor, $widths, $counters, $storage_roles, $preallocation) = @_;
     my ($kind, $cond, $message) = @$cl;
     confess "Error: ($kind ...) in transaction '$tn' takes a condition and an optional message string only\n"
         if @$cl > 3;
@@ -9291,14 +9311,35 @@ sub _ir_monitor_check {
     }
 
     my $signals = _monitor_signals_for_prefix($prefix);
+    my @deferred_roles;
     for my $role (qw(arm pending age fail)) {
-        confess "Error: ($kind (monitor …)) in transaction '$tn': generated signal '$signals->{$role}' collides with an existing signal\n"
-            if $counters->{$signals->{$role}} || ($widths && $widths->{$signals->{$role}})
-            || $interface_signals{$signals->{$role}};
+        my $signal = $signals->{$role};
+        next unless $counters->{$signal} || ($widths && $widths->{$signal})
+            || $interface_signals{$signal};
+        # Only source-only preparation can postpone this physical collision.
+        # Generated public ports, already projected declarations and fixed actor
+        # or local identities must never receive this exemption. Executable
+        # builds never pass the preparation context and retain the strict check.
+        if ($preallocation && exists $preallocation->{formals}{$signal}
+            && !$preallocation->{fixed_names}{$signal}
+            && ($storage_roles->{$signal} // '') eq 'transaction_port') {
+            push @deferred_roles, $role;
+            next;
+        }
+        confess "Error: ($kind (monitor …)) in transaction '$tn': generated signal '$signal' collides with an existing signal\n";
     }
 
     my ($state, $dt) = _build_eventually_monitor(
         $signals, $observed, $within_cycles, $counters, $storage_roles);
+    for my $role (@deferred_roles) {
+        my $signal = $signals->{$role};
+        push @{$preallocation->{collisions}}, {
+            source_identity => ['transaction_port', $actor->{actor_name}, $tn, $signal],
+            formal_declaration => _clone_isf_value($preallocation->{formals}{$signal}),
+            generated_signal => $signal, monitor_role => $role,
+            generated_width => $counters->{$signal}, monitor_state => $state->{name},
+        };
+    }
 
     my %assert = (
         name      => "${prefix}_holds",

@@ -127,8 +127,8 @@ It qualifies stable helper names under different physical allocations, generated
 interfaces, malformed/stale records, duplicate identities, source isolation,
 schedule provenance and strict carriers. Raw generated-child terminal static
 waits exposed a separate empty-state carrier defect, repaired under .55; see
-[terminal-state carriers](isf-empty-terminal-state-carriers.md). Pre-allocation helper collision admission and
-remaining module/child/domain producer closure remain .3.2.2.2.2-.3.
+[terminal-state carriers](isf-empty-terminal-state-carriers.md). Pre-allocation helper collision admission is qualified by the linked contract
+below; remaining module/child/domain producer closure is .3.2.2.2.3.
 
 The paired parser audit retains the former width-lookup defect: a wider formal
 was rejected and a narrower formal admitted an out-of-range bit against an
@@ -171,7 +171,10 @@ Named drive calls rewrite actuals; their names and actor-owned bodies are unchan
 The walker consumes parsed, source-validated records and explicit complete
 scope contexts. LoweringIR::prepare_formal_source now clones source and reuses
 production module admission plus per-transaction lowering validation without
-requiring conflicting parent merges. It derives explicit locals only, actor
+requiring conflicting parent merges. Monitor collisions solely with raw direct
+formals may now be retained as deferred physical obligations; the precise
+[pre-allocation admission contract](isf-formal-preallocation-admission.md) keeps
+executable validation strict. It derives explicit locals only, actor
 parameters/constants, exact resolved enum members and canonical imported
 constant leaf/aggregate paths through Package::Symbols. Inferred sample
 destinations are not explicit-local shielding names. Unknown members and
