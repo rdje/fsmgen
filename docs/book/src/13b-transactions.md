@@ -43,6 +43,16 @@ pass strict carrier replay after the detached rewrite, including generated calls
 and domain crossings. Production integration and runtime qualification remain
 required before relying on those combinations.
 
+Reservation preparation now retains the actual products of transaction lowering,
+including state assignments, counters, monitor logic and call records. This matters
+because a generated drive payload can have the same proposed name as a private
+formal: drive `isf_port_main` with parameter `payload` produces
+`isf_port_main_payload`, also the initial candidate for formal `main.payload`.
+The detached planner avoids that collision when supplied the product inventory,
+including case-only variants. This inventory is partial: rule, child, shared
+storage and domain wiring still need coverage before production allocation can
+use it. It does not enable independent direct-transaction storage yet.
+
 Today the task-like port model is shipped for `(ports ...)` bindings on `do`,
 `spawn`, and rule `trigger` activation sites.
 

@@ -1432,10 +1432,25 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Prove complete physical reservations and deterministic formal allocation in actual lowering contexts.`
   Acceptance: `After source-context preparation, derive real generated declarations and signal consumers without relying on guessed naming patterns or a successful conflicting old module merge. Cover counters, monitors, wait/sample helpers, named drives, bindings, child handoffs, domains and case-folded collisions. Qualify allocation determinism and fail-closed missing reservations; preserve generated public ports. Commit the qualified reservation integration before production renaming.`
   Verification: `The detached planner's explicit reserved_names contract does not establish completeness in production. Actual generated names and declarations must supply that proof.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.1`
+  Status: `done`
+  Goal: `Retain and inventory actual per-transaction lowering products for reservations.`
+  Acceptance: `Retain the existing per-transaction products from source preparation and collect conservative identifier reservations with structural provenance. Qualify actual counter/monitor/wait/sample/drive/call products without a parent merge, source isolation, malformed inputs and case-folded allocator controls. Prove the named-drive collision with source-only reservations and its avoidance using actual products. Keep module/rule/child/domain closure explicitly pending; commit this bounded producer boundary first.`
+  Verification: `T1937 retains actual per-transaction products and qualifies deterministic structural identifier provenance, exact/case-folded named-drive collision avoidance, strict transformed carriers, counter/monitor/wait/sample/call coverage, snapshot isolation and malformed/cyclic controls. Production parent merging and later wiring remain unchanged; complete reservations are .3.2.2.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2`
+  Status: `pending`
+  Goal: `Close module/wiring/domain reservation coverage before production allocation.`
+  Acceptance: `Complete the parent contract using actual rule, shared-drive, child, storage/completion, library/ATL and domain producers. Preserve authored helper identity inputs when formal physical names change; prove final allocation and emitted declarations cannot introduce unreserved collisions. Do not equate a transaction-only inventory with complete coverage, bypass conflicting parent merges as executable output, or infer helper names from guessed patterns. Qualify deterministic/case-folded and missing-reservation controls, then commit before .3.3.`
+  Verification: `Existing reservation helpers inspect selected IR maps. build_module and multi-domain realization add names after transaction lowering; source/physical endpoint projections must keep helper identity generation stable. No complete production reservation proof exists yet.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3`
@@ -2280,9 +2295,10 @@ book excerpts are synchronized. `.53` repairs and qualifies extract carrier
 replay and width declarations. `.49.2.2.3.1.1` repairs caller-formal binding
 validation and rejects unsafe direct pin aliases. `.3.1.3` repairs generated
 pin-shadow declarations and wiring. `.54` retains historical task prose through
-exact retrieval. `.3.1.2.1` repairs malformed explicit-local admission; next
-`.3.1.2.2` qualifies source contexts and count-role rewriting. Next `.3.2`
-proves complete physical reservations. Local payload, shared-writer and
+exact retrieval. `.3.1.2.1` repairs malformed explicit-local admission;
+`.3.1.2.2` qualifies source contexts and count-role rewriting. `.3.2.1` retains
+actual transaction reservation products. Next `.3.2.2` completes later module,
+child and domain reservation coverage. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -2438,3 +2454,40 @@ complete generated physical reservations, finalize parent wiring, validate the
 backend or switch production emission. .3.2 must derive actual names before .3.3
 uses the prepared contexts; controller/runtime obligations remain separate.
 DEVELOPMENT_NOTES needs no duplicate rationale.
+
+## Acceptance — transaction reservation products `.49.2.2.3.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` for probe.isf
+  confirms the named isf_port_main drive. probe.log separately compares the
+  source-only plan candidate isf_port_main_payload with the actual drive_payload
+  counter and emitted declaration. _build_transaction already produces that
+  assignment target, but prepare_formal_source discarded its returned products.
+  Source-token reservation alone therefore misses a real generated collision.
+- [x] **ADDRESSED (verified)** — T1937 qualifies retained transaction_products
+  and FormalReservationInventory: conservative key/scalar tokens, formatted
+  expressions, deterministic escaped JSON-pointer provenance, unsupported/cyclic
+  refusal and shared acyclic inputs. Actual wait/repeat/monitor counters, sample
+  targets, local/generated call records and resets are retained without parent
+  merging. Exact/case-only drive collisions cause a distinct formal allocation;
+  detached rewritten carriers pass strict checking. Products and source stay
+  independent; a conflicting production parent merge still fails as before.
+- [x] **NO REGRESSION** — regression.log passes T1937/T1936/T1928/T1925,
+  T1413 monitor/anchor and T1189 drive cases before a mistyped book test path
+  stops the harness; it is not a suite pass. book-fixtures.log then reports
+  `All tests successful` for the correctly named T1376 audit. book.log builds
+  the updated chapter. Final staged doctrine and commit-hook gates apply.
+
+Evidence is under `.artifacts/formal-reservations/`. test.log retains the first
+fixture's documented pending-sample/dynamic-wait-to-repeat refusal; the fixture
+now flushes the sample through a supported assignment before waiting. It also
+exposed a test helper name colliding with Test::More's plan export, renamed.
+test-qualified.log catches a wrong test expectation for local call field
+transaction; the actual contract is child, now asserted. Neither fixture repair
+widens production admission. Re-derivation uses actual producer data and full
+IR/carrier declarations; falsification covers source-only omission, case-folded
+collision, malformed/cyclic products, source isolation and still-refused parent
+merges; durability is T1937, the scope card, book and task record. This is a
+partial producer boundary, not complete physical reservation or production
+renaming. Later rule/shared-drive/child/storage/completion/library/ATL/domain
+coverage and stable helper identity inputs remain owned by .3.2.2. No duplicate
+DEVELOPMENT_NOTES entry is needed.

@@ -161,16 +161,25 @@ sub prepare_formal_source($self, $source_actor) {
     my ($generated, $pruned, $partition) = $self->_prepare_module_source($actor);
     my $static = _formal_expression_static_symbols($actor);
     my %drives = map { $_ => 1 } keys %{$actor->{drives} || {}};
-    my %contexts;
+    my (%contexts, %products);
     my %points;
     my $ordinal = 0;
     for my $tx (@{$actor->{transactions} || []}) {
         my $name = $tx->{name};
         next if $pruned->{$name};
         my %child_points;
-        $self->_build_transaction($tx, $actor, $generated->{$name} ? 0 : $ordinal++,
+        my @products = $self->_build_transaction($tx, $actor, $generated->{$name} ? 0 : $ordinal++,
             $generated->{$name} ? undef : $generated,
             $generated->{$name} ? \%child_points : \%points);
+        my @fields = qw(states counters dt_blocks local_do_refs spawn_refs
+            temporal_contracts signal_widths storage_roles bank_accesses reset_values
+            immediate_assertions);
+        confess "Unexpected transaction lowering product count\n" unless @products == @fields;
+        my %product;
+        @product{@fields} = @products;
+        # Products may retain source references. Keep both returned projections
+        # independent, including between transactions, before callers inspect them.
+        $products{$name} = _clone_isf_value(\%product);
         my %locals = map { $_->[1] => 1 }
             grep { ref($_) eq 'ARRAY' && @$_ && $_->[0] eq 'local' }
             @{$tx->{clauses}};
@@ -193,6 +202,9 @@ sub prepare_formal_source($self, $source_actor) {
         pruned_transactions => { %$pruned },
         domain_partition => _clone_isf_value($partition),
         transactions => \%contexts,
+        # Partial producer boundary only: later module/child/domain wiring is
+        # absent. This is not the complete reserved_names set for allocation.
+        transaction_products => \%products,
         actor_context => {
             locals => {}, static_symbols => { %$static },
             static_count_symbols => { %$static }, pruned_repeats => {},
