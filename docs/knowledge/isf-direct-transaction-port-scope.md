@@ -136,7 +136,7 @@ priority/resource, child ownership and library/ATL/domain composition remain
 resource pointer declarations now use the shared actual producer; see the
 [resource product boundary](isf-formal-resource-products.md). Independently
 built generated children now supply their actual module products; see
-[child products](isf-formal-child-products.md). Parent connection and final
+[child products](isf-formal-child-products.md) and [parent completion products](isf-formal-completion-products.md). Parent connection and final
 composition remain separate.
 
 The paired parser audit retains the former width-lookup defect: a wider formal

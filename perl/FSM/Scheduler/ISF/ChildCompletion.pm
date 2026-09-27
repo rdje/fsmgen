@@ -26,6 +26,9 @@ sub retain_child_completions {
             @{$ir->{params} || []}, @{$ir->{states} || []}, @{$ir->{dt_blocks} || []}),
         $ir->{clock}, (($ir->{reset} || {})->{name} // ()),
     );
+    # Capture the producer's actual allocation inputs and typed ownership, so
+    # source preparation need not reconstruct helper identities from spellings.
+    my $products = {input_names => {%reserved}, instances => {}};
     my %views;
     for my $done (sort keys %used) {
         my $instance = $instances{$done};
@@ -35,6 +38,11 @@ sub retain_child_completions {
                 desired => "isf_completion_${instance}_$_", role => 'completion', reserved => \%reserved,
             )
         } qw(seen ready);
+        $products->{instances}{$instance} = {
+            identity => ['generated_child_instance', $ir->{actor_name}, $instance],
+            start_signal => $start, done_signal => $done,
+            seen_signal => $seen, ready_signal => $ready,
+        };
         $views{$done} = $ready;
         $ir->{counters}{$_} = $ir->{signal_widths}{$_} = 1 for ($seen, $ready);
         $ir->{reset_values}{$seen} = 0;
@@ -68,6 +76,7 @@ sub retain_child_completions {
                 if exists $condition->{expr_ast};
         }
     }
+    return $products;
 }
 
 sub _completion_expression {

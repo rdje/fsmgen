@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2` (pending)
-- next_action: Close parent connection, grant/priority and library/ATL/final domain reservation coverage under .49.2.2.3.2.2.2.3.2.2.2.2 before the complete reservation gate. Follow the scope and pre-allocation cards and decision 0109.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2` (pending)
+- next_action: Pick the next bounded parent connection/grant/composition producer under .49.2.2.3.2.2.2.3.2.2.2.2.2. Follow the scope and pre-allocation cards and decision 0109.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

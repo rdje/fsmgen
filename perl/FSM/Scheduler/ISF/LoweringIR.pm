@@ -222,6 +222,9 @@ sub prepare_formal_source($self, $source_actor) {
         $actor, $generated, \%products);
     my $wiring_products = $self->_formal_parent_wiring_products(
         $actor, $generated, \%products, $activation_products);
+    my $point_products = $self->_formal_parent_point_products(
+        $actor, $generated, \%products, $wiring_products, \%points);
+    my $resource_products = _formal_resource_signal_products($actor);
     return {
         actor => $actor,
         generated_children => { %$generated },
@@ -236,9 +239,11 @@ sub prepare_formal_source($self, $source_actor) {
         deferred_formal_collisions => \%deferred,
         parent_activation_products => $activation_products,
         parent_wiring_products => $wiring_products,
-        parent_point_products => $self->_formal_parent_point_products(
-            $actor, $generated, \%products, $wiring_products, \%points),
-        resource_signal_products => _formal_resource_signal_products($actor),
+        parent_point_products => $point_products,
+        resource_signal_products => $resource_products,
+        parent_completion_products => _formal_parent_completion_products(
+            $actor, $generated, \%products, $activation_products, $wiring_products,
+            $point_products, $resource_products),
         # Real child construction has its own scope and does not require a
         # parent declaration merge. Parent connections and library/ATL/domain
         # realization remain separate. Isolate even producer-side source edits.
@@ -250,6 +255,51 @@ sub prepare_formal_source($self, $source_actor) {
             named_drives => { %drives },
         },
     };
+}
+
+sub _formal_parent_completion_products {
+    my ($actor, $generated, $products, $activation, $wiring, $points, $resources) = @_;
+    # Completion allocation reads declaration membership, not widths or roles.
+    # Keep that namespace separate from all raw transaction declarations: their
+    # widths may conflict before physical formal allocation.
+    my %storage = _declared_storage_signal_widths($actor);
+    my %names = map { $_ => 1 } grep { defined $_ } (
+        keys %storage, $actor->{clock}, (($actor->{reset} || {})->{name} // ()),
+        (map { $_->{name} } @{_actor_constant_declarations($actor)},
+            @{_actor_param_declarations($actor)}, @{$wiring->{ports}},
+            @{$points->{states}}, @{$activation->{dt_blocks}}),
+        (map { keys %{$_->{counters}} } $activation, $wiring, $points),
+        (map { $_->{declaration}{name} } @$resources),
+    );
+    for my $tx (@{$actor->{transactions}}) {
+        my $name = $tx->{name};
+        next if $generated->{$name} || !exists $products->{$name};
+        my $product = $products->{$name};
+        $names{$_} = 1 for keys %{$product->{counters}}, keys %{$product->{signal_widths}},
+            map { $_->{name} } @{$product->{dt_blocks}};
+    }
+    for my $movement (@{(($actor->{actor_network} || {})->{data_movements}) || []}) {
+        for my $field (qw(source_signal sink_signal)) {
+            my $name = $movement->{$field};
+            $names{$name} = 1 if defined($name) && !ref($name);
+        }
+    }
+    # This detached phase context is never finalized or emitted. The counter
+    # inputs are membership only; returned counter widths come from fresh
+    # signal_widths populated exclusively by the real completion producer.
+    my $context = {
+        actor_name => $actor->{actor_name}, counters => \%names,
+        states => _clone_isf_value($points->{states}),
+        spawn_instances => _clone_isf_value($activation->{spawn_instances}),
+        signal_widths => {}, storage_roles => {}, reset_values => {},
+        dt_blocks => [], explicit_internal_signals => [],
+    };
+    my $allocation = retain_child_completions($context) || {input_names => {}, instances => {}};
+    return _clone_isf_value({
+        %$allocation, counters => $context->{signal_widths},
+        map { $_ => $context->{$_} } qw(states signal_widths storage_roles reset_values
+            dt_blocks explicit_internal_signals),
+    });
 }
 
 sub _formal_resource_signal_products {
@@ -1553,7 +1603,8 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         _apply_rule_priority_resolution($ir, $actor),
         _apply_rule_transaction_priority_resolution($ir, $actor),
     );
-    retain_child_completions($ir);
+    my $completion_products = retain_child_completions($ir);
+    $ir->{child_completion_products} = $completion_products if $completion_products;
     _finalize_ir($ir);
     $ir->{logical_controllers} = FSM::Scheduler::ISF::LogicalControllers->inventory($ir, $actor);
     return $ir;

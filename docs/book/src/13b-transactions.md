@@ -71,7 +71,16 @@ retains independently built generated-child modules, including their start
 history, storage read/write interfaces, named completion outputs and point-active
 signals. Tests compare complete child modules before and after parent formal
 rewriting, including reused definitions and projected clock domains; child public
-ports keep their own module scope. The inventory is still partial: later priority/grant processing,
+ports keep their own module scope. Parent preparation also retains the real
+completion memory used by generated-child joins: each used instance has an
+explicit record for its start/done handoffs, seen register and ready view. For
+example, `(spawn worker as first)` followed by `(await_all done)` retains
+`first` as the owner even if an authored name forces its completion helper to
+receive a suffix. Renaming a colliding formal may free the helper's base name;
+its instance identity remains the same. Detached join products include the
+rewritten completion views in dynamic-wait guards, and retain raw done metadata.
+Declaration-name inputs remain separate from unallocated formal widths.
+The inventory is still partial: later priority/grant processing,
 parent storage/completion connections, library/ATL and final domain composition
 need coverage. It does not enable independent direct-transaction storage yet.
 

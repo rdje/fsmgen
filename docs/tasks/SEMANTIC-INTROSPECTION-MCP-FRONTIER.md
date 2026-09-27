@@ -1544,10 +1544,25 @@ For FSMGen, the analogs are:
   Commit: `b5990b98a implementation; this slice consumes qualification`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Close grant/priority parent-child connection and library ATL domain reservation coverage.`
   Acceptance: `Qualify actual later grant/priority products, parent storage/completion connections and library/ATL/final domain realization names with stable source/physical projections. Retain strict executable admission, distinct scopes and complete gate .3.2.2.3; split remaining producer boundaries as needed.`
   Verification: `Independent generated child products are owned by .1; parent connection, grant/priority and final composition phases remain uncovered.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.1`
+  Status: `done`
+  Goal: `Retain actual parent completion products with explicit instance ownership.`
+  Acceptance: `Collect the real completion-retention producer outputs from detached source states, activation records and declaration-name inputs without merging conflicting raw widths/roles or finalizing a parent IR. Retain explicit instance-to-signal allocation records from production, qualify namespace inputs, real seen/ready helpers and rewritten joins, source/physical ownership, helper-looking formals, source isolation and strict carriers. Preserve public reports and existing completion behavior; parent storage/completion-output connections and full reservations remain later gates.`
+  Verification: `T1946 qualifies actual allocation inputs/ownership, declarations, dynamic join guards, portable fixed/formal collisions, namespace controls, raw conflicts, isolation and strict carriers. Focused regression/book checks pass; native schedule before/after is byte-identical. Evidence: .artifacts/formal-completion-products/.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Close remaining grant/priority parent storage and final composition reservations.`
+  Acceptance: `Qualify actual grant/priority products, parent storage/named-completion connections, library/ATL and final domain realization names with source/physical provenance. Preserve strict executable admission and separate namespaces before complete gate .3.2.2.3; split remaining producer boundaries as needed.`
+  Verification: `Parent retained-completion products are owned by .1; other parent connections, grant/priority and final composition remain uncovered.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -2972,3 +2987,45 @@ occurrence remains open under its existing owner.
   runnable examples were unchanged after the passing book-fixtures.log audit.
   doctrine-qualification.log retains the initial freshness failure; the renewed
   staged doctrine run and commit hook verify the corrected closure index.
+
+## Acceptance — parent completion products `.49.2.2.3.2.2.2.3.2.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` and
+  before.json show real generated-child joins and completion views, while the
+  preexisting preparation inventory omits their seen/ready declarations.
+  ChildCompletion::retain_child_completions allocates them after parent point
+  and resource processing; they cannot be reconstructed from transaction-only
+  lowering products without rerunning their real producer.
+- [x] **ADDRESSED (verified)** — the real producer now returns its allocation
+  input_names and typed instance/start/done/seen/ready records. Executable parents
+  retain that private metadata. Preparation runs it over detached point states,
+  registered activations and declaration membership, retaining only fresh
+  generated widths/roles/resets/DTs and rewritten states. after.json has no
+  missing completion helper. T1946 compares actual allocation namespaces,
+  ownership and join products on raw and projected sources, including dynamic
+  wait guards, fixed/formal helper collisions, static/storage/point/resource
+  inputs, declaration order, mutation isolation, raw width conflicts, absent
+  or pruned joins and strict parent carriers.
+- [x] **NO REGRESSION** — qualified.log and regression.log report
+  `All tests successful` for T1946 and the preallocation, wiring, point,
+  resource, completion-memory and native schedule cohort. The unchanged
+  schedule-before.json/schedule-after.json files compare byte-identically.
+  book-fixtures.log passes the runnable example audit; book.log builds the
+  synchronized guidance. Staged doctrine and commit hook run before closure.
+
+Evidence: `.artifacts/formal-completion-products/`. Initial test.log records
+an exact-spelling assertion failure. case-probe.json proves the uppercase raw
+formal moves to a private name, freeing the lowercase completion helper base;
+the supplied inventory contains its uppercase portable alias. The canonical
+HDLInstanceIdentifierPolicy::_reserved_name_exists compares case-insensitively.
+T1946 now checks that actual contract and preserves explicit instance ownership
+across the real helper allocation change. This is a corrected test assumption,
+not a general proof of reservation closure or a production allocator defect.
+Re-derivation uses actual executable producer metadata and native reports;
+falsification uses missing-name, portable collision, raw-width, no-join and
+mutation controls; durability is T1946, the completion-products card, book and
+this task. Source-only membership is never emitted as fabricated storage widths.
+Public reports and completion behavior remain unchanged; no new HDL runtime
+qualification or complete namespace/production formal rewriting is claimed.
+Parent storage/named-completion connections, grants/priority and library/ATL/domain
+composition remain owned by .2. DEVELOPMENT_NOTES needs no duplicate rationale.
