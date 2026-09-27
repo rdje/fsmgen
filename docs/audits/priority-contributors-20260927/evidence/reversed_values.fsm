@@ -1,0 +1,52 @@
+(?fsm:priority_contributors
+
+  (+system
+    (clock clk)
+    (sreset rst_n active_low)
+  )
+
+  (+interface
+    (input start)
+    (input force)
+    (output done)
+    (output out)
+    (output side)
+  )
+
+  (+size
+    (start 1)
+    (force 1)
+    (done 1)
+    (out 8)
+    (side 8)
+    (can_accept 1)
+  )
+
+  (main_idle_0
+    (= (can_accept 1))
+    (<start
+      (-> main_set_1)
+    )
+  )
+
+  (main_set_1
+    (<- (out> 3))
+    (-> main_set_2)
+  )
+
+  (main_set_2
+    (<- (out> 2))
+    (-> main_done_3)
+  )
+
+  (main_done_3
+    (<1 (done> 1))
+    (-> main_idle_0)
+  )
+
+  (-fallback <force
+    (<- (out> 9) <(! (state_active main_set_2)))
+    (<- (side> 7))
+  )
+
+)

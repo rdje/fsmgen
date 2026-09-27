@@ -37,6 +37,15 @@ Rules:
   the lower-priority rule assignment while the winning transaction state is
   active; that guard lowers to internal state-register comparison logic, not
   downstream-visible module input ports.
+
+Current P1 limitation: when the same higher-priority transaction writes a target
+in multiple states, suppression currently retains only its last writer condition.
+The earlier state's write can overlap the lower-priority rule even though strict
+checking admits the source. The single-state case is separately qualified.
+Repair is owned by SEM `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2`; complete static evidence
+is retained in `docs/audits/priority-contributors-20260927/`. Runtime repair
+qualification is pending. This does not alter the intended target-local contract.
+
 - The same actor-level rule/transaction priority covers a named drive with
   exactly one distinct local transaction caller and no generated caller.
   Suppression remains target-local in both directions; a unique unordered

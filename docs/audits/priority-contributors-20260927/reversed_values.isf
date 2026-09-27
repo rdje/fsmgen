@@ -1,0 +1,6 @@
+(actor priority_contributors (clock clk) (reset rst_n)
+ (interface (input start) (input force) (output done)
+  (output out (width 8)) (output side (width 8)))
+ (priority main over fallback)
+ (transaction main (on start) (set out 3) (set out 2) (complete done))
+ (rule fallback (when force) (set out 9) (set side 7)))

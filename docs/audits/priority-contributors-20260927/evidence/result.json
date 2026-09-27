@@ -1,0 +1,174 @@
+[
+   {
+      "case" : "single_state",
+      "check_success" : true,
+      "compile_issues" : [],
+      "higher_writers" : [
+         {
+            "guard" : null,
+            "operator" : "<-",
+            "rhs" : "2",
+            "state" : "main_set_1",
+            "transaction" : "main"
+         }
+      ],
+      "priority_resolutions" : [
+         {
+            "loser" : "fallback",
+            "loser_kind" : "rule",
+            "target" : "out",
+            "winner" : "main",
+            "winner_kind" : "transaction"
+         }
+      ],
+      "retained_states" : [
+         "main_set_1"
+      ],
+      "rule_header" : {
+         "port" : "force"
+      },
+      "rule_output" : {
+         "guard" : {
+            "expr" : "(! (state_active main_set_1))"
+         },
+         "lhs" : "out",
+         "op" : "<-",
+         "priority_suppressed_by" : [
+            "main"
+         ],
+         "rhs" : "9",
+         "source_kind" : "rule_action"
+      },
+      "source_sha256" : "005e02d08488e556e138a4a812a7bd6e1a5376f793864bc513616a89bfdebca1",
+      "unrelated_output" : {
+         "lhs" : "side",
+         "op" : "<-",
+         "rhs" : "7",
+         "source_kind" : "rule_action"
+      }
+   },
+   {
+      "case" : "multi_state",
+      "check_success" : true,
+      "compile_issues" : [],
+      "higher_writers" : [
+         {
+            "guard" : null,
+            "operator" : "<-",
+            "rhs" : "2",
+            "state" : "main_set_1",
+            "transaction" : "main"
+         },
+         {
+            "guard" : null,
+            "operator" : "<-",
+            "rhs" : "3",
+            "state" : "main_set_2",
+            "transaction" : "main"
+         }
+      ],
+      "priority_resolutions" : [
+         {
+            "loser" : "fallback",
+            "loser_kind" : "rule",
+            "target" : "out",
+            "winner" : "main",
+            "winner_kind" : "transaction"
+         },
+         {
+            "loser" : "fallback",
+            "loser_kind" : "rule",
+            "target" : "out",
+            "winner" : "main",
+            "winner_kind" : "transaction"
+         }
+      ],
+      "retained_states" : [
+         "main_set_2"
+      ],
+      "rule_header" : {
+         "port" : "force"
+      },
+      "rule_output" : {
+         "guard" : {
+            "expr" : "(! (state_active main_set_2))"
+         },
+         "lhs" : "out",
+         "op" : "<-",
+         "priority_suppressed_by" : [
+            "main"
+         ],
+         "rhs" : "9",
+         "source_kind" : "rule_action"
+      },
+      "source_sha256" : "9505f38f5c248d1bd75c3a22cfd43770dd4884e71c502610af7c519c4e2be741",
+      "unrelated_output" : {
+         "lhs" : "side",
+         "op" : "<-",
+         "rhs" : "7",
+         "source_kind" : "rule_action"
+      }
+   },
+   {
+      "case" : "reversed_values",
+      "check_success" : true,
+      "compile_issues" : [],
+      "higher_writers" : [
+         {
+            "guard" : null,
+            "operator" : "<-",
+            "rhs" : "3",
+            "state" : "main_set_1",
+            "transaction" : "main"
+         },
+         {
+            "guard" : null,
+            "operator" : "<-",
+            "rhs" : "2",
+            "state" : "main_set_2",
+            "transaction" : "main"
+         }
+      ],
+      "priority_resolutions" : [
+         {
+            "loser" : "fallback",
+            "loser_kind" : "rule",
+            "target" : "out",
+            "winner" : "main",
+            "winner_kind" : "transaction"
+         },
+         {
+            "loser" : "fallback",
+            "loser_kind" : "rule",
+            "target" : "out",
+            "winner" : "main",
+            "winner_kind" : "transaction"
+         }
+      ],
+      "retained_states" : [
+         "main_set_2"
+      ],
+      "rule_header" : {
+         "port" : "force"
+      },
+      "rule_output" : {
+         "guard" : {
+            "expr" : "(! (state_active main_set_2))"
+         },
+         "lhs" : "out",
+         "op" : "<-",
+         "priority_suppressed_by" : [
+            "main"
+         ],
+         "rhs" : "9",
+         "source_kind" : "rule_action"
+      },
+      "source_sha256" : "a51a50fcc6bdfb7f1bab45c9dfb57b279c2208e85609871335804375011d0687",
+      "unrelated_output" : {
+         "lhs" : "side",
+         "op" : "<-",
+         "rhs" : "7",
+         "source_kind" : "rule_action"
+      }
+   }
+]

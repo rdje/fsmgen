@@ -1,0 +1,55 @@
+{
+  "command": "scripts/run_with_ram_guard.sh perl docs/audits/priority-contributors-20260927/reproduce.pl baseline_semantic",
+  "history": [
+    {
+      "revision": "3e5e916a90cbe09dd7474dd0c051ab6caa753ba2",
+      "role": "Rule-owner keyed overwrite predecessor",
+      "source_marker": "$lower->{suppressed_by}{$higher->{rule}} = $higher->{rule_condition};",
+      "source_sha256": "aafdb7e75d5d5020ff9a4bd12df977a5294e38b976462ccf7bdda30d16144fd6"
+    },
+    {
+      "revision": "49711b6dbee775600d924da3f92819136c52c567",
+      "role": "Generalized owner-key overwrite while transaction winners were still rejected",
+      "source_marker": "$lower->{suppressed_by}{$higher_owner} = _priority_record_condition($higher);",
+      "source_sha256": "dc95a9a6ddc78b07600be1bc5aeebd7cd5a5ebb3466be8fa21dd309c45a1705a"
+    },
+    {
+      "revision": "7a3222a1a465e165d14569f1229f6887d6709f2f",
+      "role": "Enabled transaction winners with distinct state-active conditions",
+      "source_marker": "_state_active_condition_expr($state->{name})",
+      "source_sha256": "714d2e762117b17f318f03fbcf46b5582da09c4283a98ef5864f9d8f22b48280"
+    },
+    {
+      "revision": "cbe8c43c0a20db1bb58363d03f54170ede305b67",
+      "role": "Current admitted reproduction source",
+      "source_marker": "$lower->{suppressed_by}{$higher_owner} = _priority_record_condition($higher);",
+      "source_sha256": "89e2a7d8fcbef717ea137dc020d4389de46af6ffbb5f22969aa1b483b1e812a8"
+    }
+  ],
+  "normalization": "Complete parsed public JSON reports normalize repository prefixes; carrier bytes are retained. Query stderr is required empty by the producer; separate raw query streams are not retained.",
+  "predecessor_revision": "cbe8c43c0a20db1bb58363d03f54170ede305b67",
+  "producer_exit_code": 0,
+  "schema": "fsmgen.priority_contributor_baseline.v1",
+  "scope": "Static admitted source/schedule/carrier/selector baseline. No HDL runtime, repair or native-cause claim.",
+  "sha256": {
+    "evidence/multi_state-check.json": "d0696a16b49b1c8dd882e93f4883e2734080b8e61679b548a2208c58672f527d",
+    "evidence/multi_state-schedule.json": "17651ae5fb7db789dee06afdcdeb8d06cd15aaa1d6ba65d56fee88da42f5f658",
+    "evidence/multi_state-semantic.json": "3e9a2b3effe3a50a6d14c444a7680350119940fb0c7c9b6481b3124c061e792a",
+    "evidence/multi_state.fsm": "92089d70f90109e52f0305a5b815992b274bd96f49aeac34d690a24af7107500",
+    "evidence/probe.log": "80c7021b373b947cf74f8aa0aedb220a1a62f0c58a72c3f782d077925f01b2b7",
+    "evidence/result.json": "20ef3d04e94827abd8488f98d936e8e5c926b1165d625ec20a257acdae55584f",
+    "evidence/reversed_values-check.json": "45db5c09398c815369190b04ed238e23e996a4149b63e645c9c292edf2638f53",
+    "evidence/reversed_values-schedule.json": "17651ae5fb7db789dee06afdcdeb8d06cd15aaa1d6ba65d56fee88da42f5f658",
+    "evidence/reversed_values-semantic.json": "9b1373af92b9a1339f55c018e9189c97126c8a708a586d0756e8f69f106dc3aa",
+    "evidence/reversed_values.fsm": "4a46a329f4ba737a87abbf79abf1752f83b41f8edcaa03bd22632d5500ed2621",
+    "evidence/single_state-check.json": "f0c3db531a24ac5ca32b951567ac6edc938293b01bbfeff2080729c00f5d3e26",
+    "evidence/single_state-schedule.json": "0e63fc08b0c415fd7a1bc86bab4525ab8b2538e06c0e44d145d6873a61fbf96f",
+    "evidence/single_state-semantic.json": "27c43a051ff2864a39e49558bf265b89ebae0ced2183abc98076406749920835",
+    "evidence/single_state.fsm": "ef09c9373d742a82fae58ab63dd64141e32c7f410612b16d2184b9fc066c3f67",
+    "multi_state.isf": "9505f38f5c248d1bd75c3a22cfd43770dd4884e71c502610af7c519c4e2be741",
+    "reproduce.pl": "2f23a635de3d986214975da977c416aae0a361356cf3aeb8999b6286c9d7dce8",
+    "reversed_values.isf": "a51a50fcc6bdfb7f1bab45c9dfb57b279c2208e85609871335804375011d0687",
+    "single_state.isf": "005e02d08488e556e138a4a812a7bd6e1a5376f793864bc513616a89bfdebca1",
+    "verify.py": "36a0d3ce0e2676fc399e63aa0f2ad5e1e0612f53746ec966e3e1bceec44ae05c"
+  }
+}

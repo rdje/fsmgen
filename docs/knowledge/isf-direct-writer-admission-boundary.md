@@ -147,3 +147,14 @@ products, omitted/malformed predicates, operator fragments and deep detachment.
 The helper is private and detached; it proves neither ownership nor exclusion.
 Resource/priority/invocation evidence and complete producer/public parity remain
 children .2/.3 of SEM .32.1.3.3.1.3.3.2.2.3.2.2.2. Reverify with guarded T1973.
+
+P1 discovered during grant evidence collection: priority suppressors overwrite a
+condition when multiple higher writers share one owner. An admitted transaction
+writing out in main_set_1/main_set_2 leaves the lower rule masked only in the
+second state, regardless of write-value order. The single-state control succeeds;
+complete public check/schedule/carrier/selector evidence and a saved verifier are
+in docs/audits/priority-contributors-20260927/. Transaction-winner exposure began
+at 7a3222a1a465e165d14569f1229f6887d6709f2f; the owner-key storage mechanism is
+older. SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.2 owns repair before metadata integration.
+HIAL .3.2.10.11.1 qualifies failure-only observation before genuine runtime;
+static overlap is proved, executed HDL failure/repair remains unmeasured.

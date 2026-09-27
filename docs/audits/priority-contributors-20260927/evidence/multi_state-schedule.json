@@ -1,0 +1,86 @@
+{
+   "actor_constants" : [],
+   "actor_network" : null,
+   "actor_params" : [],
+   "actor_phases" : [],
+   "actor_stages" : [],
+   "bank_accesses" : [],
+   "clock" : "clk",
+   "clock_domains" : [],
+   "compatible_fanin_groups" : [],
+   "compile_issues" : [],
+   "crossings" : [],
+   "dt_blocks" : [
+      {
+         "assignments" : 2,
+         "kind" : "rule",
+         "name" : "fallback"
+      }
+   ],
+   "generated_composition" : null,
+   "inferred_storage" : [
+      {
+         "kind" : "register",
+         "name" : "out",
+         "role" : "data_register",
+         "width" : 8
+      },
+      {
+         "kind" : "register",
+         "name" : "done",
+         "role" : "completion_pulse",
+         "width" : 1
+      }
+   ],
+   "inputs" : 2,
+   "library_uses" : [],
+   "loop_early_exits" : [],
+   "outputs" : 3,
+   "port_count" : 5,
+   "priority_resolutions" : [
+      {
+         "loser" : "fallback",
+         "loser_kind" : "rule",
+         "target" : "out",
+         "winner" : "main",
+         "winner_kind" : "transaction"
+      },
+      {
+         "loser" : "fallback",
+         "loser_kind" : "rule",
+         "target" : "out",
+         "winner" : "main",
+         "winner_kind" : "transaction"
+      }
+   ],
+   "reset" : {
+      "kind" : "sync",
+      "name" : "rst_n",
+      "polarity" : "active_low"
+   },
+   "resource_arbitration" : [],
+   "scheduled_fsm" : "priority_contributors.fsm",
+   "schema_version" : 1,
+   "source" : "priority_contributors.isf",
+   "state_count" : 4,
+   "temporal_contracts" : [],
+   "transaction_loops" : [],
+   "transaction_port_bindings" : [],
+   "transaction_stages" : [],
+   "transaction_waits" : [],
+   "transactions" : [
+      {
+         "count" : 4,
+         "name" : "main",
+         "states" : [
+            "main_idle_0",
+            "main_set_1",
+            "main_set_2",
+            "main_done_3"
+         ]
+      }
+   ],
+   "verification_bridge" : null,
+   "verification_observations" : [],
+   "watchdog" : "65535"
+}

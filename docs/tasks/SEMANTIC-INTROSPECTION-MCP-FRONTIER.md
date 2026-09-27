@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57, SEMANTIC-INTROSPECTION-MCP-FRONTIER.58`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -885,9 +885,31 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Join actual resource, priority and invocation evidence to qualified writer predicates.`
   Acceptance: `After .1, retain complete actual resource grants and assignment-local suppressors with exact local/generated invocation associations. Validate producer consistency and reject omitted/malformed evidence; never infer mutual exclusion from metadata or source ownership alone. Qualify priority/round-robin and both priority directions, source permutations and unchanged carriers/reports. Own any discovered emitted discrepancy before attachment.`
+  Verification: `pending`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.1`
+  Status: `done`
+  Goal: `Root-cause and retain suspected same-owner priority suppression loss.`
+  Acceptance: `P1 candidate found during evidence collection: _suppress_priority_assignment overwrites suppressed_by indexed by higher owner, although one transaction may write the same target in multiple states. Build a minimal actually admitted transaction-over-rule source with distinct higher-state writes and lower conflicting rule; inspect public schedule, carrier and semantic selectors. Compare a single-state control and source/state ordering without inventing a producer. Retain exact source and current output, identify the historical introducing change and own any confirmed repair before further evidence collection. No HDL runtime belongs to this baseline; separately qualify HIAL .3.2.10.11 observation before genuine runtime repair verification. Commit the diagnosis and precise next repair scope.`
+  Verification: `Confirmed P1: single-state, multi-state and reversed-value sources all strict-admit with empty compile issues. Multi-state public schedules list both main writers/resolutions, but the lower fallback output guard retains only main_set_2; main_set_1 is lost regardless of value ordering. The single-state control retains its only condition and the unrelated side output stays unmasked. Public carrier and semantic selector reports agree. Under force=1 in main_set_1, both different-valued writers are statically enabled; this is not an executed HDL observation. _suppress_priority_assignment overwrites the owner-key slot. History distinguishes the rule-key predecessor at 3e5e916a90cbe09dd7474dd0c051ab6caa753ba2, generalization at 49711b6dbee775600d924da3f92819136c52c567 while transaction winners were rejected, and actual transaction-winner exposure at 7a3222a1a465e165d14569f1229f6887d6709f2f. Complete sources/check/schedule/carrier/semantic records, current/history hashes and hostile saved verification are sealed under docs/audits/priority-contributors-20260927/. The introducing mechanism is proved; runtime remains unmeasured. HIAL .3.2.10.11.1 qualifies the fixed failure-only observer before .2 repair/runtime; .3 evidence integration remains blocked on that repair.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Repair confirmed priority contributor loss with independent emitted and runtime oracles.`
+  Acceptance: `After .1 establishes the actual defect, preserve every relevant higher writer condition without broadening suppression to unrelated targets or transaction progress. Keep deterministic output, same-value compatibility, priority/resource composition and native/API/newline parity. Qualify multi-state same-owner, source ordering, opposite priority, unrelated-target, reset/repeated and both HDL-target controls. Use legal override_req in runtime fixtures; .58 separately owns the baseline input force keyword boundary. Before runtime consume separately committed HIAL .3.2.10.11 observer integration; never weaken native admission. Update book/spec/downstream contracts and close only after signoff evidence.`
+  Verification: `pending confirmed baseline`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3`
+  Status: `pending`
+  Goal: `Join qualified grant, suppression and invocation evidence after contributor repair.`
+  Acceptance: `After .1/.2, complete the parent resource/priority/invocation association contract against actual producer records and effective predicates, preserving all contributors and rejecting omitted/malformed evidence. Split further if necessary; no metadata-only exclusion proof or production admission promotion.`
   Verification: `pending`
   Commit: `pending`
 
@@ -2094,6 +2116,13 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.58`
+  Status: `pending`
+  Goal: `Resolve the authored actor-port keyword acceptance boundary.`
+  Acceptance: `P2 candidate found in the priority baseline: input force strict-admits, while the shared shipped-target keyword registry reserves force and the public semantic assignment text retains that spelling. Reproduce from docs/audits/priority-contributors-20260927/multi_state.isf after the P1 contributor repair; independently compile emitted HDL using the qualified native observer before classifying actual backend behavior. Establish the published authoring contract and choose consistent early diagnostics or supported escaping if a gap is confirmed. Keep storage-variable policy 0110 and logical/generated identifier families distinct. Own implementation, complete native/API/newline diagnostics, target case/legal-name controls and book/spec/downstream sync; do not advertise unmeasured compiler rejection. Schedule after the P1 priority repair and before declaring full writer qualification complete.`
+  Verification: `Unmeasured compiler outcome; this is not part of the static priority-overwrite proof. The existing T1219 also uses input force. Planned T1974 priority runtime must use a separately admitted legal override_req spelling so keyword acceptance cannot obscure that oracle.`
+  Commit: `pending`
+
 ## Implementation Notes From `.4`
 
 Downstream intake note (2026-09-24): the director reports SPECFORGE's old-copy
@@ -2752,8 +2781,8 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2.2.2.2`, resource/priority/invocation evidence
-after detached effective predicate qualification
+`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2`, confirmed same-owner priority
+contributor repair after fixed observer qualification under HIAL .3.2.10.11.1
 after literal-guard repair and independently retained runtime qualification, after
 exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
@@ -4644,3 +4673,11 @@ blocker. The broader containment repair exceeds this guard-emitter slice.
 - [x] **NO REGRESSION** — Guarded `prove -Iperl -It/lib t/1973-isf-writer-activation-predicates.t t/1970-isf-source-writer-owners.t t/1971-isf-drive-invocation-sources.t` reports `All tests successful`, `Files=3, Tests=11`. No supervised HDL runtime or native-failure recurrence is requested. The selected public sync scope is private evidence plus book/fact/task; grant consistency and complete API/newline parity follow under the next children.
 
 Re-derivation uses actual lowering and emitted carrier queries; falsification uses independent explicit carrier expectations, omitted guards, malformed/ambiguous/AST mismatch controls and unchanged entry bookkeeping; durability is the helper, T1973 and canonical docs/Git. The focused log is repository-local but ignored at `.artifacts/writer-activation-predicates/focused.log`; rerun the tracked tests for fresh counts. No complete physical writer inventory or independent execution is claimed.
+
+## Acceptance — same-owner priority loss baseline `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Admitted public schedules and carriers retain only the last higher transaction state in the lower rule's inverse guard. `_suppress_priority_assignment` replaces the owner-key entry. `git log -S '_state_active_condition_expr($state->{name})'` identifies 7a3222a1a465e165d14569f1229f6887d6709f2f as transaction-winner exposure; owner-key generalization at 49711b6 predates support and is not mislabeled as exposure. Exact history hashes are sealed.
+- [x] **ADDRESSED (verified)** — The bounded baseline retains actually admitted single/multiple/reversed-value sources, complete check/schedule/carrier/semantic outputs and the static earlier-state overlap witness. The saved verifier rejects lost writers, altered retained conditions/admission/owners and erased suppression metadata. P1 repair .2 precedes any metadata join; HIAL .3.2.10.11.1 owns the necessary fixed runtime observer qualification. This baseline does not claim a fix or executed HDL failure.
+- [x] **NO REGRESSION** — Saved baseline verification passes; `knowledge-map: OK`, task-tree/claim checks, book build and staged doctrines qualify publication. Production source is unchanged. The book, ISF spec and downstream handoff expose the same known limitation instead of advertising complete multi-writer priority coverage.
+
+Re-derivation uses actual admitted public queries and source/history inspection; falsification uses the single-state and reversed-value controls, independent carrier/selector joins and corrupted records; durability is complete tracked evidence, producer, verifier and Git identities. Runtime repair evidence remains explicitly missing and scheduled, with native failure-only observation required first.

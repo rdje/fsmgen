@@ -1,0 +1,45 @@
+{
+   "check_schema_version" : 1,
+   "command" : {
+      "json" : true,
+      "mode" : "check",
+      "strict_mode" : true,
+      "target_language" : "systemverilog"
+   },
+   "diagnostic_summary" : {
+      "code_counts" : {},
+      "codes" : [],
+      "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+      "diagnostic_count" : 0,
+      "diagnostic_summary_schema_version" : 1,
+      "has_diagnostics" : false,
+      "has_stable_codes" : false,
+      "matched_support_accounting" : false,
+      "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+      "severity_counts" : {},
+      "success" : true,
+      "unique_codes" : []
+   },
+   "diagnostics" : [],
+   "generated_output" : {
+      "emitted" : false
+   },
+   "producer" : {
+      "name" : "FSMGen",
+      "report_source" : "FSM::Support::CheckDiagnostics"
+   },
+   "result" : {
+      "composition_child_count" : null,
+      "module_name" : "priority_contributors",
+      "signal_count" : 6,
+      "state_count" : 3
+   },
+   "source" : {
+      "input" : "docs/audits/priority-contributors-20260927/single_state.isf",
+      "resolved_path" : "docs/audits/priority-contributors-20260927/single_state.isf"
+   },
+   "success" : true,
+   "support_accounting" : {
+      "matched" : false
+   }
+}

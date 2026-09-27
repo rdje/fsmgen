@@ -1,0 +1,2028 @@
+{
+   "command" : {
+      "json" : true,
+      "mode" : "semantic_export",
+      "strict_mode" : true,
+      "target_language" : "systemverilog"
+   },
+   "diagnostic_summary" : {
+      "code_counts" : {},
+      "codes" : [],
+      "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+      "diagnostic_count" : 0,
+      "diagnostic_summary_schema_version" : 1,
+      "has_diagnostics" : false,
+      "has_stable_codes" : false,
+      "matched_support_accounting" : false,
+      "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+      "severity_counts" : {},
+      "success" : true,
+      "unique_codes" : []
+   },
+   "diagnostics" : [],
+   "generated_output" : {
+      "emitted" : false
+   },
+   "generation_result_snapshot" : {
+      "contract_source" : "FSM::Support::SerializableGenerationResultSnapshot",
+      "generation_result_snapshot_schema_version" : 1,
+      "present" : true,
+      "raw_shell_presence" : {
+         "composition_plan" : {
+            "present" : false,
+            "value_ref" : null
+         },
+         "composition_report" : {
+            "present" : false,
+            "value_ref" : null
+         },
+         "composition_spec" : {
+            "present" : false,
+            "value_ref" : null
+         },
+         "fsm_module" : {
+            "present" : true,
+            "value_ref" : "FSM::CoreAST::FSMModule"
+         },
+         "raw_ast" : {
+            "present" : true,
+            "value_ref" : "ARRAY"
+         },
+         "resolved_package_imports" : {
+            "present" : true,
+            "value_ref" : "HASH"
+         }
+      },
+      "report_source" : "FSM::Support::SerializableGenerationResultSnapshot",
+      "semantic_layer_presence" : {
+         "intent_hir" : true,
+         "lowered_rtl_ir" : true,
+         "structural_rtl_ir" : true
+      },
+      "source_summary" : {
+         "header" : "?fsm:priority_contributors",
+         "kind" : "fsm",
+         "package_import_count" : 0,
+         "package_import_names" : []
+      },
+      "stable_summary_presence" : {
+         "module_info" : true,
+         "source_info" : true,
+         "statistics" : true
+      },
+      "statistics_summary" : {
+         "factoring_enabled" : true,
+         "global_expressions" : 0,
+         "intermediate_signals" : 2
+      },
+      "summary" : {
+         "composition_child_count" : 0,
+         "hdl_code_length" : 6998,
+         "hdl_code_line_count" : 236,
+         "hdl_code_present" : true,
+         "module_name" : "priority_contributors",
+         "module_signal_count" : 6,
+         "module_state_count" : 4,
+         "source_root_kind" : "fsm",
+         "target_language" : "systemverilog"
+      },
+      "top_level_keys" : [
+         "fsm_module",
+         "hdl_code",
+         "intent_hir",
+         "lowered_rtl_ir",
+         "module_info",
+         "raw_ast",
+         "resolved_package_imports",
+         "source_info",
+         "statistics",
+         "structural_rtl_ir"
+      ]
+   },
+   "normalized_semantic_schema_version" : 1,
+   "producer" : {
+      "name" : "FSMGen",
+      "report_source" : "FSM::Support::NormalizedSemanticReport",
+      "semantic_layers" : [
+         "intent_hir",
+         "lowered_rtl_ir",
+         "structural_rtl_ir"
+      ]
+   },
+   "semantic" : {
+      "explicit_system_contract" : {
+         "clock" : "clk",
+         "reset" : "rst_n",
+         "reset_active_level" : 0,
+         "reset_keyword" : "sreset",
+         "reset_kind" : "sync"
+      },
+      "forward_ir" : {
+         "intent_hir" : {
+            "explicit_system_contract" : {
+               "clock" : "clk",
+               "reset" : "rst_n",
+               "reset_active_level" : 0,
+               "reset_keyword" : "sreset",
+               "reset_kind" : "sync"
+            },
+            "module_name" : "priority_contributors",
+            "parameter_count" : 0,
+            "parameter_names" : [],
+            "regular_state_count" : 4,
+            "regular_state_names" : [
+               "main_idle_0",
+               "main_set_1",
+               "main_set_2",
+               "main_done_3"
+            ],
+            "requires_implicit_system_ports" : 1,
+            "signal_analysis" : {
+               "inputs" : [
+                  {
+                     "direction" : "input",
+                     "name" : "force",
+                     "signed" : 0,
+                     "width" : 1
+                  },
+                  {
+                     "direction" : "input",
+                     "name" : "start",
+                     "signed" : 0,
+                     "width" : 1
+                  }
+               ],
+               "multi_bit" : [
+                  {
+                     "direction" : "output",
+                     "name" : "out",
+                     "signed" : 0,
+                     "width" : 8
+                  },
+                  {
+                     "direction" : "output",
+                     "name" : "side",
+                     "signed" : 0,
+                     "width" : 8
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "direction" : "output",
+                     "name" : "done",
+                     "signed" : 0,
+                     "width" : 1
+                  },
+                  {
+                     "direction" : "output",
+                     "name" : "out",
+                     "signed" : 0,
+                     "width" : 8
+                  },
+                  {
+                     "direction" : "output",
+                     "name" : "side",
+                     "signed" : 0,
+                     "width" : 8
+                  }
+               ],
+               "single_bit" : [
+                  {
+                     "direction" : "output",
+                     "name" : "done",
+                     "signed" : 0,
+                     "width" : 1
+                  },
+                  {
+                     "direction" : "input",
+                     "name" : "force",
+                     "signed" : 0,
+                     "width" : 1
+                  },
+                  {
+                     "direction" : "input",
+                     "name" : "start",
+                     "signed" : 0,
+                     "width" : 1
+                  }
+               ]
+            },
+            "signal_count" : 6,
+            "signal_names" : [
+               "current_state",
+               "done",
+               "force",
+               "out",
+               "side",
+               "start"
+            ],
+            "source_root_kind" : "fsm",
+            "standalone_dt_count" : 1,
+            "standalone_dt_enable_families" : [
+               {
+                  "dt_name" : "-fallback",
+                  "enable_signal" : "fallback_en"
+               }
+            ],
+            "standalone_dt_module_enable_family" : {
+               "dt_names" : [
+                  "-fallback"
+               ],
+               "enable_signals" : [
+                  "fallback_en"
+               ]
+            },
+            "standalone_dt_names" : [
+               "-fallback"
+            ],
+            "state_count" : 4,
+            "symbol_contract" : null,
+            "system_contract" : {
+               "clock" : "clk",
+               "declare_ports" : 1,
+               "implicit" : 0,
+               "reset" : "rst_n",
+               "reset_active_level" : 0,
+               "reset_keyword" : "sreset",
+               "reset_kind" : "sync"
+            }
+         },
+         "lowered_rtl_ir" : {
+            "module_name" : "priority_contributors",
+            "output_drive_families" : [
+               {
+                  "default_value" : "done",
+                  "driver_blocks" : [
+                     "main_done_3"
+                  ],
+                  "driver_count" : 1,
+                  "driver_enable_signals" : [
+                     "main_done_3_done_1_en"
+                  ],
+                  "family_enable_signals" : [
+                     "done_1_en"
+                  ],
+                  "multiplexer_type" : "flop",
+                  "pulse_delay_cycles" : 1,
+                  "reset_value" : "1'b0",
+                  "rhs_enable_families" : [
+                     {
+                        "driver_blocks" : [
+                           "main_done_3"
+                        ],
+                        "driver_enable_signals" : [
+                           "main_done_3_done_1_en"
+                        ],
+                        "family_enable_signal" : "done_1_en",
+                        "rhs_value" : "1"
+                     }
+                  ],
+                  "rhs_values" : [
+                     "1"
+                  ],
+                  "signal_name" : "done",
+                  "width" : 1
+               },
+               {
+                  "default_value" : "out",
+                  "driver_blocks" : [
+                     "-fallback",
+                     "main_set_1",
+                     "main_set_2"
+                  ],
+                  "driver_count" : 3,
+                  "driver_enable_signals" : [
+                     "fallback_out__9_en",
+                     "main_set_1_out__2_en",
+                     "main_set_2_out__3_en"
+                  ],
+                  "family_enable_signals" : [
+                     "out__2_en",
+                     "out__3_en",
+                     "out__9_en"
+                  ],
+                  "multiplexer_type" : "flop",
+                  "pulse_delay_cycles" : null,
+                  "reset_value" : "8'h00",
+                  "rhs_enable_families" : [
+                     {
+                        "driver_blocks" : [
+                           "main_set_1"
+                        ],
+                        "driver_enable_signals" : [
+                           "main_set_1_out__2_en"
+                        ],
+                        "family_enable_signal" : "out__2_en",
+                        "rhs_value" : "2"
+                     },
+                     {
+                        "driver_blocks" : [
+                           "main_set_2"
+                        ],
+                        "driver_enable_signals" : [
+                           "main_set_2_out__3_en"
+                        ],
+                        "family_enable_signal" : "out__3_en",
+                        "rhs_value" : "3"
+                     },
+                     {
+                        "driver_blocks" : [
+                           "-fallback"
+                        ],
+                        "driver_enable_signals" : [
+                           "fallback_out__9_en"
+                        ],
+                        "family_enable_signal" : "out__9_en",
+                        "rhs_value" : "9"
+                     }
+                  ],
+                  "rhs_values" : [
+                     "2",
+                     "3",
+                     "9"
+                  ],
+                  "signal_name" : "out",
+                  "width" : 8
+               },
+               {
+                  "default_value" : "side",
+                  "driver_blocks" : [
+                     "-fallback"
+                  ],
+                  "driver_count" : 1,
+                  "driver_enable_signals" : [
+                     "fallback_side__7_en"
+                  ],
+                  "family_enable_signals" : [
+                     "side__7_en"
+                  ],
+                  "multiplexer_type" : "flop",
+                  "pulse_delay_cycles" : null,
+                  "reset_value" : "8'h00",
+                  "rhs_enable_families" : [
+                     {
+                        "driver_blocks" : [
+                           "-fallback"
+                        ],
+                        "driver_enable_signals" : [
+                           "fallback_side__7_en"
+                        ],
+                        "family_enable_signal" : "side__7_en",
+                        "rhs_value" : "7"
+                     }
+                  ],
+                  "rhs_values" : [
+                     "7"
+                  ],
+                  "signal_name" : "side",
+                  "width" : 8
+               }
+            ],
+            "output_drive_family_count" : 3,
+            "selector_conflict_target_count" : 2,
+            "selector_conflict_targets" : [
+               {
+                  "family_enable_signals" : [
+                     "next_state_main_done_3_en",
+                     "next_state_main_idle_0_en",
+                     "next_state_main_set_1_en",
+                     "next_state_main_set_2_en"
+                  ],
+                  "multi_value_assertion" : {
+                     "input_count" : 4,
+                     "input_enable_signals" : [
+                        "next_state_main_done_3_en",
+                        "next_state_main_idle_0_en",
+                        "next_state_main_set_1_en",
+                        "next_state_main_set_2_en"
+                     ],
+                     "kind" : "onehot0",
+                     "target_signal" : "next_state"
+                  },
+                  "multiplexer_type" : "comb",
+                  "rhs_enable_families" : [
+                     {
+                        "driver_enable_signals" : [
+                           "main_set_2_next_state_main_done_3_en"
+                        ],
+                        "family_enable_signal" : "next_state_main_done_3_en",
+                        "rhs_value" : "MAIN_DONE_3",
+                        "same_value_assertion" : {
+                           "input_count" : 1,
+                           "input_enable_signals" : [
+                              "main_set_2_next_state_main_done_3_en"
+                           ],
+                           "kind" : "onehot0",
+                           "rhs_value" : "MAIN_DONE_3",
+                           "target_signal" : "next_state"
+                        }
+                     },
+                     {
+                        "driver_enable_signals" : [
+                           "main_done_3_next_state_main_idle_0_en"
+                        ],
+                        "family_enable_signal" : "next_state_main_idle_0_en",
+                        "rhs_value" : "MAIN_IDLE_0",
+                        "same_value_assertion" : {
+                           "input_count" : 1,
+                           "input_enable_signals" : [
+                              "main_done_3_next_state_main_idle_0_en"
+                           ],
+                           "kind" : "onehot0",
+                           "rhs_value" : "MAIN_IDLE_0",
+                           "target_signal" : "next_state"
+                        }
+                     },
+                     {
+                        "driver_enable_signals" : [
+                           "main_idle_0_next_state_main_set_1_en"
+                        ],
+                        "family_enable_signal" : "next_state_main_set_1_en",
+                        "rhs_value" : "MAIN_SET_1",
+                        "same_value_assertion" : {
+                           "input_count" : 1,
+                           "input_enable_signals" : [
+                              "main_idle_0_next_state_main_set_1_en"
+                           ],
+                           "kind" : "onehot0",
+                           "rhs_value" : "MAIN_SET_1",
+                           "target_signal" : "next_state"
+                        }
+                     },
+                     {
+                        "driver_enable_signals" : [
+                           "main_set_1_next_state_main_set_2_en"
+                        ],
+                        "family_enable_signal" : "next_state_main_set_2_en",
+                        "rhs_value" : "MAIN_SET_2",
+                        "same_value_assertion" : {
+                           "input_count" : 1,
+                           "input_enable_signals" : [
+                              "main_set_1_next_state_main_set_2_en"
+                           ],
+                           "kind" : "onehot0",
+                           "rhs_value" : "MAIN_SET_2",
+                           "target_signal" : "next_state"
+                        }
+                     }
+                  ],
+                  "rhs_values" : [
+                     "MAIN_DONE_3",
+                     "MAIN_IDLE_0",
+                     "MAIN_SET_1",
+                     "MAIN_SET_2"
+                  ],
+                  "signal_name" : "next_state"
+               },
+               {
+                  "family_enable_signals" : [
+                     "out__2_en",
+                     "out__3_en",
+                     "out__9_en"
+                  ],
+                  "multi_value_assertion" : {
+                     "input_count" : 3,
+                     "input_enable_signals" : [
+                        "out__2_en",
+                        "out__3_en",
+                        "out__9_en"
+                     ],
+                     "kind" : "onehot0",
+                     "target_signal" : "out"
+                  },
+                  "multiplexer_type" : "flop",
+                  "rhs_enable_families" : [
+                     {
+                        "driver_enable_signals" : [
+                           "main_set_1_out__2_en"
+                        ],
+                        "family_enable_signal" : "out__2_en",
+                        "rhs_value" : "2",
+                        "same_value_assertion" : {
+                           "input_count" : 1,
+                           "input_enable_signals" : [
+                              "main_set_1_out__2_en"
+                           ],
+                           "kind" : "onehot0",
+                           "rhs_value" : "2",
+                           "target_signal" : "out"
+                        }
+                     },
+                     {
+                        "driver_enable_signals" : [
+                           "main_set_2_out__3_en"
+                        ],
+                        "family_enable_signal" : "out__3_en",
+                        "rhs_value" : "3",
+                        "same_value_assertion" : {
+                           "input_count" : 1,
+                           "input_enable_signals" : [
+                              "main_set_2_out__3_en"
+                           ],
+                           "kind" : "onehot0",
+                           "rhs_value" : "3",
+                           "target_signal" : "out"
+                        }
+                     },
+                     {
+                        "driver_enable_signals" : [
+                           "fallback_out__9_en"
+                        ],
+                        "family_enable_signal" : "out__9_en",
+                        "rhs_value" : "9",
+                        "same_value_assertion" : {
+                           "input_count" : 1,
+                           "input_enable_signals" : [
+                              "fallback_out__9_en"
+                           ],
+                           "kind" : "onehot0",
+                           "rhs_value" : "9",
+                           "target_signal" : "out"
+                        }
+                     }
+                  ],
+                  "rhs_values" : [
+                     "2",
+                     "3",
+                     "9"
+                  ],
+                  "signal_name" : "out"
+               }
+            ],
+            "source_root_kind" : "fsm",
+            "standalone_dt_multi_drive_target_count" : 0,
+            "standalone_dt_multi_drive_targets" : [],
+            "target_language" : "systemverilog"
+         },
+         "structural_rtl_ir" : {
+            "assignment_record_count" : 25,
+            "assignment_records" : [
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_done_3_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "role" : "top_state_enable",
+                     "state_name" : "main_done_3"
+                  },
+                  "rendered" : "  assign main_done_3_en = current_state == MAIN_DONE_3;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::BinaryOp",
+                        "kind" : "binary_op",
+                        "left" : {
+                           "class" : "FSM::AST::SignalRef",
+                           "kind" : "signal_ref",
+                           "name" : "current_state"
+                        },
+                        "operator" : "==",
+                        "right" : {
+                           "class" : "FSM::AST::Literal",
+                           "kind" : "literal",
+                           "value" : "MAIN_DONE_3"
+                        }
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "current_state == MAIN_DONE_3"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_idle_0_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "role" : "top_state_enable",
+                     "state_name" : "main_idle_0"
+                  },
+                  "rendered" : "  assign main_idle_0_en = current_state == MAIN_IDLE_0;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::BinaryOp",
+                        "kind" : "binary_op",
+                        "left" : {
+                           "class" : "FSM::AST::SignalRef",
+                           "kind" : "signal_ref",
+                           "name" : "current_state"
+                        },
+                        "operator" : "==",
+                        "right" : {
+                           "class" : "FSM::AST::Literal",
+                           "kind" : "literal",
+                           "value" : "MAIN_IDLE_0"
+                        }
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "current_state == MAIN_IDLE_0"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_set_1_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "role" : "top_state_enable",
+                     "state_name" : "main_set_1"
+                  },
+                  "rendered" : "  assign main_set_1_en = current_state == MAIN_SET_1;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::BinaryOp",
+                        "kind" : "binary_op",
+                        "left" : {
+                           "class" : "FSM::AST::SignalRef",
+                           "kind" : "signal_ref",
+                           "name" : "current_state"
+                        },
+                        "operator" : "==",
+                        "right" : {
+                           "class" : "FSM::AST::Literal",
+                           "kind" : "literal",
+                           "value" : "MAIN_SET_1"
+                        }
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "current_state == MAIN_SET_1"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_set_2_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "role" : "top_state_enable",
+                     "state_name" : "main_set_2"
+                  },
+                  "rendered" : "  assign main_set_2_en = current_state_eq_const_MAIN_SET_2;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::HDL::IntermediateSignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "current_state_eq_const_MAIN_SET_2"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "current_state_eq_const_MAIN_SET_2"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "fallback_en"
+                  },
+                  "provenance" : {
+                     "clean_dt_name" : "fallback",
+                     "dt_name" : "-fallback",
+                     "family" : "generated_enable",
+                     "role" : "standalone_dt_enable"
+                  },
+                  "rendered" : "  assign fallback_en = force;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::CoreAST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "force"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "force"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "fallback_out__9_en"
+                  },
+                  "provenance" : {
+                     "dt_name" : "-fallback",
+                     "dte_gate_signal" : "fallback_en",
+                     "family" : "generated_enable",
+                     "lhs_signal" : "out",
+                     "rhs_value" : "9",
+                     "role" : "dt_specific_enable"
+                  },
+                  "rendered" : "  assign fallback_out__9_en = fallback_en & not_current_state_eq_const_MAIN_SET_2;  // out <- 9",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::BinaryOp",
+                        "kind" : "binary_op",
+                        "left" : {
+                           "class" : "FSM::AST::SignalRef",
+                           "kind" : "signal_ref",
+                           "name" : "fallback_en"
+                        },
+                        "operator" : "&&",
+                        "right" : {
+                           "class" : "FSM::HDL::IntermediateSignalRef",
+                           "kind" : "signal_ref",
+                           "name" : "not_current_state_eq_const_MAIN_SET_2"
+                        }
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "fallback_en & not_current_state_eq_const_MAIN_SET_2"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "fallback_side__7_en"
+                  },
+                  "provenance" : {
+                     "dt_name" : "-fallback",
+                     "dte_gate_signal" : "fallback_en",
+                     "family" : "generated_enable",
+                     "lhs_signal" : "side",
+                     "rhs_value" : "7",
+                     "role" : "dt_specific_enable"
+                  },
+                  "rendered" : "  assign fallback_side__7_en = fallback_en;  // side <- 7",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "fallback_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "fallback_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_done_3_done_1_en"
+                  },
+                  "provenance" : {
+                     "dt_name" : "main_done_3",
+                     "dte_gate_signal" : "main_done_3_en",
+                     "family" : "generated_enable",
+                     "lhs_signal" : "done",
+                     "rhs_value" : "1",
+                     "role" : "dt_specific_enable"
+                  },
+                  "rendered" : "  assign main_done_3_done_1_en = main_done_3_en;  // done <- 1",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_done_3_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_done_3_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_done_3_next_state_main_idle_0_en"
+                  },
+                  "provenance" : {
+                     "dt_name" : "main_done_3",
+                     "dte_gate_signal" : "main_done_3_en",
+                     "family" : "generated_enable",
+                     "lhs_signal" : "next_state",
+                     "rhs_value" : "MAIN_IDLE_0",
+                     "role" : "dt_specific_enable"
+                  },
+                  "rendered" : "  assign main_done_3_next_state_main_idle_0_en = main_done_3_en;  // next_state <- MAIN_IDLE_0",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_done_3_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_done_3_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_idle_0_can_accept_1_en"
+                  },
+                  "provenance" : {
+                     "dt_name" : "main_idle_0",
+                     "dte_gate_signal" : "main_idle_0_en",
+                     "family" : "generated_enable",
+                     "lhs_signal" : "can_accept",
+                     "rhs_value" : "1",
+                     "role" : "dt_specific_enable"
+                  },
+                  "rendered" : "  assign main_idle_0_can_accept_1_en = main_idle_0_en;  // can_accept <- 1",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_idle_0_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_idle_0_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_idle_0_next_state_main_set_1_en"
+                  },
+                  "provenance" : {
+                     "dt_name" : "main_idle_0",
+                     "dte_gate_signal" : "main_idle_0_en",
+                     "family" : "generated_enable",
+                     "lhs_signal" : "next_state",
+                     "rhs_value" : "MAIN_SET_1",
+                     "role" : "dt_specific_enable"
+                  },
+                  "rendered" : "  assign main_idle_0_next_state_main_set_1_en = main_idle_0_en & start;  // next_state <- MAIN_SET_1",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::BinaryOp",
+                        "kind" : "binary_op",
+                        "left" : {
+                           "class" : "FSM::AST::SignalRef",
+                           "kind" : "signal_ref",
+                           "name" : "main_idle_0_en"
+                        },
+                        "operator" : "&&",
+                        "right" : {
+                           "class" : "FSM::AST::SignalRef",
+                           "kind" : "signal_ref",
+                           "name" : "start"
+                        }
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_idle_0_en & start"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_set_1_next_state_main_set_2_en"
+                  },
+                  "provenance" : {
+                     "dt_name" : "main_set_1",
+                     "dte_gate_signal" : "main_set_1_en",
+                     "family" : "generated_enable",
+                     "lhs_signal" : "next_state",
+                     "rhs_value" : "MAIN_SET_2",
+                     "role" : "dt_specific_enable"
+                  },
+                  "rendered" : "  assign main_set_1_next_state_main_set_2_en = main_set_1_en;  // next_state <- MAIN_SET_2",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_set_1_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_set_1_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_set_1_out__2_en"
+                  },
+                  "provenance" : {
+                     "dt_name" : "main_set_1",
+                     "dte_gate_signal" : "main_set_1_en",
+                     "family" : "generated_enable",
+                     "lhs_signal" : "out",
+                     "rhs_value" : "2",
+                     "role" : "dt_specific_enable"
+                  },
+                  "rendered" : "  assign main_set_1_out__2_en = main_set_1_en;  // out <- 2",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_set_1_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_set_1_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_set_2_next_state_main_done_3_en"
+                  },
+                  "provenance" : {
+                     "dt_name" : "main_set_2",
+                     "dte_gate_signal" : "main_set_2_en",
+                     "family" : "generated_enable",
+                     "lhs_signal" : "next_state",
+                     "rhs_value" : "MAIN_DONE_3",
+                     "role" : "dt_specific_enable"
+                  },
+                  "rendered" : "  assign main_set_2_next_state_main_done_3_en = main_set_2_en;  // next_state <- MAIN_DONE_3",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_set_2_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_set_2_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "main_set_2_out__3_en"
+                  },
+                  "provenance" : {
+                     "dt_name" : "main_set_2",
+                     "dte_gate_signal" : "main_set_2_en",
+                     "family" : "generated_enable",
+                     "lhs_signal" : "out",
+                     "rhs_value" : "3",
+                     "role" : "dt_specific_enable"
+                  },
+                  "rendered" : "  assign main_set_2_out__3_en = main_set_2_en;  // out <- 3",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_set_2_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_set_2_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "can_accept_1_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "lhs_signal" : "can_accept",
+                     "rhs_value" : "1",
+                     "role" : "lhs_level_enable"
+                  },
+                  "rendered" : "  assign can_accept_1_en = main_idle_0_can_accept_1_en;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_idle_0_can_accept_1_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_idle_0_can_accept_1_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "done_1_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "lhs_signal" : "done",
+                     "rhs_value" : "1",
+                     "role" : "lhs_level_enable"
+                  },
+                  "rendered" : "  assign done_1_en = main_done_3_done_1_en;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_done_3_done_1_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_done_3_done_1_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "next_state_main_done_3_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "lhs_signal" : "next_state",
+                     "rhs_value" : "MAIN_DONE_3",
+                     "role" : "lhs_level_enable"
+                  },
+                  "rendered" : "  assign next_state_main_done_3_en = main_set_2_next_state_main_done_3_en;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_set_2_next_state_main_done_3_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_set_2_next_state_main_done_3_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "next_state_main_idle_0_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "lhs_signal" : "next_state",
+                     "rhs_value" : "MAIN_IDLE_0",
+                     "role" : "lhs_level_enable"
+                  },
+                  "rendered" : "  assign next_state_main_idle_0_en = main_done_3_next_state_main_idle_0_en;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_done_3_next_state_main_idle_0_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_done_3_next_state_main_idle_0_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "next_state_main_set_1_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "lhs_signal" : "next_state",
+                     "rhs_value" : "MAIN_SET_1",
+                     "role" : "lhs_level_enable"
+                  },
+                  "rendered" : "  assign next_state_main_set_1_en = main_idle_0_next_state_main_set_1_en;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_idle_0_next_state_main_set_1_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_idle_0_next_state_main_set_1_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "next_state_main_set_2_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "lhs_signal" : "next_state",
+                     "rhs_value" : "MAIN_SET_2",
+                     "role" : "lhs_level_enable"
+                  },
+                  "rendered" : "  assign next_state_main_set_2_en = main_set_1_next_state_main_set_2_en;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_set_1_next_state_main_set_2_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_set_1_next_state_main_set_2_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "out__2_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "lhs_signal" : "out",
+                     "rhs_value" : "2",
+                     "role" : "lhs_level_enable"
+                  },
+                  "rendered" : "  assign out__2_en = main_set_1_out__2_en;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_set_1_out__2_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_set_1_out__2_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "out__3_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "lhs_signal" : "out",
+                     "rhs_value" : "3",
+                     "role" : "lhs_level_enable"
+                  },
+                  "rendered" : "  assign out__3_en = main_set_2_out__3_en;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "main_set_2_out__3_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "main_set_2_out__3_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "out__9_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "lhs_signal" : "out",
+                     "rhs_value" : "9",
+                     "role" : "lhs_level_enable"
+                  },
+                  "rendered" : "  assign out__9_en = fallback_out__9_en;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "fallback_out__9_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "fallback_out__9_en"
+                  }
+               },
+               {
+                  "kind" : "continuous_assign",
+                  "lhs" : {
+                     "kind" : "signal_ref",
+                     "name" : "side__7_en"
+                  },
+                  "provenance" : {
+                     "family" : "generated_enable",
+                     "lhs_signal" : "side",
+                     "rhs_value" : "7",
+                     "role" : "lhs_level_enable"
+                  },
+                  "rendered" : "  assign side__7_en = fallback_side__7_en;",
+                  "rhs" : {
+                     "ast" : {
+                        "class" : "FSM::AST::SignalRef",
+                        "kind" : "signal_ref",
+                        "name" : "fallback_side__7_en"
+                     },
+                     "kind" : "expression",
+                     "language" : "systemverilog",
+                     "text" : "fallback_side__7_en"
+                  }
+               }
+            ],
+            "auxiliary_assignment_count" : 25,
+            "auxiliary_assignments" : [
+               "  assign main_done_3_en = current_state == MAIN_DONE_3;",
+               "  assign main_idle_0_en = current_state == MAIN_IDLE_0;",
+               "  assign main_set_1_en = current_state == MAIN_SET_1;",
+               "  assign main_set_2_en = current_state_eq_const_MAIN_SET_2;",
+               "  assign fallback_en = force;",
+               "  assign fallback_out__9_en = fallback_en & not_current_state_eq_const_MAIN_SET_2;  // out <- 9",
+               "  assign fallback_side__7_en = fallback_en;  // side <- 7",
+               "  assign main_done_3_done_1_en = main_done_3_en;  // done <- 1",
+               "  assign main_done_3_next_state_main_idle_0_en = main_done_3_en;  // next_state <- MAIN_IDLE_0",
+               "  assign main_idle_0_can_accept_1_en = main_idle_0_en;  // can_accept <- 1",
+               "  assign main_idle_0_next_state_main_set_1_en = main_idle_0_en & start;  // next_state <- MAIN_SET_1",
+               "  assign main_set_1_next_state_main_set_2_en = main_set_1_en;  // next_state <- MAIN_SET_2",
+               "  assign main_set_1_out__2_en = main_set_1_en;  // out <- 2",
+               "  assign main_set_2_next_state_main_done_3_en = main_set_2_en;  // next_state <- MAIN_DONE_3",
+               "  assign main_set_2_out__3_en = main_set_2_en;  // out <- 3",
+               "  assign can_accept_1_en = main_idle_0_can_accept_1_en;",
+               "  assign done_1_en = main_done_3_done_1_en;",
+               "  assign next_state_main_done_3_en = main_set_2_next_state_main_done_3_en;",
+               "  assign next_state_main_idle_0_en = main_done_3_next_state_main_idle_0_en;",
+               "  assign next_state_main_set_1_en = main_idle_0_next_state_main_set_1_en;",
+               "  assign next_state_main_set_2_en = main_set_1_next_state_main_set_2_en;",
+               "  assign out__2_en = main_set_1_out__2_en;",
+               "  assign out__3_en = main_set_2_out__3_en;",
+               "  assign out__9_en = fallback_out__9_en;",
+               "  assign side__7_en = fallback_side__7_en;"
+            ],
+            "declared_link_count" : 0,
+            "declared_links" : [],
+            "instance_count" : 0,
+            "instances" : [],
+            "module_name" : "priority_contributors",
+            "net_count" : 29,
+            "nets" : [
+               {
+                  "name" : "can_accept",
+                  "signed" : 0,
+                  "source" : null,
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "done_pulse_delay_pipe",
+                  "signed" : 0,
+                  "source" : null,
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "out_next",
+                  "signed" : 0,
+                  "source" : null,
+                  "targets" : [],
+                  "width" : 8
+               },
+               {
+                  "name" : "side_next",
+                  "signed" : 0,
+                  "source" : null,
+                  "targets" : [],
+                  "width" : 8
+               },
+               {
+                  "name" : "main_done_3_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_done_3_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "top_state_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "main_done_3_done_1_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     },
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "main_done_3_next_state_main_idle_0_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_idle_0_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_idle_0_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "top_state_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "main_idle_0_can_accept_1_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     },
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "main_idle_0_next_state_main_set_1_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_set_1_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_set_1_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "top_state_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "main_set_1_next_state_main_set_2_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     },
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "main_set_1_out__2_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_set_2_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_set_2_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "top_state_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "main_set_2_next_state_main_done_3_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     },
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "main_set_2_out__3_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "fallback_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "fallback_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "standalone_dt_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "fallback_out__9_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     },
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "fallback_side__7_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_idle_0_can_accept_1_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_idle_0_can_accept_1_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "dt_specific_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "can_accept_1_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "lhs_level_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "can_accept_1_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "can_accept_1_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "lhs_level_enable"
+                  },
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_done_3_done_1_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_done_3_done_1_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "dt_specific_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "done_1_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "lhs_level_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "done_1_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "done_1_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "lhs_level_enable"
+                  },
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_set_2_next_state_main_done_3_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_set_2_next_state_main_done_3_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "dt_specific_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "next_state_main_done_3_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "lhs_level_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "next_state_main_done_3_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "next_state_main_done_3_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "lhs_level_enable"
+                  },
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_done_3_next_state_main_idle_0_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_done_3_next_state_main_idle_0_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "dt_specific_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "next_state_main_idle_0_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "lhs_level_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "next_state_main_idle_0_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "next_state_main_idle_0_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "lhs_level_enable"
+                  },
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_idle_0_next_state_main_set_1_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_idle_0_next_state_main_set_1_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "dt_specific_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "next_state_main_set_1_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "lhs_level_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "next_state_main_set_1_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "next_state_main_set_1_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "lhs_level_enable"
+                  },
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_set_1_next_state_main_set_2_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_set_1_next_state_main_set_2_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "dt_specific_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "next_state_main_set_2_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "lhs_level_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "next_state_main_set_2_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "next_state_main_set_2_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "lhs_level_enable"
+                  },
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_set_1_out__2_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_set_1_out__2_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "dt_specific_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "out__2_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "lhs_level_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "out__2_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "out__2_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "lhs_level_enable"
+                  },
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "main_set_2_out__3_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "main_set_2_out__3_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "dt_specific_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "out__3_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "lhs_level_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "out__3_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "out__3_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "lhs_level_enable"
+                  },
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "fallback_out__9_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "fallback_out__9_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "dt_specific_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "out__9_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "lhs_level_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "out__9_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "out__9_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "lhs_level_enable"
+                  },
+                  "targets" : [],
+                  "width" : 1
+               },
+               {
+                  "name" : "fallback_side__7_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "fallback_side__7_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "dt_specific_enable"
+                  },
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "side__7_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "lhs_level_enable"
+                     }
+                  ],
+                  "width" : 1
+               },
+               {
+                  "name" : "side__7_en",
+                  "signed" : 0,
+                  "source" : {
+                     "assignment_kind" : "continuous_assign",
+                     "assignment_lhs" : "side__7_en",
+                     "family" : "generated_enable",
+                     "kind" : "assignment_record_driver",
+                     "role" : "lhs_level_enable"
+                  },
+                  "targets" : [],
+                  "width" : 1
+               }
+            ],
+            "port_count" : 7,
+            "ports" : [
+               {
+                  "direction" : "input",
+                  "name" : "force",
+                  "signed" : 0,
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "fallback_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "standalone_dt_enable"
+                     }
+                  ],
+                  "type" : "wire",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "signed" : 0,
+                  "targets" : [
+                     {
+                        "assignment_kind" : "continuous_assign",
+                        "assignment_lhs" : "main_idle_0_next_state_main_set_1_en",
+                        "family" : "generated_enable",
+                        "kind" : "assignment_record_rhs_dependency",
+                        "role" : "dt_specific_enable"
+                     }
+                  ],
+                  "type" : "wire",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "name" : "done",
+                  "signed" : 0,
+                  "source" : {
+                     "driver_blocks" : [
+                        "main_done_3"
+                     ],
+                     "driver_count" : 1,
+                     "driver_enable_signals" : [
+                        "main_done_3_done_1_en"
+                     ],
+                     "family_enable_signals" : [
+                        "done_1_en"
+                     ],
+                     "kind" : "lowered_output_drive_family",
+                     "multiplexer_type" : "flop",
+                     "rhs_values" : [
+                        "1"
+                     ],
+                     "signal_name" : "done"
+                  },
+                  "type" : "wire",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "name" : "out",
+                  "signed" : 0,
+                  "source" : {
+                     "driver_blocks" : [
+                        "-fallback",
+                        "main_set_1",
+                        "main_set_2"
+                     ],
+                     "driver_count" : 3,
+                     "driver_enable_signals" : [
+                        "fallback_out__9_en",
+                        "main_set_1_out__2_en",
+                        "main_set_2_out__3_en"
+                     ],
+                     "family_enable_signals" : [
+                        "out__2_en",
+                        "out__3_en",
+                        "out__9_en"
+                     ],
+                     "kind" : "lowered_output_drive_family",
+                     "multiplexer_type" : "flop",
+                     "rhs_values" : [
+                        "2",
+                        "3",
+                        "9"
+                     ],
+                     "signal_name" : "out"
+                  },
+                  "type" : "wire",
+                  "width" : 8
+               },
+               {
+                  "direction" : "output",
+                  "name" : "side",
+                  "signed" : 0,
+                  "source" : {
+                     "driver_blocks" : [
+                        "-fallback"
+                     ],
+                     "driver_count" : 1,
+                     "driver_enable_signals" : [
+                        "fallback_side__7_en"
+                     ],
+                     "family_enable_signals" : [
+                        "side__7_en"
+                     ],
+                     "kind" : "lowered_output_drive_family",
+                     "multiplexer_type" : "flop",
+                     "rhs_values" : [
+                        "7"
+                     ],
+                     "signal_name" : "side"
+                  },
+                  "type" : "wire",
+                  "width" : 8
+               },
+               {
+                  "direction" : "input",
+                  "name" : "clk",
+                  "signed" : 0,
+                  "type" : "clock",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "rst_n",
+                  "signed" : 0,
+                  "type" : "reset",
+                  "width" : 1
+               }
+            ],
+            "resolved_link_count" : 0,
+            "resolved_links" : [],
+            "source_root_kind" : "fsm",
+            "target_language" : "systemverilog"
+         }
+      },
+      "module" : {
+         "name" : "priority_contributors",
+         "output_drive_family_count" : 3,
+         "parameter_count" : 0,
+         "parameter_names" : [],
+         "regular_state_count" : 4,
+         "regular_state_names" : [
+            "main_idle_0",
+            "main_set_1",
+            "main_set_2",
+            "main_done_3"
+         ],
+         "requires_implicit_system_ports" : true,
+         "signal_count" : 6,
+         "signal_names" : [
+            "current_state",
+            "done",
+            "force",
+            "out",
+            "side",
+            "start"
+         ],
+         "source_root_kind" : "fsm",
+         "standalone_dt_count" : 1,
+         "standalone_dt_multi_drive_target_count" : 0,
+         "standalone_dt_names" : [
+            "-fallback"
+         ],
+         "state_count" : 4,
+         "target_language" : "systemverilog"
+      },
+      "signal_analysis" : {
+         "inputs" : [
+            {
+               "direction" : "input",
+               "name" : "force",
+               "signed" : 0,
+               "width" : 1
+            },
+            {
+               "direction" : "input",
+               "name" : "start",
+               "signed" : 0,
+               "width" : 1
+            }
+         ],
+         "multi_bit" : [
+            {
+               "direction" : "output",
+               "name" : "out",
+               "signed" : 0,
+               "width" : 8
+            },
+            {
+               "direction" : "output",
+               "name" : "side",
+               "signed" : 0,
+               "width" : 8
+            }
+         ],
+         "outputs" : [
+            {
+               "direction" : "output",
+               "name" : "done",
+               "signed" : 0,
+               "width" : 1
+            },
+            {
+               "direction" : "output",
+               "name" : "out",
+               "signed" : 0,
+               "width" : 8
+            },
+            {
+               "direction" : "output",
+               "name" : "side",
+               "signed" : 0,
+               "width" : 8
+            }
+         ],
+         "single_bit" : [
+            {
+               "direction" : "output",
+               "name" : "done",
+               "signed" : 0,
+               "width" : 1
+            },
+            {
+               "direction" : "input",
+               "name" : "force",
+               "signed" : 0,
+               "width" : 1
+            },
+            {
+               "direction" : "input",
+               "name" : "start",
+               "signed" : 0,
+               "width" : 1
+            }
+         ]
+      },
+      "system_contract" : {
+         "clock" : "clk",
+         "declare_ports" : 1,
+         "implicit" : 0,
+         "reset" : "rst_n",
+         "reset_active_level" : 0,
+         "reset_keyword" : "sreset",
+         "reset_kind" : "sync"
+      }
+   },
+   "source" : {
+      "input" : "docs/audits/priority-contributors-20260927/multi_state.isf",
+      "resolved_path" : "docs/audits/priority-contributors-20260927/multi_state.isf"
+   },
+   "success" : true,
+   "support_accounting" : {
+      "matched" : false
+   }
+}
