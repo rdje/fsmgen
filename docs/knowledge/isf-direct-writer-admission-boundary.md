@@ -5,11 +5,12 @@ answers:
   - "does ISF reject competing writes from direct sibling transactions?"
   - "does transaction priority grant independent controller writes?"
   - "which physical targets must shared writer admission compare?"
+  - "where are physical writer packed ranges resolved?"
   - "where is the direct writer admission baseline?"
 date: 2026-09-27
 status: current
 tags: [isf, controllers, writers, storage, conflicts, ownership]
-evidence: docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
+evidence: perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
 reverify: scripts/run_with_ram_guard.sh perl docs/audits/direct-writer-admission-20260927/reproduce.pl; compare .artifacts/direct-writer-admission/current.json with the retained result.json. This is a dated admission baseline, not an expected future safety contract.
 ---
 
@@ -52,3 +53,18 @@ ownership remains governed by decision 0107 and its separately qualified lanes.
 No concurrent execution, new arbitration or writer-safety claim follows from
 this baseline. The known reachability audit remains canonical; it is not rerun
 or reinterpreted as shared-writer qualification here.
+
+The first detached inventory prerequisite is PhysicalWriteTargets. It resolves
+actual declared roots and aggregate paths into module/root/packed-range records,
+using Package::AggregatePathSupport for type-directed traversal and offsets.
+Whole frame covers its mode/flag leaves; distinct leaves do not overlap. Nested
+record/list fragments retain their packed positions. Root width/type mismatches,
+unknown declarations/paths and malformed range operands are refused. Identically
+named roots in separate modules are distinct, and private formal names remain
+separate roots. No mask is inferred from an assignment RHS.
+
+T1967 uses every assignment in the admitted baseline plus independent nested
+range arithmetic and omission/mutation controls. The helper is detached and is
+not called by production lowering or admission yet. Complete declaration/owner
+collection and shadow attachment remain .3.2.2/.3.2.3 under the writer parent;
+conservative executable admission remains .3.3.

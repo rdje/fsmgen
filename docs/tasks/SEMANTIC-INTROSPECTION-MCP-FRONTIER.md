@@ -787,9 +787,31 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Build a complete detached physical writer inventory from admitted production IR.`
   Acceptance: `After .1, inventory every state/DT assignment using explicit source ownership and actual physical target structure. Cover private formals, actor scalars/outputs, aggregate leaves/masked updates, scalarized banks, drives, binding copies, generated handoffs, completion fan-in and internal helpers. Preserve module/domain boundaries and actual grant/suppression predicates; never infer owners from prefixes or treat entry guards as body-wide exclusion. Prove completeness, deterministic detached products, malformed/omission controls and unchanged native/API/MCP/carriers before admission changes. Split producer families into safe children if needed.`
+  Verification: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.3`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.1`
+  Status: `done`
+  Goal: `Normalize declared physical write targets without changing production admission.`
+  Acceptance: `Resolve whole signals and admitted aggregate paths to module/root/packed-range identities using the existing AggregatePathSupport resolver and resolved declaration contracts. Keep private formals and scalarized bank entries distinct; treat masked updates as whole-target writes. Prove whole/member/disjoint/nested overlap, module isolation, width/type/unknown-path refusal and detached results against actual lowered baseline targets. No independent controller or admission change is enabled.`
+  Verification: `T1967 resolves every assignment target from the admitted writer baseline using actual declarations, preserves private/module identity, and compares physical overlap for scalar/output/bank/masked/drive and aggregate targets. Independent nested record/list arithmetic, symmetric overlap, detached mutation and missing/type-width/path/range controls pass. T284/T283/T1261 and mdBook build pass. The helper remains detached; complete declaration/owner collection and shadow attachment are .2/.3, with executable admission separately owned.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2`
+  Status: `pending`
+  Goal: `Collect complete writer declarations and explicit owner/activation records from actual producers.`
+  Acceptance: `After .1, collect every parent/domain state and DT assignment after actual binding/handoff wiring, with resolved target contracts and source-owned state/DT identities. Attach missing ownership at the actual producer, not by name-prefix parsing. Classify drives with multiple callers, generated handoffs, completion views and helpers conservatively. Retain actual guards/grants and mutation/omission checks; preserve reports and emitted carriers. Split producer families if completeness exceeds a safe slice.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.3`
+  Status: `pending`
+  Goal: `Qualify and attach the complete detached physical writer inventory in shadow mode.`
+  Acceptance: `After .2, require deterministic complete assignment coverage, valid explicit controller/module ownership and actual physical target ranges across source permutations and module/domain boundaries. Inventory all writer categories from the parent acceptance contract and prove missing/malformed record controls, complete native/API/MCP/carrier parity and focused regressions. Keep executable admission changes in .3 and independent-controller promotion in the next sibling.`
   Verification: `pending`
   Commit: `pending`
 
@@ -2625,8 +2647,8 @@ before editing code. No discovered defect is closed by this audit alone.
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. The next leaf is
-`.32.1.3.3.1.3.3.2`, detached physical writer inventory after the admission
-baseline. Conservative admission precedes independent controllers and local-call
+`.32.1.3.3.1.3.3.2.2`, complete writer declaration/owner collection after
+the physical target resolver and retained admission baseline. Conservative admission precedes independent controllers and local-call
 timing under the following sibling leaves. `.49.2.3` qualifies direct-call runtime;
 `.49.3` owns explicit-local physical scope. These remain prerequisites to the
 SPECFORGE storage/register-access feature in `.38.1` and optional banks `.38.2`.
@@ -4264,3 +4286,34 @@ separate/private/same-value/pulse controls and current rejecting rule pairs;
 durability is the authenticated baseline/reproducer, canonical writer-boundary
 card, task decomposition and mdBook. The known direct-controller runtime audit
 remains authoritative and is not re-run as an admission proof.
+
+## Acceptance — physical write targets `.32.1.3.3.1.3.3.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained native
+  `--emit-schedule-json` admission baseline and actual final writer records
+  distinguish frame from frame.mode even though their physical bits overlap;
+  disjoint set-field syntax instead writes the same whole value_reg. Equal
+  target strings cannot express the required physical relation. The existing
+  Package::AggregatePathSupport owns declared aggregate path traversal and
+  packed offsets, so this prerequisite reuses it rather than another walker.
+- [x] **ADDRESSED (verified)** — PhysicalWriteTargets resolves a declared
+  module/root/packed range and compares intersection only within that identity.
+  T1967 resolves every actual assignment target in the admitted baseline,
+  retains separate private formals/bank entries, recognizes whole/member overlap
+  and disjoint leaves, and treats masked updates as whole-root writes. Independent
+  nested record/list arithmetic, symmetric overlap and separate-module controls
+  pass. Unknown declarations/paths, type-width mismatches, malformed ranges and
+  inconsistent same-root widths are refused. Returned records are detached.
+  The helper is not invoked by production lowering or writer admission yet.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1967/T284/T283/T1261, including the canonical package/composition path tests.
+  The mdBook build passes and all verification jobs are consumed. Staged
+  doctrine checks and the normal hook qualify this commit; full declaration/
+  owner collection and shadow attachment remain the following children.
+
+Evidence: `.artifacts/physical-write-targets/` and the authenticated direct
+writer baseline. Re-derivation joins actual lowered assignments to resolved
+source declarations; falsification uses independent packed-range arithmetic,
+module isolation and malformed/omitted contracts; durability is the helper,
+T1967, the canonical writer card, book and this task. No new accepted syntax,
+controller behavior, public report or arbitration is introduced.

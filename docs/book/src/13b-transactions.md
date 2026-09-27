@@ -38,6 +38,13 @@ Private formals remain separate from these shared targets. The retained direct
 writer baseline records these cases without claiming concurrent execution or
 silently selecting a winner.
 
+A detached prerequisite can now compare resolved packed targets. For a record
+with a two-bit `mode` followed by a one-bit `flag`, `frame.mode` occupies bits
+`[2:1]` and `frame.flag` occupies bit `[0]`: each overlaps `frame`, but the two
+leaves do not overlap each other. Identical names in different modules remain
+separate. This target calculation is tested in isolation; it does not yet change
+writer admission or controller execution.
+
 The lowerer now records private transaction/domain membership, initial states
 and typed state references as a checked shadow model. It adds no public ports
 or controller storage and does not change emitted execution. This prepares
