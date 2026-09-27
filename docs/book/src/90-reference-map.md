@@ -565,3 +565,13 @@ The migration discipline remains active:
   diagnostic contract prose does not drift in two places
 - `.24` owns final consumer replacement and proof-based waypoint retirement;
   no new normative wording belongs in the old guide
+
+## Decision Record Storage Transition
+
+Decision records remain discoverable through `docs/decisions/INDEX.md`.
+A task-owned rollover is being prepared because the current collection has
+reached its allowed growth. The selected design preserves original record
+text and authority, retains existing paths as links, and supplies exact
+per-record retrieval alongside a readable archive view. This audit does not
+move records or change their supersession status. Atomic migration and its
+preservation checks belong to `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.2`.

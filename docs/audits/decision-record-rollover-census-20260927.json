@@ -1,0 +1,2048 @@
+{
+  "body_or_identity_consumers": [
+    {
+      "decisions": [
+        "docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md",
+      "text": "evidence: docs/DIRECT_VHDL_REDUCTION_EXPRESSION_READINESS_AUDIT.md; docs/tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md; docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; t/1543-direct-vhdl-reduction-expression-readiness.t; t/1542-isf-rule-transaction-named-drive-priority-readiness.t"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/direct-vhdl-reduction-expression-token-leak.md",
+      "text": "evidence: docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md; docs/tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md; docs/DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md; docs/ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; t/data/isf_rule_transaction_named_drive_priority_probe.isf; t/1542-isf-rule-transaction-named-drive-priority-readiness.t; t/1543-direct-vhdl-reduction-expression-readiness.t"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0011-doc-file-paths-relative-to-repo-root.md",
+        "docs/decisions/0012-knowledge-map-paths-relative-to-repo-root.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/doc-paths-relative-to-repo-root.md",
+      "text": "evidence: docs/decisions/0011-doc-file-paths-relative-to-repo-root.md; docs/decisions/0012-knowledge-map-paths-relative-to-repo-root.md; t/1414-docs-relative-paths-audit.t"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md",
+        "docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md",
+        "docs/decisions/0030-source-hir-v2-is-a-semantic-concrete-control-subset.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/fsmgen-hir-roadmap-frontier.md",
+      "text": "evidence: docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md; docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md; docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md; docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md; docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md; docs/decisions/0030-source-hir-v2-is-a-semantic-concrete-control-subset.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; MEMORY.md; docs/IR_POLICY.md; docs/tasks/FSMGEN-IR-AUDIT.md; docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md",
+        "docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/fsmgen-source-hir-architecture-selection.md",
+      "text": "evidence: docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md; docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md; docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md; docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md; docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; docs/IR_POLICY.md; perl/FSM/IR/IntentHIR.pm; perl/FSM/IR/LoweredRTLIR.pm; perl/FSM/IR/StructuralRTLIR.pm; ppif/valid_ready_handshake.ppif"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/fsmgen-source-hir-architecture-selection.md",
+      "text": "reverify: rg -n 'FSM::IR::SourceHIR|valid_ready_handshake\\.ppif|private|canonical.*PPIF|IntentHIR' docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0030-source-hir-v2-is-a-semantic-concrete-control-subset.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/fsmgen-source-hir-concrete-control-v2-contract.md",
+      "text": "evidence: docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md; docs/decisions/0030-source-hir-v2-is-a-semantic-concrete-control-subset.md; docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; isf/phase_test.isf; perl/FSM/Adapter/ISF.pm; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF.pm; t/1179-isf-phase-stage-boundary.t; t/1312-isf-phase-fixture-coverage.t"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md",
+        "docs/decisions/0030-source-hir-v2-is-a-semantic-concrete-control-subset.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/fsmgen-source-hir-post-prototype-audit.md",
+      "text": "evidence: docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md; docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md; docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md; docs/decisions/0030-source-hir-v2-is-a-semantic-concrete-control-subset.md; docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; perl/FSM/IR/SourceHIR.pm; perl/FSM/IR/SourceHIRBuilder.pm; perl/FSM/IR/SourceHIRPPIFRenderer.pm; t/1547-source-hir-valid-ready.t; isf/phase_test.isf; docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0031-source-hir-remains-a-private-validated-architecture-boundary.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/fsmgen-source-hir-two-route-promotion-audit.md",
+      "text": "evidence: docs/FSMGEN_SOURCE_HIR_TWO_ROUTE_PROMOTION_AUDIT.md; docs/decisions/0031-source-hir-remains-a-private-validated-architecture-boundary.md; docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md; perl/FSM/IR/SourceHIR.pm; perl/FSM/IR/SourceHIRBuilder.pm; perl/FSM/IR/SourceHIRPPIFRenderer.pm; perl/FSM/IR/SourceHIRISFRenderer.pm; t/1547-source-hir-valid-ready.t; t/1548-source-hir-phase-control.t"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md"
+      ],
+      "line": 19,
+      "path": "docs/knowledge/hial-vial-bridge-manifest-v1-contract.md",
+      "text": "evidence: docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md"
+      ],
+      "line": 20,
+      "path": "docs/knowledge/hial-vial-bridge-manifest-v1-contract.md",
+      "text": "reverify: prove -Iperl t/1551-hial-vial-bridge-manifest.t t/1602-vial-architecture-scale-bridge-fanout.t && rg -n 'core_single_unit_v1|direct_ial2_to_verification|verification-bridge|architecture_scale_probe|transaction/ahb_write|probe/reg_data_q|semantic_path|shipped_private_in_process' perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm perl/FSM/Support/HIALVIALBridgeContract.pm docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0018-ial-contracts-are-backend-language-neutral.md"
+      ],
+      "line": 22,
+      "path": "docs/knowledge/ial-contracts-backend-language-neutral.md",
+      "text": "evidence: docs/decisions/0018-ial-contracts-are-backend-language-neutral.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md; docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md; docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/knowledge/backend-language-portability-readiness-audit.md; docs/knowledge/backend-language-portable-in-memory-api-selection.md; docs/knowledge/backend-language-portable-host-abstraction-selection.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-ahb-profile-alias-contract-selection.md",
+      "text": "evidence: docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md; docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md; docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_PPIF_PUBLIC_CONTRACT_SELECTION.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; ppif/ahb_requester.ppif; ppif/ahb_requester.ahb; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/RegressionCorpus.pm; t/1473-ial2-ahb-requester.t; t/1474-ial2-ahb-profile-alias.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/16c-ial2-ahb.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/ial2-ahb-two-subordinate-exact-two-paired-busy-composition-profile-alias-contract-selection.md",
+      "text": "evidence: docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md; docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md; ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; t/1525-ial2-ahb-two-subordinate-exact-two-paired-busy-composition.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 11,
+      "path": "docs/knowledge/ial2-apb-ppif-source-shape-contract-selection.md",
+      "text": "evidence: docs/IAL2_APB_PPIF_SOURCE_SHAPE_CONTRACT_SELECTION.md; docs/IAL2_APB_SOURCE_SHAPE_READINESS_AUDIT.md; docs/APB_REQUESTER_CAPTURE_WORKSHEET.md; isf/apb_requester.isf; fsm/apb_requester.fsm; fsm/apb_completer.fsm; fsm/apb_tb.fsm; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 11,
+      "path": "docs/knowledge/ial2-apb-source-shape-readiness-audit.md",
+      "text": "evidence: docs/IAL2_APB_SOURCE_SHAPE_READINESS_AUDIT.md; docs/IAL2_PIF_PPI_GENERIC_CONTAINER_ALIAS_POLICY_SELECTION.md; docs/IAL2_NON_AXI_PROFILE_ALIAS_TAXONOMY_EVIDENCE_PREREQUISITE.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; isf/apb_requester.isf; fsm/apb_requester.fsm; fsm/apb_completer.fsm; fsm/apb_tb.fsm; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/RegressionCorpus.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0018-ial-contracts-are-backend-language-neutral.md"
+      ],
+      "line": 12,
+      "path": "docs/knowledge/ial2-common-vs-profile-factoring.md",
+      "text": "evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0018-ial-contracts-are-backend-language-neutral.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0018-ial-contracts-are-backend-language-neutral.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-common-vs-profile-factoring.md",
+      "text": "reverify: rg -n 'IAL2 factoring|common semantic core|protocol/platform vocabular|profile-local|reuse across multiple profiles|0014|0015|0018' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md docs/decisions/0018-ial-contracts-are-backend-language-neutral.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-first-profile-alias-contract-selection.md",
+      "text": "evidence: docs/IAL2_FIRST_PROFILE_ALIAS_CONTRACT_SELECTION.md; docs/IAL2_PROFILE_ALIAS_UNSUPPORTED_INVENTORY_SYNC.md; docs/IAL2_PROFILE_ALIAS_SUFFIX_READINESS_AUDIT.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/RegressionCorpus.pm; ppif/axi_aw_valid_ready.ppif; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 12,
+      "path": "docs/knowledge/ial2-non-axi-profile-alias-taxonomy-evidence-prerequisite.md",
+      "text": "evidence: docs/IAL2_NON_AXI_PROFILE_ALIAS_TAXONOMY_EVIDENCE_PREREQUISITE.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/RegressionCorpus.pm; ppif/valid_ready_handshake.ppif; ppif/valid_ready_dual_channel_bundle.ppif; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+        "docs/decisions/0018-ial-contracts-are-backend-language-neutral.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/ial2-one-language-profiles-and-axi-mdbook-coverage-gap.md",
+      "text": "evidence: docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0018-ial-contracts-are-backend-language-neutral.md; docs/tasks/IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/16a-ial2-axi.md; docs/book/src/16c-ial2-ahb.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; ppif/ahb_requester.ppif"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/ial2-one-language-profiles-and-axi-mdbook-coverage-gap.md",
+      "text": "reverify: rg -n 'one architectural layer|profile|IAL2 -> IAL1|vocabulary/profile alias' docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md docs/decisions/0016-ppif-is-first-public-ial2-container.md; ls ppif/axi_*.ppif | wc -l; wc -l docs/book/src/16a-ial2-axi.md docs/book/src/16c-ial2-ahb.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 12,
+      "path": "docs/knowledge/ial2-pif-ppi-generic-container-alias-policy-selection.md",
+      "text": "evidence: docs/IAL2_PIF_PPI_GENERIC_CONTAINER_ALIAS_POLICY_SELECTION.md; docs/IAL2_NON_AXI_PROFILE_ALIAS_TAXONOMY_EVIDENCE_PREREQUISITE.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; bin/fsmgen; perl/FSM/Support/LanguageSurfaceSection.pm; isf/apb_requester.isf; fsm/apb_requester.fsm; fsm/apb_completer.fsm; fsm/apb_tb.fsm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-post-assertion-precedence-next-owner-selection.md",
+      "text": "evidence: docs/IAL2_POST_ASSERTION_PRECEDENCE_NEXT_OWNER_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/tasks/MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.md; docs/book/src/00-introduction.md; docs/book/src/10-errors-strict-mode-and-troubleshooting.md; docs/book/src/14-feature-backlog.md; docs/knowledge/direct-vhdl-scaffold.md; docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md; docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0020-ial2-layered-composable-transactor-roles.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-post-axi-aw-w-composition-next-increment-selection.md",
+      "text": "evidence: docs/IAL2_AXI_MANAGER_INITIATOR_POST_AW_W_COMPOSITION_NEXT_INCREMENT_SELECTION.md; docs/knowledge/ial2-axi-aw-w-request-composition-first-slice.md; docs/knowledge/ial2-axi-b-response-acceptor-first-slice.md; docs/knowledge/ial2-axi-manager-response-demux-readiness-audit.md; docs/decisions/0020-ial2-layered-composable-transactor-roles.md; docs/tasks/IAL2-AXI-MANAGER-INITIATOR-FRONTIER.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0020-ial2-layered-composable-transactor-roles.md"
+      ],
+      "line": 16,
+      "path": "docs/knowledge/ial2-post-axi-full-read-next-increment-selection.md",
+      "text": "evidence: docs/IAL2_AXI_MANAGER_INITIATOR_POST_FULL_READ_NEXT_INCREMENT_SELECTION.md; perl/FSM/IAL2/ProtocolIntent/AxiReadTransactionComposition.pm; perl/FSM/IAL2/ProtocolIntent/AxiRBeatAcceptor.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; docs/decisions/0020-ial2-layered-composable-transactor-roles.md; docs/tasks/IAL2-AXI-MANAGER-INITIATOR-FRONTIER.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0020-ial2-layered-composable-transactor-roles.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/ial2-post-axi-r-beat-acceptor-next-increment-selection.md",
+      "text": "evidence: docs/IAL2_AXI_MANAGER_INITIATOR_POST_R_BEAT_ACCEPTOR_NEXT_INCREMENT_SELECTION.md; perl/FSM/IAL2/ProtocolIntent/AxiArDriver.pm; perl/FSM/IAL2/ProtocolIntent/AxiRBeatAcceptor.pm; perl/FSM/IAL2/ProtocolIntent/AxiWriteRequestComposition.pm; perl/FSM/IAL2/ProtocolIntent/AxiWriteTransactionComposition.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; docs/decisions/0020-ial2-layered-composable-transactor-roles.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md"
+      ],
+      "line": 12,
+      "path": "docs/knowledge/ial2-post-guardrail-next-slice-selection.md",
+      "text": "evidence: docs/IAL2_POST_GUARDRAIL_NEXT_SLICE_SELECTION.md; docs/IAL2_PROTOCOL_GENERALITY_GUARDRAIL_PUBLIC_SURFACE_SYNC.md; docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/ial2-post-named-drive-priority-next-owner-selection.md",
+      "text": "evidence: docs/IAL2_POST_NAMED_DRIVE_PRIORITY_NEXT_OWNER_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md; docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; t/1420-vhdl-direct-backend-scaffold.t; t/1542-isf-rule-transaction-named-drive-priority-readiness.t"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md"
+      ],
+      "line": 16,
+      "path": "docs/knowledge/ial2-post-named-drive-priority-next-owner-selection.md",
+      "text": "reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.831|DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING\\.1|\\(\\|drive_zero_start\\)|_sv_expr_to_vhdl|ghdl|nvc|vcom' docs/IAL2_POST_NAMED_DRIVE_PRIORITY_NEXT_OWNER_SELECTION.md docs/tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-post-neutral-valid-ready-bundle-next-slice-selection.md",
+      "text": "evidence: docs/IAL2_POST_NEUTRAL_VALID_READY_BUNDLE_NEXT_SLICE_SELECTION.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_BEHAVIOR.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_CONTRACT_SELECTION.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_READINESS_AUDIT.md; docs/IAL2_PROTOCOL_GENERALITY_GUARDRAIL_PUBLIC_SURFACE_SYNC.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; perl/FSM/Support/LanguageSurfaceSection.pm; bin/fsmgen; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-post-neutral-valid-ready-ppif-next-slice-selection.md",
+      "text": "evidence: docs/IAL2_POST_NEUTRAL_VALID_READY_PPIF_NEXT_SLICE_SELECTION.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_BEHAVIOR.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_CONTRACT_SELECTION.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_READINESS_AUDIT.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm; ppif/valid_ready_handshake.ppif; ppif/axi_aw_w_valid_ready_bundle.ppif; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0031-source-hir-remains-a-private-validated-architecture-boundary.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-post-source-hir-next-owner-selection.md",
+      "text": "evidence: docs/IAL2_POST_SOURCE_HIR_NEXT_OWNER_SELECTION.md; docs/TASK_TREE_LIVE_NODE_INTEGRITY.md; scripts/check_task_tree_integrity.pl; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md; docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md; docs/decisions/0031-source-hir-remains-a-private-validated-architecture-boundary.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0031-source-hir-remains-a-private-validated-architecture-boundary.md",
+        "docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-post-task-tree-integrity-next-owner-selection.md",
+      "text": "evidence: docs/IAL2_POST_TASK_TREE_INTEGRITY_NEXT_OWNER_SELECTION.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/knowledge/hial-vial-verification-fixture-architecture.md; docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md; docs/tasks/FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON.md; docs/decisions/0031-source-hir-remains-a-private-validated-architecture-boundary.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0020-ial2-layered-composable-transactor-roles.md"
+      ],
+      "line": 16,
+      "path": "docs/knowledge/ial2-post-two-subordinate-exact-four-paired-alias-next-owner-selection.md",
+      "text": "evidence: docs/IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md; docs/tasks/IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_BEHAVIOR.md; docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; ppif/ahb_requester_busy_insert_four.ppif; t/1535-ial2-ahb-requester-four-busy-insert.t; docs/tasks/ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY.md; docs/decisions/0020-ial2-layered-composable-transactor-roles.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16c-ial2-ahb.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0007-memory-architecture-supersedes-blob-narration.md",
+        "docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-post-vhdl-book-sync-next-owner-selection.md",
+      "text": "evidence: docs/IAL2_POST_VHDL_BOOK_SYNC_NEXT_OWNER_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/tasks/TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.md; docs/TASK_TREE.md; docs/TASK_TREE_README.md; docs/tasks/TEMPLATE.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; COMMIT.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-ppif-public-surface-selection.md",
+      "text": "evidence: docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/tasks/IAL2-PUBLIC-PPIF-SURFACE-SELECTION.md; docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/ial2-ppif-public-surface-selection.md",
+      "text": "reverify: rg -n \"\\\\.ppif|protocol-platform-intent|valid-ready-channel\" docs/decisions/0016-ppif-is-first-public-ial2-container.md docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-ppif-valid-ready-bundle-contract.md",
+      "text": "evidence: docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md; docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md; docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/ial2-ppif-valid-ready-bundle-contract.md",
+      "text": "reverify: rg -n \"valid_ready_bundle.v1|generated_ial1 =|generated_ial0 =|first channel wins|aggregate bundle\" docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-profile-alias-suffix-readiness-audit.md",
+      "text": "evidence: docs/IAL2_PROFILE_ALIAS_SUFFIX_READINESS_AUDIT.md; docs/IAL2_AXI_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_POST_NEUTRAL_VALID_READY_BUNDLE_NEXT_SLICE_SELECTION.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_BEHAVIOR.md; docs/IAL2_PROTOCOL_GENERALITY_GUARDRAIL_PUBLIC_SURFACE_SYNC.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/297-capability-manifest.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-profile-extension-vocabulary-aliases.md",
+      "text": "evidence: docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/ial2-profile-extension-vocabulary-aliases.md",
+      "text": "reverify: rg -n \"profile extensions|vocabulary/profile aliases|IAL2 -> IAL1|Direct IAL2-to-IAL0\" docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md"
+      ],
+      "line": 12,
+      "path": "docs/knowledge/ial2-protocol-generality-guardrail-readiness-audit.md",
+      "text": "evidence: docs/IAL2_PROTOCOL_GENERALITY_GUARDRAIL_READINESS_AUDIT.md; docs/IAL2_PROTOCOL_GENERALITY_GUARDRAIL_READINESS_SELECTION.md; docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/knowledge/ial2-common-vs-profile-factoring.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md"
+      ],
+      "line": 12,
+      "path": "docs/knowledge/ial2-protocol-generality-guardrail-selection.md",
+      "text": "evidence: docs/IAL2_PROTOCOL_GENERALITY_GUARDRAIL_READINESS_SELECTION.md; docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/knowledge/ial2-common-vs-profile-factoring.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; MEMORY.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-protocol-neutral-valid-ready-bundle-contract-selection.md",
+      "text": "evidence: docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_CONTRACT_SELECTION.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_READINESS_AUDIT.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md; docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm; ppif/valid_ready_handshake.ppif; ppif/axi_aw_w_valid_ready_bundle.ppif; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-protocol-neutral-valid-ready-bundle-readiness-audit.md",
+      "text": "evidence: docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_READINESS_AUDIT.md; docs/IAL2_POST_NEUTRAL_VALID_READY_PPIF_NEXT_SLICE_SELECTION.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_BEHAVIOR.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_CONTRACT_SELECTION.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm; ppif/valid_ready_handshake.ppif; ppif/axi_aw_w_valid_ready_bundle.ppif; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-protocol-neutral-valid-ready-ppif-contract-selection.md",
+      "text": "evidence: docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_CONTRACT_SELECTION.md; docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_READINESS_AUDIT.md; docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+        "docs/decisions/0017-ppif-valid-ready-bundle-contract.md"
+      ],
+      "line": 13,
+      "path": "docs/knowledge/ial2-protocol-neutral-valid-ready-ppif-readiness-audit.md",
+      "text": "evidence: docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_READINESS_AUDIT.md; docs/IAL2_POST_GUARDRAIL_NEXT_SLICE_SELECTION.md; docs/IAL2_PROTOCOL_GENERALITY_GUARDRAIL_PUBLIC_SURFACE_SYNC.md; docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm; ppif/axi_aw_valid_ready.ppif; ppif/axi_aw_w_valid_ready_bundle.ppif; perl/FSM/Support/RegressionCorpus.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+        "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+        "docs/decisions/0016-ppif-is-first-public-ial2-container.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/ial2-protocol-platform-intent-mdbook-chapter.md",
+      "text": "evidence: docs/book/src/16-ial2-protocol-platform-intent.md; docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0022-project-data-locality-and-same-volume-storage.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/project-data-locality-same-volume-storage.md",
+      "text": "evidence: docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; PROJECT_DATA_LOCALITY.md; docs/decisions/0022-project-data-locality-and-same-volume-storage.md; docs/tasks/PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.md; scripts/check_project_data_locality.sh; README.md; TOOLBOX.md; docs/book/src/09-generated-hdl-debugging-and-inspection.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0047-changes-history-is-task-trees-and-git.md",
+        "docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md",
+        "docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/project-document-interim-lifecycle-policy.md",
+      "text": "evidence: docs/decisions/0047-changes-history-is-task-trees-and-git.md; docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md; docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md; docs/LEGACY_CONTINUITY_DOCUMENT_VALUE_AUDIT.md; docs/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md; docs/audits/ROADMAP_STATUS_VALUE_AUDIT.md; COMMIT.md; AGENTS.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0027-hdl-instance-identifiers-use-a-portable-origin-aware-policy.md"
+      ],
+      "line": 18,
+      "path": "docs/knowledge/protocol-composition-hdl-instance-identifier-audit.md",
+      "text": "evidence: docs/PROTOCOL_COMPOSITION_HDL_INSTANCE_IDENTIFIER_AUDIT.md; docs/decisions/0027-hdl-instance-identifiers-use-a-portable-origin-aware-policy.md; docs/tasks/PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.md; perl/FSM/Support/HDLInstanceIdentifierPolicy.pm; perl/FSM/Composition/Parser.pm; perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm; perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1546-hdl-instance-identifier-policy.t"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/protocol-platform-intent-surface-layered-lowering.md",
+      "text": "evidence: docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md; docs/tasks/IAL2-PROTOCOL-PLATFORM-SURFACE-DECISION-CAPTURE.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md"
+      ],
+      "line": 16,
+      "path": "docs/knowledge/protocol-platform-intent-surface-layered-lowering.md",
+      "text": "reverify: rg -n \"Protocol/Platform Intent|Direct IAL2-to-IAL0 lowering is forbidden|.pif|.ppi|.ppif|0015\" docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/task-acceptance-portable-contract.md",
+      "text": "evidence: TASK_ACCEPTANCE.md; docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md; docs/tasks/TASK-ACCEPTANCE-PORTABLE-DOCTRINE.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/task-acceptance-portable-contract.md",
+      "text": "reverify: rg -n 'change_paths.tsv|evidence_signatures.tsv|Current-Slice Freshness|ROOT CAUSE|NO REGRESSION' TASK_ACCEPTANCE.md docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md",
+        "docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md"
+      ],
+      "line": 14,
+      "path": "docs/knowledge/task-tree-in-file-secondary-views-are-historical.md",
+      "text": "evidence: docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md; docs/TASK_TREE.md; docs/tasks/TEMPLATE.md; docs/tasks/TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md",
+        "docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/task-tree-in-file-secondary-views-are-historical.md",
+      "text": "reverify: rg -n 'node list|sealed segments|optional historical|decision 0019|0042' docs/TASK_TREE.md docs/tasks/TEMPLATE.md docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/task-tree-live-node-integrity.md",
+      "text": "evidence: docs/TASK_TREE_LIVE_NODE_INTEGRITY.md; scripts/check_task_tree_integrity.pl; t/1549-task-tree-integrity-doctrine.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; DOCTRINE_ENFORCEMENT.md; docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md"
+      ],
+      "line": 21,
+      "path": "docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md",
+      "text": "evidence: docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl; docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md; docs/TASK_TREE.md; docs/TASK_TREE_README.md; docs/tasks/TEMPLATE.md; scripts/check_task_tree_integrity.pl; scripts/check_claim_verification.pl; t/1549-task-tree-integrity-doctrine.t; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md",
+        "docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md",
+        "docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md",
+        "docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md"
+      ],
+      "line": 21,
+      "path": "docs/knowledge/vial-expressive-ceiling.md",
+      "text": "evidence: docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; perl/FSM/VIAL/SourceProjection.pm; perl/FSM/VIAL/Tool.pm; t/1555-vial-public-source-tooling.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md",
+        "docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md",
+        "docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md"
+      ],
+      "line": 22,
+      "path": "docs/knowledge/vial-expressive-ceiling.md",
+      "text": "reverify: prove -Iperl t/1555-vial-public-source-tooling.t && rg -n 'not synthesis-bounded|uvm_event_callback|terse.*normal|expressive-frontier|initial profile.*language ceiling|backend methodology|fsmgen\\.vial_native_extension\\.v1|directional proof relations' docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md"
+      ],
+      "line": 16,
+      "path": "docs/knowledge/vial-hial-directional-type-binding.md",
+      "text": "evidence: docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/book/src/16d-hial-vial-verification-architecture.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md"
+      ],
+      "line": 17,
+      "path": "docs/knowledge/vial-hial-directional-type-binding.md",
+      "text": "reverify: rg -n 'bit_domain_identity_v1|known_value_injection_v1|enum_encoding_injection_v1|four-state-to-two-state|vial\\.binding\\.directional_representation\\.v1' docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/book/src/16d-hial-vial-verification-architecture.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md"
+      ],
+      "line": 15,
+      "path": "docs/knowledge/vial-hial-type-binding-mismatch.md",
+      "text": "evidence: docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; vial/ahb_subordinate_base_output_arbitration.vial; perl/FSM/HIAL/VIALBridge/Builder.pm; t/1551-hial-vial-bridge-manifest.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0008-verification-property-language-unification.md",
+        "docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md",
+        "docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md",
+        "docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md"
+      ],
+      "line": 26,
+      "path": "docs/knowledge/vial-source-semantic-ir-v1-contract.md",
+      "text": "evidence: docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0008-verification-property-language-unification.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; perl/FSM/VIAL/SemanticBuilder.pm; t/1550-vial-semantic-ir.t; t/1556-vial-public-planning-artifacts.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md"
+      ],
+      "line": 27,
+      "path": "docs/knowledge/vial-source-semantic-ir-v1-contract.md",
+      "text": "reverify: prove -Iperl t/1550-vial-semantic-ir.t t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t && rg -n 'core_directed_single_clock_v1|VIALSemanticIR Required IR Record|dedicated VIAL lexer|known_mask|z_mask|same.*value_eq|canonical property|transaction-free|ahb_subordinate_base_output_arbitration\\.vial|normal_v1|terse_v1' docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0022-project-data-locality-and-same-volume-storage.md"
+      ],
+      "line": 82,
+      "path": "doctrine/claim_verification/inventory.jsonl",
+      "text": "{\"candidate_id\":\"published-3d3e171254b064cbe5dc20b7\",\"classification\":\"actionable_review_debt\",\"excerpt\":\"[docs/decisions/0022-project-data-locality-and-same-volume-storage.md](docs/decisions/0022-project-data-locality-and-same-volume-storage.md).\",\"line\":7,\"migration_owner\":null,\"path\":\"PROJECT_DATA_LOCALITY.md\",\"producer_paths\":[],\"producer_status\":\"missing\",\"reason\":\"numeric_prose_requires_review\",\"record_type\":\"published_candidate\",\"schema_version\":1,\"source_line_sha256\":\"1392259313f5ed405a09f2184f10eb0d717cf5c20e8f913cb5717a07e5c59405\",\"tokens\":[],\"untracked_paths\":[],\"verification_legs\":{\"durability\":\"missing\",\"falsify\":\"missing\",\"rederive\":\"missing\"},\"watcher_paths\":[],\"watcher_status\":\"missing\"}"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0047-changes-history-is-task-trees-and-git.md"
+      ],
+      "line": 2,
+      "path": "doctrine/live_document_size/archive_descriptors.jsonl",
+      "text": "{\"record_type\":\"descriptor\",\"schema_version\":1,\"descriptor_id\":\"changes-retired-2026-08-01\",\"surface_id\":\"exact_history\",\"former_path\":\"CHANGES.md\",\"range_id\":\"complete-file\",\"revision\":\"329d7cf1b09319899fb59cc9863cdfffddfa40dc\",\"lines\":32299,\"bytes\":2696664,\"sha256\":\"6a1b0819fd44036130324d0a178c9e147e4e41fc91b8faca20ef5a170d6b2f98\",\"retrieval_kind\":\"version_object\",\"retrieval_locator\":\"git show 329d7cf1b09319899fb59cc9863cdfffddfa40dc:CHANGES.md\",\"current_pointer\":\"docs/decisions/0047-changes-history-is-task-trees-and-git.md\",\"sealed_on\":\"2026-08-01\",\"verifier\":\"adapter:scripts/check_retired_changes_history.pl\",\"retention_contract\":\"fsmgen_required_history\"}"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md"
+      ],
+      "line": 3,
+      "path": "doctrine/live_document_size/archive_descriptors.jsonl",
+      "text": "{\"record_type\":\"descriptor\",\"schema_version\":1,\"descriptor_id\":\"achievement-status-retired-2026-08-01\",\"surface_id\":\"exact_history\",\"former_path\":\"LIVE_ACHIEVEMENT_STATUS.md\",\"range_id\":\"complete-file\",\"revision\":\"b4d07fee5ffd6621503007958dcac3af8d44b345\",\"lines\":16618,\"bytes\":955308,\"sha256\":\"46c3c8ad2a0b7375a02b0a111bcc65410f78e0dd1df97709aeabe5f97b735d18\",\"retrieval_kind\":\"version_object\",\"retrieval_locator\":\"git show b4d07fee5ffd6621503007958dcac3af8d44b345:LIVE_ACHIEVEMENT_STATUS.md\",\"current_pointer\":\"docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md\",\"sealed_on\":\"2026-08-01\",\"verifier\":\"adapter:scripts/check_retired_achievement_history.pl\",\"retention_contract\":\"fsmgen_required_history\"}"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md"
+      ],
+      "line": 4,
+      "path": "doctrine/live_document_size/archive_descriptors.jsonl",
+      "text": "{\"record_type\":\"descriptor\",\"schema_version\":1,\"descriptor_id\":\"roadmap-status-retired-2026-08-01\",\"surface_id\":\"exact_history\",\"former_path\":\"ROADMAP_STATUS.md\",\"range_id\":\"complete-file\",\"revision\":\"b4d07fee5ffd6621503007958dcac3af8d44b345\",\"lines\":15039,\"bytes\":1638574,\"sha256\":\"0f8db932c57d883d97f1f92fec8a576795b5b367157d9846088501c52aeb22d8\",\"retrieval_kind\":\"version_object\",\"retrieval_locator\":\"git show b4d07fee5ffd6621503007958dcac3af8d44b345:ROADMAP_STATUS.md\",\"current_pointer\":\"docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md\",\"sealed_on\":\"2026-08-01\",\"verifier\":\"adapter:scripts/check_retired_roadmap_history.pl\",\"retention_contract\":\"fsmgen_required_history\"}"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md"
+      ],
+      "line": 25,
+      "path": "perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm",
+      "text": "my $CONTRACT = 'docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md';"
+    },
+    {
+      "decisions": [
+        "docs/decisions/0022-project-data-locality-and-same-volume-storage.md"
+      ],
+      "line": 100,
+      "path": "scripts/check_project_data_locality.sh",
+      "text": "if [[ ! -f docs/decisions/0022-project-data-locality-and-same-volume-storage.md ]]; then"
+    }
+  ],
+  "incoming_anchors": [],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.1",
+  "records": [
+    {
+      "bytes": 1558,
+      "front_matter": false,
+      "id": "0001",
+      "lines": 33,
+      "path": "docs/decisions/0001-isf-abstraction-layering.md",
+      "sha256": "8dbeed862130bd8aafb41cc44056e657c729b52c9f23c8d8a8c17f55b0febdf3",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0001 \u2014 ISF abstraction layering (ISF = IAL1)"
+    },
+    {
+      "bytes": 1752,
+      "front_matter": false,
+      "id": "0002",
+      "lines": 39,
+      "path": "docs/decisions/0002-isf-language-richness-frontier.md",
+      "sha256": "b6b7f9b5c8d6152b9f7892862878866b8704edf46a8cbac2bec0bead56cc2d4c",
+      "status_lines": [
+        "- Status: accepted (in progress)"
+      ],
+      "title": "0002 \u2014 ISF high-level-language richness frontier"
+    },
+    {
+      "bytes": 1414,
+      "front_matter": false,
+      "id": "0003",
+      "lines": 30,
+      "path": "docs/decisions/0003-autonomous-pnt-and-no-mid-flow-pausing.md",
+      "sha256": "2a4c50d45dcb4083a274f6a4a7559967f505a71a07f2bbfe4815c45590123437",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0003 \u2014 Autonomous PNT; do not pause mid-flow"
+    },
+    {
+      "bytes": 1666,
+      "front_matter": false,
+      "id": "0004",
+      "lines": 37,
+      "path": "docs/decisions/0004-simulate-to-catch-codegen-bugs.md",
+      "sha256": "1fa8a73ee7ab748258ae2d3577cb21d374ec136ac5d2846fb29ad1c6f7371865",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0004 \u2014 Simulate control flow; lint/synth aren't enough"
+    },
+    {
+      "bytes": 1181,
+      "front_matter": false,
+      "id": "0005",
+      "lines": 29,
+      "path": "docs/decisions/0005-push-only-on-explicit-request.md",
+      "sha256": "9107dabfe1aebe03d76ccc7fc3977e3af7b1105ace62473084fe9ad5283f1d60",
+      "status_lines": [
+        "- Status: superseded by [0062](0062-push-cadence-is-200-commits.md)"
+      ],
+      "title": "0005 \u2014 Push only on explicit request"
+    },
+    {
+      "bytes": 1330,
+      "front_matter": false,
+      "id": "0006",
+      "lines": 30,
+      "path": "docs/decisions/0006-thorough-mdbook-runnable-examples.md",
+      "sha256": "d89d9f9bf6781a1c7476d95aaf162d3aefea80a0779ac263615fd14185afadde",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0006 \u2014 Thorough mdBook with runnable examples"
+    },
+    {
+      "bytes": 2849,
+      "front_matter": false,
+      "id": "0007",
+      "lines": 54,
+      "path": "docs/decisions/0007-memory-architecture-supersedes-blob-narration.md",
+      "sha256": "e6152f4c35e7dfcc26b92327b0dc37ccab21e10a99779bb0254b189b71f55fb3",
+      "status_lines": [
+        "- Status: accepted (executed in MEMORY-ARCHITECTURE-ADOPTION.3/.4; partially"
+      ],
+      "title": "0007 \u2014 Memory architecture supersedes prose-blob narration"
+    },
+    {
+      "bytes": 4284,
+      "front_matter": false,
+      "id": "0008",
+      "lines": 68,
+      "path": "docs/decisions/0008-verification-property-language-unification.md",
+      "sha256": "3869fb00f792f09a374c61c5fec812edde8ac20334a901ab335b940764df29a5",
+      "status_lines": [
+        "- Status: accepted; **executed** \u2014 `ISF-ASSERT-CONCURRENT` (clocked concurrent"
+      ],
+      "title": "0008 \u2014 Unify verification on one property language (assert/assume/cover/contract)"
+    },
+    {
+      "bytes": 4380,
+      "front_matter": false,
+      "id": "0009",
+      "lines": 75,
+      "path": "docs/decisions/0009-trigger-anchor-vocabulary.md",
+      "sha256": "dabafbd50dfb0055bdf31381fdfe8b629f721e0bbd8988dfc2b69433d6170181",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0009 \u2014 Trigger-anchor vocabulary for bounded-eventually properties"
+    },
+    {
+      "bytes": 3799,
+      "front_matter": false,
+      "id": "0010",
+      "lines": 61,
+      "path": "docs/decisions/0010-severity-never-gated-by-trace-level.md",
+      "sha256": "66429d37085ebc6a873cc62449dfc9aab81345b1ec29222ba6505d4f18cb2e75",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0010 \u2014 Severity (\u2265 warning) is never gated by a trace/verbosity level"
+    },
+    {
+      "bytes": 1738,
+      "front_matter": false,
+      "id": "0011",
+      "lines": 35,
+      "path": "docs/decisions/0011-doc-file-paths-relative-to-repo-root.md",
+      "sha256": "02f7a8f6de972781ad87aebbfbffec21cff98cb4f1fe3b8946585fe004d51631",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0011 \u2014 File-path references in docs are relative to the repo root, never absolute"
+    },
+    {
+      "bytes": 1591,
+      "front_matter": false,
+      "id": "0012",
+      "lines": 35,
+      "path": "docs/decisions/0012-knowledge-map-paths-relative-to-repo-root.md",
+      "sha256": "9e28d6470db11ddee5954d845f8a3515922c1a449dfe1c45935c2b73dd79dd5d",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0012 \u2014 Knowledge Map path references are relative to the repo root"
+    },
+    {
+      "bytes": 2909,
+      "front_matter": false,
+      "id": "0013",
+      "lines": 69,
+      "path": "docs/decisions/0013-compositional-control-flow-activation-model.md",
+      "sha256": "8fab4c5d5a24b5b567a145db5a7bc2669fb2eeb6f50fca82a2fd7fdf4f58e8c2",
+      "status_lines": [],
+      "title": "0013 \u2014 Compositional Control-Flow/Activation Model"
+    },
+    {
+      "bytes": 2566,
+      "front_matter": false,
+      "id": "0014",
+      "lines": 61,
+      "path": "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+      "sha256": "e1cc67e05741dadc2b83f9f35674156370f77f31130e3a6f6084b027687e2d88",
+      "status_lines": [
+        "- Status: refined by `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`; first generic suffix selected by `docs/decisions/0016-ppif-is-first-public-ial2-container.md`"
+      ],
+      "title": "0014 \u2014 Protocol/platform intent surface and layered lowering for IAL2"
+    },
+    {
+      "bytes": 2380,
+      "front_matter": false,
+      "id": "0015",
+      "lines": 59,
+      "path": "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+      "sha256": "233a1493f80ac0441bcaf7e643495908229d59e48a5e09efb96c1eb65fa89fd2",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0015 \u2014 IAL2 profile extensions are vocabulary aliases"
+    },
+    {
+      "bytes": 3019,
+      "front_matter": false,
+      "id": "0016",
+      "lines": 78,
+      "path": "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+      "sha256": "43846995353446179d1926956b598de2fc2cf1a61736f8b4343df8b1907b9fc6",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0016 \u2014 `.ppif` is the first public IAL2 container"
+    },
+    {
+      "bytes": 3188,
+      "front_matter": false,
+      "id": "0017",
+      "lines": 74,
+      "path": "docs/decisions/0017-ppif-valid-ready-bundle-contract.md",
+      "sha256": "1831c16af75cb3db7f89ebf625df73d0fdae0679994f7065b272fe1a5cfce5e0",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0017 \u2014 PPIF Valid-Ready bundle contract"
+    },
+    {
+      "bytes": 2446,
+      "front_matter": false,
+      "id": "0018",
+      "lines": 53,
+      "path": "docs/decisions/0018-ial-contracts-are-backend-language-neutral.md",
+      "sha256": "c4699acc814e69ec228a5b53af49f2aad04212c8d3a288fb6699a42efd6f10b5",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0018 \u2014 IAL contracts and mdBook are backend-language-neutral"
+    },
+    {
+      "bytes": 3851,
+      "front_matter": false,
+      "id": "0019",
+      "lines": 72,
+      "path": "docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md",
+      "sha256": "0358703f9f80ee1317cfa710ccba36c2af6d699be15e4d0d9780b3f9e3a5e70d",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0019 \u2014 Task-tree in-file secondary views are historical, not per-slice-maintained"
+    },
+    {
+      "bytes": 4295,
+      "front_matter": false,
+      "id": "0020",
+      "lines": 73,
+      "path": "docs/decisions/0020-ial2-layered-composable-transactor-roles.md",
+      "sha256": "caddf93529a38d30f66748a712b8a87d7f76e014fde685daa44898f0122a39bf",
+      "status_lines": [
+        "- Status: accepted (directional \u2014 future horizon; not yet scheduled, does not pivot current work)"
+      ],
+      "title": "0020 \u2014 IAL2 protocol roles as layered, composable transactors (future North Star)"
+    },
+    {
+      "bytes": 4552,
+      "front_matter": false,
+      "id": "0021",
+      "lines": 82,
+      "path": "docs/decisions/0021-readme-is-a-bounded-discovery-entrypoint.md",
+      "sha256": "ecc52c036471bd690281d4152eae98f68d9c842fdde77af3405b4ffd4b8b0e3d",
+      "status_lines": [
+        "- Status: accepted (executed in `README-ENTRYPOINT-APPEND-LOG-DRIFT.2`/`.3`/`.4`)"
+      ],
+      "title": "0021 \u2014 `README.md` is a bounded discovery entry point, not an append log"
+    },
+    {
+      "bytes": 3547,
+      "front_matter": false,
+      "id": "0022",
+      "lines": 68,
+      "path": "docs/decisions/0022-project-data-locality-and-same-volume-storage.md",
+      "sha256": "30945e3fd0e34541af50232dab1491fdcd004a73017c1ddc49379f4a03d67138",
+      "status_lines": [
+        "- Status: accepted (execution owned by `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION`)"
+      ],
+      "title": "0022 \u2014 Project data stays on the repository filesystem volume"
+    },
+    {
+      "bytes": 2030,
+      "front_matter": false,
+      "id": "0023",
+      "lines": 45,
+      "path": "docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md",
+      "sha256": "a63754871ad00dd4311279973ce4744459b62f5a59307582d62cb09ee9cf2d0d",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0023 \u2014 VHDL generation success is not reduction-expression validation"
+    },
+    {
+      "bytes": 2523,
+      "front_matter": false,
+      "id": "0024",
+      "lines": 50,
+      "path": "docs/decisions/0024-readme-is-a-nearly-static-landing-page.md",
+      "sha256": "bea7c40f121c02513f40c27c52a5a164cf9f7291f57c574af71fa63112db928f",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0024 \u2014 `README.md` is a nearly static landing page"
+    },
+    {
+      "bytes": 2838,
+      "front_matter": false,
+      "id": "0025",
+      "lines": 56,
+      "path": "docs/decisions/0025-project-document-interim-lifecycle.md",
+      "sha256": "1d844bcee660d43887036d746f35456271debb2b212e2c98f165690121e4175e",
+      "status_lines": [
+        "- Status: partially superseded by `0047`-`0049` (changelog and status files)"
+      ],
+      "title": "0025 \u2014 Interim lifecycle split for project documents"
+    },
+    {
+      "bytes": 2804,
+      "front_matter": false,
+      "id": "0026",
+      "lines": 57,
+      "path": "docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md",
+      "sha256": "4ebaca6d6ad025452a66047845e32749194b0de27973cec29b85edd03d419d2d",
+      "status_lines": [
+        "- Status: accepted (executed in `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1`-`.3`)"
+      ],
+      "title": "0026 \u2014 Task acceptance uses project-declared evidence registries"
+    },
+    {
+      "bytes": 3432,
+      "front_matter": false,
+      "id": "0027",
+      "lines": 65,
+      "path": "docs/decisions/0027-hdl-instance-identifiers-use-a-portable-origin-aware-policy.md",
+      "sha256": "4fbee33fdbcf825c6eaae94a93c9bdc9e9a3b789440ec79d6a69ac5384a4aae3",
+      "status_lines": [
+        "- Status: accepted and implemented by `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2`"
+      ],
+      "title": "0027 \u2014 HDL instance identifiers use a portable origin-aware policy"
+    },
+    {
+      "bytes": 2909,
+      "front_matter": false,
+      "id": "0028",
+      "lines": 61,
+      "path": "docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md",
+      "sha256": "9fc483aa8afd35dba4754a7bb24653d8a9968392b0de709dc1f2c5f51358e276",
+      "status_lines": [
+        "- Status: accepted and privately implemented by `FSMGEN-HIR-ROADMAP-FRONTIER.4`"
+      ],
+      "title": "0028 \u2014 Source-facing HIR is a distinct private pre-IAL layer"
+    },
+    {
+      "bytes": 2466,
+      "front_matter": false,
+      "id": "0029",
+      "lines": 52,
+      "path": "docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md",
+      "sha256": "cef3f8e49b8f6fb69fe743f0854b99f5d134fb6e5b4b969f8b3d416a8b7ad5b4",
+      "status_lines": [
+        "- Status: accepted by `FSMGEN-HIR-ROADMAP-FRONTIER.5`"
+      ],
+      "title": "0029 \u2014 SourceHIR remains private through a second lowering route"
+    },
+    {
+      "bytes": 2572,
+      "front_matter": false,
+      "id": "0030",
+      "lines": 55,
+      "path": "docs/decisions/0030-source-hir-v2-is-a-semantic-concrete-control-subset.md",
+      "sha256": "6ecb6c7edc32d4942b4523655e466d1f06397d1bb8bf399d5c65dc7ea5406115",
+      "status_lines": [
+        "- Status: accepted by `FSMGEN-HIR-ROADMAP-FRONTIER.6`"
+      ],
+      "title": "0030 \u2014 SourceHIR v2 is a semantic concrete-control subset"
+    },
+    {
+      "bytes": 1994,
+      "front_matter": false,
+      "id": "0031",
+      "lines": 43,
+      "path": "docs/decisions/0031-source-hir-remains-a-private-validated-architecture-boundary.md",
+      "sha256": "64195aeefa0eec957520f103b56fcc38ee9b42ba6e81174f25f7b43c283c3e56",
+      "status_lines": [
+        "- Status: accepted by `FSMGEN-HIR-ROADMAP-FRONTIER.8`"
+      ],
+      "title": "0031 \u2014 SourceHIR remains a private validated architecture boundary"
+    },
+    {
+      "bytes": 6309,
+      "front_matter": false,
+      "id": "0032",
+      "lines": 112,
+      "path": "docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md",
+      "sha256": "43dd78c86f908dfb97943537d1828aae0d433bd9a464512a7e93191a7a95ad9d",
+      "status_lines": [
+        "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`"
+      ],
+      "title": "0032 \u2014 VIAL uses one source, two private IRs, and a versioned HIAL bridge"
+    },
+    {
+      "bytes": 3473,
+      "front_matter": false,
+      "id": "0033",
+      "lines": 67,
+      "path": "docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md",
+      "sha256": "711f7e2c667bd8c333b4f827606b5a5f74f46f87099c2a843df2846a92ead400",
+      "status_lines": [
+        "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`"
+      ],
+      "title": "0033 \u2014 VIAL v1 uses spanned S-expressions and typed semantic records"
+    },
+    {
+      "bytes": 6408,
+      "front_matter": false,
+      "id": "0034",
+      "lines": 113,
+      "path": "docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md",
+      "sha256": "d869c73db77e999fdf72dd48a39c22c0a7c389dd17ca4918278b75c99cfa14eb",
+      "status_lines": [
+        "- Status: accepted by director clarification during `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3`"
+      ],
+      "title": "0034 \u2014 VIAL expressiveness is not bounded by synthesizability"
+    },
+    {
+      "bytes": 5717,
+      "front_matter": false,
+      "id": "0035",
+      "lines": 106,
+      "path": "docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md",
+      "sha256": "f94a80062eda6984c065228daf3f3fc40c15260ec473bbb875a5f6d69ba91e08",
+      "status_lines": [
+        "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`"
+      ],
+      "title": "0035 \u2014 The HIAL/VIAL bridge is produced from reviewable HIAL routes"
+    },
+    {
+      "bytes": 6556,
+      "front_matter": false,
+      "id": "0036",
+      "lines": 116,
+      "path": "docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md",
+      "sha256": "a1d7bc10ff3933c156d6eb132bebaf18961801e85d7c6ceb234bc67187ce68bc",
+      "status_lines": [
+        "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6`"
+      ],
+      "title": "0036 \u2014 VIAL execution is deterministic logical time above backend methodology"
+    },
+    {
+      "bytes": 5883,
+      "front_matter": false,
+      "id": "0037",
+      "lines": 117,
+      "path": "docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md",
+      "sha256": "ec80220c4832540b423848c1d2b3e45423b5ee3337450f539056ab3eba0e2cd8",
+      "status_lines": [
+        "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2`"
+      ],
+      "title": "0037 \u2014 VIAL semantic types bind to HIAL carriers through directional proof relations"
+    },
+    {
+      "bytes": 3434,
+      "front_matter": false,
+      "id": "0038",
+      "lines": 67,
+      "path": "docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md",
+      "sha256": "ed6ad16dcf9bcf452c3f659c889dc318759a17e569763ea90a44fa928bcb50a8",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0038 \u2014 README policy is harness-neutral and locally authoritative"
+    },
+    {
+      "bytes": 4229,
+      "front_matter": false,
+      "id": "0039",
+      "lines": 73,
+      "path": "docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md",
+      "sha256": "e90c5918c1d34ab7243305fd16127e0aae5b0470929ce3a395da66c331d98825",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0039 \u2014 VIAL public tooling is intent-oriented and artifact-atomic"
+    },
+    {
+      "bytes": 6002,
+      "front_matter": false,
+      "id": "0040",
+      "lines": 96,
+      "path": "docs/decisions/0040-readme-routing-must-close-destination-pressure.md",
+      "sha256": "22d3045f249ab9d58b69ffaf47b0324c5dbe38b9643b46bda359535946dea72e",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0040 \u2014 README routing must close destination pressure"
+    },
+    {
+      "bytes": 7142,
+      "front_matter": false,
+      "id": "0041",
+      "lines": 112,
+      "path": "docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md",
+      "sha256": "9fc4423a396c64637d43b6e0f56bd5154fac35707eaf4d95ecf0421f35796205",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0041 \u2014 Live documents use bounded views over durable stores"
+    },
+    {
+      "bytes": 4721,
+      "front_matter": false,
+      "id": "0042",
+      "lines": 80,
+      "path": "docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md",
+      "sha256": "9aa777e4c8b966cfd32c29dfb7c6f4104d15b35a019c68e7508a35639c8a7737",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0042 \u2014 Task trees seal completed subtrees with exact provenance"
+    },
+    {
+      "bytes": 4703,
+      "front_matter": false,
+      "id": "0043",
+      "lines": 85,
+      "path": "docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md",
+      "sha256": "ea819c0531321b3d4259371a1e3461eb916bf398a2870c7c3e7dfacd0f752737",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0043 \u2014 VIAL portable SystemVerilog is a deterministic known-value profile"
+    },
+    {
+      "bytes": 3971,
+      "front_matter": false,
+      "id": "0044",
+      "lines": 69,
+      "path": "docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md",
+      "sha256": "ea28dafcb1ed4de9861b5a17b52823540bf818bfbb86130e846397fa87bfbba9",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0044 \u2014 External live-document review corrections precede wider reuse"
+    },
+    {
+      "bytes": 3495,
+      "front_matter": false,
+      "id": "0045",
+      "lines": 59,
+      "path": "docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md",
+      "sha256": "9710d90f3fbf3f865525b0c7a87e11c9675dcce6e17810dadb378b4bac64cd03",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0045 \u2014 Maintained reference bounds the read path, not product scope"
+    },
+    {
+      "bytes": 5291,
+      "front_matter": false,
+      "id": "0046",
+      "lines": 90,
+      "path": "docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md",
+      "sha256": "c6351105e19f979ed6155ac7478314ccbcd7d56b6c26cbbacd075e510b93fa13",
+      "status_lines": [
+        "- Status: partially superseded by `0047` (changelog), `0048` (achievement"
+      ],
+      "title": "0046 \u2014 Project documents use two bounded ledgers and canonical live views"
+    },
+    {
+      "bytes": 3781,
+      "front_matter": false,
+      "id": "0047",
+      "lines": 69,
+      "path": "docs/decisions/0047-changes-history-is-task-trees-and-git.md",
+      "sha256": "c169cecd1183f2e20931324ed0306b1fd420f8c5cc01d5e81cd572f5e5776d1f",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0047 \u2014 Change history is task-tree evidence plus Git"
+    },
+    {
+      "bytes": 2729,
+      "front_matter": false,
+      "id": "0048",
+      "lines": 57,
+      "path": "docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md",
+      "sha256": "5ad3e4c764ab31ce0f221f32b6800373154180211b48c72c41d55402d6200c83",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0048 \u2014 Achievement history is task trees, the mdBook, and Git"
+    },
+    {
+      "bytes": 3041,
+      "front_matter": false,
+      "id": "0049",
+      "lines": 62,
+      "path": "docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md",
+      "sha256": "c0eb3dd813ddbf7b057654d61d6e86cf5b563bd2981f9619055ed533ad4a8be5",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0049 \u2014 Roadmap status is the roadmap, task trees, Memory, and Git"
+    },
+    {
+      "bytes": 8149,
+      "front_matter": false,
+      "id": "0050",
+      "lines": 140,
+      "path": "docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md",
+      "sha256": "7d6880339edd7e428a97d5c1d4441a175e40d0b833ebf703a512e66b455d48e3",
+      "status_lines": [
+        "- Status: accepted by director clarification during"
+      ],
+      "title": "0050 \u2014 VIAL native UVM is open-source-first with capability-gated runtime"
+    },
+    {
+      "bytes": 5496,
+      "front_matter": false,
+      "id": "0051",
+      "lines": 100,
+      "path": "docs/decisions/0051-vial-vhdl-uses-a-provider-free-core-and-osvvm-qualified-tier.md",
+      "sha256": "6fa8a788e04905f639b56d86eb70e3df6cef2051f900603fd8dde7149d28c985",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0051 \u2014 VIAL VHDL uses a provider-free core and OSVVM-qualified tier"
+    },
+    {
+      "bytes": 3604,
+      "front_matter": false,
+      "id": "0052",
+      "lines": 74,
+      "path": "docs/decisions/0052-nexsim-native-api-is-authoritative-and-mcp-is-a-bounded-projection.md",
+      "sha256": "3b703c0e3c99e4f61cbfe1864d19777935841e1ceb6d6b40f55fc2e39261c9cb",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0052 \u2014 NEXSIM native semantic API is authoritative and MCP is a bounded projection"
+    },
+    {
+      "bytes": 3021,
+      "front_matter": false,
+      "id": "0053",
+      "lines": 56,
+      "path": "docs/decisions/0053-portable-containment-adoption-guide-expands-governance-interface.md",
+      "sha256": "dab42f3eaddeb82164b7e0adaccb35c483a41754e771c9afe2928209690e473f",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0053 \u2014 A portable containment-adoption guide expands the governance interface"
+    },
+    {
+      "bytes": 3947,
+      "front_matter": false,
+      "id": "0054",
+      "lines": 65,
+      "path": "docs/decisions/0054-derived-state-is-derived-on-read-or-authority-verified.md",
+      "sha256": "d75524d5d6cc6ff43d805e7dc4c28024d8f9172765ee253eaa66cce8614e7937",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0054 \u2014 Derived state is computed on read or retained behind an authority verifier"
+    },
+    {
+      "bytes": 19991,
+      "front_matter": false,
+      "id": "0055",
+      "lines": 387,
+      "path": "docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md",
+      "sha256": "0ccad5944557079bd504508344e9dfeb5f1dba0da1cb8b451154483d62111412",
+      "status_lines": [
+        "- Status: accepted; `.17.6` execution recorded by `.17.8`"
+      ],
+      "title": "0055 \u2014 VIAL scale proof uses orthogonal workloads and stage-local oracles"
+    },
+    {
+      "bytes": 11142,
+      "front_matter": false,
+      "id": "0056",
+      "lines": 238,
+      "path": "docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md",
+      "sha256": "1949534921f68d50dbc1de835acf9551428204fa27f79015ecb2529e171429f1",
+      "status_lines": [
+        "- Status: accepted; `.17.6` execution recorded by `.17.8`"
+      ],
+      "title": "0056 \u2014 VIAL scale measurements use pinned evidence and bounded failure"
+    },
+    {
+      "bytes": 4141,
+      "front_matter": false,
+      "id": "0057",
+      "lines": 71,
+      "path": "docs/decisions/0057-vial-scale-byte-candidates-and-construction-envelopes-are-derived-and-bounded.md",
+      "sha256": "8be50bd519e6179fe4a4aa0f44d4042d467dbcf434fad97d53656016d41541cd",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0057 \u2014 VIAL scale byte candidates and construction envelopes are derived and bounded"
+    },
+    {
+      "bytes": 2339,
+      "front_matter": false,
+      "id": "0058",
+      "lines": 45,
+      "path": "docs/decisions/0058-vial-action-local-semantic-ids-follow-language-scope.md",
+      "sha256": "900fb72fdbb4544ea67dd48196c413d885dab9fed4cbc0302cb10b5a0a74b8f1",
+      "status_lines": [
+        "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`"
+      ],
+      "title": "0058 \u2014 VIAL action-local semantic IDs follow language scope"
+    },
+    {
+      "bytes": 2751,
+      "front_matter": false,
+      "id": "0059",
+      "lines": 54,
+      "path": "docs/decisions/0059-vial-literal-repeat-scale-is-currently-dominated-by-expanded-actions.md",
+      "sha256": "457712f6cf506a9e1ddaca769348fb6eb619be17139bcea7dfee0e3fe02ffc14",
+      "status_lines": [
+        "- Status: observed and routed by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`"
+      ],
+      "title": "0059 \u2014 VIAL literal-repeat scale is currently dominated by expanded actions"
+    },
+    {
+      "bytes": 4511,
+      "front_matter": false,
+      "id": "0060",
+      "lines": 86,
+      "path": "docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md",
+      "sha256": "9ca45e79f290513389887d69bf4f935a548c2c03190740c206803c4160ff8d15",
+      "status_lines": [
+        "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.1`"
+      ],
+      "title": "0060 \u2014 VIAL bridge scale uses a qualification-only direct-IAL1 profile"
+    },
+    {
+      "bytes": 8161,
+      "front_matter": false,
+      "id": "0061",
+      "lines": 120,
+      "path": "docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md",
+      "sha256": "530564a547f6326109c46da9f4d3f501b725638d7f859d1d9acc22ad95b18995",
+      "status_lines": [
+        "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1`"
+      ],
+      "title": "0061 \u2014 VIAL execution scale uses a caller-sealed qualification binder"
+    },
+    {
+      "bytes": 2579,
+      "front_matter": true,
+      "id": "0062",
+      "lines": 59,
+      "path": "docs/decisions/0062-push-cadence-is-200-commits.md",
+      "sha256": "33eb90ad61e68911418e9fb967f51b63e44f2ddc7f572ebba22c7837ec1196d7",
+      "status_lines": [
+        "status: superseded",
+        "- Status: superseded by [0091](0091-push-cadence-is-300-commits.md)"
+      ],
+      "title": "0062 \u2014 Push cadence is 200 commits"
+    },
+    {
+      "bytes": 5636,
+      "front_matter": false,
+      "id": "0063",
+      "lines": 101,
+      "path": "docs/decisions/0063-hosted-regression-uses-closed-non-cancelling-partitions.md",
+      "sha256": "f2314fc82a314c75147dee5d324296708b0b07c90dc7c6465967b5d3e6b14aef",
+      "status_lines": [
+        "- Status: selected by `GITHUB-PUSH-OUTCOME-ASSURANCE.6.1`"
+      ],
+      "title": "0063 \u2014 Hosted regression uses closed non-cancelling partitions"
+    },
+    {
+      "bytes": 4912,
+      "front_matter": false,
+      "id": "0064",
+      "lines": 93,
+      "path": "docs/decisions/0064-live-document-growth-is-declared-measurement-with-paired-decisions.md",
+      "sha256": "146669a9d5dcaa768aadb3961837d2351fc872c2e39cedd513c8dc1f45054f61",
+      "status_lines": [
+        "- Status: selected by `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.3`"
+      ],
+      "title": "0064 \u2014 Fact cards are a cheap-to-add retrieval surface, not a ceiling-rationed one"
+    },
+    {
+      "bytes": 7462,
+      "front_matter": false,
+      "id": "0065",
+      "lines": 130,
+      "path": "docs/decisions/0065-live-document-line-and-byte-targets-are-derived-as-a-pair.md",
+      "sha256": "5d6bc8c6e63b4235c256eda5e3576988213fb40c7d1674485b08eeab74426a05",
+      "status_lines": [
+        "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2`"
+      ],
+      "title": "0065 \u2014 A surface's line and byte targets are one derivation, not two round numbers"
+    },
+    {
+      "bytes": 5605,
+      "front_matter": false,
+      "id": "0066",
+      "lines": 102,
+      "path": "docs/decisions/0066-memory-pointer-size-is-two-externally-owned-criteria.md",
+      "sha256": "eeff56888f8e00a682bc80dbf7bc2e7472160b287256dbdabdb06e6270e41588",
+      "status_lines": [
+        "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4`"
+      ],
+      "title": "0066 \u2014 The resume pointer is bounded by two different criteria, not one budget"
+    },
+    {
+      "bytes": 6021,
+      "front_matter": false,
+      "id": "0067",
+      "lines": 108,
+      "path": "docs/decisions/0067-layer-a-carries-no-decision-or-lane-summaries.md",
+      "sha256": "b1ac620ee74828498b6835e07e98e7e6344e5fa7c1cd1ade897b0425818e1b1a",
+      "status_lines": [
+        "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5`"
+      ],
+      "title": "0067 \u2014 Layer A carries no decision or lane summaries"
+    },
+    {
+      "bytes": 3977,
+      "front_matter": false,
+      "id": "0068",
+      "lines": 74,
+      "path": "docs/decisions/0068-memory-is-the-frontier-pointer-and-commit-md-stops-inviting-narration.md",
+      "sha256": "983f86ff2d95bcec3c3efe6b487812e559ac4f71012da0aa0bce350b27ada59a",
+      "status_lines": [
+        "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.6`"
+      ],
+      "title": "0068 \u2014 MEMORY.md is the frontier pointer, and COMMIT.md stops asking for anything else"
+    },
+    {
+      "bytes": 7360,
+      "front_matter": false,
+      "id": "0069",
+      "lines": 126,
+      "path": "docs/decisions/0069-live-document-target-pairs-are-swept-not-fixed-under-pressure.md",
+      "sha256": "ed1a13609aedccce1a16febce0632b23a3167288e127453ed9e78968d564a4e1",
+      "status_lines": [
+        "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.1`"
+      ],
+      "title": "0069 \u2014 Every surface's target pair is derived, not only the ones under pressure"
+    },
+    {
+      "bytes": 4996,
+      "front_matter": false,
+      "id": "0070",
+      "lines": 86,
+      "path": "docs/decisions/0070-transition-allowances-carry-one-declared-step-and-a-live-owner.md",
+      "sha256": "a26e44c6ed69bd535fceb2bd67aef41c4ad2badc74da30e9e8fb10122be3e26f",
+      "status_lines": [
+        "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.2`"
+      ],
+      "title": "0070 \u2014 A transition allowance carries one declared step of headroom and a live owner"
+    },
+    {
+      "bytes": 6530,
+      "front_matter": false,
+      "id": "0071",
+      "lines": 115,
+      "path": "docs/decisions/0071-a-containment-bound-pinned-at-its-actual-is-not-a-reviewed-bound.md",
+      "sha256": "22e7aa0ee1a5091b95de66e0094f9e133e3b37a2edea1b3a267bb407da391c0a",
+      "status_lines": [
+        "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.3`"
+      ],
+      "title": "0071 \u2014 A bound pinned at the current actual is not a reviewed bound"
+    },
+    {
+      "bytes": 7661,
+      "front_matter": false,
+      "id": "0072",
+      "lines": 123,
+      "path": "docs/decisions/0072-an-unreachable-declared-cap-is-a-result-not-a-level-to-rewrite.md",
+      "sha256": "2a54736dbc3e6bdadbfb6db8e8c921a48f697e19dfd88172ef6bae29d9f503a3",
+      "status_lines": [
+        "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.3`"
+      ],
+      "title": "0072 \u2014 An unreachable declared cap is a result, not a level to rewrite"
+    },
+    {
+      "bytes": 10300,
+      "front_matter": false,
+      "id": "0073",
+      "lines": 156,
+      "path": "docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md",
+      "sha256": "5a469ba45c108440d2f4bc8033d589f6b88a6f42aebdd6c22db431034ef786b6",
+      "status_lines": [
+        "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.1`"
+      ],
+      "title": "0073 \u2014 Checking-state scale uses packed-state oracles and static cross domains"
+    },
+    {
+      "bytes": 2998,
+      "front_matter": false,
+      "id": "0074",
+      "lines": 50,
+      "path": "docs/decisions/0074-actionable-claims-name-rederivation-falsification-and-durability.md",
+      "sha256": "947a26f9998482d76ec868cd5ce6ac8c96d0535265f896b76d6bf090055057e9",
+      "status_lines": [
+        "- Status: accepted; extended by `0104`"
+      ],
+      "title": "0074 \u2014 Actionable claims name re-derivation, falsification, and durability"
+    },
+    {
+      "bytes": 19120,
+      "front_matter": false,
+      "id": "0075",
+      "lines": 280,
+      "path": "docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md",
+      "sha256": "b5d52aabd4ff5dcdc4e7a982bffa1aae9a9c4ef7d5f20e8bc02e55ab056069a1",
+      "status_lines": [
+        "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.1`; portable-SystemVerilog evidence revised by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4`; portable-VHDL/OSVVM evidence revised by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`"
+      ],
+      "title": "0075 \u2014 Backend-emission scale uses profile-specific anchored routes"
+    },
+    {
+      "bytes": 2691,
+      "front_matter": false,
+      "id": "0076",
+      "lines": 52,
+      "path": "docs/decisions/0076-original-constant-cohorts-derive-from-versioned-sources.md",
+      "sha256": "4b765a2e5bc224387dfce28a40cc46e7a3f82f95dd1af4f2d27442031fcc1b66",
+      "status_lines": [
+        "- Status: selected by `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`"
+      ],
+      "title": "0076 \u2014 Original-constant cohorts derive from versioned sources"
+    },
+    {
+      "bytes": 7141,
+      "front_matter": false,
+      "id": "0077",
+      "lines": 128,
+      "path": "docs/decisions/0077-vial-balanced-portable-uses-a-caller-sealed-revision-2-qualification-bridge.md",
+      "sha256": "a5fb29fcfda89fd8aba5263757bad7131c9da20797939a5b318f9ca2bbd6a2a3",
+      "status_lines": [
+        "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.1`"
+      ],
+      "title": "0077 \u2014 VIAL balanced portable uses a caller-sealed revision-2 qualification bridge"
+    },
+    {
+      "bytes": 5543,
+      "front_matter": false,
+      "id": "0078",
+      "lines": 88,
+      "path": "docs/decisions/0078-vial-execution-total-operation-cap-precedes-graph-materialization.md",
+      "sha256": "36531f042dd165c174c17e525a697668f1af1e5ff43d7cbf0691859b7e1d674b",
+      "status_lines": [
+        "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.1`"
+      ],
+      "title": "0078 \u2014 VIAL total-operation cap precedes operation-graph materialization"
+    },
+    {
+      "bytes": 5964,
+      "front_matter": false,
+      "id": "0079",
+      "lines": 96,
+      "path": "docs/decisions/0079-vial-plan-preflight-reuses-one-bounded-random-decision-transcript.md",
+      "sha256": "ed9a5cac837765900a81867b5c0be005dc752554be2717a1b8300a5e7103823f",
+      "status_lines": [
+        "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1`"
+      ],
+      "title": "0079 \u2014 VIAL plan preflight reuses one bounded random-decision transcript"
+    },
+    {
+      "bytes": 6314,
+      "front_matter": false,
+      "id": "0080",
+      "lines": 107,
+      "path": "docs/decisions/0080-portable-systemverilog-rolls-backward-successors-by-logical-phase.md",
+      "sha256": "bb04ac63b5d1b7e247ff3964ece870778c88139c47d61f8b227fe73dce3b10e6",
+      "status_lines": [
+        "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1`"
+      ],
+      "title": "0080 \u2014 Portable SystemVerilog rolls backward successors by logical phase"
+    },
+    {
+      "bytes": 7764,
+      "front_matter": false,
+      "id": "0081",
+      "lines": 126,
+      "path": "docs/decisions/0081-portable-systemverilog-direct-drive-uses-root-owned-zero-duration-driver-slots.md",
+      "sha256": "3d44299e263e8dbe0a07baf40a7d0a24de67bd6eccc1f5eb70707ade3051b037",
+      "status_lines": [
+        "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2`"
+      ],
+      "title": "0081 \u2014 Portable SystemVerilog direct drive uses root-owned zero-duration driver slots"
+    },
+    {
+      "bytes": 6550,
+      "front_matter": false,
+      "id": "0082",
+      "lines": 125,
+      "path": "docs/decisions/0082-portable-systemverilog-parallel-children-are-single-await-leaves.md",
+      "sha256": "415ef34ffafed4b8307c08f64877c4021b9b8c2633153b312bd2be40dff81d09",
+      "status_lines": [],
+      "title": "Decision 0082: Portable SystemVerilog parallel children are single-await leaves"
+    },
+    {
+      "bytes": 15752,
+      "front_matter": false,
+      "id": "0083",
+      "lines": 288,
+      "path": "docs/decisions/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md",
+      "sha256": "54f6487d548b8168c5555ea663c3b04b20125466ffcb22c717710051121f4e22",
+      "status_lines": [],
+      "title": "Decision 0083: Portable SystemVerilog runtime scale uses authored cycle sampling and one shared staged lifecycle"
+    },
+    {
+      "bytes": 7708,
+      "front_matter": false,
+      "id": "0084",
+      "lines": 133,
+      "path": "docs/decisions/0084-macos-premain-stalls-retain-guarded-qualification-not-backend-workarounds.md",
+      "sha256": "dd0a7ba891310adc3e9ee881cbceae57f9e2f02558f3e3c8298f68dd59ea3ec0",
+      "status_lines": [],
+      "title": "Decision 0084: macOS pre-main stalls retain guarded qualification, not backend workarounds"
+    },
+    {
+      "bytes": 4524,
+      "front_matter": false,
+      "id": "0085",
+      "lines": 84,
+      "path": "docs/decisions/0085-darwin-runtime-integration-is-explicit-and-sampling-stays-repository-local.md",
+      "sha256": "d1b77e4f288e005b9841b3ec1aa1ff37244c744d2c3d4a3c66e902b6d8f8eeca",
+      "status_lines": [],
+      "title": "Decision 0085: Darwin runtime integration is explicit and sampling stays repository-local"
+    },
+    {
+      "bytes": 7858,
+      "front_matter": false,
+      "id": "0086",
+      "lines": 129,
+      "path": "docs/decisions/0086-legacy-verilator-tests-use-one-bounded-test-runtime-supervisor.md",
+      "sha256": "eae4a23ca8d1390b739a1b811533f317eadb8a7841afad777a674d0a571e0c38",
+      "status_lines": [],
+      "title": "Decision 0086: Legacy Verilator tests use one bounded test-runtime supervisor"
+    },
+    {
+      "bytes": 8025,
+      "front_matter": false,
+      "id": "0087",
+      "lines": 137,
+      "path": "docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md",
+      "sha256": "0fb92f386f696e5e805aa2f4426e4c82bd8f63137c90e3ffb4287d38a0e55e3b",
+      "status_lines": [],
+      "title": "Decision 0087: Test subprocesses use one shared mechanism behind sealed policy adapters"
+    },
+    {
+      "bytes": 4503,
+      "front_matter": false,
+      "id": "0088",
+      "lines": 82,
+      "path": "docs/decisions/0088-provider-backed-hosted-tests-use-explicit-dedicated-coordinates.md",
+      "sha256": "ad3974319b25f152732a796d3aa226e282b75fcc562d3d56ad484653e3b7827f",
+      "status_lines": [],
+      "title": "Decision 0088: Provider-backed hosted tests use explicit dedicated coordinates"
+    },
+    {
+      "bytes": 4386,
+      "front_matter": false,
+      "id": "0089",
+      "lines": 79,
+      "path": "docs/decisions/0089-linux-logical-core-discovery-uses-bounded-kernel-authorities.md",
+      "sha256": "8298d2e4b5b37ace405bea7276e98e78743a70a37bb039a0632844458770a3ac",
+      "status_lines": [],
+      "title": "Decision 0089: Linux logical-core discovery uses bounded kernel authorities"
+    },
+    {
+      "bytes": 10265,
+      "front_matter": false,
+      "id": "0090",
+      "lines": 188,
+      "path": "docs/decisions/0090-portable-vhdl-runtime-scale-uses-sample-snapshots-and-one-shared-ghdl-lifecycle.md",
+      "sha256": "d22399f3ad76e4161fb6dba6c9af2be41046fb7dcbdff843347dc8b5451b1f9a",
+      "status_lines": [],
+      "title": "Decision 0090: Portable VHDL runtime scale uses sample snapshots and one shared GHDL lifecycle"
+    },
+    {
+      "bytes": 1765,
+      "front_matter": true,
+      "id": "0091",
+      "lines": 30,
+      "path": "docs/decisions/0091-push-cadence-is-300-commits.md",
+      "sha256": "41f0f6a4784ef69c54db3eca84b1f61a6c6931685558760c694f7bb43271915e",
+      "status_lines": [
+        "status: superseded",
+        "- Status: superseded by [0102](0102-push-cadence-is-500-commits.md)"
+      ],
+      "title": "0091 \u2014 Push cadence is 300 commits"
+    },
+    {
+      "bytes": 11070,
+      "front_matter": false,
+      "id": "0092",
+      "lines": 196,
+      "path": "docs/decisions/0092-osvvm-runtime-scale-reuses-authored-vhdl-sources-and-one-provider-aware-ghdl-lifecycle.md",
+      "sha256": "fbf538b4aae34ebb19ee1e0c0e5c6caa1e5cece0bb0e09271215044523c725fb",
+      "status_lines": [],
+      "title": "Decision 0092: OSVVM runtime scale reuses authored VHDL sources and one provider-aware GHDL lifecycle"
+    },
+    {
+      "bytes": 6718,
+      "front_matter": false,
+      "id": "0093",
+      "lines": 127,
+      "path": "docs/decisions/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md",
+      "sha256": "3c56970e2ec40947848fcaecc092e95aca687852a2357a5cd2ce6ecd3740cf20",
+      "status_lines": [],
+      "title": "Decision 0093: Architecture-scale caps are component ceilings with explicit route authority"
+    },
+    {
+      "bytes": 5272,
+      "front_matter": false,
+      "id": "0094",
+      "lines": 91,
+      "path": "docs/decisions/0094-claim-records-use-a-finite-registry-set-with-global-identity.md",
+      "sha256": "165017888089372ae7aa24afc682bcf8e4b66a45019e66a38152ec5e55aeec37",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0094 \u2014 Claim records use a finite registry set with global identity"
+    },
+    {
+      "bytes": 7551,
+      "front_matter": false,
+      "id": "0095",
+      "lines": 122,
+      "path": "docs/decisions/0095-calibration-closure-versions-atomically-after-current-validator-drift.md",
+      "sha256": "b79e7972f6f77483129177c07dbb236378b46e3a8774425c8b244be429ec1509",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0095 \u2014 Calibration closure versions atomically after current-validator drift"
+    },
+    {
+      "bytes": 6767,
+      "front_matter": false,
+      "id": "0096",
+      "lines": 116,
+      "path": "docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md",
+      "sha256": "2d20e3ce343807851b659ebabe0c7409585775b4e7b63a59375c7f31bcab7a46",
+      "status_lines": [],
+      "title": "Decision 0096: Regression promotion uses a current eleven-profile corpus"
+    },
+    {
+      "bytes": 7772,
+      "front_matter": false,
+      "id": "0097",
+      "lines": 127,
+      "path": "docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md",
+      "sha256": "1235c31b43648cc4d3c0826a4fe1aac72f7032d62f61e2cdee7cf754553e3a2a",
+      "status_lines": [],
+      "title": "Decision 0097: Regression gates publish replaceable observations without recalibrating"
+    },
+    {
+      "bytes": 9113,
+      "front_matter": false,
+      "id": "0098",
+      "lines": 148,
+      "path": "docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md",
+      "sha256": "1b4c806730b2f4f98d2a7fdc138a7157afbb5bbb75a218173d85c1fd53733622",
+      "status_lines": [],
+      "title": "Decision 0098: Hosted regression gates materialize immutable tracked evidence"
+    },
+    {
+      "bytes": 2726,
+      "front_matter": false,
+      "id": "0099",
+      "lines": 37,
+      "path": "docs/decisions/0099-regression-correctness-excludes-only-sealed-process-telemetry-derivatives.md",
+      "sha256": "61255d4707920a0910a7d39b87707a515b480d18f528406573be8bd0ddbca0fd",
+      "status_lines": [],
+      "title": "Decision 0099: Exclude only sealed process-telemetry derivatives from regression correctness"
+    },
+    {
+      "bytes": 5631,
+      "front_matter": false,
+      "id": "0100",
+      "lines": 94,
+      "path": "docs/decisions/0100-portable-systemverilog-lifecycle-uses-a-static-check-seam-controller.md",
+      "sha256": "82b71825e54256f6e9b7e58b46c51abca9fbacc9f39678d874bbcf8f6c0ece80",
+      "status_lines": [],
+      "title": "Decision 0100: Portable SystemVerilog lifecycle uses a static check-seam controller"
+    },
+    {
+      "bytes": 3071,
+      "front_matter": false,
+      "id": "0101",
+      "lines": 49,
+      "path": "docs/decisions/0101-hdl-validation-shares-process-supervision.md",
+      "sha256": "9f78f1adcc8ba181e36b5291cc6f8128ec6bf537565f13cce057a4fb7b0c7bba",
+      "status_lines": [],
+      "title": "Decision 0101: HDL validation shares sealed process supervision"
+    },
+    {
+      "bytes": 1639,
+      "front_matter": true,
+      "id": "0102",
+      "lines": 27,
+      "path": "docs/decisions/0102-push-cadence-is-500-commits.md",
+      "sha256": "f0fd72df80a40e408bfb1fb1ef3b353733deefd682647ae332ba9888afffcdff",
+      "status_lines": [
+        "status: current"
+      ],
+      "title": "0102 \u2014 Push cadence is 500 commits"
+    },
+    {
+      "bytes": 3833,
+      "front_matter": true,
+      "id": "0103",
+      "lines": 72,
+      "path": "docs/decisions/0103-public-regression-promotion-policy-loads-a-tracked-seal.md",
+      "sha256": "91e9fb411e1b1c8a5b3bc10620360558b49c3c298707f7d0b98fcfbb64dc7935",
+      "status_lines": [
+        "status: current",
+        "- Status: accepted"
+      ],
+      "title": "0103 \u2014 Public regression-promotion policy loads a tracked seal"
+    },
+    {
+      "bytes": 1602,
+      "front_matter": false,
+      "id": "0104",
+      "lines": 32,
+      "path": "docs/decisions/0104-claim-review-matches-evidence-granularity-and-preserves-uncertainty.md",
+      "sha256": "cd347a29af92018203e887ab1e0c739d44ee139d32954ee38722b65506b3305b",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0104 \u2014 Claim review matches evidence granularity and preserves uncertainty"
+    },
+    {
+      "bytes": 2010,
+      "front_matter": false,
+      "id": "0105",
+      "lines": 40,
+      "path": "docs/decisions/0105-vial-deep-inspection-is-additive-to-frozen-summaries.md",
+      "sha256": "69c49a5d97df4a8730c43d724e49f5bc870a2dabab87347e02eeb67811c7396b",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0105 \u2014 VIAL deep inspection is additive to frozen summaries"
+    },
+    {
+      "bytes": 2286,
+      "front_matter": false,
+      "id": "0106",
+      "lines": 49,
+      "path": "docs/decisions/0106-reset-polarity-is-an-explicit-system-carrier.md",
+      "sha256": "6074ad7d70d8c350c9d6856bb0c74a39e84441c7744878c217a7a6ea00f1b10e",
+      "status_lines": [
+        "- Status: accepted"
+      ],
+      "title": "0106 \u2014 Reset polarity is an explicit system carrier"
+    },
+    {
+      "bytes": 2929,
+      "front_matter": false,
+      "id": "0107",
+      "lines": 53,
+      "path": "docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md",
+      "sha256": "aa766802055398ecce387574d15168636e5bfefce31b7d257a730685f20d7364",
+      "status_lines": [
+        "- Status: accepted; implementation lanes remain open"
+      ],
+      "title": "0107 \u2014 Actor storage has one owner across generated transaction children"
+    }
+  ],
+  "schema_version": 1,
+  "selected_cohort": {
+    "bytes": 178897,
+    "classification": "immutable storage seal; semantic authority and supersession status unchanged",
+    "first": "0001",
+    "last": "0050",
+    "lines": 3389,
+    "record_count": 50
+  },
+  "selected_links": [
+    {
+      "path": "docs/decisions/0005-push-only-on-explicit-request.md",
+      "target": "0062-push-cadence-is-200-commits.md"
+    },
+    {
+      "path": "docs/decisions/0009-trigger-anchor-vocabulary.md",
+      "target": "0008-verification-property-language-unification.md"
+    },
+    {
+      "path": "docs/decisions/0021-readme-is-a-bounded-discovery-entrypoint.md",
+      "target": "0007-memory-architecture-supersedes-blob-narration.md"
+    },
+    {
+      "path": "docs/decisions/0022-project-data-locality-and-same-volume-storage.md",
+      "target": "0011-doc-file-paths-relative-to-repo-root.md"
+    },
+    {
+      "path": "docs/decisions/0022-project-data-locality-and-same-volume-storage.md",
+      "target": "0012-knowledge-map-paths-relative-to-repo-root.md"
+    },
+    {
+      "path": "docs/decisions/0024-readme-is-a-nearly-static-landing-page.md",
+      "target": "0021-readme-is-a-bounded-discovery-entrypoint.md"
+    },
+    {
+      "path": "docs/decisions/0024-readme-is-a-nearly-static-landing-page.md",
+      "target": "0038-readme-policy-is-harness-neutral-and-locally-authoritative.md"
+    },
+    {
+      "path": "docs/decisions/0024-readme-is-a-nearly-static-landing-page.md",
+      "target": "0040-readme-routing-must-close-destination-pressure.md"
+    },
+    {
+      "path": "docs/decisions/0024-readme-is-a-nearly-static-landing-page.md",
+      "target": "../../README_POLICY.md"
+    },
+    {
+      "path": "docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md",
+      "target": "0024-readme-is-a-nearly-static-landing-page.md"
+    },
+    {
+      "path": "docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md",
+      "target": "0040-readme-routing-must-close-destination-pressure.md"
+    },
+    {
+      "path": "docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md",
+      "target": "0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md"
+    },
+    {
+      "path": "docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md",
+      "target": "0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md"
+    },
+    {
+      "path": "docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md",
+      "target": "0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md"
+    },
+    {
+      "path": "docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md",
+      "target": "0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md"
+    },
+    {
+      "path": "docs/decisions/0040-readme-routing-must-close-destination-pressure.md",
+      "target": "0038-readme-policy-is-harness-neutral-and-locally-authoritative.md"
+    },
+    {
+      "path": "docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md",
+      "target": "0007-memory-architecture-supersedes-blob-narration.md"
+    },
+    {
+      "path": "docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md",
+      "target": "0019-task-tree-in-file-secondary-views-are-historical.md"
+    },
+    {
+      "path": "docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md",
+      "target": "0025-project-document-interim-lifecycle.md"
+    },
+    {
+      "path": "docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md",
+      "target": "0040-readme-routing-must-close-destination-pressure.md"
+    },
+    {
+      "path": "docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md",
+      "target": "0019-task-tree-in-file-secondary-views-are-historical.md"
+    },
+    {
+      "path": "docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md",
+      "target": "0041-live-documents-use-bounded-views-over-durable-stores.md"
+    },
+    {
+      "path": "docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md",
+      "target": "0041-live-documents-use-bounded-views-over-durable-stores.md"
+    },
+    {
+      "path": "docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md",
+      "target": "0042-task-trees-seal-completed-subtrees-with-exact-provenance.md"
+    },
+    {
+      "path": "docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md",
+      "target": "0041-live-documents-use-bounded-views-over-durable-stores.md"
+    },
+    {
+      "path": "docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md",
+      "target": "0044-external-live-document-review-corrections-precede-wider-reuse.md"
+    },
+    {
+      "path": "docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md",
+      "target": "0007-memory-architecture-supersedes-blob-narration.md"
+    },
+    {
+      "path": "docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md",
+      "target": "0025-project-document-interim-lifecycle.md"
+    },
+    {
+      "path": "docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md",
+      "target": "0041-live-documents-use-bounded-views-over-durable-stores.md"
+    },
+    {
+      "path": "docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md",
+      "target": "0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md"
+    },
+    {
+      "path": "docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md",
+      "target": "0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md"
+    }
+  ],
+  "source_revision": "fc57b6b46444bfd33068e4885b487e9d237dc768",
+  "verification": {
+    "consumer_scope": "Tracked files containing selected full basenames; executable/declaration and Knowledge Map evidence/reverify rows retained. Markdown inline incoming section links checked. Abbreviated IDs remain navigation identities, not claimed full-text consumers.",
+    "falsification": "Membership and per-record digests prevent equal-total substitutions; root Markdown links resolve. Migration preservation and planted-negative retrieval tests remain pending under .51.2.",
+    "remaining": "Atomic migration, generated views, negative controls, navigation/reverify closure, archive registration and live/residue proofs are not yet implemented.",
+    "source_identity": "Every record compared byte-for-byte to source_revision using git show; sorted git ls-tree membership compared to the complete census."
+  }
+}

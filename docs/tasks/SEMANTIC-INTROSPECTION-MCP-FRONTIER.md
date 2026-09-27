@@ -1327,10 +1327,26 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51`
-  Status: `pending`
+  Status: `active`
   Goal: `Rollover the saturated decision-record collection while preserving exact history and active contracts.`
   Acceptance: `Immediately after .32.1.3.3.1.2.1, audit the rationale collection and its declared lifecycle under LIVE_DOCUMENT_SIZE_CONTAINMENT.md. Select the smallest semantic rollover that restores bounded current decision capacity without losing active policy, stable decision identities, exact historical text, relative links or Knowledge Map answers. Follow the atomic classification/reconstruction/index/retrieval protocol; split safe leaves before writes, prove source identity and semantic closure separately, add enforcement and negative controls where needed, synchronize reader guidance and commit. Do not merely increase rollover allowance or reclassify overflow to evade containment. Then resume controller contract .32.1.3.3.1.2.2.`
   Verification: `The staged gate for predecessor .32.1.3.3.1.1 reports rationale at 9663 lines and rollover_debt. Registry baseline 7996 plus growth 1667 exactly reaches that current use; the collection ceiling remains 10000. Local policy forbids ordinary allowance growth on rollover debt. This is a decision-record capacity prerequisite, not a request to weaken containment.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.1`
+  Status: `done`
+  Goal: `Audit decision-record rollover boundaries and consumers without changing decision authority.`
+  Acceptance: `Inventory exact source identities, current pressure, record status, front matter, links and executable consumers. Compare bounded storage choices against the existing append-once/supersede convention. Select a whole-record seal and stable retrieval route that preserves every decision, active policy, old link and Knowledge Map answer, with independently verified source/reconstruction/navigation products. Keep director-deferred agent-era document reassessment outside this narrow declared decision-store task; commit the audit before the atomic migration.`
+  Verification: `Exact source/cohort/consumer census and contract selection retained in docs/audits/decision-record-rollover-census-20260927.json and the .51.1 audit below. No records moved; migration qualification belongs to .51.2.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.1: audit exact decision-record rollover`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.2`
+  Status: `pending`
+  Goal: `Perform the selected atomic decision-record rollover and enforce exact retrieval.`
+  Acceptance: `After .51.1, implement the bounded record reader/reconstruction checker, planted-negative tests, immutable archive/manifest, root pointers and doctrine registration in one atomic migration. Preserve record authority and exact original content separately from relocated link rendering; prove source/semantic/live/residue products, complete links and Knowledge Map closure. Record the rollover decision within the migrated capacity, derive budgets from the retained working set without an unrelated ceiling increase, update reader guidance and commit. Restore controller contract adoption only after the full gate passes.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
@@ -5891,3 +5907,74 @@ callee-first from stalled caller-first behavior. Durability retains complete
 sources/oracles, hashes and observed results in the tracked audit plus the
 canonical fact and explicit implementation queue. Architecture adoption awaits
 bounded rationale capacity; no hidden scheduling or contention policy is chosen.
+
+## Decision-record rollover audit — `.51.1`
+
+The fixed source revision and complete record identities live in
+`docs/audits/decision-record-rollover-census-20260927.json`. Re-derivation
+compares each current record byte-for-byte with `git show` at that revision,
+checks hashes/lines/bytes, and compares sorted membership with `git ls-tree`.
+The selected contiguous whole-record cohort is decisions `0001–0050`.
+This is a storage boundary, not a claim that early decisions are obsolete:
+all text, supersession markers and policy authority must survive unchanged.
+
+The selected atomic migration stores original text in a bounded immutable JSON
+segment and separately generates a browseable Markdown view with explicit
+per-record anchors and relocated relative links. Every original root path
+becomes a forwarding page preserving its title, identity and archive link.
+The index still discovers every identity; a bounded reader returns an exact
+original record by ID. Ordinary lookup does not require Git history or network
+access. A manifest and registered file-backed archive descriptor pin source
+revision, cohort identities and archive hashes; reconstruction checks compare
+each original to this independently committed census and regenerate the entire
+human view. Archive storage never supersedes a decision.
+
+Rejected alternatives: deleting older records loses active contracts; relying
+only on `git show` weakens ordinary local retrieval; simply moving Markdown
+breaks its relative links; changing original bytes to relocate those links
+loses exact reconstruction; raising the live rollover allowance evades the
+required transition. The archive is a sealed record store, not a new unbounded
+bootstrap read or a replacement narrative ledger.
+
+Executable consumers use decision paths as provenance or existence identities.
+The backend contract path stays unchanged. Knowledge Map evidence paths remain
+valid, but body-search reverify commands must search the exact reader output
+or the reconstructed view in the migration. The cohort has no front-matter
+cards, so moving its bodies must not change the map's fact set. The census
+retains complete matching consumer lines and source link targets. Its inline
+Markdown anchor search found no incoming section links; this does not assert
+that arbitrary external links or dynamically constructed consumers were scanned.
+
+The migration must separately prove complete source identity, semantic/live
+consumer closure, bounded current dimensions and absence of unretained source
+residue. Root aliases retain file cardinality, so restoring line capacity alone
+does not clear file-count warning pressure. Keep that dimension visible and
+require another bounded index/identity transition before its rollover threshold;
+do not raise its ceiling as part of this migration. The director-deferred
+agent-era Markdown reassessment `.26` remains outside this narrow decision-store
+transition. No authority has been retired or reclassified by this audit.
+
+The first consumer scan was unnecessarily broad and lacked the RAM wrapper.
+It was stopped by terminating its identified process before any output write.
+The replacement uses targeted `rg` discovery, tracked membership and streamed
+matching lines under the RAM guard; its result is the retained census. No
+product failure or successful migration is inferred from the aborted scan.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The rationale registry's declared
+  rollover debt and saturated allowance prevent an ordinary architecture
+  append. `git log -S` on the rationale surface declaration identifies its
+  registered containment history. Exact source membership and per-record identities are retained;
+  the controller audit identifies the pending architecture decision.
+- [x] **ADDRESSED (verified)** — Select exact immutable originals, generated
+  relative-link views, stable root aliases and bounded per-record retrieval.
+  `.51.2` owns atomic implementation and all preservation/negative controls.
+- [x] **NO REGRESSION** — The audit check compares every record against the
+  fixed Git source, validates cohort totals and retained consumer lines, and
+  resolves each selected source link. No decision or implementation changes.
+  The book build passed; knowledge.log reports `knowledge-map: OK`. Visual
+  QA remains unqualified.
+
+Falsification uses independent Git membership and exact per-record identities
+rather than totals alone. Durability is the committed census and this selected
+contract. Migration semantic closure and planted-negative enforcement remain
+explicitly missing until `.51.2`; an audit pass is not a rollover pass.
