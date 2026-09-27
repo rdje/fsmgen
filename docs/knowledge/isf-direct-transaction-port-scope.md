@@ -12,8 +12,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, transactions, ports, scope, storage, bindings, control-flow]
-evidence: perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
+evidence: perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
 ---
 
 Generated children have separately qualified local port metadata under .49.1.
@@ -94,7 +94,26 @@ This helper does not infer activation grants or repair runtime timing.
 
 T1927 covers role preservation, operators, aggregate suffixes, malformed grammar,
 context/source isolation and the still-failing production merge boundary.
-.49.2.2.2.2 next supplies the normalized clause walker; .49.2.2.3 must connect it
-and prove complete physical reservations and source-report preservation.
+FormalClauseResolver now supplies the detached normalized clause walker.
+It rewrites explicit runtime roles in nested statements and check properties,
+retaining source/physical binding records with structural paths. Source labels,
+messages, static parameter structures and opaque phase annotations are preserved.
+Actor-owned bank names, stage ready/valid endpoints, monitor observations and
+parser-generated ATL wiring are preserved even under same-name formal shadows.
+Named drive calls rewrite actuals; their names and actor-owned bodies are unchanged.
 
-Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.1.
+The walker consumes parsed, source-validated records and explicit complete
+scope contexts. It does not establish legality or prune static-zero bodies.
+Integration must preserve those existing source checks/pruning before changing
+physical identities. Duplicate local/formal declarations fail before rewriting.
+T1928 compares role arrays and independently strict-replays transformed carriers
+from parsed helpers and the tracked controller cohort. That is detached helper
+qualification, not a production runtime or report migration.
+
+Dynamic-wait's local operator table currently admits shapes the carrier rejects;
+strict check/HDL generation reject those sources. The retained audit
+`docs/audits/dynamic-wait-carrier-grammar-20260927.json` and prerequisite .49.2.2.5
+own grammar alignment before .49.2.2.3 connects the resolvers and proves complete
+physical reservations and source-report preservation.
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2.

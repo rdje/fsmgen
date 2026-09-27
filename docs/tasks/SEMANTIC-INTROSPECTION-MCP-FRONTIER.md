@@ -1347,7 +1347,7 @@ For FSMGen, the analogs are:
   Goal: `Lower direct transaction ports to collision-safe private identities.`
   Acceptance: `After .49.2.1, controller contract .32.1.3.3.1.2.2 and shadow ownership .32.1.3.3.1.3.1, implement scope-aware operand and binding resolution before .32.1.3.3.1.3.2. Preserve actor owner metadata, local aliases and resets, caller versus callee names, source provenance and public reports. Qualify direct input/output and rule payloads independently, including same names in different transactions and user names resembling generated prefixes. No global textual substitution or actor-role overwrite is permitted.`
   Verification: `pending`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.5`
   Commit: `children below`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1`
@@ -1358,10 +1358,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Resolve transaction operands and activation endpoints through their lexical scopes.`
   Acceptance: `After .1 and parser prerequisite .4, implement typed operand and binding rewrites over explicit signal positions. Distinguish caller actuals and callee formals, generated child public formals, actor rule/drives, source state/type/member/point names, messages and specialization parameters. Cover supported clause/expression families with mutation and preservation controls. Do not use global string substitution or silently guess unknown grammar; commit the qualified resolver before production integration.`
-  Verification: `Split expression/endpoints from the normalized clause walker so each grammar boundary is independently reviewable.`
+  Verification: `Detached expression/endpoints and normalized clause walker are qualified in children .1/.2. Production integration remains open; newly reproduced dynamic-wait grammar mismatch is owned by .49.2.2.5 before .3.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2`
   Commit: `children below`
 
@@ -1373,16 +1373,16 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Apply scoped resolution to normalized transaction and rule clause roles.`
   Acceptance: `After .1, walk explicit normalized clause families using typed expression/target/endpoint methods. Preserve declaration metadata, source labels, messages, parameter overrides and actor-owned drive bodies. Rewrite named-drive actuals, inline drive pairs, temporal signal roles and nested control bodies; reject unknown grammar. Qualify parsed-source corpus and mutation controls before .49.2.2.3 integration.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `T1928 passes explicit clause-role preservation, source/report input isolation, parsed helper expansion, source-local collision rejection and strict carrier replay across the controller cohort. Existing expressions, bindings, properties and wait regressions pass. No production route is switched.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3`
   Status: `pending`
   Goal: `Integrate scoped formal lowering and preserve public source identities.`
-  Acceptance: `After .1/.2, connect declaration maps, width/type/reset/role propagation, caller-local binding validation, local call endpoints and rule payload destinations. Allocate against actual actor/generated/private declarations, preserve generated child public ports and authored binding report names, and reject any unresolved physical collision. Qualify actor/local, sibling/caller/callee, input/output and generated-prefix cases through strict artifacts and complete native/API/MCP reports; keep runtime limits explicit until .49.2.3. Update book/spec/facts and commit before payload repair .32.1.3.3.1.3.2.`
+  Acceptance: `After .1/.2/.5, connect declaration maps, width/type/reset/role propagation, caller-local binding validation, local call endpoints and rule payload destinations. Allocate against actual actor/generated/private declarations, preserve generated child public ports and authored binding report names, and reject any unresolved physical collision. Qualify actor/local, sibling/caller/callee, input/output and generated-prefix cases through strict artifacts and complete native/API/MCP reports; keep runtime limits explicit until .49.2.3. Update book/spec/facts and commit before payload repair .32.1.3.3.1.3.2.`
   Verification: `pending`
   Commit: `pending`
 
@@ -1392,6 +1392,13 @@ For FSMGen, the analogs are:
   Acceptance: `Run immediately after .1 and before .2. Reproduce valid wider-formal rejection and invalid narrower-formal acceptance for clear-bit index 7 with actor/formal status widths reversed. Fix parser lexical width precedence and qualify set/clear/toggle, set-field, rotate and bit/field tests, port-only and actor-shadow cases, aliases/parameter widths and nested bodies without weakening range checks. Verify source expansion and emitted behavior where current controller/scope support permits it; keep production scope integration .3 explicit. Update book/facts and commit.`
   Verification: `T1926 qualifies literal formal precedence across all shared bit/field/rotate helpers, nested bodies, unresolved parameter/type boundaries and genuine default widths. Direct and generated production HDL passes repeated/reset controls with complete native/API/MCP reports and strict IAL0 replay. Existing helper, scope and book-example regressions pass. Type-placeholder zero-mask emission now fails closed; direct physical identity integration remains open.`
   Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.5`
+  Status: `pending`
+  Goal: `Align dynamic-wait operator admission with the emitted carrier grammar.`
+  Acceptance: `After the clause walker and before production scope integration .3, reproduce lowerer admission followed by strict carrier rejection for ~, &&, || and unary concat wait expressions. Use the actual carrier contract to reject unsupported shapes at the wait boundary, or qualify any intended translation without changing operator meaning. Cover working known-width arithmetic/boolean/concat forms and complete native/API/MCP diagnostics. Update book and canonical wait facts and commit.`
+  Verification: `The scoped-walker grammar probe reproduces downstream unsupported-operator/arity failures; strict check and HDL generation already reject these sources. A known-width (+ cycles cycles) control succeeds. No invalid HDL success is claimed. Retained audit: docs/audits/dynamic-wait-carrier-grammar-20260927.json.`
+  Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.3`
   Status: `pending`
@@ -6563,3 +6570,88 @@ record is 2026-09-26T19:14:38+00:00, checked at 2026-09-27T06:15:29Z.
 Book verification: `mdbook build docs/book` succeeds under the RAM guard with
 its destination derived from the repository root; book.log is retained beside
 regression.log. Browser visual review remains the separately owned blocker.
+
+## Normalized clause walker — `.49.2.2.2.2` (in flight)
+
+The preceding detached operand slice committed after the staged doctrine gate
+and commit hook both passed; its message records that result. The next walker
+must retain existing source admission rules before physical rewriting: a renamed
+formal cannot make a formerly rejected duplicate local declaration legal.
+Stage ready/valid endpoints and monitor-within observations explicitly resolve
+against actor interfaces in current lowering, and ATL trigger endpoints are
+already generated actor wiring. These require actor identity preservation,
+not transaction lexical substitution. Named drive actuals remain caller-owned.
+
+The dynamic-wait grammar currently declares operators outside the carrier
+operator table (including bitwise-not and logical conjunction/disjunction).
+Before deciding walker support, reproduce their actual admission/emission path;
+do not infer a working surface or silently narrow it from the declarations alone.
+
+Grammar investigation result: dynamic-wait's local arity table accepts `~`,
+`&&`, `||` and unary concat, but unchanged serialization reaches the carrier
+and fails there. Strict check and HDL generation reject them; the known-width
+addition control succeeds. This is a validator/diagnostic consistency defect,
+not evidence of silently emitted working hardware. Priority prerequisite .5
+owns repair after this walker and before .3 integration. The walker will use
+carrier-supported expression roles and retain precise refusal for these forms.
+The first positive probe used unsized 1 and correctly failed known-width
+inference; the corrected control uses `(+ cycles cycles)`.
+
+## Normalized clause resolution qualification — `.49.2.2.2.2`
+
+FormalClauseResolver now rewrites detached transaction/rule records using the
+committed operand helper. Runtime clause positions are explicit; nested bodies
+retain source structure. Activation records include source/physical bindings
+and structural paths. Named-drive arguments use caller scope while drive names
+and actor definitions remain untouched. Bank names, stage endpoints, monitor
+observations and ATL wiring retain actor identity. Phase annotations and static
+parameter structures are copied without interpreting them as runtime code.
+Property traversal preserves window/depth operands, state/point names and text.
+
+The helper requires parsed, source-validated records and complete local/static
+context, not a second language-admission pass. Integration must preserve
+original legality, static-zero pruning and source reports before rewriting.
+The local/formal collision control specifically prevents renaming from making
+an already-invalid duplicate declaration legal. Placement and collision-safe
+allocation still belong to .3; no public query or execution route imports this
+helper yet. The dynamic-wait shape discrepancy is independently owned by .5.
+
+### Acceptance — normalized clause resolver
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — T1928's parsed shadowing fixture still
+  reaches the production merge failure `signal width for 'data' conflicts`;
+  the same mechanism is retained in collision.log from the preceding slice
+  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5610. Typed scalar expressions
+  alone cannot distinguish source labels, callee formal endpoints, static
+  parameters, actor-only endpoints and nested statement operands.
+- [x] **ADDRESSED (verified)** — T1928 compares exact expected clause arrays
+  under same-spelling role collisions, retains separate source bindings and
+  rewrites parsed bit-helper expansion. Its transformed source-shadow fixture
+  passes `--strict --check --json` carrier replay while actor width/reset and
+  formal width remain separate. Every emitted FSM carrier from the tracked
+  controller cohort also passes strict replay; source actors stay identical.
+  cohort.log reports `All tests successful` after adding that cohort.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1928/T1927/T1925/T1241/T1243/T1412/T1417/T1418/T1244. Existing expression,
+  activation/report, temporal-property and wait contracts remain green.
+  The later cohort addition also passes. The commit workflow requires the
+  final staged doctrine gate and repeats it through the commit hook.
+
+The first negative run caught a new local-option check using a regex in list
+context: failure removed the first argument, letting the diagnostic label act
+as a true condition. Explicit scalar context fixes it. The exact `(local
+scratch (type data))` mutation now fails in T1928; first.log and diagnostic.log
+retain the failing evidence, regression.log/cohort.log the passing evidence.
+No previously shipped implementation had that new-helper mistake.
+
+Claim legs: role assertions and parsed strict replay re-derive the result;
+malformed clauses, same-spelling static/actor/source roles, local/formal
+collisions and mutation isolation falsify it; checked-in helpers, T1928, the
+canonical scope card and the retained wait audit provide durability. Current
+API/MCP applicability is existing binding/report regression, because production
+is unchanged. DEVELOPMENT_NOTES is unchanged: existing decision 0109 and the
+canonical scope card own the implementation contract.
+
+Book verification: the repository-derived `.artifacts/formal-clauses/book`
+build succeeds; book.log is retained. The separate browser visual-audit blocker
+is unchanged. Staged doctrine and hook results belong to the commit evidence.
