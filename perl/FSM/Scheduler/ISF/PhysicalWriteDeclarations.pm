@@ -76,6 +76,28 @@ sub collect {
         unresolved_targets => [map {$unresolved{$_}} sort keys %unresolved]};
 }
 
+# Return one detached overlap contract per actual assignment spelling. Explicit
+# declarations provide packed ranges; an undeclared bare LHS covers its entire
+# root without pretending that its downstream inferred width is known here.
+sub target_contracts {
+    my ($class, $ir) = @_;
+    my $collection = $class->collect($ir);
+    my %targets;
+    for my $container (@{_records($ir, 'states')}, @{_records($ir, 'dt_blocks')}) {
+        for my $assignment (@{_records($container, 'assignments')}) {
+            my $target = $assignment->{lhs};
+            next if exists $targets{$target};
+            $target =~ /\A([A-Za-z_]\w*)/; # collect already validates every LHS.
+            my $root = $1;
+            $targets{$target} = exists($collection->{declarations}{$root})
+                ? FSM::Scheduler::ISF::PhysicalWriteTargets->resolve(
+                    $collection->{module}, $collection->{declarations}, $target)
+                : FSM::Scheduler::ISF::PhysicalWriteTargets->whole_root($collection->{module}, $target);
+        }
+    }
+    return \%targets;
+}
+
 sub _records {
     my ($record, $key) = @_;
     my $value = $record->{$key} // [];

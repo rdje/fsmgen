@@ -45,13 +45,38 @@ sub resolve {
     };
 }
 
+# Entire-root writes overlap regardless of the width inferred by the later
+# public carrier parser. This contract proves no partial-range disjointness.
+sub whole_root {
+    my ($class, $module, $target) = @_;
+    confess "Whole-root write target requires a module identity and bare signal target\n"
+        unless _identifier($module) && _identifier($target);
+    return {module => $module, root => $target, target => $target, coverage => 'whole_root'};
+}
+
 sub overlaps {
     my ($class, $left, $right) = @_;
-    _checked_range($_) for ($left, $right);
+    my @coverage = map {_checked_target($_)} ($left, $right);
     return 0 unless $left->{module} eq $right->{module} && $left->{root} eq $right->{root};
+    return 1 if grep {$_ eq 'whole_root'} @coverage;
     confess "Physical write target overlap has inconsistent root widths\n"
         unless $left->{root_width} == $right->{root_width};
     return $left->{low} <= $right->{high} && $right->{low} <= $left->{high} ? 1 : 0;
+}
+
+sub _checked_target {
+    my ($target) = @_;
+    if (ref($target) eq 'HASH' && exists $target->{coverage}) {
+        confess "Physical write target has a malformed whole-root contract\n"
+            unless defined($target->{coverage}) && !ref($target->{coverage})
+                && $target->{coverage} eq 'whole_root'
+                && _identifier($target->{module}) && _identifier($target->{root})
+                && _identifier($target->{target}) && $target->{target} eq $target->{root}
+                && keys(%$target) == 4;
+        return 'whole_root';
+    }
+    _checked_range($target);
+    return 'packed_range';
 }
 
 sub _checked_range {

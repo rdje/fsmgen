@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-direct`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **17** uniquely owned question entries.
+> **3** facts · **18** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -11,6 +11,7 @@
 - q="does ISF reject competing writes from direct sibling transactions?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
 - q="does transaction priority grant independent controller writes?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
 - q="how are private direct formal identities planned without changing execution?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)
+- q="how do implicit ISF assignment targets participate in physical overlap?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
 - q="how does detached expression resolution distinguish caller and callee formal names?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)
 - q="what is the runtime evidence for the direct controller repair?" · facts=[isf-direct-controller-runtime-boundary](../../docs/knowledge/isf-direct-controller-runtime-boundary.md)
 - q="what must precede direct transaction port scope repair?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)

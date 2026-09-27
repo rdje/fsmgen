@@ -817,11 +817,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Resolve the remaining implicit scalar writer contract.`
   Acceptance: `After .1, qualify actual emitted implicit targets through the public carrier and canonical downstream width inference. Establish a sound whole-root contract for every remaining scalar writer without guessed widths, width-map overclaims or report changes. Retain malformed/omission and carrier controls before complete inventory attachment.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `T1969 proves actual bare implicit targets have conservative whole-root overlap contracts without guessed widths; native and emitted-carrier semantic products agree across inferred-width and state-order variants. Same-root sibling writes and mixed whole/member coverage overlap; different roots/modules remain separate. Missing layouts and malformed whole-root contracts fail closed. T1968/T1967/T310 and mdBook build pass. Canonical downstream inference remains authoritative; the helper is detached and producer ownership remains .3/.4.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3`
   Status: `pending`
@@ -2676,8 +2676,8 @@ before editing code. No discovered defect is closed by this audit alone.
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.2`, implicit scalar target qualification after explicit
-declaration collection and before producer ownership, following
+`.32.1.3.3.1.3.3.2.2.3`, explicit source-producer ownership after declaration
+and implicit whole-root qualification, following
 the physical target resolver and retained admission baseline. Conservative admission precedes independent controllers and local-call
 timing under the following sibling leaves. `.49.2.3` qualifies direct-call runtime;
 `.49.3` owns explicit-local physical scope. These remain prerequisites to the
@@ -4378,3 +4378,34 @@ storage declarations despite retained width-map entries and mutates target/type
 contracts; durability is T1968, the canonical writer card, book and this tree.
 The helper is deliberately incomplete for implicit targets and does not claim
 whole-inventory or writer-safety signoff. No new quantitative performance claim.
+
+## Acceptance — implicit writer targets `.32.1.3.3.1.3.3.2.2.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The native `--emit-semantic-json`
+  probe exposes captured/copy roots in structural_rtl_ir.nets with widths
+  inferred downstream despite their absence from emitted +size. The canonical
+  FSMGenFull parser owns assignment width inference and later simple-signal
+  reconciliation. Reimplementing that inference in scheduling would duplicate
+  a separate stage; whole-root overlap instead requires identity and full
+  coverage, independent of the final inferred width.
+- [x] **ADDRESSED (verified)** — PhysicalWriteTargets::whole_root supplies
+  conservative width-free coverage, and PhysicalWriteDeclarations::target_contracts
+  pairs every actual assignment spelling with an explicit range or whole-root
+  contract. T1969 proves complete native/carrier semantic equality under width
+  and state-order variants, canonical inferred sample/copy widths, actual
+  sibling root overlap, separate roots/modules and symmetric mixed whole/member
+  overlap. Missing layouts cannot turn partial paths into implicit evidence;
+  malformed coverage and returned-record mutation controls pass. Explicit
+  declaration collection still exposes unknown widths rather than inventing them.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1969/T1968/T1967/T310, including canonical downstream inference regressions.
+  The mdBook build passes. Staged doctrines and normal hooks qualify this slice.
+  No production admission or execution path consumes these detached contracts;
+  explicit producer ownership and complete shadow attachment remain owned next.
+
+Evidence: `.artifacts/implicit-write-targets/`. Re-derivation compares native
+and emitted-carrier semantic products and actual downstream net widths;
+falsification changes inferred widths/order and removes layouts or corrupts
+coverage; durability is T1969, the canonical writer card, book and this tree.
+Whole-root coverage proves overlap only; it does not infer a width, partial
+layout, ownership, mutual exclusion or arbitration grant.

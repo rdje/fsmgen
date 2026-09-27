@@ -7,11 +7,12 @@ answers:
   - "which physical targets must shared writer admission compare?"
   - "where are physical writer packed ranges resolved?"
   - "which ISF widths are explicit physical declarations?"
+  - "how do implicit ISF assignment targets participate in physical overlap?"
   - "where is the direct writer admission baseline?"
 date: 2026-09-27
 status: current
 tags: [isf, controllers, writers, storage, conflicts, ownership]
-evidence: perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
+evidence: t/1969-isf-implicit-write-targets.t; perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
 reverify: scripts/run_with_ram_guard.sh perl docs/audits/direct-writer-admission-20260927/reproduce.pl; compare .artifacts/direct-writer-admission/current.json with the retained result.json. This is a dated admission baseline, not an expected future safety contract.
 ---
 
@@ -80,5 +81,22 @@ explicit declarations appear in unresolved_targets; no width is guessed and no
 completeness claim follows. T1968 compares actual emitted tokens, generated
 post-wiring parent/child modules, typed private formals and aggregate ranges;
 omission, malformed-contract and detached-mutation controls qualify the boundary.
-Reverify with guarded prove on T1968. The next child .3.2.2.2 owns implicit scalar
-contracts before explicit producer ownership and shadow attachment.
+Reverify with guarded prove on T1968.
+
+PhysicalWriteDeclarations::target_contracts now covers actual bare implicit LHS
+roots using PhysicalWriteTargets::whole_root. Its coverage is the whole signal,
+with no asserted width or packed bounds. Whole-root writes overlap every valid
+contract on the same module/root, including a resolved aggregate member; they
+cannot prove partial disjointness. Different roots/modules stay separate.
+Unresolved member/index paths are refused, not converted to whole-root evidence.
+The explicit collection still lists undeclared targets separately so consumers
+cannot mistake downstream inferred widths for emitted declarations.
+
+The canonical downstream parser owns width resolution in parse_signal_action
+and reconcile_simple_assignment_signal_widths. T1969 proves sampled aliases and
+copy chains inherit actual carrier widths, while a bare one-bit assignment has
+its downstream scalar width. Complete native/carrier semantic products agree
+under width and state-order variants. Mutation, missing-layout and actual sibling
+writer controls keep overlap conservative. Reverify with guarded prove on T1969.
+Explicit source/generated producer ownership remains .3.2.2.3/.3.2.2.4 before
+shadow attachment; no production admission consumer is installed yet.

@@ -48,10 +48,18 @@ writer admission or controller execution.
 The detached declaration collector now matches the emitted `+size` entries for
 ports, actor storage, local/helper registers and assembly operands. It retains
 aggregate layouts and private formal widths. A sampled alias can have a known
-width in lowering without an explicit size declaration; such targets remain
-listed as unresolved until the implicit-width contract is qualified. Collection
+width in lowering without an explicit size declaration; such widths remain
+listed separately from explicit declarations. Collection
 also covers actual generated storage/completion handoff modules. It does not
 assert complete writer ownership or enable concurrent execution.
+
+An implicit assignment such as `(set copy captured)` now has a detached
+whole-root overlap contract: any other write to `copy` overlaps, regardless of
+the width later inferred by the `.fsm` parser. This avoids guessing a width at
+scheduling time. Different roots and modules remain separate. Partial paths
+still need a resolved declaration layout; a missing layout cannot establish
+disjointness. Native and emitted-carrier semantic reports qualify this boundary;
+writer admission and controller execution remain unchanged.
 
 The lowerer now records private transaction/domain membership, initial states
 and typed state references as a checked shadow model. It adds no public ports
