@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2` (pending)
-- next_action: Close actual module/wiring/domain reservation coverage under .49.2.2.3.2.2 before production wiring .3.3. Follow the scope card and decision 0109; older qualification is authenticated by the task's acceptance-history manifest.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2` (pending)
+- next_action: Close stable source helper identities and remaining child/module/domain reservation producers under .49.2.2.3.2.2.2, then qualify completeness in .3.2.2.3 before production wiring .3.3. Follow the scope card and decision 0109.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

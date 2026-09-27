@@ -1447,10 +1447,32 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Close module/wiring/domain reservation coverage before production allocation.`
   Acceptance: `Complete the parent contract using actual rule, shared-drive, child, storage/completion, library/ATL and domain producers. Preserve authored helper identity inputs when formal physical names change; prove final allocation and emitted declarations cannot introduce unreserved collisions. Do not equate a transaction-only inventory with complete coverage, bypass conflicting parent merges as executable output, or infer helper names from guessed patterns. Qualify deterministic/case-folded and missing-reservation controls, then commit before .3.3.`
   Verification: `Existing reservation helpers inspect selected IR maps. build_module and multi-domain realization add names after transaction lowering; source/physical endpoint projections must keep helper identity generation stable. No complete production reservation proof exists yet.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.1`
+  Status: `done`
+  Goal: `Retain actual parent activation, rule and shared-drive reservation products.`
+  Acceptance: `Use existing generated activation registration, rule lowering and shared-drive producers over validated source and retained transaction records without requiring a conflicting parent merge. Qualify actual local/generated rule payloads, spawn/do/trigger handoffs, shared-drive sources, bank accesses, deterministic/case-folded reservations and snapshot isolation. Preserve production admission and make the still-missing child/domain/final namespace boundary explicit.`
+  Verification: `T1938 qualifies actual local rule payload collisions, generated spawn/do/parameterized-trigger handoffs and shared-drive products, rule bank metadata, source isolation, declaration permutations and canonical malformed-bank refusal. Retained products match actual parent declarations/assignments/instances. T1936/T1937 and binding/bank/schedule-golden/book regressions pass. Later ownership/domain coverage and source helper stability remain .2; final completeness remains .3.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2`
+  Status: `pending`
+  Goal: `Preserve helper source identities and close child/domain producer coverage.`
+  Acceptance: `Retain authored helper identity inputs independently from physical formal endpoints; qualify rule payload naming and generated child storage/completion/library/ATL/domain producer names. Address pre-allocation validation collisions with generated helpers without weakening source admission. Use actual producer outputs, preserve generated public interfaces and avoid treating source-conflicting merged IR as executable output. Split further only for independently reviewable implementation boundaries.`
+  Verification: `Rule payload names currently incorporate binding port spellings; monitor admission checks raw formal/actor names before formal allocation. Full coverage and stable post-rewrite helper identity are not yet proved.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
+  Status: `pending`
+  Goal: `Qualify complete reservation integration before production renaming.`
+  Acceptance: `Join actual producer inventories with a fail-closed completeness contract. Prove final allocation/emission cannot add unreserved collisions, including source declaration permutations, case-folded names, helper-looking formals, separate modules and domain realization. Preserve source/public identities and commit before .3.3.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3`
@@ -2297,8 +2319,9 @@ validation and rejects unsafe direct pin aliases. `.3.1.3` repairs generated
 pin-shadow declarations and wiring. `.54` retains historical task prose through
 exact retrieval. `.3.1.2.1` repairs malformed explicit-local admission;
 `.3.1.2.2` qualifies source contexts and count-role rewriting. `.3.2.1` retains
-actual transaction reservation products. Next `.3.2.2` completes later module,
-child and domain reservation coverage. Local payload, shared-writer and
+actual transaction reservation products; `.3.2.2.1` adds actual rule, activation
+and shared-drive products. Next `.3.2.2.2` closes helper identity and remaining
+child/domain producer coverage; `.3.2.2.3` gates completeness. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -2491,3 +2514,43 @@ partial producer boundary, not complete physical reservation or production
 renaming. Later rule/shared-drive/child/storage/completion/library/ATL/domain
 coverage and stable helper identity inputs remain owned by .3.2.2. No duplicate
 DEVELOPMENT_NOTES entry is needed.
+
+## Acceptance — parent activation products `.49.2.2.3.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` for
+  rule-probe.isf reports isf_port_main_payload as rule_trigger_payload_source
+  and as the binding payload_source. T1938 proves that name is absent from
+  transaction_products and remains the planner candidate when only those
+  products are reserved. _build_rules produces the omitted name after transaction
+  lowering; generated activation registration and shared-drive lowering add
+  further physical ports and payloads after the same boundary.
+- [x] **ADDRESSED (verified)** — prepare_formal_source now retains separate
+  parent_activation_products by invoking the canonical registration, rule and
+  shared-drive producers. Source activation records are cloned before destructive
+  registration. T1938 compares actual production ports, counters, roles, DT
+  assignments, instance metadata and rule bank accesses; local rule collisions,
+  case-folded names, declaration permutations, generated spawn/do/parameterized
+  trigger drive handoffs, snapshot isolation and unknown-bank refusal pass.
+  A conflicting actor/formal width can still yield partial product names while
+  production continues to reject its physical parent merge.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1938/T1937/T1936, T1248 generated rule triggers, T1241 port bindings, T1236
+  bank lowering, T1255 schedule goldens and T1376 book fixtures. book.log builds
+  the updated scope guidance; staged doctrine and commit-hook gates apply.
+
+Evidence is under `.artifacts/formal-parent-products/`. test.log retains an
+incorrect test assumption that ordinary spawn records carry activation_kind;
+production intentionally defaults an absent field to spawn. The test now applies
+that same default while comparing full registered metadata to production.
+No production record was changed to satisfy the test. Re-derivation is native
+schedule provenance and actual production IR comparison; falsification includes
+transaction-only omission, exact/case-folded collision, declaration permutation,
+source snapshots, invalid bank input and still-refused parent merging; durability
+is T1938, the card, book and this record. The new product bundle is not an IR:
+there is no transaction-map merge, finalization, ownership connection or emission.
+Local/external activation state wiring, priority/resource processing, child
+storage/completion/library/ATL and domain closure still require .3.2.2.2; source
+helper identity inputs must stay stable after endpoint rewriting. The complete
+reservation gate remains .3.2.2.3 and production integration remains .3.3.
+Rationale is owned here and in the scope card; no duplicate DEVELOPMENT_NOTES
+entry is warranted.

@@ -49,9 +49,14 @@ because a generated drive payload can have the same proposed name as a private
 formal: drive `isf_port_main` with parameter `payload` produces
 `isf_port_main_payload`, also the initial candidate for formal `main.payload`.
 The detached planner avoids that collision when supplied the product inventory,
-including case-only variants. This inventory is partial: rule, child, shared
-storage and domain wiring still need coverage before production allocation can
-use it. It does not enable independent direct-transaction storage yet.
+including case-only variants. Preparation also retains actual rule payloads,
+generated spawn/do/trigger handoffs and shared-drive products. For example,
+rule `isf_port` triggering `main` with input `payload` produces the same
+`isf_port_main_payload` candidate even when no transaction body uses that name.
+This inventory is still partial: child storage/completion connections, later
+module processing and domain wiring need coverage, and helper names must stay
+stable when formal endpoints are renamed. It does not enable independent
+direct-transaction storage yet.
 
 Today the task-like port model is shipped for `(ports ...)` bindings on `do`,
 `spawn`, and rule `trigger` activation sites.

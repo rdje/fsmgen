@@ -205,12 +205,54 @@ sub prepare_formal_source($self, $source_actor) {
         # Partial producer boundary only: later module/child/domain wiring is
         # absent. This is not the complete reserved_names set for allocation.
         transaction_products => \%products,
+        parent_activation_products => $self->_formal_parent_activation_products(
+            $actor, $generated, \%products),
         actor_context => {
             locals => {}, static_symbols => { %$static },
             static_count_symbols => { %$static }, pruned_repeats => {},
             named_drives => { %drives },
         },
     };
+}
+
+sub _formal_parent_activation_products($self, $actor, $generated, $products) {
+    my $ports = $self->_build_ports($actor);
+    my (%counters, %roles, %local_drive_callers, %spawn_drive_sources);
+    my (@dts, @rule_trigger_dts, @bank_accesses, @instances);
+    my %transactions = map { $_->{name} => $_ } @{$actor->{transactions}};
+    for my $tx (@{$actor->{transactions}}) {
+        my $name = $tx->{name};
+        next if $generated->{$name} || !exists $products->{$name};
+        my %uses = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
+        $local_drive_callers{$_}{$name} = 1 for keys %uses;
+        # Registration replaces source binding records with handoff metadata.
+        # Never let that mutation reach the retained transaction products.
+        for my $instance (@{_clone_isf_value($products->{$name}{spawn_refs})}) {
+            _register_generated_activation_instance($instance, $name, 'transaction',
+                $actor, $ports, \%counters, \%roles, \@dts, \%transactions,
+                \%spawn_drive_sources);
+            push @instances, $instance;
+        }
+    }
+    for my $instance (_rule_trigger_generated_refs($actor, $generated)) {
+        _register_generated_activation_instance($instance, $instance->{owner}, 'rule',
+            $actor, $ports, \%counters, \%roles, \@rule_trigger_dts, \%transactions,
+            \%spawn_drive_sources);
+        push @instances, $instance;
+    }
+    push @dts, $self->_build_rules($actor, \%counters, \@bank_accesses, $generated, \%roles);
+    push @dts, @rule_trigger_dts;
+    my $local_filter = keys(%$generated)
+        ? {map {$_ => 1} keys %local_drive_callers} : undef;
+    $self->_build_drive_dts($actor, \@dts, \%counters, $local_filter,
+        \%local_drive_callers, \%spawn_drive_sources, \%roles);
+    # These are actual producer products, not a parent IR. No transaction maps
+    # are merged and no finalization, ownership connection or emission occurs.
+    return _clone_isf_value({
+        ports => $ports, counters => \%counters, storage_roles => \%roles,
+        dt_blocks => \@dts, bank_accesses => \@bank_accesses,
+        spawn_instances => \@instances,
+    });
 }
 
 sub _formal_expression_static_symbols {

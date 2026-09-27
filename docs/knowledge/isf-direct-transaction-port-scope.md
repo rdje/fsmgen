@@ -12,8 +12,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, transactions, ports, scope, storage, bindings, control-flow]
-evidence: t/1937-isf-formal-reservation-products.t; t/1936-isf-formal-source-context.t; t/1935-isf-local-declaration-admission.t; t/1933-isf-caller-formal-binding-scope.t; perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1937-isf-formal-reservation-products.t t/1936-isf-formal-source-context.t t/1935-isf-local-declaration-admission.t t/1933-isf-caller-formal-binding-scope.t t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
+evidence: t/1938-isf-formal-parent-products.t; t/1937-isf-formal-reservation-products.t; t/1936-isf-formal-source-context.t; t/1935-isf-local-declaration-admission.t; t/1933-isf-caller-formal-binding-scope.t; perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1938-isf-formal-parent-products.t t/1937-isf-formal-reservation-products.t t/1936-isf-formal-source-context.t t/1935-isf-local-declaration-admission.t t/1933-isf-caller-formal-binding-scope.t t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
 ---
 
 Generated children have separately qualified local port metadata under .49.1.
@@ -93,8 +93,23 @@ T1937 proves the source-only candidate isf_port_main_payload collides with an
 actual named-drive payload and that product reservations avoid exact/case-folded
 collisions; rewritten carriers strict-replay. Counter/monitor/wait/sample/call
 products, detached snapshots and malformed-input controls qualify this partial
-boundary. Module/rule/child/domain producers and helper identity stability under
+boundary. Remaining module/child/domain producers and helper identity stability under
 rewriting remain .3.2.2; transaction products are not a complete reservation set.
+
+The .3.2.2.1 continuation retains parent_activation_products from the existing
+generated-activation registration, rule and shared-drive producers. It supplies
+their actual ports, counters, roles, DTs, bank accesses and registered instance
+metadata without merging transaction width/role maps or finalizing an IR.
+Registration receives cloned transaction activation records because it replaces
+source bindings with handoff metadata. T1938 compares these products with actual
+production parent declarations/assignments/instances and rule bank metadata.
+It proves a local rule payload can collide with a planned formal even when the
+transaction inventory has no such name; exact/case-folded and permutation
+controls qualify the extended partial reservation set. Generated spawn, do and
+parameterized trigger paths include real child shared-drive handoffs. Invalid
+rule-bank source still fails in the canonical producer. Child storage/completion
+connections, later module processing, library/ATL/domain closure and stable
+source-derived helper names remain .3.2.2.2; completeness is gated by .3.2.2.3.
 
 The paired parser audit retains the former width-lookup defect: a wider formal
 was rejected and a narrower formal admitted an out-of-range bit against an
