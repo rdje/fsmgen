@@ -28,6 +28,12 @@ writes. Decision `0109` defines that implementation contract; it does not mark
 the current reachability failures repaired. Production runtime and public-report
 qualification remain required before the warning above can be removed.
 
+The lowerer now records private transaction/domain membership, initial states
+and typed state references as a checked shadow model. It adds no public ports
+or controller storage and does not change emitted execution. This prepares
+scoped binding and writer checks; it does not yet make sibling transactions
+concurrent or repair local calls.
+
 Today the task-like port model is shipped for `(ports ...)` bindings on `do`,
 `spawn`, and rule `trigger` activation sites.
 

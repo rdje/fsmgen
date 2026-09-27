@@ -736,11 +736,11 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.6`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Build a shadow logical-controller ownership model and inventory state consumers.`
   Acceptance: `After decision 0109, attach explicit transaction/domain ownership, entry and state membership without switching execution. Inventory predicates, point-active signals, priorities, loops/waits, terminal holds, resets, reports and emitted interfaces. Prove native/API/MCP and generated source parity, collision-safe identity planning, complete state membership and malformed-owner rejection. Commit the shadow slice before .49.2.2; split further if the inventory exceeds a safe code slice.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `T1924 qualifies explicit parent/child/domain membership and malformed-owner controls. The tracked logical-controller-shadow audit proves complete native/API/MCP and emitted IAL0 parity with the baseline; focused watchdog, point, domain, priority, binding and book-example gates pass. Phantom no-watchdog timeout references are removed without changing emitted behavior.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2`
   Status: `pending`
@@ -6221,3 +6221,75 @@ is the tracked audits, decision, canonical fact and explicit implementation
 queue. Direct-call capture, busy/multiple-source policy and full production
 controller qualification remain named implementation obligations, not inferred
 from the authored references. Browser visual QA remains unqualified.
+
+## Shadow controller inventory — `.32.1.3.3.1.3.1`
+
+The first shadow membership test rejects parent_do_1's parent_timeout target
+in t/data/logical-controller-shadow/binding_generated_live.isf. Inspection
+locates _link_states: it appends a watchdog transition to every await, even
+when no watchdog exists. The condition's signal is undefined and the target
+state is absent. Emitter::FSM ignores that await transition, so this is an
+IR integrity defect rather than a demonstrated runtime timeout. This leaf
+owns immediate removal of the phantom reference, guarded by unchanged public
+reports/generated source plus real-watchdog positive controls. The separate
+external-callee watchdog initialization defect remains owned by .32.1.3.3.3.
+
+The private model now records explicit owner tuples, per-owner first/entry
+states, domain timing and typed state references. Parent, generated transaction
+child and concrete domain fixtures pass complete membership checks. Synthetic
+cross-domain handshake states carry transaction ownership. No physical selector
+is allocated and neither emitter reads this shadow. The Knowledge Map card
+isf-logical-controller-shadow inventories the remaining state consumers and
+names the legacy priority/provenance lookups that later promotion must replace.
+
+Capture sources are durable under t/data/logical-controller-shadow; complete
+before/after transport reports and emitted files are retained in the local
+workspace, with their exact digest audit and reproducible capture probe under
+docs/audits/logical-controller-shadow-20260927. The complete captures are byte
+identical. Source/producer fingerprints were stable within every query.
+The initial capture used a dot-prefixed artifact source, which the runner's
+source-id contract rejects; sources were moved to the durable fixture cohort.
+The original lowering-only cross-domain fixture mixed completion and data on
+one output and correctly failed --check --json. The parity fixture uses
+separate outputs; no language admission rule was weakened.
+
+The initial T1924 detected the phantom timeout reference, now repaired with
+real-watchdog positive coverage. A second test compared JSON serialization
+strings after Storable cloning and observed Perl scalar numeric/string flags,
+not unequal decoded report fields. The test now compares complete decoded
+reports, while the independent public before/after captures remain exact-byte
+comparisons. T1924 also covers implicit default-domain realization, named-point
+ownership, terminal hold and absent reset without inventing semantics.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The baseline --emit-schedule-json and
+  source/API/MCP captures establish current public behavior. T1924's initial
+  `Logical controller ownership` diagnostic identifies the dangling
+  parent_timeout target at LogicalControllers.pm line 91; _link_states
+  appended it even when its watchdog signal was undefined. State expansion
+  already stamps transaction owners, but synthetic external activation states
+  lacked them. The emitter ignored the phantom edge and used existing control.
+- [x] **ADDRESSED (verified)** — The shadow checker now accounts for every
+  state in the retained parent/child/domain fixtures and rejects missing,
+  unknown or reference-valued owners, duplicate membership, missing targets
+  and cross-owner edges. Synthetic ownership is explicit and no-watchdog
+  awaits no longer have nonexistent timeout targets. The audit's exact complete
+  before/after equality proves no public report or emitted IAL0 change.
+- [x] **NO REGRESSION** — focused.log and qualification.log under
+  .artifacts/logical-controller-model both report All tests successful for
+  shadow ownership plus real-watchdog, points, external activation, nested
+  effects, domain partition, priority, binding and book lowering checks.
+  The mdBook builds successfully; browser visual QA remains unqualified.
+
+Re-derivation uses the retained capture probe and ownership tests.
+Falsification includes malformed owner/target mutations, prefix-like names,
+implicit domains, absent resets and a real-watchdog control. Durability is
+the tracked source cohort, exact file/report digests, consumer card and tests.
+This closes shadow ownership only. Scoped formal identities .49.2.2 is next;
+local payload, writer admission and production controller/runtime obligations
+remain open. No additional DEVELOPMENT_NOTES entry is needed because decision
+0109 and the canonical consumer card own the rationale.
+
+The first staged doctrine gate passed task acceptance and claim checks but
+found the added import-map row one line beyond focused_documents' owned
+transition allowance. Apply its existing ratchet under this active tree,
+without changing health targets or hard ceilings, then rerun the full gate.

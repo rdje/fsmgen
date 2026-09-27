@@ -817,6 +817,7 @@ non-claims.
 - [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm)
 - [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm)
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+- [perl/FSM/Scheduler/ISF/LogicalControllers.pm](perl/FSM/Scheduler/ISF/LogicalControllers.pm) — private lowered-state ownership shadow; no emitter switch.
 - [perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm](perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm)
 - [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
 - [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm)

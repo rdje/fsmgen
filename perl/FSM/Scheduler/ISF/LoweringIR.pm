@@ -14,6 +14,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
     mark_atl_data_link_child_interface_ports
 );
 use FSM::Scheduler::ISF::ControlFlowEffects;
+use FSM::Scheduler::ISF::LogicalControllers;
 use FSM::Scheduler::ISF::ChildStorageOwnership qw(prepare_child_storage_writes connect_child_storage_writes select_child_storage_reads connect_child_storage_reads);
 use FSM::Scheduler::ISF::ChildActivation qw(guard_child_activation);
 use FSM::Scheduler::ISF::LibraryPortOwnership qw(connect_library_output_readbacks);
@@ -241,6 +242,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     }
     guard_child_activation($ir, $entry) if $entry;
     _finalize_ir($ir);
+    $ir->{logical_controllers} = FSM::Scheduler::ISF::LogicalControllers->inventory($ir, $actor);
     return $ir;
 }
 
@@ -1299,6 +1301,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     );
     retain_child_completions($ir);
     _finalize_ir($ir);
+    $ir->{logical_controllers} = FSM::Scheduler::ISF::LogicalControllers->inventory($ir, $actor);
     return $ir;
 }
 
@@ -11540,7 +11543,17 @@ sub _link_states {
         elsif($s->{kind}eq'loop_exit_when'){_link_loop_exit_when_state($s,$next_state,$next)}
         elsif($next_state&&$next_state->{dynamic_wait_entry}){_link_dynamic_wait_predecessor($tn,$s,$next_state)}
         elsif($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
-        elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
+        elsif ($s->{kind} eq 'await' && $next) {
+            push @{$s->{transitions}}, {target => $next, condition => $s->{guard}};
+            # A blocking call can await completion without a watchdog. Do not
+            # create a dangling timeout edge that the emitter merely ignores.
+            if (defined($s->{watchdog}) && defined($s->{watchdog}{name})) {
+                push @{$s->{transitions}}, {
+                    target => "${tn}_timeout",
+                    condition => {signal => $s->{watchdog}{name}, op => '=', value => 0},
+                };
+            }
+        }
         elsif($s->{kind}eq'stage'&&$next){push @{$s->{transitions}},{target=>$next,condition=>{port=>$s->{ready}}}}
         elsif($s->{kind}eq'repeat_check'){_link_repeat_check_state($s,\%idx_by_name,$st,$next)}
         elsif(($s->{kind}eq'sequential'||$s->{kind}eq'contract'||$s->{kind}eq'wait'||$s->{kind}eq'bank_store'||$s->{kind}eq'bank_load')&&$next){push @{$s->{transitions}},{target=>$next}}
@@ -13030,6 +13043,7 @@ sub _wire_external_activations {
                 ];
                 my $request = {
                     name        => "$do_state->{name}_req",
+                    transaction => $do_state->{transaction},
                     kind        => 'sequential',
                     assignments => [
                         { lhs => $start, rhs => 1, op => '=', source_kind => 'cross_domain_do_start' },
@@ -13038,6 +13052,7 @@ sub _wire_external_activations {
                 };
                 my $ready_wait = {
                     name        => "$do_state->{name}_ready",
+                    transaction => $do_state->{transaction},
                     kind        => 'await',
                     assignments => [],
                     guard       => { port => $ready },
@@ -13093,6 +13108,7 @@ sub _wire_external_activations {
                 my ($first_index) = grep { $st->[$_] == $first } 0 .. $#$st;
                 $entry = {
                     name        => "${child}_idle_ext",
+                    transaction => $child,
                     kind        => 'entry',
                     guard       => { port => $start },
                     assignments => [],
@@ -13117,12 +13133,14 @@ sub _wire_external_activations {
                 # accepted done pulse. Route every terminal through this chain.
                 my $done_req = {
                     name        => "${child}_done_req",
+                    transaction => $child,
                     kind        => 'sequential',
                     assignments => [{ lhs => $done, rhs => 1, op => '<1' }],
                     transitions => [{ target => $entry->{name} }],
                 };
                 my $done_ready_wait = {
                     name        => "${child}_done_ready",
+                    transaction => $child,
                     kind        => 'await',
                     assignments => [],
                     guard       => { port => $ready },

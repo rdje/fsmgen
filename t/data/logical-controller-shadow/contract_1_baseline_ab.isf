@@ -1,0 +1,7 @@
+(actor controller_probe (clock clk) (reset (rst_n async active_low))
+ (interface (input start_a) (input start_b) (output value_a (width 8) (reset 0))
+  (output value_b (width 8) (reset 0)) (output done_a) (output done_b))
+ (storage (var count_a (width 8) (reset 0)) (var count_b (width 8) (reset 0)))
+ (rule observe 1 (value_a count_a) (value_b count_b))
+(transaction worker (set count_a (+ count_a 1)) (wait 2) (complete done_b))
+(transaction parent (on start_a) (do worker) (set count_b (+ count_b 1)) (complete done_a)))

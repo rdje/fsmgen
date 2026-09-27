@@ -1,0 +1,21 @@
+(actor xdom
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus (clock bus_clk) (reset bus_rst_n)))
+  (crossings
+    (activation worker (from core) (to bus)))
+  (interface
+    (input start (domain core))
+    (output done (domain core))
+    (input din (width 8) (domain bus))
+    (output result (width 8) (domain bus)) (output worker_finished (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (do worker)
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (sample din as snap)
+    (update result snap)
+    (complete worker_finished)))

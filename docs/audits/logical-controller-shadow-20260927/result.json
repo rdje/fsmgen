@@ -1,0 +1,134 @@
+{
+  "baseline_revision": "a2631bd7af251f770a42402aa8469bf136716c86",
+  "capture_sha256": "7402a05a2b6fc0b5d957034afcdd5e5a3c8e2861a5ac37f75907157d346d85b7",
+  "cases": [
+    {
+      "emitted_files": {
+        "binding_probe.fsm": "e452b20e642f27eea1e79ae3342e9b0c9a1d3723ce41eec22a915f062f0e688e",
+        "binding_probe_top.fsm": "f9638282323d0eaa0cf7c10b1d7122d1a5ad049ec4c36d366ae551814ad6e86c",
+        "worker.fsm": "87fa9cae60d43ac58218cbf236c7fc6f41ee5a73a8f467ceff630e092745b277"
+      },
+      "reports": {
+        "check": "9a32131e8c41c58527bc9603a12b1af054fe41ba5fc537f21f68cc7f47b5ff8a",
+        "schedule": "a285ac335a3d9357966c0fcd1fad20dd563c2a4cac2629419f2b56fdbd0b0590",
+        "semantic": "73a7c53fc582271ecf6af75a249a8ad4b7b8fe8044828dd10594134a2254c5a4"
+      },
+      "source": "t/data/logical-controller-shadow/binding_generated_live.isf",
+      "source_sha256": "0b3eff4c5724c3cba35c8f66b80141ce93fa30c6ebc06677afcf991515190e18"
+    },
+    {
+      "emitted_files": {
+        "binding_probe.fsm": "7a33d5cc2ada39214a266a941ac2dad3ed69a600e23a8cd850b6f839e9df48f4"
+      },
+      "reports": {
+        "check": "494c104970f993e907b8ce3c4559619bd2a57178e68061788f7ca246a6b4fdfd",
+        "schedule": "c29104dc07a3aeb0b351b8fb96ff7ca3b637a90a16f0c76951ad637b727952fe",
+        "semantic": "fbed9aa2e506678e8c4adba6da4346560d4751acdd564e24f40959b25ab86c06"
+      },
+      "source": "t/data/logical-controller-shadow/binding_local_trigger_request_entry.isf",
+      "source_sha256": "60d860dfcd0096c560ec8d908d2cde443d1d3b831f070f0c219a243443a92ae8"
+    },
+    {
+      "emitted_files": {
+        "controller_probe.fsm": "814a182c5e5f88db9677faed1713011aa9e66de6a4524d5542aeb955326a3e7a"
+      },
+      "reports": {
+        "check": "433aa63d6614cd4f7f0508d1e72587d55404b10c1659dee2432897915af2f885",
+        "schedule": "1f98685d1b77b625591aed86a7c777ba5f325d288d72bc1f1014c1f2641ca33a",
+        "semantic": "c727f82aeba8bd3ccf4c246ced58a43cca56a44ca4a0c3a0eb12dad745ff37d0"
+      },
+      "source": "t/data/logical-controller-shadow/contract_0_baseline_ab.isf",
+      "source_sha256": "1f3ad01b90cf708fe3ac7cab128e7393feab74a97ff982bc2b55de7e2888855d"
+    },
+    {
+      "emitted_files": {
+        "controller_probe.fsm": "b18f0fcdbb27f515586db985b876381121c9a987c91d61a8b8f3449f0a0dfd72"
+      },
+      "reports": {
+        "check": "829d18d055bb18e133603ba3dc28d9c6d38aa00f8a9120cd1892391b793f9bb7",
+        "schedule": "dfbf5fb0dee20c3d2a3fa9ee5bc94fee64d26ee71a0dcb45d97d556b15849a3e",
+        "semantic": "3c37e032f6a10d6618ed6b5a54adf009ad1716104a2acb2a21de4e0cc05009af"
+      },
+      "source": "t/data/logical-controller-shadow/contract_0_baseline_ba.isf",
+      "source_sha256": "d4aa4ae28eb904949bf2fa00091c1d8f4607d30e756594fa43f0e2c3ced2d8a1"
+    },
+    {
+      "emitted_files": {
+        "controller_probe.fsm": "17f4dd2d7f0c3121721ca1ba1e3cdc443b944d9dd7a41b247cb5627101cf9b3f"
+      },
+      "reports": {
+        "check": "06d833ab13e40d3c214be9acca67dbf98085c2a1b5167ad2625a8c6ff6cb6438",
+        "schedule": "b24ece366be8b418183b3c3fc955c4bcb9c1a9b0a8dfcb171c39fd92eebbb094",
+        "semantic": "3958c8d85d2ba1397a25ef7857a4dfce0cbf319d1525a3719d64a9d42bd4afd7"
+      },
+      "source": "t/data/logical-controller-shadow/contract_1_baseline_ab.isf",
+      "source_sha256": "ff88edb65b1ebb4e267bfd668104b5ee65c700c75edd58f7cacfd2b5bd323fc9"
+    },
+    {
+      "emitted_files": {
+        "controller_probe.fsm": "f8d97bdf084a3aa9f90787bc88cd2aa53956cb2d17220e373ef47213ddeb4d50"
+      },
+      "reports": {
+        "check": "dee570cab5243f777767be5bc15df5c72c2abe254c0b4e06cae73d65a769bf32",
+        "schedule": "6611e91c2a2303125e71c53b527f131c5405cae38434c25d6a60da734b204df2",
+        "semantic": "110099a563d6f1a18806e8af982cd35f269d61e1801478c0f73e8f9c4207d0ad"
+      },
+      "source": "t/data/logical-controller-shadow/contract_1_baseline_ba.isf",
+      "source_sha256": "d7ec7af2412c2cdbc7adcbabac1e80dc677453bdac4e7718d2db0d7681cf3f47"
+    },
+    {
+      "emitted_files": {
+        "xdom__domain_bus.fsm": "c74cbebca62d12041b4a32dcfa8822805eff63ab9ed407bbc3671d3f1b1dc04e",
+        "xdom__domain_core.fsm": "db481fbd626623f48089579b2c58147335ab945fc25c815caa80461c86bbae60",
+        "xdom_top.fsm": "73fc698794a9fd3510635f6ce2c3538cd1c803e78cc91bff58f841475d63f375"
+      },
+      "reports": {
+        "check": "e9da3735a127249d36f4ff9e9d5f201e411257ccb510d00288751292a2060c06",
+        "schedule": "733db2fac85257c7da5af0fee46c6b452b1ff1e040ef03fa900389329ba41c42",
+        "semantic": "df17e9aaa7935ce82cc392163d6b81d7e52cc447f367ea301295afd59a0251db"
+      },
+      "source": "t/data/logical-controller-shadow/crossing.isf",
+      "source_sha256": "57a9e7ed6306f8b1d78be81a17e53d23c83bdb48a416218f160a402a7450bb8b"
+    },
+    {
+      "emitted_files": {
+        "while_when_repeat_do.fsm": "619fe9e467360f0c8f93ae2d5df28c6d5ad7790cf69be8f416d3bf2638ef2b9e"
+      },
+      "reports": {
+        "check": "34dd9ed83aa0cadb88c651f5ce368323e564e3b38464d68eaa8e22a53b2f805e",
+        "schedule": "7be9f820ae206566b6f4b590632444f3d392ddc290f4d399f4f5e71d43ec949e",
+        "semantic": "225774fe11a45c9dfa9fad62c0b29312c5eedde115b17a60c976d04bd6f01f85"
+      },
+      "source": "t/data/logical-controller-shadow/nested.isf",
+      "source_sha256": "6ed99902905a5b96d051c5827a3411fc76b28b8545815d119d8148ef4235d0c3"
+    },
+    {
+      "emitted_files": {
+        "direct_priority_control.fsm": "efaf2aae6e21fe3b8e717c438c90a5e5a14d68abcd2f929fd129a93abd2a27eb"
+      },
+      "reports": {
+        "check": "87ede361d85cf8166e07d5af60f98d82771ae15bf99b8c5c09da8323b49112f6",
+        "schedule": "a8565efb404172e0fc3890c868a21cab42ca47c11b9b2df218a1c1b8ff00ed05",
+        "semantic": "cb34cf64295aaa0a04de84387be5051e771e5c3e45c228c463ff2d33d2cb4b56"
+      },
+      "source": "t/data/logical-controller-shadow/priority.isf",
+      "source_sha256": "9eaa124c502a4c80dce46efb4aa891c4b4c696c057bb7a0d00a140356ecd93a7"
+    }
+  ],
+  "comparison": "Exact capture bytes equal before/after; complete native/API/newline MCP parity checked within each capture. Only repository prefix normalized. No field deletion or array sorting.",
+  "date": "2026-09-27",
+  "limits": [
+    "Private ownership model only; existing encoded-controller reachability and local payload defects remain.",
+    "No new production HDL runtime claim; exact emitted IAL0 parity qualifies unchanged behavior for these fixtures.",
+    "The cross-domain source separates data and completion outputs; the original lowering-only T1387 fixture mixes assignment families and is correctly strict-rejected.",
+    "mdBook browser visual audit remains blocked by unavailable browser runtime."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.1",
+  "production_files": {
+    "perl/FSM/Scheduler/ISF.pm": "554bbb9bb9d6b3b588e8810b5b21f3d6f4f04a3244b28ef97fe31ae7c9325ae2",
+    "perl/FSM/Scheduler/ISF/LogicalControllers.pm": "9a05eea2b5863fd253fd7ded560df91410100a07b5c50af2397cde0218b00b24",
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": "598fb31f455106ac9e5f218ed93c8198e3e64838ece6ba75e11be1001d311d1b"
+  },
+  "report_hash_encoding": "UTF-8 JSON, sorted object keys, compact separators, ensure_ascii=False; preserve array order and every field.",
+  "schema_version": 1
+}

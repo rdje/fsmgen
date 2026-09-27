@@ -1,0 +1,1 @@
+(actor binding_probe (clock clk) (reset (rst_n async active_low)) (interface (input start) (input data (width 4)) (output result (width 4)) (output done)) (transaction worker (ports (input payload (width 4))) (on worker_start) (wait 2) (set result payload) (complete done)) (rule fire start (trigger worker (bind (input payload data (timing snapshot))))))

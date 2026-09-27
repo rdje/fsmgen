@@ -242,6 +242,7 @@ sub _domain_actor_for_scheduled_artifact($actor, $domain, $default_domain) {
     $domain_actor{clock} = $domain->{clock};
     $domain_actor{reset} = _clone_isf_value($domain->{reset});
     $domain_actor{clock_domains} = undef;
+    $domain_actor{_scheduled_domain_name} = $domain_name;
     $domain_actor{interface} = {
         inputs => [
             map { _clone_isf_value($_) }
