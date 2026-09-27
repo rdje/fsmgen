@@ -60,7 +60,10 @@ activation wiring routines on detached products. Cross-domain calls add ready
 ports and request states after transaction lowering; those names now participate
 in the inventory when preparing an actual projected domain. A generated ready
 port can otherwise collide with a proposed private formal just like a rule
-payload. This inventory is still partial: later point/priority/resource processing,
+payload. Preparation also retains the actual active signals generated for
+`(at NAME)` checks and the actor output defaults added to entry states. Named
+points and activation labels keep their source identities after formal rewriting.
+This inventory is still partial: later priority/resource processing,
 child storage/completion connections, library/ATL and final domain composition
 need coverage. It does not enable independent direct-transaction storage yet.
 

@@ -215,6 +215,8 @@ sub prepare_formal_source($self, $source_actor) {
     }
     my $activation_products = $self->_formal_parent_activation_products(
         $actor, $generated, \%products);
+    my $wiring_products = $self->_formal_parent_wiring_products(
+        $actor, $generated, \%products, $activation_products);
     return {
         actor => $actor,
         generated_children => { %$generated },
@@ -228,14 +230,35 @@ sub prepare_formal_source($self, $source_actor) {
         # build_module, including collision checks, before any emission.
         deferred_formal_collisions => \%deferred,
         parent_activation_products => $activation_products,
-        parent_wiring_products => $self->_formal_parent_wiring_products(
-            $actor, $generated, \%products, $activation_products),
+        parent_wiring_products => $wiring_products,
+        parent_point_products => $self->_formal_parent_point_products(
+            $actor, $generated, \%products, $wiring_products, \%points),
         actor_context => {
             locals => {}, static_symbols => { %$static },
             static_count_symbols => { %$static }, pruned_repeats => {},
             named_drives => { %drives },
         },
     };
+}
+
+sub _formal_parent_point_products($self, $actor, $generated, $products, $wiring_products, $points) {
+    my $states = _clone_isf_value($wiring_products->{states});
+    my @assertions;
+    for my $tx (@{$actor->{transactions}}) {
+        my $name = $tx->{name};
+        next if $generated->{$name} || !exists $products->{$name};
+        push @assertions, @{_clone_isf_value($products->{$name}{immediate_assertions})};
+    }
+    my %counters;
+    my %defaults = _declared_interface_output_default_values($actor);
+    _resolve_at_references(\@assertions, $points, $states, \%counters);
+    _apply_interface_output_defaults_to_entry_states($states, \%defaults);
+    # Only products of this stage: generated point counters and resolved checks
+    # remain separate from transaction declarations and earlier wiring products.
+    return _clone_isf_value({
+        states => $states, counters => \%counters, immediate_assertions => \@assertions,
+        point_bindings => $points, output_defaults => \%defaults,
+    });
 }
 
 sub _formal_parent_wiring_products($self, $actor, $generated, $products, $activation_products) {

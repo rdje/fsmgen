@@ -1499,10 +1499,25 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Close priority resource child ownership library ATL and final domain producers.`
   Acceptance: `Retain actual later module priority/resource products, generated child storage/completion connections, library/ATL and domain realization identities with stable source/physical projections. Preserve strict executable admission; split independently reviewable producer boundaries as needed before complete gate .3.2.2.3.`
   Verification: `Local/external activation wiring is owned separately by .1; remaining phases are still uncovered.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.1`
+  Status: `done`
+  Goal: `Retain actual parent point-reference and entry-default products.`
+  Acceptance: `Use canonical point bindings and producer functions to retain resolved assertions, point-active signals, wired states and entry defaults without conflicting formal merges. Qualify actual helper collisions, source identity stability, cross-transaction anchors, generated/pruned exclusions, malformed names, detached products and strict carriers; do not promote runtime or complete reservation support.`
+  Verification: `T1943 compares actual point/default products, exact/case-folded late candidate collisions, named point and activation anchors, cross-transaction lookup, declaration order, output-shadow physical separation, source/product isolation, generated/pruned exclusions and canonical bad-anchor refusals. Strict projected carriers and focused point/default/admission/wiring/schedule regressions pass. Later arbitration and composition remain .2.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2`
+  Status: `pending`
+  Goal: `Close arbitration child ownership and final composition reservation coverage.`
+  Acceptance: `Qualify actual priority/resource products, child storage/completion connections, library/ATL and final domain realization identities with stable source/physical projections. Preserve executable admission and explicit separate namespaces; split producer boundaries when warranted before complete gate .3.2.2.3.`
+  Verification: `Parent point/default processing is separately owned by .1; later phases remain uncovered.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -2773,3 +2788,39 @@ covered. Preparation remains source-only; executable admission and controller
 runtime semantics are unchanged. The .2 continuation owns those remaining
 producer phases before the complete .3.2.2.3 gate. Rationale belongs here and in
 the fact card; DEVELOPMENT_NOTES needs no duplicate entry.
+
+## Acceptance — parent point/default products `.49.2.2.3.2.2.2.3.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` on the
+  retained source exposes interface_output_default assignments from late parent
+  processing. The independent before.json probe derives the actual point_active
+  target isf_port_main_point_1_active from production states and proves it is
+  absent from previous preparation products, while the old plan selects that
+  exact name for main.point_1_active. _resolve_at_references creates the signal
+  only after transaction lowering and activation wiring.
+- [x] **ADDRESSED (verified)** — parent_point_products reuses the canonical
+  parent point-binding map, _resolve_at_references and the entry-default producer
+  on detached states/assertions. Actual generated counters remain separate from
+  unresolved declaration maps. after.json reserves the actual helper and selects
+  a distinct formal. T1943 compares actual states, resolved checks, defaults and
+  widths; qualifies point/on-as anchors, exact/case-folded collisions, stable
+  helper identities through projection, declaration order, cross-transaction
+  scope, actor default ownership under a raw formal shadow, strict carriers and
+  snapshot mutation controls. Generated/pruned assertions stay outside parent
+  scope; unknown/duplicate direct anchors retain canonical refusals.
+- [x] **NO REGRESSION** — test.log and regression.log report
+  `All tests successful`; the latter covers T1943, T1942 wiring, T1941 admission,
+  T1936 contexts, T1413/T1416 anchors, T1476 output defaults/reset and T1255
+  schedule goldens. book-fixtures.log passes T1376; book.log builds synchronized
+  guidance. Staged doctrine and commit hooks apply to the final index.
+
+Evidence is under `.artifacts/formal-point-products/`. Re-derivation uses the
+native schedule and independently collected actual before/after helper products;
+falsification uses old-plan aliases, case variants, separate widths, source
+permutation, mutation controls, shadowed defaults and invalid anchor references;
+durability is T1943, the point-products card, book and this task. These remain
+source preparation products, not a merged or finalized executable IR. Child
+point scopes, arbitration, ownership connections and library/ATL/domain closure
+retain their later producer obligations. No automatic production rewrite or
+controller runtime change is claimed. Rationale belongs here and in the fact
+card; DEVELOPMENT_NOTES needs no duplicate entry.

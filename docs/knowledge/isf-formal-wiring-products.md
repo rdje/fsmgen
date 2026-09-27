@@ -33,8 +33,10 @@ helper and state identities; strict carriers pass. Source-order, mutation,
 generated/pruned, raw width conflict, malformed role and fixed-port width controls
 retain source isolation and executable admission boundaries.
 
-Point resolution, defaults, priority/resources, child ownership connections and
-library/ATL/final domain composition remain outside this product set. Preparing
+Point resolution and defaults are retained in the subsequent
+[parent point products](isf-formal-point-products.md). Priority/resources, child
+ownership connections and library/ATL/final domain composition remain outside
+these product sets. Preparing
 an already projected domain does not establish complete outer namespace coverage.
 No automatic production renaming or controller runtime repair is enabled.
 See the [scope contract](isf-direct-transaction-port-scope.md) and book transaction
