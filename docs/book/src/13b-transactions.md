@@ -91,8 +91,14 @@ resource/priority boundary: arbitration adds the retained round-robin pointer
 declarations; priority guards reuse existing signals and state identities.
 Finalization checks provenance and conflicts without adding declarations.
 This does not grant resource validity to unallocated source products. Parent
-storage/completion/readback connections and outer domain composition still need
-coverage before the reservation inventory is complete. It does not enable independent direct-transaction storage yet.
+storage-write planning now retains actual potential data/enable ports, their
+storage widths and types, owner-side write DTs and explicit instance/storage
+links. For example, a worker writing actor storage `cell` keeps that target
+identity even if an authored name forces its parent data handoff to use a
+suffix. Normal compilation applies the same plan only after checking writer
+ownership; a collected plan does not admit competing parent or child writers.
+Storage-read, named-completion and library-readback connections, plus outer
+domain composition, still need coverage before the inventory is complete. It does not enable independent direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both

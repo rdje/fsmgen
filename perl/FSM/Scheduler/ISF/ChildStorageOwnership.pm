@@ -10,7 +10,7 @@ use FSM::Adapter::ISF::LispishAdapter;
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
-our @EXPORT_OK = qw(prepare_child_storage_writes connect_child_storage_writes select_child_storage_reads connect_child_storage_reads);
+our @EXPORT_OK = qw(prepare_child_storage_writes connect_child_storage_writes plan_child_storage_write_handoffs select_child_storage_reads connect_child_storage_reads);
 
 # Inspect only emitted operands. Names of states, transactions, messages and
 # provenance records are not signal reads. Lispish's public adapter recovers
@@ -130,27 +130,57 @@ sub connect_child_storage_writes {
                 if exists $writers{$name};
         }
     }
-    my $reserved = _reserved_names($parent);
+    my $products = plan_child_storage_write_handoffs($parent->{actor_name},
+        $parent->{spawn_instances} || [], $children, _reserved_names($parent));
+    push @{$parent->{ports}}, @{$products->{ports}};
+    push @{$parent->{dt_blocks}}, @{$products->{dt_blocks}};
+    for my $field (qw(signal_widths signal_type_refs)) {
+        $parent->{$field}{$_} = $products->{$field}{$_} for keys %{$products->{$field}};
+    }
     for my $instance (@{$parent->{spawn_instances} || []}) {
+        my $record = $products->{instances}{$instance->{instance}} || next;
+        $instance->{actor_storage_writes} = $record->{links};
+    }
+    return scalar keys %writers;
+}
+
+# Declaration planning is independent of parent writer admission. Executable
+# connection calls this only after its ownership checks; source preparation may
+# retain potential handoffs while raw parent formal names still overlap.
+sub plan_child_storage_write_handoffs {
+    my ($actor_name, $instances, $children, $input_names) = @_;
+    my %reserved = %$input_names;
+    my $products = {
+        input_names => {%reserved}, ports => [], signal_widths => {},
+        signal_type_refs => {}, dt_blocks => [], instances => {},
+    };
+    for my $instance (@$instances) {
         my $child = $children->{$instance->{child}} || next;
-        my @links;
+        my (@links, @writes);
         for my $write (@{$child->{actor_storage_writes} || []}) {
             my $name = $write->{name};
             my $prefix = "isf_write_$instance->{instance}_$name";
-            my $data = _allocate_port($parent, $reserved, "${prefix}_data", 'input', $write->{width}, $write->{type});
-            my $enable = _allocate_port($parent, $reserved, "${prefix}_enable", 'input', 1, undef);
+            my $data = _allocate_port($products, \%reserved, "${prefix}_data", 'input', $write->{width}, $write->{type});
+            my $enable = _allocate_port($products, \%reserved, "${prefix}_enable", 'input', 1, undef);
             push @links,
                 { child_port => $write->{data_port}, parent_port => $data },
                 { child_port => $write->{enable_port}, parent_port => $enable };
-            push @{$parent->{dt_blocks}}, {
+            push @writes, {
+                identity => ['actor_storage_write', $actor_name, $instance->{instance}, $name],
+                storage => $name, data_port => $data, enable_port => $enable,
+                child_data_port => $write->{data_port}, child_enable_port => $write->{enable_port},
+            };
+            push @{$products->{dt_blocks}}, {
                 name => $enable, kind => 'actor_storage_write_handoff',
                 assignments => [{ lhs => $name, rhs => $data, op => '<-', guard => { port => $enable },
                     source_kind => 'actor_storage_write_handoff' }],
             };
         }
-        $instance->{actor_storage_writes} = \@links if @links;
+        $products->{instances}{$instance->{instance}} = {
+            child => $instance->{child}, writes => \@writes, links => \@links,
+        } if @links;
     }
-    return scalar keys %writers;
+    return $products;
 }
 
 sub select_child_storage_reads {

@@ -16,7 +16,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
 );
 use FSM::Scheduler::ISF::ControlFlowEffects;
 use FSM::Scheduler::ISF::LogicalControllers;
-use FSM::Scheduler::ISF::ChildStorageOwnership qw(prepare_child_storage_writes connect_child_storage_writes select_child_storage_reads connect_child_storage_reads);
+use FSM::Scheduler::ISF::ChildStorageOwnership qw(prepare_child_storage_writes connect_child_storage_writes plan_child_storage_write_handoffs select_child_storage_reads connect_child_storage_reads);
 use FSM::Scheduler::ISF::ChildActivation qw(guard_child_activation);
 use FSM::Scheduler::ISF::LibraryPortOwnership qw(connect_library_output_readbacks);
 use FSM::Scheduler::ISF::ChildCompletionOutputs qw(prepare_child_completion_outputs connect_child_completion_outputs);
@@ -238,6 +238,14 @@ sub prepare_formal_source($self, $source_actor) {
         $actor, $generated, \%products, $wiring_products, \%points);
     my $resource_products = _formal_resource_signal_products($actor);
     my $child_products = $self->_build_module_child_products(_clone_isf_value($actor), $generated);
+    my $declaration_names = _formal_parent_declaration_names(
+        $actor, $generated, \%products, $activation_products, $wiring_products,
+        $point_products, $resource_products);
+    my $completion_products = _formal_parent_completion_products(
+        $actor, $declaration_names, $activation_products, $point_products);
+    my %connection_names = (%$declaration_names,
+        map { $_ => 1 } keys %{$completion_products->{signal_widths}},
+            map { $_->{name} } @{$completion_products->{dt_blocks}});
     return {
         actor => $actor,
         generated_children => { %$generated },
@@ -254,9 +262,10 @@ sub prepare_formal_source($self, $source_actor) {
         parent_wiring_products => $wiring_products,
         parent_point_products => $point_products,
         resource_signal_products => $resource_products,
-        parent_completion_products => _formal_parent_completion_products(
-            $actor, $generated, \%products, $activation_products, $wiring_products,
-            $point_products, $resource_products),
+        parent_completion_products => $completion_products,
+        parent_storage_write_products => _clone_isf_value(plan_child_storage_write_handoffs(
+            $actor->{actor_name}, $activation_products->{spawn_instances},
+            $child_products->{children}, \%connection_names)),
         # Real children have independent module scopes. Detach both retained
         # views; parent ownership connections and outer domains remain separate.
         generated_child_products => _clone_isf_value({
@@ -276,9 +285,9 @@ sub prepare_formal_source($self, $source_actor) {
     };
 }
 
-sub _formal_parent_completion_products {
+sub _formal_parent_declaration_names {
     my ($actor, $generated, $products, $activation, $wiring, $points, $resources) = @_;
-    # Completion allocation reads declaration membership, not widths or roles.
+    # Parent helper allocation reads declaration membership, not widths or roles.
     # Keep that namespace separate from all raw transaction declarations: their
     # widths may conflict before physical formal allocation.
     my %storage = _declared_storage_signal_widths($actor);
@@ -303,6 +312,12 @@ sub _formal_parent_completion_products {
             $names{$name} = 1 if defined($name) && !ref($name);
         }
     }
+    return \%names;
+}
+
+sub _formal_parent_completion_products {
+    my ($actor, $declaration_names, $activation, $points) = @_;
+    my %names = %$declaration_names;
     # This detached phase context is never finalized or emitted. The counter
     # inputs are membership only; returned counter widths come from fresh
     # signal_widths populated exclusively by the real completion producer.

@@ -1596,10 +1596,25 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain parent ownership connections and outer domain declaration products.`
   Acceptance: `Collect real parent storage-write/read, named-completion/readback and outer domain realization names with typed ownership and stable source/physical correspondence before complete reservation integration. Keep raw conflicts distinct and executable validation strict; split bounded producer boundaries as needed.`
   Verification: `Resource/priority/finalization declaration coverage is owned by .1; parent connections and outer domain names remain the next uncovered producers.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.1`
+  Status: `active`
+  Goal: `Retain actual parent storage-write handoff declaration plans.`
+  Acceptance: `Share canonical handoff allocation with executable connection after its unchanged writer admission. Source preparation retains detached potential ports, widths/types, DTs and typed instance/storage links using declaration membership rather than conflicting raw widths. Qualify actual source/physical products, helper collisions, separate scopes, raw conflicts, strict carriers and native report parity. Competing writers still fail in executable connection; read/named-completion/readback and outer domain products remain later gates.`
+  Verification: `T1949/T1946 and book checks pass; actual plan and installed ports/DTs agree before/after projection, strict carriers pass and native schedule is byte-identical. Scalar-writer/child/schedule confirmation remains in flight; consume .artifacts/formal-parent-write-products/regression.log before closure.`
+  Commit: `implementation this slice; confirmation pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Retain remaining parent read completion readback and outer domain products.`
+  Acceptance: `Collect canonical storage-read and named-completion handoffs after write declarations, qualify library-readback namespace preservation and outer domain realization, then complete the reservation integration gate. Preserve source/physical ownership and strict validation.`
+  Verification: `Parent write declaration products are owned by .1; the following connection and domain stages remain uncovered.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -3180,3 +3195,43 @@ durability is T1948, the namespace card, book and this task. This closes the
 current arbitration/finalization declaration boundary, not complete parent
 connections, outer domain realization or automatic production formal renaming.
 Those remain .2. No duplicate DEVELOPMENT_NOTES rationale is needed.
+
+## Acceptance — parent write products `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` and
+  before.json expose the generated child's real parent data/enable handoffs,
+  absent from earlier preparation products. connect_child_storage_writes creates
+  these declarations after parent finalization and writer admission; child-local
+  write ports alone do not describe the parent instance namespace.
+- [x] **ADDRESSED (verified)** — plan_child_storage_write_handoffs now
+  shares the unchanged allocation/product loop with executable connection, which
+  still checks competing generated and parent writers first. Source preparation
+  retains potential ports, widths/types, DTs and typed actor/instance/storage
+  links against declaration membership extended by actual completion products.
+  after.json has no missing parent write port. T1949 compares the complete actual
+  production plan and installed products before/after formal projection across
+  scalar/alias/record/list and distinct-target writes, portable fixed/formal
+  collisions, raw role overlap, detached snapshots and strict carriers. Potential
+  plans never bypass executable competing-writer checks or invent readonly-child
+  write handoffs. T1946 preserves completion namespace inputs through extraction
+  of the common declaration-membership helper.
+- [x] **NO REGRESSION** — qualified.log reports `All tests successful` for
+  T1949 and T1946. Native schedule-before.json/schedule-after.json compare
+  byte-identically. The broader parent/child/completion/scalar-writer/schedule
+  confirmation remains in flight and is owned by this active leaf and MEMORY.md;
+  consume regression.log before advancing. Book fixture/build and staged
+  doctrine/commit gates complete for this implementation slice.
+
+Evidence: `.artifacts/formal-parent-write-products/`. Initial test.log has one
+incorrect diagnostic spelling in the raw formal/storage control. The tool
+reports storage role for 'cell' conflicts across transactions while merging
+'main' at the existing _merge_storage_roles admission. The exact expectation
+now matches that canonical diagnostic; no production diagnostic changed.
+Re-derivation uses actual planner observations and installed parent ports/DTs,
+plus native schedule metadata; falsification uses old inventory omissions,
+portable allocation changes, typed ownership, raw role/writer conflicts,
+readonly children and snapshot mutation; durability is T1949, the write-products
+card, book and this task. Plans are not executable parent IR or writer admission.
+Read/named-completion/readback and outer domain coverage remain .2. This adds
+no new runtime qualification or production formal rewrite. No duplicate
+DEVELOPMENT_NOTES rationale is needed.

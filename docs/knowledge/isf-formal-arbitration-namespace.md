@@ -39,7 +39,8 @@ unknown users and fixed pointer collisions fail in actual arbitration, and
 incomparable data writers fail during actual finalization.
 
 This qualifies a declaration boundary, not a complete executable reservation
-set, new runtime behavior or production formal renaming. Parent ownership
-connections and outer domain realization remain later producers. Source-owned
+set, new runtime behavior or production formal renaming. Potential
+[parent write declarations](isf-formal-parent-write-products.md) are now retained;
+following parent connections and outer domain realization remain later producers. Source-owned
 controller execution and physical writer admission retain decision 0109 gates.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.1.

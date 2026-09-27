@@ -143,7 +143,10 @@ still does not close parent connections or outer domain composition.
 [Arbitration namespace qualification](isf-formal-arbitration-namespace.md)
 now observes the real grant/priority/finalization stages: only retained
 round-robin pointer declarations extend their namespace. It does not execute
-resource grants over conflicting raw formal widths.
+resource grants over conflicting raw formal widths. Potential
+[parent write products](isf-formal-parent-write-products.md) now share canonical
+handoff planning after unchanged executable writer admission; the following
+read/completion/readback and outer domain stages remain separate.
 
 The paired parser audit retains the former width-lookup defect: a wider formal
 was rejected and a narrower formal admitted an out-of-range bit against an
