@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1462,10 +1462,32 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve helper source identities and close child/domain producer coverage.`
   Acceptance: `Retain authored helper identity inputs independently from physical formal endpoints; qualify rule payload naming and generated child storage/completion/library/ATL/domain producer names. Address pre-allocation validation collisions with generated helpers without weakening source admission. Use actual producer outputs, preserve generated public interfaces and avoid treating source-conflicting merged IR as executable output. Split further only for independently reviewable implementation boundaries.`
   Verification: `Rule payload names currently incorporate binding port spellings; monitor admission checks raw formal/actor names before formal allocation. Full coverage and stable post-rewrite helper identity are not yet proved.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.1`
+  Status: `done`
+  Goal: `Preserve authored rule payload helper identity through detached formal rewriting.`
+  Acceptance: `Reproduce the change in rule payload helper names when a direct callee formal is rewritten. Retain a checked explicit source-to-physical identity projection so helper generation uses authored identities while data endpoints use physical identities. Qualify source snapshots, generated public ports, native schedule/carrier provenance, malformed/stale maps and naming collisions. Do not enable automatic production rewriting or claim complete physical reservations.`
+  Verification: `T1939 qualifies typed source identity on detached physical declarations, stable rule payload helper names across physical allocations, physical fan-in endpoints, exact generated public interfaces/metadata, malformed/stale/duplicate projection refusal, source isolation, schedule provenance and strict carriers. The pre-repair unreserved helper change is retained in probe.log; after-qualified.log proves stable reserved helper identity. Next .55 repairs the separately reproduced raw terminal-wait empty-state carrier before .3.2.2.2.2 resumes.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.2`
+  Status: `pending`
+  Goal: `Separate lexical source admission from generated-helper physical collision checks.`
+  Acceptance: `Reproduce helper-looking formal names against monitor/counter preparation. Resolve the pre-allocation validation cycle without weakening actual executable admission, losing collision evidence or accepting a fabricated final IR. Preserve explicit-local/static and source grammar checks; qualify source-only versus post-allocation behavior and failure controls.`
+  Verification: `Monitor lowering currently rejects names in counters/widths before formal allocation; exact reproduction and repair remain required.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3`
+  Status: `pending`
+  Goal: `Close remaining actual module child and domain reservation producers.`
+  Acceptance: `Cover local/external activation wiring, priority/resource processing, generated child storage/completion, library/ATL and domain realization using actual producer outputs and stable source/physical projections. Preserve raw conflict refusals in executable lowering and do not infer physical names from guessed patterns. Qualify representative real declarations and separate namespaces before the final completeness gate .3.2.2.3.`
+  Verification: `Transaction and parent activation/rule/shared-drive products are qualified; these later producer phases remain uncovered.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -1625,6 +1647,13 @@ For FSMGen, the analogs are:
   Acceptance: `Activate before this task would reach 7200 lines. Use the existing exact-version acceptance-history manifest protocol; preserve the live node graph, current frontier and active repair facts, authenticate complete-source and historical-suffix identities, audit links and canonical consumers, and independently prove semantic closure, live working set and residue. Do not widen ceilings or activate deferred document reassessment. Commit before further ordinary appends.`
   Verification: `The exact 03d65d64 predecessor and Decisions-to-end suffix are authenticated through the bounded acceptance-history manifest. Independent cat-file reconstruction preserves every node ID and every other complete node record; current scope/runtime/native limits remain live, no anchored consumers target removed headings, and no historical source residue is discarded. T1549 source/suffix/pointer/typed-number negative controls pass; the book builds. Full integrity and staged gates verify the declaration. Next .49.2.2.3.1.2 prepares source contexts.`
   Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.55`
+  Status: `pending`
+  Goal: `Repair terminal static-wait carrier emission and qualify hold behavior.`
+  Acceptance: `Run immediately after helper identity .49.2.2.3.2.2.2.1. Reproduce raw source for a generated child ending in wait 1, isolate LoweringIR linking versus FSM emission, and fix terminal static-wait behavior without inventing completion/rearm. Qualify direct/generated cases, explicit successor/complete controls, warning-free strict carriers, public queries and relevant runtime behavior. Audit related empty terminal state classes within a safe scope and own any additional defects. Commit before resuming reservation prerequisites.`
+  Verification: `Raw source reproduces an empty (worker_wait_0) carrier state, displayed by the parser diagnostic as (worker_wait_0 undef). _link_states adds static-wait transitions only with a successor; Emitter::FSM::_emit_states emits the empty state without a legal body. Native strict check rejects it independently of the formal projection. Existing terminal synchronization covers only sync_all/sync_any. Exact source/carrier/check evidence is under .artifacts/formal-helper-identity/terminal-wait-baseline/; durable reproduction is recorded below.`
+  Commit: `pending`
 
 ## Implementation Notes From `.4`
 
@@ -2320,8 +2349,10 @@ pin-shadow declarations and wiring. `.54` retains historical task prose through
 exact retrieval. `.3.1.2.1` repairs malformed explicit-local admission;
 `.3.1.2.2` qualifies source contexts and count-role rewriting. `.3.2.1` retains
 actual transaction reservation products; `.3.2.2.1` adds actual rule, activation
-and shared-drive products. Next `.3.2.2.2` closes helper identity and remaining
-child/domain producer coverage; `.3.2.2.3` gates completeness. Local payload, shared-writer and
+and shared-drive products. `.3.2.2.2.1` retains stable source rule helpers.
+Next `.55` repairs raw terminal static-wait carriers, then `.3.2.2.2.2` resolves
+pre-allocation helper admission and `.3.2.2.2.3` closes remaining producer
+coverage; `.3.2.2.3` gates completeness. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -2554,3 +2585,63 @@ helper identity inputs must stay stable after endpoint rewriting. The complete
 reservation gate remains .3.2.2.3 and production integration remains .3.3.
 Rationale is owned here and in the scope card; no duplicate DEVELOPMENT_NOTES
 entry is warranted.
+
+## Owned defect — terminal static wait `.55`
+
+Run immediately after `.49.2.2.3.2.2.2.1`, before further reservation work.
+The following raw source lowers to an empty worker_wait_0 state. Native strict
+`--check --json` of worker.fsm rejects that state; the diagnostic's `undef` is
+its normalized rendering of the absent body, not text emitted into the carrier.
+
+```lisp
+(actor generated_helper (clock clk) (reset rst_n)
+  (interface (input fire) (input din (width 4)) (output done))
+  (transaction main (on fire) (complete done))
+  (transaction worker (params (N 2)) (ports (input data (width 4))) (wait 1))
+  (rule launch fire (trigger worker (params (N 3)) (bind (input data din)))))
+```
+
+_link_states supplies no transition for a static wait without a successor;
+_emit_states then emits its empty body. The raw-source path never receives the
+new private formal identity annotation, so this is an existing terminal-state
+boundary. The helper-identity positive fixture uses explicit complete; .55 owns
+the original source, terminal hold semantics, broader empty-state census and
+verified repair. Do not classify the malformed carrier as supported behavior.
+
+## Acceptance — stable rule helper identity `.49.2.2.3.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` retained
+  under formal-parent-products reports isf_port_main_payload as the rule payload
+  source. probe.log compares source and detached rewritten IR: rewriting the
+  bound formal produces isf_port_main_isf_port_main_payload_formal instead,
+  absent from the original reservations. _build_rules and binding metadata
+  previously derived helper names from the rewritten endpoint spelling.
+- [x] **ADDRESSED (verified)** — after-qualified.log preserves the original
+  helper while the physical formal remains isf_port_main_payload_formal.
+  T1939 qualifies private typed source/physical declaration provenance, checked
+  shape/owner/name agreement and duplicate source refusal, stable helpers under
+  alternative physical allocations, correct physical fan-in destinations,
+  generated public ports/instances/assignments, source isolation, schedule
+  provenance and strict replay. The annotation stays outside the public schedule
+  schema; already projected declarations cannot be silently rewritten again.
+- [x] **NO REGRESSION** — qualified-final.log reports `All tests successful`
+  for T1939. test.log separately passes T1938/T1937/T1936/T1928 but is not a
+  suite pass: the initial T1939 fixture attempted deferred activation-specialized
+  wait counts. qualified.log passes T1243/T1248/T1255 but T1939 exposed the
+  raw terminal-wait defect now owned by .55; it is not a suite pass either.
+  The final generated positive fixture uses explicit completion. book-fixtures.log
+  qualifies T1376; book.log builds the synchronized chapter. Staged doctrine
+  and commit-hook gates apply to the final index.
+
+Evidence is under `.artifacts/formal-helper-identity/`. after.log retains a
+Perl grep/list-operator precedence error in the initial projection guard, fixed
+with explicit parentheses and qualified in after-qualified.log and T1939.
+Re-derivation uses actual before/after IR plus schedule helper provenance;
+falsification uses source-only name drift, alternate physical allocations,
+malformed/stale/duplicate records, generated-interface equality and source
+snapshots; durability is T1939, the scope card, book and this task record.
+No automatic production rewriting, complete namespace proof or runtime scope
+promotion is claimed. The separate raw terminal-wait defect and exact source
+are owned by .55 above, scheduled immediately next; its repair is not waived by
+using a supported continuation in this slice's identity fixture. Rationale
+belongs here and in the scope card; DEVELOPMENT_NOTES needs no duplicate entry.

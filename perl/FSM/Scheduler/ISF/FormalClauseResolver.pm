@@ -23,6 +23,12 @@ sub transaction {
                 unless $formal && $formal->{direction} eq $direction;
             confess "Formal clause local '$port->{name}' duplicates a transaction formal\n"
                 if exists $context{locals}{$port->{name}};
+            confess "Formal clause declaration is already physically projected\n"
+                if exists $port->{_isf_formal_identity};
+            $port->{_isf_formal_identity} = {
+                source => _copy($formal->{identity}),
+                physical_name => $formal->{physical_name},
+            };
             $port->{name} = $formal->{physical_name};
         }
     }

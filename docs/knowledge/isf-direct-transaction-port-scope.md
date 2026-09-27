@@ -12,8 +12,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, transactions, ports, scope, storage, bindings, control-flow]
-evidence: t/1938-isf-formal-parent-products.t; t/1937-isf-formal-reservation-products.t; t/1936-isf-formal-source-context.t; t/1935-isf-local-declaration-admission.t; t/1933-isf-caller-formal-binding-scope.t; perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1938-isf-formal-parent-products.t t/1937-isf-formal-reservation-products.t t/1936-isf-formal-source-context.t t/1935-isf-local-declaration-admission.t t/1933-isf-caller-formal-binding-scope.t t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
+evidence: t/1939-isf-formal-helper-identity.t; t/1938-isf-formal-parent-products.t; t/1937-isf-formal-reservation-products.t; t/1936-isf-formal-source-context.t; t/1935-isf-local-declaration-admission.t; t/1933-isf-caller-formal-binding-scope.t; perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1939-isf-formal-helper-identity.t t/1938-isf-formal-parent-products.t t/1937-isf-formal-reservation-products.t t/1936-isf-formal-source-context.t t/1935-isf-local-declaration-admission.t t/1933-isf-caller-formal-binding-scope.t t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
 ---
 
 Generated children have separately qualified local port metadata under .49.1.
@@ -110,6 +110,25 @@ parameterized trigger paths include real child shared-drive handoffs. Invalid
 rule-bank source still fails in the canonical producer. Child storage/completion
 connections, later module processing, library/ATL/domain closure and stable
 source-derived helper names remain .3.2.2.2; completeness is gated by .3.2.2.3.
+
+Rule payload helper identity is now retained under .3.2.2.2.1. Detached rewritten
+formal declarations carry a private _isf_formal_identity record containing the
+typed source actor/transaction/formal tuple and the physical declaration name.
+_transaction_port_map checks its shape, source owner, physical-name agreement
+and duplicate source identities. Rule payload producers and binding metadata use
+the source name for helper generation; data destinations continue to use the
+physical name. Existing source actors without a projection retain prior behavior.
+Generated public formals keep their names, and the private record is absent from
+the public schedule schema. The clause resolver refuses reprojecting a declaration
+that already carries this record. It is internal provenance, not ISF syntax.
+T1939 retains the pre-repair helper change from isf_port_main_payload to
+isf_port_main_isf_port_main_payload_formal, absent from the original reservations.
+It qualifies stable helper names under different physical allocations, generated
+interfaces, malformed/stale records, duplicate identities, source isolation,
+schedule provenance and strict carriers. Raw generated-child terminal static
+waits exposed a separate empty-state carrier defect; .55 owns its immediate
+repair after this helper slice. Pre-allocation helper collision admission and
+remaining module/child/domain producer closure remain .3.2.2.2.2-.3.
 
 The paired parser audit retains the former width-lookup defect: a wider formal
 was rejected and a narrower formal admitted an out-of-range bit against an

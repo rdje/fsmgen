@@ -1651,7 +1651,7 @@ sub _register_generated_activation_instance {
             my %assignment = (
                 lhs         => $parent_port,
                 rhs         => $activation_kind eq 'trigger'
-                    ? _rule_trigger_payload_source_name($owner, $child, $binding->{port}, $s->{trigger_ordinal})
+                    ? _rule_trigger_payload_source_name($owner, $child, $port->{source_name}, $s->{trigger_ordinal})
                     : _activation_binding_actor_expr_text($binding),
                 op          => '=',
                 source_kind => "${activation_kind}_input_binding",
@@ -4205,7 +4205,7 @@ sub _transaction_port_binding_metadata {
                     instance           => $instance,
                     trigger_source     => _rule_trigger_source_name($owner, $target, $trigger_ordinal),
                     payload_source     => $binding->{role} eq 'input'
-                        ? _rule_trigger_payload_source_name($owner, $target, $binding->{port}, $trigger_ordinal)
+                        ? _rule_trigger_payload_source_name($owner, $target, $target_ports{$binding->{port}}{source_name}, $trigger_ordinal)
                         : undef,
                 );
             }
@@ -4248,7 +4248,7 @@ sub _transaction_port_binding_entry {
             ? ($args{trigger_source} // _rule_trigger_source_name($args{owner}, $target))
             : undef,
         payload_source      => $site_kind eq 'rule_trigger' && $role eq 'input'
-            ? ($args{payload_source} // _rule_trigger_payload_source_name($args{owner}, $target, $port))
+            ? ($args{payload_source} // _rule_trigger_payload_source_name($args{owner}, $target, $args{port}{source_name} // $port))
             : undef,
     };
 }
@@ -6858,12 +6858,28 @@ sub _activation_input_binding_current_timing {
 
 sub _transaction_port_map {
     my ($tx) = @_;
-    my %ports;
+    my (%ports, %source_names);
     for my $direction (qw(input output)) {
         my $key = "${direction}s";
         for my $port (@{($tx->{ports} || {})->{$key} || []}) {
+            my $source_name = $port->{name};
+            if (exists $port->{_isf_formal_identity}) {
+                my $origin = $port->{_isf_formal_identity};
+                confess "Transaction '$tx->{name}': malformed or stale formal identity projection\n"
+                    unless ref($origin) eq 'HASH' && keys(%$origin) == 2
+                        && defined($origin->{physical_name}) && !ref($origin->{physical_name})
+                        && $origin->{physical_name} eq $port->{name}
+                        && ref($origin->{source}) eq 'ARRAY' && @{$origin->{source}} == 4
+                        && !(grep { !defined($_) || ref($_) || !_is_hdl_identifier($_) } @{$origin->{source}})
+                        && $origin->{source}[0] eq 'transaction_port'
+                        && $origin->{source}[2] eq $tx->{name};
+                $source_name = $origin->{source}[3];
+            }
+            confess "Transaction '$tx->{name}': duplicate formal source identity '$source_name'\n"
+                if $source_names{$source_name}++;
             $ports{$port->{name}} = {
                 name      => $port->{name},
+                source_name => $source_name,
                 direction => $direction,
                 width     => $port->{width} // 1,
             };
@@ -12629,7 +12645,7 @@ sub _build_rules {
                 my %target_ports = _transaction_port_map($transaction_by_name{$target});
                 for my $binding (@{_activation_bindings_from_clause($ac, $r->{name}, 'rule trigger')}) {
                     next unless $binding->{role} eq 'input';
-                    my $payload = _rule_trigger_payload_source_name($r->{name}, $target, $binding->{port}, $trigger_ordinal);
+                    my $payload = _rule_trigger_payload_source_name($r->{name}, $target, $target_ports{$binding->{port}}{source_name}, $trigger_ordinal);
                     my $width = ($target_ports{$binding->{port}} || {})->{width} // 1;
                     push @a, {
                         lhs         => $payload,

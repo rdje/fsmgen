@@ -53,10 +53,11 @@ including case-only variants. Preparation also retains actual rule payloads,
 generated spawn/do/trigger handoffs and shared-drive products. For example,
 rule `isf_port` triggering `main` with input `payload` produces the same
 `isf_port_main_payload` candidate even when no transaction body uses that name.
-This inventory is still partial: child storage/completion connections, later
-module processing and domain wiring need coverage, and helper names must stay
-stable when formal endpoints are renamed. It does not enable independent
-direct-transaction storage yet.
+Detached rewrites now retain the formal's source identity separately, so the
+rule payload helper keeps its authored name while the destination uses the
+private physical formal. This inventory is still partial: child
+storage/completion connections, later module processing and domain wiring need
+coverage. It does not enable independent direct-transaction storage yet.
 
 Today the task-like port model is shipped for `(ports ...)` bindings on `do`,
 `spawn`, and rule `trigger` activation sites.
@@ -419,6 +420,10 @@ escape as a system-level failure, but the scheduled artifact should still not
 ask the counter to decrement at zero.
 
 ## `(wait N)` — Unconditional Exact-Cycle Delay
+
+Current boundary: a generated child ending in a static wait without a following
+statement can produce an invalid empty terminal state. Give that child an explicit
+continuation, such as `(complete done)`, while the terminal-wait repair is pending.
 
 ```lisp
 (wait 3)
