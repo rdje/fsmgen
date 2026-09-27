@@ -686,12 +686,35 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Repair independently triggered transaction and plain local-call reachability.`
   Acceptance: `Use the retained event-after-activation failure and non-colliding control to establish the scheduling contract, including plain multi-transaction and existing dual-event controls; repair lost independent transaction reachability or fail closed at the documented unsupported boundary with accurate capability/report evidence. Prefer completing intended supported behavior. Require independent event and activation oracles, repeated/reset controls, public artifact/API/MCP qualification and synchronized book before closure.`
   Verification: `The generated core FSM starts at worker_idle_ext and returns there through worker_done_ready/worker_done_req. core_consume_idle_0 and its completion state form a separate unreachable component; an event-after-do source strict-checks but its independent oracle reports expected 1 observed 0. The naming slice owns exact retained source/HDL/control evidence. No successful mixed-transaction runtime claim is made.`
   Additional reproduction: `The .39.2.2.2.3.2 plain-do control strict-admits but times out: core FSM starts at worker_wait_0 and cycles worker_done_11 back there, leaving parent_idle_0/parent_do_1 unreachable. Recreate from T1916 text by replacing spawn worker as reader with do worker and removing only the core parent await_all done; keep its remaining source and spawn HDL oracle. Retained source/materialized FSM/HDL are under .artifacts/domain-storage-reads/plain-do; spawn-do-runtime.log records the timeout. Repair here before metadata signoff; generated-do storage reads remain separately qualified.`
   Terminal-await reproduction: `During .39.2.2.4.2, domain-qualified.log exposes Use of uninitialized value target at Emitter/FSM.pm line 336. The retained .artifacts/whole-aggregate-writes/terminal-await.isf ends the parent immediately after await_all done; _emit_transitions reads a missing first transition target for terminal sync_all. Recreate from T1920's explicit aux_seen input child control by removing parent complete finished and its output. Own the terminal-await scheduling/emission repair here alongside reachability; current positive domain controls use an explicit completion.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.1`
+  Status: `pending`
+  Goal: `Emit terminal synchronization states without an undefined continuation.`
+  Acceptance: `Reproduce the retained terminal await_all source and inspect await_any and empty pending sets. Establish fall-through versus explicit complete semantics from existing lowering; preserve terminal hold when no continuation exists instead of inventing a rearm edge. Fix the missing-target warning, qualify completion retention, strict replay, repeated/reset controls where a continuation exists and full public reports. Synchronize the book and commit before controller restructuring.`
+  Verification: `The .39.2.2.4.2 retained terminal-await.isf reaches Emitter/FSM::_emit_transitions without a first transition target. LoweringIR::_link_states only creates sync continuations when a successor exists; complete explicitly returns to entry. No independent-controller repair is claimed here.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2`
+  Status: `pending`
+  Goal: `Select an executable controller contract for independent transactions and blocking local calls.`
+  Acceptance: `Reproduce the disconnected first/second and retained plain-do graphs with independent runtime oracles. Audit intended trigger/concurrency, shared storage, caller input capture, delayed completion, nested/repeated calls, reset and report provenance contracts. Select explicit per-transaction control or another semantics-preserving representation through public IAL0 carriers; do not silently serialize independent transactions, duplicate actor state or infer support from admission. Split implementation and qualification leaves before editing the scheduler and commit the contract/evidence.`
+  Verification: `The direct-port audit two_ports scheduled source contains separate first/second state loops inside one ?fsm root. Existing plain-do and event-after-do runtime evidence separately proves unreachable callers/consumers; generated child activation already has independently qualified controllers.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3`
+  Status: `pending`
+  Goal: `Implement and qualify the selected direct transaction controller contract.`
+  Acceptance: `After .1.2 selects the exact contract, split implementation into safe leaves and repair independent trigger and blocking local-call execution. Require simultaneous/separate triggers, declaration-order controls, nested/repeated calls, original binding edges, reset and source/API/MCP parity. Preserve fail-closed writer conflicts and publish any unsupported form precisely; unblock .49.2 only with executable evidence.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.2`
@@ -1244,10 +1267,33 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.1: isolate child port storage identities`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Resolve same-named direct transaction ports and actor storage without conflating their state.`
   Acceptance: `After generated-child repair, audit direct/local-call and trigger binding contracts, then select collision-safe scoped identities or another explicit semantics-preserving lowering. Do not simply overwrite the actor role or let local assignments mutate the actor register. Preserve exact binding timing, source provenance, reset/type/width ownership and public interfaces. Split prerequisites if needed, prove independent runtime and full reports, sync docs and commit before .49.3 and .50.`
   Verification: `The first T1920 direct input/output controls fail in _build_parent_ir::_merge_storage_roles. Direct transactions share the owner module, so the generated-child map filtering fix alone cannot separate their storage identities.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.1`
+  Status: `done`
+  Goal: `Audit direct-port identities and bind their repair to executable controller prerequisites.`
+  Acceptance: `Reproduce direct input/output storage collisions through the public source routes; trace declaration, operand, call binding, rule payload and report identities. Retain the existing local-call reachability reproduction, split safe dependencies and document the current runtime boundary without claiming a code fix. Update the book, facts and resume frontier, run focused evidence checks and commit.`
+  Verification: `Public check/schedule/semantic probes reproduce actor/local role and width collisions, caller-local binding precedence failure and shared formal identity across direct transactions. The repair scope and controller dependencies are recorded below. T1241/T1243/T1376 and the book build pass; no runtime or implementation repair is claimed.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.1: bound direct port scope prerequisites`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2`
+  Status: `pending`
+  Goal: `Lower direct transaction ports to collision-safe private identities.`
+  Acceptance: `After .49.2.1 and controller contract qualification under .32.1.3.3.1, implement scope-aware operand and binding resolution. Preserve actor owner metadata, local aliases and resets, caller versus callee names, source provenance and public reports. Qualify direct input/output and rule payloads independently, including same names in different transactions and user names resembling generated prefixes. No global textual substitution or actor-role overwrite is permitted.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.3`
+  Status: `pending`
+  Goal: `Qualify local-call scope end to end after controller and identity repairs.`
+  Acceptance: `After .49.2.2 and the local-call execution repair, exercise repeated/nested calls and caller/callee same-name ports with distinct actor storage. Prove payload capture and output completion timing, owner reset, exact interfaces, source replay and native/API/MCP parity; keep unqualified contention and recursive calls explicit. Commit synchronized docs before .49.3.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.3`
@@ -1990,12 +2036,13 @@ Completed `.39.2.2.3.2` qualifies independent-domain scalar writer handoffs.
 Completed `.39.2.2.4.1` splits broader writer contracts and repairs stale actor-storage
 documentation. Completed `.39.2.2.4.2` qualifies whole-aggregate writers and repairs
 declared-root domain validation. Completed `.49.1` isolates generated-child ports
-and retains trigger payloads after start pulses. Next `.49.2` resolves direct
-transaction-port scope and `.49.3` qualifies explicit locals; `.50` then investigates
-the retained MCP response gap before
-`.39.2.2.4.3` partial writers and the remaining writer leaves. After those repairs,
-resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
-`.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
+and retains trigger payloads after start pulses. Completed `.49.2.1` audits direct
+port scope and its controller prerequisite. Next `.32.1.3.3.1.1` repairs terminal
+synchronization; `.32.1.3.3.1.2/.3` select and qualify executable controllers.
+Then `.49.2.2/.3` repair direct identities and qualify local calls, `.49.3`
+qualifies explicit locals and `.50` investigates the retained MCP response gap.
+Partial writers and remaining writer leaves follow under `.39.2.2.4.3` onward,
+then watchdog rearming `.32.1.3.3.3` and broad behavior/API/MCP signoff `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
 Bundle provenance and executable interconnect lowering follow under `.32.2`
 and `.32.4`. Required scalar access metadata and optional banks are owned by
@@ -5609,3 +5656,72 @@ The first .49.1 staged doctrine gate found two new book width claims without
 claim dispositions. Both describe the qualified local-port/actor example;
 explicit derived-gate records now link distinct metadata, runtime falsification
 and tracked watchers. No test result or implementation claim was changed.
+
+## Direct-port scope audit — `.49.2.1`
+
+Public --strict --check --json, --emit-schedule-json and --emit-semantic-json
+probes are retained under .artifacts/direct-port-scope/. input.isf and output.isf
+use actor status and worker status at the same width; both fail the parent
+storage-role merge. narrow_input.isf instead fails the width merge. These
+results reproduce the direct scope defect independently of clock domains.
+
+caller_shadow.isf exposes a second scope-resolution defect: actor status has
+width 8, caller parent explicitly declares status at width 4, and a spawn binds
+worker payload at width 4 from caller status. All public routes reject with
+binding width 4 does not match actor signal status width 8. The locus is
+LoweringIR::_binding_signal_info: actor interface/storage lookup precedes
+transaction-local lookup. This is owned by .49.2.2, with priority ahead of
+local-call signoff and storage access metadata. Repair lexical lookup together
+with identity lowering; do not independently overwrite the actor declaration.
+
+The two_ports.isf control has separate first/second transaction output ports
+named status. All public routes admit it. Inspect its scheduled source and
+inferred storage before any behavior claim: admission alone does not qualify
+independent port state or independently triggered controllers. The direct
+runtime/control prerequisite remains .32.1.3.3.1.
+
+The public two_ports schedule reports one status register for both formal
+outputs. Materialized two_ports.fsm confirms both transactions assign the same
+status and return to their separate entry states under one ?fsm root. This is
+a lowering identity collision, not qualified concurrent behavior. .49.2.2 owns
+private identities for distinct declarations as well as actor/local shadowing.
+
+Scope repair must cover declaration maps, typed assignment/condition operands,
+local call callee input/output endpoints, caller-side binding expressions,
+rule-trigger payload destinations and source-facing binding reports. Preserve
+formal names in _transaction_port_binding_entry and use an explicit lowered
+identity when needed. Never rename state/transaction/type/member names or
+message text with an undifferentiated recursive string replacement.
+
+The .32.1.3.3.1 prerequisite now has separate terminal-sync, controller-contract
+and executable-repair leaves. Terminal synchronization is a small independent
+repair selected next. Controller selection then precedes scoped port lowering;
+local-call timing and independent trigger behavior must be proved before the
+port repair is declared runtime-qualified. This audit changes no implementation.
+
+## Acceptance checklist — `.49.2.1` audit
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Public --emit-schedule-json probes retained
+  in .artifacts/direct-port-scope/probe-final.log reproduce direct role/width
+  conflicts and caller-local lookup precedence. The accepted two_ports schedule
+  and materialized FSM expose the shared raw formal identity and disconnected
+  transaction graphs. LoweringIR::_build_parent_ir, _binding_signal_info,
+  _ir_do, _build_rules and _transaction_port_binding_entry identify the relevant
+  merge, lookup, binding and reporting boundaries; no runtime success is inferred.
+- [x] **ADDRESSED (verified)** — The audit splits scoped identity and local-call
+  qualification under .49.2, and terminal synchronization, controller contract
+  and executable repair under .32.1.3.3.1. Each reproduced defect has a scheduled
+  owner ahead of access metadata. Book and Knowledge Map state the current
+  boundary; this leaf closes investigation scope, not implementation defects.
+- [x] **NO REGRESSION** — .artifacts/direct-port-scope/check.log reports
+  All tests successful for T1241/T1243/T1376, then a successful mdBook build.
+  The binding/report tests retain their artifact contract; visual book QA and
+  direct-controller runtime signoff remain unearned and explicitly pending.
+
+Re-derivation uses separate public check/schedule/semantic probes and exact
+lowered declarations/operands. Falsification varies local widths, removes clock
+domains and separates declarations across transactions; the caller binding
+control tests lexical lookup before IR merging. Durability uses this task,
+the canonical scope card and the shipped book boundary. The retained runtime
+failures belong to controller repair; a source-only passing control does not
+close them.

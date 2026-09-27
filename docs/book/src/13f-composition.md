@@ -126,6 +126,13 @@ A retained plain local-`do` case with an untriggered callee before its caller
 currently leaves the caller unreachable in the emitted FSM. This scheduling
 defect is owned by `.32.1.3.3.1`; the generated-call qualification does not close
 local-call or independent-transaction reachability.
+Separate direct transactions also share raw formal-port names in the parent
+module. Reusing a formal name across those transactions can merge their
+storage identity. A formal name that matches actor storage can instead fail
+role or width merging, and caller-side binding lookup can select that actor
+storage before an explicit caller port. These direct scope defects remain
+under `.49.2`; use distinct names while that repair is pending. Generated-child
+port qualification does not establish direct-call execution.
 
 ### Named completion outputs in generated children
 
