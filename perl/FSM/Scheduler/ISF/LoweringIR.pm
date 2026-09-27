@@ -1165,6 +1165,16 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     for my $tx (@{$actor->{transactions}}) {
         next if $generated_children->{$tx->{name}};
         next if $pruned_transactions->{$tx->{name}};
+        # Until direct formals receive separate physical identities, a matching
+        # actor pin would alias the local variable even when their widths agree.
+        # Generated children have their own interfaces and do not enter here.
+        my %formals = _transaction_port_map($tx);
+        for my $direction (qw(inputs outputs)) {
+            for my $port (@{$actor->{interface}{$direction} || []}) {
+                confess "Transaction '$tx->{name}': formal '$port->{name}' collides with an actor interface port; separate direct formal physical identities are not supported yet\n"
+                    if exists $formals{$port->{name}};
+            }
+        }
         my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses, $resets, $asserts) =
             $self->_build_transaction($tx, $actor, $ti++, $generated_children, \%point_bindings);
         $reset_values{$_} = $resets->{$_} for keys %{$resets || {}};
@@ -6709,6 +6719,16 @@ sub _transaction_port_map {
 sub _binding_signal_info {
     my ($actor, $tx, $name) = @_;
     return undef unless _is_hdl_identifier($name);
+
+    # Actuals belong to the caller's lexical scope. An explicit formal owns
+    # its spelling even when the actor declares a pin or storage with that
+    # name. Do not use the whole inferred width map here: it also contains
+    # actor inputs/outputs, whose read/write restrictions must survive.
+    if ($tx) {
+        my %ports = _transaction_port_map($tx);
+        return { kind => 'transaction_variable', width => $ports{$name}{width} }
+            if exists $ports{$name};
+    }
 
     for my $input (@{$actor->{interface}{inputs} || []}) {
         return { kind => 'actor_input', width => $input->{width} // 1 }

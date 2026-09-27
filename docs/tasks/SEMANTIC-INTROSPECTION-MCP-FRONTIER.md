@@ -1380,9 +1380,60 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Integrate scoped formal lowering and preserve public source identities.`
   Acceptance: `After .1/.2/.5/.6 and extract carrier repair .53, connect declaration maps, width/type/reset/role propagation, caller-local binding validation, local call endpoints and rule payload destinations. Allocate against actual actor/generated/private declarations, preserve generated child public ports and authored binding report names, and reject any unresolved physical collision. Qualify actor/local, sibling/caller/callee, input/output and generated-prefix cases through strict artifacts and complete native/API/MCP reports; keep runtime limits explicit until .49.2.3. Update book/spec/facts and commit before payload repair .32.1.3.3.1.3.2.`
+  Verification: `Extract prerequisites are committed. Split source validation/context, complete physical reservations, production wiring/report preservation, and integration qualification into owned slices below.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.4`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1`
+  Status: `active`
+  Goal: `Prepare source validation and complete lexical contexts for formal integration.`
+  Acceptance: `Map existing source checks, static-zero pruning and binding admission before rewriting. Derive transaction-local and resolved static-symbol contexts from canonical source semantics; repair the confirmed caller-formal binding lookup precedence without weakening actor input protection, width/type checks or timing admission. Qualify source validation, malformed/zero-pruned controls and caller/callee distinctions. Keep physical scope and runtime limits explicit; commit before allocation integration.`
+  Verification: `build_module validates domains/parameters/bindings before building IR; _build_transaction separately validates supported clauses and builds width evidence. _binding_signal_info currently checks actor interface/storage before caller-local evidence. Detached resolvers require complete caller-provided locals/static-symbol sets and source validation. Investigate these exact boundaries before wiring the physical transform.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.3`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.1`
+  Status: `done`
+  Goal: `Validate caller-formal binding actuals in their lexical scope.`
+  Acceptance: `Repair explicit caller-formal lookup before actor declarations for scalar and expression input actuals and scalar output targets. Preserve actor-scope read/write restrictions, exact widths, callee directions and timing admission. Qualify parsed source validation with shadowing, malformed and static-zero controls plus production report/carrier regressions. Keep physical collisions and runtime limitations explicit; commit independently before broader context preparation.`
+  Verification: `T1933 passes caller-formal precedence, source isolation, actor protections, width/direction/timing controls, zero pruning, direct actor-pin alias rejection, strict ordinary carriers and complete native/API/newline reports. Related binding/domain/conflict/resolver tests pass. Generated spawn pin-shadow refusal is reproduced and owned by immediate successor .3.1.3 before context preparation .3.1.2.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2`
+  Status: `pending`
+  Goal: `Prepare validated explicit-local and resolved-static contexts before formal rewriting.`
+  Acceptance: `Map and preserve source checks and static-zero pruning without relying on conflicting parent merges. Derive complete explicit-local and resolved-static contexts from existing source semantics, excluding inferred sample destinations from explicit-local shielding. Qualify malformed, pruned, parameter/constant/enum and context-isolation controls; commit before physical reservations.`
+  Verification: `Top-level local declarations are parsed later in _build_transaction; _collect_transaction_local_signals includes inferred names and is not the resolver shielding set. Actor constants alone do not cover parameters or imported/static member references.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.3`
+  Status: `pending`
+  Goal: `Preserve generated transaction formals when they shadow actor interface pins.`
+  Acceptance: `Run immediately after .3.1.1 and before .3.1.2. Repair the reproduced spawn duplicate driver from automatic same-name actor input wiring plus explicit child input binding. Audit child port construction where inherited actor inputs currently win name deduplication, including width/direction shadows and actor-output assignment classification. Preserve generated public formal names, explicit handoffs and inherited nonformal inputs. Qualify native/API/MCP reports, strict carriers and runtime data provenance; update book/spec/facts and commit.`
+  Verification: `T1933 generated control lowers a child formal value bound from observed beside actor input value, then native --check --json rejects duplicate explicit drivers value and binding_scope.w0_value to w0.value. CompositionTop spawn wiring filters source names but not bound child endpoints; _build_child_ports inserts actor inputs before formal declarations. This is separate from direct physical merging and is the immediate next repair.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2`
+  Status: `pending`
+  Goal: `Prove complete physical reservations and deterministic formal allocation in actual lowering contexts.`
+  Acceptance: `After source-context preparation, derive real generated declarations and signal consumers without relying on guessed naming patterns or a successful conflicting old module merge. Cover counters, monitors, wait/sample helpers, named drives, bindings, child handoffs, domains and case-folded collisions. Qualify allocation determinism and fail-closed missing reservations; preserve generated public ports. Commit the qualified reservation integration before production renaming.`
+  Verification: `The detached planner's explicit reserved_names contract does not establish completeness in production. Actual generated names and declarations must supply that proof.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3`
+  Status: `pending`
+  Goal: `Wire scoped declarations, operands and bindings while preserving source-facing reports.`
+  Acceptance: `Use the qualified contexts/reservations and detached resolvers to connect physical formal identities through parent/domain/child lowering, widths/types/resets/roles, local calls and rule payload destinations. Preserve source binding names, logical state ownership and diagnostics; reject unresolved collisions. Qualify focused generated artifacts and complete native/API/MCP reports in the same implementation commit. Do not claim the separate controller/runtime repairs complete.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.4`
+  Status: `pending`
+  Goal: `Qualify scoped production integration across existing scheduler families.`
+  Acceptance: `After production wiring, run declaration permutations and actor/local, sibling/caller/callee, direction/type and generated-prefix collision controls plus the warranted broad regression gate. Reconcile book/spec/canonical records with the final identity/report contract. Keep remaining local-payload, shared-writer, independent-controller and local-call runtime obligations in their owning leaves. Commit before the payload repair frontier.`
   Verification: `pending`
   Commit: `pending`
 
@@ -2204,8 +2255,9 @@ terminal synchronization. `.32.1.3.3.1.2.1` retains direct-controller failures a
 passing public-carrier references. Rationale rollover, the controller contract,
 shadow ownership and detached formal resolvers are qualified. Wait grammar, diagnostics and
 book excerpts are synchronized. `.53` repairs and qualifies extract carrier
-replay and width declarations. Next is production identity integration
-`.49.2.2.3`. Local payload, shared-writer and
+replay and width declarations. `.49.2.2.3.1.1` repairs caller-formal binding
+validation and rejects unsafe direct pin aliases. Next `.3.1.3` repairs generated
+pin-shadow wiring before `.3.1.2` prepares remaining source contexts. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -6960,3 +7012,74 @@ The book's hexadecimal packet example is explicitly exercised by both runtime
 oracles. No exhaustive arbitrary-width or independent-controller qualification
 is claimed. DEVELOPMENT_NOTES is unchanged because the extract card owns the
 rationale. Full staged doctrine and hook results are recorded in commit evidence.
+
+## Scoped production preparation — `.49.2.2.3.1` (in flight)
+
+The extract repair is committed with its full gate/hook passing and the tree
+clean. Source validation precedes physical rewriting, but today's binding
+lookup already has a source-scope bug. Prepare these semantics explicitly
+before choosing the production transform point. This split does not replace
+the complete reservation proof with a guessed prefix set or promote detached
+helpers into runtime qualification. Decision 0109 remains the execution owner.
+
+### Physical pin alias discovered during `.3.1.1`
+
+The live strict-check probe in `.artifacts/formal-binding-scope/physical-probe.json`
+shows why lexical validation cannot ship alone: equal-width actor input/output
+`value` and caller formal `value` pass `--strict --check --json` while still
+sharing the raw physical identity. A caller output binding can therefore address
+the actor pin. The source is a caller with `(ports (input value (width 4)))`, a
+worker with `(ports (output payload (width 4)))` and
+`(do worker (bind (output payload value)))`, beside actor `(input value (width 4))`.
+Root: `_build_parent_ir` merges formal counters under raw names alongside actor
+ports; no width conflict distinguishes equal-width identities. The lookup change
+must not newly admit that alias. This leaf owns a direct formal/actor-pin merge
+rejection before IR construction, with generated-child and pruned-target controls.
+Production separation `.3.3` must replace the rejection only after scoped physical
+identities are connected and qualified. This is a scheduled repair boundary,
+not evidence of runtime support. The checked-in regression retains reproduction.
+
+The generated control in final-qualified.log exposed a separate existing failure:
+`(spawn worker as w0 (bind (input value observed)))` beside actor input `value`
+and worker input formal `value` emits both `(value w0.value)` and the explicit
+handoff into `w0.value`. Native `--check --json` rejects the duplicate driver.
+CompositionTop `_emit_wiring_block` filters explicit source names for spawn,
+whereas generated do already filters bound child-port names. `_build_child_ports`
+also inserts inherited actor inputs before formal declarations and drops duplicate
+formal widths/directions through `_push_port`. Immediate successor `.3.1.3` owns
+these generated interface semantics, before context preparation `.3.1.2`.
+The current test preserves the diagnosed refusal, not a false generated success.
+
+### Acceptance — caller-formal source lookup `.49.2.2.3.1.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — before.log in
+  `.artifacts/formal-binding-scope/` rejects a caller formal width 4 against
+  actor storage width 8 at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6811.
+  `_binding_signal_info` searches actor declarations first. The separate
+  physical-probe.json `--check --json` results admit equal-width actor-pin
+  aliases after lexical lookup, because `_build_parent_ir` merges raw names.
+  final-qualified.log independently reveals the generated spawn duplicate-link
+  defect, now owned by immediate successor .3.1.3 with its exact source in T1933.
+- [x] **ADDRESSED (verified)** — final-boundaries.log reports T1933 successful:
+  caller formals resolve before actor declarations for input expressions/scalars
+  and output actuals, using their own widths. Rule and nonformal actor endpoints
+  retain read/write restrictions, callee scope/direction and timing checks.
+  Direct actor-pin collisions fail before merging, even at equal width; static
+  zero-pruned targets remain absent. Ordinary carriers strict-replay and complete
+  native/API/newline check/semantic/schedule reports match. Generated shadow
+  coverage intentionally retains the diagnosed refusal until .3.1.3; it is not
+  counted as support. No physical scope or controller runtime promotion is made.
+- [x] **NO REGRESSION** — guard-qualified.log reports `All tests successful`
+  for T1933, T1241/T1242/T1243, T1428/T1429/T1431 and T1926/T1927/T1928.
+  final-boundaries.log reruns the final T1933 after adding explicit generated
+  and pruned controls. book-final.log records a successful mdBook build; browser
+  visual qualification remains blocked separately. The production edit after
+  the first green lookup run is the direct alias gate, covered by both runs.
+
+Re-derivation uses parsed-source binding validation and the actual strict CLI.
+Falsification reverses widths, scopes, callee directions and timing, and compares
+live versus static-zero sites and direct versus generated placement. Durability
+is T1933 plus the scope card and this task. Book/spec describe the shipped
+boundary and the next owned generated repair. DEVELOPMENT_NOTES is unchanged:
+these canonical records own the rationale. Full staged doctrine and hook results
+belong to the commit evidence; no full CI, push or hosted qualification is claimed.

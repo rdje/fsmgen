@@ -12,8 +12,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, transactions, ports, scope, storage, bindings, control-flow]
-evidence: perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
+evidence: t/1933-isf-caller-formal-binding-scope.t; perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1933-isf-caller-formal-binding-scope.t t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
 ---
 
 Generated children have separately qualified local port metadata under .49.1.
@@ -23,16 +23,27 @@ same-name actor/local roles or widths conflict. Separate direct transactions
 with equal-width same-named formal ports can instead share one emitted storage
 identity. That admission is not independent local state.
 
-_binding_signal_info searches actor interface and storage before caller-local
-widths. An explicit narrower caller port can therefore be rejected against the
-actor width when used as an activation input binding. _build_signal_width_map
-has local port precedence, so expression inference and scalar endpoint lookup
-also need consistent lexical resolution.
+_binding_signal_info now resolves an explicit caller formal before actor
+interface/storage, using the formal's declared width and transaction-variable
+role. T1933 qualifies scalar/expression reads and output actuals against actor
+input/output/storage shadows, width mismatch controls, callee directions,
+timing and static-zero pruning. Actor-scope restrictions remain intact; rules
+cannot borrow transaction formals. This is source binding validation only:
+_build_parent_ir still fails conflicting physical merges until .49.2.2.3.3.
+Direct formal/actor-pin collisions now fail before merging, including equal
+widths that previously passed strict checking while sharing one physical name.
+Generated-child interfaces and statically pruned targets do not enter this gate.
+Generated spawn pin shadows have a separate retained failure in T1933:
+automatic actor-input wiring competes with an explicit binding from another
+source. CompositionTop filters binding source names but misses bound child
+endpoints; _build_child_ports also inserts actor inputs before formal ports.
+.3.1.3 owns the immediate repair and width/direction qualification before
+explicit-local/static context preparation .3.1.2.
 
 The audit reproduction uses actor status width 8 and reset 19, a worker status
 input or output width 8, and a narrower input control width 4. Role/width merges
-fail. A parent status input width 4 bound to worker payload width 4 is wrongly
-validated as actor status width 8. Separate first/second transactions with
+fail. The historical parent status input width 4 bound to worker payload width 4
+was wrongly validated as actor status width 8; .3.1.1 repairs that lookup. Separate first/second transactions with
 status output width 4 assign 3/5; public reports admit them but emit one status
 register and disconnected state loops inside one FSM root.
 
@@ -113,8 +124,8 @@ qualification, not a production runtime or report migration.
 The dynamic-wait operator discrepancy is repaired under .49.2.2.5: unsupported
 carrier shapes now fail before serialization. The canonical
 [wait card](isf-dynamic-wait-count-predicates.md) owns that grammar and its audit.
-Quoted-division diagnostic sanitization .52 and stale wait examples .49.2.2.6
-precede .49.2.2.3, which connects the resolvers and must prove complete physical
-reservations and source-report preservation.
+Quoted-division diagnostics .52, wait examples .49.2.2.6 and extract replay .53
+are qualified. .49.2.2.3 connects the resolvers and must still prove complete
+physical reservations and source-report preservation.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2.

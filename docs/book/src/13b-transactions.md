@@ -57,6 +57,21 @@ Input bindings may pass scalar actor-side signals, numeric/exact-width
 literals, or non-empty list expressions; output bindings still name scalar
 writable actor-side targets.
 
+Binding validation resolves an explicit caller transaction port before a
+same-named actor pin or storage variable, using the caller port's width. A
+callee port never supplies a missing caller variable. Rule bindings remain in
+actor scope: actor inputs are read-only and actor output readback is rejected.
+Until direct formals receive separate physical identities, a direct formal
+that shares an actor interface pin name is rejected, even when the widths
+match. This prevents local writes from addressing that pin. Source validation
+does not remove the storage-collision or controller limitations described above.
+
+Generated spawn formals that share an actor input name also have an open
+wiring defect: an explicit binding from another source can collide with the
+automatic same-name actor connection. Child pin width/direction shadowing is
+under repair with that case. Generated storage-shadow qualification does not
+cover these actor-pin combinations.
+
 Local rule triggers bind transaction inputs only. Generated/parameterized rule
 triggers also support scalar output bindings through completion-qualified
 handoffs. `do` and the shipped spawn path retain their documented output timing.

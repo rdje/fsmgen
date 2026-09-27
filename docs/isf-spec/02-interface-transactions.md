@@ -752,6 +752,27 @@ same-transaction-parameter-zero divisor operands before scheduled `.fsm`
 emission. Transaction output bindings remain scalar-only because the
 actor-side endpoint is the writable destination.
 
+For actuals authored inside a transaction, an explicit caller formal resolves
+before a same-named actor interface or storage declaration. Its own width and
+transaction-variable role govern scalar reads, expression references and
+scalar output destinations. Formal direction describes the callee binding
+boundary; this lookup does not add a read-only restriction to caller-local
+variables. Rules have no caller transaction scope, and callee declarations do
+not make an unknown caller actual valid. Actor input write protection and
+actor output readback rejection still apply to actual actor endpoints.
+Direct physical identity separation remains pending. Direct formals sharing an
+actor interface pin name fail before physical IR merging, including equal-width
+cases; otherwise local storage could alias the pin. Generated-child interfaces
+and statically pruned targets bypass this direct-merge gate. Successful source
+binding validation alone does not qualify shadowing or independent execution.
+
+Generated spawn input formals that shadow actor inputs have a retained wiring
+failure when bound from another source: both the automatic actor connection
+and explicit payload handoff target the child formal. Child interface width
+and direction precedence for actor-pin shadows is also pending qualification.
+Repair `.49.2.2.3.1.3` owns these cases; generated actor-storage shadow support
+does not establish actor-pin shadow support.
+
 Transaction input bindings may include an explicit timing assertion as a
 fourth entry:
 
