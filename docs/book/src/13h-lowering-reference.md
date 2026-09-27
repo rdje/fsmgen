@@ -34,6 +34,11 @@ scheduled `.fsm` path using the declared domain clock/reset. Multi-domain
 actors emit validated per-domain scheduled `.fsm` artifacts named
 `<actor>__domain_<domain>.fsm` (with a suffix when needed to avoid a
 case-insensitive collision) plus `<actor>_top.fsm` generated top wiring.
+Domain-owned generated transaction children also emit separate artifacts and
+appear directly in that flat top. Their start/completion/data connections stay
+internal, with each child using its owning domain's clock/reset. See
+[Multi-Clock Domains](13a-actor-interface.md#multi-clock-domains) for naming and
+current qualification boundaries.
 
 Generated wiring uses canonical `(source destination)` pairs, so strict mode
 does not reject the wrapper for legacy slash links. Event, dual-event,

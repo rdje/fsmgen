@@ -9,6 +9,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Scheduler::ISF::LoweringIR;
 use FSM::Scheduler::ISF::Emitter::FSM;
 use FSM::Scheduler::ISF::Emitter::CompositionTop;
@@ -128,10 +129,9 @@ sub _emit_multi_domain_schedule_report($self, $actor, $ir) {
         unless ref($partition) eq 'HASH' && ref($partition->{domains}) eq 'ARRAY';
 
     my %domain_report_by_name;
-    for my $domain (@{$partition->{domains}}) {
-        my $domain_actor = _domain_actor_for_scheduled_artifact($actor, $domain, $partition->{default_domain});
-        my $domain_ir = $self->{ir}->build_module($domain_actor);
-        $domain_report_by_name{$domain->{name}} = $self->{json_emitter}->report_hash($domain_ir);
+    for my $realization (@{$self->_multi_domain_realizations($actor, $partition)}) {
+        $domain_report_by_name{$realization->{domain}{name}} =
+            $self->{json_emitter}->report_hash($realization->{ir});
     }
 
     my $report = $self->{json_emitter}->multi_domain_report_hash($ir, \%domain_report_by_name);
@@ -144,20 +144,77 @@ sub _emit_multi_domain_scheduled_artifacts($self, $actor, $ir) {
         unless ref($partition) eq 'HASH' && ref($partition->{domains}) eq 'ARRAY';
 
     my %files;
-    for my $domain (@{$partition->{domains}}) {
-        my $file_name = $domain->{scheduled_fsm};
-        confess "FSM::Scheduler::ISF->lower domain '$domain->{name}' is missing its scheduled .fsm artifact name\n"
-            unless defined($file_name) && !ref($file_name) && length($file_name);
-        confess "FSM::Scheduler::ISF->lower duplicate scheduled .fsm artifact '$file_name'\n"
-            if exists $files{$file_name};
+    my $realizations = $self->_multi_domain_realizations($actor, $partition);
+    for my $realization (@$realizations) {
+        my $domain = $realization->{domain};
+        my $domain_ir = $realization->{ir};
+        $files{$domain->{scheduled_fsm}} = $self->{fsm_emitter}->emit($domain_ir);
+        for my $child (sort keys %{$domain_ir->{children} || {}}) {
+            my $module = $realization->{names}{modules}{$child};
+            my $child_ir = { %{$domain_ir->{children}{$child}}, actor_name => $module };
+            $files{"$module.fsm"} = $self->{fsm_emitter}->emit($child_ir);
+        }
+    }
+    $files{"$actor->{actor_name}_top.fsm"} = $self->_emit_multi_domain_top($actor, $partition, $realizations);
+    return \%files;
+}
 
+# Allocate against every existing outer identity before adding domain children.
+# Reporting and emission use the same deterministic plan; authored transaction,
+# domain and local handoff names remain unchanged in the domain IR.
+sub _multi_domain_realizations($self, $actor, $partition) {
+    my %instances = map { $_->{name} => 1 }
+        @{$actor->{interface}{inputs} || []}, @{$actor->{interface}{outputs} || []};
+    my %modules = ("$actor->{actor_name}_top" => 1);
+    for my $domain (@{$partition->{domains}}) {
+        my $file = $domain->{scheduled_fsm};
+        confess "FSM::Scheduler::ISF domain '$domain->{name}' is missing its scheduled .fsm artifact name\n"
+            unless defined($file) && !ref($file) && length($file);
+        my $module = _scheduled_module_name($domain);
+        confess "FSM::Scheduler::ISF duplicate scheduled .fsm artifact '$file'\n"
+            if grep { lc($_) eq lc($module) } keys %modules;
+        $modules{$module} = 1;
+        $instances{$domain->{instance}} = $instances{$domain->{clock}} = 1;
+        $instances{$domain->{reset}{name}} = 1 if ref($domain->{reset}) eq 'HASH';
+    }
+    for my $crossing (@{$partition->{crossings} || []}) {
+        for my $prefix ($crossing->{kind} eq 'event' ? ('') : ('start_', 'done_')) {
+            $instances{$crossing->{"${prefix}instance"}} = 1;
+            $modules{$crossing->{"${prefix}module"}} = 1;
+        }
+    }
+    my $allocate = sub ($desired, $reserved) {
+        return FSM::Support::HDLInstanceIdentifierPolicy->allocate_generated_instance_identifier(
+            desired => $desired, role => 'child', reserved => $reserved);
+    };
+    my @realizations;
+    for my $domain (@{$partition->{domains}}) {
         my $domain_actor = _domain_actor_for_scheduled_artifact($actor, $domain, $partition->{default_domain});
         my $domain_ir = $self->{ir}->build_module($domain_actor);
-        $files{$file_name} = $self->{fsm_emitter}->emit($domain_ir);
+        my $names = { instances => { $domain_ir->{actor_name} => $domain->{instance} }, modules => {},
+            wiring_name => "$domain->{instance}_child_wiring" };
+        for my $child (sort keys %{$domain_ir->{children} || {}}) {
+            $names->{modules}{$child} = $allocate->("$domain_ir->{actor_name}__child_$child", \%modules);
+        }
+        my @children = (
+            (map { { kind => $_->{activation_kind} // 'spawn', instance => $_->{instance}, child => $_->{child} } }
+                @{$domain_ir->{spawn_instances} || []}),
+            (map { { kind => 'library', instance => $_->{instance}, child => $_->{module} } }
+                @{$domain_ir->{library_uses} || []}),
+        );
+        for my $top (@{$domain_ir->{atl_top_instances} || []}) {
+            my @atl = ref($top->{children}) eq 'ARRAY' ? @{$top->{children}} : ($top);
+            push @children, map { { kind => 'actor', instance => $_->{instance}, child => $_->{child_module} } } @atl;
+        }
+        for my $child (@children) {
+            my $instance = $child->{instance};
+            confess "Domain '$domain->{name}' has duplicate composition instance '$instance'\n"
+                if exists $names->{instances}{$instance};
+            $names->{instances}{$instance} = $allocate->("$domain->{instance}__$instance", \%instances);
+        }
+        push @realizations, { domain => $domain, ir => $domain_ir, names => $names, composed => @children ? 1 : 0 };
     }
-    $files{"$actor->{actor_name}_top.fsm"} = _emit_multi_domain_top($actor, $partition);
-
-    return \%files;
+    return \@realizations;
 }
 
 sub _domain_actor_for_scheduled_artifact($actor, $domain, $default_domain) {
@@ -299,15 +356,38 @@ sub _ensure_domain_interface_port($interface, $name, $direction, $context) {
     return 1;
 }
 
-sub _emit_multi_domain_top($actor, $partition) {
+sub _emit_multi_domain_top($self, $actor, $partition, $realizations) {
     my $top_name = "$actor->{actor_name}_top";
     my @lines;
 
     push @lines, "(?top:$top_name";
     push @lines, _emit_multi_domain_top_ports($actor, $partition);
-    for my $domain (@{$partition->{domains} || []}) {
-        push @lines, _emit_domain_instance($domain);
+    my $links = _multi_domain_links($actor, $partition);
+    my %composed = map { $_->{domain}{instance} => 1 } grep { $_->{composed} } @$realizations;
+    for my $realization (@$realizations) {
+        my $domain = $realization->{domain};
+        if (!$realization->{composed}) {
+            push @lines, _emit_domain_instance($domain);
+            next;
+        }
+        my $names = $realization->{names};
+        my $prefix = "$domain->{instance}.";
+        for my $link (@$links) {
+            if (index($link->[1], $prefix) == 0) {
+                push @{$names->{sources}{substr($link->[1], length($prefix))}}, $link->[0];
+            }
+            if (index($link->[0], $prefix) == 0) {
+                push @{$names->{targets}{substr($link->[0], length($prefix))}}, $link->[1];
+            }
+        }
+        push @lines, $self->{top_emitter}->emit_components($realization->{ir}, $names);
     }
+    my @outer_links = grep {
+        my ($source, $target) = @$_;
+        my ($source_instance) = split /\./, $source, 2;
+        my ($target_instance) = split /\./, $target, 2;
+        !$composed{$source_instance} && !$composed{$target_instance};
+    } @$links;
     for my $crossing (@{$partition->{crossings} || []}) {
         next unless ($crossing->{kind} // '') eq 'event';
         push @lines, "  (?rtl:$crossing->{instance} $crossing->{module})";
@@ -317,7 +397,8 @@ sub _emit_multi_domain_top($actor, $partition) {
         push @lines, "  (?rtl:$crossing->{start_instance} $crossing->{start_module})";
         push @lines, "  (?rtl:$crossing->{done_instance} $crossing->{done_module})";
     }
-    push @lines, _emit_multi_domain_wiring($actor, $partition);
+    push @lines, "  (?wiring:domain_wiring",
+        (map { "    ($_->[0] $_->[1])" } @outer_links), "  )";
     push @lines, ')';
 
     for my $crossing (@{$partition->{crossings} || []}) {
@@ -363,7 +444,7 @@ sub _emit_domain_instance($domain) {
     return "  (?fsmc:$domain->{instance} $module)";
 }
 
-sub _emit_multi_domain_wiring($actor, $partition) {
+sub _multi_domain_links($actor, $partition) {
     my @links;
     my %domain_by_name = map { $_->{name} => $_ } @{$partition->{domains} || []};
 
@@ -427,10 +508,7 @@ sub _emit_multi_domain_wiring($actor, $partition) {
         push @links, _link("$done.ready", "$dst->{instance}.${done_signal}_ready");
     }
 
-    my @lines = ('  (?wiring:domain_wiring');
-    push @lines, map { "    $_" } @links;
-    push @lines, '  )';
-    return join("\n", @lines);
+    return \@links;
 }
 
 sub _emit_crossing_rtlif($crossing, $partition) {
@@ -510,7 +588,7 @@ sub _format_top_port_token($name, $direction, $width) {
 sub _link($from, $to) {
     confess "FSM::Scheduler::ISF->lower generated top wiring has an undefined endpoint\n"
         unless defined($from) && defined($to);
-    return "($from $to)";
+    return [$from, $to];
 }
 
 sub _scheduled_module_name($domain) {

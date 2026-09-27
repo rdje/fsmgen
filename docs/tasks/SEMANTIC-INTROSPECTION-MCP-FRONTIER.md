@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1112,10 +1112,40 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.2: qualify aggregate child reads`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Materialize and wire generated transaction children inside multi-domain actors without exporting internal handshakes or storage handoffs.`
   Acceptance: `After .39.2.2.2.2, repair Scheduler::_emit_multi_domain_scheduled_artifacts and top wiring for generated child modules and per-domain activations, including children with no storage reads. Preserve module/instance collision policy and domain clocks/resets; qualify public interfaces, independent runtime and API/MCP reports before removing the multi-domain child-storage read refusal.`
   Verification: `T1904's core+aux actor strict-admits but exports w0_done instead of keeping a closed generated child: the multi-domain artifact loop emits only each domain parent FSM and the outer top, omitting each domain IR's children and its generated composition. T1247's historical three-file inventory codifies that omission without child runtime evidence. This is owned for actual child composition, not waived by schedule domain metadata.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.1`
+  Status: `done`
+  Goal: `Emit and wire same-domain generated transaction children inside multi-domain actors.`
+  Acceptance: `Reproduce accepted missing-child artifacts without storage. Emit children with collision-safe module/file and hardware-instance identities; share ordinary composition wiring semantics without nesting unsupported tops. Preserve parent interface routes, domain clocks/resets, CDC and generated do parameter bindings. Prove completion, distinct domain clocks/resets, repeated activations, exact ports, scheduled replay and native/API/MCP reports. Keep the storage-read refusal until the next qualification leaf. Sync docs/facts and commit.`
+  Verification: `T1912 independently qualifies domain clocks/reset isolation, repeated spawn/do activations, exact do-output pulse counts, CDC-ready input routing, reused definitions, name collisions, reset absence, scheduled replay and native/API/newline identity parity. The original watchdog runtime remains explicit TODO under .32.1.3.3.3; named completion and library interfaces remain exact refusal controls under .46/.47. Ordinary composition/domain/effect regressions pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.1: realize domain transaction children`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Qualify shared storage reads through realized domain children.`
+  Acceptance: `After .3.1 and prerequisite .46/.47 repairs, qualify scalar/typed/aggregate/bank live reads with owner-only reset/state and independently clocked domains, repeated activation, exact interfaces and native/API/MCP parity. Remove only the multi-domain read refusal, keep unowned cross-domain access and direct writer refusals, synchronize documentation and commit.`
+  Verification: `Retained T1904 multi-domain reader must observe its domain owner, with no public storage or completion handoff leakage.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.46`
+  Status: `pending`
+  Goal: `Honor named completion pulses in generated transaction children alongside their activation handshake.`
+  Acceptance: `Immediately after .39.2.2.2.3.1 and before domain storage-read qualification, reproduce a generated worker completing an actor output other than done through ordinary and multi-domain compositions. Select explicit named-output and canonical child-done routing without double-driving parent outputs or losing the authored pulse. Preserve strict interfaces, repeated activation and independent runtime; retain the original failing dual-domain source, update contracts/book/facts and commit.`
+  Verification: `T1912 dual source with aux_worker completing aux_done fails strict check: generated child aux_done is unconnected. _build_child_ports always adds done while _ir_complete assigns only the authored name; CompositionTop routes non-done child outputs only when a matching parent handoff exists. This defect also affects ordinary generated children and is not caused by flat domain naming.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.47`
+  Status: `pending`
+  Goal: `Restore correct parent interfaces around library-owned ports after explicit interface preservation.`
+  Acceptance: `Immediately after .46 and before domain storage-read qualification, repair ordinary/domain library compositions without hiding authored public ports. Reproduce T1238 and the T1912 FIFO domain source. Connect retained parent inputs; assign library-driven output ownership and any parent readback explicitly, rejecting competing writers. Prove FIFO reset/push/pop, parent input/readback use, exact interfaces, native/API/MCP parity and library regressions; update docs/facts and commit.`
+  Verification: `T1238 unchanged fails strict generated HDL: fifo_library_use.data_in is unconnected. CompositionTop::_emit_wiring_block skips library-bound inputs while explicit-interface preservation now retains them on the parent. The corresponding output-skip logic needs ownership review too. This predates domain child realization and the original regression remains unchanged; T1912 retains the multi-domain source for the same immediate repair.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3`
@@ -1846,8 +1876,10 @@ Completed `.42` shares verified repeated-source module definitions; `.43`
 retains child completion across joins and activations. Completed `.44` fixes
 even runtime wait counts. Completed `.45` qualifies typed VHDL comparisons
 and scalar wait timing. Completed `.39.2.2.2.2.2` qualifies
-aggregate live reads. Next `.39.2.2.2.3` repairs domain child composition
-before writer handoffs. After those repairs,
+aggregate live reads. Completed `.39.2.2.2.3.1` realizes domain transaction
+children and prevents held-start reexecution. Next `.46` repairs named child
+completion, then `.47` repairs library parent interfaces, followed by
+`.39.2.2.2.3.2` domain storage reads before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -4765,3 +4797,98 @@ priority. Runtime coverage remains T1908; no scheduler behavior changed here.
 Book/type/spec/intake/fact updates distinguish internal generated aggregate
 handoffs from still-unsupported authored aggregate ports and banks. Live-doc
 budget deltas belong to this leaf and preserve their existing hard ceilings.
+
+
+## Qualification — `.39.2.2.2.3.1`
+
+Split domain child realization from storage-read admission so both have bounded
+runtime qualification. The lowerer constructs child IR but the multi-domain
+artifact loop drops it; the top has no matching child instances or wiring.
+T1247's artifact inventory codifies this omission rather than a runtime result.
+Reuse the ordinary generated-child wiring contract at the flat outer top,
+with allocated module/file/instance identities and each owning domain's clock
+and reset. Preserve CDC endpoint sources when children inherit domain inputs.
+The same artifact loop also omits library children; inspect its supported
+public domain-use contract and include or explicitly schedule that defect,
+without claiming unseen library behavior qualified.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Retained native `--strict --check --json`
+  accepts `before.isf` in `.artifacts/domain-child-realization/`, but its emitted
+  top and artifact map omit worker. The domain loop emits parent IR only.
+  T1912 additionally measures an extra generated-do payload pulse: held start
+  re-enters the child after terminal, before delayed done reaches the caller.
+  Domain signal lookup also wrongly chooses an actor signal before a local port.
+- [x] **ADDRESSED (verified)** — T1912's final `runtime-identities.log` passes
+  independent dual-domain spawn/do execution, exact output-pulse counts, reset
+  isolation, repeat activation, CDC-ready routing, module/pin collisions,
+  reset absence, strict scheduled replay and complete native/API/newline
+  check/semantic/schedule parity. Physical semantic sources join to emitted
+  artifacts. Private start history fixes reexecution without an extra state.
+  The child-await oracle remains TODO under its existing watchdog owner;
+  `.46/.47` retain named-completion/library refusals, not runtime passes.
+- [x] **NO REGRESSION** — `focused-final.log` reports `All tests successful`
+  for T1216/T1217/T1241/T1242/T1247/T1315/T1424/T1426/T1427/T1387.
+  `completion-runtime.log` reports `All tests successful` for T1907/T1908.
+  T1904 and T1911 individually report `ok` in `activation-runtime.log`, including
+  the qualified scalar/bank VHDL controls. T1376 passes and mdBook builds;
+  spec partition validation passes. All logs are under
+  `.artifacts/domain-child-realization/`.
+
+The scalar/aggregate invocation accidentally named a nonexistent T1907 filename
+after its valid T1904/T1911 entries. Those entries completed successfully;
+the harness then exited with a source-discovery error, so that invocation is
+not described as an overall green gate. The correctly discovered T1907/T1908
+invocation separately passed. No test assertion was waived for that typo.
+The final local-port runtime control uses a fully bound auxiliary data port
+shadowing core's data input; an earlier local-done specimen also needed an
+explicit activation binding and was not used as the positive qualification.
+Live-document budget deltas and generated knowledge/inventory updates belong
+to this leaf without raising hard ceilings.
+
+The first T1912 runtime fixture used activation overrides of wait-count parameters;
+that separately deferred surface correctly refused before composition. The
+fixture now uses supported non-wait parameter overrides. It then exposed named
+child completion: the auxiliary worker's aux_done output is unconnected and its
+canonical done handshake has no authored pulse. `.46` owns that independent
+ordinary/domain repair immediately after this realization slice. Retain the
+original named-completion source and exact refusal in T1912; qualify realization
+with explicit transaction-local canonical done ports in the meantime.
+
+The explicit local done control exposed a smaller blocking validator defect:
+`_validate_domain_signal_access` chooses an actor signal before a same-name
+transaction-local port. The aux worker's local done output therefore gets
+misclassified as a write to core's actor done output. This leaf owns local-port
+precedence in that lookup, matching the existing child-port/storage shadowing
+contract. Preserve true unowned-crossing refusals in T1247 and the effect-domain
+regressions; T1912 is the positive same-name local-port runtime falsifier.
+
+The broader library regression T1238 exposed a pre-existing retained-parent-port
+mismatch: the ordinary library top skips its parent data_in connection even
+though explicit interface preservation now declares that port. `.47` owns the
+ordinary/domain repair immediately after `.46` and before domain storage reads.
+The library child artifact is no longer omitted by domain emission, but this
+slice does not claim library-composition admission/runtime. Keep T1238 unchanged
+and retain the exact multi-domain FIFO refusal in T1912.
+
+T1912's first runtime expected a generated-do output binding to remain asserted
+until the later parent completion pulse. The published contract instead emits
+that binding as combinational data gated by child done. Its independent oracle
+now samples the payload on the receiving clock during that valid pulse, then
+checks parent completion separately; no RTL rule changes.
+
+The CDC-await child reproduces the already-owned `.32.1.3.3.3` watchdog entry
+failure: its generated entry goes directly into the await, where an uninitialized
+watchdog can take the timeout path before the event arrives. T1912 retains the
+original runtime oracle as explicit TODO under that owner. Flat CDC-boundary
+routing is separately qualified by a fixed-wait child reading the source CDC
+ready endpoint, followed by the parent's event crossing. This slice earns no
+child-await watchdog timing signoff.
+
+T1912's measured repeated-do oracle observes an extra auxiliary payload pulse.
+The generated do parent holds start high until done; the child returns to its
+start-guarded idle before its delayed done pulse reaches the parent, so it
+accepts the same held start again. This leaf owns that blocking activation
+lifetime fix: accept an assertion of start only once, rearm when start is low,
+and reset the private start history with the child's own reset. Preserve the
+existing state sequence, accepted start edge and done timing. T1912's original
+exact payload count stays unchanged; ordinary pulse-start suites must pass.

@@ -189,8 +189,12 @@ composition pipeline:
 - Each generated child exposes `start` as an input and `done` as an output.
 - Named drive calls in spawned children expose per-drive handoff outputs that
   the top wires back into parent per-instance handoff inputs.
-- After completion, a spawned child returns to its `start`-guarded idle state
-  and waits for the next start pulse.
+- After completion, a generated child returns to its idle state. Private start
+  history accepts an assertion of `start` only once and rearms after `start`
+  goes low. This handles both pulse starts and generated `do` starts held until
+  completion, without accepting the held request again before delayed `done`
+  reaches the parent. The history uses the child's own reset when present.
+  Idle accepts the new assertion; a start pulse during execution is not queued.
 
 Actor `(storage ...)` reads in a separately generated transaction child use
 explicit internal top wiring from the owner in ordinary/single-domain actors. These

@@ -81,7 +81,11 @@ Current lowering:
 - `await_any` advances when any collected completion is live or retained.
   Remaining pending children stay available to later joins. Starting a child
   clears its retained completion, with start taking priority over capture.
-Focused regressions cover both synchronization forms.
+Focused regressions cover both synchronization forms. Generated child start
+history accepts each assertion only once and rearms after deassertion, including
+held generated-do requests whose delayed completion reaches the caller after
+the child returns to idle. No extra schedule state or accepted-request delay is
+introduced.
 
 Ordinary/single-domain actor storage has one owner across generated transaction
 modules. Referenced

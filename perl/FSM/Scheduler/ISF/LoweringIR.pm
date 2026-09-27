@@ -15,6 +15,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
 );
 use FSM::Scheduler::ISF::ControlFlowEffects;
 use FSM::Scheduler::ISF::ChildStorageOwnership qw(select_child_storage_reads connect_child_storage_reads);
+use FSM::Scheduler::ISF::ChildActivation qw(guard_child_activation);
 use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -230,6 +231,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
             $state->{transitions} = [{ target => $entry->{name} }];
         }
     }
+    guard_child_activation($ir, $entry) if $entry;
     _finalize_ir($ir);
     return $ir;
 }
@@ -2968,12 +2970,12 @@ sub _validate_domain_signal_access {
     return 1 unless defined($name) && !ref($name) && _is_hdl_identifier($name);
 
     my ($owner_domain, $owner_kind);
-    if (exists $signal_domains->{$name}) {
-        $owner_domain = $signal_domains->{$name}{domain};
-        $owner_kind = $signal_domains->{$name}{kind};
-    } elsif (exists $local_signals->{$name}) {
+    if (exists $local_signals->{$name}) {
         $owner_domain = $local_signals->{$name};
         $owner_kind = 'transaction_local';
+    } elsif (exists $signal_domains->{$name}) {
+        $owner_domain = $signal_domains->{$name}{domain};
+        $owner_kind = $signal_domains->{$name}{kind};
     } else {
         return 1;
     }

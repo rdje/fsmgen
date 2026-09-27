@@ -20,6 +20,9 @@ activation start/done CDC children through the shared portable keyword and
 case-fold collision policy. Module identifiers use a separate namespace;
 domain filenames follow the allocated module identity. This prevents case-only
 logical domains from replacing one another during filesystem materialization.
+Generated transaction child definitions and flat instances are allocated
+afterward by the scheduler; see
+[domain child realization](isf-multi-domain-generated-children.md).
 
 The scheduler consumes those identities for child declarations, event and
 activation routes, and CDC interfaces. Schedule crossings expose the allocated

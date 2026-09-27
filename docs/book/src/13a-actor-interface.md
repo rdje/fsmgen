@@ -92,8 +92,47 @@ The implementation is intentionally artifact-first. `lower(...)` does not turn
 one `.fsm` module into a hidden multi-clock state machine. It partitions the
 actor into one ordinary scheduled `.fsm` per declared domain, using
 `<actor>__domain_<domain>.fsm` names when they are collision-free, then emits `<actor>_top.fsm` as a
-composition source. The top instantiates each domain module with `?fsmc` and
-owns only wiring plus explicit CDC child interfaces.
+composition source. The top instantiates each domain parent and its generated
+transaction children with `?fsmc`, and owns only wiring plus explicit CDC child
+interfaces. Generated children use their owning domain's clock and reset. Their
+start, completion and payload handoffs remain internal, including inherited
+inputs supplied by a CDC endpoint.
+
+For example, this child executes in `core` while the auxiliary transaction uses
+its own clock:
+
+```lisp
+(actor domain_child_read
+  (clock-domains
+    (domain core (clock clk) (reset (rst_n async active_low)) :default)
+    (domain aux (clock aux_clk) (reset (aux_rst_n async active_low))))
+  (interface
+    (input start) (input data (width 8))
+    (output observed (width 8)) (output done)
+    (input aux_start (domain aux)) (output aux_done (domain aux)))
+  (transaction worker
+    (ports (output result (width 8)))
+    (wait 2) (set result data) (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0 (bind (output result observed)))
+    (await_all done) (complete done))
+  (transaction aux_tx
+    (domain aux) (on aux_start) (wait 1) (complete aux_done)))
+```
+
+The generated worker has a separate review artifact. Reused instances share
+its definition while retaining independent start, data and completion wiring.
+Parameterized generated `do` also uses the owning domain; its bound output is
+valid during the child's completion pulse, as described in
+[Composition](13f-composition.md). Transaction-local payload ports take
+precedence over same-name actor signals during domain validation.
+
+Generated-child storage reads in multi-domain actors remain explicitly refused
+pending their separate ownership qualification. Named child completion outputs
+other than the canonical `done`, library parent-interface ownership, and child
+await watchdog initialization have tracked repair owners; artifact realization
+does not qualify those behaviors.
 
 For example, the file-backed `clock_domain_event_crossing` actor uses the
 portable domain names `source` and `core` and emits these review artifacts:
@@ -117,6 +156,12 @@ pin, compares collisions without case, and uses the shared portable HDL
 keyword policy. Keywords gain `_instance`; ordinary collisions gain `_domain`
 for domain children or `_cdc` for crossing children. Further collisions gain
 the first free numeric suffix. Existing legal, non-colliding names stay stable.
+Domain-owned generated children are allocated afterward, reserving all those
+identities. Their module/file seed is `<domain-module>__child_<source>` and their
+instance seed is `<domain-instance>__<local-instance>`; collisions use the same
+portable allocator. Public schedule domain names and local child-instance names
+stay logical. The returned artifact map and semantic composition children expose
+the physical files, modules and hardware instances.
 
 For example, renaming `source` to `bus` in the complete event actor below
 changes its child label to `bus_instance`, while the public `bus_start` pin

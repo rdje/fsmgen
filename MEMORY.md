@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3` (pending)
-- next_action: Realize multi-domain generated transaction children under .39.2.2.2.3, then qualify domain storage reads and shared writer handoffs.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.46` (pending)
+- next_action: Repair generated-child named completion under .46, then library parent interfaces under .47 before domain storage-read and writer qualification.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

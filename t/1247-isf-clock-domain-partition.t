@@ -85,8 +85,8 @@ ISF
     my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
     is_deeply(
         sorted([keys %{$lowered->{files}}]),
-        [qw(clock_domain_partition__domain_bus.fsm clock_domain_partition__domain_core.fsm clock_domain_partition_top.fsm)],
-        'multi-domain lower emits one scheduled .fsm artifact per declared domain plus the generated top',
+        [qw(clock_domain_partition__domain_bus.fsm clock_domain_partition__domain_core.fsm clock_domain_partition__domain_core__child_helper.fsm clock_domain_partition_top.fsm)],
+        'multi-domain lower emits each domain, its generated helper and the top',
     );
     my $core_fsm = $lowered->{files}{'clock_domain_partition__domain_core.fsm'};
     like($core_fsm, qr/\A\(\?fsm:clock_domain_partition__domain_core\b/, 'core artifact uses the domain module name');

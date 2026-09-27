@@ -34,11 +34,7 @@ sub emit($self, $ir, $files) {
     my @lines;
     push @lines, "(?top:$top_name";
     push @lines, _emit_ports_block($ir);
-    push @lines, _emit_parent_instance($actor_name);
-    push @lines, map { _emit_spawn_instance($_) } @spawn_instances;
-    push @lines, map { _emit_library_instance($_) } @library_uses;
-    push @lines, map { _emit_atl_instance($_) } @atl_top_instances;
-    push @lines, _emit_wiring_block($ir, \@spawn_instances, \@library_uses, \@atl_top_instances);
+    push @lines, $self->emit_components($ir);
     push @lines, ')';
     push @lines, '';
     push @lines, _trim_trailing_newlines($files->{$parent_file});
@@ -53,6 +49,28 @@ sub emit($self, $ir, $files) {
 
     fsm_trace_exit('Emitter::CompositionTop emit', 2);
     return join("\n", @lines) . "\n";
+}
+
+# A domain contributes ordinary children and wiring to one flat outer top.
+# Keep logical handoff names in the IR; map only instance/module identities and
+# boundary endpoints at emission, so helper names and parameter values survive.
+sub emit_components($self, $ir, $names = {}) {
+    my @spawns = @{$ir->{spawn_instances} || []};
+    my @uses = @{$ir->{library_uses} || []};
+    my @atl = @{$ir->{atl_top_instances} || []};
+    return (
+        _emit_parent_instance($ir->{actor_name}, $names),
+        (map { _emit_spawn_instance($_, $names) } @spawns),
+        (map { _emit_library_instance($_, $names) } @uses),
+        (map { _emit_atl_instance($_, $names) } @atl),
+        _emit_wiring_block($ir, \@spawns, \@uses, \@atl, $names),
+    );
+}
+
+sub _mapped_name {
+    my ($names, $kind, $name) = @_;
+    return $name unless defined $name;
+    return ($names->{$kind} || {})->{$name} // $name;
 }
 
 sub _emit_ports_block {
@@ -99,14 +117,15 @@ sub _format_port_token {
 }
 
 sub _emit_parent_instance {
-    my ($actor_name) = @_;
-    return "  (?fsmc:$actor_name $actor_name)";
+    my ($actor_name, $names) = @_;
+    my $instance = _mapped_name($names, 'instances', $actor_name);
+    return "  (?fsmc:$instance $actor_name)";
 }
 
 sub _emit_spawn_instance {
-    my ($spawn) = @_;
-    my $instance = $spawn->{instance};
-    my $child = $spawn->{child};
+    my ($spawn, $names) = @_;
+    my $instance = _mapped_name($names, 'instances', $spawn->{instance});
+    my $child = _mapped_name($names, 'modules', $spawn->{child});
     my @overrides = @{$spawn->{parameter_overrides} || []};
 
     return "  (?fsmc:$instance $child)" unless @overrides;
@@ -123,9 +142,9 @@ sub _emit_spawn_instance {
 }
 
 sub _emit_library_instance {
-    my ($use) = @_;
-    my $instance = $use->{instance};
-    my $module = $use->{module};
+    my ($use, $names) = @_;
+    my $instance = _mapped_name($names, 'instances', $use->{instance});
+    my $module = _mapped_name($names, 'modules', $use->{module});
     my @overrides = @{$use->{parameter_overrides} || []};
 
     confess "CompositionTop emitter library use is missing an instance name\n"
@@ -147,12 +166,12 @@ sub _emit_library_instance {
 }
 
 sub _emit_atl_instance {
-    my ($top) = @_;
+    my ($top, $names) = @_;
     my @lines;
 
     for my $child (_atl_top_children($top)) {
-        my $instance = $child->{instance};
-        my $module = $child->{child_module};
+        my $instance = _mapped_name($names, 'instances', $child->{instance});
+        my $module = _mapped_name($names, 'modules', $child->{child_module});
 
         confess "CompositionTop emitter ATL top binding is missing an instance name\n"
             unless defined($instance) && length($instance);
@@ -169,7 +188,7 @@ sub _emit_atl_instance {
 }
 
 sub _emit_wiring_block {
-    my ($ir, $spawn_instances, $library_uses, $atl_top_instances) = @_;
+    my ($ir, $spawn_instances, $library_uses, $atl_top_instances, $names) = @_;
     my $actor_name = $ir->{actor_name};
     my %parent_port = map { $_->{name} => $_ } @{$ir->{ports} || []};
     my %child_ports_by_name = map {
@@ -380,15 +399,32 @@ sub _emit_wiring_block {
         }
     }
 
-    my @lines = ('  (?wiring:isf_wiring');
-    push @lines, map { "    $_" } @links;
+    my $wiring_name = $names->{wiring_name} // 'isf_wiring';
+    my @lines = ("  (?wiring:$wiring_name");
+    for my $link (@links) {
+        my @sources = _mapped_endpoints($link->[0], $names, 'sources');
+        my @targets = _mapped_endpoints($link->[1], $names, 'targets');
+        confess "Composition boundary '$link->[0]' has multiple drivers\n" if @sources != 1;
+        push @lines, map { "    ($sources[0] $_)" } @targets;
+    }
     push @lines, '  )';
     return join("\n", @lines);
 }
 
+sub _mapped_endpoints {
+    my ($endpoint, $names, $direction) = @_;
+    if ($endpoint =~ /\A([^.]+)\.(.+)\z/) {
+        my ($instance, $port) = ($1, $2);
+        return _mapped_name($names, 'instances', $instance) . ".$port";
+    }
+    return @{$names->{$direction}{$endpoint}}
+        if exists($names->{$direction}) && exists($names->{$direction}{$endpoint});
+    return $endpoint;
+}
+
 sub _link {
     my ($source, $target) = @_;
-    return "($source $target)";
+    return [$source, $target];
 }
 
 sub _spawn_input_binding_source_signals {

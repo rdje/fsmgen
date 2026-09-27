@@ -1730,8 +1730,15 @@ Selected lowering artifact strategy and current implementation status:
   generated event primitive endpoints for that domain.
 - No domain `.fsm` directly references another domain's local state, generated
   helper, transaction, rule, or port.
+- Generated transaction children are emitted beside their domain parent and
+  instantiated directly in the flat outer top. They retain the domain clock,
+  reset and ordinary activation/payload wiring; CDC endpoint inputs remain
+  internal. Their module/file and hardware-instance identities are allocated
+  after domain/CDC identities with the existing case-insensitive policy.
+  Transaction-local ports shadow same-name actor signals for domain validation.
+  Multi-domain child storage reads retain their separate qualification refusal.
 - A generated top artifact named `<actor>_top.fsm` owns inter-module wiring.
-  It instantiates domain modules and explicit CDC child interfaces through
+  It instantiates domain modules, generated transaction children and explicit CDC child interfaces through
   `?rtl`/`?rtlif` entries. It must not hide clocked behavior in top-level DT
   logic.
 - The acknowledged event primitive emits an explicit generated CDC child
