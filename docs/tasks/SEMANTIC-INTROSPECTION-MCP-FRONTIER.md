@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -704,10 +704,26 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.1: preserve terminal synchronization holds`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Select an executable controller contract for independent transactions and blocking local calls.`
   Acceptance: `Reproduce the disconnected first/second and retained plain-do graphs with independent runtime oracles. Audit intended trigger/concurrency, shared storage, caller input capture, delayed completion, nested/repeated calls, reset and report provenance contracts. Select explicit per-transaction control or another semantics-preserving representation through public IAL0 carriers; do not silently serialize independent transactions, duplicate actor state or infer support from admission. Split implementation and qualification leaves before editing the scheduler and commit the contract/evidence.`
   Verification: `The direct-port audit two_ports scheduled source contains separate first/second state loops inside one ?fsm root. Existing plain-do and event-after-do runtime evidence separately proves unreachable callers/consumers; generated child activation already has independently qualified controllers.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.1`
+  Status: `done`
+  Goal: `Retain independent-controller and local-call runtime baselines and test a public IAL0 carrier.`
+  Acceptance: `Use colliding-name-free sources in both declaration orders to distinguish unreachable independent controllers from local call defects. Test an explicitly authored controller-register/DT reference with simultaneous/separate/repeated requests and reset. Preserve complete source/oracle/output evidence in a tracked audit, identify conflict and binding dependencies, and commit the bounded audit without advertising a production repair or adopting an undocumented architecture.`
+  Verification: `Both declaration orders strict-check and compile but fail independent-controller and local-call runtime oracles. Explicit IAL0 references pass simultaneous/isolated/repeated activation, idle hold and partial-work reset. Tracked audit source hashes and result classifications verify; book examples/build pass. Production behavior is unchanged and architecture adoption remains under .1.2.2 after .51.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.1: retain direct controller runtime evidence`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.2`
+  Status: `pending`
+  Goal: `Adopt the controller contract with an explicit conflict and binding admission boundary.`
+  Acceptance: `After .51 restores decision-record capacity, use .1.2.1 evidence and current source contracts to adopt a backend-neutral architecture preserving concurrent progress, actor storage ownership, call capture/completion timing and report provenance. Require an owned transaction-write conflict policy before independently enabling existing writers. Record the durable decision and split implementation/qualification under .1.3; do not silently serialize, duplicate storage or treat a hand-authored carrier as implemented lowering.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3`
@@ -1308,6 +1324,13 @@ For FSMGen, the analogs are:
   Goal: `Diagnose the unclassified newline/API schedule mismatch retained during whole-aggregate qualification.`
   Acceptance: `After .49 and before partial writer implementation, replay T1904 multiple_readers with complete response diagnostics and a stable implementation snapshot. Inspect source-query failure and transport paths, determine whether concurrent implementation mutation explains the old error, and qualify any repair with deterministic controls. The original response payload was not printed and cannot be invented; keep that missing evidence explicit. Do not mark a product defect fixed solely from a passing retry.`
   Verification: `regression.log under .artifacts/whole-aggregate-writes records one missing result envelope for multiple_readers schedule while the implementation was being edited. All other cases and T1917 pass. multiple-readers-probe.log subsequently passes the isolated complete native/API/newline reports on stable files. T1904 now prints the actual response/stderr on mismatch. Root cause is not yet established; the missing first error payload prevents attribution.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51`
+  Status: `pending`
+  Goal: `Rollover the saturated decision-record collection while preserving exact history and active contracts.`
+  Acceptance: `Immediately after .32.1.3.3.1.2.1, audit the rationale collection and its declared lifecycle under LIVE_DOCUMENT_SIZE_CONTAINMENT.md. Select the smallest semantic rollover that restores bounded current decision capacity without losing active policy, stable decision identities, exact historical text, relative links or Knowledge Map answers. Follow the atomic classification/reconstruction/index/retrieval protocol; split safe leaves before writes, prove source identity and semantic closure separately, add enforcement and negative controls where needed, synchronize reader guidance and commit. Do not merely increase rollover allowance or reclassify overflow to evade containment. Then resume controller contract .32.1.3.3.1.2.2.`
+  Verification: `The staged gate for predecessor .32.1.3.3.1.1 reports rationale at 9663 lines and rollover_debt. Registry baseline 7996 plus growth 1667 exactly reaches that current use; the collection ceiling remains 10000. Local policy forbids ordinary allowance growth on rollover debt. This is a decision-record capacity prerequisite, not a request to weaken containment.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
@@ -2038,7 +2061,9 @@ documentation. Completed `.39.2.2.4.2` qualifies whole-aggregate writers and rep
 declared-root domain validation. Completed `.49.1` isolates generated-child ports
 and retains trigger payloads after start pulses. Completed `.49.2.1` audits direct
 port scope and its controller prerequisite. Completed `.32.1.3.3.1.1` repairs
-terminal synchronization. Next `.32.1.3.3.1.2/.3` select and qualify executable controllers.
+terminal synchronization. `.32.1.3.3.1.2.1` retains direct-controller failures and
+passing public-carrier references. Next `.51` rolls over the saturated rationale
+collection, then `.32.1.3.3.1.2.2` adopts the contract and `.1.3` implements it.
 Then `.49.2.2/.3` repair direct identities and qualify local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
 Partial writers and remaining writer leaves follow under `.39.2.2.4.3` onward,
@@ -5778,3 +5803,91 @@ without reset and then resets. Existing continued joins separately prove the
 repair did not add completion latency. Durability uses T1922, T1908 and the
 retained source, with synchronized book/spec/fact and staged doctrines.
 Independent controller reachability and direct-port scope remain open.
+
+## Direct controller audit — `.32.1.3.3.1.2`
+
+The public source and HDL probes under .artifacts/direct-controller-contract/
+reproduce declaration-order dependence without formal-port collisions.
+baseline_ab strict-checks and compiles, but its runtime observes first active
+and second inactive. Reversing declarations in baseline_ba instead observes
+second active and first inactive. The oracle requires the short transaction to
+finish while the long transaction is still waiting. Both baseline runs fail.
+reference_dt is an explicitly authored IAL0 reference with separate private
+controller registers and guarded DT bodies over shared actor storage. It
+strict-checks, compiles and passes simultaneous activation, short-versus-long
+progress, isolated repeated requests and reset during partial work. This proves
+the public carrier can express the intended independence; production ISF
+lowering is unchanged. The first probe script also emitted a Perl print-spacing
+warning; its serialization completed, and the script spelling is corrected
+without attributing any product behavior to that warning.
+
+The controller repair must separately qualify local callee entry insertion,
+held-start one-shot acceptance, caller payload capture and completion copy,
+nested/repeated calls and transaction-local identities. Existing rule-versus-
+transaction priority is assignment-local, not a stall or queue policy. Current
+_apply_rule_transaction_priority_resolution only selects rule/transaction
+pairs; _build_conflict_issues does not provide general transaction/transaction
+write conflict admission. Independently executing previously disconnected
+controllers therefore requires an explicit shared-write boundary before code
+can be promoted. This is a prerequisite owned by the controller implementation
+split, not permission to choose silent priority or to duplicate actor storage.
+
+The rationale collection is already declared rollover_debt. Its measured
+current lines reach baseline plus transition allowance; the local containment
+policy prohibits increasing that allowance for a rollover surface. A durable
+controller architecture decision therefore needs the declared rationale
+rollover before adoption. Keep the carrier evidence here and complete the
+bounded audit separately; schedule rationale containment before the contract
+leaf rather than hide the decision in implementation or relax its limits.
+
+The local-call baseline repeats the defect without formal ports. Callee-first
+starts its body repeatedly without the caller; caller-first remains blocked
+with neither side executed. The explicit IAL0 reference adds independent
+caller/callee selectors and held-start history. It passes exact call counts,
+repeated calls, idle hold and reset during a partial call. This does not qualify
+production local-call binding capture or nested calls; those remain separate
+contract/implementation requirements.
+
+Complete baseline/reference sources, shared runtime oracles, source hashes and
+observed results are tracked in docs/audits/direct-controller-contract-20260927.json.
+Runtime logs and compiled artifacts remain in the local probe directory. The
+hand-authored reference is a feasibility oracle, not generated production
+output. .1.2.1 owns this completed audit; .51 restores bounded decision capacity,
+then .1.2.2 adopts the architecture and splits executable implementation.
+
+The transaction chapter's opening every-clause-produces-a-state wording also
+conflicted with declaration-only ports/params/locals. This audit replaces it
+with the actual scheduled-state/data-path model and explicitly states that
+declarations alone do not execute. The broader direct-controller warning is
+now visible at both transaction and composition entry points.
+
+## Acceptance checklist — `.32.1.3.3.1.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The audit --check --json probes accept
+  both declaration orders, and HDL generation/Verilator compilation succeed,
+  but independent runtime oracles fail. Emitter::FSM::_emit_states concatenates
+  the transaction loops built separately by LoweringIR::_link_states inside
+  one encoded FSM root. The local-call case additionally lacks a gated callee
+  entry when none is authored. Full source/oracle/output evidence is retained
+  in docs/audits/direct-controller-contract-20260927.json.
+- [x] **ADDRESSED (verified)** — Independent-controller and local-call baselines
+  are now explicit expected failures in the tracked audit. Separate public IAL0
+  references prove private control registers and guarded DT bodies can preserve
+  concurrent progress and one-shot local-call acceptance over shared storage.
+  .1.2.2 owns contract adoption, .1.3 owns split implementation, .49.2 retains
+  scoped bindings and .51 owns the rationale rollover prerequisite. The book
+  warns at both relevant chapter entry points; no product defect is closed by
+  the reference or the audit alone.
+- [x] **NO REGRESSION** — .artifacts/direct-controller-contract/check.log
+  verifies all tracked source hashes, expected-failure classifications and
+  reference observations; T1376 reports All tests successful and mdBook builds.
+  No production code changed. Visual QA remains unqualified, and reference
+  simulations do not substitute for later production controller runtime gates.
+
+Re-derivation uses exact public source admission and emitted HDL. Falsification
+reverses declarations, overlaps short and long work, repeats isolated requests
+and resets partial execution; local-call probes distinguish free-running
+callee-first from stalled caller-first behavior. Durability retains complete
+sources/oracles, hashes and observed results in the tracked audit plus the
+canonical fact and explicit implementation queue. Architecture adoption awaits
+bounded rationale capacity; no hidden scheduling or contention policy is chosen.

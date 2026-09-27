@@ -1,7 +1,7 @@
 # Transactions
 
-A transaction is a behavioral sequence. Every clause produces a specific
-`.fsm` state with deterministic timing.
+A transaction is a behavioral sequence lowered into scheduled `.fsm` states
+and associated data-path logic. Declarations alone do not create execution.
 
 It is useful to think of an ISF transaction as a hardware task: it consumes
 cycles, can declare local ports as formal arguments, and activation sites can
@@ -12,6 +12,14 @@ software/SV-task call.
 
 It lowers to static scheduled `.fsm` states, handoff signals, mux selections,
 and generated top wiring.
+
+**Current direct-controller limitation:** direct sibling transactions can emit
+disconnected state loops inside the same encoded FSM. Independent triggers
+then execute only the first declared loop. Plain local calls also have retained
+reachability failures. Source admission and schedule reports do not qualify
+those runtime combinations; repair is owned by `.32.1.3.3.1`. Generated-child
+activation has separately qualified controllers, as described in
+[Composition](13f-composition.md).
 
 Today the task-like port model is shipped for `(ports ...)` bindings on `do`,
 `spawn`, and rule `trigger` activation sites.

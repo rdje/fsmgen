@@ -122,10 +122,13 @@ An explicit input binding takes precedence over the same-name inherited input;
 for example, binding a local bank index to `(! index)` does not also connect
 the actor's uninverted index. Storage reads use their owner handoffs separately.
 
-A retained plain local-`do` case with an untriggered callee before its caller
-currently leaves the caller unreachable in the emitted FSM. This scheduling
-defect is owned by `.32.1.3.3.1`; the generated-call qualification does not close
-local-call or independent-transaction reachability.
+Direct sibling transactions currently emit disconnected state loops inside the
+same encoded FSM. Independent-trigger probes execute only the first declared
+transaction; reversing declarations reverses which transaction can run. Plain
+local-`do` probes also fail: an untriggered callee before its caller runs without
+the call, while placing the caller first leaves it waiting for an unreachable
+callee. These scheduling defects are owned by `.32.1.3.3.1`; generated-call
+qualification does not close direct-call or independent-transaction reachability.
 Separate direct transactions also share raw formal-port names in the parent
 module. Reusing a formal name across those transactions can merge their
 storage identity. A formal name that matches actor storage can instead fail

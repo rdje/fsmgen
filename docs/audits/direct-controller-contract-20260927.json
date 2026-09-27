@@ -1,0 +1,111 @@
+{
+  "date": "2026-09-27",
+  "groups": [
+    {
+      "cases": [
+        {
+          "classification": "reproduced_production_defect",
+          "name": "baseline_ab",
+          "observed": {
+            "case": "baseline_ab",
+            "check_exit": 0,
+            "compile_ok": 1,
+            "generation_exit": 0,
+            "output": "EARLY a=1 b=0 a_done=0 b_done=0\n[146] %Fatal: tb.sv:21: Assertion failed in tb.both: independent short transaction must complete while long transaction waits\n%Error: .artifacts/direct-controller-contract/baseline_ab/tb.sv:21: Verilog $stop\nAborting...\n",
+            "runtime_ok": 0
+          },
+          "source": "(actor controller_probe (clock clk) (reset (rst_n async active_low))\n (interface (input start_a) (input start_b) (output value_a (width 8) (reset 0))\n  (output value_b (width 8) (reset 0)) (output done_a) (output done_b))\n (storage (var count_a (width 8) (reset 0)) (var count_b (width 8) (reset 0)))\n (rule observe 1 (value_a count_a) (value_b count_b))\n(transaction first (on start_a) (set count_a (+ count_a 1)) (wait 20) (complete done_a))\n(transaction second (on start_b) (set count_b (+ count_b 1)) (wait 2) (complete done_b)))",
+          "source_language": "isf",
+          "source_sha256": "1f3ad01b90cf708fe3ac7cab128e7393feab74a97ff982bc2b55de7e2888855d"
+        },
+        {
+          "classification": "reproduced_production_defect",
+          "name": "baseline_ba",
+          "observed": {
+            "case": "baseline_ba",
+            "check_exit": 0,
+            "compile_ok": 1,
+            "generation_exit": 0,
+            "output": "EARLY a=0 b=1 a_done=0 b_done=1\n[146] %Fatal: tb.sv:21: Assertion failed in tb.both: independent short transaction must complete while long transaction waits\n%Error: .artifacts/direct-controller-contract/baseline_ba/tb.sv:21: Verilog $stop\nAborting...\n",
+            "runtime_ok": 0
+          },
+          "source": "(actor controller_probe (clock clk) (reset (rst_n async active_low))\n (interface (input start_a) (input start_b) (output value_a (width 8) (reset 0))\n  (output value_b (width 8) (reset 0)) (output done_a) (output done_b))\n (storage (var count_a (width 8) (reset 0)) (var count_b (width 8) (reset 0)))\n (rule observe 1 (value_a count_a) (value_b count_b))\n(transaction second (on start_b) (set count_b (+ count_b 1)) (wait 2) (complete done_b))\n(transaction first (on start_a) (set count_a (+ count_a 1)) (wait 20) (complete done_a)))",
+          "source_language": "isf",
+          "source_sha256": "d4aa4ae28eb904949bf2fa00091c1d8f4607d30e756594fa43f0e2c3ced2d8a1"
+        },
+        {
+          "classification": "public_carrier_reference_pass",
+          "name": "reference_dt",
+          "observed": {
+            "case": "reference_dt",
+            "check_exit": 0,
+            "compile_ok": 1,
+            "generation_exit": 0,
+            "output": "EARLY a=1 b=1 a_done=0 b_done=1\nEARLY a=1 b=1 a_done=0 b_done=1\nINDEPENDENT_CONTROLLER_PASS\n- .artifacts/direct-controller-contract/reference_dt/tb.sv:37: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 1ns; walltime 0.000 s; speed 10.623 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n",
+            "runtime_ok": 1
+          },
+          "source": "(?dt:controller_probe\n (+system (clock clk) (areset rst_n))\n (+interface (input start_a) (input start_b) (output value_a) (output value_b)\n  (output done_a) (output done_b) (internal count_a) (internal count_b)\n  (internal pc_a) (internal pc_b))\n (+size (value_a 8 (reset 0)) (value_b 8 (reset 0)) (done_a 1) (done_b 1)\n  (count_a 8 (reset 0)) (count_b 8 (reset 0)) (pc_a 5 (reset 0)) (pc_b 3 (reset 0)))\n (-observe (<- (value_a> count_a)) (<- (value_b> count_b)))\n (-controller_a (?pc_a\n  (=0 (<start_a (<- (pc_a 1))))\n  (=1 (<- (count_a (+ count_a 1))) (<- (pc_a 2)))\n  (=2 (<- (pc_a 3)))\n  (=3 (<- (pc_a 4)))\n  (=4 (<- (pc_a 5)))\n  (=5 (<- (pc_a 6)))\n  (=6 (<- (pc_a 7)))\n  (=7 (<- (pc_a 8)))\n  (=8 (<- (pc_a 9)))\n  (=9 (<- (pc_a 10)))\n  (=10 (<- (pc_a 11)))\n  (=11 (<- (pc_a 12)))\n  (=12 (<- (pc_a 13)))\n  (=13 (<- (pc_a 14)))\n  (=14 (<- (pc_a 15)))\n  (=15 (<- (pc_a 16)))\n  (=16 (<- (pc_a 17)))\n  (=17 (<- (pc_a 18)))\n  (=18 (<- (pc_a 19)))\n  (=19 (<- (pc_a 20)))\n  (=20 (<- (pc_a 21)))\n  (=21 (<- (pc_a 22)))\n  (=22 (<1 (done_a> 1)) (<- (pc_a 0)))))\n (-controller_b (?pc_b\n  (=0 (<start_b (<- (pc_b 1))))\n  (=1 (<- (count_b (+ count_b 1))) (<- (pc_b 2)))\n  (=2 (<- (pc_b 3)))\n  (=3 (<- (pc_b 4)))\n  (=4 (<1 (done_b> 1)) (<- (pc_b 0)))))\n)",
+          "source_language": "fsm",
+          "source_sha256": "976d6558fd0a879c53a41a4980e06e72b3abc0dff993e3712aba069d76140f1a"
+        }
+      ],
+      "kind": "independent_transactions",
+      "testbench": "module tb;\n logic clk=0,rst_n=1,start_a=0,start_b=0;\n wire [7:0] value_a,value_b;\n wire done_a,done_b;\n int a_completions=0,b_completions=0;\n always #5 clk=~clk;\n controller_probe dut(.*);\n always @(posedge clk) begin\n  if(!rst_n) begin a_completions=0;b_completions=0;end\n  else begin if(done_a)a_completions++;if(done_b)b_completions++;end\n end\n task tick; @(posedge clk);#1;endtask\n task pulse(input bit a,input bit b);\n  @(negedge clk);start_a=a;start_b=b;\n  @(negedge clk);start_a=0;start_b=0;\n endtask\n task both;\n  pulse(1,1);repeat(12)tick;\n  $display(\"EARLY a=%0d b=%0d a_done=%0d b_done=%0d\",value_a,value_b,a_completions,b_completions);\n  if(value_a!==1 || value_b!==1 || a_completions!=0 || b_completions!=1)\n   $fatal(1,\"independent short transaction must complete while long transaction waits\");\n  repeat(25)tick;\n  if(a_completions!=1 || b_completions!=1)$fatal(1,\"both transactions must complete once\");\n endtask\n initial begin\n  #2;rst_n=0;#10;rst_n=1;\n  both;\n  pulse(0,1);repeat(12)tick;\n  if(value_a!==1 || value_b!==2 || a_completions!=1 || b_completions!=2)$fatal(1,\"isolated short reactivation\");\n  pulse(1,0);repeat(30)tick;\n  if(value_a!==2 || value_b!==2 || a_completions!=2 || b_completions!=2)$fatal(1,\"isolated long reactivation\");\n  pulse(1,1);repeat(3)tick;\n  @(negedge clk);rst_n=0;repeat(3)tick;\n  if(value_a!==0 || value_b!==0)$fatal(1,\"reset retained partial work\");\n  @(negedge clk);rst_n=1;\n  both;\n  $display(\"INDEPENDENT_CONTROLLER_PASS\");$finish;\n end\n initial begin #10000;$fatal(1,\"timeout\");end\nendmodule\n"
+    },
+    {
+      "cases": [
+        {
+          "classification": "reproduced_production_defect",
+          "name": "baseline_ab",
+          "observed": {
+            "case": "baseline_ab",
+            "check_exit": 0,
+            "compile_ok": 1,
+            "generation_exit": 0,
+            "output": "CALL child=7 parent=0 parent_done=0 child_done=6\n[266] %Fatal: tb.sv:19: Assertion failed in tb.activation: blocking local call must execute each side once\n%Error: .artifacts/direct-controller-contract/local/baseline_ab/tb.sv:19: Verilog $stop\nAborting...\n",
+            "runtime_ok": 0
+          },
+          "source": "(actor controller_probe (clock clk) (reset (rst_n async active_low))\n (interface (input start_a) (input start_b) (output value_a (width 8) (reset 0))\n  (output value_b (width 8) (reset 0)) (output done_a) (output done_b))\n (storage (var count_a (width 8) (reset 0)) (var count_b (width 8) (reset 0)))\n (rule observe 1 (value_a count_a) (value_b count_b))\n(transaction worker (set count_a (+ count_a 1)) (wait 2) (complete done_b))\n(transaction parent (on start_a) (do worker) (set count_b (+ count_b 1)) (complete done_a)))",
+          "source_language": "isf",
+          "source_sha256": "ff88edb65b1ebb4e267bfd668104b5ee65c700c75edd58f7cacfd2b5bd323fc9"
+        },
+        {
+          "classification": "reproduced_production_defect",
+          "name": "baseline_ba",
+          "observed": {
+            "case": "baseline_ba",
+            "check_exit": 0,
+            "compile_ok": 1,
+            "generation_exit": 0,
+            "output": "CALL child=0 parent=0 parent_done=0 child_done=0\n[266] %Fatal: tb.sv:19: Assertion failed in tb.activation: blocking local call must execute each side once\n%Error: .artifacts/direct-controller-contract/local/baseline_ba/tb.sv:19: Verilog $stop\nAborting...\n",
+            "runtime_ok": 0
+          },
+          "source": "(actor controller_probe (clock clk) (reset (rst_n async active_low))\n (interface (input start_a) (input start_b) (output value_a (width 8) (reset 0))\n  (output value_b (width 8) (reset 0)) (output done_a) (output done_b))\n (storage (var count_a (width 8) (reset 0)) (var count_b (width 8) (reset 0)))\n (rule observe 1 (value_a count_a) (value_b count_b))\n(transaction parent (on start_a) (do worker) (set count_b (+ count_b 1)) (complete done_a))\n(transaction worker (set count_a (+ count_a 1)) (wait 2) (complete done_b)))",
+          "source_language": "isf",
+          "source_sha256": "d7ec7af2412c2cdbc7adcbabac1e80dc677453bdac4e7718d2db0d7681cf3f47"
+        },
+        {
+          "classification": "public_carrier_reference_pass",
+          "name": "reference_dt",
+          "observed": {
+            "case": "reference_dt",
+            "check_exit": 0,
+            "compile_ok": 1,
+            "generation_exit": 0,
+            "output": "CALL child=1 parent=1 parent_done=1 child_done=1\nCALL child=2 parent=2 parent_done=2 child_done=2\nCALL child=1 parent=1 parent_done=1 child_done=1\nLOCAL_CONTROLLER_PASS\n- .artifacts/direct-controller-contract/local/reference_dt/tb.sv:33: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 1ns; walltime 0.000 s; speed 10.544 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n",
+            "runtime_ok": 1
+          },
+          "source": "(?dt:controller_probe\n (+system (clock clk) (areset rst_n))\n (+interface (input start_a) (input start_b) (output value_a) (output value_b)\n  (output done_a) (output done_b) (internal count_a) (internal count_b)\n  (internal pc_a) (internal pc_b) (internal worker_start)\n  (internal worker_done) (internal start_seen))\n (+size (value_a 8 (reset 0)) (value_b 8 (reset 0)) (done_a 1) (done_b 1)\n  (count_a 8 (reset 0)) (count_b 8 (reset 0)) (pc_a 3 (reset 0)) (pc_b 3 (reset 0))\n  (worker_start 1) (worker_done 1) (start_seen 1 (reset 0)))\n (-observe (<- (value_a> count_a)) (<- (value_b> count_b)))\n (-history (<- (start_seen worker_start)))\n (-caller (?pc_a\n  (=0 (<start_a (<- (pc_a 1))))\n  (=1 (= (worker_start 1)) (<worker_done (<- (pc_a 2))))\n  (=2 (<- (count_b (+ count_b 1))) (<- (pc_a 3)))\n  (=3 (<1 (done_a> 1)) (<- (pc_a 0)))))\n (-callee (?pc_b\n  (=0 (<(& worker_start (! start_seen)) (<- (pc_b 1))))\n  (=1 (<- (count_a (+ count_a 1))) (<- (pc_b 2)))\n  (=2 (<- (pc_b 3)))\n  (=3 (<- (pc_b 4)))\n  (=4 (<1 (worker_done 1)) (<1 (done_b> 1)) (<- (pc_b 0)))))\n)\n",
+          "source_language": "fsm",
+          "source_sha256": "93b71a75f48a54cb9e4ce03e63a5ee996fda7d6ba0be573f52ccc4609b84fb51"
+        }
+      ],
+      "kind": "blocking_local_call",
+      "testbench": "module tb;\n logic clk=0,rst_n=1,start_a=0,start_b=0;\n wire [7:0] value_a,value_b;\n wire done_a,done_b;\n int a_completions=0,b_completions=0;\n always #5 clk=~clk;\n controller_probe dut(.*);\n always @(posedge clk) begin\n  if(!rst_n) begin a_completions=0;b_completions=0;end\n  else begin if(done_a)a_completions++;if(done_b)b_completions++;end\n end\n task tick; @(posedge clk);#1;endtask\n task activation(input int expected);\n  @(negedge clk);start_a=1;\n  @(negedge clk);start_a=0;\n  repeat(24)tick;\n  $display(\"CALL child=%0d parent=%0d parent_done=%0d child_done=%0d\",value_a,value_b,a_completions,b_completions);\n  if(value_a!==8'(expected) || value_b!==8'(expected) || a_completions!=expected || b_completions!=expected)\n   $fatal(1,\"blocking local call must execute each side once\");\n  repeat(8)tick;\n  if(value_a!==8'(expected) || b_completions!=expected)$fatal(1,\"held call start reexecuted callee\");\n endtask\n initial begin\n  #2;rst_n=0;#10;rst_n=1;\n  activation(1);activation(2);\n  @(negedge clk);start_a=1;\n  @(negedge clk);start_a=0;\n  repeat(3)tick;\n  @(negedge clk);rst_n=0;repeat(3)tick;\n  if(value_a!==0 || value_b!==0)$fatal(1,\"reset retained partial work\");\n  @(negedge clk);rst_n=1;\n  activation(1);\n  $display(\"LOCAL_CONTROLLER_PASS\");$finish;\n end\n initial begin #10000;$fatal(1,\"timeout\");end\nendmodule\n"
+    }
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.1",
+  "production_change": false,
+  "repository_revision": "70a4d88d1ed196b76e25cadedaaae536aba28fa2",
+  "schema_version": 1
+}

@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2` (pending)
-- next_action: Select the executable direct transaction controller contract and split its implementation; qualify it before resuming .49.2 port identities and local calls.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51` (pending)
+- next_action: Rollover the saturated decision-record collection with exact history and active-contract closure; then adopt the direct controller contract under .32.1.3.3.1.2.2.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
