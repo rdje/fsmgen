@@ -1,16 +1,18 @@
 ---
 id: isf-direct-transaction-port-scope
-title: Direct transaction ports still share raw identities and require controller qualification
+title: Direct transaction formal identity plan and remaining scope integration
 answers:
   - "can direct transaction ports share actor storage names?"
   - "why does a caller local port bind with the actor storage width?"
   - "do different direct transactions have independent same-named formal ports?"
   - "what must precede direct transaction port scope repair?"
+  - "how are private direct formal identities planned without changing execution?"
+  - "why do bit helpers use an actor width instead of a shadowing formal width?"
 date: 2026-09-27
 status: current
 tags: [isf, transactions, ports, scope, storage, bindings, control-flow]
-evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
-reverify: Read the .49.2.1 direct-port audit reproduction recipes and rerun public check/schedule/semantic probes under the RAM guard; inspect the scoped task status before inferring runtime support.
+evidence: perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
 ---
 
 Generated children have separately qualified local port metadata under .49.1.
@@ -43,4 +45,30 @@ consumer. Its leaves separate terminal synchronization, controller contract
 selection and executable repair. Existing binding tests prove artifact/report
 shape, not completion of that runtime prerequisite.
 
-Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.1.
+FormalIdentityPlan now provides a detached declaration plan. Owner identities
+are structured actor/transaction/formal tuples. Each direct formal receives a
+separate proposed physical name; generated child formals retain their public
+name in their own module. Allocation is deterministic under source declaration
+permutation and checks case-folded collisions through the existing portable
+identifier allocator. Source names and complete local declaration metadata
+remain separate from physical names; no actor reset/type/width is inherited.
+Lookup stays within the requested owner and returns a detached value.
+
+The caller must supply generated-child membership and a complete additional
+physical reservation set. Source identifiers are conservatively reserved too.
+This is a planner contract, not proof that the current lowerer supplies that
+complete set: production integration has not happened. Private selectors,
+monitor/counter names, named drives, handoffs and implicit samples must be
+accounted at integration; unsupported grammar cannot be rewritten by guessing.
+.49.2.2.2 owns typed operand/binding rewriting and .3 owns production integration
+and source-facing report preservation. Existing public lowering is unchanged.
+
+A separate parser prerequisite is confirmed by the paired tracked audit:
+_bit_op_width_map omits transaction ports, so clear-bit validates against the
+actor's same-name width. A wider formal is incorrectly rejected and a narrower
+formal incorrectly admits an out-of-range bit. That helper also feeds set-field,
+rotate and bit/field tests; those callers need regression qualification.
+.49.2.2.4 repairs this before .2 because rewriting after parsing cannot undo a
+wrong desugared mask or an earlier rejection. The planner does not fix it.
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1.

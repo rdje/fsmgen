@@ -259,6 +259,12 @@ supported `.fsm` operator. `set-bit` / `toggle-bit` masks are width-independent;
 its declaration — a transaction `(local …)`, an interface port, or a
 `(storage (var …))`.
 
+**Current formal-port limitation:** these width checks omit transaction port
+declarations. A same-named actor declaration can therefore supply the wrong
+width, causing an incorrect rejection or range acceptance. Formal scope repair
+is tracked under `.49.2.2.4`; private-name planning alone does not correct this
+parser behavior.
+
 A complete runnable register-control example (each output reset to a known value,
 one bit op each):
 

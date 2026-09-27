@@ -1,0 +1,43 @@
+{
+  "baseline_revision": "54637e78d5591f8f0ee77d1c9cb58af6dbbc8b17",
+  "cases": [
+    {
+      "actor_width": 4,
+      "error": "Error: (clear-bit status 7) in transaction 'main' \u2014 bit index 7 is out of range for the 4-bit register 'status'",
+      "expected": "accept index 7 in the 8-bit formal",
+      "port_width": 8,
+      "source": "(actor bit_scope (clock clk) (interface (input start) (output done)) (storage (var status (width 4))) (transaction main (ports (output status (width 8))) (on start) (clear-bit status 7) (complete done)))"
+    },
+    {
+      "actor_width": 8,
+      "clauses": [
+        [
+          "on",
+          "start"
+        ],
+        [
+          "set",
+          "status",
+          [
+            "&",
+            "status",
+            127
+          ]
+        ],
+        [
+          "complete",
+          "done"
+        ]
+      ],
+      "expected": "reject index 7 outside the 4-bit formal",
+      "port_width": 4,
+      "source": "(actor bit_scope (clock clk) (interface (input start) (output done)) (storage (var status (width 8))) (transaction main (ports (output status (width 4))) (on start) (clear-bit status 7) (complete done)))"
+    }
+  ],
+  "date": "2026-09-27",
+  "mechanism": "Parser::_bit_op_width_map omits transaction ports before desugaring clear-bit. Actor width therefore determines the range check and mask.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4",
+  "reverify": "Parse each source using FSM::Adapter::ISF->new->parse_source under scripts/run_with_ram_guard.sh; compare the first diagnostic line or transaction clauses.",
+  "runtime_claim": false,
+  "schema_version": 1
+}

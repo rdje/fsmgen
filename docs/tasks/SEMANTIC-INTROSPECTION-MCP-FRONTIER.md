@@ -1343,10 +1343,39 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.1: bound direct port scope prerequisites`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Lower direct transaction ports to collision-safe private identities.`
   Acceptance: `After .49.2.1, controller contract .32.1.3.3.1.2.2 and shadow ownership .32.1.3.3.1.3.1, implement scope-aware operand and binding resolution before .32.1.3.3.1.3.2. Preserve actor owner metadata, local aliases and resets, caller versus callee names, source provenance and public reports. Qualify direct input/output and rule payloads independently, including same names in different transactions and user names resembling generated prefixes. No global textual substitution or actor-role overwrite is permitted.`
   Verification: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1`
+  Status: `done`
+  Goal: `Define scoped formal identities and deterministic private-name planning.`
+  Acceptance: `Build a detached typed identity plan for direct transaction formals with explicit actor/transaction separation and supplied complete reserved names. Preserve source declaration metadata, reject malformed/ambiguous ownership, and qualify declaration permutations, case-fold/prefix collisions, source/plan isolation and generated-child exclusion. Keep execution unchanged; document integration requirements and commit before operand rewriting.`
+  Verification: `T1925 qualifies deterministic direct names, scoped lookup, generated-child exclusion, case/prefix collisions, declaration and lookup isolation, malformed ownership and the still-failing production boundary. Existing shadow, identifier policy and binding/report regressions pass. Parser prerequisite .4 is newly reproduced and scheduled next.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2`
+  Status: `pending`
+  Goal: `Resolve transaction operands and activation endpoints through their lexical scopes.`
+  Acceptance: `After .1 and parser prerequisite .4, implement typed operand and binding rewrites over explicit signal positions. Distinguish caller actuals and callee formals, generated child public formals, actor rule/drives, source state/type/member/point names, messages and specialization parameters. Cover supported clause/expression families with mutation and preservation controls. Do not use global string substitution or silently guess unknown grammar; commit the qualified resolver before production integration.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3`
+  Status: `pending`
+  Goal: `Integrate scoped formal lowering and preserve public source identities.`
+  Acceptance: `After .1/.2, connect declaration maps, width/type/reset/role propagation, caller-local binding validation, local call endpoints and rule payload destinations. Allocate against actual actor/generated/private declarations, preserve generated child public ports and authored binding report names, and reject any unresolved physical collision. Qualify actor/local, sibling/caller/callee, input/output and generated-prefix cases through strict artifacts and complete native/API/MCP reports; keep runtime limits explicit until .49.2.3. Update book/spec/facts and commit before payload repair .32.1.3.3.1.3.2.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4`
+  Status: `pending`
+  Goal: `Honor formal widths during parser bit-operation desugaring.`
+  Acceptance: `Run immediately after .1 and before .2. Reproduce valid wider-formal rejection and invalid narrower-formal acceptance for clear-bit index 7 with actor/formal status widths reversed. Fix parser lexical width precedence and qualify set/clear/toggle, set-field, rotate and bit/field tests, port-only and actor-shadow cases, aliases/parameter widths and nested bodies without weakening range checks. Verify source expansion and emitted behavior where current controller/scope support permits it; keep production scope integration .3 explicit. Update book/facts and commit.`
+  Verification: `Parser::_bit_op_width_map visits local declarations, actor interface and actor storage but omits transaction ports. The retained direct-formal-bit-width-scope audit records the reversed-width counterexample; repair is scheduled ahead of typed rewriting because the incorrect expansion happens before LoweringIR.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.3`
@@ -6293,3 +6322,66 @@ The first staged doctrine gate passed task acceptance and claim checks but
 found the added import-map row one line beyond focused_documents' owned
 transition allowance. Apply its existing ratchet under this active tree,
 without changing health targets or hard ceilings, then rerun the full gate.
+
+
+## Formal identity planning — `.49.2.2.1`
+
+The namespace repair spans declaration maps, explicit signal operands,
+caller/callee binding endpoints, rule payloads and source-facing report names.
+It is split into detached identity planning (.1), typed rewriting (.2) and
+production integration (.3). Plans must accept complete additional physical
+reservations from the eventual lowering integration; source declarations alone
+cannot prove absence of collisions with generated counters, monitors or ports.
+No isolated planner is claimed to fix the existing parent merge or runtime.
+
+While checking the parser boundary, _bit_op_width_map was found to omit
+transaction ports. A paired public-parser probe confirms that actor status
+width 4 with formal status width 8 rejects clear-bit index 7, while actor
+width 8 with formal width 4 accepts it and expands mask 127. This is a real
+lexical range-validation defect before lowering, independently of the already
+owned role/width merge. Its sources/results are retained in
+`docs/audits/direct-formal-bit-width-scope-20260927.json`; .49.2.2.4 owns repair
+immediately after this plan slice and before typed operand rewriting.
+
+The detached FormalIdentityPlan preserves source declaration metadata under
+actor/transaction/formal tuples and allocates distinct direct private names
+against source identifiers plus mandatory caller-supplied physical reservations.
+Generated child formals keep their own module interface names. Scoped lookup
+returns detached data and does not borrow another transaction's declaration.
+The planner is intentionally not imported by the production scheduler yet;
+.2/.3 still own typed rewriting, complete reservation integration, declaration
+maps and source-facing binding reports. No emitted controller/port changes are
+claimed by this leaf, and the production merge rejection remains a test control.
+
+T1925 covers source declaration permutations, same-name formals, actor shadowing,
+case-folded and concatenated-prefix collisions, type/width/reset isolation,
+empty scopes, detached nested metadata and malformed owner/context controls.
+The first run only failed its integration-boundary assertion because the regex
+expected "conflicting width" while the actual diagnostic says "signal width
+for 'status' conflicts across transactions". The assertion now matches that
+exact mechanism; no lowerer behavior was changed to satisfy it.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — first.log records the existing merge
+  rejection at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5610: direct formal
+  status is merged under actor status's physical identity. The paired parser
+  probe additionally reports an out-of-range rejection at
+  perl/FSM/Adapter/ISF/Parser.pm line 747 when the formal is wider; reversing
+  widths incorrectly admits the same operation. These are distinct mechanisms.
+- [x] **ADDRESSED (verified)** — T1925 proves a detached, deterministic owner
+  plan with separate physical identities and preserved local declarations,
+  while generated child interfaces keep their authored names. The scope repair
+  now has explicit typed-rewrite/integration children and a scheduled parser
+  prerequisite. The planner does not claim a production scope or parser fix.
+- [x] **NO REGRESSION** — .artifacts/formal-identity-plan/focused.log reports
+  All tests successful for T1925, T1924, T1546, T1241 and T1243. Existing logical
+  membership, generated identifier policy and transaction binding/report
+  behavior remain covered. The new module is not in the production import tree.
+
+Re-derivation uses the planner tests and retained parser source cases.
+Falsification changes declaration order, reservation case/prefixes, ownership
+shape, lookup data and actor/formal width direction. Durability is the module,
+test, canonical scope card and tracked parser audit, with .49.2.2.4 next.
+The book now names the actual formal-width limitation instead of implying
+that an actor-side width qualifies a shadowing transaction formal. Runtime
+scope and controller qualification remains open; no new DEVELOPMENT_NOTES
+entry is needed beyond the canonical scope record and decision 0109.
