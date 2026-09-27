@@ -45,7 +45,8 @@ Domain storage reads are qualified by `.39.2.2.2.3.2` and T1916 using the same
 internal owner-to-child handoffs. Generated do wires retained inherited actor inputs, excluding explicitly bound
 child inputs; T1916's inverted bank-index binding qualifies that precedence.
 Sole scalar domain child writes are qualified by T1918 under `.39.2.2.3.2`.
-Competing/bank/aggregate writers, the watchdog TODO and multi-domain VHDL remain
+T1919 extends whole-register writes to packed records/lists, including imported aliases.
+Competing/bank/partial writers, the watchdog TODO and multi-domain VHDL remain
 outside this qualification. A retained plain local-do case starts in the untriggered worker
 loop and leaves caller states unreachable; `.32.1.3.3.1` owns that scheduling
 repair. Generated-call qualification does not close the local-call boundary.

@@ -124,7 +124,7 @@ for my $case (
             is_deeply($response->{result}{structuredContent}{report},$report,"complete native/API $kind parity");
             my $wire=$capture->([$^X,'bin/fsmgen-mcp','--workspace-root','.'],$json->encode($request)."\n");
             is($wire->{exit_code},0,"newline $kind");
-            is_deeply($json->decode($wire->{stdout}),$response,"complete newline/API $kind parity");
+            is_deeply($json->decode($wire->{stdout}),$response,"complete newline/API $kind parity") or diag($wire->{stdout}, $wire->{stderr});
             if($kind eq 'semantic') {
                 my %inputs=map {$_->{name}=>1} @{$report->{semantic}{signal_analysis}{inputs}};
                 my @expected_inputs = ((map { $_->{name} } @{$actor->{interface}{inputs}}), 'clk', 'rst_n');
@@ -162,7 +162,7 @@ for my $write ('(set status 37)','(update status 37)','(set status[3:0] 7)','(st
         my $diagnostic = $write =~ /\[/
             ? qr/set target must be a scalar HDL identifier or declared aggregate storage path/
             : $write =~ /slots/
-                ? qr/only full-width scalar sequential writes are qualified/
+                ? qr/only full-width variable sequential writes are qualified/
                 : qr/parent writer and generated child writer/;
         like($r->{stdout}.$r->{stderr}, $diagnostic, 'earliest authoritative writer diagnostic');
     };

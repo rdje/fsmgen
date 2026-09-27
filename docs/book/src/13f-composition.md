@@ -303,8 +303,8 @@ Stopping or resetting a sibling domain does not advance or reset that state.
 Scalar aliases, packed aggregates and scalarized bank-element reads use the
 same internal routing. Direct reads from a sibling domain are rejected with a
 clock-domain ownership diagnostic.
-Actor and domain owners also support full-width scalar writes from one
-generated child instance per register. The child sends combinational write
+Actor and domain owners also support full-width scalar or packed record/list
+writes from one generated child instance per register. The child sends combinational write
 data and an enable while executing the authored assignment. The parent owns
 the register and applies the write on that same clock edge. No payload register,
 extra state, or wait until child completion is introduced. Later child reads
@@ -334,12 +334,46 @@ completion-gated output binding semantics.
 
 The ownership check rejects a parent writer or another generated instance
 writing the same register, even if the author expects them to be exclusive.
-Multiple scalar targets are permitted when each has one writer. Bank and
-aggregate/member writes remain unqualified and fail explicitly. Source operations that lower to a full-width
+Multiple register targets are permitted when each has one writer. Bank and
+partial/member writes remain unqualified and fail explicitly. Source operations that lower to a full-width
 scalar assignment retain that whole-register meaning; this does not introduce
 partial-write arbitration. Decision `0107` owns the remaining competing-writer
 and broader storage contracts. Transaction-local variables and explicit port bindings retain
 their existing semantics.
+
+An explicit transaction port that reuses an actor-storage name currently hits
+a storage-role merge conflict before child handoffs are selected. This known
+scope defect is tracked under `.49`; use distinct transaction-port names in the
+qualified surface. Explicit ports still retain their domain when an actor port
+has the same name.
+
+A parent that ends directly in `await_all` can currently emit a missing
+continuation target. Follow the join with an explicit `(complete PORT)` in the
+qualified surface; the terminal-join defect is owned by `.32.1.3.3.1`.
+
+Whole aggregate writes preserve the storage's declared alias and packed layout
+on the private child output and owner input. Local, nested and imported aliases
+use the same owner-only register/reset contract. For example:
+
+```lisp
+(actor aggregate_shared_writer
+  (clock clk) (reset (rst_n async active_low))
+  (types (type pair_t (record (high (bits 4)) (low (bits 4)))))
+  (interface (input start) (input data (width 8))
+    (output observed (width 8)) (output done))
+  (storage (var value (type pair_t) (reset 19)))
+  (rule observe 1 (observed value))
+  (transaction worker
+    (wait 2) (set value data) (complete done))
+  (transaction parent (on start)
+    (spawn worker as writer) (await_all done) (complete done)))
+```
+
+Here `data` replaces the whole packed value on the authored write edge. This
+does not yet permit child `(set value.high ...)` member updates. A parent rule
+or another child writing any part of the same register is also rejected until
+an explicit merge/arbitration contract is qualified. Aggregate interface and
+transaction ports remain separate from these private generated handoffs.
 
 In a multi-domain actor, the generated writer and its storage must belong to
 the same domain. Only that owner's clock advances the register, and only that

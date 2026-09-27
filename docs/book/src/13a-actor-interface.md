@@ -602,13 +602,14 @@ Generated transaction children read scalar, packed aggregate and scalarized
 bank storage through explicit live handoffs, including inside independent
 clock domains. Reads create neither public top inputs nor private child register
 copies; unrelated storage is absent from the child. Updates remain visible
-after activation. Full-width scalar writes from a sole generated instance use
+after activation. Full-width scalar and packed aggregate writes from a sole
+generated instance use
 combinational data/enable handoffs and update the owning register on the original
 assignment edge. The owner alone holds its register and reset; domain crossings
 are not implicit. Explicit transaction ports and transaction-local storage keep
 their separate roles.
 
-Generated-child aggregate/member and bank writes, plus competing parent/child
+Generated-child partial/member and bank writes, plus competing parent/child
 or multiple-child writers, remain refused while their contracts are qualified.
 The existing `storage_port` resource arbitrates rule users; it does not supply
 an implicit priority or stall policy for child transactions. See

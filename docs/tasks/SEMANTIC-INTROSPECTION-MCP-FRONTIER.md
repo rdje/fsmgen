@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -691,6 +691,7 @@ For FSMGen, the analogs are:
   Acceptance: `Use the retained event-after-activation failure and non-colliding control to establish the scheduling contract, including plain multi-transaction and existing dual-event controls; repair lost independent transaction reachability or fail closed at the documented unsupported boundary with accurate capability/report evidence. Prefer completing intended supported behavior. Require independent event and activation oracles, repeated/reset controls, public artifact/API/MCP qualification and synchronized book before closure.`
   Verification: `The generated core FSM starts at worker_idle_ext and returns there through worker_done_ready/worker_done_req. core_consume_idle_0 and its completion state form a separate unreachable component; an event-after-do source strict-checks but its independent oracle reports expected 1 observed 0. The naming slice owns exact retained source/HDL/control evidence. No successful mixed-transaction runtime claim is made.`
   Additional reproduction: `The .39.2.2.2.3.2 plain-do control strict-admits but times out: core FSM starts at worker_wait_0 and cycles worker_done_11 back there, leaving parent_idle_0/parent_do_1 unreachable. Recreate from T1916 text by replacing spawn worker as reader with do worker and removing only the core parent await_all done; keep its remaining source and spawn HDL oracle. Retained source/materialized FSM/HDL are under .artifacts/domain-storage-reads/plain-do; spawn-do-runtime.log records the timeout. Repair here before metadata signoff; generated-do storage reads remain separately qualified.`
+  Terminal-await reproduction: `During .39.2.2.4.2, domain-qualified.log exposes Use of uninitialized value target at Emitter/FSM.pm line 336. The retained .artifacts/whole-aggregate-writes/terminal-await.isf ends the parent immediately after await_all done; _emit_transitions reads a missing first transition target for terminal sync_all. Recreate from T1920's explicit aux_seen input child control by removing parent complete finished and its output. Own the terminal-await scheduling/emission repair here alongside reachability; current positive domain controls use an explicit completion.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.2`
@@ -1196,11 +1197,12 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.1: split broader writer contracts`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify full-width packed aggregate writes from a sole generated-child instance.`
   Acceptance: `Extend only whole-record/list register handoffs, preserving exact aliases, widths, reset ownership and live reads without extra cycle latency. Cover nested/local/imported types, spawn/generated do, independent domains, repeated/guarded updates, source replay, exact interfaces and full native/API/MCP reports. Keep member/partial/bank and competing writes fail-closed until their leaves; sync docs and commit.`
-  Verification: `Whole-value assignment needs no partial merge; current ChildStorageOwnership explicitly restricts the resolved type to bits. Existing typed read routing and aggregate module typedef ownership are prerequisites already qualified.`
-  Commit: `pending`
+  Verification: `T1917/T1919 qualify ordinary and independent-domain whole record/list writes with exact local/imported aliases, original edges, live read-modify-write values, repeated/guarded updates, owner reset, replay, interfaces and complete native/API/MCP reports. T1920/T1247 qualify the discovered aggregate-path and inferred-target domain ownership repair. T1916/T1904 and book checks pass. Explicit storage-port name collisions and the first unclassified MCP envelope remain owned by .49/.50.`
+  Qualification defect: `T1919 aggregate crossing control fails in .artifacts/whole-aggregate-writes/final-runtime.log: aux_status.payload reaches composition as an unconnected child input instead of a domain violation. LoweringIR::_validate_domain_signal_access ignores non-identifier paths. Own the narrow root-ownership validation repair here before this slice can close; verify member/index reads and writes and preserve explicit transaction-port shadowing. The retained domain-before.log confirms public lowering accepts sibling-domain member reads, member writes and whole-register writes: inferred assignment targets take precedence over declared actor ownership. Repair that precedence while preserving explicit local ports.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.2: qualify whole aggregate child writes`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4.3`
   Status: `pending`
@@ -1221,6 +1223,20 @@ For FSMGen, the analogs are:
   Goal: `Define and implement explicit generated-child storage contention contracts without silent priority.`
   Acceptance: `After sole-writer surfaces, select roadmap-aligned ownership/merge/arbitration semantics for parent-versus-child and multiple generated writers. Separate static exclusion, concurrent disjoint updates and true contention; define request retention, grant visibility and whether denied transactions stall before any implementation. Reuse published resource priorities only through a declared extension, split safe leaves, prove adversarial concurrency/runtime/report parity and keep all unqualified combinations rejected. Ask only if repository direction cannot resolve a required policy decision.`
   Verification: `Existing storage_port priority/round_robin gates whole rule DTs for a cycle; its rule-only users do not define generated-child denial or progress semantics. Decision 0107 forbids silent priority.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49`
+  Status: `pending`
+  Goal: `Resolve explicit transaction-port shadowing against declared actor storage roles.`
+  Acceptance: `Immediately after .39.2.2.4.2, reproduce the retained direct and generated input/output shadow cases through the public parser/lowerer and establish the supported local-port contract. Repair role merging or introduce a precise owned boundary if independently scoped storage is required, preserving generated-child explicit bindings. Prove runtime/interface/report behavior for the selected fix, update docs and commit before partial writer work.`
+  Verification: `T1920's first direct worker controls fail in .artifacts/whole-aggregate-writes/domain-controls.log with storage role for scalar conflicts across transactions while merging worker at LoweringIR::_merge_storage_roles. The actor owns scalar in aux; a core transaction declares an explicit scalar input or output and reads/writes it. The diagnostic is a role-merge conflict, not a domain failure. Generated-worker controls in domain-controls-final.log fail at the same merge boundary before child storage selection. Both direct and generated local scope defects is owned here and must not be hidden by broad shadowing claims.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.50`
+  Status: `pending`
+  Goal: `Diagnose the unclassified newline/API schedule mismatch retained during whole-aggregate qualification.`
+  Acceptance: `After .49 and before partial writer implementation, replay T1904 multiple_readers with complete response diagnostics and a stable implementation snapshot. Inspect source-query failure and transport paths, determine whether concurrent implementation mutation explains the old error, and qualify any repair with deterministic controls. The original response payload was not printed and cannot be invented; keep that missing evidence explicit. Do not mark a product defect fixed solely from a passing retry.`
+  Verification: `regression.log under .artifacts/whole-aggregate-writes records one missing result envelope for multiple_readers schedule while the implementation was being edited. All other cases and T1917 pass. multiple-readers-probe.log subsequently passes the isolated complete native/API/newline reports on stable files. T1904 now prints the actual response/stderr on mismatch. Root cause is not yet established; the missing first error payload prevents attribution.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
@@ -1947,7 +1963,10 @@ domain live storage reads and generated-do inherited-input wiring. Completed
 `.39.2.2.3.1` qualifies sole full-width scalar writer handoffs in ordinary/single-domain actors.
 Completed `.39.2.2.3.2` qualifies independent-domain scalar writer handoffs.
 Completed `.39.2.2.4.1` splits broader writer contracts and repairs stale actor-storage
-documentation. Next `.39.2.2.4.2` qualifies sole whole-aggregate writers. After those repairs,
+documentation. Completed `.39.2.2.4.2` qualifies whole-aggregate writers and repairs
+declared-root domain validation. Next `.49` repairs explicit transaction-port/storage
+role collisions, then `.50` investigates the retained MCP response gap before
+`.39.2.2.4.3` partial writers and the remaining writer leaves. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -5409,3 +5428,86 @@ Re-derivation uses the named parser/lowering functions and published contracts;
 falsification uses existing invalid-path/resource-user/field-shape test controls;
 durability uses split task leaves, the fact card, corrected book and staged gates.
 No new runtime support or visual book audit is claimed.
+
+
+Whole-aggregate qualification follow-ups: regression.log first passes T1917 but
+T1904 multiple_readers has a newline/API schedule response without result.
+The original test did not print the actual error response. Add failure-only
+response diagnostics and rerun from a stable source tree; do not infer a timeout
+or dismiss the mismatch without reproducing its cause. T1920's direct worker
+shadowing controls expose a separate role-merge conflict owned by .49; generated
+worker controls also fail at the same role boundary. T1920 now asserts that
+separately owned diagnostic for storage collisions and proves explicit-port
+domain precedence using an actor-output name without a storage-role collision.
+
+
+## Qualification — `.39.2.2.4.2`
+
+Whole packed record/list assignments use the existing original-edge data/enable
+handoff. ChildStorageOwnership now admits resolved bits/record/list var types
+while retaining whole-target, sequential-op and sole-instance checks. Private
+ports retain the declared alias and width; no alternate register or merge path
+is added. T1917 gains ordinary record/list cases and migrates the old aggregate
+negative to a scalar member write. T1919 exercises whole aggregate writes and
+live scalar-leaf RHSs in independent domains, including imported/nested types.
+
+initial-runtime.log passes the initial aggregate matrix. The strengthened final
+matrix then exposes a real domain check gap: final-runtime.log fails only its
+aggregate sibling-domain diagnostic expectation, reaching unconnected composition
+wiring instead. domain-before.log reproduces public lowering admission for direct
+member reads, member writes and whole-register writes in a sibling domain.
+_validate_domain_signal_access skipped non-identifier paths, while inferred
+assignment targets in _transaction_local_signal_domains overrode declared actor
+ownership. The repair resolves parsed storage paths to their declared root and
+removes actor names from inferred locals before applying explicit local ports.
+
+T1920's first shadowing controls expose a separate role-merge defect for direct
+and generated explicit ports that reuse storage names. .49 owns that repair;
+the final controls distinguish domain precedence from the later role boundary.
+A positive parent ending immediately in await_all also produces an undefined
+transition-target warning; retain terminal-await.isf and schedule its repair
+under .32.1.3.3.1. Positive controls now author an explicit completion and pass
+without that warning. Neither issue is hidden as supported behavior in the book.
+
+The first combined regression passes T1917 but T1904 records a missing MCP result
+envelope while implementation files were changing. The initial test omitted the
+error payload, so its cause cannot be established from that log. Failure-only
+response diagnostics are now retained; multiple-readers-probe.log passes the
+isolated case on stable code. .50 owns root-cause investigation rather than
+claiming a product fix from a retry.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — before.json from `--strict --check --json`
+  rejects whole aggregate status writes at ChildStorageOwnership's scalar-type
+  guard. The path diagnostic failure and domain-before.log locate the separate
+  ownership-validation mechanisms described above in LoweringIR.
+- [x] **ADDRESSED (verified)** — qualified-runtime.log reports All tests successful
+  for T1919/T1916 with qualified Verilator. Packed record/list/nested/imported
+  writes preserve original edges, live reads, resets, repeated calls and exact
+  private types/public pins. Complete native/API/newline reports and strict
+  scheduled replay pass. Aggregate-specific partial/cross-domain/competing
+  controls reject precisely. The exact retained whole-writer before.isf now
+  passes strict check in after.json.
+- [x] **NO REGRESSION** — domain-final.log reports All tests successful for
+  T1920/T1247, with contextual member/index/root domain failures, same-domain
+  controls, inferred locals and explicit-port precedence. read-final.log reports
+  All tests successful for the complete T1904 suite with qualified Verilator and
+  the local GHDL provider; the previously failed report case passes on stable
+  code. T1917 passes in regression.log, including ordinary record/list writes.
+  book-final.log passes T1376, exact reference partitions and mdBook build.
+  Evidence is under
+  .artifacts/whole-aggregate-writes/; no visual book audit is claimed.
+
+Re-derivation uses resolved storage types, typed owner/child handoff IR, emitted
+scheduled/HDL artifacts and source-backed complete reports. Falsification uses
+independent packed-value edge oracles, late payload changes, repeated live reads,
+zero-valued updates, stopped clocks, reset isolation, imported aliases, rejected
+partial/competing writers and explicit cross-domain controls. Durability uses
+T1917/T1919/T1920, retained source probes, book/spec/facts, scheduled defect owners
+and staged gates. No partial/bank/competing writer or VHDL composition claim is
+made; the first missing MCP error payload remains an explicit evidence gap.
+
+
+The first aggregate staged gate caught the active-index row's line length above
+its existing focused-document transition allowance. Condense older qualification
+narration into the current owner/read/write summary while preserving the next
+repair sequence; no size allowance increase is needed. The final gate owns signoff.

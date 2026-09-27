@@ -33,13 +33,19 @@ my $base=<<'ISF';
  (transaction parent (on start)
   (spawn worker as w0 (bind (output result child_seen))) (await_all done) (complete done)))
 ISF
-for my $name (qw(scalar typed default_reset read_modify named_domain collision field_metadata generated_do two_scalars domains)) {
+for my $name (qw(scalar typed default_reset read_modify named_domain collision field_metadata generated_do two_scalars domains aggregate_record aggregate_list)) {
     subtest $name => sub {
         my $work="$workspace/$name";mkdir $work or die $!;
         my $text=$base;
         if ($name eq 'typed') {
             $text =~ s/\(storage/(types (type byte_t (signed (bits 8)))) (storage/;
             $text =~ s/\(var status \(width 8\)/(var status (type byte_t)/;
+        }
+        if ($name =~ /^aggregate_/) {
+            my $definition = $name eq 'aggregate_record'
+                ? '(record (upper (bits 4)) (lower (bits 4)))' : '(list (bits 4) (bits 4))';
+            $text =~ s/\(storage/(types (type value_t $definition)) (storage/;
+            $text =~ s/\(var status \(width 8\)/(var status (type value_t)/;
         }
         $text =~ s/ \(reset 19\)// if $name eq 'default_reset';
         $text =~ s/\(set status data\)/(update status (+ status data))/ if $name eq 'read_modify';
@@ -64,7 +70,7 @@ for my $name (qw(scalar typed default_reset read_modify named_domain collision f
         my $scheduler=FSM::Scheduler::ISF->new;
         my $ir=$scheduler->{ir}->build_module($actor);
         my $child=$ir->{children}{worker};
-        is_deeply([map {$_->{name}} @{$child->{actor_storage_writes}}],[$name eq 'two_scalars' ? qw(status unused) : 'status'],'exact scalar writer ownership');
+        is_deeply([map {$_->{name}} @{$child->{actor_storage_writes}}],[$name eq 'two_scalars' ? qw(status unused) : 'status'],'exact register writer ownership');
         is_deeply($child->{declared_storage},[],'child does not keep a private actor register');
         ok(!exists $child->{reset_values}{status},'child has no independent actor reset');
         my ($write)=@{$child->{actor_storage_writes}};
@@ -75,6 +81,8 @@ for my $name (qw(scalar typed default_reset read_modify named_domain collision f
         if ($name eq 'typed') {
             is($child->{signal_type_refs}{$write->{data_port}},'byte_t','write data retains signed scalar alias');
         }
+        is($child->{signal_type_refs}{$write->{data_port}},'value_t','write data retains aggregate alias')
+            if $name =~ /^aggregate_/;
         my $files=$scheduler->lower($actor)->{files};
         for my $file (sort keys %$files) {
             my $path=write_file("$work/$file",$files->{$file});
@@ -185,12 +193,13 @@ subtest 'unqualified writers remain rejected' => sub {
     my $multiple=$base;$multiple =~ s/\(await_all done\)/(spawn worker as w1 (bind (output result child_seen))) (await_all done)/;
     my $aggregate=$base;$aggregate =~ s/\(storage/(types (type rec_t (record (payload (bits 8))))) (storage/;
     $aggregate =~ s/\(var status \(width 8\)/(var status (type rec_t)/;
+    $aggregate =~ s/\(set status data\)/(set status.payload data)/;
     my $bank=$base;$bank =~ s/\(storage/(storage (bank slots (width 8) (depth 2))/;
     $bank =~ s/\(set status data\)/(store slots 1 data)/;
     for my $case (['parent',$parent,qr/parent writer and generated child writer/],
                   ['multiple',$multiple,qr/competing generated child writers/],
-                  ['aggregate',$aggregate,qr/only full-width scalar sequential writes are qualified/],
-                  ['bank',$bank,qr/only full-width scalar sequential writes are qualified/]) {
+                  ['aggregate_leaf',$aggregate,qr/only full-width variable sequential writes are qualified/],
+                  ['bank',$bank,qr/only full-width variable sequential writes are qualified/]) {
         my ($name,$text,$error)=@$case;my $path=write_file("$workspace/$name.isf",$text);
         my $r=$capture->([$^X,'bin/fsmgen','--strict','--check','--json',$path],'');
         isnt($r->{exit_code},0,"$name refused");like($r->{stdout}.$r->{stderr},$error,"$name exact ownership boundary");

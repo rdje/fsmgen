@@ -12,11 +12,11 @@ evidence: perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm; perl/FSM/Scheduler/IS
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1261-isf-aggregate-storage-leaf-writes.t t/1403-isf-set-field.t t/1218-isf-rule-slot-resource-arbitration.t
 ---
 
-Sole full-width scalar generated-child writes are qualified, including in
+Sole full-width scalar and packed aggregate generated-child writes are qualified, including in
 independent domains. Decision 0107 requires owner-held storage and original-edge
 handoffs. Broader work is split under SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4:
 
-- .4.2 qualifies whole packed record/list transfers, preserving exact types.
+- .4.2 qualifies whole packed record/list transfers in T1917/T1919, preserving exact types.
 - .4.3 qualifies source-supported partial and scalar-leaf updates without
   clobbering untouched bits. Parser-supported aggregate leaves are distinct from
   arbitrary slice targets. set-field currently desugars to a full-register
@@ -31,7 +31,7 @@ handoffs. Broader work is split under SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2
   roots or aggregate paths. Gating a rule for a cycle does not specify child
   request retention, denied-state progress or lifetime ownership.
 
-ChildStorageOwnership currently rejects aggregate/member/bank write targets and
+ChildStorageOwnership currently rejects partial/member/bank write targets and
 all competing owners. These boundaries remain until the corresponding runtime,
 report and documentation qualification is complete. No silent priority or memory
 backend is implied by the scalarized representation.

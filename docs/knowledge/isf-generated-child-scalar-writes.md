@@ -16,7 +16,7 @@ The retained writer once updated a private child status register while its
 parent observed reset value 19 instead of 37. Applying an internal role to both
 copies could not repair shared actor-state semantics; reads were routed first.
 
-prepare_child_storage_writes now turns each qualified full-width scalar
+prepare_child_storage_writes now turns each qualified full-width scalar or aggregate
 sequential assignment into combinational child write-data and write-enable
 assignments in the same state/guard. The owner receives private input ports and
 an always-active decision-tree assignment gated by that enable. The original
@@ -28,8 +28,8 @@ connect_child_storage_writes requires one generated instance per written scalar
 and rejects any parent data writer. Multiple independent scalar targets are
 allowed. Generated names reserve authored/internal/state names; explicit write
 links bypass legacy output suffix matching so an unrelated public input cannot
-become a second writer endpoint. Transaction-local ports continue to shadow
-actor storage identities.
+become a second writer endpoint. Explicit transaction ports keep their local domain, but names colliding with
+actor storage currently fail an earlier role merge; .49 owns that scope repair.
 
 T1917 changes data immediately before the authored assignment edge and checks
 the parent's next-cycle sequential observation, conditional hold paths, child
@@ -42,7 +42,11 @@ policies, repeated read-modify-write edges, zero-valued intermediate updates,
 stopped clocks, reset isolation, generated do, scalar aliases and a different
 default domain. Domain partitioning uses the same handoff and ownership checks;
 there is no alternate writer implementation or implicit crossing. Competing
-writers, bank/aggregate/member writes and wider VHDL composition remain outside
+writers, bank/partial/member writes and wider VHDL composition remain outside
 this qualification; their task owners remain explicit.
+
+T1919 and the aggregate variants in T1917 extend whole-value transfers to packed
+record/list variables, preserving local/imported aliases and owner-only reset.
+See isf-generated-child-whole-aggregate-writes for the exact qualification.
 
 Owners: SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.1 and .39.2.2.3.2.

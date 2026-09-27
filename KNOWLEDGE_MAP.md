@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1182** facts · **6591** unique questions · **6767** answer occurrences · **154** topic shards.
+> **1184** facts · **6597** unique questions · **6773** answer occurrences · **154** topic shards.
 
 Query first:
 
@@ -107,7 +107,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `isf-field` | 3 | 13 | [`isf-field.md`](knowledge-map/generated/isf-field.md) |
 | `isf-fsm` | 1 | 5 | [`isf-fsm.md`](knowledge-map/generated/isf-fsm.md) |
 | `isf-full` | 1 | 6 | [`isf-full.md`](knowledge-map/generated/isf-full.md) |
-| `isf-generated` | 5 | 17 | [`isf-generated.md`](knowledge-map/generated/isf-generated.md) |
+| `isf-generated` | 6 | 20 | [`isf-generated.md`](knowledge-map/generated/isf-generated.md) |
 | `isf-library` | 1 | 3 | [`isf-library.md`](knowledge-map/generated/isf-library.md) |
 | `isf-lowering` | 1 | 6 | [`isf-lowering.md`](knowledge-map/generated/isf-lowering.md) |
 | `isf-multi` | 1 | 3 | [`isf-multi.md`](knowledge-map/generated/isf-multi.md) |
@@ -116,7 +116,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `isf-rule` | 4 | 23 | [`isf-rule.md`](knowledge-map/generated/isf-rule.md) |
 | `isf-sampled` | 2 | 10 | [`isf-sampled.md`](knowledge-map/generated/isf-sampled.md) |
 | `isf-schedule` | 1 | 5 | [`isf-schedule.md`](knowledge-map/generated/isf-schedule.md) |
-| `isf-storage` | 1 | 4 | [`isf-storage.md`](knowledge-map/generated/isf-storage.md) |
+| `isf-storage` | 2 | 7 | [`isf-storage.md`](knowledge-map/generated/isf-storage.md) |
 | `isf-verification` | 2 | 9 | [`isf-verification.md`](knowledge-map/generated/isf-verification.md) |
 | `isf-while` | 1 | 4 | [`isf-while.md`](knowledge-map/generated/isf-while.md) |
 | `knowledge-card` | 1 | 10 | [`knowledge-card.md`](knowledge-map/generated/knowledge-card.md) |

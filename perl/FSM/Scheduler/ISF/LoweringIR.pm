@@ -2574,7 +2574,7 @@ sub _validate_transaction_domain_refs($self, $actor, $signal_domains, $transacti
     $pruned_transactions ||= {};
     for my $tx (grep { !$pruned_transactions->{$_->{name}} } @{$actor->{transactions} || []}) {
         my $domain = _domain_for_entry($tx, $default_domain);
-        my %local_signals = _transaction_local_signal_domains($tx, $domain);
+        my %local_signals = _transaction_local_signal_domains($tx, $domain, $signal_domains);
         for my $clause (@{$tx->{clauses} || []}) {
             _validate_transaction_clause_domain_refs(
                 $clause,
@@ -2713,15 +2713,18 @@ sub _validate_library_use_domain_refs($self, $actor, $signal_domains, $default_d
 }
 
 sub _transaction_local_signal_domains {
-    my ($tx, $domain) = @_;
+    my ($tx, $domain, $signal_domains) = @_;
     my %signals;
+    _collect_transaction_local_signals($tx->{clauses}, $domain, \%signals);
+    # Inferred assignment targets cannot redefine declared actor ownership.
+    # Explicit transaction ports below retain their authored shadowing contract.
+    delete @signals{keys %$signal_domains};
 
     for my $direction (qw(inputs outputs)) {
         for my $port (@{($tx->{ports} || {})->{$direction} || []}) {
             $signals{$port->{name}} = $domain;
         }
     }
-    _collect_transaction_local_signals($tx->{clauses}, $domain, \%signals);
     return %signals;
 }
 
@@ -2969,15 +2972,22 @@ sub _validate_domain_expr_reads {
 
 sub _validate_domain_signal_access {
     my ($name, $access, $domain, $signal_domains, $local_signals, $constants, $context) = @_;
-    return 1 unless defined($name) && !ref($name) && _is_hdl_identifier($name);
+    return 1 unless defined($name) && !ref($name);
+    my $root = $name;
+    if (!_is_hdl_identifier($root)) {
+        # Parsed aggregate leaf paths inherit the owning storage root's domain.
+        # Do not interpret package or enum member names as signal references.
+        return 1 unless $name =~ /\A([A-Za-z_]\w*)(?:\.[A-Za-z_]\w*|\[\d+\])+\z/;
+        $root = $1;
+        return 1 unless exists($signal_domains->{$root})
+            && ($signal_domains->{$root}{kind} // '') eq 'actor_storage';
+    }
 
-    my ($owner_domain, $owner_kind);
-    if (exists $local_signals->{$name}) {
-        $owner_domain = $local_signals->{$name};
-        $owner_kind = 'transaction_local';
-    } elsif (exists $signal_domains->{$name}) {
-        $owner_domain = $signal_domains->{$name}{domain};
-        $owner_kind = $signal_domains->{$name}{kind};
+    my $owner_domain;
+    if (exists $local_signals->{$root}) {
+        $owner_domain = $local_signals->{$root};
+    } elsif (exists $signal_domains->{$root}) {
+        $owner_domain = $signal_domains->{$root}{domain};
     } else {
         return 1;
     }

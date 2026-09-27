@@ -107,18 +107,24 @@ The child retains authored transaction ports even when unused and omits unread
 inherited actor inputs. Generated do connects retained inherited inputs with
 explicit child bindings taking precedence; storage uses its separate owner
 handoff. Explicit ports and local variables keep their identities. A sole
-generated child instance may write full-width scalar actor storage in its own
+generated child instance may write full-width scalar or packed record/list actor storage in its own
 domain, including a nondefault domain of a multi-domain actor. Combinational child data/enable handoffs feed an owner-side
 sequential assignment on the original edge; no data register or completion delay
-is added. The owner retains reset and scalar type/field metadata. Conditional
+is added. The owner retains reset and exact type/field metadata; whole aggregates preserve
+local or imported aliases on the private data handoff. Conditional
 writes and full-word read-modify-write expressions keep their scheduled edges.
 Only the owning domain's clock/reset controls the register. Parent writers,
-multiple generated writer instances and bank/aggregate/member writes remain
+multiple generated writer instances and bank/partial/member writes remain
 rejected under the remaining decision `0107` qualification lanes. Direct
 sibling-domain storage access remains illegal without its explicit crossing contract. Independent private copies are not shared storage. Multi-domain generated-child
 reads use the same live handoff inside the owning domain. Domain validation
 still rejects reads of sibling-domain storage without a crossing primitive;
 no register, reset copy, public input, or implicit CDC is introduced.
+Aggregate scalar-leaf paths inherit their declared storage root's domain. An
+inferred transaction assignment target cannot redefine a declared actor signal's
+owner. Explicit transaction ports retain local domain precedence, although a
+port colliding with actor storage currently fails a separately owned role-merge
+boundary before child handoff selection.
 
 Top-level generated-child instantiation is now shipped for the covered
 spawn and parameterized blocking `do` fixture set. Spawn and generated `do`

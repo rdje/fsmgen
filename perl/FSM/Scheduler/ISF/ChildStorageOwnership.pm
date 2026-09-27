@@ -88,11 +88,12 @@ sub prepare_child_storage_writes {
             my $name = $targets[0];
             my $signal = $storage{$name};
             my $entry = $entries{$name};
-            confess "Transaction '$tx->{name}': generated child writes actor-owned storage '$name'; only full-width scalar sequential writes are qualified\n"
+            confess "Transaction '$tx->{name}': generated child writes actor-owned storage '$name'; only full-width variable sequential writes are qualified\n"
                 unless @targets == 1 && $assignment->{lhs} eq $name
                     && ($assignment->{op} // '') eq '<-'
                     && ($entry->{kind} // '') eq 'var'
-                    && (!exists($signal->{type_spec}) || ($signal->{type_spec}{kind} // '') eq 'bits');
+                    && (!exists($signal->{type_spec})
+                        || ($signal->{type_spec}{kind} // '') =~ /\A(?:bits|record|list)\z/);
             if (!exists $writes{$name}) {
                 $writes{$name} = {
                     %$signal,
