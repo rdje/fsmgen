@@ -421,9 +421,22 @@ ask the counter to decrement at zero.
 
 ## `(wait N)` — Unconditional Exact-Cycle Delay
 
-Current boundary: a generated child ending in a static wait without a following
-statement can produce an invalid empty terminal state. Give that child an explicit
-continuation, such as `(complete done)`, while the terminal-wait repair is pending.
+A positive static wait with no following statement holds in its final state.
+It does not invent a completion pulse or return to entry. Terminal `(point NAME)`
+and transaction `(phase NAME)` marker states likewise hold. Their scheduled
+carriers express an otherwise empty state with an explicit self-loop, preserving
+the source state and its named-point identity. An explicit continuation still
+advances normally; `(complete done)` supplies completion and return to entry.
+
+For example, this actor enters the delay after `start`, then remains there until
+reset. Holding or pulsing `start` again does not restart it:
+
+```lisp
+(actor terminal_wait
+  (clock clk) (reset (rst_n async active_low))
+  (interface (input start))
+  (transaction main (on start) (wait 3)))
+```
 
 ```lisp
 (wait 3)

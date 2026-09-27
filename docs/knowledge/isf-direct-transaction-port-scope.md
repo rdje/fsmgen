@@ -126,8 +126,8 @@ isf_port_main_isf_port_main_payload_formal, absent from the original reservation
 It qualifies stable helper names under different physical allocations, generated
 interfaces, malformed/stale records, duplicate identities, source isolation,
 schedule provenance and strict carriers. Raw generated-child terminal static
-waits exposed a separate empty-state carrier defect; .55 owns its immediate
-repair after this helper slice. Pre-allocation helper collision admission and
+waits exposed a separate empty-state carrier defect, repaired under .55; see
+[terminal-state carriers](isf-empty-terminal-state-carriers.md). Pre-allocation helper collision admission and
 remaining module/child/domain producer closure remain .3.2.2.2.2-.3.
 
 The paired parser audit retains the former width-lookup defect: a wider formal

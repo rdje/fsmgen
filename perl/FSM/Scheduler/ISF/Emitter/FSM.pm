@@ -239,9 +239,13 @@ sub _emit_asserts($self, $ir) {
 sub _emit_states($self, $ir, $outputs) {
     my @lines;
     for my $s (@{$ir->{states}}) {
+        my @body = ($self->_emit_assignments($s), $self->_emit_transitions($s));
+        # A passive terminal state holds, but an empty state body is not a
+        # legal carrier form. Express that hold without inventing completion,
+        # returning to entry, or changing the source lowering graph.
+        push @body, $self->_emit_simple_transition({target => $s->{name}}) unless @body;
         push @lines, "  ($s->{name}";
-        push @lines, $self->_emit_assignments($s);
-        push @lines, $self->_emit_transitions($s);
+        push @lines, @body;
         push @lines, '  )';
         push @lines, '';
     }

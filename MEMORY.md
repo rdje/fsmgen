@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.55` (pending)
-- next_action: Repair and qualify the raw terminal static-wait empty-state carrier under .55, then resume pre-allocation helper admission .49.2.2.3.2.2.2.2 and remaining producer closure .2.3. Exact reproduction is in the semantic task record.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.2` (pending)
+- next_action: Resolve generated-helper pre-allocation admission under .49.2.2.3.2.2.2.2, then close remaining module/child/domain producers in .2.3 and qualify the complete reservation gate. Follow the scope card and decision 0109.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

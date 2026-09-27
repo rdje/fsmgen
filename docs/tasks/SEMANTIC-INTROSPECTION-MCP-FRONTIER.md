@@ -1649,11 +1649,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.55`
-  Status: `pending`
-  Goal: `Repair terminal static-wait carrier emission and qualify hold behavior.`
+  Status: `done`
+  Goal: `Repair empty terminal-state carrier emission and qualify hold behavior.`
   Acceptance: `Run immediately after helper identity .49.2.2.3.2.2.2.1. Reproduce raw source for a generated child ending in wait 1, isolate LoweringIR linking versus FSM emission, and fix terminal static-wait behavior without inventing completion/rearm. Qualify direct/generated cases, explicit successor/complete controls, warning-free strict carriers, public queries and relevant runtime behavior. Audit related empty terminal state classes within a safe scope and own any additional defects. Commit before resuming reservation prerequisites.`
-  Verification: `Raw source reproduces an empty (worker_wait_0) carrier state, displayed by the parser diagnostic as (worker_wait_0 undef). _link_states adds static-wait transitions only with a successor; Emitter::FSM::_emit_states emits the empty state without a legal body. Native strict check rejects it independently of the formal projection. Existing terminal synchronization covers only sync_all/sync_any. Exact source/carrier/check evidence is under .artifacts/formal-helper-identity/terminal-wait-baseline/; durable reproduction is recorded below.`
-  Commit: `pending`
+  Verification: `T1940 qualifies explicit carrier self-loops for otherwise empty terminal wait/point/phase states in direct/generated transactions, unchanged source IR, native empty-body negative controls, real continuations, complete native/API/newline parity and qualified Verilator hold/repeated-request/reset behavior. The before/after census confirms all retained raw failures are repaired with identical lowering graphs. Neighboring wait/synchronization/anchor/schedule/helper and book fixtures pass. Resume .49.2.2.3.2.2.2.2.`
+  Commit: `this slice`
 
 ## Implementation Notes From `.4`
 
@@ -2350,7 +2350,7 @@ exact retrieval. `.3.1.2.1` repairs malformed explicit-local admission;
 `.3.1.2.2` qualifies source contexts and count-role rewriting. `.3.2.1` retains
 actual transaction reservation products; `.3.2.2.1` adds actual rule, activation
 and shared-drive products. `.3.2.2.2.1` retains stable source rule helpers.
-Next `.55` repairs raw terminal static-wait carriers, then `.3.2.2.2.2` resolves
+`.55` repairs empty terminal wait/point/phase carriers. Next `.3.2.2.2.2` resolves
 pre-allocation helper admission and `.3.2.2.2.3` closes remaining producer
 coverage; `.3.2.2.3` gates completeness. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
@@ -2645,3 +2645,43 @@ promotion is claimed. The separate raw terminal-wait defect and exact source
 are owned by .55 above, scheduled immediately next; its repair is not waived by
 using a supported continuation in this slice's identity fixture. Rationale
 belongs here and in the scope card; DEVELOPMENT_NOTES needs no duplicate entry.
+
+## Acceptance — empty terminal-state carriers `.55`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — raw generated-child worker.fsm fails
+  native `--check --json` with Unsupported top-level form and a normalized
+  worker_wait_0 undef diagnostic. The emitted carrier actually has an empty
+  state body, not an undef token. The before.json census reproduces the same
+  failure for direct/generated terminal static wait, point and phase states.
+  LoweringIR has no successor there; Emitter::FSM::_emit_states emitted that
+  empty body although the carrier grammar requires a body.
+- [x] **ADDRESSED (verified)** — _emit_states now emits an explicit self-loop
+  only when both emitted assignments and transitions are empty. It preserves
+  the source graph, state identity and normal nonempty bodies. after.json passes
+  the retained census with identical source IR. T1940 qualifies actual carriers,
+  empty-body mutation refusals, explicit successors/completion, warning-free
+  lowering and complete native/API/newline check/semantic/schedule parity.
+  The Darwin-qualified Verilator run passes independent direct/generated
+  terminal hold, repeated-request and reset-reactivation oracles through public
+  interfaces, including generated child storage handoffs.
+- [x] **NO REGRESSION** — test.log and regression.log report
+  `All tests successful`. The latter covers T1244 waits, T1922 synchronization,
+  T1413 anchors, T1255 schedule goldens and T1939 helper identity; its legacy
+  runtime guards are not a new runtime qualification. T1940 was run separately
+  with FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 and an available provider;
+  runtime-guard.log independently records those exact branch prerequisites.
+  book-fixtures.log passes T1376 with the new complete example; book.log builds
+  synchronized book/spec guidance. Staged doctrine and commit hooks apply.
+
+Evidence is under `.artifacts/terminal-state-carriers/`; the original raw
+source/carrier/refusal remains under formal-helper-identity/terminal-wait-baseline.
+The census reuses case directories for repaired outputs; before.json retains
+original failure statuses and graphs, while T1940 independently restores empty
+bodies and proves native refusal. Re-derivation is actual source/IR/carrier
+comparison; falsification is the malformed-body control, continued-state checks
+and repeated-request/reset HDL oracle; durability is T1940, the terminal-state
+card, book/spec and this task. No new storage, completion, return-to-entry edge
+or automatic direct-controller repair is claimed. Zero-wait region erasure and
+dynamic-wait successor policy are unchanged. Resume .49.2.2.3.2.2.2.2 before
+remaining producer closure and the complete reservation gate. Rationale belongs
+here and in the fact card; DEVELOPMENT_NOTES needs no duplicate entry.

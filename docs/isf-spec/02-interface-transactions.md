@@ -1422,7 +1422,7 @@ Cycle semantics:
   active clock cycle, then advances on the next state transition.
 - `wait N` contributes exactly `N` active transaction cycles every time the
   clause executes.
-- A wait inside a future loop contributes its full `N` cycles for each loop
+- A wait inside a loop contributes its full `N` cycles for each loop
   iteration that reaches it.
 - The wait does not observe or consume an `(await ...)` watchdog. It is still
   ordinary transaction time and therefore counts toward transaction latency
@@ -1432,7 +1432,12 @@ Cycle semantics:
 The static lowering is a reviewable fixed scheduled-state chain for positive
 static counts. `(wait N)` emits `N` generated `*_wait_*` states when `N > 0`;
 each state advances unconditionally to the next wait state or to the following
-transaction clause. `(wait 0)` emits no generated state and no
+transaction clause. With no following clause, the final static-wait state holds;
+it does not implicitly complete or return to entry. Empty terminal wait, point
+and transaction-phase marker states use an explicit self-loop in the scheduled
+carrier, without changing the source lowering graph or named-state identity.
+An explicit successor or completion retains its ordinary transition.
+`(wait 0)` emits no generated state and no
 `transaction_waits[]` entry. A symbolic `(wait NAME)` first resolves `NAME`
 through same-transaction parameter defaults, then through the actor constant
 table, then through actor-local scalar parameter defaults, and then follows
