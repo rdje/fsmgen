@@ -1649,10 +1649,32 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain named-completion readback and outer domain reservation products.`
   Acceptance: `Collect actual named-completion declaration plans after storage connections, qualify library-readback declaration preservation and outer domain realization, then complete the reservation integration gate without weakening executable ownership or report contracts.`
   Verification: `Storage-read products and allocator scope are owned by .1; the following named-completion/readback and domain stages remain uncovered.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.1`
+  Status: `active`
+  Goal: `Retain actual named-completion handoff and local-pulse plans.`
+  Acceptance: `Share canonical completion allocation after read/write handoffs with detached source preparation. Preserve per-instance ports, actor-output identity, local delayed pulses, OR views, widths/types/resets and source ownership. Keep mixed-writer admission executable and separate from potential plans. Qualify actual complete inputs/products, projection, collisions, source isolation, strict/report parity and independent named-completion runtime before commit.`
+  Verification: `T1953 qualifies complete actual named-completion inputs/products and installed metadata/links/rewrites against source and projected plans. before-full.json shows missing child input/local pulse/view names; after.json has none. Native schedule remains byte-identical. Typed and literal reset cases remain separate supported contracts; multiple completers, canonical/local exclusions, portable collisions, snapshot isolation and mixed-writer refusal pass. Independent named-completion/report regression is pending.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Qualify library readback namespace preservation after completion connections.`
+  Acceptance: `Observe real library readback ownership admission and emitted interface adaptation, prove declaration namespace preservation across legal and rejected cases, retain any actual missing products if found, and preserve strict/native/API/MCP behavior.`
+  Verification: `LibraryPortOwnership changes explicit parent interface direction and storage role without currently allocating helper names; qualify this actual boundary rather than infer completeness from code inspection alone.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3`
+  Status: `pending`
+  Goal: `Qualify outer-domain declaration realization before complete reservation integration.`
+  Acceptance: `Trace actual domain-specific parent/child/CDC/top realization against prepared products and source identities. Own any missing producer before declaring reservation coverage complete; preserve domain and public report contracts.`
+  Verification: `Remains after named-completion and library-readback closure; no whole-namespace completeness claim yet.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -3453,3 +3475,44 @@ because widths and low-to-high assembly order are unchanged. The refreshed
 inventory agrees with its independent census after exact ID remapping and
 sorted registry preservation. assembly-claims.log reports All tests successful
 for T1099/T1200/T1344, retaining the original width/order evidence.
+
+## Acceptance — named-completion plans `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `--emit-schedule-json` succeeds for
+  named_products, while before-full.json records actual child input, local
+  pulse and output-view DT names absent from prepared product reservations.
+  ChildCompletionOutputs allocated these only in executable connection after
+  storage handoffs; source preparation retained child contracts without the
+  resulting parent namespace.
+- [x] **ADDRESSED (verified)** — share plan_child_completion_outputs with
+  source preparation after retained read/write declarations. The pure plan
+  retains exact inputs, local contracts, widths/types/roles/resets, explicit
+  pulse state, per-instance links and typed output/source/view identities.
+  Executable connection retains mixed-writer checks before planning, then
+  installs products and rewrites the original local delayed assignments.
+  after.json has no missing baseline name. T1953 compares entire production
+  plans and installed effects before/after projection across shared/child-only,
+  typed, literal reset, multiple-instance and local/canonical controls.
+  Portable formal/fixed/rule collisions retain coverage, all snapshots remain
+  detached and potential planning does not admit mixed writers.
+- [x] **NO REGRESSION** — qualified.log reports `All tests successful` for
+  T1953; schedule-before.json and schedule-after.json compare byte-identically.
+  T1376 book fixtures and synchronized build pass. The broader
+  T1953/T1913/T1951/T1946/T1255 confirmation is explicitly pending in
+  regression.log, with independent named-completion runtime opted in.
+  Fresh staged doctrine and normal commit hook remain mandatory.
+
+Evidence: `.artifacts/formal-named-completion-products/`. Re-derivation
+observes actual production planner inputs, installed parent declarations and
+rewritten local assignment objects, plus native reports; falsification uses
+missing baseline declarations, actual portable allocation changes, mixed-writer
+refusal, local/canonical exclusions and snapshot mutation; durability is T1953,
+the formal named-completion card, book and this task. The initial test.log
+combined typed output and reset metadata, which canonical parsing explicitly
+defers. The corrected controls separately qualify typed output and literal-width
+reset contracts; no source admission was widened. before.json recorded only
+role-bearing declarations; before-full.json additionally includes view DTs.
+No parent is fabricated from raw formal width maps, and no production formal
+rewriting, new pulse stage or shared-writer policy is claimed. Library readback
+and outer domains remain subsequent owners. No duplicate DEVELOPMENT_NOTES
+rationale is needed.

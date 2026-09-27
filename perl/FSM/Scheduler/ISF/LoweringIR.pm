@@ -19,7 +19,7 @@ use FSM::Scheduler::ISF::LogicalControllers;
 use FSM::Scheduler::ISF::ChildStorageOwnership qw(prepare_child_storage_writes connect_child_storage_writes plan_child_storage_write_handoffs select_child_storage_reads connect_child_storage_reads plan_child_storage_read_handoffs);
 use FSM::Scheduler::ISF::ChildActivation qw(guard_child_activation);
 use FSM::Scheduler::ISF::LibraryPortOwnership qw(connect_library_output_readbacks);
-use FSM::Scheduler::ISF::ChildCompletionOutputs qw(prepare_child_completion_outputs connect_child_completion_outputs);
+use FSM::Scheduler::ISF::ChildCompletionOutputs qw(prepare_child_completion_outputs connect_child_completion_outputs plan_child_completion_outputs);
 use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -254,6 +254,13 @@ sub prepare_formal_source($self, $source_actor) {
     my $read_products = plan_child_storage_read_handoffs(
         $actor->{actor_name}, $activation_products->{spawn_instances},
         $child_products->{children}, \%connection_names);
+    $connection_names{$_->{name}} = 1 for @{$read_products->{ports}}, @{$read_products->{dt_blocks}};
+    my $local_completions = _formal_local_completion_contracts(
+        $actor, $completion_products, $activation_products, $generated, \%products,
+        $child_products->{children});
+    my $named_completion_products = plan_child_completion_outputs(
+        $actor->{actor_name}, $activation_products->{spawn_instances},
+        $child_products->{children}, \%connection_names, $local_completions);
     return {
         actor => $actor,
         generated_children => { %$generated },
@@ -273,6 +280,7 @@ sub prepare_formal_source($self, $source_actor) {
         parent_completion_products => $completion_products,
         parent_storage_write_products => _clone_isf_value($write_products),
         parent_storage_read_products => _clone_isf_value($read_products),
+        parent_named_completion_products => _clone_isf_value($named_completion_products),
         # Real children have independent module scopes. Detach both retained
         # views; parent ownership connections and outer domains remain separate.
         generated_child_products => _clone_isf_value({
@@ -290,6 +298,33 @@ sub prepare_formal_source($self, $source_actor) {
             named_drives => { %drives },
         },
     };
+}
+
+sub _formal_local_completion_contracts {
+    my ($actor, $completion, $activation, $generated, $transactions, $children) = @_;
+    my %targets;
+    for my $spawn (@{$activation->{spawn_instances}}) {
+        my $child = $children->{$spawn->{child}} || next;
+        $targets{$_->{name}} = 1 for @{$child->{actor_completion_outputs} || []};
+    }
+    my @blocks = (@{$completion->{states}}, @{$activation->{dt_blocks}});
+    for my $tx (@{$actor->{transactions}}) {
+        next if $generated->{$tx->{name}} || !exists $transactions->{$tx->{name}};
+        push @blocks, @{$transactions->{$tx->{name}}{dt_blocks}};
+    }
+    my %completed = map { $_->{lhs} => 1 }
+        grep { ($_->{source_kind} // '') eq 'complete_pulse' }
+        map { @{$_->{assignments} || []} } @blocks;
+    my %contracts;
+    for my $output (@{$actor->{interface}{outputs} || []}) {
+        next unless $completed{$output->{name}} && $targets{$output->{name}};
+        $contracts{$output->{name}} = {
+            width => $output->{width} // 1,
+            reset_value => $output->{reset_value} // 0,
+            (defined($output->{type}) ? (type => $output->{type}) : ()),
+        };
+    }
+    return \%contracts;
 }
 
 sub _formal_parent_declaration_names {

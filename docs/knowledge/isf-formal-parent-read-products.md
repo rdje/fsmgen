@@ -37,8 +37,11 @@ controls preserve source, child and preceding write snapshots. Raw role
 conflicts still fail executable admission; absent reads create no handoff.
 T1950 independently checks the previously repaired rule guard collision.
 
-These are partial namespace products. Named-completion, library-readback and
-outer domain coverage remain gates before complete reservations and automatic
+These are partial namespace products. Library-readback and outer domain coverage remain gates before complete reservations and automatic
 production formal rewriting. Canonical live-read behavior remains in
 [isf-generated-child-aggregate-reads](isf-generated-child-aggregate-reads.md).
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.2.
+
+Named completion now follows these reader declarations through its actual
+shared allocation plan; see
+[isf-formal-named-completion-products](isf-formal-named-completion-products.md).

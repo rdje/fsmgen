@@ -1,12 +1,13 @@
 # Knowledge Map: `isf-formal`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **10** facts · **30** uniquely owned question entries.
+> **11** facts · **33** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are external activation ready ports and request states reserved before formal allocation?" · facts=[isf-formal-wiring-products](../../docs/knowledge/isf-formal-wiring-products.md)
 - q="are generated child activation and storage helper names retained before formal allocation?" · facts=[isf-formal-child-products](../../docs/knowledge/isf-formal-child-products.md)
+- q="are named child completion declarations reserved before formal allocation?" · facts=[isf-formal-named-completion-products](../../docs/knowledge/isf-formal-named-completion-products.md)
 - q="are named point active signals reserved before direct formal allocation?" · facts=[isf-formal-point-products](../../docs/knowledge/isf-formal-point-products.md)
 - q="are parent child-storage write data and enable names retained before formal allocation?" · facts=[isf-formal-parent-write-products](../../docs/knowledge/isf-formal-parent-write-products.md)
 - q="are parent storage read handoffs retained before formal allocation?" · facts=[isf-formal-parent-read-products](../../docs/knowledge/isf-formal-parent-read-products.md)
@@ -21,11 +22,13 @@
 - q="does formal preparation bypass production monitor collision checks?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
 - q="does formal preparation preserve reusable parameters and ATL child data ports?" · facts=[isf-formal-reusable-products](../../docs/knowledge/isf-formal-reusable-products.md)
 - q="does parent IR finalization add declarations before child storage connections?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
+- q="does planning named completion admit mixed parent writers?" · facts=[isf-formal-named-completion-products](../../docs/knowledge/isf-formal-named-completion-products.md)
 - q="how are completion seen and ready names owned before formal allocation?" · facts=[isf-formal-completion-products](../../docs/knowledge/isf-formal-completion-products.md)
 - q="how does read planning reserve completion and write handoffs?" · facts=[isf-formal-parent-read-products](../../docs/knowledge/isf-formal-parent-read-products.md)
 - q="what does deferred_formal_collisions mean in prepared source?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
 - q="what does generated_child_products include in source preparation?" · facts=[isf-formal-child-products](../../docs/knowledge/isf-formal-child-products.md)
 - q="what does parent_completion_products include in source preparation?" · facts=[isf-formal-completion-products](../../docs/knowledge/isf-formal-completion-products.md)
+- q="what does parent_named_completion_products retain?" · facts=[isf-formal-named-completion-products](../../docs/knowledge/isf-formal-named-completion-products.md)
 - q="what does parent_point_products retain in formal source preparation?" · facts=[isf-formal-point-products](../../docs/knowledge/isf-formal-point-products.md)
 - q="what does parent_storage_read_products contain?" · facts=[isf-formal-parent-read-products](../../docs/knowledge/isf-formal-parent-read-products.md)
 - q="what does parent_storage_write_products include in source preparation?" · facts=[isf-formal-parent-write-products](../../docs/knowledge/isf-formal-parent-write-products.md)
@@ -58,6 +61,13 @@ _Parent completion products retain actual instance allocation and join views_
 
 - **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-formal-completion-products.md`](../../docs/knowledge/isf-formal-completion-products.md)
+
+### isf-formal-named-completion-products
+
+_Named completion plans retain actual parent handoffs and local delayed pulses_
+
+- **date:** 2026-09-27 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-formal-named-completion-products.md`](../../docs/knowledge/isf-formal-named-completion-products.md)
 
 ### isf-formal-parent-read-products
 

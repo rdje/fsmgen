@@ -105,9 +105,15 @@ its generated name remains distinct from an authored rule with the same desired
 helper name. Reader allocation follows completion and write-handoff allocation,
 so those declarations are reserved too. The retained plan is detached from child
 and write products and preserves scalar, packed aggregate and selected bank
-reads through formal projection. Named-completion and library-readback
-connections, plus outer domain composition, still need coverage before the
-inventory is complete. It does not enable independent direct-transaction storage yet.
+reads through formal projection. Named-completion plans now retain per-instance
+parent inputs, optional local delayed-pulse storage and the output OR view after
+storage handoffs. For example, a child and parent completing `notice` keep their
+separate pulse sources while sharing the public output identity. The executable
+connection checks for non-completion writers before installing the plan and
+redirecting local completion assignments. A potential source plan does not
+admit those conflicting writers or merge raw formal storage contracts.
+Library-readback connections and outer domain composition still need coverage
+before the inventory is complete. It does not enable independent direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both
