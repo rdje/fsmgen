@@ -8,7 +8,7 @@ answers:
 date: 2026-09-27
 status: current
 tags: [process, supervision, containment, native, diagnosis]
-evidence: docs/audits/native-group-tracing-capability-20260927/manifest.json; docs/audits/native-group-host-correlation-20260927/manifest.json; docs/audits/native-group-witness-20260927/manifest.json; docs/audits/native-group-witness-20260927/original/manifest.json; docs/audits/native-group-discriminator-20260927/manifest.json; docs/audits/native-group-discriminator-20260927/result.jsonl; docs/audits/native-group-discriminator-20260927/probe.c; docs/audits/native-group-discriminator-20260927/verify.py; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: docs/audits/native-group-tracing-capability-20260927/administrator/manifest.json; docs/audits/native-group-tracing-capability-20260927/manifest.json; docs/audits/native-group-host-correlation-20260927/manifest.json; docs/audits/native-group-witness-20260927/manifest.json; docs/audits/native-group-witness-20260927/original/manifest.json; docs/audits/native-group-discriminator-20260927/manifest.json; docs/audits/native-group-discriminator-20260927/result.jsonl; docs/audits/native-group-discriminator-20260927/probe.c; docs/audits/native-group-discriminator-20260927/verify.py; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: python3 -B docs/audits/native-group-discriminator-20260927/verify.py && python3 -B docs/audits/native-group-witness-20260927/original/verify_original.py
 ---
 
@@ -28,8 +28,8 @@ Owner HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2
 retains causal repair. Child .2 seals the native discriminator; .3.1 seals the
 qualified native witness; .3.2 retains one successful original T1972 attempt.
 Child .6 retains bounded host correlation without a matching cause; .7 checks
-native tracing capability without capture or host changes. Child .8 is blocked
-on the prepared read-only administrator inventory.
+native tracing capability without capture or host changes. Child .8 consumes
+the administrator-reported SIP probe denial; .9 qualifies a failure-only recorder.
 A passing original cannot close the failure. No host change, admission relaxation,
 original retry or production repair occurs in the native discriminator slice.
 
@@ -67,3 +67,11 @@ authorization. The existing sampling helper is fixed to spindump. The prepared
 administrator request lists probes only, with no trace, root test or host change.
 A SIP warning does not prove probe absence. Exact access evidence and the saved
 verifier live in `docs/audits/native-group-tracing-capability-20260927/`.
+
+The administrator reports explicit SIP denial while matching the requested
+setpgid syscall probes, with no probe rows. A separately displayed exit zero
+remains a reported value, not successful probe admission or an independently
+captured native exit status. This rejects that tracing route under the reported
+protection; it does not attribute the original syscall failure to SIP. The exact
+transcript and hostile-conclusion verifier are in the preflight's `administrator/`
+subdirectory. No further authentication or protection change is requested.

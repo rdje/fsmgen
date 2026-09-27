@@ -1163,7 +1163,7 @@ stage results preserve the original limits and cleanup. Independent postchecks
 find the captured child processes/groups and temporary binaries absent. This
 new pass does not explain the historical failure. A bounded historical host-log query finds no matching PID/syscall message,
 although the same-window store overview confirms retained data. This cannot
-exclude unlogged kernel or policy causes. Read-only native probe listing now encounters an administrator-access boundary;
+exclude unlogged kernel or policy causes. The administrator subsequently reports SIP denial of the requested native probes;
 original retries are not a repair strategy. Verify
 the saved observation, without executing it again, with:
 
@@ -1171,23 +1171,36 @@ the saved observation, without executing it again, with:
 python3 -B docs/audits/native-group-witness-20260927/original/verify_original.py
 ```
 
-The installed DTrace manual defines `-l` as probe listing without enabling
-probes. The normal-user setpgid inventory requires additional privileges;
-`sudo -n` reports that authentication is unavailable. The existing temporary
-fixture helper admits only its fixed `spindump` operation. The next owner
-therefore needs an administrator's stdout, stderr and exit status for this
-read-only check:
+The installed DTrace manual defines `-l` as listing without enabling probes.
+After the normal-user privilege failure, the administrator ran:
 
 ```sh
 sudo /usr/sbin/dtrace -l -n 'syscall::setpgid:*'
 ```
 
-The command enables no tracing and executes no test. The SIP feature warning
-alone does not establish whether these probes exist, and no protection change
-is requested. A returned inventory must precede a separately qualified capture
-plan. The complete preflight and exact access request are retained under
-`docs/audits/native-group-tracing-capability-20260927/`; its `verify.py` checks
-the saved evidence without privileged execution.
+The supplied transcript contains no probe rows and explicitly reports that SIP
+prevents matching those probes. A later `printf` displays exit zero. That value
+is retained as reported, separately from command admission: the explicit denial
+makes this route unavailable under the reported host protection. The transcript
+is user-provided; separate raw streams and an independently captured native exit
+status are unavailable. This finding does not establish that SIP caused the
+original `setpgid` EPERM.
+
+The existing sampling session remains fixed to `spindump`. No authentication
+request or protection change is pending. The next diagnostic qualification uses
+the already qualified public native helper to record context only after a failed
+child call, preserving its return and immediate errno. Successful calls will
+perform no context queries or record writes. This is a planned recorder, not a
+repair or permission to retry the original. After-return snapshots and wrapper
+dispatch still have observation limits.
+
+The administrator report and exact limits are retained under
+`docs/audits/native-group-tracing-capability-20260927/administrator/`; verify
+that saved evidence without privileged execution:
+
+```sh
+python3 -B docs/audits/native-group-tracing-capability-20260927/administrator/verify.py
+```
 
 The updated full T1669 qualification still fails both Rust startup modes and
 legacy main-entry checks, while the new diagnostic controls and production HDL

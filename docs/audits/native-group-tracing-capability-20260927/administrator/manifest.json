@@ -1,0 +1,9 @@
+{
+  "predecessor_revision": "b685e2a54fc6ce990c1f3deb8a0229c7e187568f",
+  "provenance": "User-reported transcript, not an agent-attested command execution.",
+  "schema": "fsmgen.native_group_administrator_report_manifest.v1",
+  "sha256": {
+    "report.json": "d7089a5f8e12455f1daf0085117adae876da91c6526fa93ba44512931889f2ff",
+    "verify.py": "95c7d294880d66fe144c7fd8bdb6df6759a4c0ba67c1eac27ec4c19161e8a2e9"
+  }
+}

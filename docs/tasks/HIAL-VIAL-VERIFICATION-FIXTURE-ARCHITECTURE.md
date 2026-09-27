@@ -1801,8 +1801,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Preserve .2.9's failed control_wait result and missing PID/syscall evidence. Query the map, inspect source/history and native contract, then use bounded independently observed fork/group controls to separate setpgid return, actual membership and stale diagnostic errno. Select the smallest causal repair; if evidence needs new instrumentation, qualify and commit that separately before further original observation. Every actual owned child/group must settle; preserve rejection of false-success/undefined/negative/throwing admission, fixed limits and original failure. No retry-as-repair, host security change or unrelated recurrence campaign. Update book/fact and commit each verified slice.`
   Verification: `New .2.9 failure is in the asynchronous control_wait outer before exec; the current combined eval reports ambient $! after either syscall or membership failure. The source review identifies ambiguity, not a proved syscall failure or cause. Active at clean fe2dd2f2e3592cb043dc3daa1740254cb6f1a424. Read-only source/native-contract review and bounded independently observed fork/group controls are owned here; scratch outputs/workspaces stay under .artifacts/logs/containment-diagnosis-20260909/ and .artifacts/tmp/containment-diagnosis/. Six held native controls prove the combined message conflates a real EPERM session-leader syscall failure with a false-success membership failure; successful calls can retain EPERM too. All native identities/groups and cleanup are independently checked. This proves diagnostic ambiguity, not the original cause. Child .10.1 owns precise failure provenance and focused qualification; any remaining causal experiment is selected only after that child commits.`
   Commit: `pending causal failure diagnosis after precise diagnostic qualification`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.8`
-  Blocker: `The historical failure remains unexplained. Read-only DTrace probe inventory needs administrator access; sudo -n has no authorization. Child .8 owns the exact missing inventory and next causal selection. No original retry or host-protection change is authorized by a passing control.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.9`
+  Blocker: `The historical failure remains unexplained and lacks failed-call native context. The returned administrator transcript denies the requested syscall probes under SIP. Child .9 owns unprivileged failure-only witness qualification; no authentication request remains pending and no protection change or retry-as-repair is selected.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2`
   Status: `done`
@@ -1862,11 +1862,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.8`
-  Status: `blocked`
+  Status: `done`
   Goal: `Consume the missing administrator probe inventory and select a supported causal observation.`
   Acceptance: `Obtain complete stdout, stderr and exit status for the exact read-only command sudo /usr/sbin/dtrace -l -n 'syscall::setpgid:*' described in docs/audits/native-group-tracing-capability-20260927/administrator-check.json. Preserve it in repository-local evidence and distinguish available probes from privilege/SIP restrictions. Do not run a test as root, enable tracing, reuse the fixed spindump helper for a new command, weaken admission or disable protections. If the inventory supports a useful observation, separately own and qualify a bounded plan before execution; otherwise retain the exact blocker and choose an available supported discriminator. The earlier original pass never closes historical causality.`
-  Verification: `Blocked: normal-user listing requires additional privileges; sudo -n reports a password is required. Administrator output is not available. Prepared command and all prior evidence are committed before requesting that access.`
-  Commit: `pending administrator evidence`
+  Verification: `The administrator supplies the requested command transcript. DTrace prints its header without probe rows and explicitly fails to match syscall::setpgid:* because SIP is on. A later printf reports exit zero; preserve that user-reported value without converting it into probe admission or an independently captured native command status. Raw stdout/stderr separation and an agent-attested execution envelope are absent. The explicit denial is sufficient to retire this tracing route under current protections, not to attribute the original EPERM to SIP. Exact transcript/provenance and hostile false-admission/false-cause controls are sealed under docs/audits/native-group-tracing-capability-20260927/administrator/. No new authentication or protection change is requested. Child .9 owns an unprivileged failure-only context recorder qualification using the already qualified public native helper; it does not authorize an original replay or claim repair.`
+  Commit: `this commit`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.9`
+  Status: `active`
+  Goal: `Qualify unprivileged context capture only after native child setpgid rejection.`
+  Acceptance: `Use the committed public native identity helper in a private diagnostic wrapper. Invoke the original POSIX function once with unchanged arguments; perform no native context queries or record writes on success, including successful stale errno. On a failed child self-group call, retain return/immediate errno and post-return caller/target PID, PPID, PGID and SID, preserving query and capture errors without changing the original result. Qualify actual session-leader EPERM, successful/stale-errno and hostile diagnostic-write controls with bounded finite fixtures, independent identity/cleanup checks and corrupted-record rejection. Preserve parent race closure, limits and admission. State that after-return snapshots and wrapper dispatch still perturb observation and do not reconstruct the spent failure. Commit before any separately owned use in normal roadmap verification; no original retry, root helper, kernel trace or host change belongs here.`
+  Verification: `pending`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1`
   Status: `done`
@@ -4524,7 +4531,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.8` is blocked awaiting the prepared read-only administrator probe inventory; prior native qualification, original observation and host correlation are committed. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.9` qualifies unprivileged failure-only native context capture after the administrator reports SIP denial of the requested probes. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7113,3 +7120,25 @@ falsification separates successful version lookup, unprivileged listing failure
 and absent non-interactive authorization, with altered-evidence controls;
 durability uses complete tracked records, hashes and the prepared access request.
 The causal parent remains open; child `.3.2.10.8` is blocked pending administrator data.
+
+## Acceptance — administrator probe inventory `.3.2.10.8`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The supplied terminal transcript explicitly
+  reports failed matching of `syscall::setpgid:*` because SIP is on. This locates
+  the tracing boundary, not the original syscall cause. `git log -S
+  'authenticates the fixed native'` identifies 74c23d182dae033defcaf717f6197d59e86690a0
+  as the separate fixed spindump session contract; it cannot substitute here.
+- [x] **ADDRESSED (verified)** — The exact user transcript and its later printed
+  zero status are retained with explicit provenance. The verifier rejects
+  successful probe admission, an invented attached native exit status, a
+  removed denial and attribution of the original EPERM to SIP. Child .9 owns
+  failure-only unprivileged context qualification as the next supported path.
+- [x] **NO REGRESSION** — Saved report verification, `knowledge-map: OK`, book
+  and staged doctrine checks qualify this evidence/plan update. No production
+  source, original test, native trace or host security setting changes.
+
+Re-derivation consumes the user-reported command/output; falsification challenges
+its negative admission and causal limits; durability is the exact transcript,
+hash manifest and verifier. Independent native exit/stream capture is missing;
+it is not needed to decline the explicitly denied probe route. Historical cause
+and the pending writer/storage work remain open.

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "sudo",
+    "/usr/sbin/dtrace",
+    "-l",
+    "-n",
+    "syscall::setpgid:*"
+  ],
+  "command_exit_status": null,
+  "exit_status_limit": "The later printf reports zero. It was not captured in an agent-controlled command envelope; retain it without treating it as successful probe admission.",
+  "native_failure_attribution": "unresolved",
+  "probe_discovery_outcome": "blocked_by_sip",
+  "reported_later_exit_status": 0,
+  "schema": "fsmgen.native_group_administrator_report.v1",
+  "scope": "administrator-reported probe listing only; no trace enabled or protection changes requested",
+  "source": "user-provided terminal transcript in this conversation",
+  "transcript": "$ sudo /usr/sbin/dtrace -l -n 'syscall::setpgid:*'\nPassword:\ndtrace: system integrity protection is on, some features will not be available\n\n   ID   PROVIDER            MODULE                          FUNCTION NAME\ndtrace: failed to match syscall::setpgid:*: System Integrity Protection is on\nricharddje@richards-mac-mini1:~$ printf 'exit=%s\\n' \"$?\"\nexit=0\n"
+}
