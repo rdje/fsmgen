@@ -1574,11 +1574,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Reconcile stale ATL resolution and composition book summaries.`
-  Acceptance: `Remove contradictions between the actor-type-resolution introduction and the shipped resolved-child/multi-child/data-route sections, grounded in actual supported fixtures and contracts. Preserve explicit unsupported composition/runtime boundaries. Run book fixture/build checks.`
-  Verification: `Priority medium documentation defect: docs/book/src/13f-composition.md around lines 1220-1280 calls qualified ATL resolution future/backlog and multi-child/data-route tops unavailable immediately before and after documenting shipped resolution. T1330 and current ATL fixtures cover those later subsets. Reproduce by reading that section together with Generated-Child Top Data Routes; readers receive contradictory support guidance. Fix immediately after .1 commits, before remaining producer work.`
-  Commit: `pending`
+  Acceptance: `Remove contradictions between the composition and orchestration-backlog actor-type-resolution summaries and the shipped resolved-child/multi-child/data-route sections, grounded in actual supported fixtures and contracts. Preserve explicit unsupported composition/runtime boundaries. Run book fixture/build checks.`
+  Verification: `Priority medium documentation defect fixed in composition and orchestration-backlog summaries: actual native resolved-child, trigger-batch and vector route reports confirm the shipped subsets. T1332/T1376 and mdBook build pass; existing group/join/CDC/routing limits remain. Evidence: .artifacts/atl-book-status/.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2`
   Status: `pending`
@@ -3093,3 +3093,36 @@ domain completeness remain .2; no new runtime qualification is claimed.
 A separately owned documentation defect in stale ATL support summaries is .3,
 scheduled immediately after this slice commits. DEVELOPMENT_NOTES needs no
 duplicate rationale.
+
+## Acceptance — ATL book status `.49.2.2.3.2.2.2.3.2.2.2.2.2.3`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` for
+  atl_resolved_child_pipeline, atl_two_child_trigger_batch_pipeline and
+  atl_two_child_vector_data_pipeline reports library_actor_export instances,
+  their actual generated tops and vector_actor_handoff routing. The composition
+  chapter's older introduction nevertheless called resolution future/backlog
+  and multi-child/data-route tops unavailable. The orchestration backlog also
+  said resolved children do not emit generated tops, contradicting its later
+  shipped-subset descriptions and the feature-support matrix.
+- [x] **ADDRESSED (verified)** — both summaries now describe shipped
+  library-qualified resolution and explicitly point to the bounded trigger/event,
+  same-child pin-route and two-child composition subsets. Obsolete blanket
+  denials are removed. Sibling-root resolution, unqualified external intent,
+  executable groups, actor-event aggregation, CDC, route mux/storage and broader
+  routing remain bounded by their existing contracts. No compiler or example
+  source behavior changes. Native evidence.json is derived from the fresh
+  complete schedule reports under .artifacts/atl-book-status/.
+- [x] **NO REGRESSION** — tests.log reports `All tests successful` for
+  T1332 ATL documentation status and T1376 runnable book examples. The final
+  prose build is book-final.log. The unchanged implementation was already
+  qualified by the completed T1330 cohort in .artifacts/formal-reusable-products/
+  regression.log; no new runtime qualification is inferred. The staged doctrine
+  gate and commit hook validate the co-staged claim/size registry updates.
+
+Re-derivation uses native schedule metadata, the feature matrix and detailed
+composition contracts; falsification compares the stale blanket denials with
+actual resolved/top/route outputs and preserves the canonical group/event-join
+negative boundaries; durability is the corrected mdBook and this task record.
+No new low-impact prose test mirrors the implementation. No DEVELOPMENT_NOTES
+entry is needed for correcting stale support prose. Resume remaining parent
+connection/grant/outer domain reservations under .2 after this commit.

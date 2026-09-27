@@ -1217,10 +1217,10 @@ child `.fsm` artifacts and generated ATL tops.
 
 Sibling-root child type resolution remains deferred.
 
-The selected future source contract for ATL actor type resolution is explicit
-library qualification (the example assumes a sibling `common.packet`
-library on the search path; ATL actor type resolution is still on the
-backlog so this fixture documents the future shape):
+The shipped ATL actor type-resolution contract uses explicit library
+qualification. This example assumes a sibling `common.packet` library on the
+search path exporting `packet_reader` with a `capture` transaction and `done`
+event:
 
 ```text
 (actor packet_system
@@ -1246,20 +1246,21 @@ metadata-only external intent for now, not an implicit search through sibling
 actor roots or files.
 
 Existing `(use alias.actor as instance ...)` remains the separate reusable
-library generated-top path with explicit bindings. The targeted fail-closed
-reservation for this qualified ATL syntax is shipped: missing imports,
-non-explicit import aliases, unknown aliases, and unknown actor exports still
-fail before scheduled `.fsm` emission with ATL-specific diagnostics.
+library generated-top path with explicit bindings. Qualified ATL resolution
+rejects missing imports, non-explicit import aliases, unknown aliases and
+unknown actor exports before scheduled `.fsm` emission with ATL-specific
+diagnostics.
 
 Resolved qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `module`, and `scheduled_fsm`, with
 `type_resolution: "library_actor_export"` and deterministic child
 names `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm` under
 `actor_network.instances[]`. Lowering now emits those resolved child `.fsm`
-files, and the first generated ATL top is shipped for the one-resolved-child
-trigger/event subset. Broader generated ATL tops, interface binding inference,
-data-route child wiring, and event/trigger/data handoff wiring outside that
-selected pair remain later leaves.
+files. Generated ATL tops support the documented resolved-child trigger/event,
+same-child pin-route, two-child sequential handoff, trigger-batch and
+actor-to-actor route subsets described below. Each subset keeps its explicit
+ordering, endpoint and width constraints; arbitrary instance networks and
+interface binding inference remain deferred.
 
 The shipped resolved-child fixture is
 `isf/atl_resolved_child_pipeline.isf`. It uses one same-source library actor
@@ -1275,10 +1276,10 @@ the parent, parent `worker_process_start` to child `process_start`, and child
 HDL promotion for that same resolved-child shape is shipped. The source and
 report schema stay unchanged; focused coverage proves plain and strict CLI
 SystemVerilog generation contains the generated top, scheduled parent,
-resolved child, and selected internal trigger/event links. Multi-child ATL
-tops, data-route child wiring, CDC, payloads, ready/backpressure, route
-mux/storage, recursive actor networks, and permanent actor grouping remain
-unavailable.
+resolved child, and selected internal trigger/event links. The following
+sections cover the separately qualified pin routes and two-child tops. CDC,
+event payload protocols, ready/backpressure, route mux/storage, recursive actor
+networks and executable group scheduling remain deferred.
 
 ### Generated-Child Top Data Routes
 

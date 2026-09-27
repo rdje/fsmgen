@@ -57,13 +57,14 @@ schedule-report metadata under `actor_network`; verbose instances report
 
 Unqualified static instances remain metadata-only external intent.
 
-Library-qualified static instances now resolve to report metadata and emit
-their resolved child scheduled `.fsm` artifacts; they still do not emit a
-generated ATL top, infer parent/child handoff wiring, schedule groups, or wire
-HDL. Multiple instances outside the shipped
-scalar handoff and report-only group metadata subsets, broader event/trigger
-behavior beyond the single parent-handoff subsets, and wider endpoint movement
-remain backlog.
+Library-qualified static instances resolve to report metadata and emit their
+resolved child scheduled `.fsm` artifacts. Generated tops and HDL child wiring
+are shipped for the documented trigger/event, same-child scalar/vector pin
+routes, two-child sequential handoffs, trigger batches and actor-to-actor route
+subsets. The [composition chapter](13f-composition.md#generated-child-top-data-routes)
+describes their ordering, endpoint and width constraints. Broader instance
+networks, executable group scheduling, event aggregation and routing outside
+those subsets remain backlog.
 
 Actor-to-actor and pin-to-actor movement is not expressed as top-level
 `connect` clauses. The selected ATL v0 proposal reuses existing drive
@@ -184,9 +185,9 @@ actor instances, generated external trigger outputs pulsed from one parent
 state, and `actor_network.association_schedules[]` report evidence. Static
 `(group ...)` declarations are not required and remain review metadata only.
 
-Noncontiguous batches, repeated members, generated children, group endpoints,
-data-movement coupling, hidden same-cycle event joins, route mux/storage, and
-CDC remain later leaves.
+The resolved-child trigger-batch extension is documented below. Noncontiguous
+batches, repeated members, group endpoints, data movement coupled to a trigger
+batch, hidden actor-event joins, route mux/storage and CDC remain deferred.
 
 The compatibility `actor_network.group_schedules[]` array remains for schedule
 JSON `schema_version: 1`. The canonical association entry uses
@@ -275,13 +276,11 @@ clauses with qualified actor-event operands fail closed too; those sync forms
 remain generated-child completion joins until an explicit actor-event join
 contract adds event latch/storage and lifetime semantics.
 
-The ATL source-root boundary is shipped before generated child resolution. A
-sibling top-level `(actor ...)` root in the same `.isf` source fails closed
-until FSMGen has an explicit actor type-resolution and generated child
-artifact contract. Same-source `(library ...)` roots remain accepted.
+A sibling top-level `(actor ...)` root in the same `.isf` source remains
+rejected: sibling-root type resolution is deferred. Same-source `(library ...)`
+roots are accepted by the shipped library-qualified resolution contract.
 
-The explicit actor type-resolution source contract is now selected for future
-ATL leaves. Resolved static actor types use the library-qualified form
+Resolved static actor types use the shipped library-qualified form
 `(instance NAME of ALIAS.EXPORT)`, where `ALIAS` is declared by the enclosing
 actor's `(imports (library ... as ALIAS))` clause and `EXPORT` is an actor
 export from that library. Unqualified `(instance NAME of ACTOR_TYPE)` remains
@@ -289,9 +288,8 @@ metadata-only external intent until a later leaf widens it, and sibling actor
 roots remain rejected. Existing `(use alias.actor as instance ...)` remains
 the separate reusable-library generated-top surface with explicit bindings.
 
-The targeted fail-closed reservation for the qualified ATL syntax is now
-shipped: missing imports, non-explicit import aliases, unknown aliases,
-and unknown exports still fail before scheduled `.fsm` emission. Resolved
+Qualified ATL resolution rejects missing imports, non-explicit import aliases,
+unknown aliases and unknown exports before scheduled `.fsm` emission. Resolved
 qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `module`, and `scheduled_fsm` to resolved `actor_network.instances[]` entries
 and now emit their child `.fsm` files. The first generated ATL top is shipped
@@ -302,11 +300,10 @@ extension, same-child mixed scalar/vector pin-ingress route-set extension,
 scalar pin-egress route, exact-width vector pin-egress route, scalar
 same-child pin-egress multi-route extension, vector same-child pin-egress
 multi-route extension, and same-child mixed scalar/vector pin-egress route-set
-extension below are shipped for that same one-child top. Broader
-generated ATL tops, HDL child wiring outside that selected pair plus shipped
-scalar/vector pin routes,
-interface binding inference, event fan-in, route mux/storage, CDC, recursive
-actor networks, and ready/backpressure remain later leaves.
+extension below are shipped for that same one-child top. The two-child
+sequential, trigger-batch and actor-to-actor route subsets described below are
+also shipped. Interface binding inference, actor-event fan-in, route mux/storage,
+CDC, recursive actor networks and ready/backpressure remain deferred.
 
 The resolved-child fixture is now shipped as
 `isf/atl_resolved_child_pipeline.isf`. It proves the generated-top boundary
