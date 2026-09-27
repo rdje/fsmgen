@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2` (pending)
-- next_action: Qualify actual state/DT/assignment guards and exact named-drive local/generated caller associations under .32.1.3.3.1.3.3.2.2.3.2; preserve grants and keep source identity separate from execution exclusion.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2` (pending)
+- next_action: Qualify actual emitted assignment/DT guards and grant/suppression evidence under .32.1.3.3.1.3.3.2.2.3.2.2; keep state transition guards separate and consume exact named-drive invocation records without inferring exclusion.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none after the current slice commit.
 - in_flight_background: none.

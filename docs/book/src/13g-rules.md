@@ -241,6 +241,14 @@ VHDL generation now lowers the named-drive scalar reductions by identity or
 complement and emits no foreign reduction token. External VHDL compiler/runtime
 qualification remains unclaimed under decision `0023`; token-free generation
 alone does not establish it.
+Private writer qualification now retains the exact invocation source for each
+named-drive body assignment. Local calls keep their full caller set, including
+an empty set for an unused drive. Generated calls retain the actual child,
+instance, activation kind and source owner for `spawn`, `do` or a rule trigger.
+Generated assignments do not inherit unrelated local callers. These records
+preserve existing target-local priority guards; they do not establish a new
+grant or prove that different callers are mutually exclusive.
+
 The public report and normalized-semantic key sets do not widen. See the
 [shipped behavior](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_BEHAVIOR.md)
 and the preceding

@@ -839,9 +839,24 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify source-writer activation and exact named-drive caller associations.`
   Acceptance: `After .1, collect actual state/container/assignment guards and existing grants without replacing them with source-owner assumptions. Attach per-assignment local/generated named-drive invocation associations at the actual producer so multi-caller and mixed generated/local sources remain conservative. Preserve resource and priority predicates, and prove missing/malformed/caller mutation controls and public carrier/report parity before completing this source-producer parent.`
+  Verification: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.1`
+  Status: `done`
+  Goal: `Attach exact local/generated invocation source records to named-drive assignments.`
+  Acceptance: `Build private per-assignment invocation descriptors at _build_drive_dts from the actual local caller group or generated source record. Preserve empty and multiple local caller sets, generated activation instance/owner/child relationships and request-signal identity without parsing name prefixes. Validate association against the DT producer records, prove malformed/omission/source mutation controls and detached records, and preserve complete reports, priority behavior and emitted carriers. Existing broad public invoking_transactions provenance remains unchanged; no ownership exclusion or grant is inferred.`
+  Verification: `T1971 qualifies exact per-assignment local caller groups and generated spawn/do/trigger source descriptors from actual producers, including child/instance/owner/request identity, empty/multiple local sets, source permutations and renamed DTs. Omission/source/request mutation and detached-return controls pass. Unique-caller target-local priority guards and suppressors are unchanged. Exact carrier/schedule comparisons ignore private metadata, complete native/API/newline reports agree, and the complete generated carrier strict-checks. T1542 runtime, T1942 preparation and T1970 ownership regressions plus mdBook build pass. Emitted activation proof remains .2.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2`
+  Status: `pending`
+  Goal: `Qualify actual emitted writer activation guards and grant/suppression evidence.`
+  Acceptance: `After .1, collect actual assignment and DT enable guards plus resource and priority evidence in a detached contract. Keep state transition/entry guards separate from assignment execution and do not infer transaction-wide exclusion. Verify the effective emitter semantics for every supported assignment operator and guard shape, including unguarded controls, state decrements and rule assignment grouping; preserve typed/raw predicates and caller descriptors. Diagnose and own any discrepancy before shadow admission; prove omission/mutation controls and full report/carrier parity.`
   Verification: `pending`
   Commit: `pending`
 
@@ -2699,7 +2714,8 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2`, exact source activation/caller associations after
+`.32.1.3.3.1.3.3.2.2.3.2.2`, actual emitted guard qualification after
+exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
 the physical target resolver and retained admission baseline. Conservative admission precedes independent controllers and local-call
 timing under the following sibling leaves. `.49.2.3` qualifies direct-call runtime;
@@ -4493,3 +4509,35 @@ corrected cards, detailed behavior/dated selection, book and this task. Runtime
 verification does not imply an installed or qualified external VHDL compiler;
 command discovery found no ghdl/nvc/vcom during this slice. Resume the already
 owned activation/caller prerequisite without changing its implementation scope.
+
+## Acceptance — drive invocation sources `.32.1.3.3.1.3.3.2.2.3.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The mixed local/spawn/do/trigger fixture's
+  `--emit-schedule-json` report retains the broad legacy invoking_transactions
+  provenance. _build_drive_dts previously copied that local caller group onto
+  every body assignment, while only the DT-level generated_call_sources list
+  retained generated invocation identities. A future precise writer inventory
+  cannot pair assignments with sources by parsing helper prefixes or selecting
+  an arbitrary local caller from those broad fields.
+- [x] **ADDRESSED (verified)** — _build_drive_dts attaches private per-assignment
+  drive_invocation records at its actual local/generated source branches.
+  DriveInvocationSources verifies assignment-index association against the
+  explicit drive owner and producer source records, then returns detached data.
+  T1971 proves local groups, empty/multiple callers and exact generated spawn/do/
+  trigger child/instance/source/request relationships. Renamed DTs and source
+  permutations preserve identity; omitted and mutated associations fail closed.
+  Existing target-local priority guards/suppressors and public provenance remain
+  unchanged. Exact carrier/schedule comparisons, complete native/API/newline
+  reports and strict generated-carrier replay pass.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1971/T1542/T1942/T1970 with the qualified supervised Darwin runtime enabled
+  under default RAM limits. The mdBook build passes. Staged doctrines and
+  normal hooks qualify the slice. Actual emitted guard/grant qualification is
+  the next child; no source descriptor is treated as a mutual-exclusion proof.
+
+Evidence: `.artifacts/drive-invocation-sources/`. Re-derivation joins actual
+producer branches to per-assignment descriptors and full public reports;
+falsification removes callers/sources or mutates ownership/request identities;
+durability is T1971 and its mixed fixture, the resolver, canonical writer card,
+book and this tree. This slice does not promote independent execution or alter
+existing arbitration, including its conservative ambiguous-caller boundary.

@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-direct`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **19** uniquely owned question entries.
+> **3** facts · **20** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,6 +10,7 @@
 - q="do different direct transactions have independent same-named formal ports?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)
 - q="does ISF reject competing writes from direct sibling transactions?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
 - q="does transaction priority grant independent controller writes?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
+- q="how are exact local and generated named-drive invocation sources retained?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
 - q="how are private direct formal identities planned without changing execution?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)
 - q="how do implicit ISF assignment targets participate in physical overlap?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
 - q="how does detached expression resolution distinguish caller and callee formal names?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)

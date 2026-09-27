@@ -13190,9 +13190,20 @@ sub _build_drive_dts {
         } map { _generated_drive_source_metadata($_) } @extra_sources;
         my @sources;
 
-        push @sources, { prefix => $name, source_kind => 'drive_body' }
-            if !$local_drive_filter || $local_drive_filter->{$name};
-        push @sources, @extra_sources;
+        push @sources, {
+            prefix => $name, source_kind => 'drive_body',
+            drive_invocation => {
+                kind => 'local', drive => $name, request_signal => "${name}_start",
+                local_transactions => [@local_callers],
+            },
+        } if !$local_drive_filter || $local_drive_filter->{$name};
+        push @sources, map { +{
+            %$_,
+            drive_invocation => {
+                kind => 'generated', drive => $name, request_signal => "$_->{prefix}_start",
+                generated_source => _generated_drive_source_metadata($_),
+            },
+        } } @extra_sources;
         next unless @sources;
 
         my @assignments;
@@ -13220,6 +13231,7 @@ sub _build_drive_dts {
                     guard       => { port => "${prefix}_start" },
                     source_kind => $source->{source_kind} || 'drive_body',
                     invoking_transactions => [@local_callers],
+                    drive_invocation => _clone_isf_value($source->{drive_invocation}),
                 };
             }
         }

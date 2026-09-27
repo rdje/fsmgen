@@ -9,11 +9,12 @@ answers:
   - "which ISF widths are explicit physical declarations?"
   - "how do implicit ISF assignment targets participate in physical overlap?"
   - "where do lowered source-writer identities originate?"
+  - "how are exact local and generated named-drive invocation sources retained?"
   - "where is the direct writer admission baseline?"
 date: 2026-09-27
 status: current
 tags: [isf, controllers, writers, storage, conflicts, ownership]
-evidence: perl/FSM/Scheduler/ISF/SourceWriterOwners.pm; t/1970-isf-source-writer-owners.t; t/1969-isf-implicit-write-targets.t; perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
+evidence: perl/FSM/Scheduler/ISF/DriveInvocationSources.pm; t/1971-isf-drive-invocation-sources.t; perl/FSM/Scheduler/ISF/SourceWriterOwners.pm; t/1970-isf-source-writer-owners.t; t/1969-isf-implicit-write-targets.t; perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
 reverify: scripts/run_with_ram_guard.sh perl docs/audits/direct-writer-admission-20260927/reproduce.pl; compare .artifacts/direct-writer-admission/current.json with the retained result.json. This is a dated admission baseline, not an expected future safety contract.
 ---
 
@@ -118,3 +119,19 @@ complete native/API/newline reports and unchanged strict carriers. Reverify with
 guarded prove on T1970. Legacy public assignment provenance remains unchanged;
 exact activation/per-assignment caller association is .3.2.2.3.2 and generated
 handoff/completion/helper ownership is .3.2.2.4 before complete shadow attachment.
+
+_build_drive_dts now attaches private drive_invocation records per assignment
+from the actual producer branch. Local records retain the exact caller group,
+including empty/multiple sets; generated records retain one actual spawn/do/
+trigger descriptor with child, instance, source owner and request signal.
+DriveInvocationSources resolves an assignment index and verifies its association
+against the DT's explicit drive owner and local/generated source records.
+It never recovers owners from helper-name prefixes or borrows local callers for
+a generated assignment. The existing broad public invoking_transactions field
+is unchanged. These associations are source evidence, not a grant or guard proof.
+
+T1971 qualifies a mixed local/spawn/do/trigger actor, source permutations, renamed
+DTs, unused drives, target-local priority guards, omitted/mutated associations,
+detached records, complete public report parity and strict exported carriers.
+Reverify with guarded prove on T1971. Emitted guard qualification follows under
+.3.2.2.3.2.2 before generated helper ownership and complete shadow attachment.
