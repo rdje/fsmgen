@@ -1161,7 +1161,11 @@ One unchanged T1972 run under that witness now passes the guard oracle for both
 HDL targets and entry cases. Every observed native call succeeds, and retained
 stage results preserve the original limits and cleanup. Independent postchecks
 find the captured child processes/groups and temporary binaries absent. This
-new pass does not explain the historical failure. A bounded historical host-log query finds no matching PID/syscall message,
+new pass does not explain the historical failure. The guard emitter, fixture and
+production/test-helper sources still match that observation. Its independent
+oracles satisfy the literal-guard repair and permit the detached writer
+activation collector to proceed. Native causality remains P1-owned; failure-only
+capture is required before the next genuine roadmap runtime qualification. A bounded historical host-log query finds no matching PID/syscall message,
 although the same-window store overview confirms retained data. This cannot
 exclude unlogged kernel or policy causes. The administrator subsequently reports SIP denial of the requested native probes;
 original retries are not a repair strategy. Verify

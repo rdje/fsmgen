@@ -83,4 +83,7 @@ native identities. Actual session-leader rejection, modeled query/write faults,
 capture limits and independent cleanup pass. Query/capture gaps stay explicit.
 These are sequential after-return snapshots; wrapper dispatch still adds overhead.
 Verify sealed records with `python3 -B docs/audits/native-group-witness-20260927/failure-only/verify.py`.
-Child .10 reconciles the independent guard evidence before normal roadmap work.
+Child .10 reconciles the unchanged guard source and saved runtime evidence,
+closing that independent repair. Child .11 retains P1 causal follow-up and
+requires failure-only capture before the next genuine roadmap runtime. A pass
+cannot close causality; independent non-runtime feature work may proceed.

@@ -31,10 +31,13 @@ captured=42 and observed=9 despite false guards. The corrected public-pin oracle
 keeps disabled/captured/observed at zero for the false entry; true-entry and
 symbolic controls still execute. Independent reset/repeated-activation controls,
 actual carrier parsing, detached IR and complete native/API/newline reports
-qualify the carrier/report boundary. Verilog false/true entry and SystemVerilog
-false entry pass runtime; SystemVerilog true entry remains blocked before exec
-by pid=43538 setpgid undef errno=1 (Operation not permitted). The owner below
-links the existing native containment repair; no retry establishes its cause.
+qualify the carrier/report boundary. The initial SystemVerilog true entry was
+blocked before exec by pid=43538 setpgid undef errno=1. The separately owned,
+unchanged witnessed observation subsequently passes both targets/entry cases.
+Its sealed results and current production/test source equality satisfy this
+guard repair; they do not establish or repair the native failure. HIAL .3.2.10.11
+retains P1 causal follow-up before the next genuine runtime qualification.
+Saved evidence: docs/audits/native-group-witness-20260927/original/manifest.json.
 A synthetic rule assignment group covers the numeric group
 rendering without claiming that shape originates from every current producer.
 

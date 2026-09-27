@@ -862,12 +862,12 @@ For FSMGen, the analogs are:
   Commit: `children below`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.1`
-  Status: `blocked`
+  Status: `done`
   Goal: `Repair dropped literal-false guards before writer activation qualification.`
   Acceptance: `P1 discovered defect: a strictly admitted rule with (when 0) retains port=0 in LoweringIR but _format_guard_suffix treats it as Perl false and emits an unconditional write. Reproduce actual emitted/runtime behavior with false/true and symbolic controls; qualify related state-entry assignment/transition and expression guard fields. Replace truthiness with explicit presence checks without changing supported syntax or inventing entry-wide assignment guards. Preserve normal guards, reports and public carrier replay, sync book/spec and commit before activation inventory work.`
-  Verification: `Emitter presence checks preserve zero and numeric predicates render as explicit boolean expressions to avoid delayed-pulse/infix ambiguity. T1972 carrier, detached-IR and complete native/API/newline reports pass. Supervised Verilog false/true entry and SystemVerilog false entry pass the public-pin oracle; the SystemVerilog true-entry run is rejected before exec by setpgid EPERM. The earlier reset oracle was corrected after emitted HDL proved the existing register-input sample bypass remains visible at entry during reset. Focused non-runtime regression and book build pass; full runtime qualification remains blocked, with no retry or containment weakening. Exact failure and ownership follow below.`
-  Follow-up: `HIAL .3.2.10.3.2 consumes the qualified native witness at 915b311c2e82e37453018e3399f6321a07460eba and executes unchanged T1972 once. Both HDL targets and entry cases pass with successful observed native calls and exact cleanup. Complete saved evidence is docs/audits/native-group-witness-20260927/original/manifest.json. This supplies guard runtime evidence but does not attribute or repair the historical EPERM; containment ownership remains open and .3.2.10.6 owns bounded historical host evidence.`
-  Commit: `this commit; SystemVerilog true-entry runtime qualification pending`
+  Verification: `Emitter presence checks preserve zero and numeric predicates render as explicit boolean expressions to avoid delayed-pulse/infix ambiguity. T1972 carrier, detached-IR and complete native/API/newline reports pass. Supervised Verilog false/true entry and SystemVerilog false entry pass the public-pin oracle; the SystemVerilog true-entry run is rejected before exec by setpgid EPERM. The earlier reset oracle was corrected after emitted HDL proved the existing register-input sample bypass remains visible at entry during reset. Focused non-runtime regression and book build pass; the initial runtime qualification was incomplete, with no containment weakening. Exact failure and ownership follow below.`
+  Follow-up: `HIAL .3.2.10.3.2 consumes the qualified native witness at 915b311c2e82e37453018e3399f6321a07460eba and executes unchanged T1972 once. Both HDL targets and entry cases pass with successful observed native calls and exact cleanup. Complete saved evidence is docs/audits/native-group-witness-20260927/original/manifest.json. This supplies guard runtime evidence but does not attribute or repair the historical EPERM; HIAL .3.2.10.10 independently reverifies the saved observation and current source equality, satisfying this guard repair acceptance. Historical containment remains P1-open under .3.2.10/.11; its next observation is scheduled before genuine roadmap runtime.`
+  Commit: `7ee298c6958a61ff5600c22d1de164ff23b4f6ca; runtime evidence at 85e7e9a59f2b8e382d9567036202521ce288e4f5; source/evidence reconciliation under HIAL .3.2.10.10`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2`
   Status: `pending`
@@ -2730,8 +2730,8 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2.2.1`, literal-guard repair awaiting the blocked true-entry SystemVerilog runtime
-qualification before actual emitted guard collection, after
+`.32.1.3.3.1.3.3.2.2.3.2.2.2`, detached effective writer activation collection
+after literal-guard repair and independently retained runtime qualification, after
 exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
 the physical target resolver and retained admission baseline. Conservative admission precedes independent controllers and local-call
