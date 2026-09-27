@@ -150,11 +150,17 @@ assignment guard and generated enable logic.
   priority directions and the non-conflicting multi-output case.
 - Native Verilog is executable: Icarus compiles and runs the rule-over-drive
   fixture, and Verilog remains free of SystemVerilog assertion syntax.
-- Direct VHDL is characterization-only for this expression family. Generation
-  still leaks SystemVerilog unary-reduction syntax around `drive_zero_start`.
-  Decision `0023` and proposed
-  `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own that independent correction;
-  this behavior does not claim valid VHDL.
+- Direct VHDL generation now lowers scalar named-drive reductions by identity
+  or complement and emits no foreign reduction token. Completed
+  `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2` owns that repair; T1542/T1543
+  retain generation checks. External VHDL compilation/runtime remains
+  unqualified under decision `0023`. See the current
+  [reduction behavior](DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md).
+
+Boundary refreshed under `SEMANTIC-INTROSPECTION-MCP-FRONTIER.57`. Reverify with
+`scripts/run_with_ram_guard.sh prove -Iperl t/1542-isf-rule-transaction-named-drive-priority-readiness.t t/1543-direct-vhdl-reduction-expression-readiness.t`.
+Keep the guard defaults. T1542 needs the separately qualified runtime opt-in on
+Darwin; a skipped test is not runtime qualification.
 
 ## Public Surface And Compatibility
 

@@ -8,7 +8,7 @@ answers:
   - "what diagnostic handles ambiguous named-drive priority ownership?"
   - "does named-drive priority suppress the whole drive?"
   - "how are SystemVerilog Verilog and VHDL qualified for named-drive priority?"
-date: 2026-07-30
+date: 2026-09-27
 status: current
 tags: [isf, rule, transaction, named-drive, priority, contract, selector, backend]
 evidence: docs/ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md; docs/ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_READINESS_AUDIT.md; docs/tasks/ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.md; t/1542-isf-rule-transaction-named-drive-priority-readiness.t; perl/FSM/Scheduler/ISF/LoweringIR.pm
@@ -33,9 +33,12 @@ ownership fails before HDL through
 evidence. Same-value fan-in and the existing direct assignment path remain.
 
 SystemVerilog plus Verilog receive executable structural/runtime qualification.
-VHDL is explicitly unqualified for this expression family because current
-direct output leaks unary reduction syntax; decision `0023` and proposed
-`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own that separate repair.
+At contract selection, direct VHDL leaked unary reduction syntax. Completed
+`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2` subsequently repaired scalar and
+vector reductions; T1542/T1543 now require token-free generation. External VHDL
+compile/runtime remains unqualified under decision `0023`; generation success
+is not that proof. Current behavior is canonical in
+`direct-vhdl-reduction-expression-lowering-behavior`.
 
 Clean contract commit `b44afcc51` activates implementation `.3` continuity-
 only. Implementation `.3` now ships this unchanged contract; current behavior

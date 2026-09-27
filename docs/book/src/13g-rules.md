@@ -237,7 +237,10 @@ says the proof is unavailable rather than claiming the overlap is safe.
 
 Generated SystemVerilog selector assertions remain authoritative and pass for
 both resolved directions; native Verilog is also runtime-qualified. Direct
-VHDL remains unqualified for this expression family under decision `0023`.
+VHDL generation now lowers the named-drive scalar reductions by identity or
+complement and emits no foreign reduction token. External VHDL compiler/runtime
+qualification remains unclaimed under decision `0023`; token-free generation
+alone does not establish it.
 The public report and normalized-semantic key sets do not widen. See the
 [shipped behavior](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_BEHAVIOR.md)
 and the preceding

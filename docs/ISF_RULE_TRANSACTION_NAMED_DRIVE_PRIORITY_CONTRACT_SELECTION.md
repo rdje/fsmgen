@@ -187,8 +187,8 @@ discovery, and artifact inventories remain unchanged.
 
 ## HDL Qualification
 
-The semantic contract is backend-neutral, but current executable evidence is
-qualified per backend:
+The semantic contract is backend-neutral. At contract selection, executable
+evidence and implementation requirements were bounded per backend:
 
 - SystemVerilog: required. Preserve `$onehot0` multi-value selector assertions,
   prove the target-local inverse guard structurally, and pass assertion-enabled
@@ -197,14 +197,21 @@ qualified per backend:
   same target-local enable structure, compile with installed Icarus Verilog,
   and run the compatible focused fixture. Verilog does not gain SystemVerilog
   assertion syntax.
-- VHDL: not currently qualified for this expression family. A same-volume
-  contract probe generated the current source successfully but exposed
-  `drive_zero_en and (|drive_zero_start)`. `_sv_expr_to_vhdl` translates
-  spaced binary OR but neither translates nor rejects unary reduction OR, and
-  no `ghdl`, `nvc`, or `vcom` is installed. Decision `0023` and proposed task
+- VHDL at selection: unqualified for this expression family. A same-volume
+  contract probe generated the source successfully but exposed
+  `drive_zero_en and (|drive_zero_start)`. `_sv_expr_to_vhdl` then translated
+  spaced binary OR but neither translated nor rejected unary reduction OR, and
+  no `ghdl`, `nvc`, or `vcom` was installed. Decision `0023` and the then-proposed task
   `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own that independent defect.
   `.3` must report the VHDL outcome and make no VHDL-validity claim; it must not
   broaden into a backend repair.
+
+Current follow-up (refreshed under `SEMANTIC-INTROSPECTION-MCP-FRONTIER.57`):
+completed reduction lowering now emits token-free named-drive VHDL, including
+positive and complemented scalar forms. T1542/T1543 check that boundary.
+External compiler/runtime qualification remains separate under decision `0023`;
+the historical leak above is no longer current behavior. See
+[the reduction behavior](DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md).
 
 The three-file/19,070-byte Verilog/VHDL probe workspace was repository-local
 and is removed without residue.

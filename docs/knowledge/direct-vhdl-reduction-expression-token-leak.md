@@ -11,7 +11,7 @@ date: 2026-07-30
 status: historical
 tags: [vhdl, backend, reduction, expression, named-drive, defect, validation]
 evidence: docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md; docs/tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md; docs/DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md; docs/ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; t/data/isf_rule_transaction_named_drive_priority_probe.isf; t/1542-isf-rule-transaction-named-drive-priority-readiness.t; t/1543-direct-vhdl-reduction-expression-readiness.t
-reverify: prove -Iperl t/1542-isf-rule-transaction-named-drive-priority-readiness.t t/1543-direct-vhdl-reduction-expression-readiness.t; command -v ghdl || true
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1542-isf-rule-transaction-named-drive-priority-readiness.t t/1543-direct-vhdl-reduction-expression-readiness.t; command -v ghdl || true
 ---
 
 Before `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2`, the direct VHDL scaffold
@@ -37,3 +37,6 @@ preservation proved blanket vector rejection would regress AMBA/APB paths, so
 completed `.2` instead emits required-only `std_logic` vector folds while
 keeping ranges/unresolved/compound forms fail-closed. t1542/t1543 now prove the
 named-drive output is token-free. No external VHDL compiler claim is implied.
+
+Runtime revalidation on Darwin requires the separately qualified opt-in; a
+skipped T1542 is not executable evidence. Retain the RAM guard defaults.

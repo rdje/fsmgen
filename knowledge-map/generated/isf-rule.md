@@ -35,14 +35,14 @@
 
 _Unique-caller named drives honor target-local rule/transaction priority_
 
-- **date:** 2026-07-30 · **status:** current
+- **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-rule-transaction-named-drive-priority-behavior.md`](../../docs/knowledge/isf-rule-transaction-named-drive-priority-behavior.md)
 
 ### isf-rule-transaction-named-drive-priority-contract-selection
 
 _Named-drive priority is target-local for one local transaction caller_
 
-- **date:** 2026-07-30 · **status:** current
+- **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-rule-transaction-named-drive-priority-contract-selection.md`](../../docs/knowledge/isf-rule-transaction-named-drive-priority-contract-selection.md)
 
 ### isf-rule-transaction-named-drive-priority-readiness-audit

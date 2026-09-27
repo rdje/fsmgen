@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -2033,6 +2033,13 @@ For FSMGen, the analogs are:
   Verification: `T1964 exercises real generated storage writes/reads, completion retention and named completion with a parent contribution. Every emitted role/kind is advertised and every repaired value is observed; each deliberate descriptor omission is detected. The fixture strict-checks and complete native/API/newline reports agree; the full production schedule is identical before/after. T1158 now covers the added DT producer families. T1148 uses the qualified private formal identity without weakening width/kind/role checks. T1140/T1148/T1158/T1255/T1376 and mdBook build pass. The spec's stale temporal-contract mapping is aligned with the already-correct book: current monitors leave that legacy array empty. Snapshot integration .32.1.3.3.1.3.2.2 resumes next.`
   Commit: `this commit`
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.57`
+  Status: `done`
+  Goal: `Refresh stale named-drive priority verification and VHDL boundary facts encountered during writer activation work.`
+  Acceptance: `P1 documentation repair before .32.1.3.3.1.3.3.2.2.3.2: reproduce the contradiction between current named-drive cards/docs and completed reduction lowering, trace exact repair history, replace the RAM-guard cutoff override with the current default guarded command, and distinguish token-free VHDL generation from still-unqualified external compiler/runtime evidence. Preserve dated contract-selection history with an explicit current follow-up. Reverify focused named-drive behavior under the qualified supervised runtime without weakening guards; sync mdBook and canonical records, commit, then resume activation/caller collection.`
+  Verification: `git log -S traces token-free named-drive scalar lowering to 2879f22af56e1835a9afe52476e2d8cee6147245. T1542/T1543 pass under the default RAM guard with the already-qualified Darwin runtime opt-in, covering executable SystemVerilog/native Verilog and token-free VHDL generation. Current named-drive cards/detailed behavior and mdBook now distinguish repaired generation from still-unqualified external VHDL compile/runtime. The dated selection record preserves the original observation with an explicit current follow-up. Consulted reverify commands retain the default guard and clarify that runtime skips are not qualification. Focused obsolete-claim search is empty; book build passes. Resume .32.1.3.3.1.3.3.2.2.3.2.`
+  Commit: `this commit`
+
 
 ## Implementation Notes From `.4`
 
@@ -2690,7 +2697,8 @@ before editing code. No discovered defect is closed by this audit alone.
 
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
-Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. The next leaf is
+Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
+verification facts are repaired under `.57`. The next leaf is
 `.32.1.3.3.1.3.3.2.2.3.2`, exact source activation/caller associations after
 source identities, declaration and implicit whole-root qualification, following
 the physical target resolver and retained admission baseline. Conservative admission precedes independent controllers and local-call
@@ -4456,3 +4464,32 @@ owner resolver, canonical writer card, book and this task. Source ownership is
 not a grant or a state-exclusion claim. The initial test fixture's named-drive
 syntax was corrected to the existing published positional-call grammar before
 qualification; no language acceptance change was made.
+
+## Acceptance — named-drive fact refresh `.57`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` traces token-free scalar
+  named-drive VHDL to 2879f22af56e1835a9afe52476e2d8cee6147245. The named-drive
+  behavior/selection cards and detailed behavior still described the earlier
+  token leak as current, despite the separate completed backend card. The
+  behavior card also raised the host RAM cutoff in its reverify command. The
+  Knowledge Map query for drive priority returned that stale guidance.
+- [x] **ADDRESSED (verified)** — Current named-drive guidance and the book
+  now describe token-free generation with external VHDL compile/runtime still
+  unclaimed. The selection record explicitly dates its original leak and links
+  the completed repair. Consulted verification commands use the RAM guard
+  defaults and distinguish qualified Darwin runtime opt-in from a skipped test.
+  The bounded obsolete-current-claim search is empty. No product or backend
+  behavior changes; all edits belong to this discovered documentation defect.
+- [x] **NO REGRESSION** — verification.log reports `All tests successful` for
+  T1542/T1543 with the qualified Darwin runtime enabled and default RAM limits.
+  The positive/complemented generation and malformed reduction controls pass,
+  alongside named-drive runtime qualification. The mdBook build passes; staged
+  doctrines and normal hooks qualify this documentation repair.
+
+Evidence: `.artifacts/named-drive-fact-refresh/`. Re-derivation uses exact repair
+history and current focused tests; falsification retains malformed/unresolved
+reduction controls and checks stale guidance is absent; durability is the
+corrected cards, detailed behavior/dated selection, book and this task. Runtime
+verification does not imply an installed or qualified external VHDL compiler;
+command discovery found no ghdl/nvc/vcom during this slice. Resume the already
+owned activation/caller prerequisite without changing its implementation scope.

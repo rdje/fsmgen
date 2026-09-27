@@ -8,12 +8,12 @@ answers:
   - "what is isf_ambiguous_rule_transaction_drive_priority?"
   - "does transaction over rule work for named drives?"
   - "is named drive priority qualified in SystemVerilog Verilog and VHDL?"
-date: 2026-07-30
+date: 2026-09-27
 status: current
 supersedes: isf-rule-transaction-output-priority-gap
 tags: [isf, rule, transaction, named-drive, priority, selector, conflict, backend]
 evidence: docs/ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_BEHAVIOR.md; docs/ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md; docs/tasks/ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.md; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1542-isf-rule-transaction-named-drive-priority-readiness.t
-reverify: scripts/run_with_ram_guard.sh --host-max-pct 100 --process-max-rss-mb 4096 -- env TMPDIR=.artifacts/tmp/tests prove -v t/1542-isf-rule-transaction-named-drive-priority-readiness.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1542-isf-rule-transaction-named-drive-priority-readiness.t t/1543-direct-vhdl-reduction-expression-readiness.t; T1542 requires the qualified Darwin runtime opt-in on macOS, and a skip is not runtime revalidation.
 ---
 
 Named drives with exactly one distinct local transaction caller and no
@@ -33,5 +33,9 @@ warning. Same-value fan-in remains compatible, selector assertions remain,
 and public report/semantic schemas do not widen.
 
 SystemVerilog and native Verilog have executable runtime qualification. Direct
-VHDL remains unqualified under decision `0023` because unary-reduction syntax
-still leaks into the generated expression.
+VHDL now emits token-free scalar identity/complement expressions after reduction
+lowering commit 2879f22af56e1835a9afe52476e2d8cee6147245. T1542/T1543 qualify
+generation; external VHDL compile/runtime remains unqualified under decision
+`0023`. See `direct-vhdl-reduction-expression-lowering-behavior` for the current
+backend boundary. Keep the RAM guard defaults when reverifying; enable the
+Darwin runtime opt-in only on a host with current qualification.
