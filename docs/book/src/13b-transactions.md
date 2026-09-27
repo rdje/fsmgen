@@ -97,6 +97,7 @@ links. For example, a worker writing actor storage `cell` keeps that target
 identity even if an authored name forces its parent data handoff to use a
 suffix. Normal compilation applies the same plan only after checking writer
 ownership; a collected plan does not admit competing parent or child writers.
+Existing scalar-writer checks preserve native, API and MCP report agreement.
 Storage-read, named-completion and library-readback connections, plus outer
 domain composition, still need coverage before the inventory is complete. It does not enable independent direct-transaction storage yet.
 

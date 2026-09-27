@@ -1604,11 +1604,11 @@ For FSMGen, the analogs are:
   Commit: `children below`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Retain actual parent storage-write handoff declaration plans.`
   Acceptance: `Share canonical handoff allocation with executable connection after its unchanged writer admission. Source preparation retains detached potential ports, widths/types, DTs and typed instance/storage links using declaration membership rather than conflicting raw widths. Qualify actual source/physical products, helper collisions, separate scopes, raw conflicts, strict carriers and native report parity. Competing writers still fail in executable connection; read/named-completion/readback and outer domain products remain later gates.`
-  Verification: `T1949/T1946 and book checks pass; actual plan and installed ports/DTs agree before/after projection, strict carriers pass and native schedule is byte-identical. Scalar-writer/child/schedule confirmation remains in flight; consume .artifacts/formal-parent-write-products/regression.log before closure.`
-  Commit: `implementation this slice; confirmation pending`
+  Verification: `T1949/T1946 and book checks pass; actual plan and installed ports/DTs agree before/after projection, strict carriers pass and native schedule is byte-identical. Complete parent/child/completion/scalar-writer/schedule cohort passes; .artifacts/formal-parent-write-products/regression.log is consumed with no new runtime opt-in.`
+  Commit: `461d851a9 implementation; this slice consumes qualification`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2`
   Status: `pending`
@@ -3217,10 +3217,10 @@ Those remain .2. No duplicate DEVELOPMENT_NOTES rationale is needed.
   of the common declaration-membership helper.
 - [x] **NO REGRESSION** — qualified.log reports `All tests successful` for
   T1949 and T1946. Native schedule-before.json/schedule-after.json compare
-  byte-identically. The broader parent/child/completion/scalar-writer/schedule
-  confirmation remains in flight and is owned by this active leaf and MEMORY.md;
-  consume regression.log before advancing. Book fixture/build and staged
-  doctrine/commit gates complete for this implementation slice.
+  byte-identically. The completed regression.log reports All tests successful
+  for T1949, T1946, T1945, T1917 and T1255. No new runtime opt-in is inferred.
+  Book fixture/build and staged doctrine/commit gates passed for implementation;
+  this qualification closure consumes the broader cohort.
 
 Evidence: `.artifacts/formal-parent-write-products/`. Initial test.log has one
 incorrect diagnostic spelling in the raw formal/storage control. The tool
@@ -3235,3 +3235,22 @@ card, book and this task. Plans are not executable parent IR or writer admission
 Read/named-completion/readback and outer domain coverage remain .2. This adds
 no new runtime qualification or production formal rewrite. No duplicate
 DEVELOPMENT_NOTES rationale is needed.
+
+## Acceptance — parent write qualification closure `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` on MEMORY.md's
+  parent/child/completion/scalar-writer/schedule regression pointer identifies
+  461d851a9 as the intentional implementation commit with confirmation pending.
+  The completed regression.log now reports All tests successful, so retaining
+  the pending pointer would misstate qualification and strand the next frontier.
+- [x] **ADDRESSED (verified)** — consume the complete T1949/T1946/T1945/
+  T1917/T1255 result, close this leaf and advance MEMORY.md to remaining
+  read/named-completion/readback/domain products with no background work.
+  The book and fact card record completed writer report qualification. The
+  implementation and test sources are unchanged from 461d851a9.
+- [x] **NO REGRESSION** — .artifacts/formal-parent-write-products/regression.log
+  reports `All tests successful` for the entire named cohort. Native schedule
+  before/after remains byte-identical; prior book-fixtures.log passed unchanged
+  runnable examples, and book-qualification.log rebuilds the final prose.
+  Fresh staged doctrine and commit hook apply to the measured documentation and
+  generated claim inventory. No new Darwin HDL runtime qualification is claimed.
