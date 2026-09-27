@@ -1207,6 +1207,26 @@ Inspect the saved records, without launching a runtime fixture:
 python3 -B docs/audits/native-group-witness-20260927/failure-only/verify.py
 ```
 
+The planned priority-contributor repair now has a separately qualified fixed
+observer under `docs/audits/native-group-witness-20260927/priority-observer/`.
+Its admission selects only T1974 and binds that test, selected producers and
+supervision helpers before and after execution. Exclusive captures retain full
+stage results with unchanged limits. A native rejection joins its child PID,
+return and errno to after-return group/session context; missing, unmatched or
+failed diagnostics make the observation fail explicitly. No inherited Perl
+preload reaches compiler or generated-binary subprocesses.
+
+Finite qualification programs use the real compile/runtime adapters, including
+ordinary and stale-errno success, deliberate session-leader rejection and modeled
+query/write/retention faults. They preserve original arguments, result identity,
+result fields, errno and cleanup. Independent saved checks reject altered evidence
+and confirm child PID/group absence. These controls run no HDL compiler and do
+not qualify T1974 or explain the historical failure. Inspect the sealed evidence:
+
+```sh
+python3 -B docs/audits/native-group-witness-20260927/priority-observer/verify.py
+```
+
 The administrator report and exact limits are retained under
 `docs/audits/native-group-tracing-capability-20260927/administrator/`; verify
 that saved evidence without privileged execution:

@@ -87,3 +87,14 @@ Child .10 reconciles the unchanged guard source and saved runtime evidence,
 closing that independent repair. Child .11 retains P1 causal follow-up and
 requires failure-only capture before the next genuine roadmap runtime. A pass
 cannot close causality; independent non-runtime feature work may proceed.
+
+Child .11.1 qualifies the fixed T1974 observer before actual priority-repair use.
+Finite real-adapter controls preserve arguments, result identity/fields, errno,
+limits and cleanup; ordinary/stale success is silent, intentional session failure
+is joined to native context, and modeled diagnostic gaps fail explicitly.
+Closed input identities and exclusive captures reject unrelated tests or reuse.
+The control-only session setup never applies to genuine priority observation.
+Verify saved source/result/manifest and hostile checks with
+`python3 -B docs/audits/native-group-witness-20260927/priority-observer/verify.py`.
+No HDL compiler runs in these controls. Child .11.2 owns consumption of the first
+genuine priority runtime; original causality and broader startup remain open.

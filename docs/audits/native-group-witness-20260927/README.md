@@ -94,3 +94,9 @@ Inspect the sealed evidence without launching a process fixture:
 `python3 -B docs/audits/native-group-witness-20260927/failure-only/verify.py`.
 Use in an actual roadmap verification requires its own task-tree scope; this
 qualification neither replays nor repairs the original failure.
+
+Child `.10.11.1` qualifies `priority-observer/` for planned T1974 use. Closed
+admission, unchanged stages, real rejection and explicit diagnostic gaps pass
+finite adapter controls; no HDL or historical causal repair is claimed. The
+book's portable-runtime chapter explains the scope. Inspect sealed evidence:
+`python3 -B docs/audits/native-group-witness-20260927/priority-observer/verify.py`.
