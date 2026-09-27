@@ -1814,6 +1814,19 @@ The `condition` value is the normalized condition text used in the scheduled
 (extract packet as header payload crc (widths TX_HEADER_W 8 PACKAGE.CRC_W))
 ```
 
+Parser data helpers (`set-bit`, `clear-bit`, `toggle-bit`, `set-field`,
+rotations and bit/field tests) consult declared literal widths before general
+width/type finalization. Their lexical lookup order is transaction locals,
+transaction formal ports, actor interface ports, then actor storage variables.
+An unresolved formal remains the owner of its name and cannot borrow an actor
+width. Type placeholders do not count as literal widths. Width-dependent
+helpers reject unresolved symbolic/type widths; width-independent bit masks
+retain their existing admission and check ranges when a literal width exists.
+These parser rules do not imply that direct same-name formal/actor identities
+or independent transaction controllers are already repaired in lowering.
+The [data-manipulation chapter](../book/src/13e-data-manipulation.md) contains
+runnable helper examples and their exact masks and validation boundaries.
+
 Current lowering:
 - `set` is the canonical explicit scalar setter. It is structurally validated
   as `(set var expr)` with one scalar target `var` and one scalar or list

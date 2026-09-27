@@ -1,0 +1,65 @@
+{
+  "after_diagnostic": "Error: (clear-bit value 0) in transaction 'main' requires a statically known register width (declare 'value' with a literal (width N)); its inverse bit-mask cannot be formed otherwise",
+  "baseline_revision": "32642d54c4763a78e916f65c1c019e64bb99d0d4",
+  "before": {
+    "clauses": [
+      [
+        "on",
+        "start"
+      ],
+      [
+        "set",
+        "value",
+        "255"
+      ],
+      [
+        "set",
+        "value",
+        [
+          "&",
+          "value",
+          0
+        ]
+      ],
+      [
+        "complete",
+        "done"
+      ]
+    ],
+    "ports": {
+      "inputs": [
+        {
+          "name": "start",
+          "width": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "value",
+          "type": "word_t",
+          "type_spec": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "name": "done",
+          "width": 1
+        }
+      ]
+    },
+    "source": "(actor typed_bits (clock clk) (types (type word_t (bits 8))) (interface (input start) (output value (type word_t)) (output done)) (transaction main (on start) (set value 255) (clear-bit value 0) (complete done)))"
+  },
+  "date": "2026-09-27",
+  "emitted_fsm_before": "(?fsm:typed_bits\n\n  (+types\n    (type word_t (bits 8))\n  )\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+interface\n    (input start)\n    (output value)\n    (output done)\n  )\n\n  (+size\n    (start 1)\n    (value word_t)\n    (done 1)\n    (can_accept 1)\n  )\n\n  (main_idle_0\n    (= (can_accept 1))\n    (<start\n      (-> main_set_1)\n    )\n  )\n\n  (main_set_1\n    (<- (value> 255))\n    (-> main_set_2)\n  )\n\n  (main_set_2\n    (<- (value> (& value 0)))\n    (-> main_done_3)\n  )\n\n  (main_done_3\n    (<1 (done> 1))\n    (-> main_idle_0)\n  )\n\n)\n",
+  "limits": [
+    "Original wrong-mask evidence is parsed clauses and emitted IAL0; no baseline typed-source HDL simulation is claimed.",
+    "The existing declared-literal helper boundary remains; no early parameter or type finalization is introduced."
+  ],
+  "mechanism": "Type references are finalized after bit helper expansion. The actor interface placeholder width 1 was treated as the actual width, so clearing bit 0 generated mask 0 before finalization changed the output width to 8. The helper now leaves type-derived widths unresolved and refuses width-dependent masks.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4",
+  "qualification": "t/1926-isf-formal-bit-width.t covers the refusal and genuine one-bit default positive control, literal formal precedence, complete native/API/MCP reports and generated production HDL repeated/reset controls.",
+  "schema_version": 1
+}

@@ -662,8 +662,9 @@ sub _expand_bit_ops($self, $result) {
 
 # Build a register-name -> declared literal width map for one transaction. A name present with
 # an undef value is declared but carries a non-literal (symbolic) width; an absent name is
-# undeclared. Sources, in precedence order: transaction locals, actor interface ports, storage
-# vars. Only a bare non-negative integer counts as a literal width.
+# undeclared. Sources, in precedence order: transaction locals, transaction ports,
+# actor interface ports, storage vars. Only a bare non-negative integer counts as
+# a literal width. Type widths are finalized later: their placeholder is not evidence.
 sub _bit_op_width_map($self, $result, $tx) {
     my %w;
     my $lit = sub ($x) { (defined($x) && !ref($x) && $x =~ /^\d+$/) ? ($x + 0) : undef };
@@ -680,10 +681,14 @@ sub _bit_op_width_map($self, $result, $tx) {
         }
         $w{$name} = $lit->($width);
     }
-    for my $dir (qw(inputs outputs)) {
-        for my $port (@{$result->{interface}{$dir} || []}) {
-            next unless ref($port) eq 'HASH' && defined($port->{name}) && !exists $w{$port->{name}};
-            $w{$port->{name}} = $lit->($port->{width});
+    for my $interface ($tx->{ports} || {}, $result->{interface} || {}) {
+        for my $dir (qw(inputs outputs)) {
+            for my $port (@{$interface->{$dir} || []}) {
+                next unless ref($port) eq 'HASH' && defined($port->{name}) && !exists $w{$port->{name}};
+                # Keep an unresolved local declaration in the map so an actor
+                # declaration cannot supply a width from a different scope.
+                $w{$port->{name}} = exists($port->{type}) ? undef : $lit->($port->{width});
+            }
         }
     }
     for my $store (@{$result->{storage} || []}) {

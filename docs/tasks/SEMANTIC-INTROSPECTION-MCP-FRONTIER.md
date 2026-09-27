@@ -1372,11 +1372,11 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Honor formal widths during parser bit-operation desugaring.`
   Acceptance: `Run immediately after .1 and before .2. Reproduce valid wider-formal rejection and invalid narrower-formal acceptance for clear-bit index 7 with actor/formal status widths reversed. Fix parser lexical width precedence and qualify set/clear/toggle, set-field, rotate and bit/field tests, port-only and actor-shadow cases, aliases/parameter widths and nested bodies without weakening range checks. Verify source expansion and emitted behavior where current controller/scope support permits it; keep production scope integration .3 explicit. Update book/facts and commit.`
-  Verification: `Parser::_bit_op_width_map visits local declarations, actor interface and actor storage but omits transaction ports. The retained direct-formal-bit-width-scope audit records the reversed-width counterexample; repair is scheduled ahead of typed rewriting because the incorrect expansion happens before LoweringIR.`
-  Commit: `pending`
+  Verification: `T1926 qualifies literal formal precedence across all shared bit/field/rotate helpers, nested bodies, unresolved parameter/type boundaries and genuine default widths. Direct and generated production HDL passes repeated/reset controls with complete native/API/MCP reports and strict IAL0 replay. Existing helper, scope and book-example regressions pass. Type-placeholder zero-mask emission now fails closed; direct physical identity integration remains open.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.3`
   Status: `pending`
@@ -6385,3 +6385,96 @@ The book now names the actual formal-width limitation instead of implying
 that an actor-side width qualifies a shadowing transaction formal. Runtime
 scope and controller qualification remains open; no new DEVELOPMENT_NOTES
 entry is needed beyond the canonical scope record and decision 0109.
+
+
+## Parser formal-width prerequisite — `.49.2.2.4`
+
+Bit operations, set-field, rotate and bit/field tests all use
+Parser::_bit_op_width_map. These passes run before interface/transaction port
+width and type finalization. Preserve the declared-literal helper contract:
+an unresolved formal must shadow an actor declaration even when it cannot yet
+supply a literal width. A type placeholder must not count as a real width.
+Probe typed actor interface placeholders as a same-helper control before
+changing lookup precedence; any confirmed defect remains owned by this leaf.
+
+The typed actor-interface control confirms a second defect in the same helper:
+an output declared with an eight-bit type still carries the parser's temporary
+width 1 during desugaring. clear-bit value 0 becomes `(set value (& value 0))`;
+type finalization then emits an eight-bit output with that wrong zero mask.
+The exact source/clauses are retained in .artifacts/formal-bit-width/type-probe.log.
+This leaf owns an immediate fail-closed repair: type-derived width is unresolved
+at this pass and must not use its placeholder as literal evidence. Preserve
+existing symbolic-width boundaries instead of silently introducing early type
+or parameter finalization. Qualify actor-interface and formal type controls,
+literal defaults, and the ordinary storage/local/interface positive cases.
+
+The shared width helper now checks transaction ports before actor interface
+ports and storage, after the existing local declarations. An unresolved formal
+retains its name with unknown width, preventing fallback to another scope.
+Type-derived interface/formal widths remain unknown at this early pass instead
+of using parser placeholders. Width-dependent helpers fail closed under the
+existing literal-width contract; this does not introduce early type/parameter
+finalization. The typed wrong-mask source and exact before/after evidence are
+tracked in docs/audits/formal-bit-width-placeholder-20260927.json.
+
+T1926 exercises set/clear/toggle, set-field, both rotations and bit/field test
+variants with actor/formal widths reversed; it checks exact inverse masks,
+port-only and genuinely defaulted widths, nested bodies and unresolved actor
+parameter, transaction parameter and type cases. Its public production cases
+cover a direct port-only body and a generated child shadowing actor storage.
+Complete check/semantic/schedule reports agree over native/API/newline MCP,
+every emitted IAL0 file strict-replays, and generated HDL compiles and executes
+repeated activations plus reset-aborted/restarted work with actor state intact.
+Direct same-name actor/formal physical merging is still owned by .49.2.2.3.
+
+The first T1926 run completed those production controls successfully but failed
+parser assertions: a retained params clause shifted an assumed array index,
+and rotation uses a distinct "requires 0 < N < width" diagnostic. The tests
+now select the actual set clause and match that range diagnostic. Production
+code did not change to accommodate either test mistake. qualified.log is the
+fresh verbose successful run and explicitly includes both compile/runtime
+results without skips. regression.log separately qualifies the existing
+bit/field/rotate suites and T1924/T1925; book-examples.log passes the updated
+complete examples. The book and normative data-manipulation reference now
+state exact precedence and literal/type boundaries with a runnable formal
+example. The original typed baseline is source/IAL0 evidence, not a claimed
+baseline HDL simulation.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The tracked reversed-width audit shows
+  both wrong rejection and wrong acceptance because _bit_op_width_map omitted
+  transaction ports. type-probe.log independently exposes a typed output's
+  placeholder-derived zero mask before its resolved width is emitted. The
+  corrected source reports the refusal at perl/FSM/Adapter/ISF/Parser.pm line 761,
+  rather than generating that mask.
+- [x] **ADDRESSED (verified)** — T1926 proves local formal precedence, exact
+  masks and range checks, no outer-width borrowing for unresolved formals,
+  and refusal of type-placeholder masks. Production direct and generated
+  literal-formal executions pass repeated/reset controls; authored actor
+  storage remains unchanged by the generated child's local formal operations.
+- [x] **NO REGRESSION** — qualified.log, regression.log and book-examples.log
+  under .artifacts/formal-bit-width report All tests successful. They cover
+  exact public transport reports, strict artifact replay, production HDL
+  compile/runtime, every existing shared-helper family, prior scope/shadow
+  tests and runnable book examples. No full-CI or browser visual result is claimed.
+
+Re-derivation is the paired source/AST audits and exact parsed mask checks.
+Falsification reverses actor/formal widths, uses unresolved and default widths,
+executes independent arithmetic outcomes, repeats activation and resets during
+work. Durability is T1926, both tracked audits, the canonical helper fact and
+synchronized book/spec. Typed scope rewriting .49.2.2.2 is next. The established
+literal-width helper boundary owns the fail-closed policy; no separate new
+DEVELOPMENT_NOTES rationale is needed.
+
+The inventory refresh correctly detected a stale candidate identity for the
+edited data-manipulation support-matrix row. Its existing derived-gate
+classification and data/field evidence remain; migrate the identity and extend
+its distinct legs with Parser.pm and T1926 scope/runtime controls. Regenerate
+the inventory only after staging that bounded disposition update.
+
+
+The first full doctrine run exposed claim-registry ordering/group ownership
+requirements and a wrapped root-cause signature. The migrated matrix record
+retains its fixed general_book group owner, with sorted path legs and candidate
+order; the current parser task still owns the actual change. Keep the exact
+Perl diagnostic locus together on one acceptance line. Rerun the complete gate
+after these evidence-format corrections; no production/test behavior changed.

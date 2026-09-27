@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4` (pending)
-- next_action: Repair parser formal-width precedence under .49.2.2.4, then typed operand/binding resolution .2 and production integration .3 before local payload repair.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2` (pending)
+- next_action: Implement typed operand/binding resolution under .49.2.2.2, then production scope integration .3 before local payload repair.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

@@ -256,14 +256,35 @@ shift-based mask (`(<< 1 N)`, or `(^ x (& x M))`) produces an unsized 32-bit
 intermediate that fails the width-clean lint, and bitwise-NOT (`~`) is not a
 supported `.fsm` operator. `set-bit` / `toggle-bit` masks are width-independent;
 `clear-bit`'s inverse mask needs the register's **width**, which is resolved from
-its declaration — a transaction `(local …)`, an interface port, or a
-`(storage (var …))`.
+its declaration. Lookup checks transaction `(local …)` declarations, transaction
+formal ports, actor interface ports and actor storage variables in that order.
+A formal's declared literal width takes precedence over a same-named actor
+signal. An unresolved formal width also shadows the actor declaration; it does
+not borrow an outer width.
 
-**Current formal-port limitation:** these width checks omit transaction port
-declarations. A same-named actor declaration can therefore supply the wrong
-width, causing an incorrect rejection or range acceptance. Formal scope repair
-is tracked under `.49.2.2.4`; private-name planning alone does not correct this
-parser behavior.
+These helpers expand before symbolic widths and type references are finalized.
+`clear-bit`, `set-field`, rotations and field tests therefore require a declared
+literal width at this pass. A `(type NAME)` placeholder is not width evidence;
+it is rejected for width-dependent helpers instead of producing a wrong mask.
+The width-independent bit masks retain their existing behavior and check the
+index against a literal width when available. This parser correction does not
+remove the separate direct transaction/actor identity collision boundary.
+
+For example, a transaction can manipulate its own literal-width formal and
+copy the result to an actor output:
+
+```lisp
+(actor formal_flags
+  (clock clk) (reset rst_n)
+  (interface (input start) (output result (width 8)) (output done))
+  (transaction main
+    (ports (output flags (width 8)))
+    (on start)
+    (set flags 255)
+    (clear-bit flags 7)
+    (set result flags)
+    (complete done)))
+```
 
 A complete runnable register-control example (each output reset to a known value,
 one bit op each):

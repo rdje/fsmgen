@@ -63,12 +63,12 @@ accounted at integration; unsupported grammar cannot be rewritten by guessing.
 .49.2.2.2 owns typed operand/binding rewriting and .3 owns production integration
 and source-facing report preservation. Existing public lowering is unchanged.
 
-A separate parser prerequisite is confirmed by the paired tracked audit:
-_bit_op_width_map omits transaction ports, so clear-bit validates against the
-actor's same-name width. A wider formal is incorrectly rejected and a narrower
-formal incorrectly admits an out-of-range bit. That helper also feeds set-field,
-rotate and bit/field tests; those callers need regression qualification.
-.49.2.2.4 repairs this before .2 because rewriting after parsing cannot undo a
-wrong desugared mask or an earlier rejection. The planner does not fix it.
+The paired parser audit retains the former width-lookup defect: a wider formal
+was rejected and a narrower formal admitted an out-of-range bit against an
+actor's same-name width. .49.2.2.4 now fixes literal formal precedence and keeps
+unresolved formal/type widths from borrowing actor widths or using placeholder
+values. The canonical [bit-helper card](isf-bit-helper-literal-width-precedence.md) and T1926
+qualify that repair separately from this still-unintegrated identity planner.
+Typed operand rewriting .2 is next; it cannot substitute for parser validation.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1.
