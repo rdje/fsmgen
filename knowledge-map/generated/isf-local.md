@@ -14,7 +14,7 @@
 
 ### isf-local-rule-payload-retention-boundary
 
-_Local rule-trigger payloads lose delayed reads after the request pulse_
+_Local rule payload retention at accepted entry_
 
 - **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-local-rule-payload-retention-boundary.md`](../../docs/knowledge/isf-local-rule-payload-retention-boundary.md)

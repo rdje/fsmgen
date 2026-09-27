@@ -367,16 +367,39 @@ With a single rule source, the generated fan-in assigns the source directly:
 )
 ```
 
-**Current local payload limitation:** a local target that reads a bound input
-after authored waits can see zero after its rule-trigger pulse ends. The retained
-payload source is still present, but the local input mux remains pulse-gated.
-A request-gated runtime probe isolates this from transaction reachability; the
-failure is reconfirmed after private formal allocation and remains owned by
-`.32.1.3.3.1.3.2`. Its repair must retain the accepted payload while busy and
-preserve entry-edge reads and authored entry conditions. Generated trigger payload retention is
-separately qualified and does not close this local-input defect. Local rule
-fan-in supplies `transaction_start`; the target still authors its entry guard,
-for example `(on transaction_start)`.
+Local rule input payloads retain the value accepted by the target's initial
+state. While that state is active, a requesting source is visible immediately;
+its value is captured only when the authored entry condition admits it. Inline
+entry samples therefore see the same value as later reads after a wait. Requests
+while the target is busy do not replace its accepted payload. There is no request
+queue or implicit source winner. Existing rule/resource grants still control
+which source requests are produced.
+
+The target authors its entry condition: `(on worker_start)` accepts a request,
+while a leading `when` can also qualify its payload:
+
+```lisp
+(actor local_snapshot (clock clk) (reset (rst_n async active_low))
+ (interface (input start) (input allow) (input data (width 4))
+            (output early (width 4)) (output observed (width 4)) (output done))
+ (transaction worker (ports (input payload (width 4)))
+  (when (& worker_start allow (== payload 7)) (sample payload as early))
+  (wait 3) (set observed payload) (complete done))
+ (rule fire start (trigger worker (bind (input payload data (timing snapshot))))))
+```
+
+With `allow` asserted and `data` equal to seven when `fire` runs, both `early`
+and `observed` receive seven even if `data` changes after the request. The entry
+view does not depend on the payload-qualified condition, avoiding a combinational
+cycle. Private retained storage uses the advertised `transaction_port_binding`
+role; authored binding names remain in the schedule. Source preparation and
+final domain declaration checks include the helper.
+
+The original delayed-zero reproduction and this entry-sample case pass in
+production HDL. Broader repeated/reset/granted-source runtime qualification
+remains a separate task. Independent-controller reachability and local-call
+ownership limitations still apply. Generated live handoffs retain their own
+timing, and an unguarded local target keeps its authored free-running behavior.
 
 Parameterized rule triggers are generated-child activations, not writes to
 shared transaction parameters. The source shape is

@@ -1,6 +1,6 @@
 ---
 id: isf-local-rule-payload-retention-boundary
-title: Local rule-trigger payloads lose delayed reads after the request pulse
+title: Local rule payload retention at accepted entry
 answers:
   - "why does a local rule-trigger input become zero after a wait?"
   - "are generated do inputs live or snapshots?"
@@ -9,49 +9,44 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, binding, trigger, payload, snapshot, runtime]
-evidence: docs/audits/local-rule-payload-scoped-baseline-20260927.json; docs/audits/direct-controller-binding-timing-20260927.json; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1171-isf-rule-trigger-fanin.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: t/1965-isf-local-rule-snapshot-integration.t; docs/audits/local-rule-payload-scoped-baseline-20260927.json; docs/audits/direct-controller-binding-timing-20260927.json; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1171-isf-rule-trigger-fanin.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh perl docs/audits/local-rule-payload-scoped-baseline-20260927/reproduce.pl; compare current observations with the bounded scoped baseline. The older diagnostic HDL comparison separately normalizes only its generated Date.
 ---
 
-Generated do input bindings are live handoffs. Snapshot spelling is correctly
-rejected there; the runtime control observes a source change after admission.
-Local rule-trigger payload bindings promise snapshots instead. Their per-rule
-source is retained, but _rule_trigger_payload_fanin_assignments drives the
-local input through a combinational pulse guard and otherwise defaults to zero.
+Generated do input bindings are live handoffs; snapshot spelling is rejected
+there. Local rule inputs instead retain accepted payloads. Production lowering
+uses the target's first explicitly owned state, exposes each guarded requesting
+source during that state, and captures only under the authored entry condition.
+The retained value feeds the formal outside that request-visible window.
+The view does not depend on a payload-qualified entry guard, avoiding a cycle.
+Later entry states and busy requests cannot replace this invocation's payload.
 
-The request-gated `(on worker_start)` probe completes once but reads zero after
-its wait with both stable and changed external inputs. A diagnostic emitted-HDL
-control changes only that mux default to the retained source and passes both
-observations. The generated Date comment differs independently. This confirms
-the payload mechanism without claiming a production fix or multi-source policy.
+`_local_rule_payload_snapshot_products` supplies both detached source preparation
+and actual parent/domain lowering. Names use authored formal identity and reserve
+raw formals even after private projection, so freeing a shadowed spelling does
+not change allocation. Width/type and internal ownership follow the formal;
+helpers use the advertised transaction_port_binding role. Existing per-source
+request/grant guards remain. No reset value, implicit entry, queue or source
+winner is invented. Binding reports retain authored provenance.
 
-A target without an authored entry free-runs; that intermediate probe is not a
-new implicit-entry defect. The local rule contract supplies transaction_start
-fan-in and the target authors its request guard, as T1171 demonstrates.
-Blocking local calls have a different callee-entry contract and remain separately
-unqualified until their controller repair executes.
+T1965 checks raw/projected naming collisions, signed types, independent domain
+scopes, missing preparation category and unreserved declaration controls, strict
+carrier replay and full native/API/newline reports. Public-pin SV/Verilog runtime
+checks entry samples and delayed reads under a payload-dependent leading when.
+Broader repeated/reset/held/busy and granted-source runtime remains owner
+SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.3.
 
-Decision 0109 preserves these distinctions. Repair owner
-SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2 must qualify early samples,
-delayed reads, repeated/reset behavior and granted multiple sources before
-closing local payload retention. Generated live-call or trigger qualification
-does not close this local defect.
+Historical evidence stays immutable. At
+b7b18c76095e2c08a629f823d964a2fd28afad93, the scoped baseline observes zero with
+one completion for stable and changed local inputs, instead of captured seven.
+The old pulse-gated formal mux caused that failure, despite retained per-rule
+sources. The integrated producer restores seven for both original probes;
+generated live controls still observe seven and thirteen respectively. The
+canonical source/testbench hashes are unchanged and no emitted HDL is patched.
 
-
-The scoped baseline at b7b18c76095e2c08a629f823d964a2fd28afad93 confirms the
-same failure after private formal integration: stable and changed local inputs
-both read zero with one completion instead of captured seven. Generated live
-controls read seven and thirteen respectively. Canonical source/testbench hashes
-are unchanged; no emitted HDL counterfactual is used in this re-verification.
-
-Implementation must derive the target's initial owned state and authored guard.
-An entry-cycle payload view must expose a selected request before capture; the
-retained value updates only at actual acceptance. Bypass eligibility cannot
-depend on an entry guard that itself reads the payload, which would form a
-combinational cycle. Busy requests must not replace an accepted payload. Preserve
-per-source request/grant guards and generated live timing. New helper declarations
-must be produced identically for source preparation and actual domain lowering.
-
-The scoped baseline also records a separate generated-report enumeration gap,
-now repaired under .56; see [advertised generated report values](isf-generated-report-enumerations.md). Snapshot implementation and
-runtime qualification remain .32.1.3.3.1.3.2.2 and .3.
+An unguarded target keeps its authored free-running behavior. Local rule fan-in
+supplies transaction_start; the target authors its admission guard. Decision
+0109 keeps independent controller execution and blocking local-call ownership
+as separate prerequisites. Generated trigger retention is separately qualified.
+The baseline's report-enumeration gap is repaired under .56; see
+[advertised generated report values](isf-generated-report-enumerations.md).

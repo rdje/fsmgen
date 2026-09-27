@@ -125,8 +125,13 @@ ISF
     like($fsm, qr/\(fire_work_addr 8\)/, 'rule trigger payload source is sized from the transaction port');
     like($fsm, qr/\(-fire <ready\s+\(<1 \(fire_work 1\)\)\s+\(<- \(fire_work_addr req_addr\)\)\s+\)/s,
         'rule captures its trigger payload beside its distinct trigger pulse');
-    like($fsm, qr/\(-work_trigger_fanin\s+\(= \(work_start fire_work\)\)\s+\(= \(isf_port_work_addr fire_work_addr\) <fire_work\)\s+\)/s,
-        'trigger fan-in routes the per-rule payload into the transaction input port');
+    like($fsm, qr/\(isf_snapshot_work_addr 8\)/, 'accepted payload storage retains the formal width');
+    like($fsm, qr/\(= \(isf_port_work_addr fire_work_addr\) <\(& \(state_active work_idle_0\) fire_work\)\)/,
+        'entry view retains the individual requesting source guard');
+    like($fsm, qr/\(<- \(isf_snapshot_work_addr fire_work_addr\) <\(& \(state_active work_idle_0\) fire_work work_start\)\)/,
+        'payload capture requires target entry and its authored request guard');
+    like($fsm, qr/\(= \(isf_port_work_addr isf_snapshot_work_addr\) <\(! \(& \(state_active work_idle_0\) fire_work\)\)\)/,
+        'held payload feeds the formal outside the entry request window');
 };
 
 subtest 'activation input bindings accept expression-valued runtime payloads' => sub {

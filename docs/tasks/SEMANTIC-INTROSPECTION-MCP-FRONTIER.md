@@ -758,11 +758,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate accepted local rule payload retention with complete source preparation.`
   Acceptance: `After .1 and enumeration repair .56, derive the initial target state and authored entry guard from actual owned states; preserve a request-visible entry view while capturing only at accepted entry. Retain held payload through busy work without queues or implicit source selection, preserve granted-source guards and generated live paths, and avoid a cycle when the entry guard reads a bound formal. Use stable source-derived collision-safe helper identities in both detached preparation and actual production, including domain scopes and final reservation coverage. Preserve public binding provenance and advertise any new emitted roles/kinds. Split safe children if needed before switching execution.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `T1965 qualifies actual raw/projected helper naming with a freed sibling-formal collision, signed width/type/internal ownership, complete source/domain reservations and negative missing-category/unreserved-declaration controls. Strict carriers and complete native/API/newline check/semantic/schedule reports agree. Independent SV/Verilog entry samples and delayed reads pass with a payload-dependent leading-when guard. The original stable/changed local reproduction now retains seven; generated-live controls remain seven/thirteen. Binding conflict, resource priority, generated-trigger, metadata, golden-report and book fixtures/build pass. Broader runtime admission is retained by .3.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.3`
   Status: `pending`
@@ -2602,10 +2602,10 @@ before editing code. No discovered defect is closed by this audit alone.
 
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
-The next leaf is `.32.1.3.3.1.3.2.2`, local rule-trigger snapshot integration,
-after its scoped baseline and enumeration repair `.56`. Shared-write admission,
-independent controllers and local
-call timing under its sibling leaves. `.49.2.3` qualifies direct-call runtime;
+The next leaf is `.32.1.3.3.1.3.2.3`, broader local rule-trigger snapshot runtime
+qualification after integration, its scoped baseline and enumeration repair
+`.56`. Shared-write admission, independent controllers and local call timing
+remain under its sibling leaves. `.49.2.3` qualifies direct-call runtime;
 `.49.3` owns explicit-local physical scope. These remain prerequisites to the
 SPECFORGE storage/register-access feature in `.38.1` and optional banks `.38.2`.
 Packet intake `.37` is complete; it does not implement those reports.
@@ -4135,3 +4135,40 @@ retaining its observed producer output; durability is the fixture, enum and
 metadata coverage tests, fact card, book/spec and task. This closes the owned
 report-contract gap before snapshot additions. It does not qualify local payload
 retention, controller execution or the remaining SPECFORGE storage-access feature.
+
+## Acceptance — local snapshot integration `.32.1.3.3.1.3.2.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The scoped baseline and native
+  `--emit-schedule-json` local payload report isolate the pulse-guarded formal
+  assignments from retained per-rule sources. `_rule_trigger_payload_fanin_assignments`
+  formerly lost the value outside that request pulse. A source register alone
+  cannot preserve the target's accepted invocation when a later busy request
+  updates it. The target's actual first owned state and authored guard define
+  the capture boundary; gating the entry view by a payload-dependent guard
+  would create a combinational cycle.
+- [x] **ADDRESSED (verified)** — A shared producer plans initial-state request
+  views and accepted-payload capture for detached preparation and actual
+  parent/domain lowering. It reserves source formal spellings across projection,
+  retains width/type/internal binding ownership, preserves per-source guards
+  and leaves generated paths unchanged. T1965 proves typed collision stability,
+  domain isolation, mandatory preparation and unreserved-declaration controls,
+  complete native/API/newline reports and strict carrier replay. Independent
+  SV/Verilog public-pin oracles pass entry samples and delayed reads with a
+  payload-qualified leading when. The retained original reproduction now reads
+  seven for stable/changed local inputs; generated live reads remain seven and
+  thirteen. No emitted HDL is edited. Initial negative-control design was
+  corrected: erasing a producer record alone retains downstream reservations;
+  a truly unreserved emitted declaration is the relevant final-coverage control.
+- [x] **NO REGRESSION** — focused.log, compatibility-fixed.log and
+  book-examples.log report `All tests successful` for T1965/T1171/T1243/T1255/
+  T1959/T1963, T1241/T1242/T1248/T1176/T1219 and T1376 respectively. T1241's
+  obsolete pulse-only expectation now checks all accepted/held paths. The
+  mdBook build passes and all verification jobs are consumed. Staged doctrines
+  and the normal hook qualify this commit; broader runtime is the next leaf.
+
+Evidence: `.artifacts/local-rule-snapshot/` and the original canonical audit
+source/testbench. Re-derivation follows actual prepared and emitted products;
+falsification uses missing-category/unreserved-declaration controls plus an
+independent public-pin changed-input oracle; durability is T1965 and its fixture,
+the canonical retention card, book/spec and this owner. This closes integration,
+not broad repeated/reset/granted-source qualification or independent controllers.

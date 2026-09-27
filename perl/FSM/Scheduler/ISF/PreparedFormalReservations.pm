@@ -12,7 +12,7 @@ my %FIELDS = (
     (map {$_ => 'HASH'} qw(actor actor_context deferred_formal_collisions
         domain_source_products generated_child_products generated_children
         parent_activation_products parent_completion_products
-        parent_named_completion_products parent_point_products
+        parent_named_completion_products parent_point_products parent_payload_snapshot_products
         parent_storage_read_products parent_storage_write_products
         parent_wiring_products pruned_transactions reusable_child_products
         transaction_products transactions)),
@@ -20,7 +20,7 @@ my %FIELDS = (
     transaction_binding_report_products => 'ARRAY',
 );
 my @PARENT_PRODUCTS = qw(parent_activation_products parent_completion_products
-    parent_named_completion_products parent_point_products
+    parent_named_completion_products parent_point_products parent_payload_snapshot_products
     parent_storage_read_products parent_storage_write_products
     parent_wiring_products resource_signal_products transaction_products
     transaction_binding_report_products);

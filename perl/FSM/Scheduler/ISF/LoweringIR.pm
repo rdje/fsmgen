@@ -242,6 +242,9 @@ sub prepare_formal_source($self, $source_actor) {
     my $declaration_names = _formal_parent_declaration_names(
         $actor, $generated, \%products, $activation_products, $wiring_products,
         $point_products, $resource_products);
+    my $payload_products = _local_rule_payload_snapshot_products(
+        $actor, $declaration_names, $point_products->{states}, $activation_products->{dt_blocks});
+    $declaration_names->{$_} = 1 for keys %{$payload_products->{signal_widths}};
     my $completion_products = _formal_parent_completion_products(
         $actor, $declaration_names, $activation_products, $point_products);
     my %connection_names = (%$declaration_names,
@@ -296,6 +299,7 @@ sub prepare_formal_source($self, $source_actor) {
         parent_activation_products => $activation_products,
         parent_wiring_products => $wiring_products,
         parent_point_products => $point_products,
+        parent_payload_snapshot_products => $payload_products,
         resource_signal_products => $resource_products,
         parent_completion_products => $completion_products,
         parent_storage_write_products => _clone_isf_value($write_products),
@@ -1702,6 +1706,16 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         _apply_rule_priority_resolution($ir, $actor),
         _apply_rule_transaction_priority_resolution($ir, $actor),
     );
+    my %payload_names = map { $_ => 1 } grep { defined $_ } (
+        keys %{$ir->{signal_widths}}, keys %{$ir->{counters}},
+        (map { $_->{name} } @{$ir->{ports}}, @{$ir->{constants}}, @{$ir->{params}},
+            @{$ir->{states}}, @{$ir->{dt_blocks}}),
+        $ir->{clock}, (($ir->{reset} || {})->{name} // ()),
+        (map { $_->{declaration}{name} } @{_formal_resource_signal_products($actor)}),
+    );
+    my $payload_products = _local_rule_payload_snapshot_products(
+        $actor, \%payload_names, $ir->{states}, $ir->{dt_blocks});
+    _apply_local_rule_payload_snapshots($ir, $payload_products);
     my $completion_products = retain_child_completions($ir);
     $ir->{child_completion_products} = $completion_products if $completion_products;
     _finalize_ir($ir);
@@ -12991,6 +13005,8 @@ sub _build_rules {
         push @d, {
             name        => "${target}_trigger_fanin",
             kind        => 'rule_trigger_fanin',
+            owner       => $target,
+            owner_kind  => 'transaction',
             assignments => [
                 { lhs => "${target}_start", rhs => $rhs, op => '=', source_kind => 'rule_trigger_fanin' },
                 _rule_trigger_payload_fanin_assignments($payload_by_transaction{$target} || {}),
@@ -13028,6 +13044,104 @@ sub _rule_trigger_payload_fanin_assignments {
     }
     return @assignments;
 }
+# Plan from actual owned states and fan-in assignments in both detached source
+# preparation and executable lowering. Raw formals need not have compatible
+# parent widths here: only declaration membership is merged for allocation.
+sub _local_rule_payload_snapshot_products {
+    my ($actor, $declaration_names, $states, $dts) = @_;
+    my %reserved = %$declaration_names;
+    my (%ports, %types, %initial);
+    for my $tx (@{$actor->{transactions} || []}) {
+        $ports{$tx->{name}} = { _transaction_port_map($tx) };
+        $types{$tx->{name}} = { _transaction_port_signal_type_refs($tx) };
+        # Projection frees raw formal spellings. Keep them reserved so helper
+        # identities cannot change when the same producer sees projected source.
+        $reserved{$_->{source_name}} = 1 for values %{$ports{$tx->{name}}};
+    }
+    for my $state (@$states) {
+        my $owner = $state->{transaction};
+        next unless defined $owner;
+        $initial{$owner} //= $state;
+    }
+    my $products = {signal_widths => {}, storage_roles => {}, signal_type_refs => {},
+        explicit_internal_signals => [], dt_blocks => [], bindings => []};
+    for my $dt (sort {$a->{name} cmp $b->{name}} @$dts) {
+        next unless ($dt->{kind} // '') eq 'rule_trigger_fanin';
+        my @payloads = grep { ($_->{source_kind} // '') eq 'rule_trigger_payload_fanin' }
+            @{$dt->{assignments} || []};
+        next unless @payloads;
+        my $owner = $dt->{owner};
+        confess "Local rule payload fan-in '$dt->{name}' lacks an owned initial state\n"
+            unless defined($owner) && $initial{$owner};
+        my $entry = $initial{$owner};
+        my $active = _state_active_condition_expr($entry->{name});
+        # An unguarded target retains its authored free-running first state.
+        # Later entry states must never accept a replacement for this invocation.
+        my $accept = ($entry->{kind} // '') eq 'entry'
+            ? (_guard_condition_expr($entry->{guard}) // '1') : '1';
+        my %by_port;
+        push @{$by_port{$_->{lhs}}}, $_ for @payloads;
+        my $replacement = _clone_isf_value($dt);
+        $replacement->{assignments} = [grep {
+            ($_->{source_kind} // '') ne 'rule_trigger_payload_fanin'
+        } @{$replacement->{assignments}}];
+        for my $port (sort { $ports{$owner}{$a}{source_name} cmp $ports{$owner}{$b}{source_name} } keys %by_port) {
+            my $formal = $ports{$owner}{$port};
+            confess "Local rule payload '$owner.$port' is not an input formal\n"
+                unless $formal && $formal->{direction} eq 'input';
+            my $held = FSM::Support::HDLInstanceIdentifierPolicy->allocate_generated_instance_identifier(
+                desired => "isf_snapshot_${owner}_$formal->{source_name}",
+                role => 'payload', reserved => \%reserved);
+            $products->{signal_widths}{$held} = $formal->{width};
+            $products->{storage_roles}{$held} = 'transaction_port_binding';
+            $products->{signal_type_refs}{$held} = $types{$owner}{$port}
+                if exists $types{$owner}{$port};
+            push @{$products->{explicit_internal_signals}}, $held;
+            push @{$products->{bindings}}, {
+                identity => ['transaction_port', $actor->{actor_name}, $owner, $formal->{source_name}],
+                formal_signal => $port, held_signal => $held, initial_state => $entry->{name},
+            };
+            my @visible;
+            for my $source (@{$by_port{$port}}) {
+                my $request = _guard_condition_expr($source->{guard});
+                confess "Local rule payload '$owner.$port' lacks a source guard\n"
+                    unless defined $request;
+                # The bypass must not depend on the authored entry guard: that
+                # guard may read this formal. Only the register capture uses it.
+                my $visible = _combine_condition_exprs($active, $request);
+                push @visible, $visible;
+                my $view = _clone_isf_value($source);
+                $view->{guard} = {expr => $visible};
+                push @{$replacement->{assignments}}, $view, {
+                    lhs => $held, rhs => $source->{rhs}, op => '<-',
+                    source_kind => 'rule_trigger_payload_capture',
+                    guard => {expr => _combine_condition_exprs($visible, $accept)},
+                };
+            }
+            my $visible = @visible == 1 ? $visible[0] : '(| ' . join(' ', @visible) . ')';
+            push @{$replacement->{assignments}}, {
+                lhs => $port, rhs => $held, op => '=',
+                source_kind => 'rule_trigger_payload_held_view',
+                guard => {expr => _negated_condition_expr($visible)},
+            };
+        }
+        push @{$products->{dt_blocks}}, $replacement;
+    }
+    return $products;
+}
+
+sub _apply_local_rule_payload_snapshots {
+    my ($ir, $products) = @_;
+    my %replacement = map { $_->{name} => $_ } @{$products->{dt_blocks}};
+    $ir->{dt_blocks} = [map { $replacement{$_->{name}} // $_ } @{$ir->{dt_blocks}}];
+    for my $name (keys %{$products->{signal_widths}}) {
+        $ir->{counters}{$name} = $ir->{signal_widths}{$name} = $products->{signal_widths}{$name};
+        $ir->{storage_roles}{$name} = $products->{storage_roles}{$name};
+    }
+    _merge_signal_type_refs($ir->{signal_type_refs}, $products->{signal_type_refs});
+    push @{$ir->{explicit_internal_signals}}, @{$products->{explicit_internal_signals}};
+}
+
 sub _rule_cond {
     my ($self, $w) = @_;
     return { port => '1' } unless $w && ref($w) eq 'ARRAY' && @$w >= 2;

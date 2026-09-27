@@ -1,0 +1,7 @@
+(actor local_snapshot (clock clk) (reset (rst_n async active_low))
+ (interface (input start) (input allow) (input data (width 4))
+            (output early (width 4)) (output observed (width 4)) (output done))
+ (transaction worker (ports (input payload (width 4)))
+  (when (& worker_start allow (== payload 7)) (sample payload as early))
+  (wait 3) (set observed payload) (complete done))
+ (rule fire start (trigger worker (bind (input payload data (timing snapshot))))))

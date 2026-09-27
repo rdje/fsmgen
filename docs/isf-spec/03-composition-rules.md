@@ -410,6 +410,13 @@ Current lowering:
   each rule source separately and emits one generated combinational fan-in DT
   per target transaction. That DT drives `transaction_start` from the OR of the
   rule sources without adding another cycle.
+- Local rule input payloads capture only at the target's initial owned state
+  under the source request and authored entry condition. A request-visible
+  bypass preserves entry samples; a private `transaction_port_binding` register
+  preserves later reads while busy. The bypass is independent of the entry
+  condition so a leading `when` may inspect the payload without a combinational
+  cycle. No entry guard, queue, busy replacement or implicit source winner is
+  introduced. Generated live and generated-trigger timing remain separate.
 - Parameterized rule triggers use the source shape
   `(trigger transaction (params (NAME value) ...) (bind ...))`. The lowering
   creates one static generated child activation instance per lexical
