@@ -306,7 +306,9 @@ case-folded collisions. For example, a rule named
 `isf_storage_read_value_reg` may guard `(flag 1)` with `fire` while a spawned
 worker reads actor storage `value_reg`. The generated read view receives a
 distinct internal name; the authored rule still runs only when `fire` is true.
-Multiple children reading that storage share the same live owner view.
+Multiple children reading that storage share the same live owner view. Independent
+HDL qualification covers the colliding rule guard, read value and reset; the
+existing scalar and aggregate storage-read regressions also pass.
 
 For example, this worker reads the parent's later value, without a public
 `status` input or a private `status` register in the worker:

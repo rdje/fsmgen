@@ -44,7 +44,8 @@ Read handoff allocation reserves authored states and DTs as well as signal,
 port and system names. T1950 checks exact and case-folded block collisions,
 shared typed consumer views and ordinary stable names. Its independent HDL
 oracle preserves a colliding authored rule's guard, owner value and reset.
-The former omission merged an unguarded read DT into a guarded rule in emitted
+Existing scalar/aggregate storage reads, parent write planning and schedule
+reports pass the broader regression. The former omission merged an unguarded read DT into a guarded rule in emitted
 FSM, making that rule unconditional. Reverify with
 `FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1950-isf-child-read-block-collisions.t`.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.1.

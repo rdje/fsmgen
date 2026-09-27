@@ -1622,16 +1622,16 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Retain canonical parent storage-read handoff plans and qualify allocator scope.`
   Acceptance: `Share actual read-handoff allocation and products with source preparation after potential write products. Preserve one live owner view per storage target, exact widths/types and explicit consumer links. Qualify allocator inputs, authored block-name collisions, raw formal projection, existing write products, source isolation, strict carriers and native reports. Own and repair any demonstrated read allocator collision defect within this leaf; named completion/readback/domain stages remain later gates.`
-  Verification: `connect_child_storage_reads currently reserves signals/counters/ports/constants/parameters/system names but omits state and DT names, unlike completion/write allocators. Reproduce whether that difference permits an invalid emitted name before selecting the shared planner boundary.`
+  Verification: `The omitted block namespace caused a proven lost rule guard; .1 repairs and qualifies it through _reserved_names. Next .2 retains actual reader plans against the corrected namespace, then .3 resolves the separately reproduced backend keyword defect.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.3`
   Commit: `children below`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.1`
-  Status: `active`
+  Status: `done`
   Goal: `Prevent parent read handoffs from colliding with authored DT or state names.`
   Acceptance: `Reserve existing block names before allocating read handoff ports/DTs, preserve their source owners and guards, and qualify the retained real collision with an independent HDL observation plus strict/native report checks. Keep normal read widths/types, shared live views and connection links unchanged; retain exact before-fix evidence.`
-  Verification: `High-priority defect: a rule named isf_storage_read_cell guarded by fire collides with the generated actor-storage read DT. Public --strict --check --json succeeds, but emitted collision.sv drives isf_storage_read_cell_en unconditionally and flag ignores fire. Reproduce .artifacts/formal-parent-read-products/block-collision.isf; the emitted parent has duplicate DT headers. The initial runtime-before.json stops at the separately owned cell keyword compile error (.1.3). The isolated legal-collision.isf compiles and fails runtime with READ_HANDOFF_LOST_RULE_GUARD fire=0 flag=1. T1950 passes independent guard/read/reset execution after using the existing full _reserved_names scope; broader qualification is pending.`
-  Commit: `pending`
+  Verification: `High-priority defect: a rule named isf_storage_read_cell guarded by fire collides with the generated actor-storage read DT. Public --strict --check --json succeeds, but emitted collision.sv drives isf_storage_read_cell_en unconditionally and flag ignores fire. Reproduce .artifacts/formal-parent-read-products/block-collision.isf; the emitted parent has duplicate DT headers. The initial runtime-before.json stops at the separately owned cell keyword compile error (.1.3). The isolated legal-collision.isf compiles and fails runtime with READ_HANDOFF_LOST_RULE_GUARD fire=0 flag=1. T1950 passes independent guard/read/reset execution after using the existing full _reserved_names scope; the complete scalar/aggregate/write-plan/schedule regression passes.`
+  Commit: `54b51ef10; qualification closure in this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.3`
   Status: `pending`
@@ -3324,3 +3324,30 @@ isolated runtime failure are both preserved. No generic duplicate-DT semantics,
 public identifier contract, storage cycle or formal production rewrite changes.
 The separately scheduled keyword defect is not closed by this allocator fix.
 No duplicate DEVELOPMENT_NOTES rationale is needed.
+
+## Acceptance — read collision qualification closure `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` on MEMORY.md's read
+  collision regression pointer identifies 54b51ef10 as the implementation
+  committed with explicit confirmation pending. The complete retained
+  collision-regression.log now reports All tests successful; the pending
+  pointer must advance rather than strand finished qualification.
+- [x] **ADDRESSED (verified)** — consume the complete T1904/T1911/T1949/
+  T1255 result, close the block-collision repair and point to read planning.
+  Independent HDL guard/read/reset evidence remains in collision-test.log;
+  scalar/aggregate runtime opt-in was enabled for the broader cohort.
+  No source or regression test changed after its successful run.
+- [x] **NO REGRESSION** — collision-regression.log reports `All tests successful`
+  across the entire named cohort. T1376 book examples passed; the final book
+  qualification rebuild includes this closure. Fresh staged doctrines and the
+  normal hook apply to updated durable records and claim classification.
+
+All jobs consumed. Re-derivation is the complete retained cohort result;
+falsification includes authored block collisions and independent pin-driven
+HDL behavior; durability is T1950 and the committed task/card/book records.
+The keyword compiler defect .1.3 remains scheduled after .1.2 and is not
+classified as resolved by these passing controls.
+
+The first closure doctrine run correctly rejected reuse of the implementation
+aggregate-change authority ID. The closure uses a fresh qualification authority
+and recomputed HEAD-relative measurements; no size ceiling is raised.
