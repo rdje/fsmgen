@@ -8,8 +8,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, timing, wait, count, predicate, runtime]
-evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1909-isf-dynamic-wait-count-predicates.t; t/1908-isf-generated-child-completion-memory.t; t/1244-isf-wait-clause-lowering.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1909-isf-dynamic-wait-count-predicates.t t/1908-isf-generated-child-completion-memory.t t/1244-isf-wait-clause-lowering.t
+evidence: t/1929-isf-wait-carrier-grammar.t; docs/audits/dynamic-wait-carrier-grammar-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1909-isf-dynamic-wait-count-predicates.t; t/1908-isf-generated-child-completion-memory.t; t/1244-isf-wait-clause-lowering.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1929-isf-wait-carrier-grammar.t t/1909-isf-dynamic-wait-count-predicates.t t/1908-isf-generated-child-completion-memory.t t/1244-isf-wait-clause-lowering.t
 ---
 
 `_link_dynamic_wait_entry_edge` previously combined the count itself with its
@@ -29,3 +29,20 @@ native/API/newline check, semantic and schedule reports agree. T1908 restores
 the original even-count join case. T1244 retains exact scheduled-transition,
 zero-bypass, pending-sample and metadata assertions with explicit nonzero
 predicates. This evidence does not claim exhaustive arbitrary-width coverage.
+
+The wait-local operator/arity validator now matches the supported carrier
+intersection: unary logical-not, binary logical shifts, and multi-operand
+arithmetic, bitwise, comparison and concatenation forms. It refuses bitwise-not,
+logical conjunction/disjunction spellings and unary concatenation before
+serialization. The retained grammar audit shows that those forms formerly
+passed scheduling then failed strict carrier parsing; they never had successful
+HDL qualification. This repair changes the rejection location, not their meaning.
+
+T1929 checks nested invalid shapes and every retained operator through strict
+carrier replay. Check/semantic failures retain complete native/API/newline
+reports; schedule refusals follow the existing nonzero-stderr/message-only
+adapter contract. A working arithmetic count retains full schedule-report
+parity. The separate quoted-division diagnostic redaction defect is owned by
+SEMANTIC-INTROSPECTION-MCP-FRONTIER.52. The stale positive-count fragments in the
+book lowering-reference chapter are owned by .49.2.2.6, immediately after .52;
+this grammar repair does not claim those excerpts have been synchronized yet.

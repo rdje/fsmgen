@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1347,7 +1347,7 @@ For FSMGen, the analogs are:
   Goal: `Lower direct transaction ports to collision-safe private identities.`
   Acceptance: `After .49.2.1, controller contract .32.1.3.3.1.2.2 and shadow ownership .32.1.3.3.1.3.1, implement scope-aware operand and binding resolution before .32.1.3.3.1.3.2. Preserve actor owner metadata, local aliases and resets, caller versus callee names, source provenance and public reports. Qualify direct input/output and rule payloads independently, including same names in different transactions and user names resembling generated prefixes. No global textual substitution or actor-role overwrite is permitted.`
   Verification: `pending`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.5`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.6`
   Commit: `children below`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1`
@@ -1382,7 +1382,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3`
   Status: `pending`
   Goal: `Integrate scoped formal lowering and preserve public source identities.`
-  Acceptance: `After .1/.2/.5, connect declaration maps, width/type/reset/role propagation, caller-local binding validation, local call endpoints and rule payload destinations. Allocate against actual actor/generated/private declarations, preserve generated child public ports and authored binding report names, and reject any unresolved physical collision. Qualify actor/local, sibling/caller/callee, input/output and generated-prefix cases through strict artifacts and complete native/API/MCP reports; keep runtime limits explicit until .49.2.3. Update book/spec/facts and commit before payload repair .32.1.3.3.1.3.2.`
+  Acceptance: `After .1/.2/.5/.6, connect declaration maps, width/type/reset/role propagation, caller-local binding validation, local call endpoints and rule payload destinations. Allocate against actual actor/generated/private declarations, preserve generated child public ports and authored binding report names, and reject any unresolved physical collision. Qualify actor/local, sibling/caller/callee, input/output and generated-prefix cases through strict artifacts and complete native/API/MCP reports; keep runtime limits explicit until .49.2.3. Update book/spec/facts and commit before payload repair .32.1.3.3.1.3.2.`
   Verification: `pending`
   Commit: `pending`
 
@@ -1394,10 +1394,17 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Align dynamic-wait operator admission with the emitted carrier grammar.`
   Acceptance: `After the clause walker and before production scope integration .3, reproduce lowerer admission followed by strict carrier rejection for ~, &&, || and unary concat wait expressions. Use the actual carrier contract to reject unsupported shapes at the wait boundary, or qualify any intended translation without changing operator meaning. Cover working known-width arithmetic/boolean/concat forms and complete native/API/MCP diagnostics. Update book and canonical wait facts and commit.`
-  Verification: `The scoped-walker grammar probe reproduces downstream unsupported-operator/arity failures; strict check and HDL generation already reject these sources. A known-width (+ cycles cycles) control succeeds. No invalid HDL success is claimed. Retained audit: docs/audits/dynamic-wait-carrier-grammar-20260927.json.`
+  Verification: `T1929 now rejects unsupported direct/nested wait shapes before carrier serialization, qualifies every retained operator through strict replay, preserves full check/semantic native/API/MCP reports and the documented schedule refusal boundary. Existing SystemVerilog/GHDL timing, wait lowering, scoped clause and source-failure regressions pass; book builds. .52 then .6 are next before .3.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.6`
+  Status: `pending`
+  Goal: `Repair stale runtime-wait lowering examples in the book.`
+  Acceptance: `After .5 and before .3, census the runtime-wait examples in 13h against generated current carriers and the canonical count-predicate facts. Replace stale low-bit positive-entry guards with actual nonzero predicates; check pending/consecutive waits, joins, branches, repeat/switch/loop and exit/continue predecessors for related drift. Preserve explanatory intent while making generated examples accurate. Retain reproducible source/fragment evidence, run book-example checks/build and commit.`
+  Verification: `13h still shows main_wait_1 counter load/entry guards as (& start cycles), while the committed production fix uses (& start (!= cycles 0)). At start=1/cycles=2 the old expression is false and the current one true. Similar stale guards occur in consecutive and expression wait examples. Canonical isf-dynamic-wait-count-predicates and T1909 own the runtime proof; this leaf owns the missed book synchronization.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.3`
@@ -1494,6 +1501,13 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.45: preserve VHDL comparison types and unsigned widths`
 
 
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.52`
+  Status: `pending`
+  Goal: `Preserve quoted division operators in public diagnostic sanitization.`
+  Acceptance: `Immediately after .49.2.2.5 and before the wait-book repair .6, reproduce native/API diagnostic divergence for an unsupported carrier expression whose supported-operator hint contains quoted /. Repair contextual sanitization without exposing real absolute/quoted/URI/Windows paths. Qualify direct native/API/newline errors, bare/quoted HDL operators, genuine path redaction and repository-local paths; update book/facts and commit.`
+  Verification: `T1929 before.log reproduces native diagnostics containing the quoted division token while API diagnostics replace it with [absolute-path-redacted]. _sanitize_public_string treats the quoted standalone slash as an absolute path, despite its comment promising HDL division preservation. The error is observable through check and semantic queries on the retained wait_not source at baseline 07f475f815630317383388f4da17a05cb8cb944d. Use a direct unsupported carrier-expression source after .5 moves the wait error earlier; do not classify the disappearance from that wait probe as a sanitizer fix.`
+  Commit: `pending`
 
 ## Implementation Notes From `.4`
 
@@ -6655,3 +6669,72 @@ canonical scope card own the implementation contract.
 Book verification: the repository-derived `.artifacts/formal-clauses/book`
 build succeeds; book.log is retained. The separate browser visual-audit blocker
 is unchanged. Staged doctrine and hook results belong to the commit evidence.
+
+## Dynamic-wait grammar alignment — `.49.2.2.5` (in flight)
+
+The clause-walker commit and its hook are complete. Fix the wait-local arity
+policy to accept only the currently supported carrier intersection, without
+reinterpreting bitwise-not as logical-not or logical conjunction as bitwise
+conjunction. Retain source spelling and artifact/report parity for working
+operators. Unsupported source already fails strict checks/generation; the
+repair moves the failure to wait validation instead of emitting invalid carrier.
+
+During this review, 13h's runtime-wait fragments were found stale after the
+count-predicate repair. The first example still combines `start` and the raw
+multi-bit `cycles` signal. The canonical wait fact and T1909 prove why even
+positive values fail that expression and why current lowering tests nonzero.
+The drift recurs across nested/consecutive/expression examples. .6 owns the
+book census and repair immediately after .5; it cannot be closed by a passing
+fragment-skipping book extractor or by changing the prose in 13b alone.
+
+The pre-fix T1929 run fails its expected early-refusal tests: direct lowering
+and schedule queries accept invalid carrier shapes, while strict check/semantic
+queries reject downstream. It also detects a separate public diagnostic
+sanitizer defect: the quoted division operator in the carrier hint becomes
+`[absolute-path-redacted]` only in API/MCP output. .52 owns that small repair
+immediately after this grammar slice. All working-operator controls pass in
+before.log. No production source was edited while those queries ran.
+
+The first post-fix T1929 run passes check/semantic failure-report parity but
+reveals an incorrect test assumption for failed schedule queries: only check
+and semantic have public failure-report schemas. `bin/fsmgen` schedule failure
+uses stderr/nonzero exit, and the MCP adapter intentionally returns its bounded
+message-only error (canonical semantic-introspection-mcp-frontier, .31.2.2,
+T1868). Adjust the schedule negative oracle to that documented contract; do not
+invent a schedule failure schema or classify this existing boundary as a defect.
+Working schedule reports still require exact complete native/API/MCP parity.
+
+### Acceptance — wait/carrier grammar alignment `.49.2.2.5`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained baseline grammar audit shows
+  wait-local shape acceptance followed by `Unsupported expression operator '~'`
+  at perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm line 975. The local table
+  also admits logical conjunction/disjunction spellings and unary concat;
+  serialization does not translate them. T1929 before.log proves direct lower
+  and schedule admission, downstream check/semantic refusal, and passing
+  supported-operator controls before the repair.
+- [x] **ADDRESSED (verified)** — qualified.log reports `All tests successful`
+  for T1929: unsupported direct/nested forms fail at wait validation, while
+  retained operators still strict-replay and preserve authored count metadata.
+  Complete check/semantic native/API/newline reports match. Failed schedule
+  queries use the existing nonzero native/message-only adapter contract;
+  working schedule reports retain complete parity. No new schema is invented.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1909/T1244/T1928/T1868. T1909 ran with the Darwin Verilator runtime flag and
+  repository-derived GHDL provider; the provider was executable and Verilator
+  available. Its SystemVerilog and GHDL timing/sampling checks pass, alongside
+  the wait lowering, scoped clause replay and public failure-report controls.
+  book.log records a successful root-derived mdBook build.
+
+Claim legs: T1929's RED/GREEN wait rejection and unchanged supported controls
+re-derive the grammar result; strict carrier replay, malformed nested forms,
+complete protocol reports and T1909's independent runtime oracles falsify it;
+T1929, the baseline audit, canonical wait card and synchronized book/spec retain
+it. DEVELOPMENT_NOTES is unchanged because the wait card owns this boundary.
+Full staged doctrine and commit-hook results are captured in commit evidence.
+The sanitizer .52 and stale book-fragment .6 defects remain owned and scheduled;
+this successful grammar repair does not close either one.
+
+Workflow correction: the first staged gate rejected the missing root child-list
+link for newly owned .52. Added that link; all implementation/claim checks in
+that run passed. Rerun the complete staged gate before commit.

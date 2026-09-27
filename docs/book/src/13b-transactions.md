@@ -416,6 +416,11 @@ iterate any authored actions.
 - `wait (<op> ...)`: use the same runtime zero-bypass and predecessor-edge
   snapshot contract as scalar runtime waits when every referenced signal has
   known width and the expression-width helper derives a positive result width.
+  The bounded count grammar supports unary `!`, binary `<<`/`>>`, and
+  arithmetic `+ - * / %`, bitwise `& | ^`, comparisons `== != < <= > >=`,
+  and `concat` with multiple operands. It rejects `~`, `&&`, `||` and
+  single-operand `concat` during wait validation; these are not translated
+  into operators with different meanings.
   Division and modulo count expressions reject numeric or exact-width literal
   zero, actor-constant-zero, actor-parameter-zero, and
   same-transaction-parameter-zero divisors before scheduled `.fsm` emission;

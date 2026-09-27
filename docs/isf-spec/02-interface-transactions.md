@@ -1415,7 +1415,12 @@ body contexts:
 For the runtime surface, `(wait count_signal)` is accepted when `count_signal`
 has a known unsigned width. `(wait (<op> ...))` is accepted when every signal
 referenced by the non-empty list expression has known width and the
-expression-width helper can derive a positive result width. Expression counts
+expression-width helper can derive a positive result width. Its bounded
+operator grammar admits unary `!`, binary `<<`/`>>`, and multi-operand arithmetic
+`+ - * / %`, bitwise `& | ^`, comparisons `== != < <= > >=`, and `concat`.
+Unsupported `~`, `&&`, `||` and unary `concat` fail at wait validation before
+scheduled carrier emission; no bitwise/logical reinterpretation is performed.
+Expression counts
 use the same predecessor-edge snapshot contract as scalar counts. The
 predecessor state gets two explicit outgoing edges: an effective count of zero
 bypasses directly to the post-wait state, and a non-zero effective count

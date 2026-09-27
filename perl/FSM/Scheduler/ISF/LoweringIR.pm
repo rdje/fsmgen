@@ -8017,10 +8017,12 @@ sub _is_supported_wait_expression_shape {
 
 sub _wait_expression_operator_accepts_arity {
     my ($op, $arity) = @_;
-    return $arity >= 1 if $op eq 'concat';
-    return $arity == 1 if $op =~ /\A(?:!|~)\z/;
+    # This bounded count grammar must survive unchanged carrier serialization.
+    # Do not admit logical/bitwise aliases that the carrier cannot parse.
+    return $arity >= 2 if $op eq 'concat';
+    return $arity == 1 if $op eq '!';
     return $arity == 2 if $op =~ /\A(?:<<|>>)\z/;
-    return $arity >= 2 if $op =~ /\A(?:\+|-|\*|\/|%|&|\||\^|==|!=|<|<=|>|>=|&&|\|\|)\z/;
+    return $arity >= 2 if $op =~ /\A(?:\+|-|\*|\/|%|&|\||\^|==|!=|<|<=|>|>=)\z/;
     return 0;
 }
 

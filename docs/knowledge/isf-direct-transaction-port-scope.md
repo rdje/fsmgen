@@ -110,10 +110,11 @@ T1928 compares role arrays and independently strict-replays transformed carriers
 from parsed helpers and the tracked controller cohort. That is detached helper
 qualification, not a production runtime or report migration.
 
-Dynamic-wait's local operator table currently admits shapes the carrier rejects;
-strict check/HDL generation reject those sources. The retained audit
-`docs/audits/dynamic-wait-carrier-grammar-20260927.json` and prerequisite .49.2.2.5
-own grammar alignment before .49.2.2.3 connects the resolvers and proves complete
-physical reservations and source-report preservation.
+The dynamic-wait operator discrepancy is repaired under .49.2.2.5: unsupported
+carrier shapes now fail before serialization. The canonical
+[wait card](isf-dynamic-wait-count-predicates.md) owns that grammar and its audit.
+Quoted-division diagnostic sanitization .52 and stale wait examples .49.2.2.6
+precede .49.2.2.3, which connects the resolvers and must prove complete physical
+reservations and source-report preservation.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2.
