@@ -42,7 +42,8 @@ transaction/transaction arbitration or denied progress. The repair may not
 silently serialize independent work, duplicate actor registers or invent a
 priority policy. .32.1.3.3.1.3 now owns shadow ownership, payload repair,
 shared-write admission, independent execution, local calls and qualification.
-Scoped identities .49.2.2 precedes executable promotion; the selected contract
-is not a production repair.
+Scoped identities .49.2.2 and local rule snapshots .32.1.3.3.1.3.2 are now
+qualified prerequisites. Independent-controller promotion and blocking local-call
+execution are still open; those completed pieces do not repair reachability.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.2.

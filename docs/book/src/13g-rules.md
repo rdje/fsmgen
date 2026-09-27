@@ -395,11 +395,34 @@ cycle. Private retained storage uses the advertised `transaction_port_binding`
 role; authored binding names remain in the schedule. Source preparation and
 final domain declaration checks include the helper.
 
-The original delayed-zero reproduction and this entry-sample case pass in
-production HDL. Broader repeated/reset/granted-source runtime qualification
-remains a separate task. Independent-controller reachability and local-call
-ownership limitations still apply. Generated live handoffs retain their own
-timing, and an unguarded local target keeps its authored free-running behavior.
+The production SV/Verilog runtime fixture
+`t/data/isf_local_rule_snapshot_runtime.isf` exercises the full invocation
+lifecycle through public pins:
+
+- A rejected entry condition does not queue a request for later admission.
+- A new request while the body waits, including at a later `(on proceed)`,
+  cannot replace the accepted payload or create a queued invocation.
+- Reset aborts the in-flight invocation; a later request captures fresh data.
+- A held rule condition keeps producing level requests. The target can accept
+  a new invocation when it returns to its initial state. Its next entry sample
+  may update on the same edge as the preceding invocation's delayed completion
+  pulse; the completed result still belongs to the preceding invocation.
+- Priority and round-robin `transaction_start` resources select the payload
+  from the granted rule. Ungranted overlap retains the SystemVerilog selector
+  assertion; it does not gain an implicit winner.
+
+Run the qualification with:
+
+```sh
+FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh \
+  prove -Iperl -It/lib t/1966-isf-local-rule-snapshot-runtime.t
+```
+
+The Darwin opt-in requires the repository's qualified simulator runtime. The
+suite also retains generated live-handoff and unguarded-target controls.
+Independent-controller reachability and local-call ownership limitations still
+apply; local snapshot qualification does not close them. Generated live handoffs
+retain their own timing, and an unguarded local target remains free-running.
 
 Parameterized rule triggers are generated-child activations, not writes to
 shared transaction parameters. The source shape is

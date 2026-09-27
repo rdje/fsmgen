@@ -16,7 +16,7 @@ Those references are feasibility evidence, not implemented ISF lowering.
 
 The binding audit also distinguishes three timing classes. Generated `do`
 inputs are live handoffs and correctly reject snapshot spelling. Local rule
-payloads are snapshots, but the current pulse-gated mux loses the value before
+payloads are snapshots, but at decision time the pulse-gated mux lost the value before
 a delayed read. A request-gated target completes once and reads zero; changing
 only the emitted mux default to its retained source restores the expected read.
 An ungated rule target is a separate authored free-running control, not evidence
@@ -117,10 +117,12 @@ reference simulations alone cannot close production runtime qualification.
 ## Consequences
 
 The current direct-controller warning remains until generated production HDL
-passes the owned repair gates. The local-trigger delayed-payload defect is
-explicitly owned and remains open. Generated live-call probes are positive
-controls and must not be cited as snapshot support. The early ungated trigger
-probe is retained with its corrected interpretation.
+passes the owned repair gates. Local rule payload retention is now integrated
+and qualified under .32.1.3.3.1.3.2 (T1965/T1966), including entry samples,
+busy/reset/held requests and granted multiple sources. Independent controllers
+and local-call timing remain open. Generated live-call probes stay separate
+positive controls; they do not prove snapshot support. The early ungated
+trigger probe is retained with its corrected interpretation.
 
 This selects execution and admission boundaries without claiming an implemented
 controller, arbitration protocol, scoped-port repair or storage-access feature.

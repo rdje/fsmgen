@@ -9,8 +9,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, binding, trigger, payload, snapshot, runtime]
-evidence: t/1965-isf-local-rule-snapshot-integration.t; docs/audits/local-rule-payload-scoped-baseline-20260927.json; docs/audits/direct-controller-binding-timing-20260927.json; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1171-isf-rule-trigger-fanin.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh perl docs/audits/local-rule-payload-scoped-baseline-20260927/reproduce.pl; compare current observations with the bounded scoped baseline. The older diagnostic HDL comparison separately normalizes only its generated Date.
+evidence: t/1965-isf-local-rule-snapshot-integration.t; t/1966-isf-local-rule-snapshot-runtime.t; docs/audits/local-rule-payload-scoped-baseline-20260927.json; docs/audits/direct-controller-binding-timing-20260927.json; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1171-isf-rule-trigger-fanin.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1965-isf-local-rule-snapshot-integration.t t/1966-isf-local-rule-snapshot-runtime.t; the tracked scoped-baseline reproduce.pl retains the original production probes for historical comparison.
 ---
 
 Generated do input bindings are live handoffs; snapshot spelling is rejected
@@ -33,8 +33,13 @@ T1965 checks raw/projected naming collisions, signed types, independent domain
 scopes, missing preparation category and unreserved declaration controls, strict
 carrier replay and full native/API/newline reports. Public-pin SV/Verilog runtime
 checks entry samples and delayed reads under a payload-dependent leading when.
-Broader repeated/reset/held/busy and granted-source runtime remains owner
-SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.3.
+T1966 independently qualifies repeated source changes, rejected entry, busy
+requests at a later on, reset abort, held level requests and priority/round-robin
+grants in both emitted Verilog families. Ungranted overlap trips the payload
+selector assertion. Unguarded-target and authenticated generated-live controls
+preserve their separate semantics. A held request can accept the next invocation
+on the previous invocation's delayed completion edge: entry samples and completed
+results then belong to different invocations. The test observes them separately.
 
 Historical evidence stays immutable. At
 b7b18c76095e2c08a629f823d964a2fd28afad93, the scoped baseline observes zero with

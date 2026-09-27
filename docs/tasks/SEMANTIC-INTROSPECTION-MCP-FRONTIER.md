@@ -743,10 +743,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repair local rule-trigger payload retention at the admitted activation boundary.`
   Acceptance: `After .1 and scoped identities .49.2.2, reproduce the tracked request-gated delayed-zero case and retain both generated-live controls. Preserve early entry visibility and later snapshots with no extra observable activation cycle. Qualify changed sources, repeated requests, reset, busy requests, conditional authored entry and granted multiple rule sources; never remove all source guards to choose an implicit winner. Preserve authored rule-target entry semantics. Close only from generated production runtime and exact native/API/MCP evidence.`
-  Verification: `Scoped physical identities are committed. Reverify the retained request-gated delayed-zero reproduction and generated-live controls on current production, then preserve accepted payload with acceptance-edge visibility and busy-request isolation. Source selection must use admitted rule requests/grants; retain authored target entry guards. Any new snapshot helper must participate in source preparation and final reservation coverage.`
+  Verification: `Children .1/.2/.3 retain the scoped failure baseline, integrate accepted-entry storage with complete reservations and qualify the invocation lifecycle independently through public pins. Stable/changed/early/conditional/repeated/reset/held/busy and priority/round-robin cases pass in SV/Verilog; ungranted overlap retains the selector assertion, generated live handoffs and unguarded targets preserve their semantics, and complete native/API/newline reports agree. This closes local rule payload retention only; shared-write admission, independent controllers and local calls remain separate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.3`
   Commit: `children below`
 
@@ -765,11 +765,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify local rule snapshots across acceptance timing, grants and repeated execution.`
   Acceptance: `Require independent public-pin SV/Verilog runtime for early entry samples, delayed stable/changed reads, repeated/reset/held and busy requests, conditional authored entry including payload-dependent guards, and granted multiple sources. Preserve generated-live controls, caller/source interfaces, complete native/API/newline reports and strict carrier replay. Keep controller reachability/local-call ownership limits separate; commit before writer admission.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `T1966 passes independent production SV/Verilog changed/repeated inputs, rejected entry including zero payload, busy requests at a later on, reset abort/re-entry, held level requests and priority/round-robin granted sources. Ungranted overlap is caught by the actual payload selector assertion. Unguarded targets still free-run and authenticated generated-live controls observe stable/changed inputs. Exact public interfaces, complete native/API/newline check/semantic/schedule reports and strict carrier replay pass. Resource/selector/preparation and book fixture/build regressions pass. Oracle correction separates next-entry samples from previous delayed completion and requires a fresh counted pulse; no production code changed in this qualification slice.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3`
   Status: `pending`
@@ -2602,10 +2602,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
-The next leaf is `.32.1.3.3.1.3.2.3`, broader local rule-trigger snapshot runtime
-qualification after integration, its scoped baseline and enumeration repair
-`.56`. Shared-write admission, independent controllers and local call timing
-remain under its sibling leaves. `.49.2.3` qualifies direct-call runtime;
+Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. The next leaf is
+`.32.1.3.3.1.3.3`, shared-write admission before independent controllers and
+local-call timing under the following sibling leaves. `.49.2.3` qualifies direct-call runtime;
 `.49.3` owns explicit-local physical scope. These remain prerequisites to the
 SPECFORGE storage/register-access feature in `.38.1` and optional banks `.38.2`.
 Packet intake `.37` is complete; it does not implement those reports.
@@ -4172,3 +4171,38 @@ falsification uses missing-category/unreserved-declaration controls plus an
 independent public-pin changed-input oracle; durability is T1965 and its fixture,
 the canonical retention card, book/spec and this owner. This closes integration,
 not broad repeated/reset/granted-source qualification or independent controllers.
+
+## Acceptance — local snapshot runtime `.32.1.3.3.1.3.2.3`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--strict --check --json` and
+  `--emit-schedule-json` succeed for priority/round-robin payload fixtures, but
+  admission/report agreement alone cannot prove accepted-invocation retention.
+  T1966 drives public pins through waits and a later on to exercise that
+  distinction. The first oracle exposed a testbench timing error: the next
+  entry sample may update with the previous delayed done pulse; waiting on its
+  still-high level also reused that previous completion. The terminal carrier's
+  delayed pulse and return-to-entry contract explain both observations.
+- [x] **ADDRESSED (verified)** — T1966 now samples entry values at admission
+  and checks completed results against a fresh counted done event. Both emitted
+  Verilog families pass changed/repeated sources, false admission and zero
+  payload rejection, busy requests at a later on, reset abort/fresh re-entry,
+  held level requests and priority/round-robin grants. Ungranted overlap trips
+  the actual payload selector assertion instead of choosing a winner. An
+  unguarded target still completes without any request. Canonical generated-live
+  source/testbench hashes match and stable/changed live results remain correct.
+  Exact public ports, complete native/API/newline check/semantic/schedule
+  responses and exported carrier replay pass. No production change was needed.
+- [x] **NO REGRESSION** — runtime-qualified.log and focused.log report
+  `All tests successful` for T1966 and T1218/T1242/T1944/T1376. The mdBook build
+  passes. All jobs are consumed. Task acceptance and the normal hook qualify
+  the commit. The stale active-index pointer to formal integration is replaced
+  by the live shared-write frontier; decision/card status distinguishes the
+  completed payload repair from still-unqualified controller/local-call work.
+
+Evidence: `.artifacts/local-rule-snapshot-runtime/`. Re-derivation checks
+production carriers/reports and fresh public-pin invocation observations;
+falsification includes ungranted overlap, rejected requests, changed busy inputs
+and reset abort; durability is T1966, the source/testbench fixtures, retention
+card, updated decision consequence and mdBook. The owned parent .2 closes;
+shared-write admission .3 is next. No independent-controller, VHDL runtime,
+local-call or requested storage/register-access metadata completion is claimed.
