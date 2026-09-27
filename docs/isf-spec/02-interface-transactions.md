@@ -1902,7 +1902,12 @@ Current lowering:
   slice bounds. Explicit widths must be positive and must not conflict with
   already known field widths.
   When the source word width is known, the sum of field widths must match it;
-  a zero or negative inferred remainder fails closed.
+  a zero or negative inferred remainder fails closed. The single-field form
+  also propagates the whole known source width. Emitted field captures use
+  bracketed scalar references such as `packet[15:12]` with the existing `<=`
+  operation. Known assemble target and signal-part widths are retained in
+  `+size`, so an inferred assembled word remains a packed scalar for extraction;
+  existing declarations and static constants take precedence.
 
 The emitted shift expressions use the normal `.fsm` expression surface. Raw
 `<<` and `>>`, plus `shl` and `shr` aliases, are accepted as binary operators

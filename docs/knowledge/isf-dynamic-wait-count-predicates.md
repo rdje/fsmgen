@@ -45,9 +45,9 @@ adapter contract. A working arithmetic count retains full schedule-report
 parity. The quoted-division diagnostic redaction defect is repaired by
 SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, qualified by T1930. The lowering-reference fragments are synchronized by .49.2.2.6 against
 retained complete sources and generated state mappings. The replay audit
-checks all mapped excerpts and prose-only predecessor controls; it explicitly
-tracks the extract carrier refusal owned by .53 rather than promoting that
-intermediate fragment to HDL support. See isf-extract-carrier-replay.md.
+checks all mapped excerpts and prose-only predecessor controls. After .53
+repairs the extract carrier and width declarations, its previously failing
+extract source must also pass strict replay. See isf-extract-carrier-replay.md.
 
 The wait-book audit's fixtures retain source origins, primary carrier identity
 and state-to-fragment mappings. Its verifier requires complete fragment

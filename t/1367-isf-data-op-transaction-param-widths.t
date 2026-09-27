@@ -80,9 +80,9 @@ ISF
         qr/\(<- \(shreg \(\| \(>> shreg 1\) \(<< bit_in 7\)\)\)\)/,
         'generated child shift_right uses transaction-local width before actor constant of the same name',
     );
-    like($child_fsm, qr/\(<= \(header \(slice packet 15 12\)\)\)/, 'transaction parameter extract width drives first slice');
-    like($child_fsm, qr/\(<= \(payload \(slice packet 11 4\)\)\)/, 'transaction parameter extract width drives middle slice');
-    like($child_fsm, qr/\(<= \(crc \(slice packet 3 0\)\)\)/, 'transaction parameter extract width drives final slice');
+    like($child_fsm, qr/\(<= \(header packet\[15:12\]\)\)/, 'transaction parameter extract width drives first slice');
+    like($child_fsm, qr/\(<= \(payload packet\[11:4\]\)\)/, 'transaction parameter extract width drives middle slice');
+    like($child_fsm, qr/\(<= \(crc packet\[3:0\]\)\)/, 'transaction parameter extract width drives final slice');
     like(
         $child_fsm,
         qr/\(<- \(assembled \(\| \(>> assembled 1\) \(<< bit_in 15\)\)\)\)/,
@@ -133,9 +133,9 @@ ISF
         qr/\(<- \(shreg \(\| \(>> shreg 1\) \(<< bit_in 7\)\)\)\)/,
         'direct shift_right uses transaction-local width before actor constant of the same name',
     );
-    like($fsm, qr/\(<= \(header \(slice packet 15 12\)\)\)/, 'direct transaction parameter extract width drives first slice');
-    like($fsm, qr/\(<= \(payload \(slice packet 11 4\)\)\)/, 'direct transaction parameter extract width drives middle slice');
-    like($fsm, qr/\(<= \(crc \(slice packet 3 0\)\)\)/, 'direct transaction parameter extract width drives final slice');
+    like($fsm, qr/\(<= \(header packet\[15:12\]\)\)/, 'direct transaction parameter extract width drives first slice');
+    like($fsm, qr/\(<= \(payload packet\[11:4\]\)\)/, 'direct transaction parameter extract width drives middle slice');
+    like($fsm, qr/\(<= \(crc packet\[3:0\]\)\)/, 'direct transaction parameter extract width drives final slice');
     like(
         $fsm,
         qr/\(<- \(assembled \(\| \(>> assembled 1\) \(<< bit_in 15\)\)\)\)/,

@@ -74,9 +74,9 @@ ISF
         qr/\(<- \(shreg \(\| \(>> shreg 1\) \(<< bit_in 7\)\)\)\)/,
         'later shift_right consumes actor-parameter width evidence',
     );
-    like($fsm, qr/\(<= \(header \(slice packet 15 12\)\)\)/, 'actor-parameter extract width drives first slice');
-    like($fsm, qr/\(<= \(payload \(slice packet 11 4\)\)\)/, 'actor-constant extract width drives middle slice');
-    like($fsm, qr/\(<= \(crc \(slice packet 3 0\)\)\)/, 'actor-constant extract width drives final slice');
+    like($fsm, qr/\(<= \(header packet\[15:12\]\)\)/, 'actor-parameter extract width drives first slice');
+    like($fsm, qr/\(<= \(payload packet\[11:4\]\)\)/, 'actor-constant extract width drives middle slice');
+    like($fsm, qr/\(<= \(crc packet\[3:0\]\)\)/, 'actor-constant extract width drives final slice');
     unlike($fsm, qr/WIDTH|HIGH|LOW/, 'static data-operation widths leave no placeholder bounds');
 
     assert_storage($report, 'shreg', 'register', 'data_register', 8);
@@ -109,7 +109,7 @@ ISF
 
     my $fsm = $lowered->{files}{'enum_static_data_op_widths.fsm'};
     like($fsm, qr/\(<- \(shreg \(\| \(>> shreg 1\) \(<< bit_in 5\)\)\)\)/, 'enum-resolved actor parameter width selects shift insert position');
-    like($fsm, qr/\(<= \(field \(slice packet 5 0\)\)\)/, 'enum-resolved actor constant width selects extract slice');
+    like($fsm, qr/\(<= \(field packet\[5:0\]\)\)/, 'enum-resolved actor constant width selects extract slice');
 };
 
 subtest 'unsupported data-operation width sources fail closed' => sub {

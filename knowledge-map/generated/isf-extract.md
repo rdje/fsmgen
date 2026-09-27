@@ -13,7 +13,7 @@
 
 ### isf-extract-carrier-replay
 
-_ISF extract emits a slice operator rejected by the active carrier frontend_
+_ISF extract replays scalar slices with inferred widths and captured values_
 
 - **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-extract-carrier-replay.md`](../../docs/knowledge/isf-extract-carrier-replay.md)

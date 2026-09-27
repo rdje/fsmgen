@@ -33,9 +33,9 @@ ISF
 
     my $fsm = lower_source($source, 'extract_widths.fsm');
 
-    like($fsm, qr/\(<= \(header \(slice packet 15 12\)\)\)/, 'explicit widths drive first slice');
-    like($fsm, qr/\(<= \(payload \(slice packet 11 4\)\)\)/, 'explicit widths drive middle slice');
-    like($fsm, qr/\(<= \(crc \(slice packet 3 0\)\)\)/, 'explicit widths drive final slice');
+    like($fsm, qr/\(<= \(header packet\[15:12\]\)\)/, 'explicit widths drive first slice');
+    like($fsm, qr/\(<= \(payload packet\[11:4\]\)\)/, 'explicit widths drive middle slice');
+    like($fsm, qr/\(<= \(crc packet\[3:0\]\)\)/, 'explicit widths drive final slice');
     unlike($fsm, qr/HIGH|LOW/, 'explicit extract widths avoid placeholder slice bounds');
 };
 

@@ -4796,7 +4796,7 @@ sub _collect_extract_widths {
     my ($node, $widths, $actor, $tn) = @_;
     return unless ref($node) eq 'ARRAY';
 
-    if (@$node >= 5 && $node->[0] eq 'extract') {
+    if (@$node >= 4 && $node->[0] eq 'extract') {
         my ($word, $fields, $explicit_widths) = _parse_extract_clause($node, $actor, $tn);
         my @field_widths = _resolve_extract_field_widths(
             $word,
@@ -8663,7 +8663,18 @@ sub _ir_shift_right {
         transitions => [],
     };
 }
-sub _ir_assemble  { my ($cl,$tn,$i,$actor)=@_; my($var,$parts)=_parse_assemble_clause($cl,$actor,$tn);my$rhs='(concat '.join(' ',@$parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-',source_kind=>'assemble'}],transitions=>[]} }
+sub _ir_assemble {
+    my ($cl, $tn, $i, $actor) = @_;
+    my ($var, $parts) = _parse_assemble_clause($cl, $actor, $tn);
+    return {
+        name => "${tn}_asm_$i",
+        kind => 'sequential',
+        assembly_signals => [$var, @$parts],
+        assignments => [{lhs => $var, rhs => '(concat ' . join(' ', @$parts) . ')',
+            op => '<-', source_kind => 'assemble'}],
+        transitions => [],
+    };
+}
 sub _ir_extract {
     my ($cl, $tn, $i, $widths, $actor) = @_;
     my ($word, $fields, $explicit_widths) = _parse_extract_clause($cl, $actor, $tn);
@@ -8681,7 +8692,7 @@ sub _ir_extract {
         my $field = $fields->[$idx];
         my $field_width = $field_widths[$idx];
         my $low = $high - $field_width + 1;
-        my $rhs = "(slice $word $high $low)";
+        my $rhs = "${word}[$high:$low]";
         $high = $low - 1;
         push @assignments, { lhs => $field, rhs => $rhs, op => '<=', source_kind => 'extract_capture' };
     }

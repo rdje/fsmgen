@@ -60,11 +60,11 @@ ISF
         'scheduled .fsm embeds imported package root');
     like($fsm, qr/\(<- \(shreg \(\| \(>> shreg 1\) \(<< bit_in 7\)\)\)\)/,
         'shift_right consumes package-constant width evidence from shift_left');
-    like($fsm, qr/\(<= \(header \(slice word 15 12\)\)\)/,
+    like($fsm, qr/\(<= \(header word\[15:12\]\)\)/,
         'package-constant extract width drives first slice');
-    like($fsm, qr/\(<= \(payload \(slice word 11 4\)\)\)/,
+    like($fsm, qr/\(<= \(payload word\[11:4\]\)\)/,
         'package-constant extract width drives middle slice');
-    like($fsm, qr/\(<= \(crc \(slice word 3 0\)\)\)/,
+    like($fsm, qr/\(<= \(crc word\[3:0\]\)\)/,
         'package-constant extract width drives final slice');
     like($fsm, qr/\(<- \(packet \(concat header crc\)\)\)/,
         'package-constant assemble widths preserve concat lowering');

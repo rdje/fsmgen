@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.53` (pending)
-- next_action: Repair extract carrier/public replay .53, then scoped identity integration .49.2.2.3. Use the retained wait-book extract fixture and canonical isf-extract-carrier-replay card.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3` (pending)
+- next_action: Integrate scoped formal identities .49.2.2.3 using the qualified detached plan, operand/clause resolvers and source-scope validation. Follow the isf-direct-transaction-port-scope card and decision 0109.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

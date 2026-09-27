@@ -638,7 +638,10 @@ exactly one part width is missing and the target width plus all sibling part
 widths are known, FSMGen infers the missing part width as the positive
 remainder. Explicit or inferred part widths remain available as
 transaction-local evidence for later data operations, such as a following
-`shift_right` on the assembled target or part. If the target already has a
+`shift_right` on the assembled target or part. Known widths of the assembled
+scalar word and its signal parts are emitted in `+size`, so a following
+`extract` reads a packed scalar rather than an inferred concat list. Existing
+declarations and static constants retain their identities. If the target already has a
 known width, the final part-width sum must match it. A zero or negative
 inferred remainder fails closed. Two or more unknown part widths may still
 lower to the reviewable concat expression, but they are not used as width
@@ -668,6 +671,8 @@ width as the positive remainder.
 
 That inferred width remains available as transaction-local evidence for later
 data operations, such as a following `shift_right` on the extracted field.
+This also covers `(extract packet as field)`: a single inferred field receives
+the entire known source width.
 
 Two or more unknown field widths remain ambiguous and fail closed instead of
 placeholder slice bounds.
@@ -680,11 +685,19 @@ zero or negative inferred remainder fails closed.
 
 ```lisp
 (state
-  (<= (header> (slice packet 15 12)))
-  (<= (payload> (slice packet 11 4)))
-  (<= (crc> (slice packet 3 0)))
+  (<= (header> packet[15:12]))
+  (<= (payload> packet[11:4]))
+  (<= (crc> packet[3:0]))
   (-> next_state))
 ```
+
+The emitted RHS uses the carrier's bracketed scalar slice syntax, such as
+`packet[15:12]`, and preserves the `<=` field-capture operation. For example,
+extracting `16'hA5C3` into widths `4 8 4` produces `header = 4'hA`,
+`payload = 8'h5C`, and `crc = 4'h3` on the extraction capture edge. Once that
+state advances, changing `packet` does not change the captured fields.
+A preceding `assemble` state captures its packed word before extraction;
+changes to its original parts afterward do not change that stored word.
 
 ### Current Width Evidence Boundary
 

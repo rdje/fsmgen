@@ -184,8 +184,24 @@ sub _emit_size($self, $ir) {
     my $ctrs = $ir->{counters} || {};
     for my $name (sort keys %$ctrs) {
         next if $declared{$name};
+        $declared{$name} = 1;
         my $width_token = $type_refs->{$name} // $ctrs->{$name};
         push @l, "    ($name $width_token" . _reset_suffix($resets, $name) . ")";
+    }
+    # Preserve the known widths of an assembled scalar and its operands.
+    # Otherwise concat may infer a list or implicitly scalar input parts.
+    my $widths = $ir->{signal_widths} || {};
+    my %static = map { $_->{name} => 1 }
+        (@{$ir->{constants} || []}, @{$ir->{params} || []});
+    for my $state (@{$ir->{states} || []}) {
+        for my $name (@{$state->{assembly_signals} || []}) {
+            next unless $name =~ /\A[A-Za-z_][A-Za-z0-9_]*\z/;
+            next if $declared{$name} || $static{$name};
+            next unless defined($widths->{$name}) && $widths->{$name} > 0;
+            $declared{$name} = 1;
+            my $width_token = $type_refs->{$name} // $widths->{$name};
+            push @l, "    ($name $width_token" . _reset_suffix($resets, $name) . ")";
+        }
     }
     return '' unless @l;
     return join("\n", '  (+size', @l, '  )');

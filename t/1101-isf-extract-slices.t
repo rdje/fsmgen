@@ -57,9 +57,9 @@ ISF
     );
     unlike($fsm, qr/\(<- \(as /, 'assemble does not treat as as the target');
 
-    like($fsm, qr/\(<= \(out_header> \(slice packet 15 12\)\)\)/, 'header slice is exact');
-    like($fsm, qr/\(<= \(out_payload> \(slice packet 11 4\)\)\)/, 'payload slice is exact');
-    like($fsm, qr/\(<= \(out_crc> \(slice packet 3 0\)\)\)/,      'crc slice is exact');
+    like($fsm, qr/\(<= \(out_header> packet\[15:12\]\)\)/, 'header slice is exact');
+    like($fsm, qr/\(<= \(out_payload> packet\[11:4\]\)\)/, 'payload slice is exact');
+    like($fsm, qr/\(<= \(out_crc> packet\[3:0\]\)\)/,      'crc slice is exact');
     unlike($fsm, qr/HIGH|LOW/, 'known-width extract does not emit placeholder slice bounds');
 };
 
@@ -86,9 +86,9 @@ ISF
 
     my $fsm = lower_source($source, 'extract_from_assembled.fsm');
 
-    like($fsm, qr/\(<= \(out_header> \(slice packet 15 12\)\)\)/, 'assembled word width drives first slice');
-    like($fsm, qr/\(<= \(out_payload> \(slice packet 11 4\)\)\)/, 'assembled word width drives middle slice');
-    like($fsm, qr/\(<= \(out_crc> \(slice packet 3 0\)\)\)/,      'assembled word width drives final slice');
+    like($fsm, qr/\(<= \(out_header> packet\[15:12\]\)\)/, 'assembled word width drives first slice');
+    like($fsm, qr/\(<= \(out_payload> packet\[11:4\]\)\)/, 'assembled word width drives middle slice');
+    like($fsm, qr/\(<= \(out_crc> packet\[3:0\]\)\)/,      'assembled word width drives final slice');
     unlike($fsm, qr/HIGH|LOW/, 'assemble-inferred extract does not emit placeholder slice bounds');
 };
 
@@ -113,9 +113,9 @@ ISF
 
     my $fsm = lower_source($source, 'extract_single_unknown.fsm');
 
-    like($fsm, qr/\(<= \(header> \(slice packet 15 12\)\)\)/, 'known leading field slice remains exact');
-    like($fsm, qr/\(<= \(payload \(slice packet 11 4\)\)\)/, 'single unknown middle field width is inferred');
-    like($fsm, qr/\(<= \(crc> \(slice packet 3 0\)\)\)/, 'known trailing field slice remains exact');
+    like($fsm, qr/\(<= \(header> packet\[15:12\]\)\)/, 'known leading field slice remains exact');
+    like($fsm, qr/\(<= \(payload packet\[11:4\]\)\)/, 'single unknown middle field width is inferred');
+    like($fsm, qr/\(<= \(crc> packet\[3:0\]\)\)/, 'known trailing field slice remains exact');
     like($fsm, qr/\(<- \(payload \(\| \(>> payload 1\) \(<< bit_in 7\)\)\)\)/,
         'later shift_right uses the inferred payload width');
     unlike($fsm, qr/HIGH|LOW|WIDTH/, 'single unknown field inference emits no placeholders');
@@ -145,9 +145,9 @@ ISF
 
     my $fsm = lower_source($source, 'extract_single_unknown_from_assembled.fsm');
 
-    like($fsm, qr/\(<= \(out_header> \(slice packet 15 12\)\)\)/, 'assembled source drives known leading slice');
-    like($fsm, qr/\(<= \(out_payload \(slice packet 11 4\)\)\)/, 'single unknown field is inferred from assembled source');
-    like($fsm, qr/\(<= \(out_crc> \(slice packet 3 0\)\)\)/, 'assembled source drives known trailing slice');
+    like($fsm, qr/\(<= \(out_header> packet\[15:12\]\)\)/, 'assembled source drives known leading slice');
+    like($fsm, qr/\(<= \(out_payload packet\[11:4\]\)\)/, 'single unknown field is inferred from assembled source');
+    like($fsm, qr/\(<= \(out_crc> packet\[3:0\]\)\)/, 'assembled source drives known trailing slice');
     like($fsm, qr/\(<- \(out_payload \(\| \(>> out_payload 1\) \(<< bit_in 7\)\)\)\)/,
         'inferred width remains available after assembled-source extraction');
     unlike($fsm, qr/HIGH|LOW|WIDTH/, 'assembled-source inference emits no placeholders');

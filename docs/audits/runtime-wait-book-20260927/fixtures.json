@@ -102,11 +102,7 @@
           ]
         }
       ],
-      "carrier": "wait_dynamic_sample_extract.fsm",
-      "expected_refusal": {
-        "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.53",
-        "diagnostic": "Unsupported expression operator 'slice'"
-      }
+      "carrier": "wait_dynamic_sample_extract.fsm"
     },
     {
       "id": "wait-dynamic-sample-bank-load",

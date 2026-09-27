@@ -1510,11 +1510,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.53`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair extract carrier/public-query incompatibility found by strict book replay.`
   Acceptance: `Immediately after the current wait-book synchronization and before scope integration .49.2.2.3, reproduce the extract carrier's unsupported slice operator through actual native check/semantic and API/MCP paths. Resolve the mismatch between emitted extract RHS and the active expression grammar while preserving exact bit ranges, widths, capture timing and pending-sample behavior. Close the extract-specific replay gap in the older lowering tests; qualify direct/assembled/inferred sources and malformed controls, synchronize book/spec/facts and commit.`
-  Verification: `The wait-book source/fragment census lowers the exact T1244 extract fixture, then bin/fsmgen --strict --check --json rejects its emitted (slice packet 15 12) RHS as Unsupported expression operator slice. Other audited carriers pass. _ir_extract in LoweringIR.pm emits this form; ExpressionBuilder supports bracketed signal slices rather than a slice operator. The T1244 extract subtest omits the SourceFrontend/HDL helper used by other cases; an isolated direct frontend probe also rejects slice. This is a replay coverage gap, not a strict-versus-permissive grammar distinction. Retain the exact fixture and baseline failure in the book audit.`
-  Commit: `pending`
+  Verification: `T1931 qualifies complete native/API/newline check/semantic/schedule parity and strict carriers for declared, assembled, explicit, inferred, single-field, scalar-bit, constant-operand and pending-sample extraction. T1932 passes independent SystemVerilog/GHDL values, capture, hold/reset and assembled round trips. Existing data-op width/parameter/negative, wait, clause and book regressions pass; every mapped wait-book carrier now strict-replays and mdBook builds. Next .49.2.2.3.`
+  Commit: `this slice`
 
 ## Implementation Notes From `.4`
 
@@ -2203,8 +2203,9 @@ port scope and its controller prerequisite. Completed `.32.1.3.3.1.1` repairs
 terminal synchronization. `.32.1.3.3.1.2.1` retains direct-controller failures and
 passing public-carrier references. Rationale rollover, the controller contract,
 shadow ownership and detached formal resolvers are qualified. Wait grammar, diagnostics and
-book excerpts are synchronized. Next `.53` repairs the extract carrier failure
-found by replay, before production identity integration `.49.2.2.3`. Local payload, shared-writer and
+book excerpts are synchronized. `.53` repairs and qualifies extract carrier
+replay and width declarations. Next is production identity integration
+`.49.2.2.3`. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -6874,3 +6875,88 @@ fixture metadata and canonical fact-card limits. Removed that extra landing
 page and routed the remaining verification-boundary detail to the existing
 wait fact card. No registry exemption, new surface or ceiling increase is used;
 rerun the full gate with the smaller canonical routing.
+
+## Extract carrier replay — `.53` (in flight)
+
+The book repair is committed with the full gate/hook passing and the tree clean.
+Reproduce public replay for declared, assembled and inferred field widths,
+including scalar/single-field cases and the retained pending-sample fixture.
+Use the existing bracketed carrier signal slice without broadening the public
+operator grammar. Preserve descending ranges and <= capture semantics. Check
+width propagation and real HDL behavior; schedule text alone is insufficient.
+
+T1931's baseline also reproduces missing width evidence for a single inferred
+field: `(extract packet as field)` with packet width 8 leaves field width
+undefined in the report. `_parse_extract_clause` admits this shape, but
+`_collect_extract_widths` requires an array length of at least five, skipping
+the legal four-element form. .53 owns the admission/width consistency fix;
+retain the single-field assertion independently of carrier syntax replay.
+
+The first syntax repair passes the other replay cases but exposes the assembled
+source prerequisite: the schedule reports packet width 16, yet Emitter::FSM's
++size includes only ports, declared storage and counters. It omits the inferred
+assemble target, so the carrier infers a concat list and refuses packet[15:12]
+as a list range. Preserve the known scalar assemble-target width explicitly in
++size, without declaring every unused width-map entry. .53 owns this narrow
+carrier declaration fix because assembled-source extraction is in its contract.
+
+The broader package-width regression caught an incomplete carrier declaration
+repair: declaring only the assembled target made the target correctly width 8
+while its explicitly sized, otherwise undeclared parts still defaulted to width
+1. The operand contract rejected the resulting concat width 2. Retain the
+assemble target and operand identities in IR and serialize their known scalar
+widths together, respecting existing declarations and static symbols. This
+extends the same evidence-preservation fix; do not weaken width validation or
+remove the regression. Both independent runtime extract oracles already pass
+for declared inputs; they do not close this explicit-part declaration case.
+
+The completed broad focused run is qualified-widths-fixed.log: T1931 plus the
+existing extract, explicit/static/package/transaction width, assemble and wait
+regressions pass. qualified-widths.log retains a local syntax typo caught
+before execution; it was fixed before the successful run. No failed run is
+presented as qualification. T1932's SystemVerilog and GHDL clocked oracles pass
+including assembled-word round trips; final-qualified.log reruns the checked-in
+public/runtime tests with the exact documented packet example added.
+
+The implementation retains assemble target/part identities as private state
+metadata and emits their known scalar widths together. Existing port/storage/
+counter declarations, type references and static constants retain precedence;
+non-scalar access tokens and unknown widths are not invented declarations.
+Pending-sample clones preserve the state metadata. The source operator grammar,
+public schemas and extraction capture operator remain unchanged. T1244 now
+calls its actual frontend/HDL helper for the previously omitted extract case.
+
+### Acceptance — extract carrier replay `.53`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — T1931 before.log shows public
+  `--check --json` and semantic refusal for `_ir_extract`'s unsupported slice
+  operator, plus missing single-field width evidence from the collector's
+  overlong minimum clause shape. after.log isolates the inferred assembled
+  packet misclassified as a list because +size omitted its known width.
+  qualified.log's package smoke rejects concat width 2 against target width 8,
+  exposing omitted explicit operand widths. Those RED results name the
+  independent syntax, collection and carrier-declaration mechanisms.
+- [x] **ADDRESSED (verified)** — final-qualified.log reports `All tests
+  successful` for T1931/T1932. Bracketed slices preserve field ranges and <=
+  capture; single-field inference works; known assemble target/part widths
+  reach the carrier without redeclaring constants or existing declarations.
+  Complete native/API/newline reports match. Both Verilator and repository-local
+  GHDL run clocked walking-bit/complement and documented-packet checks, including
+  input changes, pending sample preservation, field hold/reset and assembled
+  round trips. Tool-dependent cases ran rather than skipped.
+- [x] **NO REGRESSION** — qualified-widths-fixed.log reports `All tests successful`
+  for T1931/T1101/T1174/T1201/T1244/T1343/T1344/T1358/T1367; malformed and
+  parameter-width boundaries remain intact. book-regression.log reports
+  `All tests successful` for T1376/T1928. book-replay.log verifies every mapped
+  excerpt and now-successful extract carrier, with no expected-refusal case
+  remaining. book.log records a successful mdBook build; the independent
+  browser visual-audit blocker is unchanged.
+
+Claim legs: native carrier/report replay and source-width assertions re-derive
+this fix; independent clocked SystemVerilog/GHDL values, changing-input timing,
+constant/explicit-width and malformed controls falsify it; checked-in tests,
+book/spec, canonical cards and the retained failing baseline provide durability.
+The book's hexadecimal packet example is explicitly exercised by both runtime
+oracles. No exhaustive arbitrary-width or independent-controller qualification
+is claimed. DEVELOPMENT_NOTES is unchanged because the extract card owns the
+rationale. Full staged doctrine and hook results are recorded in commit evidence.

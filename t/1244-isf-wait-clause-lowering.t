@@ -1024,21 +1024,21 @@ ISF
     my $extract = state_block($fsm, 'main_ext_2');
     unlike($extract, qr/\(<= \(hold din\)\)/,
         'original extract state does not double-sample after a positive wait');
-    like($extract, qr/\(<= \(out_header> \(slice packet 15 12\)\)\)/,
+    like($extract, qr/\(<= \(out_header> packet\[15:12\]\)\)/,
         'original extract high slice is unchanged');
-    like($extract, qr/\(<= \(out_payload> \(slice packet 11 4\)\)\)/,
+    like($extract, qr/\(<= \(out_payload> packet\[11:4\]\)\)/,
         'original extract middle slice is unchanged');
-    like($extract, qr/\(<= \(out_crc> \(slice packet 3 0\)\)\)/,
+    like($extract, qr/\(<= \(out_crc> packet\[3:0\]\)\)/,
         'original extract low slice is unchanged');
 
     my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
     like($zero_clone, qr/\(<= \(hold din\)\)/,
         'zero-count extract clone materializes the pending sample');
-    like($zero_clone, qr/\(<= \(out_header> \(slice packet 15 12\)\)\)/,
+    like($zero_clone, qr/\(<= \(out_header> packet\[15:12\]\)\)/,
         'zero-count extract clone performs the high slice');
-    like($zero_clone, qr/\(<= \(out_payload> \(slice packet 11 4\)\)\)/,
+    like($zero_clone, qr/\(<= \(out_payload> packet\[11:4\]\)\)/,
         'zero-count extract clone performs the middle slice');
-    like($zero_clone, qr/\(<= \(out_crc> \(slice packet 3 0\)\)\)/,
+    like($zero_clone, qr/\(<= \(out_crc> packet\[3:0\]\)\)/,
         'zero-count extract clone performs the low slice');
     like($zero_clone, qr/\(-> main_drive_3\)/,
         'zero-count extract clone advances like the original extract state');
@@ -1062,6 +1062,7 @@ ISF
 
     unlike($fsm, qr/HIGH|LOW|WIDTH/,
         'independent extract zero-bypass emits concrete slices without placeholders');
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_extract');
 };
 
 subtest 'top-level runtime scalar waits can zero-bypass pending samples into independent bank loads' => sub {

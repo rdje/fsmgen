@@ -700,20 +700,18 @@ original assemble successor:
 If the assembled target or any assembled part is `hold`, the form remains
 fail-closed for the same sample-and-consume timing reason.
 
-An independent extract state is scheduled with the same sample-carrying clone
-shape. **Current limitation:** its emitted `(slice ...)` expressions are
-rejected by the active carrier frontend. The following is the current
-intermediate output, not a qualified HDL example; successful scheduling alone
-does not establish usable extraction. The clone carries the pending sample
-and advances to the original extract successor:
+An independent extract state uses the same sample-carrying clone shape.
+Its bracketed scalar slices pass the active carrier frontend. The clone
+carries the pending sample, preserves the original field captures, and
+advances to the original extract successor:
 
 <!-- wait-fragment-07 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
-  (<= (out_header> (slice packet 15 12)))
-  (<= (out_payload> (slice packet 11 4)))
-  (<= (out_crc> (slice packet 3 0)))
+  (<= (out_header> packet[15:12]))
+  (<= (out_payload> packet[11:4]))
+  (<= (out_crc> packet[3:0]))
   (-> main_drive_3))
 ```
 
@@ -1226,8 +1224,9 @@ rerun the carrier comparison and public checks with:
 scripts/run_with_ram_guard.sh perl docs/audits/runtime-wait-book-20260927/verify.pl
 ```
 
-The audit checks the extract refusal explicitly; it does not count that
-intermediate fragment as successful HDL qualification.
+The audit requires successful strict replay for all retained carriers,
+including extraction. Independent extract timing and assembled-word round-trip
+checks are retained in `t/1932-isf-extract-runtime.t`.
 
 Runtime waits remain fail-closed when the selected zero-count successor cannot
 carry pending samples without changing timing, after predecessor states whose
