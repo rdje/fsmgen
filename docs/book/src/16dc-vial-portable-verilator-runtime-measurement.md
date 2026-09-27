@@ -1138,10 +1138,24 @@ parent-first, child-first and simultaneous group creation on the current host.
 An intentional session leader supplies a real EPERM despite its correct group;
 independent parent queries confirm that control's session identity. This does
 not establish that the failed T1972 child was a session leader. Its original
-PGID/SID were not retained. Native syscall context capture is being qualified
-before another observed original run; no containment repair is claimed. Completed investigation checklists
+PGID/SID were not retained. A diagnostic-only native witness is now qualified for one observed original
+run; no containment repair is claimed. Completed investigation checklists
 remain exactly recoverable through the task history manifest; active causal
 contracts and unresolved failures remain in the live task tree.
+
+The witness calls the original supervisor POSIX import once, retaining its
+arguments, return and immediate errno alongside native caller/target group and
+session queries. It restores errno after writing diagnostics. Qualification
+includes real session-leader EPERM, successful stale EPERM, both ordered call
+timings, exact cleanup and corrupt-record rejection. Sequential queries can
+perturb timing and do not provide an atomic kernel trace. The bounded procedure,
+complete capture and hash verifier live under
+`docs/audits/native-group-witness-20260927/`; from the repository root, inspect
+the saved qualification with:
+
+```sh
+python3 -B docs/audits/native-group-witness-20260927/verify.py
+```
 
 The updated full T1669 qualification still fails both Rust startup modes and
 legacy main-entry checks, while the new diagnostic controls and production HDL

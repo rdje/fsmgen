@@ -25,11 +25,19 @@ queried by its parent. Therefore correct group membership cannot replace a
 successful setpgid return. This control does not attribute the original failure.
 
 Owner HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10
-retains causal repair. Child .2 seals the native discriminator; .3.1 qualifies
-native syscall context capture before .3.2 observes one original T1972 attempt.
+retains causal repair. Child .2 seals the native discriminator; .3.1 seals the
+qualified native witness before .3.2 observes one original T1972 attempt.
 A passing original cannot close the failure. No host change, admission relaxation,
 original retry or production repair occurs in the native discriminator slice.
 
 Re-derivation uses the predeclared native matrix; falsification uses actual
 session-leader rejection, independent parent queries and corrupt-record controls;
 durability uses tracked source/result/manifest and the exact verifier.
+
+The diagnostic witness in `docs/audits/native-group-witness-20260927/` preserves
+the original POSIX call/return/immediate errno and qualifies native caller and
+target group/session queries. Actual session rejection, successful stale EPERM,
+ordered calls, exact cleanup and corrupt-record controls pass. Its snapshots
+are sequential and timing-sensitive, not an atomic kernel trace. Verify saved
+source/capture/postcheck hashes and outcomes with
+`python3 -B docs/audits/native-group-witness-20260927/verify.py`.

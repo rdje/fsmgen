@@ -1,0 +1,22 @@
+{
+  "build": {
+    "binary_sha256": "26ddbe05e515fe769bb2b8283b8b8ab32da69c1c119b6488dc67867fe86cd3ae",
+    "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n",
+    "perl_version": "5.34.1",
+    "schema": "fsmgen.native_group_witness_build.v1",
+    "source_sha256": "c4f4c3055ad9ce3e0866f01bc013f22b4f1fd27bffcdffbe0c590b0f6ec71069"
+  },
+  "platform": "Darwin 27.0.0, xnu-13432.1.9~1",
+  "schema": "fsmgen.native_group_witness_qualification.v1",
+  "scope": "diagnostic fixture witness only; original T1972 not rerun",
+  "sha256": {
+    "GroupWitness.pm": "b577d3a27c8c75423cdbfa5bb9c047c6dcd6e7237357370d076d8ea055528a66",
+    "build.py": "50a8f33a9dc0896734b29c373fd79cf75076f4b9f8fbc081221d19f83f3ce83b",
+    "context.c": "c4f4c3055ad9ce3e0866f01bc013f22b4f1fd27bffcdffbe0c590b0f6ec71069",
+    "postcheck.json": "b81a963743dd7006a121f9a8eb440232fbac1b19134e5c864dcec910002efee1",
+    "qualification.jsonl": "e53f9dc52da6e0db2fd30c4aaab54922b79e2a0cd5650e553703740d32cefb3b",
+    "qualify.t": "61b47badac2fc846fd4ed418ca26b09e89e6e4d3cf4d4718227d999174c42f32",
+    "verify.py": "f3f655c025e342103b57c048cfd0840c26d6141c953e1621e95c978272b480b4"
+  },
+  "source_revision": "1dc5e48cefda6896dd3b89e52eebf1e1ddcb8f3d"
+}

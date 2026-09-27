@@ -1832,14 +1832,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `children below`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify the bounded Darwin native setpgid witness.`
-  Acceptance: `Implement a diagnostic-only interposer outside production paths. Verify real return/errno and call identity against the standalone native control matrix, including session-leader EPERM and successful controls, before exposing an original test. Prove bounded complete record capture, missing/foreign/altered evidence rejection and exact cleanup; retain native compiler/source identities and document load/host limits. Commit before an observed original.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `Implement a diagnostic-only Perl call wrapper and native read-only context helper outside production paths, preserving the existing POSIX call without requiring environment-wide DYLD injection. Verify real return/errno and call identity against the standalone native control matrix, including session-leader EPERM and successful controls, before exposing an original test. Prove bounded complete record capture, missing/foreign/altered evidence rejection and exact cleanup; retain native compiler/source identities and document load/host limits. Commit before an observed original.`
+  Verification: `The diagnostic Perl wrapper calls the original POSIX import once and restores its immediate errno. A separately loaded read-only native helper captures sequential caller/target PID, PGID and SID queries without DYLD injection. The guarded qualification passes ordinary, parent-first, child-first, actual session-leader EPERM and successful stale-EPERM controls, while hostile diagnostic writes cannot change the native errno. Complete retained records join exact child identities, outcome and cleanup; independent PID/group postchecks are absent. The saved verifier checks producer/capture hashes and rejects missing, foreign, altered, truncated, duplicate-key or excess evidence. The first verifier wrongly required errno zero after success; the explicit stale-errno control corrected that oracle before qualification. No production behavior or original T1972 replay occurs. The sealed procedure records load/host/build and sequential-snapshot limits. Focused prove reports All tests successful; book, map and staged doctrines qualify publication.`
+  Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Observe one original guard qualification and select the causal repair or missing discriminator.`
   Acceptance: `Only after .3.1 qualification commits, run one unchanged T1972 with the qualified witness and original RAM/runtime supervision. Preserve the complete first result and all witness records; join each failing setpgid to exact before/after native identities and parent records. Settle every owned process and record capture/load/clock limitations. Do not convert a passing run into repair or claim a cause without a distinguishing observation. Commit the outcome and next repair/discriminator ownership.`
   Verification: `pending`
@@ -4501,7 +4501,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3.1` qualifies native syscall context capture after exact evidence rollover and due artifact cleanup. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3.2` observes one unchanged T1972 run with the committed qualified native context witness. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6995,3 +6995,29 @@ Re-derivation uses the named generated roots and ownership checks; falsification
 checks tracked/symlink/device exclusions and exact residue; durability is this
 owned scope and the latest cleanup record. Detailed removed-file lists are
 ignored operational data, not a permanent artifact-collection measurement.
+
+## Acceptance — native syscall witness qualification `.3.2.10.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'operation=setpgid'`
+  identifies a055d3a28a30b10d029c82ca5e4831da069ee108 as precise diagnostic
+  provenance. T1972 identifies native rejection but lacks the spent child's
+  group/session context. The separate native matrix proves a real session
+  leader can return EPERM with the correct group; it does not attribute T1972.
+- [x] **ADDRESSED (verified)** — The private witness qualifies native identity
+  queries and preserves the original call, arguments, return and immediate
+  errno. Actual session-leader rejection and successful stale-errno controls
+  protect the admission distinction. Ordered controls establish observable
+  parent/child timing. Complete evidence, source/build identity and postchecks
+  are sealed in `docs/audits/native-group-witness-20260927/manifest.json`.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl -It/lib
+  docs/audits/native-group-witness-20260927/qualify.t :: qualification_final`
+  reports `All tests successful`. The saved verifier independently checks
+  native/result joins, exact cleanup, hashes and hostile corruption controls.
+  Book build, Knowledge Map and staged doctrine gates qualify publication;
+  no production source or original test execution is part of this slice.
+
+Re-derivation is the bounded native-call fixture; falsification uses real EPERM,
+stale errno, independent native/Perl identities and altered capture controls;
+durability uses the complete tracked capture, postcheck, manifest and verifier.
+The snapshots are sequential and perturb timing; they are not a kernel trace.
+An original pass under `.3.2.10.3.2` cannot close the unresolved historical cause.
