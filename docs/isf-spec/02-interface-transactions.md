@@ -898,6 +898,21 @@ Current lowering:
 - The current implementation treats sampled names as inferred storage; richer
   wire-vs-register optimization is still future work.
 
+Explicit local registers use `(local NAME (width N))` at transaction top level.
+`NAME` is a scalar HDL identifier; `N` is a positive integer literal. Optional
+`(default V)` or `(init V)` initializes on entry, and `(reset V)` independently
+sets the hardware reset value. Each value must be a non-negative integer literal
+that fits the width. Options may be reordered, but each takes exactly one value:
+one width, at most one initialization across both synonyms, and at most one reset.
+Unknown, malformed and duplicate options fail closed; a typo never silently
+removes initialization. Actor interface collisions and already-declared
+transaction signal collisions also fail closed. Nested local declarations are
+unsupported. Zero-only child targets keep the established pruning boundary;
+local validation runs when their bodies are live. Separate physical ownership
+of same-named explicit locals in different direct transactions remains pending
+scope qualification. See [Local Variables](../book/src/13m-local-variables.md)
+for complete examples and the distinction from inferred sample destinations.
+
 ### 7.3 Await and Timeout
 
 ```lisp

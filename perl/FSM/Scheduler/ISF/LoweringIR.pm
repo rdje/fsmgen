@@ -12708,10 +12708,22 @@ sub _parse_local_decl {
     my $name = $cl->[1];
     confess "Transaction '$tn': '(local ...)' requires a name\n"
         unless defined($name) && !ref($name) && length($name);
+    confess "Transaction '$tn': local name '$name' must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($name);
     my ($width, $default, $reset);
+    my %seen;
     for my $sub (@{$cl}[2 .. $#$cl]) {
-        next unless ref($sub) eq 'ARRAY' && @$sub >= 2
-            && defined($sub->[0]) && !ref($sub->[0]);
+        confess "Transaction '$tn': local options require '(width N)', '(default V)', '(init V)' or '(reset V)'\n"
+            unless ref($sub) eq 'ARRAY' && @$sub == 2
+                && defined($sub->[0]) && !ref($sub->[0]) && defined($sub->[1]);
+        my $option = $sub->[0];
+        confess "Transaction '$tn': unsupported local option '$option'\n"
+            unless $option =~ /\A(?:width|default|init|reset)\z/;
+        my $role = $option eq 'default' || $option eq 'init' ? 'initialization' : $option;
+        confess "Transaction '$tn': duplicate local initialization option (default/init)\n"
+            if $role eq 'initialization' && $seen{$role};
+        confess "Transaction '$tn': duplicate local '$option' option\n"
+            if $seen{$role}++;
         $width   = $sub->[1] if $sub->[0] eq 'width';
         # `(default V)` and `(init V)` are accepted synonyms for the initial value.
         $default = $sub->[1] if $sub->[0] eq 'default' || $sub->[0] eq 'init';

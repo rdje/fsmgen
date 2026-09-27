@@ -8,8 +8,9 @@ is a declared register, and a `(let …)` is pure substitution.
 ## `(local NAME (width N))` — a declared internal register
 
 `(local NAME (width N))` declares an internal register `NAME` of an explicit width,
-private to the transaction and not exposed on the interface. The body reads and writes
-it like any signal.
+not exposed on the interface. The body reads and writes it like any signal.
+Separate physical identities for same-named explicit locals in different direct
+transactions remain under scope qualification; use distinct names for now.
 
 A plain `(set tmp expr)` to an undeclared name already works, but its width is only
 *inferred*. A `(local …)` **pins the width** — `NAME` is emitted in the module's
@@ -70,6 +71,21 @@ mode and active polarity determine when the reset takes effect.
 A `(local …)` fails closed if its name collides with an interface port, if the
 `(width N)` is missing or not a positive integer, or if a `(default V)` / `(init V)` /
 `(reset V)` is not a non-negative integer that fits in the width.
+
+`NAME` must be a scalar HDL identifier. Options may appear in any order, but
+there must be exactly one `(width N)`, at most one initialization option
+(`default` or `init`), and at most one `(reset V)`. Every option takes exactly
+one value. Unknown options, bare tokens, missing or extra values, and duplicate
+options are rejected. For example, `(local acc (width 8) (defualt 3))` is an
+error, as is `(local acc (width 8) (default 1) (init 2))`; neither silently
+chooses a value. `(local acc (reset 9) (init 3) (width 8))` is valid and keeps
+hardware reset separate from entry initialization.
+
+Locals are top-level transaction declarations. A nested `(local ...)` remains
+unsupported even inside a zero-count repeat. A transaction referenced only by
+pruned zero-count child activations retains the existing pruning boundary:
+its unreachable body is not lowered. Making that target live validates its
+local declarations.
 
 ## `(let NAME EXPR)` — named intermediate values
 

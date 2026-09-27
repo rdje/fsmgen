@@ -12,8 +12,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, transactions, ports, scope, storage, bindings, control-flow]
-evidence: t/1933-isf-caller-formal-binding-scope.t; perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1933-isf-caller-formal-binding-scope.t t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
+evidence: t/1935-isf-local-declaration-admission.t; t/1933-isf-caller-formal-binding-scope.t; perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1935-isf-local-declaration-admission.t t/1933-isf-caller-formal-binding-scope.t t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
 ---
 
 Generated children have separately qualified local port metadata under .49.1.
@@ -38,7 +38,13 @@ own their declarations and explicit spawn bindings exclude duplicate automatic
 same-name actor wiring. T1934 and the generated-shadow card qualify that path;
 T1933's retained equal-width reproduction now passes. These generated modules
 do not establish direct physical separation. Explicit-local/static context
-preparation remains under .3.1.2.
+preparation remains under .3.1.2. Its .1 child repairs explicit-local admission:
+_parse_local_decl requires exact known options, one width, one initialization
+across default/init and one reset, plus a scalar HDL identifier. Previously it
+ignored malformed options and let later duplicates overwrite earlier values.
+T1935 covers those failures, valid reorderings/reset/init, existing collisions,
+zero-pruned versus live targets, strict carriers and complete public reports.
+This does not establish separate physical ownership for explicit locals.
 
 The audit reproduction uses actor status width 8 and reset 19, a worker status
 input or output width 8, and a narrower input control width 4. Role/width merges

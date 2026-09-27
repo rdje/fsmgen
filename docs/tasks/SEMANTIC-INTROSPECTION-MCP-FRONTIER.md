@@ -1403,10 +1403,25 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Prepare validated explicit-local and resolved-static contexts before formal rewriting.`
   Acceptance: `Map and preserve source checks and static-zero pruning without relying on conflicting parent merges. Derive complete explicit-local and resolved-static contexts from existing source semantics, excluding inferred sample destinations from explicit-local shielding. Qualify malformed, pruned, parameter/constant/enum and context-isolation controls; commit before physical reservations.`
   Verification: `Top-level local declarations are parsed later in _build_transaction; _collect_transaction_local_signals includes inferred names and is not the resolver shielding set. Actor constants alone do not cover parameters or imported/static member references.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2.1`
+  Status: `done`
+  Goal: `Reject malformed explicit-local declarations before scope rewriting.`
+  Acceptance: `Qualify and repair source admission that silently ignores malformed local options or overwrites repeated options. Require a valid identifier and exact width/default/init/reset options, one width, one initialization and one reset; retain valid synonyms, reset/init independence, existing collision/value checks and static-zero pruning. Verify source reports and strict carriers; commit independently.`
+  Verification: `T1935 rejects malformed/duplicate options and invalid names, preserves reordered valid defaults/resets, collisions and zero-pruned targets, strict-replays carriers and compares complete native/API/newline queries. Lowering now validates exact options before recording values. Book/spec/card document admission and the remaining explicit-local physical scope limit. Related local/reset/for/procedure/formal-width and book fixtures pass; complete contexts remain .1.2.2.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2.2`
+  Status: `pending`
+  Goal: `Prepare complete local/static contexts and source checks after local grammar repair.`
+  Acceptance: `Finish the parent acceptance: derive only explicit locals, canonical parameter/constant/enum and package references; preserve source validation and static-zero pruning before any rewrite. Qualify malformed, pruned and context-isolation controls without relying on successful conflicting parent merges; commit before physical reservations.`
+  Verification: `Source validation is distributed between module admission and per-transaction lowering. Package Symbols exposes canonical scalar leaves and aggregate paths; inspect static parameter conversion and expression resolution before selecting a context provider. No production rewrite is connected.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.3`
@@ -2265,7 +2280,8 @@ book excerpts are synchronized. `.53` repairs and qualifies extract carrier
 replay and width declarations. `.49.2.2.3.1.1` repairs caller-formal binding
 validation and rejects unsafe direct pin aliases. `.3.1.3` repairs generated
 pin-shadow declarations and wiring. `.54` retains historical task prose through
-exact retrieval. Next `.3.1.2` prepares remaining source contexts. Local payload, shared-writer and
+exact retrieval. `.3.1.2.1` repairs malformed explicit-local admission; next
+`.3.1.2.2` prepares remaining source contexts. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -2344,3 +2360,38 @@ suffix, semantic closure, live working set and residue; those products overlap.
 The collection still has another large task file, so this local rollover does not
 claim collection-wide health. Current contracts remain in the book/cards/ADRs;
 DEVELOPMENT_NOTES needs no duplicate rationale. Source-context work resumes next.
+
+## Acceptance — explicit-local admission `.49.2.2.3.1.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — T1935 before.log reproduces successful
+  native `--check --json` and semantic admission of `(defualt 3)` in a local.
+  `_parse_local_decl` skipped non-list/unknown options, ignored trailing option
+  operands and overwrote repeated values. The detached clause resolver had a
+  stricter shape contract, so connecting it could mask this source defect.
+  The first test fixture's dotted invalid name was already rejected earlier by
+  enum-context validation; the final invalid-name control uses a hyphen.
+- [x] **ADDRESSED (verified)** — qualified-final.log passes T1935. Exact known
+  option pairs and defined values are required before assignment. Duplicate
+  default/init share one initialization slot; width/reset also reject repeats.
+  Valid reordered options retain separate hardware reset and entry values.
+  Carrier replay, source isolation, old collision/value checks, zero-only target
+  pruning and live-target validation pass. Complete check/semantic reports and
+  successful schedule reports agree across native/API/newline queries; failed
+  schedules retain the existing message-only adapter error contract.
+- [x] **NO REGRESSION** — qualified-final.log reports `All tests successful`.
+  Related local, reset, for/procedure expansion, formal-width and mdBook fixture
+  checks are retained in related-final.log; book-final.log builds the updated
+  chapters. The staged doctrine and commit-hook gates qualify the final index.
+
+Evidence is under `.artifacts/local-declaration-admission/`. before.log retains
+permissive behavior; qualified.log caught the parser's undefined missing-option
+value, now rejected explicitly. regression.log contains an incorrectly named
+T1926 path after passing the earlier tests, so it is not a suite pass.
+final-regression.log passes the related tests but exposes the new test's wrong
+schedule-error expectations; T1929 and the adapter's existing failure contract
+establish the corrected expectations, qualified in qualified-final.log.
+Re-derivation is native source admission and emitted declarations; falsification
+is typo/arity/duplicate/value/collision plus pruned/live controls; durability is
+T1935 and the synchronized spec/book/card. No runtime or independent explicit-
+local physical ownership claim is added. Rationale belongs here and in the
+scope card; DEVELOPMENT_NOTES needs no duplicate entry. Next is `.1.2.2`.
