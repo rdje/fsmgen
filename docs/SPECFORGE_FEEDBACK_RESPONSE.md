@@ -1196,11 +1196,11 @@ realized under `.39.2.2.2.3.1`; domain live storage reads are qualified under
 retain their edges alongside canonical activation handshakes, including shared
 names and independently clocked domains. Library parent interfaces are qualified
 under `.47`, including default-domain FIFO behavior and parent readback.
-Nondefault library system bindings are qualified under `.48`; child-await watchdog
-behavior remains separately owned before the metadata queue. Unqualified direct
-child writers are rejected pending the original-edge write and arbitration
-lanes, before watchdog and the metadata queue. The retained audit includes
-materialized FSM, HDL and the realized semantic input entry. Future metadata
+Nondefault library system bindings are qualified under `.48`. Ordinary/single-domain
+sole scalar child writes are qualified under `.39.2.2.3.1` with original-edge owner
+updates. Domain writers and bank/aggregate or competing writers remain owned by
+`.39.2.2.3.2` and `.39.2.2.4`, before watchdog and the metadata queue.
+The retained audit includes materialized FSM, HDL and the realized semantic input entry. Future metadata
 comparisons must use the corrected baseline; preserving this erroneous input
 would not satisfy the actor-storage contract.
 

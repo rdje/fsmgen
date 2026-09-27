@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-generated`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **11** uniquely owned question entries.
+> **4** facts · **14** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -9,11 +9,14 @@
 - q="can an ISF clock domain be named bus or another HDL keyword?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="can case-only ISF domain names overwrite exported files?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="can generated child transactions read actor storage in independent clock domains?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
+- q="does a child storage write wait until completion or add a register cycle?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="how are child named completion outputs combined with parent completion?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
 - q="how are domain and CDC child naming collisions resolved?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="how do agents join logical domains to generated children through semantic API and MCP?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="how do generated child storage reads preserve aggregate types?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
+- q="how does a generated child write the parent actor storage register?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="where do generated child storage resets and registers live?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
+- q="why are competing child or parent storage writers rejected?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="why did a generated child completing a named output fail to release its parent?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
 - q="why must delayed pulses be excluded from inferred shared datapaths?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
 
@@ -32,6 +35,13 @@ _Generated child named completion preserves authored pulses and activation hands
 
 - **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-generated-child-named-completion.md`](../../docs/knowledge/isf-generated-child-named-completion.md)
+
+### isf-generated-child-scalar-writes
+
+_Sole scalar child writers transfer data and enable on the original edge_
+
+- **date:** 2026-09-27 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-generated-child-scalar-writes.md`](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 
 ### isf-generated-domain-identities
 

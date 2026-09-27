@@ -303,10 +303,44 @@ Stopping or resetting a sibling domain does not advance or reset that state.
 Scalar aliases, packed aggregates and scalarized bank-element reads use the
 same internal routing. Direct reads from a sibling domain are rejected with a
 clock-domain ownership diagnostic.
-Direct generated-child writes to actor storage currently fail with a shared
-write-handoff diagnostic. Decision `0107` owns original-edge write transfer and
-the later competing-writer contract. Transaction-local variables and explicit
-port bindings retain their existing semantics. Generated-composition VHDL
+Ordinary and single-domain actors also support full-width scalar writes from
+one generated child instance per register. The child sends combinational write
+data and an enable while executing the authored assignment. The parent owns
+the register and applies the write on that same clock edge. No payload register,
+extra state, or wait until child completion is introduced. Later child reads
+observe the shared updated value. `set`, `update`, conditional writes and
+full-word read-modify-write expressions use this path. Scalar type aliases and
+field metadata remain attached to the owning storage.
+
+```lisp
+(actor shared_writer
+  (clock clk) (reset (rst_n async active_low))
+  (interface (input start) (input enable) (input data (width 8))
+    (output done) (output observed (width 8)))
+  (storage (var status (width 8) (reset 19)))
+  (rule observe 1 (observed status))
+  (transaction worker
+    (wait 2) (when enable (set status data)) (complete done))
+  (transaction parent (on start)
+    (spawn worker as writer)
+    (await_all done) (complete done)))
+```
+
+Here the rule sees the old `status` on the write edge and the new value on its
+next clock, as ordinary sequential logic does. When `enable` is false, the
+register holds its value. Reset remains owned by the parent. The handoff also
+works for a parameterized generated `do`; it does not change that call's
+completion-gated output binding semantics.
+
+The ownership check rejects a parent writer or another generated instance
+writing the same register, even if the author expects them to be exclusive.
+Multiple scalar targets are permitted when each has one writer. Bank writes,
+aggregate/member writes, and multi-domain generated-child writes remain
+unqualified and fail explicitly. Source operations that lower to a full-width
+scalar assignment retain that whole-register meaning; this does not introduce
+partial-write arbitration. Decision `0107` owns the later domain and competing
+writer contracts. Transaction-local variables and explicit port bindings retain
+their existing semantics. Generated-composition VHDL
 support remains limited to its documented composition shapes; separately
 generated parent/child VHDL modules can be explicitly wired by the caller.
 

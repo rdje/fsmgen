@@ -1623,7 +1623,9 @@ through live internal handoffs. Scalar aliases, packed aggregate roots/leaves,
 and scalarized bank entries retain their width/type and owner reset. Updates
 after activation remain visible; a snapshot requires explicit sampling. No
 storage or handoff becomes an authored public port. Sibling-domain storage
-reads and direct generated-child writes remain rejected.
+reads and multi-domain generated-child writes remain rejected. Ordinary and
+single-domain actors qualify sole scalar child writes using original-edge
+data/enable handoffs; competing writers and bank/aggregate writes remain refused.
 
 Reset-ownership decision: multi-domain source puts reset ownership inside each
 domain entry. Existing actor-level `(reset ...)` remains the single-domain

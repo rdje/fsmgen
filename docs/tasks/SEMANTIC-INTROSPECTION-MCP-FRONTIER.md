@@ -1157,10 +1157,26 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.48: bind libraries to selected domains`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement full-width scalar actor-storage writes from a sole generated-child writer with unchanged cycle timing.`
   Acceptance: `After read ownership, add per-instance write-data and write-enable handoffs feeding the owning parent/domain register on the original assignment edge. Child reads remain live; do not add payload-register latency or defer writes to child completion. Start with one statically owned full-width scalar writer and prove explicit/default resets, repeated activations, conditional writes and parent readback in independent simulation and API/MCP reports. Reject unqualified partial/aggregate/bank or competing writers with contextual diagnostics and explicit next ownership; update docs and commit.`
   Verification: `Retained writer must change parent readback from 19 to 37 through one shared register. Existing rule-only storage_port arbitration does not supply generated-child writer policy.`
+  Commit: `children below`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.1`
+  Status: `done`
+  Goal: `Transfer sole full-width scalar generated-child writes to the ordinary or single-domain owner on the original assignment edge.`
+  Acceptance: `Implement combinational child write-data/enable handoffs and owner-side register assignment for one statically owned child instance per scalar. Preserve live reads, exact scalar widths/types, reset values, guarded writes and original-edge visibility. Reject competing parent/child writers, unqualified partial/aggregate/bank writes and multi-domain writes until their owned lanes. Qualify the retained 19-to-37 defect, independent edge-by-edge parent observation, conditional/no-write paths, repeated/reset activations, exact public interfaces, scheduled replay and native/API/MCP reports. Update book/spec/facts and commit before domain qualification.`
+  Verification: `T1917 qualifies original-edge sole scalar writes, late-changing payloads, conditional holds, shared child readback, signed aliases, reset/default reset, field metadata, generated do, separate scalar targets, collisions, repeated calls and the original 19-to-37 defect. Strict replay, exact interfaces and full native/API/MCP reports pass. Parent/child contention, bank/aggregate and multi-domain writer boundaries remain explicit. T1904/T1916, binding regressions and book checks pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.1: route sole scalar child writes`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3.2`
+  Status: `pending`
+  Goal: `Qualify sole scalar generated-child writer handoffs inside independent clock domains.`
+  Acceptance: `After .3.1, remove only the temporary multi-domain writer boundary after independent clocks/reset isolation, original-edge owner reads, repeated activations, exact interfaces, scheduled replay and native/API/MCP reports pass. Preserve same-domain ownership and refusal of unowned crossings or competing writers; synchronize docs and commit before broader writer arbitration.`
+  Verification: `Pending .3.1 implementation.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.4`
@@ -1890,8 +1906,9 @@ child completion and excludes delayed events from inferred datapath sharing.
 Completed `.47` restores library parent interfaces and qualifies default-domain
 FIFO ownership/readbacks. Completed `.48` qualifies selected-domain library
 system bindings and empty-domain artifacts. Completed `.39.2.2.2.3.2` qualifies
-domain live storage reads and generated-do inherited-input wiring. Next
-`.39.2.2.3` implements sole full-width scalar writer handoffs. After those repairs,
+domain live storage reads and generated-do inherited-input wiring. Completed
+`.39.2.2.3.1` qualifies sole full-width scalar writer handoffs in ordinary/single-domain actors.
+Next `.39.2.2.3.2` qualifies independent-domain writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -5214,3 +5231,73 @@ repair: wire remaining same-name inputs for generated do while explicit child
 input bindings take precedence. Qualify an inverted explicit index binding as
 a falsifier, preserve spawn's existing binding-source contract, and retain all
 storage reads as owner handoffs.
+
+## Qualification — `.39.2.2.3.1`
+
+The public parsed storage descriptors distinguish a var's resolved bits type
+from record/list aggregates and bank signals carrying indexes. Preparation
+accepts only a full scalar target with a sequential <- assignment. Field metadata
+alone remains behavior-neutral; full-register writes must not be rejected just
+because fields are documented. Named scalar aliases keep their resolved type.
+
+prepare_child_storage_writes emits combinational data/enable outputs in the
+original state and guard. Existing read selection then removes actor-register
+copies and keeps any actual live reads. connect_child_storage_writes validates
+one generated instance per scalar and no parent writer, adds private owner
+inputs, and feeds an always-active owner DT assignment gated by the enable.
+CompositionTop explicitly links those ports and excludes them from legacy suffix
+matching. Multi-domain writer admission remains explicitly gated for .3.2.
+
+The original audit's exact writer source is retained in
+`.artifacts/child-scalar-writes/retained.isf` and replayed by T1917 from the tracked
+audit. The new edge source has two wait states, a conditional branch and the
+write state: changing data immediately before the write edge falsifies added
+payload-register latency. Parent sequential observation must change on the
+following edge. Initial runtime passes scalar, named signed alias, default reset,
+read-modify-write, one named domain and legacy public-input collision cases, plus
+the exact retained 19-to-37 defect and rejected competing writers.
+
+The expanded matrix adds metadata-only fields, generated do and distinct scalar
+targets. expanded-runtime.log passed those first additions but exposed an invalid
+testbench module-level assignment introduced by text substitution in the two-target
+case. The final test builds declarations, observation statements and reset/update
+statements separately before rendering the testbench; final-runtime.log owns the
+complete result. No compiler failure is attributed to the implementation from
+that malformed testbench.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The versioned
+  docs/audits/generated-child-storage-ownership-20260926.json records the original
+  accepted `--strict --check --json` source, separate parent/child status registers
+  and independent parent observed=19 instead of 37. Decision 0107 requires one
+  owner and original-edge transfer. The immediate predecessor explicitly refused
+  all generated child writes. retained/worker.fsm and retained/child_storage_writer.fsm
+  now show combinational child requests and the sole owner register assignment.
+- [x] **ADDRESSED (verified)** — final-runtime.log reports `All tests successful`
+  for T1917 with qualified Verilator enabled. The edge oracle, late payload,
+  conditional hold, owner and child readback, signed alias, reset/default reset,
+  repeated activation, metadata-only fields, generated do and distinct-target
+  cases pass. Exact retained source now produces 37 in the owner observation.
+  Direct scheduled replay, exact public pins and complete native/API/newline
+  check/semantic/schedule reports pass. Unsupported writer families and competing
+  owners are rejected with contextual diagnostics.
+- [x] **NO REGRESSION** — read-regression.log reports `All tests successful` for
+  T1904/T1916 with qualified Verilator and the local GHDL provider. Existing
+  live reads and domain isolation survive; writer negatives now assert the
+  specific ownership or qualification boundary. binding-regression.log reports
+  `All tests successful` for T1241/T1248/T1403. book.log passes T1376,
+  reference partitions and mdBook build. Logs are under
+  `.artifacts/child-scalar-writes/`; no visual book audit is claimed.
+
+Re-derivation uses parsed storage descriptors and emitted source/HDL, including
+one owner reset and source-backed full semantic/schedule reports. Falsification
+uses a late-changing payload and edge-specific parent observation, conditional
+holds, live child readback, repeated/reset calls, signed payloads, separate scalar
+targets, explicit writer conflicts and exact public pins. Durability is carried
+by T1917, retained audit bytes, read/domain/binding regressions, book/spec/facts
+and staged gates. No multi-domain writer, competing-writer arbitration, physical
+partial/aggregate/bank write or generated VHDL composition claim is made.
+
+The first staged gate exceeded the existing focused-doc total-line transition
+allowance by one line. Remove redundant watchdog/metadata-queue narration in the
+feedback response; preserve the scope and evidence. No hard ceiling or transition
+allowance increase is needed for that surface. The final gate owns signoff.

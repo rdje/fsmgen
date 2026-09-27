@@ -106,10 +106,15 @@ is not copied into generated children.
 The child retains authored transaction ports even when unused and omits unread
 inherited actor inputs. Generated do connects retained inherited inputs with
 explicit child bindings taking precedence; storage uses its separate owner
-handoff. Explicit ports and local variables keep their identities. Direct generated-child
-actor-storage writes are rejected until the original-edge write and arbitration
-contracts in decision `0107` are qualified; independent private copies are not
-a supported implementation of shared storage. Multi-domain generated-child
+handoff. Explicit ports and local variables keep their identities. In ordinary
+or single-domain actors, a sole generated child instance may write full-width
+scalar actor storage. Combinational child data/enable handoffs feed an owner-side
+sequential assignment on the original edge; no data register or completion delay
+is added. The owner retains reset and scalar type/field metadata. Conditional
+writes and full-word read-modify-write expressions keep their scheduled edges.
+Parent writers, multiple generated writer instances, bank/aggregate/member writes
+and multi-domain child writes remain rejected under the remaining decision `0107`
+qualification lanes. Independent private copies are not shared storage. Multi-domain generated-child
 reads use the same live handoff inside the owning domain. Domain validation
 still rejects reads of sibling-domain storage without a crossing primitive;
 no register, reset copy, public input, or implicit CDC is introduced.

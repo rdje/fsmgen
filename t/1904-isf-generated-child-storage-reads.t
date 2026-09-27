@@ -161,7 +161,9 @@ for my $write ('(set status 37)','(update status 37)','(set status[3:0] 7)','(st
         isnt($r->{exit_code},0,'writer rejected');
         my $diagnostic = $write =~ /\[/
             ? qr/set target must be a scalar HDL identifier or declared aggregate storage path/
-            : qr/generated child writes actor-owned storage/;
+            : $write =~ /slots/
+                ? qr/only full-width scalar sequential writes are qualified/
+                : qr/parent writer and generated child writer/;
         like($r->{stdout}.$r->{stderr}, $diagnostic, 'earliest authoritative writer diagnostic');
     };
 }

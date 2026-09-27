@@ -14,7 +14,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
     mark_atl_data_link_child_interface_ports
 );
 use FSM::Scheduler::ISF::ControlFlowEffects;
-use FSM::Scheduler::ISF::ChildStorageOwnership qw(select_child_storage_reads connect_child_storage_reads);
+use FSM::Scheduler::ISF::ChildStorageOwnership qw(prepare_child_storage_writes connect_child_storage_writes select_child_storage_reads connect_child_storage_reads);
 use FSM::Scheduler::ISF::ChildActivation qw(guard_child_activation);
 use FSM::Scheduler::ISF::LibraryPortOwnership qw(connect_library_output_readbacks);
 use FSM::Scheduler::ISF::ChildCompletionOutputs qw(prepare_child_completion_outputs connect_child_completion_outputs);
@@ -96,6 +96,13 @@ sub build_module($self, $actor) {
         $child_irs{$cname} = $self->_build_child_ir($ct, $actor, $cname);
     }
 
+    if ($domain_partition && ($domain_partition->{kind} // '') eq 'multi_domain') {
+        for my $cname (sort keys %generated_children) {
+            confess "Transaction '$cname': generated child actor-storage writes in a multi-domain actor require qualified domain writer handoffs\n"
+                if @{$child_irs{$cname}{actor_storage_writes} || []};
+        }
+    }
+
     my @library_instances;
     for my $use (@{$actor->{library_uses} || []}) {
         my $module = $use->{module};
@@ -125,7 +132,8 @@ sub build_module($self, $actor) {
     mark_atl_data_link_child_interface_ports(\%child_irs, \@atl_top_instances);
 
     my $parent_ir = $self->_build_parent_ir($actor, \%generated_children, \%pruned_static_zero_children);
-    my $connected = connect_child_storage_reads($parent_ir, \%child_irs);
+    my $connected = connect_child_storage_writes($parent_ir, \%child_irs);
+    $connected += connect_child_storage_reads($parent_ir, \%child_irs);
     $connected += connect_child_completion_outputs($parent_ir, \%child_irs);
     $connected += connect_library_output_readbacks($parent_ir, \@library_instances);
     _finalize_ir($parent_ir) if $connected;
@@ -202,6 +210,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     };
 
     prepare_child_completion_outputs($ir, $tx, $actor);
+    prepare_child_storage_writes($ir, $tx);
     select_child_storage_reads($ir, $tx, $actor);
     $ir->{explicit_interface_ports} = [map { { %$_ } } @{$ir->{ports}}];
 

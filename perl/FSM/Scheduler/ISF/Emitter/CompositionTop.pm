@@ -262,6 +262,10 @@ sub _emit_wiring_block {
             );
         }
 
+        for my $write (@{$spawn->{actor_storage_writes} || []}) {
+            push @links, _link($instance . ".$write->{child_port}", $actor_name . ".$write->{parent_port}");
+        }
+
         for my $output (@{$spawn->{actor_completion_outputs} || []}) {
             push @links, _link($instance . ".$output->{child_port}", $actor_name . ".$output->{parent_port}");
         }
@@ -271,8 +275,11 @@ sub _emit_wiring_block {
 
         my %completion_outputs = map { $_->{child_port} => 1 }
             @{$spawn->{actor_completion_outputs} || []};
+        my %write_outputs = map { $_->{child_port} => 1 }
+            @{$spawn->{actor_storage_writes} || []};
         for my $port_name (sort keys %$child_ports) {
             next if $port_name eq 'done';
+            next if $write_outputs{$port_name};
             # Actor completion routing has its own allocated input. An authored
             # public port with the old suffix is not an implicit second binding.
             next if $completion_outputs{$port_name};
