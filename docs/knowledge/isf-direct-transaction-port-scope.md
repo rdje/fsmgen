@@ -134,7 +134,10 @@ priority/resource, child ownership and library/ATL/domain composition remain
 .3.2.2.2.3.2.2.2. Parent point/default products are separately retained by
 .3.2.2.2.3.2.1; see [point products](isf-formal-point-products.md). Potential
 resource pointer declarations now use the shared actual producer; see the
-[resource product boundary](isf-formal-resource-products.md).
+[resource product boundary](isf-formal-resource-products.md). Independently
+built generated children now supply their actual module products; see
+[child products](isf-formal-child-products.md). Parent connection and final
+composition remain separate.
 
 The paired parser audit retains the former width-lookup defect: a wider formal
 was rejected and a narrower formal admitted an out-of-range bit against an

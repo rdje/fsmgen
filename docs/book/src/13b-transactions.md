@@ -66,9 +66,12 @@ points and activation labels keep their source identities after formal rewriting
 Potential round-robin pointer names, widths and roles also come from the same
 declaration producer used by normal arbitration. This collection does not prove
 that the resource users, members or grants are valid; actual lowering still
-checks those contracts and rejects physical collisions. The inventory is still
-partial: later priority/grant processing,
-child storage/completion connections, library/ATL and final domain composition
+checks those contracts and rejects physical collisions. Preparation now also
+retains independently built generated-child modules, including their start
+history, storage read/write interfaces, named completion outputs and point-active
+signals. Child public ports keep their own module scope through parent formal
+rewriting. The inventory is still partial: later priority/grant processing,
+parent storage/completion connections, library/ATL and final domain composition
 need coverage. It does not enable independent direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated

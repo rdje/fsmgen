@@ -1,17 +1,20 @@
 # Knowledge Map: `isf-formal`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **12** uniquely owned question entries.
+> **5** facts · **15** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are external activation ready ports and request states reserved before formal allocation?" · facts=[isf-formal-wiring-products](../../docs/knowledge/isf-formal-wiring-products.md)
+- q="are generated child activation and storage helper names retained before formal allocation?" · facts=[isf-formal-child-products](../../docs/knowledge/isf-formal-child-products.md)
 - q="are named point active signals reserved before direct formal allocation?" · facts=[isf-formal-point-products](../../docs/knowledge/isf-formal-point-products.md)
 - q="are round robin resource pointer names reserved during formal preparation?" · facts=[isf-formal-resource-products](../../docs/knowledge/isf-formal-resource-products.md)
 - q="can a raw formal shadow a round robin pointer before physical renaming?" · facts=[isf-formal-resource-products](../../docs/knowledge/isf-formal-resource-products.md)
+- q="can real child products be collected while raw parent formal declarations conflict?" · facts=[isf-formal-child-products](../../docs/knowledge/isf-formal-child-products.md)
 - q="do output defaults keep actor ownership when a formal shadows the output?" · facts=[isf-formal-point-products](../../docs/knowledge/isf-formal-point-products.md)
 - q="does formal preparation bypass production monitor collision checks?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
 - q="what does deferred_formal_collisions mean in prepared source?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
+- q="what does generated_child_products include in source preparation?" · facts=[isf-formal-child-products](../../docs/knowledge/isf-formal-child-products.md)
 - q="what does parent_point_products retain in formal source preparation?" · facts=[isf-formal-point-products](../../docs/knowledge/isf-formal-point-products.md)
 - q="what does parent_wiring_products contain in formal source preparation?" · facts=[isf-formal-wiring-products](../../docs/knowledge/isf-formal-wiring-products.md)
 - q="what does resource_signal_products prove about resource arbitration?" · facts=[isf-formal-resource-products](../../docs/knowledge/isf-formal-resource-products.md)
@@ -19,6 +22,13 @@
 - q="why did preparing a direct formal fail on a generated monitor name before allocation?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
 
 ## Facts
+
+### isf-formal-child-products
+
+_Independently built generated children supply actual module reservation products_
+
+- **date:** 2026-09-27 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-formal-child-products.md`](../../docs/knowledge/isf-formal-child-products.md)
 
 ### isf-formal-point-products
 

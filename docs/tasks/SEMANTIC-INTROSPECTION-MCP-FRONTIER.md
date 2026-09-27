@@ -1529,10 +1529,25 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify remaining priority/grant child ownership and final composition coverage.`
   Acceptance: `Complete actual priority/grant product coverage and child storage/completion, library/ATL and final domain realization names with stable source/physical projections. Preserve strict executable admission, distinct scopes and the final fail-closed completeness gate .3.2.2.3; split remaining producer boundaries as needed.`
   Verification: `Resource declaration products are separately owned by .1; grant/priority processing and child/final composition remain open.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.1`
+  Status: `active`
+  Goal: `Retain actual independently built generated transaction child products.`
+  Acceptance: `Collect canonical generated child IR from cloned child source, including activation history, child storage read/write interfaces, named completion and child point resolution, without requiring a conflicting parent merge. Compare actual production children, helper collision allocations, source/physical identity stability, reused/domain ownership, strict carriers and source isolation. Preserve child validation and statically pruned exclusions; parent connection and final composition names remain later obligations.`
+  Verification: `Implementation is qualified by T1945 and independent before/after child products; book fixtures/build pass. The running broader cohort has passed T1945/T1936/T1938/T1934; T1904/T1917/T1255 remain pending. Commit verified implementation with that explicit pending state, consume the cohort, then close this leaf before .2.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2`
+  Status: `pending`
+  Goal: `Close grant/priority parent-child connection and library ATL domain reservation coverage.`
+  Acceptance: `Qualify actual later grant/priority products, parent storage/completion connections and library/ATL/final domain realization names with stable source/physical projections. Retain strict executable admission, distinct scopes and complete gate .3.2.2.3; split remaining producer boundaries as needed.`
+  Verification: `Independent generated child products are owned by .1; parent connection, grant/priority and final composition phases remain uncovered.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -2880,3 +2895,55 @@ The executable validation order and report remain intact. Grant/priority product
 coverage, child ownership and library/ATL/domain composition remain .2 before
 the complete reservation gate. No automatic production rewriting or controller
 runtime support is claimed; DEVELOPMENT_NOTES needs no duplicate rationale.
+
+## Acceptance — generated child products `.49.2.2.3.2.2.2.3.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` records
+  the worker module and real actor storage read/write handoffs. before.json
+  independently extracts actual child counters/ports/states/DT names and finds
+  activation history, storage-write ports, synthesized entry and point-active
+  signal names absent from earlier products. Those names are produced by the
+  independent _build_child_ir stage before any parent declaration merge.
+- [x] **ADDRESSED (verified)** — _build_generated_transaction_children
+  now shares that exact production loop with source preparation, which calls it
+  on a separate actor clone and retains detached generated_child_products by
+  module. after.json has no missing names in the same child declaration probe.
+  T1945 compares complete actual child IR before/after direct formal projection,
+  spawn/generated-do/trigger placement, exact/case-folded public-port/helper
+  collisions, storage read/write and named completion metadata, child point
+  resolution, source/product isolation, reused definitions, real domain scopes
+  and strict carriers. Raw parent conflicts, child unknown-anchor/bank-write
+  refusals and zero-pruned bodies retain their canonical boundaries.
+- [x] **NO REGRESSION** — qualified.log reports `All tests successful`
+  for T1945, including complete actual child IR, physical/source scope and
+  strict-carrier controls. The in-flight regression.log already reports
+  T1945/T1936/T1938/T1934 successful; T1904/T1917/T1255 and the cohort summary
+  are still pending, not passed. book-fixtures.log passes T1376 and book.log
+  builds synchronized guidance. Commit this verified implementation with the
+  broader qualification explicitly pending; staged doctrine and hooks apply.
+
+Evidence is under `.artifacts/formal-child-products/`. Initial test.log contains
+an incorrect negative-control expectation for set-bit. The set-bit-probe.json
+reproduction and Parser::_desugar_bit_op establish the actual whole-word
+(set cell (| cell 1)) normalization and canonical full-width write handoff.
+T1945 now keeps this as a positive control and uses the existing unsupported
+bank-write boundary as its negative control; qualified.log passes. This is a
+test-assumption correction, not a production partial-writer repair.
+Re-derivation uses native schedule provenance and independent actual-child
+before/after products; falsification uses old inventory omissions, portable
+helper collisions, complete child equality, reused/domain scope, raw conflicts,
+invalid child source and mutation controls; durability is T1945, the child
+products card, book and this task. Child construction retains its real semantic
+finalization, but complete parent connection, grant/priority and library/ATL/domain
+namespace closure remain .2. Source preparation is not an executable parent,
+and no new controller/storage runtime qualification is claimed. Existing runtime
+and historical containment obligations remain separate. DEVELOPMENT_NOTES needs
+no duplicate rationale.
+
+Pending qualification recovery: the guarded prove command runs T1945, T1936,
+T1938, T1934, T1904, T1917 and T1255 in that order, with exact filenames in
+regression.log and this slice's reverify records. Preserve and consume
+`.artifacts/formal-child-products/regression.log`; if the owned process is lost,
+rerun that focused cohort under the RAM guard before closing this active leaf.
+This run does not opt into new Darwin HDL runtime qualification. The separate
+historical containment occurrence remains open under its existing owner.

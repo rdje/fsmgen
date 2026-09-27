@@ -99,12 +99,7 @@ sub build_module($self, $actor) {
     my %generated_children = %$generated;
     my %pruned_static_zero_children = %$pruned;
 
-    my %child_irs;
-    for my $cname (sort keys %generated_children) {
-        my ($ct) = grep { $_->{name} eq $cname } @{$actor->{transactions}};
-        next unless $ct;
-        $child_irs{$cname} = $self->_build_child_ir($ct, $actor, $cname);
-    }
+    my %child_irs = %{$self->_build_generated_transaction_children($actor, $generated)};
 
     my @library_instances;
     for my $use (@{$actor->{library_uses} || []}) {
@@ -150,6 +145,16 @@ sub build_module($self, $actor) {
     }
     $parent_ir->{domain_partition} = $domain_partition if $domain_partition;
     return $parent_ir;
+}
+
+sub _build_generated_transaction_children($self, $actor, $generated) {
+    my %children;
+    for my $name (sort keys %$generated) {
+        my ($tx) = grep { $_->{name} eq $name } @{$actor->{transactions}};
+        next unless $tx;
+        $children{$name} = $self->_build_child_ir($tx, $actor, $name);
+    }
+    return \%children;
 }
 
 # Prepare the detached lexical resolver's inputs from parsed source. Run the
@@ -234,6 +239,11 @@ sub prepare_formal_source($self, $source_actor) {
         parent_point_products => $self->_formal_parent_point_products(
             $actor, $generated, \%products, $wiring_products, \%points),
         resource_signal_products => _formal_resource_signal_products($actor),
+        # Real child construction has its own scope and does not require a
+        # parent declaration merge. Parent connections and library/ATL/domain
+        # realization remain separate. Isolate even producer-side source edits.
+        generated_child_products => _clone_isf_value(
+            $self->_build_generated_transaction_children(_clone_isf_value($actor), $generated)),
         actor_context => {
             locals => {}, static_symbols => { %$static },
             static_count_symbols => { %$static }, pruned_repeats => {},
