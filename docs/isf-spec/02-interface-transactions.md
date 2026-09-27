@@ -792,6 +792,9 @@ Rule `(trigger ...)` bindings support transaction input ports for local and
 generated targets. Each triggering rule emits a distinct payload source signal
 per bound input port, and the generated trigger fan-in DT routes that payload
 into a local transaction port under the matching per-rule trigger source.
+The generated trigger input handoff keeps the captured per-rule payload visible
+after the start pulse, so a child can read it after authored waits. It does not
+substitute zero once the pulse ends or add a second capture stage.
 Parameterized/generated rule triggers additionally support scalar output
 bindings: the generated trigger handoff DT copies the child output handoff to
 the actor target when that generated trigger instance's done-observer signal

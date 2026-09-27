@@ -122,9 +122,11 @@ still rejects reads of sibling-domain storage without a crossing primitive;
 no register, reset copy, public input, or implicit CDC is introduced.
 Aggregate scalar-leaf paths inherit their declared storage root's domain. An
 inferred transaction assignment target cannot redefine a declared actor signal's
-owner. Explicit transaction ports retain local domain precedence, although a
-port colliding with actor storage currently fails a separately owned role-merge
-boundary before child handoff selection.
+owner. Explicit transaction ports retain local domain precedence. Generated-child
+ports also own their width/type/role and reset behavior independently of
+same-named actor storage; inherited actor metadata is removed before local
+declarations merge. Direct/non-generated port collisions and explicit local
+declaration collisions remain separately owned qualification boundaries.
 
 Top-level generated-child instantiation is now shipped for the covered
 spawn and parameterized blocking `do` fixture set. Spawn and generated `do`

@@ -52,11 +52,11 @@ ISF
  is(lower_error($source.$body),'','same-domain paths and inferred local assignments lower');
 };
 
-subtest 'explicit transaction ports retain their domain while storage role collisions stay owned' => sub {
- like(lower_error($header.'(transaction worker (ports (input scalar (width 8)) (output result (width 8))) (set result scalar) (complete done)) (transaction parent (on start) (spawn worker as reader (bind (input scalar data) (output result seen))) (await_all done) (complete finished)))'),
-    qr/storage role for 'scalar' conflicts across transactions/, 'input collision reaches the separate .49 role boundary, not a domain violation');
- like(lower_error($header.'(transaction worker (ports (output scalar (width 8))) (set scalar data) (complete done)) (transaction parent (on start) (spawn worker as writer (bind (output scalar seen))) (await_all done) (complete finished)))'),
-    qr/storage role for 'scalar' conflicts across transactions/, 'output collision reaches the separate .49 role boundary, not a domain violation');
+subtest 'explicit generated transaction ports retain their local identity and domain' => sub {
+ is(lower_error($header.'(transaction worker (ports (input scalar (width 8)) (output result (width 8))) (set result scalar) (complete done)) (transaction parent (on start) (spawn worker as reader (bind (input scalar data) (output result seen))) (await_all done) (complete finished)))'),
+    '', 'explicit input shadows sibling-domain actor storage');
+ is(lower_error($header.'(transaction worker (ports (output scalar (width 8))) (set scalar data) (complete done)) (transaction parent (on start) (spawn worker as writer (bind (output scalar seen))) (await_all done) (complete finished)))'),
+    '', 'explicit output shadows sibling-domain actor storage');
  is(lower_error($header.'(transaction worker (ports (input aux_seen (width 8)) (output result (width 8))) (set result aux_seen) (complete done)) (transaction parent (on start) (spawn worker as reader (bind (input aux_seen data) (output result seen))) (await_all done) (complete finished)))'),
     '', 'explicit child port keeps its domain despite a sibling-domain actor port with the same name');
 };

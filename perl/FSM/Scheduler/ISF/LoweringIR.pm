@@ -150,20 +150,26 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         $self->_build_transaction($tx, $actor, 0, undef, \%point_bindings);
     _resolve_at_references($asserts, \%point_bindings, $states, $ctrs);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
-    # ISF-REGISTER-RESET-VALUES: storage var reset values (actor-level) + this transaction's
-    # local reset values (the 10th _build_transaction return).
+    my %local_ports = map { $_->{name} => 1 }
+        map { @{($tx->{ports} || {})->{$_} || []} } qw(inputs outputs);
+    # Actor metadata belongs to actor identities, not same-named child ports.
+    # Remove inherited entries before merging the transaction's own declarations.
     my %module_reset_values = (
         _declared_storage_reset_values($actor),
         _declared_interface_output_reset_values($actor),
-        %{$reset_values || {}},
     );
     my %module_signal_widths = _declared_storage_signal_widths($actor);
     my %module_storage_roles = _declared_storage_roles($actor);
     my %module_signal_type_refs = (
         _actor_interface_signal_type_refs($actor),
         _declared_storage_signal_type_refs($actor),
-        _transaction_port_signal_type_refs($tx),
     );
+    for my $map (\%module_reset_values, \%module_signal_widths,
+                 \%module_storage_roles, \%module_signal_type_refs) {
+        delete @{$map}{keys %local_ports};
+    }
+    $module_reset_values{$_} = $reset_values->{$_} for keys %{$reset_values || {}};
+    _merge_signal_type_refs(\%module_signal_type_refs, { _transaction_port_signal_type_refs($tx) });
     _merge_signal_widths(\%module_signal_widths, $signal_widths, $tx->{name});
     _merge_storage_roles(\%module_storage_roles, $storage_roles, $tx->{name});
 
@@ -1484,8 +1490,8 @@ sub _register_generated_activation_instance {
                 op          => '=',
                 source_kind => "${activation_kind}_input_binding",
             );
-            $assignment{guard} = { port => $s->{trigger_source} }
-                if $activation_kind eq 'trigger';
+            # Trigger payloads are already captured in a per-rule register.
+            # Keep that snapshot visible after the start pulse, including waits.
             push @port_binding_assignments, \%assignment;
         } else {
             _ensure_port(

@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49` (pending)
-- next_action: Repair explicit transaction-port/actor-storage role collisions under .49; then investigate the retained MCP response gap under .50.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2` (pending)
+- next_action: Audit and repair direct transaction-port scope under .49.2; explicit local declarations follow under .49.3, then the retained MCP response gap under .50.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

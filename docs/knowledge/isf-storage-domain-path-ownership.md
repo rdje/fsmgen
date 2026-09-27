@@ -8,7 +8,7 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, domains, storage, aggregates, ownership, diagnostics]
-evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1920-isf-storage-domain-path-ownership.t; t/1919-isf-generated-child-whole-aggregate-writes.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: t/1921-isf-child-port-storage-shadowing.t; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1920-isf-storage-domain-path-ownership.t; t/1919-isf-generated-child-whole-aggregate-writes.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1920-isf-storage-domain-path-ownership.t t/1247-isf-clock-domain-partition.t
 ---
 
@@ -27,11 +27,12 @@ explicit transaction ports are then applied with their authored local domain.
 T1920 checks transaction/rule/guard/nested path access, scalar/output writes,
 read-before-assignment, same-domain controls, inferred locals and enum members.
 
-An explicit transaction port sharing an actor-storage name still fails later in
-_merge_storage_roles, in both direct and generated workers. This separate scope
-defect is scheduled under .49 before partial writer work. T1920 asserts that
-specific boundary and proves local-domain precedence using an actor-output name
-without a storage-role collision; it does not claim storage shadowing works.
+Generated-child explicit ports sharing actor-storage names are qualified under
+.49.1: inherited actor metadata is removed before local declarations merge, and
+child storage cleanup preserves the local port metadata. T1920 now accepts those
+input/output controls; T1921 proves independent actor/local values at runtime.
+Direct/non-generated port collisions remain under .49.2; explicit local
+declarations require separate .49.3 qualification.
 
 Owner of the domain validation repair: .39.2.2.4.2 in
 SEMANTIC-INTROSPECTION-MCP-FRONTIER. Terminal await_all without a following

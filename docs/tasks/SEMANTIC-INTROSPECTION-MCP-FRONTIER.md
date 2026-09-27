@@ -1226,10 +1226,35 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49`
-  Status: `pending`
+  Status: `active`
   Goal: `Resolve explicit transaction-port shadowing against declared actor storage roles.`
   Acceptance: `Immediately after .39.2.2.4.2, reproduce the retained direct and generated input/output shadow cases through the public parser/lowerer and establish the supported local-port contract. Repair role merging or introduce a precise owned boundary if independently scoped storage is required, preserving generated-child explicit bindings. Prove runtime/interface/report behavior for the selected fix, update docs and commit before partial writer work.`
   Verification: `T1920's first direct worker controls fail in .artifacts/whole-aggregate-writes/domain-controls.log with storage role for scalar conflicts across transactions while merging worker at LoweringIR::_merge_storage_roles. The actor owns scalar in aux; a core transaction declares an explicit scalar input or output and reads/writes it. The diagnostic is a role-merge conflict, not a domain failure. Generated-worker controls in domain-controls-final.log fail at the same merge boundary before child storage selection. Both direct and generated local scope defects is owned here and must not be hidden by broad shadowing claims.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.1`
+  Status: `done`
+  Goal: `Keep explicit generated-child ports distinct from same-named actor storage.`
+  Acceptance: `Repair early child width/type/role/reset merging so explicit transaction inputs/outputs shadow actor storage only inside that child. Preserve the actual owner register and reset, avoid actor reset/type leakage into local ports, and keep explicit binding payload/timing unchanged. Qualify different widths/types, input/output reset independence, ordinary/domain generated activations, exact interfaces, replay and full native/API/MCP reports. Migrate T1920 generated controls, retain direct role conflicts under .49.2, update docs and commit.`
+  Verification: `T1921 qualifies independent local/actor widths, aliases, roles, resets and values for ordinary/domain input/output collisions, scalarized bank-entry names, spawn/generated do and generated rule triggers. The trigger controls exposed and now verify retained captured payloads beyond start pulses. T1920 generated collisions lower; T1241/T1243/T1248/T1431/T1918, full native/API/MCP reports, replay, exact interfaces and book checks pass.`
+  Documentation correction: `The opening transaction chapter still says all rule triggers bind inputs only, while docs/isf-spec/02-interface-transactions.md documents generated/parameterized trigger output handoffs. Correct that stale blanket statement in this port-scope slice; keep local rule-trigger output bindings explicitly refused.`
+  Trigger payload defect: `The new T1921 trigger cases complete but read zero after wait 2. Retained .artifacts/child-port-shadow/trigger-probe/trigger_input/source.isf, scheduled FSM, HDL and trigger-probe.log show a registered per-rule payload capture followed by a combinational child input guarded only by the trigger pulse. That guard returns the child input to zero before its authored read. Repair the small handoff defect in this leaf: drive the retained payload register continuously, preserve the existing capture/start/output timing, and qualify delayed reads after external input changes. This does not add request queuing or a new overlapping-trigger policy.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.1: isolate child port storage identities`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2`
+  Status: `pending`
+  Goal: `Resolve same-named direct transaction ports and actor storage without conflating their state.`
+  Acceptance: `After generated-child repair, audit direct/local-call and trigger binding contracts, then select collision-safe scoped identities or another explicit semantics-preserving lowering. Do not simply overwrite the actor role or let local assignments mutate the actor register. Preserve exact binding timing, source provenance, reset/type/width ownership and public interfaces. Split prerequisites if needed, prove independent runtime and full reports, sync docs and commit before .49.3 and .50.`
+  Verification: `The first T1920 direct input/output controls fail in _build_parent_ir::_merge_storage_roles. Direct transactions share the owner module, so the generated-child map filtering fix alone cannot separate their storage identities.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.3`
+  Status: `pending`
+  Goal: `Qualify explicit local declarations that share names with actor storage.`
+  Acceptance: `After port scope repair, reproduce generated and direct local storage names against actor storage, including differing widths and reset/default values. Parser bit-operation lookup gives explicit locals precedence, but child storage ownership currently excludes only explicit ports. Resolve scope consistently without mutating the actor register, qualify runtime/reset/report behavior and synchronize docs before .50.`
+  Verification: `Local declarations are separate transaction clauses, not entries in tx ports. _parse_local_decl checks interface and existing counter collisions but not actor storage. _build_signal_width_map and child actor-storage cleanup therefore require a dedicated local-name ownership audit; no current shadowing support is claimed from this code observation.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.50`
@@ -1964,8 +1989,10 @@ domain live storage reads and generated-do inherited-input wiring. Completed
 Completed `.39.2.2.3.2` qualifies independent-domain scalar writer handoffs.
 Completed `.39.2.2.4.1` splits broader writer contracts and repairs stale actor-storage
 documentation. Completed `.39.2.2.4.2` qualifies whole-aggregate writers and repairs
-declared-root domain validation. Next `.49` repairs explicit transaction-port/storage
-role collisions, then `.50` investigates the retained MCP response gap before
+declared-root domain validation. Completed `.49.1` isolates generated-child ports
+and retains trigger payloads after start pulses. Next `.49.2` resolves direct
+transaction-port scope and `.49.3` qualifies explicit locals; `.50` then investigates
+the retained MCP response gap before
 `.39.2.2.4.3` partial writers and the remaining writer leaves. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
@@ -5511,3 +5538,74 @@ The first aggregate staged gate caught the active-index row's line length above
 its existing focused-document transition allowance. Condense older qualification
 narration into the current owner/read/write summary while preserving the next
 repair sequence; no size allowance increase is needed. The final gate owns signoff.
+
+
+## Qualification notes — `.49.1`
+
+initial-controls.log passes the retained T1920 generated input/output collisions.
+initial-runtime.log passes ordinary, typed, independent-domain and scalarized
+bank-entry cases, but the first generated-do monitor incorrectly requires the
+public output to hold after completion. The retained generated-do-probe source,
+scheduled FSM and HDL show the actual (= child_seen ... <child_done) binding;
+generated-do-probe.log observes payload 7 during its completion-qualified window
+then zero at idle, as the published contract requires. Correct the monitor to
+observe the nonzero test payload during the valid window, retain the independent
+completion count and resets, and add generated rule-trigger snapshot controls.
+No implementation repair is attributed to that monitor failure.
+
+
+The implementation removes inherited actor metadata for explicit local port
+names before child width/role/type/reset merging. Local type references and
+transaction reset values are then applied; select_child_storage_reads skips
+those local identities when discarding actor-storage copies. The actual actor
+register retains its separate owner metadata. Explicit local declarations are
+not transaction ports and remain separately owned under .49.3; direct shared-
+module port naming remains under .49.2.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained domain-controls-final.log from
+  .artifacts/whole-aggregate-writes/ reports the storage role conflict
+  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5625 while merging the child. The
+  mismatch precedes child storage selection. Same-named local widths and types
+  also encounter inherited actor entries; child cleanup previously deleted
+  local role/reset metadata under those actor names.
+- [x] **ADDRESSED (verified)** — .artifacts/child-port-shadow/qualified-runtime.log
+  reports All tests successful for T1921 with qualified Verilator. Local payloads
+  and actor register values remain independent across exact widths/types, resets,
+  repeated calls, independent domains and scalarized bank-entry names. Spawn,
+  generated do and generated rule-trigger snapshot controls pass, with strict
+  replay, exact public interfaces and full native/API/newline reports. T1920's
+  retained generated controls now lower. The payload-handoff repair retains
+  captured values after the start pulse without adding a register stage.
+- [x] **NO REGRESSION** — .artifacts/child-port-shadow/regression-final.log
+  reports All tests successful for T1920/T1241/T1243/T1248/T1431/T1918 with qualified
+  Verilator. Existing domain writers, activation bindings, schedule reports and
+  trigger effect validation survive. book-final.log passes
+  T1376, exact reference partitions and mdBook build. No visual audit is claimed.
+
+Re-derivation uses module metadata before merging, declared storage versus local
+ports, explicit binding artifacts and complete source-backed reports.
+Falsification uses narrower local widths and independent signed aliases, actor
+reset values distinct from local defaults, repeated calls, owner updates,
+independent domain resets and live/snapshot payload timing. Durability uses
+T1921, migrated T1920, retained generated-do trace, existing binding/domain
+regressions, book/spec/facts and staged gates. Direct-port and local-declaration
+scope support remains explicitly outside this leaf's qualification.
+
+
+final-runtime.log passes the corrected generated-do cases but the added trigger
+snapshot cases fail: completion occurs while the payload result remains zero.
+The retained trigger-probe directory shows a per-rule payload register capturing
+under the authored rule guard, then a combinational child input guarded only by
+the delayed trigger source. trigger-probe.log confirms zero throughout the later
+child read/completion. Remove only the redundant handoff guard so the existing
+captured register remains visible; retain request capture, start pulse and output
+completion guards. T1248's scheduled-artifact assertions now require that retained
+snapshot connection. T1921 changes the external payload after trigger activation
+and reads after waits, with repeated/reset calls; this falsifies both a gated-zero
+handoff and an accidental live external-input connection. No request queue or
+new overlapping-trigger policy is introduced.
+
+The first .49.1 staged doctrine gate found two new book width claims without
+claim dispositions. Both describe the qualified local-port/actor example;
+explicit derived-gate records now link distinct metadata, runtime falsification
+and tracked watchers. No test result or implementation claim was changed.

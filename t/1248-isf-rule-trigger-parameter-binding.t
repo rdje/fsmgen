@@ -82,7 +82,7 @@ ISF
     unlike($parent_fsm, qr/worker_trigger_fanin/, 'parameterized trigger does not target the shared local trigger fan-in');
     like($parent_fsm, qr/\(-launch\s+<fire[\s\S]*\(<1 \(launch_worker_trigger_0 1\)\)[\s\S]*\(<- \(launch_worker_trigger_0_addr_payload req_addr\)\)/,
         'rule DT keeps delayed trigger source and sampled input payload source');
-    like($parent_fsm, qr/\(-launch_worker_trigger_0_trigger_handoff[\s\S]*\(= \(launch_worker_trigger_0_start> launch_worker_trigger_0\)\)[\s\S]*\(= \(launch_worker_trigger_0_addr> launch_worker_trigger_0_addr_payload\) <launch_worker_trigger_0\)/,
+    like($parent_fsm, qr/\(-launch_worker_trigger_0_trigger_handoff[\s\S]*\(= \(launch_worker_trigger_0_start> launch_worker_trigger_0\)\)[\s\S]*\(= \(launch_worker_trigger_0_addr> launch_worker_trigger_0_addr_payload\)\)/,
         'generated handoff DT drives child start and input under the trigger source');
     like($parent_fsm, qr/\(launch_worker_trigger_0_done_seen 1\)/, 'parent reads generated trigger done handoff for composition endpoint visibility');
     like($child_fsm, qr/\(\+params\s+\(WIDTH 8\)\s+\)/s, 'trigger child emits transaction parameter defaults');
@@ -239,7 +239,7 @@ ISF
 
     like($parent_fsm, qr/\(launch_worker_trigger_0_data 8\)/, 'parent exposes hidden output-binding handoff width');
     like($parent_fsm, qr/\(launch_worker_trigger_0_done_seen 1\)/, 'parent exposes generated trigger done observation');
-    like($parent_fsm, qr/\(-launch_worker_trigger_0_trigger_handoff[\s\S]*\(= \(launch_worker_trigger_0_start> launch_worker_trigger_0\)\)[\s\S]*\(= \(launch_worker_trigger_0_done_seen launch_worker_trigger_0_done\)\)[\s\S]*\(= \(launch_worker_trigger_0_addr> launch_worker_trigger_0_addr_payload\) <launch_worker_trigger_0\)[\s\S]*\(= \(data> launch_worker_trigger_0_data\) <launch_worker_trigger_0_done_seen\)/,
+    like($parent_fsm, qr/\(-launch_worker_trigger_0_trigger_handoff[\s\S]*\(= \(launch_worker_trigger_0_start> launch_worker_trigger_0\)\)[\s\S]*\(= \(launch_worker_trigger_0_done_seen launch_worker_trigger_0_done\)\)[\s\S]*\(= \(launch_worker_trigger_0_addr> launch_worker_trigger_0_addr_payload\)\)[\s\S]*\(= \(data> launch_worker_trigger_0_data\) <launch_worker_trigger_0_done_seen\)/,
         'generated trigger handoff copies output only under the done observation');
     like($top_fsm, qr/\(launch_worker_trigger_0\.data rule_trigger_output_binding\.launch_worker_trigger_0_data\)/,
         'generated top wires child output port to parent output handoff');

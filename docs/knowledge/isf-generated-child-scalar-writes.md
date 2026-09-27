@@ -8,7 +8,7 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, storage, writers, composition, ownership, reset, mcp]
-evidence: perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm; t/1917-isf-generated-child-scalar-writes.t; t/1918-isf-domain-child-scalar-writes.t; docs/audits/generated-child-storage-ownership-20260926.json; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md
+evidence: t/1921-isf-child-port-storage-shadowing.t; perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm; t/1917-isf-generated-child-scalar-writes.t; t/1918-isf-domain-child-scalar-writes.t; docs/audits/generated-child-storage-ownership-20260926.json; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md
 reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1917-isf-generated-child-scalar-writes.t t/1918-isf-domain-child-scalar-writes.t
 ---
 
@@ -28,8 +28,9 @@ connect_child_storage_writes requires one generated instance per written scalar
 and rejects any parent data writer. Multiple independent scalar targets are
 allowed. Generated names reserve authored/internal/state names; explicit write
 links bypass legacy output suffix matching so an unrelated public input cannot
-become a second writer endpoint. Explicit transaction ports keep their local domain, but names colliding with
-actor storage currently fail an earlier role merge; .49 owns that scope repair.
+become a second writer endpoint. Explicit generated-child ports keep their local domain and width/type/role,
+independent of same-named actor storage. .49.1 repairs early metadata merging;
+direct transaction-port and explicit local declaration scope remain separately owned.
 
 T1917 changes data immediately before the authored assignment edge and checks
 the parent's next-cycle sequential observation, conditional hold paths, child

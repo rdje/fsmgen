@@ -341,11 +341,35 @@ partial-write arbitration. Decision `0107` owns the remaining competing-writer
 and broader storage contracts. Transaction-local variables and explicit port bindings retain
 their existing semantics.
 
-An explicit transaction port that reuses an actor-storage name currently hits
-a storage-role merge conflict before child handoffs are selected. This known
-scope defect is tracked under `.49`; use distinct transaction-port names in the
-qualified surface. Explicit ports still retain their domain when an actor port
-has the same name.
+An explicit generated-child transaction port can reuse an actor-storage name.
+Inside that child, the explicit port supplies the name's width, type and role;
+it does not read or write the actor register or inherit its reset. The actor
+register remains with its original owner. Explicit bindings select the local
+port's payload, even when the actor register belongs to another domain:
+
+```lisp
+(actor local_port_name
+  (clock clk) (reset (rst_n async active_low))
+  (interface (input start) (input data (width 4))
+    (output child_seen (width 4)) (output owner_seen (width 8)) (output done))
+  (storage (var status (width 8) (reset 19)))
+  (rule observe 1 (owner_seen status))
+  (transaction worker
+    (ports (input status (width 4)) (output result (width 4)))
+    (wait 2) (set result status) (complete done))
+  (transaction parent (on start)
+    (spawn worker as reader (bind (input status data) (output result child_seen)))
+    (await_all done) (complete done)))
+```
+
+Here the child sees the bound 4-bit `data`, while `owner_seen` observes the
+separate 8-bit actor register. A local output likewise keeps its own reset
+behavior instead of inheriting the actor-storage reset. This scope rule also
+covers generated blocking `do` and generated rule-trigger ports, retaining their
+respective live/snapshot input and completion-qualified output timing.
+Direct/non-generated transaction-port collisions
+remain owned by `.49.2`; same-named explicit `(local ...)` declarations require
+the separate `.49.3` qualification. Explicit ports retain their own domain.
 
 A parent that ends directly in `await_all` can currently emit a missing
 continuation target. Follow the join with an explicit `(complete PORT)` in the

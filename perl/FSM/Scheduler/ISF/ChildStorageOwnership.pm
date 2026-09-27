@@ -192,10 +192,11 @@ sub select_child_storage_reads {
     for my $entry (@{$ir->{declared_storage} || []}) {
         for my $signal (@{$entry->{signals} || []}) {
             my $name = $signal->{name};
+            next if $local_ports{$name};
             delete $ir->{reset_values}{$name};
             delete $ir->{storage_roles}{$name};
-            delete $ir->{signal_widths}{$name} unless $local_ports{$name};
-            delete $ir->{signal_type_refs}{$name} unless $local_ports{$name} || $reads{$name};
+            delete $ir->{signal_widths}{$name};
+            delete $ir->{signal_type_refs}{$name} unless $reads{$name};
         }
     }
     $ir->{declared_storage} = [];

@@ -27,8 +27,11 @@ Input bindings may pass scalar actor-side signals, numeric/exact-width
 literals, or non-empty list expressions; output bindings still name scalar
 writable actor-side targets.
 
-Rule triggers bind transaction inputs only; output bindings require a caller
-that waits for completion, such as `do` or the shipped spawn handoff path.
+Local rule triggers bind transaction inputs only. Generated/parameterized rule
+triggers also support scalar output bindings through completion-qualified
+handoffs. `do` and the shipped spawn path retain their documented output timing.
+Generated trigger inputs retain the per-rule captured payload beyond the start
+pulse, so delayed child reads see that snapshot rather than a gated zero.
 
 Spawned child transactions and generated blocking `do` activations support
 per-instance parameter overrides through `(params ...)`.
