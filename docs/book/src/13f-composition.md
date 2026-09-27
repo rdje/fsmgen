@@ -117,6 +117,16 @@ same child transaction is already emitted as a generated child because of
 spawn or a parameterized `do`, a plain `do` to that child also uses a generated
 activation instance so the parent never targets a skipped local child body.
 
+Generated `do` also wires inherited actor inputs that the child actually reads.
+An explicit input binding takes precedence over the same-name inherited input;
+for example, binding a local bank index to `(! index)` does not also connect
+the actor's uninverted index. Storage reads use their owner handoffs separately.
+
+A retained plain local-`do` case with an untriggered callee before its caller
+currently leaves the caller unreachable in the emitted FSM. This scheduling
+defect is owned by `.32.1.3.3.1`; the generated-call qualification does not close
+local-call or independent-transaction reachability.
+
 ### Named completion outputs in generated children
 
 A generated worker may complete a public actor output other than `done`:
@@ -236,7 +246,7 @@ composition pipeline:
   Idle accepts the new assertion; a start pulse during execution is not queued.
 
 Actor `(storage ...)` reads in a separately generated transaction child use
-explicit internal top wiring from the owner in ordinary/single-domain actors. These
+explicit internal top wiring from the owning actor or clock-domain module. These
 are live reads: a parent update after spawn is visible when the child later
 reads it. Only referenced storage is carried into the child interface;
 storage resets and actual registers remain in the owner. Scalar, named scalar
@@ -265,8 +275,34 @@ For example, this worker reads the parent's later value, without a public
     (await_all done) (complete done)))
 ```
 
-Generated-child storage reads in multi-domain actors are explicitly rejected
-pending their composition qualification.
+The same live-read contract applies inside a declared clock domain. Storage and
+its reader must belong to the same domain; no handoff acts as an implicit CDC
+primitive. For example, `status` below belongs to nondefault domain `io`. A write
+after the worker starts is visible at its later read:
+
+```lisp
+(actor domain_live_read
+  (clock-domains
+    (domain idle (clock aux_clk) :default)
+    (domain io (clock clk) (reset (rst_n async active_low))))
+  (interface
+    (input start (domain io)) (input write (domain io))
+    (input data (width 8) (domain io))
+    (output observed (width 8) (domain io)) (output done (domain io)))
+  (storage (var status (width 8) (reset 19) (domain io)))
+  (rule update_status (domain io) write (status data))
+  (transaction worker (domain io) (ports (output result (width 8)))
+    (wait 4) (set result status) (complete done))
+  (transaction parent (domain io) (on start)
+    (spawn worker as reader (bind (output result observed)))
+    (await_all done) (complete done)))
+```
+
+Only the `io` owner stores and resets `status`; the worker receives a live input.
+Stopping or resetting a sibling domain does not advance or reset that state.
+Scalar aliases, packed aggregates and scalarized bank-element reads use the
+same internal routing. Direct reads from a sibling domain are rejected with a
+clock-domain ownership diagnostic.
 Direct generated-child writes to actor storage currently fail with a shared
 write-handoff diagnostic. Decision `0107` owns original-edge write transfer and
 the later competing-writer contract. Transaction-local variables and explicit

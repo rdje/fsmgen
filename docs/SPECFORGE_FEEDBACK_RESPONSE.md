@@ -1191,8 +1191,8 @@ handoffs under `.39.2.2.2.1`, with register/reset ownership retained in the owne
 Packed aggregate and scalar-leaf child reads are also qualified under
 `.39.2.2.2.2.2`, preserving type identity, live updates and repeated activation.
 Multi-domain generated transaction artifacts and flat internal wiring are now
-realized under `.39.2.2.2.3.1`; domain storage reads retain their qualification
-refusal. Named child completion is qualified under `.46`: authored pulses
+realized under `.39.2.2.2.3.1`; domain live storage reads are qualified under
+`.39.2.2.2.3.2`, with register/reset ownership and private handoffs preserved. Named child completion is qualified under `.46`: authored pulses
 retain their edges alongside canonical activation handshakes, including shared
 names and independently clocked domains. Library parent interfaces are qualified
 under `.47`, including default-domain FIFO behavior and parent readback.

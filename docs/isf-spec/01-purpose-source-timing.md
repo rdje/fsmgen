@@ -1744,7 +1744,9 @@ Selected lowering artifact strategy and current implementation status:
   internal. Their module/file and hardware-instance identities are allocated
   after domain/CDC identities with the existing case-insensitive policy.
   Transaction-local ports shadow same-name actor signals for domain validation.
-  Multi-domain child storage reads retain their separate qualification refusal.
+  Generated-child storage reads use live typed handoffs from that same domain's
+  owner, including scalar aliases, packed aggregates and scalarized bank entries.
+  Registers/resets remain only in the owner; sibling-domain reads remain rejected.
 - A generated top artifact named `<actor>_top.fsm` owns inter-module wiring.
   It instantiates domain modules, generated transaction children and explicit CDC child interfaces through
   `?rtl`/`?rtlif` entries. It must not hide clocked behavior in top-level DT

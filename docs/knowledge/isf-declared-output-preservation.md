@@ -37,7 +37,8 @@ qualifies unused/typed/read-only/written declarations, exact external ports,
 complete native/API/newline parity and independent reset/write/hold behavior.
 Ordinary/domain ISF storage is qualified by T1903; T1904 adds explicit child
 scalar/bank/record live reads and exact child ports; T1911 extends aggregate
-shape/runtime coverage. Multi-domain composition and writes remain owned.
+shape/runtime coverage. T1916 qualifies domain live reads and reset isolation;
+shared child writes remain owned separately.
 
 No hardware reset means no invented initialization. T1901/T1902 keep clock-only
 Verilog controls and explicit VHDL refusal: `VHDL::_split_if_else_assignments`

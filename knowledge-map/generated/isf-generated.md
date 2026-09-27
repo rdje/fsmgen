@@ -1,13 +1,14 @@
 # Knowledge Map: `isf-generated`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **10** uniquely owned question entries.
+> **3** facts · **11** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="can a child read a parent record or list after spawn?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
 - q="can an ISF clock domain be named bus or another HDL keyword?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="can case-only ISF domain names overwrite exported files?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
+- q="can generated child transactions read actor storage in independent clock domains?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
 - q="how are child named completion outputs combined with parent completion?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
 - q="how are domain and CDC child naming collisions resolved?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="how do agents join logical domains to generated children through semantic API and MCP?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)

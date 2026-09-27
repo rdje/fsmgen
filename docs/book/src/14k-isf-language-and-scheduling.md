@@ -1618,6 +1618,13 @@ not CDC primitives, so direct cross-domain reads, writes, triggers,
 activations, bindings, or multi-domain drive reuse fail closed until a legal
 crossing primitive ships.
 
+Generated transaction children can read their domain's actor-owned storage
+through live internal handoffs. Scalar aliases, packed aggregate roots/leaves,
+and scalarized bank entries retain their width/type and owner reset. Updates
+after activation remain visible; a snapshot requires explicit sampling. No
+storage or handoff becomes an authored public port. Sibling-domain storage
+reads and direct generated-child writes remain rejected.
+
 Reset-ownership decision: multi-domain source puts reset ownership inside each
 domain entry. Existing actor-level `(reset ...)` remains the single-domain
 shorthand, but it must not be mixed with `(clock-domains ...)`.

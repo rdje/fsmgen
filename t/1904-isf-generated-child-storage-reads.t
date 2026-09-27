@@ -81,7 +81,7 @@ for my $case (
     {name=>'bank', source=>$bank, reads=>['slots_1'], runtime=>1},
     {name=>'dynamic_bank', source=>$dynamic, reads=>[qw(slots_0 slots_1)]},
     {name=>'named', source=>$named, reads=>['status']},
-    {name=>'domains', source=>$domains, reject=>qr/generated child actor-storage reads in a multi-domain actor/},
+    {name=>'domains', source=>$domains, domains=>1, reads=>['status']},
     {name=>'collision', source=>$collision, reads=>['status']},
     {name=>'local', source=>$local, reads=>['status']},
     {name=>'literal', source=>$literal, reads=>[]},
@@ -98,34 +98,6 @@ for my $case (
         { local $SIG{__WARN__} = sub { push @warnings, @_ };
         $actor=FSM::Adapter::ISF->new->parse_file($source); }
         is_deeply(\@warnings, [], 'declaration parsing is warning-free');
-        if ($case->{reject}) {
-            for my $query (
-                ['check', [qw(--strict --check --json)], 'fsmgen_check'],
-                ['semantic', [qw(--strict --emit-semantic-json)], 'fsmgen_semantic_introspect'],
-                ['schedule', ['--emit-schedule-json'], 'fsmgen_schedule_preview'],
-            ) {
-                my ($kind, $flags, $tool) = @$query;
-                my $r = $capture->([$^X, 'bin/fsmgen', @$flags, $source], '');
-                isnt($r->{exit_code}, 0, "$kind refuses unqualified composition");
-                like($r->{stdout}.$r->{stderr}, $case->{reject}, "$kind exact scope diagnostic");
-                my $request = {jsonrpc => '2.0', id => 1, method => 'tools/call', params => {
-                    name => $tool, arguments => {source_id => File::Spec->abs2rel($source, $root)}}};
-                my $response = $api->handle_jsonrpc_request($request);
-                if ($kind eq 'schedule') {
-                    is_deeply($response->{error}, {
-                        code => -32000,
-                        message => 'FSMGen command failed without a matching public failure report',
-                    }, 'schedule preserves its existing non-report failure envelope');
-                    ok(!exists $response->{result}, 'failed schedule has no fabricated result');
-                } else {
-                    ok($response->{result}{isError}, "$kind API refuses the same boundary");
-                    like($json->encode($response), $case->{reject}, "$kind API preserves diagnostic");
-                }
-                my $wire = $capture->([$^X, 'bin/fsmgen-mcp', '--workspace-root', '.'], $json->encode($request)."\n");
-                is_deeply($json->decode($wire->{stdout}), $response, "$kind complete newline/API error parity");
-            }
-            return;
-        }
         my $scheduler=FSM::Scheduler::ISF->new;
         my $ir=$scheduler->{ir}->build_module($actor);
         is_deeply([map {$_->{name}} @{$ir->{children}{worker}{actor_storage_reads}}],$case->{reads},'exact semantic reads, not unrelated declarations');

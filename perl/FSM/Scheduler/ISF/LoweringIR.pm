@@ -95,12 +95,6 @@ sub build_module($self, $actor) {
         next unless $ct;
         $child_irs{$cname} = $self->_build_child_ir($ct, $actor, $cname);
     }
-    if ($domain_partition && ($domain_partition->{kind} // '') eq 'multi_domain') {
-        for my $cname (sort keys %generated_children) {
-            confess "Transaction '$cname': generated child actor-storage reads in a multi-domain actor require qualified domain child composition\n"
-                if @{$child_irs{$cname}{actor_storage_reads} || []};
-        }
-    }
 
     my @library_instances;
     for my $use (@{$actor->{library_uses} || []}) {

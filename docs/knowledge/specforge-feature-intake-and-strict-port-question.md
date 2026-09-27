@@ -43,8 +43,9 @@ word-access refusal; `.38.1` owns independent scalar metadata and `.38.2` option
 retained controls, direct FSM replay, exact interfaces, complete native/API/MCP parity, typed/unused
 storage, bank elements and independent reset/write/read/hold behavior. The audit keeps the original
 input/reset defect for falsification. T1904 qualifies ordinary/single-domain scalar/bank live reads,
-exact interfaces and repeat activation. Aggregate/multi-domain read composition remains refused and
-owned by .39.2.2.2.2/.3; shared writes by .39.2.2.3/.4. Resolved reset widths reject overflow without
+exact interfaces and repeat activation. T1911 qualifies aggregate shapes; T1916 qualifies
+independent-domain live reads and reset isolation. Shared writes remain owned by .39.2.2.3/.4.
+Resolved reset widths reject overflow without
 warnings. Explicit bindings and local state remain separate; decision `0107` owns shared semantics.
 
 Audits retain exact caller bytes/hashes, native reports, output-role controls and the independent

@@ -94,8 +94,8 @@ held generated-do requests whose delayed completion reaches the caller after
 the child returns to idle. No extra schedule state or accepted-request delay is
 introduced.
 
-Ordinary/single-domain actor storage has one owner across generated transaction
-modules. Referenced
+Actor storage has one owner across generated transaction modules, including
+its selected clock-domain module. Referenced
 storage is a live child input connected explicitly to a parent/domain output
 handoff; that handoff is internal to the generated top. Width/type identity is
 preserved for named scalar types, scalarized bank entries and packed record/list
@@ -104,12 +104,15 @@ remains in the owner. Aggregate child inputs and owner outputs are generated
 internal handoffs, not authored ISF aggregate ports. Unreferenced actor storage
 is not copied into generated children.
 The child retains authored transaction ports even when unused and omits unread
-inherited actor inputs. Explicit ports and local variables keep their identities. Direct generated-child
+inherited actor inputs. Generated do connects retained inherited inputs with
+explicit child bindings taking precedence; storage uses its separate owner
+handoff. Explicit ports and local variables keep their identities. Direct generated-child
 actor-storage writes are rejected until the original-edge write and arbitration
 contracts in decision `0107` are qualified; independent private copies are not
 a supported implementation of shared storage. Multi-domain generated-child
-storage reads fail closed pending their explicit qualification lane under
-`.39.2.2.2.3`.
+reads use the same live handoff inside the owning domain. Domain validation
+still rejects reads of sibling-domain storage without a crossing primitive;
+no register, reset copy, public input, or implicit CDC is introduced.
 
 Top-level generated-child instantiation is now shipped for the covered
 spawn and parameterized blocking `do` fixture set. Spawn and generated `do`

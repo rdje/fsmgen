@@ -687,9 +687,10 @@ For FSMGen, the analogs are:
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1`
   Status: `pending`
-  Goal: `Repair independently triggered transaction reachability in a domain containing an external activation callee.`
+  Goal: `Repair independently triggered transaction and plain local-call reachability.`
   Acceptance: `Use the retained event-after-activation failure and non-colliding control to establish the scheduling contract, including plain multi-transaction and existing dual-event controls; repair lost independent transaction reachability or fail closed at the documented unsupported boundary with accurate capability/report evidence. Prefer completing intended supported behavior. Require independent event and activation oracles, repeated/reset controls, public artifact/API/MCP qualification and synchronized book before closure.`
   Verification: `The generated core FSM starts at worker_idle_ext and returns there through worker_done_ready/worker_done_req. core_consume_idle_0 and its completion state form a separate unreachable component; an event-after-do source strict-checks but its independent oracle reports expected 1 observed 0. The naming slice owns exact retained source/HDL/control evidence. No successful mixed-transaction runtime claim is made.`
+  Additional reproduction: `The .39.2.2.2.3.2 plain-do control strict-admits but times out: core FSM starts at worker_wait_0 and cycles worker_done_11 back there, leaving parent_idle_0/parent_do_1 unreachable. Recreate from T1916 text by replacing spawn worker as reader with do worker and removing only the core parent await_all done; keep its remaining source and spawn HDL oracle. Retained source/materialized FSM/HDL are under .artifacts/domain-storage-reads/plain-do; spawn-do-runtime.log records the timeout. Repair here before metadata signoff; generated-do storage reads remain separately qualified.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.2`
@@ -1070,14 +1071,14 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.1: select shared child-storage ownership`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Route generated-child actor-storage reads from their owning parent/domain without external port leakage or copied state.`
   Findings: `T1904's parent-only wdata input exposes a child-interface mismatch: _build_child_ports declares it and CompositionTop wires w0.wdata, but implicit IAL0 inference drops the unused child input. Preserving all inherited inputs then exposed unconnected trigger and expression-binding inputs. The exact repair prunes unread inherited actor inputs from child IR and preserves authored transaction ports; wiring and emitted declarations must agree.`
   Additional defect: `The typed reset control emits an uninitialized-width warning in Parser::_parse_storage before named-type resolution. Guard the literal-width precheck with definedness here and verify resolved-width overflow still rejects; the required named-type path must not warn.`
   Reset falsifier: `Strict check unexpectedly accepted a named 8-bit type with reset 256. Root cause: the literal-width check runs before type/parameter resolution, and the later reset-fit check is conditional on fields. Own a resolved-storage reset-fit check here, with exact fit/overflow controls; typed or symbolic widths must not bypass reset validation.`
   Fixture migration: `T1241/T1248 payload-binding tests used actor-storage sinks written only inside generated children. The old tests silently relied on private copies, not shared-state runtime evidence. Preserve their payload checks using explicit transaction-local sinks and retain actor-writer refusal separately in T1904; original shared writes stay owned by .39.2.2.3/.4.`
   Acceptance: `Use the selected contract to classify lowered child storage reads and writes. Add explicit live read handoffs with collision-safe names, exact widths/types and per-instance top wiring; keep the actual register/reset in the parent/domain and exclude unrelated declarations from child hardware. Qualify scalar, typed, bank-element, guard/expression and repeated-activation reads, parent updates, multiple readers, domains, direct replay and complete native/API/MCP parity with independent runtime evidence. Until qualified writer lanes exist, refuse unsupported generated-child actor-storage writes explicitly rather than emit independent copies. Preserve explicit transaction port bindings and local child state. Update book/spec/facts and commit.`
-  Verification: `Immediate repair after .39.2.2.1; retained reader should observe the parent write with no public status input. Generic direct-composition top-input inference is a valid separate contract and must not be disabled globally.`
+  Verification: `Completed scalar/bank, aggregate and domain child-read leaves qualify live owner-held state, exact types/interfaces, reset ownership, repeated activation and complete native/API/MCP reports. T1904/T1911/T1916 pass; direct child writes remain explicitly owned by .39.2.2.3/.4.`
   Commit: `children below`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3`
 
@@ -1112,11 +1113,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.2: qualify aggregate child reads`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Materialize and wire generated transaction children inside multi-domain actors without exporting internal handshakes or storage handoffs.`
   Acceptance: `After .39.2.2.2.2, repair Scheduler::_emit_multi_domain_scheduled_artifacts and top wiring for generated child modules and per-domain activations, including children with no storage reads. Preserve module/instance collision policy and domain clocks/resets; qualify public interfaces, independent runtime and API/MCP reports before removing the multi-domain child-storage read refusal.`
-  Verification: `T1904's core+aux actor strict-admits but exports w0_done instead of keeping a closed generated child: the multi-domain artifact loop emits only each domain parent FSM and the outer top, omitting each domain IR's children and its generated composition. T1247's historical three-file inventory codifies that omission without child runtime evidence. This is owned for actual child composition, not waived by schedule domain metadata.`
-  Commit: `pending`
+  Verification: `Completed .3.1 realizes flat domain children and .3.2 qualifies live scalar/typed/aggregate/bank reads. T1912/T1916 pass independent clocks/reset/runtime and report checks. Generated-do inherited inputs are wired with explicit binding precedence. Local-call/independent transaction reachability and watchdog behavior remain separately owned.`
+  Commit: `children below`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.2`
 
@@ -1128,11 +1129,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.1: realize domain transaction children`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify shared storage reads through realized domain children.`
   Acceptance: `After .3.1 and prerequisite .46/.47/.48 repairs, qualify scalar/typed/aggregate/bank live reads with owner-only reset/state and independently clocked domains, repeated activation, exact interfaces and native/API/MCP parity. Remove only the multi-domain read refusal, keep unowned cross-domain access and direct writer refusals, synchronize documentation and commit.`
-  Verification: `Retained T1904 multi-domain reader must observe its domain owner, with no public storage or completion handoff leakage.`
-  Commit: `pending`
+  Verification: `T1916 qualifies spawn and parameterized generated do, whole/nested-leaf aggregate and dynamic bank reads, owner-only reset, post-activation updates, repeated activation and independent clock/reset isolation. Explicit inverted index binding wins over inherited input. T1904/T1911/T1912 and book checks pass. Plain local-do reachability is retained and scheduled under .32.1.3.3.1.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.2: qualify domain child storage reads`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.46`
   Status: `done`
@@ -1888,8 +1889,9 @@ children and prevents held-start reexecution. Completed `.46` preserves named
 child completion and excludes delayed events from inferred datapath sharing.
 Completed `.47` restores library parent interfaces and qualifies default-domain
 FIFO ownership/readbacks. Completed `.48` qualifies selected-domain library
-system bindings and empty-domain artifacts. Next `.39.2.2.2.3.2` qualifies
-domain storage reads before writer handoffs. After those repairs,
+system bindings and empty-domain artifacts. Completed `.39.2.2.2.3.2` qualifies
+domain live storage reads and generated-do inherited-input wiring. Next
+`.39.2.2.3` implements sole full-width scalar writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -5130,3 +5132,85 @@ bindings and incompatible inferred reset policies. Durability is carried by
 T1914/T1915, the existing library/domain/strict-boundary regressions, the public
 catalog/spec/book, Knowledge Map and staged gates. Explicit reset remapping
 preserves the reusable actor's policy; it does not override kind or polarity.
+
+## Qualification — `.39.2.2.2.3.2`
+
+Remove the explicit multi-domain storage-read qualification refusal only after
+the now-realized domain compositions preserve the existing owner-to-child
+handoff. No alternate state, reset copy or CDC path is introduced. The retained
+T1904 domain source becomes a positive interface/replay/report control. T1916
+exercises independent domains, explicit scalar resets, signed aliases, nested
+aggregate whole/leaf reads and dynamic scalarized bank reads, with writes after
+activation, repeated activations, both reset-isolation directions and a stopped
+owner clock. Direct child writers and sibling-domain reads remain refused.
+
+The first new source reused spawn identity reader across domains; actor-wide
+instance validation correctly rejected it. Use distinct reader/aux_reader names.
+before-valid.json then reproduces the actual qualification refusal through
+`bin/fsmgen --strict --check --json`. The first T1916 runtime passed all hardware
+observations but expected the phrase cross-domain instead of the existing
+clock-domain violation diagnostic; use the exact owned signal/domain message.
+final-runtime.log qualifies full and scalar-leaf aggregate reads. The final
+spawn/generated-do matrix is recorded in qualified-runtime.log; the earlier
+spawn-do-runtime.log exposes the local-call issue diagnosed below.
+
+A scoped Knowledge Map check found stale intake/output-preservation facts still
+calling aggregate/domain reads pending. This slice updates those facts and the
+aggregate/domain cards to the qualified boundary; writer ownership remains open.
+An exploratory read used a guessed ISF partition/book filename; use the discovered
+03-composition-rules.md and 13b-transactions.md paths. No missing-path output is
+counted as source inspection or validation.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `bin/fsmgen --strict --check --json`
+  in before-valid.json reports the exact generated child actor-storage
+  multi-domain qualification refusal. LoweringIR::build_module's admission
+  guard predates realized domain children. _multi_domain_realizations rebuilds
+  each domain IR through the existing ChildStorageOwnership handoffs; the
+  parent owns registers/resets and the child receives typed live inputs.
+- [x] **ADDRESSED (verified)** — qualified-runtime.log reports `All tests successful`
+  for T1916 with qualified Verilator enabled. Spawn and parameterized generated-do
+  cases pass independent live-update, scalar/typed/aggregate/bank observations,
+  repeated reset/activation and domain isolation. An inverted explicit index
+  binding proves precedence over inherited input wiring. Exact public interfaces,
+  strict scheduled replay and full native/API/newline reports pass. Storage
+  remains owned once; direct writers and sibling reads remain rejected.
+- [x] **NO REGRESSION** — read-regression.log reports `All tests successful` for
+  T1904/T1911 with qualified Verilator and the local GHDL provider. The original
+  T1904 domain source is now a positive case; existing writer refusals remain.
+  domain-regression.log reports `All tests successful` for T1912, retaining its
+  unrelated watchdog TODO rather than claiming that runtime. book-final.log
+  passes T1376, reference partitions and mdBook build. Logs are under
+  `.artifacts/domain-storage-reads/`; visual book audit remains blocked.
+
+Re-derivation uses emitted scheduled domain/child modules and full source-backed
+check, semantic and schedule reports. Falsification uses independent HDL values
+for post-activation updates, initial and repeated reset, whole/leaf aggregate
+packing, bank index changes, stopped-clock isolation and exact public pins;
+wrong-domain reads and direct writers remain negative controls. Durability is
+carried by T1904/T1911/T1916, the book examples, scoped facts and staged gates.
+No multi-domain VHDL or generated-child writer claim is made.
+
+The exploratory plain-do source is retained under
+`.artifacts/domain-storage-reads/plain-do/source.isf`. Unlike the selected
+parameterized generated-do path, it stays local. The source passed strict
+replay and report/interface parity but timed out without parent completion in
+spawn-do-runtime.log. The missing generated-child IR is expected for local do;
+the lost completion still requires ownership, not dismissal as a fixture issue.
+`.32.1.3.3.1` owns its local-call control-flow investigation before metadata
+signoff, alongside existing independent-transaction reachability. Diagnose the
+materialized call/return states now and retain the source for that repair; this
+storage-read lane must not claim plain local-do runtime qualification.
+
+Materialized plain-do core FSM starts in worker_wait_0 and loops worker_done_11
+back to worker_wait_0; parent_idle_0/parent_do_1 are unreachable in that single
+state machine. This is the already-owned independent local-transaction entry
+problem, now with a retained call-site reproduction under `.32.1.3.3.1`.
+
+The parameterized generated-do probe exposes a smaller blocking wiring defect:
+generated-do-runtime.log reports unconnected core__parent_worker_do_0.index.
+CompositionTop wires inherited actor inputs only for spawn, even though the
+generated do child retains the read index input. `.39.2.2.2.3.2` owns the immediate
+repair: wire remaining same-name inputs for generated do while explicit child
+input bindings take precedence. Qualify an inverted explicit index binding as
+a falsifier, preserve spawn's existing binding-source contract, and retain all
+storage reads as owner handoffs.

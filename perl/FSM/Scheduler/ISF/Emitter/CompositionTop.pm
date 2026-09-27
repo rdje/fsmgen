@@ -232,6 +232,21 @@ sub _emit_wiring_block {
             }
         }
 
+        if ($activation_kind eq 'do') {
+            # A generated do can read inherited actor inputs as well as its
+            # explicitly bound payload. Explicit child bindings win by name.
+            my %bound_inputs = map { $_->{child_port} => 1 }
+                grep { ($_->{role} || '') eq 'input' } @{$spawn->{port_bindings} || []};
+            for my $port (@{$ir->{ports} || []}) {
+                next if $port->{isf_handoff} || $port->{direction} ne 'input';
+                my $name = $port->{name};
+                next if $name eq 'start' || $bound_inputs{$name};
+                next unless exists($child_ports->{$name})
+                    && ($child_ports->{$name}{direction} || '') eq 'input';
+                push @links, _link($name, $instance . ".$name");
+            }
+        }
+
         for my $binding (@{$spawn->{port_bindings} || []}) {
             next unless ($binding->{role} || '') eq 'input';
             push @links, _link(
