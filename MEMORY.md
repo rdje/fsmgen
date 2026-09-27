@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.48` (pending)
-- next_action: Repair library clock/reset binding for nondefault domains under .48 before domain storage-read and writer qualification.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.2` (pending)
+- next_action: Qualify generated-child live storage reads in independent domains under .39.2.2.2.3.2 before shared writer handoffs.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

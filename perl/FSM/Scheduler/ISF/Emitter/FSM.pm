@@ -47,8 +47,10 @@ sub emit($self, $ir) {
         push @lines, $self->_emit_interface($ir);
         push @lines, '';
     }
-    push @lines, $self->_emit_size($ir);
-    push @lines, '';
+    if (my $size_block = $self->_emit_size($ir)) {
+        push @lines, $size_block;
+        push @lines, '';
+    }
     if (my $assert_block = $self->_emit_asserts($ir)) {
         push @lines, $assert_block;
         push @lines, '';
@@ -160,7 +162,6 @@ sub _emit_interface($self, $ir) {
 
 sub _emit_size($self, $ir) {
     my @l;
-    push @l, '  (+size';
     my %declared;
     my $type_refs = $ir->{signal_type_refs} || {};
     # ISF-REGISTER-RESET-VALUES: an opt-in per-register hardware reset value, emitted in
@@ -186,8 +187,8 @@ sub _emit_size($self, $ir) {
         my $width_token = $type_refs->{$name} // $ctrs->{$name};
         push @l, "    ($name $width_token" . _reset_suffix($resets, $name) . ")";
     }
-    push @l, '  )';
-    return join("\n", @l);
+    return '' unless @l;
+    return join("\n", '  (+size', @l, '  )');
 }
 
 # `(reset V)` marker for a register with an opt-in hardware reset value; empty otherwise.

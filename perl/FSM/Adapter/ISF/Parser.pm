@@ -7955,6 +7955,7 @@ sub _resolve_library_use_param_value($self, $actor, $value, $context) {
 }
 
 sub _validate_use_bindings($self, $actor, $use, $exported_actor) {
+    my $timing = _library_use_timing($actor, $use);
     my @bindings = @{$use->{bindings} || []};
     my %parent_ports = (
         map({ $_->{name} => { %$_, direction => 'input' } } @{$actor->{interface}{inputs} || []}),
@@ -7977,7 +7978,12 @@ sub _validate_use_bindings($self, $actor, $use, $exported_actor) {
             my $parent_name = $binding->{parent_name};
             confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' $role binding references unknown parent signal '$parent_name'\n"
                 unless exists $parent_ports{$parent_name}
-                    || (defined($actor->{$role}) && $actor->{$role} && (($role eq 'clock' ? $actor->{clock} : $actor->{reset}{name}) // '') eq $parent_name);
+                    || _actor_has_system_signal($actor, $role, $parent_name);
+            if (ref($actor->{clock_domains}) eq 'HASH') {
+                my $expected = $role eq 'clock' ? $timing->{clock} : ($timing->{reset} || {})->{name};
+                confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' $role binding must use domain '$timing->{name}' $role signal '" . ($expected // '<none>') . "', not '$parent_name'\n"
+                    unless defined($expected) && $parent_name eq $expected;
+            }
             push @resolved, { %$binding, width => 1 };
             next;
         }
@@ -8004,7 +8010,7 @@ sub _validate_use_bindings($self, $actor, $use, $exported_actor) {
     }
 
     if (defined($exported_actor->{clock}) && length($exported_actor->{clock}) && !$seen_clock_reset{clock}) {
-        my $implicit_clock = _implicit_same_name_clock_binding($actor, $exported_actor);
+        my $implicit_clock = _implicit_same_name_clock_binding($timing, $exported_actor);
         if ($implicit_clock) {
             push @resolved, $implicit_clock;
             $seen_clock_reset{clock} = 1;
@@ -8015,7 +8021,7 @@ sub _validate_use_bindings($self, $actor, $use, $exported_actor) {
     confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' has a clock binding but actor '$exported_actor->{actor_name}' has no clock\n"
         if (!defined($exported_actor->{clock}) || !length($exported_actor->{clock})) && $seen_clock_reset{clock};
     if ($exported_actor->{reset} && !$seen_clock_reset{reset}) {
-        my $implicit_reset = _implicit_same_name_reset_binding($actor, $exported_actor);
+        my $implicit_reset = _implicit_same_name_reset_binding($timing, $exported_actor);
         if ($implicit_reset) {
             push @resolved, $implicit_reset;
             $seen_clock_reset{reset} = 1;
@@ -8032,6 +8038,29 @@ sub _validate_use_bindings($self, $actor, $use, $exported_actor) {
     }
 
     return \@resolved;
+}
+
+# Library resolution precedes annotation materialization. Resolve the use's
+# explicit/default domain here without borrowing the default compatibility pins.
+sub _library_use_timing {
+    my ($actor, $use) = @_;
+    return $actor unless ref($actor->{clock_domains}) eq 'HASH';
+    my $name = $use->{domain} // $actor->{clock_domains}{default};
+    my ($domain) = grep { $_->{name} eq $name } @{$actor->{clock_domains}{domains} || []};
+    confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' uses unknown clock domain '$name'\n"
+        unless $domain;
+    return $domain;
+}
+
+sub _actor_has_system_signal {
+    my ($actor, $role, $name) = @_;
+    my @timings = ref($actor->{clock_domains}) eq 'HASH'
+        ? @{$actor->{clock_domains}{domains} || []} : ($actor);
+    for my $timing (@timings) {
+        my $signal = $role eq 'clock' ? $timing->{clock} : ($timing->{reset} || {})->{name};
+        return 1 if defined($signal) && $signal eq $name;
+    }
+    return 0;
 }
 
 sub _implicit_same_name_clock_binding {

@@ -749,11 +749,14 @@ When the library actor's authored clock or reset name differs from the
 importing actor's parent signal, the generated top emits explicit Lisp-ish
 composition links such as `(clk rx.lib_clk)` or `(rst_n rx.lib_rst_n)`. The
 reusable actor still owns reset kind and polarity; the binding remaps only the
-signal identity seen at the parent boundary. A library use in the default
-domain is realized alongside independently clocked sibling domains. Nondefault
-library system bindings still fail validation because the binder recognizes
-only the compatibility/default clock/reset; that boundary remains unqualified.
-No crossing is inferred from a library binding.
+signal identity seen at the parent boundary. In an actor with clock domains,
+a library use selects its explicit `(domain NAME)` or the actor's default
+domain. Explicit system bindings must name that domain's declared clock/reset;
+sibling system signals and ordinary interface inputs cannot replace them.
+Inference uses the selected domain's clock name and reset name/kind/polarity,
+including reset absence. A reset-policy mismatch requires an explicit binding,
+which still preserves the library's policy. Independent domain clocks/resets
+and nondefault library instances are qualified; no crossing is inferred.
 Successful schedule reports expose a bounded top-level `library_uses` array
 with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `scheduled_fsm`, `parameters`, and `bindings`. Parameter summaries expose

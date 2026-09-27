@@ -6,8 +6,8 @@
 ## Questions → facts
 
 - q="how can importing actor logic read a library-owned output?" · facts=[isf-library-parent-port-ownership](../../docs/knowledge/isf-library-parent-port-ownership.md)
+- q="how do nondefault-domain library clock and reset bindings work?" · facts=[isf-library-parent-port-ownership](../../docs/knowledge/isf-library-parent-port-ownership.md)
 - q="why did the FIFO library top leave the parent data_in port unconnected?" · facts=[isf-library-parent-port-ownership](../../docs/knowledge/isf-library-parent-port-ownership.md)
-- q="why does a nondefault-domain library clock binding fail?" · facts=[isf-library-parent-port-ownership](../../docs/knowledge/isf-library-parent-port-ownership.md)
 
 ## Facts
 

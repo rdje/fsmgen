@@ -1196,7 +1196,7 @@ refusal. Named child completion is qualified under `.46`: authored pulses
 retain their edges alongside canonical activation handshakes, including shared
 names and independently clocked domains. Library parent interfaces are qualified
 under `.47`, including default-domain FIFO behavior and parent readback.
-Nondefault library system bindings are owned by `.48`; child-await watchdog
+Nondefault library system bindings are qualified under `.48`; child-await watchdog
 behavior remains separately owned before the metadata queue. Unqualified direct
 child writers are rejected pending the original-edge write and arbitration
 lanes, before watchdog and the metadata queue. The retained audit includes

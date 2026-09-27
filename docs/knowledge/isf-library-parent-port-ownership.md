@@ -4,12 +4,12 @@ title: ISF library-owned outputs feed explicit parent readback inputs
 answers:
   - "why did the FIFO library top leave the parent data_in port unconnected?"
   - "how can importing actor logic read a library-owned output?"
-  - "why does a nondefault-domain library clock binding fail?"
+  - "how do nondefault-domain library clock and reset bindings work?"
 date: 2026-09-27
 status: current
 tags: [isf, libraries, interfaces, ownership, fifo, domains, mcp]
-evidence: perl/FSM/Scheduler/ISF/LibraryPortOwnership.pm; perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm; t/1238-isf-fifo-library-hdl-generation.t; t/1914-isf-library-parent-interfaces.t; t/1912-isf-multi-domain-generated-children.t; docs/ISF_LIBRARY_CATALOG.md
-reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1238-isf-fifo-library-hdl-generation.t t/1914-isf-library-parent-interfaces.t
+evidence: perl/FSM/Scheduler/ISF/LibraryPortOwnership.pm; perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm; t/1238-isf-fifo-library-hdl-generation.t; t/1914-isf-library-parent-interfaces.t; t/1912-isf-multi-domain-generated-children.t; t/1915-isf-library-domain-system-bindings.t; perl/FSM/Adapter/ISF/Parser.pm; docs/ISF_LIBRARY_CATALOG.md
+reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1238-isf-fifo-library-hdl-generation.t t/1914-isf-library-parent-interfaces.t t/1915-isf-library-domain-system-bindings.t
 ---
 
 Explicit interface preservation kept all importing-actor inputs and outputs in
@@ -28,15 +28,26 @@ duplicate library drivers are refused rather than silently arbitrated.
 
 The unchanged FIFO HDL regression and T1914 independently qualify queue data,
 full/empty/hold behavior, pointer-wrap stimulus, parent sampling, typed aliases,
-reset and default-domain isolation, exact public pins, scheduled replay and
+reset and selected-domain isolation, exact public pins, scheduled replay and
 complete native/API/newline reports. The FIFO fixture resets outputs low and
 sets empty on the first idle clock after release; its parent samples the prior
 cycle's output through ordinary sequential rule semantics.
 
-Nondefault library system bindings remain a separate reproduced defect:
-Parser::_validate_use_bindings sees only parent interface names and the default
-compatibility clock/reset. A use selecting domain fifo still rejects that
-domain's clk as unknown. T1914 retains the source and exact refusal; `.48` is
-scheduled immediately after this repair. No implicit crossing is qualified.
+Library resolution precedes domain-annotation materialization. The parser now
+selects the use's explicit/default domain directly for system binding validation
+and inference; the actor's compatibility clock/reset describes only its default
+domain. Explicit multidomain bindings must use the selected domain's declared
+clock/reset. Inferred resets require equal name, kind and polarity; explicit
+remapping preserves the reusable actor's policy. No reset is borrowed from a
+sibling domain, and ordinary input pins cannot replace declared domain signals.
+Legacy actors without clock-domains keep their published explicit binding rules.
+An unused domain emits no empty +size section, so its generated FSM remains
+strict-admissible; authored legacy empty sections are still rejected.
 
-Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.47; nondefault follow-up .48.
+T1914 applies its FIFO scoreboard, strict replay, exact interfaces and report
+parity to default/nondefault, inferred and renamed library pins. T1915 checks
+reset kind/polarity and absence with independent HDL observations, rejects
+wrong-domain bindings and incompatible inference, and preserves explicit policy
+remapping. No implicit domain crossing is introduced.
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.47 and .48.

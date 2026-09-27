@@ -40,7 +40,7 @@ exact output-pulse counts, reused definitions, parameter handoffs, CDC ready
 input routing, collisions, reset absence, scheduled replay and full public
 report parity. Its child-await runtime TODO belongs to `.32.1.3.3.3`; named
 completion timing is qualified by `.46`; default-domain library parent interfaces
-are qualified by `.47`. Nondefault library system bindings remain owned by `.48`.
+are qualified by `.47`. Nondefault library system bindings are qualified by `.48`.
 Domain storage-read admission remains owned by `.39.2.2.2.3.2`.
 This fact does not qualify those pending behaviors or multi-domain VHDL.
 

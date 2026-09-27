@@ -1149,11 +1149,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.47: restore library parent interfaces`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.48`
-  Status: `pending`
+  Status: `done`
   Goal: `Validate library system bindings against their owning clock domain.`
   Acceptance: `Immediately after .47 and before domain storage-read qualification, repair explicit and inferred clock/reset binding for library uses in nondefault domains. Use the retained T1914 source, preserve same-domain reset kind/polarity and published remapping behavior, reject unowned system crossings, and qualify independent clocks/resets, FIFO runtime, exact interfaces and native/API/MCP reports. Synchronize the catalog, spec/book/facts and commit.`
-  Verification: `The public source in .artifacts/library-parent-interfaces/nondefault/source.isf declares clk in domain fifo and selects that domain for u_fifo. Strict check reports: clock binding references unknown parent signal clk. Parser::_validate_use_bindings recognizes parent interface signals and only the compatibility/default actor clock/reset, omitting the selected domain system contract. T1914 retains the exact refusal until repaired.`
-  Commit: `pending`
+  Verification: `T1914/T1915 qualify nondefault explicit/inferred/remapped FIFO bindings, independent clock/reset behavior, reset kind/polarity and absence, exact interfaces, strict scheduled replay and full native/API/MCP reports. The original retained empty-default-domain source now passes after omitting an empty generated size section. Wrong-domain system bindings and incompatible inference fail precisely. Library/catalog and strict-boundary regressions, executable book example and book build pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.48: bind libraries to selected domains`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3`
   Status: `pending`
@@ -1887,8 +1887,9 @@ aggregate live reads. Completed `.39.2.2.2.3.1` realizes domain transaction
 children and prevents held-start reexecution. Completed `.46` preserves named
 child completion and excludes delayed events from inferred datapath sharing.
 Completed `.47` restores library parent interfaces and qualifies default-domain
-FIFO ownership/readbacks. Next `.48` repairs nondefault library system bindings,
-then `.39.2.2.2.3.2` qualifies domain storage reads before writer handoffs. After those repairs,
+FIFO ownership/readbacks. Completed `.48` qualifies selected-domain library
+system bindings and empty-domain artifacts. Next `.39.2.2.2.3.2` qualifies
+domain storage reads before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -5070,3 +5071,62 @@ regressions, catalog/public contract, spec/book, fact card, this task and the
 staged doctrine gate. No visual mdBook audit or nondefault binding runtime is
 claimed. Live-document budget/inventory refresh belongs to this leaf without
 raising hard ceilings.
+
+## Qualification — `.48`
+
+The exact retained nondefault source now passes library binding, then strict
+check rejects the empty default-domain module with FSMGEN_STRICT_EMPTY_SIZE_SECTION:
+the compiler emits a legacy empty (+size) section. Reproduce with
+`bin/fsmgen --strict --check --json .artifacts/library-parent-interfaces/nondefault/source.isf`;
+see `.artifacts/library-domain-bindings/retained-check.json`. The new book example
+also has an idle domain. This is generated-source behavior, not an authored
+legacy section. `.48` owns the blocking repair and regression before signoff.
+
+The empty size section came from Emitter::FSM::_emit_size unconditionally
+opening/closing a block with no declared ports, storage or counters. It now
+omits only an empty size block; authored legacy empty sections retain their
+strict rejection. T1914 includes the original empty-default-domain FIFO shape
+through scheduled replay, complete reports and independent queue simulation.
+retained-check-final.json accepts the exact retained source with no diagnostics.
+
+The first new T1914 attempt placed :default outside its generated domain form;
+corrected the fixture constructor before the green fifo-runtime.log run. The
+first T1915 run passed its HDL policy cases but omitted parse_source's required
+source label in the final parser checks; reset-final.log uses the public API
+correctly. An initial focused command guessed a nonexistent T1247 filename;
+focused-final.log uses the discovered clock-domain-partition test and completes.
+The first book wrapper fed Python over stdin, which the background RAM wrapper
+did not consume; its empty log is not validation. book-final.log runs a saved
+repository-local script, checks the new example, passes the book-example and
+partition audits, and builds the book. No visual audit is claimed.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `bin/fsmgen --strict --check --json`
+  originally rejects the retained nondefault FIFO clock because
+  Parser::_validate_use_bindings uses only the default compatibility timing.
+  The selected use domain is available before annotation materialization and
+  now supplies explicit binding validation and same-name inference. After that
+  repair, retained-check.json exposes the generated idle-domain empty +size;
+  Emitter::FSM now omits that empty block. Evidence is under
+  `.artifacts/library-domain-bindings/` and the original `.47` reproducer.
+- [x] **ADDRESSED (verified)** — final-runtime.log reports `All tests successful`
+  for T1914/T1915 with qualified Verilator enabled. Independent FIFO/reset
+  observations, selected-domain inference/remapping, stopped-clock/reset
+  isolation, exact interfaces and complete native/API/newline reports pass.
+  Wrong-domain bindings and incompatible inferred reset policies are refused.
+  retained-check-final.json accepts the original source; strict scheduled
+  replay covers the original empty-domain shape in T1914.
+- [x] **NO REGRESSION** — reset-final.log reports `All tests successful` for
+  T1915/T1230/T1231. focused-final.log reports `All tests successful` for
+  T1237/T1238/T1239/T1247/T1321/T1281/T1352/T297. empty-size-regression.log
+  reports `All tests successful` for T251/T50/T1890, preserving authored
+  legacy refusal and multiclock wiring. book-final.log checks the new example,
+  passes T1376 and reference partitions, and builds the book; book-handoff.log
+  builds the final prose. Logs are under `.artifacts/library-domain-bindings/`.
+
+Re-derivation uses the exact retained source, structured strict checks and
+emitted system/size declarations. Falsification uses the independent FIFO queue
+model, reset edge/polarity observations, stopped-clock isolation, wrong-domain
+bindings and incompatible inferred reset policies. Durability is carried by
+T1914/T1915, the existing library/domain/strict-boundary regressions, the public
+catalog/spec/book, Knowledge Map and staged gates. Explicit reset remapping
+preserves the reusable actor's policy; it does not override kind or polarity.

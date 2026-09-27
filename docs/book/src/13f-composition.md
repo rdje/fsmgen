@@ -490,10 +490,49 @@ library-owned output is rejected. Put output reset/default behavior on the
 library actor itself. Binding another library instance to the same output is
 also rejected; the compiler does not choose an arbitration policy.
 
-Library instances in the default domain can coexist with independently clocked
-sibling domains. Selecting a nondefault domain currently fails system-binding
-validation because the binder does not recognize its clock/reset names. This
-boundary does not authorize implicit clock-domain crossings.
+A library instance selects its timing with `(domain NAME)`; omission selects
+the importing actor's default domain. Its clock/reset bindings must name that
+domain's declared system signals. A sibling clock or an ordinary input cannot
+substitute for the selected domain clock. No crossing is inferred.
+
+Same-name clock bindings can be omitted. Reset inference also requires the
+library's reset kind and polarity to match the selected domain, as well as its
+name. Explicit reset binding remaps the signal name and preserves the library's
+own reset kind and polarity; it does not override them. A domain without a reset
+does not inherit the default domain's reset.
+
+For example, this FIFO runs in `io` while the default domain uses `aux_clk`.
+The same sibling library search path as the preceding example applies. The
+system bindings are inferred from `io`, not from the default domain:
+
+```text
+(actor domain_fifo
+  (clock-domains
+    (domain idle (clock aux_clk) :default)
+    (domain io (clock clk) (reset (rst_n async active_low))))
+  (interface
+    (input write_req (domain io))
+    (input read_req (domain io))
+    (input data_in (width 8) (domain io))
+    (output full (domain io))
+    (output empty (domain io))
+    (output data_out (width 8) (domain io)))
+  (imports (library common.fifo as fifo_lib))
+  (use fifo_lib.fifo as u_fifo (domain io)
+    (bind
+      (input write_req write_req)
+      (input read_req read_req)
+      (input data_in data_in)
+      (output full full)
+      (output empty empty)
+      (output data_out data_out))))
+```
+
+If the library instead declares `lib_clk` and `lib_rst_n`, add `(clock clk)`
+and `(reset rst_n)` inside `bind`. The generated top links those signals to the
+renamed child pins. Selecting `(clock aux_clk)` for this `io` instance fails
+with a domain-specific diagnostic. A reset declared by a sibling domain is
+likewise rejected.
 
 The first shipped reusable definition is
 [isf/common/fifo.isf](../../isf/common/fifo.isf), exported as

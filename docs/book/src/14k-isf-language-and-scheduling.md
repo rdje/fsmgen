@@ -1393,9 +1393,12 @@ real source path. Standalone transaction/drive exports, symbolic parameter
 values beyond the shipped actor-local scalar static-dimension defaults,
 derived parameter expressions, transaction-port dimensions beyond positive
 literals, actor-local scalar parameters, and scalar type aliases,
-memory-array backend emission, nested library imports, and nondefault-domain
-library system bindings are still deferred. Default-domain library instances
-can coexist with independently clocked sibling domains. Importing-actor inputs
+memory-array backend emission and nested library imports are still deferred.
+Library instances can select nondefault domains alongside independently clocked
+siblings. Explicit bindings use the selected domain's declared clock/reset;
+same-name inference uses that domain, with matching reset kind and polarity.
+Explicit remapping preserves the reusable actor's reset policy. No crossing is
+inferred, and a reset-free domain does not borrow the default domain's reset. Importing-actor inputs
 remain connected, and library-owned outputs feed direct parent readback inputs
 without changing public directions or inventing parent writers.
 

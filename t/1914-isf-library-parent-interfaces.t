@@ -33,11 +33,31 @@ my $domains = $observed;
 $domains =~ s/\(clock clk\)\s*\(reset \(rst_n async active_low\)\)/(clock-domains (domain core (clock clk) (reset (rst_n async active_low)) :default) (domain aux (clock aux_clk) (reset (aux_rst_n async active_low))))/;
 $domains =~ s/\(interface/(interface (input aux_data (width 8) (domain aux)) (output aux_seen (width 8) (domain aux))/;
 $domains =~ s/\)\s*\z/ (rule aux_tick (domain aux) 1 (aux_seen aux_data)))/;
-for my $case (['fifo',$base,0,0],['observed',$observed,1,0],['typed',$typed,1,0],['domains',$domains,1,1]) {
+my $nondefault = $domains;
+$nondefault =~ s/ :default//;
+$nondefault =~ s/(\(domain aux \(clock aux_clk\) \(reset \(aux_rst_n async active_low\)\))\)/$1 :default)/;
+# All former implicit/default FIFO-domain annotations must now be explicit.
+$nondefault =~ s/(\((?:input|output) \w+(?: \(width \d+\))?)\)/$1 (domain core))/g;
+$nondefault =~ s/\(use fifo_lib.fifo as u_fifo/(use fifo_lib.fifo as u_fifo (domain core)/;
+$nondefault =~ s/\(rule observe 1/(rule observe (domain core) 1/;
+my $inferred = $nondefault;
+$inferred =~ s/\(clock clk\)\s*\(reset rst_n\)//;
+my $empty_default = $base;
+$empty_default =~ s/\(clock clk\)\s*\(reset \(rst_n async active_low\)\)/(clock-domains (domain idle (clock aux_clk) (reset (aux_rst_n async active_low)) :default) (domain fifo (clock clk) (reset (rst_n async active_low))))/;
+$empty_default =~ s/(\((?:input|output) \w+(?: \(width \d+\))?)\)/$1 (domain fifo))/g;
+$empty_default =~ s/\(use fifo_lib.fifo as u_fifo/(use fifo_lib.fifo as u_fifo (domain fifo)/;
+for my $case (['fifo',$base,0,0],['observed',$observed,1,0],['typed',$typed,1,0],['domains',$domains,1,1],['nondefault',$nondefault,1,1],['inferred',$inferred,1,1],['remapped',$nondefault,1,1],['empty-default',$empty_default,0,1]) {
     my ($name,$text,$observe,$domain) = @$case;
     subtest $name => sub {
         my $dir = "$work/$name"; mkdir $dir or die $!; mkdir "$dir/common" or die $!;
         copy('isf/common/fifo.isf', "$dir/common/fifo.isf") or die $!;
+        if ($name eq 'remapped') {
+            open my $fh, '<', "$dir/common/fifo.isf" or die $!;
+            my $library = do { local $/; <$fh> }; close $fh;
+            $library =~ s/\bclk\b/lib_clk/g;
+            $library =~ s/\brst_n\b/lib_rst_n/g;
+            write_file("$dir/common/fifo.isf", $library);
+        }
         my $source = write_file("$dir/source.isf", $text);
         my $actor = FSM::Adapter::ISF->new->parse_file($source);
         my $scheduler = FSM::Scheduler::ISF->new;
@@ -71,10 +91,10 @@ for my $case (['fifo',$base,0,0],['observed',$observed,1,0],['typed',$typed,1,0]
             is_deeply($json->decode($wire->{stdout}),$response,"complete newline/API $kind parity");
             if ($kind eq 'semantic') {
                 is_deeply([sort map {$_->{name}} @{$report->{semantic}{signal_analysis}{inputs}}],
-                    [sort qw(clk rst_n write_req read_req data_in), ($domain ? qw(aux_clk aux_rst_n aux_data) : ())],
+                    [sort qw(clk rst_n write_req read_req data_in), ($domain ? qw(aux_clk aux_rst_n) : ()), ($domain && $name ne 'empty-default' ? 'aux_data' : ())],
                     'exact public inputs with no readback leakage');
                 is_deeply([sort map {$_->{name}} @{$report->{semantic}{signal_analysis}{outputs}}],
-                    [sort qw(full empty data_out), ($observe ? qw(echo seen saw_empty saw_full) : ()), ($domain ? 'aux_seen' : ())],
+                    [sort qw(full empty data_out), ($observe ? qw(echo seen saw_empty saw_full) : ()), ($domain && $name ne 'empty-default' ? 'aux_seen' : ())],
                     'exact authored public outputs');
             }
         }
@@ -84,6 +104,7 @@ for my $case (['fifo',$base,0,0],['observed',$observed,1,0],['typed',$typed,1,0]
         my $release_aux = $domain ? 'aux_rst_n=1;' : '';
         my $observe_check = $observe ? 'if(echo!==payload || seen!==old_data || saw_empty!==old_empty || saw_full!==old_full) $fatal(1,"parent input/readback mismatch");' : '';
         my $isolation = $domain ? 'run_core=0;aux_data=19;repeat(3) @(negedge aux_clk);if(aux_seen!==19) $fatal(1,"aux clock depended on FIFO clock");rst_n=0;#1;if(aux_seen!==19) $fatal(1,"FIFO reset escaped its domain");run_core=1;' : '';
+        $isolation = 'run_core=0;repeat(3) @(negedge aux_clk);if(data_out!==expected_data || empty!==expected_empty || full!==expected_full) $fatal(1,"idle domain clock advanced FIFO");run_core=1;' if $name eq 'empty-default';
         my $tb = <<"SV";
 module tb;
  logic clk=0,rst_n=1,run_core=1,write_req=0,read_req=0;
@@ -169,19 +190,6 @@ subtest 'library ownership also excludes generated completion and duplicate chil
         isnt($check->{exit_code},0,"$name has no invented arbitration");
         like($check->{stdout}.$check->{stderr},$error,"$name preserves sole output ownership");
     }
-};
-subtest 'nondefault library system bindings remain owned by .48' => sub {
-    my $dir="$work/nondefault";mkdir $dir or die $!;mkdir "$dir/common" or die $!;
-    copy('isf/common/fifo.isf',"$dir/common/fifo.isf") or die $!;
-    my $text=$base;
-    $text =~ s/\(clock clk\)\s*\(reset \(rst_n async active_low\)\)/(clock-domains (domain idle (clock aux_clk) (reset (aux_rst_n async active_low)) :default) (domain fifo (clock clk) (reset (rst_n async active_low))))/;
-    $text =~ s/(\((?:input|output) \w+(?: \(width \d+\))?)\)/$1 (domain fifo))/g;
-    $text =~ s/\(use fifo_lib.fifo as u_fifo/(use fifo_lib.fifo as u_fifo (domain fifo)/;
-    my $source=write_file("$dir/source.isf",$text);
-    my $check=$capture->([$^X,'bin/fsmgen','--strict','--check','--json',$source],'');
-    isnt($check->{exit_code},0,'unqualified nondefault-domain binding is not called successful');
-    like($check->{stdout},qr/clock binding references unknown parent signal 'clk'/,
-        'retain the exact parser omission for the immediate next repair');
 };
 done_testing();
 sub simulate {

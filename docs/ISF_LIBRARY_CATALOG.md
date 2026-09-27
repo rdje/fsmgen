@@ -117,8 +117,13 @@ Verification:
   independently checks FIFO queue behavior, reset and idle flags, parent input
   and output readback, typed aliases, sibling-domain isolation, exact public
   interfaces, scheduled replay and native/API/MCP parity. Competing writers and
-  importer reset/default overrides are rejected. The nondefault-domain system
-  binding refusal is retained explicitly.
+  importer reset/default overrides are rejected. Nondefault-domain explicit,
+  inferred and renamed library system bindings use the same independent FIFO
+  scoreboard and report checks.
+- [t/1915-isf-library-domain-system-bindings.t](../t/1915-isf-library-domain-system-bindings.t)
+  independently checks synchronous/asynchronous, active-high/active-low reset
+  behavior, reset absence and domain isolation. Wrong-domain system signals,
+  unknown domains/signals and incompatible implicit reset policies are refused.
 - [t/1239-isf-library-catalog-contract.t](../t/1239-isf-library-catalog-contract.t)
   keeps this catalog aligned with the machine-readable ISF public contract.
 
@@ -138,6 +143,7 @@ Limitations:
 - Clock/reset name remapping at the use site is shipped for generated tops:
   differently named parent/child system signals are linked explicitly while
   the reusable actor keeps its reset kind and polarity. This is name remapping
-  within the default domain; independently clocked sibling domains are qualified.
-  Nondefault-domain library system bindings still fail validation and remain
-  separately owned. No clock-domain crossing is inferred.
+  within the instance's selected domain, including nondefault domains. Inference
+  uses that domain's same-name clock/reset and matching reset policy. Explicit
+  bindings to sibling system signals or ordinary interface inputs are rejected
+  for actors with clock domains. No clock-domain crossing is inferred.
