@@ -1722,9 +1722,24 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify complete reservation integration before production renaming.`
   Acceptance: `Join actual producer inventories with a fail-closed completeness contract. Prove final allocation/emission cannot add unreserved collisions, including source declaration permutations, case-folded names, helper-looking formals, separate modules and domain realization. Preserve source/public identities and commit before .3.3.`
+  Verification: `Actual producer coverage is qualified. Complete the checked input schema and explicit scope inventory in .1, then final executable declaration coverage and missing-reservation falsification in .2 before production integration.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.1`
+  Status: `done`
+  Goal: `Collect all prepared reservation products through a checked scope-aware contract.`
+  Acceptance: `Replace ad hoc product-name filters for new consumers with one explicit prepared-input collector. Reject missing, unknown or malformed product categories and mismatched live transaction/domain/child membership. Preserve detached deterministic provenance and separate parent, generated/reusable child and domain scope identities. Qualify real source products without an executable conflicting parent merge. This input contract alone does not prove final emitted completeness.`
+  Verification: `T1959 qualifies missing/malformed/unknown categories, live and child membership, source/domain identity, erased partition/domain controls, cycles, deterministic detached provenance, raw storage/formal shadows, FIFO and static-zero/single-domain cases. T1957 consumes the checked collector in real domain projection; T1937/T1955/T1956 and book fixtures/build pass. Final emitted completeness remains child .2; no automatic rewrite or runtime support is claimed.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.2`
+  Status: `pending`
+  Goal: `Verify final executable declarations and allocation against complete prepared scopes.`
+  Acceptance: `Join the checked input inventory with actual projected modules, final declaration ownership and outer scope boundaries. Fail closed on missing reservations or unexpected scopes, including injected omissions and helper/formal aliases. Qualify declaration permutations, case-folded conflicts, library/generated children and domains. Preserve source/public reports and strict refusal boundaries; only then close the global contract before production renaming.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3855,3 +3870,35 @@ unused refusal controls beside supported handshake lowering; durability is the
 corrected test header, book and task frontier. No fresh runtime, full-CI or
 complete-production-reservation claim is made. Existing child evidence remains
 in place; parent closure does not widen any individual qualification boundary.
+
+
+## Acceptance — checked prepared reservation inputs `.49.2.2.3.2.2.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies f3a6fc691
+  as the generic FormalReservationInventory collector introduction. It accepts
+  any explicit product hash, while domain integration chose products by suffix.
+  An omitted category therefore had no input-contract failure. Actual
+  prepare_formal_source shapes are captured in shape.log; final producer
+  qualification establishes the categories to require without a parent merge.
+- [x] **ADDRESSED (verified)** — PreparedFormalReservations checks the
+  complete preparation category schema, live transaction/context and generated
+  child membership, reusable product shape, source partition membership and
+  domain identity before returning the conservative inventory and explicit
+  independent module scopes. It preserves the existing generic partial API.
+  T1959 rejects removed/malformed categories, unknown producers, missing child
+  IR and erased/misidentified domains, including erasure from both product maps.
+  Real FIFO, generated children, static-zero and single-domain controls pass.
+  T1957 now uses the checked collector in actual projected domain integration.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful`
+  for T1959/T1957/T1937/T1955/T1956. T1376 book examples and synchronized
+  mdBook build pass; all results are consumed. Staged doctrines and the normal
+  hook qualify the source, test and documentation slice before commit.
+
+Evidence: `.artifacts/formal-reservation-contract/`. Re-derivation reads actual
+preparation products and preserves the previously qualified identifier/provenance
+union; falsification deletes real categories and scope members, corrupts owner
+identities, introduces cycles and tests reordered/detached results; durability
+is T1959, the migrated T1957 consumer, canonical fact card and book. The input
+schema does not authenticate arbitrary edited product contents or prove final
+executable declarations. That independent check remains child .2, before
+production integration. No extra DEVELOPMENT_NOTES rationale is needed.

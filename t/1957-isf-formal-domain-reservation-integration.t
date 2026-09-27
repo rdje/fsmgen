@@ -11,7 +11,7 @@ use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::FormalIdentityPlan;
 use FSM::Scheduler::ISF::FormalClauseResolver;
-use FSM::Scheduler::ISF::FormalReservationInventory;
+use FSM::Scheduler::ISF::PreparedFormalReservations;
 
 my $s = FSM::Scheduler::ISF->new;
 my $l = $s->{ir};
@@ -44,8 +44,7 @@ ISF
 sub parse {FSM::Adapter::ISF->new->parse_source($_[0], 'domain_integration.isf')}
 sub inventory {
     my ($p) = @_;
-    return FSM::Scheduler::ISF::FormalReservationInventory->collect(
-        {map {$_ => $p->{$_}} grep {$_ eq 'actor' || /products$/ || $_ eq 'domain_partition'} keys %$p})->{reserved_names};
+    return FSM::Scheduler::ISF::PreparedFormalReservations->collect($p)->{reserved_names};
 }
 sub prepare {
     no warnings 'redefine';

@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3` (pending)
-- next_action: Qualify the global fail-closed formal reservation completeness contract under .49.2.2.3.2.2.3 before wiring production formal renaming.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.2` (pending)
+- next_action: Verify final executable declaration ownership and missing-reservation failures under .49.2.2.3.2.2.3.2 before production formal rewrite integration.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

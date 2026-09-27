@@ -130,9 +130,14 @@ same-spelled private formals with different widths, actor-storage shadows,
 declaration-order changes, domain-local arbitration, generated reads/writes,
 named completion and control-only activation crossings. The prepared products
 plus allocated formal identities cover the actual domain declarations in these
-cases; competing storage writers remain rejected. The complete reservation
-contract and production rewrite integration remain pending. This does not enable independent
-direct-transaction storage yet.
+cases; competing storage writers remain rejected. A checked preparation collector
+now requires every product category, even an empty one, and checks live
+transaction, generated-child and domain membership. For example, removing the
+caller domain products is rejected rather than silently producing a smaller
+reservation set. Parent and child modules retain separate typed scope identities;
+the allocation union remains conservative. This validates the prepared inputs,
+not final emitted completeness: that check and production rewrite integration
+remain pending. This does not enable independent direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both
