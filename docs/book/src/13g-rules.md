@@ -371,7 +371,9 @@ With a single rule source, the generated fan-in assigns the source directly:
 after authored waits can see zero after its rule-trigger pulse ends. The retained
 payload source is still present, but the local input mux remains pulse-gated.
 A request-gated runtime probe isolates this from transaction reachability; the
-repair is owned by `.32.1.3.3.1.3.2`. Generated trigger payload retention is
+failure is reconfirmed after private formal allocation and remains owned by
+`.32.1.3.3.1.3.2`. Its repair must retain the accepted payload while busy and
+preserve entry-edge reads and authored entry conditions. Generated trigger payload retention is
 separately qualified and does not close this local-input defect. Local rule
 fan-in supplies `transaction_start`; the target still authors its entry guard,
 for example `(on transaction_start)`.

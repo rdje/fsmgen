@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -743,9 +743,31 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Repair local rule-trigger payload retention at the admitted activation boundary.`
   Acceptance: `After .1 and scoped identities .49.2.2, reproduce the tracked request-gated delayed-zero case and retain both generated-live controls. Preserve early entry visibility and later snapshots with no extra observable activation cycle. Qualify changed sources, repeated requests, reset, busy requests, conditional authored entry and granted multiple rule sources; never remove all source guards to choose an implicit winner. Preserve authored rule-target entry semantics. Close only from generated production runtime and exact native/API/MCP evidence.`
+  Verification: `Scoped physical identities are committed. Reverify the retained request-gated delayed-zero reproduction and generated-live controls on current production, then preserve accepted payload with acceptance-edge visibility and busy-request isolation. Source selection must use admitted rule requests/grants; retain authored target entry guards. Any new snapshot helper must participate in source preparation and final reservation coverage.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.3`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.1`
+  Status: `done`
+  Goal: `Reverify the scoped production baseline and bind snapshot implementation dependencies.`
+  Acceptance: `Run the retained request-gated delayed-read reproduction and both generated-live controls through current strict production HDL with independent runtime. Preserve source/testbench hashes and exact observations. Derive acceptance-edge/busy-request constraints from actual state and rule producers, retain decision 0109, and own any discovered public-report contract mismatch before snapshot integration.`
+  Verification: `At b7b18c76095e2c08a629f823d964a2fd28afad93, stable and changed local inputs both observe zero with one completion instead of the required captured seven. Generated live controls observe seven and thirteen respectively, each with one completion. No source production change or HDL counterfactual is applied. Fresh schedule output also proves child completion storage-role and DT-kind enumeration omissions, owned by .56 before adding snapshot report roles. The bounded audit records the exact identities/results. Snapshot preparation/application and runtime qualification remain children .2/.3.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.2`
+  Status: `pending`
+  Goal: `Integrate accepted local rule payload retention with complete source preparation.`
+  Acceptance: `After .1 and enumeration repair .56, derive the initial target state and authored entry guard from actual owned states; preserve a request-visible entry view while capturing only at accepted entry. Retain held payload through busy work without queues or implicit source selection, preserve granted-source guards and generated live paths, and avoid a cycle when the entry guard reads a bound formal. Use stable source-derived collision-safe helper identities in both detached preparation and actual production, including domain scopes and final reservation coverage. Preserve public binding provenance and advertise any new emitted roles/kinds. Split safe children if needed before switching execution.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.3`
+  Status: `pending`
+  Goal: `Qualify local rule snapshots across acceptance timing, grants and repeated execution.`
+  Acceptance: `Require independent public-pin SV/Verilog runtime for early entry samples, delayed stable/changed reads, repeated/reset/held and busy requests, conditional authored entry including payload-dependent guards, and granted multiple sources. Preserve generated-live controls, caller/source interfaces, complete native/API/newline reports and strict carrier replay. Keep controller reachability/local-call ownership limits separate; commit before writer admission.`
   Verification: `pending`
   Commit: `pending`
 
@@ -1915,6 +1937,14 @@ For FSMGen, the analogs are:
   Acceptance: `Run immediately after helper identity .49.2.2.3.2.2.2.1. Reproduce raw source for a generated child ending in wait 1, isolate LoweringIR linking versus FSM emission, and fix terminal static-wait behavior without inventing completion/rearm. Qualify direct/generated cases, explicit successor/complete controls, warning-free strict carriers, public queries and relevant runtime behavior. Audit related empty terminal state classes within a safe scope and own any additional defects. Commit before resuming reservation prerequisites.`
   Verification: `T1940 qualifies explicit carrier self-loops for otherwise empty terminal wait/point/phase states in direct/generated transactions, unchanged source IR, native empty-body negative controls, real continuations, complete native/API/newline parity and qualified Verilator hold/repeated-request/reset behavior. The before/after census confirms all retained raw failures are repaired with identical lowering graphs. Neighboring wait/synchronization/anchor/schedule/helper and book fixtures pass. Resume .49.2.2.3.2.2.2.2.`
   Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.56`
+  Status: `pending`
+  Goal: `Close advertised schedule enumeration drift for generated storage and DT roles.`
+  Acceptance: `Before storage-access report extensions and as a prerequisite to adding new snapshot report roles, compare emitted production schedule roles/kinds with the advertised bounded contract. Reproduce child_completion_seen/view omissions, audit the same producer families for other omissions, update the canonical public contract and exact fixtures without inventing unsupported values, and add actual-report membership controls. Preserve public key shape and native/API/newline agreement; update book/spec and commit.`
+  Verification: `Code inspection finds ChildCompletion installing child_completion_seen and child_completion_view roles while ISFPublicInterfaceContract omits both; JSON::_storage_role_for_name returns producer roles directly. The existing golden matrix checks membership only for its selected fixtures. Fresh --emit-schedule-json reproduction under .32.1.3.3.1.3.2.1 confirms both roles and child_completion DT kind are emitted but unadvertised. Run next before snapshot integration .32.1.3.3.1.3.2.2 or .38 metadata extension.`
+  Commit: `pending`
+
 
 ## Implementation Notes From `.4`
 
@@ -4043,3 +4073,34 @@ legacy temporal-contract table: monitor assertions are DT/assertion products,
 not the removed contract syntax. The source frontier narrative is synchronized
 with the completed scope prerequisites. All remaining execution defects retain
 their owners; next is local rule-trigger payload retention .32.1.3.3.1.3.2.
+
+## Acceptance — scoped local-payload baseline `.32.1.3.3.1.3.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies
+  0ee9dca5634d69c3d85e660dd7bbc20507abfbfb introducing the local payload fan-in.
+  _rule_trigger_payload_fanin_assignments still emits a request-guarded `=`
+  assignment. Current strict production HDL completes the retained local target
+  but returns zero after waits. Fresh `--emit-schedule-json` also exposes child
+  completion storage roles/kind absent from the advertised public enumerations.
+- [x] **ADDRESSED (verified)** — The bounded scoped-baseline audit authenticates
+  unchanged canonical source/testbench hashes and exact local-failure/generated-
+  live-control observations at b7b18c76095e2c08a629f823d964a2fd28afad93. The tracked
+  reproduction command runs successfully and reproduces those classifications;
+  its local simulation failures are expected evidence, not a repair pass.
+  Acceptance must preserve entry-cycle visibility, actual capture eligibility,
+  busy isolation and source/grant guards; helper preparation and domain coverage
+  are explicit obligations. New enumeration defect .56 is scheduled before
+  snapshot integration. Implementation and runtime signoff are children .2/.3.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1171/T1243/T1255/T1376. The mdBook build passes. No production source or
+  counterfactual HDL is changed. The staged doctrine gate and normal hook must
+  pass before commit.
+
+Evidence: `.artifacts/local-rule-payload/` and the tracked scoped-baseline audit
+and reproduction entrypoint. Re-derivation compiles current strict production;
+falsification contrasts stable/changed local snapshot failures with both passing
+generated-live controls and verifies canonical input hashes; durability is the
+bounded audit, tracked replay, canonical fact and owned dependency leaves. This
+slice closes only baseline recovery and implementation prerequisites. It does
+not close the payload defect, controller/local-call failures or historical
+native process-containment occurrence.

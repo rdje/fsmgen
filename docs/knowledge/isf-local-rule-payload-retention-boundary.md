@@ -9,8 +9,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, binding, trigger, payload, snapshot, runtime]
-evidence: docs/audits/direct-controller-binding-timing-20260927.json; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1171-isf-rule-trigger-fanin.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-reverify: Materialize the tracked audit sources/testbenches into a repository-local workspace, generate strict HDL with bin/fsmgen and run qualified Verilator under scripts/run_with_ram_guard.sh. Preserve each case classification and the explicit generated-Date normalization for the diagnostic HDL comparison.
+evidence: docs/audits/local-rule-payload-scoped-baseline-20260927.json; docs/audits/direct-controller-binding-timing-20260927.json; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1171-isf-rule-trigger-fanin.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh perl docs/audits/local-rule-payload-scoped-baseline-20260927/reproduce.pl; compare current observations with the bounded scoped baseline. The older diagnostic HDL comparison separately normalizes only its generated Date.
 ---
 
 Generated do input bindings are live handoffs. Snapshot spelling is correctly
@@ -36,3 +36,23 @@ SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2 must qualify early samples,
 delayed reads, repeated/reset behavior and granted multiple sources before
 closing local payload retention. Generated live-call or trigger qualification
 does not close this local defect.
+
+
+The scoped baseline at b7b18c76095e2c08a629f823d964a2fd28afad93 confirms the
+same failure after private formal integration: stable and changed local inputs
+both read zero with one completion instead of captured seven. Generated live
+controls read seven and thirteen respectively. Canonical source/testbench hashes
+are unchanged; no emitted HDL counterfactual is used in this re-verification.
+
+Implementation must derive the target's initial owned state and authored guard.
+An entry-cycle payload view must expose a selected request before capture; the
+retained value updates only at actual acceptance. Bypass eligibility cannot
+depend on an entry guard that itself reads the payload, which would form a
+combinational cycle. Busy requests must not replace an accepted payload. Preserve
+per-source request/grant guards and generated live timing. New helper declarations
+must be produced identically for source preparation and actual domain lowering.
+
+Fresh schedule output also exposes unadvertised child-completion storage roles
+and a DT kind. Owner .56 precedes snapshot report-role additions; the scoped
+baseline records that separate contract mismatch. Snapshot implementation and
+runtime qualification remain .32.1.3.3.1.3.2.2 and .3.

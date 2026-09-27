@@ -1,0 +1,72 @@
+{
+  "canonical_sources": "docs/audits/direct-controller-binding-timing-20260927.json",
+  "cases": [
+    {
+      "case_id": "generated_live",
+      "observations": [
+        {
+          "changed_input": false,
+          "completions": 1,
+          "expected": 7,
+          "observed": 7,
+          "runtime_ok": true
+        },
+        {
+          "changed_input": true,
+          "completions": 1,
+          "expected": 13,
+          "observed": 13,
+          "runtime_ok": true
+        }
+      ],
+      "source_sha256": "0b3eff4c5724c3cba35c8f66b80141ce93fa30c6ebc06677afcf991515190e18",
+      "testbench_sha256": "e5c3577fafd1a6d491c5021bbff75e100ac459cdb8e93e6bb56742b94917cf2a"
+    },
+    {
+      "case_id": "local_trigger_request_entry",
+      "observations": [
+        {
+          "changed_input": false,
+          "completions": 1,
+          "expected": 7,
+          "observed": 0,
+          "runtime_ok": false
+        },
+        {
+          "changed_input": true,
+          "completions": 1,
+          "expected": 7,
+          "observed": 0,
+          "runtime_ok": false
+        }
+      ],
+      "source_sha256": "60d860dfcd0096c560ec8d908d2cde443d1d3b831f070f0c219a243443a92ae8",
+      "testbench_sha256": "5319a8618c0e6b7b8dc7c4ad0ffd4e590eae72ea58e2130c7238d1395a6b24d8"
+    }
+  ],
+  "commands": [
+    "FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh perl docs/audits/local-rule-payload-scoped-baseline-20260927/reproduce.pl",
+    "scripts/run_with_ram_guard.sh perl bin/fsmgen --emit-schedule-json .artifacts/local-rule-payload/role-census.isf"
+  ],
+  "date": "2026-09-27",
+  "limits": [
+    "No local snapshot repair is claimed.",
+    "No controller or local-call qualification is claimed.",
+    "No historical containment repair is claimed."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2.1",
+  "production_change": false,
+  "report_contract_gap": {
+    "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.56",
+    "source": "(actor role_census (clock clk) (reset rst_n)\n (interface (input start) (output done))\n (transaction worker (wait 1) (complete done))\n (transaction main (on start) (spawn worker as job) (await_all done) (complete done)))\n",
+    "unadvertised_dt_kinds": [
+      "child_completion"
+    ],
+    "unadvertised_storage_roles": [
+      "child_completion_seen",
+      "child_completion_view"
+    ]
+  },
+  "repository_revision": "b7b18c76095e2c08a629f823d964a2fd28afad93",
+  "schema_version": 1
+}
