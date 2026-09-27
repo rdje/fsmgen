@@ -6,11 +6,12 @@ answers:
   - "does transaction priority grant independent controller writes?"
   - "which physical targets must shared writer admission compare?"
   - "where are physical writer packed ranges resolved?"
+  - "which ISF widths are explicit physical declarations?"
   - "where is the direct writer admission baseline?"
 date: 2026-09-27
 status: current
 tags: [isf, controllers, writers, storage, conflicts, ownership]
-evidence: perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
+evidence: perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
 reverify: scripts/run_with_ram_guard.sh perl docs/audits/direct-writer-admission-20260927/reproduce.pl; compare .artifacts/direct-writer-admission/current.json with the retained result.json. This is a dated admission baseline, not an expected future safety contract.
 ---
 
@@ -68,3 +69,16 @@ range arithmetic and omission/mutation controls. The helper is detached and is
 not called by production lowering or admission yet. Complete declaration/owner
 collection and shadow attachment remain .3.2.2/.3.2.3 under the writer parent;
 conservative executable admission remains .3.3.
+
+PhysicalWriteDeclarations collects the same explicit sources and precedence as
+Emitter::FSM::_emit_size: ports, declared storage signals, counters and eligible
+assembly operands. Static constants/parameters are not assembly declarations.
+It retains emitted type tokens, resolved widths and detached aggregate layouts.
+A signal_widths entry alone is not a declaration: sampled aliases and unrelated
+known expressions remain absent from +size. Actual assignment roots lacking
+explicit declarations appear in unresolved_targets; no width is guessed and no
+completeness claim follows. T1968 compares actual emitted tokens, generated
+post-wiring parent/child modules, typed private formals and aggregate ranges;
+omission, malformed-contract and detached-mutation controls qualify the boundary.
+Reverify with guarded prove on T1968. The next child .3.2.2.2 owns implicit scalar
+contracts before explicit producer ownership and shadow attachment.

@@ -802,9 +802,38 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Collect complete writer declarations and explicit owner/activation records from actual producers.`
   Acceptance: `After .1, collect every parent/domain state and DT assignment after actual binding/handoff wiring, with resolved target contracts and source-owned state/DT identities. Attach missing ownership at the actual producer, not by name-prefix parsing. Classify drives with multiple callers, generated handoffs, completion views and helpers conservatively. Retain actual guards/grants and mutation/omission checks; preserve reports and emitted carriers. Split producer families if completeness exceeds a safe slice.`
+  Verification: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.4`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.1`
+  Status: `done`
+  Goal: `Collect explicit physical declarations from the actual lowered module.`
+  Acceptance: `Match the production emitter declaration sources and precedence for ports, storage, counters and assembly operands; preserve resolved aggregate layouts and detached module-local identities. Reject malformed contracts, record unknown assignment roots without inventing widths, and compare actual emitted size declarations. This child remains detached and does not change production admission.`
+  Verification: `T1968 matches exact emitted size/token sets for the admitted writer baseline, typed private formals, aggregates, assembly and actual post-wiring generated modules. Known sample widths remain unresolved when not explicitly emitted; declaration omission cannot be masked by signal_widths. Detached mutation, malformed contracts, precedence and static exclusions pass. T1967/T1344/T1963 and mdBook build pass. Collection remains detached; implicit target contracts and producer ownership remain the following children.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.2`
+  Status: `pending`
+  Goal: `Resolve the remaining implicit scalar writer contract.`
+  Acceptance: `After .1, qualify actual emitted implicit targets through the public carrier and canonical downstream width inference. Establish a sound whole-root contract for every remaining scalar writer without guessed widths, width-map overclaims or report changes. Retain malformed/omission and carrier controls before complete inventory attachment.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3`
+  Status: `pending`
+  Goal: `Attach explicit state and transaction/rule/drive producer ownership.`
+  Acceptance: `Use actual source-owned transaction and rule/drive records rather than state or helper prefixes. Preserve activation guards, caller identities and grant/suppression evidence. Split producer families further before changing code if needed; require unchanged reports and carriers.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.4`
+  Status: `pending`
+  Goal: `Collect generated handoff, completion and helper writer ownership.`
+  Acceptance: `After source producer ownership, inventory every post-binding/generated-handoff assignment with explicit module/domain and source-instance relationships. Conservatively retain multi-caller and helper activation uncertainty; prove omitted and malformed ownership failures before shadow inventory attachment.`
   Verification: `pending`
   Commit: `pending`
 
@@ -2647,7 +2676,8 @@ before editing code. No discovered defect is closed by this audit alone.
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. The next leaf is
-`.32.1.3.3.1.3.3.2.2`, complete writer declaration/owner collection after
+`.32.1.3.3.1.3.3.2.2.2`, implicit scalar target qualification after explicit
+declaration collection and before producer ownership, following
 the physical target resolver and retained admission baseline. Conservative admission precedes independent controllers and local-call
 timing under the following sibling leaves. `.49.2.3` qualifies direct-call runtime;
 `.49.3` owns explicit-local physical scope. These remain prerequisites to the
@@ -4317,3 +4347,34 @@ source declarations; falsification uses independent packed-range arithmetic,
 module isolation and malformed/omitted contracts; durability is the helper,
 T1967, the canonical writer card, book and this task. No new accepted syntax,
 controller behavior, public report or arbitration is introduced.
+
+## Acceptance — explicit writer declarations `.32.1.3.3.1.3.3.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained `--emit-schedule-json`
+  writer baseline requires actual target declarations rather than raw target
+  spelling. Emitter::FSM::_emit_size emits ports, declared storage, counters
+  and assembly operands; LoweringIR::signal_widths additionally contains known
+  expression/sample widths that are not emitted declarations. T1968 reproduces
+  a known-width captured alias that has no +size entry, so blindly treating the
+  width map as a declaration inventory would hide an unresolved obligation.
+- [x] **ADDRESSED (verified)** — PhysicalWriteDeclarations returns detached
+  module-local explicit declarations with resolved widths, emitted tokens,
+  origins and aggregate layouts. It checks declared assignment paths through
+  PhysicalWriteTargets and lists unresolved targets without inventing widths.
+  T1968 independently parses actual emitted +size entries for the admitted
+  baseline and generated post-wiring parent/child modules. Typed private formals,
+  local registers, aggregate ranges and assembly widths agree; static operands
+  stay excluded. Precedence, omission, malformed-contract and nested-mutation
+  controls pass. No production consumer or admission change is introduced.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1968/T1967/T1344/T1963. The mdBook build passes. Staged doctrine checks and
+  normal commit hooks qualify this slice. Implicit scalar resolution is owned
+  by .3.2.2.2; source/generated ownership and complete shadow coverage remain
+  the following children, with independent execution still separately pending.
+
+Evidence: `.artifacts/physical-write-declarations/`. Re-derivation compares
+actual emitter declarations with collected contracts; falsification removes
+storage declarations despite retained width-map entries and mutates target/type
+contracts; durability is T1968, the canonical writer card, book and this tree.
+The helper is deliberately incomplete for implicit targets and does not claim
+whole-inventory or writer-safety signoff. No new quantitative performance claim.

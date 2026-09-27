@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-direct`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **16** uniquely owned question entries.
+> **3** facts · **17** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -16,6 +16,7 @@
 - q="what must precede direct transaction port scope repair?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)
 - q="where are physical writer packed ranges resolved?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
 - q="where is the direct writer admission baseline?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
+- q="which ISF widths are explicit physical declarations?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
 - q="which physical targets must shared writer admission compare?" · facts=[isf-direct-writer-admission-boundary](../../docs/knowledge/isf-direct-writer-admission-boundary.md)
 - q="why can a plain local do stall despite strict source admission?" · facts=[isf-direct-controller-runtime-boundary](../../docs/knowledge/isf-direct-controller-runtime-boundary.md)
 - q="why do bit helpers use an actor width instead of a shadowing formal width?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)

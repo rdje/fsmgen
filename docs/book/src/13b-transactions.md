@@ -45,6 +45,14 @@ leaves do not overlap each other. Identical names in different modules remain
 separate. This target calculation is tested in isolation; it does not yet change
 writer admission or controller execution.
 
+The detached declaration collector now matches the emitted `+size` entries for
+ports, actor storage, local/helper registers and assembly operands. It retains
+aggregate layouts and private formal widths. A sampled alias can have a known
+width in lowering without an explicit size declaration; such targets remain
+listed as unresolved until the implicit-width contract is qualified. Collection
+also covers actual generated storage/completion handoff modules. It does not
+assert complete writer ownership or enable concurrent execution.
+
 The lowerer now records private transaction/domain membership, initial states
 and typed state references as a checked shadow model. It adds no public ports
 or controller storage and does not change emitted execution. This prepares

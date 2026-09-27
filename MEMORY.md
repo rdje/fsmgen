@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2` (pending)
-- next_action: Collect complete writer declarations and explicit owner/activation records under .32.1.3.3.1.3.3.2.2, using PhysicalWriteTargets and actual post-wiring producers; split families before implementation if needed.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.2` (pending)
+- next_action: Qualify implicit scalar writer targets under .32.1.3.3.1.3.3.2.2.2 through emitted carriers and canonical downstream inference, using the explicit declaration collector without guessed widths.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none after the current slice commit.
 - in_flight_background: none.
