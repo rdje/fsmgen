@@ -244,6 +244,13 @@ hygiene. The mechanical gate model is documented in
 scripts/check_doctrines.sh
 ```
 
+Long-running task records keep their live ownership graph directly readable.
+Historical qualification can move behind an acceptance-history manifest that
+names an exact Git revision and authenticates both the complete source and its
+historical suffix. The semantic-introspection task uses this route; follow its
+`Version-Retrievable Historical Views` pointer when reviewing older evidence.
+The integrity gate verifies retrieval as part of the doctrine checks.
+
 That driver runs every registered repository doctrine, including bootstrap,
 memory architecture, bounded Knowledge Map root/shard freshness and query
 parity, docs path hygiene, complete

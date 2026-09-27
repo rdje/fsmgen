@@ -1,7 +1,7 @@
 # Knowledge Map: `task-tree`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **29** uniquely owned question entries.
+> **4** facts · **30** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -28,6 +28,7 @@
 - q="what is the task-tree segment manifest format?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="what retention contract does a task-tree version object require?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="where did the completed task-tree index rows go?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
+- q="where is older semantic-introspection task acceptance evidence?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="where is the live frontier of a task tree?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
 - q="which commit field was missing from the IAL2 task tree?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
 - q="which live IAL2 task-ledger defects did .843 repair?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
@@ -55,7 +56,7 @@ _Active task-tree live-node structure is mechanically enforced_
 
 _Long-running task trees use exact-provenance sealed segments or compact terminals_
 
-- **date:** 2026-09-24 · **status:** current
+- **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md`](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 
 ### task-tree-stale-status-drift-repair
