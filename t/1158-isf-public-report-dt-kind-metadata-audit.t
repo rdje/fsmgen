@@ -160,6 +160,14 @@ ISF
         $observed{$kind} = 1;
     }
 
+    my $generated_actor = FSM::Adapter::ISF->new()->parse_file(
+        File::Spec->catfile($FindBin::Bin, 'data', 'isf_schedule_generated_role_families.isf'));
+    my $generated_report = decode_json(FSM::Scheduler::ISF->new()->report($generated_actor));
+    for my $dt (@{$generated_report->{dt_blocks}}) {
+        ok($advertised{$dt->{kind}}, "generated storage/completion DT '$dt->{kind}' is advertised");
+        $observed{$dt->{kind}} = 1;
+    }
+
     is_deeply(
         sorted([keys %observed]),
         sorted(isf_public_interface_schedule_report_dt_kind_values()),

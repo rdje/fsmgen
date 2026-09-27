@@ -4,6 +4,25 @@ Every ISF construct maps to specific `.fsm` patterns.
 
 This chapter shows the exact generated `.fsm` for each construct.
 
+## Generated storage and completion reports
+
+The advertised schedule-report values include generated ownership handoffs and
+completion memory. For example, query the combined generated-worker fixture:
+
+```bash
+bin/fsmgen --emit-schedule-json t/data/isf_schedule_generated_role_families.isf
+```
+
+Its `dt_blocks[].kind` values include `actor_storage_read_handoff` and
+`actor_storage_write_handoff` for shared actor storage, `child_completion` for
+completion retention, and `child_completion_output` for named completion output
+combination. Its `inferred_storage[].role` values distinguish
+`child_completion_seen` (retained completion), `child_completion_view` (live or
+retained completion), `child_completion_output_handoff` (child output handoff)
+and `local_completion_pulse` (the parent's contribution). These are existing
+lowered artifacts. They add neither source syntax nor report keys; native, API
+and newline MCP schedule reports expose the same values.
+
 ## Actor → Module
 
 Schematic shape (placeholders shown with `...`):

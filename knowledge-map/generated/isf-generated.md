@@ -1,11 +1,12 @@
 # Knowledge Map: `isf-generated`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **7** facts · **27** uniquely owned question entries.
+> **8** facts · **30** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are ATL actor event waits allowed in multi-domain actors?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
+- q="are generated completion storage roles advertised to API consumers?" · facts=[isf-generated-report-enumerations](../../docs/knowledge/isf-generated-report-enumerations.md)
 - q="can a child read a parent record or list after spawn?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
 - q="can a child transaction input or output share an actor storage name?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
 - q="can a generated child write an entire actor-owned record or list?" · facts=[isf-generated-child-whole-aggregate-writes](../../docs/knowledge/isf-generated-child-whole-aggregate-writes.md)
@@ -28,10 +29,12 @@
 - q="is set-field a partial child storage write?" · facts=[isf-generated-child-writer-contract-frontier](../../docs/knowledge/isf-generated-child-writer-contract-frontier.md)
 - q="what is the next generated child storage writer contract?" · facts=[isf-generated-child-writer-contract-frontier](../../docs/knowledge/isf-generated-child-writer-contract-frontier.md)
 - q="where do generated child storage resets and registers live?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
+- q="which schedule kinds describe generated actor storage handoffs?" · facts=[isf-generated-report-enumerations](../../docs/knowledge/isf-generated-report-enumerations.md)
 - q="why are competing child or parent storage writers rejected?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="why did a generated child completing a named output fail to release its parent?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
 - q="why does spawn bind a same-named child input twice?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
 - q="why must delayed pulses be excluded from inferred shared datapaths?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
+- q="why were child completion roles missing from the schedule report contract?" · facts=[isf-generated-report-enumerations](../../docs/knowledge/isf-generated-report-enumerations.md)
 
 ## Facts
 
@@ -83,3 +86,10 @@ _ISF logical domains retain identity through portable generated names and case-s
 
 - **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-generated-domain-identities.md`](../../docs/knowledge/isf-generated-domain-identities.md)
+
+### isf-generated-report-enumerations
+
+_Advertised schedule values include generated storage and completion products_
+
+- **date:** 2026-09-27 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-generated-report-enumerations.md`](../../docs/knowledge/isf-generated-report-enumerations.md)

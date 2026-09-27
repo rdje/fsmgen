@@ -52,7 +52,6 @@ combinational cycle. Busy requests must not replace an accepted payload. Preserv
 per-source request/grant guards and generated live timing. New helper declarations
 must be produced identically for source preparation and actual domain lowering.
 
-Fresh schedule output also exposes unadvertised child-completion storage roles
-and a DT kind. Owner .56 precedes snapshot report-role additions; the scoped
-baseline records that separate contract mismatch. Snapshot implementation and
+The scoped baseline also records a separate generated-report enumeration gap,
+now repaired under .56; see [advertised generated report values](isf-generated-report-enumerations.md). Snapshot implementation and
 runtime qualification remain .32.1.3.3.1.3.2.2 and .3.

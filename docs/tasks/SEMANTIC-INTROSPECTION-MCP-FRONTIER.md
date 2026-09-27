@@ -1939,11 +1939,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.56`
-  Status: `pending`
+  Status: `done`
   Goal: `Close advertised schedule enumeration drift for generated storage and DT roles.`
   Acceptance: `Before storage-access report extensions and as a prerequisite to adding new snapshot report roles, compare emitted production schedule roles/kinds with the advertised bounded contract. Reproduce child_completion_seen/view omissions, audit the same producer families for other omissions, update the canonical public contract and exact fixtures without inventing unsupported values, and add actual-report membership controls. Preserve public key shape and native/API/newline agreement; update book/spec and commit.`
-  Verification: `Code inspection finds ChildCompletion installing child_completion_seen and child_completion_view roles while ISFPublicInterfaceContract omits both; JSON::_storage_role_for_name returns producer roles directly. The existing golden matrix checks membership only for its selected fixtures. Fresh --emit-schedule-json reproduction under .32.1.3.3.1.3.2.1 confirms both roles and child_completion DT kind are emitted but unadvertised. Run next before snapshot integration .32.1.3.3.1.3.2.2 or .38 metadata extension.`
-  Commit: `pending`
+  Verification: `T1964 exercises real generated storage writes/reads, completion retention and named completion with a parent contribution. Every emitted role/kind is advertised and every repaired value is observed; each deliberate descriptor omission is detected. The fixture strict-checks and complete native/API/newline reports agree; the full production schedule is identical before/after. T1158 now covers the added DT producer families. T1148 uses the qualified private formal identity without weakening width/kind/role checks. T1140/T1148/T1158/T1255/T1376 and mdBook build pass. The spec's stale temporal-contract mapping is aligned with the already-correct book: current monitors leave that legacy array empty. Snapshot integration .32.1.3.3.1.3.2.2 resumes next.`
+  Commit: `this commit`
 
 
 ## Implementation Notes From `.4`
@@ -2602,8 +2602,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
-The next execution prerequisite is `.32.1.3.3.1.3.2`, local rule-trigger payload
-retention, followed by shared-write admission, independent controllers and local
+The next leaf is `.32.1.3.3.1.3.2.2`, local rule-trigger snapshot integration,
+after its scoped baseline and enumeration repair `.56`. Shared-write admission,
+independent controllers and local
 call timing under its sibling leaves. `.49.2.3` qualifies direct-call runtime;
 `.49.3` owns explicit-local physical scope. These remain prerequisites to the
 SPECFORGE storage/register-access feature in `.38.1` and optional banks `.38.2`.
@@ -4104,3 +4105,33 @@ bounded audit, tracked replay, canonical fact and owned dependency leaves. This
 slice closes only baseline recovery and implementation prerequisites. It does
 not close the payload defect, controller/local-call failures or historical
 native process-containment occurrence.
+
+
+## Acceptance — generated report enumerations `.56`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--emit-schedule-json` on the
+  generated-role fixture emits child_completion_seen/view/output_handoff and
+  local_completion_pulse storage roles plus child_completion/output and
+  actor_storage_read/write_handoff DT kinds. Their actual producers are
+  ChildCompletion, ChildCompletionOutputs and ChildStorageOwnership. The
+  canonical public-interface enum omitted them; earlier membership fixtures
+  did not exercise these producer families together.
+- [x] **ADDRESSED (verified)** — The canonical advertised enum includes each
+  actual missing value. T1964 requires all observed values to be advertised and
+  all repaired values to occur, and detects every deliberate descriptor omission
+  against the actual report. T1158 extends its all-advertised-DT-kind coverage.
+  Strict source checking and complete native/API/newline schedule agreement pass.
+  Before/after production schedule reports are identical. No lowering behavior
+  or public key set changes. The stale direct-formal lookup in T1148 now uses its
+  private name while preserving kind/role/width assertions. The spec also agrees
+  with the book on the empty legacy temporal-contract array.
+- [x] **NO REGRESSION** — fixed.log reports `All tests successful` for
+  T1964/T1140/T1148/T1158/T1255/T1376. The mdBook build passes. All result jobs
+  are consumed; staged doctrines and the normal hook qualify this commit.
+
+Evidence: `.artifacts/schedule-enumeration/`. Re-derivation joins production
+reports to source producers; falsification removes each advertised value while
+retaining its observed producer output; durability is the fixture, enum and
+metadata coverage tests, fact card, book/spec and task. This closes the owned
+report-contract gap before snapshot additions. It does not qualify local payload
+retention, controller execution or the remaining SPECFORGE storage-access feature.

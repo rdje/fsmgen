@@ -96,7 +96,9 @@ For each `dt_blocks` entry, `assignments` is a non-negative integer count of
 assignment forms in the matching scheduled `.fsm` DT block. It is not an
 assignment payload list. The machine-readable contract advertises this through
 `schedule_report_dt_assignments_shape`.
-For each `dt_blocks` entry, `kind` is currently one of `drive`,
+For each `dt_blocks` entry, `kind` is currently one of
+`actor_storage_read_handoff`, `actor_storage_write_handoff`, `child_completion`,
+`child_completion_output`, `drive`,
 `do_port_binding`, `latency_counter`, `rule`, `rule_trigger_fanin`,
 `spawn_port_binding`, `temporal_contract_monitor`, or
 `trigger_generated_activation`. The machine-readable contract advertises this
@@ -106,9 +108,10 @@ For each `inferred_storage` entry, `kind` is currently one of `counter` or
 `register`. Optional `role` values describe the stable scheduler purpose when
 the lowerer has direct evidence. The current role family is
 `activation_done_handoff`, `activation_start_handoff`, `actor_storage`,
-`atl_trigger_start_handoff`, `completion_pulse`, `data_register`,
+`atl_trigger_start_handoff`, `child_completion_output_handoff`,
+`child_completion_seen`, `child_completion_view`, `completion_pulse`, `data_register`,
 `dynamic_wait_counter`, `drive_payload`, `drive_request`, `extract_field`,
-`latency_counter`, `repeat_counter`, `resource_round_robin_pointer`,
+`latency_counter`, `local_completion_pulse`, `repeat_counter`, `resource_round_robin_pointer`,
 `rule_trigger_payload_source`, `rule_trigger_source`, `sample_alias`,
 `scheduler_error_status`, `temporal_contract_monitor`, `transaction_port`,
 `transaction_port_binding`, `trigger_done_observe`, and `watchdog_counter`.
@@ -130,9 +133,15 @@ transaction port is materialized in the scheduled `.fsm` review artifact.
 Bounded `round_robin` resource arbitration for `rule_slot`, `output_bundle`,
 `transaction_start`, or `storage_port` uses
 `resource_round_robin_pointer` for the generated pointer counter.
-Temporal-contract pending/fail registers and age counters use
-`temporal_contract_monitor`; use `temporal_contracts[]` to map those signal
-names back to the specific bounded-eventual contract. Optional `width` values
+Generated joins use `child_completion_seen` for retained completion and
+`child_completion_view` for the live-or-retained view. Named child completions
+use `child_completion_output_handoff`; a parent contribution to their combined
+output uses `local_completion_pulse`. These values classify existing generated
+artifacts; they do not add source declarations or public report keys.
+Bounded-eventually monitor pending/fail registers and age counters use
+`temporal_contract_monitor`. The legacy `temporal_contracts[]` array remains
+empty for schema stability after removal of the former contract clause; current
+monitors use the immediate-check assertion path. Optional `width` values
 are positive integer bit widths when present, and are currently present for
 declared actor-owned storage, inferred scheduler counters, and register
 storage with known ISF width evidence. Declared typed actor-owned storage may

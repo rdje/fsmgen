@@ -204,7 +204,7 @@ subtest 'transaction-local port storage role follows advertised metadata' => sub
     ok($role{transaction_port}, 'transaction_port is an advertised storage role');
 
     my ($entry) = grep {
-        ($_->{name} // '') eq 'addr'
+        ($_->{name} // '') eq 'isf_port_main_addr'
     } @{$report->{inferred_storage} || []};
 
     ok($entry, 'transaction port report exposes materialized port storage');

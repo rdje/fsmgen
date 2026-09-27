@@ -1857,6 +1857,9 @@ sub isf_public_interface_schedule_report_storage_role_values {
             activation_done_handoff
             activation_start_handoff
             atl_trigger_start_handoff
+            child_completion_output_handoff
+            child_completion_seen
+            child_completion_view
             completion_pulse
             data_register
             dynamic_wait_counter
@@ -1864,6 +1867,7 @@ sub isf_public_interface_schedule_report_storage_role_values {
             drive_request
             extract_field
             latency_counter
+            local_completion_pulse
             repeat_counter
             resource_round_robin_pointer
             rule_trigger_payload_source
@@ -2028,6 +2032,10 @@ sub isf_public_interface_schedule_report_dt_keys {
 sub isf_public_interface_schedule_report_dt_kind_values {
     return [
         qw(
+            actor_storage_read_handoff
+            actor_storage_write_handoff
+            child_completion
+            child_completion_output
             drive
             do_port_binding
             latency_counter
