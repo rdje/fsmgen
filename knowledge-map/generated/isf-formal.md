@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-formal`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **7** facts · **21** uniquely owned question entries.
+> **8** facts · **24** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -14,8 +14,10 @@
 - q="can a raw formal shadow a round robin pointer before physical renaming?" · facts=[isf-formal-resource-products](../../docs/knowledge/isf-formal-resource-products.md)
 - q="can real child products be collected while raw parent formal declarations conflict?" · facts=[isf-formal-child-products](../../docs/knowledge/isf-formal-child-products.md)
 - q="do output defaults keep actor ownership when a formal shadows the output?" · facts=[isf-formal-point-products](../../docs/knowledge/isf-formal-point-products.md)
+- q="do rule grants and priority create additional formal reservation names?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
 - q="does formal preparation bypass production monitor collision checks?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
 - q="does formal preparation preserve reusable parameters and ATL child data ports?" · facts=[isf-formal-reusable-products](../../docs/knowledge/isf-formal-reusable-products.md)
+- q="does parent IR finalization add declarations before child storage connections?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
 - q="how are completion seen and ready names owned before formal allocation?" · facts=[isf-formal-completion-products](../../docs/knowledge/isf-formal-completion-products.md)
 - q="what does deferred_formal_collisions mean in prepared source?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
 - q="what does generated_child_products include in source preparation?" · facts=[isf-formal-child-products](../../docs/knowledge/isf-formal-child-products.md)
@@ -24,10 +26,18 @@
 - q="what does parent_wiring_products contain in formal source preparation?" · facts=[isf-formal-wiring-products](../../docs/knowledge/isf-formal-wiring-products.md)
 - q="what does resource_signal_products prove about resource arbitration?" · facts=[isf-formal-resource-products](../../docs/knowledge/isf-formal-resource-products.md)
 - q="what does reusable_child_products include in source preparation?" · facts=[isf-formal-reusable-products](../../docs/knowledge/isf-formal-reusable-products.md)
+- q="what qualifies the resource priority namespace boundary?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
 - q="why can a generated ready port collide with a private direct formal?" · facts=[isf-formal-wiring-products](../../docs/knowledge/isf-formal-wiring-products.md)
 - q="why did preparing a direct formal fail on a generated monitor name before allocation?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
 
 ## Facts
+
+### isf-formal-arbitration-namespace
+
+_Resource priority and finalization reuse the retained declaration namespace_
+
+- **date:** 2026-09-27 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-formal-arbitration-namespace.md`](../../docs/knowledge/isf-formal-arbitration-namespace.md)
 
 ### isf-formal-child-products
 

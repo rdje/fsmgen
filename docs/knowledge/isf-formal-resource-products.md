@@ -33,8 +33,11 @@ resource kinds, tests independent width boundaries, stable source/permutation
 identities and detached snapshots, and separates a raw formal/pointer alias
 through explicit physical projection. Strict projected carriers and canonical
 invalid-resource controls pass. Exact before/after native schedule comparison
-retains executable grants and metadata. Grant/priority product coverage, child
-ownership and final library/ATL/domain composition remain later obligations
-before complete reservations or automatic production rewriting can be claimed.
+retains executable grants and metadata. The subsequent
+[arbitration namespace qualification](isf-formal-arbitration-namespace.md)
+observes actual grants, priority and finalization stages: only these pointer
+declarations extend their declaration namespace. Parent ownership connections
+and outer domain composition remain later obligations before complete
+reservations or automatic production rewriting can be claimed.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.1.

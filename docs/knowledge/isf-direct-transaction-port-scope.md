@@ -140,6 +140,10 @@ built generated children now supply their actual module products; see
 composition remain separate. [Reusable child products](isf-formal-reusable-products.md)
 now retain actual library/ATL modules and selected child-interface records; this
 still does not close parent connections or outer domain composition.
+[Arbitration namespace qualification](isf-formal-arbitration-namespace.md)
+now observes the real grant/priority/finalization stages: only retained
+round-robin pointer declarations extend their namespace. It does not execute
+resource grants over conflicting raw formal widths.
 
 The paired parser audit retains the former width-lookup defect: a wider formal
 was rejected and a narrower formal admitted an out-of-range bit against an

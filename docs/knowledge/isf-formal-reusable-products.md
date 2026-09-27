@@ -38,7 +38,8 @@ formal uses local_delay because one ATL fixture already has a public payload
 pin; its initial payload spelling correctly triggered the existing direct
 formal/pin collision refusal.
 
-Parent storage/named-completion/readback connections, grant/priority products
+[Grant/priority/finalization declaration preservation](isf-formal-arbitration-namespace.md)
+is now separately qualified. Parent storage/named-completion/readback connections
 and outer domain namespace realization still require coverage before complete
 reservations or automatic production formal renaming. No new HDL runtime
 qualification is claimed. Library readback behavior remains owned by

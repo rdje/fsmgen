@@ -1581,10 +1581,25 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Close remaining parent connection grant and outer domain reservations.`
   Acceptance: `Retain actual parent storage/named-completion/readback connections and grant/priority products with typed scoped identities; qualify outer domain realization before complete reservation integration. Split producer and admission boundaries safely without fabricating executable raw parent widths.`
   Verification: `Independent reusable child coverage is owned by .1; parent connection and final domain integration remain uncovered.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.1`
+  Status: `done`
+  Goal: `Qualify actual resource priority and finalization declaration namespaces.`
+  Acceptance: `Observe real production stages independently and prove which declaration names they introduce or preserve. Compare round-robin additions with existing potential resource products; qualify rule/rule, rule/transaction, unique named-drive and resource variants, projected formals, state-active guards and strict carriers. Preserve canonical collision/conflict failures. Do not merge raw widths, execute fabricated parents, or infer runtime support from this namespace gate.`
+  Verification: `T1948 observes actual production stage order and before/after declarations, exercises grants and priority metadata, verifies raw/projected inventories and strict carriers, and retains collision/user/conflict refusals. Resource/report regression and book checks pass. Evidence: .artifacts/formal-arbitration-namespace/.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Retain parent ownership connections and outer domain declaration products.`
+  Acceptance: `Collect real parent storage-write/read, named-completion/readback and outer domain realization names with typed ownership and stable source/physical correspondence before complete reservation integration. Keep raw conflicts distinct and executable validation strict; split bounded producer boundaries as needed.`
+  Verification: `Resource/priority/finalization declaration coverage is owned by .1; parent connections and outer domain names remain the next uncovered producers.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -3126,3 +3141,42 @@ negative boundaries; durability is the corrected mdBook and this task record.
 No new low-impact prose test mirrors the implementation. No DEVELOPMENT_NOTES
 entry is needed for correcting stale support prose. Resume remaining parent
 connection/grant/outer domain reservations under .2 after this commit.
+
+## Acceptance — arbitration namespace `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` on the
+  resource probe shows real round-robin grants, a target-local priority record
+  and the pointer declaration. _apply_rule_user_resource_arbitration is the
+  declaration-producing phase; the following priority routines rewrite guards,
+  and _finalize_ir derives provenance/fan-in/conflicts. Parent connections run
+  after those stages, so their reservation input requires qualification of this
+  boundary rather than assuming finalization adds or removes names.
+- [x] **ADDRESSED (verified)** — T1948 observes the real production calls,
+  delegates each wrapper to its original CV and compares exact declaration sets
+  before/after. Resource additions equal the retained pointer products; priority
+  and finalization add/remove no declarations. Actual stage order, nonempty grant
+  and priority records, supported resource kinds/arbiters, direct and unique
+  named-drive priorities in both directions, state_active guards, source/physical
+  inventories and strict carriers pass. The test never executes a fabricated
+  parent assembled from conflicting raw products. Actual unknown-user/pointer
+  collisions and finalization writer-conflict refusals remain authoritative.
+- [x] **NO REGRESSION** — qualified.log and regression.log report
+  `All tests successful` for T1948, T1944, T1218 and T1220. book-fixtures.log
+  passes the runnable examples; book.log builds synchronized scope guidance.
+  No production implementation changes or new runtime qualification are claimed.
+  Staged doctrine and commit hook check the test/docs/inventory slice.
+
+Evidence: `.artifacts/formal-arbitration-namespace/`. Initial test.log assumed
+whole-rule resource grants eliminate target-local priority records. The native
+resource-schedule.json proves both are retained for conflicting data writes;
+canonical _rule_data_assignment_refs carries authored condition terms into
+_condition_terms_prove_disjoint, so resource guards do not erase this priority
+record. Compatible transaction-trigger pulses remain a distinct path. Corrected
+expectations pass in qualified.log without changing production semantics.
+Re-derivation uses real stage observations and native grant/priority/storage
+reports; falsification uses exact namespace deltas, source/physical inventories,
+nonvacuous priority/grant checks, malformed resource and finalization refusals;
+durability is T1948, the namespace card, book and this task. This closes the
+current arbitration/finalization declaration boundary, not complete parent
+connections, outer domain realization or automatic production formal renaming.
+Those remain .2. No duplicate DEVELOPMENT_NOTES rationale is needed.

@@ -86,9 +86,13 @@ records. The same producer performs module-conflict checks and supported
 composition selection in normal compilation. For example, a FIFO use retains
 its bound parameters and child bank operations, while a resolved ATL data route
 retains the actual child endpoint ports. These modules keep their own scope
-through parent formal rewriting. The inventory is still partial: later
-priority/grant processing, parent storage/completion/readback connections and
-outer domain composition need coverage. It does not enable independent direct-transaction storage yet.
+through parent formal rewriting. Production-stage checks now qualify the
+resource/priority boundary: arbitration adds the retained round-robin pointer
+declarations; priority guards reuse existing signals and state identities.
+Finalization checks provenance and conflicts without adding declarations.
+This does not grant resource validity to unallocated source products. Parent
+storage/completion/readback connections and outer domain composition still need
+coverage before the reservation inventory is complete. It does not enable independent direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both
