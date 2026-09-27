@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.2` (pending)
-- next_action: Integrate the qualified physical formal pipeline and final reservation checks under .49.2.2.3.3.2, consuming original binding report products without changing authored provenance.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.4` (pending)
+- next_action: Qualify scoped production integration across scheduler families under .49.2.2.3.4, including source-report operands, declaration permutations and remaining collision controls before the payload frontier.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
-- in_flight_uncommitted: none.
+- in_flight_uncommitted: none after the current slice commit.
 - in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated. mdBook visual audit still lacks browser runtime access after the director enabled full CDP, Computer Use and the Chrome extension; fresh runtime checks still fail before browser discovery.

@@ -267,8 +267,9 @@ These helpers expand before symbolic widths and type references are finalized.
 literal width at this pass. A `(type NAME)` placeholder is not width evidence;
 it is rejected for width-dependent helpers instead of producing a wrong mask.
 The width-independent bit masks retain their existing behavior and check the
-index against a literal width when available. This parser correction does not
-remove the separate direct transaction/actor identity collision boundary.
+index against a literal width when available. Normal lowering gives direct formals private identities after these parser
+checks. Independent controllers and explicit-local ownership remain separate
+limitations.
 
 For example, a transaction can manipulate its own literal-width formal and
 copy the result to an actor output:

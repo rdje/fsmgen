@@ -118,14 +118,14 @@ subtest 'callee contract and live-site pruning are unchanged' => sub {
         qr/unknown transaction port 'missing'/, 'live repeat checks endpoints');
 };
 
-subtest 'physical storage collision remains an explicit integration boundary' => sub {
+subtest 'physical storage and caller formal remain separate' => sub {
     my $actor = parse(source(actor_kind => 'storage'));
     my $ok = eval {FSM::Scheduler::ISF->new->lower($actor); 1};
-    ok(!$ok, 'source binding admission does not claim physical integration');
-    like($@, qr/(?:signal width|storage role).*conflicts/, 'remaining merge failure is visible');
+    ok($ok, 'production accepts independent caller formal storage') or diag($@);
+    is($@, '', 'actor storage no longer creates a physical merge conflict');
 };
 
-subtest 'direct actor-pin aliases fail before emitting merged storage' => sub {
+subtest 'direct actor-pin shadows emit separate private storage' => sub {
     for my $kind (qw(input output)) {
         for my $width (4, 8) {
             for my $role (qw(input output)) {
@@ -134,15 +134,15 @@ subtest 'direct actor-pin aliases fail before emitting merged storage' => sub {
                     body => "(do worker (bind ($role payload value)))");
                 $text =~ s/\($kind value \(width 8\)\)/($kind value (width $width))/;
                 my $actor = parse($text);
-                my $ok = eval {FSM::Scheduler::ISF->new->lower($actor); 1};
-                ok(!$ok, "$kind width $width $role binding cannot alias actor pin");
-                like($@, qr/formal 'value' collides with an actor interface port/,
-                    'diagnostic names physical integration boundary');
+                my $lowered = FSM::Scheduler::ISF->new->lower($actor);
+                my $fsm = $lowered->{files}{'binding_scope.fsm'};
+                like($fsm, qr/\(isf_port_caller_value\w* 4\)/,
+                    "$kind width $width $role binding uses private caller storage");
+                like($fsm, qr/\(value $width\)/, 'actor pin keeps its original width');
                 my $file = write_file("$work/alias_${kind}_${width}_${role}.isf", $text);
                 my $check = $capture->([$^X, 'bin/fsmgen', '--strict', '--check', '--json', $file], '');
-                isnt($check->{exit_code}, 0, 'native strict check refuses alias');
-                like($check->{stdout}, qr/separate direct formal physical identities/,
-                    'public diagnostic preserves the boundary');
+                is($check->{exit_code}, 0, 'native strict check admits separated identities')
+                    or diag($check->{stdout}, $check->{stderr});
             }
         }
     }

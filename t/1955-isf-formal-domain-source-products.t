@@ -9,6 +9,7 @@ use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner;
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
+use FSM::Scheduler::ISF::FormalLowering;
 use FSM::Scheduler::ISF::FormalIdentityPlan;
 use FSM::Scheduler::ISF::FormalClauseResolver;
 use FSM::Scheduler::ISF::FormalReservationInventory;
@@ -83,8 +84,11 @@ sub qualify {
     my ($a, $label) = @_;
     my $before = dclone($a);
     my $p = prepare($a);
+    my $context = FSM::Scheduler::ISF::FormalLowering->prepare($l, $a);
+    my $physical = $context ? $context->{actor} : $a;
+    my $physical_prepared = $l->prepare_formal_source($physical);
     my ($files, $sources, $modules) = actual($a);
-    my $products = $p->{domain_source_products};
+    my $products = $physical_prepared->{domain_source_products};
     is_deeply([sort keys %$products], [sort keys %$sources], "$label actual domain source set retained");
     for my $name (sort keys %$sources) {
         my $r = $products->{$name}; my $local = $r->{preparation};
@@ -98,8 +102,8 @@ sub qualify {
         is($modules->{$name}{actor_name} . '.fsm', $r->{domain}{scheduled_fsm}, "$label physical module matches partition artifact");
         my $default = $p->{domain_partition}{default_domain};
         for my $field (qw(transactions rules storage library_uses)) {
-            is_deeply($sources->{$name}{$field}, [grep {($_->{domain} // $default) eq $name} @{$a->{$field} || []}],
-                "$label $field contains only authored domain owners");
+            is_deeply($sources->{$name}{$field}, [grep {($_->{domain} // $default) eq $name} @{$physical->{$field} || []}],
+                "$label $field contains only the projected declarations of its authored domain owners");
         }
     }
     is_deeply($a, $before, "$label source unchanged by preparation and execution");

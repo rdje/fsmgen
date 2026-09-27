@@ -129,13 +129,11 @@ local-`do` probes also fail: an untriggered callee before its caller runs withou
 the call, while placing the caller first leaves it waiting for an unreachable
 callee. These scheduling defects are owned by `.32.1.3.3.1`; generated-call
 qualification does not close direct-call or independent-transaction reachability.
-Separate direct transactions also share raw formal-port names in the parent
-module. Reusing a formal name across those transactions can merge their
-storage identity. A formal name that matches actor storage can instead fail
-role or width merging, and caller-side binding lookup can select that actor
-storage before an explicit caller port. These direct scope defects remain
-under `.49.2`; use distinct names while that repair is pending. Generated-child
-port qualification does not establish direct-call execution.
+Direct transaction formals now receive separate private storage identities even
+when they share names with actor pins, actor storage or sibling formals. Caller
+bindings resolve the caller's own formal before an actor declaration; generated
+children keep their public port names. This storage separation does not establish
+direct-call execution or repair the reachability failures above.
 
 ### Named completion outputs in generated children
 

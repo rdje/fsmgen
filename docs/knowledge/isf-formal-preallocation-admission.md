@@ -11,6 +11,12 @@ tags: [isf, formals, scope, monitors, admission, reservations]
 evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1941-isf-formal-preallocation-admission.t; t/1936-isf-formal-source-context.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1941-isf-formal-preallocation-admission.t t/1936-isf-formal-source-context.t t/1935-isf-local-declaration-admission.t t/1413-isf-trigger-anchor.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 prepare_formal_source must obtain real helper names before complete formal
 allocation, but _ir_monitor_check rejected a helper matching an unallocated

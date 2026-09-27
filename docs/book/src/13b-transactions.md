@@ -37,11 +37,11 @@ concurrent or repair local calls.
 Scope repair now has separately tested expression, clause and binding resolution. It
 keeps caller values distinct from callee formal ports, retains generated-child
 public ports, and preserves state names, point labels and aggregate members.
-That resolver is not connected to production lowering yet: same-name direct
-formals can still collide with actor storage or sibling formals. Parsed examples
-pass strict carrier replay after the detached rewrite, including generated calls
-and domain crossings. Production integration and runtime qualification remain
-required before relying on those combinations.
+Normal compilation now gives each direct formal a private physical identity,
+separate from actor pins, actor storage and sibling formals. It applies the
+qualified resolver and checks actual declarations against prepared module scopes
+before emission. Generated-child ports retain their published names. This scope
+repair does not repair sibling-controller or local-call reachability.
 
 Reservation preparation now retains the actual products of transaction lowering,
 including state assignments, counters, monitor logic and call records. This matters
@@ -140,20 +140,22 @@ compares actual parent/domain/child declarations with those prepared scopes and
 the canonical private allocation. Removing a real dynamic-wait helper from the
 inventory fails this check, as does adding an unreserved implicit assignment
 target. Private formals must also retain their planned width and ownership and
-cannot alias a fixed port or block. These checks are qualified on detached
-rewrites. Preparation also keeps the canonical authored binding report records:
+cannot alias a fixed port or block. Normal compilation runs these checks before
+emitting the parent or any domain artifacts. Preparation also keeps the canonical authored binding report records:
 for example, caller `payload` and callee `addr` retain those source names in this
 snapshot even when executable endpoints receive private physical names. The
 snapshot preserves expression text, widths, timing and domain ownership.
-Production integration and use of these source records remain pending.
-This does not enable independent direct-transaction storage yet.
+Public reports use these original records for binding provenance. Wait counts,
+loop conditions, temporal operands and bank-access expressions likewise retain
+authored names in a detached report view; executable operands remain physical.
+Inferred-storage entries identify the actual private storage and its width.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both
 identities; these preparation products are not executable modules. Fixed actor
 names, explicit locals, generated public ports and already renamed declarations
-keep their collision checks. Normal compilation still rejects the raw alias;
-the separately projected actor must pass those checks before emission.
+keep their collision checks. Normal compilation allocates direct formal
+identities first and then requires the resulting modules to pass strict checks.
 
 Today the task-like port model is shipped for `(ports ...)` bindings on `do`,
 `spawn`, and rule `trigger` activation sites.
@@ -183,10 +185,24 @@ Binding validation resolves an explicit caller transaction port before a
 same-named actor pin or storage variable, using the caller port's width. A
 callee port never supplies a missing caller variable. Rule bindings remain in
 actor scope: actor inputs are read-only and actor output readback is rejected.
-Until direct formals receive separate physical identities, a direct formal
-that shares an actor interface pin name is rejected, even when the widths
-match. This prevents local writes from addressing that pin. Source validation
-does not remove the storage-collision or controller limitations described above.
+A direct formal may share an actor pin or storage name even when the widths
+differ. Writes address its private storage; the actor declaration keeps its own
+width and ownership. Explicit `(local ...)` ownership and the controller
+limitations described above remain separate work.
+
+For example, this private four-bit `payload` neither drives nor reads the
+eight-bit actor input of the same name. The dynamic wait reads the private value:
+
+```lisp
+(actor formal_shadow (clock clk) (reset (rst_n async active_low))
+ (interface (input start) (input payload (width 8)) (input data (width 4))
+  (output observed (width 4)) (output done))
+ (transaction main (ports (input payload (width 4))) (on start)
+  (set payload data) (wait payload) (set observed payload) (complete done)))
+```
+
+The schedule reports `payload` as the authored wait count source. Its
+`inferred_storage` table lists the allocated private name at width four.
 
 Generated child formals keep their own width, direction and type when they
 share an actor pin name. Explicit input bindings select the child payload;

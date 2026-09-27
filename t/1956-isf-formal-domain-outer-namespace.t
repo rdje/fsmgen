@@ -9,6 +9,7 @@ use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner;
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
+use FSM::Scheduler::ISF::FormalLowering;
 use FSM::Scheduler::ISF::FormalIdentityPlan;
 use FSM::Scheduler::ISF::FormalClauseResolver;
 use FSM::Scheduler::ISF::FormalReservationInventory;
@@ -77,13 +78,16 @@ sub qualify {
     my ($a, $label) = @_;
     my $before = dclone($a);
     my $p = $l->prepare_formal_source($a);
+    my $context = FSM::Scheduler::ISF::FormalLowering->prepare($l, $a);
+    my $physical = $context ? $context->{actor} : $a;
+    my $physical_prepared = $l->prepare_formal_source($physical);
     my ($files, $realizations, $partition) = observe($a);
     my (@fsm, @rtl, @interfaces, @wiring, @expected_files);
     push @wiring, 'domain_wiring';
     push @expected_files, "$a->{actor_name}_top.fsm";
     for my $r (@$realizations) {
         my ($ir, $names, $domain) = @{$r}{qw(ir names domain)};
-        my $local = $p->{domain_source_products}{$domain->{name}}{preparation};
+        my $local = $physical_prepared->{domain_source_products}{$domain->{name}}{preparation};
         my $reserved = inventory($local);
         is_deeply([sort grep {!$reserved->{$_}} keys %{declarations($ir)}], [], "$label actual domain namespace covered before outer emission");
         push @expected_files, $domain->{scheduled_fsm};

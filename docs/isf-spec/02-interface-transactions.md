@@ -1874,8 +1874,10 @@ An unresolved formal remains the owner of its name and cannot borrow an actor
 width. Type placeholders do not count as literal widths. Width-dependent
 helpers reject unresolved symbolic/type widths; width-independent bit masks
 retain their existing admission and check ranges when a literal width exists.
-These parser rules do not imply that direct same-name formal/actor identities
-or independent transaction controllers are already repaired in lowering.
+Normal lowering assigns each direct formal a private physical identity, separate
+from same-named actor pins, actor storage and sibling formals. Generated-child
+public ports keep their names. This does not qualify independent transaction
+controllers or repair plain local-call reachability.
 The [data-manipulation chapter](../book/src/13e-data-manipulation.md) contains
 runnable helper examples and their exact masks and validation boundaries.
 

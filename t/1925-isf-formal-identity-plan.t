@@ -95,8 +95,8 @@ for my $case (
 eval {$planner->lookup($plan, 'absent', 'status')};
 like($@, qr/unknown transaction/, 'unknown lookup owner rejected');
 
-# The detached planner is not a production repair. Keep this integration
-# boundary explicit until the owned operand/binding implementation lands.
-eval {FSM::Scheduler::ISF->new->lower($actor)};
-like($@, qr/signal width for 'status' conflicts across transactions/, 'existing lowering still refuses actor/formal collision');
+# Production now applies the qualified planner/resolver before merging storage.
+my $production = FSM::Scheduler::ISF->new->lower($actor);
+my ($carrier) = values %{$production->{files}};
+like($carrier, qr/\(isf_port_\w+_status\w* 4(?:\s|\))/, 'production emits a distinct private formal');
 done_testing;

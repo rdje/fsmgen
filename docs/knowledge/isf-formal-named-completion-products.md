@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, completion, children, ownership]
 evidence: perl/FSM/Scheduler/ISF/ChildCompletionOutputs.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1953-isf-formal-named-completion-products.t; t/1913-isf-generated-child-named-completion.t
 reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1953-isf-formal-named-completion-products.t t/1913-isf-generated-child-named-completion.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 plan_child_completion_outputs shares actual parent declaration allocation with
 detached source preparation after storage read/write handoffs. It retains

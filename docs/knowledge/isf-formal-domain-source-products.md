@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, domains, activation, ownership]
 evidence: perl/FSM/Scheduler/ISF/DomainSource.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF.pm; t/1955-isf-formal-domain-source-products.t; t/1387-isf-cross-domain-activation-handshake-lowering.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1955-isf-formal-domain-source-products.t t/1247-isf-clock-domain-partition.t t/1387-isf-cross-domain-activation-handshake-lowering.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 Monolithic source preparation does not inject the external activation contracts
 used by independently emitted domains. Actual caller ready/request states and

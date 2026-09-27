@@ -35,11 +35,9 @@ Actual domain producers agree with local preparation records. Complete native,
 API and newline schedule reports agree for the admitted control, including
 source expressions and explicit snapshot/live modes.
 
-This adds private preparation data only. Production does not automatically
-project formals or consume the retained source table yet. The next integration
-leaf must use original prepared records for authored report provenance while
-leaving actual executable bindings physical. It must preserve the existing
-bounded public binding key set and keep physical storage identities distinct
-from authored binding names. Controller and local-call runtime work remains
+[Production formal lowering](isf-production-formal-scope.md) now consumes the
+retained source table in a detached report view. Executable bindings remain
+physical, the public binding key set is unchanged, and inferred storage names
+identify actual private storage. Controller and local-call runtime work remains
 separate.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.1.

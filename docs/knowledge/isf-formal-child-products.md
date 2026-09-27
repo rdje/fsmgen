@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, children, storage, completion, scope]
 evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1945-isf-formal-child-products.t; t/1934-isf-generated-pin-shadow.t; t/1917-isf-generated-child-scalar-writes.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1945-isf-formal-child-products.t t/1936-isf-formal-source-context.t t/1938-isf-formal-parent-products.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 Generated transaction children are independently built before the parent IR.
 Transaction-only child products omit names later created for activation history,

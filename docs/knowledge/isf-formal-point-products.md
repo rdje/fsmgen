@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, points, defaults, scope]
 evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1943-isf-formal-point-products.t; t/1416-isf-trigger-anchor-ref.t; t/1476-isf-output-default-reset.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1943-isf-formal-point-products.t t/1416-isf-trigger-anchor-ref.t t/1476-isf-output-default-reset.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 Actual parent point resolution runs after transaction lowering and activation
 wiring. It lazily creates driven active signals for referenced named points or

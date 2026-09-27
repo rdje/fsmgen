@@ -169,7 +169,8 @@ delete $missing{transaction};
 eval {$resolver->new(%missing)};
 like($@, qr/explicit transaction context/, 'omission cannot silently select actor scope');
 
-# This detached helper must not change the production scope boundary.
-eval {FSM::Scheduler::ISF->new->lower($actor)};
-like($@, qr/signal width for 'data' conflicts across transactions/, 'production direct-scope collision still explicitly open');
+# Production now applies the qualified planner/resolver before merging storage.
+my $production = FSM::Scheduler::ISF->new->lower($actor);
+my ($carrier) = values %{$production->{files}};
+like($carrier, qr/\(isf_port_\w+_data\w* 4(?:\s|\))/, 'production emits a distinct private formal');
 done_testing;

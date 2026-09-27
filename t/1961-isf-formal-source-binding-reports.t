@@ -15,6 +15,7 @@ use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::FormalIdentityPlan;
 use FSM::Scheduler::ISF::FormalClauseResolver;
 use FSM::Scheduler::ISF::PreparedFormalReservations;
+use FSM::Scheduler::ISF::FormalLowering;
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 
 my $scheduler = FSM::Scheduler::ISF->new;
@@ -124,15 +125,21 @@ ISF
         no warnings 'redefine';
         local *FSM::Scheduler::ISF::LoweringIR::build_module = sub {
             my ($self, $source) = @_; my $ir = $build->(@_);
-            $actual{$source->{_scheduled_domain_name}} = dclone($ir->{transaction_port_bindings})
+            $actual{$source->{_scheduled_domain_name}} = dclone($ir)
                 if defined $source->{_scheduled_domain_name};
             return $ir;
         };
         $scheduler->lower($actor);
     }
+    my $context = FSM::Scheduler::ISF::FormalLowering->prepare($scheduler->{ir}, $actor);
     for my $name (qw(core aux)) {
         my $records = $p->{domain_source_products}{$name}{preparation}{transaction_binding_report_products};
-        is_deeply($records, $actual{$name}, "$name source metadata matches actual domain producer");
+        my $view = FSM::Scheduler::ISF::FormalLowering->report_ir($context, $actual{$name}, $name);
+        is_deeply($records, $view->{transaction_port_bindings}, "$name source metadata survives actual physical domain reporting");
+        my $record = $records->[0];
+        is($actual{$name}{transaction_port_bindings}[0]{port},
+            $context->{plan}{formals}{$record->{target_transaction}}{$record->{port}}{physical_name},
+            "$name executable binding remains physical");
         is_deeply([map {$_->{owner}} @$records], [$name eq 'core' ? 'parent' : 'aux_parent'],
             "$name report ownership excludes sibling sites");
     }

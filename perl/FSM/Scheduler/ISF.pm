@@ -11,6 +11,7 @@ no warnings 'experimental::signatures';
 use FSM::Debug;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Scheduler::ISF::LoweringIR;
+use FSM::Scheduler::ISF::FormalLowering;
 use FSM::Scheduler::ISF::DomainSource qw(_domain_actor_for_scheduled_artifact _entry_domain);
 use FSM::Scheduler::ISF::Emitter::FSM;
 use FSM::Scheduler::ISF::Emitter::CompositionTop;
@@ -58,12 +59,15 @@ sub lower($self, @args) {
     my ($actor) = _validate_actor_arg('lower', @args);
     fsm_trace_enter("Scheduler lower: $actor->{actor_name}", 2);
 
+    my $formal = FSM::Scheduler::ISF::FormalLowering->prepare($self->{ir}, $actor);
+    $actor = $formal->{actor} if $formal;
     my $ir     = $self->{ir}->build_module($actor);
     if (_is_multi_domain_ir($ir)) {
-        my $files = $self->_emit_multi_domain_scheduled_artifacts($actor, $ir);
+        my $files = $self->_emit_multi_domain_scheduled_artifacts($actor, $ir, $formal);
         fsm_trace_exit("Scheduler lower completed", 2);
         return { files => $files };
     }
+    FSM::Scheduler::ISF::FormalLowering->verify($formal, {$ir->{actor_name} => $ir});
     my %files;
 
     # Emit parent
@@ -88,10 +92,14 @@ sub report($self, @args) {
     my ($actor) = _validate_actor_arg('report', @args);
     fsm_trace_enter("Scheduler report: $actor->{actor_name}", 2);
 
+    my $formal = FSM::Scheduler::ISF::FormalLowering->prepare($self->{ir}, $actor);
+    $actor = $formal->{actor} if $formal;
     my $ir   = $self->{ir}->build_module($actor);
+    FSM::Scheduler::ISF::FormalLowering->verify($formal, {$ir->{actor_name} => $ir})
+        unless _is_multi_domain_ir($ir);
     my $json = _is_multi_domain_ir($ir)
-        ? $self->_emit_multi_domain_schedule_report($actor, $ir)
-        : $self->{json_emitter}->emit($ir);
+        ? $self->_emit_multi_domain_schedule_report($actor, $ir, $formal)
+        : $self->{json_emitter}->emit(FSM::Scheduler::ISF::FormalLowering->report_ir($formal, $ir));
 
     fsm_trace_exit("Scheduler report completed", 2);
     return $json;
@@ -124,28 +132,34 @@ sub _is_multi_domain_ir($ir) {
     return ref($partition) eq 'HASH' && ($partition->{kind} // '') eq 'multi_domain';
 }
 
-sub _emit_multi_domain_schedule_report($self, $actor, $ir) {
+sub _emit_multi_domain_schedule_report($self, $actor, $ir, $formal = undef) {
     my $partition = $ir->{domain_partition};
     confess "FSM::Scheduler::ISF->report expected a validated multi-domain partition for actor '$actor->{actor_name}'\n"
         unless ref($partition) eq 'HASH' && ref($partition->{domains}) eq 'ARRAY';
 
     my %domain_report_by_name;
-    for my $realization (@{$self->_multi_domain_realizations($actor, $partition)}) {
+    my $realizations = $self->_multi_domain_realizations($actor, $partition);
+    FSM::Scheduler::ISF::FormalLowering->verify($formal,
+        {map {$_->{ir}{actor_name} => $_->{ir}} @$realizations});
+    for my $realization (@$realizations) {
         $domain_report_by_name{$realization->{domain}{name}} =
-            $self->{json_emitter}->report_hash($realization->{ir});
+            $self->{json_emitter}->report_hash(FSM::Scheduler::ISF::FormalLowering->report_ir(
+                $formal, $realization->{ir}, $realization->{domain}{name}));
     }
 
     my $report = $self->{json_emitter}->multi_domain_report_hash($ir, \%domain_report_by_name);
     return $self->{json_emitter}->emit_report_hash($report);
 }
 
-sub _emit_multi_domain_scheduled_artifacts($self, $actor, $ir) {
+sub _emit_multi_domain_scheduled_artifacts($self, $actor, $ir, $formal = undef) {
     my $partition = $ir->{domain_partition};
     confess "FSM::Scheduler::ISF->lower expected a validated multi-domain partition for actor '$actor->{actor_name}'\n"
         unless ref($partition) eq 'HASH' && ref($partition->{domains}) eq 'ARRAY';
 
     my %files;
     my $realizations = $self->_multi_domain_realizations($actor, $partition);
+    FSM::Scheduler::ISF::FormalLowering->verify($formal,
+        {map {$_->{ir}{actor_name} => $_->{ir}} @$realizations});
     for my $realization (@$realizations) {
         my $domain = $realization->{domain};
         my $domain_ir = $realization->{ir};

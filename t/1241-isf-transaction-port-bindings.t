@@ -58,9 +58,9 @@ subtest 'blocking do binds transaction input and output ports in the review fsm'
 ISF
 
     my $fsm = $lowered->{files}{'do_port_binding.fsm'};
-    like($fsm, qr/\(= \(addr req_addr\)\)/, 'do state drives child input port from the bound actor input');
+    like($fsm, qr/\(= \(isf_port_child_addr req_addr\)\)/, 'do state drives child input port from the bound actor input');
     like($fsm, qr/\(= \(child_start 1\)\)/, 'do state still asserts child start');
-    like($fsm, qr/\(= \(resp> data\) <child_done\)/, 'do state copies child output port to the bound actor output when done');
+    like($fsm, qr/\(= \(resp> isf_port_child_data\) <child_done\)/, 'do state copies child output port to the bound actor output when done');
 };
 
 subtest 'spawn binds transaction ports through hidden generated-top handoffs' => sub {
@@ -125,7 +125,7 @@ ISF
     like($fsm, qr/\(fire_work_addr 8\)/, 'rule trigger payload source is sized from the transaction port');
     like($fsm, qr/\(-fire <ready\s+\(<1 \(fire_work 1\)\)\s+\(<- \(fire_work_addr req_addr\)\)\s+\)/s,
         'rule captures its trigger payload beside its distinct trigger pulse');
-    like($fsm, qr/\(-work_trigger_fanin\s+\(= \(work_start fire_work\)\)\s+\(= \(addr fire_work_addr\) <fire_work\)\s+\)/s,
+    like($fsm, qr/\(-work_trigger_fanin\s+\(= \(work_start fire_work\)\)\s+\(= \(isf_port_work_addr fire_work_addr\) <fire_work\)\s+\)/s,
         'trigger fan-in routes the per-rule payload into the transaction input port');
 };
 
@@ -178,7 +178,7 @@ ISF
 
     my $lowered = lower_source($source, 'expression-port-binding');
     my $fsm = $lowered->{files}{'expression_port_binding.fsm'};
-    like($fsm, qr/\(= \(addr \(concat req_hi req_lo\)\)\)/,
+    like($fsm, qr/\(= \(isf_port_local_child_addr \(concat req_hi req_lo\)\)\)/,
         'local do input binding preserves expression RHS in the review fsm');
     like($fsm, qr/\(-w0_port_bindings\s+\(= \(w0_addr> \(concat req_hi req_lo\)\)\)\s+\)/s,
         'spawn input binding preserves expression RHS in the parent handoff DT');
@@ -265,7 +265,7 @@ ISF
     my $actor = FSM::Adapter::ISF->new()->parse_source($source, 'explicit-binding-timing.isf');
     my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
     my $fsm = $lowered->{files}{'explicit_binding_timing.fsm'};
-    like($fsm, qr/\(= \(addr req_addr\)\)/, 'snapshot timing keeps local do input assignment');
+    like($fsm, qr/\(= \(isf_port_local_child_addr req_addr\)\)/, 'snapshot timing keeps local do input assignment');
     like($fsm, qr/\(-parent_generated_child_do_1_port_bindings\s+\(= \(parent_generated_child_do_1_addr> req_addr\)\)\s+\)/s,
         'live timing keeps generated do input handoff');
     like($fsm, qr/\(-w0_port_bindings\s+\(= \(w0_addr> req_addr\)\)\s+\)/s,

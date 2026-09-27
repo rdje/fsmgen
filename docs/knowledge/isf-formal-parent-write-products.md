@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, storage, writers, children, ownership]
 evidence: perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1949-isf-formal-parent-write-products.t; t/1917-isf-generated-child-scalar-writes.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1949-isf-formal-parent-write-products.t t/1946-isf-formal-completion-products.t t/1917-isf-generated-child-scalar-writes.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 plan_child_storage_write_handoffs shares the actual allocation and handoff
 products used by connect_child_storage_writes. Executable connection retains

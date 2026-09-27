@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, resources, arbitration]
 evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1944-isf-formal-resource-products.t; t/1218-isf-rule-slot-resource-arbitration.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1944-isf-formal-resource-products.t t/1218-isf-rule-slot-resource-arbitration.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 Round-robin pointer declarations appear during resource arbitration, after the
 earlier formal-preparation product stages. T1944 derives the actual pointer

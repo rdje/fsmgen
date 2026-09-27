@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, library, atl, children, scope]
 evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1947-isf-formal-reusable-products.t; t/1945-isf-formal-child-products.t; t/1231-isf-library-generated-top.t; t/1330-isf-atl-resolved-child-fixture-coverage.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1947-isf-formal-reusable-products.t t/1945-isf-formal-child-products.t t/1231-isf-library-generated-top.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 _build_module_child_products is the unchanged production order for generated
 transaction children, library uses, resolved ATL actors, selected ATL top records

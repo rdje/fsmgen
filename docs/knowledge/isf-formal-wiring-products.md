@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, wiring, domains, activation]
 evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1942-isf-formal-wiring-products.t; t/1387-isf-cross-domain-activation-handshake-lowering.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1942-isf-formal-wiring-products.t t/1387-isf-cross-domain-activation-handshake-lowering.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 Transaction and parent activation products precede _wire_do_children and
 _wire_external_activations. Actual projected domains add ready/request states,

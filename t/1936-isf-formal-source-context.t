@@ -194,8 +194,8 @@ subtest 'source checks run before parent identity merging' => sub {
     my $prepared = eval {prepare($shadow)};
     ok($prepared, 'contexts do not require a conflicting parent merge') or diag($@);
     my $ok = eval {FSM::Scheduler::ISF->new->lower(parse($shadow)); 1};
-    ok(!$ok, 'production physical collision boundary remains');
-    like($@, qr/signal width.*conflicts across transactions/, 'existing physical refusal unchanged');
+    ok($ok, 'production separates the source formal from actor storage') or diag($@);
+    is($@, '', 'source context integrates without a physical merge conflict');
     for my $case (
         ['(local scratch (width 4) (init 1))', '(local scratch (width 4) (typo 1))', qr/unsupported local option/],
         ['(wait count)', '(wait (bogus count))', qr/supported expression operator shape/],

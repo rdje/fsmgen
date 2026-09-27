@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, storage, readers, children, ownership]
 evidence: perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1951-isf-formal-parent-read-products.t; t/1950-isf-child-read-block-collisions.t
 reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1951-isf-formal-parent-read-products.t t/1950-isf-child-read-block-collisions.t t/1949-isf-formal-parent-write-products.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 plan_child_storage_read_handoffs shares executable reader allocation and
 products with detached formal preparation. It copies input name membership,

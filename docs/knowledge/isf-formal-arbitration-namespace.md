@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, resources, priority, finalization]
 evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1948-isf-formal-arbitration-namespace.t; t/1944-isf-formal-resource-products.t; t/1218-isf-rule-slot-resource-arbitration.t; t/1220-isf-arbitration-schedule-report.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1948-isf-formal-arbitration-namespace.t t/1944-isf-formal-resource-products.t t/1218-isf-rule-slot-resource-arbitration.t t/1220-isf-arbitration-schedule-report.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 Actual _apply_rule_user_resource_arbitration adds round-robin pointer counters
 through the shared declaration producer already retained as

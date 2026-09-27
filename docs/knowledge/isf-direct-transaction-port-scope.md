@@ -16,6 +16,16 @@ evidence: t/1939-isf-formal-helper-identity.t; t/1938-isf-formal-parent-products
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1939-isf-formal-helper-identity.t t/1938-isf-formal-parent-products.t t/1937-isf-formal-reservation-products.t t/1936-isf-formal-source-context.t t/1935-isf-local-declaration-admission.t t/1933-isf-caller-formal-binding-scope.t t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
 ---
 
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now allocates private direct-formal identities before normal module construction,
+checks actual module reservations, and restores authored report provenance.
+Same-named actor pins/storage and sibling formals remain distinct. Independent
+controller execution and explicit-local ownership are still separately gated.
+
+The following records the investigation and successive prerequisite boundaries;
+its descriptions of the old production collision and pending integration refer
+to those earlier slices, superseded by the current integration above.
+
 Generated children have separately qualified local port metadata under .49.1.
 Direct transactions still merge into the actor module under raw formal names.
 _build_parent_ir seeds actor storage maps, then merges _build_transaction maps;

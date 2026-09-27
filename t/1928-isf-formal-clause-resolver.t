@@ -180,8 +180,9 @@ ISF
     my $check = FSM::Test::SourceQueryRunner::_capture([$^X, 'bin/fsmgen', '--strict', '--check', '--json', $file], '');
     is($check->{exit_code}, 0, 'transformed carrier passes independent strict public replay') or diag($check->{stdout},$check->{stderr});
     is_deeply($parsed, $before, 'source actor, bit-helper expansion and report input remain intact');
-    eval {FSM::Scheduler::ISF->new->lower($parsed)};
-    like($@, qr/signal width for 'data' conflicts/, 'ordinary production route still has the owned integration boundary');
+    my $production = FSM::Scheduler::ISF->new->lower($parsed);
+    like($production->{files}{'scoped_replay.fsm'}, qr/\(isf_port_main_data\w* 4\)/,
+        'ordinary production route separates the shadowing formal');
 };
 
 subtest 'parsed controller cohort keeps source records and strict carrier validity' => sub {

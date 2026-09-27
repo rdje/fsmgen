@@ -395,7 +395,11 @@ set and records the binding site kind (`do`, `spawn`, or `rule_trigger`),
 owner, target transaction, port role/name, actor signal when the actor side is
 a scalar endpoint, formatted actor expression, `actor_endpoint_kind`,
 `binding_timing`, `authored_timing_mode`, width, and generated handoff signal
-names where applicable.
+names where applicable. Direct-formal physical allocation does not rename these
+authored endpoints or expression operands. Wait/loop/temporal and bank-access
+source operands likewise retain authored names; inferred-storage identities and
+generated helper names describe actual lowered artifacts. This report view does
+not change executable signal references.
 Parameterized
 rule-trigger entries use the generated trigger instance handoff names and
 preserve the per-rule trigger and payload source names; generated-child

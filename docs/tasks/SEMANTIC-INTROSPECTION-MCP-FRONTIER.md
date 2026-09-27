@@ -1744,10 +1744,10 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Wire scoped declarations, operands and bindings while preserving source-facing reports.`
   Acceptance: `Use the qualified contexts/reservations and detached resolvers to connect physical formal identities through parent/domain/child lowering, widths/types/resets/roles, local calls and rule payload destinations. Preserve source binding names, logical state ownership and diagnostics; reject unresolved collisions. Qualify focused generated artifacts and complete native/API/MCP reports in the same implementation commit. Do not claim the separate controller/runtime repairs complete.`
-  Verification: `The binding report producer currently reads executable clause endpoints. Retain its original-source records in child .1 before switching scheduler lowering/reporting to the qualified physical pipeline in child .2. Physical storage names and authored binding identities must remain distinct; runtime/controller repairs are separate.`
+  Verification: `Both children are verified: original binding report products and automatic production physical scope integration. Evidence remains with those leaves. Actual storage identities and authored report operands are now separate; broad scheduler-family qualification is .49.2.2.3.4 and controller/runtime repairs remain separately owned.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.2`
   Commit: `children below`
 
@@ -1759,11 +1759,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate physical formal projection and reservation coverage into production compilation.`
   Acceptance: `Use complete prepared contexts and inventories, canonical allocation, scoped transaction/rule rewriting and final actual-module coverage in lowering and reporting. Preserve authored binding metadata, logical controller ownership and diagnostics, keep generated interfaces unchanged, and qualify native/API/newline reports plus emitted declarations for parent/domain/child and collision cases. Do not close separate execution repairs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `FormalLowering now prepares, allocates and rewrites direct formals at scheduler lower/report entry, checks actual parent/domain/child scopes before emission, and restores authored binding/wait/loop/temporal/bank metadata only in a detached report view. T1962 qualifies raw pin/storage shadows, generated reads, automatic domains, complete native/API/newline reports, strict exported carriers and late-declaration refusal. Independent SystemVerilog/Verilog public-pin oracles pass dynamic waits, reset and repeated activation. Existing scope/domain/binding tests are migrated from obsolete raw-name expectations; source validation and raw LoweringIR refusal controls remain. Book examples/build pass. Broad family qualification and independent execution remain separate.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.4`
   Status: `pending`
@@ -3988,3 +3988,46 @@ product does not add public report keys, switch production naming or qualify
 independent execution. Child .2 must use original source records for authored
 report provenance while keeping executable operands physical. The canonical
 fact/task records own the rationale without a duplicate ledger entry.
+
+
+## Acceptance — production formal integration `.49.2.2.3.3.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--check --json` in the retained
+  pre-integration scope tests refused actor/formal width or role collisions.
+  Scheduler lower/report sent raw formal names directly into the parent merger.
+  The qualified detached allocator/resolver and final scope guard were not on
+  that path; source binding reports read the same executable endpoints.
+- [x] **ADDRESSED (verified)** — FormalLowering connects complete preparation,
+  canonical allocation and scoped rewriting before actual module construction.
+  Final declaration coverage runs before emission for parent and domain scopes.
+  Report-only copies restore original binding records and source operands;
+  actual executable wait/loop fields remain physical. T1962 observes separate
+  actor-pin/storage and private formal widths, source immutability, generated
+  storage readback, automatic domain projection and strict carrier replay.
+  Independent public-pin SV/Verilog oracles emit PRODUCTION_FORMAL_SCOPE_PASS
+  through dynamic waits, reset and repeated activation. An injected unreserved
+  helper fails before any FSM emission. T1961 distinguishes physical domain
+  binding endpoints from the restored original report records.
+- [x] **NO REGRESSION** — runtime.log and migrated.log report
+  `All tests successful`; the migrated cohort covers T1925/T1927/T1928/T1933/
+  T1936/T1955/T1956/T1241/T1962. The initial broader cohort's other cases passed,
+  including T1926/T1929/T1934/T1935/T1937..T1939/T1941..T1949/T1951/T1953/
+  T1954/T1957/T1959/T1960/T1961/T1243/T1244/T1255. Its failures were obsolete
+  raw-name/refusal expectations, now replaced with positive separated-storage
+  checks while preserving admission controls. T1376 and the mdBook build pass.
+  Staged doctrines and the normal hook are required before commit.
+
+Evidence: `.artifacts/formal-production-integration/`. Re-derivation observes
+actual production declarations and complete native/API/newline reports;
+falsification retains actor shadows, differing domain widths, source immutability,
+late declaration injection and independent public-pin runtime; durability is
+T1962, migrated regression assertions, canonical facts, book/spec and final scope
+guard. The report projection is deliberately detached because executable loop
+and wait wiring consumes source-labelled fields. Explicit already-projected
+private callers retain compatibility without a second rewrite. No controller,
+plain local-call runtime, explicit-local ownership or historical containment
+repair is claimed. These remain owned; .49.2.2.3.4 is the next family gate.
+
+The first staged gate rejected lowercase/underscore authority-ID suffixes for
+the changed book/spec aggregates. This slice corrects them to valid uppercase
+hyphenated IDs; the aggregate evidence and ceilings are unchanged.

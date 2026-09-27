@@ -11,6 +11,12 @@ tags: [isf, formals, reservations, completion, children, scope]
 evidence: perl/FSM/Scheduler/ISF/ChildCompletion.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1946-isf-formal-completion-products.t; t/1908-isf-generated-child-completion-memory.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1946-isf-formal-completion-products.t t/1908-isf-generated-child-completion-memory.t
 ---
+Current integration: [production formal scope](isf-production-formal-scope.md)
+now consumes the qualified preparation products. The producer-specific account
+below records its original qualification boundary; pending global integration
+statements are historical. Independent-controller and local-call execution
+remain separately gated.
+
 
 ChildCompletion's real producer returns its pre-allocation input_names and
 instances keyed by generated activation instance, with explicit typed identity,

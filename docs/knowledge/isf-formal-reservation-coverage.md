@@ -44,8 +44,8 @@ completion and crossing cases. The preceding outer-scope qualification remains
 This detached guard establishes the final declaration check for the prepared
 ISF-to-FSM module boundary. It does not replace source or executable admission,
 prove arbitrary edited IR behavior, or cover new producer/emitter boundaries
-without extending qualification. Production lowering does not invoke automatic
-formal projection or this guard yet; that integration and public report
-preservation are the next slice. Independent controller/local-call runtime
+without extending qualification. [Production formal lowering](isf-production-formal-scope.md) now invokes this
+guard after actual module construction and before emission, with authored
+report provenance restored in a detached view. Independent controller/local-call runtime
 qualification remains separately owned.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.2.
