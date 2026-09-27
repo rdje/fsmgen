@@ -854,9 +854,24 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify actual emitted writer activation guards and grant/suppression evidence.`
   Acceptance: `After .1, collect actual assignment and DT enable guards plus resource and priority evidence in a detached contract. Keep state transition/entry guards separate from assignment execution and do not infer transaction-wide exclusion. Verify the effective emitter semantics for every supported assignment operator and guard shape, including unguarded controls, state decrements and rule assignment grouping; preserve typed/raw predicates and caller descriptors. Diagnose and own any discrepancy before shadow admission; prove omission/mutation controls and full report/carrier parity.`
+  Verification: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.1`
+  Status: `blocked`
+  Goal: `Repair dropped literal-false guards before writer activation qualification.`
+  Acceptance: `P1 discovered defect: a strictly admitted rule with (when 0) retains port=0 in LoweringIR but _format_guard_suffix treats it as Perl false and emits an unconditional write. Reproduce actual emitted/runtime behavior with false/true and symbolic controls; qualify related state-entry assignment/transition and expression guard fields. Replace truthiness with explicit presence checks without changing supported syntax or inventing entry-wide assignment guards. Preserve normal guards, reports and public carrier replay, sync book/spec and commit before activation inventory work.`
+  Verification: `Emitter presence checks preserve zero and numeric predicates render as explicit boolean expressions to avoid delayed-pulse/infix ambiguity. T1972 carrier, detached-IR and complete native/API/newline reports pass. Supervised Verilog false/true entry and SystemVerilog false entry pass the public-pin oracle; the SystemVerilog true-entry run is rejected before exec by setpgid EPERM. The earlier reset oracle was corrected after emitted HDL proved the existing register-input sample bypass remains visible at entry during reset. Focused non-runtime regression and book build pass; full runtime qualification remains blocked, with no retry or containment weakening. Exact failure and ownership follow below.`
+  Commit: `this commit; SystemVerilog true-entry runtime qualification pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2`
+  Status: `pending`
+  Goal: `Collect qualified effective writer guards and arbitration evidence.`
+  Acceptance: `After .1, implement the detached activation contract from actual emitted semantics, including DT and assignment guards, state-transition context kept separately, operator exceptions and resource/priority evidence. Preserve exact invocation sources; reject unsupported or malformed evidence rather than inferring exclusion. Prove actual carrier correspondence, omission/mutation controls and full report parity before completing this guard parent.`
   Verification: `pending`
   Commit: `pending`
 
@@ -2714,7 +2729,8 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2.2`, actual emitted guard qualification after
+`.32.1.3.3.1.3.3.2.2.3.2.2.1`, literal-guard repair awaiting the blocked true-entry SystemVerilog runtime
+qualification before actual emitted guard collection, after
 exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
 the physical target resolver and retained admission baseline. Conservative admission precedes independent controllers and local-call
@@ -4541,3 +4557,58 @@ falsification removes callers/sources or mutates ownership/request identities;
 durability is T1971 and its mixed fixture, the resolver, canonical writer card,
 book and this tree. This slice does not promote independent execution or alter
 existing arbitration, including its conservative ambiguous-caller boundary.
+
+
+## Acceptance — literal guard repair `.32.1.3.3.1.3.3.2.2.3.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained rule_0 `--check --json`
+  succeeds at bbb1ed7352255345722939a6e5a029dabd64055a although the false guard
+  disappears from the emitted DT. LoweringIR retains port=0; emitter truthiness
+  tests drop it from DT/assignment suffixes and entry transitions. T1972 RED
+  independently observes disabled=5, captured=42, observed=9 through both HDL
+  targets. A true entry instead emits a compact <1 group, parsed as a pulse
+  assignment. Bare numeric groups also collide with strict infix recognition.
+- [x] **ADDRESSED (verified)** — Explicit scalar-presence tests preserve zero;
+  numeric predicates render as < (!= N 0) in headers, suffixes and groups.
+  True port=1 elision and symbolic/relational behavior remain intact. T1972
+  strict carrier replay, detached IR and complete native/API/newline reports
+  pass. Verilog false/true entry and SystemVerilog false entry complete the
+  independent reset/repeated-activation oracle. SystemVerilog true-entry runtime
+  remains unqualified because the supervisor refuses pre-exec containment;
+  this is a committed implementation repair, not completed leaf signoff.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1972/T1168/T1206/T1233/T1376 with runtime explicitly disabled after the
+  containment failure. This establishes carrier/report, rule factoring,
+  expression/when boundaries and book-example lowering only; T1972's runtime
+  skip is not runtime evidence. The mdBook build passes. Staged doctrines and
+  normal hooks qualify the commit, without closing the runtime blocker.
+
+Evidence: `.artifacts/writer-guards/` retains initial RED, intermediate carrier
+failures and green-predicate.log's exact containment failure. Re-derivation uses
+actual source/IR/carrier and reports; falsification uses predecessor RED plus
+true/symbolic/reset controls through generated HDL; durability is T1972, the
+tracked fixture, canonical constant-guard card, book and this task. The sample
+reset expectation was corrected from emitted register_in mux behavior: enabled
+captured exposes data at entry during reset while its hidden register resets.
+This was an oracle error, not a newly changed sample contract.
+
+### Blocking verification result and scheduled ownership
+
+The final runtime attempt returns test exit one. Its only failed runtime variant
+is SystemVerilog entry=1, before exec, with empty stdout and this exact diagnostic:
+
+```text
+process-group containment failed: pid=43538 operation=setpgid result=undef errno=1 (Operation not permitted)
+```
+
+The failure originates in Support::ProcessSupervisor::_child_group_admission_error,
+which exits 126 before cwd/stdio/exec when setpgid fails. It is not an HDL assertion
+failure, and its errno does not identify the underlying native cause. The existing
+P1 owner is `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10`;
+its precise-diagnostic child is complete but causal repair is still open. This
+occurrence is linked there through this blocked consumer leaf. Resolve that
+native containment cause without weakening admission, then finish the true-entry
+SystemVerilog qualification before promoting guard collection or storage access.
+No retry-as-repair, host change, cutoff change or alternate uncontained execution
+was attempted. Unaffected checks were completed separately and cannot close this
+blocker. The broader containment repair exceeds this guard-emitter slice.

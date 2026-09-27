@@ -40,6 +40,26 @@ existing `.fsm` condition-suffix machinery, so a nonzero enum value selects the
 rule and a zero-valued enum member does not. Scalar aggregate storage leaves
 from declared actor-owned storage are valid standalone rule guards as well.
 
+Literal guards retain their boolean meaning: `(when 0)` disables a rule and
+`(when 1)` enables it. For example, `disabled` remains at its reset value while
+`enabled` becomes `6` on a clock edge after reset:
+
+```lisp
+(actor constant_rules
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (output disabled (width 8) (reset 0))
+    (output enabled (width 8) (reset 0)))
+  (rule never (when 0) (set disabled 5))
+  (rule always (when 1) (set enabled 6)))
+```
+
+The false predicate is emitted as `< (!= 0 0)`. The explicit expression avoids
+confusing a numeric guard with the `.fsm` delayed-pulse operator `<N`. A true
+rule header remains unconditional. Symbolic and compound guards retain their
+normal condition semantics.
+
 For example, `frame.flag` lowers to `<frame.flag`, and a package-backed list
 leaf such as `lanes[1]` lowers to `<lanes[1]`. Subaggregate guards, such as a
 whole record member or whole list member, still fail closed.

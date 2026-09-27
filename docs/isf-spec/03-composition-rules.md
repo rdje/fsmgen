@@ -460,6 +460,14 @@ or `<lanes[1]`. Rule assignment targets may write scalar aggregate storage
 leaves. Rule guard and assignment expression operator-position enum members or
 aggregate paths, and subaggregate rule guards, remain deferred.
 
+Literal rule predicates preserve boolean meaning: `(rule never (when 0)
+(set disabled 5))` never performs that assignment; `(when 1)` enables its rule.
+Numeric guards use explicit boolean expression carriers such as `< (!= 0 0)`
+where retained, avoiding the delayed-pulse `<N` token. Literal inline-sample
+transaction entry guards likewise govern sample enables and advancement;
+register-input sample bypass/reset semantics and entry bookkeeping are unchanged.
+The same numeric predicate rendering applies to rule assignment guard groups.
+
 Multi-rule fan-in example:
 
 ```lisp

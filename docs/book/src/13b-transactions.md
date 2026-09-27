@@ -414,6 +414,15 @@ not an implementation-internal representation:
 (-> main_done_1 <(& go (! busy)))
 ```
 
+Literal entry guards also retain their meaning. With
+`(when 0 (sample data as captured))`, the sample bypass stays disabled and the
+transaction does not advance into its following body. Changing the guard to
+`1` allows both. The sample uses register-input (`<=`) semantics: when enabled,
+its visible value is the input mux value, including while reset holds the
+controller at entry. Reset still clears its underlying register. Entry guards
+control these samples and transitions; they do not guard every bookkeeping
+assignment, such as `can_accept`.
+
 **Implicit signals created**:
 | Signal | Width | Purpose |
 |--------|-------|---------|

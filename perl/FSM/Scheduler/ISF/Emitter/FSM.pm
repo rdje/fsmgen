@@ -431,13 +431,14 @@ sub _emit_transitions($self, $state) {
 
 sub _emit_simple_transition($self, $transition) {
     my @lines;
-    if ($transition->{condition} && $transition->{condition}{port}) {
-        push @lines, "    (<$transition->{condition}{port}";
+    if ($transition->{condition} && _guard_value_present($transition->{condition}{port})) {
+        push @lines, "    (" . _format_guard_predicate($transition->{condition}{port});
         push @lines, "      (-> $transition->{target})";
         push @lines, '    )';
-    } elsif ($transition->{condition} && $transition->{condition}{expr}) {
-        push @lines, "    (-> $transition->{target} <$transition->{condition}{expr})";
-    } elsif ($transition->{condition} && $transition->{condition}{signal}) {
+    } elsif ($transition->{condition} && _guard_value_present($transition->{condition}{expr})) {
+        push @lines, "    (-> $transition->{target} "
+            . _format_guard_predicate($transition->{condition}{expr}) . ")";
+    } elsif ($transition->{condition} && _guard_value_present($transition->{condition}{signal})) {
         my $c = $transition->{condition};
         my $op = $c->{op} // '=';
         $op = '=' if $op eq '==';
@@ -486,7 +487,7 @@ sub _emit_rule_dt_assignments($self, $dt) {
             next;
         }
 
-        push @lines, "    (<$guard_key";
+        push @lines, "    (" . _format_guard_predicate($guard_key);
         push @lines, map { $self->_format_dt_assignment($_, 6, no_guard => 1) } @$assignments;
         push @lines, '    )';
     }
@@ -524,17 +525,32 @@ sub _rule_guard_key {
     return $guard->{port} // '';
 }
 
+sub _guard_value_present {
+    my ($value) = @_;
+    return defined($value) && !ref($value) && length($value);
+}
+
+sub _format_guard_predicate {
+    my ($value) = @_;
+    # A compact <N can be mistaken for a delayed-pulse operator in an
+    # action head or DT header. A boolean expression also keeps a nested
+    # guard payload distinct from the following assignment pair.
+    return $value =~ /\A[0-9]+\z/ ? "< (!= $value 0)" : "<$value";
+}
+
 sub _format_guard_suffix {
     my ($guard) = @_;
     return '' unless $guard && ref($guard) eq 'HASH';
     return '' if defined($guard->{port}) && $guard->{port} eq '1';
-    return " <$guard->{port}" if $guard->{port} && !$guard->{op};
-    if ($guard->{signal} && $guard->{op}) {
+    return " " . _format_guard_predicate($guard->{port})
+        if _guard_value_present($guard->{port}) && !$guard->{op};
+    if (_guard_value_present($guard->{signal}) && $guard->{op}) {
         my $value = $guard->{value};
         my $operator = $guard->{op} eq '=' ? '=' : $guard->{op};
         return " <$guard->{signal}$operator$value";
     }
-    return " <$guard->{expr}" if $guard->{expr};
+    return " " . _format_guard_predicate($guard->{expr})
+        if _guard_value_present($guard->{expr});
     return '';
 }
 
