@@ -9,7 +9,7 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, aggregates, storage, composition, ownership, domains, mcp]
-evidence: perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm; t/1904-isf-generated-child-storage-reads.t; t/1911-isf-generated-child-aggregate-reads.t; t/1916-isf-domain-child-storage-reads.t; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md
+evidence: t/1950-isf-child-read-block-collisions.t; perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm; t/1904-isf-generated-child-storage-reads.t; t/1911-isf-generated-child-aggregate-reads.t; t/1916-isf-domain-child-storage-reads.t; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md
 reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1911-isf-generated-child-aggregate-reads.t t/1916-isf-domain-child-storage-reads.t
 ---
 
@@ -39,3 +39,12 @@ were repaired. Removing that refusal requires no alternate storage or copying
 path. Ownership: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.2.2`.
 
 Domain qualification owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.2`.
+
+Read handoff allocation reserves authored states and DTs as well as signal,
+port and system names. T1950 checks exact and case-folded block collisions,
+shared typed consumer views and ordinary stable names. Its independent HDL
+oracle preserves a colliding authored rule's guard, owner value and reset.
+The former omission merged an unguarded read DT into a guarded rule in emitted
+FSM, making that rule unconditional. Reverify with
+`FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1950-isf-child-read-block-collisions.t`.
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.1.

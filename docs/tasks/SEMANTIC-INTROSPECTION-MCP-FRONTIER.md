@@ -1611,10 +1611,47 @@ For FSMGen, the analogs are:
   Commit: `461d851a9 implementation; this slice consumes qualification`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain remaining parent read completion readback and outer domain products.`
   Acceptance: `Collect canonical storage-read and named-completion handoffs after write declarations, qualify library-readback namespace preservation and outer domain realization, then complete the reservation integration gate. Preserve source/physical ownership and strict validation.`
   Verification: `Parent write declaration products are owned by .1; the following connection and domain stages remain uncovered.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1`
+  Status: `active`
+  Goal: `Retain canonical parent storage-read handoff plans and qualify allocator scope.`
+  Acceptance: `Share actual read-handoff allocation and products with source preparation after potential write products. Preserve one live owner view per storage target, exact widths/types and explicit consumer links. Qualify allocator inputs, authored block-name collisions, raw formal projection, existing write products, source isolation, strict carriers and native reports. Own and repair any demonstrated read allocator collision defect within this leaf; named completion/readback/domain stages remain later gates.`
+  Verification: `connect_child_storage_reads currently reserves signals/counters/ports/constants/parameters/system names but omits state and DT names, unlike completion/write allocators. Reproduce whether that difference permits an invalid emitted name before selecting the shared planner boundary.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.3`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.1`
+  Status: `active`
+  Goal: `Prevent parent read handoffs from colliding with authored DT or state names.`
+  Acceptance: `Reserve existing block names before allocating read handoff ports/DTs, preserve their source owners and guards, and qualify the retained real collision with an independent HDL observation plus strict/native report checks. Keep normal read widths/types, shared live views and connection links unchanged; retain exact before-fix evidence.`
+  Verification: `High-priority defect: a rule named isf_storage_read_cell guarded by fire collides with the generated actor-storage read DT. Public --strict --check --json succeeds, but emitted collision.sv drives isf_storage_read_cell_en unconditionally and flag ignores fire. Reproduce .artifacts/formal-parent-read-products/block-collision.isf; the emitted parent has duplicate DT headers. The initial runtime-before.json stops at the separately owned cell keyword compile error (.1.3). The isolated legal-collision.isf compiles and fails runtime with READ_HANDOFF_LOST_RULE_GUARD fire=0 flag=1. T1950 passes independent guard/read/reset execution after using the existing full _reserved_names scope; broader qualification is pending.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.3`
+  Status: `pending`
+  Goal: `Resolve accepted storage names that cannot compile as emitted HDL identifiers.`
+  Acceptance: `Trace the public identifier policy for storage named cell, preserve the actual compiler refusal, and repair or explicitly diagnose unsupported backend names with focused native/report and independent compiler controls. Do not silently rename public contracts or weaken compiler checks.`
+  Verification: `High-priority follow-up scheduled immediately after read allocation/planner closure and before named-completion coverage. Strict check accepts block-collision.isf but runtime-before.json records Verilator compile nonzero_exit: syntax error, unexpected cell. No runtime result exists for that source. Rename only the guard-defect reproduction to value_reg to isolate the separately owned collision; preserve original source/output and failure.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.2`
+  Status: `pending`
+  Goal: `Retain actual parent read handoff declaration plans after allocator repair.`
+  Acceptance: `Share the corrected production read allocation/product boundary with source preparation after potential write products; retain live shared views, widths/types and typed storage/consumer links. Qualify source/physical plans, collisions, isolation and strict/report parity without altering writer admission.`
+  Verification: `Canonical block-name collision repair is owned by .1 and must commit before extracting the reader planner.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Retain named-completion readback and outer domain reservation products.`
+  Acceptance: `Collect actual named-completion declaration plans after storage connections, qualify library-readback declaration preservation and outer domain realization, then complete the reservation integration gate without weakening executable ownership or report contracts.`
+  Verification: `Storage-read products and allocator scope are owned by .1; the following named-completion/readback and domain stages remain uncovered.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -3254,3 +3291,36 @@ DEVELOPMENT_NOTES rationale is needed.
   runnable examples, and book-qualification.log rebuilds the final prose.
   Fresh staged doctrine and commit hook apply to the measured documentation and
   generated claim inventory. No new Darwin HDL runtime qualification is claimed.
+
+## Acceptance — read handoff block collision `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `--strict --check --json` accepts
+  block-collision.isf although connect_child_storage_reads omits state and DT
+  names from its reservations. The emitted collision.sv gives the authored
+  guarded rule and generated live view the same DT enable, assigned true.
+  legal-runtime-before.json independently compiles the isolated value_reg
+  variant and reports READ_HANDOFF_LOST_RULE_GUARD fire=0 flag=1 at runtime.
+  The original cell-named source stops at compilation; it supplies no runtime
+  evidence and is separately owned by .1.3.
+- [x] **ADDRESSED (verified)** — reuse _reserved_names before read allocation,
+  preserving existing blocks and allocating a distinct generated read port/DT.
+  collision-test.log passes T1950, including independent HDL guard/read/reset
+  observations without runtime skips. Exact/case-folded state and DT controls
+  preserve authored blocks, child contracts, shared links, widths and aliases;
+  ordinary allocation stays stable. Native strict check and schedule routes
+  continue to return structured successful results.
+- [x] **NO REGRESSION** — collision-test.log reports `All tests successful`.
+  Broader T1904/T1911/T1949/T1255 confirmation is explicitly pending in
+  collision-regression.log; it is not included in this focused pass claim.
+  The synchronized book and retained storage fact card describe the repaired
+  collision boundary. Staged doctrines and normal hook remain mandatory.
+
+Evidence: `.artifacts/formal-parent-read-products/`. Re-derivation traces the
+actual emitted duplicate headers/enable and observes the public source;
+falsification uses independent compiled HDL with a legal storage name, portable
+block collisions, ordinary names and shared readers; durability is T1950,
+the aggregate-read card, book and this task. The original compiler refusal and
+isolated runtime failure are both preserved. No generic duplicate-DT semantics,
+public identifier contract, storage cycle or formal production rewrite changes.
+The separately scheduled keyword defect is not closed by this allocator fix.
+No duplicate DEVELOPMENT_NOTES rationale is needed.

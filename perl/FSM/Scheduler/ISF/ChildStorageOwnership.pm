@@ -252,11 +252,7 @@ sub select_child_storage_reads {
 
 sub connect_child_storage_reads {
     my ($parent, $children) = @_;
-    my %reserved = map { $_ => 1 } grep { defined $_ } (
-        keys %{$parent->{signal_widths} || {}}, keys %{$parent->{counters} || {}},
-        (map { $_->{name} } @{$parent->{ports}}, @{$parent->{constants} || []}, @{$parent->{params} || []}),
-        $parent->{clock}, (($parent->{reset} || {})->{name} // ()),
-    );
+    my $reserved = _reserved_names($parent);
     my %handoffs;
     for my $spawn (@{$parent->{spawn_instances} || []}) {
         my $child = $children->{$spawn->{child}} || next;
@@ -265,7 +261,7 @@ sub connect_child_storage_reads {
             my $name = $signal->{name};
             if (!exists $handoffs{$name}) {
                 my $port = FSM::Support::HDLInstanceIdentifierPolicy->allocate_generated_instance_identifier(
-                    desired => "isf_storage_read_$name", role => 'storage_read', reserved => \%reserved,
+                    desired => "isf_storage_read_$name", role => 'storage_read', reserved => $reserved,
                 );
                 $handoffs{$name} = $port;
                 push @{$parent->{ports}}, { name => $port, direction => 'output', width => $signal->{width}, isf_handoff => 1 };
