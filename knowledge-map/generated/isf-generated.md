@@ -1,10 +1,11 @@
 # Knowledge Map: `isf-generated`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **7** facts · **25** uniquely owned question entries.
+> **7** facts · **27** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="are ATL actor event waits allowed in multi-domain actors?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="can a child read a parent record or list after spawn?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
 - q="can a child transaction input or output share an actor storage name?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
 - q="can a generated child write an entire actor-owned record or list?" · facts=[isf-generated-child-whole-aggregate-writes](../../docs/knowledge/isf-generated-child-whole-aggregate-writes.md)
@@ -16,6 +17,7 @@
 - q="do aggregate child writes preserve imported aliases and owner resets?" · facts=[isf-generated-child-whole-aggregate-writes](../../docs/knowledge/isf-generated-child-whole-aggregate-writes.md)
 - q="does a child storage write wait until completion or add a register cycle?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="does an actor register reset or type leak into a same-named child port?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
+- q="does outer domain emission add declarations to a formal module scope?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="does storage_port arbitrate generated child transaction writes?" · facts=[isf-generated-child-writer-contract-frontier](../../docs/knowledge/isf-generated-child-writer-contract-frontier.md)
 - q="how are child named completion outputs combined with parent completion?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
 - q="how are domain and CDC child naming collisions resolved?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
@@ -79,5 +81,5 @@ _Broader child writers separate aggregate transfer, partial merge, bank ownershi
 
 _ISF logical domains retain identity through portable generated names and case-safe artifacts_
 
-- **date:** 2026-09-26 · **status:** current
+- **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-generated-domain-identities.md`](../../docs/knowledge/isf-generated-domain-identities.md)

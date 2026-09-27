@@ -46,7 +46,9 @@ schedule is byte-identical. The complete partition/activation/shadow/wiring/chil
 regression cohort passes, including independent T1912 domain runtime and public
 reports. The historical watchdog and local-call limits remain separately owned.
 
-Outer module/file/flat-instance/wiring/CDC identities and complete reservation
-integration remain separate gates. Related execution contract:
+Outer module/file/flat-instance/wiring/CDC identities occupy separate scopes;
+[outer namespace qualification](isf-generated-domain-identities.md) observes
+unchanged local IR across their realization. Complete reservation integration
+remains a separate gate. Related execution contract:
 [isf-multi-domain-generated-children](isf-multi-domain-generated-children.md).
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.1.

@@ -1701,10 +1701,10 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain or prove outer domain composition identity reservations.`
   Acceptance: `Cover actual module/file/flat-instance/wiring/CDC declaration namespaces from domain realization and top emission using canonical producers. Keep separate module scopes and logical/public identities explicit; no fabricated parent execution.`
-  Verification: `Pending per-domain preparation child .1.`
+  Verification: `T1956 observes exact outer FSM/CDC/interface/wiring/file identities from actual realization, unchanged complete local IR across materialization/top emission, local declaration coverage and stable public ports/outer identities after formal projection. Generated/reused/library/empty siblings, event/activation/no-reset, portable domain and actual pin/module collision controls pass. Multi-domain ATL event composition is canonically refused. No additional local producer is needed; naming/runtime/report cohort remains pending.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.3`
@@ -3721,3 +3721,38 @@ Outer composition identities remain child .2, integration child .3, and the
 previously observed stale activation-test header child .4. No production formal
 rewriting or new controller/runtime semantics are claimed. No additional
 DEVELOPMENT_NOTES rationale is needed beyond the canonical fact and task.
+
+## Acceptance — outer domain scope `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies 01718f524 as
+  the introduction of _multi_domain_realizations. Its allocator records
+  separate module/file and flat-instance identities; the remaining question
+  is whether that outer stage or emission adds unreserved local declarations.
+  T1956 observes real public lowering, allocated metadata and complete domain
+  IR through actual file/top emission rather than constructing a surrogate.
+- [x] **ADDRESSED (verified)** — exact emitted FSM children, CDC children
+  and interfaces, wiring labels and files match actual realization metadata.
+  Every actual local declaration is covered by its independent prepared domain
+  inventory; complete domain/child IR remains unchanged by file materialization
+  and top emission. Formal projection preserves every outer identity and public
+  port declaration. Reused generated children, library/empty siblings,
+  event/activation/no-reset, keyword/case domains and actual public-pin/module
+  collisions pass. This proves a separate-scope boundary; no extra local
+  reservation producer or production naming change is necessary.
+- [x] **NO REGRESSION** — qualified-final.log reports `All tests successful`
+  for T1956. T1376 book examples and synchronized book build pass. The complete
+  T1956/T1955/T1895/T1947/T1255 naming/reusable/report cohort is in flight in
+  regression.log with independent naming runtime opted in. Consume its complete
+  result before closing the leaf; staged doctrines and normal hook apply.
+
+Evidence: `.artifacts/formal-domain-outer/`. Re-derivation observes actual
+outer allocations, emitted declaration scopes and unchanged complete local IR;
+falsification uses genuine pin/module conflicts, portable domain variants,
+formal projection and the canonical multi-domain ATL event refusal; durability
+is T1956, the generated-domain identity card, book and this task. The initial
+pair comparator accidentally captured the lexical actor variable instead of
+Perl's sort variable; moving it to a separate helper fixed the harness. The ATL
+positive exploration reached the existing parser single-clock refusal; the
+final test locks that boundary instead of widening support or claiming ATL
+runtime qualification. Complete domain reservation integration remains child
+.3. DEVELOPMENT_NOTES needs no duplicate of the scoped naming contract.

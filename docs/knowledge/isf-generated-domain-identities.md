@@ -6,11 +6,13 @@ answers:
   - "how are domain and CDC child naming collisions resolved?"
   - "can case-only ISF domain names overwrite exported files?"
   - "how do agents join logical domains to generated children through semantic API and MCP?"
-date: 2026-09-26
+  - "does outer domain emission add declarations to a formal module scope?"
+  - "are ATL actor event waits allowed in multi-domain actors?"
+date: 2026-09-27
 status: current
 tags: [isf, clock-domains, composition, naming, artifacts, semantics, mcp]
-evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF.pm; t/1895-isf-generated-domain-names.t; docs/book/src/13a-actor-interface.md; docs/audits/specforge-rule-admission-20260924/generated-domain-names.json
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1895-isf-generated-domain-names.t
+evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF.pm; t/1895-isf-generated-domain-names.t; t/1956-isf-formal-domain-outer-namespace.t; docs/book/src/13a-actor-interface.md; docs/audits/specforge-rule-admission-20260924/generated-domain-names.json
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1956-isf-formal-domain-outer-namespace.t t/1895-isf-generated-domain-names.t
 ---
 
 The domain partition allocates physical identities once. Domain names and
@@ -57,3 +59,22 @@ oracle fails without a naming collision. The naming regression's separate
 callee domain isolates naming qualification from that unresolved behavior.
 Exact original failing sources, state components and runtime/control receipts
 remain in the naming audit.
+
+T1956 observes actual outer realization and emission through public lowering.
+File materialization and top emission leave complete domain/child IR unchanged.
+The emitted FSM children, CDC children/interfaces, wiring labels and module files
+match the real allocated metadata; each domain's declarations remain covered by
+its local preparation. Detached formal projection preserves those outer
+identities and public ports through generated/reused children, library/empty
+siblings, event/activation crossings, reset absence, keyword/case domains and
+real public-pin/module collisions. Outer names belong to separate composition
+or module scopes; no extra local reservation producer is needed for this stage.
+Complete reservation integration remains a later gate. The initial focused
+qualification passes; broader naming/runtime/public-report results are owned
+by the active task until consumed.
+
+Multi-domain ATL event composition is an explicit refusal control: canonical
+parsing reports that ATL actor event waits require a single-clock actor in the
+current subset. This audit does not widen ATL admission or qualify multi-domain
+ATL execution. T1956 preserves that refusal before source preparation.
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.2.

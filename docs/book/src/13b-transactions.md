@@ -122,8 +122,11 @@ For example, an activation crossing introduces `worker_start_ready` in the calle
 and `worker_idle_ext` in the callee; a monolithic actor inventory alone misses
 those declarations. Domain products keep the logical domain identity, local
 transaction order and injected crossing contracts, without merging raw formal
-widths into an executable parent. Outer composition identities and the complete
-reservation integration check remain pending. This does not enable independent
+widths into an executable parent. Outer emission preserves the complete domain
+and child IR: module/file names, flat child instances, wiring labels and CDC
+interfaces belong to separate scopes. Detached formal projection preserves
+those outer identities and public ports. The complete reservation integration
+check remains pending. This does not enable independent
 direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated
