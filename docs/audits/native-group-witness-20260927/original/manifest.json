@@ -1,0 +1,24 @@
+{
+  "command": "scripts/run_with_ram_guard.sh env FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 prove -v -Iperl -It/lib docs/audits/native-group-witness-20260927/original/observe.t",
+  "normalization": "Only the exact repository prefix is removed from saved results and prove output; returned result references and original captured-byte counters remain unchanged. Event rows are copied byte-for-byte.",
+  "observation_exit_code": 0,
+  "qualification_revision": "915b311c2e82e37453018e3399f6321a07460eba",
+  "schema": "fsmgen.native_group_original_observation.v1",
+  "scope": "One original run passes with observed successful calls and exact cleanup. No attribution or repair of the historical EPERM.",
+  "sha256": {
+    "01_compile.json": "56e1fce8e6590754f03849d7e965409a0551da3af453ba0a0514ea29716b8888",
+    "02_runtime.json": "7ec57ba8158ea93570b4a5ed94ecc784c2ab026cffe12711132b81ff7c6f7b0b",
+    "03_compile.json": "07ebf547ed7401e9c177145fd27e494a27a7bcf6782f77194e302b5e4e84d8c7",
+    "04_runtime.json": "5c1d6afbb9a21de9899f33c2d6d33db243492ec59a8f2969e7edf95609a5f1b2",
+    "05_compile.json": "84b1f3e51157e533c47930074ebe1b261c03b227e1cbb2557d8723ecccc1df79",
+    "06_runtime.json": "3b4822c75e450cfe46287d07172e4fe90fe99f15829f1e212fea63c82d66bbe8",
+    "07_compile.json": "64c0610197eae422156e8b666b3bc2ef4dd345f0a99c189e889c98475d6d7438",
+    "08_runtime.json": "8d0e93fa9a5c2d1c70b588e0c8df1f84ae9bdb83e2cf6a3411331ddb4dd3d71d",
+    "admission.json": "bee57832f6b737418334cebe15aed5f4fe7c16f9e9212f3d65e1337d81c98c84",
+    "events.jsonl": "d1f065003cd136f6293e344eaac786b3567c76ed7c9903923d60b81198d1a68d",
+    "observe.t": "cd41ae82a25f50a63442b9aea44c0f0cf42d09dafee15ef6397c166b8f8f11fd",
+    "postcheck.json": "f59a8f2ca9f8dff6200d50bfa449eb3fab4b4eb5ad843943d0cf0c1fe34bceaf",
+    "prove.txt": "93b6e06c1aefeb3ca8d1e8cb066866bdfb487f826020935739f44612504044f2",
+    "verify_original.py": "101b320c8ddaa05673fca5ea334819a67ae1687013df1baea0de199f4b1fd8c0"
+  }
+}

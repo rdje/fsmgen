@@ -1,0 +1,14 @@
+{
+  "qualification_revision": "915b311c2e82e37453018e3399f6321a07460eba",
+  "schema": "fsmgen.native_group_original_admission.v1",
+  "scope": "one unchanged T1972 run; original limits and return values preserved; native witness perturbs timing; no causal closure from a pass",
+  "sha256": {
+    "docs/audits/native-group-witness-20260927/original/observe.t": "cd41ae82a25f50a63442b9aea44c0f0cf42d09dafee15ef6397c166b8f8f11fd",
+    "perl/FSM/Support/ProcessSupervisor.pm": "9cd65fb73974f2c5a9a213836f291641fa366637e966118968557d4aba973ea6",
+    "t/1972-isf-constant-false-guards.t": "8018bcb7477f84ea6250d4dde634ed0c6e19ca52637f135ae0e667a3b0857edf",
+    "t/data/isf_constant_false_guards.isf": "c7c213825bf4ff14ed5d214a7a68470101c23cd31085b35fe0cecc62f828f351",
+    "t/lib/FSM/Test/ProcessSupervisor.pm": "d52a014ce7c242a97a5fbcf27a76db48be64eee0959a2b701e88fbc78f0be9f1",
+    "t/lib/FSM/Test/SourceQueryRunner.pm": "e95b79f9f0b5510cd66da6ebe7d9475eb3516c308aed5f9ce89e3d7b7ead528c",
+    "t/lib/FSM/Test/VerilatorRuntime.pm": "36dcf875785bd0aea3422e647c02dbe765a47e249ef6476e3cdbdc454f96538a"
+  }
+}

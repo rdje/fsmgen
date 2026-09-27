@@ -63,6 +63,23 @@ recorded digest identifies that captured build, not a reproducible-binary claim.
 The native matrix in `../native-group-discriminator-20260927/` supplies separate
 public-call timing controls.
 
-Next owner `.10.3.2` must consume this qualification and commit identity before
-one instrumented original T1972 run. A successful original does not repair or
-explain the previous failure. No original replay occurs in this slice.
+Child `.10.3.2` consumed qualification commit
+`915b311c2e82e37453018e3399f6321a07460eba` for one unchanged original T1972
+observation. The exclusive `original/observe.t` driver cannot overwrite an old
+attempt. Its admission binds original test/input/supervisor/adapter and observer
+bytes; the helper binary must match the qualified build. Every stage preserves
+its original result reference and supervision limits. Saved result/prove text
+normalizes only the repository prefix; captured-byte counters retain their
+original meaning. Native events are copied byte-for-byte.
+
+The attempt passes all original oracles and observed native calls. Independent
+postchecks find the captured child PIDs/groups and temporary binaries absent.
+Complete evidence and hostile verification controls are retained in `original/`:
+
+```sh
+python3 -B docs/audits/native-group-witness-20260927/original/verify_original.py
+```
+
+This saved verifier does not rerun T1972. The passing attempt neither repairs nor
+explains the previous failure. Owner `.10.6` correlates bounded existing host
+evidence before selecting another causal discriminator.

@@ -1157,6 +1157,18 @@ the saved qualification with:
 python3 -B docs/audits/native-group-witness-20260927/verify.py
 ```
 
+One unchanged T1972 run under that witness now passes the guard oracle for both
+HDL targets and entry cases. Every observed native call succeeds, and retained
+stage results preserve the original limits and cleanup. Independent postchecks
+find the captured child processes/groups and temporary binaries absent. This
+new pass does not explain the historical failure. Existing host evidence is the
+next causal discriminator; original retries are not a repair strategy. Verify
+the saved observation, without executing it again, with:
+
+```sh
+python3 -B docs/audits/native-group-witness-20260927/original/verify_original.py
+```
+
 The updated full T1669 qualification still fails both Rust startup modes and
 legacy main-entry checks, while the new diagnostic controls and production HDL
 contract pass. Available failures remain in the task; that run did not collect

@@ -8,8 +8,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [process, supervision, containment, native, diagnosis]
-evidence: docs/audits/native-group-discriminator-20260927/manifest.json; docs/audits/native-group-discriminator-20260927/result.jsonl; docs/audits/native-group-discriminator-20260927/probe.c; docs/audits/native-group-discriminator-20260927/verify.py; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-reverify: python3 -B docs/audits/native-group-discriminator-20260927/verify.py
+evidence: docs/audits/native-group-witness-20260927/manifest.json; docs/audits/native-group-witness-20260927/original/manifest.json; docs/audits/native-group-discriminator-20260927/manifest.json; docs/audits/native-group-discriminator-20260927/result.jsonl; docs/audits/native-group-discriminator-20260927/probe.c; docs/audits/native-group-discriminator-20260927/verify.py; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+reverify: python3 -B docs/audits/native-group-discriminator-20260927/verify.py && python3 -B docs/audits/native-group-witness-20260927/original/verify_original.py
 ---
 
 The T1972 child 43538 failed before exec with setpgid undef and immediately
@@ -26,7 +26,8 @@ successful setpgid return. This control does not attribute the original failure.
 
 Owner HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10
 retains causal repair. Child .2 seals the native discriminator; .3.1 seals the
-qualified native witness before .3.2 observes one original T1972 attempt.
+qualified native witness; .3.2 retains one successful original T1972 attempt.
+Child .6 correlates bounded existing host evidence for the historical rejection.
 A passing original cannot close the failure. No host change, admission relaxation,
 original retry or production repair occurs in the native discriminator slice.
 
@@ -41,3 +42,10 @@ ordered calls, exact cleanup and corrupt-record controls pass. Its snapshots
 are sequential and timing-sensitive, not an atomic kernel trace. Verify saved
 source/capture/postcheck hashes and outcomes with
 `python3 -B docs/audits/native-group-witness-20260927/verify.py`.
+
+The original observation passes both HDL targets/entry cases with successful
+native calls and unchanged limits. Complete results, native events and independent
+cleanup postchecks are retained under the witness audit's `original/` directory;
+`verify_original.py` verifies them without another execution. The original test
+and selected input/adapter/supervisor hashes match before and after the run.
+This is new passing evidence, not repair or attribution of the historical EPERM.

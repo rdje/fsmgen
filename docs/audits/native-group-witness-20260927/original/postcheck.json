@@ -1,0 +1,62 @@
+{
+  "children": [
+    {
+      "group_absent": true,
+      "pid": 86613,
+      "pid_absent": true
+    },
+    {
+      "group_absent": true,
+      "pid": 86928,
+      "pid_absent": true
+    },
+    {
+      "group_absent": true,
+      "pid": 86931,
+      "pid_absent": true
+    },
+    {
+      "group_absent": true,
+      "pid": 87371,
+      "pid_absent": true
+    },
+    {
+      "group_absent": true,
+      "pid": 87374,
+      "pid_absent": true
+    },
+    {
+      "group_absent": true,
+      "pid": 87687,
+      "pid_absent": true
+    },
+    {
+      "group_absent": true,
+      "pid": 87723,
+      "pid_absent": true
+    },
+    {
+      "group_absent": true,
+      "pid": 87970,
+      "pid_absent": true
+    }
+  ],
+  "temporary_binaries": [
+    {
+      "absent": true,
+      "path": ".artifacts/tmp/tests/VjQORjR8ap/entry_0/obj_systemverilog/Vtb"
+    },
+    {
+      "absent": true,
+      "path": ".artifacts/tmp/tests/VjQORjR8ap/entry_0/obj_verilog/Vtb"
+    },
+    {
+      "absent": true,
+      "path": ".artifacts/tmp/tests/VjQORjR8ap/entry_1/obj_systemverilog/Vtb"
+    },
+    {
+      "absent": true,
+      "path": ".artifacts/tmp/tests/VjQORjR8ap/entry_1/obj_verilog/Vtb"
+    }
+  ]
+}

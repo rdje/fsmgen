@@ -1,0 +1,68 @@
+ram-guard: PID 86552; host 69.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+docs/audits/native-group-witness-20260927/original/observe.t .. 
+# Subtest: admitted false rule and inline-sample entry guards survive emission
+    ok 1 - lowering retains false rule predicate
+    ok 2 - lowering retains false entry predicate
+    ok 3 - false rule enable remains in actual carrier
+    ok 4 - false inline sample guard remains in carrier
+    ok 5 - false entry transition remains conditional
+    ok 6 - unguarded entry bookkeeping stays unguarded
+    ok 7 - true rule keeps its existing unconditional carrier
+    ok 8 - symbolic guard remains intact
+    ok 9 - emission does not alter lowering records
+    ok 10 - explicit expression zero also survives transition emission
+    ok 11 - numeric rule assignment group uses unambiguous expression syntax
+    ok 12 - false rule assignment group strict-checks
+    ok 13 - guard presence is independent of Perl truthiness
+    ok 14 - guard presence is independent of Perl truthiness
+    ok 15 - guard presence is independent of Perl truthiness
+    ok 16 - guard presence is independent of Perl truthiness
+    ok 17 - guard presence is independent of Perl truthiness
+    ok 18 - guard presence is independent of Perl truthiness
+    1..18
+ok 1 - admitted false rule and inline-sample entry guards survive emission
+# Subtest: false, true and symbolic guards execute correctly through both HDL targets
+    ok 1 - systemverilog entry=0 production emission
+    ok 2 - systemverilog entry=0 public-pin testbench builds
+    ok 3 - systemverilog entry=0 runtime respects guards
+    ok 4 - systemverilog entry=0 completes independent oracle
+    ok 5 - verilog entry=0 production emission
+    ok 6 - verilog entry=0 public-pin testbench builds
+    ok 7 - verilog entry=0 runtime respects guards
+    ok 8 - verilog entry=0 completes independent oracle
+    ok 9 - systemverilog entry=1 production emission
+    ok 10 - systemverilog entry=1 public-pin testbench builds
+    ok 11 - systemverilog entry=1 runtime respects guards
+    ok 12 - systemverilog entry=1 completes independent oracle
+    ok 13 - verilog entry=1 production emission
+    ok 14 - verilog entry=1 public-pin testbench builds
+    ok 15 - verilog entry=1 runtime respects guards
+    ok 16 - verilog entry=1 completes independent oracle
+    1..16
+ok 2 - false, true and symbolic guards execute correctly through both HDL targets
+# Subtest: complete native/API/newline reports and strict carrier replay agree
+    ok 1 - corrected carrier strict-checks
+    ok 2 - numeric rule assignment group uses unambiguous expression syntax
+    ok 3 - false rule assignment group strict-checks
+    ok 4 - fsmgen_check native succeeds
+    ok 5 - fsmgen_check API succeeds
+    ok 6 - fsmgen_check complete native/API agreement
+    ok 7 - fsmgen_check newline succeeds
+    ok 8 - fsmgen_check complete API/newline agreement
+    ok 9 - fsmgen_semantic_introspect native succeeds
+    ok 10 - fsmgen_semantic_introspect API succeeds
+    ok 11 - fsmgen_semantic_introspect complete native/API agreement
+    ok 12 - fsmgen_semantic_introspect newline succeeds
+    ok 13 - fsmgen_semantic_introspect complete API/newline agreement
+    ok 14 - fsmgen_schedule_preview native succeeds
+    ok 15 - fsmgen_schedule_preview API succeeds
+    ok 16 - fsmgen_schedule_preview complete native/API agreement
+    ok 17 - fsmgen_schedule_preview newline succeeds
+    ok 18 - fsmgen_schedule_preview complete API/newline agreement
+    1..18
+ok 3 - complete native/API/newline reports and strict carrier replay agree
+1..3
+ok
+All tests successful.
+Files=1, Tests=3, 32 wallclock secs ( 0.01 usr  0.00 sys + 25.27 cusr  5.37 csys = 30.65 CPU)
+Result: PASS
