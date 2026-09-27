@@ -83,7 +83,7 @@ ISF
     like($parent_fsm, qr/\(-launch\s+<fire[\s\S]*\(<1 \(launch_worker_trigger_0 1\)\)[\s\S]*\(<- \(launch_worker_trigger_0_addr_payload req_addr\)\)/,
         'rule DT keeps delayed trigger source and sampled input payload source');
     like($parent_fsm, qr/\(-launch_worker_trigger_0_trigger_handoff[\s\S]*\(= \(launch_worker_trigger_0_start> launch_worker_trigger_0\)\)[\s\S]*\(= \(launch_worker_trigger_0_addr> launch_worker_trigger_0_addr_payload\)\)/,
-        'generated handoff DT drives child start and input under the trigger source');
+        'generated handoff DT drives child start and retained input payload');
     like($parent_fsm, qr/\(launch_worker_trigger_0_done_seen 1\)/, 'parent reads generated trigger done handoff for composition endpoint visibility');
     like($child_fsm, qr/\(\+params\s+\(WIDTH 8\)\s+\)/s, 'trigger child emits transaction parameter defaults');
     like($top_fsm, qr/\(\?fsmc:launch_worker_trigger_0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,

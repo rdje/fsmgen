@@ -367,6 +367,15 @@ With a single rule source, the generated fan-in assigns the source directly:
 )
 ```
 
+**Current local payload limitation:** a local target that reads a bound input
+after authored waits can see zero after its rule-trigger pulse ends. The retained
+payload source is still present, but the local input mux remains pulse-gated.
+A request-gated runtime probe isolates this from transaction reachability; the
+repair is owned by `.32.1.3.3.1.3.2`. Generated trigger payload retention is
+separately qualified and does not close this local-input defect. Local rule
+fan-in supplies `transaction_start`; the target still authors its entry guard,
+for example `(on transaction_start)`.
+
 Parameterized rule triggers are generated-child activations, not writes to
 shared transaction parameters. The source shape is
 `(trigger transaction (params (NAME value) ...) (bind ...))`, reusing the
@@ -378,8 +387,8 @@ the per-rule trigger source and, for input bindings, per-rule payload sources.
 Instead of feeding the shared `transaction_start` fan-in, the parameterized
 path elaborates a static generated child instance named
 `{rule}_{transaction}_trigger_{ordinal}` and a generated trigger handoff DT
-drives `{instance}_start` plus the input handoff ports under that trigger
-source. The generated top applies the `(params ...)` overrides on that
+drives `{instance}_start` from that trigger source while input handoffs read
+the retained per-rule payload beyond the pulse. The generated top applies the `(params ...)` overrides on that
 `?fsmc` instance. The parent wires `instance.done` back for uniform generated
 composition and reads it into an internal observer signal, but the rule does
 not wait for it. Generated-child rule-trigger output bindings copy a bound

@@ -808,6 +808,13 @@ no rule-specific completion identity; their diagnostic names the missing
 generated-child completion identity instead of implying all rule-trigger
 output bindings are unsupported.
 
+Current local rule-trigger runtime qualification has an open defect: a bound
+input read after authored waits sees zero once the trigger pulse ends, although
+the per-rule captured source remains available. The request-gated probe in
+`docs/audits/direct-controller-binding-timing-20260927.json` isolates this from
+entry/reachability. Repair `.32.1.3.3.1.3.2` must preserve early visibility and
+later snapshot retention; generated trigger qualification does not close it.
+
 The same-cycle visibility rule for the shipped surface is: input payloads are
 emitted in the same activation region as their start/trigger handoff, and
 spawned child bindings are live handoff wiring through the generated top.

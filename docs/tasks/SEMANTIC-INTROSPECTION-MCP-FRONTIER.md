@@ -704,11 +704,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.1: preserve terminal synchronization holds`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Select an executable controller contract for independent transactions and blocking local calls.`
   Acceptance: `Reproduce the disconnected first/second and retained plain-do graphs with independent runtime oracles. Audit intended trigger/concurrency, shared storage, caller input capture, delayed completion, nested/repeated calls, reset and report provenance contracts. Select explicit per-transaction control or another semantics-preserving representation through public IAL0 carriers; do not silently serialize independent transactions, duplicate actor state or infer support from admission. Split implementation and qualification leaves before editing the scheduler and commit the contract/evidence.`
   Verification: `The direct-port audit two_ports scheduled source contains separate first/second state loops inside one ?fsm root. Existing plain-do and event-after-do runtime evidence separately proves unreachable callers/consumers; generated child activation already has independently qualified controllers.`
-  Commit: `pending`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.2: select independent controller and binding contracts`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.2`
 
@@ -720,16 +720,60 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.1: retain direct controller runtime evidence`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Adopt the controller contract with an explicit conflict and binding admission boundary.`
   Acceptance: `After .51 restores decision-record capacity, use .1.2.1 evidence and current source contracts to adopt a backend-neutral architecture preserving concurrent progress, actor storage ownership, call capture/completion timing and report provenance. Require an owned transaction-write conflict policy before independently enabling existing writers. Record the durable decision and split implementation/qualification under .1.3; do not silently serialize, duplicate storage or treat a hand-authored carrier as implemented lowering.`
+  Verification: `Decision 0109 selects independent logical control, unchanged actor ownership, exact activation/timing classes and fail-closed shared-write admission. The retained binding audit confirms local delayed payload loss and generated live behavior; implementation is split under .1.3, with scoped identity dependency .49.2.2.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2.2: select independent controller and binding contracts`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3`
+  Status: `active`
+  Goal: `Implement and qualify the selected direct transaction controller contract.`
+  Acceptance: `After .1.2 selects the exact contract, split implementation into safe leaves and repair independent trigger and blocking local-call execution. Require simultaneous/separate triggers, declaration-order controls, nested/repeated calls, original binding edges, reset and source/API/MCP parity. Preserve fail-closed writer conflicts and publish any unsupported form precisely; unblock .49.2 only with executable evidence.`
   Verification: `pending`
   Commit: `pending`
 
-- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.6`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.1`
   Status: `pending`
-  Goal: `Implement and qualify the selected direct transaction controller contract.`
-  Acceptance: `After .1.2 selects the exact contract, split implementation into safe leaves and repair independent trigger and blocking local-call execution. Require simultaneous/separate triggers, declaration-order controls, nested/repeated calls, original binding edges, reset and source/API/MCP parity. Preserve fail-closed writer conflicts and publish any unsupported form precisely; unblock .49.2 only with executable evidence.`
+  Goal: `Build a shadow logical-controller ownership model and inventory state consumers.`
+  Acceptance: `After decision 0109, attach explicit transaction/domain ownership, entry and state membership without switching execution. Inventory predicates, point-active signals, priorities, loops/waits, terminal holds, resets, reports and emitted interfaces. Prove native/API/MCP and generated source parity, collision-safe identity planning, complete state membership and malformed-owner rejection. Commit the shadow slice before .49.2.2; split further if the inventory exceeds a safe code slice.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2`
+  Status: `pending`
+  Goal: `Repair local rule-trigger payload retention at the admitted activation boundary.`
+  Acceptance: `After .1 and scoped identities .49.2.2, reproduce the tracked request-gated delayed-zero case and retain both generated-live controls. Preserve early entry visibility and later snapshots with no extra observable activation cycle. Qualify changed sources, repeated requests, reset, busy requests, conditional authored entry and granted multiple rule sources; never remove all source guards to choose an implicit winner. Preserve authored rule-target entry semantics. Close only from generated production runtime and exact native/API/MCP evidence.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3`
+  Status: `pending`
+  Goal: `Establish shared-write admission for independently active direct controllers.`
+  Acceptance: `After .1/.2 and .49.2.2, derive physical target ownership from scoped identities and typed effects. Inventory data, completion, binding, named-drive and generated-handoff contributors. Preserve proved fan-in, rule priority and resource grants; refuse unproved overlapping controller writes with actionable diagnostics before runtime promotion. Do not treat shared encoded-state exclusion or parsed transaction priority as a proof. Qualify disjoint targets, equal/pulse compatibility boundaries, guarded conflicts and existing priority behavior; split implementation if needed.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.4`
+  Status: `pending`
+  Goal: `Emit independent controller execution through the public IAL0 carrier.`
+  Acceptance: `After shadow ownership, scoped identities and admission .3, implement private controller registers and guarded DT bodies with translated logical state predicates. Preserve all admitted state kinds, assignment edges, source provenance, exact ports and qualified reset behavior. Turn the declaration-order baseline into production runtime passes for concurrent short/long work, separate/repeated triggers and reset. Qualify point/assertion and rule-priority consumers, public replay and reports; do not infer local-call signoff from this leaf.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.5`
+  Status: `pending`
+  Goal: `Repair local-call entry, one-shot activation and payload/completion timing.`
+  Acceptance: `After .4, replace unreachable local-call wiring with independent owned caller/callee execution. Install called-body entry when absent, retain a single invocation per held request, capture caller-scoped snapshot inputs on acceptance and copy outputs only on fresh completion. Prove both declaration orders, authored/missing callee entry, repeated/nested acyclic calls, changed inputs, early samples, reset and terminal holds. Diagnose unproved recursive/multiple-caller or mixed activation ownership explicitly. Then run .49.2.3 scope qualification before broad closure.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.6`
+  Status: `pending`
+  Goal: `Qualify the complete controller repair and synchronize shipped contracts.`
+  Acceptance: `After .4/.5 and .49.2.3, run the broader regression gate plus focused SystemVerilog/VHDL runtime, state/point/priority, local and generated activation, domain/reset and complete native/API/MCP parity. Require exact ownership and interfaces with no hidden public selector ports. Update the book/spec only from qualified production behavior, remove only repaired warnings and retain watchdog/other owned gaps. Commit before resuming broader storage writer and access metadata work.`
   Verification: `pending`
   Commit: `pending`
 
@@ -1301,7 +1345,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2`
   Status: `pending`
   Goal: `Lower direct transaction ports to collision-safe private identities.`
-  Acceptance: `After .49.2.1 and controller contract qualification under .32.1.3.3.1, implement scope-aware operand and binding resolution. Preserve actor owner metadata, local aliases and resets, caller versus callee names, source provenance and public reports. Qualify direct input/output and rule payloads independently, including same names in different transactions and user names resembling generated prefixes. No global textual substitution or actor-role overwrite is permitted.`
+  Acceptance: `After .49.2.1, controller contract .32.1.3.3.1.2.2 and shadow ownership .32.1.3.3.1.3.1, implement scope-aware operand and binding resolution before .32.1.3.3.1.3.2. Preserve actor owner metadata, local aliases and resets, caller versus callee names, source provenance and public reports. Qualify direct input/output and rule payloads independently, including same names in different transactions and user names resembling generated prefixes. No global textual substitution or actor-role overwrite is permitted.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6067,3 +6111,113 @@ The corrected declaration passes the complete staged doctrine gate. A final
 staged whitespace check then found an extra blank line at the derived view's
 end; the renderer now emits one terminal newline. renderer-final.log passes
 T1923 after regeneration; exact archive originals are unchanged.
+
+## Controller adoption binding probe — `.32.1.3.3.1.2.2` (in flight)
+
+The published transaction binding contract calls activation-region `do` inputs
+snapshots, while _activation_input_assignments emits continuous assignments and
+generated child start-history guards only activation. Before adopting timing,
+probe a generated do with a delayed input read and change the external source
+after call admission. Existing generated-do port-scope qualification held that
+source stable; generated-trigger delayed capture has separate evidence. This
+is a source-observed contract risk, not yet a confirmed runtime failure.
+The active adoption leaf owns diagnosis; any reproduced repair must receive
+an explicit implementation child before controller signoff or access metadata.
+
+The generated-do snapshot probe is rejected before emission as
+`generated_live_handoff`, exactly as the timing validator specifies. This
+narrows the hypothesis: generated calls do not promise snapshots. Preserve
+that rejected probe; qualify its live positive control and local rule-trigger
+snapshot retention separately. Local activation-region calls still need their
+own capture qualification once their controller executes.
+
+The generated-live positive control passes both stable and changed inputs.
+The direct rule-trigger target without authored `on` strict-admits and compiles
+but free-runs repeatedly and reads zero, even with a stable external payload.
+This initially suggested an additional entry failure, but T1171 and the rule
+contract establish authored request gating: no-entry free-running behavior is
+not classified as a new defect. That source conflates payload and entry behavior.
+An otherwise identical authored-entry control isolates those mechanisms before
+selecting the repair. Complete probe sources and observations are retained
+under .artifacts/direct-controller-adoption for tracked audit capture.
+
+The request-specific `(on worker_start)` control accepts one rule request yet
+reads zero after the delay, with either stable or changed external input.
+The emitted mux assigns payload zero outside its per-rule trigger pulse;
+_rule_trigger_payload_fanin_assignments supplies that combinational guard.
+A diagnostic emitted-HDL control changes only the mux default to the retained
+single-rule payload source. This is attribution evidence, not a general
+multi-source capture policy or a production implementation. The forthcoming
+local activation/capture leaf owns repair and busy/multiple-source qualification.
+
+## Controller and binding contract adoption — `.32.1.3.3.1.2.2`
+
+Decision `0109` adopts private per-transaction logical control through public
+IAL0 registers and guarded DT bodies while retaining shared actor ownership.
+State/owner identity must be explicit before physical emission; the existing
+_state_active_condition_expr used by rule/transaction priority cannot continue
+to rely on one global encoded state. Point references already lower into
+state-owned point-active assignments and must retain that meaning.
+
+The selected execution contract does not silently install rule target entry:
+T1171 uses `(on work_start)`, and the rule contract defines request fan-in.
+The ungated rule probe was therefore corrected from a suspected entry defect
+to an authored free-running control. Blocking local do is different: its
+published call contract owns the callee entry and requires a one-shot request
+and fresh completion. Generated do inputs are explicitly live and reject
+snapshot spelling. Only local activation-region calls and rule payloads carry
+the snapshot obligation; no generated live path is converted by this decision.
+
+The request-gated local rule probe isolates a real payload defect: source
+admission and HDL compile succeed, completion occurs once, but a delayed read
+returns zero. Its emitted input mux defaults to zero after the trigger pulse.
+A diagnostic change to that single mux default restores the retained payload
+for stable and changed external inputs. Both raw emitted artifacts are kept;
+comparison removes exactly one generated Date header comment from each before
+proving the sole executable edit. No production lowerer changed, and the
+single-source diagnostic is not a multiple-source arbitration implementation.
+
+Complete source/testbench hashes, observations, rejected generated-snapshot
+request, corrected intermediate classifications and raw counterfactual HDL
+are tracked in docs/audits/direct-controller-binding-timing-20260927.json.
+The prior controller audit remains valid: Git confirms no scheduler/ISF adapter
+production changes since its recorded revision. The carrier references still
+do not qualify production controller behavior.
+
+Implementation children now separate shadow ownership, local payload repair,
+shared-write admission, independent execution, blocking calls and broad
+qualification. Existing .49.2.2 scoped identities runs after the shadow model
+and before payload/admission work; .49.2.3 runs after local-call execution.
+The local payload defect has a concrete scheduled repair under .1.3.2.
+
+The rules chapter also retained stale generated-handoff wording from before
+.49.1: it implied that the input value remained gated by the start pulse.
+That paragraph and T1248's assertion description now state retained generated
+payload behavior; the assertion itself already checked the correct output.
+The book separately exposes the uncorrected local payload defect and marks
+independent controllers as selected but unimplemented.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native --check --json and independent
+  emitted-HDL probes separate correct generated-live timing from local delayed
+  payload loss. _rule_trigger_payload_fanin_assignments applies a combinational
+  trigger guard that returns the input to zero after the pulse. The tracked
+  counterfactual changes that mux default only, apart from generated Date
+  comments, and passes both independent input controls. Existing direct
+  controller failures remain rooted in concatenated loops and local-call entry.
+- [x] **ADDRESSED (verified)** — Decision 0109 selects logical owner/state
+  mapping, exact activation classes and shared-write admission. Every execution
+  obligation has a child owner; local payload repair is .1.3.2. Complete
+  evidence is retained and the book distinguishes selected contracts from
+  current defects. This contract commit closes no production runtime defect.
+- [x] **NO REGRESSION** — .artifacts/direct-controller-adoption/check.log
+  verifies both tracked audits, source hashes, classifications, counterfactual
+  equality and unchanged production source. It reports All tests successful
+  for T1171/T1219/T1241/T1248/T1413/T1376, followed by a successful book build.
+
+Re-derivation retains complete public sources and emitted artifacts.
+Falsification uses declaration permutations, independent source changes,
+request-specific entry and the minimal emitted-HDL counterfactual. Durability
+is the tracked audits, decision, canonical fact and explicit implementation
+queue. Direct-call capture, busy/multiple-source policy and full production
+controller qualification remain named implementation obligations, not inferred
+from the authored references. Browser visual QA remains unqualified.

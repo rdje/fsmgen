@@ -21,6 +21,13 @@ those runtime combinations; repair is owned by `.32.1.3.3.1`. Generated-child
 activation has separately qualified controllers, as described in
 [Composition](13f-composition.md).
 
+The selected repair gives each retained transaction its own logical controller
+while keeping actor storage shared under its existing owner. It preserves
+source state identities and binding timing and must reject unproved competing
+writes. Decision `0109` defines that implementation contract; it does not mark
+the current reachability failures repaired. Production runtime and public-report
+qualification remain required before the warning above can be removed.
+
 Today the task-like port model is shipped for `(ports ...)` bindings on `do`,
 `spawn`, and rule `trigger` activation sites.
 
