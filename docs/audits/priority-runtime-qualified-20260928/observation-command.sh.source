@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+python3 -B .artifacts/priority-final-observation/extra-identities.py before
+python3 -B docs/audits/priority-reset-oracle-20260928/verify.py
+python3 -B docs/audits/native-group-witness-20260927/priority-observer/verify.py
+perl docs/audits/native-group-witness-20260927/priority-observer/prepare.pl priority_reset_corrected priority none 3 3
+set +e
+FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 prove -v docs/audits/native-group-witness-20260927/priority-observer/observe.t :: priority_reset_corrected
+priority_runtime_status=$?
+set -e
+python3 -B .artifacts/priority-final-observation/extra-identities.py after
+printf '%s\n' "$priority_runtime_status" > .artifacts/priority-final-observation/observed-exit.txt
+exit "$priority_runtime_status"

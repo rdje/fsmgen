@@ -396,21 +396,23 @@ compatible in source admission and do not acquire a priority mask merely because
 their owners share a priority relation.
 
 T1974 qualifies emitted predicates and complete native/API/newline/carrier
-products. Its first SystemVerilog execution exposed a separate assertion defect:
-allowed equal-value sources triggered `selector same-value conflict`, although
-the actual data-family enable ORed those sources. Decision `0111` corrects the
-metadata/emission contract to `compatible_fanin` while preserving different-value
-`onehot0` checks. Static selector, report and separate ownership controls qualify
-that correction. The subsequent run reaches a testbench reset check before the
-required rising edge for its synchronous reset. The bench now waits across that
-edge; its static correction and complete failed observation are retained in
-`docs/audits/priority-reset-oracle-20260928/`. Complete positive/negative execution
-and two-target signoff remain SEM `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.2`; no
-corrected runtime pass is claimed yet. Both observations stopped before Verilog
-with successful native process admission. The first assertion failure and the
-original condition-loss baseline remain in
+products. Its observed SystemVerilog and Verilog runs preserve ordered writes,
+opposite priority, compatible equal-value overlap, named-drive writes,
+unrelated output progress, repeated requests and synchronous reset. The resource
+fixture runs with its peer request inactive; this is not a general contention or
+fairness qualification. A cloned carrier restoring only the lost contributor
+is rejected by the enabled different-value selector assertion. Complete source
+identities, stage results, original bounds and cleanup evidence are retained in
+`docs/audits/priority-runtime-qualified-20260928/`.
+
+The prior executed failures exposed an incompatible same-value assertion and
+a premature synchronous-reset check in the testbench. Decision `0111` corrects
+the selector policy to `compatible_fanin`; the bench waits across a rising edge.
+Their complete first-attempt records remain in
 `docs/audits/priority-contributor-repair-20260928/` and
-`docs/audits/priority-contributors-20260927/`.
+`docs/audits/priority-reset-oracle-20260928/`. This qualification closes the
+priority repair. Broader writer admission and the historical native `setpgid`
+cause remain separately owned.
 
 - Actor-level priority also covers a rule assignment that conflicts with a
   data assignment in a uniquely owned named drive. For

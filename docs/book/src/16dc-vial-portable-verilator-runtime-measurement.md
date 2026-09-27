@@ -1232,15 +1232,30 @@ public-pin oracle. Execution then fails an emitted same-value selector assertion
 for an admitted compatible rule/transaction overlap. The observer retains both
 complete stages, their original limits and cleanup, unchanged admitted inputs
 and an empty native-failure capture. This is a backend assertion failure after
-execution, not another `setpgid` rejection. Verilog has not run; corrected
-qualification remains separately owned, as does the historical native cause.
+execution, not another `setpgid` rejection. The first attempt stops before
+Verilog; the historical native cause remains separately owned.
 After decision `0111` corrects compatible fan-in, the next observation reaches
 a testbench reset failure at time 311. Its flat `reset rst_n` is synchronous,
 but the bench checked before a reset-active rising edge. The bench correction
-is statically qualified; complete runtime is still pending. Both observed
-compile/runtime pairs retain original bounds and complete cleanup with no native
-failure event or input drift. The second complete record and reset diagnosis
-are in `docs/audits/priority-reset-oracle-20260928/`.
+is statically qualified. Both failed observations retain original bounds and
+complete cleanup with no native failure event or input drift. The second complete
+record and reset diagnosis are in `docs/audits/priority-reset-oracle-20260928/`.
+
+The subsequent fresh observation passes both HDL targets, including repeated
+requests and the corrected reset check. Its deliberately incomplete priority
+mask triggers the expected different-value assertion. Every predeclared stage
+is retained with original bounds, unchanged source identities and complete
+supervisor cleanup. No native failure occurs. Independent workspace/command
+absence is recorded, while successful-child PID identities remain uncaptured.
+Verify the complete evidence without another execution:
+
+```sh
+python3 -B docs/audits/priority-runtime-qualified-20260928/verify.py
+```
+
+Historical native causality stays P1-open. Its next owner must qualify observation
+for the next genuinely required roadmap runtime; the fixed priority observer
+cannot be silently repointed to another test.
 The first temporary workspace and exact selected commands are absent. Individual
 successful-child PIDs were not independently recorded by the failure-only hook;
 the retained supervisor results supply stage process-cleanup evidence.

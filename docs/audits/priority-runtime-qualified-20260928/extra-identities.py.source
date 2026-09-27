@@ -1,0 +1,13 @@
+import hashlib,json,subprocess,sys
+from pathlib import Path
+paths = [
+ 'perl/FSM/Backend/GeneratedModuleEmitter.pm',
+ 'perl/FSM/IR/LoweredRTLIRBuilder.pm',
+ 'perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm',
+ 't/1974-isf-priority-contributor-union.t',
+]
+records = {name: {'sha256': hashlib.sha256(Path(name).read_bytes()).hexdigest(),
+ 'git_blob': subprocess.check_output(['git','hash-object',name],text=True).strip()} for name in paths}
+out = Path('.artifacts/priority-final-observation/identities-'+sys.argv[1]+'.json')
+with out.open('x') as stream:
+ json.dump(records,stream,indent=2,sort_keys=True); stream.write('\n')

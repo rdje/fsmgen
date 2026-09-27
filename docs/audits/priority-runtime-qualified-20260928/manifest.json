@@ -1,0 +1,113 @@
+{
+  "artifact_boundary": "Complete committed test source and admitted/extra producer identities, full original stage arguments/results, log and independent postcheck are retained. Original generated HDL and binaries were removed by normal test cleanup. Successful-child PID identities are not independently captured by the failure-only hook.",
+  "baseline_revision": "fa4546704a8fc52ca6dbdefe1f1eb74e90ff0a67",
+  "native_cause": "historical_EPERM_not_attributed",
+  "prerequisites": {
+    "docs/audits/native-group-witness-20260927/priority-observer/manifest.json": "a833a356b44c573ac95eded0b54a345ec621210ff093a70c5e934f5460190a23",
+    "docs/audits/priority-contributor-repair-20260928/manifest.json": "98797fc34b2988dc7cede70011ea72a1b01b1943601056441d551238a4fdcdde",
+    "docs/audits/priority-reset-oracle-20260928/manifest.json": "47b647b355fa32857468ac28fbb7cc9f81a40ff8747e874a4a23f1cbf15e1294",
+    "docs/audits/same-value-selector-repair-20260928/manifest.json": "3f19c71d015977f959436620fdf67ce2fb1b4a55a35dc6b77fa0358cb50357a7"
+  },
+  "producers": {
+    "bin/fsmgen": {
+      "git_blob": "eb7ca89b12daf2611ddb129008f1f009a9cd3cca",
+      "sha256": "9d4f9920af7562ce7104785ea614feaf88fda1dd9ef2f03a07c522502513a7f1"
+    },
+    "bin/fsmgen-mcp": {
+      "git_blob": "0a2a313f5fe750c704d79e3c82522c9fcec5534c",
+      "sha256": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d"
+    },
+    "docs/audits/native-group-witness-20260927/GroupWitness.pm": {
+      "git_blob": "517f582c66dbf3375af5e9bbd18b2e0e12f95373",
+      "sha256": "b577d3a27c8c75423cdbfa5bb9c047c6dcd6e7237357370d076d8ea055528a66"
+    },
+    "docs/audits/native-group-witness-20260927/failure-only/FailureWitness.pm": {
+      "git_blob": "ef7bc76e8de1a2c54f35d4665d07707250b12942",
+      "sha256": "30346e10a9d3a4c148dd706d2505bcbb78f805485d6257056820573389718804"
+    },
+    "docs/audits/native-group-witness-20260927/failure-only/manifest.json": {
+      "git_blob": "35d0521cf2809d7e823ac49e92d92955d28f594d",
+      "sha256": "ef9704102e86a5f85b303818f5a3e40be65dfb5583a5791df717c050685b0620"
+    },
+    "docs/audits/native-group-witness-20260927/manifest.json": {
+      "git_blob": "46afa7e59dec75d32b1fd21a137dcd50cb08a690",
+      "sha256": "577379cc6abb34b90a237f687daf942f4200c7b1211476218bee95d8e4c4bfae"
+    },
+    "docs/audits/native-group-witness-20260927/priority-observer/Admission.pm": {
+      "git_blob": "f9ad4b9d11593a5f3f6cc5465f49270acf33662d",
+      "sha256": "33476a23cf30bf1b4c297fac32eecb03a8b8f98e64c8df6e36d247f040f0be5c"
+    },
+    "docs/audits/native-group-witness-20260927/priority-observer/StageObserver.pm": {
+      "git_blob": "cc532a3a6abff90c328a0c788a0273e7ef6c96b4",
+      "sha256": "36fc461976ee9ea58265748fa0ac94a36d0444324f87ae94d4dfea9f33721669"
+    },
+    "docs/audits/native-group-witness-20260927/priority-observer/observe.t": {
+      "git_blob": "a6f30c928553a425937463757244bcbb844a6f2a",
+      "sha256": "f6a9171fa75aa30e1e320fda316484a8cb720e718bec37e33993efaa1b2eb215"
+    },
+    "perl/FSM/Backend/GeneratedModuleEmitter.pm": {
+      "git_blob": "c9f3165db7e4d80f267acad879d8faad3c377810",
+      "sha256": "79f3094b802338ba0a2262325c5d6cb3e1913fcc6602618aef2475637eb9eab2"
+    },
+    "perl/FSM/IR/LoweredRTLIRBuilder.pm": {
+      "git_blob": "3ef3dd3acd6db766f1fb1072b8d74b4018f3086d",
+      "sha256": "97b80c3cc99a97db9a9a34dcf0be38b9024b9d0da1210b01f60398fdb38d084b"
+    },
+    "perl/FSM/Scheduler/ISF/Emitter/FSM.pm": {
+      "git_blob": "712f823ce641376672f212e01d5c49192792dd0f",
+      "sha256": "446c1c8c189f130fb7c4ae69244c1853f8ef9f30ace347e463eda18cd724a3bb"
+    },
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": {
+      "git_blob": "fccecd5880211c16687ca1efb3652771a6dd7f31",
+      "sha256": "c2c3997cace72f0e127503bb93de2661a250787938a7f2684af2c88bd9bacc30"
+    },
+    "perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm": {
+      "git_blob": "a24e2861b25542254126d7ae189cad8d7b9db693",
+      "sha256": "a4b289d1528c2ef89e4f3bcace309bcdd91fc6cea508b97318cf3d6b7eff721e"
+    },
+    "perl/FSM/Support/ProcessSupervisor.pm": {
+      "git_blob": "2ffc5446d62fb2130c26f5c0640a6f04851cda58",
+      "sha256": "9cd65fb73974f2c5a9a213836f291641fa366637e966118968557d4aba973ea6"
+    },
+    "t/1974-isf-priority-contributor-union.t": {
+      "git_blob": "796381cd876be1d24caf28436308a7d2dd315735",
+      "sha256": "dc85fb21b095c23b9c1ae5011b7ebe0b5baf7b4784aaf17123c849243fe4223c"
+    },
+    "t/lib/FSM/Test/ProcessSupervisor.pm": {
+      "git_blob": "407369115e6fbb50e115f14bc447b253199ace23",
+      "sha256": "d52a014ce7c242a97a5fbcf27a76db48be64eee0959a2b701e88fbc78f0be9f1"
+    },
+    "t/lib/FSM/Test/ProjectDataLocality.pm": {
+      "git_blob": "652a6b3343d196eb6f312d3ec81fdc40be932ac3",
+      "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+    },
+    "t/lib/FSM/Test/SourceQueryRunner.pm": {
+      "git_blob": "6768d5b086510727efb9b1920f5987a8a3c070e1",
+      "sha256": "e95b79f9f0b5510cd66da6ebe7d9475eb3516c308aed5f9ce89e3d7b7ead528c"
+    },
+    "t/lib/FSM/Test/VerilatorRuntime.pm": {
+      "git_blob": "828f3ed9833b0f4827af6ea84c0c610bc381e043",
+      "sha256": "36dcf875785bd0aea3422e647c02dbe765a47e249ef6476e3cdbdc454f96538a"
+    }
+  },
+  "schema": "fsmgen.priority_runtime_qualification.v1",
+  "sha256": {
+    "extra-identities.json": "a1d783a0f0327ce015cd671f4f9a29ed2cc86deb5a1aff60fd8e615ee174591f",
+    "extra-identities.py.source": "8a1a672d80f8786c9cb5c926d00200648a488bca30be4740f8505366bf5f2088",
+    "observation-command.sh.source": "8b75814580c1d41fc31b0da2502432682e3ba258d654b268f8d9bbaf666b1aeb",
+    "observation/admission.json": "d571bc47e7d850975a6790434b2ad4eee71e800e5dbc0359736b15116908d944",
+    "observation/compile_a.json": "0fbdbf6fb35ba2fdd63d4e853a4825b5408b43e9e6b44d6351f0a6044aec66b4",
+    "observation/compile_c.json": "c58c01482de070f204d074db3913a9e59861a54e7dd3419ad5af60a2814c815d",
+    "observation/compile_e.json": "cb33685be245c3f848ebc3758aee29e8ff9c6ee4511575d674253e53267c20ce",
+    "observation/events.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observation/runtime_b.json": "9dc63ba8fd805f4a5830686d4257be0cf27b9b03c618499453e08d8d408650b4",
+    "observation/runtime_d.json": "58e984d55c82db1c1a7e62f5d0c9d8eacd04b07a775a16cc1e7570bb29d9e3b7",
+    "observation/runtime_f.json": "2ba9df11fb9f4f051d6dca350ad69b06e8e51f788728632024892e4f838976aa",
+    "observation/summary.json": "628e4fc905063f7a6b96a3afef049921360b85517c55df7b148a76d7a74c159a",
+    "observed-result.json": "f5b4ee7534072fd325e16f5b10a08e18410b7d14298c51adccbe60106a30955f",
+    "observed-test.t.source": "dc85fb21b095c23b9c1ae5011b7ebe0b5baf7b4784aaf17123c849243fe4223c",
+    "postcheck.json": "b2163c6a47eb1f2fe8bd0971c368e9c96b42f944493402598c9bb31890f18513",
+    "postcheck.py": "ba0f3eb2112923892ac3899befa25483b9b185536e7390ded1ef7145e2df9fbc",
+    "verify.py": "cee24f267ead46d5d7e1cacb533f375ee3734bf76bd5522e19a1602dd483bbf5"
+  }
+}

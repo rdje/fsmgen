@@ -30,5 +30,7 @@ kind onehot0; explicit onehot0 metadata still emits its obligation. Compatible
 family entries remain discoverable under selector_conflict_targets for report
 compatibility. Standalone-DT and shared-composition assertion policies are
 separate and unchanged. T1211/T340 and full native/API/newline/carrier checks
-qualify metadata/emission; observed positive/negative execution remains owned
-by SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.
+qualify metadata/emission. SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3 now completes
+observed positive execution on both HDL targets and an actual different-value
+assertion rejection for the deliberately broken priority mask. The sealed
+source/result/cleanup evidence is in docs/audits/priority-runtime-qualified-20260928/.

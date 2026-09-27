@@ -61,7 +61,9 @@ mid-run bench asserted reset at a falling edge and checked one time unit later,
 before any reset-active rising edge. The actual failure at time 311 is therefore
 a test-oracle error, not evidence of a production reset defect. The correction
 waits through a rising edge before checking and releasing reset. Parsed/carrier
-expectations and an independent saved event-order model qualify the static fix;
-corrected actual execution remains separately owned. Inspect the complete failed
+expectations and an independent saved event-order model qualify the static fix.
+The subsequent observed T1974 passes both HDL targets, repeated requests and
+reset with unchanged production code; the complete result is retained in
+`docs/audits/priority-runtime-qualified-20260928/`. Inspect the original failed
 observation and public metadata/HDL witness with
 `python3 -B docs/audits/priority-reset-oracle-20260928/verify.py`.

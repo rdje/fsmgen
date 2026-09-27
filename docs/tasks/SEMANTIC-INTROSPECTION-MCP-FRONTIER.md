@@ -900,11 +900,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repair confirmed priority contributor loss with independent emitted and runtime oracles.`
   Acceptance: `After .1 establishes the actual defect, preserve every relevant higher writer condition without broadening suppression to unrelated targets or transaction progress. Keep deterministic output, same-value compatibility, priority/resource composition and native/API/newline parity. Qualify multi-state same-owner, source ordering, opposite priority, unrelated-target, reset/repeated and both HDL-target controls. Use legal override_req in runtime fixtures; .58 separately owns the baseline input force keyword boundary. Before runtime consume separately committed HIAL .3.2.10.11 observer integration; never weaken native admission. Update book/spec/downstream contracts and close only after signoff evidence.`
-  Verification: `Contributor collection and full emitted/public-report qualification pass under .1. The first observed runtime reaches execution but exposes an admitted same-value selector assertion failure. Child .2 qualifies the static metadata/emission correction; child .3 owns complete two-target runtime and a deliberately broken different-value-mask control. Parent signoff remains open. No native-cause repair or completed Verilog run is claimed.`
-  Commit: `pending`
+  Verification: `All children qualify the contributor union and its exposed assertion/test prerequisites. Static red/green and full public products establish the repair; the final observed T1974 completes all positive SystemVerilog/Verilog cases, repeated requests and synchronous reset, while the deliberately broken mask is rejected by the real different-value assertion. No native rejection occurs; historical native causality remains separately P1-open. Complete current evidence is in docs/audits/priority-runtime-qualified-20260928/. Grant/suppression/invocation integration resumes at sibling .2.3.`
+  Commit: `this commit closes qualified children`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3`
 
@@ -923,11 +923,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Complete observed two-target priority runtime qualification after the assertion contract repair.`
   Acceptance: `Consume committed .1/.2 and the qualified native observer. Complete every T1974 source/priority/resource/drive/order/compatible/reset/repeated/progress oracle for SystemVerilog and Verilog, retaining first attempts, full stage evidence, source identities and cleanup. Add an independent negative fixture by restoring the previously lost first-state mask on a cloned actual carrier: the retained different-value assertion must reject that overlap with its precise diagnostic. Keep runtime assertions enabled. A native rejection or unexpected HDL outcome requires diagnosis before further execution. Close the priority contributor parent only after all acceptance holds; a successful run cannot close historical native causality.`
-  Verification: `Active from clean 69ae18454c52a51079da17edd7c31c423ef66bb5. Consume committed contributor and assertion repairs plus unchanged fixed observer; qualify the negative fixture statically, then predeclare three compile and three runtime stages for two positive targets and the deliberate SystemVerilog negative. Bind affected backend/report producers before and after the observation in addition to the fixed observer admission. First corrected observation compiles SystemVerilog, then fails the public reset check at time 311 after two completed laps. Native events are empty and stage cleanup completes; no Verilog or negative stage was attempted. Child .1 owns immediate reset-contract diagnosis and test/production correction before child .2 resumes actual qualification. Historical native causality remains open.`
-  Commit: `pending`
+  Verification: `The first corrected observation exposed only the testbench synchronous-reset timing mismatch; child .1 retains and statically corrects it. Child .2 completes the unchanged corrected test under fresh qualified observation: all positive target and deliberately broken-mask controls pass with original stage bounds and cleanup. Full parent runtime acceptance is now satisfied; historical native causality is not attributed.`
+  Commit: `this commit closes qualified children`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.2`
 
@@ -939,11 +939,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Finish observed two-target and negative runtime after reset-contract correction.`
   Acceptance: `Consume all committed failures and static repairs, then use a fresh admitted failure-only observation for actual T1974. Require full positive and deliberate different-value rejection oracles, source identity, original bounds and cleanup. Stop and diagnose any unexpected result before further execution. Historical native cause cannot close on a pass.`
-  Verification: `pending .1`
-  Commit: `pending`
+  Verification: `Fresh priority_reset_corrected observation consumes committed fa4546704a8fc52ca6dbdefe1f1eb74e90ff0a67 with no test/production/observer changes. Guarded prove reports All tests successful, Files=1, Tests=4. All nine source cases retain complete native/API/newline/carrier parity; SystemVerilog and Verilog each complete ordered writer values, opposite priority, compatible overlap, named drive, the resource-gated case with peer_req low, unrelated output progress, repeated requests and synchronous reset. The isolated missing-contributor carrier compiles, then exits one with the exact selector multi-value conflict diagnostic; no assertion flag is disabled. All six predeclared stages retain original results/bounds and complete supervisor cleanup; input identities agree before/after, native events and capture/retention gaps are empty. Independent postcheck finds no workspace or matching command; successful-child PID identities are not independently recorded. The exact committed test, full logs/stages, additional backend/report hashes and hostile saved verifier are sealed in docs/audits/priority-runtime-qualified-20260928/. Original generated HDL/binaries follow normal test cleanup, explicitly stated rather than claimed retained. This closes the priority repair only; grant/invocation collection, general writer admission, historical native causality and broader startup/full CI remain separate. Public sync scope is qualification evidence/book/spec/downstream/fact/task; no source syntax, production code, report schema, facade or capability key changes.`
+  Commit: `this commit closes qualified children`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3`
   Status: `pending`
@@ -2820,8 +2820,8 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.2`, complete observed priority runtime after
-contributor-union, static same-value assertion and synchronous reset-oracle repairs,
+`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3`, detached grant/suppression/invocation
+evidence integration after complete observed priority qualification,
 after literal-guard repair and independently retained runtime qualification, after
 exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
@@ -4757,3 +4757,17 @@ independent parsed/carrier expectations and hostile saved records; durability
 uses `docs/audits/priority-reset-oracle-20260928/` with complete logs and source
 identities. Corrected actual runtime and original native causality remain missing
 and separately owned. This correction does not claim a production reset defect.
+
+
+## Acceptance — complete observed priority qualification `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The committed red --emit-semantic-json/carrier baseline demonstrates the lost same-owner contributor, and preceding observed failures separately identify the incompatible same-value assertion and premature reset check. Their exact repairs and source identities are committed before this genuine qualification; no unexplained failure is retried.
+- [x] **ADDRESSED (verified)** — The unchanged committed T1974 completes both positive HDL targets with ordered values, compatible overlap, target locality, unrelated progress, repeated requests and reset. A separately cloned carrier restoring only the lost contributor fails the enabled different-value assertion with its precise diagnostic. Complete original stage results, source identities and cleanup are retained in docs/audits/priority-runtime-qualified-20260928/. This closes the contributor repair and exposed assertion/reset prerequisites, not general writer admission or historical native causality.
+- [x] **NO REGRESSION** — The guarded genuine observation reports `All tests successful`, `Files=1, Tests=4`, including complete native/API/newline/carrier parity and the executed negative control. Original compile/runtime bounds and assertion flags remain, all expected stages are present, and the saved hostile verifier rejects missing pass markers, wrong negative failures, weakened bounds/flags, source drift and false cleanup. Independent workspace/command absence complements retained supervisor cleanup; successful-child PID absence is not claimed.
+
+Re-derivation uses the actual public-pin execution and complete public products;
+falsification uses the restored missing-contributor fixture's real assertion
+rejection plus independent cleanup and corrupted evidence controls; durability
+uses the committed test, full original stage/log records, admitted/extra source
+identities and saved verifier. No historical EPERM cause follows from silent
+successful native calls. That missing causal leg remains owned by HIAL .3.2.10.11.5.

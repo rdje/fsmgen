@@ -1888,7 +1888,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `P1 follow-up for the original unexplained pre-exec failures. Before the next roadmap slice genuinely needs supervised HDL runtime, consume the committed failure-only qualification and own a fixed bounded observer integration for that selected test. Preserve original arguments/results/limits, parent race closure and admission; retain source identities, explicit capture errors, native failure context and exact cleanup. Attribute only a captured mechanism joined to the failed child; qualify a repair with independent controls before closing causality. A pass leaves the historical defect open and schedules the next normal opportunity. Do not launch originals merely to obtain recurrence, enable probes, ask for authentication or change host protections. Independent non-runtime feature work may proceed; historical startup/full-CI qualification remains separate.`
   Verification: `Scheduled before the next genuine supervised HDL runtime, using docs/audits/native-group-witness-20260927/failure-only/ at 0881d31cc73e32683a09920041a2085e33974ed2. Historical cause remains missing; no finite successful control can recover the reaped child's session.`
   Commit: `pending observed causal evidence and repair`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.4`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.1`
   Status: `done`
@@ -1911,10 +1911,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit with SEM reset-oracle correction`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Observe complete priority qualification after the reset-oracle correction.`
   Acceptance: `Consume the committed reset diagnosis and all prior priority evidence. Use the unchanged qualified observer with fresh exclusive admission for actual corrected T1974 and independently bound backend/report producers. Preserve original bounds, full results, explicit diagnostic gaps and cleanup. Stop for diagnosis on any unexpected outcome. A successful complete run does not attribute historical native causality; schedule its next genuine opportunity without an original recurrence campaign.`
-  Verification: `pending SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.2.3.2`
+  Verification: `The exclusive priority_reset_corrected observation completes its predeclared three compile/runtime pairs: both positive HDL targets pass and the deliberate missing-contributor SystemVerilog fixture reaches the expected different-value assertion rejection. Complete original bounds/results and supervisor cleanup are retained; native events, input drift and diagnostic gaps are absent. Extra backend/report identities agree before/after. Independent workspace/command residue is absent, while successful-child PID identities remain uncaptured by the failure-only hook. Sealed records and hostile verification are in docs/audits/priority-runtime-qualified-20260928/. No historical native cause follows from this successful feature qualification. Child .5 owns the next genuinely required runtime opportunity; no recurrence-only rerun is authorized by this result.`
+  Commit: `this commit with SEM runtime qualification`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5`
+  Status: `pending`
+  Goal: `Own native causal observation at the next genuinely required roadmap runtime.`
+  Acceptance: `Before a selected roadmap leaf needs supervised HDL runtime, identify its exact fixed target and qualify any required observer integration separately using the committed failure-only witness. Existing T1974 admission cannot authorize a different target. Preserve original limits/arguments/results and native return/errno, retain query/capture gaps and source identities, and independently check cleanup. Diagnose captured rejection before further execution; a pass leaves historical causality open and schedules its next normal opportunity. No host-protection change, privilege request or recurrence-only original retry.`
+  Verification: `Pending the next genuinely required runtime after completed priority qualification. Independent non-runtime grant/invocation work may proceed under SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.3; original startup/full-CI qualification remains separate.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.12`
@@ -4580,7 +4587,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.4` observes priority qualification after the synchronous reset-oracle correction; .11.2/.11.3 retain executed assertion/test failures with no native rejection. Independent guard runtime evidence closes the literal-guard repair; the detached activation collector resumes under SEMANTIC-INTROSPECTION-MCP-FRONTIER. Historical containment causality remains open. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5` owns observation at the next genuine roadmap runtime; .11.4 completes priority qualification with no native rejection. Prior assertion/test failures remain retained. Independent guard runtime evidence closes the literal-guard repair; the detached activation collector resumes under SEMANTIC-INTROSPECTION-MCP-FRONTIER. Historical containment causality remains open. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and

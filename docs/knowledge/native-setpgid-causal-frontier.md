@@ -111,5 +111,17 @@ passes, then the bench checks its synchronous reset too early and fails at time
 and extra producer identities, complete retained cleanup and no native event.
 The independent workspace/command census is empty; successful-child PIDs were
 not independently captured. SEM owns the static bench correction; HIAL .11.4
-observes its next genuine qualification. Complete records and hostile verification
+consumes its next genuine qualification. Complete records and hostile verification
 are in docs/audits/priority-reset-oracle-20260928/. Historical cause stays open.
+
+
+Child .11.4 completes the corrected priority qualification: both positive HDL
+targets pass and the deliberately missing contributor triggers the expected
+real different-value assertion. Original stage bounds/results/cleanup and
+unchanged admitted/extra producer identities are retained, with no native event
+or capture gap. Independent workspace/command residue is absent; successful-child
+PID identities are not independently captured. This closes that feature repair,
+not the historical EPERM. Child .11.5 owns qualified observation before the next
+genuinely required roadmap runtime; independent static feature work proceeds.
+Verify the sealed result with
+`python3 -B docs/audits/priority-runtime-qualified-20260928/verify.py`.
