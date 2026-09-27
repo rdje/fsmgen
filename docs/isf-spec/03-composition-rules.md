@@ -85,6 +85,11 @@ Current lowering:
 - `await_all` waits for all collected spawned completions. Each generated
   child has a live-or-retained completion predicate, so staggered done pulses
   remain available to the join until that child is started again.
+- A top-level trailing `await_all` or `await_any` with no successor holds in
+  its synchronization state. Lowering emits an explicit self-loop under the
+  normal completion predicate, or unconditionally for an empty pending set.
+  It does not invent a completion pulse or a return-to-entry edge. An explicit
+  following `complete` supplies rearming; reset restores the entry state.
 - `await_any` advances when any collected completion is live or retained.
   Remaining pending children stay available to later joins. Starting a child
   clears its retained completion, with start taking priority over capture.

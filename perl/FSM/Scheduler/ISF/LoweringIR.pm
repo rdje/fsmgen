@@ -11545,8 +11545,12 @@ sub _link_states {
         elsif($s->{kind}eq'repeat_check'){_link_repeat_check_state($s,\%idx_by_name,$st,$next)}
         elsif(($s->{kind}eq'sequential'||$s->{kind}eq'contract'||$s->{kind}eq'wait'||$s->{kind}eq'bank_store'||$s->{kind}eq'bank_load')&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'branch'){my$skip=$s->{branch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip}}
-        elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}
-        elsif($s->{kind}eq'sync_any'&&$next){push @{$s->{transitions}},{target=>$next}}
+        elsif ($s->{kind} eq 'sync_all' || $s->{kind} eq 'sync_any') {
+            # A trailing join holds here; only an explicit complete rearms the
+            # transaction. Keep a real target for the emitted completion guard,
+            # including an empty pending set, instead of an empty state body.
+            push @{$s->{transitions}}, {target => $next // $s->{name}};
+        }
         elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}
 
     _append_dynamic_wait_zero_sample_clones($st,\%idx_by_name);

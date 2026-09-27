@@ -378,9 +378,26 @@ Direct/non-generated transaction-port collisions
 remain owned by `.49.2`; same-named explicit `(local ...)` declarations require
 the separate `.49.3` qualification. Explicit ports retain their own domain.
 
-A parent that ends directly in `await_all` can currently emit a missing
-continuation target. Follow the join with an explicit `(complete PORT)` in the
-qualified surface; the terminal-join defect is owned by `.32.1.3.3.1`.
+A trailing `await_all` or `await_any` has an explicit self-loop and holds in
+that state, including when its pending set is empty. Completion pulses do not
+return the parent to its entry state. Follow the join with `(complete PORT)`
+when the parent should pulse completion and accept another activation. Reset
+still restores the entry state. For example, this actor accepts a request once
+per reset and holds after the worker finishes:
+
+```lisp
+(actor terminal_join
+  (clock clk) (reset rst_n)
+  (interface (input start) (input data (width 8))
+             (output result (width 8)))
+  (transaction worker
+    (ports (output value (width 8)))
+    (set value data) (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0 (bind (output value result)))
+    (await_all done)))
+```
 
 Whole aggregate writes preserve the storage's declared alias and packed layout
 on the private child output and owner input. Local, nested and imported aliases

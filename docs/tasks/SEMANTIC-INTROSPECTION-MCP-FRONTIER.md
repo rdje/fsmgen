@@ -697,11 +697,11 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Emit terminal synchronization states without an undefined continuation.`
   Acceptance: `Reproduce the retained terminal await_all source and inspect await_any and empty pending sets. Establish fall-through versus explicit complete semantics from existing lowering; preserve terminal hold when no continuation exists instead of inventing a rearm edge. Fix the missing-target warning, qualify completion retention, strict replay, repeated/reset controls where a continuation exists and full public reports. Synchronize the book and commit before controller restructuring.`
-  Verification: `The .39.2.2.4.2 retained terminal-await.isf reaches Emitter/FSM::_emit_transitions without a first transition target. LoweringIR::_link_states only creates sync continuations when a successor exists; complete explicitly returns to entry. No independent-controller repair is claimed here.`
-  Commit: `pending`
+  Verification: `The retained terminal-await source now strict-checks without warnings. T1922 qualifies both synchronization forms with empty/single/multiple pending sets, explicit hold, reset reactivation, exact interfaces/replay and complete native/API/MCP reports. T1908/T1912/T1920 and book/reference checks pass. Existing watchdog/controller defects remain open.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.1: preserve terminal synchronization holds`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.2`
   Status: `pending`
@@ -2037,8 +2037,8 @@ Completed `.39.2.2.4.1` splits broader writer contracts and repairs stale actor-
 documentation. Completed `.39.2.2.4.2` qualifies whole-aggregate writers and repairs
 declared-root domain validation. Completed `.49.1` isolates generated-child ports
 and retains trigger payloads after start pulses. Completed `.49.2.1` audits direct
-port scope and its controller prerequisite. Next `.32.1.3.3.1.1` repairs terminal
-synchronization; `.32.1.3.3.1.2/.3` select and qualify executable controllers.
+port scope and its controller prerequisite. Completed `.32.1.3.3.1.1` repairs
+terminal synchronization. Next `.32.1.3.3.1.2/.3` select and qualify executable controllers.
 Then `.49.2.2/.3` repair direct identities and qualify local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
 Partial writers and remaining writer leaves follow under `.39.2.2.4.3` onward,
@@ -5725,3 +5725,56 @@ control tests lexical lookup before IR merging. Durability uses this task,
 the canonical scope card and the shipped book boundary. The retained runtime
 failures belong to controller repair; a source-only passing control does not
 close them.
+
+## Terminal synchronization qualification — `.32.1.3.3.1.1`
+
+.artifacts/terminal-sync/before.json and before.stderr reproduce the retained
+terminal-await.isf through public strict check. The emitter warns about an
+uninitialized target at Emitter/FSM.pm line 336; the generated core module then
+fails transition-target validation. test-before.log independently fails the
+new empty-pending regression on a missing target and malformed scheduled FSM.
+
+LoweringIR::_link_states only assigned sync successors when a next state
+existed. It now gives either synchronization form an explicit self-loop when
+there is no successor. This preserves terminal hold and completion predicates;
+it introduces neither a completion pulse nor an implicit rearm edge. Explicit
+complete retains return-to-entry behavior. Simply omitting emission would leave
+an empty state body, which the public IAL0 grammar rejects under T49.
+
+runtime.log passes all HDL hold/reset observations but fails the new empty-set
+interface assertions: standalone semantic reports separate system_contract
+from data signal_analysis; composition tops include system pins in their input
+inventory. empty-semantic.json independently verifies the exact standalone
+explicit_system_contract. The corrected test checks both exact representations,
+without changing production reporting. The first regression command passes
+T1908, then aborts because of a mistyped activation test filename. The corrected
+command names the existing T1912; no product failure is inferred from that typo.
+
+## Acceptance checklist — `.32.1.3.3.1.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — before.stderr records an uninitialized
+  target at perl/FSM/Scheduler/ISF/Emitter/FSM.pm line 336; before.json rejects
+  the malformed transition target from the retained domain source. The empty
+  pending-set regression also fails in test-before.log. _link_states omitted
+  terminal synchronization continuations while the emitter required a target.
+- [x] **ADDRESSED (verified)** — .artifacts/terminal-sync/runtime-final.log
+  reports All tests successful for T1922 with qualified Verilator. Both sync
+  forms retain an explicit self-loop for empty/single/multiple pending sets;
+  independent completion pulses and later start requests cannot rearm them,
+  while reset permits a fresh activation. Full native/API/newline reports and
+  strict emitted-source replay pass. after.json plus empty after.stderr prove
+  the original domain reproduction now succeeds without the warning.
+- [x] **NO REGRESSION** — .artifacts/terminal-sync/regression-final.log reports
+  All tests successful for T1908/T1912/T1920 with qualified Verilator. Continued
+  joins retain completion-memory lifetime and timing, repeated/reset behavior
+  and the existing domain activation controls. T1912's already-owned watchdog
+  limitation is not closed. book.log passes T49/T1376, reference partitions and
+  the mdBook build; no visual audit is claimed.
+
+Re-derivation follows the missing successor in IR through the emitter and
+public malformed-target report. Falsification distinguishes terminal hold from
+implicit entry rearm, varies pending sets and pulse ordering, repeats requests
+without reset and then resets. Existing continued joins separately prove the
+repair did not add completion latency. Durability uses T1922, T1908 and the
+retained source, with synchronized book/spec/fact and staged doctrines.
+Independent controller reachability and direct-port scope remain open.
