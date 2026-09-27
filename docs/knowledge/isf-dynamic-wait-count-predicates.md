@@ -8,7 +8,7 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, timing, wait, count, predicate, runtime]
-evidence: t/1929-isf-wait-carrier-grammar.t; docs/audits/dynamic-wait-carrier-grammar-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1909-isf-dynamic-wait-count-predicates.t; t/1908-isf-generated-child-completion-memory.t; t/1244-isf-wait-clause-lowering.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: docs/audits/runtime-wait-book-20260927/fixtures.json; docs/audits/runtime-wait-book-20260927/verify.pl; t/1929-isf-wait-carrier-grammar.t; docs/audits/dynamic-wait-carrier-grammar-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1909-isf-dynamic-wait-count-predicates.t; t/1908-isf-generated-child-completion-memory.t; t/1244-isf-wait-clause-lowering.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 scripts/run_with_ram_guard.sh prove -Iperl t/1929-isf-wait-carrier-grammar.t t/1909-isf-dynamic-wait-count-predicates.t t/1908-isf-generated-child-completion-memory.t t/1244-isf-wait-clause-lowering.t
 ---
 
@@ -43,6 +43,17 @@ carrier replay. Check/semantic failures retain complete native/API/newline
 reports; schedule refusals follow the existing nonzero-stderr/message-only
 adapter contract. A working arithmetic count retains full schedule-report
 parity. The quoted-division diagnostic redaction defect is repaired by
-SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, qualified by T1930. The stale positive-count fragments in the
-book lowering-reference chapter are owned by .49.2.2.6, immediately after .52;
-this grammar repair does not claim those excerpts have been synchronized yet.
+SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, qualified by T1930. The lowering-reference fragments are synchronized by .49.2.2.6 against
+retained complete sources and generated state mappings. The replay audit
+checks all mapped excerpts and prose-only predecessor controls; it explicitly
+tracks the extract carrier refusal owned by .53 rather than promoting that
+intermediate fragment to HDL support. See isf-extract-carrier-replay.md.
+
+The wait-book audit's fixtures retain source origins, primary carrier identity
+and state-to-fragment mappings. Its verifier requires complete fragment
+coverage and exact token order/grouping, ignoring formatting whitespace only;
+missing or duplicate identities fail. The baseline-drift record retains old
+excerpts. Prose-only predecessor controls replay too. Output and temporary
+carriers stay repository-local; the audit never changes the book or source.
+This qualifies excerpt fidelity and declared carrier outcomes, not additional
+runtime timing, independent-controller behavior or API/MCP completeness.

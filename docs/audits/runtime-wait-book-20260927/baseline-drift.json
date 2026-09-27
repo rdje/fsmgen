@@ -1,0 +1,122 @@
+{
+  "baseline": "2dc265476d266b13a74109c163840e84b74c5078",
+  "fragment_differences": [
+    {
+      "source": "wait-dynamic",
+      "documented": "(main_idle_0\n  (<- (main_wait_1_cnt cycles) <(& start cycles))\n  (-> main_wait_1 <(& start cycles))\n  (-> main_drive_2 <(& start (== cycles 0))))\n\n(main_wait_1\n  (-- main_wait_1_cnt)\n  (?main_wait_1_cnt\n    (=1 (-> main_drive_2)))\n  (?main_wait_1_cnt\n    (>1 (-> main_wait_1))))",
+      "generated": "(main_idle_0\n  (= (can_accept 1))\n  (<- (main_wait_1_cnt cycles) <(& start (!= cycles 0)))\n  (-> main_wait_1 <(& start (!= cycles 0)))\n  (-> main_drive_2 <(& start (== cycles 0)))\n)\n\n(main_wait_1\n  (-- main_wait_1_cnt)\n  (?main_wait_1_cnt\n    (=1 (-> main_drive_2))\n  )\n  (?main_wait_1_cnt\n    (>1 (-> main_wait_1))\n  )\n)",
+      "id": "wait-fragment-01",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-sample",
+      "documented": "(main_idle_0\n  (<- (main_wait_1_cnt cycles) <(& start cycles))\n  (-> main_wait_1 <(& start cycles))\n  (-> main_wait_1_zero_sample <(& start (== cycles 0))))\n\n(main_wait_1\n  (<= (hold din))\n  (-- main_wait_1_cnt)\n  (?main_wait_1_cnt\n    (=1 (-> main_drive_2)))\n  (?main_wait_1_cnt\n    (>1 (-> main_wait_1_loop))))\n\n(main_wait_1_loop\n  (-- main_wait_1_cnt)\n  (?main_wait_1_cnt\n    (=1 (-> main_drive_2)))\n  (?main_wait_1_cnt\n    (>1 (-> main_wait_1_loop))))\n\n(main_wait_1_zero_sample\n  (<= (hold din))\n  (= (outp_start 1))\n  (= (outp_val hold))\n  (-> main_done_3))",
+      "generated": "(main_idle_0\n  (= (can_accept 1))\n  (<- (main_wait_1_cnt cycles) <(& start (!= cycles 0)))\n  (-> main_wait_1 <(& start (!= cycles 0)))\n  (-> main_wait_1_zero_sample <(& start (== cycles 0)))\n)\n\n(main_wait_1\n  (<= (hold din))\n  (-- main_wait_1_cnt)\n  (?main_wait_1_cnt\n    (=1 (-> main_drive_2))\n  )\n  (?main_wait_1_cnt\n    (>1 (-> main_wait_1_loop))\n  )\n)\n\n(main_wait_1_loop\n  (-- main_wait_1_cnt)\n  (?main_wait_1_cnt\n    (=1 (-> main_drive_2))\n  )\n  (?main_wait_1_cnt\n    (>1 (-> main_wait_1_loop))\n  )\n)\n\n(main_wait_1_zero_sample\n  (<= (hold din))\n  (= (outp_start 1))\n  (= (outp_val hold))\n  (-> main_done_3)\n)",
+      "id": "wait-fragment-02",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-sample-sync-all",
+      "documented": "(parent_wait_3_zero_sample\n  (<= (hold din))\n  (-> parent_drive_5 <(& w0_done w1_done)))",
+      "generated": "(parent_wait_3_zero_sample\n  (<= (hold din))\n  (-> parent_drive_5 <(& isf_completion_w0_ready isf_completion_w1_ready))\n)",
+      "id": "wait-fragment-12",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-pair",
+      "documented": "(main_idle_0\n  (<- (main_wait_1_cnt first_cycles) <(& start first_cycles))\n  (<- (main_wait_2_cnt second_cycles) <(& start (== first_cycles 0) second_cycles))\n  (-> main_wait_1 <(& start first_cycles))\n  (-> main_wait_2 <(& start (== first_cycles 0) second_cycles))\n  (-> main_drive_3 <(& start (== first_cycles 0) (== second_cycles 0))))",
+      "generated": "(main_idle_0\n  (= (can_accept 1))\n  (<- (main_wait_1_cnt first_cycles) <(& start (!= first_cycles 0)))\n  (<- (main_wait_2_cnt second_cycles) <(& start (== first_cycles 0) (!= second_cycles 0)))\n  (-> main_wait_1 <(& start (!= first_cycles 0)))\n  (-> main_wait_2 <(& start (== first_cycles 0) (!= second_cycles 0)))\n  (-> main_drive_3 <(& start (== first_cycles 0) (== second_cycles 0)))\n)",
+      "id": "wait-fragment-16",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-pair",
+      "documented": "(main_wait_1\n  (-- main_wait_1_cnt)\n  (<- (main_wait_2_cnt second_cycles) <(& (== main_wait_1_cnt 1) second_cycles))\n  (-> main_wait_2 <(& (== main_wait_1_cnt 1) second_cycles))\n  (-> main_drive_3 <(& (== main_wait_1_cnt 1) (== second_cycles 0)))\n  (?main_wait_1_cnt\n    (>1 (-> main_wait_1))))",
+      "generated": "(main_wait_1\n  (-- main_wait_1_cnt)\n  (<- (main_wait_2_cnt second_cycles) <(& (== main_wait_1_cnt 1) (!= second_cycles 0)))\n  (-> main_wait_2 <(& (== main_wait_1_cnt 1) (!= second_cycles 0)))\n  (-> main_drive_3 <(& (== main_wait_1_cnt 1) (== second_cycles 0)))\n  (?main_wait_1_cnt\n    (>1 (-> main_wait_1))\n  )\n)",
+      "id": "wait-fragment-17",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-sample-pair",
+      "documented": "(main_idle_0\n  (<- (main_wait_1_cnt first_cycles) <(& start first_cycles))\n  (-> main_wait_1 <(& start first_cycles))\n  (<- (main_wait_2_cnt second_cycles) <(& start (== first_cycles 0) second_cycles))\n  (-> main_wait_2_sample_from_main_wait_1 <(& start (== first_cycles 0) second_cycles))\n  (-> main_wait_1_zero_sample_after_main_wait_2\n      <(& start (== first_cycles 0) (== second_cycles 0))))\n\n(main_wait_2_sample_from_main_wait_1\n  (<= (hold din))\n  (-- main_wait_2_cnt)\n  (?main_wait_2_cnt\n    (=1 (-> main_drive_3))\n    (>1 (-> main_wait_2))))",
+      "generated": "(main_idle_0\n  (= (can_accept 1))\n  (<- (main_wait_1_cnt first_cycles) <(& start (!= first_cycles 0)))\n  (<- (main_wait_2_cnt second_cycles) <(& start (== first_cycles 0) (!= second_cycles 0)))\n  (-> main_wait_1 <(& start (!= first_cycles 0)))\n  (-> main_wait_2_sample_from_main_wait_1 <(& start (== first_cycles 0) (!= second_cycles 0)))\n  (-> main_wait_1_zero_sample_after_main_wait_2 <(& start (== first_cycles 0) (== second_cycles 0)))\n)\n\n(main_wait_2_sample_from_main_wait_1\n  (<= (hold din))\n  (-- main_wait_2_cnt)\n  (?main_wait_2_cnt\n    (=1 (-> main_drive_3))\n  )\n  (?main_wait_2_cnt\n    (>1 (-> main_wait_2))\n  )\n)",
+      "id": "wait-fragment-18",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-after-sync-all",
+      "documented": "(parent_await_all_3\n  (<- (parent_wait_4_cnt cycles) <(& w0_done w1_done cycles))\n  (-> parent_wait_4 <(& w0_done w1_done cycles))\n  (-> parent_done_5 <(& w0_done w1_done (== cycles 0))))",
+      "generated": "(parent_await_all_3\n  (<- (parent_wait_4_cnt cycles) <(& isf_completion_w0_ready isf_completion_w1_ready (!= cycles 0)))\n  (-> parent_wait_4 <(& isf_completion_w0_ready isf_completion_w1_ready (!= cycles 0)))\n  (-> parent_done_5 <(& isf_completion_w0_ready isf_completion_w1_ready (== cycles 0)))\n)",
+      "id": "wait-fragment-19",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-after-bank-load",
+      "documented": "(main_load_1\n  (<- (out> data_0) <(== idx 0))\n  (<- (out> data_1) <(== idx 1))\n  (<- (out> data_2) <(== idx 2))\n  (<- (out> data_3) <(== idx 3))\n  (<- (main_wait_2_cnt cycles) <cycles)\n  (-> main_wait_2 <cycles)\n  (-> main_done_3 <(== cycles 0)))",
+      "generated": "(main_load_1\n  (<- (out> data_0) <(== idx 0))\n  (<- (out> data_1) <(== idx 1))\n  (<- (out> data_2) <(== idx 2))\n  (<- (out> data_3) <(== idx 3))\n  (<- (main_wait_2_cnt cycles) <(!= cycles 0))\n  (-> main_wait_2 <(!= cycles 0))\n  (-> main_done_3 <(== cycles 0))\n)",
+      "id": "wait-fragment-20",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-expression",
+      "documented": "(main_idle_0\n  (<- (main_wait_1_cnt (+ cycles bias)) <(& start (+ cycles bias)))\n  (-> main_wait_1 <(& start (+ cycles bias)))\n  (-> main_drive_2 <(& start (== (+ cycles bias) 0))))",
+      "generated": "(main_idle_0\n  (= (can_accept 1))\n  (<- (main_wait_1_cnt (+ cycles bias)) <(& start (!= (+ cycles bias) 0)))\n  (-> main_wait_1 <(& start (!= (+ cycles bias) 0)))\n  (-> main_drive_2 <(& start (== (+ cycles bias) 0)))\n)",
+      "id": "wait-fragment-21",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-when",
+      "documented": "(main_when_1\n  (<- (main_wait_2_cnt cycles) <(& cond cycles))\n  (-> main_done_4 <(! cond))\n  (-> main_wait_2 <(& cond cycles))\n  (-> main_drive_3 <(& cond (== cycles 0))))",
+      "generated": "(main_when_1\n  (<- (main_wait_2_cnt cycles) <(& cond (!= cycles 0)))\n  (-> main_done_4 <(! cond))\n  (-> main_wait_2 <(& cond (!= cycles 0)))\n  (-> main_drive_3 <(& cond (== cycles 0)))\n)",
+      "id": "wait-fragment-22",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-repeat",
+      "documented": "(main_repeat_init_1\n  (<= (main_cnt 2))\n  (-> main_repeat_check_4))\n\n(main_wait_2\n  (-- main_wait_2_cnt)\n  (?main_wait_2_cnt\n    (=1 (-> main_drive_3)))\n  (?main_wait_2_cnt\n    (>1 (-> main_wait_2))))\n\n(main_drive_3\n  (= (tick_start 1))\n  (-> main_repeat_check_4))\n\n(main_repeat_check_4\n  (-- main_cnt)\n  (<- (main_wait_2_cnt cycles) <(& (!= main_cnt 0) cycles))\n  (?main_cnt\n    (=0 (-> main_done_5)))\n  (-> main_wait_2 <(& (!= main_cnt 0) cycles))\n  (-> main_drive_3 <(& (!= main_cnt 0) (== cycles 0))))",
+      "generated": "(main_repeat_init_1\n  (<= (main_cnt 2))\n  (-> main_repeat_check_4)\n)\n\n(main_wait_2\n  (-- main_wait_2_cnt)\n  (?main_wait_2_cnt\n    (=1 (-> main_drive_3))\n  )\n  (?main_wait_2_cnt\n    (>1 (-> main_wait_2))\n  )\n)\n\n(main_drive_3\n  (= (tick_start 1))\n  (-> main_repeat_check_4)\n)\n\n(main_repeat_check_4\n  (-- main_cnt)\n  (<- (main_wait_2_cnt cycles) <(& (!= main_cnt 0) (!= cycles 0)))\n  (?main_cnt\n    (=0 (-> main_done_5))\n  )\n  (-> main_wait_2 <(& (!= main_cnt 0) (!= cycles 0)))\n  (-> main_drive_3 <(& (!= main_cnt 0) (== cycles 0)))\n)",
+      "id": "wait-fragment-23",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-repeat-later",
+      "documented": "(main_repeat_init_1\n  (<= (main_cnt 2))\n  (-> main_repeat_check_4))\n\n(main_update_2                       ;; first body statement (precedes the wait)\n  (<- (r> (+ r 1)))\n  (<- (main_wait_3_cnt cycles) <cycles)\n  (-> main_wait_3 <cycles)\n  (-> main_repeat_check_4 <(== cycles 0)))\n\n(main_wait_3\n  (-- main_wait_3_cnt)\n  (?main_wait_3_cnt\n    (=1 (-> main_repeat_check_4)))\n  (?main_wait_3_cnt\n    (>1 (-> main_wait_3))))\n\n(main_repeat_check_4\n  (-- main_cnt)\n  (?main_cnt\n    (!=0 (-> main_update_2))\n    (=0 (-> main_done_5))))",
+      "generated": "(main_repeat_init_1\n  (<= (main_cnt 2))\n  (-> main_repeat_check_4)\n)\n\n(main_update_2\n  (<- (r> (+ r 1)))\n  (<- (main_wait_3_cnt cycles) <(!= cycles 0))\n  (-> main_wait_3 <(!= cycles 0))\n  (-> main_repeat_check_4 <(== cycles 0))\n)\n\n(main_wait_3\n  (-- main_wait_3_cnt)\n  (?main_wait_3_cnt\n    (=1 (-> main_repeat_check_4))\n  )\n  (?main_wait_3_cnt\n    (>1 (-> main_wait_3))\n  )\n)\n\n(main_repeat_check_4\n  (-- main_cnt)\n  (?main_cnt\n    (!=0 (-> main_update_2))\n    (=0 (-> main_done_5))\n  )\n)",
+      "id": "wait-fragment-24",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-switch",
+      "documented": "(main_switch_4\n  (<- (main_wait_1_cnt cycles) <(& (== sel 0) cycles))\n  (-> main_wait_1 <(& (== sel 0) cycles))\n  (-> main_drive_2 <(& (== sel 0) (== cycles 0)))\n  (?sel\n    (=1 (-> main_drive_3))\n  )\n  (-> main_done_5 <(! (| (== sel 0) (== sel 1)))))",
+      "generated": "(main_switch_4\n  (<- (main_wait_1_cnt cycles) <(& (== sel 0) (!= cycles 0)))\n  (-> main_wait_1 <(& (== sel 0) (!= cycles 0)))\n  (-> main_drive_2 <(& (== sel 0) (== cycles 0)))\n  (?sel\n    (=1 (-> main_drive_3))\n  )\n  (-> main_done_5 <(! (| (== sel 0) (== sel 1))))\n)",
+      "id": "wait-fragment-25",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-while",
+      "documented": "(main_while_entry_1\n  (<- (main_wait_2_cnt cycles) <(& keep cycles))\n  (-> main_wait_2 <(& keep cycles))\n  (-> main_drive_3 <(& keep (== cycles 0)))\n  (-> main_done_5 <(! keep)))\n\n(main_while_check_4\n  (<- (main_wait_2_cnt cycles) <(& keep cycles))\n  (-> main_wait_2 <(& keep cycles))\n  (-> main_drive_3 <(& keep (== cycles 0)))\n  (-> main_done_5 <(! keep)))",
+      "generated": "(main_while_entry_1\n  (<- (main_wait_2_cnt cycles) <(& keep (!= cycles 0)))\n  (-> main_wait_2 <(& keep (!= cycles 0)))\n  (-> main_drive_3 <(& keep (== cycles 0)))\n  (-> main_done_5 <(! keep))\n)\n\n(main_while_check_4\n  (<- (main_wait_2_cnt cycles) <(& keep (!= cycles 0)))\n  (-> main_wait_2 <(& keep (!= cycles 0)))\n  (-> main_drive_3 <(& keep (== cycles 0)))\n  (-> main_done_5 <(! keep))\n)",
+      "id": "wait-fragment-26",
+      "matches": false
+    },
+    {
+      "source": "wait-dynamic-until",
+      "documented": "(main_until_check_3\n  (-> main_done_4 <stop)\n  (<- (main_wait_1_cnt cycles) <(& (! stop) cycles))\n  (-> main_wait_1 <(& (! stop) cycles))\n  (-> main_drive_2 <(& (! stop) (== cycles 0))))",
+      "generated": "(main_until_check_3\n  (<- (main_wait_1_cnt cycles) <(& (! stop) (!= cycles 0)))\n  (-> main_done_4 <stop)\n  (-> main_wait_1 <(& (! stop) (!= cycles 0)))\n  (-> main_drive_2 <(& (! stop) (== cycles 0)))\n)",
+      "id": "wait-fragment-27",
+      "matches": false
+    },
+    {
+      "source": "wait-after-exit-when",
+      "documented": "(main_exit_when_2\n  (<- (main_wait_3_cnt cycles) <(& (! stop) cycles))\n  (-> main_done_6 <stop)\n  (-> main_wait_3 <(& (! stop) cycles))\n  (-> main_drive_4 <(& (! stop) (== cycles 0))))",
+      "generated": "(main_exit_when_2\n  (<- (main_wait_3_cnt cycles) <(& (! stop) (!= cycles 0)))\n  (-> main_done_6 <stop)\n  (-> main_wait_3 <(& (! stop) (!= cycles 0)))\n  (-> main_drive_4 <(& (! stop) (== cycles 0)))\n)",
+      "id": "wait-fragment-29",
+      "matches": false
+    }
+  ],
+  "extract_refusal": {
+    "source": "wait-dynamic-sample-extract",
+    "diagnostic": "Unsupported expression operator 'slice'",
+    "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.53"
+  }
+}

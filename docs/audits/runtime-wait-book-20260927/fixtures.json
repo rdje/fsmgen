@@ -1,0 +1,455 @@
+{
+  "baseline": "2dc265476d266b13a74109c163840e84b74c5078",
+  "chapter": "docs/book/src/13h-lowering-reference.md",
+  "cases": [
+    {
+      "id": "wait-dynamic",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (wait cycles)\n    (drive tick)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-01",
+          "states": [
+            "main_idle_0",
+            "main_wait_1"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (output out (width 8))\n    (output done))\n  (drive (outp val)\n    (out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (drive outp hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-02",
+          "states": [
+            "main_idle_0",
+            "main_wait_1",
+            "main_wait_1_loop",
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-complete",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_complete\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (output done))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-03",
+          "states": [
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_complete.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-set",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_set\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (output out (width 8))\n    (output done))\n  (drive (outp val)\n    (out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (set out 1)\n    (drive outp hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-04",
+          "states": [
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_set.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-shift",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_shift\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (input bit)\n    (output reg_out (width 8))\n    (output done))\n  (drive (outp val)\n    (reg_out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (shift_left reg_out bit (width 8))\n    (drive outp hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-05",
+          "states": [
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_shift.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-assemble",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_assemble\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (input header (width 4))\n    (input payload (width 8))\n    (output packet (width 12))\n    (output sample_out (width 8))\n    (output done))\n  (drive (captured val)\n    (sample_out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (assemble header payload as packet)\n    (drive captured hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-06",
+          "states": [
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_assemble.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-extract",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_extract\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (input packet (width 16))\n    (output out_header (width 4))\n    (output out_payload (width 8))\n    (output out_crc (width 4))\n    (output sample_out (width 8))\n    (output done))\n  (drive (captured val)\n    (sample_out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (extract packet as out_header out_payload out_crc)\n    (drive captured hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-07",
+          "states": [
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_extract.fsm",
+      "expected_refusal": {
+        "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.53",
+        "diagnostic": "Unsupported expression operator 'slice'"
+      }
+    },
+    {
+      "id": "wait-dynamic-sample-bank-load",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_bank_load\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (input idx (width 2))\n    (output out (width 8))\n    (output sample_out (width 8))\n    (output done))\n  (storage\n    (bank data (width 8) (depth 4)))\n  (drive (captured val)\n    (sample_out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (load data idx as out)\n    (drive captured hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-08",
+          "states": [
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_bank_load.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-bank-store",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_bank_store\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (input idx (width 2))\n    (input value (width 8))\n    (output sample_out (width 8))\n    (output done))\n  (storage\n    (bank data (width 8) (depth 4)))\n  (drive (captured val)\n    (sample_out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (store data idx value)\n    (drive captured hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-09",
+          "states": [
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_bank_store.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-stage",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_stage\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input ready)\n    (input cycles (width 4))\n    (input din (width 8))\n    (output valid)\n    (output sample_out (width 8))\n    (output done))\n  (drive (captured val)\n    (sample_out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (stage accept (input ready) (output valid))\n    (drive captured hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-10",
+          "states": [
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_stage.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-contract",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_contract\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input ack)\n    (input cycles (width 4))\n    (input din (width 8))\n    (output sample_out (width 8))\n    (output done))\n  (drive (captured val)\n    (sample_out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (assert (monitor (within ack 3)) \"ack_seen\")\n    (drive captured hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-11",
+          "states": [
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_contract.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-sync-all",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_sync_all\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (output flag)\n    (output sample_out (width 8))\n    (output done))\n  (drive tick\n    (flag 1))\n  (drive (captured val)\n    (sample_out val))\n  (transaction worker\n    (on start)\n    (drive tick)\n    (complete done))\n  (transaction parent\n    (on start)\n    (spawn worker as w0)\n    (spawn worker as w1)\n    (sample din as hold)\n    (wait cycles)\n    (await_all done)\n    (drive captured hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-12",
+          "states": [
+            "parent_wait_3_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_sync_all.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-spawn",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_spawn\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (output flag)\n    (output sample_out (width 8))\n    (output done))\n  (drive tick\n    (flag 1))\n  (drive (captured val)\n    (sample_out val))\n  (transaction worker\n    (on start)\n    (drive tick)\n    (complete done))\n  (transaction parent\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (spawn worker as w0)\n    (await_all done)\n    (drive captured hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-13",
+          "states": [
+            "parent_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_spawn.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-phase",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_phase\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input din (width 8))\n    (output sample_out (width 8))\n    (output done))\n  (drive (captured val)\n    (sample_out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait cycles)\n    (phase capture (outputs sample_out) (next finish))\n    (drive captured hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-14",
+          "states": [
+            "main_wait_1_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_phase.fsm"
+    },
+    {
+      "id": "wait-dynamic-pair",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_pair\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input first_cycles (width 4))\n    (input second_cycles (width 3))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (wait first_cycles)\n    (wait second_cycles)\n    (drive tick)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-16",
+          "states": [
+            "main_idle_0"
+          ]
+        },
+        {
+          "id": "wait-fragment-17",
+          "states": [
+            "main_wait_1"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_pair.fsm"
+    },
+    {
+      "id": "wait-dynamic-sample-pair",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_sample_pair\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input first_cycles (width 4))\n    (input second_cycles (width 3))\n    (input din (width 8))\n    (output sample_out (width 8))\n    (output done))\n  (drive (captured val)\n    (sample_out val))\n  (transaction main\n    (on start)\n    (sample din as hold)\n    (wait first_cycles)\n    (wait second_cycles)\n    (drive captured hold)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-18",
+          "states": [
+            "main_idle_0",
+            "main_wait_2_sample_from_main_wait_1"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_sample_pair.fsm"
+    },
+    {
+      "id": "wait-dynamic-after-sync-all",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_after_sync_all\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction worker\n    (on start)\n    (drive tick)\n    (complete done))\n  (transaction parent\n    (on start)\n    (spawn worker as w0)\n    (spawn worker as w1)\n    (await_all done)\n    (wait cycles)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-19",
+          "states": [
+            "parent_await_all_3"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_after_sync_all.fsm"
+    },
+    {
+      "id": "wait-dynamic-after-bank-load",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_after_bank_load\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input idx (width 2))\n    (output out (width 8))\n    (output done))\n  (storage\n    (bank data (width 8) (depth 4)))\n  (transaction main\n    (on start)\n    (load data idx as out)\n    (wait cycles)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-20",
+          "states": [
+            "main_load_1"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_after_bank_load.fsm"
+    },
+    {
+      "id": "wait-dynamic-expression",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_expression\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input bias (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (wait (+ cycles bias))\n    (drive tick)\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-21",
+          "states": [
+            "main_idle_0"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_expression.fsm"
+    },
+    {
+      "id": "wait-dynamic-when",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_when\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cond)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (when cond\n      (wait cycles)\n      (drive tick))\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-22",
+          "states": [
+            "main_when_1"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_when.fsm"
+    },
+    {
+      "id": "wait-dynamic-repeat",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_repeat\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (repeat 2\n      (wait cycles)\n      (drive tick))\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-23",
+          "states": [
+            "main_repeat_init_1",
+            "main_wait_2",
+            "main_drive_3",
+            "main_repeat_check_4"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_repeat.fsm"
+    },
+    {
+      "id": "wait-dynamic-repeat-later",
+      "origin": "authored from the documented later-repeat body",
+      "source": "(actor wait_dynamic_repeat_later\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface (input start) (input cycles (width 4)) (input din (width 8))\n    (output r (width 8)) (output done))\n  (transaction main\n    (on start)\n    (repeat 2\n      (update r (+ r 1))\n      (wait cycles))\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-24",
+          "states": [
+            "main_repeat_init_1",
+            "main_update_2",
+            "main_wait_3",
+            "main_repeat_check_4"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_repeat_later.fsm"
+    },
+    {
+      "id": "wait-dynamic-switch",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_switch\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input sel)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (switch sel\n      (0 (wait cycles)\n         (drive tick))\n      (1 (drive tick)))\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-25",
+          "states": [
+            "main_switch_4"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_switch.fsm"
+    },
+    {
+      "id": "wait-dynamic-while",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_while\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input keep)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (while keep\n      (wait cycles)\n      (drive tick))\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-26",
+          "states": [
+            "main_while_entry_1",
+            "main_while_check_4"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_while.fsm"
+    },
+    {
+      "id": "wait-dynamic-until",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_until\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input stop)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (until stop\n      (wait cycles)\n      (drive tick))\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-27",
+          "states": [
+            "main_until_check_3"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_until.fsm"
+    },
+    {
+      "id": "wait-dynamic-repeat-later-sample",
+      "origin": "authored from the documented later-repeat body",
+      "source": "(actor wait_dynamic_repeat_later_sample\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface (input start) (input cycles (width 4)) (input din (width 8))\n    (output r (width 8)) (output done))\n  (transaction main\n    (on start)\n    (repeat 2\n      (update r (+ r 1))\n      (sample din as hold)\n      (wait cycles))\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-28",
+          "states": [
+            "main_wait_3_zero_sample"
+          ]
+        }
+      ],
+      "carrier": "wait_dynamic_repeat_later_sample.fsm"
+    },
+    {
+      "id": "wait-after-exit-when",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_after_exit_when\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input busy)\n    (input stop)\n    (input cycles (width 4))\n    (output tick)\n    (output done))\n  (drive pulse\n    (tick 1))\n  (transaction main\n    (on start)\n    (while busy\n      (exit-when stop)\n      (wait cycles)\n      (drive pulse))\n    (complete done)))",
+      "fragments": [
+        {
+          "id": "wait-fragment-29",
+          "states": [
+            "main_exit_when_2"
+          ]
+        }
+      ],
+      "carrier": "wait_after_exit_when.fsm"
+    },
+    {
+      "id": "wait-dynamic-after-await",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_after_await\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input ready)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (await ready)\n    (wait cycles)\n    (drive tick)\n    (complete done)))",
+      "fragments": [],
+      "carrier": "wait_dynamic_after_await.fsm"
+    },
+    {
+      "id": "wait-dynamic-after-stage",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_after_stage\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input ready)\n    (input cycles (width 4))\n    (output valid)\n    (output done))\n  (transaction main\n    (on start)\n    (stage accept (input ready) (output valid))\n    (wait cycles)\n    (complete done)))",
+      "fragments": [],
+      "carrier": "wait_dynamic_after_stage.fsm"
+    },
+    {
+      "id": "wait-dynamic-after-repeat",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_after_repeat\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (repeat 1\n      (drive tick))\n    (wait cycles)\n    (complete done)))",
+      "fragments": [],
+      "carrier": "wait_dynamic_after_repeat.fsm"
+    },
+    {
+      "id": "wait-dynamic-after-bank-store",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_after_bank_store\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (input idx (width 2))\n    (input value (width 8))\n    (output done))\n  (storage\n    (bank data (width 8) (depth 4)))\n  (transaction main\n    (on start)\n    (store data idx value)\n    (wait cycles)\n    (complete done)))",
+      "fragments": [],
+      "carrier": "wait_dynamic_after_bank_store.fsm"
+    },
+    {
+      "id": "wait-dynamic-after-sync-any",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_after_sync_any\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction worker\n    (on start)\n    (drive tick)\n    (complete done))\n  (transaction parent\n    (on start)\n    (spawn worker as w0)\n    (spawn worker as w1)\n    (await_any done)\n    (wait cycles)\n    (complete done)))",
+      "fragments": [],
+      "carrier": "wait_dynamic_after_sync_any.fsm"
+    },
+    {
+      "id": "wait-dynamic-after-while",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_dynamic_after_while\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input keep)\n    (input cycles (width 4))\n    (output flag)\n    (output done))\n  (drive tick\n    (flag 1))\n  (transaction main\n    (on start)\n    (while keep\n      (drive tick))\n    (wait cycles)\n    (complete done)))",
+      "fragments": [],
+      "carrier": "wait_dynamic_after_while.fsm"
+    },
+    {
+      "id": "wait-after-continue-when",
+      "origin": "t/1244-isf-wait-clause-lowering.t",
+      "source": "(actor wait_after_continue_when\n  (clock clk)\n  (reset (rst_n async active_low))\n  (interface\n    (input start)\n    (input busy)\n    (input skip)\n    (input cycles (width 4))\n    (output tick)\n    (output done))\n  (drive pulse\n    (tick 1))\n  (transaction main\n    (on start)\n    (while busy\n      (continue-when skip)\n      (wait cycles)\n      (drive pulse))\n    (complete done)))",
+      "fragments": [],
+      "carrier": "wait_after_continue_when.fsm"
+    }
+  ]
+}

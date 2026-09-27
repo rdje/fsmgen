@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1382,7 +1382,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3`
   Status: `pending`
   Goal: `Integrate scoped formal lowering and preserve public source identities.`
-  Acceptance: `After .1/.2/.5/.6, connect declaration maps, width/type/reset/role propagation, caller-local binding validation, local call endpoints and rule payload destinations. Allocate against actual actor/generated/private declarations, preserve generated child public ports and authored binding report names, and reject any unresolved physical collision. Qualify actor/local, sibling/caller/callee, input/output and generated-prefix cases through strict artifacts and complete native/API/MCP reports; keep runtime limits explicit until .49.2.3. Update book/spec/facts and commit before payload repair .32.1.3.3.1.3.2.`
+  Acceptance: `After .1/.2/.5/.6 and extract carrier repair .53, connect declaration maps, width/type/reset/role propagation, caller-local binding validation, local call endpoints and rule payload destinations. Allocate against actual actor/generated/private declarations, preserve generated child public ports and authored binding report names, and reject any unresolved physical collision. Qualify actor/local, sibling/caller/callee, input/output and generated-prefix cases through strict artifacts and complete native/API/MCP reports; keep runtime limits explicit until .49.2.3. Update book/spec/facts and commit before payload repair .32.1.3.3.1.3.2.`
   Verification: `pending`
   Commit: `pending`
 
@@ -1401,11 +1401,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair stale runtime-wait lowering examples in the book.`
   Acceptance: `After .5 and before .3, census the runtime-wait examples in 13h against generated current carriers and the canonical count-predicate facts. Replace stale low-bit positive-entry guards with actual nonzero predicates; check pending/consecutive waits, joins, branches, repeat/switch/loop and exit/continue predecessors for related drift. Preserve explanatory intent while making generated examples accurate. Retain reproducible source/fragment evidence, run book-example checks/build and commit.`
-  Verification: `13h still shows main_wait_1 counter load/entry guards as (& start cycles), while the committed production fix uses (& start (!= cycles 0)). At start=1/cycles=2 the old expression is false and the current one true. Similar stale guards occur in consecutive and expression wait examples. Canonical isf-dynamic-wait-count-predicates and T1909 own the runtime proof; this leaf owns the missed book synchronization.`
-  Commit: `pending`
+  Verification: `The retained runtime-wait-book audit maps every generated wait excerpt to complete sources and current primary-carrier states, with explicit prose-predecessor controls. Corrected nonzero predicates, completion-ready join signals, idle readiness and exact transition grouping/order. The book and audit mark the extract intermediate carrier as a tracked refusal under .53; other carrier replays pass. T1376/T1244 pass and mdBook builds. Next .53, then .49.2.2.3.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.3`
   Status: `pending`
@@ -1508,6 +1508,13 @@ For FSMGen, the analogs are:
   Acceptance: `Immediately after .49.2.2.5 and before the wait-book repair .6, reproduce native/API diagnostic divergence for an unsupported carrier expression whose supported-operator hint contains quoted /. Repair contextual sanitization without exposing real absolute/quoted/URI/Windows paths. Qualify direct native/API/newline errors, bare/quoted HDL operators, genuine path redaction and repository-local paths; update book/facts and commit.`
   Verification: `T1930 RED/GREEN proves unsupported/arity diagnostic parity through native/API/newline calls, unchanged successful division reports, and actual-path redaction including ordinary quoted roots. T1868/T1461/T1929 regressions pass; book builds. Next .49.2.2.6 repairs stale wait excerpts before scope integration .3.`
   Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.53`
+  Status: `pending`
+  Goal: `Repair extract carrier/public-query incompatibility found by strict book replay.`
+  Acceptance: `Immediately after the current wait-book synchronization and before scope integration .49.2.2.3, reproduce the extract carrier's unsupported slice operator through actual native check/semantic and API/MCP paths. Resolve the mismatch between emitted extract RHS and the active expression grammar while preserving exact bit ranges, widths, capture timing and pending-sample behavior. Close the extract-specific replay gap in the older lowering tests; qualify direct/assembled/inferred sources and malformed controls, synchronize book/spec/facts and commit.`
+  Verification: `The wait-book source/fragment census lowers the exact T1244 extract fixture, then bin/fsmgen --strict --check --json rejects its emitted (slice packet 15 12) RHS as Unsupported expression operator slice. Other audited carriers pass. _ir_extract in LoweringIR.pm emits this form; ExpressionBuilder supports bracketed signal slices rather than a slice operator. The T1244 extract subtest omits the SourceFrontend/HDL helper used by other cases; an isolated direct frontend probe also rejects slice. This is a replay coverage gap, not a strict-versus-permissive grammar distinction. Retain the exact fixture and baseline failure in the book audit.`
+  Commit: `pending`
 
 ## Implementation Notes From `.4`
 
@@ -2195,9 +2202,9 @@ and retains trigger payloads after start pulses. Completed `.49.2.1` audits dire
 port scope and its controller prerequisite. Completed `.32.1.3.3.1.1` repairs
 terminal synchronization. `.32.1.3.3.1.2.1` retains direct-controller failures and
 passing public-carrier references. Rationale rollover, the controller contract,
-shadow ownership and detached formal resolvers are qualified. After the wait
-grammar and diagnostic repairs, `.49.2.2.6` synchronizes wait examples before
-production identity integration `.49.2.2.3`. Local payload, shared-writer and
+shadow ownership and detached formal resolvers are qualified. Wait grammar, diagnostics and
+book excerpts are synchronized. Next `.53` repairs the extract carrier failure
+found by replay, before production identity integration `.49.2.2.3`. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -6795,3 +6802,75 @@ falsify an overbroad exemption; T1930, the source fix and canonical MCP card
 retain the contract. DEVELOPMENT_NOTES is unchanged because that card owns
 this localized rationale. The full staged doctrine gate and commit hook are
 recorded in commit evidence. Next is the owned wait-book synchronization .6.
+
+## Runtime wait book synchronization — `.49.2.2.6` (in flight)
+
+The .52 commit and hook are complete and the tree was clean before this leaf.
+Census the wait section against actual carriers from the source fixtures in
+T1244, retaining source/fragment mappings. T1376 explicitly skips non-actor
+fragments, so its pass cannot prove these generated excerpts current. Include
+pending samples and join completion retention, not just count predicates;
+strict replay proves carrier validity but does not qualify still-open direct
+multi-transaction execution. Keep that boundary explicit.
+
+The strict carrier census found an additional real incompatibility in the
+extract successor, beyond documentation drift. .53 owns it at the next
+frontier before production scope integration. `_ir_extract` emits `(slice
+packet 15 12)` while public checking rejects `slice` as an unsupported
+expression operator. The older T1244 helper passes, so investigate the exact
+frontend/report route difference rather than claiming this is merely a stale
+example or making all strict checks permissive. The current book slice will
+state the observed limitation until .53 earns its repair.
+
+Root-cause correction for .53: reading the exact extract subtest shows it never
+calls the SourceFrontend/HDL helper that other T1244 subtests use. An isolated
+replay through that same direct frontend also rejects `slice` at
+perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm line 975. The preliminary
+strict-versus-helper interpretation was wrong: the passing older test asserted
+emitted text and omitted extract replay. The minimal probe's print spacing
+warning is unrelated; failure occurs earlier at semantic parsing. The baseline
+book audit retains the source and diagnostic, and .53 will close this coverage
+gap along with the emitted carrier mismatch.
+
+### Acceptance — wait book synchronization `.49.2.2.6`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained baseline-drift.json compares
+  the old 13h excerpts with generated carriers: raw multi-bit guards differ
+  from current nonzero predicates; joins still name raw done pulses instead
+  of completion-ready signals. The audit's `--check --json` replay also
+  exposes the extract operator failure, now owned by .53. T1376 skips these
+  fragments, and T1244's extract case has no carrier replay, explaining why
+  earlier green checks did not establish the advertised boundary.
+- [x] **ADDRESSED (verified)** — qualified.log reports `wait-book: all mapped
+  fragments match current carriers; declared carrier outcomes verified`.
+  Exact source/state mappings cover the runtime-wait section and additional
+  prose-only predecessor variants. Book guards, readiness, ordering and
+  grouping now match actual output. Extract remains explicitly documented as
+  intermediate output with a required diagnostic/exit refusal, never counted
+  as qualified HDL. Baseline differences and complete sources are retained.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1376/T1244; the former checks complete actor examples only, while the new
+  audit separately checks the previously skipped state fragments. book.log
+  records a successful repository-local mdBook build. Existing T1909 timing
+  qualification remains the runtime authority; this docs slice adds no new
+  runtime or multi-controller claim. Visual audit remains separately blocked.
+
+Claim legs: exact scheduler output and public carrier replay re-derive the
+excerpt facts; stale baseline excerpts, independently authored later-repeat
+fixtures and the exact extract-refusal control falsify optimistic acceptance;
+fixtures, verifier, baseline-drift evidence and canonical fact cards retain
+results. The first verifier attempt hit duplicate primary/top carrier states;
+explicit carrier identity fixes the harness ambiguity. It was not a lowering
+failure. DEVELOPMENT_NOTES is unchanged because audit records and fact cards
+own the rationale. Full staged doctrine and hook results are commit evidence.
+
+The final runner recheck also passes with a previously absent output directory
+under .artifacts/wait-book/recheck, proving repository-local output creation
+works in a fresh workspace. No background validation remains for this slice.
+
+The first doctrine run rejected the newly added audit README as an unregistered
+live document. Its procedure duplicated the book command, verifier contract,
+fixture metadata and canonical fact-card limits. Removed that extra landing
+page and routed the remaining verification-boundary detail to the existing
+wait fact card. No registry exemption, new surface or ceiling increase is used;
+rerun the full gate with the smaller canonical routing.

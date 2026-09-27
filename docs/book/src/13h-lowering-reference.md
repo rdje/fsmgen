@@ -558,22 +558,31 @@ The first runtime scalar surface is top-level only:
 ```
 
 The count source must be a scalar signal with a known unsigned width. The
-predecessor edge is split instead of inserting a decision state:
+positive guard tests the whole count with `(!= cycles 0)`; combining the raw
+count with a condition using bitwise `&` would incorrectly reject even counts.
+The predecessor edge is split instead of inserting a decision state:
 
+<!-- wait-fragment-01 -->
 ```lisp
 (main_idle_0
-  (<- (main_wait_1_cnt cycles) <(& start cycles))
-  (-> main_wait_1 <(& start cycles))
-  (-> main_drive_2 <(& start (== cycles 0))))
+  (= (can_accept 1))
+  (<- (main_wait_1_cnt cycles) <(& start (!= cycles 0)))
+  (-> main_wait_1 <(& start (!= cycles 0)))
+  (-> main_drive_2 <(& start (== cycles 0)))
+)
 
 (main_wait_1
   (-- main_wait_1_cnt)
   (?main_wait_1_cnt
-    (=1 (-> main_drive_2)))
+    (=1 (-> main_drive_2))
+  )
   (?main_wait_1_cnt
-    (>1 (-> main_wait_1))))
+    (>1 (-> main_wait_1))
+  )
+)
 ```
 
+The idle state also asserts the existing `can_accept` readiness signal.
 The positive edge snapshots the runtime count into `main_wait_1_cnt` and
 enters the generated wait state. The zero edge bypasses that state, so a
 runtime zero still consumes no active wait cycle. Once the wait state is
@@ -586,32 +595,42 @@ path materializes those samples in the first active wait state. The zero-count
 path goes to a sample-preserving clone of the following state, so `count == 0`
 still consumes no hidden wait or sample-only cycle:
 
+<!-- wait-fragment-02 -->
 ```lisp
 (main_idle_0
-  (<- (main_wait_1_cnt cycles) <(& start cycles))
-  (-> main_wait_1 <(& start cycles))
-  (-> main_wait_1_zero_sample <(& start (== cycles 0))))
+  (= (can_accept 1))
+  (<- (main_wait_1_cnt cycles) <(& start (!= cycles 0)))
+  (-> main_wait_1 <(& start (!= cycles 0)))
+  (-> main_wait_1_zero_sample <(& start (== cycles 0)))
+)
 
 (main_wait_1
   (<= (hold din))
   (-- main_wait_1_cnt)
   (?main_wait_1_cnt
-    (=1 (-> main_drive_2)))
+    (=1 (-> main_drive_2))
+  )
   (?main_wait_1_cnt
-    (>1 (-> main_wait_1_loop))))
+    (>1 (-> main_wait_1_loop))
+  )
+)
 
 (main_wait_1_loop
   (-- main_wait_1_cnt)
   (?main_wait_1_cnt
-    (=1 (-> main_drive_2)))
+    (=1 (-> main_drive_2))
+  )
   (?main_wait_1_cnt
-    (>1 (-> main_wait_1_loop))))
+    (>1 (-> main_wait_1_loop))
+  )
+)
 
 (main_wait_1_zero_sample
   (<= (hold din))
   (= (outp_start 1))
   (= (outp_val hold))
-  (-> main_done_3))
+  (-> main_done_3)
+)
 ```
 
 The original `main_drive_2` remains the positive-count successor and does not
@@ -627,6 +646,7 @@ the sampled alias. A zero-count clone of a completion state carries the pending
 sample assignment, preserves the delayed completion pulse, and returns to idle
 like the original completion state:
 
+<!-- wait-fragment-03 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
@@ -638,6 +658,7 @@ An independent scalar setter is also sample-compatible when it does not read or
 overwrite the pending sample alias. The clone carries the pending sample, emits
 the original setter assignment, and advances to the original setter successor:
 
+<!-- wait-fragment-04 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
@@ -653,6 +674,7 @@ An independent shift follows the same rule. The clone carries the pending
 sample, emits the original shift assignment, and advances to the original shift
 successor:
 
+<!-- wait-fragment-05 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
@@ -667,6 +689,7 @@ An independent assemble state follows the same rule. The clone carries the
 pending sample, emits the original concat assignment, and advances to the
 original assemble successor:
 
+<!-- wait-fragment-06 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
@@ -677,10 +700,14 @@ original assemble successor:
 If the assembled target or any assembled part is `hold`, the form remains
 fail-closed for the same sample-and-consume timing reason.
 
-An independent extract state follows the same rule. The clone carries the
-pending sample, emits the original slice assignments, and advances to the
-original extract successor:
+An independent extract state is scheduled with the same sample-carrying clone
+shape. **Current limitation:** its emitted `(slice ...)` expressions are
+rejected by the active carrier frontend. The following is the current
+intermediate output, not a qualified HDL example; successful scheduling alone
+does not establish usable extraction. The clone carries the pending sample
+and advances to the original extract successor:
 
+<!-- wait-fragment-07 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
@@ -697,6 +724,7 @@ An independent bank-load state follows the same rule. The clone carries the
 pending sample, emits the original guarded scalarized load assignments, and
 advances to the original bank-load successor:
 
+<!-- wait-fragment-08 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
@@ -714,6 +742,7 @@ An independent bank-store state follows the same rule. The clone carries the
 pending sample, emits the original guarded scalarized store assignments, and
 advances to the original bank-store successor:
 
+<!-- wait-fragment-09 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
@@ -730,6 +759,7 @@ the form remains fail-closed for the same sample-and-consume timing reason.
 A top-level ready/valid stage can also carry the pending sample. The clone
 keeps the original `valid` assignment and ready-gated transition:
 
+<!-- wait-fragment-10 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
@@ -745,6 +775,7 @@ A top-level bounded-eventual monitor arm state can also carry the pending
 sample. The clone keeps the original one-cycle arm request and advances like
 the original monitor arm state:
 
+<!-- wait-fragment-11 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
@@ -759,15 +790,19 @@ fail-closed for the same sample-and-consume timing reason.
 Top-level `await_all` and `await_any` sync states can also carry the pending
 sample when their collected done ports do not read the pending sample alias.
 
-The clone keeps the original synchronization transition:
+The clone keeps the original synchronization transition. Its generated ready
+signals combine current child completion with retained completion history, so
+children may finish on different cycles:
 
+<!-- wait-fragment-12 -->
 ```lisp
 (parent_wait_3_zero_sample
   (<= (hold din))
-  (-> parent_drive_5 <(& w0_done w1_done)))
+  (-> parent_drive_5 <(& isf_completion_w0_ready isf_completion_w1_ready))
+)
 ```
 
-For `await_any`, the clone keeps one transition per collected done port. If a
+For `await_any`, the clone keeps one transition per collected completion-ready signal. If a
 collected done port is `hold`, the form remains fail-closed for the same
 sample-and-consume timing reason.
 
@@ -775,6 +810,7 @@ Top-level `spawn` states can carry the pending sample when the generated
 start handoff does not overwrite the pending sample alias. The clone keeps the
 child start pulse and advances like the original spawn state:
 
+<!-- wait-fragment-13 -->
 ```lisp
 (parent_wait_1_zero_sample
   (<= (hold din))
@@ -792,6 +828,7 @@ A top-level transaction `(phase ...)` marker can also carry the pending sample.
 The clone preserves the original pass-through transition; actor-level phase
 metadata remains report-only and unrelated to this runtime scheduling path:
 
+<!-- wait-fragment-14 -->
 ```lisp
 (main_wait_1_zero_sample
   (<= (hold din))
@@ -809,26 +846,32 @@ activation edge and the first wait's final sampled-counter edge. For:
 the predecessor of `first_cycles` contains a positive edge for the first wait,
 plus a zero edge that immediately evaluates `second_cycles`:
 
+<!-- wait-fragment-16 -->
 ```lisp
 (main_idle_0
-  (<- (main_wait_1_cnt first_cycles) <(& start first_cycles))
-  (<- (main_wait_2_cnt second_cycles) <(& start (== first_cycles 0) second_cycles))
-  (-> main_wait_1 <(& start first_cycles))
-  (-> main_wait_2 <(& start (== first_cycles 0) second_cycles))
-  (-> main_drive_3 <(& start (== first_cycles 0) (== second_cycles 0))))
+  (= (can_accept 1))
+  (<- (main_wait_1_cnt first_cycles) <(& start (!= first_cycles 0)))
+  (<- (main_wait_2_cnt second_cycles) <(& start (== first_cycles 0) (!= second_cycles 0)))
+  (-> main_wait_1 <(& start (!= first_cycles 0)))
+  (-> main_wait_2 <(& start (== first_cycles 0) (!= second_cycles 0)))
+  (-> main_drive_3 <(& start (== first_cycles 0) (== second_cycles 0)))
+)
 ```
 
 When the first wait has actually been entered, its final sampled-counter edge
 performs the same split for the second wait:
 
+<!-- wait-fragment-17 -->
 ```lisp
 (main_wait_1
   (-- main_wait_1_cnt)
-  (<- (main_wait_2_cnt second_cycles) <(& (== main_wait_1_cnt 1) second_cycles))
-  (-> main_wait_2 <(& (== main_wait_1_cnt 1) second_cycles))
+  (<- (main_wait_2_cnt second_cycles) <(& (== main_wait_1_cnt 1) (!= second_cycles 0)))
+  (-> main_wait_2 <(& (== main_wait_1_cnt 1) (!= second_cycles 0)))
   (-> main_drive_3 <(& (== main_wait_1_cnt 1) (== second_cycles 0)))
   (?main_wait_1_cnt
-    (>1 (-> main_wait_1))))
+    (>1 (-> main_wait_1))
+  )
+)
 ```
 
 The second count is sampled only on the edge that enters the second wait. The
@@ -839,21 +882,27 @@ first count carries the sample to generated path-specific clones. A positive
 second count enters a second-wait clone that materializes the sample before
 decrementing the sampled second counter:
 
+<!-- wait-fragment-18 -->
 ```lisp
 (main_idle_0
-  (<- (main_wait_1_cnt first_cycles) <(& start first_cycles))
-  (-> main_wait_1 <(& start first_cycles))
-  (<- (main_wait_2_cnt second_cycles) <(& start (== first_cycles 0) second_cycles))
-  (-> main_wait_2_sample_from_main_wait_1 <(& start (== first_cycles 0) second_cycles))
-  (-> main_wait_1_zero_sample_after_main_wait_2
-      <(& start (== first_cycles 0) (== second_cycles 0))))
+  (= (can_accept 1))
+  (<- (main_wait_1_cnt first_cycles) <(& start (!= first_cycles 0)))
+  (<- (main_wait_2_cnt second_cycles) <(& start (== first_cycles 0) (!= second_cycles 0)))
+  (-> main_wait_1 <(& start (!= first_cycles 0)))
+  (-> main_wait_2_sample_from_main_wait_1 <(& start (== first_cycles 0) (!= second_cycles 0)))
+  (-> main_wait_1_zero_sample_after_main_wait_2 <(& start (== first_cycles 0) (== second_cycles 0)))
+)
 
 (main_wait_2_sample_from_main_wait_1
   (<= (hold din))
   (-- main_wait_2_cnt)
   (?main_wait_2_cnt
     (=1 (-> main_drive_3))
-    (>1 (-> main_wait_2))))
+  )
+  (?main_wait_2_cnt
+    (>1 (-> main_wait_2))
+  )
+)
 ```
 
 The original `main_wait_2` remains unsampled for paths where `main_wait_1`
@@ -864,16 +913,16 @@ final compatible target assignments, then advances like the original target.
 Top-level runtime waits can also follow the shipped predecessor states whose
 advance condition is explicit in the scheduler IR:
 
-- After `(await ready)`, the ready edge is split into `ready && cycles` and
-  `ready && cycles == 0`; the watchdog timeout transition remains in the await
+- After `(await ready)`, the ready edge is split into `ready && (cycles != 0)` and
+  `ready && (cycles == 0)`; the watchdog timeout transition remains in the await
   state.
 - After `(stage name (ready ready) (valid valid))`, the stage state continues
   driving `valid`, and only the ready edge is split.
 - After a top-level `repeat`, the repeat-check exit edge `counter == 0` is
   split, while the loop-back edge remains available.
-- After `await_all`, the split condition is the AND of the collected done
+- After `await_all`, the split condition is the AND of the collected completion-ready
   signals plus the runtime count test.
-- After `await_any`, the split condition is the OR of the collected done
+- After `await_any`, the split condition is the OR of the collected completion-ready
   signals plus the runtime count test.
 - After transaction bank `load` or `store` states, the bank state keeps its
   guarded scalarized assignments, and only the unconditional advance edge is
@@ -882,25 +931,29 @@ advance condition is explicit in the scheduler IR:
 For example, a wait after `await_all` lowers the synchronization edge and the
 runtime count check into one guard:
 
+<!-- wait-fragment-19 -->
 ```lisp
 (parent_await_all_3
-  (<- (parent_wait_4_cnt cycles) <(& w0_done w1_done cycles))
-  (-> parent_wait_4 <(& w0_done w1_done cycles))
-  (-> parent_done_5 <(& w0_done w1_done (== cycles 0))))
+  (<- (parent_wait_4_cnt cycles) <(& isf_completion_w0_ready isf_completion_w1_ready (!= cycles 0)))
+  (-> parent_wait_4 <(& isf_completion_w0_ready isf_completion_w1_ready (!= cycles 0)))
+  (-> parent_done_5 <(& isf_completion_w0_ready isf_completion_w1_ready (== cycles 0)))
+)
 ```
 
 A wait after a bank load keeps every guarded entry assignment in the load
 state and adds the runtime wait split beside those assignments:
 
+<!-- wait-fragment-20 -->
 ```lisp
 (main_load_1
   (<- (out> data_0) <(== idx 0))
   (<- (out> data_1) <(== idx 1))
   (<- (out> data_2) <(== idx 2))
   (<- (out> data_3) <(== idx 3))
-  (<- (main_wait_2_cnt cycles) <cycles)
-  (-> main_wait_2 <cycles)
-  (-> main_done_3 <(== cycles 0)))
+  (<- (main_wait_2_cnt cycles) <(!= cycles 0))
+  (-> main_wait_2 <(!= cycles 0))
+  (-> main_done_3 <(== cycles 0))
+)
 ```
 
 Runtime wait report entries keep `cycles` null because the exact count is
@@ -915,11 +968,14 @@ zero-bypass contract. For example, `(wait (+ cycles bias))` lowers by loading
 the generated counter with the expression value only on the positive-count
 path:
 
+<!-- wait-fragment-21 -->
 ```lisp
 (main_idle_0
-  (<- (main_wait_1_cnt (+ cycles bias)) <(& start (+ cycles bias)))
-  (-> main_wait_1 <(& start (+ cycles bias)))
-  (-> main_drive_2 <(& start (== (+ cycles bias) 0))))
+  (= (can_accept 1))
+  (<- (main_wait_1_cnt (+ cycles bias)) <(& start (!= (+ cycles bias) 0)))
+  (-> main_wait_1 <(& start (!= (+ cycles bias) 0)))
+  (-> main_drive_2 <(& start (== (+ cycles bias) 0)))
+)
 ```
 
 All signal operands referenced by the expression must have known width, and
@@ -930,12 +986,14 @@ Runtime waits in `when` bodies are supported. With no pending sample, if the
 wait is the first body state, the branch state carries the counter load and
 split transitions:
 
+<!-- wait-fragment-22 -->
 ```lisp
 (main_when_1
-  (<- (main_wait_2_cnt cycles) <(& cond cycles))
+  (<- (main_wait_2_cnt cycles) <(& cond (!= cycles 0)))
   (-> main_done_4 <(! cond))
-  (-> main_wait_2 <(& cond cycles))
-  (-> main_drive_3 <(& cond (== cycles 0))))
+  (-> main_wait_2 <(& cond (!= cycles 0)))
+  (-> main_drive_3 <(& cond (== cycles 0)))
+)
 ```
 
 The false edge still skips the entire body. The true/positive edge enters the
@@ -956,29 +1014,37 @@ exits the loop; repeat-counter nonzero plus a positive wait count reloads the
 generated wait counter and enters the wait; repeat-counter nonzero plus a zero
 wait count bypasses the wait to the following body state:
 
+<!-- wait-fragment-23 -->
 ```lisp
 (main_repeat_init_1
   (<= (main_cnt 2))
-  (-> main_repeat_check_4))
+  (-> main_repeat_check_4)
+)
 
 (main_wait_2
   (-- main_wait_2_cnt)
   (?main_wait_2_cnt
-    (=1 (-> main_drive_3)))
+    (=1 (-> main_drive_3))
+  )
   (?main_wait_2_cnt
-    (>1 (-> main_wait_2))))
+    (>1 (-> main_wait_2))
+  )
+)
 
 (main_drive_3
   (= (tick_start 1))
-  (-> main_repeat_check_4))
+  (-> main_repeat_check_4)
+)
 
 (main_repeat_check_4
   (-- main_cnt)
-  (<- (main_wait_2_cnt cycles) <(& (!= main_cnt 0) cycles))
+  (<- (main_wait_2_cnt cycles) <(& (!= main_cnt 0) (!= cycles 0)))
   (?main_cnt
-    (=0 (-> main_done_5)))
-  (-> main_wait_2 <(& (!= main_cnt 0) cycles))
-  (-> main_drive_3 <(& (!= main_cnt 0) (== cycles 0))))
+    (=0 (-> main_done_5))
+  )
+  (-> main_wait_2 <(& (!= main_cnt 0) (!= cycles 0)))
+  (-> main_drive_3 <(& (!= main_cnt 0) (== cycles 0)))
+)
 ```
 
 For a runtime wait in a later body position, the **preceding** body state loads
@@ -987,29 +1053,37 @@ and zero paths. The repeat check keeps the same check-first `(-- main_cnt)`
 form, looping back to the first body state while the repeat counter is
 nonzero:
 
+<!-- wait-fragment-24 -->
 ```lisp
 (main_repeat_init_1
   (<= (main_cnt 2))
-  (-> main_repeat_check_4))
+  (-> main_repeat_check_4)
+)
 
-(main_update_2                       ;; first body statement (precedes the wait)
+(main_update_2
   (<- (r> (+ r 1)))
-  (<- (main_wait_3_cnt cycles) <cycles)
-  (-> main_wait_3 <cycles)
-  (-> main_repeat_check_4 <(== cycles 0)))
+  (<- (main_wait_3_cnt cycles) <(!= cycles 0))
+  (-> main_wait_3 <(!= cycles 0))
+  (-> main_repeat_check_4 <(== cycles 0))
+)
 
 (main_wait_3
   (-- main_wait_3_cnt)
   (?main_wait_3_cnt
-    (=1 (-> main_repeat_check_4)))
+    (=1 (-> main_repeat_check_4))
+  )
   (?main_wait_3_cnt
-    (>1 (-> main_wait_3))))
+    (>1 (-> main_wait_3))
+  )
+)
 
 (main_repeat_check_4
   (-- main_cnt)
   (?main_cnt
     (!=0 (-> main_update_2))
-    (=0 (-> main_done_5))))
+    (=0 (-> main_done_5))
+  )
+)
 ```
 
 The wait state's `(?main_wait_3_cnt ...)` decision is the runtime-wait counter,
@@ -1030,15 +1104,17 @@ needed branch-entry split for that case. Other explicit cases remain ordinary
 selectable branches, and implicit fallthrough is guarded by the complement of
 all explicit case predicates:
 
+<!-- wait-fragment-25 -->
 ```lisp
 (main_switch_4
-  (<- (main_wait_1_cnt cycles) <(& (== sel 0) cycles))
-  (-> main_wait_1 <(& (== sel 0) cycles))
+  (<- (main_wait_1_cnt cycles) <(& (== sel 0) (!= cycles 0)))
+  (-> main_wait_1 <(& (== sel 0) (!= cycles 0)))
   (-> main_drive_2 <(& (== sel 0) (== cycles 0)))
   (?sel
     (=1 (-> main_drive_3))
   )
-  (-> main_done_5 <(! (| (== sel 0) (== sel 1)))))
+  (-> main_done_5 <(! (| (== sel 0) (== sel 1))))
+)
 ```
 
 The positive selected-case path samples the runtime count and enters the wait.
@@ -1058,18 +1134,21 @@ first body state is a runtime wait, both the entry decision and the back-edge
 decision split the true branch into positive-count counter load/entry and
 zero-count bypass paths. The false branch still exits the loop:
 
+<!-- wait-fragment-26 -->
 ```lisp
 (main_while_entry_1
-  (<- (main_wait_2_cnt cycles) <(& keep cycles))
-  (-> main_wait_2 <(& keep cycles))
+  (<- (main_wait_2_cnt cycles) <(& keep (!= cycles 0)))
+  (-> main_wait_2 <(& keep (!= cycles 0)))
   (-> main_drive_3 <(& keep (== cycles 0)))
-  (-> main_done_5 <(! keep)))
+  (-> main_done_5 <(! keep))
+)
 
 (main_while_check_4
-  (<- (main_wait_2_cnt cycles) <(& keep cycles))
-  (-> main_wait_2 <(& keep cycles))
+  (<- (main_wait_2_cnt cycles) <(& keep (!= cycles 0)))
+  (-> main_wait_2 <(& keep (!= cycles 0)))
   (-> main_drive_3 <(& keep (== cycles 0)))
-  (-> main_done_5 <(! keep)))
+  (-> main_done_5 <(! keep))
+)
 ```
 
 Runtime waits in `until` bodies are also supported for the no-pending-sample
@@ -1077,12 +1156,14 @@ subset. The first trip through the body uses the predecessor edge that enters
 the body. The `until` decision's true path still exits, while the false
 back-edge reloads or bypasses the wait for the next iteration:
 
+<!-- wait-fragment-27 -->
 ```lisp
 (main_until_check_3
+  (<- (main_wait_1_cnt cycles) <(& (! stop) (!= cycles 0)))
   (-> main_done_4 <stop)
-  (<- (main_wait_1_cnt cycles) <(& (! stop) cycles))
-  (-> main_wait_1 <(& (! stop) cycles))
-  (-> main_drive_2 <(& (! stop) (== cycles 0))))
+  (-> main_wait_1 <(& (! stop) (!= cycles 0)))
+  (-> main_drive_2 <(& (! stop) (== cycles 0)))
+)
 ```
 
 If pending samples appear before the first `while` or `until` body runtime
@@ -1100,6 +1181,7 @@ the repeat-check materializes the pending sample and then keeps the check-first
 repeat-check body, looping back to the first body state while the repeat
 counter is nonzero:
 
+<!-- wait-fragment-28 -->
 ```lisp
 (main_wait_3_zero_sample
   (<= (hold din))
@@ -1122,17 +1204,30 @@ Loop-control states split only their false fallthrough edge when followed by a
 runtime wait. For `(exit-when stop) (wait cycles)`, the true edge still exits
 the loop, while the false edge samples, enters, or bypasses the wait:
 
+<!-- wait-fragment-29 -->
 ```lisp
 (main_exit_when_2
-  (<- (main_wait_3_cnt cycles) <(& (! stop) cycles))
+  (<- (main_wait_3_cnt cycles) <(& (! stop) (!= cycles 0)))
   (-> main_done_6 <stop)
-  (-> main_wait_3 <(& (! stop) cycles))
-  (-> main_drive_4 <(& (! stop) (== cycles 0))))
+  (-> main_wait_3 <(& (! stop) (!= cycles 0)))
+  (-> main_drive_4 <(& (! stop) (== cycles 0)))
+)
 ```
 
 For `(continue-when skip) (wait cycles)`, the true edge targets the loop tail
 check instead of the loop exit, and the false edge uses the same `(! skip)`
 runtime-wait split.
+
+The exact sources and fragment mappings for this section are retained in
+`docs/audits/runtime-wait-book-20260927/fixtures.json`. From the repository root,
+rerun the carrier comparison and public checks with:
+
+```bash
+scripts/run_with_ram_guard.sh perl docs/audits/runtime-wait-book-20260927/verify.pl
+```
+
+The audit checks the extract refusal explicitly; it does not count that
+intermediate fragment as successful HDL qualification.
 
 Runtime waits remain fail-closed when the selected zero-count successor cannot
 carry pending samples without changing timing, after predecessor states whose
