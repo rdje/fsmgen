@@ -1437,7 +1437,12 @@ transaction clause. `(wait 0)` emits no generated state and no
 through same-transaction parameter defaults, then through the actor constant
 table, then through actor-local scalar parameter defaults, and then follows
 the same rule. Same-transaction parameters therefore shadow actor-level static
-names in this value-domain slot. A qualified `(wait PACKAGE.CONSTANT)`
+names in this value-domain slot, including a same-named transaction formal.
+Direct transaction parameters are not parent HDL expression symbols: with
+`(params (count 2))` and a formal `count`, `(wait count)` remains static,
+whereas `(set observed count)` and the `count` operand of
+`(wait (+ count 4'd1))` refer to the runtime formal. Generated child parameters
+remain module expression symbols. A qualified `(wait PACKAGE.CONSTANT)`
 resolves through the actor's imported package constant metadata and keeps the
 authored qualified token in reports. No hidden wait counter is introduced for
 this static literal/constant/parameter/package-constant surface. Pending

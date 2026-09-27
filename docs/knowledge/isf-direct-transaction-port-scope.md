@@ -12,8 +12,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, transactions, ports, scope, storage, bindings, control-flow]
-evidence: t/1935-isf-local-declaration-admission.t; t/1933-isf-caller-formal-binding-scope.t; perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1935-isf-local-declaration-admission.t t/1933-isf-caller-formal-binding-scope.t t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
+evidence: t/1936-isf-formal-source-context.t; t/1935-isf-local-declaration-admission.t; t/1933-isf-caller-formal-binding-scope.t; perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1936-isf-formal-source-context.t t/1935-isf-local-declaration-admission.t t/1933-isf-caller-formal-binding-scope.t t/1928-isf-formal-clause-resolver.t t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
 ---
 
 Generated children have separately qualified local port metadata under .49.1.
@@ -38,7 +38,7 @@ own their declarations and explicit spawn bindings exclude duplicate automatic
 same-name actor wiring. T1934 and the generated-shadow card qualify that path;
 T1933's retained equal-width reproduction now passes. These generated modules
 do not establish direct physical separation. Explicit-local/static context
-preparation remains under .3.1.2. Its .1 child repairs explicit-local admission:
+preparation is supplied by .3.1.2. Its .1 child repairs explicit-local admission:
 _parse_local_decl requires exact known options, one width, one initialization
 across default/init and one reset, plus a scalar HDL identifier. Previously it
 ignored malformed options and let later duplicates overwrite earlier values.
@@ -120,9 +120,31 @@ parser-generated ATL wiring are preserved even under same-name formal shadows.
 Named drive calls rewrite actuals; their names and actor-owned bodies are unchanged.
 
 The walker consumes parsed, source-validated records and explicit complete
-scope contexts. It does not establish legality or prune static-zero bodies.
-Integration must preserve those existing source checks/pruning before changing
-physical identities. Duplicate local/formal declarations fail before rewriting.
+scope contexts. LoweringIR::prepare_formal_source now clones source and reuses
+production module admission plus per-transaction lowering validation without
+requiring conflicting parent merges. It derives explicit locals only, actor
+parameters/constants, exact resolved enum members and canonical imported
+constant leaf/aggregate paths through Package::Symbols. Inferred sample
+destinations are not explicit-local shielding names. Unknown members and
+parameter index spellings are not invented as runtime static symbols.
+
+Standalone wait/repeat counts have a separate static_count_symbols context.
+Direct transaction parameters belong there, but not in runtime static_symbols;
+generated child parameters also belong in that child's expression scope.
+T1936 retains the decisive same-named count parameter/formal case: scalar wait
+uses the parameter, dynamic-expression wait and set RHS use the runtime formal.
+A single global static set either renames both or preserves both incorrectly.
+Other static options already retain their source spelling in the clause walker.
+
+Preparation records structurally addressed zero repeats after existing source
+checks; the walker preserves those dead source subtrees without resolving their
+semantically pruned bindings. Malformed activation shapes and unknown targets
+still fail in source admission, and a zero-only child's body remains unlowered.
+Missing context maps, unmatched paths and non-repeat pruning paths fail closed.
+Source snapshots and contexts are detached. Duplicate local/formal declarations
+fail before rewriting. Production initial admission is factored through the same
+helper; production does not yet invoke formal preparation or rewriting. Full
+parent wiring, backend validation and physical reservations remain separate.
 T1928 compares role arrays and independently strict-replays transformed carriers
 from parsed helpers and the tracked controller cohort. That is detached helper
 qualification, not a production runtime or report migration.
@@ -132,6 +154,7 @@ carrier shapes now fail before serialization. The canonical
 [wait card](isf-dynamic-wait-count-predicates.md) owns that grammar and its audit.
 Quoted-division diagnostics .52, wait examples .49.2.2.6 and extract replay .53
 are qualified. .49.2.2.3 connects the resolvers and must still prove complete
-physical reservations and source-report preservation.
+physical reservations and source-report preservation. Source preparation is
+qualified by T1936; .3.2 owns complete physical reservations next.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2.

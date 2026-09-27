@@ -53,6 +53,16 @@ direct/non-generated transactions may also use same-transaction scalar
 parameter defaults as port widths when they resolve to positive integers.
 Omitted widths are one-bit.
 
+A direct transaction's own parameters are compile-time inputs for the supported
+count, width and timing positions; they are not emitted as parent HDL parameters.
+These positions have different lookup rules from runtime expressions. For
+example, if a direct transaction has both `(params (count 2))` and an input formal
+named `count`, `(wait count)` uses the parameter default, while
+`(set observed count)` reads the formal. Inside a dynamic wait expression such as
+`(wait (+ count 4'd1))`, `count` is also a runtime operand. Generated children
+emit their parameters in their own module. Actor parameters/constants and
+resolved enum/package symbols retain their existing expression lookup rules.
+
 Input bindings may pass scalar actor-side signals, numeric/exact-width
 literals, or non-empty list expressions; output bindings still name scalar
 writable actor-side targets.

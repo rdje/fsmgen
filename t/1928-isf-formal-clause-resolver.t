@@ -22,7 +22,7 @@ my $actor = {actor_name => 'roles', transactions => [
     {name => 'child', ports => {inputs => [{name => 'data', width => 4}], outputs => [{name => 'result', width => 4}]}, clauses => []},
 ]};
 my $plan = $planner->build($actor, generated_children => {child => 1}, reserved_names => {});
-my %context = (plan => $plan, locals => {scratch => 1}, static_symbols => {COUNT => 1}, named_drives => {data => 1});
+my %context = (plan => $plan, locals => {scratch => 1}, static_symbols => {COUNT => 1}, static_count_symbols => {COUNT => 1}, pruned_repeats => {}, named_drives => {data => 1});
 my $p = sub {$plan->{formals}{$_[0]}{$_[1]}{physical_name}};
 my ($data, $result, $ready, $valid) = map {$p->('main', $_)} qw(data result ready valid);
 my @cases = (
@@ -165,7 +165,7 @@ ISF
     my $before = dclone($parsed);
     my $p = $planner->build($parsed, generated_children => {}, reserved_names => {});
     my $out = $walker->transaction($parsed->{transactions}[0], plan => $p,
-        locals => {}, static_symbols => {}, named_drives => {});
+        locals => {}, static_symbols => {}, static_count_symbols => {}, pruned_repeats => {}, named_drives => {});
     my $physical = dclone($parsed);
     $physical->{transactions}[0] = $out->{transaction};
     my $lowered = FSM::Scheduler::ISF->new->lower($physical);
@@ -202,10 +202,10 @@ subtest 'parsed controller cohort keeps source records and strict carrier validi
                 $static{$_->[0]} = 1 for @$cl[1 .. $#$cl];
             }
             $physical->{transactions}[$i] = $walker->transaction($a->{transactions}[$i],
-                plan => $p, locals => {}, static_symbols => \%static, named_drives => {})->{transaction};
+                plan => $p, locals => {}, static_symbols => \%static, static_count_symbols => \%static, pruned_repeats => {}, named_drives => {})->{transaction};
         }
         $physical->{rules} = [map {$walker->rule($_, plan => $p, locals => {},
-            static_symbols => {}, named_drives => {})->{rule}} @{$a->{rules} || []}];
+            static_symbols => {}, static_count_symbols => {}, pruned_repeats => {}, named_drives => {})->{rule}} @{$a->{rules} || []}];
         my $lowered = FSM::Scheduler::ISF->new->lower($physical);
         my $work = tempdir(CLEANUP => 1);
         my @carriers = grep {/\.fsm\z/} sort keys %{$lowered->{files}};

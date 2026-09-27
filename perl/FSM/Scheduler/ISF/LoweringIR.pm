@@ -9,6 +9,7 @@ use POSIX qw(log);
 use Carp qw(confess);
 use Scalar::Util qw(refaddr weaken);
 use FSM::Package::IntegerLiteralSupport;
+use FSM::Package::Symbols;
 use FSM::Scheduler::ISF::ATLGeneratedTop qw(
     atl_generated_top_report_entry
     mark_atl_data_link_child_interface_ports
@@ -79,7 +80,7 @@ my %TRANSACTION_CONTEXT_LABEL = (
     until       => 'until body',
 );
 
-sub build_module($self, $actor) {
+sub _prepare_module_source($self, $actor) {
     $self->_validate_static_zero_repeat_child_activation_prune_surface($actor);
     $self->_validate_child_transaction_refs($actor);
     $self->_validate_activation_domain_names($actor);
@@ -89,6 +90,14 @@ sub build_module($self, $actor) {
     my $domain_partition = $self->_build_domain_partition($actor, \%pruned_static_zero_children);
     $self->_validate_transaction_parameter_clauses($actor, \%generated_children, \%pruned_static_zero_children);
     $self->_validate_transaction_port_bindings($actor);
+
+    return (\%generated_children, \%pruned_static_zero_children, $domain_partition);
+}
+
+sub build_module($self, $actor) {
+    my ($generated, $pruned, $domain_partition) = $self->_prepare_module_source($actor);
+    my %generated_children = %$generated;
+    my %pruned_static_zero_children = %$pruned;
 
     my %child_irs;
     for my $cname (sort keys %generated_children) {
@@ -141,6 +150,96 @@ sub build_module($self, $actor) {
     }
     $parent_ir->{domain_partition} = $domain_partition if $domain_partition;
     return $parent_ir;
+}
+
+# Prepare the detached lexical resolver's inputs from parsed source. Run the
+# same module admission and per-transaction lowering checks used in production,
+# without a parent merge that would conflate still-unallocated formal names.
+# This is not physical reservation, backend validation or production rewriting.
+sub prepare_formal_source($self, $source_actor) {
+    my $actor = _clone_isf_value($source_actor);
+    my ($generated, $pruned, $partition) = $self->_prepare_module_source($actor);
+    my $static = _formal_expression_static_symbols($actor);
+    my %drives = map { $_ => 1 } keys %{$actor->{drives} || {}};
+    my %contexts;
+    my %points;
+    my $ordinal = 0;
+    for my $tx (@{$actor->{transactions} || []}) {
+        my $name = $tx->{name};
+        next if $pruned->{$name};
+        my %child_points;
+        $self->_build_transaction($tx, $actor, $generated->{$name} ? 0 : $ordinal++,
+            $generated->{$name} ? undef : $generated,
+            $generated->{$name} ? \%child_points : \%points);
+        my %locals = map { $_->[1] => 1 }
+            grep { ref($_) eq 'ARRAY' && @$_ && $_->[0] eq 'local' }
+            @{$tx->{clauses}};
+        my %params = map { $_->{name} => 1 } @{_transaction_param_declarations($tx, $actor)};
+        my %pruned_repeats;
+        _formal_pruned_repeat_paths($tx->{clauses}, ['clauses'], $actor, $name, \%pruned_repeats);
+        $contexts{$name} = {
+            locals => \%locals,
+            # Direct transaction parameters are compile-time count/width inputs,
+            # not emitted parent expression symbols. Generated children emit them.
+            static_symbols => { %$static, $generated->{$name} ? %params : () },
+            static_count_symbols => { %$static, %params },
+            pruned_repeats => \%pruned_repeats,
+            named_drives => { %drives },
+        };
+    }
+    return {
+        actor => $actor,
+        generated_children => { %$generated },
+        pruned_transactions => { %$pruned },
+        domain_partition => _clone_isf_value($partition),
+        transactions => \%contexts,
+        actor_context => {
+            locals => {}, static_symbols => { %$static },
+            static_count_symbols => { %$static }, pruned_repeats => {},
+            named_drives => { %drives },
+        },
+    };
+}
+
+sub _formal_expression_static_symbols {
+    my ($actor) = @_;
+    my %names = map { $_->{name} => 1 }
+        (@{_actor_constant_declarations($actor)}, @{_actor_param_declarations($actor)});
+    my $enums = $actor->{enum_symbols} || {};
+    for my $name (keys %{$enums->{local} || {}}) {
+        $names{"$name.$_"} = 1 for keys %{$enums->{local}{$name}};
+    }
+    my $constants = ($actor->{constant_symbols} || {})->{packages} || {};
+    my %packages = map { $_ => 1 } (keys %$constants, keys %{$enums->{packages} || {}});
+    for my $package (keys %packages) {
+        my $symbols = FSM::Package::Symbols->new(constants => $constants->{$package} || {});
+        $names{"$package.$_"} = 1 for
+            keys %{$symbols->constant_scalar_leaves}, keys %{$symbols->constant_aggregate_paths};
+        for my $enum (keys %{$enums->{packages}{$package} || {}}) {
+            $names{"$package.$enum.$_"} = 1 for keys %{$enums->{packages}{$package}{$enum}};
+        }
+    }
+    return \%names;
+}
+
+sub _formal_pruned_repeat_paths {
+    my ($clauses, $path, $actor, $owner, $pruned, $start) = @_;
+    $start //= 0;
+    for my $i ($start .. $#$clauses) {
+        my $cl = $clauses->[$i];
+        next unless ref($cl) eq 'ARRAY' && @$cl;
+        my @here = (@$path, $i);
+        if ($cl->[0] eq 'repeat' && _is_static_zero_repeat_count($cl->[1], $actor, $owner)) {
+            $pruned->{join('/', @here)} = 1;
+        } elsif ($cl->[0] =~ /\A(?:when|while|until|repeat)\z/) {
+            # Keep source array indexes, including the opcode and condition slots.
+            _formal_pruned_repeat_paths($cl, \@here, $actor, $owner, $pruned, 2);
+        } elsif ($cl->[0] eq 'switch') {
+            for my $branch (2 .. $#$cl) {
+                _formal_pruned_repeat_paths($cl->[$branch], [@here, $branch], $actor, $owner, $pruned, 1);
+            }
+        }
+    }
 }
 
 # --- Child IR (separate module) ---

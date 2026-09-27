@@ -1388,10 +1388,10 @@ For FSMGen, the analogs are:
   Commit: `children below`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare source validation and complete lexical contexts for formal integration.`
   Acceptance: `Map existing source checks, static-zero pruning and binding admission before rewriting. Derive transaction-local and resolved static-symbol contexts from canonical source semantics; repair the confirmed caller-formal binding lookup precedence without weakening actor input protection, width/type checks or timing admission. Qualify source validation, malformed/zero-pruned controls and caller/callee distinctions. Keep physical scope and runtime limits explicit; commit before allocation integration.`
-  Verification: `build_module validates domains/parameters/bindings before building IR; _build_transaction separately validates supported clauses and builds width evidence. _binding_signal_info currently checks actor interface/storage before caller-local evidence. Detached resolvers require complete caller-provided locals/static-symbol sets and source validation. Investigate these exact boundaries before wiring the physical transform.`
+  Verification: `Caller-formal source validation, generated pin shadowing and explicit local/static/count/pruning contexts are qualified in the children. Existing module admission is shared with source preparation; per-transaction checks run without conflicting parent merges. Physical reservations remain .3.2 before production rewriting .3.3.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.3`
   Commit: `children below`
 
@@ -1403,10 +1403,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare validated explicit-local and resolved-static contexts before formal rewriting.`
   Acceptance: `Map and preserve source checks and static-zero pruning without relying on conflicting parent merges. Derive complete explicit-local and resolved-static contexts from existing source semantics, excluding inferred sample destinations from explicit-local shielding. Qualify malformed, pruned, parameter/constant/enum and context-isolation controls; commit before physical reservations.`
-  Verification: `Top-level local declarations are parsed later in _build_transaction; _collect_transaction_local_signals includes inferred names and is not the resolver shielding set. Actor constants alone do not cover parameters or imported/static member references.`
+  Verification: `T1935 repairs malformed explicit-local admission; T1936 derives explicit-only locals, exact actor/package static symbols, separate scalar count contexts and validated structural zero-repeat paths. Detached rewriting preserves direct parameter/formal role distinctions and source isolation. Complete physical reservations and production wiring remain the next leaves.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2.2`
   Commit: `children below`
 
@@ -1418,11 +1418,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Prepare complete local/static contexts and source checks after local grammar repair.`
   Acceptance: `Finish the parent acceptance: derive only explicit locals, canonical parameter/constant/enum and package references; preserve source validation and static-zero pruning before any rewrite. Qualify malformed, pruned and context-isolation controls without relying on successful conflicting parent merges; commit before physical reservations.`
-  Verification: `Source validation is distributed between module admission and per-transaction lowering. Package Symbols exposes canonical scalar leaves and aggregate paths; inspect static parameter conversion and expression resolution before selecting a context provider. No production rewrite is connected.`
-  Commit: `pending`
+  Verification: `T1936 qualifies canonical local/static contexts, direct versus generated parameter scope, scalar count versus runtime operand rewriting, pruned versus live bindings, malformed source, source isolation and strict carriers. Public source/regression checks pass after factoring initial module admission. Count-role ambiguity is fixed in the detached walker; production renaming and complete physical reservations remain open.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.3`
   Status: `done`
@@ -2281,7 +2281,8 @@ replay and width declarations. `.49.2.2.3.1.1` repairs caller-formal binding
 validation and rejects unsafe direct pin aliases. `.3.1.3` repairs generated
 pin-shadow declarations and wiring. `.54` retains historical task prose through
 exact retrieval. `.3.1.2.1` repairs malformed explicit-local admission; next
-`.3.1.2.2` prepares remaining source contexts. Local payload, shared-writer and
+`.3.1.2.2` qualifies source contexts and count-role rewriting. Next `.3.2`
+proves complete physical reservations. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -2395,3 +2396,45 @@ is typo/arity/duplicate/value/collision plus pruned/live controls; durability is
 T1935 and the synchronized spec/book/card. No runtime or independent explicit-
 local physical ownership claim is added. Rationale belongs here and in the
 scope card; DEVELOPMENT_NOTES needs no duplicate entry. Next is `.1.2.2`.
+
+## Acceptance — formal source contexts `.49.2.2.3.1.2.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` for the
+  direct-param-shadow probe reports a static scalar wait sourced from count;
+  probe.log emits its fixed wait chain and a runtime count register read.
+  FormalClauseResolver previously sent scalar count positions and runtime RHS
+  through one static-symbol set. The retained probe shows that an empty set
+  renames both roles, while adding count preserves both: neither is correct.
+  Source validation and zero pruning precede rewriting, but no caller previously
+  supplied their complete contexts. Inferred samples cannot stand in for locals.
+- [x] **ADDRESSED (verified)** — T1936 qualifies prepare_formal_source over
+  parsed records, sharing production module admission and invoking existing
+  per-transaction validation without parent merging. It supplies only explicit
+  locals, exact resolved actor/enum/package expression names, generated-child
+  parameters, separate standalone count symbols and structural zero-repeat
+  paths. The walker preserves validated dead subtrees and resolves live count
+  and expression roles separately. Missing maps, stale/non-repeat paths,
+  malformed source, live bad bindings and source mutation controls pass.
+  Detached transformed carriers strict-replay; scalar wait timing and dynamic
+  count provenance remain separate. Physical allocation is still caller-owned.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1936/T1928, T1933 caller bindings/public queries, T1935 local admission,
+  T1929 wait/public queries, T1348/T1350 parameter cases and T1376 book fixtures.
+  qualified-final.log passes the explicit timing/generated-carrier oracles;
+  final-context.log passes T1255 schedule goldens but its new generated fixture
+  initially omitted a required output binding, corrected in qualified-final.log.
+  book.log builds the updated source-semantics guidance.
+  The staged doctrine gate and commit hook verify the final index.
+
+Evidence is under `.artifacts/formal-source-context/`. context.log retains the
+first test fixture's bare literal width refusal; the final fixture uses the
+existing exact-width wait operand contract, without widening production grammar.
+Re-derivation is native schedule/carrier evidence and canonical Package::Symbols
+paths; falsification is distinct count/runtime roles, static-name exclusions,
+malformed and pruned/live controls plus context/source isolation; durability is
+T1936, the extended resolver tests, book/spec/card and this task record.
+The returned source copy remains authored source. This helper does not provide
+complete generated physical reservations, finalize parent wiring, validate the
+backend or switch production emission. .3.2 must derive actual names before .3.3
+uses the prepared contexts; controller/runtime obligations remain separate.
+DEVELOPMENT_NOTES needs no duplicate rationale.

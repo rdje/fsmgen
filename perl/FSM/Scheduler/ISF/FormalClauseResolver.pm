@@ -27,6 +27,7 @@ sub transaction {
         }
     }
     $copy->{clauses} = $self->_sequence($tx->{clauses}, ['clauses']);
+    _require(!keys %{$self->{pruned_repeats}}, 'unmatched pruned repeat context');
     return {transaction => $copy, bindings => $self->{bindings}};
 }
 
@@ -36,6 +37,7 @@ sub rule {
         unless ref($rule) eq 'HASH' && _identifier($rule->{name}) && ref($rule->{actions}) eq 'ARRAY';
     my $self = $class->_context(undef, %context);
     confess "Formal clause rule scope cannot contain transaction locals\n" if keys %{$context{locals}};
+    _require(!keys %{$self->{pruned_repeats}}, 'rule pruned repeat context');
     my $copy = _copy($rule);
     if (defined $rule->{when}) {
         _head($rule->{when});
@@ -70,8 +72,16 @@ sub _context {
     my $drives = delete $context{named_drives};
     confess "Formal clause resolver requires an explicit named_drives hash\n"
         unless ref($drives) eq 'HASH' && !grep {!_identifier($_)} keys %$drives;
+    my $counts = delete $context{static_count_symbols};
+    my $pruned = delete $context{pruned_repeats};
+    confess "Formal clause resolver requires an explicit pruned_repeats hash\n"
+        unless ref($pruned) eq 'HASH'
+            && !grep {!/\Aclauses\/\d+(?:\/\d+)*\z/} keys %$pruned;
     my $operands = FSM::Scheduler::ISF::FormalOperandResolver->new(%context, transaction => $owner);
+    my $count_operands = FSM::Scheduler::ISF::FormalOperandResolver->new(
+        %context, transaction => $owner, static_symbols => $counts);
     return bless {operands => $operands, named_drives => _copy($drives),
+        count_operands => $count_operands, pruned_repeats => _copy($pruned),
         locals => _copy($context{locals}), bindings => []}, $class;
 }
 
@@ -85,6 +95,11 @@ sub _clause {
     my ($self, $cl, $path) = @_;
     return [] if ref($cl) eq 'ARRAY' && !@$cl; # admitted empty no-op
     my $op = _head($cl);
+    if (exists $self->{pruned_repeats}{join('/', @$path)}) {
+        _require($op eq 'repeat', 'pruned repeat context');
+        delete $self->{pruned_repeats}{join('/', @$path)};
+        return _copy($cl); # source-validated dead body: do not resolve its bindings
+    }
     my $r = $self->{operands};
     if ($op eq 'set' || $op eq 'update') {
         _require(@$cl == 3, $op);
@@ -94,7 +109,11 @@ sub _clause {
         _require(@$cl == 4 && _scalar($cl->[2]) && $cl->[2] eq 'as', $op);
         return [$op, $r->expression($cl->[1]), 'as', $r->target($cl->[3])];
     }
-    if ($op =~ /\A(?:complete|pulse|wait|exit-when|continue-when)\z/) {
+    if ($op eq 'wait') {
+        _require(@$cl == 2, $op);
+        return [$op, $self->_count($cl->[1])];
+    }
+    if ($op =~ /\A(?:complete|pulse|exit-when|continue-when)\z/) {
         _require(@$cl == 2, $op);
         return [$op, $op eq 'complete' || $op eq 'pulse'
             ? $r->target($cl->[1]) : $r->expression($cl->[1])];
@@ -120,7 +139,8 @@ sub _clause {
     }
     if ($op =~ /\A(?:when|while|until|repeat)\z/) {
         _require(@$cl >= 3, $op);
-        return [$op, $r->expression($cl->[1]), map {$self->_clause($cl->[$_], [@$path, $_])} 2 .. $#$cl];
+        return [$op, $op eq 'repeat' ? $self->_count($cl->[1]) : $r->expression($cl->[1]),
+            map {$self->_clause($cl->[$_], [@$path, $_])} 2 .. $#$cl];
     }
     if ($op eq 'switch') {
         _require(@$cl >= 3, $op);
@@ -222,6 +242,14 @@ sub _clause {
         return _copy($cl);
     }
     confess "Formal clause resolver has unsupported transaction clause '$op'\n";
+}
+
+sub _count {
+    my ($self, $value) = @_;
+    # Only a standalone count token uses the lowering-time parameter scope.
+    # Operands within a dynamic wait expression retain runtime expression scope.
+    return ref($value) ? $self->{operands}->expression($value)
+        : $self->{count_operands}->expression($value);
 }
 
 sub _activation {
