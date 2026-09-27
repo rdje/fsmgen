@@ -167,15 +167,7 @@ subtest 'generated interfaces and zero-pruned targets keep their separate paths'
         }
         my $file = write_file("$work/$name.isf", $text);
         my $check = $capture->([$^X, 'bin/fsmgen', '--strict', '--check', '--json', $file], '');
-        if ($name eq 'generated') {
-            # Retained defect, owned by .49.2.2.3.1.3: spawn automatic actor
-            # wiring does not yet exclude a same-named explicitly bound formal.
-            isnt($check->{exit_code}, 0, 'generated shadow retains its diagnosed wiring boundary');
-            like($check->{stdout}, qr/target is already driven by explicit link 'value'/,
-                'generated failure is duplicate wiring, not the direct merge gate');
-        } else {
-            is($check->{exit_code}, 0, "$name source strict-checks") or diag($check->{stdout}, $check->{stderr});
-        }
+        is($check->{exit_code}, 0, "$name source strict-checks") or diag($check->{stdout}, $check->{stderr});
     }
 };
 

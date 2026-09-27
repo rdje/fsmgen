@@ -1,13 +1,14 @@
 # Knowledge Map: `isf-generated`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **7** facts · **23** uniquely owned question entries.
+> **7** facts · **25** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="can a child read a parent record or list after spawn?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
 - q="can a child transaction input or output share an actor storage name?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
 - q="can a generated child write an entire actor-owned record or list?" · facts=[isf-generated-child-whole-aggregate-writes](../../docs/knowledge/isf-generated-child-whole-aggregate-writes.md)
+- q="can a generated transaction formal shadow an actor input or output pin?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
 - q="can an ISF clock domain be named bus or another HDL keyword?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="can case-only ISF domain names overwrite exported files?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="can generated child transactions read actor storage in independent clock domains?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
@@ -27,6 +28,7 @@
 - q="where do generated child storage resets and registers live?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
 - q="why are competing child or parent storage writers rejected?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="why did a generated child completing a named output fail to release its parent?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
+- q="why does spawn bind a same-named child input twice?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
 - q="why must delayed pulses be excluded from inferred shared datapaths?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
 
 ## Facts
@@ -47,7 +49,7 @@ _Generated child named completion preserves authored pulses and activation hands
 
 ### isf-generated-child-port-storage-shadowing
 
-_Generated child ports keep local metadata when their names match actor storage_
+_Generated child ports keep local metadata when their names match actor storage or pins_
 
 - **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-generated-child-port-storage-shadowing.md`](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)

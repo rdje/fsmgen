@@ -217,6 +217,8 @@ sub _emit_wiring_block {
         my $child = $spawn->{child};
         my $child_ports = $child_ports_by_name{$child} || {};
         my $activation_kind = $spawn->{activation_kind} // 'spawn';
+        my %bound_inputs = map { $_->{child_port} => 1 }
+            grep { ($_->{role} || '') eq 'input' } @{$spawn->{port_bindings} || []};
 
         if ($activation_kind eq 'spawn') {
             my %explicit_binding_sources = _spawn_input_binding_source_signals($spawn);
@@ -225,6 +227,7 @@ sub _emit_wiring_block {
                 next unless $port->{direction} eq 'input';
                 my $name = $port->{name};
                 next if $name eq 'start';
+                next if $bound_inputs{$name};
                 next if $explicit_binding_sources{$name};
                 next unless exists $child_ports->{$name};
                 next unless ($child_ports->{$name}{direction} || '') eq 'input';
@@ -235,8 +238,6 @@ sub _emit_wiring_block {
         if ($activation_kind eq 'do') {
             # A generated do can read inherited actor inputs as well as its
             # explicitly bound payload. Explicit child bindings win by name.
-            my %bound_inputs = map { $_->{child_port} => 1 }
-                grep { ($_->{role} || '') eq 'input' } @{$spawn->{port_bindings} || []};
             for my $port (@{$ir->{ports} || []}) {
                 next if $port->{isf_handoff} || $port->{direction} ne 'input';
                 my $name = $port->{name};

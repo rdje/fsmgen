@@ -766,12 +766,13 @@ cases; otherwise local storage could alias the pin. Generated-child interfaces
 and statically pruned targets bypass this direct-merge gate. Successful source
 binding validation alone does not qualify shadowing or independent execution.
 
-Generated spawn input formals that shadow actor inputs have a retained wiring
-failure when bound from another source: both the automatic actor connection
-and explicit payload handoff target the child formal. Child interface width
-and direction precedence for actor-pin shadows is also pending qualification.
-Repair `.49.2.2.3.1.3` owns these cases; generated actor-storage shadow support
-does not establish actor-pin shadow support.
+Generated transaction interfaces give explicit formals precedence over
+same-named inherited actor pins. A formal keeps its own width, direction and
+type; assignments to it do not reclassify it as an actor output. An explicit
+spawn input binding excludes automatic same-name actor wiring to that child
+endpoint, including when the binding actual has a different name. Nonformal
+inherited input wiring remains unchanged. Generated blocking calls and
+parameterized rule triggers retain their existing input/output handoff timing.
 
 Transaction input bindings may include an explicit timing assertion as a
 fourth entry:

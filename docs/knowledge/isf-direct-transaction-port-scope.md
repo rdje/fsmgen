@@ -33,12 +33,12 @@ _build_parent_ir still fails conflicting physical merges until .49.2.2.3.3.
 Direct formal/actor-pin collisions now fail before merging, including equal
 widths that previously passed strict checking while sharing one physical name.
 Generated-child interfaces and statically pruned targets do not enter this gate.
-Generated spawn pin shadows have a separate retained failure in T1933:
-automatic actor-input wiring competes with an explicit binding from another
-source. CompositionTop filters binding source names but misses bound child
-endpoints; _build_child_ports also inserts actor inputs before formal ports.
-.3.1.3 owns the immediate repair and width/direction qualification before
-explicit-local/static context preparation .3.1.2.
+Generated pin shadows are separately repaired under .3.1.3: child formals
+own their declarations and explicit spawn bindings exclude duplicate automatic
+same-name actor wiring. T1934 and the generated-shadow card qualify that path;
+T1933's retained equal-width reproduction now passes. These generated modules
+do not establish direct physical separation. Explicit-local/static context
+preparation remains under .3.1.2.
 
 The audit reproduction uses actor status width 8 and reset 19, a worker status
 input or output width 8, and a narrower input control width 4. Role/width merges

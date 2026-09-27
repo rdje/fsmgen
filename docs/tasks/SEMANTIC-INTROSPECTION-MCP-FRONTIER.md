@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1410,11 +1410,11 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve generated transaction formals when they shadow actor interface pins.`
   Acceptance: `Run immediately after .3.1.1 and before .3.1.2. Repair the reproduced spawn duplicate driver from automatic same-name actor input wiring plus explicit child input binding. Audit child port construction where inherited actor inputs currently win name deduplication, including width/direction shadows and actor-output assignment classification. Preserve generated public formal names, explicit handoffs and inherited nonformal inputs. Qualify native/API/MCP reports, strict carriers and runtime data provenance; update book/spec/facts and commit.`
-  Verification: `T1933 generated control lowers a child formal value bound from observed beside actor input value, then native --check --json rejects duplicate explicit drivers value and binding_scope.w0_value to w0.value. CompositionTop spawn wiring filters source names but not bound child endpoints; _build_child_ports inserts actor inputs before formal declarations. This is separate from direct physical merging and is the immediate next repair.`
-  Commit: `pending`
+  Verification: `T1934 passes exact formal interfaces/type/reset ownership, strict carriers, complete native/API/newline reports and Verilator payload/reset/repeat oracles for actor/formal direction combinations across spawn, generated do and parameterized triggers. T1933 equal-width shadow now passes. Binding/domain/book checks pass. T1921 has one native pre-exec setpgid failure retained under the existing supervisor owner; its exact HDL differs from predecessor only by date comments and its retained oracle executes successfully. Next .54 task-history rollover, then .3.1.2 source contexts.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2`
   Status: `pending`
@@ -1566,6 +1566,13 @@ For FSMGen, the analogs are:
   Acceptance: `Immediately after the current wait-book synchronization and before scope integration .49.2.2.3, reproduce the extract carrier's unsupported slice operator through actual native check/semantic and API/MCP paths. Resolve the mismatch between emitted extract RHS and the active expression grammar while preserving exact bit ranges, widths, capture timing and pending-sample behavior. Close the extract-specific replay gap in the older lowering tests; qualify direct/assembled/inferred sources and malformed controls, synchronize book/spec/facts and commit.`
   Verification: `T1931 qualifies complete native/API/newline check/semantic/schedule parity and strict carriers for declared, assembled, explicit, inferred, single-field, scalar-bit, constant-operand and pending-sample extraction. T1932 passes independent SystemVerilog/GHDL values, capture, hold/reset and assembled round trips. Existing data-op width/parameter/negative, wait, clause and book regressions pass; every mapped wait-book carrier now strict-replays and mdBook builds. Next .49.2.2.3.`
   Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.54`
+  Status: `pending`
+  Goal: `Rollover accumulated historical acceptance prose before the semantic task reaches its line milestone.`
+  Acceptance: `Activate before this task would reach 7200 lines. Use the existing exact-version acceptance-history manifest protocol; preserve the live node graph, current frontier and active repair facts, authenticate complete-source and historical-suffix identities, audit links and canonical consumers, and independently prove semantic closure, live working set and residue. Do not widen ceilings or activate deferred document reassessment. Commit before further ordinary appends.`
+  Verification: `At d3b016da this task has 7085 lines; the doctrine collection maximum 7174 belongs to the separate HIAL tree. The immediate bounded generated-pin repair fits below rollover, while this owner schedules the existing history mechanism before source-context work would exceed the milestone.`
+  Commit: `pending`
 
 ## Implementation Notes From `.4`
 
@@ -2256,8 +2263,9 @@ passing public-carrier references. Rationale rollover, the controller contract,
 shadow ownership and detached formal resolvers are qualified. Wait grammar, diagnostics and
 book excerpts are synchronized. `.53` repairs and qualifies extract carrier
 replay and width declarations. `.49.2.2.3.1.1` repairs caller-formal binding
-validation and rejects unsafe direct pin aliases. Next `.3.1.3` repairs generated
-pin-shadow wiring before `.3.1.2` prepares remaining source contexts. Local payload, shared-writer and
+validation and rejects unsafe direct pin aliases. `.3.1.3` repairs generated
+pin-shadow declarations and wiring. Next `.54` rolls over historical task prose,
+then `.3.1.2` prepares remaining source contexts. Local payload, shared-writer and
 independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
 qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
@@ -7083,3 +7091,65 @@ is T1933 plus the scope card and this task. Book/spec describe the shipped
 boundary and the next owned generated repair. DEVELOPMENT_NOTES is unchanged:
 these canonical records own the rationale. Full staged doctrine and hook results
 belong to the commit evidence; no full CI, push or hosted qualification is claimed.
+
+## Generated pin-shadow qualification — `.49.2.2.3.1.3`
+
+T1934 before.log reproduces inherited width/direction and duplicate/width-invalid
+spawn connections. Its first typed-output fixture also hit the already documented
+typed-output/reset parser restriction; use explicit actor output width for reset
+controls, retaining typed actor inputs and typed child formals. qualified.log
+passes the full pin-shadow matrix with native/API/newline reports and actual
+Verilator provenance/repeat/reset checks; T1933's generated control now passes.
+The domain/book regression passes independently. First regression.log also
+contains mistaken T1918/T1376 filenames; domain-book.log uses discovered paths.
+
+Existing T1921 typed_output failed before exec: child PID 96726 reported
+`operation=setpgid result=undef errno=1 (Operation not permitted)` and produced
+no simulator output. `_child_group_admission_error` captures the syscall return
+and errno before exec; this is absent HDL execution, not a hardware mismatch.
+The unresolved native cause remains owned by
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10`.
+Preserve this new occurrence and separately qualify the unchanged storage-shadow
+HDL; no retry is claimed to repair containment, and no T1669 recurrence, admission
+weakening or host change is authorized by this scheduler slice.
+
+The rejected PID is absent (`kill 0`: ESRCH) in containment-postcheck.log.
+predecessor-comparison.json compares the retained typed_output DUT against the
+committed predecessor loaded from isolated repository-local module copies:
+only generated date-comment lines differ; every other HDL byte matches.
+The initial raw hash comparison correctly failed on those dates, so no complete
+byte-identity claim is made. storage-replay.log compiles the retained exact DUT
+and testbench, executes CHILD_SHADOW_PASS and preserves the complete supervisor
+result. This qualifies the HDL oracle without closing the native syscall cause.
+
+### Acceptance — generated pin shadows `.49.2.2.3.1.3`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — T1934 before.log records wrong child IR
+  width/direction and actual `--check --json` composition width/driver failures.
+  `_build_child_ports` deduplicated inherited actor inputs before local formals
+  and classified formal writes as actor outputs; CompositionTop's spawn path
+  filtered binding source names but not bound child endpoints. T1933 retains
+  the original equal-width duplicate-link source. The first fixture's typed
+  output/reset rejection is a fixture correction, not a claimed parser repair.
+- [x] **ADDRESSED (verified)** — qualified.log reports T1934/T1933 passing.
+  Explicit child declarations retain direction, width, type and reset ownership;
+  bound spawn child inputs have no automatic actor driver. Complete reports and
+  strict carriers agree across native/API/newline paths. Verilator actually runs
+  the direction matrix across spawn/do/trigger with distinct actor/payload values,
+  delayed reads, repeated activations and reset. Trigger snapshots and generated
+  live payload timing remain distinct. Direct scope/runtime limits are unchanged.
+- [x] **NO REGRESSION** — binding-regression.log and domain-book.log report
+  `All tests successful` for T1241/T1243/T1248, T1918 and T1376. The complete book
+  example lowers and mdBook builds. The first T1921 run passes its other cases
+  but cannot execute typed_output because native setpgid returns EPERM; that run
+  is not called green. The retained typed_output HDL/oracle independently passes
+  in storage-replay.log, with date-only predecessor differences documented above.
+  No containment repair or full-CI qualification is claimed.
+
+Re-derivation uses actual child IR and compiled public carriers. Falsification
+uses narrower local types, both declaration directions, distinct actor values,
+live versus captured payload changes, repeated requests and reset. Durability is
+T1934/T1933, T1921's existing source, book/spec/cards and this owned evidence.
+Ignored diagnostic logs are a retained local evidence limit, not the sole source
+of fixture meaning. Task-history rollover .54 precedes further ordinary growth;
+DEVELOPMENT_NOTES remains unchanged because the generated-shadow card owns rationale.

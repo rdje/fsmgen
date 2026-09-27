@@ -4582,6 +4582,7 @@ sub _declared_storage_roles {
 sub _build_child_ports {
     my ($self, $actor, $tx, $states, $dts, $used_drives) = @_;
 
+    my %local_ports = _transaction_port_map($tx);
     my %actor_output_width = map {
         $_->{name} => ($_->{width} // 1)
     } @{$actor->{interface}{outputs} || []};
@@ -4589,6 +4590,7 @@ sub _build_child_ports {
     my @ports;
     my %seen;
     for my $input (@{$actor->{interface}{inputs} || []}) {
+        next if exists $local_ports{$input->{name}};
         _push_port(\@ports, \%seen, $input->{name}, 'input', $input->{width} // 1);
     }
 
@@ -4600,6 +4602,7 @@ sub _build_child_ports {
     for my $assignment (_all_ir_assignments($states, $dts)) {
         my $lhs = $assignment->{lhs};
         next unless defined($lhs) && !ref($lhs);
+        next if exists $local_ports{$lhs};
         next unless exists $actor_output_width{$lhs};
         next if ($assignment->{source_kind} // '') =~ /\Adrive_call_/;
         $assigned_public_outputs{$lhs} = 1;

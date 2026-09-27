@@ -215,6 +215,41 @@ the literal `as` separator is required. Malformed spawn forms fail before
 spawned child collection, so the scheduler does not invent a default instance
 name for an invalid clause.
 
+An explicit transaction port belongs to the child interface. It can share an
+actor pin name while retaining a different width, direction or type. A binding
+supplies that formal; the top does not also connect the same-named actor pin.
+Inherited actor inputs without a matching formal retain their existing wiring.
+For example, this worker reads the bound `data`, not the actor's wider `value`:
+
+```lisp
+(actor pin_shadow_example
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input value (width 8))
+    (input data (width 4))
+    (output result (width 4))
+    (output done))
+  (transaction worker
+    (ports (input value (width 4)) (output response (width 4)))
+    (wait 2)
+    (set response value)
+    (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0
+      (bind (input value data) (output response result)))
+    (await_all done)
+    (complete done)))
+```
+
+The same declaration precedence applies to generated blocking calls and
+parameterized rule triggers. Their documented binding timing still applies:
+spawn payloads are live, while generated rule triggers retain their captured
+payload. Actor output reset values do not become child formal reset values.
+Direct transactions remain subject to the separate scope limitation above.
+
 **Lowering**:
 - One `.fsm` per unique child module
 - Spawn targets must name declared transactions in the same actor

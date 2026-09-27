@@ -66,11 +66,11 @@ that shares an actor interface pin name is rejected, even when the widths
 match. This prevents local writes from addressing that pin. Source validation
 does not remove the storage-collision or controller limitations described above.
 
-Generated spawn formals that share an actor input name also have an open
-wiring defect: an explicit binding from another source can collide with the
-automatic same-name actor connection. Child pin width/direction shadowing is
-under repair with that case. Generated storage-shadow qualification does not
-cover these actor-pin combinations.
+Generated child formals keep their own width, direction and type when they
+share an actor pin name. Explicit input bindings select the child payload;
+automatic same-name wiring does not add a second driver. The actor pin remains
+separate. See [Composition](13f-composition.md#spawn-child-as-name--parallel-fork)
+for a complete example.
 
 Local rule triggers bind transaction inputs only. Generated/parameterized rule
 triggers also support scalar output bindings through completion-qualified
