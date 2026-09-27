@@ -203,6 +203,9 @@ eight-bit actor input of the same name. The dynamic wait reads the private value
 
 The schedule reports `payload` as the authored wait count source. Its
 `inferred_storage` table lists the allocated private name at width four.
+Read-only and unused direct formals are explicitly internal too: an unbound
+formal does not become a public input through usage inference. Retaining its
+declaration does not invent an initial value or a driver.
 
 Generated child formals keep their own width, direction and type when they
 share an actor pin name. Explicit input bindings select the child payload;

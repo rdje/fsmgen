@@ -50,9 +50,9 @@ ISF
     my $fsm = $lowered->{files}{'parameter_transaction_port_widths.fsm'};
 
     like($fsm, qr/\(\+params\s+\(DATA_W 8\)\s+\)/s, 'scheduled .fsm preserves actor parameter declaration');
-    like($fsm, qr/\(\+size[\s\S]*\(addr 8\)[\s\S]*\(data 8\)/, 'scheduled .fsm uses resolved transaction port widths');
-    like($fsm, qr/\(= \(addr req_addr\)\)/, 'do binding drives resolved input port');
-    like($fsm, qr/\(= \(resp> data\) <child_done\)/, 'do binding reads resolved output port');
+    like($fsm, qr/\(\+size[\s\S]*\(isf_port_child_addr 8\)[\s\S]*\(isf_port_child_data 8\)/, 'scheduled .fsm uses resolved transaction port widths');
+    like($fsm, qr/\(= \(isf_port_child_addr req_addr\)\)/, 'do binding drives resolved input port');
+    like($fsm, qr/\(= \(resp> isf_port_child_data\) <child_done\)/, 'do binding reads resolved output port');
 
     my $report = decode_json($scheduler->report($actor));
     is_deeply(
@@ -61,8 +61,8 @@ ISF
         'schedule report binding widths use the resolved transaction port width',
     );
 
-    assert_fsm_reaches_hdl($fsm, 'parameter_transaction_port_widths', qr/\breg\s+\[7:0\]\s+addr\b/, 'HDL addr width is resolved');
-    assert_fsm_reaches_hdl($fsm, 'parameter_transaction_port_widths', qr/\breg\s+\[7:0\]\s+data\b/, 'HDL data width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'parameter_transaction_port_widths', qr/\breg\s+\[7:0\]\s+isf_port_child_addr\b/, 'HDL addr width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'parameter_transaction_port_widths', qr/\breg\s+\[7:0\]\s+isf_port_child_data\b/, 'HDL data width is resolved');
 };
 
 subtest 'enum-resolved actor scalar parameter transaction port width lowers' => sub {
@@ -93,7 +93,7 @@ ISF
     is(transaction_port_width($actor, 'child', 'inputs', 'data'), 6, 'enum-resolved actor parameter becomes a positive transaction port width');
 
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_parameter_transaction_port_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(data 6\)/, 'scheduled .fsm uses enum-resolved transaction port width');
+    like($fsm, qr/\(\+size[\s\S]*\(isf_port_child_data 6\)/, 'scheduled .fsm uses enum-resolved transaction port width');
 };
 
 subtest 'unsupported actor parameter transaction port width sources fail closed' => sub {

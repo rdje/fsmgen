@@ -63,12 +63,12 @@ ISF
     my $scheduler = FSM::Scheduler::ISF->new();
     my $fsm = $scheduler->lower($actor)->{files}{'package_constant_transaction_port_width.fsm'};
     like($fsm, qr/\(\+import\s+shared\s+\)/s, 'scheduled .fsm emits package import');
-    like($fsm, qr/\(\+size[\s\S]*\(addr 8\)[\s\S]*\(data 8\)/,
+    like($fsm, qr/\(\+size[\s\S]*\(isf_port_child_addr 8\)[\s\S]*\(isf_port_child_data 8\)/,
         'scheduled .fsm uses resolved package-constant transaction port widths');
     like($fsm, qr/\(\?pkg:shared[\s\S]*\(\+constants[\s\S]*\(DEFAULT_WIDTH 4'd8\)/,
         'scheduled .fsm embeds imported package root');
-    like($fsm, qr/\(= \(addr req_addr\)\)/, 'do binding drives resolved input port');
-    like($fsm, qr/\(= \(resp> data\) <child_done\)/, 'do binding reads resolved output port');
+    like($fsm, qr/\(= \(isf_port_child_addr req_addr\)\)/, 'do binding drives resolved input port');
+    like($fsm, qr/\(= \(resp> isf_port_child_data\) <child_done\)/, 'do binding reads resolved output port');
 
     my $report = decode_json($scheduler->report($actor));
     is_deeply(
@@ -78,10 +78,10 @@ ISF
     );
 
     assert_fsm_reaches_hdl($fsm, 'package_constant_transaction_port_width',
-        qr/\breg\s+\[7:0\]\s+addr\b/,
+        qr/\breg\s+\[7:0\]\s+isf_port_child_addr\b/,
         'HDL addr width is resolved');
     assert_fsm_reaches_hdl($fsm, 'package_constant_transaction_port_width',
-        qr/\breg\s+\[7:0\]\s+data\b/,
+        qr/\breg\s+\[7:0\]\s+isf_port_child_data\b/,
         'HDL data width is resolved');
 
     my $hdl_path = File::Spec->catfile($dir, 'package_constant_transaction_port_width.sv');

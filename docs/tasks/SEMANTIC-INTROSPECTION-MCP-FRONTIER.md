@@ -1343,10 +1343,10 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.1: bound direct port scope prerequisites`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Lower direct transaction ports to collision-safe private identities.`
   Acceptance: `After .49.2.1, controller contract .32.1.3.3.1.2.2 and shadow ownership .32.1.3.3.1.3.1, implement scope-aware operand and binding resolution before .32.1.3.3.1.3.2. Preserve actor owner metadata, local aliases and resets, caller versus callee names, source provenance and public reports. Qualify direct input/output and rule payloads independently, including same names in different transactions and user names resembling generated prefixes. No global textual substitution or actor-role overwrite is permitted.`
-  Verification: `pending`
+  Verification: `All declared children are verified. Direct formals now have collision-safe physical identities, lexical operands/bindings, private interface classification and preserved authored reports; parser/helper prerequisites and family qualification are committed with their evidence. This closes scope integration, not the separately owned local payload, shared-writer, controller or local-call execution obligations.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.6`
   Commit: `children below`
 
@@ -1380,10 +1380,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Integrate scoped formal lowering and preserve public source identities.`
   Acceptance: `After .1/.2/.5/.6 and extract carrier repair .53, connect declaration maps, width/type/reset/role propagation, caller-local binding validation, local call endpoints and rule payload destinations. Allocate against actual actor/generated/private declarations, preserve generated child public ports and authored binding report names, and reject any unresolved physical collision. Qualify actor/local, sibling/caller/callee, input/output and generated-prefix cases through strict artifacts and complete native/API/MCP reports; keep runtime limits explicit until .49.2.3. Update book/spec/facts and commit before payload repair .32.1.3.3.1.3.2.`
-  Verification: `Extract prerequisites are committed. Split source validation/context, complete physical reservations, production wiring/report preservation, and integration qualification into owned slices below.`
+  Verification: `All children are verified: source admission/contexts, complete reservations and final scope guard, automatic physical integration with authored report views, and broad family qualification including private-interface classification. Evidence remains with the children. Local payload retention is next under .32.1.3.3.1.3.2; independent controllers and direct-call runtime remain open.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.4`
   Commit: `children below`
 
@@ -1766,11 +1766,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify scoped production integration across existing scheduler families.`
   Acceptance: `After production wiring, run declaration permutations and actor/local, sibling/caller/callee, direction/type and generated-prefix collision controls plus the warranted broad regression gate. Reconcile book/spec/canonical records with the final identity/report contract. Keep remaining local-payload, shared-writer, independent-controller and local-call runtime obligations in their owning leaves. Commit before the payload repair frontier.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `T1963 qualifies authored loop/exit/continue and bank report operands against unchanged physical IR, typed sibling declaration permutations, source helper collisions and strict carriers. Family qualification exposed and repaired unassigned direct-formal input leakage: parent/domain IR now emits explicit internal roles and final coverage requires them. Exact semantic ports and SV/Verilog/VHDL declarations exclude read-only/unused formals. Existing parameter/constant/package and selector tests use private names without weakening width or conflict checks. Focused family, internal-ownership, source-report, final-reservation/domain and book gates pass; independent T1962/T1510 runtime passes. No independent-controller/local-call or VHDL runtime claim.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.4`
   Status: `done`
@@ -2570,67 +2570,23 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.9` is complete: declared output
-interfaces survive ordinary/domain lowering without invented drive values.
-`.35` is complete: explicitly reset outputs without data writers reset and
-hold; native/API/MCP drive families match the qualified hardware behavior.
-Port-option validation and startup cleanup are complete.
-Completed `.39.1` provides direct internal roles and reset/hold behavior.
-Completed `.39.2.1` preserves ordinary/domain ISF storage and qualifies the
-retained CSR baseline. Completed `.39.2.2.1` retains generated-child storage evidence and decision
-0107. Completed `.39.2.2.2.1` routes live scalar/bank reads for ordinary and
-single-domain children and refuses unqualified aggregate/domain reads and writes.
-Completed `.40` repairs single-member type normalization; `.41` aligns residual
-reset wording. Completed `.39.2.2.2.2.1` scopes aggregate typedefs by module.
-Completed `.42` shares verified repeated-source module definitions; `.43`
-retains child completion across joins and activations. Completed `.44` fixes
-even runtime wait counts. Completed `.45` qualifies typed VHDL comparisons
-and scalar wait timing. Completed `.39.2.2.2.2.2` qualifies
-aggregate live reads. Completed `.39.2.2.2.3.1` realizes domain transaction
-children and prevents held-start reexecution. Completed `.46` preserves named
-child completion and excludes delayed events from inferred datapath sharing.
-Completed `.47` restores library parent interfaces and qualifies default-domain
-FIFO ownership/readbacks. Completed `.48` qualifies selected-domain library
-system bindings and empty-domain artifacts. Completed `.39.2.2.2.3.2` qualifies
-domain live storage reads and generated-do inherited-input wiring. Completed
-`.39.2.2.3.1` qualifies sole full-width scalar writer handoffs in ordinary/single-domain actors.
-Completed `.39.2.2.3.2` qualifies independent-domain scalar writer handoffs.
-Completed `.39.2.2.4.1` splits broader writer contracts and repairs stale actor-storage
-documentation. Completed `.39.2.2.4.2` qualifies whole-aggregate writers and repairs
-declared-root domain validation. Completed `.49.1` isolates generated-child ports
-and retains trigger payloads after start pulses. Completed `.49.2.1` audits direct
-port scope and its controller prerequisite. Completed `.32.1.3.3.1.1` repairs
-terminal synchronization. `.32.1.3.3.1.2.1` retains direct-controller failures and
-passing public-carrier references. Rationale rollover, the controller contract,
-shadow ownership and detached formal resolvers are qualified. Wait grammar, diagnostics and
-book excerpts are synchronized. `.53` repairs and qualifies extract carrier
-replay and width declarations. `.49.2.2.3.1.1` repairs caller-formal binding
-validation and rejects unsafe direct pin aliases. `.3.1.3` repairs generated
-pin-shadow declarations and wiring. `.54` retains historical task prose through
-exact retrieval. `.3.1.2.1` repairs malformed explicit-local admission;
-`.3.1.2.2` qualifies source contexts and count-role rewriting. `.3.2.1` retains
-actual transaction reservation products; `.3.2.2.1` adds actual rule, activation
-and shared-drive products. `.3.2.2.2.1` retains stable source rule helpers.
-`.55` repairs empty terminal wait/point/phase carriers. `.3.2.2.2.2` retains
-source-only direct-formal monitor obligations without weakening production.
-Actual local/external wiring, parent point/default products and resource pointer
-declarations are now retained. Next `.3.2.2.2.3.2.2.2` closes remaining grant/priority,
-child ownership and library/ATL/domain producer coverage; `.3.2.2.3` gates completeness. Local payload, shared-writer and
-independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
-qualifies local calls, `.49.3`
-qualifies explicit locals and `.50` investigates the retained MCP response gap.
-Partial writers and remaining writer leaves follow under `.39.2.2.4.3` onward,
-then watchdog rearming `.32.1.3.3.3` and broad behavior/API/MCP signoff `.32.1.3.3.2`.
-Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
-Bundle provenance and executable interconnect lowering follow under `.32.2`
-and `.32.4`. Required scalar access metadata and optional banks are owned by
-`.38.1` and `.38.2` after completed packet intake `.37`. Then implement actor
-checks, knownness and phase metadata before
-the generic-width foundation, derived widths, legal sets and optional ports
-in dependency order; exact leaves are under `.33` and `.32.3`.
-Full-source API coverage and historical native qualification remain open.
-Preserve spent compiler/startup evidence; source checks do not promote runtime
-support. The remaining feature extensions are not implemented by the port-option repair.
+Formal identity integration and its family qualification are complete under
+`.49.2.2`; the live node records above carry exact status and evidence.
+The next execution prerequisite is `.32.1.3.3.1.3.2`, local rule-trigger payload
+retention, followed by shared-write admission, independent controllers and local
+call timing under its sibling leaves. `.49.2.3` qualifies direct-call runtime;
+`.49.3` owns explicit-local physical scope. These remain prerequisites to the
+SPECFORGE storage/register-access feature in `.38.1` and optional banks `.38.2`.
+Packet intake `.37` is complete; it does not implement those reports.
+
+Remaining partial/bank/competing writer work is under `.39.2.2.4.3` onward;
+watchdog rearming is `.32.1.3.3.3` and broad behavior/API/MCP signoff is
+`.32.1.3.3.2`. `.50` retains the MCP response gap. Bundle provenance and
+executable interconnect are `.32.2` and `.32.4`; later actor checks, knownness,
+phase and generic-width/optional-port work follows the dependencies recorded in
+`.33` and `.32.3`. Full-source API coverage and historical native qualification
+remain open. Preserve spent compiler/startup evidence; current runtime passes
+do not close the separately tracked containment occurrence.
 
 ## Version-Retrievable Historical Views
 
@@ -2653,7 +2609,8 @@ scripts/check_task_tree_integrity.pl
 Current behavior and active contracts remain in the mdBook, decision 0109 and
 the canonical cards `docs/knowledge/isf-direct-transaction-port-scope.md` and
 `docs/knowledge/isf-generated-child-port-storage-shadowing.md`. Source binding
-and generated pin shadows are qualified; direct physical integration, local
+and generated pin shadows are qualified; production formal scope is recorded in
+`docs/knowledge/isf-production-formal-scope.md`. Local
 payload retention, writer analysis and independent execution remain open in
 the live nodes. Source admission alone does not qualify their runtime.
 
@@ -4031,3 +3988,58 @@ repair is claimed. These remain owned; .49.2.2.3.4 is the next family gate.
 The first staged gate rejected lowercase/underscore authority-ID suffixes for
 the changed book/spec aggregates. This slice corrects them to valid uppercase
 hyphenated IDs; the aggregate evidence and ceilings are unchanged.
+
+
+## Owned finding — private formal port leakage under `.49.2.2.3.4`
+
+T1368's direct transaction parameter fixture reads an unassigned formal `addr`.
+After physical allocation, HDL exposes `input wire [7:0] isf_port_main_addr`.
+The parent IR carries transaction_port width/role but explicit_internal_signals
+contains only actor storage; +size cannot prevent usage-based input inference.
+Impact: private direct formals leak into public interfaces despite unique names.
+Reproduce with the retained initial/migrated family cohort and T1368. Priority:
+blocking scope signoff, owned and fixed within this current leaf before payload
+work. Add direct formals to parent/domain explicit internal declarations and
+require that classification in final coverage. Preserve generated-child ports,
+unused/read-only formal widths/types and uninitialized-value semantics; verify
+exact semantic/HDL ports and a missing-internal-classification negative control.
+Evidence directory: `.artifacts/formal-family-qualification/`.
+
+
+## Acceptance — production scope families `.49.2.2.3.4`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — T1368's emitted HDL exposes unassigned
+  `isf_port_main_addr` as an input. The native `--emit-semantic-json` port
+  inventory is the independent public boundary oracle. LoweringIR parent
+  construction put only actor storage in explicit_internal_signals: formal
+  width/role alone in +size left read-only formals subject to input inference.
+  This disproved complete physical ownership and blocked scope signoff.
+- [x] **ADDRESSED (verified)** — Parent/domain lowering includes direct formal
+  storage in explicit internal roles, while generated children keep their own
+  public interface builder. Final reservation coverage requires the internal
+  classification. T1963 proves exact semantic public ports, SV/Verilog/VHDL
+  private declarations, read-only and unused widths, and a missing-classification
+  negative control. It also checks detached report/IR mutation isolation,
+  loop/exit/continue and bank source operands, stage/monitor actor ownership,
+  typed sibling permutations and real helper-name collisions. No initial value
+  or driver is invented. Earlier width/selector tests now name private signals.
+- [x] **NO REGRESSION** — internal-fix.log, runtime.log and regression.log report
+  `All tests successful`. T1960/T1957 retain final reservation/domain coverage;
+  T1962/T1510 independently execute private payload/reset/readback and loop
+  truthiness. The broad focused cohort covers declarations, parameter/constant/
+  package widths, binding conflicts, loops/early exits/continues, stages, banks,
+  nested generated/local activations, report keys/order, internal ownership,
+  source binding views and T1376 book examples. The mdBook build passes. VHDL
+  declarations are checked; this slice makes no VHDL simulation claim.
+
+Evidence: `.artifacts/formal-family-qualification/`. Re-derivation observes
+source reports, actual IR and native public ports; falsification includes the
+retained input leak, omission of explicit internal classification, typed/case
+collisions, report ownership mutation and independent runtime; durability is
+T1963, migrated family assertions and the strengthened final scope guard. The
+initial family failures separate obsolete physical-name expectations from the
+real interface leak. The new monitor probe was corrected to preserve the empty
+legacy temporal-contract table: monitor assertions are DT/assertion products,
+not the removed contract syntax. The source frontier narrative is synchronized
+with the completed scope prerequisites. All remaining execution defects retain
+their owners; next is local rule-trigger payload retention .32.1.3.3.1.3.2.

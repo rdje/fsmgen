@@ -175,12 +175,12 @@ subtest 'rule trigger input bindings reach backend runtime selector instrumentat
 ISF
     );
 
-    my $addr_target = selector_target($result, 'addr');
+    my $addr_target = selector_target($result, 'isf_port_work_addr');
     ok($addr_target, 'backend selector metadata includes the transaction input driven by rule payloads');
     is($addr_target->{multi_value_assertion}{kind}, 'onehot0', 'transaction input mux has a runtime onehot0 selector check');
     like(
         $result->{hdl_code},
-        qr/selector multi-value conflict: addr/,
+        qr/selector multi-value conflict: isf_port_work_addr/,
         'SystemVerilog emits the runtime multi-value conflict assertion for the transaction input port',
     );
 };

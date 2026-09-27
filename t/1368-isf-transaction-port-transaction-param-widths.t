@@ -116,13 +116,13 @@ ISF
         'direct output port width resolves from a transaction parameter default');
 
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'direct_transaction_port_param_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(addr 8\)[\s\S]*\(resp 8\)/,
+    like($fsm, qr/\(\+size[\s\S]*\(isf_port_main_addr 8\)[\s\S]*\(isf_port_main_resp 8\)/,
         'direct scheduled .fsm uses resolved transaction parameter port widths');
     unlike($fsm, qr/DATA_W|DERIVED_W/, 'direct transaction parameter port widths leave no scheduled placeholders');
 
-    assert_fsm_reaches_hdl($fsm, 'direct_transaction_port_param_width', qr/\binput\s+wire\s+\[7:0\]\s+addr\b/,
-        'direct HDL addr port width is resolved');
-    assert_fsm_reaches_hdl($fsm, 'direct_transaction_port_param_width', qr/\breg\s+\[7:0\]\s+resp\b/,
+    assert_fsm_reaches_hdl($fsm, 'direct_transaction_port_param_width', qr/\breg\s+\[7:0\]\s+isf_port_main_addr\b/,
+        'direct HDL private addr storage width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'direct_transaction_port_param_width', qr/\breg\s+\[7:0\]\s+isf_port_main_resp\b/,
         'direct HDL resp port width is resolved');
 };
 

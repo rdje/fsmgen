@@ -1875,8 +1875,9 @@ width. Type placeholders do not count as literal widths. Width-dependent
 helpers reject unresolved symbolic/type widths; width-independent bit masks
 retain their existing admission and check ranges when a literal width exists.
 Normal lowering assigns each direct formal a private physical identity, separate
-from same-named actor pins, actor storage and sibling formals. Generated-child
-public ports keep their names. This does not qualify independent transaction
+from same-named actor pins, actor storage and sibling formals. They are explicitly
+internal even when unused or read without assignment; this does not create a
+driver or initial value. Generated-child public ports keep their names. This does not qualify independent transaction
 controllers or repair plain local-call reachability.
 The [data-manipulation chapter](../book/src/13e-data-manipulation.md) contains
 runnable helper examples and their exact masks and validation boundaries.

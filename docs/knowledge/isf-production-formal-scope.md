@@ -8,8 +8,8 @@ answers:
 date: 2026-09-27
 status: current
 tags: [isf, formals, scope, lowering, reports, domains]
-evidence: perl/FSM/Scheduler/ISF/FormalLowering.pm; perl/FSM/Scheduler/ISF.pm; t/1962-isf-production-formal-scope.t; t/1961-isf-formal-source-binding-reports.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1962-isf-production-formal-scope.t t/1961-isf-formal-source-binding-reports.t t/1955-isf-formal-domain-source-products.t t/1956-isf-formal-domain-outer-namespace.t; qualify Verilator runtime through FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 only on the already qualified host path.
+evidence: perl/FSM/Scheduler/ISF/FormalLowering.pm; perl/FSM/Scheduler/ISF.pm; t/1963-isf-production-formal-families.t; t/1962-isf-production-formal-scope.t; t/1961-isf-formal-source-binding-reports.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1963-isf-production-formal-families.t t/1962-isf-production-formal-scope.t t/1961-isf-formal-source-binding-reports.t t/1955-isf-formal-domain-source-products.t t/1956-isf-formal-domain-outer-namespace.t; qualify Verilator runtime through FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1 only on the already qualified host path.
 ---
 
 Scheduler lower/report prepare source contexts and complete reservation products,
@@ -20,6 +20,13 @@ Raw LoweringIR remains the strict executable primitive; the scheduler supplies
 its physical source. Internal callers supplying fully marked projected formals
 are not projected again. Mixed live marked/unmarked declarations fail closed;
 parsed public ISF has no private projection marker syntax.
+
+Parent/domain IR explicitly classifies direct formals as internal signals.
+Width/role metadata alone allowed an unassigned read to become an inferred
+public input; T1368 exposed this in family qualification. Final coverage now
+requires the internal classification, and T1963 checks exact semantic and
+SV/Verilog/VHDL ports, including read-only and unused formals. Declaration
+preservation creates neither a driver nor an initial value.
 
 Direct formals retain their own width/type/role and cannot merge with actor pins,
 actor storage or sibling formals. Generated children retain public endpoint names.
@@ -47,8 +54,11 @@ T1961 distinguishes physical domain bindings from the restored source report vie
 Re-derivation is actual production declaration/report observation; falsification
 uses width/role shadows, source immutability, late unreserved declarations and
 independent public-pin runtime; durability is the tests and checked scope guard.
-Broader family qualification remains the next leaf. Independent sibling-controller
+T1963 also qualifies loop/exit/continue and bank source operands against
+unchanged executable physical operands, actor-owned stages/monitors, typed
+sibling permutations and a real rule-helper name collision. The broader family
+cohort retains parameter/constant/package width and backend selector checks. Independent sibling-controller
 and plain local-call execution, explicit-local physical ownership, and storage
 access reporting for SPECFORGE remain separately owned prerequisites/features.
 Passing these cases does not close the historical process-containment occurrence.
-Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.2.
+Owners: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.2 and .49.2.2.3.4.

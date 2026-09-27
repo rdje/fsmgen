@@ -1555,8 +1555,8 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     for my $tx (@{$actor->{transactions}}) {
         next if $generated_children->{$tx->{name}};
         next if $pruned_transactions->{$tx->{name}};
-        # Until direct formals receive separate physical identities, a matching
-        # actor pin would alias the local variable even when their widths agree.
+        # The scheduler supplies private direct-formal names. Keep the raw IR
+        # primitive strict: a remaining actor-pin alias is never executable.
         # Generated children have their own interfaces and do not enter here.
         my %formals = _transaction_port_map($tx);
         for my $direction (qw(inputs outputs)) {
@@ -1675,8 +1675,11 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         # it has ordinary reads or writes. Generated children select ownership
         # separately; do not infer it from their copied width declarations.
         explicit_internal_signals => [
-            map { map { $_->{name} } @{$_->{signals} || []} }
-                @{$actor->{storage} || []}
+            (map { map { $_->{name} } @{$_->{signals} || []} }
+                @{$actor->{storage} || []}),
+            # A formal read with no assignment must not become an inferred
+            # external input. Generated public formals are built separately.
+            (sort grep { $storage_roles{$_} eq 'transaction_port' } keys %storage_roles),
         ],
         states     => \@states,
         dt_blocks  => \@dts,

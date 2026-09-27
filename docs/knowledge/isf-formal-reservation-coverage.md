@@ -48,4 +48,9 @@ without extending qualification. [Production formal lowering](isf-production-for
 guard after actual module construction and before emission, with authored
 report provenance restored in a detached view. Independent controller/local-call runtime
 qualification remains separately owned.
+Production family qualification additionally requires every private formal in
+explicit_internal_signals. A width/role record alone does not stop the carrier
+from inferring a public input for an unassigned read. T1963 removes that explicit
+classification as a negative control and verifies exclusion of private formals from public ports.
+
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.2.
