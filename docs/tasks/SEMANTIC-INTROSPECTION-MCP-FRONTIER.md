@@ -1503,11 +1503,11 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.52`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve quoted division operators in public diagnostic sanitization.`
   Acceptance: `Immediately after .49.2.2.5 and before the wait-book repair .6, reproduce native/API diagnostic divergence for an unsupported carrier expression whose supported-operator hint contains quoted /. Repair contextual sanitization without exposing real absolute/quoted/URI/Windows paths. Qualify direct native/API/newline errors, bare/quoted HDL operators, genuine path redaction and repository-local paths; update book/facts and commit.`
-  Verification: `T1929 before.log reproduces native diagnostics containing the quoted division token while API diagnostics replace it with [absolute-path-redacted]. _sanitize_public_string treats the quoted standalone slash as an absolute path, despite its comment promising HDL division preservation. The error is observable through check and semantic queries on the retained wait_not source at baseline 07f475f815630317383388f4da17a05cb8cb944d. Use a direct unsupported carrier-expression source after .5 moves the wait error earlier; do not classify the disappearance from that wait probe as a sanitizer fix.`
-  Commit: `pending`
+  Verification: `T1930 RED/GREEN proves unsupported/arity diagnostic parity through native/API/newline calls, unchanged successful division reports, and actual-path redaction including ordinary quoted roots. T1868/T1461/T1929 regressions pass; book builds. Next .49.2.2.6 repairs stale wait excerpts before scope integration .3.`
+  Commit: `this slice`
 
 ## Implementation Notes From `.4`
 
@@ -2194,9 +2194,12 @@ declared-root domain validation. Completed `.49.1` isolates generated-child port
 and retains trigger payloads after start pulses. Completed `.49.2.1` audits direct
 port scope and its controller prerequisite. Completed `.32.1.3.3.1.1` repairs
 terminal synchronization. `.32.1.3.3.1.2.1` retains direct-controller failures and
-passing public-carrier references. Next `.51` rolls over the saturated rationale
-collection, then `.32.1.3.3.1.2.2` adopts the contract and `.1.3` implements it.
-Then `.49.2.2/.3` repair direct identities and qualify local calls, `.49.3`
+passing public-carrier references. Rationale rollover, the controller contract,
+shadow ownership and detached formal resolvers are qualified. After the wait
+grammar and diagnostic repairs, `.49.2.2.6` synchronizes wait examples before
+production identity integration `.49.2.2.3`. Local payload, shared-writer and
+independent-execution repairs follow under `.32.1.3.3.1.3`; then `.49.2.3`
+qualifies local calls, `.49.3`
 qualifies explicit locals and `.50` investigates the retained MCP response gap.
 Partial writers and remaining writer leaves follow under `.39.2.2.4.3` onward,
 then watchdog rearming `.32.1.3.3.3` and broad behavior/API/MCP signoff `.32.1.3.3.2`.
@@ -6738,3 +6741,57 @@ this successful grammar repair does not close either one.
 Workflow correction: the first staged gate rejected the missing root child-list
 link for newly owned .52. Added that link; all implementation/claim checks in
 that run passed. Rerun the complete staged gate before commit.
+
+## Quoted division sanitization — `.52` (in flight)
+
+The wait grammar repair is committed with its gate and hook passing. Reproduce
+this defect independently using the checked-in unsupported-expression carrier,
+so the repaired wait validator cannot hide it. The affected path is the quoted
+absolute-path branch in _sanitize_public_string. Preserve real quoted/embedded
+POSIX, Windows and URI path redaction, including configured root normalization;
+do not replace the generic sanitizer with a blanket diagnostic exemption.
+Also inspect actual successful division reports before claiming the defect is
+limited to diagnostic text. The public error policy and failure schemas remain
+unchanged. Next after this slice is .49.2.2.6 book synchronization.
+
+The independent first probe used the legacy unsupported-expression corpus
+source, whose synchronous reset caused strict rejection before operator
+validation; its supposed division control did not contain division. Those
+fixtures were unsuitable for this question. Replaced them with explicit
+asynchronous-reset carrier sources containing `(bogus a b)` and `(/ a b)`.
+The corrected probe-qualified.log/before.json shows only failed operator
+reports diverging; valid division reports match. T1930 retains these sources
+and an arity failure `(/ a)` with complete native/API/newline comparisons.
+
+The repair exempts only a bare slash identified by singular `operator` or an
+`operators [currently] include` quoted list. The callback saves its captures
+before contextual matching; longer paths and non-operator quoted roots still
+use the generic sanitizer. This changes neither source status nor error
+schema. Structured tool content and serialized tool text remain identical.
+
+### Acceptance — quoted division diagnostics `.52`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The corrected strict `--check --json`
+  and `--emit-semantic-json` probe preserves quoted `/` natively but redacts it
+  through the API. before-test.log repeats this mismatch for unsupported and
+  arity diagnostics. `_sanitize_public_string`'s quoted-absolute-path branch
+  mistakes the operator token for a filesystem root; successful division
+  reports already match. This is independent of the repaired wait grammar.
+- [x] **ADDRESSED (verified)** — qualified.log reports `All tests successful`
+  for T1930. Complete native/API/newline reports agree for unsupported, arity
+  and successful division sources; operator-context preservation works for
+  single/double quotes and lists without exempting longer paths, ordinary
+  quoted roots, outside paths, Windows paths or file URIs. Repository-local
+  paths still normalize, and message-only errors retain their existing shape.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1868/T1461/T1929: native failure envelopes, error bounds/path authority,
+  message-only errors and wait carrier admission retain their contracts.
+  book.log records a successful repository-local mdBook build. Browser visual
+  qualification remains separately blocked and is not claimed here.
+
+Claim legs: direct native/API failure comparison re-derives the corruption;
+independent successful sources, newline envelopes and genuine-path controls
+falsify an overbroad exemption; T1930, the source fix and canonical MCP card
+retain the contract. DEVELOPMENT_NOTES is unchanged because that card owns
+this localized rationale. The full staged doctrine gate and commit hook are
+recorded in commit evidence. Next is the owned wait-book synchronization .6.

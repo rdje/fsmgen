@@ -937,12 +937,25 @@ sub _sanitize_public_string {
     # part of one path. Never expose file URIs as ambient filesystem authority.
     $value =~ s{\bfile://[^\s"'<>(),;{}\[\]]+}{[absolute-path-redacted]}gi;
     $value =~ s{(['"])((?:/|[A-Za-z]:[\\/]|\\\\)[^\r\n]*?)\1}
-        {$1 . $self->_sanitize_public_path($2) . $1}gex;
+        {$self->_sanitize_quoted_public_path($1, $2, substr($value, 0, $-[0]))}gex;
     $value =~ s{
         \b[A-Za-z][A-Za-z0-9+.-]*://[^\s"'<>(),;{}\[\]]+(*SKIP)(*F)
         | (?<![\w./\\-])((?:/(?![/*])|[A-Za-z]:[\\/]|\\\\)[^\s"'<>(),;{}\[\]]+)
     }{$self->_sanitize_public_path($1)}gex;
     return $value;
+}
+
+sub _sanitize_quoted_public_path {
+    my ($self, $quote, $path, $prefix) = @_;
+
+    # A quoted division token in an operator diagnostic is not a filesystem
+    # root. Keep this exception contextual: ordinary quoted roots and longer
+    # paths still go through the same containment/redaction policy.
+    my $operator_context = $prefix =~ /\boperator\s*\z/
+        || $prefix =~ /\boperators(?:\s+currently)?\s+include\s+(?:(['"])[^'"\r\n]+\1,\s*)*\z/;
+    my $public = $path eq '/' && $operator_context
+        ? $path : $self->_sanitize_public_path($path);
+    return $quote . $public . $quote;
 }
 
 sub _sanitize_public_path {

@@ -42,7 +42,7 @@ T1929 checks nested invalid shapes and every retained operator through strict
 carrier replay. Check/semantic failures retain complete native/API/newline
 reports; schedule refusals follow the existing nonzero-stderr/message-only
 adapter contract. A working arithmetic count retains full schedule-report
-parity. The separate quoted-division diagnostic redaction defect is owned by
-SEMANTIC-INTROSPECTION-MCP-FRONTIER.52. The stale positive-count fragments in the
+parity. The quoted-division diagnostic redaction defect is repaired by
+SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, qualified by T1930. The stale positive-count fragments in the
 book lowering-reference chapter are owned by .49.2.2.6, immediately after .52;
 this grammar repair does not claim those excerpts have been synchronized yet.

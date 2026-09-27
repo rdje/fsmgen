@@ -65,6 +65,7 @@ answers:
   - "does MCP discover axi apb ahb protocol aliases?"
   - "where is the public source query applicability map?"
   - "are FSMGen MCP error messages sanitized?"
+  - "does MCP preserve quoted division operators in diagnostics?"
   - "why did large MCP reports exceed the RAM guard?"
   - "why did concatenation factorization change APB HDL across hash seeds?"
   - "what serverInfo title does FSMGen MCP expose?"
@@ -78,14 +79,14 @@ answers:
   - "is the immediate FSMGen MCP semantic-introspection pass complete?"
   - "what did SEMANTIC-INTROSPECTION-MCP-FRONTIER.30 select?"
   - "what is the active priority after FSMGen MCP source discovery?"
-date: 2026-09-25
+date: 2026-09-27
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
 evidence: >-
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/SemanticIntrospectionContract.pm; perl/FSM/Support/SemanticIntrospectionSection.pm; perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm; bin/fsmgen-mcp; https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle; https://modelcontextprotocol.io/specification/2025-06-18/basic/transports; https://modelcontextprotocol.io/specification/2025-06-18/client/roots; https://modelcontextprotocol.io/specification/2025-06-18/client/sampling;
   https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation; https://modelcontextprotocol.io/specification/2025-06-18/server/prompts; https://modelcontextprotocol.io/specification/2025-06-18/server/resources; https://modelcontextprotocol.io/specification/2025-06-18/server/tools; https://modelcontextprotocol.io/specification/2025-06-18/schema; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/completion; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/logging; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/pagination
 reverify: >-
-  scripts/run_with_ram_guard.sh -- prove -Iperl t/144*-semantic-introspection-mcp-*.t t/145*-semantic-introspection-mcp-*.t t/146*-semantic-introspection-mcp-*.t t/1868-semantic-introspection-mcp-source-failures.t t/1869-semantic-introspection-mcp-protocol-aliases.t t/1882-semantic-introspection-mcp-vial-inspection.t t/1883-semantic-source-query-cohort.t t/1884-semantic-source-query-runner.t t/1885-semantic-source-query-oracles.t t/1886-semantic-introspection-mcp-json-encoding.t t/1887-ast-factorization-structural-identity.t t/1889-authored-source-operand-diagnostics.t t/1890-isf-multiclock-strict-wiring.t
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/144*-semantic-introspection-mcp-*.t t/145*-semantic-introspection-mcp-*.t t/146*-semantic-introspection-mcp-*.t t/1868-semantic-introspection-mcp-source-failures.t t/1869-semantic-introspection-mcp-protocol-aliases.t t/1882-semantic-introspection-mcp-vial-inspection.t t/1883-semantic-source-query-cohort.t t/1884-semantic-source-query-runner.t t/1885-semantic-source-query-oracles.t t/1886-semantic-introspection-mcp-json-encoding.t t/1887-ast-factorization-structural-identity.t t/1889-authored-source-operand-diagnostics.t t/1890-isf-multiclock-strict-wiring.t t/1930-mcp-quoted-division-diagnostics.t
 ---
 
 Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. Earlier history: `git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md`.
@@ -139,6 +140,10 @@ The 2026-09-24 audit found limits that earlier profile tests did not expose:
   sanitized and public error messages are bounded. T1868 compares complete
   actual successful/failed native reports and exercises malformed-output,
   error-path, comment/URI preservation and workspace controls.
+  `.52` preserves quoted `/` tokens in singular-operator and operator-list
+  diagnostics while retaining redaction for ordinary filesystem roots and
+  longer paths. T1930 compares full native/API/newline failure and successful
+  division reports, plus contextual path and message-only error controls.
 - `.31.2.1` repairs case-folded enable collisions with deterministic allocation
   preserving driver identity. Actual CLI/MCP reports agree after normalization;
   this does not qualify unrelated features.

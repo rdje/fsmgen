@@ -3294,7 +3294,10 @@ message. Public JSON-RPC error messages are limited to 2048 characters with an
 explicit truncation marker. Quoted absolute paths and unquoted path tokens in
 reports and error prose become relative under the workspace/repository or are
 redacted; relative documentation links, URI schemes and HDL comments remain
-usable. `error.data` is still absent.
+usable. A quoted division token in an operator diagnostic, such as
+`Malformed expression operator '/'`, remains intact. Ordinary quoted filesystem
+roots and longer absolute paths still follow the path-redaction policy.
+`error.data` is still absent.
 
 The initialize response uses stable server identity metadata:
 `serverInfo.name` is `fsmgen-semantic-introspection`, `serverInfo.title` is

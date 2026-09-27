@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.52` (pending)
-- next_action: Repair quoted-division diagnostic sanitization .52, then stale wait book fragments .49.2.2.6 before scoped identity integration .49.2.2.3.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.6` (pending)
+- next_action: Repair stale wait book fragments .49.2.2.6 against generated carriers before scoped identity integration .49.2.2.3.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
