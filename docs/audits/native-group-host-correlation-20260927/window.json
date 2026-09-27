@@ -1,0 +1,11 @@
+{
+  "birthtime_seconds": 1790532965.965701,
+  "failure_pid": 43538,
+  "limit": "Filesystem creation/modification bounds the retained run artifact, not the exact syscall timestamp. No per-event wall clock or failed native session was retained.",
+  "mtime_seconds": 1790532997.7299628,
+  "schema": "fsmgen.native_group_host_window.v1",
+  "sha256": "256249a89a647ac18473cce99211c42d0924a78652f93cacf06f5f9b8630232a",
+  "source_path": ".artifacts/writer-guards/green-predicate.log",
+  "window_end_unix": 1790533000,
+  "window_start_unix": 1790532963
+}

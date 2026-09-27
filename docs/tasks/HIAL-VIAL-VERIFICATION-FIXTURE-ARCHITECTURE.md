@@ -1801,7 +1801,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Preserve .2.9's failed control_wait result and missing PID/syscall evidence. Query the map, inspect source/history and native contract, then use bounded independently observed fork/group controls to separate setpgid return, actual membership and stale diagnostic errno. Select the smallest causal repair; if evidence needs new instrumentation, qualify and commit that separately before further original observation. Every actual owned child/group must settle; preserve rejection of false-success/undefined/negative/throwing admission, fixed limits and original failure. No retry-as-repair, host security change or unrelated recurrence campaign. Update book/fact and commit each verified slice.`
   Verification: `New .2.9 failure is in the asynchronous control_wait outer before exec; the current combined eval reports ambient $! after either syscall or membership failure. The source review identifies ambiguity, not a proved syscall failure or cause. Active at clean fe2dd2f2e3592cb043dc3daa1740254cb6f1a424. Read-only source/native-contract review and bounded independently observed fork/group controls are owned here; scratch outputs/workspaces stay under .artifacts/logs/containment-diagnosis-20260909/ and .artifacts/tmp/containment-diagnosis/. Six held native controls prove the combined message conflates a real EPERM session-leader syscall failure with a false-success membership failure; successful calls can retain EPERM too. All native identities/groups and cleanup are independently checked. This proves diagnostic ambiguity, not the original cause. Child .10.1 owns precise failure provenance and focused qualification; any remaining causal experiment is selected only after that child commits.`
   Commit: `pending causal failure diagnosis after precise diagnostic qualification`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.6`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2`
   Status: `done`
   Goal: `Discriminate native parent/child group timing from session-leader rejection after the T1972 EPERM.`
@@ -1846,9 +1846,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.6`
-  Status: `active`
+  Status: `done`
   Goal: `Correlate the historical native failure with bounded existing host evidence before selecting further instrumentation.`
   Acceptance: `The witnessed original passes without explaining the spent child 43538. Locate the retained failing-run artifacts and derive a defensible wall-clock window, explicitly distinguishing file timestamps from exact event time. Use only read-only same-host evidence and bounded unified-log queries for that PID/syscall/window; retain exact query, output/exit, host/version and any visibility or retention limits. Do not infer absence from an unavailable log or attribute a cause without matching identity and mechanism. No original retries, host changes, admission weakening, kernel capture or unrelated recurrence campaign. Commit the correlation result and the smallest next discriminator or specific access blocker before continuing.`
+  Verification: `The retained green-predicate.log contains the precise PID 43538 syscall failure. Filesystem creation/modification supplies a narrow candidate window, not an exact syscall timestamp. The bounded host log query succeeds with an empty JSON array for PID/syscall matches. Same-window store statistics prove retained data exists, but cannot establish logging of every native failure. The installed tool rejects JSON statistics combined with a row limit; that failed result is retained and the supported bounded human overview succeeds. Original failure bytes, window, exact commands/statuses, complete outputs and host/kernel version are sealed with independent verifier/corruption controls. Sandbox visibility denial is distinguished from the successful authorized host query. No matching cause is found; historical native identities/kernel branch remain unavailable. .7 owns read-only tracing capability preflight, with no capture or original replay.`
+  Commit: `this commit`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7`
+  Status: `active`
+  Goal: `Determine whether targeted native tracing can supply the missing rejection evidence without host changes.`
+  Acceptance: `Read installed tracing documentation and enumerate only the relevant setpgid probes/capabilities without attaching a trace, running another original, changing host security or invoking an interactive privilege prompt. Preserve exact tool path/version, commands, exit and visibility/privilege restrictions. If supported, prepare the smallest bounded qualification plan and its separately owned capture leaf before execution. If required privilege is unavailable, record the exact access blocker and a concrete read-only administrator check; do not infer permission or propose disabling protections. Commit the capability result and resume pointer before requesting missing access.`
   Verification: `pending`
   Commit: `pending`
 
@@ -4508,7 +4515,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.6` correlates the historical failure with bounded existing host evidence after the witnessed original pass. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7` checks targeted native tracing capability without capture after historical host correlation found no matching cause. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7053,3 +7060,24 @@ falsification uses independent semantic/cleanup controls and corrupt evidence;
 durability is the tracked observer, admission, complete results and hash verifier.
 No new observation reproduces the rejection, so attribution remains missing.
 Leaf `.3.2.10.6` owns bounded existing host evidence before further experiments.
+
+## Acceptance — bounded historical host correlation `.3.2.10.6`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The preserved original diagnostic
+  `#   at t/1972-isf-constant-false-guards.t line 95` identifies native rejection
+  for PID 43538 before the SystemVerilog guard oracle executes. File timestamps
+  bound that run artifact; they cannot reconstruct a spent syscall's context.
+- [x] **ADDRESSED (verified)** — The bounded PID/syscall log query completes
+  with no matching records. A separate same-window store overview proves
+  retained data exists, while its visibility cannot prove every syscall was
+  logged. Exact commands, original failure, outputs and limits are sealed in
+  `docs/audits/native-group-host-correlation-20260927/manifest.json`.
+- [x] **NO REGRESSION** — The saved verifier checks window derivation, hashes,
+  command/exit/capture limits, store presence and hostile changed evidence.
+  `knowledge-map: OK` and staged doctrine checks qualify publication. No
+  production source, test rerun, host security change or native trace occurs.
+
+Re-derivation uses the retained failure and bounded query; falsification uses
+separate store-presence evidence and corrupted-window/status controls; durability
+uses complete tracked records and the saved verifier. The cause remains missing.
+Leaf `.3.2.10.7` owns capability preflight before any further capture proposal.

@@ -1,0 +1,1 @@
+log: --count and --sort are ignored in JSON output style

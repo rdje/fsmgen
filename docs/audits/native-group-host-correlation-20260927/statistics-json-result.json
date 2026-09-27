@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/usr/bin/log",
+    "stats",
+    "--overview",
+    "--style",
+    "json",
+    "--count",
+    "1",
+    "--start",
+    "@1790532963",
+    "--end",
+    "@1790533000"
+  ],
+  "deadline_seconds": 30,
+  "exit_code": 64,
+  "schema": "fsmgen.native_group_host_statistics.v1",
+  "scope": "same-window store overview; no message payloads requested"
+}

@@ -1,0 +1,31 @@
+== archive =============================================================
+size:               2 536 536 216 bytes
+                    835 053 bytes (uncompressed)
+start:              Sun Sep 27 20:16:03 2026
+end:                Sun Sep 27 20:16:39 2026
+statedump:          10
+
+events:             [       total        log      trace   signpost       loss ]
+                    [      10 837      9 061          0        695          0 ]
+
+activity:           [      create transition     action ]
+                    [       1 071          0          0 ]
+
+log messages:       [     default       info      debug      error      fault ]
+                    [       7 556        179          0      1 924         97 ]
+
+ttl:                [        1day      3days      7days     14days     30days ]
+                    [         170        570         61        109          0 ]
+
+processes:          
+          [        events (%total),    total bytes (%total),                           image UUID, image ]
+          [         1 714 ( 15.8%),        311 768 ( 37.3%), DF9B0E06-052F-3E30-9D4D-D8E5AF7741B9, airportd ]
+
+senders:            
+          [        events (%total),    total bytes (%total),                           image UUID, image ]
+          [         1 215 ( 11.2%),        210 408 ( 25.2%), E5B78B8D-4F4A-3F54-A0D6-5BB080919988, CoreWiFi ]
+
+CoreWiFi:           
+          [        events (%total),    total bytes (%total), event ]
+          [           480 (  4.4%),         95 226 ( 11.4%), "[corewifi] END %{public}@ [%{public}@] took %0.9fs (pid=%d proc=%{public}@ bundleID=%{public}@ codesignID=%{public}@ service=%{public}@ qos=%d intf=%{public}@ uuid=%{public}@ err=%ld reply=%{public}@" ]
+

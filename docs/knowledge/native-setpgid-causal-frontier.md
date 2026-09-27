@@ -8,7 +8,7 @@ answers:
 date: 2026-09-27
 status: current
 tags: [process, supervision, containment, native, diagnosis]
-evidence: docs/audits/native-group-witness-20260927/manifest.json; docs/audits/native-group-witness-20260927/original/manifest.json; docs/audits/native-group-discriminator-20260927/manifest.json; docs/audits/native-group-discriminator-20260927/result.jsonl; docs/audits/native-group-discriminator-20260927/probe.c; docs/audits/native-group-discriminator-20260927/verify.py; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: docs/audits/native-group-host-correlation-20260927/manifest.json; docs/audits/native-group-witness-20260927/manifest.json; docs/audits/native-group-witness-20260927/original/manifest.json; docs/audits/native-group-discriminator-20260927/manifest.json; docs/audits/native-group-discriminator-20260927/result.jsonl; docs/audits/native-group-discriminator-20260927/probe.c; docs/audits/native-group-discriminator-20260927/verify.py; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: python3 -B docs/audits/native-group-discriminator-20260927/verify.py && python3 -B docs/audits/native-group-witness-20260927/original/verify_original.py
 ---
 
@@ -27,7 +27,8 @@ successful setpgid return. This control does not attribute the original failure.
 Owner HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10
 retains causal repair. Child .2 seals the native discriminator; .3.1 seals the
 qualified native witness; .3.2 retains one successful original T1972 attempt.
-Child .6 correlates bounded existing host evidence for the historical rejection.
+Child .6 retains bounded host correlation without a matching cause; .7 checks
+native tracing capability without capture or host changes.
 A passing original cannot close the failure. No host change, admission relaxation,
 original retry or production repair occurs in the native discriminator slice.
 
@@ -49,3 +50,12 @@ cleanup postchecks are retained under the witness audit's `original/` directory;
 `verify_original.py` verifies them without another execution. The original test
 and selected input/adapter/supervisor hashes match before and after the run.
 This is new passing evidence, not repair or attribution of the historical EPERM.
+
+Historical host correlation retains the exact original failure and a candidate
+window derived from that log's file timestamps, not a syscall wall clock. The
+PID/syscall query returns no matches. A separate same-window store overview
+confirms retained data exists, but does not prove native rejection coverage.
+No kernel or host-policy cause is ruled out. The read-only OS log tool is a
+necessary external diagnostic input; all project evidence stays repository-local.
+Verify the saved commands, outputs, window and corruption controls with
+`python3 -B docs/audits/native-group-host-correlation-20260927/verify.py`.

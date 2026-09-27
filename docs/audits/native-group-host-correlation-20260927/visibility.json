@@ -1,0 +1,8 @@
+{
+  "conclusion": "No matching retained PID/syscall messages. This does not prove all native failures are logged or exclude kernel/policy causes. Failed-call group/session and kernel branch remain unavailable.",
+  "host_query": "exit 0 and empty JSON array; bounded same-window statistics prove retained store data exists",
+  "sandbox_probe": "log help show: Cannot run while sandboxed",
+  "schema": "fsmgen.native_group_host_visibility.v1",
+  "statistics_json_limit": "installed log tool exits 64 when --count is combined with JSON statistics; complete rejected result retained, then supported human overview used",
+  "statistics_utc_offset_seconds": 7200
+}

@@ -1,0 +1,23 @@
+{
+  "predecessor_revision": "85e7e9a59f2b8e382d9567036202521ce288e4f5",
+  "schema": "fsmgen.native_group_host_correlation.v1",
+  "scope": "bounded read-only historical log correlation; no original replay, host change or kernel capture",
+  "sha256": {
+    "capture.py": "f34f1bb9916cc0d9de80fdd936547172390095529951cf218c145cd423b714c0",
+    "original-failure.txt": "256249a89a647ac18473cce99211c42d0924a78652f93cacf06f5f9b8630232a",
+    "query-result.json": "7b18f8066cfa09ad840761830029a4b0eb24f6aa55ffa73d113e8d70b5a4e470",
+    "query-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "query-stdout.txt": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "statistics-human-result.json": "ebbe0b17d6c8624b06cd5397b4b111faa1e6c40c73279f5155e01e6b3e443357",
+    "statistics-human-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "statistics-human-stdout.txt": "fe52e2706dd2045cbbadd1f75c687bc37680649c9f27e1fe6e1954d97b9898fc",
+    "statistics-json-result.json": "c8e7657d3b10e72ba42e56f61d9d1a130764eb69e9906696f8c9204835ab50dd",
+    "statistics-json-stderr.txt": "6828a0d602dc4b7866b93c0f446106c318c6ede2996734e8a1cad639b1ff317a",
+    "statistics-json-stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "statistics.py": "dea4875a66f365222cb033e49289195ac9cd1edf4d03048f20116cf60e5b65fc",
+    "statistics_human.py": "103493c889d2e151baa4ff7ece8862d7936ce8f631d5e94968df4693bc647276",
+    "verify.py": "79c6447b509c1a2b37e3e8cfbdcda78be70791fa89d9a5c6a363a160d51d79f7",
+    "visibility.json": "3bcff8110cc5695b29e8d9d0fb902d44d4b5ec85e5384d372873bed4da7ba486",
+    "window.json": "0c50b5f35d51111d6b987dfd05f1bb5926befdda3372b4e15080f2bd8983fda9"
+  }
+}

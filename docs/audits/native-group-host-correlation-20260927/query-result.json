@@ -1,0 +1,26 @@
+{
+  "capture_failure": null,
+  "capture_limit_bytes": 1048576,
+  "command": [
+    "/usr/bin/log",
+    "show",
+    "--style",
+    "json",
+    "--info",
+    "--debug",
+    "--start",
+    "@1790532963",
+    "--end",
+    "@1790533000",
+    "--timezone",
+    "UTC",
+    "--predicate",
+    "processID == 43538 OR eventMessage CONTAINS[c] \"setpgid\" OR eventMessage CONTAINS \"43538\""
+  ],
+  "deadline_seconds": 30,
+  "exit_code": 0,
+  "kernel_version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:48 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T6041",
+  "os_release": "27.0.0",
+  "schema": "fsmgen.native_group_host_query.v1",
+  "scope": "read-only bounded existing host evidence; no native test replay"
+}

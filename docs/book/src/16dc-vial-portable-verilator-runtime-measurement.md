@@ -1161,8 +1161,10 @@ One unchanged T1972 run under that witness now passes the guard oracle for both
 HDL targets and entry cases. Every observed native call succeeds, and retained
 stage results preserve the original limits and cleanup. Independent postchecks
 find the captured child processes/groups and temporary binaries absent. This
-new pass does not explain the historical failure. Existing host evidence is the
-next causal discriminator; original retries are not a repair strategy. Verify
+new pass does not explain the historical failure. A bounded historical host-log query finds no matching PID/syscall message,
+although the same-window store overview confirms retained data. This cannot
+exclude unlogged kernel or policy causes. Native tracing capability is being
+checked without capture or host changes; original retries are not a repair strategy. Verify
 the saved observation, without executing it again, with:
 
 ```sh
