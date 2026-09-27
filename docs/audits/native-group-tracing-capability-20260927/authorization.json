@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/usr/bin/sudo",
+    "-n",
+    "/usr/sbin/dtrace",
+    "-l",
+    "-n",
+    "syscall::setpgid:*"
+  ],
+  "exit_code": 1,
+  "stderr": "sudo: a password is required\n",
+  "stdout": "",
+  "timed_out": false
+}

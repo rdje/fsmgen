@@ -1801,7 +1801,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Preserve .2.9's failed control_wait result and missing PID/syscall evidence. Query the map, inspect source/history and native contract, then use bounded independently observed fork/group controls to separate setpgid return, actual membership and stale diagnostic errno. Select the smallest causal repair; if evidence needs new instrumentation, qualify and commit that separately before further original observation. Every actual owned child/group must settle; preserve rejection of false-success/undefined/negative/throwing admission, fixed limits and original failure. No retry-as-repair, host security change or unrelated recurrence campaign. Update book/fact and commit each verified slice.`
   Verification: `New .2.9 failure is in the asynchronous control_wait outer before exec; the current combined eval reports ambient $! after either syscall or membership failure. The source review identifies ambiguity, not a proved syscall failure or cause. Active at clean fe2dd2f2e3592cb043dc3daa1740254cb6f1a424. Read-only source/native-contract review and bounded independently observed fork/group controls are owned here; scratch outputs/workspaces stay under .artifacts/logs/containment-diagnosis-20260909/ and .artifacts/tmp/containment-diagnosis/. Six held native controls prove the combined message conflates a real EPERM session-leader syscall failure with a false-success membership failure; successful calls can retain EPERM too. All native identities/groups and cleanup are independently checked. This proves diagnostic ambiguity, not the original cause. Child .10.1 owns precise failure provenance and focused qualification; any remaining causal experiment is selected only after that child commits.`
   Commit: `pending causal failure diagnosis after precise diagnostic qualification`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.8`
+  Blocker: `The historical failure remains unexplained. Read-only DTrace probe inventory needs administrator access; sudo -n has no authorization. Child .8 owns the exact missing inventory and next causal selection. No original retry or host-protection change is authorized by a passing control.`
+
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2`
   Status: `done`
   Goal: `Discriminate native parent/child group timing from session-leader rejection after the T1972 EPERM.`
@@ -1853,11 +1855,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7`
-  Status: `active`
+  Status: `done`
   Goal: `Determine whether targeted native tracing can supply the missing rejection evidence without host changes.`
   Acceptance: `Read installed tracing documentation and enumerate only the relevant setpgid probes/capabilities without attaching a trace, running another original, changing host security or invoking an interactive privilege prompt. Preserve exact tool path/version, commands, exit and visibility/privilege restrictions. If supported, prepare the smallest bounded qualification plan and its separately owned capture leaf before execution. If required privilege is unavailable, record the exact access blocker and a concrete read-only administrator check; do not infer permission or propose disabling protections. Commit the capability result and resume pointer before requesting missing access.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The installed manual defines -l as listing rather than enabling probes. DTrace reports D interface Sun D 1.19; the normal-user filtered setpgid listing exits one and requires additional privileges, alongside a SIP feature warning. The same listing through sudo -n exits one with a password-required diagnostic; no existing non-interactive authorization is available. No probe was enabled or original executed. The earlier user-launched sampling session is fixed to spindump and cannot be repurposed. Complete commands, outputs, binary/manual hashes, bounds and corruption checks are sealed under docs/audits/native-group-tracing-capability-20260927/. The exact administrator check is prepared; .8 owns its returned inventory and remains blocked on access. A SIP warning does not prove whether the relevant probes are available; no protection change is requested.`
+  Commit: `this commit`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.8`
+  Status: `blocked`
+  Goal: `Consume the missing administrator probe inventory and select a supported causal observation.`
+  Acceptance: `Obtain complete stdout, stderr and exit status for the exact read-only command sudo /usr/sbin/dtrace -l -n 'syscall::setpgid:*' described in docs/audits/native-group-tracing-capability-20260927/administrator-check.json. Preserve it in repository-local evidence and distinguish available probes from privilege/SIP restrictions. Do not run a test as root, enable tracing, reuse the fixed spindump helper for a new command, weaken admission or disable protections. If the inventory supports a useful observation, separately own and qualify a bounded plan before execution; otherwise retain the exact blocker and choose an available supported discriminator. The earlier original pass never closes historical causality.`
+  Verification: `Blocked: normal-user listing requires additional privileges; sudo -n reports a password is required. Administrator output is not available. Prepared command and all prior evidence are committed before requesting that access.`
+  Commit: `pending administrator evidence`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1`
   Status: `done`
@@ -4515,7 +4524,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7` checks targeted native tracing capability without capture after historical host correlation found no matching cause. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.8` is blocked awaiting the prepared read-only administrator probe inventory; prior native qualification, original observation and host correlation are committed. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7081,3 +7090,26 @@ Re-derivation uses the retained failure and bounded query; falsification uses
 separate store-presence evidence and corrupted-window/status controls; durability
 uses complete tracked records and the saved verifier. The cause remains missing.
 Leaf `.3.2.10.7` owns capability preflight before any further capture proposal.
+
+## Acceptance — native tracing capability preflight `.3.2.10.7`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The filtered DTrace listing requires
+  additional privileges, and `sudo -n` reports a password is required.
+  `git log -S 'authenticates the fixed native'` identifies
+  74c23d182dae033defcaf717f6197d59e86690a0 as the existing fixed spindump
+  session contract; that operation does not authorize a DTrace substitution.
+- [x] **ADDRESSED (verified)** — Installed manual/binary hashes, D interface
+  version, exact listing commands, failure results and bounds are retained.
+  The prepared administrator command lists only setpgid probes. The saved
+  verifier rejects altered access status, privilege identity or an attachment
+  command. This resolves capability discovery to an explicit access blocker,
+  not an attributed native syscall cause or an executed tracing plan.
+- [x] **NO REGRESSION** — `knowledge-map: OK`, saved capability verification,
+  book and staged doctrine checks qualify publication. The work enabled no
+  trace, reran no original and changed no production code or host protection.
+
+Re-derivation uses the installed public manual and actual listing results;
+falsification separates successful version lookup, unprivileged listing failure
+and absent non-interactive authorization, with altered-evidence controls;
+durability uses complete tracked records, hashes and the prepared access request.
+The causal parent remains open; child `.3.2.10.8` is blocked pending administrator data.

@@ -1,0 +1,13 @@
+{
+  "predecessor_revision": "ce4fcc80cb03483dc51e28131ffd5e5120fb9078",
+  "schema": "fsmgen.native_group_tracing_preflight.v1",
+  "scope": "version and filtered probe listing only; no trace enabled; administrator check prepared but not executed",
+  "sha256": {
+    "administrator-check.json": "281031b5e830732e8993611c911c4fff23567fe0cf9d76f29e54aa27d8b1f427",
+    "authorization.json": "2d87ec49a9830f6d683ddb454a4eef7e04242415bc4432e1ee0b352e21c8866c",
+    "authorization.py": "d526b9de7c384504484e0a78d8fff977fcee98d17d73b9eb0ec52909d7d51be1",
+    "preflight.py": "6749e9101de4ffed9fce709cd9fd7571f93ea78ee944429e3550c334d6538402",
+    "result.json": "0b57d3aa98530cb16c19967e6fd255ff59bd9cfdeb27d19c4f8eab87cdb1f50d",
+    "verify.py": "f0873542786f7e6dfbf14292cfb62769ead9650bff2a5fcc1cc099e209f4ef90"
+  }
+}

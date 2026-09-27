@@ -8,7 +8,7 @@ answers:
 date: 2026-09-27
 status: current
 tags: [process, supervision, containment, native, diagnosis]
-evidence: docs/audits/native-group-host-correlation-20260927/manifest.json; docs/audits/native-group-witness-20260927/manifest.json; docs/audits/native-group-witness-20260927/original/manifest.json; docs/audits/native-group-discriminator-20260927/manifest.json; docs/audits/native-group-discriminator-20260927/result.jsonl; docs/audits/native-group-discriminator-20260927/probe.c; docs/audits/native-group-discriminator-20260927/verify.py; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: docs/audits/native-group-tracing-capability-20260927/manifest.json; docs/audits/native-group-host-correlation-20260927/manifest.json; docs/audits/native-group-witness-20260927/manifest.json; docs/audits/native-group-witness-20260927/original/manifest.json; docs/audits/native-group-discriminator-20260927/manifest.json; docs/audits/native-group-discriminator-20260927/result.jsonl; docs/audits/native-group-discriminator-20260927/probe.c; docs/audits/native-group-discriminator-20260927/verify.py; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: python3 -B docs/audits/native-group-discriminator-20260927/verify.py && python3 -B docs/audits/native-group-witness-20260927/original/verify_original.py
 ---
 
@@ -28,7 +28,8 @@ Owner HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2
 retains causal repair. Child .2 seals the native discriminator; .3.1 seals the
 qualified native witness; .3.2 retains one successful original T1972 attempt.
 Child .6 retains bounded host correlation without a matching cause; .7 checks
-native tracing capability without capture or host changes.
+native tracing capability without capture or host changes. Child .8 is blocked
+on the prepared read-only administrator inventory.
 A passing original cannot close the failure. No host change, admission relaxation,
 original retry or production repair occurs in the native discriminator slice.
 
@@ -59,3 +60,10 @@ No kernel or host-policy cause is ruled out. The read-only OS log tool is a
 necessary external diagnostic input; all project evidence stays repository-local.
 Verify the saved commands, outputs, window and corruption controls with
 `python3 -B docs/audits/native-group-host-correlation-20260927/verify.py`.
+
+The installed DTrace version query succeeds, but normal-user setpgid probe
+listing requires additional privileges; non-interactive sudo has no available
+authorization. The existing sampling helper is fixed to spindump. The prepared
+administrator request lists probes only, with no trace, root test or host change.
+A SIP warning does not prove probe absence. Exact access evidence and the saved
+verifier live in `docs/audits/native-group-tracing-capability-20260927/`.

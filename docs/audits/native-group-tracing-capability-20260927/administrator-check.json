@@ -1,0 +1,16 @@
+{
+  "blocker": "Normal-user DTrace requires additional privileges; sudo -n reports that a password is required. No non-interactive authorization is available.",
+  "command": [
+    "sudo",
+    "/usr/sbin/dtrace",
+    "-l",
+    "-n",
+    "syscall::setpgid:*"
+  ],
+  "existing_helper": "The documented temporary fixture session admits only the fixed spindump operation for its exact fixtures. It cannot be repurposed to DTrace or a different target.",
+  "next_on_return": "Preserve and verify the inventory; if probes are available, separately own and qualify the smallest bounded native observation plan before enabling any trace. If access/probes remain unavailable, retain that exact restriction and choose another supported discriminator.",
+  "protection_boundary": "A SIP warning alone does not prove probe unavailability. No disabling of host protections is requested.",
+  "purpose": "Read-only probe listing; no tracing, process attachment, test execution or host-security change.",
+  "required_return": "Complete stdout, stderr and exit status from the administrator-run listing.",
+  "schema": "fsmgen.native_group_administrator_check.v1"
+}

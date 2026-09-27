@@ -1,0 +1,35 @@
+{
+  "deadline_seconds_each": 15,
+  "dtrace_sha256": "b510c2d13b953b98d37f397a21669e1390d835ff248784db23e33f0b70950381",
+  "kernel_version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:48 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T6041",
+  "manual_listing_contract": "List probes instead of enabling them.",
+  "manual_sha256": "bb92b5c4389002d76d0387f8641d49c6565b37a8858d22d79a059a933e2becc6",
+  "os_release": "27.0.0",
+  "results": [
+    {
+      "command": [
+        "/usr/sbin/dtrace",
+        "-V"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "dtrace: Sun D 1.19\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "/usr/sbin/dtrace",
+        "-l",
+        "-n",
+        "syscall::setpgid:*"
+      ],
+      "exit_code": 1,
+      "stderr": "dtrace: system integrity protection is on, some features will not be available\ndtrace: failed to initialize dtrace: DTrace requires additional privileges\n",
+      "stdout": "",
+      "timed_out": false
+    }
+  ],
+  "schema": "fsmgen.native_group_tracing_capability.v1",
+  "scope": "installed read-only OS diagnostic dependency; version and filtered probe inventory only",
+  "uid": 501
+}

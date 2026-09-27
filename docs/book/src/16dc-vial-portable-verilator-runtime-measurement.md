@@ -1163,13 +1163,31 @@ stage results preserve the original limits and cleanup. Independent postchecks
 find the captured child processes/groups and temporary binaries absent. This
 new pass does not explain the historical failure. A bounded historical host-log query finds no matching PID/syscall message,
 although the same-window store overview confirms retained data. This cannot
-exclude unlogged kernel or policy causes. Native tracing capability is being
-checked without capture or host changes; original retries are not a repair strategy. Verify
+exclude unlogged kernel or policy causes. Read-only native probe listing now encounters an administrator-access boundary;
+original retries are not a repair strategy. Verify
 the saved observation, without executing it again, with:
 
 ```sh
 python3 -B docs/audits/native-group-witness-20260927/original/verify_original.py
 ```
+
+The installed DTrace manual defines `-l` as probe listing without enabling
+probes. The normal-user setpgid inventory requires additional privileges;
+`sudo -n` reports that authentication is unavailable. The existing temporary
+fixture helper admits only its fixed `spindump` operation. The next owner
+therefore needs an administrator's stdout, stderr and exit status for this
+read-only check:
+
+```sh
+sudo /usr/sbin/dtrace -l -n 'syscall::setpgid:*'
+```
+
+The command enables no tracing and executes no test. The SIP feature warning
+alone does not establish whether these probes exist, and no protection change
+is requested. A returned inventory must precede a separately qualified capture
+plan. The complete preflight and exact access request are retained under
+`docs/audits/native-group-tracing-capability-20260927/`; its `verify.py` checks
+the saved evidence without privileged execution.
 
 The updated full T1669 qualification still fails both Rust startup modes and
 legacy main-entry checks, while the new diagnostic controls and production HDL
