@@ -1652,16 +1652,16 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Retain named-completion readback and outer domain reservation products.`
   Acceptance: `Collect actual named-completion declaration plans after storage connections, qualify library-readback declaration preservation and outer domain realization, then complete the reservation integration gate without weakening executable ownership or report contracts.`
-  Verification: `Storage-read products and allocator scope are owned by .1; the following named-completion/readback and domain stages remain uncovered.`
+  Verification: `Storage-read products and allocator scope are closed by sibling .1. Named-completion child .1 is qualified; next child .2 verifies library readback, followed by .3 outer-domain realization.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3`
   Commit: `children below`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Retain actual named-completion handoff and local-pulse plans.`
   Acceptance: `Share canonical completion allocation after read/write handoffs with detached source preparation. Preserve per-instance ports, actor-output identity, local delayed pulses, OR views, widths/types/resets and source ownership. Keep mixed-writer admission executable and separate from potential plans. Qualify actual complete inputs/products, projection, collisions, source isolation, strict/report parity and independent named-completion runtime before commit.`
-  Verification: `T1953 qualifies complete actual named-completion inputs/products and installed metadata/links/rewrites against source and projected plans. before-full.json shows missing child input/local pulse/view names; after.json has none. Native schedule remains byte-identical. Typed and literal reset cases remain separate supported contracts; multiple completers, canonical/local exclusions, portable collisions, snapshot isolation and mixed-writer refusal pass. Independent named-completion/report regression is pending.`
-  Commit: `pending`
+  Verification: `T1953 qualifies complete actual named-completion inputs/products and installed metadata/links/rewrites against source and projected plans. before-full.json shows missing child input/local pulse/view names; after.json has none. Native schedule remains byte-identical. Typed and literal reset cases remain separate supported contracts; multiple completers, canonical/local exclusions, portable collisions, snapshot isolation and mixed-writer refusal pass. The full selected regression including independent named-completion runtime and complete native/API/newline reports passes.`
+  Commit: `73d4047be; qualification closure in this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2`
   Status: `pending`
@@ -3516,3 +3516,26 @@ No parent is fabricated from raw formal width maps, and no production formal
 rewriting, new pulse stage or shared-writer policy is claimed. Library readback
 and outer domains remain subsequent owners. No duplicate DEVELOPMENT_NOTES
 rationale is needed.
+
+## Acceptance — named-completion qualification closure `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` on MEMORY.md's
+  T1953/T1913/T1951/T1946/T1255 confirmation pointer identifies 73d4047be as
+  the implementation commit with broader qualification pending. The complete
+  retained regression.log now reports All tests successful; leaving the
+  pointer pending would strand the next eligible library-readback leaf.
+- [x] **ADDRESSED (verified)** — consume the complete reader/completion/
+  schedule cohort, including independent T1913 named-completion execution and
+  its full native/API/newline reports, close the leaf and advance the resume
+  action with no background work. Source and tests are unchanged from the
+  successful implementation/regression run.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1953/T1913/T1951/T1946/T1255. The native schedule remains byte-identical;
+  T1376 already passed the unchanged runnable examples. A fresh book rebuild,
+  staged doctrine gate and normal commit hook cover the qualification prose.
+
+Evidence: `.artifacts/formal-named-completion-products/`. Re-derivation consumes
+the complete retained cohort; falsification includes exact independent pulse
+cycles, reset/repeated activation and actual mixed-writer refusals; durability
+is T1953/T1913, the formal completion card, book and committed task history.
+This is bounded completion qualification, not whole-domain namespace closure.

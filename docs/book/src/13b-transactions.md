@@ -112,6 +112,9 @@ separate pulse sources while sharing the public output identity. The executable
 connection checks for non-completion writers before installing the plan and
 redirecting local completion assignments. A potential source plan does not
 admit those conflicting writers or merge raw formal storage contracts.
+Independent named-completion runtime and public report checks preserve the
+existing pulse timing, reset and repeated-activation behavior through this
+planning boundary.
 Library-readback connections and outer domain composition still need coverage
 before the inventory is complete. It does not enable independent direct-transaction storage yet.
 

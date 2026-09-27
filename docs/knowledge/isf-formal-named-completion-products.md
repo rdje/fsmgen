@@ -37,8 +37,9 @@ complete source/physical plans and tests shared/child-only, typed, literal reset
 multiple-instance and local-shadow/canonical cases. Portable formal/fixed/rule
 helper collisions retain reservation coverage after projection. Caller/source,
 child and preceding read products remain detached. Mixed non-completion writers
-still fail executable admission. T1913 owns independent named pulse timing and
-complete public report qualification.
+still fail executable admission. The full selected reader/completion/schedule
+cohort passes, including T1913 independent named pulse timing and complete
+native/API/newline report qualification.
 
 Library-readback and outer domain realization remain separate coverage gates
 before complete reservations and automatic production formal rewriting.
