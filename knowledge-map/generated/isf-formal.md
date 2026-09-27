@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-formal`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **12** facts · **36** uniquely owned question entries.
+> **13** facts · **39** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -24,7 +24,9 @@
 - q="does formal preparation reserve external activation ready and request declarations?" · facts=[isf-formal-domain-source-products](../../docs/knowledge/isf-formal-domain-source-products.md)
 - q="does parent IR finalization add declarations before child storage connections?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
 - q="does planning named completion admit mixed parent writers?" · facts=[isf-formal-named-completion-products](../../docs/knowledge/isf-formal-named-completion-products.md)
+- q="does reservation coverage enable automatic production formal renaming?" · facts=[isf-formal-reservation-coverage](../../docs/knowledge/isf-formal-reservation-coverage.md)
 - q="how are completion seen and ready names owned before formal allocation?" · facts=[isf-formal-completion-products](../../docs/knowledge/isf-formal-completion-products.md)
+- q="how does final formal reservation coverage detect an omitted producer name?" · facts=[isf-formal-reservation-coverage](../../docs/knowledge/isf-formal-reservation-coverage.md)
 - q="how does read planning reserve completion and write handoffs?" · facts=[isf-formal-parent-read-products](../../docs/knowledge/isf-formal-parent-read-products.md)
 - q="what does deferred_formal_collisions mean in prepared source?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
 - q="what does domain_source_products retain?" · facts=[isf-formal-domain-source-products](../../docs/knowledge/isf-formal-domain-source-products.md)
@@ -38,6 +40,7 @@
 - q="what does resource_signal_products prove about resource arbitration?" · facts=[isf-formal-resource-products](../../docs/knowledge/isf-formal-resource-products.md)
 - q="what does reusable_child_products include in source preparation?" · facts=[isf-formal-reusable-products](../../docs/knowledge/isf-formal-reusable-products.md)
 - q="what qualifies the resource priority namespace boundary?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
+- q="which actual module scopes are checked before formal rewrite integration?" · facts=[isf-formal-reservation-coverage](../../docs/knowledge/isf-formal-reservation-coverage.md)
 - q="why can a generated ready port collide with a private direct formal?" · facts=[isf-formal-wiring-products](../../docs/knowledge/isf-formal-wiring-products.md)
 - q="why did preparing a direct formal fail on a generated monitor name before allocation?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
 - q="why does monolithic preparation miss domain activation helpers?" · facts=[isf-formal-domain-source-products](../../docs/knowledge/isf-formal-domain-source-products.md)
@@ -106,6 +109,13 @@ _Source preparation retains narrowly deferred direct-formal monitor collisions_
 
 - **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-formal-preallocation-admission.md`](../../docs/knowledge/isf-formal-preallocation-admission.md)
+
+### isf-formal-reservation-coverage
+
+_Detached final module guard checks prepared reservations and private formal ownership_
+
+- **date:** 2026-09-27 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-formal-reservation-coverage.md`](../../docs/knowledge/isf-formal-reservation-coverage.md)
 
 ### isf-formal-resource-products
 

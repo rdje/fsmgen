@@ -40,8 +40,8 @@ this checked collector in its actual projected-domain integration cases.
 
 This is an input schema and membership contract. It does not authenticate
 arbitrarily edited product contents, prove later producer coverage, or replace
-canonical executable validation. Final declaration coverage and missing-reservation
-falsification remain the next task leaf; production does not automatically rename
-formals. The generic partial collector remains available for individual producer
+canonical executable validation. [Final declaration coverage](isf-formal-reservation-coverage.md) now joins these
+inputs to actual admitted module scopes and detects omitted declarations.
+Production does not automatically rename formals. The generic partial collector remains available for individual producer
 qualification. Existing controller, local-call and runtime limitations remain.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.1.

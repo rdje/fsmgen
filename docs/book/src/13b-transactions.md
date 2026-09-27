@@ -135,9 +135,14 @@ now requires every product category, even an empty one, and checks live
 transaction, generated-child and domain membership. For example, removing the
 caller domain products is rejected rather than silently producing a smaller
 reservation set. Parent and child modules retain separate typed scope identities;
-the allocation union remains conservative. This validates the prepared inputs,
-not final emitted completeness: that check and production rewrite integration
-remain pending. This does not enable independent direct-transaction storage yet.
+the allocation union remains conservative. A separate final-module guard now
+compares actual parent/domain/child declarations with those prepared scopes and
+the canonical private allocation. Removing a real dynamic-wait helper from the
+inventory fails this check, as does adding an unreserved implicit assignment
+target. Private formals must also retain their planned width and ownership and
+cannot alias a fixed port or block. These checks are qualified on detached
+rewrites; production integration and source-report preservation remain pending.
+This does not enable independent direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both

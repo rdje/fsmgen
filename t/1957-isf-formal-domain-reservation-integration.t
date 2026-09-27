@@ -12,6 +12,7 @@ use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::FormalIdentityPlan;
 use FSM::Scheduler::ISF::FormalClauseResolver;
 use FSM::Scheduler::ISF::PreparedFormalReservations;
+use FSM::Scheduler::ISF::FormalReservationCoverage;
 
 my $s = FSM::Scheduler::ISF->new;
 my $l = $s->{ir};
@@ -105,6 +106,9 @@ sub qualify {
         $files = $s->lower($physical)->{files};
     }
     is_deeply([sort keys %actual], ['aux', 'core'], "$label actual independent domains observed");
+    my $coverage = FSM::Scheduler::ISF::FormalReservationCoverage->verify($p, $plan,
+        {map {$_->{actor_name} => $_} values %actual});
+    ok(@{$coverage->{verified_scopes}}, "$label actual module scopes pass final reservation coverage");
     for my $domain (qw(core aux)) {
         my $ir = $actual{$domain};
         my $local = $post->{domain_source_products}{$domain}{preparation};

@@ -1432,10 +1432,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Prove complete physical reservations and deterministic formal allocation in actual lowering contexts.`
   Acceptance: `After source-context preparation, derive real generated declarations and signal consumers without relying on guessed naming patterns or a successful conflicting old module merge. Cover counters, monitors, wait/sample helpers, named drives, bindings, child handoffs, domains and case-folded collisions. Qualify allocation determinism and fail-closed missing reservations; preserve generated public ports. Commit the qualified reservation integration before production renaming.`
-  Verification: `The detached planner's explicit reserved_names contract does not establish completeness in production. Actual generated names and declarations must supply that proof.`
+  Verification: `All declared children are verified. Actual producer inventories, checked preparation inputs and a detached final-module coverage guard now qualify canonical allocation, separate scopes and missing-reservation failures. Evidence remains with those leaves. Production formal rewriting and public report preservation start at .49.2.2.3.3; controller/runtime qualification remains separate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2`
   Commit: `children below`
 
@@ -1447,10 +1447,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Close module/wiring/domain reservation coverage before production allocation.`
   Acceptance: `Complete the parent contract using actual rule, shared-drive, child, storage/completion, library/ATL and domain producers. Preserve authored helper identity inputs when formal physical names change; prove final allocation and emitted declarations cannot introduce unreserved collisions. Do not equate a transaction-only inventory with complete coverage, bypass conflicting parent merges as executable output, or infer helper names from guessed patterns. Qualify deterministic/case-folded and missing-reservation controls, then commit before .3.3.`
-  Verification: `Existing reservation helpers inspect selected IR maps. build_module and multi-domain realization add names after transaction lowering; source/physical endpoint projections must keep helper identity generation stable. No complete production reservation proof exists yet.`
+  Verification: `All declared children are verified. Actual producer inventories, checked preparation inputs and a detached final-module coverage guard now qualify canonical allocation, separate scopes and missing-reservation failures. Evidence remains with those leaves. Production formal rewriting and public report preservation start at .49.2.2.3.3; controller/runtime qualification remains separate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
   Commit: `children below`
 
@@ -1722,10 +1722,10 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify complete reservation integration before production renaming.`
   Acceptance: `Join actual producer inventories with a fail-closed completeness contract. Prove final allocation/emission cannot add unreserved collisions, including source declaration permutations, case-folded names, helper-looking formals, separate modules and domain realization. Preserve source/public identities and commit before .3.3.`
-  Verification: `Actual producer coverage is qualified. Complete the checked input schema and explicit scope inventory in .1, then final executable declaration coverage and missing-reservation falsification in .2 before production integration.`
+  Verification: `All declared children are verified. Actual producer inventories, checked preparation inputs and a detached final-module coverage guard now qualify canonical allocation, separate scopes and missing-reservation failures. Evidence remains with those leaves. Production formal rewriting and public report preservation start at .49.2.2.3.3; controller/runtime qualification remains separate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.2`
   Commit: `children below`
 
@@ -1737,11 +1737,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Verify final executable declarations and allocation against complete prepared scopes.`
   Acceptance: `Join the checked input inventory with actual projected modules, final declaration ownership and outer scope boundaries. Fail closed on missing reservations or unexpected scopes, including injected omissions and helper/formal aliases. Qualify declaration permutations, case-folded conflicts, library/generated children and domains. Preserve source/public reports and strict refusal boundaries; only then close the global contract before production renaming.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `T1960 checks actual public-lowering modules and strict exported carriers, with omitted real helper, late explicit/implicit declarations, stale plans, scope-set/identity and formal width/role/block-alias mutations. Generated/FIFO/ATL/storage/rule/monitor cases and declaration/case permutations pass. T1957 checks combined actual domains. The complete focused regression, final child-scope falsification, book fixtures/build pass; all jobs consumed. This detached guard is qualified for production integration next; it does not claim controller/runtime repair.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3`
   Status: `pending`
@@ -3902,3 +3902,39 @@ is T1959, the migrated T1957 consumer, canonical fact card and book. The input
 schema does not authenticate arbitrary edited product contents or prove final
 executable declarations. That independent check remains child .2, before
 production integration. No extra DEVELOPMENT_NOTES rationale is needed.
+
+
+## Acceptance — final module reservation coverage `.49.2.2.3.2.2.3.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — actual public-lowering modules
+  strict-check with `--check --json`, but the checked input schema alone also
+  accepts a structurally valid preparation with every occurrence of an actual
+  dynamic-wait helper removed. T1960 preserves the canonical private plan under
+  that mutation, exposing the missing final declaration comparison independently
+  of the input contract. Actual declarations must be checked in their own scopes.
+- [x] **ADDRESSED (verified)** — FormalReservationCoverage verifies the
+  canonical allocation plan, exact physical parent/domain module set and child
+  identities; it checks actual explicit and implicit declarations against each
+  prepared scope plus that scope's live private formals. Direct formals retain
+  counter/width-map widths, transaction_port roles and fixed-name separation.
+  The omitted real helper now fails with unreserved declarations. Late registers,
+  implicit assignment targets, stale plans, wrong/missing modules, nested children,
+  changed widths/roles, block aliases and parent-formal leakage into a child also
+  fail. Actual generated, FIFO, ATL, storage, rule and monitor cases strict-replay;
+  T1957 verifies combined domain declarations. Inputs remain unchanged.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful`
+  for T1960/T1957/T1959/T1941/T1939/T1947/T1255. final-focused.log reports the
+  same for final T1960 including the added child-scope mutation and T1376 book
+  examples. The synchronized book build passes. Every result is consumed;
+  staged doctrines and normal hook qualify this slice before commit.
+
+Evidence: `.artifacts/formal-reservation-coverage/`. Re-derivation observes actual
+public-lowering modules and emitted carriers; falsification mutates real producer
+names, allocation and executable scope/declaration ownership independently of
+collection; durability is T1960/T1957, the coverage fact card and book. This
+closes the detached ISF-to-FSM reservation gate and its exhausted parent tasks,
+not automatic production renaming, arbitrary IR semantic correctness, independent
+controllers, local-call runtime or the historical containment issue. Production
+integration and complete source-facing report preservation remain .49.2.2.3.3.
+The exact exhausted-parent list is retained in closed-parents.txt. Canonical
+fact/task records own the rationale without a duplicate DEVELOPMENT_NOTES entry.
