@@ -141,7 +141,11 @@ the canonical private allocation. Removing a real dynamic-wait helper from the
 inventory fails this check, as does adding an unreserved implicit assignment
 target. Private formals must also retain their planned width and ownership and
 cannot alias a fixed port or block. These checks are qualified on detached
-rewrites; production integration and source-report preservation remain pending.
+rewrites. Preparation also keeps the canonical authored binding report records:
+for example, caller `payload` and callee `addr` retain those source names in this
+snapshot even when executable endpoints receive private physical names. The
+snapshot preserves expression text, widths, timing and domain ownership.
+Production integration and use of these source records remain pending.
 This does not enable independent direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated

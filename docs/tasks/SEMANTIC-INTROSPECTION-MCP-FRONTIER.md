@@ -1744,9 +1744,24 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Wire scoped declarations, operands and bindings while preserving source-facing reports.`
   Acceptance: `Use the qualified contexts/reservations and detached resolvers to connect physical formal identities through parent/domain/child lowering, widths/types/resets/roles, local calls and rule payload destinations. Preserve source binding names, logical state ownership and diagnostics; reject unresolved collisions. Qualify focused generated artifacts and complete native/API/MCP reports in the same implementation commit. Do not claim the separate controller/runtime repairs complete.`
+  Verification: `The binding report producer currently reads executable clause endpoints. Retain its original-source records in child .1 before switching scheduler lowering/reporting to the qualified physical pipeline in child .2. Physical storage names and authored binding identities must remain distinct; runtime/controller repairs are separate.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.1`
+  Status: `done`
+  Goal: `Retain canonical authored binding report metadata before physical projection.`
+  Acceptance: `Collect the actual source binding report producer during detached preparation, including caller expressions, callee names, widths, timing, generated/local/rule sites and domain ownership. Validate raw-shadow sources without executing a conflicting parent merge; preserve detached snapshots and compare with native public reports for admitted controls. Qualify the checked input contract extension. No production rewrite is enabled in this preparatory slice.`
+  Verification: `T1961 compares complete original records with public reports and actual domain producers, preserves caller/callee names, expression text and timing across detached physical lowering, and qualifies raw storage shadows and snapshot isolation. Complete native/API/newline schedules agree. T1959/T1960/T1957/T1243/T1241/T1255 and book fixtures/build pass. The stale partial-producer comment now points to the separate final guard; automatic integration remains child .2.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.2`
+  Status: `pending`
+  Goal: `Integrate physical formal projection and reservation coverage into production compilation.`
+  Acceptance: `Use complete prepared contexts and inventories, canonical allocation, scoped transaction/rule rewriting and final actual-module coverage in lowering and reporting. Preserve authored binding metadata, logical controller ownership and diagnostics, keep generated interfaces unchanged, and qualify native/API/newline reports plus emitted declarations for parent/domain/child and collision cases. Do not close separate execution repairs.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3938,3 +3953,38 @@ controllers, local-call runtime or the historical containment issue. Production
 integration and complete source-facing report preservation remain .49.2.2.3.3.
 The exact exhausted-parent list is retained in closed-parents.txt. Canonical
 fact/task records own the rationale without a duplicate DEVELOPMENT_NOTES entry.
+
+
+## Acceptance — authored binding report preparation `.49.2.2.3.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies 1211bd617
+  as the canonical transaction binding metadata producer introduction.
+  T1961 observes that applying the qualified physical resolver changes the
+  caller actor_signal and callee port in the current report, whereas the public
+  contract requires authored binding provenance and formatted source expressions.
+  The producer is independent of parent declaration merging; retain its original
+  source records before the production rewrite switch.
+- [x] **ADDRESSED (verified)** — prepare_formal_source retains a detached
+  transaction_binding_report_products array from that existing producer, also
+  in each actual domain preparation. The checked inventory explicitly requires
+  and classifies the new category. Complete records equal ordinary public
+  binding reports and actual local domain metadata, including local/generated/
+  rule sites, widths, scalar/output/expression endpoints, authored timing and
+  handoff/helper names. Raw storage/formal shadows retain records without a
+  parent merge while executable raw collisions still fail. The old partial
+  producer comment is corrected to reference the separate final coverage guard.
+- [x] **NO REGRESSION** — test.log and regression.log report
+  `All tests successful`; the complete cohort is T1961/T1959/T1960/T1957/
+  T1243/T1241/T1255. T1961 compares whole native/API/newline schedule reports.
+  T1376 book examples and synchronized mdBook build pass. All jobs are consumed;
+  staged doctrines and normal hook qualify this slice before commit.
+
+Evidence: `.artifacts/formal-source-binding-reports/`. Re-derivation invokes the
+same canonical producer used by ordinary reports; falsification contrasts actual
+physical endpoint reports with the unchanged source snapshot, exercises raw
+width/role refusal, local-domain ownership and snapshot mutation; durability is
+T1961, the checked preparation schema, canonical fact card and book. This private
+product does not add public report keys, switch production naming or qualify
+independent execution. Child .2 must use original source records for authored
+report provenance while keeping executable operands physical. The canonical
+fact/task records own the rationale without a duplicate ledger entry.

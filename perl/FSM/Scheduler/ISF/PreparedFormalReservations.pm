@@ -17,11 +17,13 @@ my %FIELDS = (
         parent_wiring_products pruned_transactions reusable_child_products
         transaction_products transactions)),
     resource_signal_products => 'ARRAY', domain_partition => 'optional_hash',
+    transaction_binding_report_products => 'ARRAY',
 );
 my @PARENT_PRODUCTS = qw(parent_activation_products parent_completion_products
     parent_named_completion_products parent_point_products
     parent_storage_read_products parent_storage_write_products
-    parent_wiring_products resource_signal_products transaction_products);
+    parent_wiring_products resource_signal_products transaction_products
+    transaction_binding_report_products);
 
 sub collect {
     my ($class, $prepared) = @_;

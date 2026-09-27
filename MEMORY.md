@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3` (pending)
-- next_action: Integrate qualified physical formal identities and final reservation checks into production lowering under .49.2.2.3.3 while preserving source-facing reports.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.2` (pending)
+- next_action: Integrate the qualified physical formal pipeline and final reservation checks under .49.2.2.3.3.2, consuming original binding report products without changing authored provenance.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

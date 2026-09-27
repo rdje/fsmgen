@@ -284,9 +284,12 @@ sub prepare_formal_source($self, $source_actor) {
         domain_partition => _clone_isf_value($partition),
         domain_source_products => \%domain_products,
         transactions => \%contexts,
-        # Partial producer boundary only: outer composition identities and the
-        # final integration proof remain separate. This is not a complete reservation set.
+        # Actual producer inputs for the checked reservation collector. Final
+        # executable declarations are verified separately against these scopes.
         transaction_products => \%products,
+        # Preserve authored report endpoints before physical projection. The
+        # same producer supplies ordinary executable binding report metadata.
+        transaction_binding_report_products => _clone_isf_value(_transaction_port_binding_metadata($actor)),
         # These products are not executable IR. A projected actor must pass
         # build_module, including collision checks, before any emission.
         deferred_formal_collisions => \%deferred,
