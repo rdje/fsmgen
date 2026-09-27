@@ -12,7 +12,7 @@ date: 2026-07-30
 status: current
 tags: [architecture, source-hir, hir, ial2, ppif, valid-ready, diagnostics]
 evidence: docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md; docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md; docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md; docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md; docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; docs/IR_POLICY.md; perl/FSM/IR/IntentHIR.pm; perl/FSM/IR/LoweredRTLIR.pm; perl/FSM/IR/StructuralRTLIR.pm; ppif/valid_ready_handshake.ppif
-reverify: rg -n 'FSM::IR::SourceHIR|valid_ready_handshake\.ppif|private|canonical.*PPIF|IntentHIR' docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md docs/book/src/14-feature-backlog.md
+reverify: (scripts/decision_records.py read 0028 && cat docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md docs/book/src/14-feature-backlog.md) | rg -n 'FSM::IR::SourceHIR|valid_ready_handshake\.ppif|private|canonical.*PPIF|IntentHIR'
 ---
 
 `FSMGEN-HIR-ROADMAP-FRONTIER.2` selects a distinct private

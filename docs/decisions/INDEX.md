@@ -6,6 +6,11 @@ Durable, cross-cutting facts, constraints, conventions, preferences, and
 what used to live only in harness home-dir memory (`~/.claude/.../memory/`) or be
 buried in the `MEMORY.md` blob. See `MEMORY_ARCHITECTURE.md` (layer C).
 
+Sealed records keep their original paths as forwarding pages. Follow the
+complete-record link or run `scripts/decision_records.py read 0001` from the
+repository root for exact text. Storage does not alter authority; decision
+`0108` defines retention, reconstruction and the supersession boundary.
+
 Conventions:
 - One durable fact per `NNNN-kebab-title.md`, dated, with Context/Decision/Consequences.
 - **Supersede, don't mutate**: when a fact changes, add a new record (or mark the old
@@ -121,3 +126,4 @@ Conventions:
 | [0105](0105-vial-deep-inspection-is-additive-to-frozen-summaries.md) | VIAL deep inspection is additive to frozen summaries | public API architecture | Selects typed source detail through separate portable/filesystem APIs and MCP while preserving existing summary contracts. |
 | [0106](0106-reset-polarity-is-an-explicit-system-carrier.md) | Reset polarity is an explicit system carrier | source language / semantic contract | Adds literal polarity modifiers to canonical reset forms while retaining defaults, bounded semantic fields and independent behavior qualification. |
 | [0107](0107-actor-storage-has-one-owner-across-generated-children.md) | Actor storage has one owner across generated transaction children | ISF storage / generated-module contract | Selects shared actor/domain storage with live reads and original-edge write handoffs; implementation remains owned and pending. |
+| [0108](0108-decision-records-seal-originals-with-stable-retrieval.md) | Decision originals have stable exact retrieval | architecture | Sealed originals, generated views and stable paths preserve authority while containing the live store. |

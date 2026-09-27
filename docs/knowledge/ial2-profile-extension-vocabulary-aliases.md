@@ -11,7 +11,7 @@ date: 2026-06-12
 status: current
 tags: [ial2, protocol-intent, profile-extension, vocabulary, lowering]
 evidence: docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n "profile extensions|vocabulary/profile aliases|IAL2 -> IAL1|Direct IAL2-to-IAL0" docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md
+reverify: scripts/decision_records.py read 0015 | rg -n 'profile extensions|vocabulary/profile aliases|IAL2 -> IAL1|Direct IAL2-to-IAL0'
 ---
 
 Future IAL2 may support both generic protocol/platform container extensions

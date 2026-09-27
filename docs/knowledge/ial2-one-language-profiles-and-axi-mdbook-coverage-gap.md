@@ -12,7 +12,7 @@ date: 2026-07-12
 status: current
 tags: [ial2, ppif, profile, alias, axi, ahb, apb, mdbook, coverage, architecture]
 evidence: docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0018-ial-contracts-are-backend-language-neutral.md; docs/tasks/IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/16a-ial2-axi.md; docs/book/src/16c-ial2-ahb.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; ppif/ahb_requester.ppif
-reverify: rg -n 'one architectural layer|profile|IAL2 -> IAL1|vocabulary/profile alias' docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md docs/decisions/0016-ppif-is-first-public-ial2-container.md; ls ppif/axi_*.ppif | wc -l; wc -l docs/book/src/16a-ial2-axi.md docs/book/src/16c-ial2-ahb.md
+reverify: scripts/decision_records.py read 0014 0015 0016 | rg -n 'one architectural layer|profile|IAL2 -> IAL1|vocabulary/profile alias' ; ls 'ppif/axi_*.ppif' | wc -l ; wc -l docs/book/src/16a-ial2-axi.md docs/book/src/16c-ial2-ahb.md
 ---
 
 **One language, not three dialects.** IAL2 is a single protocol/platform-intent

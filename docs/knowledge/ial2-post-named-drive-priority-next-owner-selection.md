@@ -13,7 +13,7 @@ date: 2026-07-30
 status: current
 tags: [ial2, selector, vhdl, backend, reduction, correctness, named-drive]
 evidence: docs/IAL2_POST_NAMED_DRIVE_PRIORITY_NEXT_OWNER_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md; docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; t/1420-vhdl-direct-backend-scaffold.t; t/1542-isf-rule-transaction-named-drive-priority-readiness.t
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.831|DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING\.1|\(\|drive_zero_start\)|_sv_expr_to_vhdl|ghdl|nvc|vcom' docs/IAL2_POST_NAMED_DRIVE_PRIORITY_NEXT_OWNER_SELECTION.md docs/tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm
+reverify: (scripts/decision_records.py read 0023 && cat docs/IAL2_POST_NAMED_DRIVE_PRIORITY_NEXT_OWNER_SELECTION.md docs/tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm) | rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.831|DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING\.1|\(\|drive_zero_start\)|_sv_expr_to_vhdl|ghdl|nvc|vcom'
 ---
 
 Parent selector `.831` selects proposed no-behavior audit

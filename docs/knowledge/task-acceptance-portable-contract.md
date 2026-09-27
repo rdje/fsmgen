@@ -12,7 +12,7 @@ date: 2026-07-30
 status: current
 tags: [doctrine, task-acceptance, evidence, checklist, portability]
 evidence: TASK_ACCEPTANCE.md; docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md; docs/tasks/TASK-ACCEPTANCE-PORTABLE-DOCTRINE.md
-reverify: rg -n 'change_paths.tsv|evidence_signatures.tsv|Current-Slice Freshness|ROOT CAUSE|NO REGRESSION' TASK_ACCEPTANCE.md docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md
+reverify: (scripts/decision_records.py read 0026 && cat TASK_ACCEPTANCE.md) | rg -n 'change_paths.tsv|evidence_signatures.tsv|Current-Slice Freshness|ROOT CAUSE|NO REGRESSION'
 ---
 
 Decision `0026` and `TASK_ACCEPTANCE.md` select a neutral data-driven contract.

@@ -1333,7 +1333,7 @@ For FSMGen, the analogs are:
   Verification: `The staged gate for predecessor .32.1.3.3.1.1 reports rationale at 9663 lines and rollover_debt. Registry baseline 7996 plus growth 1667 exactly reaches that current use; the collection ceiling remains 10000. Local policy forbids ordinary allowance growth on rollover debt. This is a decision-record capacity prerequisite, not a request to weaken containment.`
   Commit: `pending`
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.2`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.1`
   Status: `done`
@@ -1343,10 +1343,17 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.1: audit exact decision-record rollover`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Perform the selected atomic decision-record rollover and enforce exact retrieval.`
   Acceptance: `After .51.1, implement the bounded record reader/reconstruction checker, planted-negative tests, immutable archive/manifest, root pointers and doctrine registration in one atomic migration. Preserve record authority and exact original content separately from relocated link rendering; prove source/semantic/live/residue products, complete links and Knowledge Map closure. Record the rollover decision within the migrated capacity, derive budgets from the retained working set without an unrelated ceiling increase, update reader guidance and commit. Restore controller contract adoption only after the full gate passes.`
-  Verification: `pending`
+  Verification: `T1923 independent Git reconstruction and negative controls plus T1554 containment regression pass. Exact originals, view and reader declarations are atomic; Knowledge Map parity holds. See .51.2 evidence below for limits and separate live/residue products.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.2: seal decision originals with exact retrieval`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3`
+  Status: `pending`
+  Goal: `Contain decision identity and index cardinality before file-count rollover.`
+  Acceptance: `Activate before an added record would enter the rationale file-count rollover band. Audit stable external and generated provenance identities, select bounded identity/index partitions with exact retrieval, preserve all policy authority and record links, qualify negative navigation controls and commit without widening the file ceiling. This future warning-pressure task does not block controller contract adoption after .51.2.`
+  Verification: `Root aliases deliberately preserve file cardinality. The .51.2 line/byte rollover leaves explicit warning_debt rather than claiming every pressure dimension is normal.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
@@ -5978,3 +5985,85 @@ Falsification uses independent Git membership and exact per-record identities
 rather than totals alone. Durability is the committed census and this selected
 contract. Migration semantic closure and planted-negative enforcement remain
 explicitly missing until `.51.2`; an audit pass is not a rollover pass.
+
+## Exact decision storage migration — `.51.2`
+
+Decision `0108` adopts the audited whole-record seal. Original text is retained
+in the file-backed archive; every source digest is checked against the prior
+committed census, whose identity is pinned independently by the reader.
+The complete human view is derived from those exact originals, with relocated
+relative links and explicit record anchors. Root forwarding pages are exact
+bounded projections; the index still reaches every original identity. No
+record's policy or supersession status was selected for retirement.
+
+The live-document adapter executes the reader's default check as freshness
+verification for the generated view. A separate archive descriptor pins the
+original JSON bytes. The fixed view limits admit this one sealed cohort; the
+freshness gate prohibits additions disguised as generated output. The live
+rationale ceilings are unchanged, recovered line/byte growth allowance is
+retired, and file-count warning debt remains explicit. `.51.3` owns the next
+identity/index transition before that dimension reaches rollover.
+
+The affected Knowledge Map commands combine exact reader output with their
+remaining original sources before applying the original rg expression. Their
+fact bodies and answers are unchanged. Existing backend provenance and
+existence checks keep the same decision paths. A new retrieval fact documents
+the local read path; no map answers are removed by the storage transition.
+
+The source-identity product is the fixed census plus independent Git-byte
+comparison for every reader result. Semantic closure is complete-record text
+preservation plus unchanged authority, forwarding/index closure, relocated
+link targets and migrated body searches. Live dimensions are measured from
+the resulting root collection and bounded generated view. Loss residue is
+empty because every selected source identity is present exactly once in the
+archive and every original path is an exact forwarding projection; unselected
+originals are unchanged. These products are separate from a generic gate pass.
+
+The initial Python suite passed. The first Perl wrapper then failed before
+running tests because it called SourceQueryRunner::_capture with positional
+arguments instead of its array-reference/input contract and expected a tuple
+instead of the result hash. The wrapper was corrected after reading that
+interface; prove-final.log records the completed successful wrapper and
+containment regression. This was a new test integration error, not archive
+corruption or a product compiler failure.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies the rationale
+  collection's declared containment history (audit .51.1). Its fixed census
+  locates the saturated growth allowance and body-search consumers; moving
+  bodies without exact retrieval would break those consumers. T1923 plants
+  these failures and requires the new checker to reject them.
+- [x] **ADDRESSED (verified)** — Exact originals, bounded reader, deterministic
+  human view, forwarding pages, archive descriptor and executed projection
+  verifier implement decision `0108` atomically. The test compares every
+  public read with independent Git source bytes; archive corruption, membership
+  drift, stale views, broken routes and obsolete body searches fail closed.
+- [x] **NO REGRESSION** — .artifacts/decision-rollover/prove-final.log reports
+  All tests successful for T1923 and T1554. Before adding the retrieval card,
+  knowledge.log reports knowledge-map: OK with the same fact/answer set and
+  query parity as the preceding audit. Compiler behavior is unchanged.
+
+Re-derivation uses fixed source identities and current filesystem dimensions.
+Falsification uses per-record Git comparison and planted defects, including
+same-size text replacement, duplicate/order changes and missing destinations.
+Durability is the archive descriptor, pinned prior census, executable checker,
+regression, decision and fact card. Browser visual QA remains unavailable;
+textual navigation checks and a book build do not claim visual inspection.
+
+Final `.51.2` qualification.log passes T1923/T1414 and the mdBook build.
+All rewritten reverify commands pass `bash -n`; exact source scope and reader
+bytes are covered separately. The tracked
+`docs/audits/decision-record-rollover-result-20260927.json` retains resulting
+live dimensions, unchanged unselected identities and empty loss residue.
+The new retrieval card is the only added Knowledge Map fact; original fact
+bodies and answers retain their existing content.
+
+The initial full gate rejected an incomplete surface declaration: the generated
+view's declared route to original storage lacked its route-registry row.
+The row now names the view's existing archive-source marker as reader navigation.
+Exact reconstruction and all other doctrine checks passed in that attempt;
+the complete staged gate is rerun for the corrected atomic declaration.
+
+The corrected declaration passes the complete staged doctrine gate. A final
+staged whitespace check then found an extra blank line at the derived view's
+end; the renderer now emits one terminal newline. renderer-final.log passes
+T1923 after regeneration; exact archive originals are unchanged.

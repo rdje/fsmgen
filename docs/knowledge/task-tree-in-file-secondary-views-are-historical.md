@@ -12,7 +12,7 @@ date: 2026-07-12
 status: current
 tags: [task-tree, continuity, convention, frontier, pnt, decision-0019]
 evidence: docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md; docs/TASK_TREE.md; docs/tasks/TEMPLATE.md; docs/tasks/TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
-reverify: rg -n 'node list|sealed segments|optional historical|decision 0019|0042' docs/TASK_TREE.md docs/tasks/TEMPLATE.md docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md
+reverify: (scripts/decision_records.py read 0019 0042 && cat docs/TASK_TREE.md docs/tasks/TEMPLATE.md) | rg -n 'node list|sealed segments|optional historical|decision 0019|0042'
 ---
 
 Per decision `0019`, the **authoritative live sources** for a task tree's

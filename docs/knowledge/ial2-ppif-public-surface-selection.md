@@ -11,7 +11,7 @@ date: 2026-06-12
 status: current
 tags: [ial2, ppif, public-surface, parser, cli]
 evidence: docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/tasks/IAL2-PUBLIC-PPIF-SURFACE-SELECTION.md; docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n "\\.ppif|protocol-platform-intent|valid-ready-channel" docs/decisions/0016-ppif-is-first-public-ial2-container.md docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md docs/book/src/14-feature-backlog.md
+reverify: (scripts/decision_records.py read 0016 && cat docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md docs/book/src/14-feature-backlog.md) | rg -n '\.ppif|protocol-platform-intent|valid-ready-channel'
 ---
 
 Decision `0016` selects `.ppif` as the first public generic IAL2 file

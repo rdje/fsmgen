@@ -11,7 +11,7 @@ date: 2026-06-12
 status: current
 tags: [ial2, ppif, valid-ready, bundle, contract]
 evidence: docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md; docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md; docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md
-reverify: rg -n "valid_ready_bundle.v1|generated_ial1 =|generated_ial0 =|first channel wins|aggregate bundle" docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md docs/decisions/0017-ppif-valid-ready-bundle-contract.md
+reverify: (scripts/decision_records.py read 0017 && cat docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md) | rg -n 'valid_ready_bundle.v1|generated_ial1 =|generated_ial0 =|first channel wins|aggregate bundle'
 ---
 
 Multi-channel `.ppif` Valid-Ready support uses an aggregate bundle contract

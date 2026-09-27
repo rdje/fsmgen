@@ -10,7 +10,7 @@ date: 2026-06-14
 status: current
 tags: [ial2, architecture, protocol-platform, factoring, profiles, task-tree]
 evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0018-ial-contracts-are-backend-language-neutral.md
-reverify: rg -n 'IAL2 factoring|common semantic core|protocol/platform vocabular|profile-local|reuse across multiple profiles|0014|0015|0018' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md docs/decisions/0018-ial-contracts-are-backend-language-neutral.md
+reverify: (scripts/decision_records.py read 0014 0015 0018 && cat docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md) | rg -n 'IAL2 factoring|common semantic core|protocol/platform vocabular|profile-local|reuse across multiple profiles|0014|0015|0018'
 ---
 
 The current IAL2 factoring stance is a conservative hybrid:

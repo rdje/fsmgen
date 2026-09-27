@@ -566,12 +566,24 @@ The migration discipline remains active:
 - `.24` owns final consumer replacement and proof-based waypoint retirement;
   no new normative wording belongs in the old guide
 
-## Decision Record Storage Transition
+## Reading Sealed Decision Records
 
-Decision records remain discoverable through `docs/decisions/INDEX.md`.
-A task-owned rollover is being prepared because the current collection has
-reached its allowed growth. The selected design preserves original record
-text and authority, retains existing paths as links, and supplies exact
-per-record retrieval alongside a readable archive view. This audit does not
-move records or change their supersession status. Atomic migration and its
-preservation checks belong to `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.2`.
+Use `docs/decisions/INDEX.md` to find a decision. Sealed records keep their
+existing paths as forwarding pages to the complete readable archive entry.
+Storage does not change a record's authority or supersession status; follow
+later decisions named by the record and index when a policy has changed.
+
+For exact original text, run from the repository root:
+
+```sh
+scripts/decision_records.py read 0014
+scripts/decision_records.py read 0014 0015 | rg 'IAL2|profile'
+scripts/decision_records.py check
+```
+
+The reader uses the repository's immutable archive without requiring a Git
+history fetch. The readable view has relocated relative links; the reader
+returns the original bytes. The check rejects altered originals, stale views,
+missing forwarding/index links and obsolete Knowledge Map body searches.
+These checks run through the live-document doctrine's projection verifier.
+The archive is read on demand, not loaded as part of every session bootstrap.

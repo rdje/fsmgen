@@ -14,7 +14,7 @@ date: 2026-07-31
 status: current
 tags: [vial, hial, binding, type-relation, two-state, four-state, enum, decision-0037]
 evidence: docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/book/src/16d-hial-vial-verification-architecture.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md
-reverify: rg -n 'bit_domain_identity_v1|known_value_injection_v1|enum_encoding_injection_v1|four-state-to-two-state|vial\.binding\.directional_representation\.v1' docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/book/src/16d-hial-vial-verification-architecture.md
+reverify: (scripts/decision_records.py read 0037 && cat docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/book/src/16d-hial-vial-verification-architecture.md) | rg -n 'bit_domain_identity_v1|known_value_injection_v1|enum_encoding_injection_v1|four-state-to-two-state|vial\.binding\.directional_representation\.v1'
 ---
 
 Decision `0037` keeps VIAL semantic types and HIAL hardware carrier types

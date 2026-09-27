@@ -1,61 +1,10 @@
 # 0014 — Protocol/platform intent surface and layered lowering for IAL2
 
-- Date: 2026-06-12
-- Type: architecture
-- Status: refined by `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`; first generic suffix selected by `docs/decisions/0016-ppif-is-first-public-ial2-container.md`
+This record is sealed; its authority and supersession status are unchanged.
+[Read the complete record](history/0001-0050.md#decision-0014).
 
-## Context
+Retrieve exact original text from the repository root:
 
-IAL2 is intended to express protocol and platform intent above explicit IAL1
-actor/network scheduling. The user clarified that IAL2 must apply across
-protocol families, including AXI, CHI, ACE, AHB, APB, ATB, and future
-protocols, rather than becoming an AXI-only language surface.
-
-The user also clarified that IAL2 must not lower directly to IAL0 `.fsm`.
-IAL2 behavior must first become reviewable IAL1 `.isf`, and only then lower to
-IAL0 `.fsm`.
-
-The exact extension name is still being shaped. Current candidate directions
-are:
-
-- `.pif`: Protocol Intent Format.
-- `.ppi`: Protocol/Platform Intent.
-- `.ppif`: Protocol/Platform Intent Format.
-
-## Decision
-
-Future IAL2 must use a protocol/platform-generic file surface. This decision
-defines the generic container direction; protocol-profile extension aliases
-are addressed by decision `0015`.
-
-A future IAL2 file can declare or select a protocol vocabulary inside the file,
-but the file surface itself remains generic enough for protocol and platform
-intent across AXI, CHI, ACE, AHB, APB, ATB, and future protocols.
-
-The mandatory lowering chain is:
-
-```text
-IAL2 -> IAL1 / .isf -> IAL0 / .fsm -> HDL
+```sh
+scripts/decision_records.py read 0014
 ```
-
-Direct IAL2-to-IAL0 lowering is forbidden. Direct IAL2-to-`.fsm`
-generation is also forbidden, even as a shortcut.
-
-The exact generic extension name was left open here among `.pif`, `.ppi`,
-`.ppif`, or a future explicitly accepted generic variant. Decision `0016`
-selects `.ppif` as the first public generic IAL2 suffix.
-Protocol-profile extensions are addressed by decision `0015`.
-
-## Consequences
-
-- `.isf` remains IAL1 and should not become a mixed IAL1/IAL2 container.
-- Future IAL2 tooling must emit or preserve reviewable IAL1 before IAL0
-  exists.
-- Protocol vocabulary can be selected inside the IAL2 file, but the generic
-  extension, tooling identity, and documentation must remain
-  protocol/platform-generic. Decision `0015` later refines the model to allow
-  future protocol-profile extension aliases over the same IAL2 layer.
-- AXI manager work is one IAL2 vocabulary candidate, not a language boundary.
-- Any future implementation requires a new exact task-tree owner for parser,
-  diagnostics, lowering, emitted IAL1, emitted IAL0, reports, tests, and
-  mdBook examples.

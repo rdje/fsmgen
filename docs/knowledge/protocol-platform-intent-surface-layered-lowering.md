@@ -13,7 +13,7 @@ date: 2026-06-12
 status: current
 tags: [ial2, protocol-intent, platform-intent, layering, lowering]
 evidence: docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md; docs/tasks/IAL2-PROTOCOL-PLATFORM-SURFACE-DECISION-CAPTURE.md
-reverify: rg -n "Protocol/Platform Intent|Direct IAL2-to-IAL0 lowering is forbidden|.pif|.ppi|.ppif|0015" docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md
+reverify: scripts/decision_records.py read 0014 | rg -n 'Protocol/Platform Intent|Direct IAL2-to-IAL0 lowering is forbidden|.pif|.ppi|.ppif|0015'
 ---
 
 Future IAL2 must use a protocol/platform-generic file surface. Generic
