@@ -870,9 +870,31 @@ For FSMGen, the analogs are:
   Commit: `7ee298c6958a61ff5600c22d1de164ff23b4f6ca; runtime evidence at 85e7e9a59f2b8e382d9567036202521ce288e4f5; source/evidence reconciliation under HIAL .3.2.10.10`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Collect qualified effective writer guards and arbitration evidence.`
   Acceptance: `After .1, implement the detached activation contract from actual emitted semantics, including DT and assignment guards, state-transition context kept separately, operator exceptions and resource/priority evidence. Preserve exact invocation sources; reject unsupported or malformed evidence rather than inferring exclusion. Prove actual carrier correspondence, omission/mutation controls and full report parity before completing this guard parent.`
+  Verification: `pending`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.1`
+  Status: `done`
+  Goal: `Collect detached effective predicates for explicit state and DT assignments.`
+  Acceptance: `Mirror actual emitter placement without calling the emitter as the collector oracle. Retain tagged raw/typed guard forms, state-active or DT-header enable, assignment enable and separately labeled state-transition context. Preserve zero/one, scalar/expression/comparison forms, rule groups and all supported assignment operators; refuse malformed/ambiguous or unqualified forms rather than inferring exclusion. State decrement guards are not emitted: qualify the actual unguarded producer and refuse invented guarded forms without claiming a production defect. Compare actual lowered/emitted carriers and strict replay, independently mutate guards/enable placement, preserve detached inputs and outputs. No production attachment, admission, grant proof or supervised HDL runtime belongs here. Commit before grant/suppression integration.`
+  Verification: `WriterActivation resolves explicit assignment indexes into detached state-active/DT-header and assignment predicates, keeping state-transition context separate. It preserves raw guards and tagged truthy/comparison/always forms, validates structured expression text/AST agreement and distinguishes rule groups from suffixes. Unsupported/malformed forms and invented guarded state or DT decrements fail closed. T1973 compares actual inline samples, unconditional entry bookkeeping, latency comparisons, monitor enables, repeat decrement and false rule headers with emitted carriers and full native/carrier semantic replay. Fragment controls cover scalar/numeric/expression/comparison predicates and assignment operators without claiming each synthetic combination has an authored producer. Omitted guards independently change records and actual emitted text; returned nested records remain detached. Initial fixture corrections use documented when rather than compound on and retain the internal captured alias without an output marker. Guarded T1973/T1970/T1971 pass All tests successful, Files=3, Tests=11. No production caller or runtime invocation is added. Public sync scope: private helper/test plus book/fact/task; source syntax, lowering, HDL, public diagnostics/reports/facade/manifest and downstream integration contract remain unchanged. Resource/priority consistency and complete producer/public parity remain .2/.3.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2`
+  Status: `pending`
+  Goal: `Join actual resource, priority and invocation evidence to qualified writer predicates.`
+  Acceptance: `After .1, retain complete actual resource grants and assignment-local suppressors with exact local/generated invocation associations. Validate producer consistency and reject omitted/malformed evidence; never infer mutual exclusion from metadata or source ownership alone. Qualify priority/round-robin and both priority directions, source permutations and unchanged carriers/reports. Own any discovered emitted discrepancy before attachment.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.3`
+  Status: `pending`
+  Goal: `Qualify the complete detached activation collection and public parity.`
+  Acceptance: `After .1/.2, require complete explicit assignment coverage across actual parent/generated/domain producer families and operator/guard shapes, exact source ownership and invocation joins, stable detached products and omission/mutation controls. Compare complete native/API/newline reports and strict carrier replay. Keep emission-generated assignments and helper ownership under their explicit later owner; do not advertise a complete physical inventory until those gates pass. Any genuine HDL runtime first consumes HIAL .3.2.10.11 observation ownership.`
   Verification: `pending`
   Commit: `pending`
 
@@ -2730,7 +2752,8 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2.2.2`, detached effective writer activation collection
+`.32.1.3.3.1.3.3.2.2.3.2.2.2.2`, resource/priority/invocation evidence
+after detached effective predicate qualification
 after literal-guard repair and independently retained runtime qualification, after
 exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
@@ -4613,3 +4636,11 @@ SystemVerilog qualification before promoting guard collection or storage access.
 No retry-as-repair, host change, cutoff change or alternate uncontained execution
 was attempted. Unaffected checks were completed separately and cannot close this
 blocker. The broader containment repair exceeds this guard-emitter slice.
+
+## Acceptance — detached emitted writer predicates `.32.1.3.3.1.3.3.2.2.3.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'state_guard      => _clone_provenance_value'` identifies e32cbee6504362450be9f27f3ab060dc89bc8697 as the raw assignment-provenance introduction. Current emitter inspection and T1973 distinguish raw state context from effective assignment/DT conditions: entry bookkeeping lacks the sample guard and state decrement emission has no suffix. Raw ownership/context alone cannot prove effective activation.
+- [x] **ADDRESSED (verified)** — The detached WriterActivation helper retains separately tagged container and assignment conditions plus raw guards/AST and transition context. T1973 checks actual carrier placement and strict native/carrier semantic equality, unguarded bookkeeping, literal false headers, comparison/monitor/decrement forms, rule grouping, malformed evidence, omission changes and deep detachment. Production lowering does not call the helper.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl -It/lib t/1973-isf-writer-activation-predicates.t t/1970-isf-source-writer-owners.t t/1971-isf-drive-invocation-sources.t` reports `All tests successful`, `Files=3, Tests=11`. No supervised HDL runtime or native-failure recurrence is requested. The selected public sync scope is private evidence plus book/fact/task; grant consistency and complete API/newline parity follow under the next children.
+
+Re-derivation uses actual lowering and emitted carrier queries; falsification uses independent explicit carrier expectations, omitted guards, malformed/ambiguous/AST mismatch controls and unchanged entry bookkeeping; durability is the helper, T1973 and canonical docs/Git. The focused log is repository-local but ignored at `.artifacts/writer-activation-predicates/focused.log`; rerun the tracked tests for fresh counts. No complete physical writer inventory or independent execution is claimed.

@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2` (pending)
-- next_action: Implement the detached effective writer activation collector after reviewing actual emitter/producer contracts; split safe children first if needed.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2` (pending)
+- next_action: Join actual resource grants, assignment-local priority suppressors and exact invocation evidence to the qualified detached writer predicates.
   Before genuine supervised HDL runtime, consume HIAL .3.2.10.11 for failure-only native observation; never retry merely to seek recurrence.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.

@@ -74,7 +74,27 @@ These identities survive source ordering and module/domain realization without
 parsing generated names. A transaction-owned monitor remains a DT with its own
 guards; its source identity alone does not prove state-based mutual exclusion.
 Shared drives retain all callers. Public reports and emitted carriers keep their
-existing contract while exact activation/caller association is qualified next.
+existing contract while complete activation evidence is qualified.
+
+A detached predicate collector now separates the conditions actually emitted
+for explicit assignments. For `(when (& req allow) (sample data as captured))`,
+the sample carries the compound predicate while the entry's `can_accept`
+bookkeeping remains unconditional within that state. The entry condition stays
+separate from later transaction-body writes. DT writers retain their header
+condition and assignment condition separately; `(when 0)` remains a false
+header. Rule port guards retain their nested group placement, while latency
+comparisons and monitor expressions retain assignment suffixes.
+
+Actual repeat-counter decrements have no emitted assignment guard. The collector
+refuses invented guarded-decrement forms instead of using a dropped condition as
+exclusion evidence. It validates raw/structured predicate consistency and returns
+detached records. This helper is not attached to production admission; resource,
+priority and complete generated-writer evidence remain the following slices.
+The focused carrier and malformed-evidence checks run without HDL simulation:
+
+```sh
+scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1973-isf-writer-activation-predicates.t
+```
 
 Scope repair now has separately tested expression, clause and binding resolution. It
 keeps caller values distinct from callee formal ports, retains generated-child

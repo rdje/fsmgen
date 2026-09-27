@@ -135,3 +135,15 @@ DTs, unused drives, target-local priority guards, omitted/mutated associations,
 detached records, complete public report parity and strict exported carriers.
 Reverify with guarded prove on T1971. Emitted guard qualification follows under
 .3.2.2.3.2.2 before generated helper ownership and complete shadow attachment.
+
+WriterActivation now resolves an explicit state/DT assignment index into separate
+container and assignment predicates plus separately labeled state-transition
+context. It preserves raw guards and structured expression ASTs with consistency
+checks, literal zero/true elision, comparison forms and rule group placement.
+Entry bookkeeping does not inherit the entry condition. Actual state decrements
+remain unguarded; invented guarded state decrements and DT decrements are refused.
+T1973 independently compares real emitted carriers, strict native/carrier semantic
+products, omitted/malformed predicates, operator fragments and deep detachment.
+The helper is private and detached; it proves neither ownership nor exclusion.
+Resource/priority/invocation evidence and complete producer/public parity remain
+children .2/.3 of SEM .32.1.3.3.1.3.3.2.2.3.2.2.2. Reverify with guarded T1973.
