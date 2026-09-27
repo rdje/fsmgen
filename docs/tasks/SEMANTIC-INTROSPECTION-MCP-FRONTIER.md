@@ -1358,9 +1358,24 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Resolve transaction operands and activation endpoints through their lexical scopes.`
   Acceptance: `After .1 and parser prerequisite .4, implement typed operand and binding rewrites over explicit signal positions. Distinguish caller actuals and callee formals, generated child public formals, actor rule/drives, source state/type/member/point names, messages and specialization parameters. Cover supported clause/expression families with mutation and preservation controls. Do not use global string substitution or silently guess unknown grammar; commit the qualified resolver before production integration.`
+  Verification: `Split expression/endpoints from the normalized clause walker so each grammar boundary is independently reviewable.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.1`
+  Status: `done`
+  Goal: `Resolve typed runtime expressions and explicit caller/callee endpoints.`
+  Acceptance: `Provide a detached resolver consuming the formal identity plan and explicit lexical locals/static-symbol context. Rewrite only runtime signal roots; preserve literals, static symbols, aggregate members, state/point names and generated-child ports. Distinguish binding directions and caller actuals from callee formal identities. Qualify malformed grammar, owner/type/path controls, source isolation and every supported operator family without production integration.`
+  Verification: `T1927 passes typed caller/callee and actor scope, generated public endpoints, local/static precedence, every carrier operator family, aggregate/scalar suffixes, state/point identities, property context, malformed grammar and mutation isolation. Existing expression, binding/report, aggregate and controller regressions pass. Production remains detached.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2`
+  Status: `pending`
+  Goal: `Apply scoped resolution to normalized transaction and rule clause roles.`
+  Acceptance: `After .1, walk explicit normalized clause families using typed expression/target/endpoint methods. Preserve declaration metadata, source labels, messages, parameter overrides and actor-owned drive bodies. Rewrite named-drive actuals, inline drive pairs, temporal signal roles and nested control bodies; reject unknown grammar. Qualify parsed-source corpus and mutation controls before .49.2.2.3 integration.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6478,3 +6493,73 @@ retains its fixed general_book group owner, with sorted path legs and candidate
 order; the current parser task still owns the actual change. Keep the exact
 Perl diagnostic locus together on one acceptance line. Rerun the complete gate
 after these evidence-format corrections; no production/test behavior changed.
+
+
+## Typed scoped operand resolver — `.49.2.2.2` (in flight)
+
+Prerequisites .49.2.2.1 and .4 are committed. The resolver must consume the
+normalized parsed transaction/rule forms, preserve source-owned labels,
+transaction/callee names, type/member names, messages and specialization
+parameters, and distinguish caller actuals from callee formal endpoints.
+The eventual integration must retain original source binding metadata before
+physical renaming; inferred physical storage may expose distinct private names.
+Named drives remain actor-owned bodies, while inline drive assignments are
+transaction operand positions. Point labels and state_active identities are
+not signal operands. Unknown grammar needs a precise refusal rather than a
+recursive string replacement. Aggregate/scalar suffix and static qualified
+constant disambiguation need explicit qualification before production use.
+
+FormalIdentityPlan currently proves allocation only against source identifiers
+and the caller's supplied complete physical reservations. .3 must establish
+that completeness for generated counters, monitors, state/DT labels, handoffs
+and other declarations, including authored transaction names resembling
+private prefixes. A detached plan cannot itself prove that integration fact.
+
+## Detached expression/endpoints — `.49.2.2.2.1`
+
+FormalOperandResolver consumes the identity plan plus explicit owner/local/static
+scope sets. Only typed runtime reference roots are renamed; exact named static
+values, aggregate member spelling, state/point identities and timing metadata
+retain their roles. Operator policy is reused from the carrier. Source binding
+entries and physical entries are returned separately, with a detached callee
+identity. Generated child public names remain unchanged. The normalized clause
+walker is a separate next commit, followed by production integration.
+
+This helper is deliberately not a second semantic/type checker. It requires
+complete caller-supplied static and local context, does not validate nonformal
+reference existence or binding width/timing admission, and does not allocate
+physical names. The integration leaf retains those obligations plus explicit
+reservation completeness and authored report projection. No runtime repair or
+new public API/MCP surface is claimed from the detached helper.
+
+### Acceptance — detached expression/endpoints
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained collision.pl probe still fails
+  with `signal width for 'data' conflicts across transactions while merging 'main'`
+  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5610. The formal planner cannot
+  resolve runtime operands by itself; blind replacement would also rename
+  callee/source identities. T1927 retains that production boundary and contrasts
+  explicitly scoped caller/callee endpoints with actor, generated and static roles.
+- [x] **ADDRESSED (verified)** — T1927 passes in first.log and regression.log:
+  normalized runtime expressions rewrite matching caller roots, bindings use
+  callee identities, generated interfaces remain public, nested source data and
+  constructor contexts stay isolated, and unknown grammar fails precisely.
+  Production integration remains owned by .49.2.2.3, not closed by this helper.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  T1927/T1925/T1924/T1241/T1243/T40/T58/T283/T1262. These cover existing carrier
+  grammar, aggregate paths, controller shadow and public binding reports.
+  The synchronized book retains the runtime/scope warning; book build and
+  staged doctrine results are recorded before commit below.
+
+Claim legs: re-derive the role transformations with T1927; falsify with its
+same-spelling source roles, actor/generated scope, invalid paths/operators and
+mutation controls; durability is the checked-in helper/test, canonical scope
+card and task record. Existing API/MCP reports are covered by binding regressions;
+there is no public query change requiring a new feature corpus entry.
+DEVELOPMENT_NOTES is unchanged because these contracts belong in the canonical
+card/task and existing decision 0109. Artifact cleanup is not due: its latest
+record is 2026-09-26T19:14:38+00:00, checked at 2026-09-27T06:15:29Z.
+
+Book verification: `mdbook build docs/book` succeeds under the RAM guard with
+its destination derived from the repository root; book.log is retained beside
+regression.log. Browser visual review remains the separately owned blocker.

@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-direct`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **10** uniquely owned question entries.
+> **2** facts · **11** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -9,6 +9,7 @@
 - q="can public IAL0 decision trees express independent transaction controllers?" · facts=[isf-direct-controller-runtime-boundary](../../docs/knowledge/isf-direct-controller-runtime-boundary.md)
 - q="do different direct transactions have independent same-named formal ports?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)
 - q="how are private direct formal identities planned without changing execution?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)
+- q="how does detached expression resolution distinguish caller and callee formal names?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)
 - q="what is the runtime evidence for the direct controller repair?" · facts=[isf-direct-controller-runtime-boundary](../../docs/knowledge/isf-direct-controller-runtime-boundary.md)
 - q="what must precede direct transaction port scope repair?" · facts=[isf-direct-transaction-port-scope](../../docs/knowledge/isf-direct-transaction-port-scope.md)
 - q="why can a plain local do stall despite strict source admission?" · facts=[isf-direct-controller-runtime-boundary](../../docs/knowledge/isf-direct-controller-runtime-boundary.md)

@@ -34,6 +34,14 @@ or controller storage and does not change emitted execution. This prepares
 scoped binding and writer checks; it does not yet make sibling transactions
 concurrent or repair local calls.
 
+Scope repair now has separately tested expression and binding resolution. It
+keeps caller values distinct from callee formal ports, retains generated-child
+public ports, and preserves state names, point labels and aggregate members.
+That resolver is not connected to production lowering yet: same-name direct
+formals can still collide with actor storage or sibling formals. Clause-level
+integration and runtime qualification remain required before relying on those
+combinations.
+
 Today the task-like port model is shipped for `(ports ...)` bindings on `do`,
 `spawn`, and rule `trigger` activation sites.
 

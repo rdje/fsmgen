@@ -7,12 +7,13 @@ answers:
   - "do different direct transactions have independent same-named formal ports?"
   - "what must precede direct transaction port scope repair?"
   - "how are private direct formal identities planned without changing execution?"
+  - "how does detached expression resolution distinguish caller and callee formal names?"
   - "why do bit helpers use an actor width instead of a shadowing formal width?"
 date: 2026-09-27
 status: current
 tags: [isf, transactions, ports, scope, storage, bindings, control-flow]
-evidence: perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
+evidence: perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1927-isf-formal-operand-resolver.t t/1925-isf-formal-identity-plan.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t; rerun the tracked direct-formal-bit-width-scope parser sources before classifying the parser boundary.
 ---
 
 Generated children have separately qualified local port metadata under .49.1.
@@ -69,6 +70,31 @@ actor's same-name width. .49.2.2.4 now fixes literal formal precedence and keeps
 unresolved formal/type widths from borrowing actor widths or using placeholder
 values. The canonical [bit-helper card](isf-bit-helper-literal-width-precedence.md) and T1926
 qualify that repair separately from this still-unintegrated identity planner.
-Typed operand rewriting .2 is next; it cannot substitute for parser validation.
+Typed operand rewriting cannot substitute for parser validation.
 
-Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1.
+FormalOperandResolver adds detached expression and binding resolution over
+normalized ISF arrays, not formatted prefix strings or Lispish packed arrays.
+Its constructor requires explicit owner (undefined for actor scope), local-name
+and resolved static-symbol sets. It snapshots these and the plan; callers must
+supply complete scope facts. Exact resolved static tokens keep expression
+precedence; explicit locals shield formals. Other runtime references rename
+only a matching owner-local formal root. Type-directed aggregate paths use
+AggregatePathSupport; scalar bit/slice bounds use the formal declaration.
+Nonformal references are preserved, not checked for declaration existence.
+
+Carrier operator aliases/arity families come from ExpressionBuilder's pure
+policy methods. State-active and point leaves retain source identities; sampled
+past operands require explicit property context and keep literal depths.
+Binding records contain detached source and physical entries plus a callee
+identity/declaration. Inputs rewrite caller expressions; outputs require scalar
+caller targets. Generated endpoints retain public names. Timing syntax stays
+unchanged; admission, timing legality, width compatibility, static-symbol
+completeness and generated placement are still the caller/lowerer's obligations.
+This helper does not infer activation grants or repair runtime timing.
+
+T1927 covers role preservation, operators, aggregate suffixes, malformed grammar,
+context/source isolation and the still-failing production merge boundary.
+.49.2.2.2.2 next supplies the normalized clause walker; .49.2.2.3 must connect it
+and prove complete physical reservations and source-report preservation.
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.1.
