@@ -42,8 +42,12 @@ their executable refusals. A child with no actor write creates no handoff.
 The complete parent/child/completion/scalar-writer/schedule cohort passes,
 including existing native/API/newline report checks. This does not add a register
 cycle, new writer arbitration or new runtime qualification. The native schedule
-is unchanged by the planner extraction. Read, named-completion,
+is unchanged by the planner extraction. Named-completion,
 library-readback and outer domain namespace coverage remain later gates before
 complete reservations or automatic production formal renaming. Storage behavior
 remains canonical in [isf-generated-child-scalar-writes](isf-generated-child-scalar-writes.md).
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.1.
+
+The following reader stage now has its own shared plan, documented in
+[isf-formal-parent-read-products](isf-formal-parent-read-products.md). It reserves
+these write declarations before allocating its shared owner views.

@@ -1622,7 +1622,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Retain canonical parent storage-read handoff plans and qualify allocator scope.`
   Acceptance: `Share actual read-handoff allocation and products with source preparation after potential write products. Preserve one live owner view per storage target, exact widths/types and explicit consumer links. Qualify allocator inputs, authored block-name collisions, raw formal projection, existing write products, source isolation, strict carriers and native reports. Own and repair any demonstrated read allocator collision defect within this leaf; named completion/readback/domain stages remain later gates.`
-  Verification: `The omitted block namespace caused a proven lost rule guard; .1 repairs and qualifies it through _reserved_names. Next .2 retains actual reader plans against the corrected namespace, then .3 resolves the separately reproduced backend keyword defect.`
+  Verification: `The omitted block namespace caused a proven lost rule guard; .1 repairs and qualifies it through _reserved_names. The actual reader plans are retained and qualified by .2 against the corrected namespace. Next .3 resolves the separately reproduced backend keyword defect.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.3`
   Commit: `children below`
 
@@ -1641,11 +1641,11 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Retain actual parent read handoff declaration plans after allocator repair.`
   Acceptance: `Share the corrected production read allocation/product boundary with source preparation after potential write products; retain live shared views, widths/types and typed storage/consumer links. Qualify source/physical plans, collisions, isolation and strict/report parity without altering writer admission.`
-  Verification: `Canonical block-name collision repair is owned by .1 and must commit before extracting the reader planner.`
-  Commit: `pending`
+  Verification: `T1951 compares complete actual read allocation inputs and installed ports/types/DTs/storage identities/consumer links before and after formal projection. Scalar, typed aggregate, selected bank, shared readers, read/write ordering, portable formal/fixed/rule collisions, raw ownership refusal and detached snapshots pass. Before inventory omission is repaired; native schedule before/after is byte-identical. The complete T1951/T1950/T1949/T1946/T1255 cohort passes with independent guard/read/reset runtime enabled; book fixtures and build pass.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2`
   Status: `pending`
@@ -3351,3 +3351,39 @@ classified as resolved by these passing controls.
 The first closure doctrine run correctly rejected reuse of the implementation
 aggregate-change authority ID. The closure uses a fresh qualification authority
 and recomputed HEAD-relative measurements; no size ceiling is raised.
+
+## Acceptance — parent storage-read plans `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — actual `--emit-schedule-json` succeeds
+  for legal-collision.isf, while read-product-probe.pl's planner-before.json
+  reports isf_storage_read_value_reg_storage_read missing from prepared
+  products. connect_child_storage_reads previously allocated this real output
+  only after write connections; prepare_formal_source could not reserve it.
+- [x] **ADDRESSED (verified)** — share plan_child_storage_read_handoffs with
+  executable connection and preparation after completion/write declarations.
+  planner-after.json has no missing read handoff. T1951 compares complete
+  actual allocation inputs and installed ports/types/DTs/links against detached
+  source and projected products. Typed actor/storage identities, shared
+  readers, scalar/alias/record/list/selected-bank and read/write cases retain
+  strict carriers. Portable formal/fixed/rule collisions preserve reservations;
+  raw storage-role conflicts still fail executable admission. Caller inputs,
+  source and child/write snapshots remain detached; absent reads stay absent.
+- [x] **NO REGRESSION** — planner-qualified.log reports `All tests successful`
+  for T1951. planner-schedule-before.json and planner-schedule-after.json are
+  byte-identical. The complete T1951/T1950/T1949/T1946/T1255 cohort in
+  planner-regression.log reports All tests successful, including non-skipped
+  independent guard/read/reset execution. T1376 book fixtures and
+  the synchronized book build pass; staged doctrine and hook gates remain.
+
+Evidence: `.artifacts/formal-parent-read-products/`. Re-derivation observes the
+actual production planner and installed parent interface plus public schedule;
+falsification uses the missing before-name, actual portable reallocations,
+raw ownership refusals, empty reads and snapshot mutations; durability is
+T1951, the formal-read-products card, book and this task. The first planner-test
+control assigned a non-pulse rule to the transaction's pulse done output;
+strict checking correctly returned FSMGEN_LANGUAGE_MIXED_PULSE_ASSIGNMENT_FAMILY.
+The rule control now uses an independent flag output. No production diagnostic
+or assignment contract changed. No new production formal rewriting, writer
+admission or extra storage cycle is claimed. Named-completion/readback/domain
+coverage remains later; .1.3 owns the separate keyword compiler defect.
+No duplicate DEVELOPMENT_NOTES rationale is needed.

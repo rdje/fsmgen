@@ -98,8 +98,16 @@ identity even if an authored name forces its parent data handoff to use a
 suffix. Normal compilation applies the same plan only after checking writer
 ownership; a collected plan does not admit competing parent or child writers.
 Existing scalar-writer checks preserve native, API and MCP report agreement.
-Storage-read, named-completion and library-readback connections, plus outer
-domain composition, still need coverage before the inventory is complete. It does not enable independent direct-transaction storage yet.
+Storage-read planning also retains the actual shared owner output, type alias,
+combinational read DT and explicit consumer links. For example, separate worker
+instances reading `value_reg` share a live view identified by actor and storage;
+its generated name remains distinct from an authored rule with the same desired
+helper name. Reader allocation follows completion and write-handoff allocation,
+so those declarations are reserved too. The retained plan is detached from child
+and write products and preserves scalar, packed aggregate and selected bank
+reads through formal projection. Named-completion and library-readback
+connections, plus outer domain composition, still need coverage before the
+inventory is complete. It does not enable independent direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both

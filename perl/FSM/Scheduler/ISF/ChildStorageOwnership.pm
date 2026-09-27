@@ -10,7 +10,7 @@ use FSM::Adapter::ISF::LispishAdapter;
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
-our @EXPORT_OK = qw(prepare_child_storage_writes connect_child_storage_writes plan_child_storage_write_handoffs select_child_storage_reads connect_child_storage_reads);
+our @EXPORT_OK = qw(prepare_child_storage_writes connect_child_storage_writes plan_child_storage_write_handoffs select_child_storage_reads connect_child_storage_reads plan_child_storage_read_handoffs);
 
 # Inspect only emitted operands. Names of states, transactions, messages and
 # provenance records are not signal reads. Lispish's public adapter recovers
@@ -252,30 +252,55 @@ sub select_child_storage_reads {
 
 sub connect_child_storage_reads {
     my ($parent, $children) = @_;
-    my $reserved = _reserved_names($parent);
-    my %handoffs;
+    my $products = plan_child_storage_read_handoffs($parent->{actor_name},
+        $parent->{spawn_instances} || [], $children, _reserved_names($parent));
+    push @{$parent->{ports}}, @{$products->{ports}};
+    push @{$parent->{dt_blocks}}, @{$products->{dt_blocks}};
+    $parent->{signal_type_refs}{$_} = $products->{signal_type_refs}{$_}
+        for keys %{$products->{signal_type_refs}};
     for my $spawn (@{$parent->{spawn_instances} || []}) {
+        my $record = $products->{instances}{$spawn->{instance}} || next;
+        $spawn->{actor_storage_reads} = $record->{links};
+    }
+    return scalar keys %{$products->{storage}};
+}
+
+# Retain the actual shared owner views and consumer links without constructing
+# an executable parent from unallocated formal declarations.
+sub plan_child_storage_read_handoffs {
+    my ($actor_name, $instances, $children, $input_names) = @_;
+    my %reserved = %$input_names;
+    my $products = {
+        input_names => {%reserved}, ports => [], signal_type_refs => {},
+        dt_blocks => [], storage => {}, instances => {},
+    };
+    for my $spawn (@$instances) {
         my $child = $children->{$spawn->{child}} || next;
         my @links;
         for my $signal (@{$child->{actor_storage_reads} || []}) {
             my $name = $signal->{name};
-            if (!exists $handoffs{$name}) {
+            if (!exists $products->{storage}{$name}) {
                 my $port = FSM::Support::HDLInstanceIdentifierPolicy->allocate_generated_instance_identifier(
-                    desired => "isf_storage_read_$name", role => 'storage_read', reserved => $reserved,
+                    desired => "isf_storage_read_$name", role => 'storage_read', reserved => \%reserved,
                 );
-                $handoffs{$name} = $port;
-                push @{$parent->{ports}}, { name => $port, direction => 'output', width => $signal->{width}, isf_handoff => 1 };
-                $parent->{signal_type_refs}{$port} = $signal->{type} if defined $signal->{type};
-                push @{$parent->{dt_blocks}}, {
+                $products->{storage}{$name} = {
+                    identity => ['actor_storage_read', $actor_name, $name],
+                    parent_port => $port,
+                };
+                push @{$products->{ports}}, { name => $port, direction => 'output', width => $signal->{width}, isf_handoff => 1 };
+                $products->{signal_type_refs}{$port} = $signal->{type} if defined $signal->{type};
+                push @{$products->{dt_blocks}}, {
                     name => $port, kind => 'actor_storage_read_handoff',
                     assignments => [{ lhs => $port, rhs => $name, op => '=', source_kind => 'actor_storage_read_handoff' }],
                 };
             }
-            push @links, { parent_port => $handoffs{$name}, child_port => $name };
+            push @links, { parent_port => $products->{storage}{$name}{parent_port}, child_port => $name };
         }
-        $spawn->{actor_storage_reads} = \@links if @links;
+        $products->{instances}{$spawn->{instance}} = {
+            child => $spawn->{child}, links => \@links,
+        } if @links;
     }
-    return scalar keys %handoffs;
+    return $products;
 }
 
 1;

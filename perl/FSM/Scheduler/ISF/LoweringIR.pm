@@ -16,7 +16,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
 );
 use FSM::Scheduler::ISF::ControlFlowEffects;
 use FSM::Scheduler::ISF::LogicalControllers;
-use FSM::Scheduler::ISF::ChildStorageOwnership qw(prepare_child_storage_writes connect_child_storage_writes plan_child_storage_write_handoffs select_child_storage_reads connect_child_storage_reads);
+use FSM::Scheduler::ISF::ChildStorageOwnership qw(prepare_child_storage_writes connect_child_storage_writes plan_child_storage_write_handoffs select_child_storage_reads connect_child_storage_reads plan_child_storage_read_handoffs);
 use FSM::Scheduler::ISF::ChildActivation qw(guard_child_activation);
 use FSM::Scheduler::ISF::LibraryPortOwnership qw(connect_library_output_readbacks);
 use FSM::Scheduler::ISF::ChildCompletionOutputs qw(prepare_child_completion_outputs connect_child_completion_outputs);
@@ -246,6 +246,14 @@ sub prepare_formal_source($self, $source_actor) {
     my %connection_names = (%$declaration_names,
         map { $_ => 1 } keys %{$completion_products->{signal_widths}},
             map { $_->{name} } @{$completion_products->{dt_blocks}});
+    my $write_products = plan_child_storage_write_handoffs(
+        $actor->{actor_name}, $activation_products->{spawn_instances},
+        $child_products->{children}, \%connection_names);
+    $connection_names{$_} = 1 for keys %{$write_products->{signal_widths}},
+        map { $_->{name} } @{$write_products->{dt_blocks}};
+    my $read_products = plan_child_storage_read_handoffs(
+        $actor->{actor_name}, $activation_products->{spawn_instances},
+        $child_products->{children}, \%connection_names);
     return {
         actor => $actor,
         generated_children => { %$generated },
@@ -263,9 +271,8 @@ sub prepare_formal_source($self, $source_actor) {
         parent_point_products => $point_products,
         resource_signal_products => $resource_products,
         parent_completion_products => $completion_products,
-        parent_storage_write_products => _clone_isf_value(plan_child_storage_write_handoffs(
-            $actor->{actor_name}, $activation_products->{spawn_instances},
-            $child_products->{children}, \%connection_names)),
+        parent_storage_write_products => _clone_isf_value($write_products),
+        parent_storage_read_products => _clone_isf_value($read_products),
         # Real children have independent module scopes. Detach both retained
         # views; parent ownership connections and outer domains remain separate.
         generated_child_products => _clone_isf_value({
