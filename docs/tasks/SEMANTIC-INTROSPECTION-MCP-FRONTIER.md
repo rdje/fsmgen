@@ -1462,10 +1462,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve helper source identities and close child/domain producer coverage.`
   Acceptance: `Retain authored helper identity inputs independently from physical formal endpoints; qualify rule payload naming and generated child storage/completion/library/ATL/domain producer names. Address pre-allocation validation collisions with generated helpers without weakening source admission. Use actual producer outputs, preserve generated public interfaces and avoid treating source-conflicting merged IR as executable output. Split further only for independently reviewable implementation boundaries.`
-  Verification: `Rule payload names currently incorporate binding port spellings; monitor admission checks raw formal/actor names before formal allocation. Full coverage and stable post-rewrite helper identity are not yet proved.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3`
   Commit: `children below`
 
@@ -1484,10 +1484,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Close remaining actual module child and domain reservation producers.`
   Acceptance: `Cover local/external activation wiring, priority/resource processing, generated child storage/completion, library/ATL and domain realization using actual producer outputs and stable source/physical projections. Preserve raw conflict refusals in executable lowering and do not infer physical names from guessed patterns. Qualify representative real declarations and separate namespaces before the final completeness gate .3.2.2.3.`
-  Verification: `Transaction and parent activation/rule/shared-drive products are qualified; these later producer phases remain uncovered.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2`
   Commit: `children below`
 
@@ -1499,10 +1499,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Close priority resource child ownership library ATL and final domain producers.`
   Acceptance: `Retain actual later module priority/resource products, generated child storage/completion connections, library/ATL and domain realization identities with stable source/physical projections. Preserve strict executable admission; split independently reviewable producer boundaries as needed before complete gate .3.2.2.3.`
-  Verification: `Local/external activation wiring is owned separately by .1; remaining phases are still uncovered.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2`
   Commit: `children below`
 
@@ -1514,10 +1514,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Close arbitration child ownership and final composition reservation coverage.`
   Acceptance: `Qualify actual priority/resource products, child storage/completion connections, library/ATL and final domain realization identities with stable source/physical projections. Preserve executable admission and explicit separate namespaces; split producer boundaries when warranted before complete gate .3.2.2.3.`
-  Verification: `Parent point/default processing is separately owned by .1; later phases remain uncovered.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2`
   Commit: `children below`
 
@@ -1529,10 +1529,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify remaining priority/grant child ownership and final composition coverage.`
   Acceptance: `Complete actual priority/grant product coverage and child storage/completion, library/ATL and final domain realization names with stable source/physical projections. Preserve strict executable admission, distinct scopes and the final fail-closed completeness gate .3.2.2.3; split remaining producer boundaries as needed.`
-  Verification: `Resource declaration products are separately owned by .1; grant/priority processing and child/final composition remain open.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2`
   Commit: `children below`
 
@@ -1544,10 +1544,10 @@ For FSMGen, the analogs are:
   Commit: `b5990b98a implementation; this slice consumes qualification`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Close grant/priority parent-child connection and library ATL domain reservation coverage.`
   Acceptance: `Qualify actual later grant/priority products, parent storage/completion connections and library/ATL/final domain realization names with stable source/physical projections. Retain strict executable admission, distinct scopes and complete gate .3.2.2.3; split remaining producer boundaries as needed.`
-  Verification: `Independent generated child products are owned by .1; parent connection, grant/priority and final composition phases remain uncovered.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2`
   Commit: `children below`
 
@@ -1559,10 +1559,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Close remaining grant/priority parent storage and final composition reservations.`
   Acceptance: `Qualify actual grant/priority products, parent storage/named-completion connections, library/ATL and final domain realization names with source/physical provenance. Preserve strict executable admission and separate namespaces before complete gate .3.2.2.3; split remaining producer boundaries as needed.`
-  Verification: `Parent retained-completion products are owned by .1; other parent connections, grant/priority and final composition remain uncovered.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.3`
   Commit: `children below`
 
@@ -1581,10 +1581,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Close remaining parent connection grant and outer domain reservations.`
   Acceptance: `Retain actual parent storage/named-completion/readback connections and grant/priority products with typed scoped identities; qualify outer domain realization before complete reservation integration. Split producer and admission boundaries safely without fabricating executable raw parent widths.`
-  Verification: `Independent reusable child coverage is owned by .1; parent connection and final domain integration remain uncovered.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2`
   Commit: `children below`
 
@@ -1596,10 +1596,10 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain parent ownership connections and outer domain declaration products.`
   Acceptance: `Collect real parent storage-write/read, named-completion/readback and outer domain realization names with typed ownership and stable source/physical correspondence before complete reservation integration. Keep raw conflicts distinct and executable validation strict; split bounded producer boundaries as needed.`
-  Verification: `Resource/priority/finalization declaration coverage is owned by .1; parent connections and outer domain names remain the next uncovered producers.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2`
   Commit: `children below`
 
@@ -1611,10 +1611,10 @@ For FSMGen, the analogs are:
   Commit: `461d851a9 implementation; this slice consumes qualification`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain remaining parent read completion readback and outer domain products.`
   Acceptance: `Collect canonical storage-read and named-completion handoffs after write declarations, qualify library-readback namespace preservation and outer domain realization, then complete the reservation integration gate. Preserve source/physical ownership and strict validation.`
-  Verification: `Parent write declaration products are owned by .1; the following connection and domain stages remain uncovered.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2`
   Commit: `children below`
 
@@ -1649,10 +1649,10 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain named-completion readback and outer domain reservation products.`
   Acceptance: `Collect actual named-completion declaration plans after storage connections, qualify library-readback declaration preservation and outer domain realization, then complete the reservation integration gate without weakening executable ownership or report contracts.`
-  Verification: `Storage-read products and allocator scope are closed by sibling .1. Named-completion child .1 and library-readback child .2 are qualified; next child .3 verifies outer-domain realization.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3`
   Commit: `children below`
 
@@ -1671,10 +1671,10 @@ For FSMGen, the analogs are:
   Commit: `8ca4fe501; qualification closure in this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify outer-domain declaration realization before complete reservation integration.`
   Acceptance: `Trace actual domain-specific parent/child/CDC/top realization against prepared products and source identities. Own any missing producer before declaring reservation coverage complete; preserve domain and public report contracts.`
-  Verification: `Domain chapter retains stale refusal/deferred prose from initial artifact realization. Child .1 repairs this observed documentation defect; child .2 next audits actual domain declarations; no whole-namespace completeness claim yet.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2`
   Commit: `children below`
 
@@ -1686,10 +1686,10 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify actual domain source shells, local products and outer identities.`
   Acceptance: `Observe real domain-specific parent/child/CDC/top realization against prepared products, retain missing canonical producers before complete reservation integration, and preserve strict/native/API/MCP contracts without fabricated parent merges.`
-  Verification: `Public activation lowering succeeds, but activation-before.json shows missing caller ready/request states and ready port, plus callee idle/ready/request declarations. Ordinary event fixtures show no omission. Own actual per-domain preparation under child .1 before outer namespace child .2; integration child .3 follows. A stale parser-test support comment is repaired under child .4.`
+  Verification: `All declared child producer leaves are complete and verified in their evidence below. Actual transaction, rule, wiring, point, resource, child, ownership, readback and domain products are qualified; global fail-closed completeness remains the independently pending .49.2.2.3.2.2.3 integration gate.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.4`
   Commit: `children below`
 
@@ -1715,11 +1715,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Correct stale activation parser-test support commentary.`
   Acceptance: `Align T1386 header with its actual unused-crossing refusal and T1387 supported used-crossing contract; run both focused tests without changing admission.`
-  Verification: `The header still says every well-formed activation crossing fails because routing has not shipped. Its actual test now rejects only unused crossings, and T1387 covers supported routing. Low-priority documentation defect scheduled after domain producer qualification.`
-  Commit: `pending`
+  Verification: `git log -S identifies 13cbceeb6 as the integration change that updated the unused-crossing test while retaining the obsolete header. The corrected header distinguishes malformed, unused and supported used crossings. T1386/T1387 pass; no source admission or test assertion changed.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
   Status: `pending`
@@ -3830,3 +3830,28 @@ changed production admission. The global fail-closed reservation contract and
 automatic production formal rewrite remain subsequent leaves. Existing
 watchdog/local-call/containment issues remain separately owned. Engineering
 rationale is owned by the canonical card; no duplicate ledger entry is needed.
+
+
+## Acceptance — activation test commentary and producer closure `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.4`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies 13cbceeb6,
+  which replaced T1386's blanket lowering refusal with the unused-crossing
+  diagnostic but left the file header claiming all routing was deferred.
+  The actual supported handshake is exercised by T1387 and documented in 13a.
+- [x] **ADDRESSED (verified)** — the header now distinguishes parsing,
+  unused-crossing refusal and supported start/done CDC lowering. The book
+  clarifies that declaration alone creates no activation. No assertion or
+  admission code changed. Close only producer ancestors whose declared children
+  are all done; leave the separate global completeness integration leaf open.
+- [x] **NO REGRESSION** — tests.log reports `All tests successful` for
+  T1386/T1387. This comment-only test change preserves every executable test
+  statement; the book adds explanatory prose only. Staged doctrines and the
+  normal hook verify task-tree closure and documentation consistency.
+
+Evidence: `.artifacts/activation-header/tests.log`; exact ancestor closure list
+in `.artifacts/activation-header/closed-parents.txt`. Re-derivation joins the
+introducing Git diff and current tests; falsification retains malformed and
+unused refusal controls beside supported handshake lowering; durability is the
+corrected test header, book and task frontier. No fresh runtime, full-CI or
+complete-production-reservation claim is made. Existing child evidence remains
+in place; parent closure does not widen any individual qualification boundary.

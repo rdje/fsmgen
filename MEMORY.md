@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2` (active)
-- next_action: Correct the stale activation parser-test header under .49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.4, then close exhausted domain reservation parents and qualify the global completeness contract.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3` (pending)
+- next_action: Qualify the global fail-closed formal reservation completeness contract under .49.2.2.3.2.2.3 before wiring production formal renaming.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

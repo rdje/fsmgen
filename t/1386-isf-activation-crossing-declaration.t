@@ -10,12 +10,11 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 
-# Locks ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.2: the new
-# `(crossings (activation child (from SRC) (to DEST)))` declaration parses and
-# is structurally validated, malformed forms are rejected at parse, and a
-# well-formed declaration FAILS CLOSED at lowering ("not yet supported") because
-# the CDC routing of the activation start/done handshake ships in `.3`
-# (parser-acceptance != support). Existing event crossings are unaffected.
+# Locks activation-crossing declaration parsing and structural validation.
+# Malformed declarations fail at parse; a valid but unused crossing fails at
+# lowering because it owns no real cross-domain activation. Used crossings
+# lower through the start/done CDC handshake (covered end-to-end in t/1387).
+# Existing event-crossing declaration behavior remains covered below.
 
 sub parse_only {
     my ($src) = @_;

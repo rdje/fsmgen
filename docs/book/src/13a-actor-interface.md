@@ -359,7 +359,9 @@ boundaries are deliberate: a cross-domain `(do child)` with **no** covering acti
 crossing is rejected; a **declared-but-unused** crossing (one whose `child` no
 transaction actually `(do)`es) or one whose `child` is not in the declared
 destination domain is rejected; and cross-domain `(spawn)` plus deeper cross-domain
-`(do)` placements beyond those shipped contexts remain deferred.
+`(do)` placements beyond those shipped contexts remain deferred. Declaring a
+crossing alone creates no activation: a supported source-domain `(do child)`
+must use it.
 
 Normal `?rtl` children still need externally supplied RTL; FSMGen does not
 invent module internals from a matching port list. When the marker is present,
