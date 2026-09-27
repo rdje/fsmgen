@@ -69,9 +69,9 @@ identities and public ports through generated/reused children, library/empty
 siblings, event/activation crossings, reset absence, keyword/case domains and
 real public-pin/module collisions. Outer names belong to separate composition
 or module scopes; no extra local reservation producer is needed for this stage.
-Complete reservation integration remains a later gate. The initial focused
-qualification passes; broader naming/runtime/public-report results are owned
-by the active task until consumed.
+Complete reservation integration remains a later gate. The complete focused,
+domain-source, naming, reusable-product and schedule cohort passes, including
+independent naming/CDC runtime and complete native/API/newline reports.
 
 Multi-domain ATL event composition is an explicit refusal control: canonical
 parsing reports that ATL actor event waits require a single-clock actor in the

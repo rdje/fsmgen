@@ -1701,11 +1701,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain or prove outer domain composition identity reservations.`
   Acceptance: `Cover actual module/file/flat-instance/wiring/CDC declaration namespaces from domain realization and top emission using canonical producers. Keep separate module scopes and logical/public identities explicit; no fabricated parent execution.`
-  Verification: `T1956 observes exact outer FSM/CDC/interface/wiring/file identities from actual realization, unchanged complete local IR across materialization/top emission, local declaration coverage and stable public ports/outer identities after formal projection. Generated/reused/library/empty siblings, event/activation/no-reset, portable domain and actual pin/module collision controls pass. Multi-domain ATL event composition is canonically refused. No additional local producer is needed; naming/runtime/report cohort remains pending.`
-  Commit: `pending`
+  Verification: `T1956 observes exact outer FSM/CDC/interface/wiring/file identities from actual realization, unchanged complete local IR across materialization/top emission, local declaration coverage and stable public ports/outer identities after formal projection. Generated/reused/library/empty siblings, event/activation/no-reset, portable domain and actual pin/module collision controls pass. Multi-domain ATL event composition is canonically refused. No additional local producer is needed. The complete T1956/T1955/T1895/T1947/T1255 cohort passes, including independent naming/CDC runtime and complete native/API/newline reports. All jobs are consumed.`
+  Commit: `fc19fb1f5; qualification closure in this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.3`
   Status: `pending`
@@ -3756,3 +3756,25 @@ positive exploration reached the existing parser single-clock refusal; the
 final test locks that boundary instead of widening support or claiming ATL
 runtime qualification. Complete domain reservation integration remains child
 .3. DEVELOPMENT_NOTES needs no duplicate of the scoped naming contract.
+
+## Acceptance — outer scope qualification closure `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2.3.2.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies fc19fb1f5 as
+  the commit retaining the pending naming/runtime/reusable/report cohort.
+  regression.log now reports All tests successful for every selected file;
+  retaining the pending pointer would strand the next domain integration leaf.
+- [x] **ADDRESSED (verified)** — consume the full T1956/T1955/T1895/T1947/
+  T1255 result, close outer-scope qualification and advance the durable resume
+  action. T1895 includes independently observed CDC/reset behavior and complete
+  native/API/newline identity reports. No background result remains, and no
+  implementation or test changed after those runs.
+- [x] **NO REGRESSION** — regression.log reports `All tests successful` for
+  the complete selected cohort with qualified runtime enabled. T1376 and the
+  existing synchronized build cover the unchanged book. Fresh staged doctrine
+  and normal hook cover this evidence-only closure.
+
+Evidence: `.artifacts/formal-domain-outer/`. Re-derivation consumes actual
+cohort outputs; falsification includes real namespace collisions, case-safe
+materialization, public-only HDL oracles and explicit ATL refusal; durability
+is T1956/T1895 and the canonical naming card/task. This does not close domain
+integration or the separately owned watchdog/local-call/containment issues.
