@@ -80,9 +80,15 @@ receive a suffix. Renaming a colliding formal may free the helper's base name;
 its instance identity remains the same. Detached join products include the
 rewritten completion views in dynamic-wait guards, and retain raw done metadata.
 Declaration-name inputs remain separate from unallocated formal widths.
-The inventory is still partial: later priority/grant processing,
-parent storage/completion connections, library/ATL and final domain composition
-need coverage. It does not enable independent direct-transaction storage yet.
+Preparation also retains independently built reusable-library and resolved ATL
+children, their explicit bindings and origin, and the selected ATL child-interface
+records. The same producer performs module-conflict checks and supported
+composition selection in normal compilation. For example, a FIFO use retains
+its bound parameters and child bank operations, while a resolved ATL data route
+retains the actual child endpoint ports. These modules keep their own scope
+through parent formal rewriting. The inventory is still partial: later
+priority/grant processing, parent storage/completion/readback connections and
+outer domain composition need coverage. It does not enable independent direct-transaction storage yet.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both

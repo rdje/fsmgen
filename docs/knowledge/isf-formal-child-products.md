@@ -39,8 +39,9 @@ pruned-body controls retain their existing boundaries. A set-bit negative-contro
 assumption was corrected by inspecting normalized source: it is a whole-word
 read/modify/write and uses the qualified full-width handoff, not a partial LHS.
 
-Parent connection names, grant/priority processing, library/ATL children and
-outer domain realization still need separate coverage before complete
+Reusable library and resolved ATL children now have [separate retained products](isf-formal-reusable-products.md).
+Parent connection names, grant/priority processing and outer domain realization
+still need separate coverage before complete
 reservations or automatic production renaming can be claimed. This adds no new
 controller or storage runtime qualification. See the [scope contract](isf-direct-transaction-port-scope.md).
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.1.

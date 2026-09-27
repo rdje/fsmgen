@@ -1559,10 +1559,32 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Close remaining grant/priority parent storage and final composition reservations.`
   Acceptance: `Qualify actual grant/priority products, parent storage/named-completion connections, library/ATL and final domain realization names with source/physical provenance. Preserve strict executable admission and separate namespaces before complete gate .3.2.2.3; split remaining producer boundaries as needed.`
   Verification: `Parent retained-completion products are owned by .1; other parent connections, grant/priority and final composition remain uncovered.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.3`
+  Commit: `children below`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.1`
+  Status: `done`
+  Goal: `Retain actual reusable library and resolved ATL child products.`
+  Acceptance: `Share real independent child construction and composition selection with executable builds, preserving canonical module conflicts, origin and port metadata. Keep children detached from source and parent formal widths; qualify source/physical products, bound parameters, storage and ATL data interfaces, strict carriers and unchanged public schedules. Parent connections and outer domain names remain later gates.`
+  Verification: `T1947/T1945 and the source/completion/library/ATL/schedule cohort pass; full real child and composition products agree before/after formal projection, strict carriers pass, native ATL schedule is byte-identical and book checks pass. Evidence: .artifacts/formal-reusable-products/.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.3`
+  Status: `pending`
+  Goal: `Reconcile stale ATL resolution and composition book summaries.`
+  Acceptance: `Remove contradictions between the actor-type-resolution introduction and the shipped resolved-child/multi-child/data-route sections, grounded in actual supported fixtures and contracts. Preserve explicit unsupported composition/runtime boundaries. Run book fixture/build checks.`
+  Verification: `Priority medium documentation defect: docs/book/src/13f-composition.md around lines 1220-1280 calls qualified ATL resolution future/backlog and multi-child/data-route tops unavailable immediately before and after documenting shipped resolution. T1330 and current ATL fixtures cover those later subsets. Reproduce by reading that section together with Generated-Child Top Data Routes; readers receive contradictory support guidance. Fix immediately after .1 commits, before remaining producer work.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Close remaining parent connection grant and outer domain reservations.`
+  Acceptance: `Retain actual parent storage/named-completion/readback connections and grant/priority products with typed scoped identities; qualify outer domain realization before complete reservation integration. Split producer and admission boundaries safely without fabricating executable raw parent widths.`
+  Verification: `Independent reusable child coverage is owned by .1; parent connection and final domain integration remain uncovered.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3`
@@ -3029,3 +3051,45 @@ Public reports and completion behavior remain unchanged; no new HDL runtime
 qualification or complete namespace/production formal rewriting is claimed.
 Parent storage/named-completion connections, grants/priority and library/ATL/domain
 composition remain owned by .2. DEVELOPMENT_NOTES needs no duplicate rationale.
+
+## Acceptance — reusable child products `.49.2.2.3.2.2.2.3.2.2.2.2.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — native `--emit-schedule-json` of the
+  resolved ATL fixture exposes the real child module and composition. before.json
+  independently inventories executable library and ATL child declarations and
+  finds FIFO DT/state helpers and ATL process states absent from earlier source
+  preparation products. build_module constructs these modules before its parent
+  merge, but preparation previously collected only generated transaction children.
+- [x] **ADDRESSED (verified)** — _build_module_child_products now shares the
+  exact production construction order, conflict checks, library metadata, ATL
+  selection and child-interface marking. Preparation calls it on a separate actor
+  clone and retains distinct detached generated/reusable views. after.json has
+  no missing declarations in the same probe. T1947 compares complete actual
+  reusable children and composition records before/after formal projection for
+  FIFO, resolved ATL trigger/event, vector ingress/egress, actor-to-actor data
+  and trigger batches. Mixed generated/library modules, bound parameters,
+  storage/bank products, strict carriers, source/mutation isolation and raw
+  parent width conflicts pass. Canonical missing-module/shell, cross-kind module
+  conflict, unsupported ATL group and unresolved-external controls are retained.
+- [x] **NO REGRESSION** — qualified.log reports `All tests successful` for
+  T1947 and T1945. The native ATL schedule before/after files compare byte-identically.
+  book-fixtures.log passes the runnable example audit and book.log builds the
+  synchronized guidance. Completed regression.log reports All tests successful
+  for T1947, T1936, T1946, T1231, T1330 and T1255; no new runtime opt-in is
+  inferred. Staged doctrine and commit hook run for this implementation.
+
+Evidence: `.artifacts/formal-reusable-products/`. Initial test.log records a
+control-fixture error: the added raw direct payload formal aliases the authored
+ATL ingress payload pin, and executable parent lowering correctly rejects it.
+The control now uses local_delay; dedicated raw conflict cases keep the strict
+boundary. This is not a production regression. qualified.log passes both new
+reusable and existing generated child product tests. Native ATL schedule
+atl-before.json/atl-after.json compare byte-identically.
+Re-derivation uses native schedules and complete actual child/metadata equality;
+falsification uses old inventory omissions, raw parent conflict, invalid module
+and composition inputs, mutation and strict replay; durability is T1947, the
+reusable-products card, book and this task. Parent connection/grant and outer
+domain completeness remain .2; no new runtime qualification is claimed.
+A separately owned documentation defect in stale ATL support summaries is .3,
+scheduled immediately after this slice commits. DEVELOPMENT_NOTES needs no
+duplicate rationale.

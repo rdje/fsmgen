@@ -99,6 +99,32 @@ sub build_module($self, $actor) {
     my %generated_children = %$generated;
     my %pruned_static_zero_children = %$pruned;
 
+    my $child_products = $self->_build_module_child_products($actor, $generated);
+    my %child_irs = %{$child_products->{children}};
+    my @library_instances = @{$child_products->{library_uses}};
+    my @atl_top_instances = @{$child_products->{atl_top_instances}};
+
+    my $parent_ir = $self->_build_parent_ir($actor, \%generated_children, \%pruned_static_zero_children);
+    my $connected = connect_child_storage_writes($parent_ir, \%child_irs);
+    $connected += connect_child_storage_reads($parent_ir, \%child_irs);
+    $connected += connect_child_completion_outputs($parent_ir, \%child_irs);
+    $connected += connect_library_output_readbacks($parent_ir, \@library_instances);
+    _finalize_ir($parent_ir) if $connected;
+    $parent_ir->{children} = \%child_irs;
+    $parent_ir->{library_uses} = \@library_instances;
+    $parent_ir->{atl_top_instances} = \@atl_top_instances;
+    if (@atl_top_instances) {
+        $parent_ir->{actor_network}{generated_tops} = [
+            map { atl_generated_top_report_entry($_) } @atl_top_instances
+        ];
+    }
+    $parent_ir->{domain_partition} = $domain_partition if $domain_partition;
+    return $parent_ir;
+}
+
+# These modules and composition records are constructed before the parent
+# declaration merge. Share the same admission/order with source preparation.
+sub _build_module_child_products($self, $actor, $generated) {
     my %child_irs = %{$self->_build_generated_transaction_children($actor, $generated)};
 
     my @library_instances;
@@ -129,22 +155,8 @@ sub build_module($self, $actor) {
     my @atl_top_instances = $self->_select_atl_generated_top_instances($actor, \%child_irs);
     mark_atl_data_link_child_interface_ports(\%child_irs, \@atl_top_instances);
 
-    my $parent_ir = $self->_build_parent_ir($actor, \%generated_children, \%pruned_static_zero_children);
-    my $connected = connect_child_storage_writes($parent_ir, \%child_irs);
-    $connected += connect_child_storage_reads($parent_ir, \%child_irs);
-    $connected += connect_child_completion_outputs($parent_ir, \%child_irs);
-    $connected += connect_library_output_readbacks($parent_ir, \@library_instances);
-    _finalize_ir($parent_ir) if $connected;
-    $parent_ir->{children} = \%child_irs;
-    $parent_ir->{library_uses} = \@library_instances;
-    $parent_ir->{atl_top_instances} = \@atl_top_instances;
-    if (@atl_top_instances) {
-        $parent_ir->{actor_network}{generated_tops} = [
-            map { atl_generated_top_report_entry($_) } @atl_top_instances
-        ];
-    }
-    $parent_ir->{domain_partition} = $domain_partition if $domain_partition;
-    return $parent_ir;
+    return {children => \%child_irs, library_uses => \@library_instances,
+        atl_top_instances => \@atl_top_instances};
 }
 
 sub _build_generated_transaction_children($self, $actor, $generated) {
@@ -225,6 +237,7 @@ sub prepare_formal_source($self, $source_actor) {
     my $point_products = $self->_formal_parent_point_products(
         $actor, $generated, \%products, $wiring_products, \%points);
     my $resource_products = _formal_resource_signal_products($actor);
+    my $child_products = $self->_build_module_child_products(_clone_isf_value($actor), $generated);
     return {
         actor => $actor,
         generated_children => { %$generated },
@@ -244,11 +257,17 @@ sub prepare_formal_source($self, $source_actor) {
         parent_completion_products => _formal_parent_completion_products(
             $actor, $generated, \%products, $activation_products, $wiring_products,
             $point_products, $resource_products),
-        # Real child construction has its own scope and does not require a
-        # parent declaration merge. Parent connections and library/ATL/domain
-        # realization remain separate. Isolate even producer-side source edits.
-        generated_child_products => _clone_isf_value(
-            $self->_build_generated_transaction_children(_clone_isf_value($actor), $generated)),
+        # Real children have independent module scopes. Detach both retained
+        # views; parent ownership connections and outer domains remain separate.
+        generated_child_products => _clone_isf_value({
+            map { $_ => $child_products->{children}{$_} } sort keys %$generated,
+        }),
+        reusable_child_products => _clone_isf_value({
+            children => {map { $_ => $child_products->{children}{$_} }
+                grep { !$generated->{$_} } sort keys %{$child_products->{children}}},
+            library_uses => $child_products->{library_uses},
+            atl_top_instances => $child_products->{atl_top_instances},
+        }),
         actor_context => {
             locals => {}, static_symbols => { %$static },
             static_count_symbols => { %$static }, pruned_repeats => {},

@@ -42,6 +42,8 @@ This qualified example is not a general proof of reservation closure.
 Completion retention semantics remain owned by
 [generated-child-completion-memory](generated-child-completion-memory.md).
 This slice adds no new HDL runtime qualification. Grant/priority processing,
-parent storage/named-completion connections, library/ATL and final domain
-composition remain separate coverage gates before production formal renaming.
+parent storage/named-completion connections and final domain composition remain
+separate coverage gates. Reusable library and resolved ATL children now have
+[retained products](isf-formal-reusable-products.md); production formal renaming
+remains gated.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.1.

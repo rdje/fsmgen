@@ -137,7 +137,9 @@ resource pointer declarations now use the shared actual producer; see the
 [resource product boundary](isf-formal-resource-products.md). Independently
 built generated children now supply their actual module products; see
 [child products](isf-formal-child-products.md) and [parent completion products](isf-formal-completion-products.md). Parent connection and final
-composition remain separate.
+composition remain separate. [Reusable child products](isf-formal-reusable-products.md)
+now retain actual library/ATL modules and selected child-interface records; this
+still does not close parent connections or outer domain composition.
 
 The paired parser audit retains the former width-lookup defect: a wider formal
 was rejected and a narrower formal admitted an out-of-range bit against an
