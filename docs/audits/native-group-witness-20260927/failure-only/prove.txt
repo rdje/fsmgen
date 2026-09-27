@@ -1,0 +1,6 @@
+ram-guard: PID 59855; host 77.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+modeled capture write failure
+docs/audits/native-group-witness-20260927/failure-only/qualify.t .. ok
+All tests successful.
+Files=1, Tests=73,  0 wallclock secs ( 0.01 usr  0.00 sys +  0.05 cusr  0.03 csys =  0.09 CPU)
+Result: PASS

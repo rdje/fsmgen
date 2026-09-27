@@ -1,0 +1,15 @@
+{
+  "helper_qualification_sha256": "577379cc6abb34b90a237f687daf942f4200c7b1211476218bee95d8e4c4bfae",
+  "predecessor_revision": "eaed3f1ce172b812757b68847e166f77be0b1ca2",
+  "schema": "fsmgen.native_failure_context_qualification.v1",
+  "scope": "Finite private diagnostic qualification; actual session-leader rejection with modeled query/write errors; no original replay or causal repair.",
+  "sha256": {
+    "FailureWitness.pm": "30346e10a9d3a4c148dd706d2505bcbb78f805485d6257056820573389718804",
+    "events.jsonl": "cdbb257e00b07b6068fefb61bb7bca048194eec88dc153d0c8f98db7b103b1cf",
+    "postcheck.json": "ab207f49956086be4c1b8be7cda204a935a45bd553097add606233d45d42f37b",
+    "prove.txt": "5493dff7be370939f327abe7fc56f9eb8b679f324c2c481d7040a92ed1a661a4",
+    "qualify.t": "e79e6f782ae056d42d4c2d0b5b4596320a2db771e77a2abf726f2bd25771fbbf",
+    "results.json": "c73176b62d5f09589a08356a1193d2937f79e20a2d22d3acf3f0a1a730da56c6",
+    "verify.py": "c8d836c86d2ac9f500fbe90211bd87b98a796276e01b6fe0b8362731d04d14d4"
+  }
+}

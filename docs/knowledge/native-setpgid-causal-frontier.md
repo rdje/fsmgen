@@ -75,3 +75,12 @@ captured native exit status. This rejects that tracing route under the reported
 protection; it does not attribute the original syscall failure to SIP. The exact
 transcript and hostile-conclusion verifier are in the preflight's `administrator/`
 subdirectory. No further authentication or protection change is requested.
+
+The private `failure-only/` recorder is qualified for subsequent owned use.
+It performs no context query or write on success, including stale errno; after
+child self-group rejection it preserves immediate return/errno and queries the
+native identities. Actual session-leader rejection, modeled query/write faults,
+capture limits and independent cleanup pass. Query/capture gaps stay explicit.
+These are sequential after-return snapshots; wrapper dispatch still adds overhead.
+Verify sealed records with `python3 -B docs/audits/native-group-witness-20260927/failure-only/verify.py`.
+Child .10 reconciles the independent guard evidence before normal roadmap work.

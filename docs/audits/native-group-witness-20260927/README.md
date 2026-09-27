@@ -83,3 +83,14 @@ python3 -B docs/audits/native-group-witness-20260927/original/verify_original.py
 This saved verifier does not rerun T1972. The passing attempt neither repairs nor
 explains the previous failure. Owner `.10.6` correlates bounded existing host
 evidence before selecting another causal discriminator.
+
+Child `.10.9` qualifies `failure-only/FailureWitness.pm` for subsequent owned
+verification. It uses this native helper only after failed child self-group
+admission. Successful calls, including stale errno, perform no query or write.
+Real session-leader rejection and modeled diagnostic faults preserve native
+return/errno; capture bounds and independent cleanup are retained. After-return
+snapshots are sequential and wrapper dispatch still perturbs observation.
+Inspect the sealed evidence without launching a process fixture:
+`python3 -B docs/audits/native-group-witness-20260927/failure-only/verify.py`.
+Use in an actual roadmap verification requires its own task-tree scope; this
+qualification neither replays nor repairs the original failure.

@@ -1187,12 +1187,21 @@ status are unavailable. This finding does not establish that SIP caused the
 original `setpgid` EPERM.
 
 The existing sampling session remains fixed to `spindump`. No authentication
-request or protection change is pending. The next diagnostic qualification uses
-the already qualified public native helper to record context only after a failed
-child call, preserving its return and immediate errno. Successful calls will
-perform no context queries or record writes. This is a planned recorder, not a
-repair or permission to retry the original. After-return snapshots and wrapper
-dispatch still have observation limits.
+request or protection change is pending. A private failure-only recorder now uses
+the qualified public native helper after child self-group rejection, preserving
+the original return and immediate errno. Successful calls, including stale
+EPERM, perform no context queries or record writes. Actual session-leader
+rejection remains a pre-exec failure. Modeled query and write faults remain
+explicit diagnostic gaps; even diagnostic EIO cannot replace native errno.
+Independent child identities, cleanup and capture-boundary controls pass.
+After-return snapshots are sequential and wrapper dispatch still adds overhead.
+This qualification does not replay or repair the historical failure. Its next
+use must belong to a genuine planned verification with separately owned scope.
+Inspect the saved records, without launching a runtime fixture:
+
+```sh
+python3 -B docs/audits/native-group-witness-20260927/failure-only/verify.py
+```
 
 The administrator report and exact limits are retained under
 `docs/audits/native-group-tracing-capability-20260927/administrator/`; verify
