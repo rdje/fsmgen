@@ -1132,6 +1132,15 @@ pipe, failed exec status and cleanup contract are unchanged. Native session and
 false-success controls distinguish causes merged by the older message.
 Isolated query faults and a deliberate wrong-label mutation protect the result.
 
+The later T1972 guard regression also reports native `setpgid` EPERM before
+execution. Bounded native timing controls now show successful child-only,
+parent-first, child-first and simultaneous group creation on the current host.
+An intentional session leader supplies a real EPERM despite its correct group;
+independent parent queries confirm that control's session identity. This does
+not establish that the failed T1972 child was a session leader. Its original
+PGID/SID were not retained. Native syscall context capture is being qualified
+before another observed original run; no containment repair is claimed.
+
 The updated full T1669 qualification still fails both Rust startup modes and
 legacy main-entry checks, while the new diagnostic controls and production HDL
 contract pass. Available failures remain in the task; that run did not collect

@@ -1801,7 +1801,43 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Preserve .2.9's failed control_wait result and missing PID/syscall evidence. Query the map, inspect source/history and native contract, then use bounded independently observed fork/group controls to separate setpgid return, actual membership and stale diagnostic errno. Select the smallest causal repair; if evidence needs new instrumentation, qualify and commit that separately before further original observation. Every actual owned child/group must settle; preserve rejection of false-success/undefined/negative/throwing admission, fixed limits and original failure. No retry-as-repair, host security change or unrelated recurrence campaign. Update book/fact and commit each verified slice.`
   Verification: `New .2.9 failure is in the asynchronous control_wait outer before exec; the current combined eval reports ambient $! after either syscall or membership failure. The source review identifies ambiguity, not a proved syscall failure or cause. Active at clean fe2dd2f2e3592cb043dc3daa1740254cb6f1a424. Read-only source/native-contract review and bounded independently observed fork/group controls are owned here; scratch outputs/workspaces stay under .artifacts/logs/containment-diagnosis-20260909/ and .artifacts/tmp/containment-diagnosis/. Six held native controls prove the combined message conflates a real EPERM session-leader syscall failure with a false-success membership failure; successful calls can retain EPERM too. All native identities/groups and cleanup are independently checked. This proves diagnostic ambiguity, not the original cause. Child .10.1 owns precise failure provenance and focused qualification; any remaining causal experiment is selected only after that child commits.`
   Commit: `pending causal failure diagnosis after precise diagnostic qualification`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2`
+  Status: `done`
+  Goal: `Discriminate native parent/child group timing from session-leader rejection after the T1972 EPERM.`
+  Acceptance: `Retain the exact T1972 failure at 7ee298c6958a61ff5600c22d1de164ff23b4f6ca. Qualify a bounded standalone native fork/group probe with child-only, parent-first, child-first, simultaneous and intentional session-leader controls. Capture syscall return and immediate errno, child PID/PPID/PGID/SID and independent parent queries, with bounded waits, exact reaping and no descendants. Select the finite matrix before execution; a passing matrix is not repair or an original-test retry. Record host/source version limits and schedule the next discriminator from the observed result. Do not weaken production containment, change host security, rerun T1669 or perform kernel capture. Keep all probe sources and artifacts repository-local, and commit diagnosis/next ownership before further experiments.`
+  Verification: `The fixed native matrix completes with exact reaping and absent child PIDs. Child-only, both ordered parent/child controls and simultaneous cases succeed. The intentional session leader returns native EPERM with PGID=SID=PID, independently confirmed by parent queries. Retained records, source/hash manifest and verifier reject missing cases, mismatched sessions, false admission, stale errno and false cleanup. This disproves universal failure under ordinary parent/child timing on this host; it does not explain the spent T1972 child or prove timing races impossible. Published XNU source is not assumed to match installed xnu-13432.1.9. Child .3 must qualify native context capture before another original observation.`
+  Commit: `this commit`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4`
+  Status: `active`
+  Goal: `Roll over completed task evidence before extending native causal investigation.`
+  Acceptance: `Task-evidence maximum crossed the existing rollover threshold. Retain exact Git-backed recovery for a bounded completed acceptance block, verify source bytes/hash and preserve active contracts, canonical routing and pending failure ownership. Reduce the actual maximum without raising any ceiling. Commit the verified rollover before native witness implementation.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3`
+  Status: `active`
+  Goal: `Capture native group and session context around the actual supervisor call.`
+  Acceptance: `Qualify a repository-local Darwin syscall witness against independent native controls before one separately owned observed T1972 run. Preserve exact setpgid arguments/return/immediate errno, caller and target PID/PGID/SID before/after, parent timing and original result/cleanup. Instrumentation cannot retry, alter arguments, admit failures, change limits or modify host security. An unobserved failure or passing original does not resolve the cause.`
+  Verification: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3.2`
+  Commit: `children below`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3.1`
+  Status: `active`
+  Goal: `Qualify the bounded Darwin native setpgid witness.`
+  Acceptance: `Implement a diagnostic-only interposer outside production paths. Verify real return/errno and call identity against the standalone native control matrix, including session-leader EPERM and successful controls, before exposing an original test. Prove bounded complete record capture, missing/foreign/altered evidence rejection and exact cleanup; retain native compiler/source identities and document load/host limits. Commit before an observed original.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3.2`
+  Status: `pending`
+  Goal: `Observe one original guard qualification and select the causal repair or missing discriminator.`
+  Acceptance: `Only after .3.1 qualification commits, run one unchanged T1972 with the qualified witness and original RAM/runtime supervision. Preserve the complete first result and all witness records; join each failing setpgid to exact before/after native identities and parent records. Settle every owned process and record capture/load/clock limitations. Do not convert a passing run into repair or claim a cause without a distinguishing observation. Commit the outcome and next repair/discriminator ownership.`
+  Verification: `pending`
+  Commit: `pending`
+
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1`
   Status: `done`
   Goal: `Repair containment-failure provenance while preserving fail-closed child admission.`
@@ -4458,7 +4494,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.4` owns bounded nested stream delivery after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4` rolls over completed evidence before `.10.3.1` qualifies native syscall context capture. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7172,3 +7208,40 @@ feature completion must include structured external-agent access wherever the
 public contract supports it. Distinguish inspection from invocable controls, keep
 the mdBook accurate, and do not claim coverage before the audit. This direction
 takes priority over starting the next stream implementation slice.
+
+
+## Acceptance — native group timing discriminator `.3.2.10.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies
+  a055d3a28a30b10d029c82ca5e4831da069ee108 as the precise admission diagnostic
+  repair. T1972 now identifies setpgid undef/EPERM at child 43538, but retains
+  no group/session observations for that spent child. The native cause is still
+  unknown; this slice owns the missing causal discriminator, not a guessed fix.
+- [x] **ADDRESSED (verified)** — The predeclared native controls capture immediate
+  errno plus child/parent PGID/SID around the call and hold children for independent
+  parent queries. Ordinary timing controls succeed; the actual session-leader
+  control fails with EPERM despite the correct group. Exact wait-zero and ESRCH
+  observations settle every trial. verify.py validates retained source hashes,
+  ordered membership, native identities, outcomes and cleanup; deliberate corrupt
+  records are rejected. No production change or original-test retry occurred.
+- [x] **NO REGRESSION** — Native compilation passes -Wall -Wextra -Werror. The
+  retained-data verifier and mutation controls pass. Knowledge Map regeneration
+  and `knowledge-map: OK` qualify routing; mdBook and staged doctrine checks
+  qualify documentation. Product tests are unchanged and T1972 remains blocked.
+
+Durable evidence: `docs/audits/native-group-discriminator-20260927/` retains the
+source, predeclared recipe, complete result, source/result/verifier hash manifest
+and independent verifier. Re-derivation is the fixed native experiment;
+falsification is intentional native session-leader EPERM plus independent parent
+queries and corrupt-record rejection; durability is the tracked sealed evidence
+and verifier. Installed Darwin 27.0.0 reports xnu-13432.1.9; reviewed published
+Apple source is useful contract evidence but not a matching-kernel attestation.
+The known native session cause must not be attributed to original child 43538.
+Child .3.1 qualifies native context instrumentation before .3.2 observes one
+original test. Broad startup, nested containment and full CI remain separate.
+
+The first staged gate rejected the task collection's per-file line allowance.
+The existing ceiling is unchanged; the transition allowance is refreshed from
+the actual maximum alongside the aggregate census. The next gate correctly
+requires rollover_debt at the crossed threshold; .10.4 owns exact recovery and
+reduction before more investigation evidence is added.

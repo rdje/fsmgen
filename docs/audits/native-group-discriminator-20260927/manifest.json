@@ -1,0 +1,11 @@
+{
+  "host": "Darwin 27.0.0 xnu-13432.1.9~1 RELEASE_ARM64_T6041",
+  "qualification": "native timing controls only; original T1972 cause unproved",
+  "schema": "fsmgen.native_group_discriminator.v1",
+  "sha256": {
+    "probe.c": "8a5a660fb5f7b009cf0b77fa42bd6748e7410842a7764f16459259ce87cb1cf8",
+    "result.jsonl": "836e756df88bb390d7df3f5b83d0e10c94212c8ec08b6cae68ad2fecd577374d",
+    "verify.py": "f7f051cee69bf5f23e1eedf4de2d0045339ab43c6f3608142e165507e84a3b24"
+  },
+  "source_revision": "7ee298c6958a61ff5600c22d1de164ff23b4f6ca"
+}
