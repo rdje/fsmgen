@@ -67,6 +67,13 @@ before lowering. `FSMGEN_LANGUAGE_ISF_UNDECLARED_RULE_OPERAND` identifies the
 actor, missing operand and reading rules in check/semantic JSON and MCP.
 Declare or correct the operand; see [Rules and Priorities](13g-rules.md).
 
+`FSMGEN_LANGUAGE_ISF_STORAGE_IDENTIFIER` rejects an actor storage variable
+whose name is an HDL keyword, such as `cell`. The diagnostic identifies the
+actor, variable and reserving target before lowering. Rename the variable and
+its references; see [Actor-Owned Storage](13a-actor-interface.md#actor-owned-storage).
+Check and semantic JSON preserve this classified failure through MCP.
+Schedule preview retains its existing message-only failure contract.
+
 Typical causes:
 
 - illegal combinational self-dependency

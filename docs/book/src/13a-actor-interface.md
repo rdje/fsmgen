@@ -768,6 +768,19 @@ typed storage fields, banks, aggregate carriers, packet/flit layouts, access
 enforcement, generated register models, and parent reset derivation are
 deferred.
 
+Actor `var` and `variable` names must be simple HDL identifiers that are not
+keywords in any shipped target. SystemVerilog keyword matching is
+case-sensitive; VHDL matching is case-insensitive. For example, `cell`,
+`process` and `PROCESS` are rejected with the actor, variable name, reserving
+target and rename guidance. Use `value_reg` or another legal name. FSMGen does
+not silently rename authored storage variables or escape them per target.
+
+Bank names identify logical storage. `(bank cell (width 4) (depth 2))` remains
+valid because its emitted elements are `cell_0` and `cell_1`; the logical name
+is not emitted as a standalone HDL signal. Field metadata names likewise do
+not declare separate registers. This check covers actor storage variables;
+other identifier families retain their own validation contracts.
+
 `(storage ...)` is a singleton actor clause. Storage names and scalarized
 element names must not collide with interface ports, actor clock/reset signals,
 or generated scheduler signals such as `can_accept`. Missing scalar storage

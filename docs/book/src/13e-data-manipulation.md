@@ -796,7 +796,7 @@ carries a scalarized `+size` family for the four cells.
 ```lisp
 (actor dataop_demo
   (storage
-    (var packed (width 8))
+    (var packed_value (width 8))
     (var lo (width 4))
     (var hi (width 4)))
   (clock clk)
@@ -806,14 +806,14 @@ carries a scalarized `+size` family for the four cells.
     (output done))
   (transaction tx
     (on start)
-    (assemble lo hi as packed (widths 4 4))
+    (assemble lo hi as packed_value (widths 4 4))
     (complete done)))
 ```
 
 **Walkthrough.** Three storage variables: `lo` (4-bit), `hi`
-(4-bit), and `packed` (8-bit). `(assemble lo hi as packed (widths 4
-4))` concatenates `lo` (LSBs) and `hi` (MSBs) into `packed`. The
+(4-bit), and `packed_value` (8-bit). `(assemble lo hi as packed_value (widths 4
+4))` concatenates `lo` (LSBs) and `hi` (MSBs) into `packed_value`. The
 `(widths ...)` option asserts the per-field widths so the lowerer
 can place each field at a concrete bit position. The transaction
 runs the assembly once and completes. The reverse direction uses
-`(extract packed (widths 4 4) (as lo hi))` — not shown here.
+`(extract packed_value (widths 4 4) (as lo hi))` — not shown here.

@@ -20,18 +20,18 @@ sub parse {FSM::Adapter::ISF->new->parse_source($_[0], 'resource_products.isf')}
 sub source {
     my ($kind, $count) = @_;
     my $resource = $kind eq 'transaction_start' ? 'work' : 'shared_bus';
-    my $members = $kind eq 'output_bundle' ? '(members valid)' : $kind eq 'storage_port' ? '(members cell)' : '';
+    my $members = $kind eq 'output_bundle' ? '(members valid)' : $kind eq 'storage_port' ? '(members value_reg)' : '';
     my $inputs = join ' ', map {"(input req$_)"} 0 .. $count-1;
     my $users = join ' ', map {"user$_"} 0 .. $count-1;
     my $rules = join ' ', map {
         my $action = $kind eq 'transaction_start' ? '(trigger work)'
-            : '(' . ($kind eq 'storage_port' ? 'cell' : 'valid') . ' ' . ($_ % 2) . ')';
+            : '(' . ($kind eq 'storage_port' ? 'value_reg' : 'valid') . ' ' . ($_ % 2) . ')';
         "(rule user$_ req$_ $action)";
     } 0 .. $count-1;
     return <<"ISF";
 (actor resource_products (clock clk) (reset rst_n)
  (interface (input fire) $inputs (output valid) (output observed (width 4)) (output work_done))
- (storage (var cell (width 1)))
+ (storage (var value_reg (width 1)))
  (transaction main (ports (input payload (width 4))) (on fire) (set observed payload))
  (transaction work (on work_start) (wait 1) (complete work_done))
  (resources (resource $resource (kind $kind) (arbiter round_robin) $members (users $users)))

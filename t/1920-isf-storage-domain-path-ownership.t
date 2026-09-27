@@ -14,22 +14,22 @@ my $header=<<'ISF';
  (enums (mode (IDLE 0) (BUSY 1)))
  (interface (input start) (input data (width 8)) (output seen (width 8)) (output finished)
             (output aux_seen (width 8) (domain aux)))
- (storage (var record (type record_t) (domain aux))
+ (storage (var record_value (type record_t) (domain aux))
           (var lanes (type list_t) (domain aux))
           (var scalar (width 8) (domain aux)))
 ISF
 
 for my $case (
- ['member read', '(transaction main (on start) (set seen record.payload))', 'read', 'record.payload'],
+ ['member read', '(transaction main (on start) (set seen record_value.payload))', 'read', 'record_value.payload'],
  ['nested list read', '(transaction main (on start) (set seen lanes[0].payload))', 'read', 'lanes[0].payload'],
- ['member write', '(transaction main (on start) (set record.payload data))', 'write', 'record.payload'],
+ ['member write', '(transaction main (on start) (set record_value.payload data))', 'write', 'record_value.payload'],
  ['nested list write', '(transaction main (on start) (set lanes[0].payload data))', 'write', 'lanes[0].payload'],
- ['whole write', '(transaction main (on start) (set record data))', 'write', 'record'],
+ ['whole write', '(transaction main (on start) (set record_value data))', 'write', 'record_value'],
  ['scalar write', '(transaction main (on start) (set scalar data))', 'write', 'scalar'],
  ['output write', '(transaction main (on start) (set aux_seen data))', 'write', 'aux_seen'],
  ['nested write', '(transaction main (on start) (when data (set scalar 1)))', 'write', 'scalar'],
  ['read then inferred write', '(transaction main (on start) (set seen scalar) (set scalar data))', 'read', 'scalar'],
- ['rule read', '(rule observe 1 (seen record.payload))', 'read', 'record.payload'],
+ ['rule read', '(rule observe 1 (seen record_value.payload))', 'read', 'record_value.payload'],
  ['rule write', '(rule observe 1 (lanes[0].payload data))', 'write', 'lanes[0].payload'],
  ['guard read', '(rule observe lanes[0].payload (seen data))', 'read', 'lanes[0].payload'],
 ) {
@@ -46,7 +46,7 @@ subtest 'same-domain leaves, inferred locals and enum members remain valid' => s
  $source =~ s/\(domain aux\)/\(domain core\)/g;
  my $body=<<'ISF';
  (transaction main (on start)
-  (set scratch data) (set record.payload scratch) (set lanes[0].payload record.payload)
+  (set scratch data) (set record_value.payload scratch) (set lanes[0].payload record_value.payload)
   (when mode.BUSY (set seen lanes[0].payload))))
 ISF
  is(lower_error($source.$body),'','same-domain paths and inferred local assignments lower');

@@ -13,6 +13,12 @@ our @EXPORT_OK = qw(
 );
 
 my %DIAGNOSTIC_CODES = (
+    FSMGEN_LANGUAGE_ISF_STORAGE_IDENTIFIER => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An ISF actor storage variable uses a reserved HDL keyword.',
+    },
     FSMGEN_LANGUAGE_SYSTEM_RESET_POLARITY => {
         severity => 'error',
         stability => 'stable',

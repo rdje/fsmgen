@@ -19,11 +19,11 @@ my $work = tempdir(CLEANUP => 1);
 my $base = <<'ISF';
 (actor child_products (clock clk) (reset rst_n)
  (interface (input fire) (input din (width 4)) (output child_done) (output done))
- (storage (var cell (width 4) (reset 3)))
+ (storage (var value_reg (width 4) (reset 3)))
  (transaction main (ports (input payload (width 4))) (on fire) (set payload din)
   (spawn worker as job (bind (input data payload))) (await_all done) (complete done))
  (transaction worker (ports (input data (width 4)))
-  (point armed) (assert (=> (at armed) fire)) (set cell (+ cell data)) (complete child_done)))
+  (point armed) (assert (=> (at armed) fire)) (set value_reg (+ value_reg data)) (complete child_done)))
 ISF
 sub parse {FSM::Adapter::ISF->new->parse_source($_[0], 'child_products.isf')}
 sub inventory {FSM::Scheduler::ISF::FormalReservationInventory->collect($_[0])->{reserved_names}}
@@ -88,11 +88,11 @@ subtest 'real child producer retains activation storage completion and point pro
         }
         my $p = qualify(parse($text), $kind);
         my $child = $p->{generated_child_products}{worker};
-        is_deeply([map {$_->{name}} @{$child->{actor_storage_reads}}], ['cell'], 'actual live actor storage read retained');
-        is_deeply([map {$_->{name}} @{$child->{actor_storage_writes}}], ['cell'], 'actual actor storage write interface retained');
+        is_deeply([map {$_->{name}} @{$child->{actor_storage_reads}}], ['value_reg'], 'actual live actor storage read retained');
+        is_deeply([map {$_->{name}} @{$child->{actor_storage_writes}}], ['value_reg'], 'actual actor storage write interface retained');
         is_deeply([map {$_->{name}} @{$child->{actor_completion_outputs}}], ['child_done'], 'actual named completion retained');
         is_deeply($child->{declared_storage}, [], 'child holds no duplicate actor storage');
-        ok(!exists $child->{reset_values}{cell}, 'owner reset is not copied into child');
+        ok(!exists $child->{reset_values}{value_reg}, 'owner reset is not copied into child');
         my @history = grep {$child->{storage_roles}{$_} eq 'child_start_history'} keys %{$child->{storage_roles}};
         is(scalar @history, 1, 'actual activation history declaration retained');
         my @points = grep {($_->{source_kind}//'') eq 'point_active'} map {@{$_->{assignments}}} @{$child->{states}};
@@ -136,7 +136,7 @@ subtest 'child-local helper allocation respects exact and portable case collisio
 
 subtest 'reused definitions and actual domain projections retain separate module scopes' => sub {
     my $text = $base;
-    $text =~ s/\(set cell \(\+ cell data\)\)/(local snapshot (width 4)) (set snapshot (+ cell data))/;
+    $text =~ s/\(set value_reg \(\+ value_reg data\)\)/(local snapshot (width 4)) (set snapshot (+ value_reg data))/;
     $text =~ s/\(spawn worker as job \(bind \(input data payload\)\)\)/(spawn worker as first (bind (input data payload))) (spawn worker as second (bind (input data payload)))/;
     my $p = qualify(parse($text), 'reused');
     is_deeply([keys %{$p->{generated_child_products}}], ['worker'], 'reused worker definition collected once');
@@ -162,15 +162,15 @@ subtest 'parent conflicts remain separate and child admission stays canonical' =
     eval {$lowerer->prepare_formal_source(parse($text))};
     like($@, qr/references unknown point\/activation name 'missing'/, 'actual child resolver rejects unknown anchor');
     $text = $base;
-    $text =~ s/\(set cell \(\+ cell data\)\)/(set-bit cell 0)/;
+    $text =~ s/\(set value_reg \(\+ value_reg data\)\)/(set-bit value_reg 0)/;
     # Bit helpers desugar to whole-word read/modify/write, so they are a valid
     # control for the qualified full-width writer rather than a partial LHS.
     my $bit = qualify(parse($text), 'whole_word_setbit');
-    is($bit->{generated_child_products}{worker}{actor_storage_writes}[0]{name}, 'cell',
+    is($bit->{generated_child_products}{worker}{actor_storage_writes}[0]{name}, 'value_reg',
         'normalized whole-word bit helper keeps the qualified write handoff');
     $text = $base;
     $text =~ s/\(storage/(storage (bank slots (width 4) (depth 2))/;
-    $text =~ s/\(set cell \(\+ cell data\)\)/(store slots 1 data)/;
+    $text =~ s/\(set value_reg \(\+ value_reg data\)\)/(store slots 1 data)/;
     eval {$lowerer->prepare_formal_source(parse($text))};
     like($@, qr/only full-width variable sequential writes are qualified/, 'canonical unsupported child bank-write boundary retained');
     $text = $base;

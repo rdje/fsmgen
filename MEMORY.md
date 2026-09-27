@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1` (active)
-- next_action: Resolve accepted storage names that fail HDL compilation under .49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.3; retain the original cell compiler evidence and inspect canonical identifier policy before choosing the repair.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2` (active)
+- next_action: Retain named-completion/readback and outer-domain reservation products under .49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.2, then qualify complete reservations before production formal rewriting. Follow decision 0109 and canonical formal-product cards.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

@@ -119,13 +119,13 @@ sub qualify {
 sub resource_source {
     my ($kind, $arbiter) = @_;
     my $name = $kind eq 'transaction_start' ? 'work' : 'lane';
-    my $members = $kind eq 'storage_port' ? '(members cell)' : $kind eq 'output_bundle' ? '(members flag)' : '';
-    my $first = $kind eq 'transaction_start' ? '(trigger work)' : $kind eq 'storage_port' ? '(cell 1)' : '(flag 1)';
-    my $second = $kind eq 'transaction_start' ? '(trigger work)' : $kind eq 'storage_port' ? '(cell 0)' : '(flag 0)';
+    my $members = $kind eq 'storage_port' ? '(members value_reg)' : $kind eq 'output_bundle' ? '(members flag)' : '';
+    my $first = $kind eq 'transaction_start' ? '(trigger work)' : $kind eq 'storage_port' ? '(value_reg 1)' : '(flag 1)';
+    my $second = $kind eq 'transaction_start' ? '(trigger work)' : $kind eq 'storage_port' ? '(value_reg 0)' : '(flag 0)';
     return <<"ISF";
 (actor namespace_resource (clock clk) (reset rst_n)
  (interface (input fire) (input a) (input b) (output flag) (output done))
- (storage (var cell (width 1)))
+ (storage (var value_reg (width 1)))
  (transaction main (ports (input payload (width 4))) (on fire) (wait payload) (complete done))
  (transaction work (on work_start) (wait 1) (complete done))
  (priority high over low)

@@ -8793,6 +8793,13 @@ sub _parse_storage($self, $clause, $actor_name) {
             unless _is_hdl_identifier($name);
         confess "Error: actor '$actor_name' has duplicate storage name '$name'\n"
             if $seen_logical_name{$name}++;
+        if ($kind eq 'var') {
+            my $targets = FSM::Support::HDLInstanceIdentifierPolicy->reserved_target_languages($name);
+            confess "Error: actor '$actor_name' storage variable '$name' is reserved in "
+                . join(' and ', @$targets)
+                . "; choose a non-keyword simple identifier\n"
+                if @$targets;
+        }
 
         my %parsed_options;
         for my $option (@options) {

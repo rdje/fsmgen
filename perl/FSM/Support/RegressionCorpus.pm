@@ -9,6 +9,17 @@ our @EXPORT_OK = qw(regression_corpus_entries protocol_fixture_entries);
 
 my @REGRESSION_CORPUS = (
     {
+        id => 'language.isf_storage_identifier.rejection',
+        relpath => 't/corpus/isf_storage_identifier.isf',
+        family => 'language_feature_fixture',
+        classification => 'expected_failure',
+        coverage => 'language_contract_rejection_pipeline_cli',
+        source_kind => 'isf',
+        diagnostic_code => 'FSMGEN_LANGUAGE_ISF_STORAGE_IDENTIFIER',
+        expected_error_pattern => qr/actor '[^']+' storage variable '[^']+' is reserved in /,
+        expected_hint_pattern => qr/choose a non-keyword simple identifier/,
+    },
+    {
         id => 'contract.system_reset_polarity',
         relpath => 't/corpus/system_reset_polarity.fsm',
         family => 'language_contract_fixture',

@@ -1619,10 +1619,10 @@ For FSMGen, the analogs are:
   Commit: `children below`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Retain canonical parent storage-read handoff plans and qualify allocator scope.`
   Acceptance: `Share actual read-handoff allocation and products with source preparation after potential write products. Preserve one live owner view per storage target, exact widths/types and explicit consumer links. Qualify allocator inputs, authored block-name collisions, raw formal projection, existing write products, source isolation, strict carriers and native reports. Own and repair any demonstrated read allocator collision defect within this leaf; named completion/readback/domain stages remain later gates.`
-  Verification: `The omitted block namespace caused a proven lost rule guard; .1 repairs and qualifies it through _reserved_names. The actual reader plans are retained and qualified by .2 against the corrected namespace. Next .3 resolves the separately reproduced backend keyword defect.`
+  Verification: `Children close the real read/block collision, retain and qualify actual reader plans, and reject invalid actor-variable keyword names with compiled legal controls. Next named-completion/readback/domain products remain independently owned by .2.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.3`
   Commit: `children below`
 
@@ -1634,11 +1634,12 @@ For FSMGen, the analogs are:
   Commit: `54b51ef10; qualification closure in this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Resolve accepted storage names that cannot compile as emitted HDL identifiers.`
+  Decision: `Use the existing shared keyword union for actor var/variable names, which become emitted signal names. Reject with actor/name/target/rename guidance before lowering. Banks retain logical names because emitted element names have numeric suffixes. Decision 0110 records this bounded source contract; four new formal-preparation tests migrate their legal controls from cell to value_reg. Keep explicit keyword rejection and independent compiler controls.`
   Acceptance: `Trace the public identifier policy for storage named cell, preserve the actual compiler refusal, and repair or explicitly diagnose unsupported backend names with focused native/report and independent compiler controls. Do not silently rename public contracts or weaken compiler checks.`
-  Verification: `High-priority follow-up scheduled immediately after read allocation/planner closure and before named-completion coverage. Strict check accepts block-collision.isf but runtime-before.json records Verilator compile nonzero_exit: syntax error, unexpected cell. No runtime result exists for that source. Rename only the guard-defect reproduction to value_reg to isolate the separately owned collision; preserve original source/output and failure.`
-  Commit: `pending`
+  Verification: `The exact original source now fails early with FSMGEN_LANGUAGE_ISF_STORAGE_IDENTIFIER; before strict success and Verilator compile failure remain retained. T1952 qualifies variable aliases, target case rules, keyword bank identity, full native/API/newline check/semantic failures and the existing schedule refusal contract. Independent Verilog/SystemVerilog lint passes legal controls; VHDL emission passes but GHDL is absent from PATH. The migrated formal/domain controls, existing storage reset/field tests, diagnostic accounting and book fixtures pass. The exact corrected dataop_demo book example independently passes Verilator lint.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.2`
   Status: `done`
@@ -3387,3 +3388,68 @@ or assignment contract changed. No new production formal rewriting, writer
 admission or extra storage cycle is claimed. Named-completion/readback/domain
 coverage remains later; .1.3 owns the separate keyword compiler defect.
 No duplicate DEVELOPMENT_NOTES rationale is needed.
+
+### Storage identifier producer follow-up under `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.3`
+
+The book audit reproduces the same keyword defect in dataop_demo's packed
+variable at docs/book/src/13e-data-manipulation.md. The literal tracked-producer
+census also finds record in T1920's domain-access control; a qw(var var ...)
+list in T1232 is a lexical false positive, not an ISF source declaration.
+Own and repair the book example and domain control in this leaf, preserving
+assembly and cross-domain access behavior. Update T248's exact expected-failure
+count for the newly added named corpus fixture, retaining exact accounting.
+Census scope is tracked literal var/variable forms in t, isf, perl and book
+sources; it is not a proof about arbitrary interpolated/generated source.
+
+## Acceptance — actor storage keywords `.49.2.2.3.2.2.2.3.2.2.2.2.2.2.2.2.1.3`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the original `--strict --check --json`
+  succeeds for block-collision.isf, but runtime-before.json records independent
+  Verilator compile failure: syntax error, unexpected cell. _parse_storage
+  checked identifier shape without consulting the existing keyword registry;
+  scalar variables emit their authored names as owner registers/child inputs.
+  T1376 also exposes packed in the book after the new guard; the tracked literal
+  census identifies the record domain control and excludes a qw-list false hit.
+- [x] **ADDRESSED (verified)** — _parse_storage rejects var/variable target
+  keywords with actor/name/target/rename guidance. Decision 0110 distinguishes
+  emitted variable names from logical bank names. original-after.json rejects
+  the exact original source with FSMGEN_LANGUAGE_ISF_STORAGE_IDENTIFIER.
+  T1952 proves alias/case rules, unchanged legal spelling and bank identity,
+  complete native/API/newline check/semantic failures and unchanged schedule
+  refusal behavior. Independent Verilog/SystemVerilog lint accepts legal
+  controls; the corrected dataop_demo example also compiles independently.
+  Formal and domain test controls retain their mechanisms under legal names.
+- [x] **NO REGRESSION** — qualified-final.log, regression.log and
+  producer-qualified.log report `All tests successful`. The complete selected
+  cohorts cover T1952, T1944/T1945/T1948/T1949/T1951, T1232/T1398/T1453,
+  T1920, T248/T298/T315/T1041 and T1376. The final book builds. VHDL emission
+  succeeds; independent GHDL analysis is explicitly skipped because GHDL is
+  unavailable on PATH, so this slice claims no new VHDL compilation result.
+  Fresh staged doctrines and normal hook remain mandatory.
+
+Evidence: `.artifacts/storage-keyword/` plus original retained evidence in
+`.artifacts/formal-parent-read-products/`. Re-derivation uses strict-before,
+actual compiler failure and exact source rejection after repair; falsification
+uses independent legal-control lint, keyword/case/bank controls and complete
+public failures; durability is T1952 and its named corpus fixture, migrated
+controls, decision 0110, fact card, book and this task. No global identifier
+completeness, escaped-name support or storage access-metadata feature is claimed.
+
+Initial test.log assumed a structured schedule failure contrary to the existing
+T1898/adapter contract; it now checks the documented message-only refusal.
+qualified.log used the binary-build helper for lint, which correctly refused
+that invocation. qualified-lint.log exposed a missing explicit supervisor cwd;
+qualified-final.log uses bounded generic lint supervision with the derived
+repository root. No supervisor or containment guard was changed. The first
+book/corpus gate identified packed and the new exact rejection count; the
+corrected producer-qualified.log passes both. These harness corrections do not
+resolve the separately owned historical process-group containment occurrence.
+DEVELOPMENT_NOTES needs no duplicate of decision 0110.
+
+Renaming packed to packed_value changes the content-derived identities of the
+book's existing assembly-width claims. claim-id-map.json records the exact old
+and new candidate IDs; disposition witness/producer/oracle legs are unchanged
+because widths and low-to-high assembly order are unchanged. The refreshed
+inventory agrees with its independent census after exact ID remapping and
+sorted registry preservation. assembly-claims.log reports All tests successful
+for T1099/T1200/T1344, retaining the original width/order evidence.

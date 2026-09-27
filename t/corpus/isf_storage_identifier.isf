@@ -1,0 +1,5 @@
+(actor storage_identifier
+  (clock clk) (reset rst_n)
+  (interface (input fire) (output done) (output observed (width 4)))
+  (storage (var cell (width 4) (reset 3)))
+  (transaction read_value (on fire) (set observed cell) (complete done)))

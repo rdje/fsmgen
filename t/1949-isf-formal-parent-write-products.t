@@ -19,8 +19,8 @@ my $work = tempdir(CLEANUP => 1);
 my $base = <<'ISF';
 (actor parent_write_products (clock clk) (reset rst_n)
  (interface (input fire) (input din (width 4)) (output done))
- (storage (var cell (width 4) (reset 3)))
- (transaction worker (ports (input data (width 4))) (set cell data) (complete done))
+ (storage (var value_reg (width 4) (reset 3)))
+ (transaction worker (ports (input data (width 4))) (set value_reg data) (complete done))
  (transaction main (ports (input payload (width 4))) (on fire) (set payload din)
   (spawn worker as job (bind (input data payload))) (await_all done) (complete done)))
 ISF
@@ -98,11 +98,11 @@ subtest 'real parent write declarations preserve storage types and source snapsh
             my $type = $kind eq 'typed' ? '(bits 4)' : $kind eq 'record'
                 ? '(record (high (bits 2)) (low (bits 2)))' : '(list (bits 2) (bits 2))';
             $text =~ s/\(storage/(types (type value_t $type)) (storage/;
-            $text =~ s/\(var cell \(width 4\)/(var cell (type value_t)/;
+            $text =~ s/\(var value_reg \(width 4\)/(var value_reg (type value_t)/;
         }
         if ($kind eq 'two_targets') {
             $text =~ s/\(storage/(storage (var extra (width 4))/;
-            $text =~ s/\(set cell data\)/(set cell data) (set extra data)/;
+            $text =~ s/\(set value_reg data\)/(set value_reg data) (set extra data)/;
         }
         my $a = parse($text);my $before = dclone($a);
         my $p = $l->prepare_formal_source($a);
@@ -126,7 +126,7 @@ subtest 'real parent write declarations preserve storage types and source snapsh
     }
 };
 subtest 'portable collisions and raw formal aliases remain distinct' => sub {
-    for my $name ('isf_write_job_cell_data', 'ISF_WRITE_JOB_CELL_ENABLE') {
+    for my $name ('isf_write_job_value_reg_data', 'ISF_WRITE_JOB_VALUE_REG_ENABLE') {
         for my $kind (qw(formal fixed)) {
             my $text = $base;
             $text =~ s/\bpayload\b/$name/g if $kind eq 'formal';
@@ -143,18 +143,18 @@ subtest 'portable collisions and raw formal aliases remain distinct' => sub {
             strict_parent($ir, "${kind}_$name");
         }
     }
-    (my $text = $base) =~ s/\bpayload\b/cell/g;
+    (my $text = $base) =~ s/\bpayload\b/value_reg/g;
     my $a = parse($text);my $p = $l->prepare_formal_source($a);
     is(scalar @{$p->{parent_storage_write_products}{ports}}, 2, 'raw formal/storage overlap retains potential write ports');
     eval {$l->build_module($a)};
-    like($@, qr/storage role for 'cell' conflicts across transactions/, 'raw parent alias still fails executable ownership');
+    like($@, qr/storage role for 'value_reg' conflicts across transactions/, 'raw parent alias still fails executable ownership');
     my ($physical) = project($p);
     strict_parent(compare_actual($physical, $l->prepare_formal_source($physical), 'raw_projected'), 'raw_projected');
 };
 subtest 'potential plans do not admit competing writers or invent unused handoffs' => sub {
     for my $kind (qw(parent generated)) {
         my $text = $base;
-        $text =~ s/\(on fire\)/(on fire) (set cell 0)/ if $kind eq 'parent';
+        $text =~ s/\(on fire\)/(on fire) (set value_reg 0)/ if $kind eq 'parent';
         $text =~ s/\(await_all done\)/(spawn worker as other (bind (input data payload))) (await_all done)/ if $kind eq 'generated';
         my $a = parse($text);my $p = $l->prepare_formal_source($a);
         ok(@{$p->{parent_storage_write_products}{ports}}, 'potential declarations retained before writer admission');
@@ -162,7 +162,7 @@ subtest 'potential plans do not admit competing writers or invent unused handoff
         like($@, $kind eq 'parent' ? qr/parent writer and generated child writer/ : qr/competing generated child writers/,
             "$kind competing writer remains refused before actual allocation");
     }
-    (my $text = $base) =~ s/\(set cell data\)/(wait 1)/;
+    (my $text = $base) =~ s/\(set value_reg data\)/(wait 1)/;
     my $w = $l->prepare_formal_source(parse($text))->{parent_storage_write_products};
     is_deeply($w->{ports}, [], 'readonly child creates no write port');
     is_deeply($w->{instances}, {}, 'readonly child creates no write ownership');

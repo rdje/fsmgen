@@ -1535,8 +1535,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    166,
-    'catalog records expected failures including explicit reset polarity rejection',
+    167,
+    'catalog records expected failures including storage keyword rejection',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
