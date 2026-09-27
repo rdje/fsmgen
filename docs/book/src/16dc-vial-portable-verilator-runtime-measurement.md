@@ -1139,7 +1139,7 @@ An intentional session leader supplies a real EPERM despite its correct group;
 independent parent queries confirm that control's session identity. This does
 not establish that the failed T1972 child was a session leader. Its original
 PGID/SID were not retained. A diagnostic-only native witness is now qualified for one observed original
-run; no containment repair is claimed. Completed investigation checklists
+run; no containment repair is claimed. Completed investigation and fixed-observer checklists
 remain exactly recoverable through the task history manifest; active causal
 contracts and unresolved failures remain in the live task tree.
 

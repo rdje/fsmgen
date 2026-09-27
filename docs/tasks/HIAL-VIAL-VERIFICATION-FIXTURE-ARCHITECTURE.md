@@ -1801,7 +1801,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Preserve .2.9's failed control_wait result and missing PID/syscall evidence. Query the map, inspect source/history and native contract, then use bounded independently observed fork/group controls to separate setpgid return, actual membership and stale diagnostic errno. Select the smallest causal repair; if evidence needs new instrumentation, qualify and commit that separately before further original observation. Every actual owned child/group must settle; preserve rejection of false-success/undefined/negative/throwing admission, fixed limits and original failure. No retry-as-repair, host security change or unrelated recurrence campaign. Update book/fact and commit each verified slice.`
   Verification: `New .2.9 failure is in the asynchronous control_wait outer before exec; the current combined eval reports ambient $! after either syscall or membership failure. The source review identifies ambiguity, not a proved syscall failure or cause. Active at clean fe2dd2f2e3592cb043dc3daa1740254cb6f1a424. Read-only source/native-contract review and bounded independently observed fork/group controls are owned here; scratch outputs/workspaces stay under .artifacts/logs/containment-diagnosis-20260909/ and .artifacts/tmp/containment-diagnosis/. Six held native controls prove the combined message conflates a real EPERM session-leader syscall failure with a false-success membership failure; successful calls can retain EPERM too. All native identities/groups and cleanup are independently checked. This proves diagnostic ambiguity, not the original cause. Child .10.1 owns precise failure provenance and focused qualification; any remaining causal experiment is selected only after that child commits.`
   Commit: `pending causal failure diagnosis after precise diagnostic qualification`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.9, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.10, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.9, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.10, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.12`
   Blocker: `The historical failure remains unexplained and lacks failed-call native context. The returned administrator transcript denies the requested syscall probes under SIP. Child .9 qualifies unprivileged failure-only observation. Child .10 reconciles guard runtime evidence; .11 owns failure-only capture before the next genuine runtime qualification; no authentication, protection change or retry-as-repair is selected.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.2`
@@ -1902,6 +1902,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `After .1 commits and SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.2 prepares its actual runtime test, observe that genuine qualification with unchanged original bounds and record complete result/capture/cleanup. A native failure creates attributable evidence to diagnose before further execution; a pass never repairs historical causality. Retain explicit missing native failure context and schedule the next normal opportunity when no rejection occurs. This observation may be recorded with the owning priority-repair commit; no separate original recurrence campaign.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.12`
+  Status: `done`
+  Goal: `Retain completed native-observer acceptance history before priority runtime follow-up.`
+  Acceptance: `Roll over only closed optional acceptance bodies through the exact committed predecessor and existing bounded history manifest. Preserve all task nodes, active contracts, unresolved-failure routing and the verification-scope correction. Independently verify full source/suffix hashes and byte/line/section counts, unchanged old node contracts and the manifest chain. Leave all ceilings unchanged, update book/pointer and commit before returning to priority repair.`
+  Verification: `The existing bounded manifest now seals complete 4251364d5bcf6b6fc63c7e88d2356727a7f8612b and its historical-view suffix. Only completed acceptance bodies from .3.2.10.4 through .11.1 leave the live file. Independent Python byte comparison preserves the entire preceding document after removing only this new leaf and its parent child reference; the live verification-scope correction also remains byte-identical. Source/suffix digests, UTF-8 byte/line counts and heading counts are independently reconstructed and checked by task integrity. Exact Git retrieval retains all former acceptance bodies and the previous manifest chain. No active contract, unresolved failure, native capture, product behavior or ceiling changes.`
+  Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.1`
   Status: `done`
@@ -6991,13 +6998,12 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the complete predecessor and its suffix beginning at .18.1.
-Completed .18.1–.18.7 checklists and the latest completed execution/native-control
-acceptance bodies are recovered there. Intervening live contracts and unresolved
-qualification evidence remain here unchanged. The source retains the previous
-manifest chain and the misplaced final .19.1.5 paragraph at its document top;
-that paragraph is historical evidence, not live task metadata. Node contracts
-remain authoritative.
+The manifest binds the complete fixed-observer qualification predecessor and
+its historical-view suffix. Completed native-investigation/observer checklists
+are recovered there. All preceding live contracts and unresolved qualification
+evidence remain unchanged. That predecessor retains the previous manifest chain,
+including earlier .18 and execution evidence and the historical .19.1.5 preamble.
+Current node contracts and the scope correction below remain authoritative.
 
 Verification-scope correction, owned by `.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3`: the
 preserved checklists for ACCEPT publication (`13bf045a3`), retained request
@@ -7011,186 +7017,10 @@ whole regression band. The original startup/proxy/compiler producers, full CI
 and push did not run. Exact predecessor evidence remains unchanged; this live
 correction supplies its proper scope and is reflected in the canonical fact/book.
 
-## Acceptance — exact task evidence rollover `.3.2.10.4`
+## Acceptance — observer history rollover `.3.2.10.12`
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — The size gate required rollover_debt
-  at the actual task-file threshold. `git log -S` and blame identify the misplaced
-  final .19.1.5 Verification at 94356f17514427a0f18127d798f2e193f4bd69ce;
-  its earlier node summary remained different. The header was historical final
-  evidence, not a byte-identical duplicate and not current metadata.
-- [x] **ADDRESSED (verified)** — The bounded existing history manifest now
-  authenticates complete cbc94d53d6ae409eb1698a78eb8296e510f9e047 and its
-  suffix from .18.1. Completed .18 checklists and the recent completed tail
-  leave the live file; intervening live contracts, unresolved failures and
-  archived-node references remain intact. Complete-source recovery preserves
-  the removed preamble exactly and retains the earlier manifest chain.
-- [x] **NO REGRESSION** — Task integrity checks complete-source/suffix hashes,
-  byte/line/section identities, the live pointer and current node topology.
-  `knowledge-map: OK` preserves canonical routing. The mdBook build and staged
-  doctrine gates qualify the rollover; no product or runtime behavior changes.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'fixed priority observer'` identifies 4251364d5bcf6b6fc63c7e88d2356727a7f8612b as the latest completed observer checklist. The measured live task is 7196 lines against the unchanged 7200-line rollover boundary; the forthcoming runtime follow-up needs headroom.
+- [x] **ADDRESSED (verified)** — The existing manifest authenticates exact predecessor/source suffix, counts and digests. Independent byte comparison preserves every preceding contract and the live verification-scope correction; only closed optional checklist bodies move to exact Git recovery. The former manifest remains recoverable at the new predecessor.
+- [x] **NO REGRESSION** — `knowledge-map: OK`, task-tree integrity, independent claim census, book and staged doctrine checks qualify this documentation-only rollover. No runtime, source, active contract or ceiling changes.
 
-Re-derivation retrieves the exact predecessor; falsification compares independent
-source/suffix hashes and retained live contract spans; durability is the existing
-manifest checker and immutable Git recovery. The native EPERM cause remains open.
-
-## Acceptance — due generated artifact cleanup `.3.2.10.5`
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies the previous
-  cleanup record dated 2026-09-26T19:14:38+00:00. It is due under the standing
-  daily cleanup rule. Completed book renders are task-owned generated outputs;
-  guard/native logs and spent compiler evidence remain needed for open work.
-- [x] **ADDRESSED (verified)** — Preflight checks prove each selected book root
-  is ignored, untracked, on the repository device and free of symlink entries.
-  Only those exact roots are removed, with post-removal absence checks. Root
-  and rust/target release/deps/incremental log/bin census requires no removal.
-  The latest-only cleanup record and book storage guidance are synchronized.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves routing. Documentation
-  hygiene and staged doctrine checks qualify the maintenance commit. Native
-  and guard evidence remain present; no source, test or runtime behavior changes.
-
-The bounded operation manifest is retained under `.artifacts/native-artifact-cleanup/`.
-Re-derivation uses the named generated roots and ownership checks; falsification
-checks tracked/symlink/device exclusions and exact residue; durability is this
-owned scope and the latest cleanup record. Detailed removed-file lists are
-ignored operational data, not a permanent artifact-collection measurement.
-
-## Acceptance — native syscall witness qualification `.3.2.10.3.1`
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'operation=setpgid'`
-  identifies a055d3a28a30b10d029c82ca5e4831da069ee108 as precise diagnostic
-  provenance. T1972 identifies native rejection but lacks the spent child's
-  group/session context. The separate native matrix proves a real session
-  leader can return EPERM with the correct group; it does not attribute T1972.
-- [x] **ADDRESSED (verified)** — The private witness qualifies native identity
-  queries and preserves the original call, arguments, return and immediate
-  errno. Actual session-leader rejection and successful stale-errno controls
-  protect the admission distinction. Ordered controls establish observable
-  parent/child timing. Complete evidence, source/build identity and postchecks
-  are sealed in `docs/audits/native-group-witness-20260927/manifest.json`.
-- [x] **NO REGRESSION** — Guarded `prove -Iperl -It/lib
-  docs/audits/native-group-witness-20260927/qualify.t :: qualification_final`
-  reports `All tests successful`. The saved verifier independently checks
-  native/result joins, exact cleanup, hashes and hostile corruption controls.
-  Book build, Knowledge Map and staged doctrine gates qualify publication;
-  no production source or original test execution is part of this slice.
-
-Re-derivation is the bounded native-call fixture; falsification uses real EPERM,
-stale errno, independent native/Perl identities and altered capture controls;
-durability uses the complete tracked capture, postcheck, manifest and verifier.
-The snapshots are sequential and perturb timing; they are not a kernel trace.
-An original pass under `.3.2.10.3.2` cannot close the unresolved historical cause.
-
-## Acceptance — single original observation `.3.2.10.3.2`
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'operation=setpgid'`
-  locates the precise native diagnostic at a055d3a28a30b10d029c82ca5e4831da069ee108.
-  The retained T1972 failure lacks native PGID/SID evidence; the committed
-  qualified witness supplies those queries for this separately owned run.
-- [x] **ADDRESSED (verified)** — The exclusive observer consumes qualification
-  915b311c2e82e37453018e3399f6321a07460eba and exact input/build hashes, then
-  executes unchanged T1972 once with the original runtime and RAM limits.
-  Complete stage results and native records show successful admission and
-  guard behavior. Independent postchecks find all captured children/groups
-  and temporary generated binaries absent. The original EPERM remains open.
-- [x] **NO REGRESSION** — Guarded `prove -v -Iperl -It/lib
-  docs/audits/native-group-witness-20260927/original/observe.t` with runtime
-  qualification enabled reports `All tests successful`. The saved verifier
-  checks exact capture/result joins, input/hash integrity, unchanged limits,
-  semantic markers and hostile corruption controls. Book, map and doctrine
-  gates qualify publication. No production source or original test changes.
-
-Re-derivation is the single retained original observation and its native records;
-falsification uses independent semantic/cleanup controls and corrupt evidence;
-durability is the tracked observer, admission, complete results and hash verifier.
-No new observation reproduces the rejection, so attribution remains missing.
-Leaf `.3.2.10.6` owns bounded existing host evidence before further experiments.
-
-## Acceptance — bounded historical host correlation `.3.2.10.6`
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The preserved original diagnostic
-  `#   at t/1972-isf-constant-false-guards.t line 95` identifies native rejection
-  for PID 43538 before the SystemVerilog guard oracle executes. File timestamps
-  bound that run artifact; they cannot reconstruct a spent syscall's context.
-- [x] **ADDRESSED (verified)** — The bounded PID/syscall log query completes
-  with no matching records. A separate same-window store overview proves
-  retained data exists, while its visibility cannot prove every syscall was
-  logged. Exact commands, original failure, outputs and limits are sealed in
-  `docs/audits/native-group-host-correlation-20260927/manifest.json`.
-- [x] **NO REGRESSION** — The saved verifier checks window derivation, hashes,
-  command/exit/capture limits, store presence and hostile changed evidence.
-  `knowledge-map: OK` and staged doctrine checks qualify publication. No
-  production source, test rerun, host security change or native trace occurs.
-
-Re-derivation uses the retained failure and bounded query; falsification uses
-separate store-presence evidence and corrupted-window/status controls; durability
-uses complete tracked records and the saved verifier. The cause remains missing.
-Leaf `.3.2.10.7` owns capability preflight before any further capture proposal.
-
-## Acceptance — native tracing capability preflight `.3.2.10.7`
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The filtered DTrace listing requires
-  additional privileges, and `sudo -n` reports a password is required.
-  `git log -S 'authenticates the fixed native'` identifies
-  74c23d182dae033defcaf717f6197d59e86690a0 as the existing fixed spindump
-  session contract; that operation does not authorize a DTrace substitution.
-- [x] **ADDRESSED (verified)** — Installed manual/binary hashes, D interface
-  version, exact listing commands, failure results and bounds are retained.
-  The prepared administrator command lists only setpgid probes. The saved
-  verifier rejects altered access status, privilege identity or an attachment
-  command. This resolves capability discovery to an explicit access blocker,
-  not an attributed native syscall cause or an executed tracing plan.
-- [x] **NO REGRESSION** — `knowledge-map: OK`, saved capability verification,
-  book and staged doctrine checks qualify publication. The work enabled no
-  trace, reran no original and changed no production code or host protection.
-
-Re-derivation uses the installed public manual and actual listing results;
-falsification separates successful version lookup, unprivileged listing failure
-and absent non-interactive authorization, with altered-evidence controls;
-durability uses complete tracked records, hashes and the prepared access request.
-The causal parent remains open; child `.3.2.10.8` is blocked pending administrator data.
-
-## Acceptance — administrator probe inventory `.3.2.10.8`
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The supplied terminal transcript explicitly
-  reports failed matching of `syscall::setpgid:*` because SIP is on. This locates
-  the tracing boundary, not the original syscall cause. `git log -S
-  'authenticates the fixed native'` identifies 74c23d182dae033defcaf717f6197d59e86690a0
-  as the separate fixed spindump session contract; it cannot substitute here.
-- [x] **ADDRESSED (verified)** — The exact user transcript and its later printed
-  zero status are retained with explicit provenance. The verifier rejects
-  successful probe admission, an invented attached native exit status, a
-  removed denial and attribution of the original EPERM to SIP. Child .9 owns
-  failure-only unprivileged context qualification as the next supported path.
-- [x] **NO REGRESSION** — Saved report verification, `knowledge-map: OK`, book
-  and staged doctrine checks qualify this evidence/plan update. No production
-  source, original test, native trace or host security setting changes.
-
-Re-derivation consumes the user-reported command/output; falsification challenges
-its negative admission and causal limits; durability is the exact transcript,
-hash manifest and verifier. Independent native exit/stream capture is missing;
-it is not needed to decline the explicitly denied probe route. Historical cause
-and the pending writer/storage work remain open.
-
-## Acceptance — failure-only native context qualification `.3.2.10.9`
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The retained `#   at t/1972-isf-constant-false-guards.t line 95` identifies a pre-exec rejection whose spent group/session context was absent. SIP denies the requested trace route. This recorder addresses future evidence loss, not the unproved historical cause.
-- [x] **ADDRESSED (verified)** — Real session-leader EPERM retains original return/errno and independent native identities. Ordinary/stale-errno success performs no queries or writes; modeled query/write failures remain explicit without changing admission. Row/file/sink controls preserve complete capture bytes. The sealed failure-only manifest binds producer, results, cleanup and verifier.
-- [x] **NO REGRESSION** — Guarded `prove -Iperl -It/lib docs/audits/native-group-witness-20260927/failure-only/qualify.t :: qualification_final` reports `All tests successful`, `Files=1, Tests=73`. Independent saved verification rejects altered success activity, native errno/session, missing events/capture gaps and false cleanup. Production sources and original tests are unchanged.
-
-Re-derivation uses actual native rejection and exact supervisor outcomes; falsification uses independent relay identities/counters, native absence and corrupt records; durability uses complete tracked source/capture/manifest. Modeled diagnostic faults do not establish native query failures. The historical cause remains missing; `.10` owns the evidence-only roadmap handoff.
-
-## Evidence handoff — independent guard qualification `.3.2.10.10`
-
-Saved original/failure-only verification passes; the production/test-source diff against the qualified observation is empty. Re-derivation uses the retained full runtime outcomes and current source identity; falsification uses independent public-pin oracles and the saved verifier's altered result/limit/cleanup controls; durability is the existing tracked manifests, exact Git revisions and this reconciliation. No new runtime is required to consume that evidence. Guard behavior is qualified; native causality, startup and full-CI gates remain open. Child `.11` retains P1 responsibility at the next genuine runtime opportunity.
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The initial `#   at t/1972-isf-constant-false-guards.t line 95` failure blocked the guard oracle before execution. The retained independently owned observation subsequently completes that oracle; current production/test-source equality separates guard qualification from unexplained native causality.
-- [x] **ADDRESSED (verified)** — Both saved verifiers pass and the scoped Git comparison exits zero. The guard leaf closes only its own acceptance; P1 native repair remains scheduled under `.11`. Current task/index/book/fact/pointer state now agrees without executing a new runtime.
-- [x] **NO REGRESSION** — `knowledge-map: OK`, task-tree integrity, independent claim census and the book build pass. Staged acceptance initially required fresh boxes because the census/budget records are configured implementation paths; these box-scoped declarations qualify that publication change without claiming production modification.
-
-## Acceptance — fixed priority observer `.3.2.10.11.1`
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The original `#   at t/1972-isf-constant-false-guards.t line 95` precedes child execution without retained session context. The next genuine priority repair needs fixed capture admission; the qualified failure-only primitive alone does not bind a selected test or retain complete stages.
-- [x] **ADDRESSED (verified)** — Guarded `priority-observer/qualify.t` passes closed admission, imported-hook installation, unchanged arguments/results/errno, real rejection and explicit diagnostic-gap controls. `priority-observer/verify.py` independently validates complete sealed outcomes, native identity, limits, cleanup and hostile records. The initial saved verifier expected no Test::More END diagnostic; exact retained stderr corrected that oracle without changing the successful producer.
-- [x] **NO REGRESSION** — `All tests successful`, `Files=1, Tests=49`; complete control TAP and evidence are sealed. Existing helper/failure-only saved qualification also passes. Knowledge Map, task integrity, claim census, book and staged doctrines qualify publication; production and original tests remain unchanged.
-
-Re-derivation uses actual adapter/native outcomes; falsification uses independent child relay, OS PID/group absence, controlled diagnostic faults and corrupted saved records; durability uses complete tracked captures, producer identities, manifest and verifier. Deliberate session controls are not historical causal evidence. Genuine HDL qualification and original causality remain missing under .11.2 and its parent.
+Re-derivation uses exact Git source retrieval; falsification compares the unchanged contract prefix and scope correction independently of the production manifest/count checker; durability is the bounded manifest, immutable predecessor and mandatory task-integrity gate. Open native causality stays owned by .11.
