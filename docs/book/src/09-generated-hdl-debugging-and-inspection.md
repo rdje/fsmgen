@@ -314,6 +314,10 @@ git-ignored `.artifacts/` directory, with typed roots such as
 in-tree build roots such as `rust/target/` and `docs/book/book/` also remain
 valid.
 
+The latest cleanup is recorded in `docs/ARTIFACT_CLEANUP.md`. Cleanup removes
+verified generated outputs while preserving failed-run evidence needed by open
+investigations.
+
 Output-bearing CLI options must resolve inside the repository and reject
 parent traversal, absolute external destinations, and symlink escapes. An
 external source may still be supplied as an explicit caller-authorized input;

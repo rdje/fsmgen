@@ -1817,11 +1817,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5`
-  Status: `active`
+  Status: `done`
   Goal: `Complete the due repository-local generated artifact cleanup before witness qualification.`
   Acceptance: `Remove only the completed generated mdBook output roots .artifacts/writer-guards/book, .artifacts/native-group-discriminator/book and .artifacts/native-task-rollover/book after checking repository containment, no symlinks and ignored/untracked-output ownership. Retain all native and guard failure logs, sealed evidence and spent compiler/proxy workspaces. Census Rust release/deps/incremental log/bin paths without deleting ambiguous outputs. Replace docs/ARTIFACT_CLEANUP.md with the latest dated summary, synchronize the book/resume pointer and commit exact residue checks.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Each selected book root was an ignored, untracked generated output on the repository device with no symlink entries. Exact deletion and absence checks pass. Guard/native logs, sealed evidence and spent compiler/proxy workspaces remain. Root and rust/target release/debug-incremental/debug-deps log/bin census found no matching files requiring deletion. The overwrite-only cleanup record is dated 2026-09-27T19:21:28+00:00. Focused documentation/Knowledge Map and staged gates qualify this maintenance slice; native diagnosis remains .3.1.`
+  Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3`
   Status: `active`
@@ -4501,7 +4501,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.5` performs the due completed-book artifact cleanup before `.10.3.1` qualifies native syscall context capture. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.3.1` qualifies native syscall context capture after exact evidence rollover and due artifact cleanup. T1972 remains blocked pending an attributable diagnosis. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6974,3 +6974,24 @@ correction supplies its proper scope and is reflected in the canonical fact/book
 Re-derivation retrieves the exact predecessor; falsification compares independent
 source/suffix hashes and retained live contract spans; durability is the existing
 manifest checker and immutable Git recovery. The native EPERM cause remains open.
+
+## Acceptance — due generated artifact cleanup `.3.2.10.5`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies the previous
+  cleanup record dated 2026-09-26T19:14:38+00:00. It is due under the standing
+  daily cleanup rule. Completed book renders are task-owned generated outputs;
+  guard/native logs and spent compiler evidence remain needed for open work.
+- [x] **ADDRESSED (verified)** — Preflight checks prove each selected book root
+  is ignored, untracked, on the repository device and free of symlink entries.
+  Only those exact roots are removed, with post-removal absence checks. Root
+  and rust/target release/deps/incremental log/bin census requires no removal.
+  The latest-only cleanup record and book storage guidance are synchronized.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves routing. Documentation
+  hygiene and staged doctrine checks qualify the maintenance commit. Native
+  and guard evidence remain present; no source, test or runtime behavior changes.
+
+The bounded operation manifest is retained under `.artifacts/native-artifact-cleanup/`.
+Re-derivation uses the named generated roots and ownership checks; falsification
+checks tracked/symlink/device exclusions and exact residue; durability is this
+owned scope and the latest cleanup record. Detailed removed-file lists are
+ignored operational data, not a permanent artifact-collection measurement.
