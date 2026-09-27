@@ -477,6 +477,24 @@ the search path):
       (output data_out data_out))))
 ```
 
+Library-bound inputs remain connected to both the library and the importing
+actor, so parent logic can read them too. A library-bound output has one writer:
+the library actor. The generated top forwards it to the public output and to
+an input on the importing FSM. Parent rules and transactions can read that
+value without an added register stage. Actor-facing schedule counts and public
+port directions remain unchanged; only the importing FSM's component interface
+uses an input for that readback.
+
+A parent assignment, generated-child completion, reset value, or default on a
+library-owned output is rejected. Put output reset/default behavior on the
+library actor itself. Binding another library instance to the same output is
+also rejected; the compiler does not choose an arbitration policy.
+
+Library instances in the default domain can coexist with independently clocked
+sibling domains. Selecting a nondefault domain currently fails system-binding
+validation because the binder does not recognize its clock/reset names. This
+boundary does not authorize implicit clock-domain crossings.
+
 The first shipped reusable definition is
 [isf/common/fifo.isf](../../isf/common/fifo.isf), exported as
 `common.fifo.fifo`, with

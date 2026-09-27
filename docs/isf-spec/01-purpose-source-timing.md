@@ -736,8 +736,12 @@ resolved library actor use. The deterministic module and file basename are
 When a library actor use is present, lowering also emits a generated top
 `<importing_actor>_top.fsm` that instantiates the importing actor and each
 library child actor. Bound library inputs are linked from top inputs directly
-to the library instance, and bound library outputs drive the corresponding top
-outputs. Same-name clock/reset system bindings can be omitted at the use site
+to the library instance and the retained importing-FSM inputs. Bound library
+outputs drive the corresponding top outputs and importing-FSM readback inputs.
+The actor-facing schedule/top interface keeps its authored directions; the
+component readback adds no state. Parent writers, reset/default declarations,
+generated completions, and duplicate library drivers on those outputs are
+rejected; the library actor owns their value and reset. Same-name clock/reset system bindings can be omitted at the use site
 when the parent and child clock names match and the reset name/kind/polarity
 matches; FSMGen records the inferred bindings in `library_uses[].bindings[]`
 and uses the existing generated-composition system-port auto-wiring path.
@@ -745,10 +749,11 @@ When the library actor's authored clock or reset name differs from the
 importing actor's parent signal, the generated top emits explicit Lisp-ish
 composition links such as `(clk rx.lib_clk)` or `(rst_n rx.lib_rst_n)`. The
 reusable actor still owns reset kind and polarity; the binding remaps only the
-signal identity seen at the parent boundary. This is not multi-clock-domain
-support. The current ISF scheduler still models one
-clock domain for an actor/generated top; multi-clock, asynchronous, and
-interacting clock-domain semantics remain unspecified and out of scope here.
+signal identity seen at the parent boundary. A library use in the default
+domain is realized alongside independently clocked sibling domains. Nondefault
+library system bindings still fail validation because the binder recognizes
+only the compatibility/default clock/reset; that boundary remains unqualified.
+No crossing is inferred from a library binding.
 Successful schedule reports expose a bounded top-level `library_uses` array
 with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `scheduled_fsm`, `parameters`, and `bindings`. Parameter summaries expose
@@ -1510,9 +1515,9 @@ Multi-clock boundary:
 - Legacy `(clock name)` ISF actors have one clock domain per actor/generated
   top.
 - Library clock/reset bindings and generated-top system-port links are
-  signal-name binding inside the one-domain library-binding model. They do
-  not create a second clock domain and they do not model clock-domain crossing
-  behavior.
+  signal-name binding within the owning domain. Default-domain library uses
+  can coexist with independent sibling domains; nondefault library system
+  binding remains unqualified. These links do not infer a clock-domain crossing.
 - ISF now accepts parser metadata for named domains and builds an internal
   scheduler partition. Public `lower(...)` emits one domain scheduled `.fsm`
   artifact per declared domain plus a generated multi-domain top that wires

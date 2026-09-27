@@ -1393,8 +1393,11 @@ real source path. Standalone transaction/drive exports, symbolic parameter
 values beyond the shipped actor-local scalar static-dimension defaults,
 derived parameter expressions, transaction-port dimensions beyond positive
 literals, actor-local scalar parameters, and scalar type aliases,
-memory-array backend emission, nested library imports, and multi-clock-domain
-ISF semantics are still deferred.
+memory-array backend emission, nested library imports, and nondefault-domain
+library system bindings are still deferred. Default-domain library instances
+can coexist with independently clocked sibling domains. Importing-actor inputs
+remain connected, and library-owned outputs feed direct parent readback inputs
+without changing public directions or inventing parent writers.
 
 FIFO modeling rule: a FIFO should be modeled primarily as an actor because it
 owns persistent storage, pointers, occupancy, full/empty flags, reset behavior,

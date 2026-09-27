@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -1130,7 +1130,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.3.2`
   Status: `pending`
   Goal: `Qualify shared storage reads through realized domain children.`
-  Acceptance: `After .3.1 and prerequisite .46/.47 repairs, qualify scalar/typed/aggregate/bank live reads with owner-only reset/state and independently clocked domains, repeated activation, exact interfaces and native/API/MCP parity. Remove only the multi-domain read refusal, keep unowned cross-domain access and direct writer refusals, synchronize documentation and commit.`
+  Acceptance: `After .3.1 and prerequisite .46/.47/.48 repairs, qualify scalar/typed/aggregate/bank live reads with owner-only reset/state and independently clocked domains, repeated activation, exact interfaces and native/API/MCP parity. Remove only the multi-domain read refusal, keep unowned cross-domain access and direct writer refusals, synchronize documentation and commit.`
   Verification: `Retained T1904 multi-domain reader must observe its domain owner, with no public storage or completion handoff leakage.`
   Commit: `pending`
 
@@ -1142,10 +1142,17 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.46: preserve generated child named completion`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.47`
-  Status: `pending`
+  Status: `done`
   Goal: `Restore correct parent interfaces around library-owned ports after explicit interface preservation.`
-  Acceptance: `Immediately after .46 and before domain storage-read qualification, repair ordinary/domain library compositions without hiding authored public ports. Reproduce T1238 and the T1912 FIFO domain source. Connect retained parent inputs; assign library-driven output ownership and any parent readback explicitly, rejecting competing writers. Prove FIFO reset/push/pop, parent input/readback use, exact interfaces, native/API/MCP parity and library regressions; update docs/facts and commit.`
-  Verification: `T1238 unchanged fails strict generated HDL: fifo_library_use.data_in is unconnected. CompositionTop::_emit_wiring_block skips library-bound inputs while explicit-interface preservation now retains them on the parent. The corresponding output-skip logic needs ownership review too. This predates domain child realization and the original regression remains unchanged; T1912 retains the multi-domain source for the same immediate repair.`
+  Acceptance: `Immediately after .46 and before domain storage-read qualification, repair ordinary/default-domain library compositions without hiding authored public ports. Reproduce T1238 and the T1912 FIFO domain source. Connect retained parent inputs; assign library-driven output ownership and any parent readback explicitly, rejecting competing writers. Prove FIFO reset/push/pop, parent input/readback use, exact interfaces, native/API/MCP parity and library regressions; update docs/facts and commit.`
+  Verification: `Unchanged T1238/T1231/T1321 pass. T1914 independently qualifies FIFO queue/flag/reset behavior, parent input and output readback, typed aliases, sibling-domain isolation, exact public pins, scheduled replay and full native/API/MCP parity. Parent writers, reset/default overrides, generated completions and duplicate library drivers are rejected. T1912 retains its original default-domain FIFO source as a passing check. Nondefault system binding remains explicitly owned by .48.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.47: restore library parent interfaces`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.48`
+  Status: `pending`
+  Goal: `Validate library system bindings against their owning clock domain.`
+  Acceptance: `Immediately after .47 and before domain storage-read qualification, repair explicit and inferred clock/reset binding for library uses in nondefault domains. Use the retained T1914 source, preserve same-domain reset kind/polarity and published remapping behavior, reject unowned system crossings, and qualify independent clocks/resets, FIFO runtime, exact interfaces and native/API/MCP reports. Synchronize the catalog, spec/book/facts and commit.`
+  Verification: `The public source in .artifacts/library-parent-interfaces/nondefault/source.isf declares clk in domain fifo and selects that domain for u_fifo. Strict check reports: clock binding references unknown parent signal clk. Parser::_validate_use_bindings recognizes parent interface signals and only the compatibility/default actor clock/reset, omitting the selected domain system contract. T1914 retains the exact refusal until repaired.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.3`
@@ -1879,8 +1886,9 @@ and scalar wait timing. Completed `.39.2.2.2.2.2` qualifies
 aggregate live reads. Completed `.39.2.2.2.3.1` realizes domain transaction
 children and prevents held-start reexecution. Completed `.46` preserves named
 child completion and excludes delayed events from inferred datapath sharing.
-Next `.47` repairs library parent interfaces, followed by
-`.39.2.2.2.3.2` domain storage reads before writer handoffs. After those repairs,
+Completed `.47` restores library parent interfaces and qualifies default-domain
+FIFO ownership/readbacks. Next `.48` repairs nondefault library system bindings,
+then `.39.2.2.2.3.2` qualifies domain storage reads before writer handoffs. After those repairs,
 resume watchdog entry and rearming under `.32.1.3.3.3`, independent transaction reachability under
 `.32.1.3.3.1`, and broader behavior/API/MCP signoff under `.32.1.3.3.2`.
 Naming, explicit routes and declared inputs are qualified; `.32.1.3.4` is done.
@@ -5001,3 +5009,64 @@ completion routing. T1913 now tests that valid shadowing contract: mirrored
 receives the local pulse and the untouched actor notice stays low. The emitter
 therefore skips legacy lookup for automatic actor completions unconditionally;
 explicit transaction-local bindings retain their existing separate path.
+
+
+## Qualification — `.47`
+
+Restore retained parent inputs in ordinary and domain library compositions.
+Keep library outputs owned by their child; parent readback must be an explicit
+input view, not a phantom parent writer or a leaked public port. Reject genuine
+competing writers. Qualify unchanged FIFO regression, push/pop/reset runtime,
+parent input/readback use, exact interfaces, scheduled replay and native/API/MCP
+parity before domain storage-read work.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `bin/fsmgen --strict --check --json`
+  reports unconnected fifo_library_use.data_in in before-check.json; unchanged
+  T1238 fails in before-test.log. CompositionTop skipped retained parent inputs
+  solely because the library also consumed them. Emitted before/fifo_library_use.fsm
+  also declares child-owned full/empty/data_out as parent outputs, creating
+  phantom ownership. LibraryPortOwnership now separates the actor-facing
+  interface from explicit parent-component readback inputs. Evidence lives in
+  `.artifacts/library-parent-interfaces/`.
+- [x] **ADDRESSED (verified)** — final-runtime.log reports `All tests successful`
+  for T1914/T1912. The independent queue scoreboard verifies FIFO data/flags,
+  wrap stimulus, reset/idle and parent sampling, including typed readback and
+  a stopped sibling clock. Exact public directions/counts, strict scheduled
+  replay and complete native/API/newline check/semantic/schedule reports pass.
+  Competing writers and parent reset/default declarations fail precisely.
+  T1914 retains the nondefault-domain refusal for immediate follow-up `.48`;
+  T1912's unrelated watchdog TODO remains owned by `.32.1.3.3.3`.
+- [x] **NO REGRESSION** — focused.log reports `All tests successful` for
+  T1230/T1231/T1237/T1238/T1239/T1247/T1281/T1321/T1352/T1476. The original
+  FIFO schedule counts remain unchanged. catalog-final.log reports
+  `All tests successful` for T1239/T297 after machine-readable catalog sync.
+  T1376 and reference partition validation pass in book.log; mdBook builds.
+  Logs are under `.artifacts/library-parent-interfaces/`.
+
+T1238 and T1231 pass after the initial wiring repair. T1321 then caught an
+actor-report regression: changing parent IR ports to inputs changed the public
+schedule counts. Keep actor-facing ports unchanged and express readback only
+in explicit_interface_ports, the emitted importing FSM contract. The generated
+top and schedule continue to expose the authored directions, while the parent
+component sees child-owned outputs as inputs. Preserve T1321's original counts.
+
+T1914's first observed/typed/domain scoreboard run omitted the idle clock between
+reset release and the first operation. The FIFO sets empty on that clock and
+the parent samples it on the next. The corrected reset task explicitly advances
+and verifies that first idle edge, then seeds the independent flag model; it
+still requires all outputs low while reset is asserted. No RTL timing changes.
+
+The nondefault-domain probe reproduces a separate parser defect before lowering:
+clock binding references unknown parent signal clk despite that clock belonging
+to the selected FIFO domain. `.48` owns this immediate next repair; `.47`
+qualifies default-domain library realization with independently clocked sibling
+logic and retains the nondefault source/refusal without claiming it works.
+
+Re-derivation uses retained strict diagnostics, scheduled parent interfaces and
+source-backed schedule/semantic reports. Falsification uses an independent
+queue/flag model and cycle-offset parent samples, plus rejected competing owners
+and exact top-level interfaces. Durability is carried by T1914, unchanged older
+regressions, catalog/public contract, spec/book, fact card, this task and the
+staged doctrine gate. No visual mdBook audit or nondefault binding runtime is
+claimed. Live-document budget/inventory refresh belongs to this leaf without
+raising hard ceilings.

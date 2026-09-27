@@ -113,6 +113,12 @@ Verification:
   promotes the file-backed fixture to strict schedule JSON parity, strict
   `--outdir` importer/child/top `.fsm` emission, fixed use-site parameter and
   binding provenance, and plain plus strict generated-top HDL generation.
+- [t/1914-isf-library-parent-interfaces.t](../t/1914-isf-library-parent-interfaces.t)
+  independently checks FIFO queue behavior, reset and idle flags, parent input
+  and output readback, typed aliases, sibling-domain isolation, exact public
+  interfaces, scheduled replay and native/API/MCP parity. Competing writers and
+  importer reset/default overrides are rejected. The nondefault-domain system
+  binding refusal is retained explicitly.
 - [t/1239-isf-library-catalog-contract.t](../t/1239-isf-library-catalog-contract.t)
   keeps this catalog aligned with the machine-readable ISF public contract.
 
@@ -123,13 +129,15 @@ Limitations:
 - Parameter-driven interface and storage elaboration is not shipped yet.
 - The backend still emits scalarized bank entries, not a native memory-array
   FIFO storage primitive.
-- Automatic non-zero reset values, such as reset-time `empty = 1`, are not
-  shipped yet.
+- This fixture declares no nonzero output reset: `full`, `empty`, and
+  `data_out` reset low. The first idle clock after release sets `empty` high.
+  The importing actor cannot override library-owned output reset/default values.
 - Standalone transaction and drive exports are not shipped as reusable
   library definitions yet.
 - Library actors that import other libraries are not shipped yet.
 - Clock/reset name remapping at the use site is shipped for generated tops:
   differently named parent/child system signals are linked explicitly while
   the reusable actor keeps its reset kind and polarity. This is name remapping
-  inside the current single-clock-domain ISF model, not multi-clock-domain
-  behavior.
+  within the default domain; independently clocked sibling domains are qualified.
+  Nondefault-domain library system bindings still fail validation and remain
+  separately owned. No clock-domain crossing is inferred.

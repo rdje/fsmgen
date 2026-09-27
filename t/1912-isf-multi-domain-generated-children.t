@@ -267,14 +267,13 @@ subtest 'child await watchdog remains owned by .32.1.3.3.3' => sub {
     local $TODO = 'child entry watchdog initialization is owned by .32.1.3.3.3';
     simulate($dir, $hdl, $cdc_await_tb);
 };
-subtest 'library parent interfaces remain owned by .47' => sub {
+subtest 'library parent interfaces qualified by .47' => sub {
     mkdir "$work/common" or die $!;
     copy('isf/common/fifo.isf', "$work/common/fifo.isf") or die $!;
     my $source = write_file("$work/library.isf", $library);
     my $check = $capture->([$^X, 'bin/fsmgen', '--strict', '--check', '--json', $source], '');
-    isnt($check->{exit_code}, 0, 'unqualified library interfaces are not called successful');
-    like($check->{stdout}, qr/leaves child port 'core\.data_in' unconnected/,
-        'retain the domain form of the unchanged T1238 interface failure');
+    is($check->{exit_code}, 0, 'retained domain FIFO library source passes strict check')
+        or diag($check->{stdout}, $check->{stderr});
 };
 done_testing();
 sub simulate {

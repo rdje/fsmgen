@@ -16,6 +16,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
 use FSM::Scheduler::ISF::ControlFlowEffects;
 use FSM::Scheduler::ISF::ChildStorageOwnership qw(select_child_storage_reads connect_child_storage_reads);
 use FSM::Scheduler::ISF::ChildActivation qw(guard_child_activation);
+use FSM::Scheduler::ISF::LibraryPortOwnership qw(connect_library_output_readbacks);
 use FSM::Scheduler::ISF::ChildCompletionOutputs qw(prepare_child_completion_outputs connect_child_completion_outputs);
 use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
@@ -132,6 +133,7 @@ sub build_module($self, $actor) {
     my $parent_ir = $self->_build_parent_ir($actor, \%generated_children, \%pruned_static_zero_children);
     my $connected = connect_child_storage_reads($parent_ir, \%child_irs);
     $connected += connect_child_completion_outputs($parent_ir, \%child_irs);
+    $connected += connect_library_output_readbacks($parent_ir, \@library_instances);
     _finalize_ir($parent_ir) if $connected;
     $parent_ir->{children} = \%child_irs;
     $parent_ir->{library_uses} = \@library_instances;

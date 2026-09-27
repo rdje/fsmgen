@@ -198,18 +198,16 @@ sub _emit_wiring_block {
     } keys %{$ir->{children} || {}};
     my @links;
     my %library_output_parent = _library_output_parent_port_map($library_uses || []);
-    my %library_input_parent = _library_input_parent_port_map($library_uses || []);
     my %atl_internal_parent_port = _atl_internal_parent_port_map($atl_top_instances || []);
 
     for my $port (@{$ir->{ports} || []}) {
         next if $port->{isf_handoff};
         my $name = $port->{name};
         next if $atl_internal_parent_port{$name};
+        next if $library_output_parent{$name};
         if ($port->{direction} eq 'output') {
-            next if $library_output_parent{$name};
             push @links, _link($actor_name . ".$name", $name);
         } else {
-            next if $library_input_parent{$name};
             push @links, _link($name, $actor_name . ".$name");
         }
     }
@@ -310,6 +308,7 @@ sub _emit_wiring_block {
             }
             if ($role eq 'output') {
                 push @links, _link($instance . ".$library_name", $parent_name);
+                push @links, _link($instance . ".$library_name", $actor_name . ".$parent_name");
                 next;
             }
 
@@ -487,22 +486,6 @@ sub _library_output_parent_port_map {
     }
 
     return %drivers;
-}
-
-sub _library_input_parent_port_map {
-    my ($library_uses) = @_;
-    my %consumers;
-
-    for my $use (@$library_uses) {
-        for my $binding (@{$use->{bindings} || []}) {
-            next unless ($binding->{role} || '') eq 'input';
-            my $parent_name = $binding->{parent_name};
-            next unless defined($parent_name) && length($parent_name);
-            $consumers{$parent_name} = 1;
-        }
-    }
-
-    return %consumers;
 }
 
 sub _atl_internal_parent_port_map {
