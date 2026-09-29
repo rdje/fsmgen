@@ -1,0 +1,17 @@
+(actor link_timers
+  (clock clk)
+  (reset (rst_n async active_low))
+  (timers
+    (timer pending_hp 1250)
+    (timer credit_hp 625000))
+  (interface
+    (input start)
+    (input ack)
+    (output done)
+    (output recovery))
+  (transaction pending
+    (on start)
+    (start-timer pending_hp)
+    (when (expired pending_hp)
+      (set recovery 1))
+    (complete done)))

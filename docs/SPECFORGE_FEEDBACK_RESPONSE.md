@@ -1335,3 +1335,30 @@ width correctly. Existing runtime-wait counters are relevant prior machinery,
 not evidence that duration conversion or instantiation support already ships.
 The named-timer and aggregate-interface packets receive their bounded intake
 next so delivery can follow demonstrated dependencies.
+
+
+## 2026-09-30: Named-Timer Request — Baseline Qualified
+
+`sf-isf-named-timers` is an accepted feature request owned by SEM `.60.2`.
+The complete packet and current native/API/newline products are preserved in
+`docs/audits/specforge-timer-intake-20260930/`. Named timer declarations and
+distinct per-await watchdog limits remain refused. The accepted watchdog
+baseline retains its complete prior schedule, apart from reset provenance;
+its actual carrier loads the limit minus one and sets `last_error` on timeout.
+This is a compatibility control, not named-timer support.
+
+Required delivery includes positive cycle limits, declaration/name validation,
+start/restart/stop in rules and transactions, ordinary expiry predicates,
+concurrent lifetimes across transaction completion and control/use metadata.
+Duration limits are conditional on duration support; they do not prevent a
+cycle-limit delivery. Optional distinct per-await watchdog limits remain owned
+separately. Timer commands need an explicit same-cycle/reset precedence and
+writer contract before implementation.
+
+The supplied immediate `when` after `start-timer` illustrates syntax; it cannot
+serve as the eventual concurrent expiry test. Qualification must actually wait
+for or repeatedly observe expiry while another timer continues, without
+changing ordinary `when` into an implicit wait or setting `last_error`.
+No native runtime or external corpus remeasurement is claimed by this intake.
+Aggregate-port intake is next, followed by the smallest qualified feature
+unblocks across the owned requests.

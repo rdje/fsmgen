@@ -2226,7 +2226,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Resolve the additional SPECFORGE duration, named-timer and aggregate-port feature requests and the unstated-reset question supplied on 2026-09-29.`
   Acceptance: `Own every requested capability and question, retain authorized packet inputs locally, independently reverify current compiler observations, distinguish supplied corpus/scale measurements from FSMGen evidence, and select bounded roadmap-aligned implementation and qualification leaves. Read sibling packet inputs only; do not change the SPECFORGE checkout, run its commands blindly, inspect submodule internals or treat illustrative syntax as selected. Director states SPECFORGE is blocked, so finish and commit only the active resource validator, then prioritize downstream intake and the smallest shippable unblocks. Resolve the reset question first, inventory other packets promptly, and retain broader compiler prerequisites only where a specific request needs them. No dirty pivot.`
-  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, reproduction, provenance delivery and complete question answer are qualified under .60.3, with P1 malformed-option repair .62 complete. Duration packet preservation and baseline reproduction are qualified under .60.1.1; timer and aggregate packet preservation/signoff/reproduction are next. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
+  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, reproduction, provenance delivery and complete question answer are qualified under .60.3, with P1 malformed-option repair .62 complete. Duration packet preservation and baseline reproduction are qualified under .60.1.1; named-timer packet preservation and baseline reproduction are qualified under .60.2.1; aggregate packet preservation/signoff/reproduction is next. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4`
 
@@ -2270,16 +2270,16 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Concurrent actor-owned named timers from sf-isf-named-timers.`
   Acceptance: `R1 named limits and duplicate/zero/unknown refusals; R2 start/restart/stop from rules and transactions; R3 ordinary expiry conditions; R4 concurrent timers independent of initiating transactions; R5 limit/width/control/use reports. Optional R6 per-await watchdog limits stays distinct. Preserve watchdog error semantics; timer command conflicts require qualified writer admission and explicit timing/reset/control precedence. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
-  Verification: `Packet README reviewed; no current reproduction or implementation signoff yet.`
+  Verification: `.1 preserves and qualifies the complete packet/current watchdog baseline. Cycle limits are required, duration support is conditional, and per-await watchdog limits are optional. Contract .2 must define timing/control/reset precedence and actual concurrent expiry qualification; no named-timer implementation ships yet.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.4`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve and qualify the supplied packet baseline.`
   Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-named-timers; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
-  Verification: `pending ordered packet intake after completed reset answer`
-  Commit: `pending`
+  Verification: `Full request/signoff/commands/source/expected material read. Packet identities, exact sources, complete native/API/newline reports and actual baseline carrier retained in docs/audits/specforge-timer-intake-20260930/. Guarded capture Files=1, Tests=3 PASS; current schedule equals every supplied prior field after excluding reset_provenance. The actual watchdog loads limit minus one, sets last_error and returns to idle on timeout. Named declarations and distinct await limits remain refused. Offline verifier rejects matching-copy counter/count/failure/provenance corruption plus altered actual load/error assignments. Initial audit guesses about load folding and output markers were corrected without production changes; both logs retained. No native execution or external corpus measurement. Next .60.4.1, then selected feature contracts and implementation.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.2`
   Status: `pending`
@@ -3059,8 +3059,8 @@ Formal identity integration and its family qualification are complete under
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
-duration baseline `.60.1.1` is qualified. The next leaf `.60.2.1` intakes
-named timers, followed by aggregate intake and contract/implementation of the
+duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
+The next leaf `.60.4.1` intakes aggregate ports, followed by contract/implementation of the
 smallest shippable downstream unblocks. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5139,3 +5139,16 @@ uses matching-copy report corruption and a separate carrier mutation; durability
 uses the complete packet/products, hashes, capture test and offline verifier.
 Supplied corpus counts and larger-scale timing remain externally supplied,
 not independently measured here. This intake does not close feature delivery.
+
+
+## Acceptance Checklist — SEM .60.2.1 named-timer packet baseline
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Current --emit-schedule-json refuses the timers actor clause in Parser and distinct await limits in LoweringIR::_transaction_watchdog_limit. The accepted watchdog carrier loads limit minus one, then raises last_error on timeout. Ordinary concurrent expiry is a missing capability, not the current watchdog contract.
+- [x] **ADDRESSED (verified)** — Preserved the complete authorized packet with verified identities and exact sources. Native/API/newline reports agree completely; baseline schedule fields match supplied evidence apart from reset provenance. Independent carrier checks retain actual load, error and idle behavior. The offline verifier rejects semantic corruption even when report mirrors agree, plus changed actual load/error assignments. Initial audit-oracle guesses are disclosed and corrected without production changes.
+- [x] **NO REGRESSION** — Guarded capture reports `All tests successful. Files=1, Tests=3`; offline identity/transport/carrier and hostile controls pass. The accepted watchdog and current refusal contracts are preserved. No native runtime required. Book, canonical fact, response and task state distinguish required cycle timers, conditional durations and optional per-await limits; publication and staged doctrines qualify the record.
+
+Re-derivation uses actual public commands and the emitted watchdog carrier;
+falsification uses matching-copy report corruption and independent carrier
+mutations; durability uses tracked packet/products, logs, hashes and verifier.
+External corpus counts are not independently measured. Feature delivery remains
+open and follows the remaining aggregate intake.

@@ -1,0 +1,32 @@
+{
+  "base_revision": "9882618b2ba4601ed2c8eb3287e82bbdd0d906c9",
+  "baseline_compatibility": "Every supplied baseline schedule field is unchanged; only the separately shipped reset_provenance field was added.",
+  "files": {
+    "baseline-good.isf": "533ee9195e6b2c5cf9602168fd445cf86dfaa57aae4a6683ab602bd83209a5f6",
+    "capture.t": "21166982ad0a0204211a4462c13e5739a4d6615f75bea53576b3ac822b48f07a",
+    "current.json": "2966486f9e0702b348adc5e35772ebfa7267555aa5d0d1aa8db57759ce4e9356",
+    "logs.json": "8317e313c77b2b8d1a3b5f9fc2373e6e5a2cc6d34150df598bb4e3ec708c5ec0",
+    "named-timers.isf": "08a6dfcb09b78343e36fbe0e93b1d9fab1e3177e87843d62db2c4ce47d8d725b",
+    "packet.json": "a5f36174ff0f0c53aba9e559cf92eea1f36e137740966691edcedfebc9485a49",
+    "two-await-limits.isf": "ec1e30b11471ebcaeb16152028194ad6df22cecbb7185621e24d02035d7ebdd6",
+    "verify.py": "313a5ac5a1fc44cc3e891d4451e5e81fc477e58555b15142d309cb1963de48d1"
+  },
+  "initial_disposition": "Initial capture guessed a constant-folded output assignment and an output marker on last_error. The actual watchdog entry uses a register-input expression (limit minus one), and last_error is internal storage. Corrected those audit oracles without production changes; initial and final logs are retained.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.1",
+  "packet_census": {
+    "files": 64,
+    "source_bytes": 1158156
+  },
+  "producer_sha256": {
+    "bin/fsmgen": "4fa93b2d8b66b73c8bf1a41c8f5b0888d8409cf16fcc5c9bb0b74349ad88df3d",
+    "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+    "perl/FSM/Adapter/ISF/Parser.pm": "8796b7e39557cc5c4e53b63a3d53667bb3ab6c7f3afc03611e9f2823dacfe993",
+    "perl/FSM/Scheduler/ISF/Emitter/FSM.pm": "446c1c8c189f130fb7c4ae69244c1853f8ef9f30ace347e463eda18cd724a3bb",
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": "9b48b7817ac327838a982d833704050f2e6b2e0f6eaa433667086a08bbf88ff0",
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": "3e824aab0497219c2995efa4e738f2b67b5f290632157acde652d42039336fe0",
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "68fd3e4c8a2f3f72b362e386c5de3d82efe5780e23ee8553f79e452fc3c26b5f"
+  },
+  "public_qualification": "Files=1, Tests=3 PASS; complete native/API/newline success and failure comparisons, plus independent actual watchdog-carrier assertions.",
+  "scope": "Bounded named-timer request baseline only. No timer implementation, native HDL execution or external corpus measurement.",
+  "supplied_external_claims": "Corpus counts and larger scale/timing observations remain supplied evidence, not reverified measurements. The foreign-git-head correction is already owned by SEM .32.2."
+}
