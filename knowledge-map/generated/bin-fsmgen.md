@@ -26,5 +26,5 @@
 
 _Current bin/fsmgen import-tree baseline is recorded in docs/BIN_FSMGEN_IMPORT_TREE.md_
 
-- **date:** 2026-09-06 · **status:** current
+- **date:** 2026-09-30 · **status:** current
 - **source and verification:** [`docs/knowledge/bin-fsmgen-import-tree-current-baseline.md`](../../docs/knowledge/bin-fsmgen-import-tree-current-baseline.md)

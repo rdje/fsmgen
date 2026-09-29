@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::ISFResetProvenance qw(reset_provenance_contract);
 use FSM::Support::ISFResourceCatalog qw(
     isf_backlog_resource_kind_values
     isf_enforced_resource_kind_values
@@ -303,6 +304,7 @@ sub build_isf_public_interface_contract {
         schedule_report_presence_key_family_map => isf_public_interface_schedule_report_presence_key_family_map(),
         schedule_report_reset_shape => isf_public_interface_schedule_report_reset_shape(),
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
+        schedule_report_reset_provenance => reset_provenance_contract(),
         schedule_report_reset_kind_values => isf_public_interface_schedule_report_reset_kind_values(),
         schedule_report_reset_polarity_values => isf_public_interface_schedule_report_reset_polarity_values(),
         schedule_report_storage_required_keys => isf_public_interface_schedule_report_storage_required_keys(),
@@ -385,6 +387,7 @@ sub build_isf_public_interface_contract {
             't/1157-isf-public-report-transaction-ordering-audit.t',
             't/1158-isf-public-report-dt-kind-metadata-audit.t',
             't/1159-isf-public-report-reset-shape-metadata-audit.t',
+            't/1978-isf-reset-provenance.t',
             't/1160-isf-public-actor-shell-value-shape-audit.t',
             't/1161-isf-public-facade-failure-diagnostic-metadata-audit.t',
             't/1162-isf-public-actor-shell-interface-shape-audit.t',
@@ -713,6 +716,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_presence_key_family_map
             schedule_report_reset_shape
             schedule_report_reset_keys
+            schedule_report_reset_provenance
             schedule_report_reset_kind_values
             schedule_report_reset_polarity_values
             schedule_report_storage_required_keys
@@ -1021,6 +1025,7 @@ sub isf_public_interface_schedule_report_top_level_keys {
             scheduled_fsm
             clock
             reset
+            reset_provenance
             watchdog
             actor_phases
             actor_stages

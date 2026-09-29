@@ -527,6 +527,7 @@ my $emit_verification_output = "";
 my $verification_outdir = "";
 my $verify_hdl = 0;
 my $isf_schedule_report;
+my $isf_reset_provenance;
 
 # Store original ARGV to check for bare flags before GetOptions processes them
 my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
@@ -1241,6 +1242,8 @@ if ($fsm_file =~ /\.isf$/i) {
         die $display_error;
     }
 
+    $isf_reset_provenance = $actor->{reset_provenance};
+
     if ($emit_schedule_json) {
         my $json = eval { $scheduler->report($actor); };
         if ($@) { die normalize_cli_error_text($@); }
@@ -1487,6 +1490,7 @@ if ($emit_semantic_json) {
     my $report = build_normalized_semantic_success_report(
         input => $fsm_input,
         source_file => $public_source_file,
+        reset_provenance => $isf_reset_provenance,
         target_language => $target_language,
         strict_mode => $strict_mode,
         result => $result,
@@ -1500,6 +1504,7 @@ if ($check_json_mode) {
     my $report = build_check_success_report(
         input => $fsm_input,
         source_file => $public_source_file,
+        reset_provenance => $isf_reset_provenance,
         target_language => $target_language,
         strict_mode => $strict_mode,
         module_info => $result->{module_info},

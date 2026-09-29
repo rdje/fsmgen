@@ -8,6 +8,7 @@ use Exporter 'import';
 use File::Basename qw(dirname);
 use File::Spec;
 use JSON::PP ();
+use FSM::Support::ISFResetProvenance qw(snapshot_reset_provenance);
 
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_metadata);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
@@ -28,7 +29,7 @@ sub build_check_success_report {
             report_source => 'FSM::Support::CheckDiagnostics',
         },
         command => _command_contract(%args),
-        source => _source_contract(%args),
+        source => _source_contract(%args, include_reset_provenance => 1),
         success => JSON::PP::true,
         diagnostics => [],
         diagnostic_summary => build_serializable_diagnostic_summary(
@@ -131,6 +132,8 @@ sub _source_contract {
     return {
         input => $args{input},
         resolved_path => $args{source_file},
+        ($args{include_reset_provenance} && defined($args{reset_provenance})
+            ? (reset_provenance => snapshot_reset_provenance($args{reset_provenance})) : ()),
     };
 }
 

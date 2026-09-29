@@ -16,7 +16,7 @@ answers:
   - "which VIAL backend packages are reachable from bin/fsmgen?"
   - "does bin/fsmgen reach the shared Verilator lifecycle?"
   - "does bin/fsmgen reach the shared backend-emission authority?"
-date: 2026-09-06
+date: 2026-09-30
 status: current
 tags: [bootstrap, architecture, import-tree, bin-fsmgen, semantic-introspection, ial2, ppif, vial]
 evidence: docs/BIN_FSMGEN_IMPORT_TREE.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; bin/fsmgen; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/PlanBuilder.pm; perl/FSM/VIAL/ArtifactTransaction.pm; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/Runner.pm; perl/FSM/VIAL/Backend/VerilatorLifecycle.pm; perl/FSM/VIAL/Backend/ProcessSupervisor.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm; perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm
@@ -44,3 +44,9 @@ README, roadmap, bootstrap, mdBook, task evidence, and executable scans consume
 this current runtime-spine map. `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13`
 retains it as live maintainer reference because raw dependency output does not
 supply the same architecture view.
+
+The scoped reset-provenance update on 2026-09-30 adds the shared
+`FSM::Support::ISFResetProvenance` projection/discovery helper through ISF
+schedule and shared check/semantic source contracts. It preserves the runtime
+spine and the dated numerical capture above; see T1978 for native/API/newline
+qualification rather than treating that old census as a refreshed closure count.

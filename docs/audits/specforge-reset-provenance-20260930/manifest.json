@@ -1,0 +1,28 @@
+{
+  "base_revision": "0fa7943104a0d684f1974ff7be5eaf9f8b5401be",
+  "files": {
+    "logs.json": "2cc65e008baba4550de7fe8ac55c77a1c627da509bcdec3a5f511ac88e6f5388",
+    "reset-token-defect.json": "63e26e9a52d85a9a179fd142fd821a68ebbe70c49d2ef991d9ad2a374ab02a68"
+  },
+  "log_storage": "logs.json retains original log text and SHA-256 losslessly, including whitespace.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3.1",
+  "producer_sha256": {
+    "bin/fsmgen": "4fa93b2d8b66b73c8bf1a41c8f5b0888d8409cf16fcc5c9bb0b74349ad88df3d",
+    "perl/FSM/Adapter/ISF/Parser.pm": "b15f8458ed5ae1d67a9f4176a1b5354ecf33682548e4a6e4b95c9bf650c75e3b",
+    "perl/FSM/Scheduler/ISF/DomainSource.pm": "bda60d97169803031728ddf23516d9991fcd14348e66a597f23353ec63aaad05",
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": "9b48b7817ac327838a982d833704050f2e6b2e0f6eaa433667086a08bbf88ff0",
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": "3e824aab0497219c2995efa4e738f2b67b5f290632157acde652d42039336fe0",
+    "perl/FSM/Support/CheckDiagnostics.pm": "e42ebb3f566f13cdcac795a9f20d33ca23271c0c5ad8f4c8d6c6b9411df57ae1",
+    "perl/FSM/Support/CheckDiagnosticsContract.pm": "a45723eaeb78717dcb112cff298bd3074c3935e498550120f2eb2bbf8f979f94",
+    "perl/FSM/Support/ISFPublicInterfaceContract.pm": "4991d692b648d32df086918308733ab3fbf0c18e402ae560084ee747a9ff6356",
+    "perl/FSM/Support/ISFResetProvenance.pm": "16f0e0e6fc3dbf2a98b5e7817c9491a249f82e4770d1cb45b4e66fe9e9dd38f4",
+    "perl/FSM/Support/NormalizedSemanticReport.pm": "846e9f50626f2d64d00de2c4436cb434b76f77760a658ddcbc289526a28aaa5c",
+    "perl/FSM/Support/NormalizedSemanticReportContract.pm": "bd5462f616175157d94d89f55307489d1b4f9c714b2ff3b8be716a7fa9efcd71",
+    "perl/FSM/Support/ReportSourceContract.pm": "37654a6623c963a4c62f03354892aaa2b64324b30139a5aa4a18bfab974d0ab4",
+    "t/1144-isf-public-tested-by-metadata-audit.t": "6df0179d0319ad13e2ac0452e938233346f2598afa4f09d3a101c2f78d71adfd",
+    "t/1255-isf-schedule-report-golden-matrix.t": "c49960c7cacbf834dd26c63e3aa9a7d2c859a80f8ee8e8fff19c509ab12c418f",
+    "t/1978-isf-reset-provenance.t": "7975d3e838d9f441ef47d6c10d6144f9b9b948b8c9d36cedca583cc6f4168575"
+  },
+  "regression_disposition": "Initial 15-file neighboring run: only exact T1144 tested_by list failed on newly advertised T1978. Corrected expected catalog and requalified with golden/report/book checks: Files=4, Tests=288 PASS. All other neighboring files including T1893 and T1890 passed.",
+  "scope": "Reset provenance metadata; full T1978 native/API/newline and capability checks with unchanged baseline reports, FSM and both Verilog HDL targets. No native HDL execution."
+}

@@ -8629,6 +8629,12 @@ sub _finalize_actor_clock_domain_timing($self, $actor, $singleton_actor_clauses)
 sub _finalize_actor_timing_conventions($self, $actor, $singleton_actor_clauses) {
     my $has_clock_domains = ref($actor->{clock_domains}) eq 'HASH';
 
+    # Capture source evidence before legacy defaults make the policies identical.
+    $actor->{reset_provenance} = $has_clock_domains
+        ? [map { {domain => $_->{name}, origin => $_->{reset} ? 'explicit' : 'domain_absent'} }
+            @{$actor->{clock_domains}{domains}}]
+        : [{domain => undef, origin => $singleton_actor_clauses->{reset} ? 'explicit' : 'legacy_default'}];
+
     if (!$has_clock_domains) {
         $actor->{clock} = ISF_DEFAULT_CLOCK_NAME
             unless $singleton_actor_clauses->{clock};

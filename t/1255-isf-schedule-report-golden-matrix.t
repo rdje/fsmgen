@@ -67,6 +67,7 @@ sub golden_matrix_cases {
                   schedule_report_presence_key_family_map
                   schedule_report_reset_shape
                   schedule_report_reset_keys
+                  schedule_report_reset_provenance
                   schedule_report_reset_kind_values
                   schedule_report_reset_polarity_values
                   schedule_report_storage_required_keys
@@ -458,6 +459,13 @@ sub assert_branch_present {
     }
     if ($branch eq 'schedule_report_state_count_shape') {
         ok_nonnegative_integer($report->{state_count}, "$label state_count");
+        return;
+    }
+    if ($branch eq 'schedule_report_reset_provenance') {
+        is_deeply($report->{reset_provenance}, [{domain => undef, origin => 'explicit'}],
+            "$label retains its explicitly authored reset clause");
+        assert_entry_keys($report->{reset_provenance}[0],
+            $contract->{$branch}{entry_keys}, "$label reset provenance keys");
         return;
     }
     if ($branch eq 'schedule_report_reset_shape') {

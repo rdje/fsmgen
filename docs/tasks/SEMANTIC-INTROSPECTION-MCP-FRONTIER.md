@@ -2224,9 +2224,9 @@ For FSMGen, the analogs are:
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60`
   Status: `active`
-  Goal: `Resolve the four additional SPECFORGE duration, timer, unstated-reset and aggregate-port packets supplied on 2026-09-29.`
+  Goal: `Resolve the additional SPECFORGE duration, named-timer and aggregate-port feature requests and the unstated-reset question supplied on 2026-09-29.`
   Acceptance: `Own every requested capability and question, retain authorized packet inputs locally, independently reverify current compiler observations, distinguish supplied corpus/scale measurements from FSMGen evidence, and select bounded roadmap-aligned implementation and qualification leaves. Read sibling packet inputs only; do not change the SPECFORGE checkout, run its commands blindly, inspect submodule internals or treat illustrative syntax as selected. Director states SPECFORGE is blocked, so finish and commit only the active resource validator, then prioritize downstream intake and the smallest shippable unblocks. Resolve the reset question first, inventory other packets promptly, and retain broader compiler prerequisites only where a specific request needs them. No dirty pivot.`
-  Verification: `Read all four packet README files from the director-authorized external directories. Detailed packet preservation, signoff review, claim dispositions and fresh public reproduction remain pending. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
+  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, current reproduction and provenance delivery are qualified under .60.3; its answer follows P1 reset-token repair .62. Other packet preservation, signoff review and reproduction remain pending. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4`
 
@@ -2305,8 +2305,8 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3`
   Status: `active`
   Goal: `Source-honest unspecified-reset guidance from sf-isf-unstated-reset.`
-  Acceptance: `Answer the distinction between omitted/defaulted reset, actual no-reset clock domains and implementation-selected reset. Reverify generated initial state/register behavior and all report surfaces for supplied variants; never infer initialization from successful checking. Explain single-domain support and supported target limits, distinguish unstated from absent hardware, and own missing provenance or configurable-reset capability separately if required. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
-  Verification: `Packet README reviewed; no current reproduction or implementation signoff yet.`
+  Acceptance: `Answer the distinction between omitted/defaulted reset, actual no-reset clock domains and implementation-selected reset. Reverify generated initial state/register behavior and all report surfaces for supplied variants; never infer initialization from successful checking. Explain single-domain support and supported target limits, distinguish unstated from absent hardware, and answer the missing configurable-reset form without treating this question as a feature request. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
+  Verification: `Baseline and additive provenance are qualified by .1 and .3.3.1; .62 owns the discovered strict reset-token defect before .4 publishes the complete downstream answer. Director confirms this is a question; inferred configurable-reset feature .61 is superseded.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.4`
 
@@ -2321,23 +2321,23 @@ For FSMGen, the analogs are:
   Status: `done`
   Goal: `Select the precise contract and safe dependency order.`
   Acceptance: `Map all required and optional packet requirements to current roadmap, decisions, parser/lowerer/backends/reports/tests/book. Resolve source-honest unspecified-reset guidance semantics within director authority; explicitly own any missing decision, source ambiguity or external evidence gap. Decompose implementation before source changes; do not equate intake with delivery.`
-  Verification: `Decision 0112 selects reset_provenance per authored actor/domain before defaulting, shared success source metadata and complete native/API/newline/capability qualification. Explicit existing hardware contracts and carriers remain unchanged; unknown caller-created provenance is not guessed. Legacy omission is an unstated ISF clause with a selected implementation default, not a deferred reset contract or proof about an unseen original specification. Q1/Q3 and expected metadata distinction are delivered by .60.3.3; Q2 is qualified static reset-free absence with no guaranteed initialization; Q4 is answered as missing and separately owned by .61. No writer/controller/native-runtime prerequisite for metadata. Found and corrected stale spec statement claiming ISF supports only one domain: same section already documented named domains, and supplied single-domain source passes. Existing reset carrier decision 0106 remains authoritative.`
+  Verification: `Decision 0112 selects reset_provenance per authored actor/domain before defaulting, shared success source metadata and complete native/API/newline/capability qualification. Explicit existing hardware contracts and carriers remain unchanged; unknown caller-created provenance is not guessed. Legacy omission is an unstated ISF clause with a selected implementation default, not a deferred reset contract or proof about an unseen original specification. Q1/Q3 and expected metadata distinction are delivered by .60.3.3; Q2 is qualified static reset-free absence with no guaranteed initialization; Q4 is answered as missing; the inferred implementation follow-on .61 is superseded by the director clarification that this packet is a question. No writer/controller/native-runtime prerequisite for metadata. Found and corrected stale spec statement claiming ISF supports only one domain: same section already documented named domains, and supplied single-domain source passes. Existing reset carrier decision 0106 remains authoritative.`
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement selected reset declaration provenance without hardware changes.`
   Acceptance: `Decision 0112 defines the bounded metadata contract. Child .1 owns coherent parser/IR/report/capability implementation and focused qualification before .60.3.4 consumer closure. No new source syntax or reset timing, initialization, backend or admission change.`
-  Verification: `Contract selected; implementation pending.`
-  Commit: `pending`
+  Verification: `Child .1 qualifies the complete additive provenance contract and unchanged hardware. Consumer response .60.3.4 follows the separately discovered P1 reset-token repair .62.`
+  Commit: `this commit`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3.1`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Retain and expose reset clause provenance through every affected facade.`
   Acceptance: `Retain parser evidence before defaults; detached schedule reset_provenance and successful ISF source.reset_provenance entries have domain/origin and explicit/legacy_default/domain_absent values. Preserve unknown evidence as null/absence, named-domain order/selection and standalone FSM reports. Advertise exact capability key/value families; qualify supplied forms, default clock, mixed domains, permutations, caller-built actor, malformed source, detachment, full native/API/newline equality, baseline carrier/HDL equality and focused neighboring contracts. Update corpus, spec, book, shared source and ISF public contract together; split again only if the bounded implementation exposes a real dependency.`
-  Verification: `pending implementation from a clean committed contract`
-  Commit: `pending`
+  Verification: `T1978 red -> green; final Files=1, Tests=5 PASS. Parser retains clause provenance before defaults; detached projections preserve authored domain order and scope. Successful ISF native check/semantic plus schedule, API/newline and capability discovery agree completely. Direct FSM/PPIF and failure controls acquire no ISF provenance; unknown caller-created evidence remains null. All prior supplied reports except the new field, complete FSM and both Verilog targets except date remain identical to the sealed baseline. Hostile evidence is rejected. Neighboring report/reset/domain regressions pass after updating the expected advertised test catalog; golden/book/schema follow-up Files=4, Tests=288 PASS. Exact logs and producer hashes: docs/audits/specforge-reset-provenance-20260930/. No new source syntax, corpus category, HDL behavior or native runtime; current corpus cases participate in T1255/T1890/T1893. New reset-token P1 .62 is next before consumer closure.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.4`
   Status: `pending`
@@ -3034,14 +3034,23 @@ source tooling (`.31.2.4`), then complete qualification (`.31.3`). Actual
 implementation leaves must refine their smallest safe test/contract boundary
 before editing code. No discovered defect is closed by this audit alone.
 
-## Deferred reset configuration ownership
+## Reset grammar defect ownership
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.62`
+  Status: `pending`
+  Goal: `Reject malformed reset clauses instead of silently selecting a different reset policy.`
+  Acceptance: `P1 reset-policy correctness follow-up immediately after the current provenance implementation commit and before consumer closure. Reproduce unknown timing/polarity tokens and extra operands through strict public queries; Parser::_parse_reset currently loops recognized tokens and ignores all other values. Own exact accepted/rejected grammar, preserved valid shorthand and domain behavior, precise diagnostics, native/API/newline failure equality and book/spec alignment. Split if the compatibility census reveals an intended accepted alias; do not speculate that parse success proves authored reset intent.`
+  Verification: `Strict --emit-semantic-json accepts (reset (rst_n asnyc active_low)) with success true and reset_kind sync. Exact source/report/parser identity is retained in docs/audits/specforge-reset-provenance-20260930/reset-token-defect.json. Parser::_parse_reset ignores unknown list values and does not check outer operand count. Repair is next from a clean provenance commit before .60.3.4; no grammar change mixed into metadata.`
+  Commit: `pending`
+
+## Reset question scope disposition
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.61`
-  Status: `pending`
-  Goal: `Select and deliver implementation-configurable reset policy when source intent leaves the hardware choice open.`
-  Acceptance: `P2 follow-on after the required SPECFORGE packet unblocks. Q4 in sf-isf-unstated-reset identifies the absent instantiation-selected reset form. Before implementation, select an explicit unresolved source representation, binding point, required resolution and fail-closed generation behavior; preserve provenance and existing reset-free/defaulted contracts. Decompose parser, binding, lowering, public reporting and target-qualified runtime before source changes. Do not equate visible legacy defaults with a deferred hardware decision.`
-  Verification: `Owned missing capability identified by decision 0112; no deferred reset syntax currently promised. This is separate from answering the submitted question and delivering provenance.`
-  Commit: `pending`
+  Status: `superseded`
+  Goal: `Disposition the inferred implementation-configurable reset follow-on.`
+  Acceptance: `Respect the supplied packet's question classification and the director's explicit clarification. Answer whether an instantiation-selected reset form exists without converting that question into a new reset feature request.`
+  Verification: `The director clarified that sf-isf-unstated-reset is a question. The packet already declared that kind; the additional configurable-reset implementation plan was an over-expansion and is withdrawn. Current forms and the report ambiguity are answered under .60.3; no configurable-reset implementation is on this packet's delivery path. A separately requested future capability would need its own contract. Duration units, named timers and aggregate ports remain feature requests; storage access remains independently owned.`
+  Commit: `this commit`
 
 ## Current Frontier
 
@@ -3049,7 +3058,8 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.60.3.3.1`, director-prioritized SPECFORGE reset provenance delivery, followed by
+`.62`, the discovered strict reset-token refusal repair, then `.60.3.4`
+closes the director-prioritized SPECFORGE reset answer, followed by
 duration/timer/aggregate packet intake and the smallest shippable downstream
 unblocks. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
@@ -5075,3 +5085,16 @@ supplied forms at the recorded revision, not arbitrary no-reset hardware runtime
 - [x] **ROOT CAUSE (WHY + WHERE)** — The retained `--emit-semantic-json` and `--emit-schedule-json` baseline collapses explicit and defaulted reset. Parser timing finalization supplies legacy rst_n; the emitted FSM explicitly carries that policy, so its explicit-system metadata cannot prove ISF clause presence. The spec also retained a contradictory legacy-only domain sentence alongside its named-domain contract.
 - [x] **ADDRESSED (verified)** — Decision 0112 defines origin metadata, unknown-provenance behavior, complete domain scope and unchanged hardware. .60.3.3.1 owns coherent public delivery; .61 owns missing deferred reset configuration after required packet unblocks. The stale spec sentence now scopes the single domain to legacy clock syntax. Book/spec clearly label the selected report extension unshipped.
 - [x] **NO REGRESSION** — Offline retained-product verification passes and preceding `All tests successful. Files=1, Tests=3` public baseline remains immutable. No production or fixture behavior changed; the contract requires preservation and complete query/capability qualification before delivery.
+
+## Acceptance Checklist — SEM .60.3.3.1 reset provenance delivery
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Sealed `--emit-semantic-json` and `--emit-schedule-json` products could not distinguish omitted legacy reset from an explicit clause because Parser::_finalize_actor_timing_conventions normalized both before downstream reporting. T1978 red fails the independently expected source/schedule provenance while all pre-existing products remain valid.
+- [x] **ADDRESSED (verified)** — Parser captures origin before defaulting; LoweringIR/domain selection retain detached evidence and the shared projection validates closed domain/origin shapes. Schedule and successful ISF source reports expose the same complete provenance, with matching capability declarations. T1978 confirms independent expected origins, domain order/scope, unknown evidence, malformed-evidence refusals, failure/direct-FSM/PPIF controls and exact native/API/newline equality. Complete legacy public fields and actual scheduled FSM/HDL match the baseline, allowing only the new field and HDL date banner.
+- [x] **NO REGRESSION** — Final T1978: `All tests successful. Files=1, Tests=5`. Focused report/source/reset/domain tests pass except the initially stale T1144 expected tested_by list; correcting that explicit catalog addition and running T1144/T1255/T1305/T1227 yields `All tests successful. Files=4, Tests=288`. T1890/T1893 and all other neighboring checks pass in the retained regression log. No native simulator run was required for byte-preserved hardware; historical native cause remains open.
+
+Claim legs: public-product re-derivation uses actual native/API/newline commands
+and both HDL emitters; falsification uses the missing-metadata red run,
+independent baseline byte comparisons and malformed-evidence controls; durability
+is T1978, the immutable baseline plus candidate logs/producer identities in
+`docs/audits/specforge-reset-provenance-20260930/`. The typo acceptance is a
+separate actual defect, owned by .62 and scheduled before downstream closure.

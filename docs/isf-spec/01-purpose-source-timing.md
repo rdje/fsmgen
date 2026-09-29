@@ -1514,12 +1514,16 @@ Reset rules:
 - Async resets lower to `.fsm` `(areset name)`.
 - Sync resets lower to `.fsm` `(sreset name)`.
 
-Reset declaration provenance is separately selected by decision `0112` and
-owned by SEM `.60.3.3`: schedule `reset_provenance` and successful ISF
-check/semantic `source.reset_provenance` will distinguish clause presence,
-legacy defaulting and domain reset absence. Until that implementation ships,
-effective reset metadata does not establish whether an ISF clause was authored.
-No reset-free form implies a guaranteed initial state or a deferred reset choice.
+Reset declaration provenance is separate from effective hardware policy
+(decision `0112`). Schedule `reset_provenance` and successful directly parsed
+ISF check/semantic `source.reset_provenance` contain authored-order entries with
+`domain` and `origin`. A legacy actor uses null domain and `explicit` or
+`legacy_default`; each named domain uses its declared name and `explicit` or
+`domain_absent`. Explicit means clause presence, not that every optional reset
+operand was authored. Caller-created actor hashes without source evidence report
+null provenance. Failed checks and non-ISF sources omit the optional source field.
+Existing reset fields and generated hardware are unchanged. No reset-free form
+implies a guaranteed initial state or a deferred reset choice.
 
 Multi-clock boundary:
 - Legacy `(clock name)` ISF actors have one clock domain per actor/generated

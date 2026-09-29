@@ -2,7 +2,7 @@
 
 - Date: 2026-09-30
 - Type: ISF source and public report contract
-- Status: accepted; implementation pending
+- Status: accepted; provenance implemented under .60.3.3.1
 - Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.2
 
 ## Context
@@ -57,8 +57,9 @@ only when deliberately selecting hardware without reset. No existing form
 defers reset kind/polarity to instantiation; this answer does not claim one.
 If SPECFORGE requires a deferred hardware decision rather than a visible
 default, it must retain that unresolved source fact before executable ISF
-generation. A configurable reset contract is separately owned, not silently
-implemented by treating absence as reset-free hardware.
+generation. The director clarified that this ticket is a question. A configurable reset
+feature is outside its scope; the inferred follow-on `.61` is superseded.
+Absence must not be silently implemented as reset-free hardware.
 
 ## Delivery and qualification
 

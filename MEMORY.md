@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3.1` (pending)
-- next_action: Implement selected reset provenance and close the SPECFORGE question, then intake durations/timers/aggregate ports and deliver the smallest qualified downstream unblocks.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.62` (pending)
+- next_action: Reject malformed reset tokens under .62, close the SPECFORGE reset question, then intake durations/timers/aggregate ports and deliver the smallest qualified downstream unblocks.
   Before genuine supervised HDL runtime, consume HIAL .3.2.10.11.5 for failure-only native observation; never retry merely to seek recurrence.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.

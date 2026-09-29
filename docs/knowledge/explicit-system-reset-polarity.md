@@ -69,14 +69,21 @@ reset with unchanged production code; the complete result is retained in
 observation and public metadata/HDL witness with
 `python3 -B docs/audits/priority-reset-oracle-20260928/verify.py`.
 
-The SPECFORGE unstated-reset baseline confirms legacy omission and explicit
-async-low `rst_n` have identical public reports apart from source paths.
-`explicit_system_contract` is explicit in the lowered FSM, not proof of authored
-ISF reset provenance. A standalone clock-only named domain emits no reset,
-state initializer or initial block in either Verilog target; it supplies no
-guaranteed initial state. It is not a deferred implementation reset choice.
-Reverify saved identities, complete contracts and HDL structure with
-`python3 -B docs/audits/specforge-unstated-reset-20260930/verify.py`; replay native,
-API and actual newline queries plus HDL emission with its `capture.t` under
-the RAM guard. No native runtime executes in that audit. Missing reset-source
-provenance and the downstream answer remain owned by SEM `.60.3.2` onward.
+The retained SPECFORGE baseline demonstrated that legacy omission and explicit
+async-low `rst_n` previously had identical public reports apart from source
+paths. Decision `0112` and T1978 now distinguish them with schedule
+`reset_provenance` and successful ISF `source.reset_provenance`: authored-order
+`{domain, origin}` entries use explicit, legacy_default, or domain_absent.
+Legacy domain is null; named domains retain their names. Unknown caller-created
+provenance stays null, and failure/direct FSM reports omit the source extension.
+The metadata proves ISF clause presence, not upstream source grounding or that
+all optional reset operands were authored. Effective policy and HDL are unchanged.
+
+A standalone clock-only domain supplies no reset or guaranteed initial state.
+The earlier static baseline remains re-verifiable with
+`python3 -B docs/audits/specforge-unstated-reset-20260930/verify.py`.
+Reverify current public provenance and complete unchanged HDL with
+`scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1978-isf-reset-provenance.t`.
+This audit does not execute a native simulator. Implementation-selected reset is outside this question's scope; SEM `.61`
+records the withdrawn feature inference after director clarification.
+Reset-token typo rejection is owned by `.62` before downstream answer closure.

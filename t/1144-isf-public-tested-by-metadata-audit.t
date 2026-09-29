@@ -64,6 +64,7 @@ my $expected_tested_by = [
     't/1157-isf-public-report-transaction-ordering-audit.t',
     't/1158-isf-public-report-dt-kind-metadata-audit.t',
     't/1159-isf-public-report-reset-shape-metadata-audit.t',
+    't/1978-isf-reset-provenance.t',
     't/1160-isf-public-actor-shell-value-shape-audit.t',
     't/1161-isf-public-facade-failure-diagnostic-metadata-audit.t',
     't/1162-isf-public-actor-shell-interface-shape-audit.t',

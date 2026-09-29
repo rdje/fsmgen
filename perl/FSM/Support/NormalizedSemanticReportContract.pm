@@ -195,6 +195,7 @@ use FSM::Support::ReportProducerContract qw(
     report_producer_common_keys
 );
 use FSM::Support::ReportSourceContract qw(
+    report_source_optional_fields
     report_source_contract_source
     report_source_presence_keys
 );
@@ -411,6 +412,7 @@ sub build_normalized_semantic_report_contract {
         producer_presence_keys => report_producer_common_keys(),
         producer_extra_presence_keys => normalized_semantic_report_producer_extra_keys(),
         source_presence_keys => report_source_presence_keys(),
+        source_optional_fields => report_source_optional_fields(),
         success_only_top_level_keys => normalized_semantic_success_only_top_level_keys(),
         support_accounting_presence_keys => normalized_semantic_support_accounting_keys(),
         failure_diagnostic_presence_keys => normalized_semantic_failure_diagnostic_keys(),
@@ -739,6 +741,7 @@ sub normalized_semantic_presence_key_family_map {
         producer_presence_keys => report_producer_common_keys(),
         producer_extra_presence_keys => normalized_semantic_report_producer_extra_keys(),
         source_presence_keys => report_source_presence_keys(),
+        source_optional_fields => report_source_optional_fields(),
         success_only_top_level_keys => normalized_semantic_success_only_top_level_keys(),
         support_accounting_presence_keys => normalized_semantic_support_accounting_keys(),
         failure_diagnostic_presence_keys => normalized_semantic_failure_diagnostic_keys(),

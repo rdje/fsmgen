@@ -7,6 +7,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use JSON::PP ();
 use FSM::Debug;
+use FSM::Support::ISFResetProvenance qw(snapshot_reset_provenance);
 
 # Emits JSON schedule report from LoweringIR.
 # Consumes the same IR as Emitter::FSM — no string coupling.
@@ -29,6 +30,7 @@ sub report_hash($self, $ir) {
         scheduled_fsm  => $ir->{actor_name} . '.fsm',
         clock          => $ir->{clock},
         reset          => $self->_reset_summary($ir->{reset}),
+        reset_provenance => snapshot_reset_provenance($ir->{reset_provenance}),
         watchdog       => $ir->{watchdog},
         actor_phases   => $self->_actor_metadata_summary($ir, 'actor_phases'),
         actor_stages   => $self->_actor_metadata_summary($ir, 'actor_stages'),

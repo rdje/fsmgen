@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use Exporter qw(import);
+use FSM::Support::ISFResetProvenance qw(snapshot_reset_provenance);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
@@ -37,6 +38,10 @@ sub _domain_actor_for_scheduled_artifact($actor, $domain, $default_domain) {
     $domain_actor{actor_name} = $module_name;
     $domain_actor{clock} = $domain->{clock};
     $domain_actor{reset} = _clone_isf_value($domain->{reset});
+    my $reset_provenance = snapshot_reset_provenance($actor->{reset_provenance});
+    $domain_actor{reset_provenance} = [
+        grep { defined($_->{domain}) && $_->{domain} eq $domain_name } @$reset_provenance
+    ] if defined $reset_provenance;
     $domain_actor{clock_domains} = undef;
     $domain_actor{_scheduled_domain_name} = $domain_name;
     $domain_actor{interface} = {

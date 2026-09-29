@@ -34,6 +34,7 @@ use FSM::Support::ReportProducerContract qw(
     report_producer_contract_source
 );
 use FSM::Support::ReportSourceContract qw(
+    report_source_optional_fields
     report_source_contract_source
     report_source_presence_keys
 );
@@ -113,6 +114,7 @@ sub build_check_diagnostics_contract {
         generated_output_presence_keys => report_generated_output_presence_keys(),
         producer_presence_keys => report_producer_common_keys(),
         source_presence_keys => report_source_presence_keys(),
+        source_optional_fields => report_source_optional_fields(),
         success_only_top_level_keys => check_json_success_only_top_level_keys(),
         success_result_presence_keys => check_result_presence_keys(),
         success_support_accounting_presence_keys => check_json_success_support_accounting_keys(),
@@ -176,6 +178,7 @@ sub check_json_presence_key_family_map {
         generated_output_presence_keys => report_generated_output_presence_keys(),
         producer_presence_keys => report_producer_common_keys(),
         source_presence_keys => report_source_presence_keys(),
+        source_optional_fields => report_source_optional_fields(),
         success_only_top_level_keys => check_json_success_only_top_level_keys(),
         success_result_presence_keys => check_result_presence_keys(),
         success_support_accounting_presence_keys => check_json_success_support_accounting_keys(),

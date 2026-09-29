@@ -10,6 +10,15 @@ Use it to keep one current, high-signal picture of:
 
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
+Scoped update on `2026-09-30`: the ISF parser retains reset-clause provenance;
+LoweringIR/domain selection and schedule emission carry it independently of HDL.
+Shared check/semantic source builders and capability contracts now import
+`FSM::Support::ISFResetProvenance` for detached projection and discovery.
+The CLI passes evidence from the parsed ISF actor, never reconstructing it from
+the lowered FSM. T1978 exercises this path through native/API/newline queries.
+The closure counts below remain the explicitly dated earlier census, not a new
+count inferred from this scoped dependency update.
+
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
 - Startup import review refreshed on `2026-09-06`; the live static trace includes

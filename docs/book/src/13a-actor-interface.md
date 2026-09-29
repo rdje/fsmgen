@@ -428,11 +428,20 @@ behavior and does not test this contract.
 ### Omitted reset versus hardware without reset
 
 Omitting a legacy actor's reset clause selects the documented `rst_n` default.
-The current check, semantic and schedule reports do not distinguish that
-omission from an explicitly authored `(reset (rst_n async active_low))`, apart
-from the input path. In particular, `explicit_system_contract` describes the
-lowered FSM carrier; its name does not prove that the ISF author stated a reset.
-Source provenance for this distinction is owned by the SPECFORGE reset request.
+Successful ISF check/semantic JSON records clause origin separately in
+`source.reset_provenance`; schedule JSON uses `reset_provenance` at its root.
+For an omitted legacy reset the value is:
+
+```json
+[{"domain": null, "origin": "legacy_default"}]
+```
+
+Writing `(reset (rst_n async active_low))` instead gives `origin: "explicit"`
+with the same effective reset policy and generated hardware. `explicit` means
+that an ISF reset clause exists; it does not prove that all kind/polarity operands
+were written, nor that a separate upstream specification states a reset.
+`explicit_system_contract` describes the lowered FSM carrier, so use the
+provenance field to distinguish authored ISF reset from compiler defaults.
 
 A standalone clock-only actor is accepted through a named domain; CDC is not
 required:
@@ -444,7 +453,8 @@ required:
   (transaction main (on start) (complete done)))
 ```
 
-This form selects hardware **without a reset**. Schedule `reset` and semantic
+This form selects hardware **without a reset**. Its provenance is
+`[{"domain":"link","origin":"domain_absent"}]`. Schedule `reset` and semantic
 reset fields are null. The emitted SystemVerilog and Verilog declare the state
 register without an initializer and only clock `next_state` into it; there is
 no reset branch or `initial` block. FSMGen therefore supplies no guaranteed
@@ -454,16 +464,22 @@ Clock-only direct VHDL remains outside the supported reset-bearing subset.
 Neither existing spelling represents a deferred implementation choice of reset
 kind or polarity. If the source specification is silent, retain that fact in
 the source model rather than treating clock-only hardware as its equivalent.
-The supplied examples, complete current public products, emitted HDL and
+The supplied examples, complete baseline public products, emitted HDL and
 independent evidence checks are retained under
 `docs/audits/specforge-unstated-reset-20260930/`; this baseline is static emission
 and report qualification, not a runtime initialization test.
 
-The selected next extension is `reset_provenance` in schedule JSON and
-`source.reset_provenance` in successful ISF check/semantic JSON, identifying
-`explicit`, `legacy_default`, or `domain_absent` per domain. It is not yet
-shipped. Decision `0112` preserves all hardware behavior and keeps provenance
-separate from the effective reset contract.
+For multiple named domains, provenance lists every domain in authored order;
+an explicit domain reset has `origin: "explicit"`. A legacy actor uses null
+for `domain`. An actor hash constructed without parser evidence reports null
+provenance; FSMGen does not guess from its effective reset. Failed checks and
+direct `.fsm` inputs have no `source.reset_provenance` field.
+
+The capability manifest advertises the entry keys, values and meaning through
+`embedding.isf_public_interface.schedule_report_reset_provenance` and both
+check/semantic report contracts' `source_optional_fields.reset_provenance`.
+These values are identical through native queries, the public API and newline
+MCP. Decision `0112` owns the separation between provenance and hardware policy.
 
 **Lowering to .fsm**:
 | ISF | .fsm |

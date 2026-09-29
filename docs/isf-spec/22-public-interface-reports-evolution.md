@@ -13,6 +13,7 @@ source
 scheduled_fsm
 clock
 reset
+reset_provenance
 watchdog
 actor_phases
 actor_stages
@@ -43,6 +44,22 @@ compile_issues
 clock_domains
 crossings
 ```
+
+Reset provenance records ISF clause presence separately from resolved hardware:
+`reset_provenance` is an authored-order array of `{domain, origin}` entries,
+or null when a caller-created actor has no parser evidence. A legacy actor has
+null domain and origin `explicit` or `legacy_default`; named domains have their
+name and origin `explicit` or `domain_absent`. This does not prove grounding in
+an external specification or defer reset policy to instantiation. Explicit clause
+presence does not mean optional kind/polarity operands were authored.
+Successful directly parsed ISF check and semantic reports expose the same array
+as optional `source.reset_provenance`; failure reports and direct FSM inputs do
+not acquire it. Effective reset fields, scheduled FSM and HDL are unchanged.
+Native/API/newline equality, domain scope and malformed-evidence controls are
+qualified by T1978. Discovery lives in the schedule contract's
+`schedule_report_reset_provenance` and the shared source contract's
+`optional_fields.reset_provenance`, also projected as `source_optional_fields`
+in both public report contracts.
 
 Current bounded nested and array summary families:
 
