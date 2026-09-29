@@ -13,7 +13,7 @@ answers:
   - "where is the direct writer admission baseline?"
   - "how are resource grants checked for writer admission?"
   - "where are detached writer activation predicates collected?"
-date: 2026-09-28
+date: 2026-09-29
 status: current
 tags: [isf, controllers, writers, storage, conflicts, ownership]
 evidence: perl/FSM/Scheduler/ISF/WriterResourceGrants.pm; t/1975-isf-writer-resource-grants.t; perl/FSM/Scheduler/ISF/DriveInvocationSources.pm; t/1971-isf-drive-invocation-sources.t; perl/FSM/Scheduler/ISF/SourceWriterOwners.pm; t/1970-isf-source-writer-owners.t; t/1969-isf-implicit-write-targets.t; perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm; t/1968-isf-physical-write-declarations.t; perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm; t/1967-isf-physical-write-targets.t; docs/audits/direct-writer-admission-20260927/manifest.json; docs/audits/direct-writer-admission-20260927/result.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md; docs/knowledge/isf-generated-child-writer-contract-frontier.md
@@ -196,3 +196,15 @@ independent expected records, hostile omissions, unchanged carriers and public
 parity. The helper has no production caller; next child .2 of SEM
 .32.1.3.3.1.3.3.2.2.3.2.2.2.2.3 owns grant-condition and priority-suppression joins.
 Reverify using guarded prove on T1975/T1973/T1970/T1218.
+
+
+LoweringIR now retains private resource_activation requests and ordered steps at
+the actual arbitration producers. Requests preserve the original raw guard,
+expression and typed source owner. Steps capture before/after headers, including
+unchanged priority winners, actual higher-request inputs and selected round-robin
+permission/pointer/update identity. Snapshots are deeply detached; the producer
+adds no public report field or exclusion proof. T1976 qualifies literal,
+unconditional and compound requests, mixed resource order, independent literal
+expressions, actual selected pointer identity and unchanged executable products.
+Reverify with guarded T1976/T1975/T1973/T1944/T1218. Semantic validation remains
+SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2 before priority/invocation joins.

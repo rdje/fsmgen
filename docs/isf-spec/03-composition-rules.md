@@ -401,8 +401,12 @@ preserves declared member order and distinguishes priority suppressors from
 round-robin peers. Missing, duplicate or inconsistent records fail collection,
 including deletion from both lowered copies. Source ownership provides the rule
 identity even if the DT is renamed. The collector returns detached evidence;
-actual grant-condition proof and production writer admission remain separately
-owned. It introduces no new source form or public report keys.
+the lowerer also retains original request guards and ordered before/after
+resource transformations. Highest-priority identity steps remain explicit.
+Round-robin evidence includes the selected pointer declaration, permission and
+actual update association. These private snapshots preserve inputs needed for
+validation; grant-condition proof and production writer admission remain
+separately owned. No new source form or public report key is introduced.
 
 T1974 qualifies emitted predicates and complete native/API/newline/carrier
 products. Its observed SystemVerilog and Verilog runs preserve ordered writes,

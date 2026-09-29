@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57, SEMANTIC-INTROSPECTION-MCP-FRONTIER.58`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57, SEMANTIC-INTROSPECTION-MCP-FRONTIER.58, SEMANTIC-INTROSPECTION-MCP-FRONTIER.59`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -962,10 +962,40 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Join validated grants and priority suppressors to actual assignment predicates.`
   Acceptance: `After .1, qualify actual grant condition and target-local suppression semantics against producer records, authored requests and emitted guards. Preserve multiple resources, priority/round_robin distinctions, both priority directions and all higher contributors. Keep source annotations separate from effective container/assignment guards; qualify generated assignments added after arbitration without inventing complete legacy annotations. Reject omitted or inconsistent evidence before attachment; no metadata-only exclusion proof. Split further if needed before code changes.`
+  Verification: `Scoped from clean 8513cef4254db4572ab8dd3c94f3953df358f0a9. Existing grants describe source users and peers, while effective guards are destructively combined in resource declaration order. Preserve actual pre-grant requests and each transformation before validating semantic joins; do not infer input conditions from final names or owner lists. Children separate producer evidence, resource validation, priority contributions and combined assignment coverage.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.1`
+  Status: `done`
+  Goal: `Retain private resource activation evidence from the actual arbitration producer.`
+  Acceptance: `Capture detached original rule request guards and one ordered before/after transformation record per actual resource grant, including unchanged highest-priority grants and round-robin permission/pointer identity. Use actual producer inputs and selected declarations; do not reconstruct identities from naming conventions. Preserve zero/unconditional/compound requests, multiple resources and both arbiters. Qualify deep detachment, exact emitted carriers and complete baseline/current public products. No public schema keys, grant policy, guard expression, source admission or native runtime change. Commit producer evidence before semantic validation.`
+  Verification: `T1976 red baseline fails both missing-evidence subtests at unchanged 8513cef4254db4572ab8dd3c94f3953df358f0a9. Producer capture now preserves original raw guards/source owners/expressions and ordered priority or round-robin before/after steps, actual suppressor inputs and selected pointer/update identity. Guarded focused final: Files=1, Tests=3 PASS; T1975/T1973/T1944/T1218: Files=4, Tests=24 PASS. Complete baseline/current executable IR (excluding only the new private field), carriers, check/schedule/semantic JSON and API/newline products agree for all ResourceActivationFixture cases. Logs and snapshots: .artifacts/resource-activation/. No native HDL runtime or public contract change. Semantic validation follows .2.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2`
+  Status: `pending`
+  Goal: `Validate resource activation evidence against declarations and actual predicates.`
+  Acceptance: `After .1, join the qualified grant catalog to original requests, complete ordered transformations and final DT header predicates. Require independent priority and round-robin selection controls, literal/compound requests and multiple-resource composition; reject missing/inconsistent intermediate or final evidence. Validate actual pointer identity/update association without inferring from prefixes. State explicitly any boundary that prevents exclusion proof and keep the helper detached from production admission.`
   Verification: `pending .1`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3`
+  Status: `pending`
+  Goal: `Retain and validate all target-local priority suppression contributors.`
+  Acceptance: `After resource evidence qualification, join every actual higher contributor and original assignment predicate to target-local suppression. Preserve both priority directions, multiple same-owner states/drives, same-value compatibility and independent invocation identities; reject omissions and malformed associations with emitted and independent controls. Do not treat source owner names as controller-wide exclusion. Split further before edits if the producer and validator require independent slices.`
+  Verification: `pending .1/.2`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.4`
+  Status: `pending`
+  Goal: `Qualify combined grants and suppressors across complete explicit assignments.`
+  Acceptance: `After .1-.3, cover actual user and generated assignments, including records appended after arbitration, against effective container and assignment predicates. Keep legacy source annotations separate from actual guards, preserve exact detached products and full public parity, and own any discrepancy before invocation integration or whole-collector admission.`
+  Verification: `pending .1-.3`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.3`
@@ -2185,6 +2215,13 @@ For FSMGen, the analogs are:
   Verification: `Unmeasured compiler outcome; this is not part of the static priority-overwrite proof. The existing T1219 also uses input force. Planned T1974 priority runtime must use a separately admitted legal override_req spelling so keyword acceptance cannot obscure that oracle.`
   Commit: `pending`
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.59`
+  Status: `pending`
+  Goal: `Perform the startup-due safe artifact cleanup before the next resource validator slice.`
+  Acceptance: `Last cleanup is 2026-09-27T19:21:28+00:00 and the resumed session is 2026-09-29. Inventory repository-local generated artifacts and Rust release/debug dependency/incremental log/bin candidates. Delete only provably disposable completed book renders; preserve all failure/native evidence, logs, spent compiler/proxy directories and ambiguous build products. Overwrite the bounded cleanup record, verify exact selected path absence, synchronize task/resume state and commit separately.`
+  Verification: `pending after current producer-evidence commit`
+  Commit: `pending`
+
 ## Implementation Notes From `.4`
 
 Downstream intake note (2026-09-24): the director reports SPECFORGE's old-copy
@@ -2843,8 +2880,9 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2`, grant-condition and target-local
-priority-suppression semantics after complete observed priority qualification,
+`.59`, startup-due artifact cleanup, then
+`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2`, actual resource-activation
+validation after qualified producer evidence and complete observed priority qualification,
 after literal-guard repair and independently retained runtime qualification, after
 exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
@@ -4809,3 +4847,21 @@ durability uses the permanent T1975 regression, tracked collector and canonical
 fact/task records. Full grant-condition, priority-suppression and invocation
 semantics remain the following owned children; these records alone prove no
 mutual exclusion. No additional decision or rationale-ledger entry is needed.
+
+
+## Acceptance — resource activation producer `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Red T1976 reports `#   at t/1976-isf-resource-activation-evidence.t line 104.`: the producer returns grant names but loses original requests as successive resources overwrite dte_guard. The complete baseline --emit-schedule-json and --emit-semantic-json products confirm the existing public behavior; missing private provenance is the selected implementation gap, not a new runtime defect.
+- [x] **ADDRESSED (verified)** — LoweringIR retains detached requests and ordered actual transformations at both arbitration producers, including unchanged priority winners, original higher conditions, selected round-robin declaration/permission and exact update index. Independent literal expressions, mixed-resource order, absent/literal guards, selected-pointer substitution and nested mutations pass. Complete baseline/current compiler/public products agree after excluding only the added private evidence from internal IR.
+- [x] **NO REGRESSION** — Guarded T1976 reports `All tests successful`, `Files=1, Tests=3`; guarded T1975/T1973/T1944/T1218 reports `All tests successful`, `Files=4, Tests=24`. Complete source/carrier, API/newline and malformed grant regressions pass. Book/spec/downstream and canonical knowledge are aligned; map, claim census, book build and staged doctrines complete publication qualification.
+
+Re-derivation uses actual producer and complete baseline/current products;
+falsification uses red missing evidence, independent expressions, pointer identity
+substitution and destructive nested-copy controls; durability is the tracked
+fixture/test and Git-owned producer, with dated comparison logs in
+`.artifacts/resource-activation/`. The permanent tests rerun semantic/carrier
+and private/public separation contracts. General grant proof, admission and
+native runtime remain separately owned. Shared policy source recheck matches
+the retained claim-template digest; local README/containment authorities remain
+adopted. Startup reviewed the scoped roadmap, selected lowering/public spine and
+relevant book/spec paths; the import map needs no change for this private field.

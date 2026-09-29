@@ -94,13 +94,15 @@ module grants and explicitly owned rule-DT grant records. It catches missing
 records even when both lowered copies omit them, preserves resource members and
 priority/round-robin policy, and joins through source identity after a DT rename.
 Priority `higher` entries describe fixed higher users; round-robin entries name
-potential blocking peers. Neither list alone proves exclusion. Actual grant
-conditions, target-local suppressors, invocation joins and complete generated
-writer evidence remain the following slices.
+potential blocking peers. Neither list alone proves exclusion. The lowerer now
+retains original requests and ordered guard transformations, including unchanged
+highest-priority grants and the actual round-robin pointer/update association.
+Validating these conditions, target-local suppressors, invocation joins and
+complete generated writer evidence remains the following work.
 The focused carrier and malformed-evidence checks run without HDL simulation:
 
 ```sh
-scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1973-isf-writer-activation-predicates.t t/1975-isf-writer-resource-grants.t
+scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1973-isf-writer-activation-predicates.t t/1975-isf-writer-resource-grants.t t/1976-isf-resource-activation-evidence.t
 ```
 
 Scope repair now has separately tested expression, clause and binding resolution. It

@@ -724,3 +724,13 @@ For priority grants, `suppressed_by` names higher-priority bound rule users.
 For round-robin grants, it names the dynamic peer users that can block that
 grant for a given pointer position and request set. The remaining resource
 work is tracked in [Feature Backlog](14-feature-backlog.md).
+
+For internal writer validation, lowering retains each original rule request and
+an ordered snapshot before and after each resource transforms its guard. For
+example, a lower rule requesting on `req` with a higher user requesting on
+`urgent` retains the original `req` and the resulting `(& req (! urgent))`.
+A highest-priority user retains an explicit unchanged step. Round-robin snapshots
+retain the selected pointer declaration, permission expression and update
+association. These private records add no public schedule keys and do not yet
+establish exclusion for general writer admission. T1976 checks literal and
+compound requests, resource order, detached snapshots and unchanged carriers.

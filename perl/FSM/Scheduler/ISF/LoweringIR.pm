@@ -10003,6 +10003,17 @@ sub _apply_rule_user_resource_arbitration {
     my %original_guard = map {
         $_ => (_guard_condition_expr($rule_dt{$_}{dte_guard}) // '1')
     } keys %rule_dt;
+    # Keep actual producer inputs before successive resources combine the DT
+    # header. This private provenance is not itself an exclusion proof.
+    my %requests = map {
+        $_ => {
+            container_name => $rule_dt{$_}{name},
+            source_owner   => _clone_provenance_value($rule_dt{$_}{source_owner}),
+            guard          => _clone_provenance_value($rule_dt{$_}{dte_guard}),
+            condition      => $original_guard{$_},
+        }
+    } keys %rule_dt;
+    my @activation_steps;
     my $model = _build_rule_priority_model($actor);
     my @grants;
     my %round_robin_user_resource;
@@ -10077,6 +10088,7 @@ sub _apply_rule_user_resource_arbitration {
                 \%rule_dt,
                 \%original_guard,
                 \%round_robin_user_resource,
+                \@activation_steps,
             );
             next;
         }
@@ -10112,6 +10124,7 @@ sub _apply_rule_user_resource_arbitration {
             } @users;
             my $dt = $rule_dt{$user};
             my @higher_conditions = map { $original_guard{$_} // '1' } @higher;
+            my $before_guard = _clone_provenance_value($dt->{dte_guard});
 
             push @grants, {
                 resource => $resource_name,
@@ -10126,15 +10139,28 @@ sub _apply_rule_user_resource_arbitration {
                 higher   => [@higher],
             };
 
-            next unless @higher;
-            $dt->{dte_guard} = _combine_rule_dte_with_resource_suppressors(
-                $dt->{dte_guard},
-                \@higher_conditions,
-            );
-            _mark_rule_assignments_resource_suppressed($dt, \@higher);
+            if (@higher) {
+                $dt->{dte_guard} = _combine_rule_dte_with_resource_suppressors(
+                    $dt->{dte_guard},
+                    \@higher_conditions,
+                );
+                _mark_rule_assignments_resource_suppressed($dt, \@higher);
+            }
+            push @activation_steps, {
+                resource       => $resource_name,
+                user           => $user,
+                container_name => $dt->{name},
+                arbiter        => $arbiter,
+                before_guard   => $before_guard,
+                after_guard    => _clone_provenance_value($dt->{dte_guard}),
+                suppressors    => [map {
+                    {user => $higher[$_], condition => $higher_conditions[$_]}
+                } 0 .. $#higher],
+            };
         }
     }
 
+    $ir->{resource_activation} = { requests => \%requests, steps => \@activation_steps };
     return { grants => \@grants, issues => [] };
 }
 
@@ -10157,7 +10183,7 @@ sub _resource_kind_supports_round_robin_rule_users {
 }
 
 sub _apply_round_robin_rule_user_resource_grants {
-    my ($ir, $resource, $users, $rule_dt, $original_guard, $round_robin_user_resource) = @_;
+    my ($ir, $resource, $users, $rule_dt, $original_guard, $round_robin_user_resource, $activation_steps) = @_;
     my $resource_name = $resource->{name} // '<unnamed>';
     my @users = @$users;
 
@@ -10194,17 +10220,34 @@ sub _apply_round_robin_rule_user_resource_grants {
             higher   => [@peers],
         };
 
+        my $before_guard = _clone_provenance_value($dt->{dte_guard});
         $dt->{dte_guard} = _combine_rule_dte_with_required_condition(
             $dt->{dte_guard},
             $permission,
         );
         _mark_rule_assignments_resource_suppressed($dt, \@peers);
+        my $assignment_index = scalar @{$dt->{assignments}};
         push @{$dt->{assignments}}, {
             lhs                    => $pointer,
             rhs                    => $next_pointer,
             op                     => '<-',
             source_kind            => 'resource_round_robin_pointer',
             resource_suppressed_by => [@peers],
+        };
+        push @$activation_steps, {
+            resource       => $resource_name,
+            user           => $user,
+            container_name => $dt->{name},
+            arbiter        => 'round_robin',
+            before_guard   => $before_guard,
+            after_guard    => _clone_provenance_value($dt->{dte_guard}),
+            round_robin    => {
+                permission          => $permission,
+                pointer_declaration => _clone_provenance_value($declaration),
+                user_index          => $idx,
+                next_pointer        => $next_pointer,
+                assignment_index    => $assignment_index,
+            },
         };
     }
 
