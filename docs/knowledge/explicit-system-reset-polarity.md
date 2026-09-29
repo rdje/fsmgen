@@ -97,3 +97,12 @@ The original strict accepted `asnyc` witness is sealed in
 `docs/audits/specforge-reset-provenance-20260930/reset-token-defect.json`.
 Reverify the repair without a native simulator using
 `scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1979-isf-reset-grammar.t`.
+
+T1980 qualifies standalone clock-only state and written/read-only storage:
+reset-value metadata invents neither initialization nor a reset pin, while
+ordinary storage writes and feedback remain. An explicit-reset control supplies
+state and storage reset assignments. The evidence is public reporting and
+actual HDL emission, without native execution. Reverify with
+`scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1980-isf-clock-only-initialization.t`.
+The complete question answer and its source-grounding/default-choice boundary
+are recorded in `docs/SPECFORGE_FEEDBACK_RESPONSE.md`, dated 2026-09-30.

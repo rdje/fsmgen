@@ -1665,6 +1665,11 @@ Selected reset ownership model and current implementation status:
   `(reset (rst async))` emits `(areset rst active_high)`. The domain FSM and
   CDC metadata therefore interpret the same reset net consistently.
 - A synchronous reset is sampled only on the owning domain clock edge.
+- Storage reset values are assignments for an effective hardware reset, not
+  power-on initializers. Clock-only state and storage have no guaranteed initial
+  value; ordinary storage write/hold behavior remains. T1980 qualifies this with
+  a standalone domain and an explicit-reset control through actual reports and
+  both Verilog-family emitters.
 - An asynchronous reset is a direct external reset pin for the owning domain's
   clocked state. It is not a data signal, handshake, or CDC primitive.
 - The same reset signal may be named by multiple domains only when

@@ -1213,3 +1213,97 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/replay-specforge-feature
 The destination must be fresh, repository-relative and on the repository
 volume. A replay captures changed outcomes; future feature tests must decide
 whether those changes meet the requested contract.
+
+
+## 2026-09-30: Unstated Reset — Answer To A Question
+
+Packet: `sf-isf-unstated-reset`; SPECFORGE owner: `FSMGEN-REQUESTS.9`.
+FSMGen owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3`.
+The packet is a question, as the director clarified. No configurable-reset
+feature is implied by this answer; the inferred follow-on `.61` is withdrawn.
+
+### Which form should SPECFORGE write?
+
+Use omitted legacy `(reset ...)` when an unstated ISF reset **may select
+FSMGen's documented implementation default**. The effective hardware reset is
+asynchronous active-low `rst_n`, and the report now says its origin is
+`legacy_default`. This records the omission honestly without claiming that the
+upstream specification named that reset. SPECFORGE still owns grounding in the
+original specification; FSMGen only observes the supplied ISF clauses.
+
+If SPECFORGE requires reset policy to remain unresolved until instantiation,
+**neither existing form satisfies that requirement**. Its current refusal to
+invent implementation choices should remain until its own policy permits a
+compiler default or it requests the missing deferred-choice feature. A
+clock-only domain is suitable only when hardware without a reset is intended.
+Silence in a specification does not by itself assert that hardware contract.
+
+| Authored source | Effective hardware reset | Provenance entry |
+| --- | --- | --- |
+| Legacy actor with no reset clause | Asynchronous active-low `rst_n` | `{"domain":null,"origin":"legacy_default"}` |
+| `(reset (rst_n async active_low))` | Asynchronous active-low `rst_n` | `{"domain":null,"origin":"explicit"}` |
+| `(clock-domains (domain link (clock clk)))` | No reset | `{"domain":"link","origin":"domain_absent"}` |
+
+### Initial state and values in the clock-only form
+
+A standalone named domain is supported; CDC is not required. The supplied
+clock-only actor passes strict checking and emits SystemVerilog and Verilog.
+It has **no guaranteed initial FSM state or register values**. Generated state
+and storage declarations have no initializer, and there is no `initial` block
+or reset branch. Ordinary clocked writes can establish later register values;
+retaining a value in a feedback path does not initialize it.
+
+Storage `(reset V)` metadata specifies a hardware-reset assignment, not a
+power-on initializer. In the clock-only qualification, written storage retains
+its ordinary write/hold behavior and read-only storage gains no fabricated
+write. Adding an explicit domain reset supplies the corresponding reset
+assignments, including the initial FSM state. Clock-only direct VHDL remains
+outside the supported reset-bearing process subset, independently owned by
+SEM `.36`. This answer does not promise a simulator-dependent startup value.
+
+### Can a report distinguish defaulted and stated reset?
+
+Yes. Successful directly parsed ISF check/semantic reports expose
+`source.reset_provenance`; schedule JSON exposes root `reset_provenance`.
+The value is an array containing the entries above. Named domains appear in
+authored order. `explicit` means that an ISF reset clause exists, not that every
+optional operand was written or that an external specification states it.
+`explicit_system_contract` continues to describe the lowered carrier's policy.
+
+Capability discovery describes this through
+`embedding.isf_public_interface.schedule_report_reset_provenance` and the
+check/semantic contracts' `source_optional_fields.reset_provenance`. Native
+queries, the API and newline MCP agree. Failed reports and direct FSM/PPIF
+source reports acquire no manufactured ISF provenance; unknown caller-built
+actor evidence remains null in schedule reporting.
+
+The extension is available in commit `d5c1806c2bf68af97ff7eff103f723cce8f74173`.
+Commit `88e593884f783557bf6ec5c82aa272adc13ff2a4` also rejects misspelled,
+conflicting, nested or empty reset options instead of silently selecting a
+policy. Consumers need a revision containing those commits; no SPECFORGE pin
+or external ticket was changed by this work.
+
+### Is an instantiation-selected reset form missing?
+
+Yes. No current ISF form defers reset kind or polarity as an unresolved
+implementation choice. The provenance extension reports the default choice;
+it does not introduce configurable-reset syntax. This answers the question and
+does not open an additional feature request on SPECFORGE's behalf.
+
+### Evidence and expected-outcome disposition
+
+The supplied packet and immutable prior products are retained in
+`docs/audits/specforge-unstated-reset-20260930/`. T1978 qualifies the supplied
+forms, complete native/API/newline products, capability discovery and unchanged
+prior report fields, scheduled FSM and HDL (apart from provenance and generated
+date). T1979 qualifies malformed-policy refusal. T1980 adds written/read-only
+storage and explicit-reset controls, with full reports and emitted HDL retained
+in `docs/audits/specforge-reset-answer-20260930/`.
+
+The packet's requested form and distinct report are satisfied by legacy
+omission **only if selecting the documented implementation default is allowed**.
+The clock-only alternative's lack of initialization is documented and checked
+by emission tests; it is not presented as an unresolved reset policy. Explicit
+baseline behavior is preserved, with the additive provenance field. These are
+static source/report/emission qualifications, not a new native runtime result.
+The remaining decision to accept defaults belongs to SPECFORGE's adapter policy.

@@ -16,7 +16,7 @@ use FSM::HDL::FlattenedDT;
 # ISF-REGISTER-RESET-VALUES.4
 #
 # Register-map / CSR support: an actor-owned storage var may carry a hardware reset value
-# `(storage (var NAME (width N) (reset V)))`, so a control/status register powers up at V.
+# `(storage (var NAME (width N) (reset V)))`, so a control/status register takes V when its hardware reset is applied.
 # This emits the `+size` carrier `(NAME N (reset V))` (ISF-REGISTER-RESET-VALUES.2/.3) and
 # flows to the HDL reset block. Unspecified -> all-0s (unchanged). Per-element bank reset
 # values and over-width reset values fail closed.
@@ -43,7 +43,7 @@ sub fsm_to_hdl {
     return FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($module);
 }
 
-subtest 'storage var (reset V) emits the +size carrier and powers the register up at V' => sub {
+subtest 'storage var (reset V) emits the +size carrier and assigns V on reset' => sub {
     my $fsm = lower_fsm(<<'ISF', 'csr');
 (actor csr
   (clock clk) (reset rst_n)
@@ -69,8 +69,8 @@ ISF
     my $hdl = fsm_to_hdl($fsm, 'csr');
     # the reset-literal rendering (bare `255` vs width-qualified `8'd1`) is the HDL backend's;
     # the values are what matter, so accept either spelling.
-    like($hdl, qr/\bmode <= (?:8'd)?1\b/, 'mode powers up at 1');
-    like($hdl, qr/\bflags <= (?:8'd)?255\b/, 'flags powers up at 255');
+    like($hdl, qr/\bmode <= (?:8'd)?1\b/, 'mode reset assignment uses 1');
+    like($hdl, qr/\bflags <= (?:8'd)?255\b/, 'flags reset assignment uses 255');
     like($hdl, qr/\bscratch <= (?:8'b0+|8'd0|8'h0+)\b/, 'scratch (unspecified) resets to all-0s');
 };
 

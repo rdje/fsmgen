@@ -1,0 +1,21 @@
+{
+  "base_revision": "88e593884f783557bf6ec5c82aa272adc13ff2a4",
+  "files": {
+    "logs.json": "568f8d986c87afd89de93e0bdec779c03dbd41e3c6c1bb937f3242a33ef5e92c",
+    "products.json": "76c25df7c3f4cbca433292927f1f2a406996d101636abdf992764a25027d05c0"
+  },
+  "initial_disposition": "The first T1980 oracle guessed next_live; the emitted helper was live_next. It was corrected to follow the actual selected clocked RHS and independently require current-value feedback and authored data assignments. Production was unchanged. Initial failure and final qualification logs are losslessly retained.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.4",
+  "packet": "docs/audits/specforge-unstated-reset-20260930/packet.json",
+  "producer_sha256": {
+    "bin/fsmgen": "4fa93b2d8b66b73c8bf1a41c8f5b0888d8409cf16fcc5c9bb0b74349ad88df3d",
+    "perl/FSM/Adapter/ISF/LispishAdapter.pm": "2c31afb99d77ec3adf144f738765854376ae94c67d5a5573b1be6be85c40b30a",
+    "perl/FSM/Adapter/ISF/Parser.pm": "8796b7e39557cc5c4e53b63a3d53667bb3ab6c7f3afc03611e9f2823dacfe993",
+    "t/1398-isf-storage-reset-value.t": "12bc2799b869e8fabfcff9eb474dfcd8c900a58dcd3e8404bea39e97b1c81b10",
+    "t/1980-isf-clock-only-initialization.t": "b338a680ddfde7e5f3788023ef78c51953287076de0060cba6a09df8f9545567"
+  },
+  "response": "docs/SPECFORGE_FEEDBACK_RESPONSE.md",
+  "result": "Files=2, Tests=5 PASS",
+  "scope": "Question answer and static clock-only initialization qualification. No production code change or native HDL execution.",
+  "test_command": "FSMGEN_CLOCK_ONLY_CAPTURE=.artifacts/reset-answer/current.json scripts/run_with_ram_guard.sh prove -v -Iperl -It/lib t/1980-isf-clock-only-initialization.t t/1398-isf-storage-reset-value.t"
+}

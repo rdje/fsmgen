@@ -691,6 +691,8 @@ Reset-policy regression coverage also includes
 transport, and `t/1978-isf-reset-provenance.t` for clause origin with unchanged
 effective policy and generated HDL. Both run through the repository RAM guard;
 neither executes a native HDL simulator.
+`t/1980-isf-clock-only-initialization.t` additionally checks actual clock-only
+state and written/read-only storage emission against explicit-reset controls.
 
 ## 17. Machine-Readable Discovery
 

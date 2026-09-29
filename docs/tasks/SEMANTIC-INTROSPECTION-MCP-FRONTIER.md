@@ -2226,7 +2226,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Resolve the additional SPECFORGE duration, named-timer and aggregate-port feature requests and the unstated-reset question supplied on 2026-09-29.`
   Acceptance: `Own every requested capability and question, retain authorized packet inputs locally, independently reverify current compiler observations, distinguish supplied corpus/scale measurements from FSMGen evidence, and select bounded roadmap-aligned implementation and qualification leaves. Read sibling packet inputs only; do not change the SPECFORGE checkout, run its commands blindly, inspect submodule internals or treat illustrative syntax as selected. Director states SPECFORGE is blocked, so finish and commit only the active resource validator, then prioritize downstream intake and the smallest shippable unblocks. Resolve the reset question first, inventory other packets promptly, and retain broader compiler prerequisites only where a specific request needs them. No dirty pivot.`
-  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, current reproduction and provenance delivery are qualified under .60.3; its answer follows P1 reset-token repair .62. Other packet preservation, signoff review and reproduction remain pending. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
+  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, reproduction, provenance delivery and complete question answer are qualified under .60.3, with P1 malformed-option repair .62 complete. Other packet preservation, signoff review and reproduction remain pending. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4`
 
@@ -2242,7 +2242,7 @@ For FSMGen, the analogs are:
   Status: `pending`
   Goal: `Preserve and qualify the supplied packet baseline.`
   Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-duration-time-units; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
-  Verification: `pending active validator commit; then ordered packet intake`
+  Verification: `pending ordered packet intake after completed reset answer`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.2`
@@ -2278,7 +2278,7 @@ For FSMGen, the analogs are:
   Status: `pending`
   Goal: `Preserve and qualify the supplied packet baseline.`
   Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-named-timers; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
-  Verification: `pending active validator commit; then ordered packet intake`
+  Verification: `pending ordered packet intake after completed reset answer`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.2`
@@ -2303,11 +2303,11 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3`
-  Status: `active`
+  Status: `done`
   Goal: `Source-honest unspecified-reset guidance from sf-isf-unstated-reset.`
   Acceptance: `Answer the distinction between omitted/defaulted reset, actual no-reset clock domains and implementation-selected reset. Reverify generated initial state/register behavior and all report surfaces for supplied variants; never infer initialization from successful checking. Explain single-domain support and supported target limits, distinguish unstated from absent hardware, and answer the missing configurable-reset form without treating this question as a feature request. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
-  Verification: `Baseline and additive provenance are qualified by .1 and .3.3.1; .62 fixes malformed reset options. .4 publishes the complete downstream answer next. Director confirms this is a question; inferred configurable-reset feature .61 is superseded.`
-  Commit: `pending`
+  Verification: `Question answered, with the report ambiguity resolved by qualified provenance and malformed reset options repaired under .62. Complete downstream response and initial-state/storage limits are in docs/SPECFORGE_FEEDBACK_RESPONSE.md and docs/audits/specforge-reset-answer-20260930/. .1 owns the immutable packet baseline, .2 the contract, .3.3.1 the public delivery and .4 the consumer answer. The director-confirmed question scope excludes the withdrawn configurable-reset inference .61. SPECFORGE owns whether its adapter may accept compiler defaults; no current form defers policy to instantiation.`
+  Commit: `this commit`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.4`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.1`
@@ -2340,11 +2340,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify the complete consumer outcome.`
   Acceptance: `After implementation, independently exercise positive/negative cases, unchanged controls, target-qualified HDL where behavior changes, exact native/API/newline reports, source/capability/corpus/book alignment and all explicit requirement dispositions. Retain recoverable evidence and a repository-local downstream response; no external sending is authorized by this intake.`
-  Verification: `Pending final answer after .62. Initial-state wording must distinguish reset values from power-on initialization; t/1398-isf-storage-reset-value.t currently uses misleading powers-up wording for assertions that only inspect reset assignments. Correct that local description within this answer qualification and cite actual no-reset state/storage emission evidence.`
-  Commit: `pending`
+  Verification: `Complete repository-local response in docs/SPECFORGE_FEEDBACK_RESPONSE.md answers every supplied question and expected outcome: omission is source-unstated plus selected legacy hardware default; clock-only means actual no reset with no guaranteed initialization; standalone domains are supported; provenance is discoverable; instantiation-selected reset is absent and not inferred as a feature request. T1980 qualifies written/read-only storage and explicit-reset controls through native reports and actual SV/Verilog emission; T1398 misleading power-on wording corrected without assertion changes. Files=2, Tests=5 PASS. Initial helper-name test assumption corrected against actual emission, retaining the failed and successful logs. Exact products and hashes: docs/audits/specforge-reset-answer-20260930/. Prior T1978 complete supplied native/API/newline, baseline and capability qualification remains current because production is unchanged. No external message, SPECFORGE checkout write or new native runtime. Director-prioritized feature intake resumes at .60.1.1.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4`
   Status: `active`
@@ -2358,7 +2358,7 @@ For FSMGen, the analogs are:
   Status: `pending`
   Goal: `Preserve and qualify the supplied packet baseline.`
   Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-aggregate-interface-ports; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
-  Verification: `pending active validator commit; then ordered packet intake`
+  Verification: `pending ordered packet intake after completed reset answer`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.2`
@@ -3058,10 +3058,9 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
-reset-token repair `.62`, the next leaf `.60.3.4` closes the director-prioritized
-SPECFORGE reset answer, followed by
-duration/timer/aggregate packet intake and the smallest shippable downstream
-unblocks. The resource activation validator is qualified; target-local priority
+reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
+next leaf `.60.1.1` preserves and reproduces the duration packet, followed by
+timer/aggregate intake and the smallest shippable downstream unblocks. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
 after literal-guard repair and independently retained runtime qualification, after
@@ -5112,3 +5111,17 @@ expected policy/error matrices; durability is T1979 and the lossless log/hash
 archive in `docs/audits/isf-reset-grammar-20260930/`. Existing supported corpus
 forms remain covered by neighboring tests; no new source-feature category or
 public schema is introduced. Historical native EPERM remains separately open.
+
+
+## Acceptance Checklist — SEM .60.3.4 reset question answer
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The supplied question and retained --emit-semantic-json baseline conflated legacy default and explicit reset; qualified provenance now separates them. The clock-only baseline has no state initializer. Actual T1980 --emit-schedule-json and generated HDL confirm that storage reset metadata also does not create initialization without a hardware reset. T1398's powers-up wording described reset assignments and overstated what those assertions establish.
+- [x] **ADDRESSED (verified)** — The tracked response answers every question and condition in expected-notes.md, names the exact provenance fields/commits and preserves the boundary between upstream source silence, an accepted implementation default, hardware without reset and unavailable deferred choice. T1980 independently checks actual state/storage declarations and assignments against an explicit-reset control; T1398 labels now say reset assignments. The initial next-helper-name oracle error is disclosed and corrected by following the actual clocked RHS; no production code changed.
+- [x] **NO REGRESSION** — Guarded T1980/T1398 report `All tests successful. Files=2, Tests=5`. The immediately preceding final T1978-containing regression reports `All tests successful. Files=10, Tests=43` on the unchanged production revision, retaining complete supplied native/API/newline reports and baseline HDL equality. Book/spec/downstream, canonical facts, task state and bounded claim/document records are synchronized through publication and staged doctrine checks.
+
+Re-derivation uses complete actual public reports and both HDL emitters;
+falsification distinguishes an explicit-reset control from absent initialization
+and locks current-value feedback plus ordinary writes; durability is T1980 and
+full products/logs/source identities in the committed reset-answer audit.
+No simulator startup value is claimed. This closes the question, not a new
+configurable-reset feature or SPECFORGE's downstream adapter-policy decision.

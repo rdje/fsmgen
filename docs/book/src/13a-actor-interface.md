@@ -472,9 +472,19 @@ no reset branch or `initial` block. FSMGen therefore supplies no guaranteed
 initial FSM state. A simulator's default value is not an initialization promise.
 Clock-only direct VHDL remains outside the supported reset-bearing subset.
 
+Storage `(reset V)` describes a hardware-reset value, not power-on
+initialization. Without an effective domain reset, written storage still
+updates from ordinary writes and holds its current value otherwise; read-only
+storage gains no initialization or fabricated write. An explicit domain reset
+supplies those reset assignments. T1980 qualifies both cases by inspecting
+actual public reports and emitted SystemVerilog/Verilog, without a simulator.
+
 Neither existing spelling represents a deferred implementation choice of reset
 kind or polarity. If the source specification is silent, retain that fact in
 the source model rather than treating clock-only hardware as its equivalent.
+Legacy omission is suitable only if selecting the documented implementation
+default is acceptable. A source adapter that requires the choice to remain
+unresolved cannot express that requirement with an existing reset form.
 The supplied examples, complete baseline public products, emitted HDL and
 independent evidence checks are retained under
 `docs/audits/specforge-unstated-reset-20260930/`; this baseline is static emission
