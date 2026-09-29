@@ -1,0 +1,15 @@
+(actor link_rx
+  (clock clk)
+  (reset (rst_n async active_low))
+  (types
+    (type lmp_t (record (subtype (bits 4)) (payload (bits 12)))))
+  (interface
+    (input start)
+    (input subtype_in (width 4))
+    (output done))
+  (storage
+    (var last_lmp (type lmp_t)))
+  (transaction receive
+    (on start)
+    (set last_lmp.subtype subtype_in)
+    (complete done)))

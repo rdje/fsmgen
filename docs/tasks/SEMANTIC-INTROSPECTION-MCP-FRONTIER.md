@@ -2226,7 +2226,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Resolve the additional SPECFORGE duration, named-timer and aggregate-port feature requests and the unstated-reset question supplied on 2026-09-29.`
   Acceptance: `Own every requested capability and question, retain authorized packet inputs locally, independently reverify current compiler observations, distinguish supplied corpus/scale measurements from FSMGen evidence, and select bounded roadmap-aligned implementation and qualification leaves. Read sibling packet inputs only; do not change the SPECFORGE checkout, run its commands blindly, inspect submodule internals or treat illustrative syntax as selected. Director states SPECFORGE is blocked, so finish and commit only the active resource validator, then prioritize downstream intake and the smallest shippable unblocks. Resolve the reset question first, inventory other packets promptly, and retain broader compiler prerequisites only where a specific request needs them. No dirty pivot.`
-  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, reproduction, provenance delivery and complete question answer are qualified under .60.3, with P1 malformed-option repair .62 complete. Duration packet preservation and baseline reproduction are qualified under .60.1.1; named-timer packet preservation and baseline reproduction are qualified under .60.2.1; aggregate packet preservation/signoff/reproduction is next. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
+  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, reproduction, provenance delivery and complete question answer are qualified under .60.3, with P1 malformed-option repair .62 complete. Duration packet preservation and baseline reproduction are qualified under .60.1.1; named-timer packet preservation and baseline reproduction are qualified under .60.2.1; aggregate packet preservation and baseline reproduction are qualified under .60.4.1. Required feature deliveries remain open; next inspect .38.1 metadata-only dependency scope before implementing the smallest downstream unblock. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4`
 
@@ -2350,16 +2350,16 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Packed record interface ports and named fields from sf-isf-aggregate-interface-ports.`
   Acceptance: `R1 local/imported packed record input/output ports and precise unknown/unpacked refusals; R2 scalar-context input field reads, output field writes and whole same-type port/storage copies; R3 documented packed layout/width in carriers, HDL and reports. Optional R4 list ports and R5 variants remain explicitly separate. Preserve scalar/storage behavior and depend on qualified physical writer overlap before output-field admission. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
-  Verification: `Packet README reviewed; no current reproduction or implementation signoff yet.`
+  Verification: `.1 preserves and qualifies the complete packet/current storage baseline. Required packed-record ports/fields/copies/reports remain unshipped; list ports and variants are optional. Contract .2 must separate input reads from output writer admission and use demonstrated dependencies.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.4`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve and qualify the supplied packet baseline.`
   Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-aggregate-interface-ports; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
-  Verification: `pending ordered packet intake after completed reset answer`
-  Commit: `pending`
+  Verification: `Full request/signoff/commands/source/expected material read. Packet identities, exact sources, complete native/API/newline products and actual baseline carrier retained in docs/audits/specforge-aggregate-intake-20260930/. Guarded capture Files=1, Tests=3 PASS. Both record-port forms retain precise parser refusal; accepted typed storage retains width, kind, member order and scalar leaf assignment. Every supplied baseline check field matches after exact source path relocation and reset_provenance removal. Independent verifier rejects matching-copy count/storage/failure/provenance corruption, changed member order and changed carrier target. No production change, native runtime or external corpus measurement. Next inspect .38.1 and its recorded execution prerequisites against the metadata-only contract before selecting delivery; aggregate contract .60.4.2 remains owned.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.2`
   Status: `pending`
@@ -3060,8 +3060,9 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-The next leaf `.60.4.1` intakes aggregate ports, followed by contract/implementation of the
-smallest shippable downstream unblocks. The resource activation validator is qualified; target-local priority
+Aggregate intake `.60.4.1` is also qualified. Next `.38.1` reviews the recorded
+execution prerequisites against the metadata-only access contract, then delivers
+the smallest qualified downstream unblock; the other feature contracts remain owned. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
 after literal-guard repair and independently retained runtime qualification, after
@@ -5152,3 +5153,15 @@ falsification uses matching-copy report corruption and independent carrier
 mutations; durability uses tracked packet/products, logs, hashes and verifier.
 External corpus counts are not independently measured. Feature delivery remains
 open and follows the remaining aggregate intake.
+
+
+## Acceptance Checklist — SEM .60.4.1 aggregate-port packet baseline
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Current --emit-schedule-json refuses both record-port forms in Parser::_resolve_typed_width_entry; _finalize_actor_type_references allows aggregates only on storage variables. The accepted scalar-input control retains typed actor storage and its scalar-leaf assignment. Generated internal typed handoffs do not remove this authored-port boundary.
+- [x] **ADDRESSED (verified)** — Preserved the complete authorized packet and exact source identities. Native/API/newline reports agree completely; prior strict-check fields match after exact source relocation and reset provenance. Independent expected storage shape/order/width and actual carrier checks qualify the control. The offline verifier refuses count/storage/failure/provenance corruption even with matching report mirrors, reversed member order and altered carrier target. Required record ports and optional lists/variants remain separately owned.
+- [x] **NO REGRESSION** — Guarded capture reports `All tests successful. Files=1, Tests=3`; offline identity/transport/type/carrier and hostile controls pass. Production remains unchanged; no native runtime or external corpus remeasurement. Book, canonical fact, response and task state describe the current boundary; publication and staged doctrines qualify the record.
+
+Re-derivation uses actual public commands, parsed type evidence and the emitted
+carrier; falsification uses independent expected shapes, matching-copy report
+corruption and carrier mutation; durability uses tracked packet/products, logs,
+hashes and verifier. This closes intake, not feature implementation.

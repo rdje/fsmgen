@@ -1,0 +1,31 @@
+{
+  "base_revision": "3dee221fc3b65d128f2ee091a94018b430eb87bb",
+  "baseline_compatibility": "Every supplied baseline check field is unchanged after exact source path relocation and the separately shipped reset_provenance addition.",
+  "files": {
+    "baseline-good.isf": "7084672b7ac3081b87d803f337e5a68514da98ff2d2ea09361074940d2e1b461",
+    "capture.t": "53b662cc3b7c337f3772ae7eaf3f6dd33a7b5c74034f9861643a42e60fbe7c5e",
+    "current.json": "311b8a7f66e479961b70136f2e01d1a588657414a152a41656933ab748dd0c76",
+    "logs.json": "0e4929e95f544162f71189d6c86a58c9788f03bb61915f63bd5efec658120bea",
+    "packet.json": "7e16064a5c0d3d28f19f105413399473665ea7f3e7540366edfb930337aca2fe",
+    "record-port-field-guard.isf": "56afac9a5a2223ed4ad8a35a31952ff7b14617a05293845ff80d82dfd61c3fa8",
+    "record-port.isf": "e52f192ab6ca3a2bd2e307ebf32258e24ff9c53cc584ed03058b05ea93501edc",
+    "verify.py": "50a3fcee9f03b5dd018a7262d96a26fec2b1b5e0d06ef4e88a52991aabc0a68a"
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.1",
+  "packet_census": {
+    "files": 60,
+    "source_bytes": 1155921
+  },
+  "producer_sha256": {
+    "bin/fsmgen": "4fa93b2d8b66b73c8bf1a41c8f5b0888d8409cf16fcc5c9bb0b74349ad88df3d",
+    "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+    "perl/FSM/Adapter/ISF/Parser.pm": "8796b7e39557cc5c4e53b63a3d53667bb3ab6c7f3afc03611e9f2823dacfe993",
+    "perl/FSM/Scheduler/ISF/Emitter/FSM.pm": "446c1c8c189f130fb7c4ae69244c1853f8ef9f30ace347e463eda18cd724a3bb",
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": "9b48b7817ac327838a982d833704050f2e6b2e0f6eaa433667086a08bbf88ff0",
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": "3e824aab0497219c2995efa4e738f2b67b5f290632157acde652d42039336fe0",
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "68fd3e4c8a2f3f72b362e386c5de3d82efe5780e23ee8553f79e452fc3c26b5f"
+  },
+  "public_qualification": "Files=1, Tests=3 PASS; complete native/API/newline success and failure comparisons, plus independently expected storage width/type/order and actual carrier assignments.",
+  "scope": "Bounded aggregate-port request baseline only. No feature implementation, native HDL execution or external corpus measurement.",
+  "supplied_external_claims": "Corpus counts and larger scale/timing observations remain supplied evidence, not reverified measurements. The foreign-git-head correction is already owned by SEM .32.2."
+}

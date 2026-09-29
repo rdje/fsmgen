@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.1` (pending)
-- next_action: Preserve and reproduce the SPECFORGE aggregate-interface-port packet; select and deliver the smallest qualified downstream feature unblocks.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.1` (pending)
+- next_action: Review the storage-word metadata-only contract against its recorded execution prerequisites, then deliver the required checked access metadata with unchanged HDL.
   Before genuine supervised HDL runtime, consume HIAL .3.2.10.11.5 for failure-only native observation; never retry merely to seek recurrence.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.

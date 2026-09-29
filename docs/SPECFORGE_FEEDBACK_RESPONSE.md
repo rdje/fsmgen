@@ -1362,3 +1362,27 @@ changing ordinary `when` into an implicit wait or setting `last_error`.
 No native runtime or external corpus remeasurement is claimed by this intake.
 Aggregate-port intake is next, followed by the smallest qualified feature
 unblocks across the owned requests.
+
+
+## 2026-09-30: Record Interface Request — Baseline Qualified
+
+`sf-isf-aggregate-interface-ports` is an accepted feature request owned by
+SEM `.60.4`. Its complete packet and current native/API/newline products are
+preserved in `docs/audits/specforge-aggregate-intake-20260930/`. Both the whole
+record input copy and input field guard remain refused by the explicit
+aggregate-carrier boundary. The storage-only control retains its authored
+member order, packed width and scalar leaf assignment. Its complete prior
+strict-check report is unchanged after source relocation and reset provenance.
+
+Required delivery covers actor-local and imported packed record types on input
+and output ports; input field reads in scalar contexts; output field writes;
+whole same-type port/storage copies; and type/layout evidence in schedule and
+semantic reports with documented packing. Unknown and unsupported types need
+port-specific diagnostics. Optional list ports and variant layouts remain
+separate work. Existing generated internal typed handoffs provide useful
+machinery, but do not qualify these authored ports or output writer admission.
+
+The supplied corpus counts remain SPECFORGE evidence, not fresh FSMGen
+measurements. This intake includes no native simulation. All additional packets
+now have a preserved and independently exercised baseline; the reset question
+is answered, while the requested feature implementations remain open.
