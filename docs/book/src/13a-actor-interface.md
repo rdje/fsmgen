@@ -459,6 +459,12 @@ independent evidence checks are retained under
 `docs/audits/specforge-unstated-reset-20260930/`; this baseline is static emission
 and report qualification, not a runtime initialization test.
 
+The selected next extension is `reset_provenance` in schedule JSON and
+`source.reset_provenance` in successful ISF check/semantic JSON, identifying
+`explicit`, `legacy_default`, or `domain_absent` per domain. It is not yet
+shipped. Decision `0112` preserves all hardware behavior and keeps provenance
+separate from the effective reset contract.
+
 **Lowering to .fsm**:
 | ISF | .fsm |
 |-----|------|

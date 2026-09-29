@@ -1503,9 +1503,9 @@ Reset rules:
 - Clock names must be scalar when a `(clock ...)` clause is present.
 - `(clock ...)`, `(reset ...)`, and `(watchdog ...)` are actor-level
   singleton clauses; duplicates are rejected before actor-shell return.
-- ISF currently supports one actor clock domain. A non-`clk` name is just an
-  authored signal name for that single domain, not a second or interacting
-  clock domain.
+- Legacy `(clock name)` selects one actor clock domain. A non-`clk` name is
+  just its authored signal name. Explicit `(clock-domains ...)` supports the
+  named-domain model described below, including a standalone clock-only domain.
 - Explicit flat `(reset name)` keeps the shipped synchronous reset shorthand.
 - Names ending in `_n` or `_b` infer `active_low`; other names infer
   `active_high`.
@@ -1513,6 +1513,13 @@ Reset rules:
 - Reset names must be scalar when a `(reset ...)` clause is present.
 - Async resets lower to `.fsm` `(areset name)`.
 - Sync resets lower to `.fsm` `(sreset name)`.
+
+Reset declaration provenance is separately selected by decision `0112` and
+owned by SEM `.60.3.3`: schedule `reset_provenance` and successful ISF
+check/semantic `source.reset_provenance` will distinguish clause presence,
+legacy defaulting and domain reset absence. Until that implementation ships,
+effective reset metadata does not establish whether an ISF clause was authored.
+No reset-free form implies a guaranteed initial state or a deferred reset choice.
 
 Multi-clock boundary:
 - Legacy `(clock name)` ISF actors have one clock domain per actor/generated

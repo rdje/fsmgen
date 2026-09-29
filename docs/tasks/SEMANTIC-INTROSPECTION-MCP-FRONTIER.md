@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-09-27`
+- Last updated: `2026-09-30`
 - Owner: repo-local workflow
 
 ## Goal
@@ -2318,17 +2318,25 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the precise contract and safe dependency order.`
   Acceptance: `Map all required and optional packet requirements to current roadmap, decisions, parser/lowerer/backends/reports/tests/book. Resolve source-honest unspecified-reset guidance semantics within director authority; explicitly own any missing decision, source ambiguity or external evidence gap. Decompose implementation before source changes; do not equate intake with delivery.`
-  Verification: `pending preceding contract dependency`
-  Commit: `pending`
+  Verification: `Decision 0112 selects reset_provenance per authored actor/domain before defaulting, shared success source metadata and complete native/API/newline/capability qualification. Explicit existing hardware contracts and carriers remain unchanged; unknown caller-created provenance is not guessed. Legacy omission is an unstated ISF clause with a selected implementation default, not a deferred reset contract or proof about an unseen original specification. Q1/Q3 and expected metadata distinction are delivered by .60.3.3; Q2 is qualified static reset-free absence with no guaranteed initialization; Q4 is answered as missing and separately owned by .61. No writer/controller/native-runtime prerequisite for metadata. Found and corrected stale spec statement claiming ISF supports only one domain: same section already documented named domains, and supplied single-domain source passes. Existing reset carrier decision 0106 remains authoritative.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3`
+  Status: `active`
+  Goal: `Implement selected reset declaration provenance without hardware changes.`
+  Acceptance: `Decision 0112 defines the bounded metadata contract. Child .1 owns coherent parser/IR/report/capability implementation and focused qualification before .60.3.4 consumer closure. No new source syntax or reset timing, initialization, backend or admission change.`
+  Verification: `Contract selected; implementation pending.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3.1`
   Status: `pending`
-  Goal: `Implement the selected bounded contract.`
-  Acceptance: `After baseline and contract selection, split into independently verifiable parser/IR/lowering/report/diagnostic and compatibility leaves before code changes. Preserve accepted source semantics, locality and source provenance. Use existing public dependency APIs and qualify every affected public facade and book example.`
-  Verification: `pending preceding contract dependency`
+  Goal: `Retain and expose reset clause provenance through every affected facade.`
+  Acceptance: `Retain parser evidence before defaults; detached schedule reset_provenance and successful ISF source.reset_provenance entries have domain/origin and explicit/legacy_default/domain_absent values. Preserve unknown evidence as null/absence, named-domain order/selection and standalone FSM reports. Advertise exact capability key/value families; qualify supplied forms, default clock, mixed domains, permutations, caller-built actor, malformed source, detachment, full native/API/newline equality, baseline carrier/HDL equality and focused neighboring contracts. Update corpus, spec, book, shared source and ISF public contract together; split again only if the bounded implementation exposes a real dependency.`
+  Verification: `pending implementation from a clean committed contract`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.4`
@@ -3026,13 +3034,22 @@ source tooling (`.31.2.4`), then complete qualification (`.31.3`). Actual
 implementation leaves must refine their smallest safe test/contract boundary
 before editing code. No discovered defect is closed by this audit alone.
 
+## Deferred reset configuration ownership
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.61`
+  Status: `pending`
+  Goal: `Select and deliver implementation-configurable reset policy when source intent leaves the hardware choice open.`
+  Acceptance: `P2 follow-on after the required SPECFORGE packet unblocks. Q4 in sf-isf-unstated-reset identifies the absent instantiation-selected reset form. Before implementation, select an explicit unresolved source representation, binding point, required resolution and fail-closed generation behavior; preserve provenance and existing reset-free/defaulted contracts. Decompose parser, binding, lowering, public reporting and target-qualified runtime before source changes. Do not equate visible legacy defaults with a deferred hardware decision.`
+  Verification: `Owned missing capability identified by decision 0112; no deferred reset syntax currently promised. This is separate from answering the submitted question and delivering provenance.`
+  Commit: `pending`
+
 ## Current Frontier
 
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.60.3.2`, director-prioritized SPECFORGE reset contract selection, followed by
+`.60.3.3.1`, director-prioritized SPECFORGE reset provenance delivery, followed by
 duration/timer/aggregate packet intake and the smallest shippable downstream
 unblocks. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
@@ -5052,3 +5069,9 @@ Claim legs: re-derivation is actual independent public commands and HDL emission
 falsification is the offline verifier's corrupt-evidence controls; durability is
 the tracked packet, products, command/test logs and hashes. These qualify the
 supplied forms at the recorded revision, not arbitrary no-reset hardware runtime.
+
+## Acceptance Checklist — SEM .60.3.2 reset provenance contract
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained `--emit-semantic-json` and `--emit-schedule-json` baseline collapses explicit and defaulted reset. Parser timing finalization supplies legacy rst_n; the emitted FSM explicitly carries that policy, so its explicit-system metadata cannot prove ISF clause presence. The spec also retained a contradictory legacy-only domain sentence alongside its named-domain contract.
+- [x] **ADDRESSED (verified)** — Decision 0112 defines origin metadata, unknown-provenance behavior, complete domain scope and unchanged hardware. .60.3.3.1 owns coherent public delivery; .61 owns missing deferred reset configuration after required packet unblocks. The stale spec sentence now scopes the single domain to legacy clock syntax. Book/spec clearly label the selected report extension unshipped.
+- [x] **NO REGRESSION** — Offline retained-product verification passes and preceding `All tests successful. Files=1, Tests=3` public baseline remains immutable. No production or fixture behavior changed; the contract requires preservation and complete query/capability qualification before delivery.
