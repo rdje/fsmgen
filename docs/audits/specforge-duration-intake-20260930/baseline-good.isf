@@ -1,0 +1,11 @@
+(actor link_quiet
+  (clock clk)
+  (reset (rst_n async active_low))
+  (params (QUIET_CYCLES 234))
+  (interface
+    (input start)
+    (output done))
+  (transaction quiet
+    (on start)
+    (wait QUIET_CYCLES)
+    (complete done)))

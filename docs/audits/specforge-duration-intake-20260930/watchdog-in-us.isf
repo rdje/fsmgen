@@ -1,0 +1,12 @@
+(actor link_quiet
+  (clock clk)
+  (reset (rst_n async active_low))
+  (params (CLK_HZ 125000000))
+  (interface
+    (input start)
+    (input ready)
+    (output done))
+  (transaction quiet
+    (on start)
+    (await ready (watchdog (time 10 us)))
+    (complete done)))

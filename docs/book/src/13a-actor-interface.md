@@ -43,6 +43,11 @@ than `clk` does not create a second domain.
 If a legacy single-clock actor omits `(clock ...)`, the parser normalizes its
 clock to `clk`.
 
+The current clock clause does not declare a frequency or period. Physical-time
+durations and clock-rate declarations are requested under SEM `.60.1`; their
+source contract and implementation remain pending. Timing bounds currently
+use the documented cycle-count forms.
+
 Generated-top clock/reset links for reusable libraries are still
 single-domain signal-name bindings. They are not clock-domain-crossing
 constructs, and they do not specify synchronizers, handshakes, dual-clock

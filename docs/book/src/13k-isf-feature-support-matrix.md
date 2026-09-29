@@ -24,6 +24,7 @@ owned implementation work; they are not shipped capabilities yet.
 | Actor invariants | Verification checks are written inside transactions; their existing meaning is always-on. | Actor-level `assert`/`assume`/`cover`, including actors without transactions. |
 | Known-value checks | `known` and `isunknown` are unsupported. | Verification-only knownness with independent X/Z behavior evidence. |
 | Storage-word access | Only individual storage fields accept checked access metadata. Word-level `access` is rejected. | Independent checked scalar-word access in schedule/API/MCP metadata; bank access follows separately, with no access-policy RTL. |
+| Physical-time durations | Timing bounds use cycle counts; clocks carry signal identity without a declared rate. | Exact duration conversion against a declared frequency/period, authored-duration and derived-cycle reports, and counter-based duration waits while preserving existing cycle-count behavior. Owned by SEM `.60.1`; not shipped. |
 | Transaction phase groups | Membership cannot be carried as checked transaction metadata. | Checked phase/member/role facts without invented values, order or behavior. |
 
 Unknown or malformed interface-port options are rejected in default and strict

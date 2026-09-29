@@ -1,0 +1,33 @@
+{
+  "base_revision": "f6c44aa5a4517967632d25c2a190d2f1c2e22f59",
+  "baseline_compatibility": "Every supplied baseline schedule field is unchanged; only the separately shipped reset_provenance field was added.",
+  "files": {
+    "baseline-good.isf": "089ef9857e195d0eb7b8d567757d6ff5904cd155585861ee10d39f4816692970",
+    "capture.t": "f1b1e0e4822a32b95c44e889be12776f75327b6f803a5f6dc297e273ac300cf0",
+    "clock-frequency.isf": "d79b82d7427d25a7cc3c4d860415840910a625fb4f80cc1cec3a56255de73fb7",
+    "current.json": "dce768d982e01a8c023ff3b4fccdf5a4e7cc98aa725d884403c981ae2716fbe0",
+    "logs.json": "df2f781b53c611e5959ea28e1b1325c80282c39182d9479281cb7de4067e4f2a",
+    "packet.json": "07bc09ffefb613368c6722c2a5feb2f6d216b4b95d006eee7d7aebe7adcdb81d",
+    "verify.py": "45982d8277c3dfe5beef5b06eecef8de570add8e1e1725df78995742fca376d3",
+    "wait-in-ms.isf": "069ce6a1f7dcc07521a53412d8f5c884f5fdc096cdc9bdae593e8193c9085261",
+    "watchdog-in-us.isf": "7f4fc7091f256f802e6a1c7c3cc823c3dedb060c9492ece3b897bad8f392cc31"
+  },
+  "initial_disposition": "Initial capture expectations incorrectly required schedule exit 1 rather than any nonzero refusal and assumed unindented carrier headers. Actual refusals exit 255; generated headers are indented. Corrected both audit oracles without production changes, retained original and passing logs.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.1",
+  "packet_census": {
+    "files": 69,
+    "source_bytes": 1168345
+  },
+  "producer_sha256": {
+    "bin/fsmgen": "4fa93b2d8b66b73c8bf1a41c8f5b0888d8409cf16fcc5c9bb0b74349ad88df3d",
+    "bin/fsmgen-mcp": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d",
+    "perl/FSM/Adapter/ISF/Parser.pm": "8796b7e39557cc5c4e53b63a3d53667bb3ab6c7f3afc03611e9f2823dacfe993",
+    "perl/FSM/Scheduler/ISF/Emitter/FSM.pm": "446c1c8c189f130fb7c4ae69244c1853f8ef9f30ace347e463eda18cd724a3bb",
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": "9b48b7817ac327838a982d833704050f2e6b2e0f6eaa433667086a08bbf88ff0",
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": "3e824aab0497219c2995efa4e738f2b67b5f290632157acde652d42039336fe0",
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "68fd3e4c8a2f3f72b362e386c5de3d82efe5780e23ee8553f79e452fc3c26b5f"
+  },
+  "public_qualification": "Files=1, Tests=4 PASS; complete native/API/newline success and failure comparisons, plus independent actual scheduled-carrier census.",
+  "scope": "Bounded duration-request baseline only. No implementation, large scale timeout, performance claim or native HDL execution.",
+  "supplied_external_claims": "Corpus counts and larger scale/timing observations remain supplied evidence, not reverified measurements. The foreign-git-head correction is already owned by SEM .32.2."
+}

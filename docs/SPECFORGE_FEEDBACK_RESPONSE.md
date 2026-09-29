@@ -1307,3 +1307,31 @@ by emission tests; it is not presented as an unresolved reset policy. Explicit
 baseline behavior is preserved, with the additive provenance field. These are
 static source/report/emission qualifications, not a new native runtime result.
 The remaining decision to accept defaults belongs to SPECFORGE's adapter policy.
+
+
+## 2026-09-30: Physical-Time Duration Request — Baseline Qualified
+
+`sf-isf-duration-time-units` is an accepted feature request, owned by
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1`; it is not implemented yet.
+Its packet, source identities, complete public products and actual scheduled
+carrier are preserved in `docs/audits/specforge-duration-intake-20260930/`.
+The supplied duration wait, duration watchdog and frequency-bearing clock
+remain refused through native/API/newline queries. The cycle-parameter baseline
+still uses a static state chain without a wait counter. Its complete schedule
+matches the supplied baseline except for the separately delivered reset-origin
+metadata. The supplied larger timeout and external corpus measurements were
+not rerun or adopted as fresh FSMGen measurements.
+
+Required delivery covers physical-time bounds in waits, watchdogs, latency and
+monitors; a declared literal/parameter clock rate; exact directed rounding and
+source/conversion reports; and counter-based duration lowering. Existing
+cycle-count meanings and the baseline schedule remain compatibility controls.
+Optional legal-duration ranges remain explicitly owned contract work.
+
+The contract leaf `.60.1.2` must account for parameter override elaboration as
+well as default values: retaining a parameter spelling alone cannot ensure
+that an integrator's clock changes both the derived count and its counter
+width correctly. Existing runtime-wait counters are relevant prior machinery,
+not evidence that duration conversion or instantiation support already ships.
+The named-timer and aggregate-interface packets receive their bounded intake
+next so delivery can follow demonstrated dependencies.

@@ -2226,7 +2226,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Resolve the additional SPECFORGE duration, named-timer and aggregate-port feature requests and the unstated-reset question supplied on 2026-09-29.`
   Acceptance: `Own every requested capability and question, retain authorized packet inputs locally, independently reverify current compiler observations, distinguish supplied corpus/scale measurements from FSMGen evidence, and select bounded roadmap-aligned implementation and qualification leaves. Read sibling packet inputs only; do not change the SPECFORGE checkout, run its commands blindly, inspect submodule internals or treat illustrative syntax as selected. Director states SPECFORGE is blocked, so finish and commit only the active resource validator, then prioritize downstream intake and the smallest shippable unblocks. Resolve the reset question first, inventory other packets promptly, and retain broader compiler prerequisites only where a specific request needs them. No dirty pivot.`
-  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, reproduction, provenance delivery and complete question answer are qualified under .60.3, with P1 malformed-option repair .62 complete. Other packet preservation, signoff review and reproduction remain pending. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
+  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, reproduction, provenance delivery and complete question answer are qualified under .60.3, with P1 malformed-option repair .62 complete. Duration packet preservation and baseline reproduction are qualified under .60.1.1; timer and aggregate packet preservation/signoff/reproduction are next. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4`
 
@@ -2234,16 +2234,16 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Time-unit durations and clock frequency from sf-isf-duration-time-units.`
   Acceptance: `R1 duration literals for wait/watchdog/latency/temporal bounds; R2 literal/parameter clock frequency or period per actor/domain; R3 exact stated conversion with upward minimum/wait rounding and downward maximum rounding plus source/frequency/derived reports; R4 counter lowering independent of duration count; optional R5 legal duration ranges. Preserve existing cycle-count meanings. Own the reported static-wait scale limit without replaying the large timeout before bounded measurement design. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
-  Verification: `Packet README reviewed; no current reproduction or implementation signoff yet.`
+  Verification: `.1 preserves and qualifies the complete packet/current baseline. Required and optional contract selection remains .2; no duration implementation is shipped. Preserve the existing cycle-parameter schedule and define frequency-parameter override/count-width recomputation explicitly before implementation.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.4`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve and qualify the supplied packet baseline.`
   Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-duration-time-units; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
-  Verification: `pending ordered packet intake after completed reset answer`
-  Commit: `pending`
+  Verification: `Full request/signoff/commands/source/expected material read; packet text/size/SHA identities and exact source copies retained in docs/audits/specforge-duration-intake-20260930/. Guarded capture Files=1, Tests=4 PASS with complete native/API/newline reports and expected schedule transport refusals. Actual carrier independently contains 236 states, including 234 wait states, with no wait counter; every prior supplied baseline schedule field matches after excluding only reset_provenance. Initial audit assumptions about schedule exit and carrier indentation were corrected without production changes; both logs retained. Offline verifier checks source/product identities and rejects matching-copy count/counter/provenance/failure corruption plus changed carrier census. No large scale probe, performance/corpus claim, implementation or native HDL run. The foreign Git-head issue remains owned by .32.2. Book, canonical fact and downstream response state the unshipped boundary. Next intake is .60.2.1; contract .60.1.2 follows sibling inventories.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.2`
   Status: `pending`
@@ -3059,8 +3059,9 @@ Formal identity integration and its family qualification are complete under
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
-next leaf `.60.1.1` preserves and reproduces the duration packet, followed by
-timer/aggregate intake and the smallest shippable downstream unblocks. The resource activation validator is qualified; target-local priority
+duration baseline `.60.1.1` is qualified. The next leaf `.60.2.1` intakes
+named timers, followed by aggregate intake and contract/implementation of the
+smallest shippable downstream unblocks. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
 after literal-guard repair and independently retained runtime qualification, after
@@ -5125,3 +5126,16 @@ and locks current-value feedback plus ordinary writes; durability is T1980 and
 full products/logs/source identities in the committed reset-answer audit.
 No simulator startup value is claimed. This closes the question, not a new
 configurable-reset feature or SPECFORGE's downstream adapter-policy decision.
+
+
+## Acceptance Checklist — SEM .60.1.1 duration packet baseline
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Supplied and current --emit-schedule-json reports show the cycle parameter lowering to a static chain without a counter. Parser::_parse_clock requires one name; LoweringIR::_wait_count_spec refuses time as an unsupported expression operator and _parse_await_wd requires a scalar bound. _ir_wait allocates one state per static cycle. This is the documented missing duration capability, not evidence that the requested feature already exists.
+- [x] **ADDRESSED (verified)** — Preserved the director-authorized packet losslessly, verified every source identity, and captured complete bounded native/API/newline results and actual scheduled FSM. Current baseline fields equal the supplied schedule after removing only qualified reset provenance. The independent verifier refuses corrupted state counts, counter metadata, failure/provenance fields even when all report mirrors agree, and a changed actual carrier census. Initial exit/indentation audit assumptions were corrected and retained; production is unchanged.
+- [x] **NO REGRESSION** — Guarded intake capture reports `All tests successful. Files=1, Tests=4`; offline identity/transport/carrier/hostile verification passes. The accepted control and exact public failure contracts are preserved. No large timeout rerun or native runtime was needed. Book, response and Knowledge Map state the current gap; task/claim/publication and staged doctrines qualify the record.
+
+Re-derivation uses actual public commands and the emitted carrier; falsification
+uses matching-copy report corruption and a separate carrier mutation; durability
+uses the complete packet/products, hashes, capture test and offline verifier.
+Supplied corpus counts and larger-scale timing remain externally supplied,
+not independently measured here. This intake does not close feature delivery.
