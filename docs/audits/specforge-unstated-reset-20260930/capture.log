@@ -1,0 +1,91 @@
+ram-guard: PID 69404; host 70.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+docs/audits/specforge-unstated-reset-20260930/capture.t .. 
+# Subtest: baseline-good
+    ok 1 - check native success
+    ok 2 - check native clean stderr
+    ok 3 - check API success
+    ok 4 - check complete native/API equality
+    ok 5 - check newline success
+    ok 6 - check newline clean stderr
+    ok 7 - check complete API/newline equality
+    ok 8 - semantic native success
+    ok 9 - semantic native clean stderr
+    ok 10 - semantic API success
+    ok 11 - semantic complete native/API equality
+    ok 12 - semantic newline success
+    ok 13 - semantic newline clean stderr
+    ok 14 - semantic complete API/newline equality
+    ok 15 - schedule native success
+    ok 16 - schedule native clean stderr
+    ok 17 - schedule API success
+    ok 18 - schedule complete native/API equality
+    ok 19 - schedule newline success
+    ok 20 - schedule newline clean stderr
+    ok 21 - schedule complete API/newline equality
+    ok 22 - systemverilog generation succeeds
+    ok 23 - actual HDL retained
+    ok 24 - verilog generation succeeds
+    ok 25 - actual HDL retained
+    1..25
+ok 1 - baseline-good
+# Subtest: omitted-reset
+    ok 1 - check native success
+    ok 2 - check native clean stderr
+    ok 3 - check API success
+    ok 4 - check complete native/API equality
+    ok 5 - check newline success
+    ok 6 - check newline clean stderr
+    ok 7 - check complete API/newline equality
+    ok 8 - semantic native success
+    ok 9 - semantic native clean stderr
+    ok 10 - semantic API success
+    ok 11 - semantic complete native/API equality
+    ok 12 - semantic newline success
+    ok 13 - semantic newline clean stderr
+    ok 14 - semantic complete API/newline equality
+    ok 15 - schedule native success
+    ok 16 - schedule native clean stderr
+    ok 17 - schedule API success
+    ok 18 - schedule complete native/API equality
+    ok 19 - schedule newline success
+    ok 20 - schedule newline clean stderr
+    ok 21 - schedule complete API/newline equality
+    ok 22 - systemverilog generation succeeds
+    ok 23 - actual HDL retained
+    ok 24 - verilog generation succeeds
+    ok 25 - actual HDL retained
+    1..25
+ok 2 - omitted-reset
+# Subtest: clock-domain-no-reset
+    ok 1 - check native success
+    ok 2 - check native clean stderr
+    ok 3 - check API success
+    ok 4 - check complete native/API equality
+    ok 5 - check newline success
+    ok 6 - check newline clean stderr
+    ok 7 - check complete API/newline equality
+    ok 8 - semantic native success
+    ok 9 - semantic native clean stderr
+    ok 10 - semantic API success
+    ok 11 - semantic complete native/API equality
+    ok 12 - semantic newline success
+    ok 13 - semantic newline clean stderr
+    ok 14 - semantic complete API/newline equality
+    ok 15 - schedule native success
+    ok 16 - schedule native clean stderr
+    ok 17 - schedule API success
+    ok 18 - schedule complete native/API equality
+    ok 19 - schedule newline success
+    ok 20 - schedule newline clean stderr
+    ok 21 - schedule complete API/newline equality
+    ok 22 - systemverilog generation succeeds
+    ok 23 - actual HDL retained
+    ok 24 - verilog generation succeeds
+    ok 25 - actual HDL retained
+    1..25
+ok 3 - clock-domain-no-reset
+1..3
+ok
+All tests successful.
+Files=1, Tests=3, 37 wallclock secs ( 0.01 usr  0.01 sys + 25.17 cusr  9.66 csys = 34.85 CPU)
+Result: PASS

@@ -1,0 +1,8 @@
+(actor link_state
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (transaction main
+    (on start)
+    (complete done)))

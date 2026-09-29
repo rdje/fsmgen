@@ -2311,11 +2311,11 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.4`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve and qualify the supplied packet baseline.`
   Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-unstated-reset; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
-  Verification: `pending active validator commit; then ordered packet intake`
-  Commit: `pending`
+  Verification: `Read-only packet preserved losslessly in docs/audits/specforge-unstated-reset-20260930/packet.json; input identities and emitted products retained with revision/producer hashes. capture.t --strict --check --json / --emit-semantic-json / --emit-schedule-json: Files=1, Tests=3 PASS, complete native/API/newline parity after correcting test-only repository-path normalization. Existing omission and explicit baseline differ only by source paths; clock-only schedule/semantic reset is null and actual SV/Verilog has neither state initializer nor reset branch. verify.py independently checks contracts/HDL/identities and rejects corrupt reset/default/initialization controls. No native runtime executed or startup guarantee inferred. Legacy default mechanism: Parser::_finalize_actor_timing_conventions; clock-domain omission bypasses it. Source provenance/implementation-choice answer remains .60.3.2 onward.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.2`
   Status: `pending`
@@ -3032,7 +3032,7 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.60.3.1`, director-prioritized SPECFORGE reset-question intake, followed by
+`.60.3.2`, director-prioritized SPECFORGE reset contract selection, followed by
 duration/timer/aggregate packet intake and the smallest shippable downstream
 unblocks. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
@@ -5041,3 +5041,14 @@ rule-header semantic correspondence result, not general assignment exclusion,
 priority-contributor integration, independent-controller admission or native
 runtime qualification. The director's newly blocking SPECFORGE requests are
 owned under .60 and become the next delivery priority after this commit.
+
+## Acceptance Checklist — SEM .60.3.1 reset packet baseline
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Current `--emit-semantic-json` retains identical reset contracts for explicit and omitted legacy forms; `--emit-schedule-json` returns null for the clock-only form. Parser::_finalize_actor_timing_conventions applies legacy defaults only outside clock-domains, while generated explicit-system metadata describes the lowered carrier. Exact public products and actual HDL are retained in the reset audit.
+- [x] **ADDRESSED (verified)** — Preserved the supplied packet and verified copied source identities. The audit captures complete native/API/newline reports and both Verilog targets; independent verify.py checks explicit versus omitted equality and clock-only initialization absence. Corrupt reset fields, default policy and an invented initial block fail its hostile controls. Baseline only; the missing downstream provenance contract is owned by .60.3.2.
+- [x] **NO REGRESSION** — RAM-guarded audit `prove -v -Iperl -It/lib docs/audits/specforge-unstated-reset-20260930/capture.t`: `All tests successful. Files=1, Tests=3`; native/API/newline complete comparisons and actual HDL generation all succeed. Production source unchanged. The first run failed only unnormalized repository-path comparisons; corrected harness and both logs are retained.
+
+Claim legs: re-derivation is actual independent public commands and HDL emission;
+falsification is the offline verifier's corrupt-evidence controls; durability is
+the tracked packet, products, command/test logs and hashes. These qualify the
+supplied forms at the recorded revision, not arbitrary no-reset hardware runtime.

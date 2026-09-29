@@ -1,0 +1,20 @@
+{
+  "files": {
+    "baseline-good.isf": "3df2246049cdc0566cd85a93dea514ef1480644b03b5071b1b25963dd5c60f2d",
+    "capture-path-oracle.log": "bd2f262f22b4656875e166036baaf0c692dd81187ae8ab97ccbe4347d3619af2",
+    "capture.log": "54482a5996d96d61f41f95a205544d1f8cbab3b01eab51e212ac0595ceb5e4cb",
+    "capture.t": "aecc1f784fffa50e9704d64af3639bdb5bb3424c2f6f15e89a1dc8c1ec7553e0",
+    "clock-domain-no-reset.isf": "858e54c8e1795b8ce23c7221c500a1efe848f8e5b864ae73c5a1afc85faabfcc",
+    "current.json": "50f27225b5aa9a602affb8dd74909be11e013a9524c01a7598f4fdc2d082a12d",
+    "omitted-reset.isf": "f840b7c36dc4ffb9eec6b00dfc8e1b80fe88b7cb3df18077f65c9984f928fb31",
+    "packet.json": "c4d11279ab8c95c50a0a20614843d200f6e980682de00a7bd231fbf6468f2a4c"
+  },
+  "producer_sha256": {
+    "perl/FSM/Adapter/ISF/Parser.pm": "38a19a6ecba841925af86d399816f0d4f0dc9ea4d7896a0dd4bc8c81c27a9f41",
+    "perl/FSM/Scheduler/ISF/Emitter/FSM.pm": "446c1c8c189f130fb7c4ae69244c1853f8ef9f30ace347e463eda18cd724a3bb",
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": "62cf49134806bd2bd214f79f5d4275817d40bd10c16e2ff5a1cf853d4dd9b033",
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": "7dfd8f03269b35777373d7f3999c6677d884d4d7c31e7b1636d3f43070ba7a5b"
+  },
+  "revision": "da2e7ddc8762ef3e81942b8ae623cf5684540788",
+  "scope": "Public check/semantic/schedule native/API/newline and actual SystemVerilog/Verilog emission; no runtime execution or initialization claim."
+}

@@ -1,0 +1,9 @@
+(actor link_state
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (transaction main
+    (on start)
+    (complete done)))

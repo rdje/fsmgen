@@ -1,0 +1,9 @@
+(actor link_state
+  (clock-domains
+    (domain link (clock clk)))
+  (interface
+    (input start)
+    (output done))
+  (transaction main
+    (on start)
+    (complete done)))

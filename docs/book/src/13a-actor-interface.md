@@ -425,6 +425,40 @@ For example, assert `rst_n=0` at a falling edge, wait for the next falling edge
 one time unit after assertion without a rising edge assumes asynchronous
 behavior and does not test this contract.
 
+### Omitted reset versus hardware without reset
+
+Omitting a legacy actor's reset clause selects the documented `rst_n` default.
+The current check, semantic and schedule reports do not distinguish that
+omission from an explicitly authored `(reset (rst_n async active_low))`, apart
+from the input path. In particular, `explicit_system_contract` describes the
+lowered FSM carrier; its name does not prove that the ISF author stated a reset.
+Source provenance for this distinction is owned by the SPECFORGE reset request.
+
+A standalone clock-only actor is accepted through a named domain; CDC is not
+required:
+
+```lisp
+(actor link_state
+  (clock-domains (domain link (clock clk)))
+  (interface (input start) (output done))
+  (transaction main (on start) (complete done)))
+```
+
+This form selects hardware **without a reset**. Schedule `reset` and semantic
+reset fields are null. The emitted SystemVerilog and Verilog declare the state
+register without an initializer and only clock `next_state` into it; there is
+no reset branch or `initial` block. FSMGen therefore supplies no guaranteed
+initial FSM state. A simulator's default value is not an initialization promise.
+Clock-only direct VHDL remains outside the supported reset-bearing subset.
+
+Neither existing spelling represents a deferred implementation choice of reset
+kind or polarity. If the source specification is silent, retain that fact in
+the source model rather than treating clock-only hardware as its equivalent.
+The supplied examples, complete current public products, emitted HDL and
+independent evidence checks are retained under
+`docs/audits/specforge-unstated-reset-20260930/`; this baseline is static emission
+and report qualification, not a runtime initialization test.
+
 **Lowering to .fsm**:
 | ISF | .fsm |
 |-----|------|

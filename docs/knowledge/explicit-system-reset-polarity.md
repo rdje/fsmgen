@@ -9,7 +9,8 @@ answers:
   - "does ISF lowering preserve synchronous active-low and asynchronous active-high reset?"
   - "why do generated domain resets agree with CDC metadata?"
   - "why did T1974 fail its reset check at time 311?"
-date: 2026-09-28
+  - "does omitted ISF reset mean the specification leaves reset unspecified?"
+date: 2026-09-30
 status: current
 tags: [fsm, isf, reset, polarity, semantics, mcp, systemverilog, verilog, vhdl]
 evidence: docs/decisions/0106-reset-polarity-is-an-explicit-system-carrier.md; docs/book/src/03-decision-trees-and-fsms.md; t/1891-explicit-system-reset-polarity.t; t/1892-explicit-reset-hdl-behavior.t; docs/audits/specforge-rule-admission-20260924/reset-polarity-carrier.json; docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json; t/1893-isf-reset-polarity-lowering.t; t/1894-isf-domain-reset-event-behavior.t
@@ -67,3 +68,15 @@ reset with unchanged production code; the complete result is retained in
 `docs/audits/priority-runtime-qualified-20260928/`. Inspect the original failed
 observation and public metadata/HDL witness with
 `python3 -B docs/audits/priority-reset-oracle-20260928/verify.py`.
+
+The SPECFORGE unstated-reset baseline confirms legacy omission and explicit
+async-low `rst_n` have identical public reports apart from source paths.
+`explicit_system_contract` is explicit in the lowered FSM, not proof of authored
+ISF reset provenance. A standalone clock-only named domain emits no reset,
+state initializer or initial block in either Verilog target; it supplies no
+guaranteed initial state. It is not a deferred implementation reset choice.
+Reverify saved identities, complete contracts and HDL structure with
+`python3 -B docs/audits/specforge-unstated-reset-20260930/verify.py`; replay native,
+API and actual newline queries plus HDL emission with its `capture.t` under
+the RAM guard. No native runtime executes in that audit. Missing reset-source
+provenance and the downstream answer remain owned by SEM `.60.3.2` onward.
