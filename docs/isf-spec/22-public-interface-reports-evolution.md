@@ -61,6 +61,12 @@ qualified by T1978. Discovery lives in the schedule contract's
 `optional_fields.reset_provenance`, also projected as `source_optional_fields`
 in both public report contracts.
 
+Malformed reset options fail before successful provenance or scheduling is
+published. T1979 covers ordinary/strict check and semantic diagnostic reports,
+complete native/API/newline failure equality, and schedule refusal. This grammar
+repair preserves the advertised reset kind/polarity value families and the
+existing schedule transport-error contract.
+
 Current bounded nested and array summary families:
 
 ```text

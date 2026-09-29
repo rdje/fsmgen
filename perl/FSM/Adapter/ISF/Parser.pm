@@ -8336,6 +8336,8 @@ sub _parse_clock($self, $clause) {
 }
 
 sub _parse_reset($self, $clause) {
+    confess "Error: (reset ...) requires exactly one reset specification\n"
+        unless @$clause == 2;
     my $spec = $clause->[1];
     # Flat form: (reset rst_n)
     if (!ref($spec)) {
@@ -8351,13 +8353,24 @@ sub _parse_reset($self, $clause) {
         unless defined($name) && !ref($name) && length($name);
     my $kind = 'sync';
     my $polarity = $name =~ /_[nb]$/ ? 'active_low' : 'active_high';
+    my %seen;
 
     for my $i (1 .. $#$spec) {
         my $val = $spec->[$i];
+        # Lispish may retain an undefined tail; it is not an authored option.
         next unless defined $val;
-        if ($val eq 'async')      { $kind = 'async'; }
-        elsif ($val eq 'active_low')  { $polarity = 'active_low'; }
-        elsif ($val eq 'active_high') { $polarity = 'active_high'; }
+        confess "Error: (reset ...) reset options must be scalar\n" if ref($val);
+        if ($val eq 'sync' || $val eq 'async') {
+            confess "Error: (reset ...) duplicate or conflicting reset timing\n"
+                if $seen{kind}++;
+            $kind = $val;
+        } elsif ($val eq 'active_low' || $val eq 'active_high') {
+            confess "Error: (reset ...) duplicate or conflicting reset polarity\n"
+                if $seen{polarity}++;
+            $polarity = $val;
+        } else {
+            confess "Error: (reset ...) unsupported reset option '$val'; expected sync, async, active_low, or active_high\n";
+        }
     }
 
     return { name => $name, kind => $kind, polarity => $polarity };

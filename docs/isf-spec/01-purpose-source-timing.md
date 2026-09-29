@@ -1509,7 +1509,10 @@ Reset rules:
 - Explicit flat `(reset name)` keeps the shipped synchronous reset shorthand.
 - Names ending in `_n` or `_b` infer `active_low`; other names infer
   `active_high`.
-- List form may include `async`, `active_low`, or `active_high`.
+- A reset clause takes exactly one scalar name or list. List form accepts at
+  most one of `sync`/`async` and one of `active_low`/`active_high`, in either
+  order; omitted timing is synchronous. Unknown, nested, repeated or conflicting
+  options and extra clause operands fail in ordinary and strict modes.
 - Reset names must be scalar when a `(reset ...)` clause is present.
 - Async resets lower to `.fsm` `(areset name)`.
 - Sync resets lower to `.fsm` `(sreset name)`.
@@ -1653,7 +1656,9 @@ Selected reset ownership model and current implementation status:
   no-reset domain artifacts.
 - Domain reset payloads reuse the shipped reset value rules: flat
   `(reset name)` is synchronous with inferred polarity; list forms may include
-  `async`, `active_low`, or `active_high`; and reset names must be scalar.
+  `sync` or `async` and `active_low` or `active_high`; reset names must be scalar.
+  The same arity and duplicate/conflict/unknown-option checks apply as for the
+  legacy actor reset clause.
   Scheduled FSMs preserve that resolved policy with an explicit reset-polarity
   modifier whenever keyword defaults or strict FSM name conventions would
   lose it. For example, flat `rst_n` emits `(sreset rst_n active_low)`;

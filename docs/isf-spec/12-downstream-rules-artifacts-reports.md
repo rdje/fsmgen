@@ -1064,6 +1064,13 @@ qualified by T1978. Discovery lives in the schedule contract's
 `optional_fields.reset_provenance`, also projected as `source_optional_fields`
 in both public report contracts.
 
+Reset clauses accept exactly one scalar name or list. A list may select one
+`sync`/`async` timing and one `active_low`/`active_high` polarity, in either order.
+Unknown, nested, repeated or conflicting options and extra operands are source
+errors in ordinary and strict modes. Successful provenance is not emitted for
+those failures; T1979 qualifies complete native/API/newline diagnostic equality
+and schedule refusal while T1978 preserves valid-source reports and HDL.
+
 
 `--emit-schedule-json` and `FSM::Scheduler::ISF->report(...)` expose the
 bounded schedule report. Top-level keys currently advertised:

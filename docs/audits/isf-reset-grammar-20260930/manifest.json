@@ -1,0 +1,32 @@
+{
+  "base_revision": "d5c1806c2bf68af97ff7eff103f723cce8f74173",
+  "cause": "_parse_reset ignored unknown tokens, accepted repeated/conflicting options and ignored extra outer operands. An asnyc typo became sync in a successful strict report.",
+  "disposition": {
+    "empty-option-ast.log": "Public Lispish output and own normalization expose the exact authored-list versus valid-tail collapse; no dependency implementation read.",
+    "empty-options.log": "Public parser probe reveals acceptance of an authored empty reset option.",
+    "green-final.log": "Final T1979 including authored empty options and full public failure transport PASS.",
+    "green-parser.log": "All malformed forms refused; only missing-name diagnostic expectations were incorrect. Normalized missing operand takes the existing scalar-name error. Expectations corrected without changing production behavior.",
+    "green-public.log": "Final T1979 parser and native/API/newline failures PASS.",
+    "red.log": "Initial parser-only regression: malformed acceptance fails, valid policies pass.",
+    "regression-final.log": "Final normalizer, storage/output reset, timing/provenance and complete unchanged carrier/HDL regressions PASS.",
+    "regression.log": "Initial neighboring reset/timing/public provenance tests PASS before empty-option boundary discovery."
+  },
+  "empty_option_cause": "The own LispishAdapter singleton unwrapping collapsed raw [undef] (authored empty list) to undef, making it indistinguishable from a legitimate singleton-name tail. Reset payload normalization now retains authored empties as arrays for scalar-option refusal; other normalization contexts are unchanged.",
+  "files": {
+    "logs.json": "32763b09474c422b100fa006813ddc72bb7006c89a0f0bf295b4bcc5573ca8d8"
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.62",
+  "pre_repair_witness": "docs/audits/specforge-reset-provenance-20260930/reset-token-defect.json",
+  "producer_sha256": {
+    "perl/FSM/Adapter/ISF/LispishAdapter.pm": "2c31afb99d77ec3adf144f738765854376ae94c67d5a5573b1be6be85c40b30a",
+    "perl/FSM/Adapter/ISF/Parser.pm": "8796b7e39557cc5c4e53b63a3d53667bb3ab6c7f3afc03611e9f2823dacfe993",
+    "t/1092-isf-lispish-adapter.t": "39eed3881b922261e89657f6f4e438d8a1071340daa4c1e112775185a57ce3aa",
+    "t/1978-isf-reset-provenance.t": "7975d3e838d9f441ef47d6c10d6144f9b9b948b8c9d36cedca583cc6f4168575",
+    "t/1979-isf-reset-grammar.t": "ae6e51e6b299f966f46e916b3f6ab01ca7c0f46a183695390772fac44ccb0c9d"
+  },
+  "relevant_history": {
+    "finding": "R14 reset name/polarity inference retained an undefined Lispish tail skip. The repair preserves that valid-source handling and recognizes explicit sync, already used by T1331 and domain/library fixtures.",
+    "revision": "8dc7bb3d6f262be760bbe11ca1ec968bf6bdd792"
+  },
+  "scope": "Closed ISF reset options and retained authored empty-list identity within reset payloads; no new reset policy, HDL behavior or native simulator execution."
+}

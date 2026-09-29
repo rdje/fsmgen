@@ -686,6 +686,12 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
 mdbook build docs/book
 ```
 
+Reset-policy regression coverage also includes
+`t/1979-isf-reset-grammar.t` for malformed actor/domain clauses and public failure
+transport, and `t/1978-isf-reset-provenance.t` for clause origin with unchanged
+effective policy and generated HDL. Both run through the repository RAM guard;
+neither executes a native HDL simulator.
+
 ## 17. Machine-Readable Discovery
 
 The machine-readable public contract is available through:

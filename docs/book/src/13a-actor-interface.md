@@ -410,11 +410,22 @@ top/CDC HDL targets remain outside the shipped backend scope.
 (reset rst_n)                          ;; sync, polarity from _n → active_low
 (reset (rst_n))                        ;; sync, polarity from _n
 (reset (rst_n async))                  ;; async, polarity from _n
+(reset (rst_n sync active_low))        ;; explicit synchronous policy
 (reset (rst_n async active_low))       ;; explicit
 (reset rst)                            ;; sync, active_high (no _n suffix)
 ```
 
 Reset name convention: `*_n` or `*_b` suffix → `active_low`. Otherwise `active_high`.
+
+A reset clause takes exactly one name or one list. The list accepts at most one
+timing option (`sync` or `async`) and one polarity option (`active_low` or
+`active_high`), in either order. Without a timing option it is synchronous.
+Unknown, nested, repeated or contradictory options and extra clause operands
+are errors in both ordinary and strict checking, including inside named domains.
+An empty list is also an invalid option: `(reset (rst_n ()))` is rejected,
+while `(reset (rst_n))` remains valid synchronous shorthand.
+For example, `(reset (rst_n asnyc active_low))` fails with an unsupported-option
+diagnostic; a misspelling cannot silently select synchronous hardware.
 
 If a legacy single-clock actor omits `(reset ...)`, the parser normalizes its
 reset to asynchronous active-low `rst_n`. Explicit flat `(reset name)` keeps

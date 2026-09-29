@@ -86,4 +86,14 @@ Reverify current public provenance and complete unchanged HDL with
 `scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1978-isf-reset-provenance.t`.
 This audit does not execute a native simulator. Implementation-selected reset is outside this question's scope; SEM `.61`
 records the withdrawn feature inference after director clarification.
-Reset-token typo rejection is owned by `.62` before downstream answer closure.
+T1979 and SEM `.62` reject unknown, nested, repeated or conflicting ISF reset
+options and extra outer operands before lowering. Valid `sync`/`async`, inferred
+or explicit polarity, option order and legacy/domain defaults are preserved.
+The own Lispish adapter preserves authored empty lists within reset payloads;
+otherwise singleton unwrapping would collapse `()` to the same undefined value
+as a valid singleton-name tail. T1092 locks that distinction and unchanged
+normalization outside reset payloads; no dependency implementation was inspected.
+The original strict accepted `asnyc` witness is sealed in
+`docs/audits/specforge-reset-provenance-20260930/reset-token-defect.json`.
+Reverify the repair without a native simulator using
+`scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1979-isf-reset-grammar.t`.

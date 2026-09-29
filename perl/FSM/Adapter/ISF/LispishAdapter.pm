@@ -35,19 +35,24 @@ sub normalize_multi($self, $raw_ast) {
 }
 
 # Normalize a single Lispish form into canonical [head, arg1, arg2, ...]
-sub normalize_form($self, $form) {
+sub normalize_form($self, $form, $preserve_empty_lists = 0) {
     confess "normalize_form: expected array ref\n"
         unless ref($form) eq 'ARRAY';
 
     return [] unless @$form;
 
     my $head = $form->[0];
+    # A reset option written as () must stay distinct from Lispish's undefined
+    # tail after a valid singleton name. Preserve that authored list within
+    # reset payloads so the parser can reject it as a non-scalar option.
+    $preserve_empty_lists = 1
+        if defined($head) && !ref($head) && $head eq 'reset';
 
     # Leaf unwrapping: if the form has exactly one element (a singleton
     # sub-expression), return that element unwrapped.
     # Lispish wraps (foo) as [foo] but we want the scalar "foo".
     if (@$form == 1) {
-        return $head;
+        return $preserve_empty_lists && !defined($head) ? [] : $head;
     }
 
     # If the second element is an array, Lispish has nested the tail
@@ -55,12 +60,12 @@ sub normalize_form($self, $form) {
     if (@$form >= 2 && ref($form->[1]) eq 'ARRAY') {
         my $first_arg = $form->[1][0];
         $first_arg = ref($first_arg) eq 'ARRAY'
-            ? $self->normalize_form($first_arg)
+            ? $self->normalize_form($first_arg, $preserve_empty_lists)
             : $self->_leaf_unwrap($first_arg);
         my @rest;
         for my $elem (@{$form->[1]}[1 .. $#{$form->[1]}]) {
             push @rest, ref($elem) eq 'ARRAY'
-                ? $self->normalize_form($elem)
+                ? $self->normalize_form($elem, $preserve_empty_lists)
                 : $elem;
         }
         return [$head, $first_arg, @rest];
@@ -70,7 +75,7 @@ sub normalize_form($self, $form) {
     my @normalized;
     for my $elem (@$form) {
         push @normalized, ref($elem) eq 'ARRAY'
-            ? $self->normalize_form($elem)
+            ? $self->normalize_form($elem, $preserve_empty_lists)
             : $elem;
     }
     return \@normalized;

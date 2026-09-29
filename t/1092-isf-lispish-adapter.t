@@ -55,4 +55,20 @@ subtest 'find_form_by_head locates form in multi-form result' => sub {
     ok(!$missing, 'non-existent form returns undef');
 };
 
+subtest 'reset options retain authored empty lists separately from singleton tails' => sub {
+    my $adapter = FSM::Adapter::ISF::LispishAdapter->new();
+    for my $case (
+        ['(reset (rst_n ()))', ['reset', ['rst_n', []]]],
+        ['(reset (rst_n () active_low))', ['reset', ['rst_n', [], 'active_low']]],
+        ['(reset (rst_n async ()))', ['reset', ['rst_n', 'async', []]]],
+        ['(reset (rst_n))', ['reset', ['rst_n', undef]]],
+        ['(reset rst_n)', ['reset', 'rst_n']],
+        ['(reset 0)', ['reset', '0']],
+        ['(options ())', ['options', undef]],
+    ) {
+        my $raw = Lispish::single(\$case->[0]);
+        is_deeply($adapter->normalize_form($raw), $case->[1], $case->[0]);
+    }
+};
+
 done_testing();

@@ -2306,7 +2306,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Source-honest unspecified-reset guidance from sf-isf-unstated-reset.`
   Acceptance: `Answer the distinction between omitted/defaulted reset, actual no-reset clock domains and implementation-selected reset. Reverify generated initial state/register behavior and all report surfaces for supplied variants; never infer initialization from successful checking. Explain single-domain support and supported target limits, distinguish unstated from absent hardware, and answer the missing configurable-reset form without treating this question as a feature request. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
-  Verification: `Baseline and additive provenance are qualified by .1 and .3.3.1; .62 owns the discovered strict reset-token defect before .4 publishes the complete downstream answer. Director confirms this is a question; inferred configurable-reset feature .61 is superseded.`
+  Verification: `Baseline and additive provenance are qualified by .1 and .3.3.1; .62 fixes malformed reset options. .4 publishes the complete downstream answer next. Director confirms this is a question; inferred configurable-reset feature .61 is superseded.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.4`
 
@@ -2343,7 +2343,7 @@ For FSMGen, the analogs are:
   Status: `pending`
   Goal: `Qualify the complete consumer outcome.`
   Acceptance: `After implementation, independently exercise positive/negative cases, unchanged controls, target-qualified HDL where behavior changes, exact native/API/newline reports, source/capability/corpus/book alignment and all explicit requirement dispositions. Retain recoverable evidence and a repository-local downstream response; no external sending is authorized by this intake.`
-  Verification: `pending preceding contract dependency`
+  Verification: `Pending final answer after .62. Initial-state wording must distinguish reset values from power-on initialization; t/1398-isf-storage-reset-value.t currently uses misleading powers-up wording for assertions that only inspect reset assignments. Correct that local description within this answer qualification and cite actual no-reset state/storage emission evidence.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4`
@@ -3037,11 +3037,11 @@ before editing code. No discovered defect is closed by this audit alone.
 ## Reset grammar defect ownership
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.62`
-  Status: `pending`
+  Status: `done`
   Goal: `Reject malformed reset clauses instead of silently selecting a different reset policy.`
   Acceptance: `P1 reset-policy correctness follow-up immediately after the current provenance implementation commit and before consumer closure. Reproduce unknown timing/polarity tokens and extra operands through strict public queries; Parser::_parse_reset currently loops recognized tokens and ignores all other values. Own exact accepted/rejected grammar, preserved valid shorthand and domain behavior, precise diagnostics, native/API/newline failure equality and book/spec alignment. Split if the compatibility census reveals an intended accepted alias; do not speculate that parse success proves authored reset intent.`
-  Verification: `Strict --emit-semantic-json accepts (reset (rst_n asnyc active_low)) with success true and reset_kind sync. Exact source/report/parser identity is retained in docs/audits/specforge-reset-provenance-20260930/reset-token-defect.json. Parser::_parse_reset ignores unknown list values and does not check outer operand count. Repair is next from a clean provenance commit before .60.3.4; no grammar change mixed into metadata.`
-  Commit: `pending`
+  Verification: `Parser closes reset arity and options while retaining explicit sync, suffix inference, modifier order and undefined Lispish tails. A late public probe exposed authored () collapsed to undef by own normalization; reset payload normalization now preserves empty lists for rejection, without changing other contexts. Final T1979 Files=1, Tests=3 PASS; normalizer/storage/output/timing/provenance regressions Files=10, Tests=43 PASS, including complete unchanged valid-source carriers and HDL. Ordinary/strict native check and semantic failures, API/newline equality and schedule refusal qualify the fix; no simulator executed. Historical singleton-tail handling at 8dc7bb3d6f262be760bbe11ca1ec968bf6bdd792 is preserved. Lossless red/intermediate/final logs, public AST cause capture and exact identities: docs/audits/isf-reset-grammar-20260930/. Book/spec/downstream and canonical fact align; .60.3.4 is next.`
+  Commit: `this commit`
 
 ## Reset question scope disposition
 
@@ -3057,9 +3057,9 @@ before editing code. No discovered defect is closed by this audit alone.
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
-verification facts are repaired under `.57`. The next leaf is
-`.62`, the discovered strict reset-token refusal repair, then `.60.3.4`
-closes the director-prioritized SPECFORGE reset answer, followed by
+verification facts are repaired under `.57`. After the qualified strict
+reset-token repair `.62`, the next leaf `.60.3.4` closes the director-prioritized
+SPECFORGE reset answer, followed by
 duration/timer/aggregate packet intake and the smallest shippable downstream
 unblocks. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
@@ -5098,3 +5098,17 @@ independent baseline byte comparisons and malformed-evidence controls; durabilit
 is T1978, the immutable baseline plus candidate logs/producer identities in
 `docs/audits/specforge-reset-provenance-20260930/`. The typo acceptance is a
 separate actual defect, owned by .62 and scheduled before downstream closure.
+
+
+## Acceptance Checklist — SEM .62 reset grammar repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The sealed strict --emit-semantic-json witness accepts asnyc and reports sync: Parser::_parse_reset ignored unknown list values, repeated/conflicting options and extra outer operands. T1979 red reproduces the malformed acceptance. The relevant git log -S history at 8dc7bb3d records valid singleton-tail handling. A late public AST probe also proves the own normalizer collapsed authored () to undef; that identity loss caused empty options to evade the parser guard.
+- [x] **ADDRESSED (verified)** — The parser now enforces reset arity, scalar options, known timing/polarity values and non-repeated selection. Reset-payload normalization retains authored empty lists separately from legitimate undefined tails; T1092 proves that distinction and unchanged non-reset normalization. T1979 passes independent expected actor/domain policies and malformed controls, ordinary/strict public diagnostic failures, complete native/API/newline equality and schedule refusal. Explicit sync, inferred polarity, option order and whitespace tails remain accepted. The first repaired run failed only incorrect missing-name diagnostic expectations; correction is disclosed in the sealed evidence.
+- [x] **NO REGRESSION** — Guarded T1979 reports `All tests successful. Files=1, Tests=3`; Final T1092/T1398/T1476/T1331/T1165/T1192/T1150/T1159/T1893/T1978 report `All tests successful. Files=10, Tests=43`. Parser syntax, Knowledge Map, task/claim checks and book build pass. T1978 compares complete previous reports, scheduled carriers and generated HDL; no native runtime was required for preserved valid-source hardware. Staged doctrines qualify the committed publication.
+
+Re-derivation uses actual parsing and public commands; falsification uses the
+original successful typo report, the red grammar regression and independently
+expected policy/error matrices; durability is T1979 and the lossless log/hash
+archive in `docs/audits/isf-reset-grammar-20260930/`. Existing supported corpus
+forms remain covered by neighboring tests; no new source-feature category or
+public schema is introduced. Historical native EPERM remains separately open.
