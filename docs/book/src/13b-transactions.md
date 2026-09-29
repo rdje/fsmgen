@@ -97,12 +97,15 @@ Priority `higher` entries describe fixed higher users; round-robin entries name
 potential blocking peers. Neither list alone proves exclusion. The lowerer now
 retains original requests and ordered guard transformations, including unchanged
 highest-priority grants and the actual round-robin pointer/update association.
-Validating these conditions, target-local suppressors, invocation joins and
-complete generated writer evidence remains the following work.
+A detached validator now checks these requests against authored rules and joins
+every ordered transformation to the actual final header. It independently
+rederives resource priority and circular round-robin permissions and verifies
+actual pointer storage and updates. Target-local assignment suppressors,
+invocation joins and complete generated writer evidence remain separate work.
 The focused carrier and malformed-evidence checks run without HDL simulation:
 
 ```sh
-scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1973-isf-writer-activation-predicates.t t/1975-isf-writer-resource-grants.t t/1976-isf-resource-activation-evidence.t
+scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1973-isf-writer-activation-predicates.t t/1975-isf-writer-resource-grants.t t/1976-isf-resource-activation-evidence.t t/1977-isf-writer-resource-activation.t
 ```
 
 Scope repair now has separately tested expression, clause and binding resolution. It

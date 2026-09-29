@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57, SEMANTIC-INTROSPECTION-MCP-FRONTIER.58, SEMANTIC-INTROSPECTION-MCP-FRONTIER.59`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57, SEMANTIC-INTROSPECTION-MCP-FRONTIER.58, SEMANTIC-INTROSPECTION-MCP-FRONTIER.59, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -978,11 +978,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Validate resource activation evidence against declarations and actual predicates.`
   Acceptance: `After .1, join the qualified grant catalog to original requests, complete ordered transformations and final DT header predicates. Require independent priority and round-robin selection controls, literal/compound requests and multiple-resource composition; reject missing/inconsistent intermediate or final evidence. Validate actual pointer identity/update association without inferring from prefixes. State explicitly any boundary that prevents exclusion proof and keep the helper detached from production admission.`
-  Verification: `pending .1`
-  Commit: `pending`
+  Verification: `WriterResourceActivation joins complete authored-rule/request/DT coverage to ordered grant steps and actual final headers. It independently reconstructs priority reachability and circular permissions and validates selected pointer storage/update identity, including unbound rules and consistently renamed containers. T1977 focused final: Files=1, Tests=4 PASS; T1975/T1976/T1973/T1944/T1218: Files=5, Tests=27 PASS, including all resource kinds and complete native/API/newline/carrier parity. Initial T1977 oracle incorrectly used reversed resource user order for priority in mixed resources; exact declared high-over-middle-over-low ranking corrects that test-only error. Hostile controls reject matching incomplete grant copies, changed inputs/chains/headers and pointer/permission corruption. No production caller, public key, admission or native runtime change. Logs: .artifacts/resource-activation-validation/. Director-prioritized SPECFORGE intake .60.3.1 precedes further writer work.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3`
   Status: `pending`
@@ -2222,6 +2222,158 @@ For FSMGen, the analogs are:
   Verification: `Only .artifacts/{priority-contributors,priority-contributor-repair,same-value-selector-repair,priority-final-observation,priority-runtime-qualified,writer-resource-grants,resource-activation}/book were removed after same-volume, non-symlink, untracked and actual mdBook index/hashed-asset checks. Initial unhashed book.js preflight assumption failed safely before deletion and was corrected from index.html. All selected paths are absent; all log/bin candidates are retained. Root target and rust/target/release are absent; rust debug deps/incremental contain no log/bin candidates. Census and cleanup procedure: .artifacts/artifact-cleanup-20260929/. Latest-cleanup record overwritten. No product behavior/book source changed; preceding committed book build remains valid. Next .32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2.`
   Commit: `this commit`
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60`
+  Status: `active`
+  Goal: `Resolve the four additional SPECFORGE duration, timer, unstated-reset and aggregate-port packets supplied on 2026-09-29.`
+  Acceptance: `Own every requested capability and question, retain authorized packet inputs locally, independently reverify current compiler observations, distinguish supplied corpus/scale measurements from FSMGen evidence, and select bounded roadmap-aligned implementation and qualification leaves. Read sibling packet inputs only; do not change the SPECFORGE checkout, run its commands blindly, inspect submodule internals or treat illustrative syntax as selected. Director states SPECFORGE is blocked, so finish and commit only the active resource validator, then prioritize downstream intake and the smallest shippable unblocks. Resolve the reset question first, inventory other packets promptly, and retain broader compiler prerequisites only where a specific request needs them. No dirty pivot.`
+  Verification: `Read all four packet README files from the director-authorized external directories. Detailed packet preservation, signoff review, claim dispositions and fresh public reproduction remain pending. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1`
+  Status: `active`
+  Goal: `Time-unit durations and clock frequency from sf-isf-duration-time-units.`
+  Acceptance: `R1 duration literals for wait/watchdog/latency/temporal bounds; R2 literal/parameter clock frequency or period per actor/domain; R3 exact stated conversion with upward minimum/wait rounding and downward maximum rounding plus source/frequency/derived reports; R4 counter lowering independent of duration count; optional R5 legal duration ranges. Preserve existing cycle-count meanings. Own the reported static-wait scale limit without replaying the large timeout before bounded measurement design. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
+  Verification: `Packet README reviewed; no current reproduction or implementation signoff yet.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.1`
+  Status: `pending`
+  Goal: `Preserve and qualify the supplied packet baseline.`
+  Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-duration-time-units; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
+  Verification: `pending active validator commit; then ordered packet intake`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.2`
+  Status: `pending`
+  Goal: `Select the precise contract and safe dependency order.`
+  Acceptance: `Map all required and optional packet requirements to current roadmap, decisions, parser/lowerer/backends/reports/tests/book. Resolve time-unit durations and clock frequency semantics within director authority; explicitly own any missing decision, source ambiguity or external evidence gap. Decompose implementation before source changes; do not equate intake with delivery.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.3`
+  Status: `pending`
+  Goal: `Implement the selected bounded contract.`
+  Acceptance: `After baseline and contract selection, split into independently verifiable parser/IR/lowering/report/diagnostic and compatibility leaves before code changes. Preserve accepted source semantics, locality and source provenance. Use existing public dependency APIs and qualify every affected public facade and book example.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1.4`
+  Status: `pending`
+  Goal: `Qualify the complete consumer outcome.`
+  Acceptance: `After implementation, independently exercise positive/negative cases, unchanged controls, target-qualified HDL where behavior changes, exact native/API/newline reports, source/capability/corpus/book alignment and all explicit requirement dispositions. Retain recoverable evidence and a repository-local downstream response; no external sending is authorized by this intake.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2`
+  Status: `active`
+  Goal: `Concurrent actor-owned named timers from sf-isf-named-timers.`
+  Acceptance: `R1 named limits and duplicate/zero/unknown refusals; R2 start/restart/stop from rules and transactions; R3 ordinary expiry conditions; R4 concurrent timers independent of initiating transactions; R5 limit/width/control/use reports. Optional R6 per-await watchdog limits stays distinct. Preserve watchdog error semantics; timer command conflicts require qualified writer admission and explicit timing/reset/control precedence. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
+  Verification: `Packet README reviewed; no current reproduction or implementation signoff yet.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.1`
+  Status: `pending`
+  Goal: `Preserve and qualify the supplied packet baseline.`
+  Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-named-timers; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
+  Verification: `pending active validator commit; then ordered packet intake`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.2`
+  Status: `pending`
+  Goal: `Select the precise contract and safe dependency order.`
+  Acceptance: `Map all required and optional packet requirements to current roadmap, decisions, parser/lowerer/backends/reports/tests/book. Resolve concurrent actor-owned named timers semantics within director authority; explicitly own any missing decision, source ambiguity or external evidence gap. Decompose implementation before source changes; do not equate intake with delivery.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.3`
+  Status: `pending`
+  Goal: `Implement the selected bounded contract.`
+  Acceptance: `After baseline and contract selection, split into independently verifiable parser/IR/lowering/report/diagnostic and compatibility leaves before code changes. Preserve accepted source semantics, locality and source provenance. Use existing public dependency APIs and qualify every affected public facade and book example.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2.4`
+  Status: `pending`
+  Goal: `Qualify the complete consumer outcome.`
+  Acceptance: `After implementation, independently exercise positive/negative cases, unchanged controls, target-qualified HDL where behavior changes, exact native/API/newline reports, source/capability/corpus/book alignment and all explicit requirement dispositions. Retain recoverable evidence and a repository-local downstream response; no external sending is authorized by this intake.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3`
+  Status: `active`
+  Goal: `Source-honest unspecified-reset guidance from sf-isf-unstated-reset.`
+  Acceptance: `Answer the distinction between omitted/defaulted reset, actual no-reset clock domains and implementation-selected reset. Reverify generated initial state/register behavior and all report surfaces for supplied variants; never infer initialization from successful checking. Explain single-domain support and supported target limits, distinguish unstated from absent hardware, and own missing provenance or configurable-reset capability separately if required. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
+  Verification: `Packet README reviewed; no current reproduction or implementation signoff yet.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.1`
+  Status: `pending`
+  Goal: `Preserve and qualify the supplied packet baseline.`
+  Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-unstated-reset; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
+  Verification: `pending active validator commit; then ordered packet intake`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.2`
+  Status: `pending`
+  Goal: `Select the precise contract and safe dependency order.`
+  Acceptance: `Map all required and optional packet requirements to current roadmap, decisions, parser/lowerer/backends/reports/tests/book. Resolve source-honest unspecified-reset guidance semantics within director authority; explicitly own any missing decision, source ambiguity or external evidence gap. Decompose implementation before source changes; do not equate intake with delivery.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.3`
+  Status: `pending`
+  Goal: `Implement the selected bounded contract.`
+  Acceptance: `After baseline and contract selection, split into independently verifiable parser/IR/lowering/report/diagnostic and compatibility leaves before code changes. Preserve accepted source semantics, locality and source provenance. Use existing public dependency APIs and qualify every affected public facade and book example.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3.4`
+  Status: `pending`
+  Goal: `Qualify the complete consumer outcome.`
+  Acceptance: `After implementation, independently exercise positive/negative cases, unchanged controls, target-qualified HDL where behavior changes, exact native/API/newline reports, source/capability/corpus/book alignment and all explicit requirement dispositions. Retain recoverable evidence and a repository-local downstream response; no external sending is authorized by this intake.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4`
+  Status: `active`
+  Goal: `Packed record interface ports and named fields from sf-isf-aggregate-interface-ports.`
+  Acceptance: `R1 local/imported packed record input/output ports and precise unknown/unpacked refusals; R2 scalar-context input field reads, output field writes and whole same-type port/storage copies; R3 documented packed layout/width in carriers, HDL and reports. Optional R4 list ports and R5 variants remain explicitly separate. Preserve scalar/storage behavior and depend on qualified physical writer overlap before output-field admission. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
+  Verification: `Packet README reviewed; no current reproduction or implementation signoff yet.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.1`
+  Status: `pending`
+  Goal: `Preserve and qualify the supplied packet baseline.`
+  Acceptance: `Read request.json, SIGNOFF.md, commands and all relevant sources/evidence for sf-isf-aggregate-interface-ports; copy needed inputs and immutable provenance into repository-relative storage after identity checks. Independently run small bounded current native/API/MCP controls, retain discrepancies and root-cause any actual defect. Do not rerun large scale probes or native runtime without their existing admission/measurement prerequisites.`
+  Verification: `pending active validator commit; then ordered packet intake`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.2`
+  Status: `pending`
+  Goal: `Select the precise contract and safe dependency order.`
+  Acceptance: `Map all required and optional packet requirements to current roadmap, decisions, parser/lowerer/backends/reports/tests/book. Resolve packed record interface ports and named fields semantics within director authority; explicitly own any missing decision, source ambiguity or external evidence gap. Decompose implementation before source changes; do not equate intake with delivery.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3`
+  Status: `pending`
+  Goal: `Implement the selected bounded contract.`
+  Acceptance: `After baseline and contract selection, split into independently verifiable parser/IR/lowering/report/diagnostic and compatibility leaves before code changes. Preserve accepted source semantics, locality and source provenance. Use existing public dependency APIs and qualify every affected public facade and book example.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.4`
+  Status: `pending`
+  Goal: `Qualify the complete consumer outcome.`
+  Acceptance: `After implementation, independently exercise positive/negative cases, unchanged controls, target-qualified HDL where behavior changes, exact native/API/newline reports, source/capability/corpus/book alignment and all explicit requirement dispositions. Retain recoverable evidence and a repository-local downstream response; no external sending is authorized by this intake.`
+  Verification: `pending preceding contract dependency`
+  Commit: `pending`
+
 ## Implementation Notes From `.4`
 
 Downstream intake note (2026-09-24): the director reports SPECFORGE's old-copy
@@ -2880,8 +3032,11 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2`, actual resource-activation
-validation after qualified producer evidence and complete observed priority qualification,
+`.60.3.1`, director-prioritized SPECFORGE reset-question intake, followed by
+duration/timer/aggregate packet intake and the smallest shippable downstream
+unblocks. The resource activation validator is qualified; target-local priority
+`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
+with complete observed priority repair qualification,
 after literal-guard repair and independently retained runtime qualification, after
 exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
@@ -4870,3 +5025,19 @@ relevant book/spec paths; the import map needs no change for this private field.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '2026-09-27T19:21:28+00:00' -- docs/ARTIFACT_CLEANUP.md` identifies 1dc5e48cefda6896dd3b89e52eebf1e1ddcb8f3d as the prior cleanup record. The current session date makes the required sweep due. Exact selected directories contain generated mdBook indexes/assets; the initial unhashed-asset check stopped before deletion and was corrected from actual index references.
 - [x] **ADDRESSED (verified)** — The closed selected-path list was checked for same-volume, regular/untracked renderer contents before removal; every selected directory is absent afterward. Repository artifact and Rust release/deps/incremental log/bin candidates remain untouched. The bounded cleanup record and its generated inventory now agree; task/resume state returns to resource activation validation.
 - [x] **NO REGRESSION** — The cleanup staged run reports `knowledge-map: OK`; locality, task integrity, claim inventory/dispositions and document pressure checks pass. Its initial acceptance gate correctly required fresh boxes because generated doctrine registries changed; this checklist supplies the missing current-slice evidence. Source/tests/book source and all failure evidence remain unchanged. The selected rendered outputs can be regenerated from committed book source.
+
+
+## Acceptance — detached resource activation validation `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Complete public --emit-schedule-json grant annotations and the existing structural collector do not establish their guard semantics. T1977 deliberately removes a higher user from both module/DT grant copies: structural collection accepts the matching lists, while the new independent authored-priority reconstruction refuses them with `incomplete priority suppressors`. The private ordered producer evidence supplies original requests and transformations without proving those associations by itself.
+- [x] **ADDRESSED (verified)** — WriterResourceActivation validates exact source/request/DT coverage, ordered step identity and chaining, final headers, original higher requests, priority reachability and circular permissions. Actual selected counter width/role and pointer update identity are checked without name reconstruction. Independent request-selection enumeration and hostile changed/missing/copied evidence controls pass; source permutations, local priority declarations, selected pointer names and nested detachment remain covered. The initial test oracle's reversed-user-order assumption was corrected against the fixture's explicit priority declarations; production arbitration was unchanged.
+- [x] **NO REGRESSION** — Guarded T1977 reports `All tests successful`, `Files=1, Tests=4`; T1975/T1976/T1973/T1944/T1218 reports `All tests successful`, `Files=5, Tests=27`. All supported resource kinds join their independently expected catalogs, with complete public native/API/newline/carrier parity and unchanged emitted products. The helper has only test callers. Book/spec/downstream, Knowledge Map, task/claim checks and staged doctrines qualify publication.
+
+Re-derivation uses the actual retained producers and new detached validator;
+falsification uses direct winner selection, matching incomplete catalog copies,
+permission/header corruption and actual storage/update controls; durability is
+tracked T1977/T1975, fixture producers and the private module in Git. This is a
+rule-header semantic correspondence result, not general assignment exclusion,
+priority-contributor integration, independent-controller admission or native
+runtime qualification. The director's newly blocking SPECFORGE requests are
+owned under .60 and become the next delivery priority after this commit.

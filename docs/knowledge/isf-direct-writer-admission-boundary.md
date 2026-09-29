@@ -206,5 +206,11 @@ permission/pointer/update identity. Snapshots are deeply detached; the producer
 adds no public report field or exclusion proof. T1976 qualifies literal,
 unconditional and compound requests, mixed resource order, independent literal
 expressions, actual selected pointer identity and unchanged executable products.
-Reverify with guarded T1976/T1975/T1973/T1944/T1218. Semantic validation remains
-SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2 before priority/invocation joins.
+Reverify with guarded T1976/T1975/T1973/T1944/T1218. WriterResourceActivation now verifies authored-rule/request/DT completeness,
+original requests, ordered transformations and final headers. It independently
+reconstructs rule-priority reachability and circular permissions and joins the
+actual selected pointer to storage and updates. T1977 adds independent request
+selection, same-corruption controls, local priorities, pointer cardinalities and
+consistent container renames. T1975 qualifies all resource kinds. No production
+caller or general exclusion proof is installed; target-local priority and
+invocation joins remain SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3 and .3.

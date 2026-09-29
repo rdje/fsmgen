@@ -12,6 +12,7 @@ use FSM::Test::SourceQueryRunner;
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::WriterResourceGrants;
+use FSM::Scheduler::ISF::WriterResourceActivation;
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 
 my $collector = 'FSM::Scheduler::ISF::WriterResourceGrants';
@@ -81,6 +82,9 @@ subtest 'actual declarations, module grants and explicitly owned DT mirrors agre
         } @users;
         my $records = $collector->collect($ir, $actor);
         is_deeply($records, \@expected, "$case->{kind} $case->{arbiter} retains independent expected grant records");
+        my $activation = FSM::Scheduler::ISF::WriterResourceActivation->collect($ir, $actor);
+        is_deeply([map {my %grant = %$_; delete $grant{activation}; \%grant} @{$activation->{grants}}],
+            \@expected, 'validated actual predicates preserve the independently expected grant catalog');
         is_deeply($ir, $before_ir, 'collection leaves the entire module unchanged');
         is_deeply($actor, $before_actor, 'collection leaves all authored declarations unchanged');
         is($scheduler->{fsm_emitter}->emit($ir), $carrier, 'complete emitted carrier is unchanged');

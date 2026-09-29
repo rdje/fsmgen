@@ -404,9 +404,13 @@ identity even if the DT is renamed. The collector returns detached evidence;
 the lowerer also retains original request guards and ordered before/after
 resource transformations. Highest-priority identity steps remain explicit.
 Round-robin evidence includes the selected pointer declaration, permission and
-actual update association. These private snapshots preserve inputs needed for
-validation; grant-condition proof and production writer admission remain
-separately owned. No new source form or public report key is introduced.
+actual update association. A detached validator now matches original requests
+to authored rules, checks complete ordered transformations against final headers,
+rederives resource priority and round-robin conditions, and verifies actual
+pointer storage/update associations. Independent request-selection controls
+qualify these rule-header semantics. General assignment exclusion, target-local
+priority joins and production writer admission remain separately owned. No new
+source form or public report key is introduced.
 
 T1974 qualifies emitted predicates and complete native/API/newline/carrier
 products. Its observed SystemVerilog and Verilog runs preserve ordered writes,

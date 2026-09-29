@@ -731,6 +731,10 @@ example, a lower rule requesting on `req` with a higher user requesting on
 `urgent` retains the original `req` and the resulting `(& req (! urgent))`.
 A highest-priority user retains an explicit unchanged step. Round-robin snapshots
 retain the selected pointer declaration, permission expression and update
-association. These private records add no public schedule keys and do not yet
-establish exclusion for general writer admission. T1976 checks literal and
-compound requests, resource order, detached snapshots and unchanged carriers.
+association. A detached validator checks the original requests against source
+rules and the ordered transformations against final guards. It reconstructs
+priority reachability and circular round-robin permissions and verifies pointer
+storage/update associations without guessing names. Missing or consistently
+corrupted evidence is refused. T1976/T1977 check literal and compound requests,
+resource order, independent winner selection, detached snapshots and unchanged
+carriers. This adds no public schedule keys or general writer-admission proof.
