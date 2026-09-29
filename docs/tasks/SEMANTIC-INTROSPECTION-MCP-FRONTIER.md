@@ -2216,11 +2216,11 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.59`
-  Status: `pending`
+  Status: `done`
   Goal: `Perform the startup-due safe artifact cleanup before the next resource validator slice.`
   Acceptance: `Last cleanup is 2026-09-27T19:21:28+00:00 and the resumed session is 2026-09-29. Inventory repository-local generated artifacts and Rust release/debug dependency/incremental log/bin candidates. Delete only provably disposable completed book renders; preserve all failure/native evidence, logs, spent compiler/proxy directories and ambiguous build products. Overwrite the bounded cleanup record, verify exact selected path absence, synchronize task/resume state and commit separately.`
-  Verification: `pending after current producer-evidence commit`
-  Commit: `pending`
+  Verification: `Only .artifacts/{priority-contributors,priority-contributor-repair,same-value-selector-repair,priority-final-observation,priority-runtime-qualified,writer-resource-grants,resource-activation}/book were removed after same-volume, non-symlink, untracked and actual mdBook index/hashed-asset checks. Initial unhashed book.js preflight assumption failed safely before deletion and was corrected from index.html. All selected paths are absent; all log/bin candidates are retained. Root target and rust/target/release are absent; rust debug deps/incremental contain no log/bin candidates. Census and cleanup procedure: .artifacts/artifact-cleanup-20260929/. Latest-cleanup record overwritten. No product behavior/book source changed; preceding committed book build remains valid. Next .32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2.`
+  Commit: `this commit`
 
 ## Implementation Notes From `.4`
 
@@ -2880,7 +2880,6 @@ Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
 Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. The next leaf is
-`.59`, startup-due artifact cleanup, then
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.2`, actual resource-activation
 validation after qualified producer evidence and complete observed priority qualification,
 after literal-guard repair and independently retained runtime qualification, after
@@ -4865,3 +4864,9 @@ native runtime remain separately owned. Shared policy source recheck matches
 the retained claim-template digest; local README/containment authorities remain
 adopted. Startup reviewed the scoped roadmap, selected lowering/public spine and
 relevant book/spec paths; the import map needs no change for this private field.
+
+## Acceptance — scheduled artifact cleanup `.59`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '2026-09-27T19:21:28+00:00' -- docs/ARTIFACT_CLEANUP.md` identifies 1dc5e48cefda6896dd3b89e52eebf1e1ddcb8f3d as the prior cleanup record. The current session date makes the required sweep due. Exact selected directories contain generated mdBook indexes/assets; the initial unhashed-asset check stopped before deletion and was corrected from actual index references.
+- [x] **ADDRESSED (verified)** — The closed selected-path list was checked for same-volume, regular/untracked renderer contents before removal; every selected directory is absent afterward. Repository artifact and Rust release/deps/incremental log/bin candidates remain untouched. The bounded cleanup record and its generated inventory now agree; task/resume state returns to resource activation validation.
+- [x] **NO REGRESSION** — The cleanup staged run reports `knowledge-map: OK`; locality, task integrity, claim inventory/dispositions and document pressure checks pass. Its initial acceptance gate correctly required fresh boxes because generated doctrine registries changed; this checklist supplies the missing current-slice evidence. Source/tests/book source and all failure evidence remain unchanged. The selected rendered outputs can be regenerated from committed book source.
