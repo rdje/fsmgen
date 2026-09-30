@@ -1525,8 +1525,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    383,
-    'catalog now keeps three hundred eighty-three named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL v1/v2 semantic/tooling/migration/planning/runtime/parity/native-emission fixtures',
+    385,
+    'catalog retains the independently recounted supported-smoke entries including storage-word access and declared-interface metadata',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -1540,8 +1540,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    373,
-    'catalog now records three hundred seventy-three positive strict-mode supported-smoke acceptance entries',
+    375,
+    'catalog retains the independently recounted positive strict-mode acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester

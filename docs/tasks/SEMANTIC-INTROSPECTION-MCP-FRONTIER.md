@@ -2379,17 +2379,17 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Implement the selected bounded contract.`
   Acceptance: `After baseline and contract selection, split into independently verifiable parser/IR/lowering/report/diagnostic and compatibility leaves before code changes. Preserve accepted source semantics, locality and source provenance. Use existing public dependency APIs and qualify every affected public facade and book example.`
-  Verification: `Decision 0113 selects five independently qualified delivery slices; .3.1 is the next metadata-only leaf. Record source ports remain refused until their delivery leaves pass.`
+  Verification: `Decision 0113 selects five independently qualified delivery slices; declaration metadata .3.1 is qualified and .3.2 next owns record input delivery. Record source ports remain refused until their delivery leaves pass.`
   Commit: `pending child qualification`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.5`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Project detached declared interface metadata without changing accepted hardware.`
   Acceptance: `Implement one closed fresh JSON-safe snapshot from parsed ports, shared success source.interface_ports and schedule interface_ports, owned domain details and capability field families under decision 0113. Qualify scalar/local/imported/unused/undriven/domain interfaces, null caller-created metadata, copy isolation and complete native/API/newline products. Record-layout producer controls do not admit record source ports. Preserve complete pre-change scheduled FSM/HDL and existing check/semantic/schedule controls; synchronize book/spec and corpus applicability.`
-  Verification: `Split before source changes into a pure closed producer, parser/IR/report integration and complete public compatibility qualification. Record source admission remains outside this metadata lane.`
-  Commit: `pending`
+  Verification: `Children .1-.3 qualify the closed producer, detached parser/IR/source/schedule/domain integration and complete typed native/API/newline products, supported corpus allocation, hostile controls and historical hardware/report preservation. Known/unknown declaration evidence and private boundaries are explicit. The book/spec/discovery/corpus are synchronized. This is metadata delivery; authored record inputs/outputs remain separately pending under .3.2-.3.5.`
+  Commit: `this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.3`
 
@@ -2408,11 +2408,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify complete public metadata delivery and unchanged controls.`
   Acceptance: `After .2, independently compare complete native/API/actual newline check, semantic, schedule and discovery products for scalar/local/imported/unused/undriven/domain sources, malformed source and unrelated formats. Verify detached ownership, actual baseline carriers/HDL, all compatibility tests and existing supported corpus applicability. Preserve record-port refusal and close the metadata lane only with recoverable evidence and synchronized docs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `T1985 compares complete typed native/API/actual newline check/semantic/schedule products for every live supported ISF source-query row against independently reviewed literal port lists, plus local/imported aliases, empty interfaces and empty named domains. Record/list/unknown-width source refusals and unrelated FSM/PPIF omission/null controls pass; discovery sections compare complete products and source bytes stay unchanged. Identical corrupt transport copies still fail independent typed width/role/order/field/private-data expectations. The new feature owns dedicated isf/interface_port_metadata.isf and a supported catalog entry. T248 exposed an invalid reused (relpath, classification, coverage) tuple and stale exact counts from storage-word-access commit 3fa482924; pre-slice 241fad6b5 exports 384 supported/374 strict entries while the final catalog exports 385/375 with no duplicate tuples. The dedicated fixture and independently recounted T248 expectations repair both issues. Guarded T1985/T248/T1883 reports All tests successful. Existing T1983/T1984 and retained historical native/API/newline reports, exact carriers and HDL controls establish the unchanged boundary. Focused T1884 qualifies the new public fixture and producer/envelope/semantic provenance; book and staged doctrines gate completion. No native HDL runtime, record source admission, full CI/push or downstream completion is claimed.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2`
   Status: `pending`
@@ -3143,8 +3143,8 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.1.3` qualifies
-complete declaration reports and unchanged controls before record source admission; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.2` delivers
+packed record inputs after decomposition and qualification of scalar reads and same-type copies; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5312,3 +5312,20 @@ mutation controls, exact old-product comparisons and advertised/documented key
 sets distinguish source evidence from inference and parity from semantic truth.
 Durability: producer wiring, permanent controls, this task, decision 0113 and
 book/spec retain both the report contract and repaired schema drift.
+
+
+## Acceptance — complete declaration metadata qualification `.60.4.3.1.3`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Earlier integration establishes the shared report field but complete parity alone cannot establish correct declarations. T1985 executes native `--check --json`, `--emit-semantic-json` and `--emit-schedule-json` products with independent authored port expectations. Corpus qualification reports `catalog contract for 'feature.isf_declared_interface_metadata' is unique` failing at t/248-regression-corpus-accounting.t line 1231: the draft reused a `(relpath, classification, coverage)` tuple. Exact counts also report got 385/375 versus expected 383/373. Independent exports at pre-slice `241fad6b5` show the old catalog was already 384/374; `git log -S` locates the prior storage-word-access addition at `3fa482924`.
+- [x] **ADDRESSED (verified)** — A dedicated reviewed `isf/interface_port_metadata.isf` retains typed unused input and undriven output; its catalog entry is unique. Independent live exports yield 385 supported and 375 strict entries with no duplicate tuples; T248's exact expectations include both missing prior storage access and the new fixture. T1985 joins the complete live ISF cohort to literal declarations and qualifies complete native/API/newline reports and discovery, local/imported/empty/domain cases, unrelated omission/null, contextual source refusal and untouched bytes. Shared corruption of all transport copies still fails the independent typed expectations. T1883/T248 preserve classification, strict admission, source allocation and uniqueness contracts.
+- [x] **NO REGRESSION** — Guarded T1985/T248/T1883 reports `All tests successful`. Focused T1884 additionally qualifies the new fixture through existing producer identity, envelope and semantic oracles. The previously passed T1983/T1984, T1978/T1981/T1982 and T1255 retain malformed metadata, parser/report isolation, actual private crossing/child exclusion, complete old report fields, actual scheduled carriers and SystemVerilog/Verilog HDL identity except date. mdBook build and staged doctrines verify user/spec/discovery alignment, source locality, task ownership and Knowledge Map consistency. Record source ports remain refused; no native HDL execution or full-CI/push signoff is represented.
+
+Re-derive: rerun T1985/T248/T1883 and the focused T1884 fixture selection;
+export current `regression_corpus_entries()` for catalog definitions. Falsify:
+independent literal declarations and typed shared-corruption controls reject
+parity-only loss; T248 rejects duplicate tuples/IDs and inconsistent strict
+classification, while the fixed pre-slice public export distinguishes old
+stale assertions from the one added distinct fixture. Durability: corpus,
+fixture, controls, this owning task, decision 0113, book and Git retain the
+complete preparation. Catalog totals are entries, not product-feature/runtime
+coverage. Subsequent record-port admission remains explicitly owned.

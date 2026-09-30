@@ -8,10 +8,11 @@ answers:
   - "are list ports and variant records part of required record-port delivery?"
   - "why must metadata validation predicates use scalar context?"
   - "where are declared ISF interface ports exposed in reports?"
+  - "how is declared interface metadata qualified against supported ISF source queries?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; t/1985-isf-interface-port-public-qualification.t; t/lib/FSM/Test/SourceQueryCoverage.pm; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0113 — ISF record interface ports reuse packed type and writer contracts
@@ -196,3 +197,43 @@ actual event crossings and generated children demonstrate private-port exclusion
 This report delivery does not admit authored records. Complete transport and
 supported-corpus qualification remains explicitly owned by `.60.4.3.1.3` before
 record input implementation. No native HDL runtime is claimed.
+
+
+## Complete metadata qualification — 2026-09-30
+
+SEM `.60.4.3.1.3` qualifies complete typed native/API/actual newline products
+against independent declaration witnesses. T1985 joins the live
+`build_source_query_cohort()` selector's ISF rows to explicit reviewed source
+identities and declared port lists, then executes every applicable check,
+semantic and schedule query. The selector owns supported catalog applicability;
+this is not a census of product features, all repository fixtures or runtime
+coverage. `feature.isf_declared_interface_metadata` now names this delivered
+metadata through the dedicated `isf/interface_port_metadata.isf` fixture in
+the existing supported ISF pipeline corpus.
+
+Local/imported aliases, unused/undriven declarations, known empty interfaces,
+a named empty domain, malformed record/list/width refusals and unrelated
+FSM/PPIF reports receive complete transport comparisons. Discovery compares
+complete native, in-process, API and newline sections. Canonical typed JSON
+comparisons retain scalar kinds; shared field loss, wrong width/direction/order,
+private data and stringified widths still fail independent expectations even
+when all three fabricated transport copies agree. No parser or report values
+are repaired by the oracle. Source bytes remain unchanged across queries.
+
+Together with T1983/T1984 and the retained historical report/carrier/HDL controls,
+this closes the preparatory declaration metadata lane. Authored record source
+ports and their hardware behavior remain owned by the subsequent input/output
+leaves; no native HDL execution or complete consumer delivery is established.
+
+
+The corpus accounting control rejects duplicate `(relpath, classification,
+coverage)` tuples even under different IDs. Reusing an existing source for the
+new identical contract failed that gate, so the delivered metadata owns a
+separate runnable fixture. T248 also exposed stale exact expectations from the
+prior storage-word-access entry (Git `3fa482924`, found with `git log -S`).
+The pre-slice `241fad6b5` public catalog already exceeded those expectations;
+the new fixture adds only its distinct entry. T248's exact census, tuple/ID and
+classification/strict checks and T1883's complete cohort join retain the repair.
+Counts describe catalog entries, not independently implemented features or
+runtime qualification. Recount from the live public catalog; do not reuse the
+old dated qualification receipt as a current total.

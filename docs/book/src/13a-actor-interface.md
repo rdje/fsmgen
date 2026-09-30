@@ -757,6 +757,7 @@ check/semantic contracts' `source_optional_fields.interface_ports`.
 `fsmgen_check`, `fsmgen_semantic_introspect` and `fsmgen_schedule_preview`
 carry the same native reports through the API and newline MCP adapter.
 Declaration metadata adds no hardware assignments, sampling or reset policy.
+The maintained runnable fixture is [interface_port_metadata.isf](../../../isf/interface_port_metadata.isf).
 
 ## Actor-Owned Storage
 

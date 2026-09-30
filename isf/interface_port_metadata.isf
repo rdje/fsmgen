@@ -1,0 +1,12 @@
+(actor interface_port_metadata
+  (types (type byte (bits 8)))
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (output spare (width 2))
+    (input start)
+    (input data (type byte))
+    (output done))
+  (transaction main
+    (on start)
+    (complete done)))
