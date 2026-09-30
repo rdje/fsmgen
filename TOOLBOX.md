@@ -217,6 +217,14 @@ or an equivalent active monitor:
 scripts/run_with_ram_guard.sh -- prove -Iperl t/248-regression-corpus-accounting.t
 ```
 
+The guard passes standard input through, including pipes, file redirections and
+interpreter programs supplied on stdin. Its diagnostics stay on standard error;
+the child retains its exit status. For example:
+
+```bash
+printf '%s\n' 'print "guarded stdin\n";' | scripts/run_with_ram_guard.sh -- perl -
+```
+
 ## 5. Documentation, Knowledge, And Doctrine Gates
 
 Use these when the issue touches user-facing docs, task continuity, or repo

@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1223** facts · **6770** unique questions · **6946** answer occurrences · **171** topic shards.
+> **1223** facts · **6771** unique questions · **6948** answer occurrences · **171** topic shards.
 
 Query first:
 
@@ -18,7 +18,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 |---|---:|---:|---|
 | `abc-discovery` | 1 | 5 | [`abc-discovery.md`](knowledge-map/generated/abc-discovery.md) |
 | `accellera-standards` | 1 | 5 | [`accellera-standards.md`](knowledge-map/generated/accellera-standards.md) |
-| `agent-runtime` | 1 | 4 | [`agent-runtime.md`](knowledge-map/generated/agent-runtime.md) |
+| `agent-runtime` | 1 | 6 | [`agent-runtime.md`](knowledge-map/generated/agent-runtime.md) |
 | `aggregate-parameter` | 1 | 4 | [`aggregate-parameter.md`](knowledge-map/generated/aggregate-parameter.md) |
 | `aggregate-typedef` | 1 | 3 | [`aggregate-typedef.md`](knowledge-map/generated/aggregate-typedef.md) |
 | `ahb-hburst` | 1 | 4 | [`ahb-hburst.md`](knowledge-map/generated/ahb-hburst.md) |
@@ -163,7 +163,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `sv-intermediate` | 1 | 4 | [`sv-intermediate.md`](knowledge-map/generated/sv-intermediate.md) |
 | `task-acceptance` | 1 | 6 | [`task-acceptance.md`](knowledge-map/generated/task-acceptance.md) |
 | `task-tree` | 4 | 30 | [`task-tree.md`](knowledge-map/generated/task-tree.md) |
-| `test-subprocess` | 1 | 166 | [`test-subprocess.md`](knowledge-map/generated/test-subprocess.md) |
+| `test-subprocess` | 1 | 165 | [`test-subprocess.md`](knowledge-map/generated/test-subprocess.md) |
 | `trial2-legacy` | 1 | 5 | [`trial2-legacy.md`](knowledge-map/generated/trial2-legacy.md) |
 | `vhdl-backend` | 1 | 5 | [`vhdl-backend.md`](knowledge-map/generated/vhdl-backend.md) |
 | `vhdl-deferred` | 1 | 20 | [`vhdl-deferred.md`](knowledge-map/generated/vhdl-deferred.md) |

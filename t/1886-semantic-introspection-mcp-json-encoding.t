@@ -21,7 +21,7 @@ if (@ARGV && $ARGV[0] eq '--native-encoding-fixture') {
     exit 0;
 }
 if (@ARGV && $ARGV[0] eq '--stdio-encoding-fixture') {
-    # The RAM guard starts its child without forwarding its own stdin.
+    # This fixture opens its owned request file; the capture caller supplies EOF.
     open STDIN,'<:raw',"$ARGV[1]/request.json" or die "request: $!";
     exec $^X,'bin/fsmgen-mcp','--repo-root',$ARGV[1],'--workspace-root',$ARGV[1];
     die "exec MCP: $!";

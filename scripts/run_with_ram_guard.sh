@@ -33,6 +33,7 @@ Examples:
   scripts/run_with_ram_guard.sh --process-max-rss-mb 3072 -- ./bin/fsmgen --check-json ppif/axi_aw_valid_ready.ppif
 
 The wrapper monitors the command and all descendants. A guard trip exits 137.
+Standard input is passed through to the command, including piped and file input.
 USAGE
 }
 
@@ -275,7 +276,8 @@ export FSMGEN_RAM_GUARD_ACTIVE=1
 export FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT="$host_max_pct"
 export FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB="$process_max_rss_mb"
 
-"$@" &
+# Explicit stdin redirection prevents Bash's asynchronous /dev/null fallback.
+"$@" <&0 &
 root_pid=$!
 
 echo "ram-guard: PID $root_pid; host ${initial_host_pct}%; host cutoff ${host_max_pct}%; descendant RSS cutoff ${process_max_rss_mb} MiB; poll ${poll_seconds}s" >&2

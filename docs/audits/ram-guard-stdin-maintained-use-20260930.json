@@ -1,0 +1,372 @@
+{
+  "candidate_search": {
+    "criteria": "guard command followed by stdin-fed Python/Perl dash programs or file-input redirection; independently review selected code interfaces",
+    "inputs": "matching tracked Markdown and code blobs, continuations joined before explicit recipe search",
+    "noncode": "retained JSON/stream/provenance products are census references, not executed recipes",
+    "result": "no explicit direct stdin recipe candidate in this finite selected set"
+  },
+  "census_sha256": "482134b12ff1577fd26a4b4ca28ff7238c4fecd29783350efefdeea1e711f88b",
+  "code_interface_review": [
+    {
+      "note": "Named unittest module and published Perl verifier; no stdin-fed interpreter or input redirect.",
+      "path": ".github/workflows/regression.yml",
+      "role": "direct argv launch",
+      "sha256": "bc71a70e525fc859d9f8862a7ee2fe6be2aadca9989062db201b520568fe58bf"
+    },
+    {
+      "note": "Literal expected book command uses a named audit/qualification file; no stdin-fed launch.",
+      "path": "docs/audits/native-proxy-capture-dispatch-20260913/inspect_book.py",
+      "role": "book-passage assertion",
+      "sha256": "5f2bb26ec5c9ab12f86fd4f662cc5bb84fecb9f0297d210e9acc0b790f6ef684"
+    },
+    {
+      "note": "Pins tracked guard bytes as an admitted input; no guard launch at the reference. Native workload not executed.",
+      "path": "docs/audits/native-proxy-hardlink-20260910/run.py",
+      "role": "immutable source provenance",
+      "sha256": "0515de97158633aab0e789d37d00fb9e73ca573f7e79d3a158431ad61a8508de"
+    },
+    {
+      "note": "Literal expected book command uses a named audit/qualification file; no stdin-fed launch.",
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/inspect_book.py",
+      "role": "book-passage assertion",
+      "sha256": "d3f23feda459a274c6bd63c82e468e4572ad2bd37634c9431a2bfac4327ab146"
+    },
+    {
+      "note": "Literal expected book command uses a named audit/qualification file; no stdin-fed launch.",
+      "path": "docs/audits/native-proxy-preparation-records-20260913/inspect_book.py",
+      "role": "book-passage assertion",
+      "sha256": "111710b432fed756539127e8c6faa3832fe77bee7c12af61f455f4c267ce57e8"
+    },
+    {
+      "note": "Literal expected book command uses a named audit/qualification file; no stdin-fed launch.",
+      "path": "docs/audits/native-proxy-release-final-join-20260913/inspect_book.py",
+      "role": "book-passage assertion",
+      "sha256": "14759b7f5842c756afe2079a21607807ff3157d19443504b33a1307b3cfbd2e4"
+    },
+    {
+      "note": "Literal expected book command uses a named audit/qualification file; no stdin-fed launch.",
+      "path": "docs/audits/native-proxy-retained-formats-20260913/inspect_book.py",
+      "role": "book-passage assertion",
+      "sha256": "2af052b8f564ee63c6954494a7f877911124136d1c314f7462b1c3b54210e321"
+    },
+    {
+      "note": "Literal expected book command uses a named audit/qualification file; no stdin-fed launch.",
+      "path": "docs/audits/native-proxy-version-contracts-20260913/inspect_book.py",
+      "role": "book-passage assertion",
+      "sha256": "7f4f13524bb8047e5a3c61d5eeeb255c7d929e21d493e2e8769bbb4616c831e7"
+    },
+    {
+      "note": "Literal expected book command uses a named audit/qualification file; no stdin-fed launch.",
+      "path": "docs/audits/native-proxy-version-join-20260913/inspect_book.py",
+      "role": "book-passage assertion",
+      "sha256": "2a2a150e694a9402b14be76abb325033af7b727990e382ee10371d772fdc9daa"
+    },
+    {
+      "note": "Literal public gate entrypoint or outer-guard requirement; no stdin-fed launcher at the reference.",
+      "path": "perl/FSM/Support/VIALArchitectureScaleRegressionContract.pm",
+      "role": "published command/resource policy",
+      "sha256": "ad092d750a2918547dd71d631966a5b78a29c1cefdc356311b5598226e45c000"
+    },
+    {
+      "note": "Literal public gate entrypoint or outer-guard requirement; no stdin-fed launcher at the reference.",
+      "path": "perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm",
+      "role": "published command/resource policy",
+      "sha256": "36137155b59bf366f14f2977d5baeec0b171750df71062d187b6eb407337277e"
+    },
+    {
+      "note": "Literal public gate entrypoint or outer-guard requirement; no stdin-fed launcher at the reference.",
+      "path": "perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeExecutionPlan.pm",
+      "role": "published command/resource policy",
+      "sha256": "a9f314dac1988e56da547f3fdf52ed68549ae0344451d4fd8644cbfea204be12"
+    },
+    {
+      "note": "Literal public gate entrypoint or outer-guard requirement; no stdin-fed launcher at the reference.",
+      "path": "perl/FSM/VIAL/Backend/GHDLLifecycle.pm",
+      "role": "published command/resource policy",
+      "sha256": "a9029bc4b6a05dba339f8f2707db112fb22d17a90810c80cf767116c69eae97a"
+    },
+    {
+      "note": "Literal public gate entrypoint or outer-guard requirement; no stdin-fed launcher at the reference.",
+      "path": "perl/FSM/VIAL/Backend/VHDLPortableGHDLQualification.pm",
+      "role": "published command/resource policy",
+      "sha256": "91608ae2b31e2a4cba8c4556c0c800c74319e7e83575ae2ed69943cacf23b9ec"
+    },
+    {
+      "note": "Exec guard around named fixture_kernel_sampler.py with forwarded argv; no stdin recipe. No collector executed by this audit.",
+      "path": "scripts/await_fixture_kernel_samples.sh",
+      "role": "direct argv launch",
+      "sha256": "7edda8d33d1dbb87b703dac361504cf6fdfcc1f73395f98aa195f03bc746b039"
+    },
+    {
+      "note": "Enumerates launcher sources for locality contract; no child guard invocation.",
+      "path": "scripts/check_project_data_locality.sh",
+      "role": "source-policy check",
+      "sha256": "e223b1bdce52997fa4f8c977e8c53fac480efb034b5b6a0d60330bae9d1f91f1"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/measure_vial_regression_promotion_canonicalization.pl",
+      "role": "help/admission requirement",
+      "sha256": "1ce8345419f4aca0c628e4aa1fda6cb2debdc18284b10094972bca09c1b89a01"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/observe_fixture_startup.py",
+      "role": "help/admission requirement",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_fixture_startup_observation.py",
+      "role": "help/admission requirement",
+      "sha256": "a793b6b81b6954aa49cd9e9b0a67045844c334862927b3946b492fcf4dccdafb"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_fixture_startup_policy_observation.py",
+      "role": "help/admission requirement",
+      "sha256": "1f562370c15d95b4fc6eecd94df15fbb333cf39dd053d8ad077a5a4ad979725b"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_fixture_startup_sequence.py",
+      "role": "help/admission requirement",
+      "sha256": "0346d836c1f61ac1210408a4acfd891f2a5cc2c6e0e6e7a4d2941d7127541633"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_vial_backend_emission_measurement_matrix.pl",
+      "role": "help/admission requirement",
+      "sha256": "783da84a9e049eea2f9e99085a94703bef4386fd5f24acfc8c21ee1ef13c0982"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_vial_balanced_portable_measurement_matrix.pl",
+      "role": "help/admission requirement",
+      "sha256": "aab5299c1c73d60524fab1a52657948953b4935cf12c1803ae7115e7f3ad673b"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_vial_calibration_closure_publication.pl",
+      "role": "help/admission requirement",
+      "sha256": "5161ce55e44a227c7371f392b468e9c505ebe1b7463a16612a0374558c74a138"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_vial_execution_checking_measurement_matrix.pl",
+      "role": "help/admission requirement",
+      "sha256": "0580486e92ab7f2992e90300769894f8893e65c42131de48447d830a71e25b36"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_vial_osvvm_runtime_measurement_matrix.pl",
+      "role": "help/admission requirement",
+      "sha256": "a49f06071618c12dadba4372620dd06d928dc260f85b553bf951ac11d8caf69b"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_vial_portable_runtime_measurement_matrix.pl",
+      "role": "help/admission requirement",
+      "sha256": "c3a5ea01a467a492a1de3a0d17b98a775011fa03b09539ddb98d361fc7554829"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_vial_portable_vhdl_runtime_measurement_matrix.pl",
+      "role": "help/admission requirement",
+      "sha256": "33ccdd906945ce47e3a84ae6d6a48d741955ac401e4ce4f30e50b7b534378dba"
+    },
+    {
+      "note": "Names required enclosing RAM guard in help or guard-environment refusal; actual workload is named-file/argv based.",
+      "path": "scripts/run_vial_semantic_bridge_measurement_matrix.pl",
+      "role": "help/admission requirement",
+      "sha256": "a3ded28caba8162bad88f1d4e84a8ac370981bc918623348c4ed2500d854ecf6"
+    },
+    {
+      "note": "Bare asynchronous child launch loses stdin; exact committed capsule is T2011 falsifier.",
+      "path": "scripts/run_with_ram_guard.sh",
+      "role": "launcher definition/help",
+      "sha256": "ade1e6930d696a3abba0899244b1dd0ef4fc289f3b5c33ac2ff8ead96c1312af"
+    },
+    {
+      "note": "Fixture guard stub dispatches its own fixed argv; not the real background guard.",
+      "path": "t/1183-ci-regression-tier-selection.t",
+      "role": "isolated stub launcher",
+      "sha256": "ae9fc5df1e2503cfa4362574eb89feb849308625528a4a9877bb16ca9fb22ece"
+    },
+    {
+      "note": "Fixed healthy/pressured/marker Perl -e commands and file-based fake telemetry; supervisor intentionally closes input. T1595/T1811 rerun with T2011.",
+      "path": "t/1595-agent-runtime-ram-guard-macos-metric.t",
+      "role": "sealed fixture launcher/contract",
+      "sha256": "1a4c099e2981d3f08ba1333dabdafccd6735913b506e00ecffa5d31483058401"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1601-vial-architecture-scale-semantic-catalog.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "15efff48eb4e7474a58d1e8f22203d4c92af0911cf64090b8a461e771a82b582"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1602-vial-architecture-scale-bridge-fanout.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "e96c1fb55694ef37422e908be1b9b218ec09a00cdae64db93f64aab2e77d621d"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1607-vial-architecture-scale-execution-source-maps.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "241f8f915bf3553ac067eba9f658006fa9e2ed642ca266b42aeb968812c1c1a9"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1626-vial-architecture-scale-execution-total-operation-limit.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "55c42088703970e6cbbddf5778ad5143edad0199a76b3709f084e45d3e539d22"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1627-vial-architecture-scale-execution-type-qualification.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "46332039e91c4fa87216388a13784ba2bc870a85f314b61dffba36f059475f0f"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1628-vial-architecture-scale-execution-binding-limits.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "dbdd6e8135f29c9a69e67dfd602c6c3d9303e38dee39c21b00678605a87e6cfe"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1630-vial-architecture-scale-checking-models.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "313631642fe61834e6612e36c2773aab23aa5098e76921334f70f65f5eabda03"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1631-vial-architecture-scale-checking-scoreboards.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "29943dcd6979ba46c12f12d33b0e1241f270351be111a0f7efe742b9d66f0482"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1632-vial-architecture-scale-checking-coverage.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "7986778c6dd8575ad96865661250ac7642db27912f3d196a843e68dbbcf45615"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1633-vial-architecture-scale-checking-faults.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "4b79ba3d64f477c0cadd4fa6316ccb73381fd66da83cbeff9eec98d9560b05de"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1634-vial-architecture-scale-checking-random-replay.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "e7eab3663cc61ef146b6767c695ffe172b9b875f914b8f4b7876e51199199306"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1656-vial-architecture-scale-measurement-foundation.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "cfea6c188e9c3162e65b6fb17338179fe8e21a00891261f90cbf02d8e1297047"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1667-vial-architecture-scale-portable-runtime-measurement.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "bb07709dbf365ce5eadccaff3f093cd6e3bd4b7e99373893260cbb5d6d160b1d"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1674-vial-architecture-scale-portable-vhdl-runtime-measurement.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "0be30e5eba1e0e75188aa000283c95a9a12e3ae24cfb73c8f8cff4955777587d"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1678-vial-ghdl-provider-aware-lifecycle.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "a396de1316fb3fcc0254112c55a816401341d69f32112b4730ae126ef70f733e"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1679-vial-architecture-scale-osvvm-runtime-measurement.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "13a6cbcf9532e6f12735e274c39e8bb9e5e2dbc186f0fd5a65b18c337ecfc57c"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1683-vial-architecture-scale-calibration-closure.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "099174d442361cfa040e2b5425e8d6029ac048f10ff54a5d19866e89b7b66eb4"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1739-vial-ghdl-request-scalar-types.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "d4d19655f63295e1578e46696b9bcf6b3d0736916070bc9749c868eaa70d44a3"
+    },
+    {
+      "note": "Expected guard command or explicit scale admission/skip text; no real stdin-fed guard launch at the reference.",
+      "path": "t/1795-vial-architecture-scale-regression-public-closeout.t",
+      "role": "policy/skip/contract assertion",
+      "sha256": "6b504d56bdd73e768a4bc118d2d0c842f1dd9b3a342cd603a1ba1eeab36cbec2"
+    },
+    {
+      "note": "Fixed healthy/pressured/marker Perl -e commands and file-based fake telemetry; supervisor intentionally closes input. T1595/T1811 rerun with T2011.",
+      "path": "t/1811-ram-guard-fixture-runtime.t",
+      "role": "sealed fixture launcher/contract",
+      "sha256": "babbdeb09a920e531c65dbbd713a95620252353abbabf4f9d25bdc90ebc47733"
+    },
+    {
+      "note": "Capture supplies EOF; stdio fixture independently opens owned request.json; one-shot passes request argv. Stale launcher comment corrected by this slice.",
+      "path": "t/1886-semantic-introspection-mcp-json-encoding.t",
+      "role": "direct argv launch and owned-file workaround",
+      "sha256": "6ffcf48b829e81fd475359c220f8b9de685faac5c1d01290685eb87cb7b2122f"
+    },
+    {
+      "note": "Fixed healthy/pressured/marker Perl -e commands and file-based fake telemetry; supervisor intentionally closes input. T1595/T1811 rerun with T2011.",
+      "path": "t/lib/FSM/Test/RamGuardFixtureRuntime.pm",
+      "role": "sealed fixture launcher/contract",
+      "sha256": "304fb6f17cce6d31a42ce378c75bb3ee01916d4e213da4c304d56e2dbd439c9c"
+    }
+  ],
+  "direct_stdin_candidates": [],
+  "falsification": "T2011 recovers exact ce4 guard/locality helper and reproduces exit-zero empty bytes; independently literal new pipe/file/program tests fail old source and pass the repair.",
+  "historical_ephemeral_limit": "No exhaustive invocation ledger exists for dynamic/ephemeral historical tool calls; no claim that every previous invocation was unaffected.",
+  "history_observations": [
+    {
+      "meaning": "Guarded stdin Python ran no code; explicit named script and artifact verification replace that rejected capture.",
+      "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+      "revision": "25a4a19646e1786d854d826ae11958ca4f495ae6"
+    },
+    {
+      "meaning": "Native feasibility query corrections explicitly reject empty stdin-only capture and use a file; no native candidate retry.",
+      "owner_suffix": ".15.7.3.6",
+      "path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+      "revision": "25a4a19646e1786d854d826ae11958ca4f495ae6"
+    },
+    {
+      "meaning": "Intentional owned request file bypasses old stdin loss; capture supplies EOF and verifies complete actual wire response.",
+      "path": "t/1886-semantic-introspection-mcp-json-encoding.t",
+      "revision": "ce4d0029028a3e25f517ea93632cf50f2712354a"
+    }
+  ],
+  "matched_paths": 407,
+  "matched_rows": 920,
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.3.2.4",
+  "rederive_census_argv": [
+    "git",
+    "grep",
+    "--no-recurse-submodules",
+    "-n",
+    "-I",
+    "-F",
+    "run_with_ram_guard.sh",
+    "ce4d0029028a3e25f517ea93632cf50f2712354a",
+    "--"
+  ],
+  "revision": "ce4d0029028a3e25f517ea93632cf50f2712354a",
+  "scope": "All tracked nonbinary root-repository full-basename references; no submodule recursion. Maintained Markdown/code continuations joined for explicit interpreter-on-stdin and file-stdin candidates. Dynamic invocations and historical ephemeral tool calls are not exhaustively recoverable."
+}

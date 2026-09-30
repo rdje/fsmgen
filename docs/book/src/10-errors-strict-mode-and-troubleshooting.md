@@ -556,6 +556,32 @@ Hosted regression uses a minimal Perl setup. Ordinary runtime paths should not
 depend on undeclared local CPAN modules, and CLI report modes that are tested
 for clean stderr must remain compatible with the hosted Perl version.
 
+## Guarded commands and standard input
+
+The repository RAM guard preserves standard input for the command it supervises.
+Pipes, input files and interpreter programs supplied on stdin therefore work:
+
+```bash
+printf '%s\n' 'print "guarded stdin\n";' | scripts/run_with_ram_guard.sh -- perl -
+```
+
+The command prints `guarded stdin`. Guard diagnostics go to standard error, and
+the command's exit status is preserved. The memory cutoffs remain 88% of host
+occupied capacity and 4096 MiB RSS per descendant. A cutoff stops the command
+tree and returns the guard's documented failure status.
+
+Earlier guard versions discarded stdin when launching their background child.
+A program supplied on stdin could consequently exit zero without executing.
+The regression retains that exact committed version as an independent failure
+control, and verifies binary pipe/file bytes, EOF, nonzero child exit and a
+separate inherited descriptor alongside the existing cutoff and cleanup tests:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/2011-ram-guard-stdin.t t/1595-agent-runtime-ram-guard-macos-metric.t \
+  t/1811-ram-guard-fixture-runtime.t
+```
+
 ## Decision-store diagnostics
 
 Maintainers can audit decision identities and consumer references at a fixed
