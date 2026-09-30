@@ -748,6 +748,22 @@ question bindings and wrong heading/relative destinations. This proof covers
 the named tracked source cohort; it does not enumerate dynamic or external
 consumers or execute HDL. Fresh-record growth has its own qualification owner.
 
+Successful fresh growth also has a complete production-cohort fixture:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -v -Iperl t/2010-decision-production-growth.t
+```
+
+It copies fixed committed store products and their declared archive destinations,
+retains the installed independent pins, and publishes a fixture predecessor
+before adding a literal fact-bearing record. Actual original/current retrieval
+and prior-aware Perl admission pass working, staged and committed selections.
+Physical current membership gains the record while compatibility aliases remain
+fixed. Python and Perl independently measure capacity under unchanged ceilings;
+the fixture declares its resulting aggregate warning pressure. The literal lives
+only in the isolated qualification workspace. Complete production-cohort hostile
+and post-publication identity/question controls remain separately tracked.
+
 ## Current Boundary
 
 The project is trying to move toward:
