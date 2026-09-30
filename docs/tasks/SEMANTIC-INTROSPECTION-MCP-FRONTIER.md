@@ -2455,11 +2455,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare scoped record-value and enum-context gates without admission.`
   Acceptance: `Use actual finalized actor, transaction local/formal and drive-parameter declarations to build nearest-binding scopes. Reuse qualified value primitives for all selected transaction/rule/drive scalar/copy contexts, input roles and exact resolved identity. Prepare coherent aggregate/enum/rule operand root classification; retain legacy storage/scalar behavior and record source refusal until mandatory gates are wired. Qualify independent AST/source controls, unknown paths, enum/package names, lexical shadows and unchanged facades.`
-  Verification: `Split actual declaration-scope extraction, selected contextual AST validation and namespace integration before implementation. Source admission and sample/domain carriers remain separately owned prerequisites.`
-  Commit: `pending child qualification`
+  Verification: `Children .1-.3 qualify actual declaration scopes, selected contextual scalar/copy gates, repaired first-touch caller-data detachment and a common aggregate/enum/rule root projection. Complete current public products and historical carriers remain unchanged. Frontend wiring, sampling, domains and authored record input admission retain subsequent owners; all three preparation children are committed through their work-unit subjects.`
+  Commit: `this commit`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.1`
@@ -2477,11 +2477,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Align contextual aggregate, enum and rule namespace classification.`
   Acceptance: `After contextual gates, prepare one actual scoped declaration-root classifier for aggregate-path, enum and rule-operand validators, honoring nearest bindings and preserving enum/package constants. Wire only behavior-preserving preparation on currently admitted sources or retain an explicit unwired boundary until sample/domain prerequisites permit admission. Qualify complete native/API/newline products, historical carriers and scalar/storage/enum/local controls, synchronize book/spec/facts and close this preparation parent only when all children qualify.`
-  Verification: `pending contextual gates`
-  Commit: `pending`
+  Verification: `ISFRecordPortScopes supplies one detached actual actor/transaction/drive projection for value, aggregate traversal, enum exclusion, namespace and actor rule roots. Nearest scalar/unresolved/drive bindings suppress outer aggregate traversal and enum fallback; scalar pin/package coexistence retains namespace ownership. Contextual gates consume the common projection; frontend validators remain explicitly unwired until sample/domain prerequisites qualify. T1989 independently expects complete maps, actual imported type/enum/constant facts, named-domain clocks/resets, first-read JSON and separate output-map detachment. Guarded T1989/T1988/T1987/T1986/T1985/T1982/T1259/T1391 reports All tests successful, Files=8, Tests=52. Complete native/API/newline check, semantic and schedule products, current refusals, historical domain reports, actual IAL0 files and generated SystemVerilog/Verilog except date remain unchanged. mdBook builds. No authored record admission or native HDL execution is claimed; sampling .3.3 is next.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.3`
   Status: `pending`
@@ -3264,8 +3264,8 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.2.3.2` prepares
-actual scoped contextual/enum gates before sampling/domain preparation and record-input admission; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Next `.60.4.3.2.3.3` prepares
+scalar-leaf sampling facts and typed carriers before domain preparation and record-input admission; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5518,3 +5518,9 @@ remains under .3.4.2 after scoped contextual preparation.
 - [x] **ROOT CAUSE (WHY + WHERE)** — T1988 first reports complete caller actor inequality, with the captured TAP diagnostic `#   at t/1988-isf-record-port-context-gates.t line 50.`: borrowed resolved widths become JSON numbers while numeric validation reads them. Fresh copied actor/transaction/drive controls in T1987 and independent explicitly string-width scope/reference/copy controls in T1986 go RED; direct fresh parser controls remain equal. The standalone JSON::PP numeric-read program in decision 0114 independently changes width string to number without assignment. `_binding` and value-gate validation read caller facts before cloning; the older mutation baseline followed an earlier projection. The draft also misclassifies admitted `mode.BUSY` under scalar input `mode`; the public parse/gate probe locates that path at the core `member_on_non_record` diagnostic.
 - [x] **ADDRESSED (verified)** — All declaration and scope/reference/copy boundaries detach maps before numeric validation. The first-touch controls and complete T1988 products stay equal without oracle normalization. Context gates qualify selected transaction/rule/drive AST reads/copies and strict type/role failures, whole record scalar negation/comparison misuse, invalid members/indexes/operators, input writes and nearest shadows. Actual enum/package roots remain delegated while outer aggregate shadows prevent borrowed enum members. Unsupported sampling/count/trigger references refuse, and unknown tokens remain with existing validators. Source authoring and facades remain unwired; record admission and actual namespace/sample/domain integration retain owners.
 - [x] **NO REGRESSION** — Guarded `prove -Iperl t/1988-isf-record-port-context-gates.t t/1987-isf-record-port-declaration-scopes.t t/1986-isf-record-port-value-gates.t t/1983-isf-interface-port-metadata.t t/1259-isf-aggregate-storage-type-aliases.t t/1391-isf-local-variables.t` reports `All tests successful`, `Files=6, Tests=42`. Existing parser/scheduled objects and emitted file bytes stay equal; malformed/cyclic type, metadata, alias/storage and local-declaration controls retain their contract. Syntax, mdBook, scoped decision, map/inventory and staged doctrines accompany this slice; no native HDL execution or new public/source admission is claimed.
+
+## Acceptance — common declaration classifier `.60.4.3.2.3.2.3`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Current T1985 native/API/newline `--check --json`, `--emit-semantic-json` and `--emit-schedule-json` controls confirm scalar declarations and aggregate-port refusals; T1989 retains the first-line authored diagnostic interface port 'packet' references aggregate type. The private contextual namespace projection at 48da7b698 lacks shared aggregate and actor rule maps, so independently selecting roots risks borrowing an outer record through a scalar/unresolved formal or confusing enum/package tokens with scalar members. Actual declaration scopes and existing namespace producers identify the boundary; source integration must wait for sampling/domain prerequisites. This is owned preparation, not a new public admission defect.
+- [x] **ADDRESSED (verified)** — The common scope projection supplies detached actual value, aggregate traversal, enum-exclusion, namespace and actor rule-declaration maps. The contextual gate consumes it. T1989 independently expects exact sets and imported/named-domain facts, and distinguishes member-validation ownership from enum ownership, scalar-pin coexistence from masked outer aggregates, input writes from reads, and transaction locals from actor rule operands. Fresh copied caller JSON and mutation of independent output maps preserve source and sibling facts. Frontend aggregate/enum/rule validators remain explicitly unwired until the separately owned mandatory gates qualify.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl t/1989-isf-record-port-root-classification.t t/1988-isf-record-port-context-gates.t t/1987-isf-record-port-declaration-scopes.t t/1986-isf-record-port-value-gates.t t/1985-isf-interface-port-public-qualification.t t/1982-isf-domain-storage-report.t t/1259-isf-aggregate-storage-type-aliases.t t/1391-isf-local-variables.t` reports `All tests successful`, `Files=8, Tests=52`. Complete public transport products, current source refusals, historical domain reports and emitted IAL0/HDL bytes except date stay unchanged. Syntax, mdBook build, scoped decision, generated map/inventory and staged doctrines accompany the slice. No native HDL execution or new authored record-port behavior is claimed.

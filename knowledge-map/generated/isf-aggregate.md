@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-aggregate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **19** uniquely owned question entries.
+> **3** facts · **20** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -13,6 +13,7 @@
 - q="how are actual parsed record-value declaration scopes prepared?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="how are record value gates and contextual diagnostic oracles qualified?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="how are selected record input AST contexts prepared without admission?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
+- q="how do aggregate enum and rule validators share declaration-root classification?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how is declared interface metadata qualified against supported ISF source queries?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="how is first-touch record declaration mutation reproduced and repaired?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how is foreign-domain scalar slice and input-index refusal repaired and qualified?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)

@@ -6,10 +6,11 @@ answers:
   - "why can numeric validation change caller JSON scalar kinds without an assignment?"
   - "how is first-touch record declaration mutation reproduced and repaired?"
   - "can a scalar pin share an enum namespace name during record context validation?"
+  - "how do aggregate enum and rule validators share declaration-root classification?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0114 — Record value validation detaches facts before reading
@@ -74,7 +75,7 @@ aggregate identifies a declaration path. The draft incorrectly rejected the
 admitted enum token `mode.BUSY` when the actor had scalar input `mode`.
 T1988 retains the repaired source control and the counterexample in which a
 scalar formal must not borrow a same-named outer record's member via an enum.
-Actual aggregate/enum/rule classifier integration remains under `.3.2.3`.
+Common aggregate/enum/rule root projection is prepared below; frontend integration remains pending.
 
 ## Qualification and limits
 
@@ -103,3 +104,31 @@ controls. Producers and permanent source/AST controls are tracked; ignored
 logs are supplementary. This establishes unwired preparation and the repaired
 caller-data contract, not new source/public transport admission, sample timing,
 generated/domain carriers, external HDL execution or complete consumer delivery.
+
+## Common root-classification preparation
+
+SEM `.60.4.3.2.3.2.3` prepares `record_context_scope` and
+`record_reference_root_kind` in the existing scope owner. One actual actor,
+transaction or drive declaration selection supplies detached value roots,
+resolved aggregate traversal roots, enum-exclusion roots, existing namespace
+roots and actor rule-declaration roots. Transaction locals/formals and drive
+parameters never become actor rule inputs. Rule roots also retain authored
+storage signals, parameters/constants and legacy/named-domain clock/reset pins.
+
+Nearest scalar or unresolved bindings remove an outer record from aggregate
+traversal while keeping that outer name excluded from enum fallback. Scalar
+pins that only share an enum/package root remain namespace tokens. Member
+validity and enum/package resolution stay with their existing owners; root
+classification does not turn an unknown member into a valid value.
+
+The unwired contextual gate consumes this common projection instead of its
+private namespace classifier. Existing frontend aggregate/enum/rule validators
+remain unchanged until sampling/domain prerequisites permit source integration.
+This is deliberate preparation, not record authoring or carrier admission.
+T1989 independently expects every map and tests actual imported enum/type/
+constant facts, named-domain system pins, nearest scalar/unresolved/drive shadows,
+input roles, first-read caller JSON and separate output-map mutation isolation.
+T1985 and T1982 qualify complete current public transport products and historical
+domain reports, actual IAL0 carriers and generated HDL bytes except date. The
+combined producer command and captured result are retained by this leaf in
+the task evidence; no new authored record-port behavior is established.

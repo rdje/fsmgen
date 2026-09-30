@@ -7,7 +7,8 @@ use Exporter 'import';
 use Storable qw(dclone);
 use FSM::Support::ISFRecordPortValues qw(record_value_scope);
 
-our @EXPORT_OK = qw(record_actor_scope record_transaction_scope record_drive_scope);
+our @EXPORT_OK = qw(record_actor_scope record_transaction_scope record_drive_scope
+    record_context_scope record_reference_root_kind);
 
 # Preparatory declaration projection only. Existing parser/lowering validators
 # still own declaration admission, including local collisions and options.
@@ -75,6 +76,66 @@ sub record_drive_scope {
     return record_value_scope(outer => $outer, local => \%local);
 }
 
+# One detached declaration projection for value, aggregate, enum and rule
+# consumers. This does not resolve enum/package members or admit source forms.
+sub record_context_scope {
+    my %args = @_;
+    _arguments(\%args, [qw(actor)], [qw(transaction drive)]);
+    _require(!(exists($args{transaction}) && exists($args{drive})),
+        'context cannot select both transaction and drive');
+    my $actor = $args{actor};
+    my $outer = record_actor_scope(actor => $actor);
+    my $roots = exists($args{transaction})
+        ? record_transaction_scope(actor => $actor, transaction => $args{transaction})
+        : exists($args{drive}) ? record_drive_scope(actor => $actor, drive => $args{drive}) : $outer;
+    my $enums = $actor->{enum_symbols} || {};
+    my $constants = $actor->{constant_symbols} || {};
+    my %namespaces = map {$_ => 1} (keys %{$enums->{local} || {}},
+        keys %{$enums->{packages} || {}}, keys %{$constants->{packages} || {}});
+    my %aggregates = map {$_ => dclone($roots->{$_}{type_spec})}
+        grep {_aggregate($roots->{$_}{type_spec})} keys %$roots;
+    my %exclusions = map {$_ => 1} keys %aggregates;
+    # A scalar/unresolved formal masking an actor record must not let an enum
+    # namespace lend it that record's missing layout.
+    $exclusions{$_} = 1 for grep {_aggregate($outer->{$_}{type_spec})} keys %$outer;
+    my %declared = map {$_ => 1} keys %$outer;
+    for my $entry (@{$actor->{storage} || []}) {
+        _name(\%declared, $_->{name}) for @{$entry->{signals} || []};
+    }
+    _name(\%declared, $_->{name}) for @{$actor->{params} || []}, @{$actor->{constants} || []};
+    for my $timing ($actor, @{($actor->{clock_domains} || {})->{domains} || []}) {
+        _name(\%declared, $timing->{clock});
+        _name(\%declared, $timing->{reset}{name}) if ref($timing->{reset}) eq 'HASH';
+    }
+    return {roots => $roots, aggregate_roots => \%aggregates,
+        enum_exclusion_roots => \%exclusions, namespaces => \%namespaces,
+        rule_declared_roots => \%declared};
+}
+
+sub record_reference_root_kind {
+    my %args = @_;
+    _arguments(\%args, [qw(context token)]);
+    my ($context, $token) = @args{qw(context token)};
+    _require(ref($context) eq 'HASH' && ref($context->{roots}) eq 'HASH'
+        && ref($context->{namespaces}) eq 'HASH' && ref($context->{enum_exclusion_roots}) eq 'HASH',
+        'reference classification requires declaration context');
+    return undef unless defined($token) && !ref($token) && $token =~ /\A([A-Za-z_]\w*)(.*)\z/s;
+    my ($root, $suffix) = ($1, $2);
+    return 'namespace' if $suffix =~ /\A\./ && $context->{namespaces}{$root}
+        && !$context->{enum_exclusion_roots}{$root};
+    return undef unless exists $context->{roots}{$root};
+    return 'declaration';
+}
+
+sub _name {
+    my ($names, $name) = @_;
+    $names->{$name} = 1 if defined($name) && !ref($name) && length($name);
+}
+sub _aggregate {
+    my ($spec) = @_;
+    return (ref($spec) eq 'HASH' && ($spec->{kind} eq 'record' || $spec->{kind} eq 'list')) ? 1 : 0;
+}
+
 sub _ports {
     my ($interface, $roots, $context) = @_;
     return unless defined $interface;
@@ -113,8 +174,8 @@ sub _scalar_width {
 sub _identifier { (defined($_[0]) && !ref($_[0]) && $_[0] =~ /\A[A-Za-z_]\w*\z/) ? 1 : 0 }
 sub _positive { (defined($_[0]) && !ref($_[0]) && $_[0] =~ /\A[1-9][0-9]*\z/) ? 1 : 0 }
 sub _arguments {
-    my ($args, $keys) = @_;
-    my %allowed = map { $_ => 1 } @$keys;
+    my ($args, $keys, $optional) = @_;
+    my %allowed = map { $_ => 1 } (@$keys, @{$optional || []});
     _require(!grep(!exists($args->{$_}), @$keys), 'missing scope argument');
     _require(!grep(!$allowed{$_}, keys %$args), 'unknown scope argument');
 }

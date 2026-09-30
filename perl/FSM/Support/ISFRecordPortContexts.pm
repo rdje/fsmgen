@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use Exporter 'import';
-use FSM::Support::ISFRecordPortScopes qw(record_actor_scope record_transaction_scope record_drive_scope);
+use FSM::Support::ISFRecordPortScopes qw(record_context_scope record_reference_root_kind);
 use FSM::Support::ISFRecordPortValues qw(record_value_reference validate_record_port_copy);
 
 our @EXPORT_OK = qw(validate_actor_record_contexts);
@@ -16,10 +16,9 @@ sub validate_actor_record_contexts {
     my %args = @_;
     _require(keys(%args) == 1 && ref($args{actor}) eq 'HASH', 'requires one actor map');
     my $actor = $args{actor};
-    my $outer = record_actor_scope(actor => $actor);
-    my $scope = _context_scope($outer, $outer, $actor);
+    my $scope = record_context_scope(actor => $actor);
     for my $tx (@{$actor->{transactions} || []}) {
-        my $local = _context_scope(record_transaction_scope(actor => $actor, transaction => $tx), $outer, $actor);
+        my $local = record_context_scope(actor => $actor, transaction => $tx);
         _clauses($tx->{clauses}, $local, $actor, "transaction '$tx->{name}'");
     }
     for my $rule (@{$actor->{rules} || []}) {
@@ -40,7 +39,7 @@ sub validate_actor_record_contexts {
     }
     for my $name (sort keys %{$actor->{drives} || {}}) {
         my $drive = $actor->{drives}{$name};
-        my $local = _context_scope(record_drive_scope(actor => $actor, drive => $drive), $outer, $actor);
+        my $local = record_context_scope(actor => $actor, drive => $drive);
         _drive_body($drive->{body}, $local, "drive '$name'");
     }
     return 1;
@@ -170,27 +169,18 @@ sub _reference {
     return undef unless defined($token) && !ref($token) && $token =~ /\A([A-Za-z_]\w*)(.*)\z/s;
     my ($name, $suffix) = ($1, $2);
     my $roots = $scope->{roots};
+    my $kind = record_reference_root_kind(context => $scope, token => $token);
+    return undef unless defined($kind) && $kind eq 'declaration';
     return undef unless exists $roots->{$name};
     # A scalar pin can share an enum/package name. Those namespaces retain
     # their current validator unless a nearest aggregate, or an explicitly
     # shadowed outer aggregate, establishes this as a declaration path.
-    return undef if $suffix =~ /\A\./ && $scope->{namespaces}{$name}
-        && !_aggregate($roots->{$name}{type_spec}) && !$scope->{aggregate_outers}{$name};
     # Scalar width/output annotations belong to the existing expression owner;
     # they cannot conceal a record port or an aggregate path here.
     return undef if length($suffix) && $suffix !~ /\A[.\[]/
         && !_aggregate($roots->{$name}{type_spec});
     return record_value_reference(scope => $roots, token => $token, access => $access,
         allow_whole => 1, context => $context);
-}
-sub _context_scope {
-    my ($roots, $outer, $actor) = @_;
-    my $enums = $actor->{enum_symbols} || {};
-    my $constants = $actor->{constant_symbols} || {};
-    my %namespaces = map {$_ => 1} (keys %{$enums->{local} || {}},
-        keys %{$enums->{packages} || {}}, keys %{$constants->{packages} || {}});
-    my %aggregate_outers = map {$_ => 1} grep {_aggregate($outer->{$_}{type_spec})} keys %$outer;
-    return {roots => $roots, namespaces => \%namespaces, aggregate_outers => \%aggregate_outers};
 }
 sub _aggregate {
     my ($spec) = @_;

@@ -125,8 +125,10 @@ and drive scalar reads and strict copies; whole record ports refuse scalar
 contexts, and input targets refuse writes. Validation detaches caller facts
 before numeric reads so their original JSON types stay intact. See
 [0114](../../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md).
-Actual aggregate/enum/rule integration, sampled behavior and generated/domain
-carriers still need qualification before authors can use record inputs.
+A common declaration projection now separates aggregate traversal, enum
+exclusions, namespaces and actor rule operands while honoring nearest bindings.
+Frontend integration, sampled behavior and generated/domain carriers still
+need qualification before authors can use record inputs.
 Existing declaration-collision refusals still apply.
 
 Single-member records and single-item lists also preserve their aggregate
