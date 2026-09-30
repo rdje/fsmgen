@@ -9,7 +9,7 @@ answers:
 date: 2026-09-30
 status: current
 tags: [continuity, decisions, doctrine, knowledge-map]
-evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_identity_capacity.py --revision 25c01f0127144922ade78951b91439e1d9221c08 > .artifacts/decision-identity-capacity-reverify.json
 ---
 
@@ -187,3 +187,48 @@ missing files and symlinked parents; the controls observe rejection.
 Durability is the tracked helper, independent literal fixtures, owning task
 and this contract. Existing exact sealed reads and flat ceiling-authority
 behavior are separately exercised before integration under `.51.3.2.2`.
+
+## Authenticated store/navigation preparation — 2026-09-30
+
+Owner `.51.3.2.2.1` adds `scripts/decision_store.py`. Its integrating caller
+must supply independent fingerprints for the transition census and complete
+original index. Fixed relative inputs are
+`docs/audits/decision-store-transition-census.json`,
+`history/transition-originals.json`, `history/transition-index.md` and
+`current/catalog.json`; the latter three are below `docs/decisions/`.
+They are future-store locations, not delivered live inputs at this stage.
+The loader authenticates source/index bytes before calling shared catalog
+preparation, and retains exact original index text alongside original records.
+The index's titles, types and summaries are unique source values, not disposable
+routing decoration.
+
+Compatibility rendering uses only fixed source paths, semantic parts and
+original heading lines, in their complete order. It adds no headings or
+competing slug calculation. Each original heading remains a destination with
+a complete-record link. Sealed records route to the existing archive view;
+current records route to their selected canonical part. Exact render comparison
+and complete root membership prohibit stale pages or future root aliases.
+
+The root front door directly discovers every sealed/current identity and all
+three part indexes. Part tables exactly enumerate their canonical members.
+Every per-ID relative destination and type must agree; part display cells must
+match the root. Equal-count duplicate/substituted/misrouted rows refuse, as do
+malformed/fenced rows used as membership and missing parts or sealed anchors.
+Shared fenced-example handling excludes code headings and fake closing runs;
+unterminated fences refuse. Initial transition additionally preserves every
+captured title/type/summary cell and complete ordered metadata. Later owned
+summary/status changes are validated as current values without rewriting the
+immutable original index or records.
+
+Selected-snapshot access requires its complete root path inventory. It cannot
+silently fall back to ambient worktree enumeration. Literal fixtures prove
+accepted original/current products, complete fresh part navigation without
+compatibility growth, and exact initial preservation. Planted source/index
+fingerprint corruption, lost originals, stale headings/pages, duplicate or
+escaping routes, wrong types, missing part/anchor products, extra root aliases
+and symlinks refuse; a broken ambient index cannot replace selected bytes.
+Run `t/2001-decision-store-navigation.t` with the RAM guard to re-derive these
+results. The tracked helper, literal fixtures and owning task provide durability.
+Published reading, production fingerprint installation and fresh authority
+integration remain `.51.3.2.2.2-.3`; complete real body/link meaning and storage
+rollout remain `.51.3.2.3`. No live path or authority is admitted here.

@@ -575,17 +575,22 @@ candidates are listed separately. This is historical evidence, with explicit
 limits for dynamic and external consumers. It does not move decision records
 or replace their current [discovery index](../../../docs/decisions/INDEX.md).
 
-The decision rollover also has a separately qualified catalog preparation
-module. Maintainers can exercise its literal future-store fixtures:
+The decision rollover also has separately qualified catalog and authenticated
+store preparation modules. Maintainers can exercise their literal future-store
+fixtures:
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl t/2000-decision-catalog-preparation.t
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/2000-decision-catalog-preparation.t t/2001-decision-store-navigation.t
 ```
 
 These controls check source/original identity, semantic routes, copied metadata,
-record bytes and unsafe or missing files. The published reader still handles
-the existing sealed cohort; catalog preparation does not move records or admit
-new authority paths. Reader integration and source rollout remain tracked work.
+record bytes and unsafe or missing files. Store controls also authenticate the
+transition source and original index, preserve compatibility headings, and
+check complete root/part navigation against selected bytes. The published
+reader still handles the existing sealed cohort; preparation does not move
+records or admit new authority paths. Reader integration and source rollout
+remain tracked work.
 
 ## Current Boundary
 

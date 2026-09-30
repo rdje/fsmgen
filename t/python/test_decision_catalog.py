@@ -305,6 +305,16 @@ class DecisionCatalogPreparation(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'duplicate current knowledge ID'):
             self.prepare()
 
+    def test_fake_fence_closer_and_unterminated_examples_cannot_supply_headings(self):
+        text = '# 0051 — Fixture\n\n```md\n```language\n# 9999 — still an example\n```\n\n  ## Actual heading\n'
+        _, headings = catalog_api.record_facts(text, 'docs/decisions/0051-current.md', '0051')
+        self.assertEqual(headings, ['# 0051 — Fixture', '  ## Actual heading'])
+        self.assertEqual(list(catalog_api.visible_lines('```inline```\n\n```md\nignored\n```\t\nkept\n')),
+                         ['```inline```', '', 'kept'])
+        with self.assertRaisesRegex(ValueError, 'unterminated'):
+            catalog_api.record_facts(text.replace('```\n\n  ##', '\n\n  ##'),
+                                     'docs/decisions/0051-current.md', '0051')
+
 
 if __name__ == '__main__':
     unittest.main()

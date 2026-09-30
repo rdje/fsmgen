@@ -129,6 +129,25 @@ def normalize_links(text, path):
     return LINK.sub(replace, text)
 
 
+def visible_lines(text):
+    """Keep Markdown identity outside fenced examples, with exact closing runs."""
+    fence = None
+    for line in text.splitlines():
+        marker = re.match(r'^ {0,3}(`{3,}|~{3,})', line)
+        if fence is not None:
+            if re.fullmatch(r' {0,3}' + re.escape(fence[0]) + '{' + str(len(fence)) + r',}[ \t]*', line):
+                fence = None
+            continue
+        if marker:
+            if marker[1][0] == '`' and '`' in line[marker.end():]:
+                yield line
+                continue
+            fence = marker[1]
+            continue
+        yield line
+    require(fence is None, 'unterminated decision/navigation code fence')
+
+
 def record_facts(text, path, identity):
     """Extract identity/status/questions and actual headings, excluding code fences."""
     lines = text.splitlines()
@@ -164,19 +183,8 @@ def record_facts(text, path, identity):
         require(re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', knowledge_id), 'invalid knowledge ID')
         bounded_string(knowledge_status, 'knowledge status', 128)
     headings, statuses = [], []
-    fence = None
-    for line in lines[body_start:]:
-        marker = re.match(r'^ {0,3}(`{3,}|~{3,})', line)
-        if marker:
-            run = marker[1]
-            if fence is None:
-                fence = run
-            elif run[0] == fence[0] and len(run) >= len(fence):
-                fence = None
-            continue
-        if fence is not None:
-            continue
-        if re.match(r'^#{1,6} +\S', line):
+    for line in visible_lines('\n'.join(lines[body_start:])):
+        if re.match(r'^ {0,3}#{1,6}[ \t]+\S', line):
             bounded_string(line, 'heading')
             headings.append(line)
         if re.match(r'^(?:- )?(?:\*\*)?Status:(?:\*\*)? ', line):
