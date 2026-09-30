@@ -7,6 +7,7 @@
   (input  name (width N))
   (input  name (width PARAM))
   (input  name (width CONST))
+  (input  name (type PACKED_RECORD_ALIAS))
   (output name)
   (output name (width N))
   (output name (width PARAM))
@@ -76,6 +77,17 @@ width. `(reset V)` lowers to generated `.fsm` `+size` reset metadata.
 assignments, matching the generated drive output assignment family. Inputs,
 type-referenced outputs, unresolved-width outputs, negative values,
 malformed arity, and too-wide values fail closed.
+
+Packed record actor inputs accept existing local/imported aliases through the
+same type resolver and typed `+size` / explicit `+interface` carriers. Fields
+are live scalar values in selected transaction conditions, set/update RHS,
+rules and drives; explicit scalar sampling retains existing capture timing.
+Whole input-to-storage copies require the same resolved recursive record type,
+including member names/order, nested shape, scalar kind/width, signed and
+optional state-model properties. Input writes, whole-record scalar operations,
+invalid paths and unsupported contexts fail before successful lowering.
+Declared domain ownership and nearest scalar formal/parameter masks still apply.
+Record outputs, root-list inputs and transaction aggregate ports remain deferred.
 
 ### 5.1 Actor-Owned Storage
 

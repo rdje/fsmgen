@@ -4606,6 +4606,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'feature.isf_record_input',
+        relpath => 'isf/record_input.isf',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'isf_pipeline_cli',
+        source_kind => 'isf',
+        strict_supported => 1,
+        expected_module_name => 'record_input',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'feature.partial_lhs_with_size',
         relpath => 't/corpus/partial_lhs_with_size.fsm',
         family => 'language_feature_fixture',

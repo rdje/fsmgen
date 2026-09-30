@@ -2811,6 +2811,7 @@ sub _finalize_actor_type_references($self, $actor) {
                 $actor,
                 $port,
                 "actor '$actor_name' interface port '$port->{name}'",
+                allow_record => ($direction eq 'inputs' ? 1 : 0),
             );
         }
     }
@@ -2863,8 +2864,9 @@ sub _resolve_typed_width_entry($self, $actor, $entry, $context, %options) {
     my $kind = $type_spec->{kind} || '';
     my $is_scalar = $kind eq 'bit' || $kind eq 'bits';
     my $is_aggregate = _is_aggregate_type_spec($type_spec);
-    confess "Error: $context references aggregate type '$type_name'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables\n"
-        if $is_aggregate && !$options{allow_aggregate};
+    confess "Error: $context references aggregate type '$type_name'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs\n"
+        if $is_aggregate && !$options{allow_aggregate}
+            && !($options{allow_record} && $kind eq 'record');
     confess "Error: $context references unsupported type '$type_name' of kind '$kind'\n"
         unless $is_scalar || $is_aggregate;
     confess "Error: $context type '$type_name' does not resolve to a positive width\n"

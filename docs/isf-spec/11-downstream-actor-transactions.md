@@ -1753,13 +1753,16 @@ body RHS scalar values/expression operands, inline drive target tokens,
 inline drive assignment RHS scalar values/expression operands, or drive-call
 actual scalar values/expression operands; aggregate paths in drive body RHS,
 inline drive RHS, or drive-call actual expression operator position;
-subaggregate operands/updates; aggregate interface or transaction ports; and
-aggregate storage banks are not shipped yet.
+subaggregate operands/updates; record output and root-list interface ports;
+transaction aggregate ports; and aggregate storage banks remain deferred.
+Packed record actor inputs use existing local/imported aliases, selected scalar
+leaf contexts, explicit scalar sampling and strict same-type input-to-storage
+copies. Input targets, whole-record scalar operations and invalid paths refuse;
+nearest bindings and declared domains retain their ownership.
 
-Existing aggregate support beyond the actor-owned storage-variable carrier
-and direct scalar leaf read/write context is limited to compatible
-aggregate/list literal parameter values and scalarized actor-owned
-bank/storage lowering.
+Beyond actor-owned storage variables and selected packed record inputs,
+aggregate support remains limited to compatible aggregate/list literal
+parameter values and scalarized actor-owned bank/storage lowering.
 
 ### 11.7 Blocking Do, Spawn, Await Sync
 

@@ -92,66 +92,59 @@ The scheduled `.fsm` keeps the authored alias in typed `+size` review entries,
 and schedule reports expose the storage item with its packed `width`, authored
 `type`, and resolved `type_kind` (`record` or `list`).
 
-Aggregate interface ports, transaction-local ports, storage banks, and other
-aggregate carriers are not shipped yet. They require separate ownership,
-port-binding, and partial-update contracts.
+Packed record actor inputs are admitted with `(input NAME (type T))`, where
+`T` is a local or package-qualified alias. Fields are live scalar reads in
+supported transaction conditions, `set`/`update` RHS values, rules and drives.
+Nested record members, list items and scalar slices use the existing packed
+layout. The first authored member occupies the most significant bits.
 
-Decision [0113](../../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
-selects future packed record ports, live scalar field reads and same-type
-port/storage copies. Delivery starts with detached declared-interface metadata;
-input support and output writer qualification follow separately. This selection
-does not change the shipped authoring surface. List-root ports and variant
-records remain optional follow-ups.
-The preparatory [declared interface metadata](13a-actor-interface.md#declared-interface-metadata)
-now describes admitted scalar ports, including unused declarations, and
-distinguishes unknown declarations from a known empty interface. Record-layout
-metadata has producer controls; scalar declaration reports are qualified across
-native, API and newline MCP products. Record source admission remains pending.
+```lisp
+(actor record_input
+ (types (type frame (record (flag bit) (data (signed (four_state (bits 5)))))))
+ (interface (input start) (input packet (type frame))
+  (output seen (width 5)) (output done))
+ (storage (var held (type frame)))
+ (transaction main
+  (on start)
+  (set held packet)
+  (set seen packet.data)
+  (complete done)))
+```
 
-Before record inputs are admitted, their copies must compare resolved member
-order, nested shape, signed properties and declared state-model properties;
-equal packed width is insufficient. An unspecified state model remains
-unspecified for this comparison. Scalar leaf sampling also needs qualified
-width/type and capture timing. These are delivery prerequisites, not additional
-forms authors can use today; whole-record sampling into an inferred local
-remains outside the selected input subset.
-The preparatory value helpers now have type, path, role and lexical-shadow
-controls, including diagnostic-line negative oracles. Detached declaration
-scopes consume actual parsed actor ports/storage, transaction formals/locals
-and named-drive parameter names. Unresolved types and untyped drive parameters
-mask outer facts without borrowing a width or record layout. These resolved
-reference gates now run at parser and module admission boundaries for supplied
-record-input facts; authored record ports remain refused. Contextual AST controls
-cover selected transaction, rule and drive scalar reads and strict copies;
-whole record ports refuse scalar
-contexts, and input targets refuse writes. Validation detaches caller facts
-before numeric reads so their original JSON types stay intact. See
-[0114](../../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md).
-A common declaration projection now separates aggregate traversal, enum
-exclusions, namespaces and actor rule operands while honoring nearest bindings.
-Declared domain roots now have preparatory record/formal path controls.
-The parser now shares declaration-based enum exclusions and actor rule roots
-with the contextual gates. Bounded source admission and its qualification still
-precede authoring record inputs.
-Detached explicit leaf-sample facts now retain exact width, signed/state
-properties and nearest bindings, with private scalar type-declaration controls.
-The integrated contextual gate consumes those sample bindings for supplied
-record-input actors, preserving scalar alias widths and input ownership.
-Supplied preparatory actors now retain exact private scalar widths and core
-types in actual parent, generated-child and owning-domain module carriers.
-Strict IAL0 replay preserves signed/state properties and existing capture
-states, without public sample pins or inherited storage resets. Actual drive,
-spawn and counter helpers are reserved; shared aliases and other transaction/
-rule writers refuse. Repeated captures by one owner and separate aliases in
-parent/child modules retain private declarations. Complete preparatory entry,
-await/drive, pre-data and nested control states now preserve existing capture
-assignments, guards and transitions. Actual strict semantic replay retains the
-independently expected private scalar types, including imported leaves and
-nearest scalar-formal shadows. Preparatory nested member/list/slice reads and
-samples now retain their declared input domain; nearest formals and enum/package
-names keep their distinct ownership. Actual owning-domain and top carriers
-strictly replay, with unused named drives excluded from independent domain
-modules. Frontend admission remains pending; authored record ports are still refused.
+The maintained example is [record_input.isf](../../../isf/record_input.isf).
+Run `./bin/fsmgen --strict --check --json isf/record_input.isf` from the repository root.
+
+`packet` is one six-bit input; it does not become separate field pins.
+`packet.flag` occupies bit 5 and `packet.data` bits 4 through 0. The copy into
+`held` requires the same resolved recursive record type. Equivalent local or
+imported aliases may have different spellings; equal packed width alone is
+insufficient. Member names/order, nested shape, scalar kinds, signed properties
+and declared state models must match. An unspecified state model stays
+unspecified for this comparison. Existing storage-only copies keep their prior
+contract.
+
+Use `(sample packet.data as captured)` in an already supported sample position
+when a snapshot is needed. The private scalar alias retains the leaf width,
+signed/state properties and existing capture timing. It adds no public port or
+implicit reset. Alias collisions, shared transaction writers and invalid sample
+paths refuse. Repeated captures by one owner preserve their existing rules.
+
+Inputs cannot be assignment targets. Unknown members, out-of-range items,
+subaggregate scalar operands, whole-record conditions/arithmetic and whole-record
+sampling refuse. A nearest scalar formal or drive parameter masks an outer
+record; enum/package names retain their own namespace meaning. Named-domain
+reads and copies require the declared owning domain or a supported crossing.
+Generated child scalar outputs still require their published explicit bindings.
+Strict width checks require width-aligned scalar assignments.
+
+Record outputs, root-list input ports, transaction-local aggregate ports,
+aggregate banks and variants remain deferred. Output copies/member writes keep
+their separately owned writer prerequisites. The compiler preserves typed
+`+size`, explicit `+interface`, exact declaration metadata and private sample
+carriers. Full generated/domain behavior, affected backend profiles, native HDL
+execution and supplied consumer signoff remain separate qualification work.
+See [0113](../../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md#authored-record-input-admission--2026-09-30)
+and [declared interface metadata](13a-actor-interface.md#declared-interface-metadata).
 Existing declaration-collision refusals still apply.
 
 Single-member records and single-item lists also preserve their aggregate

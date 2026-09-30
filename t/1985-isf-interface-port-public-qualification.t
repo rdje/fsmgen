@@ -24,6 +24,12 @@ my %supported = (
         p('start','input',1), {name=>'data',direction=>'input',width=>8,type=>'byte',type_kind=>'bits'},
         p('spare','output',2), p('done','output',1),
     ],
+    'isf/record_input.isf' => [
+        p('start','input',1), {name=>'packet',direction=>'input',width=>6,type=>'frame',type_kind=>'record',fields=>[
+            {path=>'flag',width=>1,lsb=>5,msb=>5,signed=>0},
+            {path=>'data',width=>5,lsb=>0,msb=>4,signed=>1,state_model=>'four_state'}]},
+        p('seen','output',5), p('done','output',1),
+    ],
     'isf/apb_requester.isf' => [
         p('start','input',1), p('req_write','input',1), p('req_addr','input',32), p('req_wdata','input',32),
         p('PREADY','input',1), p('PRDATA','input',32), p('PSLVERR','input',1),
@@ -56,7 +62,7 @@ subtest 'every current supported ISF cohort row has independent declaration witn
     }
 };
 
-subtest 'local imported empty and domain declarations preserve complete transport products' => sub {
+subtest 'local imported record empty and domain declarations preserve complete transport products' => sub {
     write_file("$work/shared.fsm", '(?pkg:shared (+types (type byte (bits 8))))');
     my @cases = (
         ['local', '(actor local_ports (types (type nibble (bits 4))) (params (BUS_WIDTH 9))'
@@ -69,6 +75,14 @@ subtest 'local imported empty and domain declarations preserve complete transpor
             . ' (transaction main (on start) (complete done)))',
             [p('start','input',1), {name=>'data',direction=>'input',width=>8,type=>'shared.byte',type_kind=>'bits'},
              {name=>'spare',direction=>'output',width=>8,type=>'shared.byte',type_kind=>'bits'}, p('done','output',1)]],
+        ['record_input', '(actor record_input (types (type frame (record (flag bit) (data (signed (four_state (bits 5)))))))'
+            . ' (interface (input start) (input packet (type frame)) (output seen (width 5)) (output done))'
+            . ' (storage (var held (type frame)))'
+            . ' (transaction main (on start) (set held packet) (set seen packet.data) (complete done)))',
+            [p('start','input',1), {name=>'packet',direction=>'input',width=>6,type=>'frame',type_kind=>'record',fields=>[
+                {path=>'flag',width=>1,lsb=>5,msb=>5,signed=>0},
+                {path=>'data',width=>5,lsb=>0,msb=>4,signed=>1,state_model=>'four_state'}]},
+             p('seen','output',5), p('done','output',1)]],
         ['empty', '(actor empty_ports)', []],
         ['domains', '(actor domain_ports (clock-domains (domain core (clock clk) (reset rst_n) :default)'
             . ' (domain spare (clock spare_clk) (reset spare_rst_n)) (domain aux (clock aux_clk) (reset aux_rst_n)))'
@@ -97,9 +111,9 @@ subtest 'local imported empty and domain declarations preserve complete transpor
     }
 };
 
-subtest 'record list malformed and unrelated sources retain their public boundaries' => sub {
+subtest 'record output, list, malformed and unrelated sources retain their public boundaries' => sub {
     for my $case (
-        ['record', '(actor refused (types (type frame (record (flag bit)))) (interface (input packet (type frame))))',
+        ['record', '(actor refused (types (type frame (record (flag bit)))) (interface (output packet (type frame))))',
             qr/interface port 'packet' references aggregate type 'frame'/],
         ['list', '(actor refused (types (type array_t (list bit bit))) (interface (input packet (type array_t))))',
             qr/interface port 'packet' references aggregate type 'array_t'/],

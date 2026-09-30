@@ -6,8 +6,8 @@ use Carp qw(confess);
 use Storable qw(dclone);
 use FSM::Support::ISFRecordPortSamples qw(actor_has_record_input record_transaction_samples record_sample_type_products);
 
-# Source record inputs remain refused. These consumers qualify supplied parsed
-# facts before frontend admission, without changing the transaction product ABI.
+# Consume finalized record-input facts through the existing transaction products.
+# Private sample types and ownership do not change the transaction product ABI.
 sub transaction_plan {
     my ($class, $actor, $transaction) = @_;
     return undef unless actor_has_record_input(actor => $actor);

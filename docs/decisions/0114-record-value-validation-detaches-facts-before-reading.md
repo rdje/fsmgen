@@ -29,7 +29,7 @@ evidence: >-
 # 0114 — Record value validation detaches facts before reading
 
 - Date: 2026-09-30
-- Status: qualified preparation; source admission remains pending
+- Status: qualified context/sample/domain preparation; authored input admission follows 0113
 - Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.2`
 - Parent contract: [0113](0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 

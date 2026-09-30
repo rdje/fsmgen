@@ -170,9 +170,9 @@ subtest 'imported alias and prepared record pin keep actual resolved facts' => s
     refuses(sub {reference($scope, 'value.payload', 'write')}, qr/cannot write declared input 'value.payload'/,
         'prepared input leaf cannot become a write');
     refuses(sub {$parser->parse_source('(actor refused (types (type frame (record (x bit))))'
-        . ' (interface (input value (type frame)) (output done))'
+        . ' (interface (output value (type frame)) (output done))'
         . ' (transaction main (complete done)))', 'still-refused.isf')},
-        qr/interface port 'value' references aggregate type/, 'authored record input stays refused');
+        qr/interface port 'value' references aggregate type/, 'authored record output stays refused');
 };
 
 subtest 'scope preparation leaves complete parser and scheduled products unchanged' => sub {

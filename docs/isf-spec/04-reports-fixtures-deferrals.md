@@ -425,6 +425,8 @@ Representative shipped fixtures:
 - [isf/apb_requester.isf](../../isf/apb_requester.isf)
 - [isf/burst_reader.isf](../../isf/burst_reader.isf)
 - [isf/full_featured.isf](../../isf/full_featured.isf)
+- [isf/record_input.isf](../../isf/record_input.isf) — packed record input,
+  exact-type storage copy and signed scalar field read
 - [isf/i2c_master.isf](../../isf/i2c_master.isf)
 - [isf/spawn_parent.isf](../../isf/spawn_parent.isf)
 - [isf/rule_resource_arbiter.isf](../../isf/rule_resource_arbiter.isf)

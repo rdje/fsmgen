@@ -155,8 +155,8 @@ subtest 'closed context selection and current source admission remain unchanged'
     ok(validate_actor_record_contexts(actor => $actor), 'existing contextual consumer uses common projection');
     is($json->encode($actor), $before, 'complete parsed source unchanged');
     refuses(sub {$parser->parse_source('(actor refused (types (type frame (record (data bit))))'
-        . ' (interface (input packet (type frame))) (transaction main (wait 1)))', 'refused.isf')},
-        qr/interface port 'packet' references aggregate type/, 'authored record input still refused');
+        . ' (interface (output packet (type frame))) (transaction main (wait 1)))', 'refused.isf')},
+        qr/interface port 'packet' references aggregate type/, 'authored record output still refused');
 };
 
 done_testing;

@@ -2125,7 +2125,7 @@ For FSMGen, the analogs are:
   Status: `pending`
   Goal: `Contain decision identity and index cardinality before file-count rollover.`
   Acceptance: `Activate before an added record would enter the rationale file-count rollover band. Audit stable external and generated provenance identities, select bounded identity/index partitions with exact retrieval, preserve all policy authority and record links, qualify negative navigation controls and commit without widening the file ceiling. This future warning-pressure task does not block controller contract adoption after .51.2.`
-  Verification: `Root aliases deliberately preserve file cardinality. The .51.2 line/byte rollover leaves explicit warning_debt rather than claiming every pressure dimension is normal.`
+  Verification: `Root aliases deliberately preserve file cardinality. The .51.2 line/byte rollover leaves explicit warning_debt. Admission .60.4.3.2.3.5.2 observes a new staged record crossing the file-count rollover band: 116/128, 90.6%, rejected by the unchanged gate. Consolidating its redundant draft into canonical 0113 completes that dirty slice; .51.3 is the immediate clean-state prerequisite before more record growth, then frontend matrix .60.4.3.2.3.6 resumes.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
@@ -2568,11 +2568,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5`
-  Status: `active`
+  Status: `done`
   Goal: `Admit the bounded record-input source surface with every mandatory gate.`
   Acceptance: `After .2-.4, admit local/imported packed record input aliases only with complete contextual scalar/copy/role/type/domain/sampling checks from the first accepted source. Preserve root-list/output/transaction aggregate refusals, explicit IAL0 typed interfaces and unused declarations; qualify invalid types/paths/operators/whole-record scalar contexts and same-type input-to-owned-storage copies. Keep unsupported carrier/backend contexts fail closed and synchronize actual authoring behavior in book/spec.`
-  Verification: `Split gate integration .1 from bounded authored admission .2 before changing source acceptance; every first accepted source must use the complete integrated gates.`
-  Commit: `pending child qualification`
+  Verification: `Gate integration .1 and bounded authored admission .2 are qualified separately. Every admitted source consumes the complete contextual, role/type/copy/domain/sample gates; strict native source/carrier and complete public/corpus products pass. Frontend matrix .3.6 and generated/domain/native completion retain their owners.`
+  Commit: `children qualified through this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5.2`
 
@@ -2584,17 +2584,17 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Admit local/imported packed record inputs only through integrated gates.`
   Acceptance: `After .1, admit the selected actor record-input aliases with all mandatory contextual/domain/sample/role/copy/type checks. Permanently qualify actual authored local/imported/nested/unused inputs, scalar leaves, strict same-type input-to-owned-storage copies and typed IAL0 replay. Preserve output/list-root/transaction aggregate refusal and invalid declaration/path/operator/context/input-write failures. Keep unsupported integration/backend carriers precise and fail closed, then synchronize actual authoring book/spec before frontend/public qualification .3.6.`
-  Verification: `pending gate integration`
-  Commit: `pending`
+  Verification: `At predecessor 0d01ca3fc8f880acf926ae59305843a1172bf1d3, actual local/imported inputs fail T1998 at resolved interface aggregate refusal. Record-kind-only actor input admission now passes authored nested/unused/copy/leaf/slice/sample/rule/drive/generated sources with independent exact metadata, complete caller isolation and strict source/every-carrier replay. First-cause type/path/role/context/copy/domain negatives and deferred output/list/transaction carriers remain closed. Generated scalar outputs require published explicit bindings; record and ordinary unbound controls refuse alike. Final focused preparation/sample/domain/storage/historical cohort reports All tests successful, Files=16, Tests=89. Complete native/API/actual newline/discovery T1985 reports Files=1, Tests=6; current corpus/source cohort reports Files=2, Tests=7201. Catalog omission control exits 2 on literal supported 385 versus 386 and strict 375 versus 376. Syntax and book build pass. Initial width and unbound-child fixtures were corrected to existing strict contracts, without product repairs. An 88.2% host RAM cutoff exits 137 without a verdict; final completed runs keep the unchanged cutoff. Two aggregate attempts used nonexistent test basenames and have no suite verdict; final paths were enumerated with rg. Shipped record_input source, book/spec/fixture list, bounded 0113 admission update, exact reference authority, map/inventory and staged gates accompany the slice. No native execution or complete backend/consumer signoff is claimed; .3.6 then .2.4-.2.5 remain owned.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6`
   Status: `pending`
   Goal: `Qualify frontend delivery and public replay before carrier/runtime completion.`
   Acceptance: `After .5, independently verify accepted local/imported/nested/shadow sources, all contextual failures, exact metadata/type/layout identities and complete native/API/actual newline check/semantic/schedule/discovery products. Strict-replay every emitted IAL0 carrier; preserve pre-change scalar/storage controls and exact source provenance. Close frontend work only with synchronized references while generated/domain behavior and independent native completion remain separately owned by .2.4-.2.5.`
-  Verification: `pending source admission`
+  Verification: `Authored admission .5.2 is qualified; next independently complete the imported/nested/nearest-shadow public frontend matrix before generated/domain/native completion.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4`
@@ -3333,7 +3333,7 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Record/formal domain roots and existing drive ingress repairs are qualified under `.60.4.3.2.3.4.2`. Unused named-drive domain carrier leakage is repaired under `.60.4.3.2.3.4.3`. Prepared parser/module gates are integrated under `.60.4.3.2.3.5.1`. Next `.60.4.3.2.3.5.2` admits bounded authored record inputs; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Record/formal domain roots and existing drive ingress repairs are qualified under `.60.4.3.2.3.4.2`. Unused named-drive domain carrier leakage is repaired under `.60.4.3.2.3.4.3`. Prepared parser/module gates are integrated under `.60.4.3.2.3.5.1`. Bounded authored record inputs are admitted under `.60.4.3.2.3.5.2`. Next `.51.3` contains decision identity/index cardinality before further record growth, then `.60.4.3.2.3.6` qualifies the full frontend/public matrix; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5689,3 +5689,59 @@ negative subtests run before the producer changes. Ignored logs supplement
 tracked controls. No authored admission, native HDL execution or complete
 backend/consumer signoff is claimed; those remain subsequent owned gates.
 Canonical rationale belongs to 0113; DEVELOPMENT_NOTES gains no duplicate.
+
+
+## Acceptance — authored record-input admission `.60.4.3.2.3.5.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — At 0d01ca3fc8f880acf926ae59305843a1172bf1d3, guarded T1998 reports `#   at t/1998-isf-record-input-source-admission.t line 48.` and `actor 'records' interface port 'packet' references aggregate type 'frame'`: valid local/imported record sources cannot reach the already integrated contextual gates. Parser::_finalize_actor_type_references supplies no record permission to actor interfaces, and _resolve_typed_width_entry permits aggregate aliases only for storage. The pre-admission run fails positive source and selected first-cause diagnostic subtests 1-3 while remaining-carrier refusal passes. This is the selected admission obligation, distinct from fixture width or binding errors.
+- [x] **ADDRESSED (verified)** — The resolved type boundary admits only actual record-kind actor inputs. Existing layout, nearest-declaration contexts, exact-copy roles/types, domain and scalar sample consumers remain authoritative. T1998 independently expects the complete ordered nested field layout and local/imported identities, checks unchanged complete caller JSON, actual schedule metadata, native original-source success and every emitted IAL0 carrier. Live leaves/slices, same-type owned-storage copies, explicit captures, rules, drives, generated scalar output binding and unused declarations pass. Invalid input targets/aliases, whole scalar/operator/trigger contexts, members/items, same-width wrong types and foreign domains name their first cause; record outputs, root-list and transaction aggregate ports still refuse. Complete T1985 native/API/actual newline check, semantic, schedule and discovery products include literal metadata for the maintained record_input fixture and preserve exact source bytes.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl t/1998-isf-record-input-source-admission.t t/1997-isf-record-port-gate-integration.t t/1983-isf-interface-port-metadata.t t/1984-isf-interface-port-report-integration.t t/1986-isf-record-port-value-gates.t t/1987-isf-record-port-declaration-scopes.t t/1989-isf-record-port-root-classification.t t/1990-isf-record-port-sample-facts.t t/1991-isf-record-port-sample-contexts.t t/1992-isf-record-port-sample-carriers.t t/1993-isf-record-port-sample-ownership.t t/1994-isf-record-port-sample-replay.t t/1995-isf-record-port-domain-roots.t t/1996-isf-domain-drive-selection.t t/1259-isf-aggregate-storage-type-aliases.t t/1255-isf-schedule-report-golden-matrix.t` reports `All tests successful`, `Files=16, Tests=89`. Complete guarded T1985 reports `All tests successful`, `Files=1, Tests=6`; guarded T1883/T248 reports `Files=2, Tests=7201`. Producer/test syntax and `mdbook build docs/book` pass. Corpus catalog omission fails the independent literal counters as expected. Exact maintained book/spec authority, unchanged ceilings, map/inventory and staged doctrines/hooks accompany this slice.
+
+Re-derivation uses actual authored native source and every strict IAL0 carrier,
+complete public products, and the maintained catalog/source-cohort derivation.
+Falsification uses the pre-admission RED run, literal nested layout and exact
+field properties, equal-width wrong-type/input-target/context controls, and
+observed omission of only feature.isf_record_input from an isolated catalog:
+T248 exits 2, reporting supported 385 versus 386 and strict 375 versus 376.
+Durability is the tracked parser, maintained source, T1998/T1985/T1883/T248,
+immutable predecessor and decision 0113. Ignored logs supplement those recipes.
+
+The draft's five-bit-to-eight-bit assignment was corrected to width-aligned
+outputs after actual strict checking refused widening. Unbound job.seen is
+reproduced for both record and ordinary scalar sources; an explicit scalar
+formal and published output binding correct the positive fixture. These are
+existing closed contracts, not new product defects. One public aggregate was
+RAM-guard terminated at 88.2% host usage, exit 137. Two aggregate invocations
+used nonexistent T1883/T1993 basenames; individual green files in those runs
+are not suite passes. Final path enumeration and completed commands above
+supply the verdicts, using the unchanged 88% cutoff.
+
+No native HDL execution occurred. Complete frontend matrix .3.6,
+generated/domain behavior .2.4, and independent runtime/backend/supplied
+consumer completion .2.5 remain owned; the runtime leg is explicitly missing
+here and retains the HIAL failure-only prerequisite. Canonical rationale
+belongs to 0113; DEVELOPMENT_NOTES gains no duplicate.
+
+
+The first staged doctrine run identified one new general-book candidate: the
+maintained example's exact flag/data bit indices. Its reviewed disposition
+classifies those as syntax/example values under the claim policy, with actual
+independent T1985 field-range/property witnesses and T1998 nested-order controls.
+No numeric metric is excused and no checker is weakened; the final staged gate
+must cover the new disposition.
+
+
+The added draft 0115 made the staged rationale collection contain 116 files
+against the unchanged 128-file target/ceiling, entering its 90% rollover band
+(`surface rationale is at 90.6% and must declare rollover_debt`). Existing
+`.51.3` already owns identity/index cardinality rollover and is next after this
+clean commit, before further record growth; .3.6 keeps frontend qualification.
+This slice consolidates the admission facts into canonical 0113 instead of
+adding a redundant record. Its removed Retrieval signpost repeated the preceding
+source/value, metadata, delivery-order and consequence contracts; no evidence
+recipe or unique fact was removed. Plain-prose reflow checks unchanged word
+sequences, preserving code/front matter/lists. The draft's actual admission,
+fixture corrections, controls and explicit runtime gaps now live in 0113;
+its three answer questions and T1998 evidence move there. Stable prior identity
+and questions remain; the Knowledge Map must prove their continued routing.
+No ceiling grows and no rollover-debt reclassification excuses this work.

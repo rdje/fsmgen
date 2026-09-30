@@ -1,0 +1,14 @@
+(actor record_input
+  (types
+    (type frame (record (flag bit) (data (signed (four_state (bits 5)))))))
+  (interface
+    (input start)
+    (input packet (type frame))
+    (output seen (width 5))
+    (output done))
+  (storage (var held (type frame)))
+  (transaction main
+    (on start)
+    (set held packet)
+    (set seen packet.data)
+    (complete done)))

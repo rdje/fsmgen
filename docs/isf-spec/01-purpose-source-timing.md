@@ -380,13 +380,16 @@ defaults or `(wait PACKAGE.CONSTANT)` when the parameter or imported package
 constant resolves to a non-negative integer scalar. `NAME` may be
 local, such as `byte`, or package-qualified, such as `shared.byte`.
 Unknown aliases fail closed. Resolved `list` or `record` aliases are accepted
-only on actor-owned storage variables, for example `(var frame (type
-frame_t))` or `(var frame (type shared.frame_t))`; the alias must resolve to a
+on actor-owned storage variables, for example `(var frame (type frame_t))` or
+`(var frame (type shared.frame_t))`. Packed records also qualify actor inputs
+as `(input packet (type frame_t))`; the alias must resolve to a
 positive packed width through the existing `.fsm` `+types` machinery. Generated
 transaction children in ordinary/single-domain actors read these owner-held
 values through typed internal handoffs, including packed whole values and scalar
-leaves; see the composition contract. Aggregate aliases on actor interface ports, transaction-local ports, storage
-banks, and other width-bearing declarations fail closed. Actor-local
+leaves; see the composition contract. Record outputs, root-list inputs,
+transaction aggregate ports, storage banks and other aggregate declarations
+remain closed. Record inputs use the contextual role/type/copy/sample gate,
+canonical nearest declaration roots and existing declared-domain checks. Actor-local
 `(enums ...)` declarations are accepted and preserved into scheduled `.fsm` as
 `+enums`. Actor parameter defaults consume declared actor constants and earlier
 scalar actor parameters by name for scalar defaults and scalar leaves inside
@@ -472,8 +475,10 @@ body RHS scalar values or expression operands, inline drive target tokens,
 inline drive assignment RHS scalar values or operands, or drive-call actual
 scalar values/expression operands,
 aggregate paths in
-expression operator position, subaggregate writes/operands, aggregate interface or
-transaction ports, and aggregate storage banks remain deferred.
+expression operator position, subaggregate writes/operands, record output or
+root-list interface ports, transaction aggregate ports and aggregate storage
+banks remain deferred. Record input leaves and strict same-type input-to-storage
+copies use their selected contextual contract.
 Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values

@@ -135,14 +135,14 @@ subtest 'formal and executable source preparation share contextual admission' =>
     }
 };
 
-subtest 'ordinary public authoring still refuses record ports' => sub {
+subtest 'ordinary public authoring still refuses record outputs' => sub {
     my $source = $header;
     $source =~ s/\(var packet \(type frame\)\)//;
-    $source =~ s/\(input start\)/\(input start\) \(input packet \(type frame\)\)/;
+    $source =~ s/\(input start\)/\(input start\) \(output packet \(type frame\)\)/;
     my ($ok, $error) = first_error(sub { $parser->parse_source($source . ')', 'still-refused.isf') });
-    ok(!$ok, 'public record source has no early partial admission');
+    ok(!$ok, 'public record output remains deferred');
     like($error, qr/interface port 'packet' references aggregate type 'frame'/,
-        'existing aggregate-port refusal stays precise');
+        'record-output refusal stays precise');
 };
 
 done_testing;

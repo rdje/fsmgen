@@ -145,8 +145,8 @@ subtest 'whole input snapshots and actual scheduler helper collisions refuse' =>
         is($json->encode($case->[0]), $before, 'refused carrier leaves complete caller facts unchanged');
     }
     my $ok = eval {$parser->parse_source('(actor refused (types (type frame (record (data bit)))) (interface (input packet (type frame))) (transaction main (on packet.data)))','refused.isf');1};
-    ok(!$ok, 'prepared carrier integration does not admit authored record ports');
-    like((split /\n/,$@)[0], qr/interface port 'packet' references aggregate type/, 'source refusal is unchanged');
+    ok(!$ok, 'record member activation trigger remains outside the input subset');
+    like((split /\n/,$@)[0], qr/on trigger does not admit record port reference 'packet.data'/, 'unsupported trigger refusal stays precise');
 };
 
 done_testing;

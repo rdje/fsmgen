@@ -752,11 +752,11 @@ JSON scalar kinds on both successful and refused validation.
 
 Each entry requires `name`, `direction` and positive `width`. Optional `type`
 retains the authored local/imported alias and `type_kind` describes its resolved
-kind. Scalar aliases currently resolve to `bit` or `bits`. Packed record source
-ports still fail under the boundary described in [Types and Aggregates](13j-type-enum-aggregate.md).
-The selected future record layout uses ordered scalar-leaf `fields` with
-port-relative `path`, `width`, inclusive `lsb`/`msb`, `signed` and optional
-`state_model`; that schema does not admit record ports yet.
+kind. Scalar aliases resolve to `bit` or `bits`. Packed record inputs also
+carry ordered scalar-leaf `fields` with port-relative `path`, `width`, inclusive
+`lsb`/`msb`, `signed` and optional `state_model`. Nested member/item paths retain
+their exact packed ranges. Record outputs and root-list ports remain deferred;
+see [Types and Aggregates](13j-type-enum-aggregate.md).
 
 Discovery publishes the complete schema at
 `embedding.isf_public_interface.schedule_report_interface_ports` and both

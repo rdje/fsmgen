@@ -281,8 +281,8 @@ subtest 'closed malformed facts fail before comparison or path traversal' => sub
         'contradictory copy descriptor');
 };
 
-subtest 'pure preparation does not widen source authoring' => sub {
-    for my $pair (['input', 'frame'], ['output', 'frame'], ['input', 'lanes']) {
+subtest 'deferred output and list-root source carriers remain closed' => sub {
+    for my $pair (['output', 'frame'], ['input', 'lanes']) {
         my ($direction, $type) = @$pair;
         my $source = '(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit)))'
             . " (interface ($direction value (type $type)) (output done))"
