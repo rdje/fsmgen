@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-aggregate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **21** uniquely owned question entries.
+> **3** facts · **23** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -15,6 +15,7 @@
 - q="how are record value gates and contextual diagnostic oracles qualified?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="how are selected record input AST contexts prepared without admission?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how do aggregate enum and rule validators share declaration-root classification?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
+- q="how do contextual record-input gates consume sampled scalar alias facts?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how is declared interface metadata qualified against supported ISF source queries?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="how is first-touch record declaration mutation reproduced and repaired?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how is foreign-domain scalar slice and input-index refusal repaired and qualified?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
@@ -25,6 +26,7 @@
 - q="which existing domain-path defect must be repaired before record input admission?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="which type and lexical gates must precede record input admission?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="why can numeric validation change caller JSON scalar kinds without an assignment?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
+- q="why did a malformed record-input selector turn a caller null entry into an empty map?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="why must metadata validation predicates use scalar context?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 
 ## Facts

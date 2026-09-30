@@ -148,7 +148,7 @@ subtest 'known input targets and invalid paths fail in each assignment family' =
 subtest 'unselected source contexts do not inherit leaf-read permission' => sub {
     for my $clause (
         ['wait', 'packet.data'], ['repeat', 'packet.data', ['set', 'seen', 1]],
-        ['sample', 'packet.data', 'as', 'captured'], ['on', 'packet.flag'],
+        ['on', 'packet.flag'],
     ) {
         refuses(transaction($clause), qr/does not admit record port reference/,
             'unselected ' . $clause->[0]);

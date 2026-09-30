@@ -8,10 +8,12 @@ answers:
   - "can a scalar pin share an enum namespace name during record context validation?"
   - "how do aggregate enum and rule validators share declaration-root classification?"
   - "how are explicit record-leaf sample facts and private scalar type declarations prepared?"
+  - "how do contextual record-input gates consume sampled scalar alias facts?"
+  - "why did a malformed record-input selector turn a caller null entry into an empty map?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFRecordPortSamples.pm; t/1990-isf-record-port-sample-facts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: perl/FSM/Support/ISFRecordPortSamples.pm; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0114 — Record value validation detaches facts before reading
@@ -177,3 +179,57 @@ output-map and leaked reset/default interpretations. Producers are tracked;
 ignored logs are supplementary. Typed private carrier integration and actual
 IAL0 replay/timing remain `.3.3.2` and `.3.3.3`; first authored record admission
 and independently supervised HDL behavior retain their later owners.
+
+## Contextual sample consumption
+
+SEM `.60.4.3.2.3.3.2.1` lets the unwired contextual gate consume the ordered
+sample plan for supplied resolved record-input actors. Explicit entry/body/
+control leaf samples receive local scalar alias bindings before contextual
+reads/copies. Input roles, exact alias widths and scalar path refusals remain
+qualified; sampling cannot replace an authored declaration or invent a record.
+
+The consumer's `port_only` selection delegates existing storage-only aggregate
+samples to their packed-width/inference owner; no new aggregate alias layout is
+borrowed. Ordinary scalar, formal/local and namespace facts retain their existing
+contracts. An unresolved forward sample chain which later names a record-derived
+alias refuses rather than losing its newly resolved signed/state facts. Sample
+collection does not reorder any capture state or permit a new clause placement.
+
+T1991 covers entry, standalone, nested control and chained samples, independently
+checks alias member/width/input/collision/type failures and nearest scalar/
+unresolved/local masks, and preserves complete caller JSON. Existing packed
+storage and enum samples remain delegated. An isolated exact predecessor
+`ISFRecordPortContexts` from e0015db1314cfc0625609a358219c85a8d4cfa4b makes these
+selected-sample controls RED: its first diagnostic refuses packet.count through
+`_unsupported`. The new consumer passes without changing parser, scheduler or
+module emission. Complete ordinary parsed/scheduled products and actual emitted
+bytes remain equal; authored record-input sources still refuse.
+
+Module widths/types, actual generated-helper/private alias ownership and full
+replay/capture qualification remain the next children. The combined command and
+result are retained in the task leaf; tracked predecessor history, current
+producer and permanent AST controls retain re-derivation, falsification and
+durability independently of ignored logs. No new public admission, backend
+behavior or native HDL execution is established here.
+
+## Selector shape validation precedes dereference
+
+The `.3.3.2.1` draft selector read `type_spec` from an unchecked input entry.
+A direct first-touch call returned false but changed caller `inputs` from
+`[null]` to `[{}]`: Perl autovivified the undefined array entry. T1991's added
+malformed-entry controls went RED for the mutation and unclassified raw hash
+errors. This is distinct from the earlier numeric-flag mutation mechanism.
+
+Reproduce autovivification independently:
+
+```bash
+perl -MJSON::PP -e 'my $j=JSON::PP->new->canonical; my $a=[undef]; print $j->encode($a),"\n"; my $unused=$a->[0]{type_spec}; print $j->encode($a),"\n";'
+```
+
+The outputs are `[null]` then `[{}]`. The repair validates interface/input-list
+shape and each declaration map before its first dereference. It scans the full
+list so a valid record prefix cannot conceal a malformed suffix. Absent
+interfaces remain absent. Permanent first-touch controls preserve complete
+caller JSON on both successful and refused selection; existing sample and
+context controls remain qualified. No public parser or module emitter consumes
+this selector yet.

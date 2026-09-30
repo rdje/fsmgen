@@ -9,18 +9,38 @@ use FSM::Support::ISFRecordPortScopes qw(record_context_scope record_reference_r
 use FSM::Support::ISFRecordPortValues qw(record_value_scope record_value_reference);
 use FSM::Composition::InterfacePortBuilder;
 
-our @EXPORT_OK = qw(record_transaction_samples record_sample_type_products);
+our @EXPORT_OK = qw(record_transaction_samples record_sample_type_products actor_has_record_input);
+
+sub actor_has_record_input {
+    my %args = @_;
+    _arguments(\%args, [qw(actor)]);
+    _require(ref($args{actor}) eq 'HASH', 'record-input selection requires an actor');
+    my $interface = $args{actor}{interface};
+    _require(!defined($interface) || ref($interface) eq 'HASH', 'record-input selection requires an interface map');
+    my $inputs = ($interface || {})->{inputs};
+    _require(!defined($inputs) || ref($inputs) eq 'ARRAY', 'record-input selection requires an input list');
+    my $found = 0;
+    for my $entry (@{$inputs || []}) {
+        # Reading a hash member of an undefined array entry autovivifies the
+        # caller's entry. Reject shape before the first dereference.
+        _require(ref($entry) eq 'HASH', 'record-input selection requires declared input maps');
+        $found = 1 if ref($entry->{type_spec}) eq 'HASH' && ($entry->{type_spec}{kind} // '') eq 'record';
+    }
+    return $found;
+}
 
 # Detached preparation only. Neither capture states nor authored admission are
 # changed here. Existing grammar/context validators still own clause placement.
 sub record_transaction_samples {
     my %args = @_;
-    _arguments(\%args, [qw(actor transaction)]);
-    my $context = record_context_scope(%args);
+    _arguments(\%args, [qw(actor transaction)], [qw(port_only)]);
+    my $port_only = $args{port_only} // 0;
+    _require(defined($port_only) && !ref($port_only) && $port_only =~ /\A[01]\z/, 'port-only selection must be binary');
+    my $context = record_context_scope(actor => $args{actor}, transaction => $args{transaction});
     my %declared = map {$_ => 1} (keys %{$context->{roots}}, keys %{$context->{rule_declared_roots}});
     my @clauses;
     _collect($args{transaction}{clauses}, \@clauses);
-    my (%bindings, %derived, @samples);
+    my (%bindings, %derived, @samples, @unresolved);
     for my $clause (@clauses) {
         my $label = "transaction '$args{transaction}{name}' sample";
         _require(@$clause == 4 && _text($clause->[1])
@@ -28,9 +48,18 @@ sub record_transaction_samples {
             "$label requires '(sample scalar as identifier)'");
         my ($source, $alias) = @$clause[1, 3];
         my $kind = record_reference_root_kind(context => $context, token => $source);
-        my $value = defined($kind) && $kind eq 'declaration'
+        my ($source_root) = $source =~ /\A([A-Za-z_]\w*)/;
+        my $binding = defined($source_root) ? $context->{roots}{$source_root} : undef;
+        # Existing packed storage samples retain their width/inference owner.
+        # The input delivery consumer adds scalar facts only for port leaves or
+        # aliases already derived from those leaves.
+        my $delegated = $port_only && $binding && _aggregate($binding->{type_spec})
+            && $binding->{role} ne 'input' && $binding->{role} ne 'output';
+        my $value = !$delegated && defined($kind) && $kind eq 'declaration'
             ? record_value_reference(scope => $context->{roots}, token => $source,
                 access => 'read', context => $label) : undef;
+        push @unresolved, [$source, $source_root] if !$value && defined($source_root)
+            && (!defined($kind) || $kind ne 'namespace');
         my $root = $value ? $value->{root} : undef;
         my $record = defined($root) && (_aggregate($context->{roots}{$root}{type_spec}) || $derived{$root}) ? 1 : 0;
         my $prior = $context->{roots}{$alias};
@@ -52,6 +81,10 @@ sub record_transaction_samples {
         $context->{roots} = record_value_scope(outer => $context->{roots}, local => {$alias => $bindings{$alias}});
         push @samples, {source => $source, alias => $alias, record_derived => $record,
             reference => $value ? dclone($value) : undef};
+    }
+    for my $unresolved (@unresolved) {
+        _require(!$derived{$unresolved->[1]},
+            "transaction '$args{transaction}{name}' sample uses record-derived alias '$unresolved->[0]' before its declaration");
     }
     return {samples => \@samples, bindings => \%bindings, record_aliases => \%derived};
 }
@@ -118,8 +151,8 @@ sub _aggregate {
 sub _identifier { _text($_[0]) && $_[0] =~ /\A[A-Za-z_]\w*\z/ ? 1 : 0 }
 sub _text { defined($_[0]) && !ref($_[0]) && length($_[0]) ? 1 : 0 }
 sub _arguments {
-    my ($args, $names) = @_;
-    my %allowed = map {$_ => 1} @$names;
+    my ($args, $names, $optional) = @_;
+    my %allowed = map {$_ => 1} (@$names, @{$optional || []});
     _require(!grep(!exists($args->{$_}), @$names), 'missing sample argument');
     _require(!grep(!$allowed{$_}, keys %$args), 'unknown sample argument');
 }

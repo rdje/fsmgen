@@ -5,7 +5,8 @@ use warnings;
 use Carp qw(confess);
 use Exporter 'import';
 use FSM::Support::ISFRecordPortScopes qw(record_context_scope record_reference_root_kind);
-use FSM::Support::ISFRecordPortValues qw(record_value_reference validate_record_port_copy);
+use FSM::Support::ISFRecordPortValues qw(record_value_scope record_value_reference validate_record_port_copy);
+use FSM::Support::ISFRecordPortSamples qw(actor_has_record_input record_transaction_samples);
 
 our @EXPORT_OK = qw(validate_actor_record_contexts);
 
@@ -19,6 +20,10 @@ sub validate_actor_record_contexts {
     my $scope = record_context_scope(actor => $actor);
     for my $tx (@{$actor->{transactions} || []}) {
         my $local = record_context_scope(actor => $actor, transaction => $tx);
+        if (actor_has_record_input(actor => $actor)) {
+            my $samples = record_transaction_samples(actor => $actor, transaction => $tx, port_only => 1);
+            $local->{roots} = record_value_scope(outer => $local->{roots}, local => $samples->{bindings});
+        }
         _clauses($tx->{clauses}, $local, $actor, "transaction '$tx->{name}'");
     }
     for my $rule (@{$actor->{rules} || []}) {
@@ -79,6 +84,11 @@ sub _clauses {
         } elsif ($head eq 'on') {
             _unsupported($clause->[1], $scope, "$context on trigger");
             _clauses([@{$clause}[2 .. $#$clause]], $scope, $actor, "$context on body");
+        } elsif ($head eq 'sample' && actor_has_record_input(actor => $actor)) {
+            # The ordered sample plan has already validated source paths, roles,
+            # private aliases and exact scalar types. Existing source validators
+            # still own placement; no capture assignment or state is introduced.
+            next;
         } elsif ($head eq 'local' || $head eq 'params') {
             # Names/options are declarations, not expression operands. Existing
             # declaration/static-value validation remains authoritative.
@@ -88,7 +98,6 @@ sub _clauses {
                 _unsupported($option->[1], $scope, "$context $head value");
             }
         } else {
-            # Explicit leaf samples acquire their facts in the sampling slice.
             # No other source context inherits scalar-read permission here.
             _unsupported($clause, $scope, "$context $head clause");
         }
