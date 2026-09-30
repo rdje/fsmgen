@@ -9,7 +9,7 @@ answers:
 date: 2026-09-30
 status: current
 tags: [continuity, decisions, doctrine, knowledge-map]
-evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; scripts/decision_store_git.py; t/2003-decision-store-git-continuity.t; t/2002-decision-reader-stores.t; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; scripts/decision_store_git.py; t/2004-decision-reader-snapshots.t; t/2003-decision-store-git-continuity.t; t/2002-decision-reader-stores.t; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_identity_capacity.py --revision 25c01f0127144922ade78951b91439e1d9221c08 > .artifacts/decision-identity-capacity-reverify.json
 ---
 
@@ -315,3 +315,31 @@ and the task provide durability. `.51.3.2.2.3.2` must wire this comparison
 unconditionally into actual selected-store/public/Perl gates; `.3` qualifies
 all modes before real source rollout. No production pin or new authority is
 installed by these prerequisites.
+
+## Published selected products and change checks — 2026-09-30
+
+Owner `.51.3.2.2.3.2.1` exposes the shared selected Git accessor through the
+actual reader. All read/check/resolve products use the captured bytes and root
+inventory; legacy archive/link/body-search checks consume the same snapshot.
+The filesystem default and standalone legacy capsule remain available.
+Supplied independent fixture digests require an explicit other root and cannot
+override the reader's actual repository authority, with or without installed
+production pins.
+
+The atomic `check-continuity` operation authenticates both current and exact
+Git predecessor stores before comparing complete prior identities. Optional
+canonical paths return verified bindings and text plus prior-relative
+freshness. A post-transition birth is no longer fresh after publication.
+First catalog adoption matches the exact predecessor revision, complete root
+population, original index, sealed archive originals and flat current originals;
+transition metadata/navigation must also remain exact. Removal, malformed
+requests or identity loss produces no partial result. Both absent catalogs
+return an explicit non-catalog product, not a claim about sealed-reader checks.
+
+Actual same-volume Git fixtures re-derive selected current products, adoption
+and staged/worktree/committed birth bindings. Literal originals and planted
+ambient/index/source/predecessor/deletion/removal/request/authority substitutions
+falsify the contract. Tracked reader/test, this card and the task provide
+durability; re-derive with guarded `t/2004-decision-reader-snapshots.t`.
+Actual unconditional Perl gate enforcement remains child `.2`; production
+pins and source migration remain `.51.3.2.3`.

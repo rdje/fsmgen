@@ -626,6 +626,39 @@ fact/question keys. The gate integration must enforce this comparison on every
 catalog change before live source rollout; standalone current validation cannot
 infer records born after its fixed source census.
 
+The published operations can select `--snapshot index`, `HEAD`, `HEAD^` or an
+exact Git commit; omitted selection uses the working files. Selected reads use
+the captured regular blobs and complete root inventory throughout, including
+legacy sealed-record checks. Later working edits cannot supply missing selected
+bytes or replace selected navigation.
+
+`check-continuity` additionally requires `--prior-snapshot HEAD`, `HEAD^` or an
+exact commit. It returns one bounded JSON product after authenticating both
+selected stores. Optional canonical path arguments return exact bindings,
+current text and `fresh_identity`, which is relative to the selected predecessor.
+A record born after the transition is fresh once; a later check against its
+published predecessor returns false. This binding alone grants no ceiling
+increase. For an explicitly trusted fixture store:
+
+```bash
+scripts/decision_records.py --root "$store_root" \
+  --source-sha256 "$trusted_source_sha256" --index-sha256 "$trusted_index_sha256" \
+  --snapshot index --prior-snapshot HEAD check-continuity
+```
+
+The fingerprints must come from independent trusted evidence. Supplying them
+for the reader's own repository is refused, including when production pins are
+installed. First catalog adoption must match the exact predecessor commit,
+complete root identity population, original index and original bodies. Catalog
+removal, lost prior IDs or question/fact keys, invalid requests and oversized
+change products refuse without partial output. With neither snapshot containing
+a catalog, the change product reports `catalog: false`; it makes no sealed-reader
+qualification claim. Actual Perl enforcement remains the next integration slice.
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2004-decision-reader-snapshots.t
+```
+
 ## Current Boundary
 
 The project is trying to move toward:

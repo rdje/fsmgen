@@ -30,8 +30,10 @@ def require(condition, message):
         raise ValueError(message)
 
 
-def read_bytes(root, relative):
+def read_bytes(root, relative, reader=None):
     """Bound reads and reject links or paths that escape the chosen root."""
+    if reader is not None:
+        return reader(relative)
     parts = Path(relative).parts
     require(parts and not Path(relative).is_absolute() and '..' not in parts,
             f'unsafe path: {relative}')
@@ -53,12 +55,12 @@ def unique_object(pairs):
     return result
 
 
-def load_records(root):
-    census_bytes = read_bytes(root, CENSUS)
+def load_records(root, reader=None):
+    census_bytes = read_bytes(root, CENSUS, reader)
     require(hashlib.sha256(census_bytes).hexdigest() == CENSUS_SHA256,
             'independent source census changed')
     census = json.loads(census_bytes, object_pairs_hook=unique_object)
-    archive = json.loads(read_bytes(root, ARCHIVE), object_pairs_hook=unique_object)
+    archive = json.loads(read_bytes(root, ARCHIVE, reader), object_pairs_hook=unique_object)
     require(set(archive) == {'schema_version', 'source_revision', 'records'},
             'unexpected archive fields')
     require(type(archive['schema_version']) is int and archive['schema_version'] == 1,
@@ -105,14 +107,14 @@ def render(records):
     return ''.join(output).rstrip() + '\n'
 
 
-def verify(root, store=None):
-    records, census = load_records(root)
-    require(read_bytes(root, VIEW) == render(records).encode('utf-8'),
+def verify(root, store=None, reader=None):
+    records, census = load_records(root, reader)
+    require(read_bytes(root, VIEW, reader) == render(records).encode('utf-8'),
             'derived archive view is stale or altered')
-    index = read_bytes(root, INDEX).decode('utf-8')
+    index = read_bytes(root, INDEX, reader).decode('utf-8')
     for record in records:
         if store is None:
-            require(read_bytes(root, record['path']) == pointer(record).encode('utf-8'),
+            require(read_bytes(root, record['path'], reader) == pointer(record).encode('utf-8'),
                     f"forwarding page changed: {record['id']}")
             require(f"]({Path(record['path']).name})" in index,
                     f"decision index omits {record['id']}")
@@ -123,10 +125,10 @@ def verify(root, store=None):
         original = posixpath.normpath(posixpath.join('docs/decisions', link['target']))
         relocated = posixpath.normpath(posixpath.join('docs/decisions/history', '../' + link['target']))
         require(original == relocated, f'link meaning changed: {link}')
-        read_bytes(root, original)
+        read_bytes(root, original, reader)
     for consumer in census['body_or_identity_consumers']:
         if consumer['text'].startswith('reverify:'):
-            text = read_bytes(root, consumer['path']).decode('utf-8')
+            text = read_bytes(root, consumer['path'], reader).decode('utf-8')
             commands = [line for line in text.splitlines() if line.startswith('reverify:')]
             require(len(commands) == 1, f"missing reverify command: {consumer['path']}")
             command = commands[0]
@@ -138,14 +140,102 @@ def verify(root, store=None):
     return records
 
 
-def load_store(root, source_digest, index_digest):
+def load_store(root, source_digest, index_digest, snapshot=None):
     # Lazy loading preserves the standalone captured legacy-reader capsule when
     # no catalog exists. Live stores always use the one shared location contract.
     import decision_store
     require(CATALOG == decision_store.CATALOG, 'catalog locator differs from shared store contract')
-    store = decision_store.load(root, source_digest, index_digest)
-    decision_store.verify(root, store)
+    reader = snapshot.read if snapshot is not None else None
+    store = decision_store.load(root, source_digest, index_digest, reader=reader)
+    decision_store.verify(root, store, reader=reader,
+                          paths=snapshot.root_paths if snapshot is not None else None)
     return store
+
+
+def selected_snapshot(root, selector):
+    if selector == 'worktree':
+        return None
+    from decision_store_git import GitSnapshot
+    return GitSnapshot(root, selector)
+
+
+def selected_store(root, snapshot, supplied, source_digest, index_digest):
+    present = CATALOG in snapshot.objects if snapshot is not None \
+        else (root / CATALOG).exists() or (root / CATALOG).is_symlink()
+    if not present:
+        return None
+    require(source_digest is not None and index_digest is not None,
+            'catalog store has no installed independent authority')
+    store = load_store(root, source_digest, index_digest, snapshot)
+    if not supplied:
+        # All legacy publication checks consume this same selected snapshot.
+        verify(root, store, reader=snapshot.read if snapshot is not None else None)
+    return store
+
+
+def canonical_binding(store, path):
+    rows = [row for row in store['current'].values() if row['path'] == path]
+    require(len(rows) == 1, 'path is not an exact current canonical decision')
+    row = rows[0]
+    return {'id': row['id'], 'path': path, 'transition_source_revision': store['source_revision'],
+            'content_sha256': row['content']['sha256'],
+            'transition_identity': row['id'] in store['compatibility']}
+
+
+def verify_adoption(root, predecessor, store):
+    """First catalog adoption retains the exact selected flat predecessor."""
+    require(predecessor is not None and predecessor.revision == store['source_revision'],
+            'transition source is not the selected predecessor revision')
+    require(set(predecessor.root_paths) == {INDEX} | {
+        row['path'] for row in store['compatibility'].values()},
+        'transition source omits or substitutes predecessor root identities')
+    require(predecessor.read(INDEX).decode('utf-8') == store['original_index'],
+            'transition original index differs from selected predecessor')
+    sealed = [row for row in store['compatibility'].values() if row['kind'] == 'sealed']
+    if sealed:
+        archive = json.loads(predecessor.read(ARCHIVE), object_pairs_hook=unique_object)
+        require(type(archive) is dict
+                and set(archive) == {'schema_version', 'source_revision', 'records'}
+                and type(archive['schema_version']) is int and archive['schema_version'] == 1
+                and type(archive['records']) is list, 'invalid predecessor sealed archive')
+        records = archive['records']
+        require(len(records) == len(sealed), 'predecessor sealed cohort differs')
+        for record, row in zip(records, sealed):
+            require(type(record) is dict and set(record) == {'id', 'path', 'text'}
+                    and record['id'] == row['id'] and record['path'] == row['path']
+                    and record['text'] == store['originals'][row['id']],
+                    'transition substitutes predecessor sealed original')
+    for row in store['compatibility'].values():
+        if row['kind'] == 'current':
+            require(predecessor.read(row['path']).decode('utf-8') == store['originals'][row['id']],
+                    f"transition substitutes predecessor current original: {row['id']}")
+
+
+def change_product(root, prior_snapshot, prior, current, paths, snapshot):
+    """Authenticate before calling; emit one complete bounded gate product."""
+    from decision_store_git import verify_continuity
+    require(current is not None or prior is None, 'catalog store removed from selected change')
+    require(len(paths) <= 50 and len(set(paths)) == len(paths), 'invalid bounded canonical path request')
+    if current is None:
+        require(not paths, 'canonical bindings require an authenticated catalog store')
+        return {'catalog': False, 'fresh_ids': [], 'resolved': []}
+    if prior is None:
+        import decision_store
+        routes = decision_store.verify(root, current, reader=snapshot.read if snapshot is not None else None,
+                                       paths=snapshot.root_paths if snapshot is not None else None)
+        decision_store.verify_transition(current, routes)
+        verify_adoption(root, prior_snapshot, current)
+        previous_ids = set(current['compatibility'])
+    else:
+        verify_continuity(prior, current)
+        previous_ids = set(prior['compatibility']) | set(prior['current'])
+    fresh = sorted(set(current['current']) - previous_ids)
+    resolved = []
+    for path in paths:
+        binding = canonical_binding(current, path)
+        row = current['current'][binding['id']]
+        resolved.append({**binding, 'fresh_identity': binding['id'] in fresh, 'text': row['text']})
+    return {'catalog': True, 'fresh_ids': fresh, 'resolved': resolved}
 
 
 def request_bytes(store, operation, identities):
@@ -169,9 +259,14 @@ def main(argv=None):
     parser.add_argument('--root', type=Path, help='explicit selected store or legacy fixture root')
     parser.add_argument('--source-sha256', help='independently trusted census digest for a supplied store')
     parser.add_argument('--index-sha256', help='independently trusted original-index digest for a supplied store')
-    parser.add_argument('operation', choices=('check', 'read', 'read-original', 'read-current', 'resolve'),
+    parser.add_argument('--snapshot', default='worktree',
+                        help='worktree, index, HEAD, HEAD^ or an exact Git commit')
+    parser.add_argument('--prior-snapshot', help='Git predecessor for check-continuity')
+    parser.add_argument('operation', choices=('check', 'read', 'read-original', 'read-current', 'resolve',
+                                             'check-continuity'),
                         nargs='?', default='check')
-    parser.add_argument('ids', nargs='*', help='four-digit IDs in output order, or one canonical path for resolve')
+    parser.add_argument('ids', nargs='*',
+                        help='ordered IDs, one resolve path, or optional check-continuity canonical paths')
     args = parser.parse_args(argv)
     try:
         default_root = Path(__file__).resolve().parent.parent
@@ -181,40 +276,46 @@ def main(argv=None):
             require(args.root is not None, 'supplied store fingerprints require explicit --root')
             require(args.source_sha256 is not None and args.index_sha256 is not None,
                     'supplied store requires both independent fingerprints')
-            store = load_store(root, args.source_sha256, args.index_sha256)
-        elif (root / CATALOG).exists() or (root / CATALOG).is_symlink() \
-                or (root == default_root and STORE_SOURCE_SHA256 is not None):
-            require(STORE_SOURCE_SHA256 is not None and STORE_INDEX_SHA256 is not None,
-                    'catalog store has no installed independent authority')
-            store = load_store(root, STORE_SOURCE_SHA256, STORE_INDEX_SHA256)
-            # Delivered production stores preserve the already-published exact
-            # sealed originals, archive view and existing body-search consumers.
-            verify(root, store)
+            require(root != default_root, 'supplied fingerprints cannot override the actual repository authority')
+            source_digest, index_digest = args.source_sha256, args.index_sha256
         else:
-            store = None
-        if args.operation == 'check':
+            source_digest, index_digest = STORE_SOURCE_SHA256, STORE_INDEX_SHA256
+        require((args.operation == 'check-continuity') == (args.prior_snapshot is not None),
+                'check-continuity requires --prior-snapshot; other operations do not accept it')
+        snapshot = selected_snapshot(root, args.snapshot)
+        reader = snapshot.read if snapshot is not None else None
+        store = selected_store(root, snapshot, supplied, source_digest, index_digest)
+        if supplied and args.operation != 'check-continuity':
+            require(store is not None, 'unresolved regular source: ' + CATALOG)
+        if not supplied and root == default_root and STORE_SOURCE_SHA256 is not None \
+                and args.snapshot == 'worktree' and args.operation != 'check-continuity':
+            require(store is not None, 'installed catalog store is absent')
+        if args.operation == 'check-continuity':
+            require(args.prior_snapshot not in ('worktree', 'index'),
+                    'predecessor must be a resolved Git revision')
+            prior_snapshot = selected_snapshot(root, args.prior_snapshot)
+            prior = selected_store(root, prior_snapshot, supplied, source_digest, index_digest)
+            product = change_product(root, prior_snapshot, prior, store, args.ids, snapshot)
+            payload = (json.dumps(product, ensure_ascii=False, sort_keys=True) + '\n').encode('utf-8')
+            require(len(payload) <= MAX_BYTES, 'change product output exceeds byte bound')
+            sys.stdout.buffer.write(payload)
+        elif args.operation == 'check':
             require(not args.ids, 'check does not accept record IDs')
             if store is None:
-                verify(root)
+                verify(root, reader=reader)
                 print('decision-records: exact originals, view, links and consumers verified')
             else:
                 print('decision-records: authenticated originals, current records, compatibility and indexes verified')
         elif args.operation == 'resolve':
             require(store is not None, 'resolve requires an authenticated catalog store')
             require(len(args.ids) == 1, 'resolve requires one canonical decision path')
-            path = args.ids[0]
-            rows = [row for row in store['current'].values() if row['path'] == path]
-            require(len(rows) == 1, 'path is not an exact current canonical decision')
-            row = rows[0]
-            print(json.dumps({'id': row['id'], 'path': path, 'transition_source_revision': store['source_revision'],
-                              'content_sha256': row['content']['sha256'],
-                              'transition_identity': row['id'] in store['compatibility']}, sort_keys=True))
+            print(json.dumps(canonical_binding(store, args.ids[0]), sort_keys=True))
         elif store is not None:
             sys.stdout.buffer.write(request_bytes(store, args.operation, args.ids))
         else:
             require(args.operation != 'read-current', 'read-current requires an authenticated catalog store')
             require(args.ids and len(args.ids) <= 50, 'read requires a bounded nonempty ID list')
-            records, _ = load_records(root)
+            records, _ = load_records(root, reader)
             by_id = {record['id']: record for record in records}
             require(all(re.fullmatch(r'[0-9]{4}', value) and value in by_id
                         for value in args.ids), 'unknown or unsealed decision ID')

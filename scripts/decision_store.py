@@ -1,8 +1,9 @@
 """Authenticated future-store loading and finite navigation preparation.
 
-No production reader or authority gate calls this module yet. The integrating
-caller supplies independently trusted digests, never values taken from these
-documents. All locations and identity checks come from the shared catalog.
+The published reader consumes this module for authenticated supplied stores;
+production pins and gate integration have separate rollout owners. Callers
+supply independently trusted digests, never values taken from these documents.
+All locations and identity checks come from the shared catalog.
 """
 
 import hashlib
