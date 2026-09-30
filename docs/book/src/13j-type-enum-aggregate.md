@@ -96,6 +96,13 @@ Aggregate interface ports, transaction-local ports, storage banks, and other
 aggregate carriers are not shipped yet. They require separate ownership,
 port-binding, and partial-update contracts.
 
+Decision [0113](../../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
+selects future packed record ports, live scalar field reads and same-type
+port/storage copies. Delivery starts with detached declared-interface metadata;
+input support and output writer qualification follow separately. This selection
+does not change the shipped authoring surface. List-root ports and variant
+records remain optional follow-ups.
+
 Single-member records and single-item lists also preserve their aggregate
 identity. Nested forms and forward local aliases work in actor declarations
 and survive the scheduled `.fsm` replay. For example:

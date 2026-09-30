@@ -2357,9 +2357,9 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Packed record interface ports and named fields from sf-isf-aggregate-interface-ports.`
   Acceptance: `R1 local/imported packed record input/output ports and precise unknown/unpacked refusals; R2 scalar-context input field reads, output field writes and whole same-type port/storage copies; R3 documented packed layout/width in carriers, HDL and reports. Optional R4 list ports and R5 variants remain explicitly separate. Preserve scalar/storage behavior and depend on qualified physical writer overlap before output-field admission. Commit each implementation/qualification slice with book/spec/downstream/API/MCP applicability and independent evidence before any completion claim.`
-  Verification: `.1 preserves and qualifies the complete packet/current storage baseline. Required packed-record ports/fields/copies/reports remain unshipped; list ports and variants are optional. Contract .2 must separate input reads from output writer admission and use demonstrated dependencies.`
+  Verification: `.1 preserves and qualifies the complete packet/current storage baseline. Required packed-record ports/fields/copies/reports remain unshipped; list ports and variants are optional. Decision 0113 separates input reads from output writer admission; .3.1 begins detached interface metadata before record source admission.`
   Commit: `pending`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.4`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.6`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.1`
   Status: `done`
@@ -2369,17 +2369,54 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the precise contract and safe dependency order.`
   Acceptance: `Map all required and optional packet requirements to current roadmap, decisions, parser/lowerer/backends/reports/tests/book. Resolve packed record interface ports and named fields semantics within director authority; explicitly own any missing decision, source ambiguity or external evidence gap. Decompose implementation before source changes; do not equate intake with delivery.`
-  Verification: `pending preceding contract dependency`
-  Commit: `pending`
+  Verification: `Decision 0113 maps R1-R3 to shared packed types, live scalar reads, same resolved record-type copies and physical writer admission. Detached public interface metadata precedes input delivery, whole output copies and scalar output-field writes. Optional R4/R5 have separately blocked owners .60.4.5/.6. The supplied baseline/source contracts and exact core member-offset order were read; no record-port acceptance or runtime signoff is claimed. Shared claim template matches its reviewed snapshot; cleanup remains within its required interval. Focused doctrine, historical baseline and book verification are recorded below.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement the selected bounded contract.`
   Acceptance: `After baseline and contract selection, split into independently verifiable parser/IR/lowering/report/diagnostic and compatibility leaves before code changes. Preserve accepted source semantics, locality and source provenance. Use existing public dependency APIs and qualify every affected public facade and book example.`
-  Verification: `pending preceding contract dependency`
+  Verification: `Decision 0113 selects five independently qualified delivery slices; .3.1 is the next metadata-only leaf. Record source ports remain refused until their delivery leaves pass.`
+  Commit: `pending child qualification`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1`
+  Status: `pending`
+  Goal: `Project detached declared interface metadata without changing accepted hardware.`
+  Acceptance: `Implement one closed fresh JSON-safe snapshot from parsed ports, shared success source.interface_ports and schedule interface_ports, owned domain details and capability field families under decision 0113. Qualify scalar/local/imported/unused/undriven/domain interfaces, null caller-created metadata, copy isolation and complete native/API/newline products. Record-layout producer controls do not admit record source ports. Preserve complete pre-change scheduled FSM/HDL and existing check/semantic/schedule controls; synchronize book/spec and corpus applicability.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2`
+  Status: `pending`
+  Goal: `Deliver packed record inputs, scalar field reads and whole input-to-storage copies.`
+  Acceptance: `After .3.1, split further as needed before implementation. Admit local/imported resolved record roots, existing nested scalar paths and same resolved record-type copies. Qualify all existing scalar-expression contexts and declared input-write refusals, type/path mismatches, whole-record scalar-context refusal, unused ports, domain ownership and generated-child routing. Compare public IAL0 replay, independent packed-value HDL observations and complete native/API/newline products under HIAL admission; preserve scalar/storage-only sources and publish supported examples.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3`
+  Status: `pending`
+  Goal: `Deliver record outputs and whole copies with physical writer admission.`
+  Acceptance: `After qualified input delivery, map whole output writers to scoped physical packed roots. Preserve input/output roles, actor ownership, source-order semantics and existing exclusion/compatibility proofs. Refuse unresolved overlap, type mismatches and unqualified generated writers. Split any prerequisite repair before changing source; independently qualify hold, timing, repeated requests, reset and domain behavior and all public surfaces.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.4`
+  Status: `pending`
+  Goal: `Deliver scalar output fields with qualified packed-range overlap.`
+  Acceptance: `After whole outputs and demonstrated physical target/writer prerequisites, admit scalar leaf writes in existing supported contexts. Independently distinguish disjoint members, same-value compatible overlap, whole/member overlap and conflicting writers; do not infer arbitration. Preserve unaddressed fields and original write edges under the applicable assignment contract. Qualify nested paths, domains, generated ownership, diagnostics, public replay/runtime and report/corpus/book alignment.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.5`
+  Status: `pending`
+  Goal: `Qualify affected backend profiles and unchanged source controls.`
+  Acceptance: `After required implementation slices, qualify direct SystemVerilog/Verilog and supported VHDL profiles separately, imports, explicit interfaces, compositions and report metadata. Unsupported combinations must fail contextually. Preserve supplied baseline and scalar/storage/generated handoff controls, complete native/API/newline parity, capability/corpus/spec/book alignment and recoverable artifacts; do not close .60.4.4 from lint or parser acceptance alone.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.4`
@@ -2388,6 +2425,22 @@ For FSMGen, the analogs are:
   Acceptance: `After implementation, independently exercise positive/negative cases, unchanged controls, target-qualified HDL where behavior changes, exact native/API/newline reports, source/capability/corpus/book alignment and all explicit requirement dispositions. Retain recoverable evidence and a repository-local downstream response; no external sending is authorized by this intake.`
   Verification: `pending preceding contract dependency`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.5`
+  Status: `blocked`
+  Goal: `Select optional list-root ports after required delivery.`
+  Acceptance: `Map optional R4 to the completed required record-port contract and remaining roadmap; select a separately qualified bounded contract or explicit deferral before implementation. Preserve required record, scalar and storage behavior.`
+  Verification: `Optional request remains unimplemented under decision 0113.`
+  Commit: `pending`
+  Blocked by: `Required R1-R3 and director-prioritized SPECFORGE duration/timer delivery; unblock after those required outcomes qualify.`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.6`
+  Status: `blocked`
+  Goal: `Select optional variant-record semantics after required delivery.`
+  Acceptance: `Map optional R5 to the completed required record-port contract and remaining roadmap; select a separately qualified bounded contract or explicit deferral before implementation. Preserve required record, scalar and storage behavior.`
+  Verification: `Optional request remains unimplemented under decision 0113.`
+  Commit: `pending`
+  Blocked by: `Required R1-R3 and director-prioritized SPECFORGE duration/timer delivery; unblock after those required outcomes qualify.`
 
 ## Implementation Notes From `.4`
 
@@ -3067,8 +3120,8 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Next `.60.4.2` selects
-bounded record-port delivery; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.1` implements
+detached interface metadata before any record source admission; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5200,3 +5253,13 @@ empty/single-domain controls and nested-mutation isolation; durability uses
 T1982 and the retained baseline/source/log/hash audit. The initially wrong
 scope-descriptor test key is disclosed in the manifest; it is not a production
 contract change. Required record-port delivery is next; optional banks stay owned.
+
+## Acceptance — record-port contract selection `.60.4.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'accepts aggregate type aliases only on actor-owned storage variables' -- perl/FSM/Adapter/ISF/Parser.pm` identifies `9c6fda6961ca1c40e1de547e39c58cec10c2ed69`. `_finalize_actor_type_references` still passes no aggregate permission for interface ports, while typed storage and generated internal handoffs have their own qualification. The retained packet and baseline verifier preserve that boundary. The task-index row also incorrectly pointed to timer intake already completed in the live nodes; its current projection is corrected here.
+- [x] **ADDRESSED (verified)** — Decision 0113 selects exact source/value/layout/public snapshot contracts and maps R1-R3 to separate metadata, input, whole-output, scalar-output and backend qualification owners. R4/R5 have explicit blocked optional owners. The book labels selection as future work; current record-port refusals remain. Shared policy source identity matches the reviewed local snapshot, the cleanup interval remains current, and no external repository was changed. No source implementation or native HDL runtime is claimed.
+- [x] **NO REGRESSION** — `scripts/check_docs_relative_paths.sh` reports `All tests successful`. Guarded `prove -Iperl t/1259-isf-aggregate-storage-type-aliases.t t/1978-isf-reset-provenance.t` also reports `All tests successful`, retaining the aggregate refusal and unchanged reset controls. `scripts/check_task_tree_integrity.pl` passes the expanded live graph; the retained aggregate baseline verifier passes identities, complete reports, actual typed storage carrier and hostile controls. `mdbook build docs/book -d .artifacts/mdbook-record-port-contract` succeeds and the rendered chapter retains the future label and decision link. The initial staged doctrine run rejected an unnecessary new Knowledge Map topic row at the root-document allowance. The signpost now joins the existing aggregate topic through the owning decision record, retaining its complete metadata/body without growing the saturated card collection. Task/decision warning allowances are refreshed from measured actual plus their declared ratchet steps, inside unchanged ceilings. The staged doctrine gate owns document pressure, aggregate authority, inventory/dispositions and Knowledge Map freshness.
+
+Evidence scope: the selection is durable in decision/task/book/card/Git. Baseline
+identity and independently rejected corrupt controls establish retained evidence;
+no new runtime, external corpus, capacity or timing measurement is published.
