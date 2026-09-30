@@ -213,6 +213,7 @@ def verify_adoption(root, predecessor, store):
 
 def change_product(root, prior_snapshot, prior, current, paths, snapshot):
     """Authenticate before calling; emit one complete bounded gate product."""
+    from decision_catalog import visible_lines
     from decision_store_git import verify_continuity
     require(current is not None or prior is None, 'catalog store removed from selected change')
     require(len(paths) <= 50 and len(set(paths)) == len(paths), 'invalid bounded canonical path request')
@@ -234,8 +235,28 @@ def change_product(root, prior_snapshot, prior, current, paths, snapshot):
     for path in paths:
         binding = canonical_binding(current, path)
         row = current['current'][binding['id']]
-        resolved.append({**binding, 'fresh_identity': binding['id'] in fresh, 'text': row['text']})
+        markers = [line for line in visible_lines(row['text'])
+                   if re.fullmatch(r'- (?:Ceiling authority|Surface|Dimension|Change): `[^`]+`', line)]
+        resolved.append({**binding, 'fresh_identity': binding['id'] in fresh,
+                         'new_file': path not in prior_snapshot.objects,
+                         'authority_markers': markers, 'text': row['text']})
     return {'catalog': True, 'fresh_ids': fresh, 'resolved': resolved}
+
+
+def selected_file_digest(root, snapshot, path):
+    """Bind a gate's control file to the same captured path/object inventory."""
+    from decision_catalog import read_bytes as regular_bytes, relative_parts
+    relative_parts(path)
+    if snapshot is not None:
+        if path not in snapshot.objects:
+            return None
+        data = snapshot.read(path)
+    else:
+        source = root.joinpath(*relative_parts(path))
+        if not source.exists() and not source.is_symlink():
+            return None
+        data = regular_bytes(root, path)
+    return hashlib.sha256(data).hexdigest()
 
 
 def request_bytes(store, operation, identities):
@@ -262,6 +283,8 @@ def main(argv=None):
     parser.add_argument('--snapshot', default='worktree',
                         help='worktree, index, HEAD, HEAD^ or an exact Git commit')
     parser.add_argument('--prior-snapshot', help='Git predecessor for check-continuity')
+    parser.add_argument('--bind-file', action='append', default=[],
+                        help='optional selected control-file digest binding for check-continuity')
     parser.add_argument('operation', choices=('check', 'read', 'read-original', 'read-current', 'resolve',
                                              'check-continuity'),
                         nargs='?', default='check')
@@ -282,6 +305,10 @@ def main(argv=None):
             source_digest, index_digest = STORE_SOURCE_SHA256, STORE_INDEX_SHA256
         require((args.operation == 'check-continuity') == (args.prior_snapshot is not None),
                 'check-continuity requires --prior-snapshot; other operations do not accept it')
+        require(not args.bind_file or args.operation == 'check-continuity',
+                '--bind-file requires check-continuity')
+        require(len(args.bind_file) <= 8 and len(set(args.bind_file)) == len(args.bind_file),
+                'invalid bounded control-file binding request')
         snapshot = selected_snapshot(root, args.snapshot)
         reader = snapshot.read if snapshot is not None else None
         store = selected_store(root, snapshot, supplied, source_digest, index_digest)
@@ -296,6 +323,11 @@ def main(argv=None):
             prior_snapshot = selected_snapshot(root, args.prior_snapshot)
             prior = selected_store(root, prior_snapshot, supplied, source_digest, index_digest)
             product = change_product(root, prior_snapshot, prior, store, args.ids, snapshot)
+            if args.bind_file:
+                product['file_bindings'] = {
+                    path: {'prior': selected_file_digest(root, prior_snapshot, path),
+                           'current': selected_file_digest(root, snapshot, path)}
+                    for path in args.bind_file}
             payload = (json.dumps(product, ensure_ascii=False, sort_keys=True) + '\n').encode('utf-8')
             require(len(payload) <= MAX_BYTES, 'change product output exceeds byte bound')
             sys.stdout.buffer.write(payload)

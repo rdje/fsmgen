@@ -653,10 +653,36 @@ complete root identity population, original index and original bodies. Catalog
 removal, lost prior IDs or question/fact keys, invalid requests and oversized
 change products refuse without partial output. With neither snapshot containing
 a catalog, the change product reports `catalog: false`; it makes no sealed-reader
-qualification claim. Actual Perl enforcement remains the next integration slice.
+qualification claim. The Perl ceiling-authority gate now consumes the same
+atomic product whenever either selected snapshot has a catalog.
 
 ```bash
 scripts/run_with_ram_guard.sh -- prove -Iperl t/2004-decision-reader-snapshots.t
+```
+
+The ceiling-authority gate selects staged, working or committed changes from
+the controlled decision store and reader inputs as well as registry/authority
+files. Ordinary catalog growth or updates receive prior-current continuity
+checks even when no ceiling increases. Existing flat historical authorities
+remain append-only, and no-catalog controls retain their legacy behavior.
+
+Canonical authority additionally requires a fresh decision ID, a canonical file
+absent from the selected predecessor, and the four exact authority markers
+outside fenced examples. A relocated transition record or a previously
+published birth cannot authorize a new increase. Mixed staged/working controlled
+files, malformed stores, lost identities and mismatched control-file bytes refuse.
+The reader's optional `--bind-file PATH` arguments expose selected prior/current
+SHA-256 bindings; the gate uses these to compare its registry and authority bytes
+with the same captured reader inventory. Output and diagnostics are bounded.
+
+The actual gate accepts independently trusted fixture fingerprints only with
+an explicit other `--root`. They cannot override production authority at its
+own repository root. Boolean schema versions refuse in both registry metadata
+and authority rows. Production catalog delivery and pins remain a separate
+atomic rollover; this integration does not raise a ceiling.
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2005-decision-ceiling-stores.t
 ```
 
 ## Current Boundary

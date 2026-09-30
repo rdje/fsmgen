@@ -9,7 +9,7 @@ answers:
 date: 2026-09-30
 status: current
 tags: [continuity, decisions, doctrine, knowledge-map]
-evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; scripts/decision_store_git.py; t/2004-decision-reader-snapshots.t; t/2003-decision-store-git-continuity.t; t/2002-decision-reader-stores.t; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; scripts/decision_store_git.py; scripts/check_live_document_ceiling_authority.pl; t/2005-decision-ceiling-stores.t; t/2004-decision-reader-snapshots.t; t/2003-decision-store-git-continuity.t; t/2002-decision-reader-stores.t; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_identity_capacity.py --revision 25c01f0127144922ade78951b91439e1d9221c08 > .artifacts/decision-identity-capacity-reverify.json
 ---
 
@@ -343,3 +343,38 @@ falsify the contract. Tracked reader/test, this card and the task provide
 durability; re-derive with guarded `t/2004-decision-reader-snapshots.t`.
 Actual unconditional Perl gate enforcement remains child `.2`; production
 pins and source migration remain `.51.3.2.3`.
+
+## Actual ceiling-authority integration — 2026-09-30
+
+Owner `.51.3.2.2.3.2.2` integrates the actual Perl gate with the authenticated
+public change product. Controlled-path selection includes store/source/reader
+changes, not only registry increases. Every change involving a catalog verifies
+its complete prior-current identities. Ordinary births and owned updates do
+not need a ceiling authority, but still cannot delete/recycle published keys.
+Resolved immutable current commits determine their own exact parent snapshot.
+
+Optional reader file bindings authenticate the gate's registry/authority bytes
+against the same captured inventory. A real fixture dispatch changes the index
+registry after the Perl read; the selected fingerprint mismatch refuses it.
+Canonical authority uses verified current text, exact markers outside fences,
+prior-relative ID freshness and file absence in the selected predecessor.
+Neither relocation nor a previously published birth becomes fresh authority.
+Existing flat historical authorities and no-catalog fixtures retain their
+contracts. Fixture trust requires an explicit other root and independent pins;
+actual-root overrides refuse. Reader output and diagnostics are streamed within
+fixed bounds, and nonzero/signal failure cannot be interpreted as success.
+
+P2 schema-kind repair: the predecessor Perl parser treated JSON true as version
+one. Red actual-gate T2005 returned success for staged Boolean surface metadata.
+Reference-valued versions now refuse in surface/authority metadata and authority
+rows. Git traces the original bounded parser to
+`2e10cc605f1dec9259b18d9b9d568c35882105a6`.
+
+Actual independent fixture products and all selected modes re-derive successful
+fresh authority and ordinary birth behavior. Planted identity deletion,
+removal, ambient disagreement, source corruption, borrowed IDs, fenced-only
+markers, mutable control substitutions and Boolean/authority overrides falsify
+the boundary. Tracked code/tests, this card and the task provide durability;
+re-derive with guarded `t/2005-decision-ceiling-stores.t` and the existing reader,
+legacy authority and containment cohorts. Sibling `.51.3.2.2.3.3` still owns the
+broader hostile mode matrix before real source rollover `.51.3.2.3`.

@@ -72,8 +72,10 @@ class PublishedSelectedReader(unittest.TestCase):
             self.assertEqual(product['fresh_ids'], ['0115'])
             self.assertTrue(product['catalog'])
             self.assertTrue(product['resolved'][0]['fresh_identity'])
+            self.assertTrue(product['resolved'][0]['new_file'])
             self.assertEqual(product['resolved'][0]['text'], literals.FRESH)
             self.assertFalse(product['resolved'][1]['fresh_identity'])
+            self.assertFalse(product['resolved'][1]['new_file'])
             self.assertTrue(product['resolved'][1]['transition_identity'])
         self.git('commit', '-q', '-m', 'fixture fresh catalog birth')
         committed = self.run_reader('check-continuity', fresh_path, snapshot='HEAD', prior='HEAD^')
@@ -82,6 +84,21 @@ class PublishedSelectedReader(unittest.TestCase):
         already_published = self.run_reader('check-continuity', fresh_path, snapshot='HEAD', prior='HEAD')
         self.assertEqual(already_published.returncode, 0, already_published.stderr)
         self.assertFalse(json.loads(already_published.stdout)['resolved'][0]['fresh_identity'])
+
+    def test_control_digest_bindings_are_selected_and_requests_are_atomic(self):
+        self.fresh()
+        self.git('add', '.')
+        self.fixture.write(stores.store.INDEX, '# Wrong ambient index\n')
+        result = self.run_reader('--bind-file', stores.store.INDEX, 'check-continuity', prior='HEAD')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        expected_current = stores.ROOT_INDEX + '| [0115](current/language-api/0115-fresh.md) | Fresh | architecture | Later body. |\n'
+        self.assertEqual(json.loads(result.stdout)['file_bindings'], {
+            stores.store.INDEX: {'prior': hashlib.sha256(stores.ROOT_INDEX.encode()).hexdigest(),
+                                'current': hashlib.sha256(expected_current.encode()).hexdigest()}})
+        self.failure(self.run_reader('--bind-file', '../bad.md', 'check-continuity', prior='HEAD'), 'unsafe path')
+        self.failure(self.run_reader('--bind-file', stores.store.INDEX, '--bind-file', stores.store.INDEX,
+                                     'check-continuity', prior='HEAD'), 'invalid bounded control-file')
+        self.failure(self.run_reader('--bind-file', stores.store.INDEX, 'check'), 'requires check-continuity')
 
     def test_post_transition_deletion_and_catalog_removal_refuse_without_partial_output(self):
         self.fresh()

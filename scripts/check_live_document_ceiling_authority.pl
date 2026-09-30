@@ -3,20 +3,24 @@ use strict;
 use warnings;
 
 use Cwd qw(abs_path);
+use Digest::SHA qw(sha256_hex);
 use File::Basename qw(dirname);
 use File::Spec;
 use Getopt::Long qw(GetOptions);
+use IO::Select;
 use IPC::Open3 qw(open3);
 use JSON::PP;
 use Symbol qw(gensym);
 
-my ($root_arg, $registry, $authorities, $help);
+my ($root_arg, $registry, $authorities, $source_digest, $index_digest, $help);
 $registry = 'doctrine/live_document_size/surfaces.jsonl';
 $authorities = 'doctrine/live_document_size/ceiling_increase_authorities.jsonl';
 GetOptions(
     'root=s'        => \$root_arg,
     'registry=s'    => \$registry,
     'authorities=s' => \$authorities,
+    'source-sha256=s' => \$source_digest,
+    'index-sha256=s' => \$index_digest,
     'help|h'        => \$help,
 ) or usage(2);
 usage(0) if $help;
@@ -31,12 +35,21 @@ if (!defined($root) || !-d $root) {
 
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 my $fail = 0;
+if (defined($source_digest) || defined($index_digest)) {
+    if (!defined($root_arg) || $root eq $default_root
+            || !defined($source_digest) || !defined($index_digest)
+            || $source_digest !~ /\A[0-9a-f]{64}\z/ || $index_digest !~ /\A[0-9a-f]{64}\z/) {
+        problem('supplied store fingerprints require an explicit other root and both independent digests');
+        exit 1;
+    }
+}
 
 sub usage {
     my ($status) = @_;
     print STDERR <<'USAGE';
 Usage: check_live_document_ceiling_authority.pl [--root DIR]
        [--registry FILE] [--authorities FILE]
+       [--source-sha256 HEX --index-sha256 HEX] (explicit supplied fixture only)
 USAGE
     exit $status;
 }
@@ -58,13 +71,15 @@ sub relative_path_ok {
 sub run_git {
     my (@args) = @_;
     my $stderr = gensym;
-    my $pid = open3(my $stdin, my $stdout, $stderr, 'git', '-C', $root, @args);
+    local $ENV{GIT_NO_LAZY_FETCH} = 1;
+    local $ENV{GIT_OPTIONAL_LOCKS} = 0;
+    my $pid = open3(my $stdin, my $stdout, $stderr, 'git', '--no-replace-objects', '-C', $root, @args);
     close $stdin;
     local $/;
     my $out = <$stdout> // '';
     my $err = <$stderr> // '';
     waitpid($pid, 0);
-    return ($? >> 8, $out, $err);
+    return ($? == 0 ? 0 : 1, $out, $err);
 }
 
 sub git_output {
@@ -183,7 +198,7 @@ sub bounded_registry_rows {
     }
     exact_keys($metadata, "$label metadata", @keys);
     problem("$label metadata has unsupported schema_version")
-        if ($metadata->{schema_version} // '') ne '1';
+        if ref($metadata->{schema_version}) || ($metadata->{schema_version} // '') ne '1';
     for my $key (qw(max_records max_bytes max_record_bytes)) {
         problem("$label metadata has invalid positive $key")
             if !positive_integer($metadata->{$key});
@@ -251,7 +266,7 @@ sub authority_records {
         problem("$row_label has invalid record_type")
             if ($record->{record_type} // '') ne 'ceiling_increase_authority';
         problem("$row_label has unsupported schema_version")
-            if ($record->{schema_version} // '') ne '1';
+            if ref($record->{schema_version}) || ($record->{schema_version} // '') ne '1';
         my $id = $record->{authority_id} // '';
         problem("$row_label has invalid authority_id")
             if ref($id) || length($id) > 128 || $id !~ /\A[A-Z][A-Z0-9_.-]*\z/;
@@ -268,12 +283,119 @@ sub authority_records {
         problem("$row_label decision must be a project-relative docs/decisions Markdown path")
             if ref($record->{decision}) || length($record->{decision} // '') > 512
                 || !relative_path_ok($record->{decision})
-                || $record->{decision} !~ m{\Adocs/decisions/[0-9]{4}[-a-z0-9]*\.md\z};
+                || $record->{decision} !~ m{\Adocs/decisions/(?:[0-9]{4}[-a-z0-9]*|current/(?:continuity|language-api|verification)/[0-9]{4}-[a-z0-9]+(?:-[a-z0-9]+)*)\.md\z};
         problem("$row_label has invalid approved_on date")
             if ref($record->{approved_on})
                 || ($record->{approved_on} // '') !~ /\A[0-9]{4}-[0-9]{2}-[0-9]{2}\z/;
     }
     return \@rows;
+}
+
+sub catalog_change_product {
+    my ($prior_revision, $current_selector, $prior_registry, $current_registry,
+        $prior_authorities, $current_authorities, $paths) = @_;
+    my $catalog_path = 'docs/decisions/current/catalog.json';
+    my $prior_present = defined($prior_revision) && blob_exists("$prior_revision:$catalog_path");
+    my $current_present = $current_selector eq 'worktree'
+        ? (-e File::Spec->catfile($root, split m{/}, $catalog_path)
+            || -l File::Spec->catfile($root, split m{/}, $catalog_path))
+        : blob_exists(($current_selector eq 'index' ? ':' : "$current_selector:") . $catalog_path);
+    if (!$prior_present && !$current_present) {
+        problem('canonical authority requires an authenticated catalog store') if @{$paths};
+        return {};
+    }
+    if (!defined $prior_revision) {
+        problem('catalog continuity requires a selected predecessor commit');
+        return {};
+    }
+    my @command = ('python3', '-B', File::Spec->catfile($default_root, 'scripts', 'decision_records.py'),
+        '--root', $root, '--snapshot', $current_selector, '--prior-snapshot', $prior_revision,
+        '--bind-file', $registry, '--bind-file', $authorities);
+    push @command, ('--source-sha256', $source_digest, '--index-sha256', $index_digest)
+        if defined $source_digest;
+    push @command, ('check-continuity', @{$paths});
+    my ($out, $err, $status, $pid, $stdout, $stderr) = ('', '', undef);
+    my $ok = eval {
+        $stderr = gensym;
+        $pid = open3(my $stdin, $stdout, $stderr, @command);
+        close $stdin;
+        my $output_fd = fileno($stdout);
+        my $streams = IO::Select->new($stdout, $stderr);
+        while (my @ready = $streams->can_read) {
+            for my $stream (@ready) {
+                my $count = sysread($stream, my $chunk, 8192);
+                die "cannot read authenticated reader output: $!\n" if !defined $count;
+                if ($count == 0) {
+                    $streams->remove($stream);
+                    close $stream;
+                    next;
+                }
+                if (fileno($stream) == $output_fd) {
+                    $out .= $chunk;
+                    die "authenticated reader output exceeds byte bound\n" if length($out) > 1_048_576;
+                } else {
+                    $err .= $chunk;
+                    die "authenticated reader diagnostic exceeds byte bound\n" if length($err) > 65536;
+                }
+            }
+        }
+        waitpid($pid, 0);
+        $status = $?;
+        undef $pid;
+        1;
+    };
+    if (defined $pid) {
+        kill 'TERM', $pid;
+        close $stdout if defined(fileno($stdout));
+        close $stderr if defined(fileno($stderr));
+        waitpid($pid, 0);
+    }
+    if (!$ok || $status != 0) {
+        my $message = $ok ? $err : $@;
+        $message =~ s/\s+\z//;
+        problem('authenticated catalog change check failed: ' . $message);
+        return {};
+    }
+    my $product = eval { decode_json($out) };
+    if ($@ || length($out) > 1_048_576 || ref($product) ne 'HASH'
+            || !JSON::PP::is_bool($product->{catalog}) || !$product->{catalog}
+            || ref($product->{resolved}) ne 'ARRAY' || ref($product->{file_bindings}) ne 'HASH') {
+        problem('authenticated catalog change product is malformed or unbounded');
+        return {};
+    }
+    my %expected = ($registry => [$prior_registry, $current_registry],
+                    $authorities => [$prior_authorities, $current_authorities]);
+    for my $path (sort keys %expected) {
+        my $binding = $product->{file_bindings}{$path};
+        if (ref($binding) ne 'HASH') {
+            problem("selected control-file binding is absent: $path");
+            next;
+        }
+        for my $index (0, 1) {
+            my $which = $index == 0 ? 'prior' : 'current';
+            my $bytes = $expected{$path}[$index];
+            my $digest = defined($bytes) ? sha256_hex($bytes) : undef;
+            my $actual = $binding->{$which};
+            problem("selected $which control bytes differ from authenticated snapshot: $path")
+                if defined($digest) != defined($actual)
+                    || defined($digest) && (ref($actual) || $digest ne $actual);
+        }
+    }
+    my %requested = map { $_ => 1 } @{$paths};
+    my %resolved;
+    for my $row (@{$product->{resolved}}) {
+        if (ref($row) ne 'HASH' || ref($row->{path}) || !defined($row->{path})
+                || !$requested{$row->{path}} || exists($resolved{$row->{path}})
+                || !JSON::PP::is_bool($row->{fresh_identity}) || !JSON::PP::is_bool($row->{new_file})
+                || ref($row->{authority_markers}) ne 'ARRAY' || ref($row->{text}) || !defined($row->{text})) {
+            problem('authenticated canonical authority binding is malformed');
+            next;
+        }
+        $resolved{$row->{path}} = $row;
+    }
+    problem('authenticated canonical authority bindings are incomplete')
+        if scalar(keys %resolved) != scalar(keys %requested);
+    return \%resolved;
 }
 
 my ($inside_status) = run_git('rev-parse', '--is-inside-work-tree');
@@ -282,39 +404,54 @@ if ($inside_status != 0) {
     exit 1;
 }
 
-my $staged = git_output('diff', '--cached', '--name-only', '--', $registry, $authorities);
-my $unstaged = git_output('diff', '--name-only', '--', $registry, $authorities);
+my @controlled = ($registry, $authorities, 'docs/decisions',
+    'docs/audits/decision-store-transition-census.json',
+    'docs/audits/decision-record-rollover-census-20260927.json',
+    map { "scripts/$_.py" } qw(decision_records decision_catalog decision_store decision_store_git));
+my $staged = git_output('diff', '--cached', '--name-only', '--', @controlled);
+my $unstaged = git_output('diff', '--name-only', '--', @controlled)
+    . git_output('ls-files', '--others', '--exclude-standard', '--', @controlled);
 my ($prior_registry, $current_registry, $prior_authorities, $current_authorities);
 my ($mode, @added_decisions);
+my ($prior_revision, $current_selector);
 
 if ($staged ne '') {
     problem('controlled files differ between the staged index and worktree') if $unstaged ne '';
     $mode = 'staged';
-    $prior_registry = read_blob("HEAD:$registry", 1);
+    $prior_revision = git_output('rev-parse', '--verify', 'HEAD');
+    chomp $prior_revision;
+    $current_selector = 'index';
+    $prior_registry = read_blob("$prior_revision:$registry", 1);
     $current_registry = read_blob(":$registry", 1);
-    $prior_authorities = read_blob("HEAD:$authorities", 0);
+    $prior_authorities = read_blob("$prior_revision:$authorities", 0);
     $current_authorities = read_blob(":$authorities", 1);
     @added_decisions = grep { $_ ne '' } split /\n/,
         git_output('diff', '--cached', '--diff-filter=A', '--name-only', '--', 'docs/decisions');
 } elsif ($unstaged ne '') {
     $mode = 'worktree';
-    $prior_registry = read_blob("HEAD:$registry", 1);
+    $prior_revision = git_output('rev-parse', '--verify', 'HEAD');
+    chomp $prior_revision;
+    $current_selector = 'worktree';
+    $prior_registry = read_blob("$prior_revision:$registry", 1);
     $current_registry = read_worktree_file($registry, 1);
-    $prior_authorities = read_blob("HEAD:$authorities", 0);
+    $prior_authorities = read_blob("$prior_revision:$authorities", 0);
     $current_authorities = read_worktree_file($authorities, 1);
     @added_decisions = grep { $_ ne '' } split /\n/,
         git_output('ls-files', '--others', '--exclude-standard', '--', 'docs/decisions');
 } else {
     $mode = 'committed';
-    my ($parent_status) = run_git('rev-parse', '--verify', 'HEAD^');
-    my $prior_revision = $parent_status == 0 ? 'HEAD^' : undef;
+    $current_selector = git_output('rev-parse', '--verify', 'HEAD');
+    chomp $current_selector;
+    my ($parent_status) = run_git('rev-parse', '--verify', "$current_selector^");
+    $prior_revision = $parent_status == 0 ? git_output('rev-parse', '--verify', "$current_selector^") : undef;
+    chomp $prior_revision if defined $prior_revision;
     $prior_registry = defined($prior_revision) ? read_blob("$prior_revision:$registry", 0) : undef;
-    $current_registry = read_blob("HEAD:$registry", 1);
+    $current_registry = read_blob("$current_selector:$registry", 1);
     $prior_authorities = defined($prior_revision) ? read_blob("$prior_revision:$authorities", 0) : undef;
-    $current_authorities = read_blob("HEAD:$authorities", 1);
+    $current_authorities = read_blob("$current_selector:$authorities", 1);
     @added_decisions = defined($prior_revision)
         ? grep { $_ ne '' } split /\n/,
-            git_output('diff', '--diff-filter=A', '--name-only', $prior_revision, 'HEAD', '--', 'docs/decisions')
+            git_output('diff', '--diff-filter=A', '--name-only', $prior_revision, $current_selector, '--', 'docs/decisions')
         : ();
 }
 
@@ -374,6 +511,13 @@ for my $surface (sort keys %{$current}) {
     }
 }
 
+my %canonical_request = map { $_->{decision} => 1 }
+    grep { !ref($_->{decision}) && ($_->{decision} // '') =~ m{\Adocs/decisions/current/} }
+    @new_authorities;
+my $canonical = $fail ? {} : catalog_change_product(
+    $prior_revision, $current_selector, $prior_registry, $current_registry,
+    $prior_authorities, $current_authorities, [sort keys %canonical_request]);
+
 my %added_decision = map { $_ => 1 } @added_decisions;
 my %used_authority;
 for my $increase (@increases) {
@@ -393,15 +537,21 @@ for my $increase (@increases) {
     my $authority = $matches[0];
     $used_authority{$authority->{authority_id}} = 1;
     my $decision = $authority->{decision};
-    if (!$added_decision{$decision}) {
+    my $binding = $canonical->{$decision};
+    my $is_canonical = ($decision // '') =~ m{\Adocs/decisions/current/};
+    if ($is_canonical && (!defined($binding) || !$binding->{fresh_identity} || !$binding->{new_file})) {
+        problem("authority $authority->{authority_id} requires a fresh canonical ID and file in the selected change: $decision");
+        next;
+    }
+    if (!$is_canonical && !$added_decision{$decision}) {
         problem("authority $authority->{authority_id} must cite a decision newly added with this increase: $decision");
         next;
     }
-    my $decision_contents = $mode eq 'staged'
+    my $decision_contents = $is_canonical ? $binding->{text} : $mode eq 'staged'
         ? read_blob(":$decision", 1)
         : $mode eq 'worktree'
             ? read_worktree_file($decision, 1)
-            : read_blob("HEAD:$decision", 1);
+            : read_blob("$current_selector:$decision", 1);
     next if !defined $decision_contents;
     my @markers = (
         "- Ceiling authority: `$authority->{authority_id}`",
@@ -409,9 +559,10 @@ for my $increase (@increases) {
         "- Dimension: `$authority->{dimension}`",
         "- Change: `$authority->{previous} -> $authority->{new}`",
     );
+    my %canonical_marker = $is_canonical ? map { $_ => 1 } @{$binding->{authority_markers}} : ();
     for my $marker (@markers) {
         problem("authority $authority->{authority_id} decision lacks marker: $marker")
-            if index($decision_contents, $marker) < 0;
+            if $is_canonical ? !$canonical_marker{$marker} : index($decision_contents, $marker) < 0;
     }
 }
 

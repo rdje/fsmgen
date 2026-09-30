@@ -123,15 +123,15 @@ assuming a ceiling change. While `files` is below its enforcement ceiling this
 is an ordinary write; decision `0064` deliberately put `knowledge_cards` in
 that position so an ordinary fact card costs no decision record, authority row,
 or ceiling edit. It is a real ceiling increase only when `files` has actually
-reached the ceiling. In that case, in one commit, add the new
-`docs/decisions/NNNN-*.md` record the increase serves, append one
+reached the ceiling. In that case, add a new decision in one commit (use its canonical catalog path when installed;
+otherwise `docs/decisions/NNNN-*.md`), append one
 `ceiling_increase_authority` row to
 `doctrine/live_document_size/ceiling_increase_authorities.jsonl` naming that
 decision path with its `dimension` and `previous`/`new`, and raise both
 `enforcement_ceilings` and `transition.max_growth` for that dimension. The
 guard requires the cited decision to be **added** in the same change, so a
 ceiling increase is admitted only alongside a new durable decision record.
-That pairing is a deliberate anti-sprawl control; do not work around it.
+That pairing is deliberate; do not work around it. See the [catalog authority contract](docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md) for installed-store checks.
 Decisions `0052`, `0059`, `0061`, and `0063` are worked `knowledge_cards`
 examples, each carrying `Ceiling authority`, `Surface`, `Dimension`, and
 `Change` metadata.
