@@ -120,9 +120,14 @@ controls, including diagnostic-line negative oracles. Detached declaration
 scopes consume actual parsed actor ports/storage, transaction formals/locals
 and named-drive parameter names. Unresolved types and untyped drive parameters
 mask outer facts without borrowing a width or record layout. This preparation
-remains unwired; contextual and enum validation, sampled behavior and
-generated/domain carriers still need qualification before authors can use
-record inputs. Existing declaration-collision refusals still apply.
+remains unwired. Contextual AST controls now cover selected transaction, rule
+and drive scalar reads and strict copies; whole record ports refuse scalar
+contexts, and input targets refuse writes. Validation detaches caller facts
+before numeric reads so their original JSON types stay intact. See
+[0114](../../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md).
+Actual aggregate/enum/rule integration, sampled behavior and generated/domain
+carriers still need qualification before authors can use record inputs.
+Existing declaration-collision refusals still apply.
 
 Single-member records and single-item lists also preserve their aggregate
 identity. Nested forms and forward local aliases work in actor declarations

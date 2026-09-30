@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use Exporter 'import';
+use Storable qw(dclone);
 use FSM::Support::ISFRecordPortValues qw(record_value_scope);
 
 our @EXPORT_OK = qw(record_actor_scope record_transaction_scope record_drive_scope);
@@ -91,6 +92,7 @@ sub _ports {
 
 sub _binding {
     my ($entry, $role, $context) = @_;
+    $entry = dclone($entry);
     my $spec = $entry->{type_spec};
     if (defined $spec) {
         _require(ref($spec) eq 'HASH' && _positive($spec->{width})

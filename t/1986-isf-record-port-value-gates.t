@@ -4,6 +4,7 @@ use lib 'perl', 't/lib';
 use Test::More;
 use Carp qw(confess);
 use Storable qw(dclone);
+use JSON::PP;
 use File::Temp qw(tempdir);
 use FSM::Test::ProjectDataLocality;
 use FSM::Adapter::ISF;
@@ -39,6 +40,28 @@ my $actor = $parser->parse_source(<<'ISF', 'record-value-controls.isf');
 ISF
 my %types = map { $_->{type} => $_->{type_spec} } @{$actor->{storage}};
 my $scalar = {kind => 'bits', width => 7, signed => 0};
+
+subtest 'validation preserves caller JSON kinds on first touch' => sub {
+    my $json = JSON::PP->new->canonical;
+    my $string_frame = $json->decode('{"kind":"record","width":"8","signed":0,"member_order":["flag","data"],'
+        . '"members":{"flag":{"kind":"bit","width":"1","signed":0},'
+        . '"data":{"kind":"bits","width":"7","signed":0}}}');
+    my $roots = {packet => {role => 'input', type_spec => $string_frame}};
+    my $before = $json->encode($roots);
+    record_value_scope(outer => $roots, local => {});
+    is($json->encode($roots), $before, 'scope validation retains original typed JSON');
+    my $scope = {packet => {role => 'input', type_spec => $json->decode($before)->{packet}{type_spec}}};
+    $before = $json->encode($scope);
+    record_value_reference(scope => $scope, token => 'packet.data', access => 'read', context => 'first touch');
+    is($json->encode($scope), $before, 'reference validation retains original typed JSON');
+    my $source = {root => 'packet', role => 'input', path_text => '', width => '8',
+        type_spec => $json->decode($before)->{packet}{type_spec}};
+    my $target = dclone($source);
+    @{$target}{qw(root role)} = ('held', 'storage');
+    $before = $json->encode([$source, $target]);
+    validate_record_port_copy(source => $source, target => $target, context => 'first touch');
+    is($json->encode([$source, $target]), $before, 'copy validation retains original typed JSON');
+};
 
 sub scope_for {
     my ($source_type, $target_type, $local) = @_;

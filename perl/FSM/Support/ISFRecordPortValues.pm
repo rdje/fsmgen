@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use Exporter 'import';
+use Storable qw(dclone);
 use FSM::Package::AggregatePathSupport;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
@@ -23,6 +24,9 @@ sub record_value_scope {
             _require(_identifier($name), 'invalid declaration root');
             my $root = $roots->{$name};
             _keys($root, [qw(role type_spec)], [], "root '$name'");
+            # Numeric validation can change Perl scalar flags and therefore
+            # JSON kinds even without an assignment. Detach before any reads.
+            $root = dclone($root);
             _require(_role($root->{role}), "root '$name' has invalid role");
             my $spec = $root->{type_spec};
             _validate_type($spec, "root '$name'") if defined $spec;
@@ -53,6 +57,7 @@ sub record_value_reference {
     return undef unless exists $scope->{$name};
     my $root = $scope->{$name};
     _keys($root, [qw(role type_spec)], [], "$context root '$name'");
+    $root = dclone($root);
     _require(_role($root->{role}), "$context root '$name' has invalid role");
     _require($access ne 'write' || $root->{role} ne 'input',
         "$context cannot write declared input '$token'");
@@ -93,6 +98,8 @@ sub validate_record_port_copy {
     _keys(\%args, [qw(source target context)], [], 'copy');
     my ($source, $target, $context) = @args{qw(source target context)};
     _require(_text($context), 'copy requires context');
+    $source = dclone($source) if ref($source) eq 'HASH';
+    $target = dclone($target) if ref($target) eq 'HASH';
     _validate_reference($_, $context) for grep { defined $_ } ($source, $target);
     return 0 unless _record_port($source) || _record_port($target);
     _require(_whole_record($source) && _whole_record($target),

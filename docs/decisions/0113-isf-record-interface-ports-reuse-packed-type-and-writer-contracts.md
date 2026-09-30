@@ -464,3 +464,8 @@ placeholder-width and inferred-target interpretations fail the independent
 scope/range witnesses and negative controls. Tracked producers, source controls
 and tests make this preparation reproducible; no sample timing, new public
 transport field, generated-child carrier or native HDL behavior is established.
+
+Contextual preparation and first-touch caller-data correction are retained in
+[0114](0114-record-value-validation-detaches-facts-before-reading.md). The original
+scope mutation baseline followed an earlier projection; fresh copied facts now
+have independent pre-projection controls. This qualification remains unwired.

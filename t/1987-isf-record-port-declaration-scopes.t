@@ -30,6 +30,18 @@ my $source = <<'ISF';
 ISF
 my $actor = $parser->parse_source($source, 'scope-controls.isf');
 
+subtest 'first projection preserves complete fresh copied parsed scalar kinds' => sub {
+    my $unread = $source =~ s/\(set seen packet.payload\)/(set seen 0)/r;
+    for my $kind (qw(actor transaction drive)) {
+        my $fresh = dclone($parser->parse_source($unread, 'first-touch-scope.isf'));
+        my $before = $json->encode($fresh);
+        record_actor_scope(actor => $fresh) if $kind eq 'actor';
+        record_transaction_scope(actor => $fresh, transaction => $fresh->{transactions}[0]) if $kind eq 'transaction';
+        record_drive_scope(actor => $fresh, drive => $fresh->{drives}{publish}) if $kind eq 'drive';
+        is($json->encode($fresh), $before, "$kind first projection preserves complete actor JSON kinds");
+    }
+};
+
 sub reference {
     my ($scope, $token, $access) = @_;
     return record_value_reference(scope => $scope, token => $token,
