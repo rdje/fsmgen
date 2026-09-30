@@ -293,7 +293,7 @@ class DecisionCatalogPreparation(unittest.TestCase):
         bad = SECOND.replace('0051', '0100')
         self.write(row['path'], bad)
         row.update(content=content(bad), metadata=copy.deepcopy(self.catalog['records'][0]['metadata']))
-        with self.assertRaisesRegex(ValueError, 'loses source fact identity/questions'):
+        with self.assertRaisesRegex(ValueError, 'duplicate current knowledge ID'):
             self.prepare()
 
     def test_equal_metadata_does_not_allow_a_fresh_record_to_borrow_a_fact_id(self):

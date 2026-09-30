@@ -273,7 +273,7 @@ def prepare(root, source, originals, catalog, *, reader=None):
         require(row['metadata'] == metadata, f'current metadata differs from record: {identity}')
         if old:
             prior = old['metadata']
-            require(metadata['knowledge_id'] == prior['knowledge_id']
+            require((prior['knowledge_id'] is None or metadata['knowledge_id'] == prior['knowledge_id'])
                     and set(prior['questions']) <= set(metadata['questions']),
                     f'current record loses source fact identity/questions: {identity}')
         knowledge_id = metadata['knowledge_id']

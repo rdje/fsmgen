@@ -122,6 +122,17 @@ class DecisionRecords(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'duplicate JSON key'):
             decisions.verify(self.root)
 
+    def test_noninteger_schema_version_is_not_integer_one(self):
+        archive = self.archive()
+        for version in (True, 1.0, '1', None, False, {}, []):
+            with self.subTest(version=version):
+                archive['schema_version'] = version
+                self.save(archive)
+                result = self.run_reader('0001')
+                self.assertEqual(result.returncode, 1)
+                self.assertEqual(result.stdout, b'')
+                self.assertIn(b'unsupported archive schema', result.stderr)
+
     def test_unknown_id_is_atomic_and_symlink_and_oversize_are_rejected(self):
         result = self.run_reader('0001', '9999')
         self.assertNotEqual(result.returncode, 0)
@@ -138,6 +149,23 @@ class DecisionRecords(unittest.TestCase):
             decisions.verify(self.root)
         archive.write_bytes(original)
         self.assertEqual(len(decisions.verify(self.root)), 50)
+
+    def test_catalog_cannot_substitute_already_published_sealed_originals(self):
+        archive = self.archive()
+        prepared = {'originals': {row['id']: row['text'] for row in archive['records']}}
+        self.assertEqual(len(decisions.verify(self.root, prepared)), 50)
+        prepared['originals']['0001'] = prepared['originals']['0001'].replace('ISF', 'BAD', 1)
+        with self.assertRaisesRegex(ValueError, 'substitutes published sealed original'):
+            decisions.verify(self.root, prepared)
+
+    def test_selected_legacy_reader_capsule_needs_no_store_helper_files(self):
+        script = self.root / 'capsule/scripts/decision_records.py'
+        script.parent.mkdir(parents=True)
+        script.write_bytes((ROOT / 'scripts/decision_records.py').read_bytes())
+        result = subprocess.run([sys.executable, '-B', str(script), '--root', str(self.root),
+                                 'read', '0001'], capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, self.archive()['records'][0]['text'].encode())
 
 
 if __name__ == '__main__':

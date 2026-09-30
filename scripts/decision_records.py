@@ -9,11 +9,18 @@ import re
 import sys
 from pathlib import Path
 
+sys.dont_write_bytecode = True
+
 CENSUS = 'docs/audits/decision-record-rollover-census-20260927.json'
 CENSUS_SHA256 = '01c08fde970b1a9c8ae4f1418d5d24da80ca0a23f5bead35649d0694b4f1811b'
 ARCHIVE = 'docs/decisions/history/0001-0050.json'
 VIEW = 'docs/decisions/history/0001-0050.md'
 INDEX = 'docs/decisions/INDEX.md'
+CATALOG = 'docs/decisions/current/catalog.json'
+# Installed only by the atomic source-rollover slice. Supplied stores require
+# explicit independent caller fingerprints and an explicit selected root.
+STORE_SOURCE_SHA256 = None
+STORE_INDEX_SHA256 = None
 MAX_BYTES = 1_048_576
 LINK = re.compile(r'(\[[^\]\n]*\]\()([^\s)]+)(\))')
 
@@ -54,7 +61,8 @@ def load_records(root):
     archive = json.loads(read_bytes(root, ARCHIVE), object_pairs_hook=unique_object)
     require(set(archive) == {'schema_version', 'source_revision', 'records'},
             'unexpected archive fields')
-    require(archive['schema_version'] == 1, 'unsupported archive schema')
+    require(type(archive['schema_version']) is int and archive['schema_version'] == 1,
+            'unsupported archive schema')
     require(archive['source_revision'] == census['source_revision'],
             'archive source revision changed')
     expected = [row for row in census['records'] if '0001' <= row['id'] <= '0050']
@@ -97,16 +105,20 @@ def render(records):
     return ''.join(output).rstrip() + '\n'
 
 
-def verify(root):
+def verify(root, store=None):
     records, census = load_records(root)
     require(read_bytes(root, VIEW) == render(records).encode('utf-8'),
             'derived archive view is stale or altered')
     index = read_bytes(root, INDEX).decode('utf-8')
     for record in records:
-        require(read_bytes(root, record['path']) == pointer(record).encode('utf-8'),
-                f"forwarding page changed: {record['id']}")
-        require(f"]({Path(record['path']).name})" in index,
-                f"decision index omits {record['id']}")
+        if store is None:
+            require(read_bytes(root, record['path']) == pointer(record).encode('utf-8'),
+                    f"forwarding page changed: {record['id']}")
+            require(f"]({Path(record['path']).name})" in index,
+                    f"decision index omits {record['id']}")
+        else:
+            require(store['originals'].get(record['id']) == record['text'],
+                    f"transition substitutes published sealed original: {record['id']}")
     for link in census['selected_links']:
         original = posixpath.normpath(posixpath.join('docs/decisions', link['target']))
         relocated = posixpath.normpath(posixpath.join('docs/decisions/history', '../' + link['target']))
@@ -126,19 +138,81 @@ def verify(root):
     return records
 
 
-def main():
+def load_store(root, source_digest, index_digest):
+    # Lazy loading preserves the standalone captured legacy-reader capsule when
+    # no catalog exists. Live stores always use the one shared location contract.
+    import decision_store
+    require(CATALOG == decision_store.CATALOG, 'catalog locator differs from shared store contract')
+    store = decision_store.load(root, source_digest, index_digest)
+    decision_store.verify(root, store)
+    return store
+
+
+def request_bytes(store, operation, identities):
+    require(identities and len(identities) <= 50, 'read requires a bounded nonempty ID list')
+    require(all(type(value) is str and re.fullmatch(r'[0-9]{4}', value) for value in identities),
+            'invalid decision ID request')
+    products = {}
+    if operation in ('read', 'read-current'):
+        products.update({identity: row['text'] for identity, row in store['current'].items()})
+    if operation in ('read', 'read-original'):
+        products.update(store['originals'])
+    require(all(value in products for value in identities),
+            f'unknown decision ID or unavailable {operation} product')
+    payload = ''.join(products[value] for value in identities).encode('utf-8')
+    require(len(payload) <= MAX_BYTES, 'requested record output exceeds byte bound')
+    return payload
+
+
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parent.parent)
-    parser.add_argument('operation', choices=('check', 'read'), nargs='?', default='check')
-    parser.add_argument('ids', nargs='*', help='sealed four-digit decision IDs, in output order')
-    args = parser.parse_args()
+    parser.add_argument('--root', type=Path, help='explicit selected store or legacy fixture root')
+    parser.add_argument('--source-sha256', help='independently trusted census digest for a supplied store')
+    parser.add_argument('--index-sha256', help='independently trusted original-index digest for a supplied store')
+    parser.add_argument('operation', choices=('check', 'read', 'read-original', 'read-current', 'resolve'),
+                        nargs='?', default='check')
+    parser.add_argument('ids', nargs='*', help='four-digit IDs in output order, or one canonical path for resolve')
+    args = parser.parse_args(argv)
     try:
-        root = args.root.resolve(strict=True)
+        default_root = Path(__file__).resolve().parent.parent
+        root = (args.root or default_root).resolve(strict=True)
+        supplied = args.source_sha256 is not None or args.index_sha256 is not None
+        if supplied:
+            require(args.root is not None, 'supplied store fingerprints require explicit --root')
+            require(args.source_sha256 is not None and args.index_sha256 is not None,
+                    'supplied store requires both independent fingerprints')
+            store = load_store(root, args.source_sha256, args.index_sha256)
+        elif (root / CATALOG).exists() or (root / CATALOG).is_symlink() \
+                or (root == default_root and STORE_SOURCE_SHA256 is not None):
+            require(STORE_SOURCE_SHA256 is not None and STORE_INDEX_SHA256 is not None,
+                    'catalog store has no installed independent authority')
+            store = load_store(root, STORE_SOURCE_SHA256, STORE_INDEX_SHA256)
+            # Delivered production stores preserve the already-published exact
+            # sealed originals, archive view and existing body-search consumers.
+            verify(root, store)
+        else:
+            store = None
         if args.operation == 'check':
             require(not args.ids, 'check does not accept record IDs')
-            verify(root)
-            print('decision-records: exact originals, view, links and consumers verified')
+            if store is None:
+                verify(root)
+                print('decision-records: exact originals, view, links and consumers verified')
+            else:
+                print('decision-records: authenticated originals, current records, compatibility and indexes verified')
+        elif args.operation == 'resolve':
+            require(store is not None, 'resolve requires an authenticated catalog store')
+            require(len(args.ids) == 1, 'resolve requires one canonical decision path')
+            path = args.ids[0]
+            rows = [row for row in store['current'].values() if row['path'] == path]
+            require(len(rows) == 1, 'path is not an exact current canonical decision')
+            row = rows[0]
+            print(json.dumps({'id': row['id'], 'path': path, 'transition_source_revision': store['source_revision'],
+                              'content_sha256': row['content']['sha256'],
+                              'transition_identity': row['id'] in store['compatibility']}, sort_keys=True))
+        elif store is not None:
+            sys.stdout.buffer.write(request_bytes(store, args.operation, args.ids))
         else:
+            require(args.operation != 'read-current', 'read-current requires an authenticated catalog store')
             require(args.ids and len(args.ids) <= 50, 'read requires a bounded nonempty ID list')
             records, _ = load_records(root)
             by_id = {record['id']: record for record in records}

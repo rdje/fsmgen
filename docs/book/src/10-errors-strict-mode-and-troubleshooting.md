@@ -589,8 +589,29 @@ record bytes and unsafe or missing files. Store controls also authenticate the
 transition source and original index, preserve compatibility headings, and
 check complete root/part navigation against selected bytes. The published
 reader still handles the existing sealed cohort; preparation does not move
-records or admit new authority paths. Reader integration and source rollout
-remain tracked work.
+records or admit new authority paths. Source rollout remains tracked work.
+
+The published reader also handles explicitly supplied authenticated stores.
+Such a store requires `--root`, `--source-sha256` and `--index-sha256`; the
+digests must come from independent trusted source/index evidence. The current
+repository has not installed the live catalog rollover yet. Without a catalog,
+ordinary `check` and sealed `read` retain their existing behavior.
+
+| Operation | Selected product |
+| --- | --- |
+| `read IDs` | Captured original bytes when available; current bytes for fresh uncaptured IDs. |
+| `read-original IDs` | Captured originals; an uncaptured fresh ID refuses. |
+| `read-current IDs` | Current canonical bodies in an authenticated store; sealed-only IDs refuse. |
+| `resolve CANONICAL_PATH` | Exact authenticated canonical ID/path/source/content binding; this grants no new authority. |
+
+Requests validate completely before any record output. Current owned status or
+first-time fact-index changes preserve immutable original products. Malformed
+schema kinds, missing or altered store products and unavailable IDs refuse.
+Exercise the actual CLI controls with:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2002-decision-reader-stores.t
+```
 
 ## Current Boundary
 

@@ -9,7 +9,7 @@ answers:
 date: 2026-09-30
 status: current
 tags: [continuity, decisions, doctrine, knowledge-map]
-evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; t/2002-decision-reader-stores.t; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_identity_capacity.py --revision 25c01f0127144922ade78951b91439e1d9221c08 > .artifacts/decision-identity-capacity-reverify.json
 ---
 
@@ -232,3 +232,49 @@ results. The tracked helper, literal fixtures and owning task provide durability
 Published reading, production fingerprint installation and fresh authority
 integration remain `.51.3.2.2.2-.3`; complete real body/link meaning and storage
 rollout remain `.51.3.2.3`. No live path or authority is admitted here.
+
+## Published supplied-store reader — 2026-09-30
+
+Owner `.51.3.2.2.2` connects the authenticated store to the actual published
+CLI. Supplied stores require explicit `--root`, `--source-sha256` and
+`--index-sha256`, with both digests independently trusted by the caller.
+Do not obtain authority merely by hashing the candidate store being checked.
+These explicit supplied-store reads do not install production fingerprints or
+authorize a canonical decision addition. Production fingerprints remain unset
+until the atomic rollout. A catalog without installed authority cannot silently
+fall back to the legacy reader.
+
+`read` preserves captured original bytes for transition identities and returns
+current bytes for fresh uncaptured IDs. `read-original` selects captured source
+bytes and refuses an uncaptured fresh ID. `read-current` selects current
+canonical bodies and refuses sealed-only IDs or a legacy store. Whole requests
+validate before output; both request cardinality and output bytes are bounded.
+`resolve` returns a small exact canonical ID/path/content/source binding after
+complete store verification. A compatibility, escaping or wrong-part path is
+not a canonical binding. This lookup alone grants no new authority.
+
+Current metadata may acquire a unique first fact identity where the original
+had none. Existing source identities/questions still cannot be lost; exact
+initial transition comparison still refuses that additive change at rollout.
+Immutable original bytes keep their captured absence. Owned later status
+changes similarly appear only in current products. Independent actual CLI
+fixtures observe both products and their failures.
+
+The no-catalog sealed reader retains its old check/read behavior and adds an
+explicit original operation. Its schema requires an integer; the former Python
+equality check incorrectly admitted JSON true and a floating version as one.
+Actual reproduction observed true return original bytes; strict-kind controls
+now refuse with no partial output. Delivered production stores must also match
+every already-published sealed original and preserve archive-view/body-search
+checks. Supplied fictional cohorts never replace that production provenance.
+Lazy store loading preserves captured standalone legacy-reader capsules, and
+the CLI disables bytecode writes.
+
+Re-derive with guarded `t/2002-decision-reader-stores.t` and T1923. Literal
+CLI products, unknown/unavailable/oversized requests, altered fingerprints,
+missing catalog products, wrong canonical bindings and original substitution
+are observed controls. Tracked CLI/helpers/tests and this owner provide
+durability. Standalone current validation cannot infer births after its fixed
+census: `.51.3.2.2.3` owns unconditional prior-to-current ID/path/fact/question
+continuity before production admission, including deletion/reuse controls.
+Real fingerprint installation, fresh authority and source rollout remain open.
