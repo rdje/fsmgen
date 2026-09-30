@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.3.2.2` (active)
-- next_action: Qualify complete production-cohort malformed alias/index/retrieval controls under .51.3.3.2.2, then published-floor .3 and closure .51.3.3.3; resume record-input frontend/public matrix .60.4.3.2.3.6; continue required SPECFORGE duration/timer work before optional banks, list ports and variants.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.3.2.3` (active)
+- next_action: Qualify published production-cohort identity/fact/question floors under .51.3.3.2.3, then closure .51.3.3.3; resume record-input frontend/public matrix .60.4.3.2.3.6; continue required SPECFORGE duration/timer work before optional banks, list ports and variants.
   Before genuine supervised HDL runtime, consume HIAL .3.2.10.11.5 for failure-only native observation; never retry merely to seek recurrence.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none

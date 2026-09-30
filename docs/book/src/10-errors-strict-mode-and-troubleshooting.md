@@ -787,8 +787,22 @@ and prior-aware Perl admission pass working, staged and committed selections.
 Physical current membership gains the record while compatibility aliases remain
 fixed. Python and Perl independently measure capacity under unchanged ceilings;
 the fixture declares its resulting aggregate warning pressure. The literal lives
-only in the isolated qualification workspace. Complete production-cohort hostile
-and post-publication identity/question controls remain separately tracked.
+only in the isolated qualification workspace.
+
+The same complete cohort also qualifies malformed-product refusal:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -v -Iperl t/2012-decision-production-hostile.t
+```
+
+The fixture first publishes an authenticated birth, then independently removes
+or changes a compatibility heading, duplicates or misroutes root/part navigation,
+and changes or removes the current body. The actual public check, current
+retrieval, prior-continuity operation and Perl authority gate refuse each selected
+working, staged and committed product. Public failures emit no partial record.
+Each case restores the exact valid fixture publication, and immutable originals,
+independent pins, control products and enforcement ceilings remain fixed.
+Post-publication identity/question floor controls are still separately tracked.
 
 ## Current Boundary
 
