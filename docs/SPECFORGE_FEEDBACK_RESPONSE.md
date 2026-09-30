@@ -17,7 +17,7 @@ behavior so FSMGen maintainers can reproduce locally.
 
 ## High-Level Response
 
-### Current delivery status — 2026-09-30
+### Current delivery status — 2026-10-01
 
 The requested feature set is not complete. This is the canonical downstream
 response; status answers must be reflected here as well as in the task tree
@@ -43,9 +43,8 @@ Decision storage rollover is committed in
 `df7f692c8b94b083d2d078d62854d37869fbca6d`. Fixed-commit consumer/question
 closure is qualified in `5ef1133c59f6d1814ebe7d1bf95373bdd77cbbc8`; successful
 production-cohort birth, malformed-product refusal and post-publication
-identity/fact/question floors are also qualified. Overall rollover closure
-remains the immediate prerequisite under `.51.3.3.3`, then record-input frontend
-qualification `.60.4.3.2.3.6` resumes. Required
+identity/fact/question floors are also qualified. Final rollover closure under
+`.51.3.3.3.2` resumes record-input frontend qualification `.60.4.3.2.3.6`. Required
 duration/timer deliveries precede optional banks, list ports and variants.
 Earlier configuration, verification and phase requests retain their tracked
 owners. These statuses do not claim complete SPECFORGE implementation or

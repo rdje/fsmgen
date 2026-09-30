@@ -777,7 +777,7 @@ Stable exported provenance identifiers retain their published paths. Current
 body readers follow the canonical records. The controls plant lost/substituted
 question bindings and wrong heading/relative destinations. This proof covers
 the named tracked source cohort; it does not enumerate dynamic or external
-consumers or execute HDL. Fresh-record growth has its own qualification owner.
+consumers or execute HDL. Fresh-record growth is qualified separately below.
 
 Successful fresh growth also has a complete production-cohort fixture:
 
@@ -823,6 +823,12 @@ committed selections. Counts that stay equal do not excuse replaced identities
 or keys. Owned content, status and additive questions pass the same modes. These
 fixtures preserve installed independent pins, immutable originals and enforcement
 ceilings; their warning pressure is declared without publishing fictional ADRs.
+
+Together these source-bound qualifications close the decision-store rollover
+prerequisite under SEM `.51`. Record-input frontend/public qualification resumes
+under `.60.4.3.2.3.6`; generated/domain carriers and native/consumer completion
+retain separate owners. The canonical [SPECFORGE response](../../SPECFORGE_FEEDBACK_RESPONSE.md)
+records the reset answer and remaining feature deliveries.
 
 ## Current Boundary
 

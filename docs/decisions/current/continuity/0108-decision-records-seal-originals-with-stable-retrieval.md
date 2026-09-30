@@ -459,4 +459,17 @@ self-searches select canonical paths. T2009 plants lost/substituted bindings,
 misrouted headings and changed relative destinations independently of rendering.
 Fixed commits, the tracked audit/tool/test and these controls provide distinct
 re-derivation, durability and falsification legs. Dynamic/external consumers and
-HDL runtime remain outside this proof; fresh-record growth remains `.51.3.3.2`.
+HDL runtime remain outside this proof; production growth is qualified below.
+
+## Production growth and closure — 2026-10-01
+
+Owner `.51.3.3.3.2` closes the prerequisite after the complete-cohort birth,
+malformed-product and published-floor proofs in T2010, T2012 and T2013.
+Actual public and prior-aware Perl boundaries qualify working, staged and
+committed products; standalone-consistent replacements still fail prior floors.
+Current public retrieval supplies re-derivation. Independently authored corruptions,
+equal-count replacements and additive controls supply falsification. Pinned source
+products, literal fixture tests, the consumer audit and Git provide durability.
+All installed fingerprints, immutable originals and enforcement ceilings remain fixed.
+This finite qualification excludes unseen dynamic/external consumers and HDL execution.
+Record-input frontend/public qualification resumes under `.60.4.3.2.3.6`.
