@@ -109,7 +109,7 @@ library_uses parameter entries: name, source, value
 library_uses binding entries: role, library_name, parent_name, width
 bank_accesses entries: kind, owner, owner_kind, container_kind, container_name, bank, index, width, depth, scalar_entries, same_cycle_policy, value, target
 transaction_port_bindings entries: site_kind, owner, owner_kind, target_transaction, role, port, actor_signal, actor_expression, actor_endpoint_kind, binding_timing, authored_timing_mode, width, instance, parent_port, child_port, start_signal, done_signal, trigger_source, payload_source
-clock_domains entries: name, default, clock, reset, scheduled_fsm, ports, storage, transactions, rules, library_uses, child_instances, crossings, state_count, dt_block_count
+clock_domains entries: name, default, clock, reset, scheduled_fsm, ports, storage, transactions, rules, library_uses, child_instances, crossings, state_count, dt_block_count, inferred_storage
 clock_domains child_instances entries: kind, owner, child, instance
 clock_domains crossings entries: event, role, signal, ready
 crossings entries: name, kind, source_domain, source_signal, destination_domain, destination_signal, ready_signal, instance, module, outstanding_policy, payload, top_fsm
@@ -175,8 +175,8 @@ hashes. Declared scalar actor-owned storage may also report optional
 `access`, `reset`, and inline `enum[]` member metadata. Width-based scalar
 storage also reports optional word `access` independently of `fields[].access`.
 The token vocabulary is `ro`, `rw`, `wo`, `w1c`, `w0c`, `rc`, `rs`, `warl`,
-`wpri`, `reserved`; omission remains omission. Selected domain source actors preserve it; the multi-domain public summary
-currently publishes storage names only, with detail projection owned by SEM `.38.3`. Word and field metadata never change FSM/HDL behavior.
+`wpri`, `reserved`; omission remains omission. Multi-domain reports publish the same storage entries under
+`clock_domains[].inferred_storage[]`, preserving the actual owning domain. Word and field metadata never change FSM/HDL behavior.
 The machine-readable
 contract advertises these through
 `schedule_report_storage_kind_values`, `schedule_report_storage_role_values`,
@@ -483,9 +483,17 @@ Multi-domain schedule reports add two bounded top-level arrays.
 `(clock-domains ...)` actors, each entry records the declared domain name,
 default marker, clock/reset summary, scheduled domain artifact basename, local
 port/storage/transaction/rule/library/child-instance names, local crossing
-endpoints, and bounded domain report counts. Multi-domain reports describe the
+endpoints, bounded domain report counts, and `inferred_storage[]` using the
+same normalized storage entry schema as single-clock reports. The original
+`storage` field remains a list of declared logical names; the detailed array
+also covers scalarized bank elements and inferred scheduler storage. Empty
+realized domains report an empty array. A named single domain publishes its
+module storage under both the ordinary top-level entry list and its domain
+summary, preserving the pre-existing domain count fields. A private, not-yet-realized domain
+summary uses JSON null rather than claiming an empty storage inventory. Multi-domain reports describe the
 generated top as the top-level report scope, so top-level `state_count` is
-zero and domain-local scheduled state counts live in `clock_domains[]`.
+zero, top-level `inferred_storage` stays empty, and domain-local states and
+storage live in `clock_domains[]`.
 `crossings[]` is empty when no crossing primitive is declared. For accepted
 event crossings, each entry records the source domain/signal, destination
 domain/pulse signal, ready signal, generated CDC instance/module names,

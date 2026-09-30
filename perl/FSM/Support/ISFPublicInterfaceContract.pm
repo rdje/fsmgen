@@ -458,6 +458,7 @@ sub build_isf_public_interface_contract {
             't/1232-isf-actor-storage-declarations.t',
             't/1453-isf-storage-field-metadata.t',
             't/1981-isf-storage-word-access.t',
+            't/1982-isf-domain-storage-report.t',
             't/1233-isf-rule-expression-guards.t',
             't/1234-isf-disjoint-rule-writes.t',
             't/1235-isf-fifo-same-cycle-update-matrix.t',
@@ -1738,6 +1739,7 @@ sub isf_public_interface_schedule_report_clock_domain_keys {
             crossings
             state_count
             dt_block_count
+            inferred_storage
         ),
     ];
 }
@@ -1784,7 +1786,7 @@ sub isf_public_interface_schedule_report_crossing_keys {
 }
 
 sub isf_public_interface_schedule_report_multi_file_scope {
-    return 'single-clock multi-file report transaction/state/dt/storage summaries describe the parent module; actor_network summarizes static ATL actor declarations from verbose instances or compact instance aliases, resolved library-qualified type metadata and child artifact names, report-only group metadata from verbose groups or compact concurrent aliases, selected parent-handoff event waits, transaction triggers, temporary trigger batches, scalar or exact-width vector data movements, and selected generated ATL tops without embedding child reports or HDL event wiring; the bounded generated-child actor-to-actor route set reports each same-source same-sink scalar or same-width vector route through data_movements[] and its generated top through generated_tops[]; generated_composition summarizes generated top, child files, spawned instances, handoffs, and bindings; library_uses summarizes resolved reusable library actor instances and their child scheduled .fsm artifacts; multi-domain reports describe the generated top at the top level and expose per-domain scheduled artifacts plus crossing metadata through clock_domains and crossings; child and domain scheduled .fsm text remains available through lower_result files';
+    return 'single-clock multi-file report transaction/state/dt/storage summaries describe the parent module; actor_network summarizes static ATL actor declarations from verbose instances or compact instance aliases, resolved library-qualified type metadata and child artifact names, report-only group metadata from verbose groups or compact concurrent aliases, selected parent-handoff event waits, transaction triggers, temporary trigger batches, scalar or exact-width vector data movements, and selected generated ATL tops without embedding child reports or HDL event wiring; the bounded generated-child actor-to-actor route set reports each same-source same-sink scalar or same-width vector route through data_movements[] and its generated top through generated_tops[]; generated_composition summarizes generated top, child files, spawned instances, handoffs, and bindings; library_uses summarizes resolved reusable library actor instances and their child scheduled .fsm artifacts; multi-domain reports describe the generated top at the top level and expose per-domain scheduled artifacts plus crossing metadata through clock_domains and crossings; each realized clock_domains entry carries inferred_storage using the same normalized storage entry schema as a single-clock report, preserving domain ownership while top-level inferred_storage stays empty; child and domain scheduled .fsm text remains available through lower_result files';
 }
 
 sub isf_public_interface_schedule_report_interface_count_shape {

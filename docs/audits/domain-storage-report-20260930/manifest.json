@@ -1,0 +1,37 @@
+{
+  "base_producer_sha256": {
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": "7ad6169829a37f2f86486533bd7d4881c6edcf97bdda78c652891c4235f09601",
+    "perl/FSM/Support/ISFPublicInterfaceContract.pm": "308285da11b71df2af5c9bef845c24e5c96d7f90803d9d21ab528da760d14903",
+    "t/1255-isf-schedule-report-golden-matrix.t": "f449c943ddc8e6bfa926e5a6347993baeb70e661e0ffe52c587d43f66c143045",
+    "t/1978-isf-reset-provenance.t": "7975d3e838d9f441ef47d6c10d6144f9b9b948b8c9d36cedca583cc6f4168575",
+    "t/1981-isf-storage-word-access.t": "91ce612558b6e7834c7b0c0a1aaba8c965a3d8919371a1bcbb80c4fd4b28051e"
+  },
+  "base_revision": "3fa482924ae93421918d955b916291cd3c741001",
+  "candidate_sha256": {
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": "3bef8774ace51c98556b931ab2dcedfaed06641f2795f4dfa9d6c8ee63ad5349",
+    "perl/FSM/Support/ISFPublicInterfaceContract.pm": "92ecba0c2671689521134379b37968857aaf744ff97cff704197239b9d90a789",
+    "t/1255-isf-schedule-report-golden-matrix.t": "f449c943ddc8e6bfa926e5a6347993baeb70e661e0ffe52c587d43f66c143045",
+    "t/1978-isf-reset-provenance.t": "86fdff2ff1428e394802218697c4fa41ac11f6e35f8f35105385cf5339e29c48",
+    "t/1981-isf-storage-word-access.t": "a5c0b1d785eea431a3685cea72c9f9796afc196d349272d2f16562306718f1ad",
+    "t/1982-isf-domain-storage-report.t": "20ab6462b8c9e7451aae7e263e175f81bc8892b5a12b2a02259fa658f114b893"
+  },
+  "files": {
+    "baseline.json": "b730bb6a3668ae73f3a315ec54cdecb01ef6377f7044e473c4adbdd61c5f0929",
+    "capture-baseline.t": "b119bd0b6422b99876b82ea0d566e55f68b651876b0010ac899d8e243453da6c",
+    "domains.isf": "2d56518dea706161a5f63091164fe58ed807b3e0721539304cea73d85023434e",
+    "logs.json": "946458eb0094b538af4ddd3451db1c159d8c098e7f3c31a6aede060f60ef7df9",
+    "verify.py": "7dbc76b7b5de23a46bc35179a04f26f28b971406073912a247d5c78edaf0942c"
+  },
+  "initial_dispositions": [
+    "Red run reproduces absent domain fields and missing discovery. Its scope-descriptor test initially used the wrong key multi_file_model; corrected to the existing multi_file_scope before candidate qualification.",
+    "The broad regression exposed a separate named-single-domain route: it emits the parent report directly without a domain-report map. That route now supplies its existing normalized storage while keeping prior count fields unchanged. Final T1982/T1978/T1255 pass; the unchanged multi-domain branch retains the successful T1981/T1144/T1247/T1890/T1893 controls."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.3",
+  "qualification": {
+    "baseline": "Files=1, Tests=1 PASS",
+    "final_affected": "Files=3, Tests=11 PASS after the isolated named-single-domain correction; T1982 includes independently expected single/multiple/empty-domain details and old artifact equality.",
+    "initial_feature": "Files=1, Tests=4 PASS",
+    "initial_regression": "Files=8, Tests=43 overall FAIL: only T1978 missing named-single-domain detail failed; every other file passed."
+  },
+  "scope": "Add normalized per-domain storage details; preserve all existing report fields, scheduled FSM and emitted SystemVerilog/Verilog. Named single domains reuse the module-owned details; multi-domain top storage remains empty. No native simulation."
+}

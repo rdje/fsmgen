@@ -245,8 +245,9 @@ including hardware reset behavior, are unchanged by adding access metadata.
 
 Unknown tokens, duplicate access options, missing/non-scalar/extra operands,
 and access on bank or typed storage declarations fail closed with the storage
-name and relevant token/carrier context. Domain source selection preserves the fact, but the existing multi-domain
-public report publishes storage names only; detail projection is owned by SEM `.38.3`. The public fixture
+name and relevant token/carrier context. Multi-domain reports preserve the fact in each owning
+`clock_domains[].inferred_storage[]`, using the same storage entry schema;
+existing domain `storage` name lists remain unchanged. The public fixture
 `isf/storage_word_access.isf` is support-accounted as
 `feature.isf_storage_word_access`; check/semantic queries validate it, while
 schedule queries expose the metadata through native/API/newline transports.

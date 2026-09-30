@@ -135,6 +135,7 @@ my $expected_tested_by = [
     't/1232-isf-actor-storage-declarations.t',
     't/1453-isf-storage-field-metadata.t',
         't/1981-isf-storage-word-access.t',
+        't/1982-isf-domain-storage-report.t',
     't/1233-isf-rule-expression-guards.t',
     't/1234-isf-disjoint-rule-writes.t',
     't/1235-isf-fifo-same-cycle-update-matrix.t',

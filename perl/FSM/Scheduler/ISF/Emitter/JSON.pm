@@ -6,6 +6,7 @@ use warnings;
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use JSON::PP ();
+use Storable qw(dclone);
 use FSM::Debug;
 use FSM::Support::ISFResetProvenance qw(snapshot_reset_provenance);
 
@@ -119,6 +120,13 @@ sub _clock_domain_summary($self, $ir, $domain_report_by_name = undef) {
         && @{$partition->{domains}};
 
     my $default_domain = $partition->{default_domain};
+    if (($partition->{kind} // '') eq 'single_domain' && !defined $domain_report_by_name) {
+        # A named single domain is realized by this module itself. Preserve
+        # existing domain count fields while publishing its available storage.
+        $domain_report_by_name = {
+            $partition->{domains}[0]{name} => {inferred_storage => $self->_storage_summary($ir)},
+        };
+    }
     return [
         map {
             $self->_clock_domain_entry_summary($_, $default_domain, $domain_report_by_name)
@@ -156,6 +164,9 @@ sub _clock_domain_entry_summary($self, $domain, $default_domain, $domain_report_
         state_count    => ref($domain_report) eq 'HASH' ? $domain_report->{state_count} : undef,
         dt_block_count => ref($domain_report) eq 'HASH' && ref($domain_report->{dt_blocks}) eq 'ARRAY'
             ? scalar(@{$domain_report->{dt_blocks}})
+            : undef,
+        inferred_storage => ref($domain_report) eq 'HASH' && ref($domain_report->{inferred_storage}) eq 'ARRAY'
+            ? dclone($domain_report->{inferred_storage})
             : undef,
     };
 }

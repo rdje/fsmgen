@@ -876,3 +876,8 @@ malformed/carrier refusals, domain ownership, discovery and complete
 native/API/newline reports. T1453 retains field-only compatibility. This passive
 metadata qualification does not promote independent-controller or local-call
 runtime support; their separately tracked repair gates remain open.
+
+T1982 qualifies per-domain storage details: independently expected word/field,
+typed and scalarized-bank entries; scheduler counter ownership; empty-domain
+and detached nested-metadata controls; exact old report-field and FSM/HDL
+preservation; and complete native/API/newline report and capability parity.

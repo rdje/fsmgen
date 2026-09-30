@@ -1274,7 +1274,7 @@ library_uses[]: library, alias, export, kind, instance, module,
   scheduled_fsm, parameters, bindings
 clock_domains[]: name, default, clock, reset, scheduled_fsm, ports, storage,
   transactions, rules, library_uses, child_instances, crossings, state_count,
-  dt_block_count
+  dt_block_count, inferred_storage
 crossings[]: name, kind, source_domain, source_signal, destination_domain,
   destination_signal, ready_signal, instance, module, outstanding_policy,
   payload, top_fsm

@@ -143,10 +143,15 @@ ISF
     is_deeply($scheduler->lower($actor)->{files}, $scheduler->lower($control)->{files}, 'all domain FSM files unchanged');
     my $path = "$work/domains.isf"; write_file($path, $text); $path =~ s/^\Q$root\E\///;
     my $schedule = public_query($path, 'schedule', 0);
-    is_deeply($schedule, report($control), 'existing multi-domain public shape remains unchanged');
+    my $expected_report = report($control);
+    for my $domain (@{$expected_report->{clock_domains}}) {
+        my ($name, $access) = @{$expected{$domain->{name}}};
+        storage($domain, $name)->{access} = $access;
+    }
+    is_deeply($schedule, $expected_report, 'word access is the only domain report difference');
     is_deeply($schedule->{inferred_storage}, [], 'top owns no domain storage metadata');
     is_deeply([map { $_->{storage} } @{$schedule->{clock_domains}}],
-        [['core_reg'], ['aux_reg']], 'existing domain views publish names only; detail gap owned by SEM .38.3');
+        [['core_reg'], ['aux_reg']], 'existing domain storage-name lists are preserved');
 };
 
 subtest 'non-token and carrier refusals retain complete public diagnostics' => sub {

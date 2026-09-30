@@ -906,8 +906,10 @@ word `access: "rw"`, while `enable` independently reports field `access: "ro"`.
 The assignment remains ordinary authored behavior; access labels do not install
 write protection or read/clear logic. The public fixture
 `isf/storage_word_access.isf` also demonstrates word metadata with and without
-fields. Single-clock schedule/API/MCP reports retain it. Multi-domain reports currently
-publish only domain storage names; full storage detail is owned by SEM `.38.3`.
+fields. Single-clock schedule/API/MCP reports retain it in `inferred_storage[]`.
+Multi-domain reports retain it in each `clock_domains[].inferred_storage[]`;
+the existing domain `storage` name lists remain unchanged and the generated
+top has no domain-owned storage entries of its own.
 Check and semantic queries validate the source and identify the supported
 fixture; the metadata payload belongs to the schedule report.
 

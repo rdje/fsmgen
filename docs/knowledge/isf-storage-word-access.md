@@ -6,12 +6,13 @@ answers:
   - "does word access inherit into storage fields?"
   - "does access ro prevent an authored ISF write?"
   - "where is storage word access reported?"
+  - "do multi-domain schedule reports expose storage details?"
   - "why is scalar access metadata independent of controller repair?"
 date: 2026-09-30
 status: current
 tags: [isf, storage, register, access, metadata, specforge, mcp]
-evidence: t/1981-isf-storage-word-access.t; docs/audits/storage-word-access-20260930/manifest.json; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl/FSM/Support/ISFPublicInterfaceContract.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md
-reverify: scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1981-isf-storage-word-access.t t/1453-isf-storage-field-metadata.t
+evidence: t/1982-isf-domain-storage-report.t; docs/audits/domain-storage-report-20260930/manifest.json; t/1981-isf-storage-word-access.t; docs/audits/storage-word-access-20260930/manifest.json; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl/FSM/Support/ISFPublicInterfaceContract.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md
+reverify: scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1982-isf-domain-storage-report.t t/1981-isf-storage-word-access.t t/1453-isf-storage-field-metadata.t
 ---
 
 Width-based scalar `var` and `variable` entries accept `(access TOKEN)` using
@@ -34,9 +35,16 @@ allowing only authored word access and source relocation. It separately checks
 tokens, field independence, refusal causes, domain-source selection and
 capability discovery. The initial red run reproduces the missing parser option;
 the candidate's first failure was an incorrect assumption that public domain
-summaries already carry storage details. They currently carry names only.
-Domain source actors retain metadata, but public multi-domain detail projection
-is the immediate next owner SEM `.38.3`; this limitation is explicit.
+summaries already carried storage details. SEM `.38.3` repairs that projection:
+`clock_domains[].inferred_storage[]` now uses the same normalized storage schema,
+while original `storage` names and the generated top's empty detail array stay
+unchanged. T1982 independently checks owned words/fields, typed storage,
+scalarized banks, watchdogs, empty domains and detached nested metadata, with
+complete native/API/newline and pre-change FSM/HDL compatibility controls.
+Private pre-realization summaries use null for unavailable details; actual
+realized empty domains have empty arrays. Named single domains reuse their
+module storage details without changing existing domain counts. This adds no child-report flattening
+or hardware behavior.
 
 Passive metadata does not depend on independent-controller execution. Decision
 0109's former blanket sequence is narrowed under SEM `.38.1`; unchanged emitted

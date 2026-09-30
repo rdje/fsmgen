@@ -1414,11 +1414,15 @@ The runnable book example and support-accounted `isf/storage_word_access.isf`
 show the new form. Capability discovery advertises the optional storage key.
 Evidence is retained in `docs/audits/storage-word-access-20260930/`.
 
-One existing report limit remains explicit: multi-domain public reports expose
-storage names without storage details, including field metadata. Domain source
-selection preserves the new fact, but that public detail projection is next
-under `.38.3`, before optional bank support `.38.2`. Single-clock packet R1-R3
-are delivered without claiming those extensions. The previous blanket dependency
+The follow-up `.38.3` also publishes domain-local storage detail through
+`clock_domains[].inferred_storage[]`, using the same normalized storage schema.
+Word access, field metadata, types, scalarized bank elements and scheduler
+storage retain their owning domain. Existing storage-name lists and top-level
+empty ownership are preserved. T1982 qualifies complete prior report-field and
+FSM/HDL equality, independent ownership/shape, empty domains, nested detachment
+and all public transports. Evidence is in
+`docs/audits/domain-storage-report-20260930/`. Optional bank access metadata
+remains `.38.2`; bank layout reporting does not imply that syntax is accepted. The previous blanket dependency
 on controller/runtime repairs is narrowed by decision 0109: this change proves
 unchanged hardware and makes no new execution claim. Those repairs remain open.
 

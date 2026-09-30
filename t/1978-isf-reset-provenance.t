@@ -90,7 +90,14 @@ subtest 'supplied cases gain provenance with every prior public product preserve
             is($wire->{exit_code}, 0, 'newline MCP success');
             is($wire->{stderr}, '', 'newline stderr clean');
             is_deeply($json->decode($wire->{stdout}), $response, 'complete API/newline equality');
-            if ($query eq 'schedule') { delete $report->{reset_provenance}; }
+            if ($query eq 'schedule') {
+                delete $report->{reset_provenance};
+                # SEM .38.3 subsequently adds normalized domain storage detail.
+                # T1982 independently qualifies its complete ownership/schema.
+                for my $domain (@{$report->{clock_domains}}) {
+                    is(ref(delete $domain->{inferred_storage}), 'ARRAY', 'additive domain storage detail is explicit');
+                }
+            }
             else { delete $report->{source}{reset_provenance}; }
             is_deeply($report, $baseline->{$case}{queries}{$query}{report}, 'all previous report fields unchanged');
         }

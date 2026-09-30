@@ -1,13 +1,14 @@
 # Knowledge Map: `isf-storage`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **16** uniquely owned question entries.
+> **4** facts · **17** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="can a storage bank use a keyword logical name?" · facts=[isf-storage-keyword-identifiers](../../docs/knowledge/isf-storage-keyword-identifiers.md)
 - q="can an ISF storage register state its own access?" · facts=[isf-storage-word-access](../../docs/knowledge/isf-storage-word-access.md)
 - q="can assigning an actor signal inside a transaction change its clock domain?" · facts=[isf-storage-domain-path-ownership](../../docs/knowledge/isf-storage-domain-path-ownership.md)
+- q="do multi-domain schedule reports expose storage details?" · facts=[isf-storage-word-access](../../docs/knowledge/isf-storage-word-access.md)
 - q="does access ro prevent an authored ISF write?" · facts=[isf-storage-word-access](../../docs/knowledge/isf-storage-word-access.md)
 - q="does check JSON match ISF storage field metadata support accounting?" · facts=[isf-storage-field-support-accounting](../../docs/knowledge/isf-storage-field-support-accounting.md)
 - q="does normalized semantic JSON include ISF storage field maps?" · facts=[isf-storage-field-support-accounting](../../docs/knowledge/isf-storage-field-support-accounting.md)

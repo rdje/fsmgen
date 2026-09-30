@@ -114,6 +114,17 @@ the generated top and concrete acknowledged-event CDC child modules for
 accepted crossings when each emitted domain artifact satisfies the current
 scheduled `.fsm` HDL contract, including clock-only no-reset domains.
 
+Each `clock_domains[]` schedule entry includes `inferred_storage[]` for its
+realized domain, using the ordinary normalized storage schema. For example,
+a word declared in `aux` with `(access ro)` appears only under `aux`'s detail
+array; field metadata, types and scheduler counter roles follow the same
+ownership. The existing `storage` list keeps logical declaration names, while
+the detail array includes concrete scalarized bank elements. Empty domains
+have an empty array. The generated top's `inferred_storage` remains empty.
+For a named single domain, the module itself owns the storage, so its top-level
+and domain detail arrays describe the same owner. This report extension does
+not change scheduled FSM, HDL or clock/reset wiring.
+
 ## Multi-Domain Actor -> Domain FSMs + CDC Top
 
 For a reset-declared two-domain actor with one event crossing:

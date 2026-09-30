@@ -1,0 +1,23 @@
+(actor domain_storage_report
+  (types (type packet_t (record (flag bit) (data (bits 7)))))
+  (clock-domains
+    (domain core (clock clk) (reset (rst_n async active_low)) :default)
+    (domain aux (clock aux_clk) (reset (aux_reset sync active_high))))
+  (interface
+    (input start) (input ack) (output done)
+    (input aux_start (domain aux)) (output aux_done (domain aux)))
+  (storage
+    (var core_word (width 8) (reset 1) (access rw)
+      (fields (field flag (bits 0 0) (access ro) (reset 1)
+        (enum (OFF 0) (ON 1)))))
+    (var core_record (type packet_t) (reset 3))
+    (bank bytes (width 8) (depth 2))
+    (variable aux_word (width 12) (reset 7) (domain aux) (access ro)
+      (fields (field upper (bits 11 8) (access reserved)))))
+  (transaction main (on start)
+    (set core_word 1)
+    (await ack (watchdog 5))
+    (complete done))
+  (transaction other (domain aux) (on aux_start)
+    (set aux_word 7)
+    (complete aux_done)))
