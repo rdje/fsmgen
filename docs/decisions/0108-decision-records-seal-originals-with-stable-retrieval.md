@@ -9,7 +9,7 @@ answers:
 date: 2026-09-30
 status: current
 tags: [continuity, decisions, doctrine, knowledge-map]
-evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; scripts/decision_store_git.py; scripts/check_live_document_ceiling_authority.pl; t/2006-decision-identity-modes.t; t/2005-decision-ceiling-stores.t; t/2004-decision-reader-snapshots.t; t/2003-decision-store-git-continuity.t; t/2002-decision-reader-stores.t; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; scripts/decision_store_git.py; scripts/check_live_document_ceiling_authority.pl; t/2007-decision-hostile-boundaries.t; t/2006-decision-identity-modes.t; t/2005-decision-ceiling-stores.t; t/2004-decision-reader-snapshots.t; t/2003-decision-store-git-continuity.t; t/2002-decision-reader-stores.t; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_identity_capacity.py --revision 25c01f0127144922ade78951b91439e1d9221c08 > .artifacts/decision-identity-capacity-reverify.json
 ---
 
@@ -394,5 +394,30 @@ pass every mode. The standalone/current and prior-aware checks are separate
 legs; a stale digest or malformed index cannot falsely earn the identity-floor
 proof. Exact source/index/original/control baselines and same-volume fixtures
 remain independent. Tracked `t/2006-decision-identity-modes.t`, this card and the
-task provide durability. Remaining malformed product/authority/caller/IPC
-qualification stays child `.2` before the atomic real source rollover.
+task provide durability. Child `.2` completes the remaining boundary controls.
+
+## Complete hostile boundary qualification — 2026-09-30
+
+Owner `.51.3.2.2.3.3.2` independently corrupts source/index/original products,
+descriptors, schema/JSON keys, navigation, aliases and regular-file kinds in
+working, staged and committed modes. Actual gates refuse each without needing
+a ceiling increase. Orphan/reused/prior-birth/misrouted authorities refuse, as
+do conflicting index entries and gitlink metadata. Installed default-mode
+capsules retain the independently published sealed prefix and deny fixture-pin
+overrides. Controlled dispatch refuses oversized output/diagnostics, malformed
+products and signal failure even after valid JSON is emitted.
+
+P3 caller-shape repair: supplied malformed digest strings previously reached a
+successful non-catalog change result when both catalogs were absent. No authority
+was granted, but format validation was conditional on loading a catalog.
+Git traces selected-reader introduction to
+`09e83cac3a63d7420cdf567069da7423295ac966`.
+Validation now occurs before selecting products; malformed forms refuse without
+stdout, and well-formed no-catalog requests retain their explicit result.
+
+Re-derivation uses the actual public and Perl boundaries against independently
+literal source/index/control products. Separate planted corruptions, dispatch
+failures and installed-mode capsules supply falsification. Tracked
+`t/2007-decision-hostile-boundaries.t`, this card and the owning task supply
+durability. Re-run the guarded test with the earlier reader/catalog/legacy gates.
+Real production source capture and rollover remain `.51.3.2.3`.

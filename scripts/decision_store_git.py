@@ -1,4 +1,4 @@
-"""Bounded immutable blob access and catalog continuity, before gate wiring."""
+"""Bounded immutable blob access and catalog continuity for selected gate products."""
 
 import os
 import re

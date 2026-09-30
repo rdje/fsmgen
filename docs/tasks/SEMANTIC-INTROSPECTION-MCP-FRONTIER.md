@@ -2154,11 +2154,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Integrate catalog-aware public reading and fresh authority paths before source rollout.`
   Acceptance: `After .1, connect qualified identity/path/retrieval gates to the published reader, complete index/heading verification and ceiling-authority addition boundary using independent supplied future-store fixtures. Preserve existing read/check/unknown-ID behavior where no delivered catalog exists, legacy flat authority identities and generated provenance strings. Qualify accepted current/original products and precise malformed/duplicate/stale/misrouted/missing-source failures; no partial output or unowned canonical admission. Keep real source paths unchanged until .3, then commit.`
-  Verification: `Pure shared catalog/path/identity controls are qualified under .1. Integrate published reading, navigation and fresh authority validation using complete supplied future-store fixtures before moving real sources.`
-  Commit: `pending child qualification`
+  Verification: `Authenticated loading/navigation, public selected reading, unconditional prior-current continuity, exact fresh authority and hostile mode qualification are complete under children .1-.3. Production sources remain unmoved; .51.3.2.3 owns fresh capture and atomic rollout.`
+  Commit: `this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.3`
 
@@ -2177,11 +2177,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Integrate exact catalog-aware canonical addition into ceiling-authority validation.`
   Acceptance: `After .1-.2, use the same authenticated store/identity contract for new canonical decision authority in actual staged/worktree/committed modes. Preserve legacy flat authorities and their exported paths; only exact resolved newly added canonical catalog IDs may authorize a same-change ceiling increase. Reject unknown parts, borrowed/substituted IDs, malformed/missing/stale source/catalog/index products, snapshot/worktree disagreement and reused/orphan authority. Continuously preserve prior selected-catalog ID/path/type/fact identities and question keys for every catalog change, including post-transition births; never permit deletion or recycling merely because an ID is absent from the fixed original census. Use complete independent Git fixtures, keep ceilings unchanged, qualify relevant gates and commit before real source rollout .3.`
-  Verification: `Pending shared authenticated store/public-reader integration. Owned P2 prototype continuity gap: a supplied store admits fresh 0115; deleting its current row/body and both navigation rows restores a self-consistent snapshot which standalone current validation accepts. Root cause: the immutable source census necessarily covers only the transition cohort, so later births need prior-to-current catalog identity comparison. Resolve unconditionally at the actual selected Git boundary before live rollout, not merely when a ceiling increase occurs; qualify deletion/reuse/lost-new-fact controls.`
-  Commit: `pending child qualification`
+  Verification: `Shared selected Git products, public predecessor binding and actual Perl integration retain complete prior identities/facts/questions. Children qualify fresh authority, ordinary no-increase evolution, all-mode identity substitutions and malformed product/caller/IPC refusal. No ceiling is widened. The owned P2 schema and P3 fingerprint-shape defects are repaired before production rollout.`
+  Commit: `this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.3.3`
 
@@ -2215,11 +2215,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify complete canonical authority and identity continuity across all selected modes.`
   Acceptance: `After .2, exercise actual public and Perl boundaries with independent complete staged/worktree/committed Git fixtures, including successful fresh authority and ordinary catalog growth/update with no increase. Plant equal-count deletion/reuse/path/type/fact/question substitutions, source/index/original corruption, stale descriptors/indexes/pages, symlink/conflict/missing data, mixed snapshots and reused/orphan authority. Prove legacy controls and default production pin isolation, run focused relevant gates/book/doctrines, commit and hand off cleanly to atomic real rollover .51.3.2.3.`
-  Verification: `Shared accessor/continuity, actual public selection/adoption products and actual unconditional Perl integration are qualified under siblings .1-.2. Expand independent hostile store/authority controls across every selected mode, include bounded IPC and malformed request/caller controls, then hand off to the atomic rollover.`
-  Commit: `pending`
+  Verification: `Children .1-.2 qualify self-consistent post-transition identity/key substitutions and malformed product/authority/caller/IPC controls through actual selected public and Perl gates. Owned additive evolution and historical controls remain accepted. Installed capsules preserve published sealed originals and refuse own-root pin overrides. Production rollover remains .51.3.2.3.`
+  Commit: `this commit`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.3.3.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.3.3.1`
@@ -2230,17 +2230,17 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify malformed stores, authority/caller isolation and bounded IPC refusal before atomic rollout.`
   Acceptance: `After .1, plant complete malformed source/index/original/descriptor/navigation/alias and unsafe file controls across selected modes; exercise fresh/borrowed/reused/orphan/misrouted authority, production/default pin isolation and malformed public fingerprint/request inputs. Exercise actual bounded stdout/diagnostic draining, malformed products and signal failure using project-owned controlled dispatch fixtures. Repair and own any reproduced boundary defect, preserve all historical reader/flat authority behavior, run focused complete gates/book/doctrines and commit a clean frontier for atomic rollout .51.3.2.3.`
-  Verification: `Independent self-consistent post-transition identity/fact/question controls and additive owned updates are qualified in all modes under child .1. Complete remaining malformed product/authority/caller/IPC controls, repair reproduced defects and commit before real atomic rollover.`
-  Commit: `pending`
+  Verification: `Initial T2007 passes malformed product/authority/conflict/IPC controls but exposes P3 malformed supplied fingerprints accepted on the no-catalog path. Unconditional shape validation repairs it before product selection, preserves valid no-catalog results and emits no partial output. Final refined T2007/T2004/T2005 passes All tests successful, Files=3, Tests=6. Every selected mode refuses source/index/original/descriptor/schema/JSON/navigation/alias/missing/symlink/oversized controls; orphan/reused/prior-birth/misrouted authority and conflicting/gitlink entries refuse. Controlled dispatch refuses oversized dual streams, malformed products and signal termination after valid output. Installed default capsules retain published sealed-prefix authority and deny own-root pins. Final guarded T2007/T2006/T2005/T2004/T2003/T2002/T2001/T2000/T1923/T1999/T1560/T1554 reports All tests successful, Files=12, Tests=46. Book/syntax and bounded staged doctrines/hooks accompany the workflow. No source moves or ceiling increases occur; .51.3.2.3 is now active.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Roll over canonical decision storage and navigation atomically through integrated gates.`
   Acceptance: `After .2, take a fresh exact pre-transition census, preserve complete original bodies separately from relocated current rendering, freeze finite compatibility paths/headings and place current bodies/indexes in the selected semantic partitions. Update self-searches and direct body readers, declarations, source links and Knowledge Map routes together. Prove exact source identity, unchanged authority/question/metadata keys, relative destination closure, complete reader products and no loss residue; restore current capacity without widening ceilings. Run focused relevant gates and book, commit, then hand off broad fresh-record/consumer continuity to .51.3.3.`
-  Verification: `pending reader/authority integration`
+  Verification: `Prerequisite children are qualified. Capture the exact clean predecessor; pin legacy reader fixtures to pre-transition published products rather than copying new aliases. Update current-body readers and source routes atomically without changing exported historical provenance paths.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.3`
@@ -3455,7 +3455,7 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Record/formal domain roots and existing drive ingress repairs are qualified under `.60.4.3.2.3.4.2`. Unused named-drive domain carrier leakage is repaired under `.60.4.3.2.3.4.3`. Prepared parser/module gates are integrated under `.60.4.3.2.3.5.1`. Bounded authored record inputs are admitted under `.60.4.3.2.3.5.2`. The exact decision identity/cardinality audit `.51.3.1` is qualified. Next `.51.3.2` applies bounded rollover and reader/authority prerequisites before further record growth, then `.60.4.3.2.3.6` qualifies the full frontend/public matrix; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Record/formal domain roots and existing drive ingress repairs are qualified under `.60.4.3.2.3.4.2`. Unused named-drive domain carrier leakage is repaired under `.60.4.3.2.3.4.3`. Prepared parser/module gates are integrated under `.60.4.3.2.3.5.1`. Bounded authored record inputs are admitted under `.60.4.3.2.3.5.2`. The exact decision identity/cardinality audit `.51.3.1` is qualified. Reader/authority prerequisites and hostile-mode qualification are complete. Next `.51.3.2.3` applies atomic real-source rollover before further record growth, then `.60.4.3.2.3.6` qualifies the full frontend/public matrix; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5939,3 +5939,9 @@ DEVELOPMENT_NOTES gains no duplicate of the canonical contract selection.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub catalog_change_product' -1 --format='%H %s' -- scripts/check_live_document_ceiling_authority.pl` returns c83948125cdd6c84baa3fb13fbca7a4edd180800. The actual integrated gate has initial mode/birth/deletion controls, while pure prior-product comparisons cover fact/question and path/type controls. Neither alone earns complete actual-mode proof for facts first born after the immutable transition source. An internally self-consistent current snapshot can lose those identities/keys while retaining correct digests and routes; qualification must distinguish current authentication from the prior floor before real rollout.
 - [x] **ADDRESSED (verified)** — Independently literal fixtures publish a post-transition fact-bearing identity with its questions before each mutation. Complete source/index/original/control baselines remain independent, and every current byte/metadata/root/part product is kept consistent. Actual selected current authentication passes each deletion, equal-count birth replacement, path/type recycle, fact deletion/replacement, question deletion/equal-count substitution and earlier-gap birth. The actual prior-aware Perl gate refuses the intended identity/key violation in every worktree/staged/committed mode, even with no ceiling increase. Owned body/status/summary changes and additive questions retain earlier keys and pass every mode. Each same-volume fixture is cleaned; book and canonical evidence name the separate current/prior legs. Remaining malformed product/authority/caller/IPC qualification is owned by child .2.
 - [x] **NO REGRESSION** — Guarded T2006 initially reports `All tests successful`, `Files=1, Tests=2`. Final T2006/T2005/T2004/T2003/T1560 reports `All tests successful`, `Files=5, Tests=16`; book builds and Python syntax/diff checks pass. Complete current products, ordinary owned evolution, public selections, actual authority/control-byte binding and legacy flat authority remain green; predecessor full catalog/reader/containment qualification is committed in c83948125cdd6c84baa3fb13fbca7a4edd180800. Re-derivation is actual standalone current authentication followed by the actual prior-aware Perl gate on independently published fixtures; falsification is literal post-transition fact/question products plus separate self-consistent hostile mode mutations; durability is tracked T2006/Python matrix, canonical 0108, book and this leaf. No production rollout or wider backend/runtime qualification is inferred. Bounded registry authority, Knowledge Map/inventory and staged doctrines/hooks accompany the workflow.
+
+## Acceptance — hostile store/authority/caller/IPC boundaries `.51.3.2.2.3.3.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'def selected_store' -1 --format='%H %s' -- scripts/decision_records.py` returns 09e83cac3a63d7420cdf567069da7423295ac966. Shape checks occur only when load authenticates an existing catalog; actual red T2007 supplies bad/nonhex/short/long digests with neither snapshot containing a catalog and observes successful catalog-false JSON. No authority is granted, but the public input contract is inconsistent. Complete hostile-mode and installed-prefix qualification is also needed before real source admission.
+- [x] **ADDRESSED (verified)** — Public supplied digest format validation now precedes product selection. Red fingerprint cases refuse without stdout; independent well-formed no-catalog controls retain the exact non-catalog result. Actual malformed store products and authority controls refuse in worktree/staged/committed modes without ceiling changes. Captured index conflicts/gitlinks never enter regular readers. Dispatch plants output/diagnostic overflow, malformed products and signal failure after valid output; each refuses. Independently installed default capsules preserve published sealed originals and deny own-root fixture overrides. Refined T2007/T2004/T2005 reports All tests successful, Files=3, Tests=6. No real source moves or ceiling increases occur.
+- [x] **NO REGRESSION** — Final guarded T2007/T2006/T2005/T2004/T2003/T2002/T2001/T2000/T1923/T1999/T1560/T1554 reports `All tests successful`, `Files=12, Tests=46`. Existing current/original products, selected snapshots, prior identities, authenticated navigation and historical reader/flat authority/containment remain green. Book, syntax and staged doctrines/hooks accompany the commit; atomic real rollout .51.3.2.3 becomes the next leaf. Re-derivation is actual public/Perl boundaries on independently literal complete same-volume source/index/control fixtures; falsification is separately planted product/authority/file/input/dispatch/default-mode failures; durability is tracked code/tests, canonical 0108 and this owner.

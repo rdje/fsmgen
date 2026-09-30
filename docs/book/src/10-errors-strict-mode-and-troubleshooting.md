@@ -694,6 +694,21 @@ earlier ID gaps. Additive owned content/status/summary/question changes pass.
 scripts/run_with_ram_guard.sh -- prove -Iperl t/2006-decision-identity-modes.t
 ```
 
+Malformed source/original/catalog products, missing navigation rows, altered
+compatibility pages and unsafe files refuse in every selected gate mode.
+Orphan, reused, borrowed and misrouted authority also refuses. Installed default
+mode additionally preserves the published sealed originals; fixture pins cannot
+replace that authority. Supplied fingerprints must have the required lowercase
+hexadecimal form even when neither selected snapshot has a catalog. A valid
+no-catalog request retains its explicit non-catalog result.
+
+The controlled reader-dispatch tests also plant oversized output and diagnostics,
+malformed JSON products and signal failure after valid output. Each refuses:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2007-decision-hostile-boundaries.t
+```
+
 ## Current Boundary
 
 The project is trying to move toward:

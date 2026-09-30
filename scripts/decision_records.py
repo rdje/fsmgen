@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read sealed decision records and verify their exact, navigable projection."""
+"""Read exact decision products and verify authenticated navigation and continuity."""
 
 import argparse
 import hashlib
@@ -300,6 +300,9 @@ def main(argv=None):
             require(args.source_sha256 is not None and args.index_sha256 is not None,
                     'supplied store requires both independent fingerprints')
             require(root != default_root, 'supplied fingerprints cannot override the actual repository authority')
+            require(all(re.fullmatch(r'[0-9a-f]{64}', digest)
+                        for digest in (args.source_sha256, args.index_sha256)),
+                    'independent store authority digest is required')
             source_digest, index_digest = args.source_sha256, args.index_sha256
         else:
             source_digest, index_digest = STORE_SOURCE_SHA256, STORE_INDEX_SHA256
