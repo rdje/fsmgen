@@ -19,6 +19,12 @@ the lowered FSM. T1978 exercises this path through native/API/newline queries.
 The closure counts below remain the explicitly dated earlier census, not a new
 count inferred from this scoped dependency update.
 
+The same date's private sample-carrier integration makes LoweringIR import
+`FSM::Scheduler::ISF::RecordSamples`, which consumes `ISFRecordPortSamples`
+and its detached scope/value dependencies for supplied record-input actors.
+Context/enum frontend gates remain unwired and authored record ports still
+refuse. This is a scoped dependency update, not a fresh closure census.
+
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
 - Startup import review refreshed on `2026-09-06`; the live static trace includes

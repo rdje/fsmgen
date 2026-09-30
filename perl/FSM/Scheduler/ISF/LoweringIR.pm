@@ -24,6 +24,7 @@ use FSM::Scheduler::ISF::ChildCompletionOutputs qw(prepare_child_completion_outp
 use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
+use FSM::Scheduler::ISF::RecordSamples;
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 
@@ -639,6 +640,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         }
     }
     guard_child_activation($ir, $entry) if $entry;
+    FSM::Scheduler::ISF::RecordSamples->apply_to_module($ir, $actor, [$tx]);
     _finalize_ir($ir);
     $ir->{logical_controllers} = FSM::Scheduler::ISF::LogicalControllers->inventory($ir, $actor);
     return $ir;
@@ -1724,6 +1726,8 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     _apply_local_rule_payload_snapshots($ir, $payload_products);
     my $completion_products = retain_child_completions($ir);
     $ir->{child_completion_products} = $completion_products if $completion_products;
+    FSM::Scheduler::ISF::RecordSamples->apply_to_module($ir, $actor,
+        [grep {!$generated_children->{$_->{name}} && !$pruned_transactions->{$_->{name}}} @{$actor->{transactions}}]);
     _finalize_ir($ir);
     $ir->{logical_controllers} = FSM::Scheduler::ISF::LogicalControllers->inventory($ir, $actor);
     return $ir;
@@ -5156,6 +5160,10 @@ sub _build_signal_width_map {
         }
     }
     _collect_sample_widths($tx->{clauses}, \%widths);
+    my $record_samples = FSM::Scheduler::ISF::RecordSamples->transaction_plan($actor, $tx);
+    for my $alias (keys %{$record_samples ? $record_samples->{record_aliases} : {}}) {
+        $widths{$alias} = $record_samples->{bindings}{$alias}{type_spec}{width};
+    }
     _collect_shift_widths($tx->{clauses}, \%widths, $actor, $tx->{name});
     _collect_data_widths($tx->{clauses}, \%widths, $actor, $tx->{name});
     _collect_extract_widths($tx->{clauses}, \%widths, $actor, $tx->{name});
@@ -5876,6 +5884,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef, $p
     my $constant_values = _actor_constant_value_map($actor);
     _validate_supported_transaction_clauses($tx->{clauses}, $tn, 'transaction', undef, $generated_children, $actor);
     my $widths = _build_signal_width_map($actor, $tx);
+    my $record_samples = FSM::Scheduler::ISF::RecordSamples->transaction_plan($actor, $tx);
     my @st;
     my %ct;
     my %reset_values;   # ISF-REGISTER-RESET-VALUES: signal -> hardware reset value (opt-in)
@@ -6029,6 +6038,8 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef, $p
     _merge_sequential(\@st) if 0;  # disabled — needs more work
     _link_states(\@st, $tn);
     $ct{can_accept} = 1;
+    FSM::Scheduler::ISF::RecordSamples->declare_transaction_aliases(
+        $record_samples, \%ct, \%storage_roles, $widths, $tn);
     for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
     $_->{transaction} = $tn for @st;
     $_->{source_owner} = {kind => 'transaction', name => $tn} for @dt;

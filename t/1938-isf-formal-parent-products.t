@@ -22,9 +22,13 @@ sub compare_parent {
     my ($prepared, $ir) = @_;
     my $p = $prepared->{parent_activation_products};
     my %dts = map {$_->{name} => $_} @{$ir->{dt_blocks}};
+    # Activation products precede accepted-payload retention. Compare transformed
+    # DTs to the complete retained producer; every other DT remains exact/raw.
+    my %snapshots = map {$_->{name} => $_} @{$prepared->{parent_payload_snapshot_products}{dt_blocks}};
     for my $dt (@{$p->{dt_blocks}}) {
         ok(exists $dts{$dt->{name}}, "actual parent retains DT $dt->{name}");
-        is_deeply($dts{$dt->{name}}{assignments}, $dt->{assignments}, 'actual assignment targets/values/guards agree');
+        my $expected = $snapshots{$dt->{name}} // $dt;
+        is_deeply($dts{$dt->{name}}{assignments}, $expected->{assignments}, 'actual assignment targets/values/guards agree');
     }
     for my $field (qw(counters storage_roles)) {
         is_deeply({map {$_ => $ir->{$field}{$_}} keys %{$p->{$field}}}, $p->{$field}, "actual parent $field agree");
@@ -58,7 +62,20 @@ ISF
         my $safe = identity_plan($prepared, $all->{reserved_names});
         isnt(lc($safe->{formals}{main}{payload}{physical_name}), lc($helper), 'combined partial inventory avoids exact/case-folded collision');
         is_deeply(identity_plan($prepared, $all->{reserved_names}), $safe, 'allocation deterministic');
-        compare_parent($prepared, $lowerer->build_module($actor));
+        my $ir = $lowerer->build_module($actor);
+        compare_parent($prepared, $ir);
+        my ($dt) = grep {$_->{name} eq 'main_trigger_fanin'} @{$ir->{dt_blocks}};
+        my ($view) = grep {($_->{source_kind}//'') eq 'rule_trigger_payload_fanin'} @{$dt->{assignments}};
+        my ($capture) = grep {($_->{source_kind}//'') eq 'rule_trigger_payload_capture'} @{$dt->{assignments}};
+        my ($held) = grep {($_->{source_kind}//'') eq 'rule_trigger_payload_held_view'} @{$dt->{assignments}};
+        my $visible = "(& (state_active main_idle_0) ${rule}_main)";
+        is_deeply($view->{guard}, {expr=>$visible}, 'payload is visible only during the requesting initial state');
+        is_deeply($capture, {lhs=>'isf_snapshot_main_payload',rhs=>$helper,op=>'<-',
+            source_kind=>'rule_trigger_payload_capture',guard=>{expr=>"(& (state_active main_idle_0) ${rule}_main main_start)"}},
+            'independent witness captures the requesting value only at accepted entry');
+        is_deeply($held, {lhs=>'payload',rhs=>'isf_snapshot_main_payload',op=>'=',
+            source_kind=>'rule_trigger_payload_held_view',guard=>{expr=>"(! $visible)"}},
+            'independent witness retains the accepted value outside the request window');
         is_deeply($actor, $before, 'preparation preserves source');
     }
 };

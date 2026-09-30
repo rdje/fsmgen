@@ -10,10 +10,12 @@ answers:
   - "how are explicit record-leaf sample facts and private scalar type declarations prepared?"
   - "how do contextual record-input gates consume sampled scalar alias facts?"
   - "why did a malformed record-input selector turn a caller null entry into an empty map?"
+  - "how do prepared record-leaf samples retain private scalar types in actual modules?"
+  - "why did raw parent product comparisons fail after payload snapshot integration?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFRecordPortSamples.pm; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: perl/FSM/Support/ISFRecordPortSamples.pm; perl/FSM/Scheduler/ISF/RecordSamples.pm; t/1992-isf-record-port-sample-carriers.t; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; t/1938-isf-formal-parent-products.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0114 — Record value validation detaches facts before reading
@@ -231,5 +233,65 @@ shape and each declaration map before its first dereference. It scans the full
 list so a valid record prefix cannot conceal a malformed suffix. Absent
 interfaces remain absent. Permanent first-touch controls preserve complete
 caller JSON on both successful and refused selection; existing sample and
-context controls remain qualified. No public parser or module emitter consumes
-this selector yet.
+context controls remain qualified. At selector qualification, no public parser
+or module emitter consumed it. Module preparation now follows below.
+
+## Private scalar sample module carriers
+
+SEM `.60.4.3.2.3.3.2.2` consumes the qualified port-only plan for supplied
+resolved record-input actors in actual transaction and module preparation.
+Known scalar alias widths enter the existing width map before data-operation
+collectors. After transaction helpers are built, private sample declarations
+retain the existing `sample_alias` role. The exact eleven transaction products
+remain unchanged; no extra return product carries the new type information.
+
+The module consumer runs after actual parent/child helpers and writers exist.
+It checks alias ownership, declarations, widths and reset/default/type facts
+before adding ordinary core scalar type ASTs and typed size references. Actual
+type names are reserved deterministically. Explicit internal declarations keep
+unused aliases private rather than allowing inference to create public pins.
+Existing authored storage retains its reset; private samples inherit none.
+Parent, generated transaction child and owning-domain modules use this same
+consumer. Capture assignments, guards and state order retain their existing
+lowering owner. Source record ports still refuse before scheduler preparation.
+
+T1992 independently expects signed four-state and two-state bit declarations,
+exact private widths/roles, reserved-name suffixing, unchanged capture states,
+caller JSON and strict native CLI replay of actual emitted IAL0. Its generated
+fixture initially used local `do`, which creates no child; documented `spawn`
+and the emitted `worker.fsm` identity qualify the actual generated route.
+An isolated exact LoweringIR predecessor from
+`24d0abf84622ffaf6e665ae425e86f687968995c` makes these type/width/private-carrier
+controls RED even though its untyped parent FSM passes strict parsing. Replay
+alone cannot prove the expected scalar type, width or private role. The current
+consumer passes these distinct assertions. Tracked producer, test and predecessor
+history retain re-derivation, falsification and durability; ignored logs are
+supplementary. Complete existing facade and historical carrier regressions
+remain the no-regression oracle, with their command/result in the task leaf.
+
+Actual generated-helper/cross-writer collision qualification remains `.3`;
+complete replay/capture timing, domain-root validation and authored admission
+retain their subsequent owners. No native HDL execution or complete backend/
+consumer delivery is established by typed carrier preparation.
+
+## Raw and finalized parent-product oracle calibration
+
+The carrier slice's broader gate exposed P2 test drift in T1938. Its raw
+`parent_activation_products` comparison expected the pre-snapshot payload mux
+to equal finalized parent assignments. The exact 24d0 predecessor reproduces
+the same failure at its original line 27: expected `guard.port` is replaced
+by the qualified request/initial-state `guard.expr`. The existing accepted-
+payload contract remains owned by decision 0109 and T1965/T1966, rather than
+being reverted to satisfy this older comparator.
+
+The repaired comparator selects complete `parent_payload_snapshot_products`
+for transformed DTs and retains exact raw assignment comparisons elsewhere.
+Independent literal witnesses require the requesting initial-state view,
+entry-qualified capture and held view outside that window, for both exact and
+case-folded rule names. Initial witness spelling was corrected to the actual
+IR contract: `state_active` remains symbolic here and conjunctions flatten.
+An isolated LoweringIR copy omitting only
+`_apply_local_rule_payload_snapshots($ir, $payload_products)` makes both the
+complete-product and independent capture/held witnesses RED. Production code
+is unchanged for this repair. T1938 and the tracked transform retain a
+reproducible oracle; no native HDL replay or new timing claim follows.
