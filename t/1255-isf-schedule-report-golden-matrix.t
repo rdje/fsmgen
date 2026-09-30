@@ -1107,7 +1107,7 @@ sub typed_storage_source {
     (output frame_out (width 3)))
   (storage
     (var frame (type frame_t))
-    (var control (width 2) (reset 1)
+    (var control (width 2) (reset 1) (access ro)
       (fields
         (field enable (bits 0 0) (access rw) (reset 1)))))
   (transaction main

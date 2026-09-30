@@ -1165,9 +1165,8 @@ Required scope is assigned to `.38.1` in the semantic/API/MCP task tree:
   diagnostics. Banks and typed storage remain outside this scalar slice.
 
 The optional bank request has a separate owner, `.38.2`, after scalar
-qualification and an explicit bank-report mapping. Both leaves follow the
-current watchdog/reachability and provenance/interconnect repair lanes, before
-the configuration extensions that depend on generic widths. This intake does
+qualification and an explicit bank-report mapping. The intake originally sequenced both leaves after execution repairs; the
+2026-09-30 delivery below supersedes that sequence for passive metadata. This intake does
 not implement either feature. SPECFORGE retains its separate integration owner
 `FSMGEN-REQUESTS.5`; no external repository was modified or message sent.
 
@@ -1386,3 +1385,42 @@ The supplied corpus counts remain SPECFORGE evidence, not fresh FSMGen
 measurements. This intake includes no native simulation. All additional packets
 now have a preserved and independently exercised baseline; the reset question
 is answered, while the requested feature implementations remain open.
+
+
+## 2026-09-30: Scalar Storage-Word Access — Required Packet Delivery
+
+The scalar contract from `sf-isf-storage-register-access` is implemented under
+SEM `.38.1`. Width-based `var` and `variable` declarations accept `(access TOKEN)`
+with the existing lowercase field vocabulary. For example:
+
+```lisp
+(var status (width 8) (reset 0) (access ro))
+(var control (width 8) (reset 0) (access rw)
+  (fields (field enable (bits 0 0) (access ro))))
+```
+
+The schedule entry carries optional word `access` beside `width` and `fields`.
+Word and field values remain independent: no inheritance, consistency rule or
+synthetic whole-word field is imposed. The supplied primary and with-fields
+cases pass; the original controls retain their complete public products. The supplied unknown token `sometimes`, duplicate options,
+malformed operands, banks and typed storage fail with contextual diagnostics.
+No access-policy RTL, write protection, clear behavior or reset is generated.
+
+T1981 compares complete native/API/newline reports and actual scheduled FSM and
+SystemVerilog/Verilog against pre-change controls. Only authored access metadata,
+exact source relocation and generated date banners are allowed differences.
+Both scalar spellings and every accepted token retain identical carriers.
+The runnable book example and support-accounted `isf/storage_word_access.isf`
+show the new form. Capability discovery advertises the optional storage key.
+Evidence is retained in `docs/audits/storage-word-access-20260930/`.
+
+One existing report limit remains explicit: multi-domain public reports expose
+storage names without storage details, including field metadata. Domain source
+selection preserves the new fact, but that public detail projection is next
+under `.38.3`, before optional bank support `.38.2`. Single-clock packet R1-R3
+are delivered without claiming those extensions. The previous blanket dependency
+on controller/runtime repairs is narrowed by decision 0109: this change proves
+unchanged hardware and makes no new execution claim. Those repairs remain open.
+
+SPECFORGE's integration remains its `FSMGEN-REQUESTS.5`; no external checkout,
+pin, ticket or message was changed here.

@@ -1,0 +1,20 @@
+(actor csr_access
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input wdata (width 8))
+    (output done)
+    (output status_out (width 8))
+    (output control_out (width 8)))
+  (storage
+    (var status (width 8) (reset 0) (access sometimes))
+    (var control (width 8) (reset 0)
+      (fields
+        (field enable (bits 0 0) (access rw)))))
+  (transaction main
+    (on start)
+    (set control wdata)
+    (update status_out status)
+    (update control_out control)
+    (complete done)))

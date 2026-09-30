@@ -8864,8 +8864,16 @@ sub _parse_storage($self, $clause, $actor_name) {
                 );
                 next;
             }
+            if ($option_name eq 'access') {
+                confess "Error: actor '$actor_name' storage '$name' access requires '(access TOKEN)' with one scalar token\n"
+                    unless @$option == 2 && defined($option->[1]) && !ref($option->[1]);
+                confess "Error: actor '$actor_name' storage '$name' has unknown access token '$option->[1]'; expected ro|rw|wo|w1c|w0c|rc|rs|warl|wpri|reserved\n"
+                    unless _is_actor_storage_field_access($option->[1]);
+                $parsed_options{access_value} = $option->[1];
+                next;
+            }
             # ISF-REGISTER-RESET-VALUES.4: `(reset V)` sets a storage var's hardware reset
-            # value (the value the register powers up at) — for register-map / CSR fields.
+            # assignment value — it does not establish a power-on initializer.
             if ($option_name eq 'reset') {
                 confess "Error: actor '$actor_name' storage '$name' reset requires '(reset V)' with a non-negative integer literal\n"
                     unless @$option == 2 && defined($option->[1]) && !ref($option->[1]) && $option->[1] =~ /\A[0-9]+\z/;
@@ -8884,6 +8892,8 @@ sub _parse_storage($self, $clause, $actor_name) {
             unless defined($width) || defined($type);
         confess "Error: actor '$actor_name' storage '$name' fields require scalar '(var ...)' storage with '(width N)'; typed storage fields are not supported in this slice\n"
             if defined($parsed_options{fields_value}) && defined($type);
+        confess "Error: actor '$actor_name' storage '$name' access requires scalar var or variable storage with '(width N)'; bank and typed storage access are not supported in this slice\n"
+            if defined($parsed_options{access_value}) && ($kind ne 'var' || defined($type));
 
         my $reset = $parsed_options{reset_value};
         if (defined $reset) {
@@ -8919,6 +8929,8 @@ sub _parse_storage($self, $clause, $actor_name) {
         };
         $entries[-1]{fields} = $parsed_options{fields_value}
             if defined($parsed_options{fields_value});
+        $entries[-1]{access} = $parsed_options{access_value}
+            if defined($parsed_options{access_value});
         $entries[-1]{type} = $type if defined $type;
         $entries[-1]{domain} = $parsed_options{domain_value}
             if defined($parsed_options{domain_value});

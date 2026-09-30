@@ -162,9 +162,9 @@ bank elements stay internal when replayed; semantic/API/MCP port inventories
 exclude them. An explicitly reset unwritten scalar resets and holds when the
 module has a hardware reset. Without a writer or explicit reset, it remains
 undriven; written registers keep their existing default reset behavior.
-Generated transaction-child storage ownership remains separately unqualified;
-this does not establish cross-module shared storage. The
-lowerer also carries their widths as normal width evidence so updates and data
+Generated children use qualified live typed read handoffs and sole whole-value
+write ownership; partial or competing child writers remain separately deferred.
+The lowerer also carries their widths as normal width evidence so updates and data
 operations can reuse the existing expression and mux paths. Schedule reports
 include declared storage entries in `inferred_storage` with kind `register`,
 role `actor_storage`, and positive integer `width`. Declared typed
@@ -228,6 +228,28 @@ promised by this first slice. The public fixture `isf/storage_fields.isf` is
 support-accounted as `feature.isf_storage_field_metadata`; check JSON and
 normalized semantic JSON report that matched source identity, while the field
 map remains a schedule JSON payload.
+
+### 5.1.2 Storage-Word Access Metadata
+
+Width-based scalar `(var NAME ...)` and `(variable NAME ...)` entries accept
+optional `(access TOKEN)` with exactly `ro`, `rw`, `wo`, `w1c`, `w0c`, `rc`,
+`rs`, `warl`, `wpri`, or `reserved`. A word can carry access with or without
+fields. Word and field access are independent authored facts: no inheritance,
+implicit word value, synthetic field or consistency check is applied.
+
+For example, `(var status (width 8) (reset 0) (access ro))` reports
+`inferred_storage[].access` as `ro` without a `fields` entry. A word marked
+`rw` may contain a field marked `ro`. These labels do not enforce write
+permissions or implement clear-on-read/write behavior. Scheduled FSM and HDL,
+including hardware reset behavior, are unchanged by adding access metadata.
+
+Unknown tokens, duplicate access options, missing/non-scalar/extra operands,
+and access on bank or typed storage declarations fail closed with the storage
+name and relevant token/carrier context. Domain source selection preserves the fact, but the existing multi-domain
+public report publishes storage names only; detail projection is owned by SEM `.38.3`. The public fixture
+`isf/storage_word_access.isf` is support-accounted as
+`feature.isf_storage_word_access`; check/semantic queries validate it, while
+schedule queries expose the metadata through native/API/newline transports.
 
 ### 5.2 Actor-Owned Bank Access
 

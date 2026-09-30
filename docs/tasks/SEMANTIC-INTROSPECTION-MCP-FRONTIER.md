@@ -1368,20 +1368,27 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38`
   Status: `active`
   Goal: `Represent checked storage-word access independently of field access, without changing generated behavior.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.2`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement required SPECFORGE storage-register-access R1-R3 for width-based scalar var and variable entries.`
   Acceptance: `Accept exactly the existing lowercase field-access token set on scalar storage words, with or without fields; preserve independent word/field facts without inheritance or consistency constraints. Reject duplicate, malformed, unknown and bank/typed access forms with storage/token diagnostics. Project optional access beside width/fields wherever scalar storage is reported, including applicable domain views and API/MCP schedule projections. Retain original caller controls from the .37 audit; prove unchanged scheduled FSM and date-normalized generated HDL/reset behavior, unchanged baseline/whole-word-field reports, token/alias coverage and default/strict/native/API/newline negative controls. Update book/spec/public contract and support coverage before commit.`
-  Verification: `Current parser _parse_storage rejects access; existing _is_actor_storage_field_access defines the accepted vocabulary and field metadata reaches schedule inferred_storage only. Native/API/newline intake preserves both accepted controls and all refusals. Schedule semantic metadata must not be confused with runtime access enforcement. Schedule after the existing watchdog/reachability and .32.2/.32.4 repair lanes, before the generic-width-dependent configuration extensions; no dependency on generic widths.`
-  Commit: `pending`
+  Verification: `Required scalar packet R1-R3 qualified: parser checks the existing field vocabulary on width-based var/variable words; LoweringIR preserves an independent scalar fact and JSON reports optional inferred_storage[].access. Complete supplied native/API/newline reports retain all prior fields except authored access; actual scheduled FSM and both HDL targets equal pre-change controls except HDL date. T1981 Files=1, Tests=6 PASS; T1453/T1398/T1144/T1148/T1112/T1255/T1376/T1978 Files=8, Tests=31 PASS. Baseline, red, initial/final feature and regression logs/source identities are retained in docs/audits/storage-word-access-20260930/. First candidate assumed nonexistent public domain detail; root cause is name-only projection, now owned immediately next by .38.3. Initial regression had a wrong T1398 filename, corrected and rerun. Decision 0109 narrows over-broad execution prerequisites for passive metadata; those runtime owners remain open. Stale child-storage spec disclaimers and power-on wording are corrected against qualified ownership contracts. Book/spec/capabilities/support fixture and canonical fact are synchronized. No new native runtime.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.2`
   Status: `pending`
   Goal: `Select and implement the optional R4 storage-bank access metadata extension after scalar access is qualified.`
   Acceptance: `Read scalarization/domain/report contracts after .38.1 and choose an unambiguous bank-level access projection without inventing per-field facts or access-policy RTL. Implement the same checked token set only if bank identity and element ownership survive every affected report; otherwise split the required report prerequisite into owned leaves. Prove unchanged generated FSM/HDL, unknown/duplicate/malformed refusal, native/API/newline parity and no implicit reset or access enforcement. Keep scalar metadata and unrelated bank boundaries unchanged; update book/spec and commit separately.`
   Verification: `Caller labels R4 optional; it is retained as scheduled work after .38.1 rather than silently dropped. Until its qualified implementation, access on bank remains refused.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.3`
+  Status: `pending`
+  Goal: `Publish owned storage metadata in multi-domain schedule reports.`
+  Acceptance: `Immediately after .38.1, select and add a bounded per-domain storage-detail projection preserving existing storage-name lists and top-level empty ownership. Reproduce multi-domain field and word metadata absence, qualify independent owned-domain expectations and existing report compatibility, advertise exact keys/shapes across native/API/newline capabilities, update report golden controls/book/spec, and prove unchanged FSM/HDL. Do not conflate domain summaries with child-report publication or promote runtime controller behavior.`
+  Verification: `T1981 initial feature run expected domain metadata in public clock_domains but the actual report contains only storage names. JSON::multi_domain_report_hash clears top inferred_storage and _clock_domain_entry_summary forwards names/counts only; selected DomainSource actors retain and independently report the metadata. This is a pre-existing public projection gap affecting both field and new word facts, not metadata inheritance or hardware loss. Priority is next after .38.1, before optional bank .38.2. Initial log is retained in the storage-word audit.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.39`
@@ -2226,7 +2233,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Resolve the additional SPECFORGE duration, named-timer and aggregate-port feature requests and the unstated-reset question supplied on 2026-09-29.`
   Acceptance: `Own every requested capability and question, retain authorized packet inputs locally, independently reverify current compiler observations, distinguish supplied corpus/scale measurements from FSMGen evidence, and select bounded roadmap-aligned implementation and qualification leaves. Read sibling packet inputs only; do not change the SPECFORGE checkout, run its commands blindly, inspect submodule internals or treat illustrative syntax as selected. Director states SPECFORGE is blocked, so finish and commit only the active resource validator, then prioritize downstream intake and the smallest shippable unblocks. Resolve the reset question first, inventory other packets promptly, and retain broader compiler prerequisites only where a specific request needs them. No dirty pivot.`
-  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, reproduction, provenance delivery and complete question answer are qualified under .60.3, with P1 malformed-option repair .62 complete. Duration packet preservation and baseline reproduction are qualified under .60.1.1; named-timer packet preservation and baseline reproduction are qualified under .60.2.1; aggregate packet preservation and baseline reproduction are qualified under .60.4.1. Required feature deliveries remain open; next inspect .38.1 metadata-only dependency scope before implementing the smallest downstream unblock. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
+  Verification: `Read all four packet README files from the director-authorized external directories. Reset packet preservation, reproduction, provenance delivery and complete question answer are qualified under .60.3, with P1 malformed-option repair .62 complete. Duration packet preservation and baseline reproduction are qualified under .60.1.1; named-timer packet preservation and baseline reproduction are qualified under .60.2.1; aggregate packet preservation and baseline reproduction are qualified under .60.4.1. Required duration/timer/record feature deliveries remain open. Required scalar storage access from the earlier packet is qualified under .38.1; next .38.3 publishes existing domain storage details before optional banks and further features. The requests cite FSMGen 8513cef4254db4572ab8dd3c94f3953df358f0a9 plus a separate SPECFORGE pin; neither is a current-result claim. Corpus counts and timing observations are supplied external evidence, not independently verified here.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4`
 
@@ -3060,9 +3067,9 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Next `.38.1` reviews the recorded
-execution prerequisites against the metadata-only access contract, then delivers
-the smallest qualified downstream unblock; the other feature contracts remain owned. The resource activation validator is qualified; target-local priority
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Next `.38.3` publishes
+owned domain storage metadata, then optional banks `.38.2`; duration, timer and
+record-port contracts and deliveries remain owned. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
 after literal-guard repair and independently retained runtime qualification, after
@@ -3070,9 +3077,9 @@ exact named-drive invocation sources, following
 source identities, declaration and implicit whole-root qualification, following
 the physical target resolver and retained admission baseline. Conservative admission precedes independent controllers and local-call
 timing under the following sibling leaves. `.49.2.3` qualifies direct-call runtime;
-`.49.3` owns explicit-local physical scope. These remain prerequisites to the
-SPECFORGE storage/register-access feature in `.38.1` and optional banks `.38.2`.
-Packet intake `.37` is complete; it does not implement those reports.
+`.49.3` owns explicit-local physical scope. These remain prerequisites to execution promotion. Decision 0109 narrows the
+former blanket dependency on passive metadata: scalar access `.38.1` proves
+unchanged hardware; domain detail `.38.3` and optional banks `.38.2` follow.
 
 Remaining partial/bank/competing writer work is under `.39.2.2.4.3` onward;
 watchdog rearming is `.32.1.3.3.3` and broad behavior/API/MCP signoff is
@@ -5165,3 +5172,17 @@ Re-derivation uses actual public commands, parsed type evidence and the emitted
 carrier; falsification uses independent expected shapes, matching-copy report
 corruption and carrier mutation; durability uses tracked packet/products, logs,
 hashes and verifier. This closes intake, not feature implementation.
+
+
+## Acceptance Checklist — SEM .38.1 scalar storage access delivery
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Retained --emit-schedule-json intake and T1981 red show Parser::_parse_storage rejecting the access option. Existing field vocabulary and LoweringIR::_declared_storage_for_ir provide the bounded metadata path; JSON::_storage_summary previously omitted word access. The initial domain test separately traced missing public details to multi_domain_report_hash and _clock_domain_entry_summary, owned by .38.3.
+- [x] **ADDRESSED (verified)** — Width-based var/variable words accept the checked field vocabulary, preserving independent word and field facts with precise unknown/malformed/duplicate/carrier refusals. Detached declared storage projects optional access in schedule reports and discovery. T1981 checks exact supplied native/API/newline products, both spellings/tokens, omission/no-inheritance, domain source ownership and complete FSM/HDL equality to pre-change controls. No hardware policy consumes access. Decision 0109 scopes passive metadata independently of execution repairs. The support fixture, book/spec, stale ownership wording and downstream response match this bounded delivery and explicit domain-report limit.
+- [x] **NO REGRESSION** — T1981 reports `All tests successful. Files=1, Tests=6`; focused storage/reset/public-contract/golden/book/provenance regression reports `All tests successful. Files=8, Tests=31`. Pre-change capture reports `All tests successful. Files=1, Tests=2`. Original red, domain-oracle correction and wrong-path regression invocation are retained alongside passing logs. Independent identity/product verification, publication checks and staged doctrines qualify durability. No native runtime required for identical hardware.
+
+Re-derivation uses actual native/API/newline commands and both HDL emitters;
+falsification uses the red feature test, independent token/field expectations,
+malformed and unsupported-carrier controls, and exact old-product comparisons;
+durability is T1981 plus retained sources/products/logs/hashes in the audit.
+The multi-domain storage-detail gap is immediately next under `.38.3`; it is
+not hidden by scalar delivery. Historical native and execution defects remain open.

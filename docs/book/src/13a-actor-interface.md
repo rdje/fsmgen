@@ -877,10 +877,43 @@ Each field uses `(field NAME (bits HI LO) ...)`; names are unique HDL
 identifiers, ranges are literal and inclusive, gaps are allowed, and
 overlaps or ranges outside the parent width fail closed. Optional
 `(access ro|rw|wo|w1c|w0c|rc|rs|warl|wpri|reserved)` is metadata only.
-A storage word itself cannot yet carry `(access ...)`; checked word-level
-metadata is tracked separately from field access. A whole-word placeholder
-field would invent a source fact, so keep unrepresented register access in the
-caller model until word metadata support ships. No access-policy RTL is implied.
+A width-based scalar `var` or `variable` may also carry `(access TOKEN)` on
+the word itself, with the same lowercase vocabulary. The word and its fields
+state independent facts: neither inherits from the other and they need not
+match. Omitting a word access omits `inferred_storage[].access`; omitting field
+access omits that field's `access`. No placeholder field is needed.
+
+```lisp
+(actor storage_word_access
+  (clock clk)
+  (reset rst_n)
+  (interface (input start) (input wdata (width 8))
+             (output done) (output status_out (width 8))
+             (output control_out (width 8)))
+  (storage
+    (var status (width 8) (reset 0) (access ro))
+    (variable control (width 8) (reset 0) (access rw)
+      (fields (field enable (bits 0 0) (access ro)))))
+  (transaction main (on start)
+    (set control wdata)
+    (update status_out status)
+    (update control_out control)
+    (complete done)))
+```
+
+Here `status` reports word `access: "ro"` without fields. `control` reports
+word `access: "rw"`, while `enable` independently reports field `access: "ro"`.
+The assignment remains ordinary authored behavior; access labels do not install
+write protection or read/clear logic. The public fixture
+`isf/storage_word_access.isf` also demonstrates word metadata with and without
+fields. Single-clock schedule/API/MCP reports retain it. Multi-domain reports currently
+publish only domain storage names; full storage detail is owned by SEM `.38.3`.
+Check and semantic queries validate the source and identify the supported
+fixture; the metadata payload belongs to the schedule report.
+
+Unknown tokens, duplicate options, missing/nested/extra values, banks and typed
+storage fail closed with storage-specific diagnostics. Word access changes no
+scheduled `.fsm`, generated HDL, hardware reset, assertions or register model.
 Optional field `(reset V)` must match the corresponding bit slice of an
 explicit parent storage reset. Inline `(enum (NAME VALUE)...)` metadata is
 accepted when values fit the field width. Actor `(enums ...)` references,

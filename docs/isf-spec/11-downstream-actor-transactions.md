@@ -327,8 +327,9 @@ Rules:
 - Ordinary/domain FSMs carry declared storage as explicit internal roles,
   preserving read-only and unused scalars and bank elements without exporting
   ports. Explicit reset-only scalars reset and hold; absent reset metadata or
-  hardware reset invents no initialization. Generated transaction-child
-  storage ownership remains separately unqualified.
+  hardware reset invents no initialization. Generated transaction children
+  use qualified live typed read handoffs and sole whole-value write ownership;
+  partial and competing child writers remain separately deferred.
 - Schedule reports expose declared storage through `inferred_storage`.
 - Scalar `(var ...)` / `(variable ...)` storage entries may carry optional
   `(fields (field NAME (bits HI LO) ...))` metadata. The first shipped slice is
@@ -344,6 +345,14 @@ Rules:
   fixture for scalar storage field metadata. Its check JSON and normalized
   semantic JSON report a matched `feature.isf_storage_field_metadata` support
   identity; schedule JSON remains the public field-map payload.
+- Width-based scalar `var` and `variable` entries also accept `(access TOKEN)`
+  on the word, using the same lowercase access vocabulary. Optional
+  `inferred_storage[].access` is independent of `fields[].access`; neither
+  implies or overrides the other. No field is invented for a whole word.
+  Unknown, duplicate or malformed access and access on bank/typed storage
+  fail closed. This metadata changes no FSM/HDL, reset or access enforcement.
+  `isf/storage_word_access.isf` carries the supported fixture identity
+  `feature.isf_storage_word_access`; the payload remains schedule metadata.
 - Existing runtime field/data operations such as `set-field`, `when-field`,
   `extract`, and `assemble` remain scheduled behavior and must not be used to
   stand in for a static PDF register table.

@@ -285,6 +285,8 @@ sub _storage_summary($self, $ir) {
             $entry{type_kind} = $type_kind if defined $type_kind;
             $entry{fields} = _storage_field_summary($signal->{fields})
                 if ref($signal->{fields}) eq 'ARRAY' && @{$signal->{fields}};
+            $entry{access} = $signal->{access}
+                if defined($signal->{access}) && !ref($signal->{access}) && length($signal->{access});
             push @storage, \%entry;
         }
     }

@@ -1232,7 +1232,8 @@ verification_observations[]: name, role, clock, reset, signals
 verification_observations[].signals[]: name, direction, width
 actor_params[]: name, value
 inferred_storage[] required: name, kind
-inferred_storage[] optional: role, type, type_kind, width, fields
+inferred_storage[] optional: role, type, type_kind, width, fields, access
+inferred_storage[].access: optional checked word access, independent of fields
 inferred_storage[].fields[]: name, msb, lsb, width, access, reset, enum
 transactions[]: name, states, count
 transaction_waits[]: transaction, cycles, count_kind, count_source,

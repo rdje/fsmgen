@@ -126,4 +126,12 @@ trigger probe is retained with its corrected interpretation.
 
 This selects execution and admission boundaries without claiming an implemented
 controller, arbitration protocol, scoped-port repair or storage-access feature.
-Those remain prerequisites to the requested semantic register-access metadata.
+The original rollout also placed passive register-access metadata behind those
+execution repairs. That sequencing is narrowed on 2026-09-30 under SEM `.38.1`:
+the SPECFORGE R1-R3 contract expressly requires unchanged scheduled FSM and HDL.
+Parser declaration metadata, the detached declared-storage snapshot and schedule
+JSON projection can satisfy it without touching controller or writer admission.
+Exact before/after carrier and HDL controls are required for that separation.
+The director has prioritized blocked downstream feature requests. Execution
+repairs remain mandatory for their affected runtime claims; passive metadata
+delivery does not qualify, hide or close them.

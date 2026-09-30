@@ -1,0 +1,42 @@
+{
+  "base_producer_sha256": {
+    "perl/FSM/Adapter/ISF/Parser.pm": "8796b7e39557cc5c4e53b63a3d53667bb3ab6c7f3afc03611e9f2823dacfe993",
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": "9b48b7817ac327838a982d833704050f2e6b2e0f6eaa433667086a08bbf88ff0",
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": "3e824aab0497219c2995efa4e738f2b67b5f290632157acde652d42039336fe0",
+    "perl/FSM/Support/ISFPublicInterfaceContract.pm": "4991d692b648d32df086918308733ab3fbf0c18e402ae560084ee747a9ff6356",
+    "perl/FSM/Support/RegressionCorpus.pm": "573778729ebd821f9136371b4a3aca2f40446ab9991d3200610c9391f13be64e"
+  },
+  "base_revision": "5bad5f36b8d81cd2bfaf823c7b32b3d757d1ad08",
+  "candidate_sha256": {
+    "perl/FSM/Adapter/ISF/Parser.pm": "3575a61f47a4e2629714fe89e7b680aee5e321d1cd9a13b6c7f8f26acb866722",
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": "7ad6169829a37f2f86486533bd7d4881c6edcf97bdda78c652891c4235f09601",
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": "e27dd92a74b2715ef1b4d31acab17b43fd55c9119c56dc453b97044a5f1e56d3",
+    "perl/FSM/Support/ISFPublicInterfaceContract.pm": "308285da11b71df2af5c9bef845c24e5c96d7f90803d9d21ab528da760d14903",
+    "perl/FSM/Support/RegressionCorpus.pm": "9f62355a6b20626cb2915b3395ebe6c047456f0742b681aa2f487b86a80cc603",
+    "t/1981-isf-storage-word-access.t": "91ce612558b6e7834c7b0c0a1aaba8c965a3d8919371a1bcbb80c4fd4b28051e"
+  },
+  "files": {
+    "baseline-good.isf": "95b865ead75cb8a35412eb4944d462eeff2e81af50e88120329d037084e709cb",
+    "baseline.json": "0925cb4b0406aa19e065ba1a1dd75ba24b56ef9e261657b825b5bb08da8ad8a1",
+    "capture-baseline.t": "620f99824a5f7045bf77cbedd3bb91eb283e1756d18eb24b1a957a3f1f8fccf6",
+    "logs.json": "82c0b04f98f820f3e3c6da0e6bf0fe138a9bd0265bd53e91780600476db9a78d",
+    "register-access-with-fields.isf": "0d3b39473de44c880832017f1b4a68bcb5143d8a8e6ccb1918f08a20ef093305",
+    "register-access.isf": "7e31c17891b841e914cd21b5f70f93d167a38ce68f717cda56ea12e3c63d6210",
+    "unknown-token.isf": "251fef78d02c6cae62c0b736590a0f2936453b4033a6a67c1de8d1421605b543",
+    "verify.py": "fd45eb04fccb98a0d3bf1f61023545788469f974dd48c50a55f841137ea62ae1",
+    "whole-word-field.isf": "ad24cf6cd1fc7dec49377eb3b286fec8a190ce3f766b8702de434be25a94a7f1"
+  },
+  "initial_dispositions": [
+    "Red run reproduces the old unsupported access parser option.",
+    "First candidate fails only incorrect aggregate domain-detail expectations. Root cause is existing name-only public domain projection; corrected the compatibility oracle and immediately scheduled full detail under .38.3.",
+    "First regression invocation used a nonexistent T1398 filename after T1453 passed; corrected to t/1398-isf-storage-reset-value.t and reran the complete focused set."
+  ],
+  "original_source": "docs/audits/specforge-storage-register-access-intake-20260926.json",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.38.1",
+  "qualification": {
+    "baseline": "Files=1, Tests=2 PASS",
+    "feature": "Files=1, Tests=6 PASS",
+    "regression": "Files=8, Tests=31 PASS"
+  },
+  "scope": "Required scalar storage-word access R1-R3; exact before/after scheduled FSM and SystemVerilog/Verilog comparisons. No runtime promotion or new native execution. Multi-domain public storage detail is separately owned by SEM .38.3; optional banks by .38.2."
+}

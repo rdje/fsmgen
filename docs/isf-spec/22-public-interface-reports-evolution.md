@@ -88,7 +88,7 @@ actor_network association_schedules entries: association, kind, lifetime, owner_
 actor_network group_schedules entries: group, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, sink
 actor_network event_waits entries: transaction, context, instance, event, signal, source
 actor_network transaction_triggers entries: owner_transaction, context, instance, target_transaction, signal, sink
-inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width, optional fields
+inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width, optional fields, optional access
 transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, count_kind, count_source, entry_state, exit_state, counter_signal, counter_width
 transaction_waits count_kind values: static, runtime_scalar, runtime_expression
@@ -172,7 +172,12 @@ also report the authored alias in `type` and the resolved top-level kind in
 `type_kind`; these are bounded summaries and do not expose raw type-spec
 hashes. Declared scalar actor-owned storage may also report optional
 `fields[]` metadata entries with `name`, `msb`, `lsb`, `width`, and optional
-`access`, `reset`, and inline `enum[]` member metadata. The machine-readable
+`access`, `reset`, and inline `enum[]` member metadata. Width-based scalar
+storage also reports optional word `access` independently of `fields[].access`.
+The token vocabulary is `ro`, `rw`, `wo`, `w1c`, `w0c`, `rc`, `rs`, `warl`,
+`wpri`, `reserved`; omission remains omission. Selected domain source actors preserve it; the multi-domain public summary
+currently publishes storage names only, with detail projection owned by SEM `.38.3`. Word and field metadata never change FSM/HDL behavior.
+The machine-readable
 contract advertises these through
 `schedule_report_storage_kind_values`, `schedule_report_storage_role_values`,
 `schedule_report_storage_optional_keys`, and

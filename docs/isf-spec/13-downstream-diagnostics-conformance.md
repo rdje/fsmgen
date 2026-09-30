@@ -125,6 +125,7 @@ isf/spi_master.isf
 isf/spawn_parent.isf
 isf/rule_resource_arbiter.isf
 isf/full_featured.isf
+isf/storage_word_access.isf
 isf/clock_domain_event_crossing.isf
 isf/clock_domain_dual_event_crossing.isf
 isf/clock_domain_no_reset_event_crossing.isf
@@ -867,3 +868,11 @@ changes:
   manifest, live-doc, or tested-by metadata changes;
 - `docs/ISF_LIBRARY_CATALOG.md` when reusable library semantics change;
 - owning task tree and live recovery docs.
+
+
+Storage-word metadata conformance is owned by T1981: both scalar spellings,
+checked tokens, independent field facts, exact retained carrier/HDL equality,
+malformed/carrier refusals, domain ownership, discovery and complete
+native/API/newline reports. T1453 retains field-only compatibility. This passive
+metadata qualification does not promote independent-controller or local-call
+runtime support; their separately tracked repair gates remain open.
