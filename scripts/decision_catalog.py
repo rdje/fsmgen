@@ -59,13 +59,18 @@ def detached(value):
     return decode_document(json.dumps(value, ensure_ascii=False, allow_nan=False).encode('utf-8'))
 
 
-def read_bytes(root, relative):
-    """Reject every symlink component and noncanonical/escaping relative path."""
+def relative_parts(relative):
     bounded_string(relative, 'file path', 512)
     parts = relative.split('/')
     require(not relative.startswith(('/', '~')) and '\\' not in relative
             and all(part and part not in ('.', '..') for part in parts),
             f'unsafe path: {relative}')
+    return parts
+
+
+def read_bytes(root, relative):
+    """Reject every symlink component and noncanonical/escaping relative path."""
+    parts = relative_parts(relative)
     path = Path(root)
     for part in parts:
         path /= part

@@ -1,0 +1,199 @@
+"""Selected object IDs and post-transition births cannot borrow ambient state."""
+
+import copy
+import subprocess
+import sys
+import unittest
+from pathlib import Path
+
+sys.dont_write_bytecode = True
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'scripts'))
+import decision_store_git as selected
+import test_decision_store as fixtures
+import test_decision_catalog as literals
+
+
+class SelectedStoreAccess(unittest.TestCase):
+    def setUp(self):
+        self.fixture = fixtures.AuthenticatedDecisionStore()
+        self.fixture.setUp()
+        self.addCleanup(self.fixture.doCleanups)
+        self.root = self.fixture.root
+        self.git('init', '-q')
+        self.git('add', '.')
+        self.git('commit', '-q', '-m', 'fixture initial store')
+
+    def git(self, *arguments, input=None):
+        result = subprocess.run(['git', '-C', str(self.root),
+                                 '-c', 'user.name=Decision Store Fixture',
+                                 '-c', 'user.email=fixture@example.invalid',
+                                 '-c', 'commit.gpgsign=false', '-c', 'core.hooksPath=.fixture-hooks',
+                                 *arguments], input=input, capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        return result.stdout
+
+    def load(self, snapshot):
+        store = fixtures.store.load(self.root, self.fixture.source_digest, self.fixture.index_digest,
+                                    reader=snapshot.read)
+        routes = fixtures.store.verify(self.root, store, reader=snapshot.read, paths=snapshot.root_paths)
+        fixtures.store.verify_transition(store, routes)
+        return store
+
+    def test_index_and_resolved_revision_use_exact_regular_blob_products(self):
+        expected = self.git('rev-parse', 'HEAD').decode().strip()
+        for selector in ('index', 'HEAD', expected):
+            with self.subTest(selector=selector):
+                snapshot = selected.GitSnapshot(self.root, selector)
+                prepared = self.load(snapshot)
+                self.assertEqual(prepared['original_index'], fixtures.ORIGINAL_INDEX)
+                self.assertEqual(snapshot.read(fixtures.store.INDEX), fixtures.ROOT_INDEX.encode())
+                self.assertEqual(snapshot.revision, None if selector == 'index' else expected)
+
+    def test_captured_index_and_head_survive_later_index_commit_and_worktree_changes(self):
+        index = selected.GitSnapshot(self.root, 'index')
+        head = selected.GitSnapshot(self.root, 'HEAD')
+        self.fixture.write(fixtures.store.INDEX, '# Later wrong index\n')
+        self.git('add', fixtures.store.INDEX)
+        self.git('commit', '-q', '-m', 'fixture changed index')
+        self.assertEqual(index.read(fixtures.store.INDEX), fixtures.ROOT_INDEX.encode())
+        self.assertEqual(head.read(fixtures.store.INDEX), fixtures.ROOT_INDEX.encode())
+        self.load(index)
+        self.load(head)
+        current = selected.GitSnapshot(self.root, 'HEAD')
+        with self.assertRaisesRegex(ValueError, 'membership'):
+            self.load(current)
+
+    def test_unstaged_data_cannot_replace_a_selected_blob(self):
+        snapshot = selected.GitSnapshot(self.root, 'index')
+        path = self.fixture.catalog['records'][0]['path']
+        self.fixture.write(path, '# Wrong ambient body\n')
+        self.assertEqual(snapshot.read(path), literals.SECOND.encode())
+        self.load(snapshot)
+
+    def test_replace_refs_cannot_change_captured_object_identity(self):
+        snapshot = selected.GitSnapshot(self.root, 'HEAD')
+        original = snapshot.objects[fixtures.store.INDEX][1]
+        replacement = self.git('hash-object', '-w', '--stdin', input=b'wrong replacement\n').decode().strip()
+        self.git('replace', original, replacement)
+        self.assertEqual(self.git('cat-file', 'blob', original), b'wrong replacement\n')
+        self.assertEqual(snapshot.read(fixtures.store.INDEX), fixtures.ROOT_INDEX.encode())
+        self.load(snapshot)
+
+    def test_symlink_and_gitlink_are_never_regular_sources(self):
+        path = self.root / self.fixture.catalog['records'][0]['path']
+        original = path.read_bytes()
+        path.unlink()
+        retained = self.root / 'retained-source'
+        retained.write_bytes(original)
+        path.symlink_to(retained)
+        self.git('add', str(path.relative_to(self.root)))
+        snapshot = selected.GitSnapshot(self.root, 'index')
+        with self.assertRaisesRegex(ValueError, 'not a regular blob'):
+            snapshot.read(str(path.relative_to(self.root)))
+        revision = self.git('rev-parse', 'HEAD').decode().strip()
+        self.git('update-index', '--add', '--cacheinfo', f'160000,{revision},docs/decisions/external.md')
+        snapshot = selected.GitSnapshot(self.root, 'index')
+        with self.assertRaisesRegex(ValueError, 'not a regular blob'):
+            snapshot.read('docs/decisions/external.md')
+
+    def test_conflicting_stages_are_refused_before_reading(self):
+        path = 'docs/decisions/INDEX.md'
+        first = self.git('hash-object', '-w', '--stdin', input=b'first\n').decode().strip()
+        second = self.git('hash-object', '-w', '--stdin', input=b'second\n').decode().strip()
+        records = f'0 {"0" * 40}\t{path}\n100644 {first} 1\t{path}\n100644 {second} 2\t{path}\n'
+        self.git('update-index', '--index-info', input=records.encode())
+        with self.assertRaisesRegex(ValueError, 'conflicting Git index stages'):
+            selected.GitSnapshot(self.root, 'index')
+
+    def test_unsafe_missing_unbounded_selectors_paths_and_blobs_refuse(self):
+        for selector in ('HEAD:docs/decisions/INDEX.md', '--help', '../HEAD', 'HEAD~99'):
+            with self.subTest(selector=selector):
+                with self.assertRaisesRegex(ValueError, 'snapshot selector'):
+                    selected.GitSnapshot(self.root, selector)
+        snapshot = selected.GitSnapshot(self.root, 'HEAD')
+        for path, message in [('../README.md', 'unsafe path'), ('docs//decisions/INDEX.md', 'unsafe path'),
+                              ('missing.md', 'unresolved selected source'),
+                              ('docs/decisions', 'unresolved selected source')]:
+            with self.subTest(path=path):
+                with self.assertRaisesRegex(ValueError, message):
+                    snapshot.read(path)
+        self.fixture.write('large.bin', 'a' * (selected.catalog_api.MAX_DOCUMENT_BYTES + 1))
+        self.git('add', 'large.bin')
+        large = selected.GitSnapshot(self.root, 'index')
+        with self.assertRaisesRegex(ValueError, 'exceeds byte bound'):
+            large.read('large.bin')
+        object_id = snapshot.objects[fixtures.store.INDEX][1]
+        with self.assertRaisesRegex(ValueError, 'output exceeds selected snapshot bound'):
+            snapshot._git('cat-file', 'blob', object_id, maximum=1)
+
+
+class PriorCurrentContinuity(unittest.TestCase):
+    def setUp(self):
+        self.fixture = fixtures.AuthenticatedDecisionStore()
+        self.fixture.setUp()
+        self.addCleanup(self.fixture.doCleanups)
+        self.fixture.test_complete_fresh_navigation_keeps_fixed_compatibility_and_original_index()
+        self.prior, _ = self.fixture.check()
+        self.current = copy.deepcopy(self.prior)
+
+    def test_content_status_summary_and_additive_fact_changes_remain_current(self):
+        self.current['current']['0115']['text'] += 'Owned later rationale.\n'
+        self.current['current']['0115']['metadata']['knowledge_id'] = 'new-first-fact'
+        self.current['current']['0115']['metadata']['questions'] = ['which new fact?']
+        selected.verify_continuity(self.prior, self.current)
+        self.assertIsNone(self.prior['current']['0115']['metadata']['knowledge_id'])
+
+    def test_actual_self_consistent_post_transition_deletion_is_now_refused(self):
+        self.fixture.catalog['records'].pop()
+        self.fixture.write_json(fixtures.store.CATALOG, self.fixture.catalog)
+        self.fixture.write(fixtures.store.INDEX, fixtures.ROOT_INDEX)
+        self.fixture.write('docs/decisions/current/language-api/INDEX.md', fixtures.PART_PREFIX)
+        (self.fixture.root / 'docs/decisions/current/language-api/0115-fresh.md').unlink()
+        current, _ = self.fixture.check()
+        with self.assertRaisesRegex(ValueError, 'deleted a prior decision identity'):
+            selected.verify_continuity(self.prior, current)
+
+    def test_originals_source_index_and_equal_count_id_or_path_recycling_refuse(self):
+        for key in ('source_revision', 'source_sha256', 'original_index_sha256',
+                    'compatibility', 'originals', 'original_index', 'original_routes'):
+            with self.subTest(key=key):
+                current = copy.deepcopy(self.prior)
+                current[key] = 'substitution'
+                with self.assertRaisesRegex(ValueError, 'immutable store source changed'):
+                    selected.verify_continuity(self.prior, current)
+        for key, value in [('path', 'docs/decisions/current/language-api/0115-recycled.md'),
+                           ('type', 'borrowed type')]:
+            current = copy.deepcopy(self.prior)
+            current['current']['0115'][key] = value
+            with self.assertRaisesRegex(ValueError, 'recycles a prior decision identity'):
+                selected.verify_continuity(self.prior, current)
+        current = copy.deepcopy(self.prior)
+        current['current']['0116'] = current['current'].pop('0115')
+        with self.assertRaisesRegex(ValueError, 'deleted a prior decision identity'):
+            selected.verify_continuity(self.prior, current)
+
+    def test_post_transition_fact_ids_and_question_keys_are_retained(self):
+        prior = copy.deepcopy(self.prior)
+        prior['current']['0115']['metadata'].update(knowledge_id='born-fact', questions=['born question?'])
+        for change, message in [({'knowledge_id': None}, 'loses prior fact identity'),
+                                ({'knowledge_id': 'substitute'}, 'loses prior fact identity'),
+                                ({'questions': []}, 'loses prior question keys')]:
+            current = copy.deepcopy(prior)
+            current['current']['0115']['metadata'].update(change)
+            with self.assertRaisesRegex(ValueError, message):
+                selected.verify_continuity(prior, current)
+
+    def test_new_births_follow_the_prior_highest_identity(self):
+        for identity, accepted in [('0110', False), ('0116', True)]:
+            current = copy.deepcopy(self.prior)
+            current['current'][identity] = {'id': identity}
+            if accepted:
+                selected.verify_continuity(self.prior, current)
+            else:
+                with self.assertRaisesRegex(ValueError, 'earlier decision ID space'):
+                    selected.verify_continuity(self.prior, current)
+
+
+if __name__ == '__main__':
+    unittest.main()

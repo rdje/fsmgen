@@ -77,6 +77,8 @@ def load(root, source_sha256, index_sha256, *, reader=None):
     originals = catalog_api.decode_document(read(ORIGINALS))
     catalog = catalog_api.decode_document(read(CATALOG))
     prepared = catalog_api.prepare(root, source, originals, catalog, reader=read)
+    prepared['source_sha256'] = source_sha256
+    prepared['original_index_sha256'] = index_sha256
     original_index = catalog_api.verify_content(index_bytes, catalog_api.dimensions(index_bytes),
                                                 'original decision index')
     prepared['original_index'] = original_index

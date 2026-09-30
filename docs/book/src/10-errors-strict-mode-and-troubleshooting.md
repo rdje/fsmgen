@@ -613,6 +613,19 @@ Exercise the actual CLI controls with:
 scripts/run_with_ram_guard.sh -- prove -Iperl t/2002-decision-reader-stores.t
 ```
 
+Selected Git access and prior/current catalog continuity also have independent
+controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2003-decision-store-git-continuity.t
+```
+
+They pin selected object IDs rather than borrowing later index/worktree data,
+and reject deletion/reuse of decision identities or loss of previously published
+fact/question keys. The gate integration must enforce this comparison on every
+catalog change before live source rollout; standalone current validation cannot
+infer records born after its fixed source census.
+
 ## Current Boundary
 
 The project is trying to move toward:
