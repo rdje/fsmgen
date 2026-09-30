@@ -9,7 +9,7 @@ answers:
   - "where is the SPECFORGE storage-register-access request owned?"
   - "why does read-only actor storage status appear as an HDL input?"
   - "why do generated transaction children duplicate or export actor storage?"
-date: 2026-09-26
+date: 2026-09-30
 status: current
 tags: [specforge, isf, parameters, interface, verification, semantic-api, mcp, storage, register-access]
 evidence: t/1904-isf-generated-child-storage-reads.t; docs/audits/generated-child-storage-ownership-20260926.json; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md; t/1903-isf-internal-storage-ownership.t; docs/audits/specforge-storage-register-access-intake-20260926.json; docs/SPECFORGE_FEEDBACK_RESPONSE.md; docs/audits/specforge-feature-intake-20260926.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
@@ -19,6 +19,16 @@ reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/replay-specfor
 `docs/SPECFORGE_FEEDBACK_RESPONSE.md`, under `2026-09-26: Configuration, Verification And
 Phase-Metadata Requests`, records required/optional scopes, dependencies and order for the supplied
 packets. Parent `.33` owns them; intake `.33.1` implements none of those features.
+
+The response's current delivery status also records the complete unstated-reset
+question answer and the later packed record-input source admission. Reset was
+answered in `f6c44aa5a4517967632d25c2a190d2f1c2e22f59`; record inputs are admitted
+in `25c01f0127144922ade78951b91439e1d9221c08`, with frontend/public,
+generated/domain/native and consumer qualification still open. Record outputs,
+root-list ports and variants remain deferred; durations and named timers are
+not implemented. The book matrix now distinguishes this admitted source subset
+from full feature delivery. Dated refused intake observations remain historical
+evidence. Status replies must also reach the tracked response, not only chat.
 
 At `a7bf398ac3c1008b996bf0a92bdd18c9464d9fda`, native strict checks accepted `bogus-clause` and
 unsupported `present` port options and emitted the same HDL as the clause-free control except its

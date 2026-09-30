@@ -19,5 +19,5 @@
 
 _SPECFORGE feature intentions, unknown-port validation defect and width/interface controls_
 
-- **date:** 2026-09-26 · **status:** current
+- **date:** 2026-09-30 · **status:** current
 - **source and verification:** [`docs/knowledge/specforge-feature-intake-and-strict-port-question.md`](../../docs/knowledge/specforge-feature-intake-and-strict-port-question.md)

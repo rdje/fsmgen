@@ -17,6 +17,37 @@ behavior so FSMGen maintainers can reproduce locally.
 
 ## High-Level Response
 
+### Current delivery status — 2026-09-30
+
+The requested feature set is not complete. This is the canonical downstream
+response; status answers must be reflected here as well as in the task tree
+and book.
+
+- **Unstated reset:** answered in the dated question section below, committed
+  in `f6c44aa5a4517967632d25c2a190d2f1c2e22f59`. Omission selects the documented
+  legacy default; a clock-only domain means actual hardware without reset and
+  no guaranteed initialization. No existing form defers reset policy to
+  instantiation. Accepting compiler defaults remains SPECFORGE's decision.
+- **Scalar storage access and domain storage reports:** delivered under
+  SEM `.38.1` and `.38.3`; optional bank access remains open.
+- **Packed record inputs:** local/imported actor input aliases, live scalar
+  field reads and exact-type input-to-owned-storage copies are admitted in
+  `25c01f0127144922ade78951b91439e1d9221c08`. Full frontend/public replay,
+  generated/domain carriers, native execution and consumer signoff remain
+  owned qualification work. Record outputs, root-list ports and variants
+  remain deferred; the aggregate-interface request is not complete.
+- **Physical-time durations and named timers:** baselines are qualified;
+  the requested implementations remain open under SEM `.60.1` and `.60.2`.
+
+Decision storage rollover is committed in
+`df7f692c8b94b083d2d078d62854d37869fbca6d`. Consumer/question closure and
+fresh-record qualification remain the immediate prerequisite under `.51.3.3`,
+then record-input frontend qualification `.60.4.3.2.3.6` resumes. Required
+duration/timer deliveries precede optional banks, list ports and variants.
+Earlier configuration, verification and phase requests retain their tracked
+owners. These statuses do not claim complete SPECFORGE implementation or
+external integration signoff; no external checkout, pin or ticket is changed.
+
 FSMGen agrees with the core SPECFORGE framing:
 
 - `.fsm` should remain precise rather than permissive.
@@ -1367,9 +1398,11 @@ unblocks across the owned requests.
 
 `sf-isf-aggregate-interface-ports` is an accepted feature request owned by
 SEM `.60.4`. Its complete packet and current native/API/newline products are
-preserved in `docs/audits/specforge-aggregate-intake-20260930/`. Both the whole
-record input copy and input field guard remain refused by the explicit
-aggregate-carrier boundary. The storage-only control retains its authored
+preserved in `docs/audits/specforge-aggregate-intake-20260930/`. At that captured
+intake revision, both the whole record input copy and input field guard were
+refused by the explicit aggregate-carrier boundary. Later bounded record-input
+admission is recorded in the current delivery status above; the complete
+aggregate-interface request remains open. The storage-only control retains its authored
 member order, packed width and scalar leaf assignment. Its complete prior
 strict-check report is unchanged after source relocation and reset provenance.
 
