@@ -115,6 +115,10 @@ unspecified for this comparison. Scalar leaf sampling also needs qualified
 width/type and capture timing. These are delivery prerequisites, not additional
 forms authors can use today; whole-record sampling into an inferred local
 remains outside the selected input subset.
+The preparatory value helpers now have type, path, role and lexical-shadow
+controls, including diagnostic-line negative oracles. They remain unwired;
+parser admission, sampled behavior and generated/domain carriers still need
+their own qualification before authors can use record inputs.
 
 Single-member records and single-item lists also preserve their aggregate
 identity. Nested forms and forward local aliases work in actor declarations

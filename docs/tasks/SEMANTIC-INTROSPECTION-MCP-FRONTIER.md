@@ -2431,17 +2431,17 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify closed resolved record-type and input-role value gates.`
   Acceptance: `After .1, implement or reuse one qualified recursive type-identity and readable/writable root contract, with independent same-width different-member/order/signed/state-model controls, alias-equivalent positives, scalar-leaf and input-write refusals. Preserve existing storage-only transfer contracts and lexical shadowing. Prepare gates without admitting new source until every required value context can fail closed.`
-  Verification: `Ingress design is selected in decision 0113; pure preparation must retain source refusal until mandatory gates are wired.`
-  Commit: `pending`
+  Verification: `ISFRecordPortValues prepares closed detached declaration scopes, nearest-binding masking, core scalar type/ranges and strict whole-record-port copies through existing composition comparison after validated shape. T1986 independently distinguishes alias/imported identity from equal-width member/order/kind/nested/list/signed/state mismatches, exact nested ranges, unresolved/scalar/formal shadows, known input roles, malformed/cyclic facts and storage-only bypass. Review exposed scalar shadow slices requiring core traversal anchoring and a draft diagnostic oracle accepting regex text from Carp caller stacks. First-line-only oracles turned incorrect reason-key projections RED; code-key projection and a permanent known-bad stack control repair the cause. Guarded T1986 plus metadata/storage/core-path/structural-type/interface controls reports All tests successful. Parser and scheduler remain unwired; authored records/lists retain refusal, and native/public input delivery is pending.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3`
   Status: `pending`
   Goal: `Admit record inputs with qualified scalar reads and same-type copies.`
   Acceptance: `After .2, admit only local/imported resolved record input roots and wire all applicable transaction, rule, named-drive, enum-disambiguation and domain validators; qualify scalar leaf entry/body sampling width/type and existing capture timing while whole-record inferred samples refuse. Copies from an input to actor storage must use qualified recursive type identity from first admission; input writes and whole-record scalar contexts refuse. Root lists, outputs and transaction-local aggregate ports retain precise boundaries. Qualify nested paths, symbolic alias equivalence, lexical shadows, invalid members/types/roles and complete emitted IAL0 replay; synchronize accepted public reports and book.`
-  Verification: `pending qualified gates`
+  Verification: `Pure type/path/role gates are qualified under .2; select bounded parser/carrier integration children before source mutation and retain refusal until mandatory checks are complete.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4`
@@ -3180,8 +3180,8 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.2.2` prepares
-strict resolved-record type and lexical role gates before parser admission; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.2.3` wires
+mandatory record-input source/value/lexical/sampling gates before admission; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5380,3 +5380,17 @@ identity from width compatibility; the source refusal prevents a planning
 receipt being mistaken for feature delivery. Durability: decision, task, book
 and Git retain the selected contracts and executable controls. Native behavior
 is explicitly owned by the later completion leaf.
+
+
+## Acceptance — unwired record value gates `.60.4.3.2.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — T1986 diagnostic-line controls report Failed test at t/1986-isf-record-port-value-gates.t line 66: `packet.unknown` emits `unresolved` rather than `unknown_member`, with analogous index/syntax and shadow controls. The draft reads `reason`, but AggregatePathSupport returns `code`. Its original negative helper searches a Carp stack containing the expected regex passed to that helper, concealing the defect. A permanent independent wrong-message/expected-stack control reproduces that false match. Core range resolution also explicitly returns `scalar_root` for a direct scalar slice, so scalar locals masking records require a range-preserving traversal anchor.
+- [x] **ADDRESSED (verified)** — The unwired closed scope/reference/copy helpers reuse validated declared shapes, core packed ranges and the existing strict composition type comparison. First-line-only negative oracles reject the demonstrated wrong diagnostic; code projection retains canonical failures. Scalar local/formal slices resolve through a one-member anchor without borrowing outer record facts. Known input roles reject writes before unresolved-type fallback. T1986 independently verifies alias/imported positives, equal-width identity negatives, nested ranges/properties, lexical masks, malformed/cyclic facts and unchanged storage-only contracts. No source/scheduler wiring or runtime admission is added.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl t/1986-isf-record-port-value-gates.t t/1983-isf-interface-port-metadata.t t/1259-isf-aggregate-storage-type-aliases.t t/284-package-aggregate-path-support.t t/283-composition-aggregate-path-support.t t/281-structural-declared-type-contracts.t t/1188-isf-interface-port-boundary.t` reports `All tests successful`. Source record input/output and list-port controls retain the existing refusal; aliases, package types and current core/interface contracts remain accepted. `perl -Iperl -c perl/FSM/Support/ISFRecordPortValues.pm` reports `syntax OK`. mdBook and staged doctrines verify future-only source claims, ownership, fresh maintained-reference authority and generated knowledge/inventory before commit. No native HDL observation or complete record-input public delivery is claimed.
+
+Re-derive: rerun T1986 and the listed core/interface baselines. Falsify: distinct
+recursive identities, literal packed ranges, known-bad stack-only diagnostics,
+invalid declaration/role/path controls and unchanged source refusal distinguish
+semantic preparation from parity and parser acceptance. Durability: helper,
+permanent tests, decision 0113, this task and book retain the contracts and the
+repaired draft oracle. Parser context/carrier/runtime completion remains owned.

@@ -10,10 +10,11 @@ answers:
   - "where are declared ISF interface ports exposed in reports?"
   - "how is declared interface metadata qualified against supported ISF source queries?"
   - "which type and lexical gates must precede record input admission?"
+  - "how are record value gates and contextual diagnostic oracles qualified?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; t/1985-isf-interface-port-public-qualification.t; t/lib/FSM/Test/SourceQueryCoverage.pm; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; t/1985-isf-interface-port-public-qualification.t; t/1986-isf-record-port-value-gates.t; t/lib/FSM/Test/SourceQueryCoverage.pm; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0113 — ISF record interface ports reuse packed type and writer contracts
@@ -312,3 +313,40 @@ print "alias identity, distinct property controls and input refusal verified\n";
 The input lane now separately owns closed gates, source admission, generated/
 domain carriers and independent HDL/public completion. This planning receipt
 does not establish new input acceptance, sampling support or native behavior.
+
+## Unwired value-gate qualification — 2026-09-30
+
+SEM `.60.4.3.2.2` prepares `ISFRecordPortValues` without parser or scheduler
+wiring. `record_value_scope` takes closed resolved outer/local declarations;
+the nearest binding masks its outer type and role even when unresolved.
+`record_value_reference` retains scalar path type/width/range through
+`AggregatePathSupport`, refuses input writes and whole/subaggregate scalar
+values, and returns unknown tokens to their existing validator. The caller must
+still validate those tokens and supply actual lexical bindings; a prepared map
+does not establish parser, domain or generated-child integration.
+
+`validate_record_port_copy` uses the existing composition declared-type
+comparison after closed resolved-shape validation by the qualified declaration
+producer. Root aliases are absent from that identity. Equal packed widths,
+renamed/reordered members, bit/bits kinds, nested shape/list order, signed and
+optional state-model differences are independently distinguished. Transfers
+with no whole record port keep their existing scalar/storage assignment owner.
+Scalar formal/local slices use a one-member wrapper for existing core traversal;
+the wrapper preserves offsets and adds no source carrier or type declaration.
+
+T1986's draft negative helper matched an expected regex passed as a caller
+argument inside `Carp::confess` stack text. That concealed a wrong-key diagnostic
+projection (`reason` instead of the resolver's `code`), yielding `unresolved`
+for otherwise specific invalid paths. Restricting the oracle to the first
+diagnostic line first made the unknown-member/index/syntax controls fail. The
+producer now retains the core code. A permanent independently wrong message
+with the expected pattern only in its stack demonstrates the original false
+match and the corrected oracle's rejection. This is a repaired unshipped draft
+and test-helper defect, not a finding about uninspected diagnostic oracles.
+
+T1986 retains resolved alias/imported positives, independently authored ranges,
+same-width counterexamples, lexical unresolved/scalar/formal shadows, input-role
+negatives, malformed/cyclic facts, storage-only bypass and unchanged aggregate
+source refusal. T1983/T1259 and core path, structural type and interface-boundary
+controls pass alongside it. Source admission, sample timing, carriers, complete
+public products and HDL behavior remain owned by later leaves.
