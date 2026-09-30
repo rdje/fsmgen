@@ -108,6 +108,14 @@ distinguishes unknown declarations from a known empty interface. Record-layout
 metadata has producer controls; scalar declaration reports are qualified across
 native, API and newline MCP products. Record source admission remains pending.
 
+Before record inputs are admitted, their copies must compare resolved member
+order, nested shape, signed properties and declared state-model properties;
+equal packed width is insufficient. An unspecified state model remains
+unspecified for this comparison. Scalar leaf sampling also needs qualified
+width/type and capture timing. These are delivery prerequisites, not additional
+forms authors can use today; whole-record sampling into an inferred local
+remains outside the selected input subset.
+
 Single-member records and single-item lists also preserve their aggregate
 identity. Nested forms and forward local aliases work in actor declarations
 and survive the scheduled `.fsm` replay. For example:

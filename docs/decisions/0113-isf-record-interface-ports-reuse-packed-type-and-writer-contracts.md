@@ -9,6 +9,7 @@ answers:
   - "why must metadata validation predicates use scalar context?"
   - "where are declared ISF interface ports exposed in reports?"
   - "how is declared interface metadata qualified against supported ISF source queries?"
+  - "which type and lexical gates must precede record input admission?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
@@ -237,3 +238,77 @@ classification/strict checks and T1883's complete cohort join retain the repair.
 Counts describe catalog entries, not independently implemented features or
 runtime qualification. Recount from the live public catalog; do not reuse the
 old dated qualification receipt as a current total.
+
+## Record-input ingress selection — 2026-09-30
+
+SEM `.60.4.3.2.1` traces the refused input boundary before widening it. Parser
+`_finalize_actor_type_references` admits aggregate aliases only on storage;
+`_validate_actor_aggregate_storage_paths`, rule operand maps and enum
+disambiguation currently select storage roots. Adding inputs to one map is
+insufficient. Use a shared declaration-root description, with transaction
+locals/formals and drive parameters masking outer names in their actual scope.
+An input shadowed by a writable formal must not become that formal's role;
+an unresolved local must not borrow its outer type or placeholder width.
+The existing formal resolver and domain ownership remain authoritative.
+
+Prepare a strict resolved-record identity gate separately from
+`PayloadTypeSupport::payload_compatible_with_type_spec`. That public helper
+intentionally checks payload shape and scalar width, allowing different signed
+and state-model facts. Preserve it for its existing callers. Port copies compare
+recursive kinds, ordered record members, ordered list children, widths, signed
+values and optional resolved state-model presence/value. Unspecified stays
+unspecified; do not substitute a backend rendering default. Alias names are not
+part of resolved identity. Malformed/unresolved roots fail contextually.
+
+Transaction conditions, switch values, set/update RHS, rule guards/assignments,
+named-drive bodies/actuals and inline drives need explicit scalar-versus-copy
+checks from the first admission. Whole-record values are permitted only in
+qualified same-type assignments with allowed declaration roles; expression
+operators, truthiness and subaggregate writes refuse. Existing storage-only
+packed transfers retain their separate contract. Domain lookup resolves a path
+to its declared root, honoring lexical masking and preserving the authored
+path in diagnostics; it must not invent a crossing from a same-named formal.
+
+The current aggregate validator handles `set`, but not `update` or `sample`
+leaf paths. Sampling width collection copies exact root widths, not resolved
+leaf facts. Input delivery therefore owns explicit scalar-leaf sampling in
+entry/body contexts, with resolved width/type and existing capture timing.
+Whole-record sampling into an inferred alias remains outside this bounded
+delivery. No hidden sample, delayed edge or new aggregate local is introduced.
+Typed `+size` and explicit `+interface` already preserve unused declarations;
+generated/domain routes must retain those identities before behavior signoff.
+
+Reproduce the identity distinction and current source refusal without HDL:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl -Iperl -MFSM::Adapter::ISF -MFSM::Package::PayloadTypeSupport -MJSON::PP -e '
+my $p = FSM::Adapter::ISF->new;
+my $a = $p->parse_source(q{(actor controls
+  (types (type plain (record (payload (bits 8)))) (type alias plain)
+    (type signed_frame (record (payload (signed (bits 8)))))
+    (type four (record (payload (four_state (bits 8)))))
+    (type two (record (payload (two_state (bits 8))))))
+  (interface (output done))
+  (storage (var a (type plain)) (var b (type alias))
+    (var c (type signed_frame)) (var d (type four)) (var e (type two)))
+  (transaction main (complete done)))}, "controls.isf");
+my @t = map { $_->{type_spec} } @{$a->{storage}};
+my $j = JSON::PP->new->canonical;
+die "alias mismatch" unless $j->encode($t[0]) eq $j->encode($t[1]);
+for my $pair ([0,2], [0,3], [3,4]) {
+  die "control lost" unless $j->encode($t[$pair->[0]]) ne $j->encode($t[$pair->[1]])
+    && FSM::Package::PayloadTypeSupport->payload_compatible_with_type_spec(@t[@$pair]);
+}
+my $ok = eval { $p->parse_source(q{(actor refused
+  (types (type frame (record (payload (bits 8)))))
+  (interface (input packet (type frame)) (output done))
+  (storage (var held (type frame)))
+  (transaction main (set held packet) (complete done)))}, "refused.isf"); 1 };
+die "refusal lost: $@" if $ok || $@ !~ /interface port.*references aggregate type/;
+print "alias identity, distinct property controls and input refusal verified\n";
+'
+```
+
+The input lane now separately owns closed gates, source admission, generated/
+domain carriers and independent HDL/public completion. This planning receipt
+does not establish new input acceptance, sampling support or native behavior.

@@ -2415,10 +2415,47 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Deliver packed record inputs, scalar field reads and whole input-to-storage copies.`
   Acceptance: `After .3.1, split further as needed before implementation. Admit local/imported resolved record roots, existing nested scalar paths and same resolved record-type copies. Qualify all existing scalar-expression contexts and declared input-write refusals, type/path mismatches, whole-record scalar-context refusal, unused ports, domain ownership and generated-child routing. Compare public IAL0 replay, independent packed-value HDL observations and complete native/API/newline products under HIAL admission; preserve scalar/storage-only sources and publish supported examples.`
-  Verification: `pending`
+  Verification: `Declaration metadata is qualified. Split before input source changes into ingress/qualification design, closed type/role preparation, parser admission with mandatory value gates, generated/domain carrier qualification and native/public completion. No record source form is newly admitted by this decomposition.`
+  Commit: `pending child qualification`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.1`
+  Status: `done`
+  Goal: `Trace record-input ingress and select the safe qualification split.`
+  Acceptance: `Read selected source/type/role contracts and relevant parsed value, enum, domain, lexical, IAL0 and child routes. Reproduce current source refusal without native runtime, retain independent resolved type/layout controls and map every required scalar-read/copy context to its owning validator and emitted carrier. Decide bounded role, type identity and shadowing behavior from existing public/core contracts; own genuine unresolved dependencies before any admission change. Publish precise children and synchronized future book guidance without widening source.`
+  Verification: `Decision 0113 retains the source/type/role/enum/lexical/domain/carrier ingress map and reproducible pure controls. Alias-equivalent resolved records match; existing public payload compatibility accepts distinct signed/state facts, requiring a separate strict identity gate without changing literal/storage behavior. Source record inputs still refuse at Parser.pm line 2862. Transaction locals/formals and drive parameters must mask outer declaration roots. Scalar leaf entry/body samples need resolved width/type and existing timing; whole-record inferred samples remain deferred. Five bounded children own gate preparation, source admission, generated/domain carriers and native/public completion. Guarded T1983/T1259 reports All tests successful; no new authoring or native runtime is claimed.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.2`
+  Status: `pending`
+  Goal: `Qualify closed resolved record-type and input-role value gates.`
+  Acceptance: `After .1, implement or reuse one qualified recursive type-identity and readable/writable root contract, with independent same-width different-member/order/signed/state-model controls, alias-equivalent positives, scalar-leaf and input-write refusals. Preserve existing storage-only transfer contracts and lexical shadowing. Prepare gates without admitting new source until every required value context can fail closed.`
+  Verification: `Ingress design is selected in decision 0113; pure preparation must retain source refusal until mandatory gates are wired.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3`
+  Status: `pending`
+  Goal: `Admit record inputs with qualified scalar reads and same-type copies.`
+  Acceptance: `After .2, admit only local/imported resolved record input roots and wire all applicable transaction, rule, named-drive, enum-disambiguation and domain validators; qualify scalar leaf entry/body sampling width/type and existing capture timing while whole-record inferred samples refuse. Copies from an input to actor storage must use qualified recursive type identity from first admission; input writes and whole-record scalar contexts refuse. Root lists, outputs and transaction-local aggregate ports retain precise boundaries. Qualify nested paths, symbolic alias equivalence, lexical shadows, invalid members/types/roles and complete emitted IAL0 replay; synchronize accepted public reports and book.`
+  Verification: `pending qualified gates`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4`
+  Status: `pending`
+  Goal: `Qualify generated and named-domain record-input carriers.`
+  Acceptance: `After .3, independently exercise live record reads and valid input-to-storage transfers through existing generated-child/domain ownership, including nested/imported aliases, reused instances and unused declarations. Preserve explicit top interfaces, typed private connections, reset/storage ownership and unchanged old sources; refuse unowned crossing and unqualified input targets. Split actual prerequisite fixes before mutation and retain backend-profile boundaries.`
+  Verification: `pending source admission`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5`
+  Status: `pending`
+  Goal: `Qualify packed input behavior and complete public delivery.`
+  Acceptance: `After source/carrier qualification, consume current HIAL admission before genuine supervised native runtime. Independently observe packed layout, scalar signed/state properties, live versus explicitly sampled reads, whole-copy edge, holds, repeated requests and reset/domain behavior. Compare complete native/API/actual newline source/schedule/semantic/discovery products, supported corpus and baseline carriers/HDL. Keep unsupported profiles precise and synchronize all selected requirements/book/records; close input delivery only with recoverable behavior evidence.`
+  Verification: `pending qualified carriers and HIAL admission`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3`
@@ -3143,8 +3180,8 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.2` delivers
-packed record inputs after decomposition and qualification of scalar reads and same-type copies; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.2.2` prepares
+strict resolved-record type and lexical role gates before parser admission; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5329,3 +5366,17 @@ stale assertions from the one added distinct fixture. Durability: corpus,
 fixture, controls, this owning task, decision 0113, book and Git retain the
 complete preparation. Catalog totals are entries, not product-feature/runtime
 coverage. Subsequent record-port admission remains explicitly owned.
+
+
+## Acceptance — record-input ingress selection `.60.4.3.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The public parser probe refuses `interface port packet references aggregate type frame` at perl/FSM/Adapter/ISF/Parser.pm line 2862. Storage-only aggregate maps and enum disambiguation cannot establish lexical input roles. Public payload compatibility controls accept signed/state-distinct resolved records of equal width, so that helper cannot establish the selected copy identity. Existing leaf validation has no update/sample branch and sample width collection does not resolve leaf facts. These are pre-admission dependencies, not evidence of shipped record support.
+- [x] **ADDRESSED (verified)** — Decision 0113 records strict recursive resolved identity, optional state presence/value, preserved payload/storage compatibility, lexical masking and owned domains, supported scalar/copy contexts and explicit leaf sampling preparation. Reproducible controls establish alias identity, distinct signed/absent/four/two-state facts and unchanged record-input refusal. Closed gates, mandatory first-admission checks, carrier ownership and native/public completion have exact child owners; the book keeps all new source forms future-only.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl t/1983-isf-interface-port-metadata.t t/1259-isf-aggregate-storage-type-aliases.t` reports `All tests successful`. A first invocation named a nonexistent T1259 path; the corrected canonical path passes. The retained decision command reproduces controls without HDL. Book build and staged doctrines verify future-only prose, task ownership, fresh aggregate authority, measured warning allowances, generated Knowledge Map and claim inventory before commit. No implementation source or native-runtime admission changes.
+
+Re-derive: run the pure command in decision 0113 and the named focused tests.
+Falsify: alias-equivalent and signed/state-distinct controls distinguish strict
+identity from width compatibility; the source refusal prevents a planning
+receipt being mistaken for feature delivery. Durability: decision, task, book
+and Git retain the selected contracts and executable controls. Native behavior
+is explicitly owned by the later completion leaf.
