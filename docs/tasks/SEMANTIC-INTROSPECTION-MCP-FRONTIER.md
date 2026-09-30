@@ -2138,10 +2138,33 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Apply the selected bounded decision identity/index rollover atomically.`
   Acceptance: `After .1, split implementation prerequisites if needed, then preserve every pre-transition path/identity and exact original retrieval while placing mutable canonical records and navigation in bounded semantic partitions. Freeze any finite compatibility projection by exact source/membership proofs; never create unbounded alias growth. Update readers, metadata consumers, indexes and declared surfaces together, preserve stable question/answer and policy authority, and qualify corrupt/missing/duplicate/misrouted navigation controls. Restore legitimate current capacity without raising predecessor ceilings or merely relabeling overflow.`
-  Verification: `pending committed audit selection`
+  Verification: `Audit/contract selection is committed at 8acfa9c087f971706fd35a3755d208792d27076f. Split pure catalog/path/identity controls, actual reader/authority integration, and atomic storage/navigation rollout before changing source locations. Every first admitted canonical path must use complete identity and retrieval gates.`
+  Commit: `pending child qualification`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.1`
+  Status: `done`
+  Goal: `Prepare closed decision catalog/path/identity controls before live integration.`
+  Acceptance: `Define and independently qualify the bounded canonical location and catalog contract selected in 0108: finite pre-transition root identities, current continuity/language-API/verification parts, exact ID-to-source/type/status/question metadata, immutable original retrieval and compatibility headings. Reject escaping/symlinked/unknown-topic paths, duplicate or substituted IDs, malformed dimensions/digests, unresolved sources and borrowed identities. Preserve caller values and existing published sealed-reader/flat authority behavior; no source moves or live canonical authority admission yet. Keep one canonical identity authority across eventual Python reader and Perl gate consumers, then commit before wiring.`
+  Verification: `The pure shared Python preparation module defines closed current parts, per-ID source paths/types/metadata/headings and independently supplied immutable originals. Literal future-store fixtures establish exact products, detached success/failure callers and fresh IDs without compatibility growth; borrowed sealed/body/fact IDs, supported-topic misroutes, duplicate/reordered/missing cohorts, copied metadata, invalid dimensions/digests, unresolved files and symlinked parent components refuse. Selected snapshot bytes use the same identity contract. Initial transition metadata is exact; subsequent owned status changes retain original text. Every actual current canonical body parses within the grammar. Guarded T2000/T1999/T1923/T1560/T1554 reports All tests successful, Files=5, Tests=32. Existing public reader and flat authority code/storage are unchanged. Canonical 0108 documents the closed schemas, bounded helper and caller source-authentication duty; .2 integrates actual reader/authority gates before .3 moves sources. Syntax and book checks accompany this commit.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.2`
+  Status: `active`
+  Goal: `Integrate catalog-aware public reading and fresh authority paths before source rollout.`
+  Acceptance: `After .1, connect qualified identity/path/retrieval gates to the published reader, complete index/heading verification and ceiling-authority addition boundary using independent supplied future-store fixtures. Preserve existing read/check/unknown-ID behavior where no delivered catalog exists, legacy flat authority identities and generated provenance strings. Qualify accepted current/original products and precise malformed/duplicate/stale/misrouted/missing-source failures; no partial output or unowned canonical admission. Keep real source paths unchanged until .3, then commit.`
+  Verification: `Pure shared catalog/path/identity controls are qualified under .1. Integrate published reading, navigation and fresh authority validation using complete supplied future-store fixtures before moving real sources.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2.3`
+  Status: `pending`
+  Goal: `Roll over canonical decision storage and navigation atomically through integrated gates.`
+  Acceptance: `After .2, take a fresh exact pre-transition census, preserve complete original bodies separately from relocated current rendering, freeze finite compatibility paths/headings and place current bodies/indexes in the selected semantic partitions. Update self-searches and direct body readers, declarations, source links and Knowledge Map routes together. Prove exact source identity, unchanged authority/question/metadata keys, relative destination closure, complete reader products and no loss residue; restore current capacity without widening ceilings. Run focused relevant gates and book, commit, then hand off broad fresh-record/consumer continuity to .51.3.3.`
+  Verification: `pending reader/authority integration`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.3`
@@ -5794,3 +5817,10 @@ files are removed by their owning context. Original sealed history, spent
 compiler/proxy evidence and other repositories remain untouched. Atomic storage
 and reader/authority integration are deliberately subsequent leaves, and
 DEVELOPMENT_NOTES gains no duplicate of the canonical contract selection.
+
+
+## Acceptance — closed decision catalog preparation `.51.3.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Every original path remains' -1 --format='%H %s' -- docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md` returns cca713eff2f241c920275ec423454183ac6ab083, the original body seal that preserved flat path cardinality. The audit 8acfa9c087f971706fd35a3755d208792d27076f and canonical 0108 select finite compatibility plus current semantic parts; the published reader still accepts only sealed originals, and the authority checker retains its flat-only path grammar. Broadening that grammar or moving bodies before full source/identity gates would admit substituted or unresolved authority. This preparation leaf therefore precedes both integrations.
+- [x] **ADDRESSED (verified)** — `scripts/decision_catalog.py` defines one closed location/source/catalog contract with independent original-byte closure, derived metadata/headings, exact transition metadata and detached caller products. T2000's independent literal supplied future stores exercise all three parts and accepted current/original products. The complete existing current bodies parse within the content/metadata grammar. Same-size original corruption, source/type/part/body substitutions, duplicate/reordered/missing IDs, borrowed sealed/fact identities, unsupported and escaping paths, malformed dimensions/digests, copied metadata, unresolved sources and file/parent symlinks refuse; failure leaves a caller boolean unchanged. Fresh IDs do not create old root aliases. A selected-snapshot byte accessor uses the same checks. Canonical 0108 and the book state source authentication and complete navigation/rendering are integrating duties, not claims established by this pure helper. No live paths, source storage, published reading or authority admission changed.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl t/2000-decision-catalog-preparation.t t/1999-decision-identity-capacity-audit.t t/1923-decision-record-archive.t t/1560-live-document-ceiling-authority.t t/1554-live-document-size-doctrine.t` reports `All tests successful`, `Files=5, Tests=32`. Original public byte retrieval, corrupt/stale archive/navigation controls, existing flat authority and neutral containment remain green. Python syntax is OK; all existing current source bodies are parsed by the new extractor. The book, bounded Knowledge Map/inventory and staged doctrines/hooks are required commit checks. Re-derivation is the source/current byte and metadata comparison; falsification is the literal independent fixtures and observed planted failures; durability is tracked helper/tests, canonical 0108, task ownership and Git. Initial metadata equality is distinct from later owned supersession; production source authentication, body meaning, index/compatibility rendering and live integration remain .2-.3, with no external or HDL execution signoff here.

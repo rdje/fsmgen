@@ -9,7 +9,7 @@ answers:
 date: 2026-09-30
 status: current
 tags: [continuity, decisions, doctrine, knowledge-map]
-evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_identity_capacity.py --revision 25c01f0127144922ade78951b91439e1d9221c08 > .artifacts/decision-identity-capacity-reverify.json
 ---
 
@@ -121,3 +121,69 @@ The consumer search covers tracked nonbinary full basenames; the separate
 code search covers literal docs/decisions candidates in scripts/knowledge-map/
 perl/t. Neither claims every dynamic or external consumer is enumerated.
 No migration, external integration signoff or native HDL result is established.
+
+## Catalog preparation contract — 2026-09-30
+
+Owner `.51.3.2.1` supplies `scripts/decision_catalog.py` as a preparation
+boundary. It neither moves sources nor changes the published reader or
+ceiling-authority gate. Integrating callers must authenticate the independent
+transition census before calling it; caller-supplied matching hashes alone
+cannot establish historical authority. Python reading and Perl authority
+integration must use this same contract rather than duplicate path/topic rules.
+
+Canonical current locations are
+`docs/decisions/current/PART/NNNN-kebab-title.md`, where PART is exactly
+`continuity`, `language-api` or `verification`. The filename's ID must equal
+the body's primary heading ID. Retained current IDs keep their original
+basename, independently selected semantic part and index type. A new ID
+follows the transition cohort's maximum; it cannot borrow a sealed ID or a
+gap inside the fixed cohort. Future records do not enlarge compatibility
+membership. The collection still has finite declared pressure limits; these
+guards grant no ceiling increase or permanent capacity claim.
+
+The source census, original archive and current catalog have the same closed
+envelope: `schema_version`, `source_revision`, `records`. Each ordered source
+row contains `id`, `path`, `kind`, `part`, `type`, `metadata`, `headings`,
+`content`. Kind is `sealed` or `current`; the former has null part and the
+latter one of the three parts. Paths in the source census are the original
+flat locations. Complete original rows contain `id`, `path`, `text`; they
+must match the census's complete ordered population, revision, dimensions and
+digests. Current rows contain `id`, `path`, `type`, `metadata`, `content`.
+Their complete declared transition membership must be present, with fresh
+records allowed only through the closed current grammar.
+
+Content descriptors contain exact UTF-8 `bytes`, LF `lines`, `line_bytes` and
+`sha256`. Metadata contains `knowledge_id`, `knowledge_status`, ordered
+`questions` and ordered `authority_status` lines. Record extraction validates
+these against actual content, handles inline or listed questions, and excludes
+fenced examples from heading/status identity. Relative inline status links
+normalize to repository destinations so relocation cannot masquerade as a
+status change. Original heading lines remain recoverable rendering inputs;
+the integrated compatibility renderer must preserve their destinations.
+
+The supplied documents, populations, paths, individual records, questions and
+headings have explicit code bounds. Duplicate keys/IDs/questions/fact IDs,
+reordered or missing originals, borrowed body/source identities, unknown
+fields or parts, malformed dimensions/digests, unresolved files, escaping
+paths and symlinks at any file component refuse. Preparation returns detached
+products and never modifies caller values. A selected-snapshot bytes accessor
+uses the same validation as the regular-file accessor; snapshot authentication
+remains the caller's duty.
+
+Initial rollout additionally calls `verify_transition_metadata` to compare
+the complete ordered metadata with the independent source. Ordinary current
+validation authenticates current status against current bytes and retains
+original fact identity and every original question; it does not freeze future
+owned supersession changes. Immutable originals still return their original
+status. The atomic rollout must separately prove body/link meaning, complete
+index closure and exact compatibility rendering; this helper is not those
+proofs or a live authority admission.
+
+Re-derivation uses the literal future-store fixtures through
+`scripts/run_with_ram_guard.sh -- prove -Iperl t/2000-decision-catalog-preparation.t`.
+Falsification plants same-size source corruption, borrowed metadata/IDs,
+equal-count duplicates, wrong supported semantic routes, malformed dimensions,
+missing files and symlinked parents; the controls observe rejection.
+Durability is the tracked helper, independent literal fixtures, owning task
+and this contract. Existing exact sealed reads and flat ceiling-authority
+behavior are separately exercised before integration under `.51.3.2.2`.
