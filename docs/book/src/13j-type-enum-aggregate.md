@@ -127,8 +127,9 @@ before numeric reads so their original JSON types stay intact. See
 [0114](../../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md).
 A common declaration projection now separates aggregate traversal, enum
 exclusions, namespaces and actor rule operands while honoring nearest bindings.
-Domain and frontend integration still need qualification before authors can
-use record inputs.
+Declared domain roots now have preparatory record/formal path controls;
+frontend integration still needs qualification before authors can use record
+inputs.
 Detached explicit leaf-sample facts now retain exact width, signed/state
 properties and nearest bindings, with private scalar type-declaration controls.
 The unwired contextual gate now consumes those sample bindings for supplied
@@ -143,8 +144,11 @@ parent/child modules retain private declarations. Complete preparatory entry,
 await/drive, pre-data and nested control states now preserve existing capture
 assignments, guards and transitions. Actual strict semantic replay retains the
 independently expected private scalar types, including imported leaves and
-nearest scalar-formal shadows. Domain and frontend admission remain pending;
-authored record ports are still refused.
+nearest scalar-formal shadows. Preparatory nested member/list/slice reads and
+samples now retain their declared input domain; nearest formals and enum/package
+names keep their distinct ownership. Actual owning-domain and top carriers
+strictly replay. The separately owned unused-drive domain carrier repair and
+frontend admission remain pending; authored record ports are still refused.
 Existing declaration-collision refusals still apply.
 
 Single-member records and single-item lists also preserve their aggregate

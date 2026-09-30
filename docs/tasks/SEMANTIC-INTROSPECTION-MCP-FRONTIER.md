@@ -2540,11 +2540,11 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Qualify declared domain roots before record-input admission.`
   Acceptance: `Resolve selected member/item/scalar-slice paths to actual declared actor/formal roots for domain ownership. Reproduce and repair any existing prerequisite defects with public before/after controls and exact lexical masking; refuse unowned read/write crossings, preserve authored diagnostics, unrelated enum/package names and declared crossings. Qualify existing scalar/storage/domain facade/replay controls before new record source admission.`
-  Verification: `P1 .1 is repaired and publicly qualified with current scalar/storage/indexed-root ownership. Future .2 retains record/formal member-domain preparation after scoped gates, without confusing enum/package namespaces.`
-  Commit: `pending child qualification`
+  Verification: `Existing slice/index protection .1 and record/formal nested roots .2 are qualified. .2 also repairs confirmed existing inline-first-assignment and used named-body domain read/write bypasses, preserving nearest parameters and namespace constants with complete public diagnostic controls. Actual domain/top replay exposes a separate ordinary unused parameterized-drive helper width conflict, owned and scheduled immediately next under .3 before source admission; parent remains active until that repair qualifies.`
+  Commit: `pending .3 qualification`
 
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.2`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.1`
   Status: `done`
@@ -2554,10 +2554,17 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Prepare record/formal path-domain ownership before input admission.`
   Acceptance: `After the existing-path repair and scoped contextual gates, retain actual declared record/input/formal roots across nested member/list/scalar-slice paths. Preserve nearest lexical bindings, owned-domain selection, enum/package namespaces and explicit crossings. Qualify preparatory public lowering actors and unchanged admitted sources before first authored record-input admission, with actual authored-source confirmation in .3.5-.3.6 and carrier/runtime qualification under .2.4-.2.5.`
-  Verification: `pending prerequisite repair and scoped gates`
+  Verification: `T1995 proves supplied foreign record input nested members, scalar/reversed/single-bit slices, list leaves, control/rule/drive reads and entry/body samples lose domain refusal at 8698b1a897752036b875c27336306582665dc4e3. Resolved record roots now join storage member ownership while scalar enum/package namespaces remain delegated and nearest formals keep local domains. Complete caller JSON, actual imported aliases, independently valid scalar contexts, same-domain copies/reads, domain snapshots and strict replay of every domain/top carrier pass. A forced scalar-pin record_root predicate falsely refuses valid mode.ON, proving the namespace witness. The remaining inline control exposes an existing P1 first-assignment omission; ordinary scalar-only probes also prove used named-drive bodies lack ownership validation. T1920 exact storage read/write controls go RED before repair. Inline validation now matches emitted assignment boundaries; used named bodies validate targets/expressions in activation-site domains with parameter masks. T1985 adds complete native/API/newline check/semantic diagnostic parity, schedule transport refusal, no successful metadata/partial schedules and unchanged bytes. Guarded T1995/T1920/T1247/T1982/T1985/T1989/T1992/T1994/T1936/T1945/T1387 reports All tests successful, Files=11, Tests=87. Syntax and mdBook pass; exact book/reference authorities, decision/map/inventory and staged doctrines accompany the slice. Positive draft width and metadata-shape mistakes were corrected from actual native diagnostics/contracts. A separate ordinary unused-drive top width conflict is P2-owned by .4.3 immediately next before record admission; it is not hidden as a fixture error. Source records still refuse; no native HDL execution or full record delivery is claimed.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.3`
+  Status: `pending`
+  Goal: `P2: repair unused named-drive parameter leakage across independent domains.`
+  Acceptance: `Immediately after .2 and before authored record input admission, reproduce and repair actual domain source/helper selection for named drives without inventing private top inputs. Ordinary admitted source with core/aux domains, seen width 8, unused drive publish(value) assigning seen, and main setting seen=data strictly fails: core.publish_value width 8 disagrees with aux.publish_value width 1, blocking top inference. Retain that exact source and original strict diagnostic, determine the responsible producer, preserve used drive calls/parameters and lexical masking, qualify complete domain/top carriers and unchanged public reports. Own any broader unused-drive helper/width cases discovered and avoid changing submodules or native runtime prerequisites.`
+  Verification: `Confirmed with native --strict --check --json on an ordinary scalar-only public source at 8698b1a897752036b875c27336306582665dc4e3; success false and generated output absent. The same defect appears in prepared positive top replay, independently of record types. Precise source/diagnostic recipe is retained in decision 0114; repair is scheduled immediately next. Ignored probe logs supplement tracked reproduction, not sole evidence.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5`
@@ -3310,7 +3317,7 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Next `.60.4.3.2.3.4.2` prepares record/formal domain roots before record-input admission; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Record/formal domain roots and existing drive ingress repairs are qualified under `.60.4.3.2.3.4.2`. Next `.60.4.3.2.3.4.3` repairs unused named-drive domain carrier leakage before record-input admission; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5609,3 +5616,25 @@ decision 0114's mutation recipe and this task record. Ignored logs under
 runtime and full frontend/backend/consumer signoff remain explicitly missing
 and owned by following record delivery leaves. Rationale is canonical in 0114;
 DEVELOPMENT_NOTES needs no duplicate entry.
+
+
+## Acceptance — record/formal domain roots and drive ingress `.60.4.3.2.3.4.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — T1995's pre-repair supplied aux-owned packet member/slice/list/sample/control/rule/drive paths lower from core with empty diagnostics: _validate_domain_signal_access recognizes dotted storage only. T1920 newly reports `#   at t/1920-isf-storage-domain-path-ownership.t line 57.` for inline and named storage read/write cases. _ir_drive emits its first array assignment at index one while domain validation starts at two; used named bodies receive no ownership validation. Ordinary scalar-only public probes independently accept core reads of aux data and writes of aux remote in both forms. Production predecessor is 8698b1a897752036b875c27336306582665dc4e3. Strict `--check --json` also confirms the separate unused parameterized-drive top width conflict on the exact ordinary source in decision 0114; that P2 repair is owned immediately next, not classified away.
+- [x] **ADDRESSED (verified)** — Finalized record input roots retain nested path domains, nearest scalar formals keep their actual local/physical identities and scalar enum/package names remain delegated. Complete caller facts, exact first diagnostics, imported types, selected contexts, owned declaration snapshots and every positive actual domain/top IAL0 carrier qualify. Inline checks now cover the emitted first assignment; each used named body's read/write validation uses its real call domain and parameter masks. T1920 prior RED drive controls are GREEN; T1985 complete native/API/newline diagnostics preserve exact authored ownership and absent successful/partial products. The isolated all-scalar record_root mutation falsely refuses valid mode.ON and exits nonzero; current namespace controls pass. The unused-drive carrier defect remains scheduled under .4.3 before frontend admission.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl t/1995-isf-record-port-domain-roots.t t/1920-isf-storage-domain-path-ownership.t t/1247-isf-clock-domain-partition.t t/1982-isf-domain-storage-report.t t/1985-isf-interface-port-public-qualification.t t/1989-isf-record-port-root-classification.t t/1992-isf-record-port-sample-carriers.t t/1994-isf-record-port-sample-replay.t t/1936-isf-formal-source-context.t t/1945-isf-formal-child-products.t t/1387-isf-cross-domain-activation-handshake-lowering.t` reports `All tests successful`, `Files=11, Tests=87`. Historical complete public reports and actual scheduled/HDL bytes except date remain equal; current record refusal, sampling, formals and explicit crossings pass. Producer/new/updated test syntax is OK and mdBook builds. Exact aggregate book/reference authority, generated map/inventory, measured warning allowances within unchanged ceilings and staged doctrines/hooks accompany the slice. No native HDL execution or complete authored record delivery is claimed.
+
+Re-derivation uses public before/after lowering and actual full carrier/report
+products; falsification uses independently valid leaf contexts, exact authored
+domain messages, nearest bindings and the observed bad scalar-root predicate;
+durability is T1995/T1920/T1985, the immutable predecessor, decision 0114's
+recipes and owning nodes. Ignored record-domain logs supplement tracked sources.
+The separately confirmed P2 unused-drive source and impact have immediate
+repair ownership; record admission and native/backend/consumer completion
+remain subsequent gates. Canonical rationale is in 0114, without duplicate
+DEVELOPMENT_NOTES narration.
+
+The first map regeneration rejected decision 0113 at 567 lines above its
+512-line fact-card bound. New domain/drive contextual facts are routed intact
+to existing decision 0114, with a direct canonical pointer from 0113; existing
+questions and facts are retained, and no topic/card or ceiling is added.

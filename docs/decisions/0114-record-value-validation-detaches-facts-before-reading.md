@@ -15,10 +15,13 @@ answers:
   - "how are private record samples qualified against actual generated helpers and writers?"
   - "why did first-touch interface metadata validation change caller JSON scalar kinds?"
   - "how are complete record-leaf sample states and actual semantic scalar types qualified?"
+  - "how do prepared record input member paths retain their declared clock domain?"
+  - "why did inline and named drive bodies bypass declared domain ownership?"
+  - "why can an unused parameterized drive break strict multi-domain replay?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: t/1994-isf-record-port-sample-replay.t; perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1993-isf-record-port-sample-ownership.t; perl/FSM/Support/ISFRecordPortSamples.pm; perl/FSM/Scheduler/ISF/RecordSamples.pm; t/1992-isf-record-port-sample-carriers.t; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; t/1938-isf-formal-parent-products.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: t/1995-isf-record-port-domain-roots.t; t/1994-isf-record-port-sample-replay.t; perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1993-isf-record-port-sample-ownership.t; perl/FSM/Support/ISFRecordPortSamples.pm; perl/FSM/Scheduler/ISF/RecordSamples.pm; t/1992-isf-record-port-sample-carriers.t; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; t/1938-isf-formal-parent-products.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0114 — Record value validation detaches facts before reading
@@ -386,3 +389,96 @@ retain re-derivation, falsification and durability; ignored logs supplement
 them. Domain preparation and authored admission remain subsequent owners.
 Native HDL execution and full frontend/backend/consumer delivery remain
 unqualified by this preparation slice.
+
+
+## Record/formal path-domain preparation — 2026-09-30
+
+SEM `.60.4.3.2.3.4.2` qualifies supplied resolved record-input ownership before
+source admission. At `8698b1a897752036b875c27336306582665dc4e3`, T1995's
+foreign nested member, scalar slice, list-leaf, control, rule, drive-actual and
+explicit sample controls go RED: public scheduler lowering accepts the foreign
+path with no diagnostic. `_validate_domain_signal_access` admitted dotted paths
+only for storage roots; record inputs were absent from that path boundary.
+Whole-root copies already refused their foreign declared domain.
+
+The domain map now marks only finalized record input roots for member traversal.
+Indexed scalar lookup retains nearest formal ownership, and dotted scalar
+namespace names remain delegated. T1995 independently validates each selected
+leaf context, then requires the exact original path, access and declared domains
+in the first lowering diagnostic. Complete fresh caller JSON stays unchanged.
+Same-domain nested reads and copies, real imported record aliases, renamed
+nearest scalar formals and foreign scalar pins sharing enum/package names
+strictly replay every actual domain and top IAL0 carrier. Declaration snapshots
+retain the selected input in its actual owning domain. This is preparatory
+actor qualification; authored record ports remain refused.
+
+The first positive fixture attempted implicit scalar widening and guessed a
+nested input/output metadata shape. Native strict diagnostics established the
+width mismatch; width-aligned assignments and the actual flat declaration
+array repaired the fixture. Its named-drive declaration separately exposed
+the admitted-source defect retained below rather than being dismissed as a
+fixture problem. Current domain-path qualification isolates that pending defect
+by declaring the named drive only in its actual drive-call control.
+
+## Existing inline and named-drive domain bypass repairs
+
+T1995's inline control still failed after the record-root repair. Actual
+`_ir_drive` emits assignments beginning at clause index one when that first
+operand is an array, but domain validation always began at index two. The
+first read/write assignment bypassed ownership. Used named-drive bodies were
+never validated either; only their call arguments and multiple-domain reuse
+were checked. Ordinary scalar-only parser/scheduler probes accepted core
+inline/named reads of aux `data` and writes of aux `remote`. New T1920 first-line
+storage read/write controls go RED for both forms before the repair.
+
+Inline domain validation now uses the same admitted assignment boundary as
+emission. After drive-use collection and reuse admission, each used named body
+checks its targets and expressions in its actual activation-site domain. Its
+scalar parameter names mask outer declarations with that domain. Unused bodies
+have no activation owner and are not checked by this new call-site gate.
+Nearest parameter shadows, nested record input body reads, same-domain paths
+and explicit crossing contracts pass. T1985 adds complete native/API/newline
+check and semantic diagnostic parity, existing schedule transport refusal,
+no successful declaration/partial schedule products and unchanged source bytes
+for admitted inline/named foreign read/write sources.
+
+Re-derive with guarded T1995/T1920/T1985 and the owning leaf's cohort. Falsification
+is the captured pre-repair RED domain/drive controls, independent exact domain
+messages, nearest bindings and foreign scalar namespace witnesses; durability
+is these tracked tests and the immutable production predecessor above. These
+are source-validation repairs and preparatory path ownership, not native HDL
+execution or complete frontend/backend/consumer record delivery.
+
+The scalar namespace distinction has an observed known-bad control. Copy this
+leaf's tracked LoweringIR into an isolated repository-local include tree and
+replace only the resolved-record condition assigning `record_root` with
+`if 1;`. Run T1995 with that include tree before `-Iperl`, preloading
+`-MFSM::Scheduler::ISF::LoweringIR`. It exits nonzero on the valid `mode.ON`
+constant with a false aux-to-core clock-domain violation. The production
+condition passes the complete enum and imported-package controls. Marking
+every scalar input as a record root is therefore not a valid domain repair.
+
+## Owned unused-drive domain carrier defect
+
+SEM `.60.4.3.2.3.4.3` owns the separate P2 strict-replay defect, scheduled
+immediately after `.4.2` and before authored record input admission. This
+ordinary admitted scalar source reproduces it without record-port preparation:
+
+```lisp
+(actor unused_drive_domains
+ (clock-domains (domain core (clock clk) :default) (domain aux (clock aux_clk)))
+ (interface (input start) (input data (width 8)) (output seen (width 8)) (output done))
+ (drive (publish value) (seen value))
+ (transaction main (on start) (set seen data) (complete done)))
+```
+
+Save it under a repository-local path and run native
+`./bin/fsmgen --quiet --strict --check --json PATH`. At the predecessor above,
+success is false and no generated output is emitted. The diagnostic names
+undeclared top input `publish_value`: core's child input has width 8 while
+aux's has width 1, blocking consistent inference. The drive is unused. The
+same cause breaks positive prepared top replay, independently of record types.
+DomainSource currently copies all drive definitions into each local actor,
+but responsible helper/width production and its verified repair remain that
+next leaf. Ignored probe JSON/logs supplement this tracked exact source and
+version identity; no fix is claimed here.

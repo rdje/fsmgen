@@ -119,6 +119,12 @@ Rules:
 - Transactions and rules are indivisible domain-owned regions.
 - Drives do not own domains; they inherit the activation-site domain. Reusing
   one drive from multiple domains is rejected until a safe reuse rule exists.
+  Every inline assignment and each used named body validates reads/writes in
+  that activation-site domain. Scalar parameter names retain local ownership
+  when they shadow foreign actor declarations.
+  An unused parameterized drive can currently fail strict multi-domain replay
+  because inferred parameter widths disagree across domain modules; the owned
+  carrier repair must precede record-input admission.
 - Direct unowned cross-domain reads, writes, triggers, activations, bindings,
   and multi-domain drive reuse fail closed.
 

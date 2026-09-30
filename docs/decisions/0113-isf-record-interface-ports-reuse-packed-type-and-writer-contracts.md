@@ -469,3 +469,9 @@ Contextual preparation and first-touch caller-data correction are retained in
 [0114](0114-record-value-validation-detaches-facts-before-reading.md). The original
 scope mutation baseline followed an earlier projection; fresh copied facts now
 have independent pre-projection controls. This qualification remains unwired.
+
+
+Current record/formal domain preparation, repaired inline/named-drive ingress
+and the owned unused-drive carrier defect are canonical in
+[0114](0114-record-value-validation-detaches-facts-before-reading.md#recordformal-path-domain-preparation--2026-09-30).
+The earlier domain receipts above retain their original capture boundaries.

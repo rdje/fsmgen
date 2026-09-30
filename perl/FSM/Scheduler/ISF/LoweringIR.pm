@@ -2873,6 +2873,7 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
     );
     $self->_validate_library_use_domain_refs($actor, \%signal_domains, $default_domain);
     _validate_drive_reuse_domains(\%drive_use_domains);
+    _validate_drive_body_domain_refs($actor, \%drive_use_domains, \%signal_domains, \%constants);
 
     my @domains = map { $groups{$_} } @domain_order;
     _allocate_domain_artifact_names($actor, \@domains, \@crossing_summaries)
@@ -2946,6 +2947,11 @@ sub _actor_domain_signal_map {
             domain => _domain_for_entry($input, $default_domain),
             kind   => 'actor_input',
         };
+        # Resolved record inputs own their member paths. Scalar pins may share
+        # enum/package namespace names, so a pin name alone is insufficient.
+        $signals{$input->{name}}{record_root} = 1
+            if ref($input->{type_spec}) eq 'HASH'
+                && ($input->{type_spec}{kind} // '') eq 'record';
     }
     for my $output (@{$actor->{interface}{outputs} || []}) {
         $signals{$output->{name}} = {
@@ -3306,7 +3312,8 @@ sub _validate_transaction_clause_domain_refs {
                 _validate_domain_expr_reads($arg, $domain, $signal_domains, $local_signals, $constants, "$context drive '$clause->[1]' call");
             }
         } else {
-            for my $assignment (@{$clause}[2 .. $#$clause]) {
+            my $first = ref($clause->[1]) eq 'ARRAY' ? 1 : 2;
+            for my $assignment (@{$clause}[$first .. $#$clause]) {
                 next unless ref($assignment) eq 'ARRAY' && @$assignment >= 2;
                 _validate_domain_signal_access($assignment->[0], 'write', $domain, $signal_domains, $local_signals, $constants, "$context inline drive");
                 _validate_domain_expr_reads($assignment->[1], $domain, $signal_domains, $local_signals, $constants, "$context inline drive");
@@ -3413,14 +3420,15 @@ sub _validate_domain_signal_access {
     my $root = $name;
     if (!_is_hdl_identifier($root)) {
         # Indexed scalar references inherit any declared root's domain, with
-        # local/formal ownership selected below. Dotted paths retain the
-        # existing storage boundary so enum/package names are not reclassified.
+        # local/formal ownership selected below. Dotted paths require storage
+        # or a resolved record input, preserving scalar enum/package names.
         return 1 unless $name =~ /\A([A-Za-z_]\w*)((?:\.[A-Za-z_]\w*|\[\d+(?::\d+)?\])+)\z/;
         $root = $1;
         my $path = $2;
         if ($path !~ /\A(?:\[\d+(?::\d+)?\])+\z/) {
             return 1 unless exists($signal_domains->{$root})
-                && ($signal_domains->{$root}{kind} // '') eq 'actor_storage';
+                && (($signal_domains->{$root}{kind} // '') eq 'actor_storage'
+                    || $signal_domains->{$root}{record_root});
         }
     }
 
@@ -3724,6 +3732,27 @@ sub _validate_drive_reuse_domains {
         my @domains = sort keys %{$drive_use_domains->{$drive} || {}};
         confess "ISF clock-domain violation: drive '$drive' is called from multiple domains (" . join(', ', @domains) . ") without a safe cross-domain drive reuse rule\n"
             if @domains > 1;
+    }
+    return 1;
+}
+
+sub _validate_drive_body_domain_refs {
+    my ($actor, $drive_use_domains, $signal_domains, $constants) = @_;
+    for my $name (sort keys %$drive_use_domains) {
+        my $drive = $actor->{drives}{$name};
+        for my $domain (sort keys %{$drive_use_domains->{$name}}) {
+            # Parameters belong to the caller's scope; an outer declaration
+            # with the same name cannot lend them its domain.
+            my %local = map { $_ => $domain } @{$drive->{params} || []};
+            for my $assignment (@{$drive->{body} || []}) {
+                next unless ref($assignment) eq 'ARRAY' && @$assignment >= 2;
+                my $context = "drive '$name' assignment";
+                _validate_domain_signal_access($assignment->[0], 'write', $domain,
+                    $signal_domains, \%local, $constants, $context);
+                _validate_domain_expr_reads($assignment->[1], $domain,
+                    $signal_domains, \%local, $constants, $context);
+            }
+        }
     }
     return 1;
 }

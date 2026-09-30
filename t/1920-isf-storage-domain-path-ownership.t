@@ -45,6 +45,22 @@ for my $case (
  };
 }
 
+subtest 'inline and used named drive assignments retain declared domain ownership' => sub {
+ for my $case (
+  ['inline read','(transaction main (on start) (drive (seen record_value.payload)) (complete finished))','read','record_value.payload'],
+  ['inline write','(transaction main (on start) (drive (record_value.payload data)) (complete finished))','write','record_value.payload'],
+  ['named read','(drive publish (seen record_value.payload)) (transaction main (on start) (drive publish) (complete finished))','read','record_value.payload'],
+  ['named write','(drive publish (record_value.payload data)) (transaction main (on start) (drive publish) (complete finished))','write','record_value.payload'],
+ ) {
+  my ($label,$body,$access,$token)=@$case;
+  my ($line)=split /\n/,lower_error($header.$body.')');
+  like($line // '',qr/clock-domain violation: .* $access signal '\Q$token\E' owned by domain 'aux' from domain 'core'/,
+   "$label refuses its exact foreign declared storage root");
+ }
+ is(lower_error($header.'(drive (publish record_value) (seen record_value))'
+  . ' (transaction main (on start) (drive publish data) (complete finished)))'),'','nearest scalar drive parameter keeps the calling domain despite foreign same-named storage');
+};
+
 subtest 'scalar input slices and bit indexes retain declared ownership' => sub {
  my $source = $header;
  $source =~ s/\(input data \(width 8\)\)/(input data (width 8) (domain aux))/;

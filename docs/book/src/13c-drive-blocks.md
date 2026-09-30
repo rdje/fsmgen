@@ -63,6 +63,16 @@ RHS expressions are substituted recursively during lowering.
 
 This reduces two drives (`scl_hi`, `scl_lo`) into one parameterized drive.
 
+In a named-domain actor, every inline assignment and every used named-drive
+body read/write must belong to the activation-site domain. A parameter keeps
+that local identity even when it shares a name with foreign actor storage.
+Foreign values require a supported crossing; calling a drive does not provide
+one.
+
+An unused parameterized drive can currently make strict multi-domain replay
+fail because its inferred parameter widths disagree between domain modules.
+This known limitation is owned for repair before record-input admission.
+
 Known drive calls use exact positional arity. A drive declared with `N`
 formal parameters must be called with exactly `N` actual values. Missing
 actuals and extra actuals are lowering errors; extra values are not ignored.
