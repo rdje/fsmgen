@@ -17,7 +17,7 @@ answers:
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; perl/FSM/Support/ISFRecordPortValues.pm; perl/FSM/Support/ISFRecordPortScopes.pm; t/1987-isf-record-port-declaration-scopes.t; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; t/1985-isf-interface-port-public-qualification.t; t/1986-isf-record-port-value-gates.t; t/lib/FSM/Test/SourceQueryCoverage.pm; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: t/1997-isf-record-port-gate-integration.t; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Support/ISFInterfacePortMetadata.pm; perl/FSM/Support/ISFRecordPortValues.pm; perl/FSM/Support/ISFRecordPortScopes.pm; t/1987-isf-record-port-declaration-scopes.t; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; t/1985-isf-interface-port-public-qualification.t; t/1986-isf-record-port-value-gates.t; t/lib/FSM/Test/SourceQueryCoverage.pm; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0113 — ISF record interface ports reuse packed type and writer contracts
@@ -475,3 +475,33 @@ Current record/formal domain preparation, repaired inline/named-drive ingress
 and the owned unused-drive carrier defect are canonical in
 [0114](0114-record-value-validation-detaches-facts-before-reading.md#recordformal-path-domain-preparation--2026-09-30).
 The earlier domain receipts above retain their original capture boundaries.
+
+## Parser/module gate integration — 2026-09-30
+
+SEM `.60.4.3.2.3.5.1` integrates prepared validation before `.5.2` admits
+record-input source syntax. Parser resolved-type phases and shared formal/
+executable module preparation now apply the contextual scalar/copy/role/sample
+gate whenever actual record-input facts exist. Existing storage-only path
+grammar remains with its original validator. Record-bearing enum exclusions
+use the canonical nearest actor/transaction/drive projection; rule operands
+use its declared actor roots and resolved aggregate roots. Ordinary scalar/
+storage actors retain existing projections. This is integration, not admission.
+
+T1997 supplies finalized record facts at the real parser type-finalization
+boundary without replacing production validators. Actual later phases retain
+layout metadata, scalar/formal/parameter masks and enum namespaces, while
+refusing invalid members, input writes, wrong copies, whole scalar values,
+operator references and unsupported contexts. Missing ordinary rule operands
+still reach their original validator. Actual formal/executable boundaries have
+independent first-line negatives and complete caller-JSON isolation controls.
+
+Re-derive with guarded T1997 and the owning leaf's preparation/public cohorts.
+At immutable predecessor `6f7b30bb4498f3ab13f294fae6a209342a4ef4c4`, the full
+pre-integration controls fail parser namespace and module admission witnesses.
+Falsification also replaces only the shared LoweringIR contextual gate call
+with an omission in an isolated repository-local include tree. Preload that
+copy and run T1997: its module-admission subtest fails while parser phases and
+public record refusal pass. Durability is these tracked producers, T1997 and
+this control recipe. Initial draft fixtures were corrected to parenthesized
+drive formals and nonfatal diagnostic capture, without product changes.
+Authored record ports still refuse; native/backend/consumer signoff remains open.

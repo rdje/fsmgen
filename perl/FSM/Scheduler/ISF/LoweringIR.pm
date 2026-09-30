@@ -25,6 +25,8 @@ use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
 use FSM::Scheduler::ISF::RecordSamples;
+use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
+use FSM::Support::ISFRecordPortSamples qw(actor_has_record_input);
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 
@@ -84,6 +86,8 @@ my %TRANSACTION_CONTEXT_LABEL = (
 );
 
 sub _prepare_module_source($self, $actor) {
+    validate_actor_record_contexts(actor => $actor)
+        if actor_has_record_input(actor => $actor);
     $self->_validate_static_zero_repeat_child_activation_prune_surface($actor);
     $self->_validate_child_transaction_refs($actor);
     $self->_validate_activation_domain_names($actor);

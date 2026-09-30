@@ -119,20 +119,23 @@ The preparatory value helpers now have type, path, role and lexical-shadow
 controls, including diagnostic-line negative oracles. Detached declaration
 scopes consume actual parsed actor ports/storage, transaction formals/locals
 and named-drive parameter names. Unresolved types and untyped drive parameters
-mask outer facts without borrowing a width or record layout. This preparation
-remains unwired. Contextual AST controls now cover selected transaction, rule
-and drive scalar reads and strict copies; whole record ports refuse scalar
+mask outer facts without borrowing a width or record layout. These resolved
+reference gates now run at parser and module admission boundaries for supplied
+record-input facts; authored record ports remain refused. Contextual AST controls
+cover selected transaction, rule and drive scalar reads and strict copies;
+whole record ports refuse scalar
 contexts, and input targets refuse writes. Validation detaches caller facts
 before numeric reads so their original JSON types stay intact. See
 [0114](../../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md).
 A common declaration projection now separates aggregate traversal, enum
 exclusions, namespaces and actor rule operands while honoring nearest bindings.
-Declared domain roots now have preparatory record/formal path controls;
-frontend integration still needs qualification before authors can use record
-inputs.
+Declared domain roots now have preparatory record/formal path controls.
+The parser now shares declaration-based enum exclusions and actor rule roots
+with the contextual gates. Bounded source admission and its qualification still
+precede authoring record inputs.
 Detached explicit leaf-sample facts now retain exact width, signed/state
 properties and nearest bindings, with private scalar type-declaration controls.
-The unwired contextual gate now consumes those sample bindings for supplied
+The integrated contextual gate consumes those sample bindings for supplied
 record-input actors, preserving scalar alias widths and input ownership.
 Supplied preparatory actors now retain exact private scalar widths and core
 types in actual parent, generated-child and owning-domain module carriers.

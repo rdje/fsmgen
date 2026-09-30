@@ -2568,10 +2568,26 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Admit the bounded record-input source surface with every mandatory gate.`
   Acceptance: `After .2-.4, admit local/imported packed record input aliases only with complete contextual scalar/copy/role/type/domain/sampling checks from the first accepted source. Preserve root-list/output/transaction aggregate refusals, explicit IAL0 typed interfaces and unused declarations; qualify invalid types/paths/operators/whole-record scalar contexts and same-type input-to-owned-storage copies. Keep unsupported carrier/backend contexts fail closed and synchronize actual authoring behavior in book/spec.`
-  Verification: `pending all mandatory preparation`
+  Verification: `Split gate integration .1 from bounded authored admission .2 before changing source acceptance; every first accepted source must use the complete integrated gates.`
+  Commit: `pending child qualification`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5.1`
+  Status: `done`
+  Goal: `Integrate qualified record-input gates before authored admission.`
+  Acceptance: `Connect the existing detached contextual/sample/role/type gates to the actual parser and shared module-source preparation boundaries. Use the canonical nearest declaration projection for record-bearing enum exclusions and rule operands; preserve the existing storage-only aggregate grammar and all nonrecord behavior. Qualify actual parser phase order using supplied finalized record facts, actual formal/executable module admission, precise failures, nearest masks and complete caller isolation. Keep authored aggregate-port refusal intact; source admission remains .2 and native/runtime/carrier completion keeps its prior owners.`
+  Verification: `At 6f7b30bb4498f3ab13f294fae6a209342a4ef4c4, corrected full T1997 fails parser namespace and formal/executable admission controls. Record-input actors now consume the existing contextual gate at resolved parser phases and shared module source preparation. Canonical nearest projections supply record-bearing enum exclusions and actor rule declarations; existing storage-only path grammar and nonrecord projections remain. T1997 supplies finalized facts at the actual type-finalization boundary without replacing validators, proves independent layout metadata, scalar/formal/drive masks, input roles, copies and precise failures, and preserves complete caller JSON at formal/executable entry. An isolated omission of only the shared gate makes module admission subtest 3 RED while parser and source-refusal controls pass. Final preparation/domain/sample/storage cohort reports All tests successful, Files=13, Tests=77; complete native/API/actual newline, historical schedules and scalar sampling cohort reports Files=5, Tests=21. Producer/test syntax and final book build pass. An earlier book attempt was RAM-guard terminated at 89.7% host usage, exit 137; no success is inferred from it, and the completed build uses the unchanged cutoff. The initial test fixture used invalid unparenthesized drive formals and fatal metadata capture; both are corrected from exact parser/TAP diagnostics, without product changes. Exact book authority, bounded 0113 integration record, map/inventory and staged gates accompany the slice. Authored record ports still refuse; admission .5.2 is next, and native/runtime/full carrier/consumer completion remains separately owned.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5.2`
+  Status: `pending`
+  Goal: `Admit local/imported packed record inputs only through integrated gates.`
+  Acceptance: `After .1, admit the selected actor record-input aliases with all mandatory contextual/domain/sample/role/copy/type checks. Permanently qualify actual authored local/imported/nested/unused inputs, scalar leaves, strict same-type input-to-owned-storage copies and typed IAL0 replay. Preserve output/list-root/transaction aggregate refusal and invalid declaration/path/operator/context/input-write failures. Keep unsupported integration/backend carriers precise and fail closed, then synchronize actual authoring book/spec before frontend/public qualification .3.6.`
+  Verification: `pending gate integration`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6`
@@ -3317,7 +3333,7 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Record/formal domain roots and existing drive ingress repairs are qualified under `.60.4.3.2.3.4.2`. Unused named-drive domain carrier leakage is repaired under `.60.4.3.2.3.4.3`. Next `.60.4.3.2.3.5` admits the bounded record-input source surface with all mandatory gates; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Record/formal domain roots and existing drive ingress repairs are qualified under `.60.4.3.2.3.4.2`. Unused named-drive domain carrier leakage is repaired under `.60.4.3.2.3.4.3`. Prepared parser/module gates are integrated under `.60.4.3.2.3.5.1`. Next `.60.4.3.2.3.5.2` admits bounded authored record inputs; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5656,3 +5672,20 @@ transport fixture now uses the established actual capture protocol. No product
 path-policy change is made. Canonical rationale belongs to 0114; no duplicate
 DEVELOPMENT_NOTES entry is needed. Source record admission remains next,
 and native/backend/consumer qualification retains its existing owners.
+
+## Acceptance — parser/module record gate integration `.60.4.3.2.3.5.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — At 6f7b30bb4498f3ab13f294fae6a209342a4ef4c4, the corrected full T1997 reports `#   at t/1997-isf-record-port-gate-integration.t line 70.` for valid supplied packet.data: actual parser enum phases report unknown enum member instead of selecting the declared record. Parser enum/rule maps select storage only. Independent formal/executable negatives lack contextual input-write, whole-scalar and exact-copy refusal because _prepare_module_source does not call the prepared gate. The full pre-integration run fails subtests 1-3; source aggregate refusal passes. This is an unfulfilled preparatory integration obligation, not new authored admission.
+- [x] **ADDRESSED (verified)** — Resolved parser phases and shared formal/executable source preparation apply the qualified contextual role/type/copy/sample gate for record-input facts. Canonical nearest actor/transaction/drive projections supply record-bearing enum exclusions and actor rule declaration/aggregate roots. T1997 exercises actual later parser phases with only a finalized-fact fixture promotion, keeping every production validator. Literal layout, valid scalar/copy/sample contexts, nearest scalar/formal/parameter masks and real enum names pass. Invalid paths, input targets, wrong copies, whole scalar contexts, operator references and unsupported waits refuse on the first cause; unknown rule operands stay with their original validator. Both actual module entry points preserve complete caller JSON on accepted/refused actors. Removing only the shared gate in an isolated LoweringIR makes module subtest 3 fail while parser phases and source refusal pass. Authored record source remains refused.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl t/1997-isf-record-port-gate-integration.t t/1989-isf-record-port-root-classification.t t/1988-isf-record-port-context-gates.t t/1995-isf-record-port-domain-roots.t t/1994-isf-record-port-sample-replay.t t/1993-isf-record-port-sample-ownership.t t/1992-isf-record-port-sample-carriers.t t/1987-isf-record-port-declaration-scopes.t t/1986-isf-record-port-value-gates.t t/1983-isf-interface-port-metadata.t t/1259-isf-aggregate-storage-type-aliases.t t/1391-isf-local-variables.t t/1996-isf-domain-drive-selection.t` reports `All tests successful`, `Files=13, Tests=77`. Guarded complete public/historical/sample cohort `prove -Iperl t/1985-isf-interface-port-public-qualification.t t/1255-isf-schedule-report-golden-matrix.t t/1100-isf-sample-piggyback.t t/1111-isf-sample-before-data-ops.t t/1195-isf-sample-clause-boundary.t` reports `All tests successful`, `Files=5, Tests=21`. Complete native/API/actual newline products, historical schedule carriers, prior sampling, private sample ownership/types and domains pass. Producer/test syntax is OK and the final mdBook build passes after host headroom recovered. The earlier 89.7% host cutoff exits 137 without a build verdict; no cutoff is raised. Exact reference authority, map/inventory, measured warning allowances and staged doctrines/hooks accompany completion.
+
+Re-derivation uses real parser phase order and both formal/executable source
+entry points; falsification uses independent first-line role/type/path/context
+failures and the observed isolated omission control. Durability is T1997,
+tracked producers, the immutable predecessor and decision 0113's integration
+recipe. The draft's positive parameter declaration was corrected to actual
+parenthesized drive formals; nonfatal diagnostic capture lets all independent
+negative subtests run before the producer changes. Ignored logs supplement
+tracked controls. No authored admission, native HDL execution or complete
+backend/consumer signoff is claimed; those remain subsequent owned gates.
+Canonical rationale belongs to 0113; DEVELOPMENT_NOTES gains no duplicate.

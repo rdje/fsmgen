@@ -24,6 +24,9 @@ use FSM::Package::Symbols;
 use FSM::SourcePathResolver;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
+use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
+use FSM::Support::ISFRecordPortSamples qw(actor_has_record_input);
+use FSM::Support::ISFRecordPortScopes qw(record_context_scope);
 use FSM::Support::ISFResourceCatalog qw(
     isf_resource_arbiter_values
     isf_resource_kind_values
@@ -389,6 +392,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_verification_bridge($result);
     $self->_validate_deferred_atl_drive_sink_expression_candidates($result);
     $self->_validate_rule_pulse_targets($result);
+    validate_actor_record_contexts(actor => $result)
+        if actor_has_record_input(actor => $result);
     $self->_validate_actor_aggregate_storage_paths($result);
     $self->_validate_actor_atl_reserved_qualified_forms($result);
     $self->_validate_actor_enum_member_value_contexts($result);
@@ -4906,6 +4911,11 @@ sub _validate_actor_rule_operands($self, $actor) {
     }
     my %aggregate_roots = map { $_->{name} => $_->{type_spec} }
         grep { _is_aggregate_type_spec($_->{type_spec}) } @{$actor->{storage} || []};
+    if (actor_has_record_input(actor => $actor)) {
+        my $context = record_context_scope(actor => $actor);
+        %declared = %{$context->{rule_declared_roots}};
+        %aggregate_roots = %{$context->{aggregate_roots}};
+    }
     my (%missing, %seen);
     my $check = sub {
         my ($expr, $context) = @_;
@@ -4992,12 +5002,18 @@ sub _validate_actor_enum_member_value_contexts($self, $actor) {
     my %aggregate_roots = map { $_->{name} => 1 }
         grep { _is_aggregate_type_spec($_->{type_spec}) }
         @{$actor->{storage} || []};
+    my $has_records = actor_has_record_input(actor => $actor);
+    %aggregate_roots = %{record_context_scope(actor => $actor)->{enum_exclusion_roots}}
+        if $has_records;
 
     for my $tx (@{$actor->{transactions} || []}) {
+        my $roots = $has_records
+            ? record_context_scope(actor => $actor, transaction => $tx)->{enum_exclusion_roots}
+            : \%aggregate_roots;
         _validate_transaction_enum_member_value_contexts(
             $tx->{clauses},
             $actor,
-            \%aggregate_roots,
+            $roots,
             "transaction '$tx->{name}'",
         );
     }
@@ -5011,11 +5027,14 @@ sub _validate_actor_enum_member_value_contexts($self, $actor) {
     }
 
     for my $drive_name (sort keys %{$actor->{drives} || {}}) {
+        my $roots = $has_records
+            ? record_context_scope(actor => $actor, drive => $actor->{drives}{$drive_name})->{enum_exclusion_roots}
+            : \%aggregate_roots;
         _validate_drive_enum_member_value_contexts(
             $drive_name,
             $actor->{drives}{$drive_name},
             $actor,
-            \%aggregate_roots,
+            $roots,
         );
     }
 

@@ -10,9 +10,9 @@ use FSM::Support::ISFRecordPortSamples qw(actor_has_record_input record_transact
 
 our @EXPORT_OK = qw(validate_actor_record_contexts);
 
-# Preparation only: this checks declaration references, not the complete source
-# grammar. Existing validators still own unknown tokens, arity, operators and
-# namespace/static-symbol resolution. Sampling and domain gates are separate.
+# Parser and shared module admission use this resolved-reference gate. It does
+# not replace the complete source grammar: existing validators own unknown
+# tokens, arity, operators and namespace/static symbols; domain gates are separate.
 sub validate_actor_record_contexts {
     my %args = @_;
     _require(keys(%args) == 1 && ref($args{actor}) eq 'HASH', 'requires one actor map');
