@@ -12,6 +12,7 @@ answers:
   - "which type and lexical gates must precede record input admission?"
   - "how are record value gates and contextual diagnostic oracles qualified?"
   - "which existing domain-path defect must be repaired before record input admission?"
+  - "how is foreign-domain scalar slice and input-index refusal repaired and qualified?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
@@ -374,7 +375,7 @@ P1 repair `.60.4.3.2.3.4.1` is next, before unrelated contextual implementation;
 `.4.2` retains future record/formal/domain qualification. Do not widen the
 matcher blindly into enum/package namespaces or erase nearest-binding roles.
 
-Reproduce the bounded existing source defect without native execution:
+Reproduce the bounded existing source defect without native HDL execution:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl -Iperl -MFSM::Adapter::ISF -MFSM::Scheduler::ISF -MJSON::PP -e '
@@ -403,3 +404,28 @@ foreign-domain ownership; the slice/index cases accept. Permanent first-line
 negative oracles and same-domain/lexical/enum/package/crossing controls must
 retain the repair. After repair this dated receipt remains historical; the
 current command and owning task establish present admission.
+
+## Existing domain-path repair — 2026-09-30
+
+SEM `.60.4.3.2.3.4.1` closes the confirmed existing source-validation defect
+before record admission. Domain lookup now recognizes scalar colon slices and
+uses the nearest declared actor/formal/local root for indexed references.
+Dotted paths retain their existing storage classification, preserving enum and
+package names. Future authored record-input member ownership remains under
+`.4.2`, after scoped contextual preparation; record source ports still refuse.
+
+T1920 first goes RED on the recorded foreign member/storage slices and input
+slice/index controls, then passes the repair. Its first diagnostic line must
+name the exact path, access and declared domains. Nested list/member slices,
+reversed and single-bit ranges, same-domain values, unrelated enum names and
+explicit generated formal shadows are included. The unchanged command above
+now rejects every recorded foreign case with its authored ownership message.
+
+T1985 adds complete typed native/API/actual newline check/semantic comparisons
+and existing schedule transport errors for these sources, with independent
+exact diagnostic messages, absent successful declaration snapshots, no partial
+schedule and unchanged source bytes. T1982 preserves complete earlier domain
+reports, actual scheduled FSM files and SystemVerilog/Verilog HDL except date.
+T1247/T1259/T1986 retain domain partition, storage/types and unwired value gates.
+This repairs validation; it establishes no new record authoring, general
+controller repair, native HDL runtime or downstream completion.

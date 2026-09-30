@@ -146,6 +146,38 @@ subtest 'discovery remains complete through native API and actual newline' => su
     }
 };
 
+subtest 'foreign-domain slices refuse consistently without successful declaration products' => sub {
+    my $header = '(actor domain_slices'
+        . ' (clock-domains (domain core (clock clk) :default) (domain aux (clock aux_clk)))'
+        . ' (types (type frame (record (payload (bits 8)))))'
+        . ' (interface (input start) (input data (width 8) (domain aux)) (output seen (width 8)))'
+        . ' (storage (var record_value (type frame) (domain aux)) (var scalar (width 8) (domain aux)))';
+    for my $token (qw(record_value.payload record_value.payload[3:0] scalar[3:0] data data[3:0] data[0])) {
+        my $path = "$work/domain-" . ($token =~ s/\W/_/gr) . '.isf';
+        write_file($path, $header . " (transaction main (on start) (set seen $token)))");
+        $path =~ s/^\Q$root\E\///;
+        my $message = "ISF clock-domain violation: transaction 'main' set clause read signal '$token'"
+            . " owned by domain 'aux' from domain 'core' without a crossing primitive";
+        for my $kind (qw(check semantic)) {
+            my $report = query($path, $kind, 1);
+            ok(!$report->{success}, "$kind refuses the independently specified foreign owner");
+            is($report->{diagnostics}[0]{message}, $message, 'exact diagnostic message, independent of stack text');
+            ok(!exists($report->{source}{interface_ports}), 'failure publishes no successful interface snapshot');
+        }
+        my $before = sha256_hex(read_file($path));
+        my $native = capture([$^X, 'bin/fsmgen', '--emit-schedule-json', $path]);
+        isnt($native->{exit_code}, 0, 'native schedule refuses the foreign read');
+        is($native->{stdout}, '', 'no partial schedule product');
+        my ($diagnostic) = split /\n/, $native->{stderr};
+        like($diagnostic // '', qr/\Q$message\E/, 'schedule diagnostic line names the exact owner/path');
+        my $request = request($path, 'schedule');
+        my $response = $api->handle_jsonrpc_request($request);
+        ok($response->{error}, 'schedule preserves its transport-error contract');
+        wire_equal($request, $response);
+        is(sha256_hex(read_file($path)), $before, 'all failed schedules preserve source bytes');
+    }
+};
+
 subtest 'identical corrupt metadata cannot pass independent declaration expectations' => sub {
     my $expected = $supported{'isf/storage_fields.isf'};
     for my $change (sub { pop @{$_[0]} }, sub { $_[0][0]{width}=2 }, sub { $_[0][0]{width}='1' },

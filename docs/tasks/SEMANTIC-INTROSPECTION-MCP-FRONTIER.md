@@ -2472,18 +2472,18 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Qualify declared domain roots before record-input admission.`
   Acceptance: `Resolve selected member/item/scalar-slice paths to actual declared actor/formal roots for domain ownership. Reproduce and repair any existing prerequisite defects with public before/after controls and exact lexical masking; refuse unowned read/write crossings, preserve authored diagnostics, unrelated enum/package names and declared crossings. Qualify existing scalar/storage/domain facade/replay controls before new record source admission.`
-  Verification: `Public probes confirm existing foreign storage/member scalar-slice and input slice/index bypasses. P1 .1 repairs that admission defect first; .2 prepares record/formal path-domain ownership without confusing enum/package namespaces.`
+  Verification: `P1 .1 is repaired and publicly qualified with current scalar/storage/indexed-root ownership. Future .2 retains record/formal member-domain preparation after scoped gates, without confusing enum/package namespaces.`
   Commit: `pending child qualification`
 
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.1`
-  Status: `pending`
+  Status: `done`
   Goal: `P1: repair existing foreign-domain scalar slice and input-index admission bypasses.`
   Acceptance: `At pre-repair 02827d840, public parse/lower rejects record_value.payload and foreign data but accepts record_value.payload[3:0], scalar[3:0], data[3:0] and data[0]. Reproduce those exact declared ownership failures, repair the domain root/path classifier with real lexical scope, and permanently reject them before carrier emission. Preserve same-domain slices, local/formal shadows, unrelated enum/package constants and declared crossings; use first-diagnostic-line negative oracles, complete native/API/newline products, IAL0 replay and current scalar/storage/domain baselines. This source-validation repair needs no native HDL replay or new record-port admission.`
-  Verification: `Owned P1 defect, reproduced through public parse/lower; repair is the next frontier after .3.1 commit.`
-  Commit: `pending`
+  Verification: `T1920 first reports empty diagnostics for foreign member/storage scalar slices and input slice/bit-index reads, proving the admission bypass. Domain lookup now recognizes colon ranges and selects nearest declared roots for indexed references; dotted storage/enum/package classification is preserved. Exact first-line controls include nested list/member slices, reversed/single-bit ranges, same-domain values and generated formal shadows. The same public pre-repair probe now rejects every foreign case. Guarded T1920/T1247/T1259 and complete T1985/T1982/T1986 qualification report All tests successful: native/API/newline check/semantic diagnostics are independently exact, schedule failures retain no partial product and source bytes are unchanged; complete historical domain reports, actual IAL0 files and SystemVerilog/Verilog HDL except date remain identical. The book gap is replaced by qualified current behavior. No native HDL execution or record-source admission is claimed.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.2`
   Status: `pending`
@@ -3242,8 +3242,8 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.2.3.4.1` repairs
-confirmed existing foreign-domain slice/index admission bypasses before record-input integration; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.2.3.2` prepares
+actual scoped contextual/enum gates before sampling/domain preparation and record-input admission; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5469,3 +5469,18 @@ foreign roots distinguish whole/member refusal from slice/index acceptance.
 Durability: the exact pre-repair revision, executable source, owning P1 repair,
 book limitation and Git retain the finding. First-line permanent oracles and
 complete source/report/replay qualification belong to the repair slice.
+
+
+## Acceptance — P1 domain slice/index repair `.60.4.3.2.3.4.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Before production mutation, T1920 reports Failed test at t/1920-isf-storage-domain-path-ownership.t line 42: foreign record_value.payload[3:0] and scalar[3:0] return empty diagnostics; input slice/index controls fail likewise. The existing unsliced control throws at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3428. The path matcher omits colon ranges and its non-identifier branch excludes actor inputs; local/formal root selection never runs for those forms. This is the P1 source-validation defect reproduced at 02827d840, not a new HDL behavior claim.
+- [x] **ADDRESSED (verified)** — Colon ranges enter domain validation, and indexed scalar references select the nearest declared actor/formal/local root. Dotted paths preserve existing storage/enum/package classification. The exact same public probe now rejects every foreign case. T1920 independently requires the authored path/access/domains in the first diagnostic line, including nested/reversed/single-bit ranges and formal shadow positives. T1985 compares complete typed native/API/newline products with literal diagnostic messages, successful-metadata omission, schedule transport-error/no-partial-product and untouched-source controls. The book's known-gap note is replaced by the verified current rule.
+- [x] **NO REGRESSION** — Guarded T1920/T1247/T1259 reports `All tests successful`; guarded T1920/T1985/T1982/T1986 also reports `All tests successful`. T1982 preserves complete historical domain reports, actual scheduled IAL0 files and SystemVerilog/Verilog HDL except date. Current scalar/storage/core type gates, same-domain paths, generated formal shadows, enum names and complete public discovery remain accepted. `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm` reports `syntax OK`. Book and staged doctrines verify current behavior, source locality, task ownership and generated knowledge/inventory before commit. The first staged doctrine gate reports rationale max lines 431 above baseline 421 plus growth 0; the warning-debt allowance is refreshed to measured actual plus its declared ratchet step, inside the unchanged 640-line ceiling. No native HDL execution or new record-port authoring is established.
+
+Re-derive: rerun the decision's unchanged public probe and T1920/T1985.
+Falsify: pre-mutation first-line oracles go RED; independently exact foreign
+ownership messages and same-domain/formal controls distinguish domain enforcement
+from broad refusal. T1982 compares complete old products and actual carriers/HDL.
+Durability: repair, permanent source/report controls, owning task, decision 0113,
+book and Git retain the cause and closure. Future record/domain member admission
+remains under .3.4.2 after scoped contextual preparation.

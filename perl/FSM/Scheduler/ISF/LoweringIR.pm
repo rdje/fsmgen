@@ -3408,12 +3408,16 @@ sub _validate_domain_signal_access {
     return 1 unless defined($name) && !ref($name);
     my $root = $name;
     if (!_is_hdl_identifier($root)) {
-        # Parsed aggregate leaf paths inherit the owning storage root's domain.
-        # Do not interpret package or enum member names as signal references.
-        return 1 unless $name =~ /\A([A-Za-z_]\w*)(?:\.[A-Za-z_]\w*|\[\d+\])+\z/;
+        # Indexed scalar references inherit any declared root's domain, with
+        # local/formal ownership selected below. Dotted paths retain the
+        # existing storage boundary so enum/package names are not reclassified.
+        return 1 unless $name =~ /\A([A-Za-z_]\w*)((?:\.[A-Za-z_]\w*|\[\d+(?::\d+)?\])+)\z/;
         $root = $1;
-        return 1 unless exists($signal_domains->{$root})
-            && ($signal_domains->{$root}{kind} // '') eq 'actor_storage';
+        my $path = $2;
+        if ($path !~ /\A(?:\[\d+(?::\d+)?\])+\z/) {
+            return 1 unless exists($signal_domains->{$root})
+                && ($signal_domains->{$root}{kind} // '') eq 'actor_storage';
+        }
     }
 
     my $owner_domain;
