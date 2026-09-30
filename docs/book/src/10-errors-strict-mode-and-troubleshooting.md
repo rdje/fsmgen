@@ -728,8 +728,25 @@ The immutable transition census, original bodies and original index bind to an
 exact preceding Git commit. Production pins authenticate that evidence, and the
 initial adoption gate compares the complete predecessor population and bytes.
 The historical capacity audit above remains a historical selection record;
-current storage checks use the delivered authenticated store. Broader new-record
-and downstream-consumer qualification remains separately tracked.
+current storage checks use the delivered authenticated store.
+
+The fixed production relocation also has an independent consumer-continuity
+audit. It compares complete Knowledge Map question/fact/path bindings and
+authored inline destinations, checks every original heading forwarder, and
+lists full-basename references separately from generic code candidates:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_store_consumer_closure.py \
+  --revision df7f692c8b94b083d2d078d62854d37869fbca6d \
+  > .artifacts/decision-consumer-closure.json
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2009-decision-consumer-closure.t
+```
+
+Stable exported provenance identifiers retain their published paths. Current
+body readers follow the canonical records. The controls plant lost/substituted
+question bindings and wrong heading/relative destinations. This proof covers
+the named tracked source cohort; it does not enumerate dynamic or external
+consumers or execute HDL. Fresh-record growth has its own qualification owner.
 
 ## Current Boundary
 

@@ -10,7 +10,7 @@ date: 2026-09-30
 status: current
 tags: [continuity, decisions, doctrine, knowledge-map]
 evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; scripts/decision_store_git.py; scripts/check_live_document_ceiling_authority.pl; t/2007-decision-hostile-boundaries.t; t/2006-decision-identity-modes.t; t/2005-decision-ceiling-stores.t; t/2004-decision-reader-snapshots.t; t/2003-decision-store-git-continuity.t; t/2002-decision-reader-stores.t; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_identity_capacity.py --revision 25c01f0127144922ade78951b91439e1d9221c08 > .artifacts/decision-identity-capacity-reverify.json
+reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_store_consumer_closure.py --revision df7f692c8b94b083d2d078d62854d37869fbca6d > .artifacts/decision-consumer-closure-reverify.json
 ---
 
 # 0108 — Decision records seal originals with stable retrieval
@@ -445,3 +445,18 @@ mode tests supply separate falsification. Tracked source/original/index products
 pins, preparation tool and tests provide durability. Broader new-record growth,
 consumer and question-set closure remain `.51.3.3`; this delivery does not prove
 unseen external integrations or HDL execution.
+
+## Complete tracked consumer continuity — 2026-09-30
+
+Owner `.51.3.3.1.2` qualifies the fixed installed commit against its exact source.
+`scripts/audit_decision_store_consumer_closure.py` authenticates initial adoption,
+then independently compares every question/fact/path binding, original heading
+forwarder and resolved authored inline destination. Its fixed audit is
+`docs/audits/decision-consumer-closure-20260930.json`. Full-basename references
+and generic code candidates are separate complete tracked-text censuses.
+Reviewed exported identifiers retain source bytes; current body readers and
+self-searches select canonical paths. T2009 plants lost/substituted bindings,
+misrouted headings and changed relative destinations independently of rendering.
+Fixed commits, the tracked audit/tool/test and these controls provide distinct
+re-derivation, durability and falsification legs. Dynamic/external consumers and
+HDL runtime remain outside this proof; fresh-record growth remains `.51.3.3.2`.
