@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-aggregate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **12** uniquely owned question entries.
+> **2** facts · **13** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -15,6 +15,7 @@
 - q="what is the packed record port field order?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="where are declared ISF interface ports exposed in reports?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="where is the SPECFORGE aggregate interface request preserved?" · facts=[isf-aggregate-port-request-baseline](../../docs/knowledge/isf-aggregate-port-request-baseline.md)
+- q="which existing domain-path defect must be repaired before record input admission?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="which type and lexical gates must precede record input admission?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="why must metadata validation predicates use scalar context?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 

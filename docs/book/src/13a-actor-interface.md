@@ -93,6 +93,11 @@ are CDC primitives: direct cross-domain reads, writes, triggers, activations,
 bindings, or multi-domain drive reuse fail closed before emission unless a
 shipped crossing primitive owns that path.
 
+Known validation gap: scalar slices and bit indexes of foreign-domain values
+can currently pass public scheduling despite this prohibition. The owned repair
+is a prerequisite to record-input delivery; these reads remain outside the
+source contract.
+
 The implementation is intentionally artifact-first. `lower(...)` does not turn
 one `.fsm` module into a hidden multi-clock state machine. It partitions the
 actor into one ordinary scheduled `.fsm` per declared domain, using

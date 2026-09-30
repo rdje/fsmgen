@@ -11,6 +11,7 @@ answers:
   - "how is declared interface metadata qualified against supported ISF source queries?"
   - "which type and lexical gates must precede record input admission?"
   - "how are record value gates and contextual diagnostic oracles qualified?"
+  - "which existing domain-path defect must be repaired before record input admission?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
@@ -350,3 +351,55 @@ negatives, malformed/cyclic facts, storage-only bypass and unchanged aggregate
 source refusal. T1983/T1259 and core path, structural type and interface-boundary
 controls pass alongside it. Source admission, sample timing, carriers, complete
 public products and HDL behavior remain owned by later leaves.
+
+## Contextual integration and domain prerequisite — 2026-09-30
+
+SEM `.60.4.3.2.3.1` splits actual lexical/contextual gate preparation, explicit
+leaf sampling carriers, declared-domain protection, first input admission and
+frontend/public replay before implementation. Parser type finalization precedes
+aggregate/enum checks, but their current maps select storage roots. Locals,
+formals, drive parameters and explicit samples require their actual binding
+facts; inferred writes must not redefine an actor input. Sampling preparation
+must retain signed/state facts as well as leaf width through existing typed
+carriers, with no new snapshot edge or whole-record inferred local.
+
+At pre-repair revision `02827d840254d6cdbfa4020be7910bb7ae9ac4cb`, public
+parse/lower probes reject a foreign-domain whole scalar input and unsliced
+record-storage member, yet accept the same input's bit/indexed slices and the
+member/storage scalar slices. `_validate_domain_signal_access` recognizes only
+single-index path suffixes and only actor-storage roots for non-identifiers.
+The missing colon form and interface-root exclusion bypass domain admission.
+This proves a source/lowering validation defect; no HDL runtime is established.
+P1 repair `.60.4.3.2.3.4.1` is next, before unrelated contextual implementation;
+`.4.2` retains future record/formal/domain qualification. Do not widen the
+matcher blindly into enum/package namespaces or erase nearest-binding roles.
+
+Reproduce the bounded existing source defect without native execution:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl -Iperl -MFSM::Adapter::ISF -MFSM::Scheduler::ISF -MJSON::PP -e '
+my $header = q{(actor domain_probe
+ (clock-domains (domain core (clock clk) :default) (domain aux (clock aux_clk)))
+ (types (type frame (record (payload (bits 8)))))
+ (interface (input start) (input data (width 8) (domain aux)) (output seen (width 8)))
+ (storage (var record_value (type frame) (domain aux)) (var scalar (width 8) (domain aux)))};
+my @rows;
+for my $token (qw(record_value.payload record_value.payload[3:0] scalar[3:0] data data[3:0] data[0])) {
+ my $ok = eval {
+  my $a = FSM::Adapter::ISF->new->parse_source($header
+    . "(transaction main (on start) (set seen $token)))", "domain-probe.isf");
+  FSM::Scheduler::ISF->new->lower($a); 1;
+ };
+ my ($message) = split /\n/, $@;
+ push @rows, {token => $token, accepted => $ok ? JSON::PP::true : JSON::PP::false,
+   diagnostic => $message // ""};
+}
+print JSON::PP->new->canonical->pretty->encode(\@rows);
+'
+```
+
+Before repair, `record_value.payload` and `data` refuse with their authored
+foreign-domain ownership; the slice/index cases accept. Permanent first-line
+negative oracles and same-domain/lexical/enum/package/crossing controls must
+retain the repair. After repair this dated receipt remains historical; the
+current command and owning task establish present admission.

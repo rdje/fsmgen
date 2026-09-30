@@ -2438,10 +2438,72 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Admit record inputs with qualified scalar reads and same-type copies.`
   Acceptance: `After .2, admit only local/imported resolved record input roots and wire all applicable transaction, rule, named-drive, enum-disambiguation and domain validators; qualify scalar leaf entry/body sampling width/type and existing capture timing while whole-record inferred samples refuse. Copies from an input to actor storage must use qualified recursive type identity from first admission; input writes and whole-record scalar contexts refuse. Root lists, outputs and transaction-local aggregate ports retain precise boundaries. Qualify nested paths, symbolic alias equivalence, lexical shadows, invalid members/types/roles and complete emitted IAL0 replay; synchronize accepted public reports and book.`
-  Verification: `Pure type/path/role gates are qualified under .2; select bounded parser/carrier integration children before source mutation and retain refusal until mandatory checks are complete.`
+  Verification: `Pure type/path/role gates are qualified. Split before source mutation into contextual/lexical ingress review, scoped AST/enum gate preparation, scalar-leaf sampling carriers, domain-root protection, first source admission and frontend/public replay qualification. All mandatory value/role/type/domain/sampling gates must precede admission; record source ports remain refused during preparation.`
+  Commit: `pending child qualification`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.1`
+  Status: `done`
+  Goal: `Select bounded contextual integration and re-verify admission prerequisites.`
+  Acceptance: `Trace finalized declarations, actual lexical bindings, AST scalar/copy contexts, enum maps, sampling width/type carriers and domain-root protection. Re-verify questionable prerequisite behavior through public interfaces without native execution, log and schedule every confirmed defect, and select exact integration children before code mutation. Keep source refusal and the book future boundary.`
+  Verification: `Decision 0113 retains finalized declaration/lexical/AST/enum/sampling/domain integration boundaries and a reproducible public domain probe at pre-repair 02827d840. Foreign unsliced member and whole input controls refuse, while record-member/storage scalar slices and scalar input slices/bit indexes pass lowering. Domain lookup excludes colon ranges and non-storage roots. P1 repair .3.4.1 is next before contextual source work; .3.4.2 retains future record/formal/domain protection. Source record ports remain refused. Existing domain/storage baseline, task/book and staged doctrines qualify decomposition without native execution.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2`
+  Status: `pending`
+  Goal: `Prepare scoped record-value and enum-context gates without admission.`
+  Acceptance: `Use actual finalized actor, transaction local/formal and drive-parameter declarations to build nearest-binding scopes. Reuse qualified value primitives for all selected transaction/rule/drive scalar/copy contexts, input roles and exact resolved identity. Prepare coherent aggregate/enum/rule operand root classification; retain legacy storage/scalar behavior and record source refusal until mandatory gates are wired. Qualify independent AST/source controls, unknown paths, enum/package names, lexical shadows and unchanged facades.`
+  Verification: `pending contextual review`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.3`
+  Status: `pending`
+  Goal: `Prepare qualified scalar-leaf sampling facts and typed carriers.`
+  Acceptance: `Resolve entry/body sample leaf width and signed/state facts in actual lexical scope, preserve existing capture timing and deterministic private carrier ownership, and refuse whole-record inferred aliases. Reuse core type declarations and avoid alias collisions, leaked reset/type metadata, placeholder widths or implicit samples. Qualify replay, local/imported/nested and shadow controls without enabling record source before prerequisites are complete.`
+  Verification: `pending scoped gates`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4`
+  Status: `active`
+  Goal: `Qualify declared domain roots before record-input admission.`
+  Acceptance: `Resolve selected member/item/scalar-slice paths to actual declared actor/formal roots for domain ownership. Reproduce and repair any existing prerequisite defects with public before/after controls and exact lexical masking; refuse unowned read/write crossings, preserve authored diagnostics, unrelated enum/package names and declared crossings. Qualify existing scalar/storage/domain facade/replay controls before new record source admission.`
+  Verification: `Public probes confirm existing foreign storage/member scalar-slice and input slice/index bypasses. P1 .1 repairs that admission defect first; .2 prepares record/formal path-domain ownership without confusing enum/package namespaces.`
+  Commit: `pending child qualification`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.1`
+  Status: `pending`
+  Goal: `P1: repair existing foreign-domain scalar slice and input-index admission bypasses.`
+  Acceptance: `At pre-repair 02827d840, public parse/lower rejects record_value.payload and foreign data but accepts record_value.payload[3:0], scalar[3:0], data[3:0] and data[0]. Reproduce those exact declared ownership failures, repair the domain root/path classifier with real lexical scope, and permanently reject them before carrier emission. Preserve same-domain slices, local/formal shadows, unrelated enum/package constants and declared crossings; use first-diagnostic-line negative oracles, complete native/API/newline products, IAL0 replay and current scalar/storage/domain baselines. This source-validation repair needs no native HDL replay or new record-port admission.`
+  Verification: `Owned P1 defect, reproduced through public parse/lower; repair is the next frontier after .3.1 commit.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4.2`
+  Status: `pending`
+  Goal: `Prepare record/formal path-domain ownership before input admission.`
+  Acceptance: `After the existing-path repair and scoped contextual gates, retain actual declared record/input/formal roots across nested member/list/scalar-slice paths. Preserve nearest lexical bindings, owned-domain selection, enum/package namespaces and explicit crossings. Qualify preparatory public lowering actors and unchanged admitted sources before first authored record-input admission, with actual authored-source confirmation in .3.5-.3.6 and carrier/runtime qualification under .2.4-.2.5.`
+  Verification: `pending prerequisite repair and scoped gates`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5`
+  Status: `pending`
+  Goal: `Admit the bounded record-input source surface with every mandatory gate.`
+  Acceptance: `After .2-.4, admit local/imported packed record input aliases only with complete contextual scalar/copy/role/type/domain/sampling checks from the first accepted source. Preserve root-list/output/transaction aggregate refusals, explicit IAL0 typed interfaces and unused declarations; qualify invalid types/paths/operators/whole-record scalar contexts and same-type input-to-owned-storage copies. Keep unsupported carrier/backend contexts fail closed and synchronize actual authoring behavior in book/spec.`
+  Verification: `pending all mandatory preparation`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6`
+  Status: `pending`
+  Goal: `Qualify frontend delivery and public replay before carrier/runtime completion.`
+  Acceptance: `After .5, independently verify accepted local/imported/nested/shadow sources, all contextual failures, exact metadata/type/layout identities and complete native/API/actual newline check/semantic/schedule/discovery products. Strict-replay every emitted IAL0 carrier; preserve pre-change scalar/storage controls and exact source provenance. Close frontend work only with synchronized references while generated/domain behavior and independent native completion remain separately owned by .2.4-.2.5.`
+  Verification: `pending source admission`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4`
@@ -3180,8 +3242,8 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.2.3` wires
-mandatory record-input source/value/lexical/sampling gates before admission; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.2.3.4.1` repairs
+confirmed existing foreign-domain slice/index admission bypasses before record-input integration; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5394,3 +5456,16 @@ invalid declaration/role/path controls and unchanged source refusal distinguish
 semantic preparation from parity and parser acceptance. Durability: helper,
 permanent tests, decision 0113, this task and book retain the contracts and the
 repaired draft oracle. Parser context/carrier/runtime completion remains owned.
+
+
+## Acceptance — contextual integration prerequisites `.60.4.3.2.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Public parse/lower at 02827d840 emits `clock-domain violation` at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3428 for foreign unsliced record_value.payload and whole data; scalar slices of record members/storage and scalar input slices/bit indexes instead lower successfully. LoweringIR::_validate_domain_signal_access recognizes single index paths but excludes colon ranges, then limits non-identifiers to actor_storage roots. Decision 0113 retains executable reproduction and the source-validation impact. No native behavior is inferred.
+- [x] **ADDRESSED (verified)** — Integration now has exact owners for scoped contextual/enum gates, leaf sampling carriers, domain protection, first source admission and frontend/public replay. Confirmed domain bypasses are P1-owned and scheduled next under .3.4.1, with independent accepted/refused source controls and complete public/replay requirements; .3.4.2 retains record/formal namespace qualification. Source record ports still refuse, and the book exposes the current validation gap accurately. The repair is pending rather than falsely reported complete.
+- [x] **NO REGRESSION** — Guarded existing T1920/T1259 checks report `All tests successful`; the retained public probe verifies the scoped baseline without native execution. Task-tree integrity, book build and staged doctrines verify the expanded graph, current/future product distinctions, fresh aggregate authority and generated knowledge/inventory before commit. This is ownership/decomposition; the pending domain defect is not erased by baseline success.
+
+Re-derive: run the public command in decision 0113. Falsify: the same declared
+foreign roots distinguish whole/member refusal from slice/index acceptance.
+Durability: the exact pre-repair revision, executable source, owning P1 repair,
+book limitation and Git retain the finding. First-line permanent oracles and
+complete source/report/replay qualification belong to the repair slice.
