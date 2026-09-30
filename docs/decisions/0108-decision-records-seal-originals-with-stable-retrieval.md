@@ -9,7 +9,7 @@ answers:
 date: 2026-09-30
 status: current
 tags: [continuity, decisions, doctrine, knowledge-map]
-evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; scripts/decision_store_git.py; scripts/check_live_document_ceiling_authority.pl; t/2005-decision-ceiling-stores.t; t/2004-decision-reader-snapshots.t; t/2003-decision-store-git-continuity.t; t/2002-decision-reader-stores.t; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: scripts/audit_decision_identity_capacity.py; docs/audits/decision-identity-capacity-20260930.json; scripts/decision_records.py; scripts/decision_catalog.py; scripts/decision_store.py; scripts/decision_store_git.py; scripts/check_live_document_ceiling_authority.pl; t/2006-decision-identity-modes.t; t/2005-decision-ceiling-stores.t; t/2004-decision-reader-snapshots.t; t/2003-decision-store-git-continuity.t; t/2002-decision-reader-stores.t; t/2001-decision-store-navigation.t; t/2000-decision-catalog-preparation.t; t/1999-decision-identity-capacity-audit.t; t/1923-decision-record-archive.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_identity_capacity.py --revision 25c01f0127144922ade78951b91439e1d9221c08 > .artifacts/decision-identity-capacity-reverify.json
 ---
 
@@ -378,3 +378,21 @@ the boundary. Tracked code/tests, this card and the task provide durability;
 re-derive with guarded `t/2005-decision-ceiling-stores.t` and the existing reader,
 legacy authority and containment cohorts. Sibling `.51.3.2.2.3.3` still owns the
 broader hostile mode matrix before real source rollover `.51.3.2.3`.
+
+## Independently complete post-transition mode controls — 2026-09-30
+
+Owner `.51.3.2.2.3.3.1` publishes a literal post-transition fact-bearing birth
+in each independent fixture before changing it. Current byte descriptors,
+metadata and complete root/part routes are updated consistently. Standalone
+current authentication/navigation passes every planted deletion, equal-count
+birth replacement, path/type recycle, fact deletion/replacement, question
+loss/substitution and earlier-gap birth. The actual prior-aware Perl gate then
+refuses each in working, staged and committed modes without a ceiling increase.
+
+Owned body/status/summary changes and additive questions retain prior keys and
+pass every mode. The standalone/current and prior-aware checks are separate
+legs; a stale digest or malformed index cannot falsely earn the identity-floor
+proof. Exact source/index/original/control baselines and same-volume fixtures
+remain independent. Tracked `t/2006-decision-identity-modes.t`, this card and the
+task provide durability. Remaining malformed product/authority/caller/IPC
+qualification stays child `.2` before the atomic real source rollover.

@@ -685,6 +685,15 @@ atomic rollover; this integration does not raise a ceiling.
 scripts/run_with_ram_guard.sh -- prove -Iperl t/2005-decision-ceiling-stores.t
 ```
 
+Post-transition facts also have an independent mode matrix. Its complete current
+snapshots pass standalone authentication and navigation before the actual prior
+comparison rejects identity/path/type recycling, lost facts/questions and reused
+earlier ID gaps. Additive owned content/status/summary/question changes pass.
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2006-decision-identity-modes.t
+```
+
 ## Current Boundary
 
 The project is trying to move toward:
