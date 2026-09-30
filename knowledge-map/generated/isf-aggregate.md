@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-aggregate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **20** uniquely owned question entries.
+> **3** facts · **21** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -11,6 +11,7 @@
 - q="do record input reads require independent controller repairs?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="does internal generated aggregate handoff support authored record ports?" · facts=[isf-aggregate-port-request-baseline](../../docs/knowledge/isf-aggregate-port-request-baseline.md)
 - q="how are actual parsed record-value declaration scopes prepared?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
+- q="how are explicit record-leaf sample facts and private scalar type declarations prepared?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how are record value gates and contextual diagnostic oracles qualified?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="how are selected record input AST contexts prepared without admission?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how do aggregate enum and rule validators share declaration-root classification?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)

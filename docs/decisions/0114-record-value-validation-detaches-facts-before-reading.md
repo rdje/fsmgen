@@ -7,10 +7,11 @@ answers:
   - "how is first-touch record declaration mutation reproduced and repaired?"
   - "can a scalar pin share an enum namespace name during record context validation?"
   - "how do aggregate enum and rule validators share declaration-root classification?"
+  - "how are explicit record-leaf sample facts and private scalar type declarations prepared?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: perl/FSM/Support/ISFRecordPortSamples.pm; t/1990-isf-record-port-sample-facts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0114 — Record value validation detaches facts before reading
@@ -132,3 +133,47 @@ T1985 and T1982 qualify complete current public transport products and historica
 domain reports, actual IAL0 carriers and generated HDL bytes except date. The
 combined producer command and captured result are retained by this leaf in
 the task evidence; no new authored record-port behavior is established.
+
+## Explicit scalar-leaf sample facts
+
+SEM `.60.4.3.2.3.3.1` prepares `ISFRecordPortSamples` without source or
+carrier wiring. Actual transaction scopes resolve explicit entry/body/control
+sample sources into detached scalar references, root-relative ranges and local
+alias bindings. A record leaf retains scalar kind, width, signed property and
+optional state model; chained explicit samples retain their record provenance.
+Unknown/formal/enum facts remain unknown or delegated, and an explicit sample
+alias masks outer declaration facts without borrowing a record layout. No
+implicit sample or declaration is inferred from unrelated assignments.
+
+Whole records/subaggregates, invalid members/items, input targets, existing
+declaration collisions for private record-derived aliases and inconsistent
+repeated sample types refuse. Repeated explicit captures of the same scalar
+type may reuse their own alias. A record-derived alias cannot replace authored
+local/formal/storage/output declarations or inherit their reset/type metadata.
+
+A separate pure type-product boundary generates ordinary core scalar type ASTs,
+type references and exact widths only for record-derived aliases. Private type
+names are sorted and deterministically reserve existing names before suffixing
+collisions. Signed and declared two/four-state wrappers are retained; no backend
+state default, reset/default fact or hardware edge is introduced. The actual
+public type resolver reconstructs these scalar properties independently.
+
+T1990 retains an independently authored nine-bit nested layout, exact scalar
+facts, imported aliases, formal/local/unresolved and namespace shadows, repeated
+captures, declaration/role/path negatives and complete first-read copied JSON
+isolation. Its first lexical-local fixture failed because the helper replaced
+all clauses, removing the declaration; the repaired control retains that actual
+local AST. A separate draft collision predicate trusted a previous sample alias
+and permitted scalar-then-record sample reuse of authored storage `held`. An
+isolated copy of that predicate makes the permanent declaration-collision
+witness RED. The production gate retains the original declaration set, so no
+intermediate sample scope can erase an authored collision. Existing entry/
+piggyback/pre-data capture and malformed-source tests remain green. Complete current parsed/scheduled products stay unchanged. Native
+structured authored record-input refusal is also retained at this boundary.
+
+The task leaf retains the combined producing command and captured result.
+Permanent source/AST witnesses falsify width-only, outer-type borrowing, shared
+output-map and leaked reset/default interpretations. Producers are tracked;
+ignored logs are supplementary. Typed private carrier integration and actual
+IAL0 replay/timing remain `.3.3.2` and `.3.3.3`; first authored record admission
+and independently supervised HDL behavior retain their later owners.

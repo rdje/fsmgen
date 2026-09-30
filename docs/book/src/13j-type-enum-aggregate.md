@@ -129,6 +129,10 @@ A common declaration projection now separates aggregate traversal, enum
 exclusions, namespaces and actor rule operands while honoring nearest bindings.
 Frontend integration, sampled behavior and generated/domain carriers still
 need qualification before authors can use record inputs.
+Detached explicit leaf-sample facts now retain exact width, signed/state
+properties and nearest bindings, with private scalar type-declaration controls.
+Carrier integration and replay/capture-timing qualification remain pending;
+this preparation does not enable authored record ports.
 Existing declaration-collision refusals still apply.
 
 Single-member records and single-item lists also preserve their aggregate
