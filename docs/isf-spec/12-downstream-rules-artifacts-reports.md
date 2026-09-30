@@ -1048,6 +1048,26 @@ hash-backed drive DT blocks are sorted lexically by drive name
 
 ## 14. Schedule JSON Report
 
+Declared interface metadata is independent of inferred hardware. Successful
+check/semantic reports for directly parsed ISF sources include optional
+`source.interface_ports`; schedule reports include `interface_ports`, and each
+realized `clock_domains` entry includes its owned declarations with the same
+schema. Inputs precede outputs, preserving authored order within each direction.
+Unused/undriven declarations remain present; clock/reset pins and generated
+private handoffs do not enter this census. A known empty interface is `[]`;
+unknown caller-provided declaration metadata is null in schedule reports.
+Unrelated formats and failure source reports omit this optional source field.
+
+Entries require `name`, `direction` and positive `width`; optional `type` keeps
+the authored local/imported alias, `type_kind` its resolved kind, and `domain`
+the named owning domain. Scalar source aliases currently resolve to `bit` or
+`bits`. Future record entries use ordered scalar-leaf `fields`: `path`, `width`,
+`lsb`, `msb`, `signed`, optional `state_model`, with first leaf most significant.
+Record source admission remains refused. The shared closed shape is advertised
+by `schedule_report_interface_ports` and
+`source_optional_fields.interface_ports`. T1983/T1984 qualify detached values,
+invalid shapes, owned declarations and preserved refusal boundaries.
+
 Reset provenance records ISF clause presence separately from resolved hardware:
 `reset_provenance` is an authored-order array of `{domain, origin}` entries,
 or null when a caller-created actor has no parser evidence. A legacy actor has
@@ -1082,10 +1102,12 @@ scheduled_fsm
 clock
 reset
 reset_provenance
+interface_ports
 watchdog
 actor_phases
 actor_stages
 verification_observations
+verification_bridge
 actor_params
 actor_constants
 port_count
@@ -1231,6 +1253,9 @@ actor_stages[]: name, body
 verification_observations[]: name, role, clock, reset, signals
 verification_observations[].signals[]: name, direction, width
 actor_params[]: name, value
+interface_ports[] required: name, direction, width
+interface_ports[] optional: type, type_kind, domain, fields
+interface_ports[].fields[]: path, width, lsb, msb, signed, optional state_model
 inferred_storage[] required: name, kind
 inferred_storage[] optional: role, type, type_kind, width, fields, access
 inferred_storage[].access: optional checked word access, independent of fields
@@ -1274,7 +1299,7 @@ library_uses[]: library, alias, export, kind, instance, module,
   scheduled_fsm, parameters, bindings
 clock_domains[]: name, default, clock, reset, scheduled_fsm, ports, storage,
   transactions, rules, library_uses, child_instances, crossings, state_count,
-  dt_block_count, inferred_storage
+  dt_block_count, inferred_storage, interface_ports
 crossings[]: name, kind, source_domain, source_signal, destination_domain,
   destination_signal, ready_signal, instance, module, outstanding_policy,
   payload, top_fsm

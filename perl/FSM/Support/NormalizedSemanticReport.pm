@@ -6,6 +6,7 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::ISFResetProvenance qw(snapshot_reset_provenance);
+use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
 
 use FSM::Support::CheckDiagnostics qw(build_check_failure_report build_check_success_report);
 use FSM::Support::CompositionReportContract qw(sanitize_composition_report);
@@ -35,7 +36,7 @@ sub build_normalized_semantic_success_report {
         normalized_semantic_schema_version => 1,
         producer => _producer_contract(),
         command => _command_contract(%args),
-        source => _source_contract(%args, include_reset_provenance => 1),
+        source => _source_contract(%args, include_isf_declarations => 1),
         success => JSON::PP::true,
         diagnostics => [],
         diagnostic_summary => build_serializable_diagnostic_summary(
@@ -120,8 +121,10 @@ sub _source_contract {
     return {
         input => $args{input},
         resolved_path => $args{source_file},
-        ($args{include_reset_provenance} && defined($args{reset_provenance})
+        ($args{include_isf_declarations} && defined($args{reset_provenance})
             ? (reset_provenance => snapshot_reset_provenance($args{reset_provenance})) : ()),
+        ($args{include_isf_declarations} && exists($args{interface_ports})
+            ? (interface_ports => snapshot_interface_port_metadata($args{interface_ports})) : ()),
     };
 }
 

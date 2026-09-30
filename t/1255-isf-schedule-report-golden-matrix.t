@@ -68,6 +68,7 @@ sub golden_matrix_cases {
                   schedule_report_reset_shape
                   schedule_report_reset_keys
                   schedule_report_reset_provenance
+                  schedule_report_interface_ports
                   schedule_report_reset_kind_values
                   schedule_report_reset_polarity_values
                   schedule_report_storage_required_keys
@@ -459,6 +460,15 @@ sub assert_branch_present {
     }
     if ($branch eq 'schedule_report_state_count_shape') {
         ok_nonnegative_integer($report->{state_count}, "$label state_count");
+        return;
+    }
+    if ($branch eq 'schedule_report_interface_ports') {
+        ok(ref($report->{interface_ports}) eq 'ARRAY', "$label has declared port metadata");
+        for my $port (@{$report->{interface_ports}}) {
+            assert_entry_keys($port, $contract->{$branch}{entry_keys}, "$label declared port keys");
+            ok(grep($_ eq $port->{direction}, @{$contract->{$branch}{direction_values}}),
+                "$label has a declared direction");
+        }
         return;
     }
     if ($branch eq 'schedule_report_reset_provenance') {

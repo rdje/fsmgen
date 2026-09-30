@@ -92,13 +92,18 @@ subtest 'supplied cases gain provenance with every prior public product preserve
             is_deeply($json->decode($wire->{stdout}), $response, 'complete API/newline equality');
             if ($query eq 'schedule') {
                 delete $report->{reset_provenance};
+                is(ref(delete $report->{interface_ports}), 'ARRAY', 'declared-port addition is qualified by T1984');
                 # SEM .38.3 subsequently adds normalized domain storage detail.
                 # T1982 independently qualifies its complete ownership/schema.
                 for my $domain (@{$report->{clock_domains}}) {
+                    is(ref(delete $domain->{interface_ports}), 'ARRAY', 'declared domain ports are explicit');
                     is(ref(delete $domain->{inferred_storage}), 'ARRAY', 'additive domain storage detail is explicit');
                 }
             }
-            else { delete $report->{source}{reset_provenance}; }
+            else {
+                delete $report->{source}{reset_provenance};
+                is(ref(delete $report->{source}{interface_ports}), 'ARRAY', 'declared source ports are explicit');
+            }
             is_deeply($report, $baseline->{$case}{queries}{$query}{report}, 'all previous report fields unchanged');
         }
         for my $language (qw(systemverilog verilog)) {

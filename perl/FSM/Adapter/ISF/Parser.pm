@@ -23,6 +23,7 @@ use FSM::Package::Parser;
 use FSM::Package::Symbols;
 use FSM::SourcePathResolver;
 use FSM::Support::HDLInstanceIdentifierPolicy;
+use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
 use FSM::Support::ISFResourceCatalog qw(
     isf_resource_arbiter_values
     isf_resource_kind_values
@@ -401,6 +402,12 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_validate_resource_user_targets($result);
     $self->_validate_storage_actor_names($result);
     $self->_validate_actor_constant_names($result);
+
+    # Preserve validated declarations before scheduling adds private ports.
+    $result->{interface_port_metadata} = capture_interface_port_metadata(
+        $result->{interface},
+        ref($result->{clock_domains}) eq 'HASH' ? $result->{clock_domains}{default} : undef,
+    );
 
     fsm_trace_exit('Parser _build_actor completed', 3);
     return $result;

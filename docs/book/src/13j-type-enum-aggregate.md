@@ -102,9 +102,10 @@ port/storage copies. Delivery starts with detached declared-interface metadata;
 input support and output writer qualification follow separately. This selection
 does not change the shipped authoring surface. List-root ports and variant
 records remain optional follow-ups.
-The planned metadata distinguishes unknown declarations from a known empty
-interface and describes declared ports, including unused declarations, rather
-than inferred signals. It does not add port admission or hardware behavior.
+The preparatory [declared interface metadata](13a-actor-interface.md#declared-interface-metadata)
+now describes admitted scalar ports, including unused declarations, and
+distinguishes unknown declarations from a known empty interface. Record-layout
+metadata has producer controls; record source admission remains pending.
 
 Single-member records and single-item lists also preserve their aggregate
 identity. Nested forms and forward local aliases work in actor declarations

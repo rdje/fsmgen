@@ -7,10 +7,11 @@ answers:
   - "do record input reads require independent controller repairs?"
   - "are list ports and variant records part of required record-port delivery?"
   - "why must metadata validation predicates use scalar context?"
+  - "where are declared ISF interface ports exposed in reports?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0113 — ISF record interface ports reuse packed type and writer contracts
@@ -175,3 +176,23 @@ perl -e 'sub predicate { $_[0] =~ /\A[01]\z/ } sub guard { print "arguments=",sc
 The first call places the message in the predicate slot; the scalar call keeps
 both slots. The permanent hostile controls verify refusal rather than accepting
 report parity as proof of valid metadata. No native HDL runtime is established.
+
+
+## Declaration report integration — 2026-09-30
+
+SEM `.60.4.3.1.2` captures validated parser declarations before scheduler
+port injection. Ordinary module IR carries a fresh closed snapshot; domain
+sources select their original owned entries. Generated transaction children
+have unknown declaration metadata, rather than pretending private ports are
+actor declarations. Reports distinguish known empty arrays from unknown null;
+unrelated and failed source reports omit the ISF source field.
+
+The shipped preparatory surfaces are success `source.interface_ports`, schedule
+`interface_ports` and owned `clock_domains[].interface_ports`, with one complete
+shared discovery descriptor at `source_optional_fields.interface_ports` and
+`schedule_report_interface_ports`. T1984 independently expects local/imported
+scalar declarations, unused/undriven entries, source order and domain ownership;
+actual event crossings and generated children demonstrate private-port exclusion.
+This report delivery does not admit authored records. Complete transport and
+supported-corpus qualification remains explicitly owned by `.60.4.3.1.3` before
+record input implementation. No native HDL runtime is claimed.

@@ -9,6 +9,7 @@ use JSON::PP ();
 use Storable qw(dclone);
 use FSM::Debug;
 use FSM::Support::ISFResetProvenance qw(snapshot_reset_provenance);
+use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
 
 # Emits JSON schedule report from LoweringIR.
 # Consumes the same IR as Emitter::FSM — no string coupling.
@@ -32,6 +33,7 @@ sub report_hash($self, $ir) {
         clock          => $ir->{clock},
         reset          => $self->_reset_summary($ir->{reset}),
         reset_provenance => snapshot_reset_provenance($ir->{reset_provenance}),
+        interface_ports => snapshot_interface_port_metadata($ir->{interface_port_metadata}),
         watchdog       => $ir->{watchdog},
         actor_phases   => $self->_actor_metadata_summary($ir, 'actor_phases'),
         actor_stages   => $self->_actor_metadata_summary($ir, 'actor_stages'),
@@ -124,7 +126,10 @@ sub _clock_domain_summary($self, $ir, $domain_report_by_name = undef) {
         # A named single domain is realized by this module itself. Preserve
         # existing domain count fields while publishing its available storage.
         $domain_report_by_name = {
-            $partition->{domains}[0]{name} => {inferred_storage => $self->_storage_summary($ir)},
+            $partition->{domains}[0]{name} => {
+                inferred_storage => $self->_storage_summary($ir),
+                interface_ports => snapshot_interface_port_metadata($ir->{interface_port_metadata}),
+            },
         };
     }
     return [
@@ -168,6 +173,8 @@ sub _clock_domain_entry_summary($self, $domain, $default_domain, $domain_report_
         inferred_storage => ref($domain_report) eq 'HASH' && ref($domain_report->{inferred_storage}) eq 'ARRAY'
             ? dclone($domain_report->{inferred_storage})
             : undef,
+        interface_ports => snapshot_interface_port_metadata(
+            ref($domain_report) eq 'HASH' ? $domain_report->{interface_ports} : undef),
     };
 }
 

@@ -6,6 +6,7 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::ISFResetProvenance qw(reset_provenance_contract);
+use FSM::Support::ISFInterfacePortMetadata qw(interface_port_metadata_contract);
 
 our @EXPORT_OK = qw(
     build_report_source_contract
@@ -54,7 +55,7 @@ sub build_report_source_contract {
         reused_across_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `source` object shared by the public check JSON and normalized semantic JSON report surfaces.},
-            'The shared object records the caller-facing input and resolved path; successful directly parsed ISF sources also retain reset declaration provenance through optional_fields.',
+            'The shared object records the caller-facing input and resolved path; successful directly parsed ISF sources also retain reset provenance and declared interface ports through optional_fields.',
             'Use the grouped presence_key_family_map to discover the bounded source input and resolution key families without collecting those key-family lists separately.',
             'Widen this nested object only when both public report surfaces and their manifest advertisement need the same additional field.',
         ],
@@ -62,7 +63,10 @@ sub build_report_source_contract {
 }
 
 sub report_source_optional_fields {
-    return {reset_provenance => reset_provenance_contract()};
+    return {
+        reset_provenance => reset_provenance_contract(),
+        interface_ports => interface_port_metadata_contract(),
+    };
 }
 
 sub report_source_input_keys {

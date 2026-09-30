@@ -97,9 +97,14 @@ subtest 'full public reports add only domain storage while all hardware stays id
         is_deeply($json->decode($wire->{stdout}), $response, 'complete API/newline parity');
         if ($query eq 'schedule') {
             is_deeply($report, $json->decode($scheduler->report($actor)), 'public details equal actual scheduled domain report');
+            is(ref(delete $report->{interface_ports}), 'ARRAY', 'declared-port addition is qualified by T1984');
             for my $domain (@{$report->{clock_domains}}) {
+                is(ref(delete $domain->{interface_ports}), 'ARRAY', 'domain declared-port addition is explicit');
                 is(ref(delete $domain->{inferred_storage}), 'ARRAY', 'only the additive detail field is removed');
             }
+        }
+        else {
+            is(ref(delete $report->{source}{interface_ports}), 'ARRAY', 'source declared-port addition is explicit');
         }
         is_deeply($report, $baseline->{queries}{$query}{report}, 'every previous public field preserved');
     }
@@ -138,7 +143,7 @@ subtest 'capabilities advertise complete domain-detail shape through every trans
     my $contract = $manifest->{embedding}{isf_public_interface};
     is_deeply($contract->{schedule_report_clock_domain_keys},
         [qw(name default clock reset scheduled_fsm ports storage transactions rules library_uses child_instances
-            crossings state_count dt_block_count inferred_storage)], 'complete bounded domain keys');
+            crossings state_count dt_block_count inferred_storage interface_ports)], 'complete bounded domain keys');
     like($contract->{schedule_report_multi_file_scope}, qr/inferred_storage.*same.*storage/s, 'shared storage schema is discoverable');
     my $native = capture([$^X, 'bin/fsmgen', '--capability-manifest']);
     is($native->{exit_code}, 0, 'native capabilities succeed');

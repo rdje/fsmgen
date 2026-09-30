@@ -528,6 +528,8 @@ my $verification_outdir = "";
 my $verify_hdl = 0;
 my $isf_schedule_report;
 my $isf_reset_provenance;
+my $isf_interface_ports;
+my $isf_declarations_known = 0;
 
 # Store original ARGV to check for bare flags before GetOptions processes them
 my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
@@ -1243,6 +1245,8 @@ if ($fsm_file =~ /\.isf$/i) {
     }
 
     $isf_reset_provenance = $actor->{reset_provenance};
+    $isf_interface_ports = $actor->{interface_port_metadata};
+    $isf_declarations_known = 1;
 
     if ($emit_schedule_json) {
         my $json = eval { $scheduler->report($actor); };
@@ -1491,6 +1495,7 @@ if ($emit_semantic_json) {
         input => $fsm_input,
         source_file => $public_source_file,
         reset_provenance => $isf_reset_provenance,
+        ($isf_declarations_known ? (interface_ports => $isf_interface_ports) : ()),
         target_language => $target_language,
         strict_mode => $strict_mode,
         result => $result,
@@ -1505,6 +1510,7 @@ if ($check_json_mode) {
         input => $fsm_input,
         source_file => $public_source_file,
         reset_provenance => $isf_reset_provenance,
+        ($isf_declarations_known ? (interface_ports => $isf_interface_ports) : ()),
         target_language => $target_language,
         strict_mode => $strict_mode,
         module_info => $result->{module_info},

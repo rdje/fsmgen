@@ -93,6 +93,10 @@ subtest 'supplied controls and new word forms preserve all hardware products' =>
             } elsif ($query eq 'schedule' && $case eq 'register-access-with-fields') {
                 storage($expected, 'control')->{access} = 'rw';
             }
+            # T1984 independently qualifies the subsequently added declarations.
+            my $ports = $query eq 'schedule' ? delete $actual->{interface_ports}
+                : delete $actual->{source}{interface_ports};
+            is(ref($ports), 'ARRAY', 'additive declared interface metadata is explicit');
             is_deeply($actual, $expected, "$case $query exact previous product plus only authored access");
         }
         for my $flags ([qw(--check --json)], ['--emit-semantic-json']) {

@@ -702,6 +702,62 @@ declare the owning domain; omitted port domains inherit the actor default
 domain. The annotation is ownership metadata only, not permission for another
 domain to sample or drive the port directly.
 
+### Declared interface metadata
+
+Successful check and semantic JSON for a directly parsed ISF source expose
+`source.interface_ports`. Schedule JSON exposes `interface_ports`; each realized
+`clock_domains` entry also exposes its owned declarations with the same schema.
+The array contains inputs in source order, followed by outputs in source order.
+Unused inputs and undriven outputs remain present. Clock/reset pins, inferred
+signals and generated private handshakes are outside this declaration census.
+
+For example, save this as `.artifacts/port_metadata.isf`:
+
+```lisp
+(actor port_metadata
+  (types (type byte (bits 8)))
+  (clock clk) (reset rst_n)
+  (interface
+    (output spare (width 2))
+    (input start) (input data (type byte)) (output done))
+  (transaction main (on start) (complete done)))
+```
+
+Run `./bin/fsmgen --strict --check --json .artifacts/port_metadata.isf`,
+`./bin/fsmgen --strict --emit-semantic-json .artifacts/port_metadata.isf`, or
+`./bin/fsmgen --emit-schedule-json .artifacts/port_metadata.isf`. The declared
+port array is:
+
+```json
+[
+  {"name": "start", "direction": "input", "width": 1},
+  {"name": "data", "direction": "input", "width": 8,
+   "type": "byte", "type_kind": "bits"},
+  {"name": "spare", "direction": "output", "width": 2},
+  {"name": "done", "direction": "output", "width": 1}
+]
+```
+
+Named-domain entries include the resolved owning `domain`. A known empty
+interface yields `[]`. Schedule metadata is `null` when a caller-created actor
+has no declaration evidence; hardware inference does not fill that gap.
+Unrelated source formats and failure source reports omit `source.interface_ports`.
+
+Each entry requires `name`, `direction` and positive `width`. Optional `type`
+retains the authored local/imported alias and `type_kind` describes its resolved
+kind. Scalar aliases currently resolve to `bit` or `bits`. Packed record source
+ports still fail under the boundary described in [Types and Aggregates](13j-type-enum-aggregate.md).
+The selected future record layout uses ordered scalar-leaf `fields` with
+port-relative `path`, `width`, inclusive `lsb`/`msb`, `signed` and optional
+`state_model`; that schema does not admit record ports yet.
+
+Discovery publishes the complete schema at
+`embedding.isf_public_interface.schedule_report_interface_ports` and both
+check/semantic contracts' `source_optional_fields.interface_ports`.
+`fsmgen_check`, `fsmgen_semantic_introspect` and `fsmgen_schedule_preview`
+carry the same native reports through the API and newline MCP adapter.
+Declaration metadata adds no hardware assignments, sampling or reset policy.
+
 ## Actor-Owned Storage
 
 ```lisp

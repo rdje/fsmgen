@@ -14,10 +14,12 @@ scheduled_fsm
 clock
 reset
 reset_provenance
+interface_ports
 watchdog
 actor_phases
 actor_stages
 verification_observations
+verification_bridge
 actor_params
 actor_constants
 port_count
@@ -44,6 +46,26 @@ compile_issues
 clock_domains
 crossings
 ```
+
+Declared interface metadata is independent of inferred hardware. Successful
+check/semantic reports for directly parsed ISF sources include optional
+`source.interface_ports`; schedule reports include `interface_ports`, and each
+realized `clock_domains` entry includes its owned declarations with the same
+schema. Inputs precede outputs, preserving authored order within each direction.
+Unused/undriven declarations remain present; clock/reset pins and generated
+private handoffs do not enter this census. A known empty interface is `[]`;
+unknown caller-provided declaration metadata is null in schedule reports.
+Unrelated formats and failure source reports omit this optional source field.
+
+Entries require `name`, `direction` and positive `width`; optional `type` keeps
+the authored local/imported alias, `type_kind` its resolved kind, and `domain`
+the named owning domain. Scalar source aliases currently resolve to `bit` or
+`bits`. Future record entries use ordered scalar-leaf `fields`: `path`, `width`,
+`lsb`, `msb`, `signed`, optional `state_model`, with first leaf most significant.
+Record source admission remains refused. The shared closed shape is advertised
+by `schedule_report_interface_ports` and
+`source_optional_fields.interface_ports`. T1983/T1984 qualify detached values,
+invalid shapes, owned declarations and preserved refusal boundaries.
 
 Reset provenance records ISF clause presence separately from resolved hardware:
 `reset_provenance` is an authored-order array of `{domain, origin}` entries,
@@ -88,6 +110,8 @@ actor_network association_schedules entries: association, kind, lifetime, owner_
 actor_network group_schedules entries: group, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, sink
 actor_network event_waits entries: transaction, context, instance, event, signal, source
 actor_network transaction_triggers entries: owner_transaction, context, instance, target_transaction, signal, sink
+interface_ports entries: name, direction, width; optional type, type_kind, domain, fields
+interface_ports scalar fields: path, width, lsb, msb, signed; optional state_model
 inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width, optional fields, optional access
 transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, count_kind, count_source, entry_state, exit_state, counter_signal, counter_width
@@ -109,7 +133,7 @@ library_uses parameter entries: name, source, value
 library_uses binding entries: role, library_name, parent_name, width
 bank_accesses entries: kind, owner, owner_kind, container_kind, container_name, bank, index, width, depth, scalar_entries, same_cycle_policy, value, target
 transaction_port_bindings entries: site_kind, owner, owner_kind, target_transaction, role, port, actor_signal, actor_expression, actor_endpoint_kind, binding_timing, authored_timing_mode, width, instance, parent_port, child_port, start_signal, done_signal, trigger_source, payload_source
-clock_domains entries: name, default, clock, reset, scheduled_fsm, ports, storage, transactions, rules, library_uses, child_instances, crossings, state_count, dt_block_count, inferred_storage
+clock_domains entries: name, default, clock, reset, scheduled_fsm, ports, storage, transactions, rules, library_uses, child_instances, crossings, state_count, dt_block_count, inferred_storage, interface_ports
 clock_domains child_instances entries: kind, owner, child, instance
 clock_domains crossings entries: event, role, signal, ready
 crossings entries: name, kind, source_domain, source_signal, destination_domain, destination_signal, ready_signal, instance, module, outstanding_policy, payload, top_fsm

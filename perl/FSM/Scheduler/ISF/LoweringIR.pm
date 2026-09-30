@@ -23,6 +23,7 @@ use FSM::Scheduler::ISF::LibraryPortOwnership qw(connect_library_output_readback
 use FSM::Scheduler::ISF::ChildCompletionOutputs qw(prepare_child_completion_outputs connect_child_completion_outputs plan_child_completion_outputs);
 use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
+use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 
@@ -578,6 +579,8 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         clock      => $actor->{clock},
         reset      => $actor->{reset},
         reset_provenance => _clone_isf_value($actor->{reset_provenance}),
+        # Generated transaction ports are private, not actor declarations.
+        interface_port_metadata => undef,
         watchdog   => $actor->{watchdog},
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),
@@ -1655,6 +1658,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         clock      => $actor->{clock},
         reset      => $actor->{reset},
         reset_provenance => _clone_isf_value($actor->{reset_provenance}),
+        interface_port_metadata => snapshot_interface_port_metadata($actor->{interface_port_metadata}),
         watchdog   => $actor->{watchdog},
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),

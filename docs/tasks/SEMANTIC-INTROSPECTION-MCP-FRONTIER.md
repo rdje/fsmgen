@@ -2401,11 +2401,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate declared interface snapshots through parser, IR and reports.`
   Acceptance: `After qualified producer .1, capture validated parsed declarations without widening accepted source forms; preserve actor/domain/source ownership and generated private handoff boundaries. Wire shared success source and schedule/domain fields, including unknown caller-created metadata, advertise exact capability shapes and update book/spec. Prove unchanged scheduled carriers/HDL and existing failures before claiming report delivery.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Parser captures declarations after validation, ordinary IR retains detached evidence and domain sources filter owned original ports before private injection. T1984 independently verifies local/imported scalar declarations, unused/undriven source order, known empty versus unknown, failure/unrelated omission, generated-child and actual event-crossing exclusions, source/IR/report isolation and exact shared discovery families. Guarded T1984/T1259/source-copy/roundtrip/facade/schedule set reports All tests successful. T1978, T1981, T1982 and T1255 passed with production code unchanged, preserving complete native/API/newline products, historical reports apart from the explicitly removed new metadata, actual scheduled files and HDL except date. The initial aggregate run failed only draft fixture assertions expecting do to generate a child and activation metadata to enter interface arrays; corrected controls use spawned children and actual event interface injection. New book example check/semantic/schedule arrays match the independently written JSON. The advertised-key census found verification_bridge missing from two maintained top-level lists; this leaf owns and fixes that stale schema and exact set rechecks pass. Record source ports remain refused; no native HDL runtime or downstream completion is claimed. Complete new transport/corpus coverage remains .3.1.3.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.3`
   Status: `pending`
@@ -3143,8 +3143,8 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.1.2` integrates
-the qualified detached producer into declared interface reports before record source admission; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.1.3` qualifies
+complete declaration reports and unchanged controls before record source admission; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5298,3 +5298,17 @@ and mutated metadata controls reject exact competing layouts and the retained
 Perl reproduction demonstrates the original argument-context mechanism.
 Durability: producer, tests, this owning leaf and decision 0113 retain the
 contract and reproducible cause. Public integration remains explicitly owned.
+
+
+## Acceptance — declared interface report integration `.60.4.3.1.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained domain-storage baseline's `--emit-schedule-json` product has counts/inferred ports but no authored interface snapshot. Decision 0113 requires declared source roles including unused ports, unknown versus empty evidence and private-handoff exclusion. The qualified producer was unwired in parser/IR/source/report paths; projecting inferred scheduler ports would lose that source distinction. An independent advertised-key census also reports `missing: ['verification_bridge']` for both maintained report top-level lists, revealing existing schema drift.
+- [x] **ADDRESSED (verified)** — Parser captures validated declarations before scheduler injection; ordinary IR and domain source selection propagate detached owned evidence; generated transaction children retain unknown authored metadata. Shared success source and schedule/domain projections expose the same closed schema and advertise every selected key/value family. T1984 independently expects order, alias identity, named ownership, actual crossing/private-child exclusions and unknown/empty/mutation/failure controls. The two stale schema lists now match the complete advertised key set. Book examples produce exactly their independently written arrays for check, semantic and schedule.
+- [x] **NO REGRESSION** — Guarded producer integration/aggregate/source-copy/roundtrip/parser-facade/schedule tests report `All tests successful`. T1978/T1981/T1982/T1255 also individually pass with the same production source: complete native/API/newline reports preserve old fields after removing only the new declarations; actual carriers and SystemVerilog/Verilog HDL retain complete baseline identity except generated date. `perl -Iperl -c bin/fsmgen` reports `syntax OK`. mdBook build and staged doctrine gate verify synchronized documents, task ownership, maintained-reference authority and Knowledge Map consistency before commit. New complete transport/corpus qualification remains owned; no native HDL execution is represented.
+
+Re-derive: rerun T1984 and the named historical/source/schema controls. Falsify:
+independently authored declarations, unknown/empty and private-port exclusions,
+mutation controls, exact old-product comparisons and advertised/documented key
+sets distinguish source evidence from inference and parity from semantic truth.
+Durability: producer wiring, permanent controls, this task, decision 0113 and
+book/spec retain both the report contract and repaired schema drift.
