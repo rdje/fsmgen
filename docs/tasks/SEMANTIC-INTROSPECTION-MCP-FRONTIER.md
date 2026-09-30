@@ -2122,10 +2122,33 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.2: seal decision originals with exact retrieval`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Contain decision identity and index cardinality before file-count rollover.`
   Acceptance: `Activate before an added record would enter the rationale file-count rollover band. Audit stable external and generated provenance identities, select bounded identity/index partitions with exact retrieval, preserve all policy authority and record links, qualify negative navigation controls and commit without widening the file ceiling. This future warning-pressure task does not block controller contract adoption after .51.2.`
   Verification: `Root aliases deliberately preserve file cardinality. The .51.2 line/byte rollover leaves explicit warning_debt. Admission .60.4.3.2.3.5.2 observes a new staged record crossing the file-count rollover band: 116/128, 90.6%, rejected by the unchanged gate. Consolidating its redundant draft into canonical 0113 completes that dirty slice; .51.3 is the immediate clean-state prerequisite before more record growth, then frontend matrix .60.4.3.2.3.6 resumes.`
+  Commit: `pending child qualification`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.1`
+  Status: `done`
+  Goal: `Audit exact decision identity, index and consumer cardinality before selecting rollover.`
+  Acceptance: `At a fixed clean predecessor, census every decision identity, sealed original/forwarding page, current canonical body, index entry, front-matter identity and incoming tracked link/body/provenance consumer. Reconcile membership and per-file dimensions/digests with independent Git enumeration and published reader results. Separate external path compatibility from mutable fact storage and generated navigation; select a bounded semantic partition/identity contract with exact retrieval and retained policy/Knowledge Map answers. Record alternatives and limitations honestly, commit the audit before moving records, and do not increase ceilings or infer external consumer absence from repository search.`
+  Verification: `Fixed source 25c01f0127144922ade78951b91439e1d9221c08 has exact IDs 0001-0114 and INDEX: 115 root files, 50 sealed forwarders and 64 canonical bodies; the next root record enters the unchanged 128-file target's rollover band. Tracked bounded producer/census reconcile per-ID index destinations and per-file dimensions/digests with an independent direct-directory Git enumeration and literal full ID set. Every pinned public sealed-reader result equals its independent Git source. Final replay is byte-for-byte equal despite current owned doc changes; explicit no-submodule recursion and same-volume captured-reader fixtures close ambient-input drift. Scoped basename/fragment consumers and separate generic code candidates identify stable provenance, four literal fragment destinations, T1809's direct body read, 0062/0091 self-searches and flat-only ceiling-authority validation. Canonical 0108 selects a finite pre-transition compatibility cohort plus current continuity/language-API/verification partitions, with exact authority/status/question/source/navigation preservation and no ceiling increase. Full atomic integration and fresh-record capacity remain .2-.3. Guarded T1999/T1923/T1554 reports All tests successful, Files=3, Tests=22; equal-count duplicate/substitution/misroute and missing/escape controls refuse. Syntax and book build pass. Source-bound census/search exclusions, current/generic reader differences and external/dynamic limits are explicit; no migration, external consumer signoff or native execution is claimed.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.2`
+  Status: `pending`
+  Goal: `Apply the selected bounded decision identity/index rollover atomically.`
+  Acceptance: `After .1, split implementation prerequisites if needed, then preserve every pre-transition path/identity and exact original retrieval while placing mutable canonical records and navigation in bounded semantic partitions. Freeze any finite compatibility projection by exact source/membership proofs; never create unbounded alias growth. Update readers, metadata consumers, indexes and declared surfaces together, preserve stable question/answer and policy authority, and qualify corrupt/missing/duplicate/misrouted navigation controls. Restore legitimate current capacity without raising predecessor ceilings or merely relabeling overflow.`
+  Verification: `pending committed audit selection`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.51.3.3`
+  Status: `pending`
+  Goal: `Qualify complete decision continuity and new-record capacity before resuming frontend work.`
+  Acceptance: `After .2, independently reconstruct every transition source and public identity, resolve complete tracked navigation/provenance/body consumers, compare exact Knowledge Map question/answer closure, and exercise successful fresh record growth plus planted known-bad alias/index/retrieval controls. Run relevant reader, containment, claim, memory and doctrine gates; synchronize user retrieval guidance and handoff pointer, commit, then resume .60.4.3.2.3.6 with a clean tree. Report finite external-consumer limits instead of asserting unseen integrations passed.`
+  Verification: `pending atomic rollover`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.40`
@@ -3333,7 +3356,7 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Record/formal domain roots and existing drive ingress repairs are qualified under `.60.4.3.2.3.4.2`. Unused named-drive domain carrier leakage is repaired under `.60.4.3.2.3.4.3`. Prepared parser/module gates are integrated under `.60.4.3.2.3.5.1`. Bounded authored record inputs are admitted under `.60.4.3.2.3.5.2`. Next `.51.3` contains decision identity/index cardinality before further record growth, then `.60.4.3.2.3.6` qualifies the full frontend/public matrix; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Record/formal domain roots and existing drive ingress repairs are qualified under `.60.4.3.2.3.4.2`. Unused named-drive domain carrier leakage is repaired under `.60.4.3.2.3.4.3`. Prepared parser/module gates are integrated under `.60.4.3.2.3.5.1`. Bounded authored record inputs are admitted under `.60.4.3.2.3.5.2`. The exact decision identity/cardinality audit `.51.3.1` is qualified. Next `.51.3.2` applies bounded rollover and reader/authority prerequisites before further record growth, then `.60.4.3.2.3.6` qualifies the full frontend/public matrix; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5745,3 +5768,29 @@ fixture corrections, controls and explicit runtime gaps now live in 0113;
 its three answer questions and T1998 evidence move there. Stable prior identity
 and questions remain; the Knowledge Map must prove their continued routing.
 No ceiling grows and no rollover-debt reclassification excuses this work.
+
+
+## Acceptance — decision identity/cardinality audit `.51.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Every original path remains' -1 --format='%H %s' -- docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md` returns cca713eff2f241c920275ec423454183ac6ab083, the .51.2 body seal. Its root forwarding identities deliberately remain. The admission slice's staged gate reports `surface rationale is at 90.6% and must declare rollover_debt` when adding a record. At fixed clean source 25c01f0127144922ade78951b91439e1d9221c08, the producer and independent direct-directory Git population/literal ID set establish 114 decision paths plus INDEX, with 50 forwarders and 64 canonical bodies. This cardinality cannot shrink merely by sealing more bodies; retiring paths would violate known identity/provenance contracts and cannot prove unseen external safety.
+- [x] **ADDRESSED (verified)** — The task-owned bounded audit captures complete per-ID destinations, blob dimensions/digests, fact identities, fixed original-reader comparisons, scoped full-basename/fragment consumer candidates and a separate generic code-path search. It invokes the captured published CLI and inputs in a same-volume temporary fixture, then compares every sealed original with its independent Git source. Final current instrument replay exactly matches the tracked fixed census, while current owned docs differ; ambient working reader inputs cannot substitute. T1999 observes equal-count duplicate IDs, substituted identities, wrong per-ID destinations, missing and escaping routes refuse. Review identifies the direct T1809 body/status read, 0062/0091 reverify bodies, recursive Knowledge Map and root-index bootstrap, stable exported path strings, published reader navigation, and the flat-only authority grammar. Canonical 0108 preserves its entire pre-audit body and adds the finite compatibility/current semantic partition contract; .51.3.2-.3 own actual migration, precise reader/authority prerequisites and fresh capacity. No decision moved and no ceiling widened.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl t/1999-decision-identity-capacity-audit.t t/1923-decision-record-archive.t t/1554-live-document-size-doctrine.t` reports `All tests successful`, `Files=3, Tests=22`. Exact original/public-reader, altered-original, duplicate/reordered/missing archive, stale view/alias/index/link and neutral containment controls pass. Both new Python modules parse with syntax OK; the Perl wrapper completes. The final pinned audit replay compares byte-for-byte equal with `cmp`, and `mdbook build docs/book` passes. Bounded canonical facts, unchanged-ceiling exact book authority, Knowledge Map/inventory and staged doctrines/hooks accompany this audit. Native HDL, external consumers and migration completion have no signoff here.
+
+Re-derivation is the tracked fixed-revision producer and public original-reader
+comparison. Falsification is the independent direct-directory Git member set,
+literal 0001-0114 identity population, per-ID destinations, observed equal-count
+bad routes and T1923's original-byte/corrupt-navigation controls. Durability is
+the tracked instrument, fixed input revision, JSON census, tests, canonical 0108
+and existing version-history retention. The 1050 basename candidate lines and
+101 generic code candidates describe those scoped lexical populations, not a
+defect or complete dynamic/external-reader count. Four literal fragment targets
+must remain reachable; unknown external headings also require retained original
+heading compatibility rather than an absence inference.
+
+The producer's first replay reproduced the capture; final generic/fragment
+instrument changes and explicit submodule opt-out were re-executed before
+completion. All fixtures stay under .artifacts and temporary captured-reader
+files are removed by their owning context. Original sealed history, spent
+compiler/proxy evidence and other repositories remain untouched. Atomic storage
+and reader/authority integration are deliberately subsequent leaves, and
+DEVELOPMENT_NOTES gains no duplicate of the canonical contract selection.

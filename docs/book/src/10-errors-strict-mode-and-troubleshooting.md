@@ -556,6 +556,25 @@ Hosted regression uses a minimal Perl setup. Ordinary runtime paths should not
 depend on undeclared local CPAN modules, and CLI report modes that are tested
 for clean stderr must remain compatible with the hosted Perl version.
 
+## Decision-store diagnostics
+
+Maintainers can audit decision identities and consumer references at a fixed
+source revision without moving records or changing their authority:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B scripts/audit_decision_identity_capacity.py \
+  --revision 25c01f0127144922ade78951b91439e1d9221c08 \
+  > .artifacts/decision-identity-capacity.json
+```
+
+The JSON names its source revision, exact index destinations, record digests,
+sealed-reader comparisons, root dimensions and scoped consumer candidates.
+It runs the captured reader in a repository-local temporary fixture. Basename
+and literal-fragment searches include tracked provenance; generic code-path
+candidates are listed separately. This is historical evidence, with explicit
+limits for dynamic and external consumers. It does not move decision records
+or replace their current [discovery index](../../../docs/decisions/INDEX.md).
+
 ## Current Boundary
 
 The project is trying to move toward:
