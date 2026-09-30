@@ -42,9 +42,9 @@ and book.
 Decision storage rollover is committed in
 `df7f692c8b94b083d2d078d62854d37869fbca6d`. Fixed-commit consumer/question
 closure is qualified in `5ef1133c59f6d1814ebe7d1bf95373bdd77cbbc8`; successful
-production-cohort birth and malformed-product refusal are also qualified.
-Post-publication identity/question floors and overall rollover closure remain
-the immediate prerequisite under `.51.3.3`, then record-input frontend
+production-cohort birth, malformed-product refusal and post-publication
+identity/fact/question floors are also qualified. Overall rollover closure
+remains the immediate prerequisite under `.51.3.3.3`, then record-input frontend
 qualification `.60.4.3.2.3.6` resumes. Required
 duration/timer deliveries precede optional banks, list ports and variants.
 Earlier configuration, verification and phase requests retain their tracked

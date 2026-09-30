@@ -802,7 +802,22 @@ retrieval, prior-continuity operation and Perl authority gate refuse each select
 working, staged and committed product. Public failures emit no partial record.
 Each case restores the exact valid fixture publication, and immutable originals,
 independent pins, control products and enforcement ceilings remain fixed.
-Post-publication identity/question floor controls are still separately tracked.
+Published identity and question floors also have a complete production-cohort
+matrix:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -v -Iperl t/2013-decision-production-floors.t
+```
+
+Each isolated fixture publishes its authored fact and questions before testing
+identity deletion/replacement, path/type recycling, fact loss/substitution and
+question loss/substitution. Descriptors and all navigation routes are updated
+consistently, so current authentication passes first. The actual prior-aware
+public operation and Perl gate then reject each loss in working, staged and
+committed selections. Counts that stay equal do not excuse replaced identities
+or keys. Owned content, status and additive questions pass the same modes. These
+fixtures preserve installed independent pins, immutable originals and enforcement
+ceilings; their warning pressure is declared without publishing fictional ADRs.
 
 ## Current Boundary
 
