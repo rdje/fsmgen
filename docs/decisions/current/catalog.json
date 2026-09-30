@@ -1,0 +1,1279 @@
+{
+  "records": [
+    {
+      "content": {
+        "bytes": 5496,
+        "line_bytes": 79,
+        "lines": 100,
+        "sha256": "6fa8a788e04905f639b56d86eb70e3df6cef2051f900603fd8dde7149d28c985"
+      },
+      "id": "0051",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0051-vial-vhdl-uses-a-provider-free-core-and-osvvm-qualified-tier.md",
+      "type": "verification backend/runtime architecture"
+    },
+    {
+      "content": {
+        "bytes": 3604,
+        "line_bytes": 87,
+        "lines": 74,
+        "sha256": "3b703c0e3c99e4f61cbfe1864d19777935841e1ceb6d6b40f55fc2e39261c9cb"
+      },
+      "id": "0052",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/language-api/0052-nexsim-native-api-is-authoritative-and-mcp-is-a-bounded-projection.md",
+      "type": "external simulator operability/consumer contract"
+    },
+    {
+      "content": {
+        "bytes": 3033,
+        "line_bytes": 170,
+        "lines": 56,
+        "sha256": "a0207440d799a6ef3117043bccf127f2d9525338b6a93b586168d36d356d18c6"
+      },
+      "id": "0053",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0053-portable-containment-adoption-guide-expands-governance-interface.md",
+      "type": "architecture/convention"
+    },
+    {
+      "content": {
+        "bytes": 3971,
+        "line_bytes": 327,
+        "lines": 65,
+        "sha256": "d1e37a7c1244b4d9a0854304ce47ec0852785cd86164a8412e1f068f467ddf62"
+      },
+      "id": "0054",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0054-derived-state-is-derived-on-read-or-authority-verified.md",
+      "type": "architecture/convention"
+    },
+    {
+      "content": {
+        "bytes": 20015,
+        "line_bytes": 281,
+        "lines": 387,
+        "sha256": "f62a250faba0ac6c777b9d35df4bb0e13112c92d69d310e33eed21ebec6c52cb"
+      },
+      "id": "0055",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; `.17.6` execution recorded by `.17.8`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 11148,
+        "line_bytes": 99,
+        "lines": 238,
+        "sha256": "34ac3d8cf090cc09f4bfff3fbae21fad9f26015ec56881c5ae6a4aeebb023292"
+      },
+      "id": "0056",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; `.17.6` execution recorded by `.17.8`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 4153,
+        "line_bytes": 186,
+        "lines": 71,
+        "sha256": "2b3665f92aeade55c286c7d8f980203b7addc08f960272a0a78a3ee94b3942df"
+      },
+      "id": "0057",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0057-vial-scale-byte-candidates-and-construction-envelopes-are-derived-and-bounded.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 2345,
+        "line_bytes": 94,
+        "lines": 45,
+        "sha256": "01cf7d67b472d384ee301fd6173db7b07b9feeb71c96e755bc9e1b3a39c79531"
+      },
+      "id": "0058",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/language-api/0058-vial-action-local-semantic-ids-follow-language-scope.md",
+      "type": "verification language/semantic identity"
+    },
+    {
+      "content": {
+        "bytes": 2757,
+        "line_bytes": 99,
+        "lines": 54,
+        "sha256": "d2b342037dcd4086f414f04a0adc98504c254739a6e398624def35269f9a882f"
+      },
+      "id": "0059",
+      "metadata": {
+        "authority_status": [
+          "- Status: observed and routed by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0059-vial-literal-repeat-scale-is-currently-dominated-by-expanded-actions.md",
+      "type": "verification architecture/limit interaction"
+    },
+    {
+      "content": {
+        "bytes": 4523,
+        "line_bytes": 179,
+        "lines": 86,
+        "sha256": "51770205caf3b5ea6f436c2e4fbe377bc0d00d4a06b4d110c268fbf277697b46"
+      },
+      "id": "0060",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 8179,
+        "line_bytes": 280,
+        "lines": 120,
+        "sha256": "5c345b17b4da7976a1f23d959f750fbbcfa8390cdad684e4407e17192aa20d36"
+      },
+      "id": "0061",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 2604,
+        "line_bytes": 107,
+        "lines": 59,
+        "sha256": "735ad7a83b795072ce9f64864ec2c4c1333b32a76a520735a66ac705d77d88de"
+      },
+      "id": "0062",
+      "metadata": {
+        "authority_status": [
+          "- Status: superseded by [0091](docs/decisions/0091-push-cadence-is-300-commits.md)"
+        ],
+        "knowledge_id": "push-cadence-is-200-commits",
+        "knowledge_status": "superseded",
+        "questions": [
+          "how often should this repository push commits?",
+          "how many commits should accumulate before pushing?",
+          "should every commit be pushed immediately?",
+          "does an explicitly requested early push change the normal cadence?",
+          "how is the push cadence counter calculated and reset?"
+        ]
+      },
+      "path": "docs/decisions/current/continuity/0062-push-cadence-is-200-commits.md",
+      "type": "feedback/governance"
+    },
+    {
+      "content": {
+        "bytes": 5642,
+        "line_bytes": 88,
+        "lines": 101,
+        "sha256": "0a268d9afa259b20f3c7be359a929582b69d5b03ed1c691b92a81b4eb48ca1b1"
+      },
+      "id": "0063",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `GITHUB-PUSH-OUTCOME-ASSURANCE.6.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0063-hosted-regression-uses-closed-non-cancelling-partitions.md",
+      "type": "CI architecture/continuity"
+    },
+    {
+      "content": {
+        "bytes": 4918,
+        "line_bytes": 89,
+        "lines": 93,
+        "sha256": "cb7f0603c471d827e52eb352100829024829868fc6a5036d4bda1242c506eac7"
+      },
+      "id": "0064",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.3`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0064-live-document-growth-is-declared-measurement-with-paired-decisions.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 7474,
+        "line_bytes": 175,
+        "lines": 130,
+        "sha256": "b9e3af4e93bd336e7f13c0f6a7528bed73c13e2871cab8cefd287788424ef08b"
+      },
+      "id": "0065",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0065-live-document-line-and-byte-targets-are-derived-as-a-pair.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 5617,
+        "line_bytes": 200,
+        "lines": 102,
+        "sha256": "933f1eb44c0ab0c670da434503068d96f5538e04fa54fd77a974a1dd3fd58494"
+      },
+      "id": "0066",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0066-memory-pointer-size-is-two-externally-owned-criteria.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 6033,
+        "line_bytes": 154,
+        "lines": 108,
+        "sha256": "7f8be4bf52efc5a4438cfe74cce31b2b30c96922952fdf2dfdb45bdb4681db7e"
+      },
+      "id": "0067",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0067-layer-a-carries-no-decision-or-lane-summaries.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 3983,
+        "line_bytes": 123,
+        "lines": 74,
+        "sha256": "838193ea931b9c0e403193bed91efcb645e6db22c67dd506a9fb150977f2a887"
+      },
+      "id": "0068",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.6`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0068-memory-is-the-frontier-pointer-and-commit-md-stops-inviting-narration.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 7366,
+        "line_bytes": 91,
+        "lines": 126,
+        "sha256": "5ca402eaec1388da2e72ac4845d2d2f9314a274c7a29026123730bfa3ac9ebab"
+      },
+      "id": "0069",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0069-live-document-target-pairs-are-swept-not-fixed-under-pressure.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 5008,
+        "line_bytes": 184,
+        "lines": 86,
+        "sha256": "14cca283683599f3438dc5f971fba81fff856ac198c8afe8f89c2396f113a6be"
+      },
+      "id": "0070",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0070-transition-allowances-carry-one-declared-step-and-a-live-owner.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 6548,
+        "line_bytes": 270,
+        "lines": 115,
+        "sha256": "b85284b379038f23984e3fc80a53bf236f47b891e6600fe73f356a6ea7b6c4b1"
+      },
+      "id": "0071",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.3`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0071-a-containment-bound-pinned-at-its-actual-is-not-a-reviewed-bound.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 7679,
+        "line_bytes": 272,
+        "lines": 123,
+        "sha256": "5c33d9be3c02dfc10928aa378a65139c445dffdd5814693023eeed5137f4abb9"
+      },
+      "id": "0072",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.3`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0072-an-unreachable-declared-cap-is-a-result-not-a-level-to-rewrite.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 10318,
+        "line_bytes": 272,
+        "lines": 156,
+        "sha256": "26aab209367b4c8c52d3842c4e60396b9cf571ac3395b101f48f2c0ccce589ae"
+      },
+      "id": "0073",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 2998,
+        "line_bytes": 93,
+        "lines": 50,
+        "sha256": "947a26f9998482d76ec868cd5ce6ac8c96d0535265f896b76d6bf090055057e9"
+      },
+      "id": "0074",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; extended by `0104`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0074-actionable-claims-name-rederivation-falsification-and-durability.md",
+      "type": "evidence governance"
+    },
+    {
+      "content": {
+        "bytes": 19138,
+        "line_bytes": 321,
+        "lines": 280,
+        "sha256": "f5cbb4cf435b22cfbf7f294848cca376a5de9c06443f9b78b21051fca8e136d5"
+      },
+      "id": "0075",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.1`; portable-SystemVerilog evidence revised by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4`; portable-VHDL/OSVVM evidence revised by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 2697,
+        "line_bytes": 97,
+        "lines": 52,
+        "sha256": "9df64bfa1d6925246b0edae0a03343e1f35be947346195409ab152f816575647"
+      },
+      "id": "0076",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0076-original-constant-cohorts-derive-from-versioned-sources.md",
+      "type": "evidence architecture/governance"
+    },
+    {
+      "content": {
+        "bytes": 7171,
+        "line_bytes": 442,
+        "lines": 128,
+        "sha256": "3d583359afe519f49eebc4cd90a51921aa6386bba7972a8ecec65b5375c193ae"
+      },
+      "id": "0077",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0077-vial-balanced-portable-uses-a-caller-sealed-revision-2-qualification-bridge.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 5567,
+        "line_bytes": 366,
+        "lines": 88,
+        "sha256": "66deeac89b4330a966574e8453466596edc3bd354a0aa0ce94075c5bb7c1ef76"
+      },
+      "id": "0078",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0078-vial-execution-total-operation-cap-precedes-graph-materialization.md",
+      "type": "verification architecture/limit enforcement"
+    },
+    {
+      "content": {
+        "bytes": 5988,
+        "line_bytes": 365,
+        "lines": 96,
+        "sha256": "d81758fb7acee1a2e8090bdca5f3f178af9b8c8f1c4203f0ffe40e398106b0c4"
+      },
+      "id": "0079",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0079-vial-plan-preflight-reuses-one-bounded-random-decision-transcript.md",
+      "type": "verification architecture/limit enforcement"
+    },
+    {
+      "content": {
+        "bytes": 6326,
+        "line_bytes": 193,
+        "lines": 107,
+        "sha256": "67f3ca9719ed06dce9b9f2775f1fec3c6d7cc8639fac0f3968b672bb85526205"
+      },
+      "id": "0080",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0080-portable-systemverilog-rolls-backward-successors-by-logical-phase.md",
+      "type": "verification backend/runtime scheduling"
+    },
+    {
+      "content": {
+        "bytes": 7782,
+        "line_bytes": 282,
+        "lines": 126,
+        "sha256": "16bf6c5a9ae4eddfe65e8e691472947c68b98d5427941286e206548cdb97eeb8"
+      },
+      "id": "0081",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0081-portable-systemverilog-direct-drive-uses-root-owned-zero-duration-driver-slots.md",
+      "type": "verification backend/runtime drive semantics"
+    },
+    {
+      "content": {
+        "bytes": 6550,
+        "line_bytes": 81,
+        "lines": 125,
+        "sha256": "415ef34ffafed4b8307c08f64877c4021b9b8c2633153b312bd2be40dff81d09"
+      },
+      "id": "0082",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0082-portable-systemverilog-parallel-children-are-single-await-leaves.md",
+      "type": "verification backend/runtime scheduling"
+    },
+    {
+      "content": {
+        "bytes": 15770,
+        "line_bytes": 280,
+        "lines": 288,
+        "sha256": "992022d86f2f4b1513d82b3cb7cf540cf5935d184eaa002ec0caee2d574a4b94"
+      },
+      "id": "0083",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md",
+      "type": "verification architecture/runtime measurement"
+    },
+    {
+      "content": {
+        "bytes": 7714,
+        "line_bytes": 134,
+        "lines": 133,
+        "sha256": "87626e17ed272a5009650942aa33134a7634b5aa6d3dcfaefbea29b6af7c558c"
+      },
+      "id": "0084",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0084-macos-premain-stalls-retain-guarded-qualification-not-backend-workarounds.md",
+      "type": "verification runtime/host qualification"
+    },
+    {
+      "content": {
+        "bytes": 4530,
+        "line_bytes": 110,
+        "lines": 84,
+        "sha256": "5a0f3b09b095db094844f73ffc8c631f4b031f690ee673948152d043e2b9345e"
+      },
+      "id": "0085",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0085-darwin-runtime-integration-is-explicit-and-sampling-stays-repository-local.md",
+      "type": "CI/runtime qualification and data locality"
+    },
+    {
+      "content": {
+        "bytes": 7876,
+        "line_bytes": 262,
+        "lines": 129,
+        "sha256": "1382daba6dbfdaf1842dcc5375f73971befe880f2dc84bc425e7434a9a062c7f"
+      },
+      "id": "0086",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0086-legacy-verilator-tests-use-one-bounded-test-runtime-supervisor.md",
+      "type": "CI/test runtime supervision and qualification"
+    },
+    {
+      "content": {
+        "bytes": 8043,
+        "line_bytes": 249,
+        "lines": 137,
+        "sha256": "5630910c3ac4116c6ebde9dcd596165d8c1aa8da7140878c9d29eb76706641db"
+      },
+      "id": "0087",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md",
+      "type": "CI/test runtime supervision and qualification"
+    },
+    {
+      "content": {
+        "bytes": 4509,
+        "line_bytes": 92,
+        "lines": 82,
+        "sha256": "2abf7d45902edce6c2396311d601f6ad74bfaefcfe56352ff9d027a6378888bf"
+      },
+      "id": "0088",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0088-provider-backed-hosted-tests-use-explicit-dedicated-coordinates.md",
+      "type": "CI architecture/continuity"
+    },
+    {
+      "content": {
+        "bytes": 4392,
+        "line_bytes": 100,
+        "lines": 79,
+        "sha256": "0a1b3872687f88e9df8dc0eb67776f49f8fe30b20df3fd810a31e2ba9686f595"
+      },
+      "id": "0089",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0089-linux-logical-core-discovery-uses-bounded-kernel-authorities.md",
+      "type": "measurement evidence/host portability"
+    },
+    {
+      "content": {
+        "bytes": 10283,
+        "line_bytes": 274,
+        "lines": 188,
+        "sha256": "ba980688b7f3d14146940bef4897fb01a1aef9c6101e3e20f6ae0c96a18d836a"
+      },
+      "id": "0090",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0090-portable-vhdl-runtime-scale-uses-sample-snapshots-and-one-shared-ghdl-lifecycle.md",
+      "type": "verification architecture/runtime measurement"
+    },
+    {
+      "content": {
+        "bytes": 1790,
+        "line_bytes": 286,
+        "lines": 30,
+        "sha256": "1eb9daf00226c6f49baec8efacdfc8d9fec5e22c9269ab1214bca984b66fcfaf"
+      },
+      "id": "0091",
+      "metadata": {
+        "authority_status": [
+          "- Status: superseded by [0102](docs/decisions/0102-push-cadence-is-500-commits.md)"
+        ],
+        "knowledge_id": "push-cadence-is-300-commits",
+        "knowledge_status": "superseded",
+        "questions": [
+          "how often should this repository push commits?",
+          "how many commits should accumulate before pushing?",
+          "should every commit be pushed immediately?",
+          "does an explicitly requested early push change the normal cadence?",
+          "how is the push cadence counter calculated and reset?"
+        ]
+      },
+      "path": "docs/decisions/current/continuity/0091-push-cadence-is-300-commits.md",
+      "type": "feedback/governance"
+    },
+    {
+      "content": {
+        "bytes": 11088,
+        "line_bytes": 287,
+        "lines": 196,
+        "sha256": "427e75dcccbe4809b58ae2845917242576deea3933d293f80c2557de53c6bd3d"
+      },
+      "id": "0092",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0092-osvvm-runtime-scale-reuses-authored-vhdl-sources-and-one-provider-aware-ghdl-lifecycle.md",
+      "type": "verification architecture/runtime measurement"
+    },
+    {
+      "content": {
+        "bytes": 6736,
+        "line_bytes": 278,
+        "lines": 127,
+        "sha256": "f729e69cb6a7a8b87541c9b8559306ccded4927c7c7bf4c9c79d46f4e86b486a"
+      },
+      "id": "0093",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md",
+      "type": "verification architecture/limit policy"
+    },
+    {
+      "content": {
+        "bytes": 5278,
+        "line_bytes": 97,
+        "lines": 91,
+        "sha256": "9969e06fa787407b386c0a4245219ccd79d5fc3d85d796ad037d0184ac0af0f6"
+      },
+      "id": "0094",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0094-claim-records-use-a-finite-registry-set-with-global-identity.md",
+      "type": "evidence architecture/governance"
+    },
+    {
+      "content": {
+        "bytes": 7563,
+        "line_bytes": 196,
+        "lines": 122,
+        "sha256": "b148ccabbbc8b59e1ce123ac0c5ea8d152c79c33d00d431fc6613825db5a5bc7"
+      },
+      "id": "0095",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0095-calibration-closure-versions-atomically-after-current-validator-drift.md",
+      "type": "verification evidence/versioning"
+    },
+    {
+      "content": {
+        "bytes": 6779,
+        "line_bytes": 193,
+        "lines": 116,
+        "sha256": "65b3b8fd7bef4d0e86b5f64faef88d3ec5b0531d953c16e760893a80122ff855"
+      },
+      "id": "0096",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md",
+      "type": "verification architecture / regression promotion"
+    },
+    {
+      "content": {
+        "bytes": 7784,
+        "line_bytes": 181,
+        "lines": 127,
+        "sha256": "53a04bb36273f79c1414155110cbd9e5a9fca8463771430d83011d6559e9cc9e"
+      },
+      "id": "0097",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md",
+      "type": "verification architecture / regression enforcement"
+    },
+    {
+      "content": {
+        "bytes": 9131,
+        "line_bytes": 276,
+        "lines": 148,
+        "sha256": "ad4eaf5d7c4869de982baeacbadf6358689911604c584c40283ec95fea09b044"
+      },
+      "id": "0098",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md",
+      "type": "CI architecture / regression evidence"
+    },
+    {
+      "content": {
+        "bytes": 2732,
+        "line_bytes": 304,
+        "lines": 37,
+        "sha256": "852748e2528c1d96bf90bf33df03d349aa3d51bbf8d17278d076d2666207a37b"
+      },
+      "id": "0099",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0099-regression-correctness-excludes-only-sealed-process-telemetry-derivatives.md",
+      "type": "verification architecture / regression correctness"
+    },
+    {
+      "content": {
+        "bytes": 5643,
+        "line_bytes": 197,
+        "lines": 94,
+        "sha256": "8f73ea8c49e7e3da1cf6b71b74d0ab849c45c71285ed06ebdb41cdad8bb803ff"
+      },
+      "id": "0100",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0100-portable-systemverilog-lifecycle-uses-a-static-check-seam-controller.md",
+      "type": "verification backend/runtime"
+    },
+    {
+      "content": {
+        "bytes": 3083,
+        "line_bytes": 188,
+        "lines": 49,
+        "sha256": "e8736627beb24cc0ebf93768422753e4936a233d961bc87dfe45eb09977add0e"
+      },
+      "id": "0101",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/verification/0101-hdl-validation-shares-process-supervision.md",
+      "type": "process architecture"
+    },
+    {
+      "content": {
+        "bytes": 1639,
+        "line_bytes": 286,
+        "lines": 27,
+        "sha256": "f0fd72df80a40e408bfb1fb1ef3b353733deefd682647ae332ba9888afffcdff"
+      },
+      "id": "0102",
+      "metadata": {
+        "authority_status": [],
+        "knowledge_id": "push-cadence-is-500-commits",
+        "knowledge_status": "current",
+        "questions": [
+          "how often should this repository push commits?",
+          "how many commits should accumulate before pushing?",
+          "should every commit be pushed immediately?",
+          "does an explicitly requested early push change the normal cadence?",
+          "how is the push cadence counter calculated and reset?"
+        ]
+      },
+      "path": "docs/decisions/current/continuity/0102-push-cadence-is-500-commits.md",
+      "type": "feedback/governance"
+    },
+    {
+      "content": {
+        "bytes": 3839,
+        "line_bytes": 322,
+        "lines": 72,
+        "sha256": "008730c1df1a2afb5e627352eb99264a7f8bf61ed72029b1cc62ac2da0f07ed2"
+      },
+      "id": "0103",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": "public-regression-promotion-policy-loads-a-tracked-seal",
+        "knowledge_status": "current",
+        "questions": [
+          "why does public regression-promotion policy derivation no longer authenticate the ignored calibration closure?",
+          "where is the sealed regression-promotion policy a fresh checkout loads?",
+          "does the tracked policy seal change the pinned policy identity?",
+          "does a failed hosted gate become support or capacity?"
+        ]
+      },
+      "path": "docs/decisions/current/verification/0103-public-regression-promotion-policy-loads-a-tracked-seal.md",
+      "type": "verification architecture / regression promotion"
+    },
+    {
+      "content": {
+        "bytes": 1602,
+        "line_bytes": 90,
+        "lines": 32,
+        "sha256": "cd347a29af92018203e887ab1e0c739d44ee139d32954ee38722b65506b3305b"
+      },
+      "id": "0104",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/continuity/0104-claim-review-matches-evidence-granularity-and-preserves-uncertainty.md",
+      "type": "evidence governance"
+    },
+    {
+      "content": {
+        "bytes": 2016,
+        "line_bytes": 78,
+        "lines": 40,
+        "sha256": "717cbaadca116615d0da8b27be2dc264da16628b1625dc64fbc3398d762d2262"
+      },
+      "id": "0105",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/language-api/0105-vial-deep-inspection-is-additive-to-frozen-summaries.md",
+      "type": "public API architecture"
+    },
+    {
+      "content": {
+        "bytes": 2286,
+        "line_bytes": 78,
+        "lines": 49,
+        "sha256": "6074ad7d70d8c350c9d6856bb0c74a39e84441c7744878c217a7a6ea00f1b10e"
+      },
+      "id": "0106",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/language-api/0106-reset-polarity-is-an-explicit-system-carrier.md",
+      "type": "source language / semantic contract"
+    },
+    {
+      "content": {
+        "bytes": 2935,
+        "line_bytes": 90,
+        "lines": 53,
+        "sha256": "c452d7c5421a8a19e1c515812103a53e7fc0adc8ccb30e3f16379ba6e667c8fb"
+      },
+      "id": "0107",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; implementation lanes remain open"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/language-api/0107-actor-storage-has-one-owner-across-generated-children.md",
+      "type": "ISF storage / generated-module contract"
+    },
+    {
+      "content": {
+        "bytes": 28546,
+        "line_bytes": 691,
+        "lines": 447,
+        "sha256": "b37a062bcf5f7f1f7123d787cc810be6b58e6fc8955a8eb409bc9a914933636e"
+      },
+      "id": "0108",
+      "metadata": {
+        "authority_status": [],
+        "knowledge_id": "live-document-decision-identity-capacity",
+        "knowledge_status": "current",
+        "questions": [
+          "why does sealing more decision bodies not solve decision file-count rollover?",
+          "how is the decision identity and consumer census reverified?",
+          "what contract is selected for decision identity and index cardinality rollover?",
+          "which decision consumers must change before canonical records move?"
+        ]
+      },
+      "path": "docs/decisions/current/continuity/0108-decision-records-seal-originals-with-stable-retrieval.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 8326,
+        "line_bytes": 86,
+        "lines": 137,
+        "sha256": "ced3a56fc227aca213d7f3ac17bebe599268a8a732a8a3d407b9a2958a7d20a6"
+      },
+      "id": "0109",
+      "metadata": {
+        "authority_status": [
+          "Status: selected; implementation and qualification remain open"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/language-api/0109-direct-transactions-have-independent-logical-controllers.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 2181,
+        "line_bytes": 81,
+        "lines": 43,
+        "sha256": "08576cf5f2a42cf80080a443b44b78933ae183f29a52ff52a73d4a72028bbb65"
+      },
+      "id": "0110",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/language-api/0110-actor-storage-variables-reject-hdl-keywords.md",
+      "type": "language contract"
+    },
+    {
+      "content": {
+        "bytes": 2353,
+        "line_bytes": 80,
+        "lines": 46,
+        "sha256": "70645584b59a6adb39c35e1923135acf2850d89ad6ec0b0072a3671e31c53b8f"
+      },
+      "id": "0111",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/language-api/0111-same-value-selector-fanin-is-compatible.md",
+      "type": "backend and semantic reports"
+    },
+    {
+      "content": {
+        "bytes": 4419,
+        "line_bytes": 87,
+        "lines": 79,
+        "sha256": "a1aba234213041978e84586ee5e4db2fa4107eef97e640e96f05ecd8a3b9f5f9"
+      },
+      "id": "0112",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; provenance implemented under .60.3.3.1"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/language-api/0112-isf-reset-provenance-is-separate-from-hardware-policy.md",
+      "type": "source and public reports"
+    },
+    {
+      "content": {
+        "bytes": 32766,
+        "line_bytes": 795,
+        "lines": 474,
+        "sha256": "5733d711157b2656977c825200abce92eeb03f10b4fbfc5d11c6f9bb3a17c44f"
+      },
+      "id": "0113",
+      "metadata": {
+        "authority_status": [
+          "- Status: input authoring admitted; complete input/output and consumer qualification remain open"
+        ],
+        "knowledge_id": "isf-aggregate-port-contract-selection",
+        "knowledge_status": "current",
+        "questions": [
+          "what contract is selected for ISF record interface ports?",
+          "what is the packed record port field order?",
+          "do record input reads require independent controller repairs?",
+          "are list ports and variant records part of required record-port delivery?",
+          "why must metadata validation predicates use scalar context?",
+          "where are declared ISF interface ports exposed in reports?",
+          "how is declared interface metadata qualified against supported ISF source queries?",
+          "which type and lexical gates must precede record input admission?",
+          "how are record value gates and contextual diagnostic oracles qualified?",
+          "which existing domain-path defect must be repaired before record input admission?",
+          "how is foreign-domain scalar slice and input-index refusal repaired and qualified?",
+          "how are actual parsed record-value declaration scopes prepared?",
+          "which authored ISF record inputs and scalar contexts are admitted?",
+          "how does record input admission preserve deferred output and list carriers?",
+          "why did the first authored record input replay fixtures fail width and child wiring contracts?"
+        ]
+      },
+      "path": "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md",
+      "type": "language/report contract"
+    },
+    {
+      "content": {
+        "bytes": 32171,
+        "line_bytes": 701,
+        "lines": 511,
+        "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+      },
+      "id": "0114",
+      "metadata": {
+        "authority_status": [
+          "- Status: qualified context/sample/domain preparation; authored input admission follows 0113"
+        ],
+        "knowledge_id": "isf-aggregate-record-context-and-first-touch-validation",
+        "knowledge_status": "current",
+        "questions": [
+          "how are selected record input AST contexts prepared without admission?",
+          "why can numeric validation change caller JSON scalar kinds without an assignment?",
+          "how is first-touch record declaration mutation reproduced and repaired?",
+          "can a scalar pin share an enum namespace name during record context validation?",
+          "how do aggregate enum and rule validators share declaration-root classification?",
+          "how are explicit record-leaf sample facts and private scalar type declarations prepared?",
+          "how do contextual record-input gates consume sampled scalar alias facts?",
+          "why did a malformed record-input selector turn a caller null entry into an empty map?",
+          "how do prepared record-leaf samples retain private scalar types in actual modules?",
+          "why did raw parent product comparisons fail after payload snapshot integration?",
+          "how are private record samples qualified against actual generated helpers and writers?",
+          "why did first-touch interface metadata validation change caller JSON scalar kinds?",
+          "how are complete record-leaf sample states and actual semantic scalar types qualified?",
+          "how do prepared record input member paths retain their declared clock domain?",
+          "why did inline and named drive bodies bypass declared domain ownership?",
+          "why can an unused parameterized drive break strict multi-domain replay?"
+        ]
+      },
+      "path": "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md",
+      "type": "ISF contextual validation"
+    }
+  ],
+  "schema_version": 1,
+  "source_revision": "585070c07bbcfa1af1497ff9701924a0f9b81e01"
+}

@@ -16,7 +16,7 @@ answers:
   - "how is VIAL v2 lifecycle control mapped to portable SystemVerilog?"
   - "which check seams advance the portable VIAL lifecycle controller?"
   - "does the VIAL v1 trace validator reject execution IR v2?"
-date: 2026-09-04
+date: 2026-09-30
 status: current
 tags: [vial, hial, lifecycle, semantic-ir, logical-time, deadlines, target-neutral]
 evidence: >-
@@ -31,6 +31,7 @@ evidence: >-
   t/1807-vial-v2-lifecycle-selection.t;
   t/1808-vial-v2-lifecycle-compiler-phases.t;
   t/1809-vial-v2-portable-sv-lifecycle-contract.t;
+  t/data/vial_v1_contract_frozen_hial_dut.json;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md
 reverify: >-
   prove -Iperl t/1807-vial-v2-lifecycle-selection.t t/1808-vial-v2-lifecycle-compiler-phases.t t/1809-vial-v2-portable-sv-lifecycle-contract.t &&
@@ -89,3 +90,21 @@ characterizes that a canonical v1-shaped trace is accepted against lifecycle
 ExecutionIR v2. Adapter, emitter, runner, result producer, and public v2 `run`
 still reject before a false result can be published. Proposed repair child
 `.19.2.3.1.2.1` must close this isolation gap before emitter implementation.
+
+T1809 separates current HIAL DUT emission from the fixed-input VIAL byte
+contract. Its original complete graph oracle was introduced at
+`d200f9fe7268ba292b898c64a3d3e6bd992b4441`. Reconstructing that project-owned
+source through its plan/emission interface reproduces the original graph;
+substituting only its recovered DUT text into the current plan reproduces the
+same graph. The maintained emission-only text fixture is authenticated by its
+own digest in T1809. The test also emits the current DUT and compares VIAL
+negotiation; no historical DUT is compiled or run.
+
+The initial mixed-dependency oracle became stale after later HIAL repairs:
+explicit internal roles affect scalar truthiness emission, and
+`69ae18454c52a51079da17edd7c31c423ef66bb5` removes invalid same-value fan-in
+assertions. Complete old/current graph comparison isolates the differences to
+DUT text and its dependent length/digest references; VIAL plan identity and
+the synthetic normalized-result oracle remain unchanged. Holding the DUT
+input fixed preserves the original VIAL oracle without reverting those HIAL
+repairs. This evidence does not qualify HDL execution or VIAL v2 runtime.

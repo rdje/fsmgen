@@ -32,10 +32,18 @@ class DecisionRecords(unittest.TestCase):
                      if row['text'].startswith('reverify:'))
         paths.update(posixpath.normpath(posixpath.join('docs/decisions', row['target']))
                      for row in census['selected_links'])
+        transition = ROOT / 'docs/audits/decision-store-transition-census.json'
+        revision = json.loads(transition.read_bytes())['source_revision'] if transition.exists() else None
         for relative in paths:
             target = self.root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(ROOT / relative, target)
+            # Legacy no-catalog controls use their own published pre-transition
+            # paths and index, rather than the current compatibility rendering.
+            if revision and (relative == decisions.INDEX or relative.startswith('docs/decisions/')
+                             and relative.count('/') == 2):
+                target.write_bytes(subprocess.check_output(['git', 'show', revision + ':' + relative], cwd=ROOT))
+            else:
+                shutil.copyfile(ROOT / relative, target)
 
     def archive(self):
         return json.loads((self.root / decisions.ARCHIVE).read_bytes())

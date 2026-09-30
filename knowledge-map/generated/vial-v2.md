@@ -26,5 +26,5 @@
 
 _VIAL v2 lifecycle control compiles through target-neutral planning_
 
-- **date:** 2026-09-04 · **status:** current
+- **date:** 2026-09-30 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-v2-lifecycle-control-selection.md`](../../docs/knowledge/vial-v2-lifecycle-control-selection.md)

@@ -9,6 +9,7 @@ from pathlib import Path
 sys.dont_write_bytecode = True
 import test_decision_store as stores
 import test_decision_catalog as fixtures
+import decision_records as published
 
 ROOT = Path(__file__).resolve().parents[2]
 CLI = ROOT / 'scripts/decision_records.py'
@@ -102,7 +103,11 @@ class PublishedStoreReader(unittest.TestCase):
 
     def test_supplied_authority_is_explicit_and_missing_or_altered_products_refuse(self):
         self.assert_failure(self.run_reader('read', '0051', root=False), 'explicit --root')
-        self.assert_failure(self.run_reader('read', '0051', authority=False), 'no installed independent authority')
+        # After rollout, omitted fixture pins select installed production pins;
+        # the independently different fixture must fail authentication instead.
+        untrusted = ('no installed independent authority' if published.STORE_SOURCE_SHA256 is None
+                     else 'independent transition source census changed')
+        self.assert_failure(self.run_reader('read', '0051', authority=False), untrusted)
         partial = subprocess.run([sys.executable, '-B', str(CLI), '--root', str(self.root),
                                   '--source-sha256', self.fixture.source_digest, 'read', '0051'], capture_output=True)
         self.assert_failure(partial, 'both independent fingerprints')

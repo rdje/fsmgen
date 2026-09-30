@@ -31,7 +31,7 @@ my $v1_name = 'vial/ahb_subordinate_base_output_arbitration.vial';
 my $v2_name = 'vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial';
 my $hial_name = 'ppif/ahb_lite_subordinate.ppif';
 my $spec_rel = 'docs/vial-spec/portable-systemverilog-lifecycle-v2.md';
-my $decision_rel = 'docs/decisions/0100-portable-systemverilog-lifecycle-uses-a-static-check-seam-controller.md';
+my $decision_rel = 'docs/decisions/current/verification/0100-portable-systemverilog-lifecycle-uses-a-static-check-seam-controller.md';
 my $landing_rel = 'docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md';
 my $book_rel = 'docs/book/src/16dg-vial-public-lifecycle-reference.md';
 my $artifact_root = '.artifacts/test/vial-v2-portable-lifecycle-contract';
@@ -330,14 +330,42 @@ subtest 'known standalone v1 trace-validator isolation gap is bounded' => sub {
 
 subtest 'v1 emitted graph and normalized result remain byte-exact' => sub {
     my $v1 = build_plan(1, $v1_name);
-    my $emitted = emit_plan(
+    my $current_emitted = emit_plan(
         $v1, '.artifacts/test/vial-portable-sv-emission',
+    );
+    ok($current_emitted->{ok}, 'v1 backend emits the current HIAL DUT');
+    diag $json->encode($current_emitted->{diagnostics})
+        unless $current_emitted->{ok};
+
+    # The byte oracle was introduced at d200f9fe7268ba292b898c64a3d3e6bd992b4441.
+    # Hold that authenticated DUT input fixed: independently owned HIAL repairs
+    # legitimately change its bytes and dependent manifest/source-map digests.
+    # This fixture is emission input only; no historical DUT is compiled or run.
+    my $fixed_input = {
+        %$v1,
+        backend_inputs => $json->decode($json->encode($v1->{backend_inputs})),
+    };
+    my $dut = $fixed_input->{backend_inputs}{dut_systemverilog}[0];
+    my $frozen = $json->decode(slurp_raw('t/data/vial_v1_contract_frozen_hial_dut.json'));
+    is($frozen->{source_revision},
+        'd200f9fe7268ba292b898c64a3d3e6bd992b4441',
+        'fixed emission input names the independently reconstructed source');
+    $dut->{text} = $frozen->{text};
+    is(sha256_hex($dut->{text}),
+        'eeaa8a687a3a1ce010446f848ca6785538dd907e4c567a91ee6049cc4e079f82',
+        'fixed HIAL input retains its independently recovered identity');
+    $dut->{byte_length} = length($dut->{text});
+    $dut->{content_sha256} = sha256_hex($dut->{text});
+    my $emitted = emit_plan(
+        $fixed_input, '.artifacts/test/vial-portable-sv-emission',
     );
     ok($emitted->{ok}, 'canonical v1 backend still emits');
     diag $json->encode($emitted->{diagnostics}) unless $emitted->{ok};
     is(sha256_hex($json->encode($emitted)),
         '604f4713b6d8126be4d58ec19f77b5c5960f2424c85cd85d4880830ad2d2d823',
         'complete v1 emitted graph retains its frozen byte identity');
+    is_deeply($current_emitted->{negotiation}, $emitted->{negotiation},
+        'current and fixed DUT emission retain the same VIAL negotiation');
 
     my $validated = FSM::VIAL::Backend::TraceValidator->validate({
         execution_ir => $v1->{execution_ir},

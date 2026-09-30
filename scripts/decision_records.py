@@ -19,8 +19,8 @@ INDEX = 'docs/decisions/INDEX.md'
 CATALOG = 'docs/decisions/current/catalog.json'
 # Installed only by the atomic source-rollover slice. Supplied stores require
 # explicit independent caller fingerprints and an explicit selected root.
-STORE_SOURCE_SHA256 = None
-STORE_INDEX_SHA256 = None
+STORE_SOURCE_SHA256 = 'a1f17aad2176c7edc1383e3bc064ebefb633767365e29404ba210302e1c231e3'
+STORE_INDEX_SHA256 = '1a3675cd78a00b931968a051a8f561564dac9db74f673246a9234fd6a50659fa'
 MAX_BYTES = 1_048_576
 LINK = re.compile(r'(\[[^\]\n]*\]\()([^\s)]+)(\))')
 

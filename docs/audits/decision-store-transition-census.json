@@ -1,0 +1,3297 @@
+{
+  "records": [
+    {
+      "content": {
+        "bytes": 1558,
+        "line_bytes": 87,
+        "lines": 33,
+        "sha256": "8dbeed862130bd8aafb41cc44056e657c729b52c9f23c8d8a8c17f55b0febdf3"
+      },
+      "headings": [
+        "# 0001 — ISF abstraction layering (ISF = IAL1)",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0001",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0001-isf-abstraction-layering.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 1752,
+        "line_bytes": 100,
+        "lines": 39,
+        "sha256": "b6b7f9b5c8d6152b9f7892862878866b8704edf46a8cbac2bec0bead56cc2d4c"
+      },
+      "headings": [
+        "# 0002 — ISF high-level-language richness frontier",
+        "## Context",
+        "## Decision",
+        "## Consequences (theme-3 surface shipped as of 2026-06-02)"
+      ],
+      "id": "0002",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted (in progress)"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0002-isf-language-richness-frontier.md",
+      "type": "project"
+    },
+    {
+      "content": {
+        "bytes": 1414,
+        "line_bytes": 89,
+        "lines": 30,
+        "sha256": "2a4c50d45dcb4083a274f6a4a7559967f505a71a07f2bbfe4815c45590123437"
+      },
+      "headings": [
+        "# 0003 — Autonomous PNT; do not pause mid-flow",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0003",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0003-autonomous-pnt-and-no-mid-flow-pausing.md",
+      "type": "feedback"
+    },
+    {
+      "content": {
+        "bytes": 1666,
+        "line_bytes": 87,
+        "lines": 37,
+        "sha256": "1fa8a73ee7ab748258ae2d3577cb21d374ec136ac5d2846fb29ad1c6f7371865"
+      },
+      "headings": [
+        "# 0004 — Simulate control flow; lint/synth aren't enough",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0004",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0004-simulate-to-catch-codegen-bugs.md",
+      "type": "learning"
+    },
+    {
+      "content": {
+        "bytes": 1181,
+        "line_bytes": 85,
+        "lines": 29,
+        "sha256": "9107dabfe1aebe03d76ccc7fc3977e3af7b1105ace62473084fe9ad5283f1d60"
+      },
+      "headings": [
+        "# 0005 — Push only on explicit request",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0005",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: superseded by [0062](docs/decisions/0062-push-cadence-is-200-commits.md)"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0005-push-only-on-explicit-request.md",
+      "type": "feedback"
+    },
+    {
+      "content": {
+        "bytes": 1330,
+        "line_bytes": 86,
+        "lines": 30,
+        "sha256": "d89d9f9bf6781a1c7476d95aaf162d3aefea80a0779ac263615fd14185afadde"
+      },
+      "headings": [
+        "# 0006 — Thorough mdBook with runnable examples",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0006",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0006-thorough-mdbook-runnable-examples.md",
+      "type": "convention"
+    },
+    {
+      "content": {
+        "bytes": 2849,
+        "line_bytes": 85,
+        "lines": 54,
+        "sha256": "e6152f4c35e7dfcc26b92327b0dc37ccab21e10a99779bb0254b189b71f55fb3"
+      },
+      "headings": [
+        "# 0007 — Memory architecture supersedes prose-blob narration",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Later Refinement"
+      ],
+      "id": "0007",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted (executed in MEMORY-ARCHITECTURE-ADOPTION.3/.4; partially"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0007-memory-architecture-supersedes-blob-narration.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 4284,
+        "line_bytes": 87,
+        "lines": 68,
+        "sha256": "3869fb00f792f09a374c61c5fec812edde8ac20334a901ab335b940764df29a5"
+      },
+      "headings": [
+        "# 0008 — Unify verification on one property language (assert/assume/cover/contract)",
+        "## Context",
+        "## Decision",
+        "## Consequences / staging"
+      ],
+      "id": "0008",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; **executed** — `ISF-ASSERT-CONCURRENT` (clocked concurrent"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0008-verification-property-language-unification.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 4380,
+        "line_bytes": 160,
+        "lines": 75,
+        "sha256": "dabafbd50dfb0055bdf31381fdfe8b629f721e0bbd8988dfc2b69433d6170181"
+      },
+      "headings": [
+        "# 0009 — Trigger-anchor vocabulary for bounded-eventually properties",
+        "## Context",
+        "## Decision",
+        "### 1. A small trigger vocabulary (three spellings of the antecedent)",
+        "### 2. A synthesizable-monitor output-mode for `(within …)` consequents",
+        "### Consequence: `contract` dissolves into the engine",
+        "## Consequences / staging"
+      ],
+      "id": "0009",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0009-trigger-anchor-vocabulary.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 3799,
+        "line_bytes": 93,
+        "lines": 61,
+        "sha256": "66429d37085ebc6a873cc62449dfc9aab81345b1ec29222ba6505d4f18cb2e75"
+      },
+      "headings": [
+        "# 0010 — Severity (≥ warning) is never gated by a trace/verbosity level",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0010",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0010-severity-never-gated-by-trace-level.md",
+      "type": "convention"
+    },
+    {
+      "content": {
+        "bytes": 1738,
+        "line_bytes": 89,
+        "lines": 35,
+        "sha256": "02f7a8f6de972781ad87aebbfbffec21cff98cb4f1fe3b8946585fe004d51631"
+      },
+      "headings": [
+        "# 0011 — File-path references in docs are relative to the repo root, never absolute",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0011",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0011-doc-file-paths-relative-to-repo-root.md",
+      "type": "convention"
+    },
+    {
+      "content": {
+        "bytes": 1591,
+        "line_bytes": 88,
+        "lines": 35,
+        "sha256": "9e28d6470db11ddee5954d845f8a3515922c1a449dfe1c45935c2b73dd79dd5d"
+      },
+      "headings": [
+        "# 0012 — Knowledge Map path references are relative to the repo root",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0012",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0012-knowledge-map-paths-relative-to-repo-root.md",
+      "type": "convention"
+    },
+    {
+      "content": {
+        "bytes": 2909,
+        "line_bytes": 80,
+        "lines": 69,
+        "sha256": "8fab4c5d5a24b5b567a145db5a7bc2669fb2eeb6f50fca82a2fd7fdf4f58e8c2"
+      },
+      "headings": [
+        "# 0013 — Compositional Control-Flow/Activation Model",
+        "## Context",
+        "## Decision",
+        "## Required Hardware Invariants",
+        "## Consequences"
+      ],
+      "id": "0013",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0013-compositional-control-flow-activation-model.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 2566,
+        "line_bytes": 187,
+        "lines": 61,
+        "sha256": "e1cc67e05741dadc2b83f9f35674156370f77f31130e3a6f6084b027687e2d88"
+      },
+      "headings": [
+        "# 0014 — Protocol/platform intent surface and layered lowering for IAL2",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0014",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: refined by `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`; first generic suffix selected by `docs/decisions/0016-ppif-is-first-public-ial2-container.md`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 2380,
+        "line_bytes": 89,
+        "lines": 59,
+        "sha256": "233a1493f80ac0441bcaf7e643495908229d59e48a5e09efb96c1eb65fa89fd2"
+      },
+      "headings": [
+        "# 0015 — IAL2 profile extensions are vocabulary aliases",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0015",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 3019,
+        "line_bytes": 89,
+        "lines": 78,
+        "sha256": "43846995353446179d1926956b598de2fc2cf1a61736f8b4343df8b1907b9fc6"
+      },
+      "headings": [
+        "# 0016 — `.ppif` is the first public IAL2 container",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0016",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0016-ppif-is-first-public-ial2-container.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 3188,
+        "line_bytes": 80,
+        "lines": 74,
+        "sha256": "1831c16af75cb3db7f89ebf625df73d0fdae0679994f7065b272fe1a5cfce5e0"
+      },
+      "headings": [
+        "# 0017 — PPIF Valid-Ready bundle contract",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Implementation Note"
+      ],
+      "id": "0017",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0017-ppif-valid-ready-bundle-contract.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 2446,
+        "line_bytes": 78,
+        "lines": 53,
+        "sha256": "c4699acc814e69ec228a5b53af49f2aad04212c8d3a288fb6699a42efd6f10b5"
+      },
+      "headings": [
+        "# 0018 — IAL contracts and mdBook are backend-language-neutral",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0018",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0018-ial-contracts-are-backend-language-neutral.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 3851,
+        "line_bytes": 85,
+        "lines": 72,
+        "sha256": "0358703f9f80ee1317cfa710ccba36c2af6d699be15e4d0d9780b3f9e3a5e70d"
+      },
+      "headings": [
+        "# 0019 — Task-tree in-file secondary views are historical, not per-slice-maintained",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0019",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md",
+      "type": "convention"
+    },
+    {
+      "content": {
+        "bytes": 4295,
+        "line_bytes": 177,
+        "lines": 73,
+        "sha256": "caddf93529a38d30f66748a712b8a87d7f76e014fde685daa44898f0122a39bf"
+      },
+      "headings": [
+        "# 0020 — IAL2 protocol roles as layered, composable transactors (future North Star)",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0020",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted (directional — future horizon; not yet scheduled, does not pivot current work)"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0020-ial2-layered-composable-transactor-roles.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 4552,
+        "line_bytes": 82,
+        "lines": 82,
+        "sha256": "ecc52c036471bd690281d4152eae98f68d9c842fdde77af3405b4ffd4b8b0e3d"
+      },
+      "headings": [
+        "# 0021 — `README.md` is a bounded discovery entry point, not an append log",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0021",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted (executed in `README-ENTRYPOINT-APPEND-LOG-DRIFT.2`/`.3`/`.4`)"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0021-readme-is-a-bounded-discovery-entrypoint.md",
+      "type": "convention"
+    },
+    {
+      "content": {
+        "bytes": 3547,
+        "line_bytes": 122,
+        "lines": 68,
+        "sha256": "30945e3fd0e34541af50232dab1491fdcd004a73017c1ddc49379f4a03d67138"
+      },
+      "headings": [
+        "# 0022 — Project data stays on the repository filesystem volume",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0022",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted (execution owned by `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION`)"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0022-project-data-locality-and-same-volume-storage.md",
+      "type": "convention"
+    },
+    {
+      "content": {
+        "bytes": 2030,
+        "line_bytes": 79,
+        "lines": 45,
+        "sha256": "a63754871ad00dd4311279973ce4744459b62f5a59307582d62cb09ee9cf2d0d"
+      },
+      "headings": [
+        "# 0023 — VHDL generation success is not reduction-expression validation",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0023",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md",
+      "type": "learning"
+    },
+    {
+      "content": {
+        "bytes": 2523,
+        "line_bytes": 89,
+        "lines": 50,
+        "sha256": "bea7c40f121c02513f40c27c52a5a164cf9f7291f57c574af71fa63112db928f"
+      },
+      "headings": [
+        "# 0024 — `README.md` is a nearly static landing page",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0024",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0024-readme-is-a-nearly-static-landing-page.md",
+      "type": "convention"
+    },
+    {
+      "content": {
+        "bytes": 2838,
+        "line_bytes": 79,
+        "lines": 56,
+        "sha256": "1d844bcee660d43887036d746f35456271debb2b212e2c98f165690121e4175e"
+      },
+      "headings": [
+        "# 0025 — Interim lifecycle split for project documents",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Later Refinement"
+      ],
+      "id": "0025",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: partially superseded by `0047`-`0049` (changelog and status files)"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0025-project-document-interim-lifecycle.md",
+      "type": "convention"
+    },
+    {
+      "content": {
+        "bytes": 2804,
+        "line_bytes": 79,
+        "lines": 57,
+        "sha256": "4ebaca6d6ad025452a66047845e32749194b0de27973cec29b85edd03d419d2d"
+      },
+      "headings": [
+        "# 0026 — Task acceptance uses project-declared evidence registries",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0026",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted (executed in `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1`-`.3`)"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 3432,
+        "line_bytes": 92,
+        "lines": 65,
+        "sha256": "4fbee33fdbcf825c6eaae94a93c9bdc9e9a3b789440ec79d6a69ac5384a4aae3"
+      },
+      "headings": [
+        "# 0027 — HDL instance identifiers use a portable origin-aware policy",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Implementation"
+      ],
+      "id": "0027",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted and implemented by `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0027-hdl-instance-identifiers-use-a-portable-origin-aware-policy.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 2909,
+        "line_bytes": 79,
+        "lines": 61,
+        "sha256": "9fc483aa8afd35dba4754a7bb24653d8a9968392b0de709dc1f2c5f51358e276"
+      },
+      "headings": [
+        "# 0028 — Source-facing HIR is a distinct private pre-IAL layer",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Implementation"
+      ],
+      "id": "0028",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted and privately implemented by `FSMGEN-HIR-ROADMAP-FRONTIER.4`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 2466,
+        "line_bytes": 79,
+        "lines": 52,
+        "sha256": "cef3f8e49b8f6fb69fe743f0854b99f5d134fb6e5b4b969f8b3d416a8b7ad5b4"
+      },
+      "headings": [
+        "# 0029 — SourceHIR remains private through a second lowering route",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0029",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `FSMGEN-HIR-ROADMAP-FRONTIER.5`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 2572,
+        "line_bytes": 80,
+        "lines": 55,
+        "sha256": "6ecb6c7edc32d4942b4523655e466d1f06397d1bb8bf399d5c65dc7ea5406115"
+      },
+      "headings": [
+        "# 0030 — SourceHIR v2 is a semantic concrete-control subset",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0030",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `FSMGEN-HIR-ROADMAP-FRONTIER.6`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0030-source-hir-v2-is-a-semantic-concrete-control-subset.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 1994,
+        "line_bytes": 79,
+        "lines": 43,
+        "sha256": "64195aeefa0eec957520f103b56fcc38ee9b42ba6e81174f25f7b43c283c3e56"
+      },
+      "headings": [
+        "# 0031 — SourceHIR remains a private validated architecture boundary",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0031",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `FSMGEN-HIR-ROADMAP-FRONTIER.8`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0031-source-hir-remains-a-private-validated-architecture-boundary.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 6309,
+        "line_bytes": 80,
+        "lines": 112,
+        "sha256": "43dd78c86f908dfb97943537d1828aae0d433bd9a464512a7e93191a7a95ad9d"
+      },
+      "headings": [
+        "# 0032 — VIAL uses one source, two private IRs, and a versioned HIAL bridge",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0032",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 3473,
+        "line_bytes": 79,
+        "lines": 67,
+        "sha256": "711f7e2c667bd8c333b4f827606b5a5f74f46f87099c2a843df2846a92ead400"
+      },
+      "headings": [
+        "# 0033 — VIAL v1 uses spanned S-expressions and typed semantic records",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0033",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md",
+      "type": "language/architecture"
+    },
+    {
+      "content": {
+        "bytes": 6408,
+        "line_bytes": 99,
+        "lines": 113,
+        "sha256": "d869c73db77e999fdf72dd48a39c22c0a7c389dd17ca4918278b75c99cfa14eb"
+      },
+      "headings": [
+        "# 0034 — VIAL expressiveness is not bounded by synthesizability",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0034",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by director clarification during `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md",
+      "type": "language/architecture"
+    },
+    {
+      "content": {
+        "bytes": 5717,
+        "line_bytes": 78,
+        "lines": 106,
+        "sha256": "f94a80062eda6984c065228daf3f3fc40c15260ec473bbb875a5f6d69ba91e08"
+      },
+      "headings": [
+        "# 0035 — The HIAL/VIAL bridge is produced from reviewable HIAL routes",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Implementation Note"
+      ],
+      "id": "0035",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md",
+      "type": "compiler boundary/public schema"
+    },
+    {
+      "content": {
+        "bytes": 6556,
+        "line_bytes": 81,
+        "lines": 116,
+        "sha256": "a1d7bc10ff3933c156d6eb132bebaf18961801e85d7c6ceb234bc67187ce68bc"
+      },
+      "headings": [
+        "# 0036 — VIAL execution is deterministic logical time above backend methodology",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Implementation Review"
+      ],
+      "id": "0036",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md",
+      "type": "verification language/execution architecture"
+    },
+    {
+      "content": {
+        "bytes": 5883,
+        "line_bytes": 88,
+        "lines": 117,
+        "sha256": "ec80220c4832540b423848c1d2b3e45423b5ee3337450f539056ab3eba0e2cd8"
+      },
+      "headings": [
+        "# 0037 — VIAL semantic types bind to HIAL carriers through directional proof relations",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Rejected Alternative",
+        "## Canonical Detail"
+      ],
+      "id": "0037",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md",
+      "type": "verification language/HIAL-VIAL binding architecture"
+    },
+    {
+      "content": {
+        "bytes": 3434,
+        "line_bytes": 80,
+        "lines": 67,
+        "sha256": "ed6ad16dcf9bcf452c3f659c889dc318759a17e569763ea90a44fa928bcb50a8"
+      },
+      "headings": [
+        "# 0038 — README policy is harness-neutral and locally authoritative",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0038",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md",
+      "type": "convention/feedback"
+    },
+    {
+      "content": {
+        "bytes": 4229,
+        "line_bytes": 353,
+        "lines": 73,
+        "sha256": "e90c5918c1d34ab7243305fd16127e0aae5b0470929ce3a395da66c331d98825"
+      },
+      "headings": [
+        "# 0039 — VIAL public tooling is intent-oriented and artifact-atomic",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0039",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md",
+      "type": "verification language/public tooling architecture"
+    },
+    {
+      "content": {
+        "bytes": 6002,
+        "line_bytes": 199,
+        "lines": 96,
+        "sha256": "22d3045f249ab9d58b69ffaf47b0324c5dbe38b9643b46bda359535946dea72e"
+      },
+      "headings": [
+        "# 0040 — README routing must close destination pressure",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0040",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0040-readme-routing-must-close-destination-pressure.md",
+      "type": "convention/feedback"
+    },
+    {
+      "content": {
+        "bytes": 7142,
+        "line_bytes": 254,
+        "lines": 112,
+        "sha256": "9fc4423a396c64637d43b6e0f56bd5154fac35707eaf4d95ecf0421f35796205"
+      },
+      "headings": [
+        "# 0041 — Live documents use bounded views over durable stores",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0041",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md",
+      "type": "architecture/convention"
+    },
+    {
+      "content": {
+        "bytes": 4721,
+        "line_bytes": 145,
+        "lines": 80,
+        "sha256": "9aa777e4c8b966cfd32c29dfb7c6f4104d15b35a019c68e7508a35639c8a7737"
+      },
+      "headings": [
+        "# 0042 — Task trees seal completed subtrees with exact provenance",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## First Migration"
+      ],
+      "id": "0042",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md",
+      "type": "architecture/convention"
+    },
+    {
+      "content": {
+        "bytes": 4703,
+        "line_bytes": 80,
+        "lines": 85,
+        "sha256": "ea819c0531321b3d4259371a1e3461eb916bf398a2870c7c3e7dfacd0f752737"
+      },
+      "headings": [
+        "# 0043 — VIAL portable SystemVerilog is a deterministic known-value profile",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0043",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md",
+      "type": "verification backend/runtime architecture"
+    },
+    {
+      "content": {
+        "bytes": 3971,
+        "line_bytes": 153,
+        "lines": 69,
+        "sha256": "ea28dafcb1ed4de9861b5a17b52823540bf818bfbb86130e846397fa87bfbba9"
+      },
+      "headings": [
+        "# 0044 — External live-document review corrections precede wider reuse",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0044",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md",
+      "type": "architecture/convention/feedback"
+    },
+    {
+      "content": {
+        "bytes": 3495,
+        "line_bytes": 158,
+        "lines": 59,
+        "sha256": "9710d90f3fbf3f865525b0c7a87e11c9675dcce6e17810dadb378b4bac64cd03"
+      },
+      "headings": [
+        "# 0045 — Maintained reference bounds the read path, not product scope",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0045",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md",
+      "type": "architecture/convention/feedback"
+    },
+    {
+      "content": {
+        "bytes": 5291,
+        "line_bytes": 194,
+        "lines": 90,
+        "sha256": "c6351105e19f979ed6155ac7478314ccbcd7d56b6c26cbbacd075e510b93fa13"
+      },
+      "headings": [
+        "# 0046 — Project documents use two bounded ledgers and canonical live views",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Later Refinement"
+      ],
+      "id": "0046",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: partially superseded by `0047` (changelog), `0048` (achievement"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md",
+      "type": "architecture/convention"
+    },
+    {
+      "content": {
+        "bytes": 3781,
+        "line_bytes": 81,
+        "lines": 69,
+        "sha256": "c169cecd1183f2e20931324ed0306b1fd420f8c5cc01d5e81cd572f5e5776d1f"
+      },
+      "headings": [
+        "# 0047 — Change history is task-tree evidence plus Git",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0047",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0047-changes-history-is-task-trees-and-git.md",
+      "type": "architecture/convention/feedback"
+    },
+    {
+      "content": {
+        "bytes": 2729,
+        "line_bytes": 108,
+        "lines": 57,
+        "sha256": "5ad3e4c764ab31ce0f221f32b6800373154180211b48c72c41d55402d6200c83"
+      },
+      "headings": [
+        "# 0048 — Achievement history is task trees, the mdBook, and Git",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0048",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md",
+      "type": "architecture/convention/feedback"
+    },
+    {
+      "content": {
+        "bytes": 3041,
+        "line_bytes": 108,
+        "lines": 62,
+        "sha256": "c0eb3dd813ddbf7b057654d61d6e86cf5b563bd2981f9619055ed533ad4a8be5"
+      },
+      "headings": [
+        "# 0049 — Roadmap status is the roadmap, task trees, Memory, and Git",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0049",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md",
+      "type": "architecture/convention/feedback"
+    },
+    {
+      "content": {
+        "bytes": 8149,
+        "line_bytes": 80,
+        "lines": 140,
+        "sha256": "7d6880339edd7e428a97d5c1d4441a175e40d0b833ebf703a512e66b455d48e3"
+      },
+      "headings": [
+        "# 0050 — VIAL native UVM is open-source-first with capability-gated runtime",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0050",
+      "kind": "sealed",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by director clarification during"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": null,
+      "path": "docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md",
+      "type": "verification backend/runtime architecture"
+    },
+    {
+      "content": {
+        "bytes": 5496,
+        "line_bytes": 79,
+        "lines": 100,
+        "sha256": "6fa8a788e04905f639b56d86eb70e3df6cef2051f900603fd8dde7149d28c985"
+      },
+      "headings": [
+        "# 0051 — VIAL VHDL uses a provider-free core and OSVVM-qualified tier",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0051",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0051-vial-vhdl-uses-a-provider-free-core-and-osvvm-qualified-tier.md",
+      "type": "verification backend/runtime architecture"
+    },
+    {
+      "content": {
+        "bytes": 3604,
+        "line_bytes": 87,
+        "lines": 74,
+        "sha256": "3b703c0e3c99e4f61cbfe1864d19777935841e1ceb6d6b40f55fc2e39261c9cb"
+      },
+      "headings": [
+        "# 0052 — NEXSIM native semantic API is authoritative and MCP is a bounded projection",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0052",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0052-nexsim-native-api-is-authoritative-and-mcp-is-a-bounded-projection.md",
+      "type": "external simulator operability/consumer contract"
+    },
+    {
+      "content": {
+        "bytes": 3021,
+        "line_bytes": 158,
+        "lines": 56,
+        "sha256": "dab42f3eaddeb82164b7e0adaccb35c483a41754e771c9afe2928209690e473f"
+      },
+      "headings": [
+        "# 0053 — A portable containment-adoption guide expands the governance interface",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0053",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0053-portable-containment-adoption-guide-expands-governance-interface.md",
+      "type": "architecture/convention"
+    },
+    {
+      "content": {
+        "bytes": 3947,
+        "line_bytes": 303,
+        "lines": 65,
+        "sha256": "d75524d5d6cc6ff43d805e7dc4c28024d8f9172765ee253eaa66cce8614e7937"
+      },
+      "headings": [
+        "# 0054 — Derived state is computed on read or retained behind an authority verifier",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0054",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0054-derived-state-is-derived-on-read-or-authority-verified.md",
+      "type": "architecture/convention"
+    },
+    {
+      "content": {
+        "bytes": 19991,
+        "line_bytes": 263,
+        "lines": 387,
+        "sha256": "0ccad5944557079bd504508344e9dfeb5f1dba0da1cb8b451154483d62111412"
+      },
+      "headings": [
+        "# 0055 — VIAL scale proof uses orthogonal workloads and stage-local oracles",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Execution Status",
+        "## Selected Contract",
+        "## Outcome",
+        "## Authority And Scope",
+        "## Immutable Workload Specification",
+        "## Levels And Claim States",
+        "## Semantic Catalog Family",
+        "## Bridge Fanout Family",
+        "## Execution Graph Family",
+        "## Checking-State Family",
+        "## Balanced Candidate",
+        "## Backend Emission Family",
+        "## Runtime Stream Family",
+        "### Portable runtime-selection refinement (2026-08-24)",
+        "## Stage Oracles"
+      ],
+      "id": "0055",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; `.17.6` execution recorded by `.17.8`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 11142,
+        "line_bytes": 93,
+        "lines": 238,
+        "sha256": "1949534921f68d50dbc1de835acf9551428204fa27f79015ecb2529e171429f1"
+      },
+      "headings": [
+        "# 0056 — VIAL scale measurements use pinned evidence and bounded failure",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Execution Status",
+        "## Selected Contract",
+        "## Measurement Record",
+        "## Repetitions And Noise",
+        "## Safety Ceilings And Timeouts",
+        "## Calibration And Regression Budgets",
+        "## Graceful Failure",
+        "## Repository Locality And Cleanup",
+        "## Promotion Gate And Nonclaims",
+        "## Rollback"
+      ],
+      "id": "0056",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; `.17.6` execution recorded by `.17.8`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 4141,
+        "line_bytes": 174,
+        "lines": 71,
+        "sha256": "8be50bd519e6179fe4a4aa0f44d4042d467dbcf434fad97d53656016d41541cd"
+      },
+      "headings": [
+        "# 0057 — VIAL scale byte candidates and construction envelopes are derived and bounded",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0057",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0057-vial-scale-byte-candidates-and-construction-envelopes-are-derived-and-bounded.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 2339,
+        "line_bytes": 88,
+        "lines": 45,
+        "sha256": "900fb72fdbb4544ea67dd48196c413d885dab9fed4cbc0302cb10b5a0a74b8f1"
+      },
+      "headings": [
+        "# 0058 — VIAL action-local semantic IDs follow language scope",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0058",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0058-vial-action-local-semantic-ids-follow-language-scope.md",
+      "type": "verification language/semantic identity"
+    },
+    {
+      "content": {
+        "bytes": 2751,
+        "line_bytes": 93,
+        "lines": 54,
+        "sha256": "457712f6cf506a9e1ddaca769348fb6eb619be17139bcea7dfee0e3fe02ffc14"
+      },
+      "headings": [
+        "# 0059 — VIAL literal-repeat scale is currently dominated by expanded actions",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0059",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: observed and routed by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0059-vial-literal-repeat-scale-is-currently-dominated-by-expanded-actions.md",
+      "type": "verification architecture/limit interaction"
+    },
+    {
+      "content": {
+        "bytes": 4511,
+        "line_bytes": 167,
+        "lines": 86,
+        "sha256": "9ca45e79f290513389887d69bf4f935a548c2c03190740c206803c4160ff8d15"
+      },
+      "headings": [
+        "# 0060 — VIAL bridge scale uses a qualification-only direct-IAL1 profile",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0060",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 8161,
+        "line_bytes": 262,
+        "lines": 120,
+        "sha256": "530564a547f6326109c46da9f4d3f501b725638d7f859d1d9acc22ad95b18995"
+      },
+      "headings": [
+        "# 0061 — VIAL execution scale uses a caller-sealed qualification binder",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0061",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 2579,
+        "line_bytes": 88,
+        "lines": 59,
+        "sha256": "33eb90ad61e68911418e9fb967f51b63e44f2ddc7f572ebba22c7837ec1196d7"
+      },
+      "headings": [
+        "# 0062 — Push cadence is 200 commits",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0062",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: superseded by [0091](docs/decisions/0091-push-cadence-is-300-commits.md)"
+        ],
+        "knowledge_id": "push-cadence-is-200-commits",
+        "knowledge_status": "superseded",
+        "questions": [
+          "how often should this repository push commits?",
+          "how many commits should accumulate before pushing?",
+          "should every commit be pushed immediately?",
+          "does an explicitly requested early push change the normal cadence?",
+          "how is the push cadence counter calculated and reset?"
+        ]
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0062-push-cadence-is-200-commits.md",
+      "type": "feedback/governance"
+    },
+    {
+      "content": {
+        "bytes": 5636,
+        "line_bytes": 88,
+        "lines": 101,
+        "sha256": "f2314fc82a314c75147dee5d324296708b0b07c90dc7c6465967b5d3e6b14aef"
+      },
+      "headings": [
+        "# 0063 — Hosted regression uses closed non-cancelling partitions",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0063",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `GITHUB-PUSH-OUTCOME-ASSURANCE.6.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0063-hosted-regression-uses-closed-non-cancelling-partitions.md",
+      "type": "CI architecture/continuity"
+    },
+    {
+      "content": {
+        "bytes": 4912,
+        "line_bytes": 89,
+        "lines": 93,
+        "sha256": "146669a9d5dcaa768aadb3961837d2351fc872c2e39cedd513c8dc1f45054f61"
+      },
+      "headings": [
+        "# 0064 — Fact cards are a cheap-to-add retrieval surface, not a ceiling-rationed one",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0064",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.3`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0064-live-document-growth-is-declared-measurement-with-paired-decisions.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 7462,
+        "line_bytes": 163,
+        "lines": 130,
+        "sha256": "5d6bc8c6e63b4235c256eda5e3576988213fb40c7d1674485b08eeab74426a05"
+      },
+      "headings": [
+        "# 0065 — A surface's line and byte targets are one derivation, not two round numbers",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0065",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0065-live-document-line-and-byte-targets-are-derived-as-a-pair.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 5605,
+        "line_bytes": 188,
+        "lines": 102,
+        "sha256": "eeff56888f8e00a682bc80dbf7bc2e7472160b287256dbdabdb06e6270e41588"
+      },
+      "headings": [
+        "# 0066 — The resume pointer is bounded by two different criteria, not one budget",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0066",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0066-memory-pointer-size-is-two-externally-owned-criteria.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 6021,
+        "line_bytes": 142,
+        "lines": 108,
+        "sha256": "b1ac620ee74828498b6835e07e98e7e6344e5fa7c1cd1ade897b0425818e1b1a"
+      },
+      "headings": [
+        "# 0067 — Layer A carries no decision or lane summaries",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0067",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0067-layer-a-carries-no-decision-or-lane-summaries.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 3977,
+        "line_bytes": 117,
+        "lines": 74,
+        "sha256": "983f86ff2d95bcec3c3efe6b487812e559ac4f71012da0aa0bce350b27ada59a"
+      },
+      "headings": [
+        "# 0068 — MEMORY.md is the frontier pointer, and COMMIT.md stops asking for anything else",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0068",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.6`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0068-memory-is-the-frontier-pointer-and-commit-md-stops-inviting-narration.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 7360,
+        "line_bytes": 91,
+        "lines": 126,
+        "sha256": "ed1a13609aedccce1a16febce0632b23a3167288e127453ed9e78968d564a4e1"
+      },
+      "headings": [
+        "# 0069 — Every surface's target pair is derived, not only the ones under pressure",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0069",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0069-live-document-target-pairs-are-swept-not-fixed-under-pressure.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 4996,
+        "line_bytes": 172,
+        "lines": 86,
+        "sha256": "a26e44c6ed69bd535fceb2bd67aef41c4ad2badc74da30e9e8fb10122be3e26f"
+      },
+      "headings": [
+        "# 0070 — A transition allowance carries one declared step of headroom and a live owner",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0070",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0070-transition-allowances-carry-one-declared-step-and-a-live-owner.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 6530,
+        "line_bytes": 252,
+        "lines": 115,
+        "sha256": "22e7aa0ee1a5091b95de66e0094f9e133e3b37a2edea1b3a267bb407da391c0a"
+      },
+      "headings": [
+        "# 0071 — A bound pinned at the current actual is not a reviewed bound",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0071",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.3`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0071-a-containment-bound-pinned-at-its-actual-is-not-a-reviewed-bound.md",
+      "type": "infra/continuity governance"
+    },
+    {
+      "content": {
+        "bytes": 7661,
+        "line_bytes": 254,
+        "lines": 123,
+        "sha256": "2a54736dbc3e6bdadbfb6db8e8c921a48f697e19dfd88172ef6bae29d9f503a3"
+      },
+      "headings": [
+        "# 0072 — An unreachable declared cap is a result, not a level to rewrite",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0072",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.3`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0072-an-unreachable-declared-cap-is-a-result-not-a-level-to-rewrite.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 10300,
+        "line_bytes": 254,
+        "lines": 156,
+        "sha256": "5a469ba45c108440d2f4bc8033d589f6b88a6f42aebdd6c22db431034ef786b6"
+      },
+      "headings": [
+        "# 0073 — Checking-state scale uses packed-state oracles and static cross domains",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0073",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 2998,
+        "line_bytes": 93,
+        "lines": 50,
+        "sha256": "947a26f9998482d76ec868cd5ce6ac8c96d0535265f896b76d6bf090055057e9"
+      },
+      "headings": [
+        "# 0074 — Actionable claims name re-derivation, falsification, and durability",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0074",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; extended by `0104`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0074-actionable-claims-name-rederivation-falsification-and-durability.md",
+      "type": "evidence governance"
+    },
+    {
+      "content": {
+        "bytes": 19120,
+        "line_bytes": 321,
+        "lines": 280,
+        "sha256": "b5d52aabd4ff5dcdc4e7a982bffa1aae9a9c4ef7d5f20e8bc02e55ab056069a1"
+      },
+      "headings": [
+        "# 0075 — Backend-emission scale uses profile-specific anchored routes",
+        "## Context",
+        "### Portable-SystemVerilog oracle revision 2 (2026-08-24)",
+        "### Portable-VHDL trace-v2 refinement (2026-08-27)",
+        "### Portable-VHDL result-contract refinement (2026-08-31)",
+        "### Portable-VHDL scenario-boundary trace refinement (2026-09-01)",
+        "## Decision",
+        "## Claim verification",
+        "## Consequences"
+      ],
+      "id": "0075",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.1`; portable-SystemVerilog evidence revised by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4`; portable-VHDL/OSVVM evidence revised by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 2691,
+        "line_bytes": 91,
+        "lines": 52,
+        "sha256": "4b765a2e5bc224387dfce28a40cc46e7a3f82f95dd1af4f2d27442031fcc1b66"
+      },
+      "headings": [
+        "# 0076 — Original-constant cohorts derive from versioned sources",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0076",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0076-original-constant-cohorts-derive-from-versioned-sources.md",
+      "type": "evidence architecture/governance"
+    },
+    {
+      "content": {
+        "bytes": 7141,
+        "line_bytes": 412,
+        "lines": 128,
+        "sha256": "a5fb29fcfda89fd8aba5263757bad7131c9da20797939a5b318f9ca2bbd6a2a3"
+      },
+      "headings": [
+        "# 0077 — VIAL balanced portable uses a caller-sealed revision-2 qualification bridge",
+        "## Context",
+        "## Decision",
+        "## Claim verification",
+        "## Consequences",
+        "## Containment"
+      ],
+      "id": "0077",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0077-vial-balanced-portable-uses-a-caller-sealed-revision-2-qualification-bridge.md",
+      "type": "verification architecture/scalability"
+    },
+    {
+      "content": {
+        "bytes": 5543,
+        "line_bytes": 342,
+        "lines": 88,
+        "sha256": "36531f042dd165c174c17e525a697668f1af1e5ff43d7cbf0691859b7e1d674b"
+      },
+      "headings": [
+        "# 0078 — VIAL total-operation cap precedes operation-graph materialization",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Implementation evidence"
+      ],
+      "id": "0078",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0078-vial-execution-total-operation-cap-precedes-graph-materialization.md",
+      "type": "verification architecture/limit enforcement"
+    },
+    {
+      "content": {
+        "bytes": 5964,
+        "line_bytes": 341,
+        "lines": 96,
+        "sha256": "ed9a5cac837765900a81867b5c0be005dc752554be2717a1b8300a5e7103823f"
+      },
+      "headings": [
+        "# 0079 — VIAL plan preflight reuses one bounded random-decision transcript",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Evidence state at selection"
+      ],
+      "id": "0079",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0079-vial-plan-preflight-reuses-one-bounded-random-decision-transcript.md",
+      "type": "verification architecture/limit enforcement"
+    },
+    {
+      "content": {
+        "bytes": 6314,
+        "line_bytes": 181,
+        "lines": 107,
+        "sha256": "bb04ac63b5d1b7e247ff3964ece870778c88139c47d61f8b227fe73dce3b10e6"
+      },
+      "headings": [
+        "# 0080 — Portable SystemVerilog rolls backward successors by logical phase",
+        "## Context",
+        "## Decision",
+        "## Alternatives rejected",
+        "## Consequences and rollback",
+        "## Verification legs"
+      ],
+      "id": "0080",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0080-portable-systemverilog-rolls-backward-successors-by-logical-phase.md",
+      "type": "verification backend/runtime scheduling"
+    },
+    {
+      "content": {
+        "bytes": 7764,
+        "line_bytes": 264,
+        "lines": 126,
+        "sha256": "3d44299e263e8dbe0a07baf40a7d0a24de67bd6eccc1f5eb70707ade3051b037"
+      },
+      "headings": [
+        "# 0081 — Portable SystemVerilog direct drive uses root-owned zero-duration driver slots",
+        "## Context",
+        "## Decision",
+        "## Alternatives rejected",
+        "## Consequences and rollback",
+        "## Verification legs"
+      ],
+      "id": "0081",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2`"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0081-portable-systemverilog-direct-drive-uses-root-owned-zero-duration-driver-slots.md",
+      "type": "verification backend/runtime drive semantics"
+    },
+    {
+      "content": {
+        "bytes": 6550,
+        "line_bytes": 81,
+        "lines": 125,
+        "sha256": "415ef34ffafed4b8307c08f64877c4021b9b8c2633153b312bd2be40dff81d09"
+      },
+      "headings": [
+        "# Decision 0082: Portable SystemVerilog parallel children are single-await leaves",
+        "## Context",
+        "## Decision",
+        "## Rationale",
+        "## Alternatives rejected",
+        "## Compatibility and evolution",
+        "## Claim verification"
+      ],
+      "id": "0082",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0082-portable-systemverilog-parallel-children-are-single-await-leaves.md",
+      "type": "verification backend/runtime scheduling"
+    },
+    {
+      "content": {
+        "bytes": 15752,
+        "line_bytes": 262,
+        "lines": 288,
+        "sha256": "54f6487d548b8168c5555ea663c3b04b20125466ffcb22c717710051121f4e22"
+      },
+      "headings": [
+        "# Decision 0083: Portable SystemVerilog runtime scale uses authored cycle sampling and one shared staged lifecycle",
+        "## Context",
+        "## Decision",
+        "### Authored runtime-stream fixtures",
+        "### One caller-sealed lifecycle",
+        "## Rationale",
+        "## Alternatives rejected",
+        "## Compatibility and evolution",
+        "## Claim verification"
+      ],
+      "id": "0083",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md",
+      "type": "verification architecture/runtime measurement"
+    },
+    {
+      "content": {
+        "bytes": 7708,
+        "line_bytes": 128,
+        "lines": 133,
+        "sha256": "dd0a7ba891310adc3e9ee881cbceae57f9e2f02558f3e3c8298f68dd59ea3ec0"
+      },
+      "headings": [
+        "# Decision 0084: macOS pre-main stalls retain guarded qualification, not backend workarounds",
+        "## Context",
+        "## Decision",
+        "## Rationale",
+        "## Alternatives rejected",
+        "## Compatibility and evolution",
+        "## Claim verification"
+      ],
+      "id": "0084",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0084-macos-premain-stalls-retain-guarded-qualification-not-backend-workarounds.md",
+      "type": "verification runtime/host qualification"
+    },
+    {
+      "content": {
+        "bytes": 4524,
+        "line_bytes": 104,
+        "lines": 84,
+        "sha256": "d1b77e4f288e005b9841b3ec1aa1ff37244c744d2c3d4a3c66e902b6d8f8eeca"
+      },
+      "headings": [
+        "# Decision 0085: Darwin runtime integration is explicit and sampling stays repository-local",
+        "## Context",
+        "## Decision",
+        "## Rationale",
+        "## Alternatives rejected",
+        "## Claim verification"
+      ],
+      "id": "0085",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0085-darwin-runtime-integration-is-explicit-and-sampling-stays-repository-local.md",
+      "type": "CI/runtime qualification and data locality"
+    },
+    {
+      "content": {
+        "bytes": 7858,
+        "line_bytes": 244,
+        "lines": 129,
+        "sha256": "eae4a23ca8d1390b739a1b811533f317eadb8a7841afad777a674d0a571e0c38"
+      },
+      "headings": [
+        "# Decision 0086: Legacy Verilator tests use one bounded test-runtime supervisor",
+        "## Context",
+        "## Decision",
+        "## Rationale",
+        "## Alternatives rejected",
+        "## Claim verification"
+      ],
+      "id": "0086",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0086-legacy-verilator-tests-use-one-bounded-test-runtime-supervisor.md",
+      "type": "CI/test runtime supervision and qualification"
+    },
+    {
+      "content": {
+        "bytes": 8025,
+        "line_bytes": 231,
+        "lines": 137,
+        "sha256": "0fb92f386f696e5e805aa2f4426e4c82bd8f63137c90e3ffb4287d38a0e55e3b"
+      },
+      "headings": [
+        "# Decision 0087: Test subprocesses use one shared mechanism behind sealed policy adapters",
+        "## Context",
+        "## Decision",
+        "## Rationale",
+        "## Alternatives rejected",
+        "## Claim verification"
+      ],
+      "id": "0087",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md",
+      "type": "CI/test runtime supervision and qualification"
+    },
+    {
+      "content": {
+        "bytes": 4503,
+        "line_bytes": 86,
+        "lines": 82,
+        "sha256": "ad3974319b25f152732a796d3aa226e282b75fcc562d3d56ad484653e3b7827f"
+      },
+      "headings": [
+        "# Decision 0088: Provider-backed hosted tests use explicit dedicated coordinates",
+        "## Context",
+        "## Decision",
+        "## Rationale",
+        "## Alternatives rejected",
+        "## Claim verification"
+      ],
+      "id": "0088",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0088-provider-backed-hosted-tests-use-explicit-dedicated-coordinates.md",
+      "type": "CI architecture/continuity"
+    },
+    {
+      "content": {
+        "bytes": 4386,
+        "line_bytes": 94,
+        "lines": 79,
+        "sha256": "8298d2e4b5b37ace405bea7276e98e78743a70a37bb039a0632844458770a3ac"
+      },
+      "headings": [
+        "# Decision 0089: Linux logical-core discovery uses bounded kernel authorities",
+        "## Context",
+        "## Decision",
+        "## Rationale",
+        "## Alternatives rejected",
+        "## Claim verification"
+      ],
+      "id": "0089",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0089-linux-logical-core-discovery-uses-bounded-kernel-authorities.md",
+      "type": "measurement evidence/host portability"
+    },
+    {
+      "content": {
+        "bytes": 10265,
+        "line_bytes": 256,
+        "lines": 188,
+        "sha256": "d22399f3ad76e4161fb6dba6c9af2be41046fb7dcbdff843347dc8b5451b1f9a"
+      },
+      "headings": [
+        "# Decision 0090: Portable VHDL runtime scale uses sample snapshots and one shared GHDL lifecycle",
+        "## Context",
+        "## Decision",
+        "### Versioned compact sample snapshots",
+        "### One staged GHDL lifecycle",
+        "### Capture-evidence resume refinement (2026-09-01)",
+        "### Remaining state-evidence resume refinement (2026-09-01)",
+        "### Ordered implementation",
+        "## Claim verification",
+        "## Consequences"
+      ],
+      "id": "0090",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0090-portable-vhdl-runtime-scale-uses-sample-snapshots-and-one-shared-ghdl-lifecycle.md",
+      "type": "verification architecture/runtime measurement"
+    },
+    {
+      "content": {
+        "bytes": 1765,
+        "line_bytes": 286,
+        "lines": 30,
+        "sha256": "41f0f6a4784ef69c54db3eca84b1f61a6c6931685558760c694f7bb43271915e"
+      },
+      "headings": [
+        "# 0091 — Push cadence is 300 commits",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0091",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: superseded by [0102](docs/decisions/0102-push-cadence-is-500-commits.md)"
+        ],
+        "knowledge_id": "push-cadence-is-300-commits",
+        "knowledge_status": "superseded",
+        "questions": [
+          "how often should this repository push commits?",
+          "how many commits should accumulate before pushing?",
+          "should every commit be pushed immediately?",
+          "does an explicitly requested early push change the normal cadence?",
+          "how is the push cadence counter calculated and reset?"
+        ]
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0091-push-cadence-is-300-commits.md",
+      "type": "feedback/governance"
+    },
+    {
+      "content": {
+        "bytes": 11070,
+        "line_bytes": 269,
+        "lines": 196,
+        "sha256": "fbf538b4aae34ebb19ee1e0c0e5c6caa1e5cece0bb0e09271215044523c725fb"
+      },
+      "headings": [
+        "# Decision 0092: OSVVM runtime scale reuses authored VHDL sources and one provider-aware GHDL lifecycle",
+        "## Context",
+        "## Decision",
+        "### One authored semantic axis",
+        "### One exact provider/tool execution plan",
+        "### One provider-aware shared GHDL lifecycle",
+        "### Common-controller measurement and publication",
+        "### Provider-report byte preflight refinement (2026-09-01)",
+        "### Capture-evidence resume refinement (2026-09-01)",
+        "### Remaining state-evidence resume refinement (2026-09-01)",
+        "## Ordered implementation",
+        "## Claim verification",
+        "## Consequences and nonclaims"
+      ],
+      "id": "0092",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0092-osvvm-runtime-scale-reuses-authored-vhdl-sources-and-one-provider-aware-ghdl-lifecycle.md",
+      "type": "verification architecture/runtime measurement"
+    },
+    {
+      "content": {
+        "bytes": 6718,
+        "line_bytes": 260,
+        "lines": 127,
+        "sha256": "3c56970e2ec40947848fcaecc092e95aca687852a2357a5cd2ce6ecd3740cf20"
+      },
+      "headings": [
+        "# Decision 0093: Architecture-scale caps are component ceilings with explicit route authority",
+        "## Context",
+        "## Decision",
+        "### Retain component-local hard ceilings",
+        "### Publish three distinct route facts",
+        "### Harden enforcement without widening behavior",
+        "### Keep evidence envelopes distinct from product caps",
+        "## Alternatives rejected",
+        "## Ordered implementation",
+        "## Claim verification",
+        "## Consequences and nonclaims"
+      ],
+      "id": "0093",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md",
+      "type": "verification architecture/limit policy"
+    },
+    {
+      "content": {
+        "bytes": 5272,
+        "line_bytes": 91,
+        "lines": 91,
+        "sha256": "165017888089372ae7aa24afc682bcf8e4b66a45019e66a38152ec5e55aeec37"
+      },
+      "headings": [
+        "# 0094 — Claim records use a finite registry set with global identity",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0094",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0094-claim-records-use-a-finite-registry-set-with-global-identity.md",
+      "type": "evidence architecture/governance"
+    },
+    {
+      "content": {
+        "bytes": 7551,
+        "line_bytes": 184,
+        "lines": 122,
+        "sha256": "b79e7972f6f77483129177c07dbb236378b46e3a8774425c8b244be429ec1509"
+      },
+      "headings": [
+        "# 0095 — Calibration closure versions atomically after current-validator drift",
+        "## Context",
+        "## Decision",
+        "## Alternatives rejected",
+        "## Claim verification",
+        "## Consequences and nonclaims"
+      ],
+      "id": "0095",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0095-calibration-closure-versions-atomically-after-current-validator-drift.md",
+      "type": "verification evidence/versioning"
+    },
+    {
+      "content": {
+        "bytes": 6767,
+        "line_bytes": 181,
+        "lines": 116,
+        "sha256": "2d20e3ce343807851b659ebabe0c7409585775b4e7b63a59375c7f31bcab7a46"
+      },
+      "headings": [
+        "# Decision 0096: Regression promotion uses a current eleven-profile corpus",
+        "## Context",
+        "## Decision",
+        "## Verification legs",
+        "## Consequences",
+        "## Rollback"
+      ],
+      "id": "0096",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md",
+      "type": "verification architecture / regression promotion"
+    },
+    {
+      "content": {
+        "bytes": 7772,
+        "line_bytes": 169,
+        "lines": 127,
+        "sha256": "1235c31b43648cc4d3c0826a4fe1aac72f7032d62f61e2cdee7cf754553e3a2a"
+      },
+      "headings": [
+        "# Decision 0097: Regression gates publish replaceable observations without recalibrating",
+        "## Context",
+        "## Decision",
+        "## Alternatives rejected",
+        "## Verification legs",
+        "## Consequences and nonclaims",
+        "## Rollback"
+      ],
+      "id": "0097",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md",
+      "type": "verification architecture / regression enforcement"
+    },
+    {
+      "content": {
+        "bytes": 9113,
+        "line_bytes": 258,
+        "lines": 148,
+        "sha256": "1b4c806730b2f4f98d2a7fdc138a7157afbb5bbb75a218173d85c1fd53733622"
+      },
+      "headings": [
+        "# Decision 0098: Hosted regression gates materialize immutable tracked evidence",
+        "## Context",
+        "## Decision",
+        "## Alternatives rejected",
+        "## Verification legs",
+        "## Consequences and nonclaims",
+        "## Rollback"
+      ],
+      "id": "0098",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md",
+      "type": "CI architecture / regression evidence"
+    },
+    {
+      "content": {
+        "bytes": 2726,
+        "line_bytes": 304,
+        "lines": 37,
+        "sha256": "61255d4707920a0910a7d39b87707a515b480d18f528406573be8bd0ddbca0fd"
+      },
+      "headings": [
+        "# Decision 0099: Exclude only sealed process-telemetry derivatives from regression correctness",
+        "## Context",
+        "## Decision",
+        "## Rejected alternatives",
+        "## Verification and consequences"
+      ],
+      "id": "0099",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0099-regression-correctness-excludes-only-sealed-process-telemetry-derivatives.md",
+      "type": "verification architecture / regression correctness"
+    },
+    {
+      "content": {
+        "bytes": 5631,
+        "line_bytes": 185,
+        "lines": 94,
+        "sha256": "82b71825e54256f6e9b7e58b46c51abca9fbacc9f39678d874bbcf8f6c0ece80"
+      },
+      "headings": [
+        "# Decision 0100: Portable SystemVerilog lifecycle uses a static check-seam controller",
+        "## Context",
+        "## Decision",
+        "## Rejected alternatives",
+        "## Verification and consequences"
+      ],
+      "id": "0100",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0100-portable-systemverilog-lifecycle-uses-a-static-check-seam-controller.md",
+      "type": "verification backend/runtime"
+    },
+    {
+      "content": {
+        "bytes": 3071,
+        "line_bytes": 176,
+        "lines": 49,
+        "sha256": "9f78f1adcc8ba181e36b5291cc6f8128ec6bf537565f13cce057a4fb7b0c7bba"
+      },
+      "headings": [
+        "# Decision 0101: HDL validation shares sealed process supervision",
+        "## Context",
+        "## Decision",
+        "## Rejected alternatives",
+        "## Verification and consequences"
+      ],
+      "id": "0101",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- **Status:** Accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "verification",
+      "path": "docs/decisions/0101-hdl-validation-shares-process-supervision.md",
+      "type": "process architecture"
+    },
+    {
+      "content": {
+        "bytes": 1639,
+        "line_bytes": 286,
+        "lines": 27,
+        "sha256": "f0fd72df80a40e408bfb1fb1ef3b353733deefd682647ae332ba9888afffcdff"
+      },
+      "headings": [
+        "# 0102 — Push cadence is 500 commits",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0102",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [],
+        "knowledge_id": "push-cadence-is-500-commits",
+        "knowledge_status": "current",
+        "questions": [
+          "how often should this repository push commits?",
+          "how many commits should accumulate before pushing?",
+          "should every commit be pushed immediately?",
+          "does an explicitly requested early push change the normal cadence?",
+          "how is the push cadence counter calculated and reset?"
+        ]
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0102-push-cadence-is-500-commits.md",
+      "type": "feedback/governance"
+    },
+    {
+      "content": {
+        "bytes": 3833,
+        "line_bytes": 322,
+        "lines": 72,
+        "sha256": "91e9fb411e1b1c8a5b3bc10620360558b49c3c298707f7d0b98fcfbb64dc7935"
+      },
+      "headings": [
+        "# 0103 — Public regression-promotion policy loads a tracked seal",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Rollback"
+      ],
+      "id": "0103",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": "public-regression-promotion-policy-loads-a-tracked-seal",
+        "knowledge_status": "current",
+        "questions": [
+          "why does public regression-promotion policy derivation no longer authenticate the ignored calibration closure?",
+          "where is the sealed regression-promotion policy a fresh checkout loads?",
+          "does the tracked policy seal change the pinned policy identity?",
+          "does a failed hosted gate become support or capacity?"
+        ]
+      },
+      "part": "verification",
+      "path": "docs/decisions/0103-public-regression-promotion-policy-loads-a-tracked-seal.md",
+      "type": "verification architecture / regression promotion"
+    },
+    {
+      "content": {
+        "bytes": 1602,
+        "line_bytes": 90,
+        "lines": 32,
+        "sha256": "cd347a29af92018203e887ab1e0c739d44ee139d32954ee38722b65506b3305b"
+      },
+      "headings": [
+        "# 0104 — Claim review matches evidence granularity and preserves uncertainty",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0104",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0104-claim-review-matches-evidence-granularity-and-preserves-uncertainty.md",
+      "type": "evidence governance"
+    },
+    {
+      "content": {
+        "bytes": 2010,
+        "line_bytes": 78,
+        "lines": 40,
+        "sha256": "69c49a5d97df4a8730c43d724e49f5bc870a2dabab87347e02eeb67811c7396b"
+      },
+      "headings": [
+        "# 0105 — VIAL deep inspection is additive to frozen summaries",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0105",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0105-vial-deep-inspection-is-additive-to-frozen-summaries.md",
+      "type": "public API architecture"
+    },
+    {
+      "content": {
+        "bytes": 2286,
+        "line_bytes": 78,
+        "lines": 49,
+        "sha256": "6074ad7d70d8c350c9d6856bb0c74a39e84441c7744878c217a7a6ea00f1b10e"
+      },
+      "headings": [
+        "# 0106 — Reset polarity is an explicit system carrier",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0106",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0106-reset-polarity-is-an-explicit-system-carrier.md",
+      "type": "source language / semantic contract"
+    },
+    {
+      "content": {
+        "bytes": 2929,
+        "line_bytes": 84,
+        "lines": 53,
+        "sha256": "aa766802055398ecce387574d15168636e5bfefce31b7d257a730685f20d7364"
+      },
+      "headings": [
+        "# 0107 — Actor storage has one owner across generated transaction children",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0107",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; implementation lanes remain open"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md",
+      "type": "ISF storage / generated-module contract"
+    },
+    {
+      "content": {
+        "bytes": 27066,
+        "line_bytes": 691,
+        "lines": 423,
+        "sha256": "a6469e19d986e81ddbbccf6c043e36ff52c60cab487db14775ac2d5eac61978c"
+      },
+      "headings": [
+        "# 0108 — Decision records seal originals with stable retrieval",
+        "## Context",
+        "## Decision",
+        "## Consequences",
+        "## Identity/cardinality rollover selection — 2026-09-30",
+        "## Catalog preparation contract — 2026-09-30",
+        "## Authenticated store/navigation preparation — 2026-09-30",
+        "## Published supplied-store reader — 2026-09-30",
+        "## Selected Git access and identity continuity — 2026-09-30",
+        "## Published selected products and change checks — 2026-09-30",
+        "## Actual ceiling-authority integration — 2026-09-30",
+        "## Independently complete post-transition mode controls — 2026-09-30",
+        "## Complete hostile boundary qualification — 2026-09-30"
+      ],
+      "id": "0108",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [],
+        "knowledge_id": "live-document-decision-identity-capacity",
+        "knowledge_status": "current",
+        "questions": [
+          "why does sealing more decision bodies not solve decision file-count rollover?",
+          "how is the decision identity and consumer census reverified?",
+          "what contract is selected for decision identity and index cardinality rollover?",
+          "which decision consumers must change before canonical records move?"
+        ]
+      },
+      "part": "continuity",
+      "path": "docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 8326,
+        "line_bytes": 86,
+        "lines": 137,
+        "sha256": "ced3a56fc227aca213d7f3ac17bebe599268a8a732a8a3d407b9a2958a7d20a6"
+      },
+      "headings": [
+        "# 0109 — Direct transactions have independent logical controllers",
+        "## Context",
+        "## Decision",
+        "### Activation and binding boundaries",
+        "### Shared-write admission",
+        "### Rollout and signoff",
+        "## Consequences"
+      ],
+      "id": "0109",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "Status: selected; implementation and qualification remain open"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md",
+      "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 2181,
+        "line_bytes": 81,
+        "lines": 43,
+        "sha256": "08576cf5f2a42cf80080a443b44b78933ae183f29a52ff52a73d4a72028bbb65"
+      },
+      "headings": [
+        "# 0110 — Actor storage variables reject HDL keywords",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0110",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0110-actor-storage-variables-reject-hdl-keywords.md",
+      "type": "language contract"
+    },
+    {
+      "content": {
+        "bytes": 2353,
+        "line_bytes": 80,
+        "lines": 46,
+        "sha256": "70645584b59a6adb39c35e1923135acf2850d89ad6ec0b0072a3671e31c53b8f"
+      },
+      "headings": [
+        "# 0111 — Same-value selector fan-in is compatible",
+        "## Context",
+        "## Decision",
+        "## Consequences"
+      ],
+      "id": "0111",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0111-same-value-selector-fanin-is-compatible.md",
+      "type": "backend and semantic reports"
+    },
+    {
+      "content": {
+        "bytes": 4419,
+        "line_bytes": 87,
+        "lines": 79,
+        "sha256": "a1aba234213041978e84586ee5e4db2fa4107eef97e640e96f05ecd8a3b9f5f9"
+      },
+      "headings": [
+        "# 0112 — ISF reset provenance is separate from hardware policy",
+        "## Context",
+        "## Decision",
+        "## Delivery and qualification"
+      ],
+      "id": "0112",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted; provenance implemented under .60.3.3.1"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0112-isf-reset-provenance-is-separate-from-hardware-policy.md",
+      "type": "source and public reports"
+    },
+    {
+      "content": {
+        "bytes": 32754,
+        "line_bytes": 795,
+        "lines": 474,
+        "sha256": "8ac80f76de8b327a07e9f82ace1a602ada1701bc6322c67e9279dbadf2d747e8"
+      },
+      "headings": [
+        "# 0113 — ISF record interface ports reuse packed type and writer contracts",
+        "## Context",
+        "## Decision",
+        "### Source and value contract",
+        "### Detached public metadata",
+        "### Delivery and qualification order",
+        "## Consequences at selection",
+        "## Producer implementation evidence — 2026-09-30",
+        "## Declaration report integration — 2026-09-30",
+        "## Complete metadata qualification — 2026-09-30",
+        "## Record-input ingress selection — 2026-09-30",
+        "## Unwired value-gate qualification — 2026-09-30",
+        "## Contextual integration and domain prerequisite — 2026-09-30",
+        "## Existing domain-path repair — 2026-09-30",
+        "## Actual declaration-scope preparation — 2026-09-30",
+        "## Parser/module gate integration — 2026-09-30",
+        "## Authored record-input admission — 2026-09-30"
+      ],
+      "id": "0113",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: input authoring admitted; complete input/output and consumer qualification remain open"
+        ],
+        "knowledge_id": "isf-aggregate-port-contract-selection",
+        "knowledge_status": "current",
+        "questions": [
+          "what contract is selected for ISF record interface ports?",
+          "what is the packed record port field order?",
+          "do record input reads require independent controller repairs?",
+          "are list ports and variant records part of required record-port delivery?",
+          "why must metadata validation predicates use scalar context?",
+          "where are declared ISF interface ports exposed in reports?",
+          "how is declared interface metadata qualified against supported ISF source queries?",
+          "which type and lexical gates must precede record input admission?",
+          "how are record value gates and contextual diagnostic oracles qualified?",
+          "which existing domain-path defect must be repaired before record input admission?",
+          "how is foreign-domain scalar slice and input-index refusal repaired and qualified?",
+          "how are actual parsed record-value declaration scopes prepared?",
+          "which authored ISF record inputs and scalar contexts are admitted?",
+          "how does record input admission preserve deferred output and list carriers?",
+          "why did the first authored record input replay fixtures fail width and child wiring contracts?"
+        ]
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md",
+      "type": "language/report contract"
+    },
+    {
+      "content": {
+        "bytes": 32165,
+        "line_bytes": 701,
+        "lines": 511,
+        "sha256": "4d7e0f302732977d5753f233d396798dd295b8a36c9acd6a88cfd4f97266aa09"
+      },
+      "headings": [
+        "# 0114 — Record value validation detaches facts before reading",
+        "## Context",
+        "## Decision",
+        "## Qualification and limits",
+        "## Common root-classification preparation",
+        "## Explicit scalar-leaf sample facts",
+        "## Contextual sample consumption",
+        "## Selector shape validation precedes dereference",
+        "## Private scalar sample module carriers",
+        "## Raw and finalized parent-product oracle calibration",
+        "## Actual sample ownership and metadata first-touch repair",
+        "## Complete sample states and actual semantic replay",
+        "## Record/formal path-domain preparation — 2026-09-30",
+        "## Existing inline and named-drive domain bypass repairs",
+        "## Owned unused-drive domain carrier defect"
+      ],
+      "id": "0114",
+      "kind": "current",
+      "metadata": {
+        "authority_status": [
+          "- Status: qualified context/sample/domain preparation; authored input admission follows 0113"
+        ],
+        "knowledge_id": "isf-aggregate-record-context-and-first-touch-validation",
+        "knowledge_status": "current",
+        "questions": [
+          "how are selected record input AST contexts prepared without admission?",
+          "why can numeric validation change caller JSON scalar kinds without an assignment?",
+          "how is first-touch record declaration mutation reproduced and repaired?",
+          "can a scalar pin share an enum namespace name during record context validation?",
+          "how do aggregate enum and rule validators share declaration-root classification?",
+          "how are explicit record-leaf sample facts and private scalar type declarations prepared?",
+          "how do contextual record-input gates consume sampled scalar alias facts?",
+          "why did a malformed record-input selector turn a caller null entry into an empty map?",
+          "how do prepared record-leaf samples retain private scalar types in actual modules?",
+          "why did raw parent product comparisons fail after payload snapshot integration?",
+          "how are private record samples qualified against actual generated helpers and writers?",
+          "why did first-touch interface metadata validation change caller JSON scalar kinds?",
+          "how are complete record-leaf sample states and actual semantic scalar types qualified?",
+          "how do prepared record input member paths retain their declared clock domain?",
+          "why did inline and named drive bodies bypass declared domain ownership?",
+          "why can an unused parameterized drive break strict multi-domain replay?"
+        ]
+      },
+      "part": "language-api",
+      "path": "docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md",
+      "type": "ISF contextual validation"
+    }
+  ],
+  "schema_version": 1,
+  "source_revision": "585070c07bbcfa1af1497ff9701924a0f9b81e01"
+}

@@ -1,4 +1,4 @@
-"""Closed decision-store preparation; production readers do not yet use it.
+"""Closed decision-store preparation used by authenticated production readers.
 
 The caller supplies an independently authenticated transition census. This module
 checks its originals and prepares a detached catalog, without publishing files,

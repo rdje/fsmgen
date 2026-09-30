@@ -1,6 +1,7 @@
 """Actual malformed-store, authority and reader-dispatch refusal controls."""
 
 import json
+import re
 import os
 import subprocess
 import sys
@@ -214,10 +215,10 @@ class HostileDecisionBoundaries(unittest.TestCase):
                      'check_live_document_ceiling_authority.pl'):
             text = (ROOT / 'scripts' / name).read_text()
             if name == 'decision_records.py':
-                text = text.replace('STORE_SOURCE_SHA256 = None',
-                                    'STORE_SOURCE_SHA256 = ' + repr(fixture.fixture.source_digest))
-                text = text.replace('STORE_INDEX_SHA256 = None',
-                                    'STORE_INDEX_SHA256 = ' + repr(fixture.fixture.index_digest))
+                text = re.sub(r'^STORE_SOURCE_SHA256 = .+$',
+                                    'STORE_SOURCE_SHA256 = ' + repr(fixture.fixture.source_digest), text, flags=re.MULTILINE)
+                text = re.sub(r'^STORE_INDEX_SHA256 = .+$',
+                                    'STORE_INDEX_SHA256 = ' + repr(fixture.fixture.index_digest), text, flags=re.MULTILINE)
             (capsule / name).write_text(text)
         for relative in ('docs/audits/decision-record-rollover-census-20260927.json',
                          'docs/decisions/history/0001-0050.json', 'docs/decisions/history/0001-0050.md'):

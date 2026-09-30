@@ -11,6 +11,7 @@ sys.dont_write_bytecode = True
 import test_decision_store_git as selected
 import test_decision_store as stores
 import test_decision_catalog as literals
+import decision_records as published
 
 ROOT = Path(__file__).resolve().parents[2]
 CHECKER = ROOT / 'scripts/check_live_document_ceiling_authority.pl'
@@ -133,7 +134,9 @@ class CanonicalAuthorityGate(unittest.TestCase):
     def test_independent_authority_and_source_products_are_not_optional(self):
         self.birth()
         self.git('add', '.')
-        self.failure(self.run_checker(trusted=False), 'no installed independent authority')
+        untrusted = ('no installed independent authority' if published.STORE_SOURCE_SHA256 is None
+                     else 'independent transition source census changed')
+        self.failure(self.run_checker(trusted=False), untrusted)
         source = self.root / stores.store.SOURCE
         source.write_bytes(source.read_bytes() + b' ')
         self.git('add', stores.store.SOURCE)

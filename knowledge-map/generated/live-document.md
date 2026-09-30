@@ -45,7 +45,7 @@
 - q="how is archived document content proved retrievable?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the ISF reference partitioned?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the Knowledge Map kept bounded?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
-- q="how is the decision identity and consumer census reverified?" · facts=[live-document-decision-identity-capacity](../../docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md)
+- q="how is the decision identity and consumer census reverified?" · facts=[live-document-decision-identity-capacity](../../docs/decisions/current/continuity/0108-decision-records-seal-originals-with-stable-retrieval.md)
 - q="how long can a fact card line be?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="how much headroom does a live-document debt surface actually have?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="how were the diagnostics, active_resume, and rationale targets derived?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
@@ -66,7 +66,7 @@
 - q="unauthorized enforcement-ceiling increase requires exactly one new authority record" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="were 15727 IAL2 task lines lost during task-tree sealing?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="what caps MEMORY.md now that active_resume allows 150 lines?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
-- q="what contract is selected for decision identity and index cardinality rollover?" · facts=[live-document-decision-identity-capacity](../../docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md)
+- q="what contract is selected for decision identity and index cardinality rollover?" · facts=[live-document-decision-identity-capacity](../../docs/decisions/current/continuity/0108-decision-records-seal-originals-with-stable-retrieval.md)
 - q="what did PGEN and ANVIL find in the live-document review?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="what does max_growth mean in doctrine/live_document_size/surfaces.jsonl?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="what does transition max_growth mean and who may change it?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
@@ -85,7 +85,7 @@
 - q="where is the complete focused and ancillary document index?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="where is the external review packet for live-document containment?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="which FSMGen live documents are retirement candidates?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
-- q="which decision consumers must change before canonical records move?" · facts=[live-document-decision-identity-capacity](../../docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md)
+- q="which decision consumers must change before canonical records move?" · facts=[live-document-decision-identity-capacity](../../docs/decisions/current/continuity/0108-decision-records-seal-originals-with-stable-retrieval.md)
 - q="which live-document families are migrated versus pinned or deferred?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="which tasks own the large roadmap, task, book, changelog, development notes, and knowledge map migrations?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="who owns a live-document transition allowance?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
@@ -97,7 +97,7 @@
 - q="why does a live-document surface hit its line warning while byte pressure is tiny?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why does a long reverify line fail even though knowledge_cards is normal?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why does adding one file under docs/ fail the live-document checker?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
-- q="why does sealing more decision bodies not solve decision file-count rollover?" · facts=[live-document-decision-identity-capacity](../../docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md)
+- q="why does sealing more decision bodies not solve decision file-count rollover?" · facts=[live-document-decision-identity-capacity](../../docs/decisions/current/continuity/0108-decision-records-seal-originals-with-stable-retrieval.md)
 - q="why does the live-document registry use JSONL instead of TSV?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why is MEMORY.md capped at 32768 bytes?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why is docs/decisions/INDEX.md the largest member of the rationale surface?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
@@ -110,7 +110,7 @@
 _Decision identity rollover preserves finite compatibility paths and current canonical partitions_
 
 - **date:** 2026-09-30 · **status:** current
-- **source and verification:** [`docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md`](../../docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md)
+- **source and verification:** [`docs/decisions/current/continuity/0108-decision-records-seal-originals-with-stable-retrieval.md`](../../docs/decisions/current/continuity/0108-decision-records-seal-originals-with-stable-retrieval.md)
 
 ### live-document-size-containment
 

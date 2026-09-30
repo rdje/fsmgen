@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import unittest
@@ -214,10 +215,10 @@ class PublishedSelectedReader(unittest.TestCase):
         for name in ('decision_records.py', 'decision_catalog.py', 'decision_store.py', 'decision_store_git.py'):
             source = (ROOT / 'scripts' / name).read_text()
             if name == 'decision_records.py':
-                source = source.replace('STORE_SOURCE_SHA256 = None',
-                                        'STORE_SOURCE_SHA256 = ' + repr(self.fixture.source_digest))
-                source = source.replace('STORE_INDEX_SHA256 = None',
-                                        'STORE_INDEX_SHA256 = ' + repr(self.fixture.index_digest))
+                source = re.sub(r'^STORE_SOURCE_SHA256 = .+$',
+                                        'STORE_SOURCE_SHA256 = ' + repr(self.fixture.source_digest), source, flags=re.MULTILINE)
+                source = re.sub(r'^STORE_INDEX_SHA256 = .+$',
+                                        'STORE_INDEX_SHA256 = ' + repr(self.fixture.index_digest), source, flags=re.MULTILINE)
             (capsule / name).write_text(source)
         self.failure(self.run_reader('check', cli=capsule / 'decision_records.py'),
                      'cannot override the actual repository authority')

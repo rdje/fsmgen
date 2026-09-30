@@ -587,14 +587,14 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
 These controls check source/original identity, semantic routes, copied metadata,
 record bytes and unsafe or missing files. Store controls also authenticate the
 transition source and original index, preserve compatibility headings, and
-check complete root/part navigation against selected bytes. The published
-reader still handles the existing sealed cohort; preparation does not move
-records or admit new authority paths. Source rollout remains tracked work.
+check complete root/part navigation against selected bytes. Production now uses
+this authenticated store, while the old sealed-reader behavior remains available
+for historical snapshots without a catalog.
 
 The published reader also handles explicitly supplied authenticated stores.
 Such a store requires `--root`, `--source-sha256` and `--index-sha256`; the
 digests must come from independent trusted source/index evidence. The current
-repository has not installed the live catalog rollover yet. Without a catalog,
+repository installs its own fixed transition pins. Without a catalog,
 ordinary `check` and sealed `read` retain their existing behavior.
 
 | Operation | Selected product |
@@ -622,8 +622,8 @@ scripts/run_with_ram_guard.sh -- prove -Iperl t/2003-decision-store-git-continui
 
 They pin selected object IDs rather than borrowing later index/worktree data,
 and reject deletion/reuse of decision identities or loss of previously published
-fact/question keys. The gate integration must enforce this comparison on every
-catalog change before live source rollout; standalone current validation cannot
+fact/question keys. The gate enforces this comparison on every
+catalog change; standalone current validation cannot
 infer records born after its fixed source census.
 
 The published operations can select `--snapshot index`, `HEAD`, `HEAD^` or an
@@ -678,8 +678,8 @@ with the same captured reader inventory. Output and diagnostics are bounded.
 The actual gate accepts independently trusted fixture fingerprints only with
 an explicit other `--root`. They cannot override production authority at its
 own repository root. Boolean schema versions refuse in both registry metadata
-and authority rows. Production catalog delivery and pins remain a separate
-atomic rollover; this integration does not raise a ceiling.
+and authority rows. Production catalog delivery and pins use the qualified atomic
+rollover; this integration does not raise a ceiling.
 
 ```bash
 scripts/run_with_ram_guard.sh -- prove -Iperl t/2005-decision-ceiling-stores.t
@@ -708,6 +708,28 @@ malformed JSON products and signal failure after valid output. Each refuses:
 ```bash
 scripts/run_with_ram_guard.sh -- prove -Iperl t/2007-decision-hostile-boundaries.t
 ```
+
+Production current bodies live below `docs/decisions/current/`, grouped into
+continuity, language/API and verification indexes. The complete decision index
+links directly to each body. Old root paths retain the original heading sequence
+and point to the complete record; add future records to a current part and its
+catalog, rather than extending the fixed compatibility population.
+
+Captured originals and current owned rendering are separate products:
+
+```bash
+scripts/decision_records.py read-original 0113
+scripts/decision_records.py read-current 0113
+scripts/decision_records.py check
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2008-decision-production-rollover.t
+```
+
+The immutable transition census, original bodies and original index bind to an
+exact preceding Git commit. Production pins authenticate that evidence, and the
+initial adoption gate compares the complete predecessor population and bytes.
+The historical capacity audit above remains a historical selection record;
+current storage checks use the delivered authenticated store. Broader new-record
+and downstream-consumer qualification remains separately tracked.
 
 ## Current Boundary
 

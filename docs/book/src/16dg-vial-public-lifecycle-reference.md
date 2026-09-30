@@ -81,6 +81,10 @@ nullable `source_migration`. Embedding code uses
 `vial_tool_capabilities_v2()` for v2 discovery and the common
 `execute_vial_tool_request(...)` entrypoint with an exact v2 request schema.
 The legacy `vial_tool_capabilities()` entrypoint remains byte-exact v1.
+The maintained emission contract checks fixed, authenticated DUT input to
+separate VIAL byte stability from later HIAL code-generation changes. It also
+checks emission with the current DUT. This emission-only check does not run
+the historical DUT or qualify simulator execution.
 Successful migration records use `fsmgen.vial_source_migration.v1`; see the
 [legacy migration guide](16di-vial-legacy-migration.md) before adopting any
 returned source bytes.

@@ -1,0 +1,17 @@
+# language-api decisions
+
+[Complete decision index](../../INDEX.md).
+
+| # | Title | Type | Summary |
+| --- | --- | --- | --- |
+| [0052](0052-nexsim-native-api-is-authoritative-and-mcp-is-a-bounded-projection.md) | NEXSIM native semantic API is authoritative and MCP is a bounded projection | external simulator operability/consumer contract | Publishes an implementation-neutral living consumer contract for semantic introspection, causality, control, replay, verification-framework state, evidence, and conformance without claiming NEXSIM support or exposing client-private architecture. |
+| [0058](0058-vial-action-local-semantic-ids-follow-language-scope.md) | VIAL action-local semantic IDs follow language scope | verification language/semantic identity | Scopes handles and expectations by scenario and fibers by their unnamed parallel structure so every legal named SemanticIR entity has one globally unambiguous ID. |
+| [0105](0105-vial-deep-inspection-is-additive-to-frozen-summaries.md) | VIAL deep inspection is additive to frozen summaries | public API architecture | Selects typed source detail through separate portable/filesystem APIs and MCP while preserving existing summary contracts. |
+| [0106](0106-reset-polarity-is-an-explicit-system-carrier.md) | Reset polarity is an explicit system carrier | source language / semantic contract | Adds literal polarity modifiers to canonical reset forms while retaining defaults, bounded semantic fields and independent behavior qualification. |
+| [0107](0107-actor-storage-has-one-owner-across-generated-children.md) | Actor storage has one owner across generated transaction children | ISF storage / generated-module contract | Selects shared actor/domain storage with live reads and original-edge write handoffs; implementation remains owned and pending. |
+| [0109](0109-direct-transactions-have-independent-logical-controllers.md) | Direct transactions have independent logical controllers | architecture | Selects owned control, activation/capture and shared-write admission before runtime promotion. |
+| [0110](0110-actor-storage-variables-reject-hdl-keywords.md) | Actor storage variables reject HDL keywords | language contract | Actor var/variable names use the shared target keyword union; logical bank names remain distinct from emitted elements. |
+| [0111](0111-same-value-selector-fanin-is-compatible.md) | Same-value selector fan-in is compatible | backend and semantic reports | Tags OR-coalesced source families as compatible fan-in while retaining different-value onehot0 and separate ownership contracts. |
+| [0112](0112-isf-reset-provenance-is-separate-from-hardware-policy.md) | ISF reset provenance is separate from hardware policy | source and public reports | Separates clause-origin metadata from defaulted or reset-free hardware; configurable reset is outside the question scope. |
+| [0113](0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md) | ISF record ports reuse packed types and writers | language/report contract | Delivers detached metadata and bounded packed record-input authoring; output writers and complete runtime/consumer qualification remain owned, R4/R5 optional. |
+| [0114](0114-record-value-validation-detaches-facts-before-reading.md) | Record value validation detaches facts before reading | ISF contextual validation | Qualifies scalar/copy gates, detached caller facts, private samples and domain roots; integrated record-input authoring follows 0113, while output/runtime/consumer work remains owned. |
