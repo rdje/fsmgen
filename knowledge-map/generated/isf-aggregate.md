@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-aggregate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **27** uniquely owned question entries.
+> **3** facts · **28** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -11,6 +11,7 @@
 - q="do record input reads require independent controller repairs?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="does internal generated aggregate handoff support authored record ports?" · facts=[isf-aggregate-port-request-baseline](../../docs/knowledge/isf-aggregate-port-request-baseline.md)
 - q="how are actual parsed record-value declaration scopes prepared?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
+- q="how are complete record-leaf sample states and actual semantic scalar types qualified?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how are explicit record-leaf sample facts and private scalar type declarations prepared?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how are private record samples qualified against actual generated helpers and writers?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how are record value gates and contextual diagnostic oracles qualified?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)

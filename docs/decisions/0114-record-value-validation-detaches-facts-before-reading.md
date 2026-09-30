@@ -14,10 +14,11 @@ answers:
   - "why did raw parent product comparisons fail after payload snapshot integration?"
   - "how are private record samples qualified against actual generated helpers and writers?"
   - "why did first-touch interface metadata validation change caller JSON scalar kinds?"
+  - "how are complete record-leaf sample states and actual semantic scalar types qualified?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1993-isf-record-port-sample-ownership.t; perl/FSM/Support/ISFRecordPortSamples.pm; perl/FSM/Scheduler/ISF/RecordSamples.pm; t/1992-isf-record-port-sample-carriers.t; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; t/1938-isf-formal-parent-products.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: t/1994-isf-record-port-sample-replay.t; perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1993-isf-record-port-sample-ownership.t; perl/FSM/Support/ISFRecordPortSamples.pm; perl/FSM/Scheduler/ISF/RecordSamples.pm; t/1992-isf-record-port-sample-carriers.t; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; t/1938-isf-formal-parent-products.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0114 — Record value validation detaches facts before reading
@@ -337,3 +338,51 @@ T1993 retain the missing first-touch cases; current complete public report
 regressions retain the normalized-product contract. Their combined command and
 captured result live in the task leaf. No metadata schema, authored record
 admission, capture timing, backend state default or native HDL execution changes.
+
+
+## Complete sample states and actual semantic replay
+
+SEM `.60.4.3.2.3.3.3` closes sampling preparation through T1994 at production
+boundary `401aea31d1159e4136c3903304373f6ea43b099f`. The reference parses
+admitted scalar sample sources. A detached preparatory actor replaces storage
+with a supplied resolved record input and substitutes only explicit sample
+operands with nested record leaves. Expected complete states change only those
+capture RHS values and retained control-clause sample operands. Every other
+assignment, guard, transition and state field compares exactly. The draft's
+authored storage-leaf sampling reference was invalid under the current parser;
+correcting the reference did not widen that source grammar.
+
+Entry, preceding await/drive samples, dedicated pre-data capture and nested
+when/while/until/repeat/switch samples preserve their existing structures.
+Independent literal witnesses require the start-qualified entry assignment,
+the existing unguarded capture in a pending await state and pre-data successor
+ordering. The entry assignment is selected by its alias, rather than assuming
+a fixed array position before other helper assignments. This qualification
+compares capture-state structure; it does not claim observed HDL timing.
+
+Actual emitted IAL0 runs through native strict `--emit-semantic-json`. Exact
+independent leaf specs must agree with both `symbol_contract.types` and private
+`forward_ir.structural_rtl_ir.nets[].declared_type_spec`, alongside successful
+replay, source identity and no public alias pins. Real imported nested leaves
+and renamed nearest scalar formals retain their distinct contracts. Whole
+input snapshots, invalid members and scalar-formal member borrowing refuse
+with precise first diagnostics while complete caller JSON remains unchanged.
+
+For a reproducible known-bad control, copy that production LoweringIR module
+into an isolated repository-local Perl include tree. Immediately after `_ir_on`
+constructs `@assignments` from `_inline_on_samples`, insert:
+
+```perl
+delete $_->{guard} for grep { $_->{rhs} =~ /\Apacket\./ } @assignments;
+```
+
+Run T1994 with that include tree before `-Iperl` and preload
+`-MFSM::Scheduler::ISF::LoweringIR`. Complete entry/imported state comparisons
+and the independent entry-guard witness go RED, while native semantic replay
+and scalar-type witnesses stay green. This distinguishes structural guard
+loss from a merely parseable, correctly typed carrier. The current production
+module needs no repair. Tracked tests, module history and this mutation recipe
+retain re-derivation, falsification and durability; ignored logs supplement
+them. Domain preparation and authored admission remain subsequent owners.
+Native HDL execution and full frontend/backend/consumer delivery remain
+unqualified by this preparation slice.
