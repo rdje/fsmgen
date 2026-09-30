@@ -1809,8 +1809,8 @@ sub _parse_actor_enums($self, $clause, $actor_name) {
 
 sub _finalize_actor_symbol_tables($self, $actor, $source_label) {
     my $actor_name = $actor->{actor_name} // 'unknown';
-    my $local_symbols = $self->_resolve_actor_local_symbols($actor);
     my $package_info = $self->_resolve_actor_package_symbols($actor, $source_label);
+    my $local_symbols = $self->_resolve_actor_local_symbols($actor, $package_info->{types});
 
     $actor->{type_symbols} = {
         local => $local_symbols->{types} || {},
@@ -1828,13 +1828,23 @@ sub _finalize_actor_symbol_tables($self, $actor, $source_label) {
     return 1;
 }
 
-sub _resolve_actor_local_symbols($self, $actor) {
+sub _resolve_actor_local_symbols($self, $actor, $package_types = {}) {
     my $actor_name = $actor->{actor_name} // 'unknown';
     my $parser = FSM::Package::Parser->new(debug => ($self->{debug} ? 1 : 0));
     my $symbols = FSM::Package::Symbols->new();
     my $signal_manager = FSM::Adapter::FSMGenFull::SignalManager->new(
         debug => ($self->{debug} ? 1 : 0),
     );
+    # The shared resolver can follow qualified aliases and nested imported
+    # members. Seed only its type lookup; imported names remain outside the
+    # actor's local symbol table and keep their package qualification.
+    for my $package_name (sort keys %$package_types) {
+        for my $type_name (sort keys %{$package_types->{$package_name}}) {
+            $signal_manager->store_type(
+                "$package_name.$type_name", $package_types->{$package_name}{$type_name},
+            );
+        }
+    }
     my $expression_builder = FSM::Adapter::FSMGenFull::ExpressionBuilder->new(
         debug => ($self->{debug} ? 1 : 0),
         signal_manager => $signal_manager,

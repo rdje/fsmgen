@@ -79,8 +79,8 @@ the same declaration. Unknown aliases fail before lowering.
 
 ## Aggregate Storage Carriers
 
-Packed `list` and `record` aliases are currently accepted only as actor-owned
-storage variables.
+Packed `list` and `record` aliases are accepted on actor-owned storage variables.
+Packed records also support actor input ports, as described below.
 
 ```lisp
 (storage
@@ -113,6 +113,30 @@ layout. The first authored member occupies the most significant bits.
 
 The maintained example is [record_input.isf](../../../isf/record_input.isf).
 Run `./bin/fsmgen --strict --check --json isf/record_input.isf` from the repository root.
+
+That example uses a local alias to an imported record. Its companion
+[record_input_types.fsm](../../../isf/record_input_types.fsm) declares the package:
+
+```lisp
+(?pkg:record_input_types
+  (+types
+    (type frame (record (flag bit) (data (signed (four_state (bits 5))))))))
+```
+
+The actor imports it and retains its local spelling:
+
+```lisp
+(imports (package record_input_types))
+(types (type frame record_input_types.frame))
+```
+
+Local aliases and nested members may reference declared imported types. Imports
+resolve before local aliases; qualified names remain in their package namespace.
+Forward local aliases also work. Missing types and undeclared packages refuse.
+The scheduled carrier embeds the package root for independent strict replay.
+T2014 qualifies accepted nested/imported/nearest-shadow public sources; T2015
+qualifies scalar and nested imported dependencies. The contextual public refusal
+matrix and final frontend closure remain separate tracked work.
 
 `packet` is one six-bit input; it does not become separate field pins.
 `packet.flag` occupies bit 5 and `packet.data` bits 4 through 0. The copy into

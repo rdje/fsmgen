@@ -1,6 +1,7 @@
 (actor record_input
+  (imports (package record_input_types))
   (types
-    (type frame (record (flag bit) (data (signed (four_state (bits 5)))))))
+    (type frame record_input_types.frame))
   (interface
     (input start)
     (input packet (type frame))

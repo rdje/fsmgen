@@ -48,7 +48,7 @@ ISF
         'scheduled .fsm emits actor-local +types block');
     like($fsm, qr/\(\+enums\s+\(mode \(IDLE 0\) \(BUSY 1\)\)\s+\)/s,
         'scheduled .fsm preserves actor-local +enums declaration artifacts');
-    like($fsm, qr/\(\+size[\s\S]*\(data_in byte\)[\s\S]*\(data_out byte\)[\s\S]*\(accum byte\)[\s\S]*\(done_flag flag\)[\s\S]*\(payload byte\)/,
+    like($fsm, qr/\(\+size[\s\S]*\(data_in byte\)[\s\S]*\(data_out byte\)[\s\S]*\(accum byte\)[\s\S]*\(isf_port_main_done_flag flag\)[\s\S]*\(isf_port_main_payload byte\)/,
         'scheduled .fsm preserves type aliases in +size review artifact');
 };
 
