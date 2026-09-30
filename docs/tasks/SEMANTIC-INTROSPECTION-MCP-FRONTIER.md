@@ -2385,9 +2385,32 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.5`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Project detached declared interface metadata without changing accepted hardware.`
   Acceptance: `Implement one closed fresh JSON-safe snapshot from parsed ports, shared success source.interface_ports and schedule interface_ports, owned domain details and capability field families under decision 0113. Qualify scalar/local/imported/unused/undriven/domain interfaces, null caller-created metadata, copy isolation and complete native/API/newline products. Record-layout producer controls do not admit record source ports. Preserve complete pre-change scheduled FSM/HDL and existing check/semantic/schedule controls; synchronize book/spec and corpus applicability.`
+  Verification: `Split before source changes into a pure closed producer, parser/IR/report integration and complete public compatibility qualification. Record source admission remains outside this metadata lane.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.1`
+  Status: `done`
+  Goal: `Implement the closed detached interface snapshot producer.`
+  Acceptance: `Implement source-ordered declared port projection, scalar/local/imported type metadata, nested record leaf ranges through the shared aggregate resolver, known/unknown metadata handling and exact public schema description under decision 0113. Independently test signed/state-model/order/range properties, null/empty distinctions, mutation isolation and malformed/cyclic/contradictory metadata. No parser admission, report wiring or native runtime in this slice.`
+  Verification: `T1983 independently verifies scalar/local/imported identities, ordered nested record/list leaf ranges, signed/state-model properties, known empty versus unknown, detached JSON-safe values and contextual malformed/cyclic/range/type refusals. Draft hostile controls exposed list-context predicate disappearance; an argument-count guard then exposed expanding nonempty array predicates. Explicit boolean/scalar results and exact guard arity repair both mechanisms. Guarded T1983 plus T1259 report All tests successful; authoring/parser/report/HDL paths remain unchanged and record ports retain their current refusal. Report integration is .3.1.2.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.2`
+  Status: `pending`
+  Goal: `Integrate declared interface snapshots through parser, IR and reports.`
+  Acceptance: `After qualified producer .1, capture validated parsed declarations without widening accepted source forms; preserve actor/domain/source ownership and generated private handoff boundaries. Wire shared success source and schedule/domain fields, including unknown caller-created metadata, advertise exact capability shapes and update book/spec. Prove unchanged scheduled carriers/HDL and existing failures before claiming report delivery.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.3`
+  Status: `pending`
+  Goal: `Qualify complete public metadata delivery and unchanged controls.`
+  Acceptance: `After .2, independently compare complete native/API/actual newline check, semantic, schedule and discovery products for scalar/local/imported/unused/undriven/domain sources, malformed source and unrelated formats. Verify detached ownership, actual baseline carriers/HDL, all compatibility tests and existing supported corpus applicability. Preserve record-port refusal and close the metadata lane only with recoverable evidence and synchronized docs.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3120,8 +3143,8 @@ Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
 verification facts are repaired under `.57`. After the qualified strict
 reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
 duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.1` implements
-detached interface metadata before any record source admission; duration and timer contracts remain owned, and
+Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Next `.60.4.3.1.2` integrates
+the qualified detached producer into declared interface reports before record source admission; duration and timer contracts remain owned, and
 optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
 `.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
 with complete observed priority repair qualification,
@@ -5263,3 +5286,15 @@ contract change. Required record-port delivery is next; optional banks stay owne
 Evidence scope: the selection is durable in decision/task/book/card/Git. Baseline
 identity and independently rejected corrupt controls establish retained evidence;
 no new runtime, external corpus, capacity or timing measurement is published.
+
+## Acceptance — detached interface producer `.60.4.3.1.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The initial T1983 malformed controls accepted `inout`, signed `2` and an unknown state model. A minimal Perl reproduction shows a failed regex predicate disappearing in argument-list context, shifting the message into the truth slot. The strict guard subsequently reports `Invalid ISF interface port metadata: validation requires a predicate and message` at perl/FSM/Support/ISFInterfacePortMetadata.pm line 220 when a nonempty ordered-member array expands into arguments. Both faults belong to this previously unshipped producer draft.
+- [x] **ADDRESSED (verified)** — `ISFInterfacePortMetadata` projects a closed detached declared-port value and validates its exact key/type/range families. Explicit scalar/boolean predicates and exact validation arity repair the demonstrated bypass and expansion. Independently authored nested/imported layouts, signed/state-model leaves, mutation controls, empty/null distinctions and hostile metadata pass T1983. The producer remains unwired; no parser admission, new public source/schedule field, hardware policy or native runtime is claimed.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl t/1983-isf-interface-port-metadata.t t/1259-isf-aggregate-storage-type-aliases.t` reports `All tests successful`. The original aggregate-storage controls preserve accepted types/carriers and authored-port refusal. `perl -Iperl -c perl/FSM/Support/ISFInterfacePortMetadata.pm` reports `syntax OK`. The book labels metadata as planned; its build and staged doctrine gate verify documentation, task ownership, aggregate authority and Knowledge Map consistency before commit.
+
+Re-derive: rerun the focused producer/aggregate controls. Falsify: the malformed
+and mutated metadata controls reject exact competing layouts and the retained
+Perl reproduction demonstrates the original argument-context mechanism.
+Durability: producer, tests, this owning leaf and decision 0113 retain the
+contract and reproducible cause. Public integration remains explicitly owned.

@@ -6,10 +6,11 @@ answers:
   - "what is the packed record port field order?"
   - "do record input reads require independent controller repairs?"
   - "are list ports and variant records part of required record-port delivery?"
+  - "why must metadata validation predicates use scalar context?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0113 — ISF record interface ports reuse packed type and writer contracts
@@ -152,3 +153,25 @@ The historical intake preserves the old refusal, not a future acceptance
 oracle. Follow the decision for the public snapshot shape and the task nodes
 for current qualification. No new native runtime or external corpus measurement
 is established by this selection.
+
+## Producer implementation evidence — 2026-09-30
+
+SEM `.60.4.3.1.1` qualifies the detached producer independently of source
+admission and report wiring. T1983 retains independently expected nested/imported
+ranges, signed/state-model leaves, mutation isolation and invalid metadata.
+The draft's hostile controls found an argument-context defect: a failed regex
+returns an empty list in list context, while an array returns its members.
+Either can change the predicate/message argument slots of a validation helper.
+Predicates now return explicit booleans or scalar counts; the helper also
+requires exact argument arity. This is a producer repair, not a claim about
+uninspected validators or a public record-port implementation.
+
+Reproduce the failed-regex mechanism independently:
+
+```bash
+perl -e 'sub predicate { $_[0] =~ /\A[01]\z/ } sub guard { print "arguments=",scalar(@_)," first=",($_[0] // "undef"),"\n" } guard(predicate(2), "error message"); guard(scalar(predicate(2)), "error message");'
+```
+
+The first call places the message in the predicate slot; the scalar call keeps
+both slots. The permanent hostile controls verify refusal rather than accepting
+report parity as proof of valid metadata. No native HDL runtime is established.
