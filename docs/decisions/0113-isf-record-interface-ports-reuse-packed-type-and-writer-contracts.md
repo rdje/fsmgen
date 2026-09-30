@@ -13,10 +13,11 @@ answers:
   - "how are record value gates and contextual diagnostic oracles qualified?"
   - "which existing domain-path defect must be repaired before record input admission?"
   - "how is foreign-domain scalar slice and input-index refusal repaired and qualified?"
+  - "how are actual parsed record-value declaration scopes prepared?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; t/1985-isf-interface-port-public-qualification.t; t/1986-isf-record-port-value-gates.t; t/lib/FSM/Test/SourceQueryCoverage.pm; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; perl/FSM/Support/ISFRecordPortValues.pm; perl/FSM/Support/ISFRecordPortScopes.pm; t/1987-isf-record-port-declaration-scopes.t; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; t/1985-isf-interface-port-public-qualification.t; t/1986-isf-record-port-value-gates.t; t/lib/FSM/Test/SourceQueryCoverage.pm; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0113 — ISF record interface ports reuse packed type and writer contracts
@@ -429,3 +430,37 @@ reports, actual scheduled FSM files and SystemVerilog/Verilog HDL except date.
 T1247/T1259/T1986 retain domain partition, storage/types and unwired value gates.
 This repairs validation; it establishes no new record authoring, general
 controller repair, native HDL runtime or downstream completion.
+
+## Actual declaration-scope preparation — 2026-09-30
+
+SEM `.60.4.3.2.3.2.1` prepares detached actor, transaction and drive scopes in
+`ISFRecordPortScopes`. Actor ports and `var` storage consume finalized declaration
+widths and resolved type facts. Transaction formals replace outer declarations;
+explicit top-level local clauses provide the nearest width-only binding.
+Resolved type facts retain signed and optional state-model properties. An
+unresolved typed declaration never uses its placeholder width. Symbolic local
+widths remain unknown because existing local admission requires positive
+literal widths; that admission is not changed by this projection.
+
+Named-drive parameters carry names without resolved types. They mask outer
+roles and types without inferring a type from a drive target. Assignment targets
+create no declarations here. Explicit sample aliases and their leaf facts remain
+owned by `.3.3`; contextual AST and enum/rule namespace integration remain under
+`.3.2.2` and `.3.2.3`. These helpers are unwired, and record authoring still refuses.
+
+T1987 independently expects parsed symbolic/scalar/formal facts and imported
+record identity, exact packed leaf ranges, signed/state properties, unresolved
+shadows, known input roles and mutation isolation. Malformed declared widths,
+duplicate port roles and invalid parameter names fail. Complete parsed actors
+and scheduled objects, including emitted file bytes, remain unchanged after
+projection. The first draft fixture incorrectly assumed an authored pin/storage
+collision was accepted; the actual parser refused it. The corrected fixture
+retains that refusal and the existing explicit-local pin-collision refusal.
+Caller-supplied conflicting facts cannot erase a pin role, but their projection
+establishes no new source admission or physical identity contract.
+
+Reverify with guarded T1987/T1986/T1983/T1259/T1391. The competing borrowed-type,
+placeholder-width and inferred-target interpretations fail the independent
+scope/range witnesses and negative controls. Tracked producers, source controls
+and tests make this preparation reproducible; no sample timing, new public
+transport field, generated-child carrier or native HDL behavior is established.

@@ -116,9 +116,13 @@ width/type and capture timing. These are delivery prerequisites, not additional
 forms authors can use today; whole-record sampling into an inferred local
 remains outside the selected input subset.
 The preparatory value helpers now have type, path, role and lexical-shadow
-controls, including diagnostic-line negative oracles. They remain unwired;
-parser admission, sampled behavior and generated/domain carriers still need
-their own qualification before authors can use record inputs.
+controls, including diagnostic-line negative oracles. Detached declaration
+scopes consume actual parsed actor ports/storage, transaction formals/locals
+and named-drive parameter names. Unresolved types and untyped drive parameters
+mask outer facts without borrowing a width or record layout. This preparation
+remains unwired; contextual and enum validation, sampled behavior and
+generated/domain carriers still need qualification before authors can use
+record inputs. Existing declaration-collision refusals still apply.
 
 Single-member records and single-item lists also preserve their aggregate
 identity. Nested forms and forward local aliases work in actor declarations

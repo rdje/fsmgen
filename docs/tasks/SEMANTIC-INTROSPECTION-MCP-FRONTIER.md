@@ -2455,10 +2455,32 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Prepare scoped record-value and enum-context gates without admission.`
   Acceptance: `Use actual finalized actor, transaction local/formal and drive-parameter declarations to build nearest-binding scopes. Reuse qualified value primitives for all selected transaction/rule/drive scalar/copy contexts, input roles and exact resolved identity. Prepare coherent aggregate/enum/rule operand root classification; retain legacy storage/scalar behavior and record source refusal until mandatory gates are wired. Qualify independent AST/source controls, unknown paths, enum/package names, lexical shadows and unchanged facades.`
-  Verification: `pending contextual review`
+  Verification: `Split actual declaration-scope extraction, selected contextual AST validation and namespace integration before implementation. Source admission and sample/domain carriers remain separately owned prerequisites.`
+  Commit: `pending child qualification`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.1`
+  Status: `done`
+  Goal: `Prepare detached scopes from actual parsed declarations.`
+  Acceptance: `Consume finalized actor interface/storage declarations, transaction formals and explicit local AST declarations, and named-drive parameter names. Preserve declared input/output/storage roles, nearest local/formal masking, resolved signed/state facts and unknown local/drive type facts without placeholder inference. Do not invent declarations from assignment targets or admit invalid local collisions. Qualify parsed ordinary/imported/symbolic controls, independent scope/range witnesses, mutation isolation, unresolved/shadow cases and unchanged parser/lowering products. Keep contextual wiring, sampling and source admission pending.`
+  Verification: `ISFRecordPortScopes projects actual finalized actor ports/var storage, transaction formals and explicit local AST clauses, and untyped drive parameters into detached qualified value scopes. T1987 independently expects width/type/role/range facts, imported equivalence, unresolved/scalar/local/formal shadows and mutation isolation; it rejects malformed facts and retains authored pin/storage, explicit-local pin-collision and symbolic-local refusals. No assignment-inferred declaration or type placeholder erases actor input ownership. Complete parsed and scheduled objects, including emitted file bytes, are unchanged. Guarded T1987/T1986/T1983/T1259/T1391 reports All tests successful, Files=5, Tests=33. Helpers remain unwired; contextual/enum, sampling, domain and source/runtime admission remain pending.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.2`
+  Status: `pending`
+  Goal: `Prepare selected scalar and whole-copy AST context validation.`
+  Acceptance: `After detached scopes, validate selected set/update RHS, condition/switch, rule assignment/guard, inline/named drive body and actual contexts with qualified value primitives. Distinguish same-type whole record assignments from scalar contexts and refuse declared input writes, operator-position paths and unsupported subaggregate uses. Preserve established scalar/storage-only behavior and delegate unrelated tokens to current validators. Qualify independently authored AST positives and precise first-line failures without source admission.`
+  Verification: `pending declaration scopes`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.3`
+  Status: `pending`
+  Goal: `Align contextual aggregate, enum and rule namespace classification.`
+  Acceptance: `After contextual gates, prepare one actual scoped declaration-root classifier for aggregate-path, enum and rule-operand validators, honoring nearest bindings and preserving enum/package constants. Wire only behavior-preserving preparation on currently admitted sources or retain an explicit unwired boundary until sample/domain prerequisites permit admission. Qualify complete native/API/newline products, historical carriers and scalar/storage/enum/local controls, synchronize book/spec/facts and close this preparation parent only when all children qualify.`
+  Verification: `pending contextual gates`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.3`
@@ -5484,3 +5506,9 @@ from broad refusal. T1982 compares complete old products and actual carriers/HDL
 Durability: repair, permanent source/report controls, owning task, decision 0113,
 book and Git retain the cause and closure. Future record/domain member admission
 remains under .3.4.2 after scoped contextual preparation.
+
+## Acceptance — actual declaration scopes `.60.4.3.2.3.2.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Existing value primitives require manual closed maps; actual parser declarations use resolved port/storage maps, explicit local AST clauses and untyped drive names. `_bit_op_width_map` establishes nearest local/formal lookup, and type finalization follows desugaring; a typed placeholder cannot establish width/type. The initial source fixture independently refused an assumed pin/storage collision: `Error: actor 'scopes' storage signal 'data' conflicts with interface input port 'data'` at perl/FSM/Adapter/ISF/Parser.pm line 9868. The corrected T1987 retains that source refusal and the current local collision/symbolic-width boundaries instead of treating scope projection as authoring admission.
+- [x] **ADDRESSED (verified)** — `ISFRecordPortScopes` now derives detached actor/transaction/drive maps from actual declarations and delegates closed type/path/role validation to qualified value helpers. T1987 checks independent literal scope/range/signed/state witnesses, imported identity, unresolved placeholders and explicit shadows, known input roles, malformed width/name/role controls and mutation isolation. Its complete parser/scheduled-object comparison, including emitted file bytes, remains equal. Record inputs still refuse and the helpers remain unwired; sampling/contextual/domain delivery has separate owners.
+- [x] **NO REGRESSION** — Guarded `prove -Iperl t/1987-isf-record-port-declaration-scopes.t t/1986-isf-record-port-value-gates.t t/1983-isf-interface-port-metadata.t t/1259-isf-aggregate-storage-type-aliases.t t/1391-isf-local-variables.t` reports `All tests successful`, `Files=5, Tests=33`. Producer and test syntax checks report syntax OK. The first doctrine gate rejects the expanded decision evidence-line width; refresh its measured warning allowance within unchanged ceilings, then rerun. mdBook, scoped decision signpost, task frontier, inventory and staged doctrine checks accompany this slice. No native HDL runtime or new transport/source field is claimed.
