@@ -69,9 +69,18 @@ that local identity even when it shares a name with foreign actor storage.
 Foreign values require a supported crossing; calling a drive does not provide
 one.
 
-An unused parameterized drive can currently make strict multi-domain replay
-fail because its inferred parameter widths disagree between domain modules.
-This known limitation is owned for repair before record-input admission.
+Each independent domain includes only the named drives activated there,
+including calls from its generated children. Unused definitions create no
+request or parameter inputs in those domain modules or their top wrapper.
+For example, this actor strictly replays even though `publish` is unused:
+
+```lisp
+(actor unused_drive_domains
+ (clock-domains (domain core (clock clk) :default) (domain aux (clock aux_clk)))
+ (interface (input start) (input data (width 8)) (output seen (width 8)) (output done))
+ (drive (publish value) (seen value))
+ (transaction main (on start) (set seen data) (complete done)))
+```
 
 Known drive calls use exact positional arity. A drive declared with `N`
 formal parameters must be called with exactly `N` actual values. Missing

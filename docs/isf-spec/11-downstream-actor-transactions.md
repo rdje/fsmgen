@@ -122,9 +122,9 @@ Rules:
   Every inline assignment and each used named body validates reads/writes in
   that activation-site domain. Scalar parameter names retain local ownership
   when they shadow foreign actor declarations.
-  An unused parameterized drive can currently fail strict multi-domain replay
-  because inferred parameter widths disagree across domain modules; the owned
-  carrier repair must precede record-input admission.
+  Each independent domain source retains only drives activated there, including
+  generated-child calls. Unused definitions create no request/payload inputs
+  in domain modules or the top wrapper.
 - Direct unowned cross-domain reads, writes, triggers, activations, bindings,
   and multi-domain drive reuse fail closed.
 

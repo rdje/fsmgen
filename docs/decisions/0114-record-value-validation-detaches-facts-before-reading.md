@@ -21,7 +21,9 @@ answers:
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: t/1995-isf-record-port-domain-roots.t; t/1994-isf-record-port-sample-replay.t; perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1993-isf-record-port-sample-ownership.t; perl/FSM/Support/ISFRecordPortSamples.pm; perl/FSM/Scheduler/ISF/RecordSamples.pm; t/1992-isf-record-port-sample-carriers.t; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; t/1938-isf-formal-parent-products.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: >-
+  t/1996-isf-domain-drive-selection.t; perl/FSM/Scheduler/ISF/DomainSource.pm; t/1995-isf-record-port-domain-roots.t; t/1994-isf-record-port-sample-replay.t; perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1993-isf-record-port-sample-ownership.t; perl/FSM/Support/ISFRecordPortSamples.pm; perl/FSM/Scheduler/ISF/RecordSamples.pm; t/1992-isf-record-port-sample-carriers.t; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t;
+  t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; t/1938-isf-formal-parent-products.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0114 — Record value validation detaches facts before reading
@@ -460,9 +462,9 @@ every scalar input as a record root is therefore not a valid domain repair.
 
 ## Owned unused-drive domain carrier defect
 
-SEM `.60.4.3.2.3.4.3` owns the separate P2 strict-replay defect, scheduled
-immediately after `.4.2` and before authored record input admission. This
-ordinary admitted scalar source reproduces it without record-port preparation:
+SEM `.60.4.3.2.3.4.3` repairs the separate P2 strict-replay defect before
+authored record input admission. This ordinary admitted scalar source
+reproduces it without record-port preparation:
 
 ```lisp
 (actor unused_drive_domains
@@ -478,7 +480,32 @@ success is false and no generated output is emitted. The diagnostic names
 undeclared top input `publish_value`: core's child input has width 8 while
 aux's has width 1, blocking consistent inference. The drive is unused. The
 same cause breaks positive prepared top replay, independently of record types.
-DomainSource currently copies all drive definitions into each local actor,
-but responsible helper/width production and its verified repair remain that
-next leaf. Ignored probe JSON/logs supplement this tracked exact source and
-version identity; no fix is claimed here.
+At pre-repair `68880895fc4635f04b631f705ad548a600bddb3f`, DomainSource
+copies every drive definition into every local actor. `_build_drive_dts`
+creates request/payload helpers for those bodies; `_drive_param_width` infers
+width from local outputs, defaulting to one where the foreign target is absent.
+The top then sees incompatible invented inputs. The private partition now
+retains sorted drive names from its existing validated activation-site map,
+including generated transactions. The shared actual/formal domain constructor
+clones only those definitions. Missing, malformed, unknown or duplicate
+selections refuse; selected body mutations cannot reach caller declarations.
+Public domain projections keep their existing closed fields.
+
+Re-derive with guarded T1996 and the owning leaf's focused cohort. Its literal
+per-domain definition sets, absent inactive request/payload names and strict
+replay of every actual domain/top/generated carrier distinguish selection
+from mere transport parity. Complete native/API/actual newline check, semantic
+and schedule products agree, with unchanged source bytes and caller JSON.
+Nested calls in distinct domains and generated-child calls retain used bodies.
+The exact ordinary source above now reports strict success.
+
+Falsification includes the captured complete pre-repair T1996 RED controls.
+An isolated repository-local DomainSource copy replacing only
+`$domain_actor{drives} = \%drives;` with `$domain_actor{drives} = {};` makes the
+used nested case terminate with `Transaction 'main': drive 'publish' not defined`
+at LoweringIR.pm:8838. Dropping all definitions is therefore not a valid repair.
+Durability is T1996, the two tracked producers, the immutable predecessor and
+this exact source/control recipe; ignored logs are supplemental. The initial
+transport fixture mistakenly used the qualified-corpus row helper for dynamic
+source IDs. Corrected tests use the existing actual capture protocol; no public
+path policy changed. No native HDL execution or record admission is claimed.

@@ -2671,6 +2671,7 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
             child_instances => [],
             library_uses  => [],
             crossings     => [],
+            drive_names   => [],
         };
     }
 
@@ -2874,6 +2875,10 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
     $self->_validate_library_use_domain_refs($actor, \%signal_domains, $default_domain);
     _validate_drive_reuse_domains(\%drive_use_domains);
     _validate_drive_body_domain_refs($actor, \%drive_use_domains, \%signal_domains, \%constants);
+    for my $name (sort keys %drive_use_domains) {
+        push @{$groups{$_}{drive_names}}, $name
+            for sort keys %{$drive_use_domains{$name}};
+    }
 
     my @domains = map { $groups{$_} } @domain_order;
     _allocate_domain_artifact_names($actor, \@domains, \@crossing_summaries)

@@ -86,6 +86,20 @@ sub _domain_actor_for_scheduled_artifact($actor, $domain, $default_domain) {
     $domain_actor{resources} = _domain_resources($actor, \%rule_names);
     $domain_actor{priorities} = _domain_priorities($actor, \%owner_names);
 
+    # Use the partition's validated activation sites, including generated
+    # transactions. Unused/foreign bodies must not invent local helper pins.
+    confess "ISF domain source requires selected drive names\n"
+        unless ref($domain->{drive_names}) eq 'ARRAY';
+    my %drives;
+    for my $name (@{$domain->{drive_names}}) {
+        confess "ISF domain source has an invalid selected drive\n"
+            unless defined($name) && !ref($name)
+                && ref(($actor->{drives} || {})->{$name}) eq 'HASH'
+                && !exists $drives{$name};
+        $drives{$name} = _clone_isf_value($actor->{drives}{$name});
+    }
+    $domain_actor{drives} = \%drives;
+
     return \%domain_actor;
 }
 

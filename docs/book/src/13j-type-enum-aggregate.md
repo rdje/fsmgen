@@ -147,8 +147,8 @@ independently expected private scalar types, including imported leaves and
 nearest scalar-formal shadows. Preparatory nested member/list/slice reads and
 samples now retain their declared input domain; nearest formals and enum/package
 names keep their distinct ownership. Actual owning-domain and top carriers
-strictly replay. The separately owned unused-drive domain carrier repair and
-frontend admission remain pending; authored record ports are still refused.
+strictly replay, with unused named drives excluded from independent domain
+modules. Frontend admission remains pending; authored record ports are still refused.
 Existing declaration-collision refusals still apply.
 
 Single-member records and single-item lists also preserve their aggregate

@@ -1617,9 +1617,9 @@ Selected source model and current implementation status:
   Every inline assignment and each used named body validates reads/writes in
   that activation-site domain. Scalar parameter names retain local ownership
   when they shadow foreign actor declarations.
-  An unused parameterized drive can currently fail strict multi-domain replay
-  because inferred parameter widths disagree across domain modules; the owned
-  carrier repair must precede record-input admission.
+  Each independent domain source retains only drives activated there, including
+  generated-child calls. Unused definitions create no request/payload inputs
+  in domain modules or the top wrapper.
 - Transactions and rules are indivisible domain-owned regions. One
   transaction or rule may not be split across multiple domains.
 - Interface-port or child-instance domain annotations are ownership metadata,
