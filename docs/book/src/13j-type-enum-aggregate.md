@@ -136,9 +136,11 @@ record-input actors, preserving scalar alias widths and input ownership.
 Supplied preparatory actors now retain exact private scalar widths and core
 types in actual parent, generated-child and owning-domain module carriers.
 Strict IAL0 replay preserves signed/state properties and existing capture
-states, without public sample pins or inherited storage resets. Actual helper/
-writer ownership and complete replay/capture-timing qualification remain
-pending; authored record ports are still refused.
+states, without public sample pins or inherited storage resets. Actual drive,
+spawn and counter helpers are reserved; shared aliases and other transaction/
+rule writers refuse. Repeated captures by one owner and separate aliases in
+parent/child modules retain private declarations. Complete replay/capture-timing
+qualification remains pending; authored record ports are still refused.
 Existing declaration-collision refusals still apply.
 
 Single-member records and single-item lists also preserve their aggregate

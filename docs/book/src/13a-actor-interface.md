@@ -747,6 +747,8 @@ Named-domain entries include the resolved owning `domain`. A known empty
 interface yields `[]`. Schedule metadata is `null` when a caller-created actor
 has no declaration evidence; hardware inference does not fill that gap.
 Unrelated source formats and failure source reports omit `source.interface_ports`.
+Metadata projection preserves supplied declaration facts and their original
+JSON scalar kinds on both successful and refused validation.
 
 Each entry requires `name`, `direction` and positive `width`. Optional `type`
 retains the authored local/imported alias and `type_kind` describes its resolved

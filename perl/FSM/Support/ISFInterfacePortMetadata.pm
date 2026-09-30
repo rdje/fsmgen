@@ -5,6 +5,7 @@ use warnings;
 use Carp qw(confess);
 use Exporter 'import';
 use Scalar::Util qw(refaddr);
+use Storable qw(dclone);
 use FSM::Package::AggregatePathSupport;
 
 our @EXPORT_OK = qw(
@@ -36,6 +37,7 @@ sub capture_interface_port_metadata {
     my ($interface, $default_domain) = @_;
     return undef unless defined $interface;
     _require(ref($interface) eq 'HASH', 'expected declared interface');
+    $interface = dclone($interface);
     _require(!defined($default_domain) || _identifier($default_domain), 'invalid default domain');
     my @ports;
     for my $pair (['inputs', 'input'], ['outputs', 'output']) {
@@ -137,6 +139,7 @@ sub snapshot_interface_port_metadata {
     my ($value) = @_;
     return undef unless defined $value;
     _require(ref($value) eq 'ARRAY', 'expected port metadata array');
+    $value = dclone($value);
     my (@ports, %seen);
     my $outputs_started = 0;
     for my $port (@$value) {

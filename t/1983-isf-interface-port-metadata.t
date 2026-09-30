@@ -67,6 +67,51 @@ my $record_interface = {
 my $record = [{name => 'packet', direction => 'input', width => 10,
     type => 'frame_t', type_kind => 'record', fields => $fields}];
 
+sub stringify_numeric_properties {
+    my ($value) = @_;
+    if (ref($value) eq 'HASH') {
+        for my $key (keys %$value) {
+            if ($key =~ /\A(?:width|lsb|msb|signed)\z/ && !ref($value->{$key})) {
+                $value->{$key} = "$value->{$key}";
+            } else {
+                stringify_numeric_properties($value->{$key});
+            }
+        }
+    } elsif (ref($value) eq 'ARRAY') {
+        stringify_numeric_properties($_) for @$value;
+    }
+}
+
+subtest 'capture and snapshot detach before first numeric read on valid and refused facts' => sub {
+    for my $case (
+        ['capture',\&capture_interface_port_metadata,$record_interface],
+        ['snapshot',\&snapshot_interface_port_metadata,$record],
+    ) {
+        my ($name,$produce,$template) = @$case;
+        my $value=dclone($template);
+        stringify_numeric_properties($value);
+        my $before=$json->encode($value);
+        my $actual=$produce->($value);
+        is($json->encode($value),$before,"$name preserves original scalar kinds on its first read");
+        is_deeply($actual,$record,"$name still returns the same independently expected numeric layout");
+        $actual->[0]{fields}[0]{width}=99;
+        is($json->encode($value),$before,"$name output mutation cannot reach source facts");
+        $value=dclone($template);
+        stringify_numeric_properties($value);
+        if ($name eq 'capture') {
+            push @{$value->{outputs}}, {name=>'invalid',width=>'bad'};
+        } else {
+            push @$value,undef;
+        }
+        $before=$json->encode($value);
+        my $ok=eval {$produce->($value);1};
+        my ($line)=split /\n/,$@;
+        ok(!$ok,"$name rejects a malformed suffix after valid numeric facts");
+        like($line // '',qr/\AInvalid ISF interface port metadata:/,"$name retains a classified first diagnostic");
+        is($json->encode($value),$before,"$name refused first read cannot mutate valid prefix facts");
+    }
+};
+
 subtest 'resolved record preparation preserves independently expected leaf ranges' => sub {
     my $before = dclone($record_interface);
     my $actual = capture_interface_port_metadata($record_interface);

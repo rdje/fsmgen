@@ -12,10 +12,12 @@ answers:
   - "why did a malformed record-input selector turn a caller null entry into an empty map?"
   - "how do prepared record-leaf samples retain private scalar types in actual modules?"
   - "why did raw parent product comparisons fail after payload snapshot integration?"
+  - "how are private record samples qualified against actual generated helpers and writers?"
+  - "why did first-touch interface metadata validation change caller JSON scalar kinds?"
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: perl/FSM/Support/ISFRecordPortSamples.pm; perl/FSM/Scheduler/ISF/RecordSamples.pm; t/1992-isf-record-port-sample-carriers.t; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; t/1938-isf-formal-parent-products.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: perl/FSM/Support/ISFInterfacePortMetadata.pm; t/1983-isf-interface-port-metadata.t; t/1993-isf-record-port-sample-ownership.t; perl/FSM/Support/ISFRecordPortSamples.pm; perl/FSM/Scheduler/ISF/RecordSamples.pm; t/1992-isf-record-port-sample-carriers.t; t/1990-isf-record-port-sample-facts.t; t/1991-isf-record-port-sample-contexts.t; perl/FSM/Support/ISFRecordPortContexts.pm; perl/FSM/Support/ISFRecordPortScopes.pm; perl/FSM/Support/ISFRecordPortValues.pm; t/1989-isf-record-port-root-classification.t; t/1988-isf-record-port-context-gates.t; t/1987-isf-record-port-declaration-scopes.t; t/1986-isf-record-port-value-gates.t; t/1938-isf-formal-parent-products.t; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 
 # 0114 — Record value validation detaches facts before reading
@@ -295,3 +297,43 @@ An isolated LoweringIR copy omitting only
 complete-product and independent capture/held witnesses RED. Production code
 is unchanged for this repair. T1938 and the tracked transform retain a
 reproducible oracle; no native HDL replay or new timing claim follows.
+
+## Actual sample ownership and metadata first-touch repair
+
+SEM `.60.4.3.2.3.3.2.3` qualifies actual private sample ownership through
+T1993. Ordinary production modules supply the selected drive request/payload,
+dynamic wait-counter and spawn start/done names, roles and declarations; the
+controls do not guess helper prefixes. Reusing those names for a record-derived
+sample refuses before emission. Module-local aliases cannot have multiple
+record/ordinary sample owners or another transaction/rule writer. Repeated
+same-owner captures share one private scalar type; unused aliases remain
+internal. The same authored alias spelling can belong to separate parent and
+generated-child modules, each with its own strict typed IAL0 carrier.
+
+An isolated RecordSamples copy removes its transaction collision predicate,
+multiple-record-owner predicate and module ownership-check block while retaining
+plan and type installation. The permanent helper/cross-writer negatives go
+RED; positive distinct-module owners still pass. The production ownership code
+needed no change. Tracked producer and test retain the controls independently
+of ignored logs. Complete replay/timing and source admission remain later work.
+
+Fresh copied actors in T1993 separately expose P2 metadata mutation on refused
+actual drive/spawn collisions. Original interface metadata widths are strings;
+`ISFInterfacePortMetadata` numerically validates/rebuilds borrowed facts before
+returning its detached output. Numeric reads change their subsequent JSON kinds.
+A direct snapshot of `[{name=>"p",direction=>"input",width=>"3"}]` changes the
+caller width from string to number, independently of scheduler/helper logic.
+The pre-repair metadata producer is retained at
+`53c7f9a5361fa0af96dcc94af7150218b3c22b14`. T1983's new first-touch controls go RED for capture and snapshot on valid
+nested layouts and malformed suffixes. Earlier deep comparisons and baselines
+after producer calls did not preserve the pre-read scalar-kind observation.
+
+Both public metadata boundaries now clone their validated container before
+reading any numeric member. The normalized result remains the independently
+expected numeric layout, while caller facts stay unchanged on successful and
+refused validation. Output edits remain detached. The earlier standalone Perl
+numeric-read demonstration reproduces the mechanism independently. T1983 and
+T1993 retain the missing first-touch cases; current complete public report
+regressions retain the normalized-product contract. Their combined command and
+captured result live in the task leaf. No metadata schema, authored record
+admission, capture timing, backend state default or native HDL execution changes.
