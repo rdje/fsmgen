@@ -229,11 +229,38 @@ reads and copies require the declared owning domain or a supported crossing.
 Generated child scalar outputs still require their published explicit bindings.
 Strict width checks require width-aligned scalar assignments.
 
+A static bit or slice of a named-drive scalar parameter follows that parameter,
+including inside an expression. It does not read a same-named actor record.
+The existing bare-parameter assignment supplies the parameter width; a selector
+alone does not borrow a wider outer declaration. For example, `whole` establishes
+the five-bit parameter below, while `seen` receives its low four bits:
+
+```lisp
+(actor scalar_drive_selectors
+ (clock clk)
+ (types (type frame (record (flag bit) (data (bits 5)))))
+ (interface (input start) (input value (width 5)) (input packet (type frame))
+  (output whole (width 5)) (output seen (width 4)) (output done))
+ (drive (publish packet) (whole packet) (seen packet[3:0]))
+ (transaction main (on start) (drive publish value) (complete done)))
+```
+
+The drive's `packet` is scalar and masks the actor's six-bit record. Its member
+access such as `packet.data` still refuses. The same parameter identity applies
+to an explicitly bound generated invocation and to the drive's owning domain.
+Transaction locals retain their existing interface-name collision refusals.
+
 Rejected check and semantic queries retain their complete failure reports and
 nullable diagnostic codes, without successful declarations or partial semantic
 payloads. Schedule failure emits no schedule JSON. Its API and newline transport
 retain the existing message-only error contract; the compiler diagnostic appears
 in native stderr. None of these queries modifies the source or imported package.
+
+Schedule preview reports scheduled intent before HDL realization. A later
+composition wiring refusal, such as an unbound generated child output, can
+therefore retain a complete schedule preview while strict check and semantic
+queries refuse. Use those strict queries to qualify the realized composition;
+a schedule preview alone does not prove its ports are connected.
 
 Record outputs, root-list input ports, transaction-local aggregate ports,
 aggregate banks and variants remain deferred. Output copies/member writes keep

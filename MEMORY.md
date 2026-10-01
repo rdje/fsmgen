@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2` (active)
-- next_action: Qualify generated/domain contextual record-input refusals and scalar shadows under .60.4.3.2.4.2.2, then exact prior/discovery closure .3 before backend/native/consumer completion.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.2` (active)
+- next_action: Repair generated binding formal identity-as-record-read scanning .60.4.3.2.4.2.2.2; complete parent generated scalar shadow qualification, then exact prior/discovery closure .3.
   Before genuine supervised HDL runtime, consume HIAL .3.2.10.11.5 for failure-only native observation; never retry merely to seek recurrence.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.

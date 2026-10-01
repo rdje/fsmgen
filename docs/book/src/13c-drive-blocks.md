@@ -94,6 +94,11 @@ In actors with record inputs, a parameter sharing the record's name masks its
 layout. Member access on that scalar parameter refuses before check, semantic
 export or schedule publication. Bare parameters and scalar slices retain their
 existing width rules; no width is invented from the masked record.
+Static bit/slice RHS references follow the private parameter signal, including
+inside expressions and generated invocation handoffs. A supported bare-parameter
+output still supplies the parameter width. See the complete
+[scalar selector example](13j-type-enum-aggregate.md) for a five-bit parameter
+masking a six-bit record and driving a four-bit slice.
 
 Actual values may be scalar tokens or composed `.fsm` expression forms. This
 keeps parameterized drives useful inside realistic fixtures without requiring

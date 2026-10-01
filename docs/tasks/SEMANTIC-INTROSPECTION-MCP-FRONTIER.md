@@ -2931,11 +2931,27 @@ For FSMGen, the analogs are:
   Verification: `Accepted full public matrix is qualified under .1. Next authored generated/domain foreign nested/sliced reads/copies and input targets, nearest scalar declarations and explicit writer/binding boundaries must retain independent first causes and full native/API/newline refusal products.`
   Commit: `pending`
 
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.2`
+
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3`
   Status: `pending`
   Goal: `Close generated/domain record-input qualification with exact prior controls.`
   Acceptance: `After accepted/refused matrices, requalify complete fixed prior scalar/storage products and carrier/HDL controls under narrowly declared differences, complete discovery/current supported applicability and final combined focused gates. Reconcile every .2.4 acceptance requirement, exact caller/import/type/ownership evidence and canonical feedback/book/Knowledge Map pointers. Close generated/domain frontend/carriers only and resume backend/native/consumer .2.5 with HIAL admission before genuine HDL execution.`
   Verification: `pending accepted/refused public products`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.1`
+  Status: `done`
+  Goal: `Preserve scalar named-drive parameter identity through bit/slice lowering.`
+  Acceptance: `P1 prerequisite: a width-qualified scalar drive parameter masks a foreign outer record during contextual/domain validation, but _substitute_named_drive_body_expr replaces only bare parameter names. An authored packet[3:0] remains the outer spelling instead of publish_packet[3:0]; actual strict native domain check refuses an unintended core.packet port. Root the selector handoff and relevant history, retain immutable predecessor falsification, then rewrite only admitted static scalar selectors on declared drive parameter roots. Preserve parameter width ownership, scalar member refusals, unrelated namespaces/declarations, nested expression/caller facts, generated/domain invocation and all full public error/success products. Close parent refusal qualification only after its matrix passes. No runtime or broader writer/profile admission.`
+  Verification: `Final T2021/T2022 passes All tests successful, Files=2, Tests=11. Static scalar selectors and nested expressions retain declared private drive roots, source/caller/producer bytes and existing width ownership; ordinary/domain/generated sources strictly check and emit semantics. Exact aebe0037554eb9995c1d4fa67f4ec53f98364520 helper is RED only for the independent selector literals. Complete contextual native/API/newline refusals and admitted direct scalar controls pass; later C2 binding failures retain the documented pre-HDL schedule preview. Focused old drive/domain/public failures Files=4, Tests=38; scope/JSON kinds Files=3, Tests=21; accepted T2019 Files=1, Tests=8; actual lisp-fenced book audit Files=1, Tests=2 and final book build pass. Parent closure remains active for owned binding-name P1 .2.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.2`
+  Status: `active`
+  Goal: `Keep generated binding formal identities out of actor record-read scanning.`
+  Acceptance: `P1 qualification defect: an actual generated worker with scalar input packet width 3 and explicit caller binding (input packet scalar[2:0]) falsely refuses because ISFRecordPortContexts recursively treats the callee formal name as an actor record value. Reproduce the actual authored public refusal, trace the unsupported-context scan and declared binding grammar before mutation, then retain identity positions separately from actual value positions without admitting unqualified record actuals or aggregate formals. Qualify generated scalar shadows, exact private ports/bindings, actual strict carriers and complete native/API/newline products with hostile actual-record reads and caller purity. Finish .1's selector commit first; close parent .2 only after this repair and matrix qualification.`
+  Verification: `Next reproduce the tracked generated scalar formal/binding source, trace declared activation binding roles and repair only identity-as-value scanning. Selector .1 and bounded contextual/public matrix are committed first; parent .2 remains active until generated scalar binding closure.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5`
@@ -6422,3 +6438,158 @@ refusals remain .2 and exact prior/discovery closure remains .3.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual `--emit-semantic-json isf/record_input_children.isf` exposes physical vector top pins and recursive typed module declarations in composition_children child HIR/structural ports, with authored layout separately in source.interface_ports. Prior T2019 owned carrier structure and actual strict replay but not the entire authored public product matrix. The ordinary reset extension fails ` at t/2019-isf-record-input-generated-carriers.t line 310.` only because its literal omits required domain:null; ISFResetProvenance declares exact domain/origin keys, and all native/API/newline products preserve the same closed shape. This is a qualification/oracle gap, not a product metadata loss or new source admission.
 - [x] **ADDRESSED (verified)** — Final guarded T2019 reports All tests successful, Files=1, Tests=8. Every authored local/imported ordinary/domain reader/writer/blocking case and maintained imported example runs actual native/API/newline check/semantic/schedule queries with complete typed reports, text/structured/envelope equality, exact source provenance and literal ordered declarations/ranges/domain snapshots. Physical top input/output vectors expose no private handoffs; each actual instance retains complete recursive child HIR/structural input and private write-data identity. Exact owning clock/reset contracts and declaration provenance, caller facts, source/package bytes and named public producers remain. The book documents actual projection locations without inventing top type keys; canonical SPECFORGE response and fact/frontier pointers record accepted public completion only.
 - [x] **NO REGRESSION** — Guarded primitive JSON/copy, unchanged supplied frontend/discovery and embedded package controls T2018/T2017/T2020 report `All tests successful`, `Files=3, Tests=12`. Final expanded T2019 reports All tests successful, Files=1, Tests=8; runnable T1376 reports All tests successful, Files=1, Tests=2 and book builds. Knowledge Map reports knowledge-map: OK. Independent shared ownership/presence/numeric-kind/type/signed/state/range corruptions remain equal across transport copies but fail literal witnesses. Re-derivation uses actual native/API/newline full products and recursive/type/clock declarations; falsification uses those independently authored complete literals and hostile shared projections, retaining the omitted-null draft RED as an oracle limit; tracked public producers/tests/source/package/book/fact, this owner and Git preserve durability. Current capacity and claims are independently censused, with unchanged ceilings and no new open reviews. Staged doctrines and normal hooks accompany the commit. Generated/domain contextual refusals, exact prior-product closure, backend/native behavior, external consumer, full CI and push remain separately owned.
+
+## Qualification in flight — contextual generated/domain refusals `.60.4.3.2.4.2.2`
+
+Ownership, roadmap type/IR direction, public failure contracts, generated writer
+boundaries and the relevant book sections are read before test mutation. Start
+from authored local/imported domain and generated child sources; do not promote
+storage metadata into input facts. Compare complete actual native/API/newline
+check/semantic failures and message-only schedule errors, independent first
+causes, exact source/package bytes and no partial success. Pair foreign paths,
+input targets and unsupported writer/binding cases with admitted nearest scalar
+formal/local/drive controls and exact physical identity. Prerequisite defects
+must be rooted and owned before any product mutation. Backend/native execution,
+external consumer and final prior/discovery closure remain separate leaves.
+
+Workflow correction: the prior commit command was launched before the separate
+staged gate's terminal receipt was consumed. Its staged index stayed unchanged;
+both that gate and normal commit hooks subsequently passed and both terminal
+receipts were consumed before this leaf started. Commit aebe0037554eb9995c1d4fa67f4ec53f98364520
+was verified clean with an empty message file. Future commit commands wait for
+the standalone staged gate's terminal success first.
+
+- [ ] **ROOT CAUSE (WHY + WHERE)** — pending authored matrix and first-cause evidence.
+- [ ] **ADDRESSED (verified)** — pending actual public refusal and nearest-declaration qualification.
+- [ ] **NO REGRESSION** — pending focused accepted and prior controls.
+
+### Prerequisite `.60.4.3.2.4.2.2.1` — scalar drive selector identity
+
+The first full draft uses carrier areset syntax in authored ISF; its failures
+are setup-only, not contextual qualification. The identified prove process and
+its descendants are stopped after diagnosis; terminal exit 143 and the stop
+helper's exit 0 are consumed. Correct ISF reset syntax reaches the intended
+gates. The native-only probe independently exposes full input target diagnostic
+spellings, known composition provenance prefixes, and local collision ordering.
+A local declaration colliding with packet is already unsupported; with packet
+foreign, ownership validation runs before local collision admission. The
+collision witness is moved to same-domain ownership to isolate its own refusal,
+while the separate local member witness still refuses member_on_non_record.
+No accepted local shadow or domain crossing is inferred from that invalid source.
+
+The original drive slice control supplies a five-bit actual to a parameter with
+the existing fallback width of one. Native check correctly refuses the width;
+that draft cannot establish selector admission. A bare whole-value output in
+the same drive independently establishes the existing five-bit width owner.
+Now actual native check instead refuses an unintended core.packet port, and
+the actual core carrier still contains packet[3:0]. The private payload
+publish_packet is already five bits, but only its bare RHS uses are renamed.
+_substitute_named_drive_body_expr recurses arrays and checks exact bare names;
+static scalar selectors miss that lookup. This is owned P1 child .1 before
+product mutation. It must never be worked around by wiring the foreign record
+or relaxing explicit child binding/type/width checks.
+
+Focused T2022 first runs the literal root unit, then stops because its dynamic
+subtest label is passed with incorrect Perl call grouping. That setup receipt
+does not qualify either authored source. After correcting the label, the entire
+pre-product test is RED for root selectors and actual ordinary/domain carriers:
+ordinary strict check/semantic report malformed typed aggregate access against
+the masked record; domain strict check/semantic report an unconnected core.packet.
+The repair changes only known scalar parameter roots with one literal bit/slice
+suffix. Final focused root first passes Files=1, Tests=3; the added generated
+invocation and complete contextual/public controls remain pending their terminal
+receipts. Exact committed predecessor root-only probe remains RED while caller
+and unrelated/member/namespace controls pass. Its subprocess CLI is not used as
+historical public transport evidence.
+
+Two guessed test basenames produce setup failures rather than qualification:
+the accepted cohort completes T2019 then stops at a nonexistent T2018 path;
+the first book audit names a nonexistent T1376 path. Actual paths are enumerated
+with rg --files before corrected scope/book and standalone accepted commands.
+Those failed cohorts are not counted as regression success. The root helper
+history shows c6480c4d6378f884e4937a8ae9b9050a8e2ac8a4's bare substitution and
+505c2f72f6389c97165ccd68f9f140037139768d's recursive extension; no intervening
+helper-line edits appear through the predecessor.
+
+The expanded full matrix passes contextual refusals but initially overpromises
+schedule failure for a later C2 unbound-output error. Canonical isf-lowering-pipeline,
+book 13k's CLI execution contract and bin/fsmgen's emit_schedule_json early exit
+confirm that schedule is a pre-HDL intent preview. Native/API/newline schedule
+therefore retain a complete preview; strict check/semantic retain the C2 failure
+and no semantic/HDL success. This is a matrix stage-oracle correction, not an
+authorization to widen or rewrite the schedule API. Contextual parser/lowering
+refusals still emit no schedule JSON and keep message-only adapter errors.
+
+The added generated scalar-formal positive reveals a separate owned P1 .2:
+the actor record packet is foreign, the worker declares scalar packet width 3,
+and the caller binds that formal to scalar[2:0]. The unsupported spawn-context
+scan mistakes the callee identity token packet for an actor value. The current
+selector slice does not modify that gate; .2 reproduces and repairs it after
+.1 commits. Parent refusal/shadow closure remains active. The generated failing
+source and exact stack are retained in the full matrix log; it is removed from
+the .1 accepted cohort until its owning repair can establish acceptance.
+The book audit ignores isf-tagged fences; the new runnable example is retagged
+with the existing lisp convention before its final audit.
+
+Reproduce the next binding-name defect using T2021's authored source header
+with foreign => 1, imported => 1, width => 3 and this body:
+
+```lisp
+(transaction worker (domain core)
+ (ports (input packet (width 3)) (output result (width 3)))
+ (set result packet[2:0]) (complete done))
+(transaction main (domain core) (on start)
+ (spawn worker as job (bind (input packet scalar[2:0]) (output result seen)))
+ (await_all done) (complete done))
+```
+
+
+### Verified selector prerequisite `.60.4.3.2.4.2.2.1`
+
+Final T2021/T2022 reports All tests successful, Files=2, Tests=11. Contextual
+parser/lowering failures preserve exact first causes, complete typed native/API/
+newline check/semantic reports, no declarations/semantic/HDL success, and no
+schedule JSON with message-only adapter errors. The later unbound C2 output
+keeps check/semantic refusal and independently expected child identity in the
+complete typed pre-HDL preview. Admitted direct scalar formal/drive/local and
+namespace controls retain literal declarations/layout, distinct physical
+identities, actual strict carriers and source/package/producer/caller bytes.
+T2022 independently qualifies static selectors and nested normalized expressions,
+unchanged unrelated/member/namespace/caller values, and actual ordinary/domain/
+generated named-drive private payloads with unchanged five-bit width ownership.
+No generated scalar-formal binding acceptance is inferred; owned child .2 is next.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual corrected pre-product `--strict --check --json` and `--strict --emit-semantic-json` refuse ordinary selector_drive for malformed typed aggregate access packet[3:0] and the domain source for unconnected core.packet. The literal private-root carrier and recursive selector witnesses fail before mutation. _substitute_named_drive_body_expr's exact bare-name lookup is the locus; git log -L shows its recursive helper introduction in 505c2f72f6389c97165ccd68f9f140037139768d unchanged through the predecessor, and c6480c4d6378f884e4937a8ae9b9050a8e2ac8a4 introduces the original bare lookup. Exact aebe0037554eb9995c1d4fa67f4ec53f98364520 module bytes match Git and its root-only capsule fails the independent selector literals while caller/unrelated/member/namespace controls pass. Draft syntax, label, width-owner and command-path failures are excluded; the complete prior matrix also roots documented pre-HDL preview ordering and the separately owned binding-name defect.
+- [x] **ADDRESSED (verified)** — Final guarded T2021/T2022 reports All tests successful, Files=2, Tests=11. Only one admitted literal scalar selector on a declared drive parameter root follows the existing private signal prefix, including recursive expressions. Existing width owners, ordinary/domain/generated carriers and strict public source products pass; context/member/type/writer/explicit-binding boundaries and caller/source/package/public producer bytes remain. Full actual typed native/API/newline contextual failures and admitted direct scalar controls pass. Book examples and canonical SPECFORGE feedback preserve the finite prerequisite status and the existing later-C2 preview contract. Generated binding-name P1 .2 remains owned and active before parent closure.
+- [x] **NO REGRESSION** — Focused old drive grammar/aggregate expressions/domain selection and complete public refusals T1194/T1288/T1996/T2016 report `All tests successful`, `Files=4, Tests=38`. Corrected scope/JSON-kind controls T2018/T1987/T1988 pass Files=3, Tests=21; standalone accepted generated/domain T2019 passes Files=1, Tests=8; final T2021/T2022 passes Files=2, Tests=11. The actual lisp-fenced runnable T1376 audit passes Files=1, Tests=2 and the final book builds. Re-derivation uses actual source/carrier/public products and independently authored full declarations/physical roots; falsification uses complete literals, contextual hostile sources and exact committed predecessor root RED; permanent product/tests/source grammar/book/fact, this owner and Git preserve durability. Knowledge Map, capacity/claims and staged doctrines are required before the normal hooked commit. Full CI, push, native HDL runtime and external consumer signoff remain separately owned.
+
+The first staged gate passes task acceptance and document bounds but rejects a
+new quantified book cross-reference without a disposition/group. The five-bit
+parameter is scoped to the linked authored example, not a global drive width.
+This leaf owns its review under the same syntax_or_example_value policy as
+existing candidate published-20d165455eb4e69e752728df: the quantity is an authored
+example width, not an empirical measurement or a universal drive width. Its
+semantic contract remains watched by T2022 literal private payload widths and
+strict actual products, T2021 full declarations and the runnable book audit.
+The registry retains the fixed general_book review owner; this SEM leaf owns
+the implementation, evidence and group-membership addition. Extend
+the existing language-book group to its new drive chapter candidate, preserve
+all registry bounds and closed-group requirements, regenerate inventory and
+remeasure before restaging. The attempted gen_knowledge_map.sh --check flag is
+unsupported setup-only; enumerated check_knowledge_map.sh passes before commit.
+
+
+Repeated inventory drift is rooted in this slice's command ordering: the claim
+inventory reads the live-document surface registry as a declared constant/scope
+input. Capacity refresh was launched after the inventory producer had started,
+so the refreshed ratchets/aggregate record invalidated the just-written inventory.
+The driver itself performs reads and does not refresh those records. Correct
+ordering is final docs/map, capacity measurement, inventory write and terminal
+receipt, then explicit stage and staged gate. Preserve the stale inventory for
+an exact changed-row attribution; no producer or gate policy is loosened.
+
+The ordered writer and independent current-surface census both finish with exit
+0. Exact stale/current comparison changes only the surface registry transition
+bytes_total and lines_total constant rows; all other inventory rows are equal.
+This isolates the drift to refreshed capacity inputs. Repeat the same ordered
+refresh after this evidence note, then require staged gate success before commit.

@@ -13272,6 +13272,13 @@ sub _substitute_named_drive_body_expr {
     }
     return $param_signal->{$value}
         if defined($value) && !ref($value) && exists $param_signal->{$value};
+    if (defined($value) && !ref($value)) {
+        my $token = $value;
+        if ($token =~ /\A([A-Za-z_]\w*)(\[\d+(?::\d+)?\])\z/) {
+            my ($root, $selector) = ($1, $2);
+            return $param_signal->{$root} . $selector if exists $param_signal->{$root};
+        }
+    }
     return $value;
 }
 
