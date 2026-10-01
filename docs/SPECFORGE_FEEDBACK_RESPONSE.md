@@ -35,8 +35,10 @@ and book.
   `25c01f0127144922ade78951b91439e1d9221c08`. Accepted nested/imported/shadow
   public sources and strict carrier replay are qualified under `.60.4.3.2.3.6.1`;
   local aliases to imported types are repaired under its child `.1`.
-  Public refusal/closure, generated/domain carriers, native execution and consumer signoff remain
-  owned qualification work. Record outputs, root-list ports and variants
+  Contextual public refusals are qualified under `.60.4.3.2.3.6.2`, including
+  repair of scalar drive-parameter member access before product publication.
+  Final frontend closure, generated/domain carriers, native execution and
+  consumer signoff remain owned qualification work. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

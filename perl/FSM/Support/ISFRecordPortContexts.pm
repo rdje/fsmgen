@@ -181,6 +181,10 @@ sub _reference {
     my $kind = record_reference_root_kind(context => $scope, token => $token);
     return undef unless defined($kind) && $kind eq 'declaration';
     return undef unless exists $roots->{$name};
+    # Namespace tokens have already been delegated above. A declared drive
+    # parameter is scalar-only; missing width facts cannot admit member access.
+    _require(!($scope->{scalar_parameter_roots}{$name} && $suffix =~ /\A(?:\[[^\]]*\])*\./),
+        "$context invalid declared path '$token': member_on_non_record");
     # A scalar pin can share an enum/package name. Those namespaces retain
     # their current validator unless a nearest aggregate, or an explicitly
     # shadowed outer aggregate, establishes this as a declaration path.

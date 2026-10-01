@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-09-30`
+- Last updated: `2026-10-01`
 - Owner: repo-local workflow
 
 ## Goal
@@ -2830,7 +2830,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Qualify frontend delivery and public replay before carrier/runtime completion.`
   Acceptance: `After .5, independently verify accepted local/imported/nested/shadow sources, all contextual failures, exact metadata/type/layout identities and complete native/API/actual newline check/semantic/schedule/discovery products. Strict-replay every emitted IAL0 carrier; preserve pre-change scalar/storage controls and exact source provenance. Close frontend work only with synchronized references while generated/domain behavior and independent native completion remain separately owned by .2.4-.2.5.`
-  Verification: `Accepted nested/import/nearest-shadow public sources and imported local type dependencies are qualified under .1. Contextual public refusal matrix .2 and prior-control/discovery closure .3 remain before frontend closure and generated/domain/native completion.`
+  Verification: `Accepted nested/import/nearest-shadow public sources and imported local type dependencies are qualified under .1. Contextual public refusal matrix .2 and its scalar-parameter repair are qualified; prior-control/discovery closure .3 remains before frontend closure and generated/domain/native completion.`
   Commit: `pending`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.3`
@@ -2852,17 +2852,26 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify contextual record-input refusals across all public frontend routes.`
   Acceptance: `After .1, exercise the complete reviewed contextual/type/path/role/unsupported-carrier and nearest-shadow failure matrix through native/API/actual newline check/semantic and schedule refusal. Independently expect diagnostics, no partial successful declarations/schedule/HDL, exact source/import preservation and complete failure transport products. Fix and separately own discovered defects before closing this slice; synchronize references and commit.`
-  Verification: `Accepted-source matrix .1 and imported dependency repair .1.1 are qualified. Next complete the independently authored contextual public refusal matrix without treating parser-only negatives as full transport proof.`
-  Commit: `pending`
+  Verification: `T2016 qualifies the complete authored contextual/type/path/role/shadow/unsupported-carrier failure matrix through native/API/actual newline check/semantic and schedule routes, with independently expected first causes, no partial successful products, complete typed transport equality and exact source/import preservation. Child .1 repairs scalar-parameter direct/indexed member admission. Final combined T2014/T2015/T2016 passes All tests successful, Files=3, Tests=42; frontend prior-control/discovery closure remains .3.`
+  Commit: `completed through child .1 in this commit`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.2.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.2.1`
+  Status: `done`
+  Goal: `Repair masked scalar drive-parameter member validation before public product publication.`
+  Acceptance: `Reproduce a drive parameter named packet masking an actor record input, called with declared one-bit input start, whose body reads packet.payload.data. The first scalar-width-five probe fails check/semantic for a width mismatch while schedule preview succeeds. The width-aligned start-bit probe incorrectly succeeds on all native/API/newline check/semantic/schedule routes. Trace scalar-only drive parameter facts and existing scope/context contracts; retain width/type uncertainty without borrowing outer record facts, preserve valid scalar arguments/slices and enum/package namespaces, and refuse invalid masked member access before successful scheduling. Qualify deterministic root controls and complete public refusal/accepted matrices plus focused scope/context/legacy regressions. Log any ordinary-source variants or dependency gaps before repairs, synchronize book/facts/feedback and commit the complete qualification.`
+  Verification: `Corrected pre-product T2016 RED completes Files=1, Tests=27, failing only drive_parameter_member: aligned start-bit actual succeeds on all check/semantic/schedule routes, while the other cases refuse. The earlier five-bit actual fails check/semantic only for an unrelated width mismatch. The first draft also assumes nonnullable diagnostic codes, schedule exit one and contextual API schedule messages, contrary to the existing nullable-code, arbitrary nonzero exit and generic message-only contracts; correct those test expectations separately from the genuine schedule gap. The scope correctly masks the outer record with type_spec undef, but the context then delegates dotted parameter paths without using the scalar-only drive contract. The private scalar-only context marker now rejects direct/indexed/sliced member paths without type borrowing; final full public and focused scope/context/module controls pass. See fresh acceptance below.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Close frontend qualification with prior controls, discovery and exact handoff.`
   Acceptance: `After .1-.2, compare complete pre-admission scalar/storage public products and scheduled carriers with narrowly declared source/date/reset-origin differences. Qualify full native/API/newline discovery and current supported corpus applicability, reconcile exact positive/negative/strict-replay evidence, run focused combined gates and synchronize canonical record/book/feedback/frontiers. Close frontend only; generated/domain/backend/native and consumer completion remain .2.4-.2.5. Commit a clean handoff without claiming omitted external/runtime legs.`
-  Verification: `Accepted/negative matrices precede this closure; preserve fixed historical source evidence and actual public boundaries.`
+  Verification: `Accepted and refused public matrices are qualified through .1-.2. Next compare complete prior scalar/storage products and qualify current public discovery before closing frontend; preserve fixed historical evidence and generated/domain/native/consumer boundaries.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4`
@@ -6201,3 +6210,32 @@ The failed gate is not a pass; the corrected complete gate must qualify.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my $local_symbols = $self->_resolve_actor_local_symbols' -1 --format='%H %s' -- perl/FSM/Adapter/ISF/Parser.pm` returns 6dce0d9a34acaa813fa1ef1bbc791121674e074f. Local types resolve against an empty symbol/type lookup before imported package facts exist. Independently authored T2014 source shared.frame succeeds directly while its local alias fails malformed +types; corrected-runner RED reports Files=1, Tests=8, failed test 4. The first draft's catalog-only runner rejects private .artifacts source IDs and is replaced by the existing actual API/newline pattern without helper/policy changes. Separately, broader T1257 fails at t/1257-isf-scalar-type-aliases.t line 51: old raw formal names contradict the private scoped plan introduced by 32642d54c4763a78e916f65c1c019e64bb99d0d4. Exact clean d9 source-capsule reproduction confirms only that regex fails while its other scalar controls pass.
 - [x] **ADDRESSED (verified)** — Packages resolve before local types; only qualified type facts seed the temporary shared resolver lookup. Local symbol inventories remain clean, forward aliases/imported scalar and nested members resolve, and unknown/undeclared dependencies refuse. Guarded T2014 reports All tests successful, Files=1, Tests=8; T2015 reports Files=1, Tests=5. Complete literal types/layouts and typed native/API/actual newline check/semantic/schedule reports agree for every accepted authored case; exact sources/packages stay unchanged and all emitted carriers strictly replay. The maintained supported record_input case now uses its owned companion package and local alias, with independently expected metadata retained by T1985. T1257's literal regex now names existing scoped private carriers and passes Files=1, Tests=3. Stale storage-only book wording is corrected; feedback and bounded facts retain remaining refusal/domain/backend/native/consumer work.
 - [x] **NO REGRESSION** — T1985/T1998/T1259 pass in the first broader run; its four-file aggregate is failed because of the stale T1257 oracle, not claimed green. The independently reproduced and corrected isolated T1257 passes All tests successful, Files=1, Tests=3. Core T279/T280 passes Files=2, Tests=23; lowering-clean book T1376 passes Files=1, Tests=2; parser syntax, mdBook and current Knowledge Map checks pass. Final generated fact/inventory/capacity products and staged doctrines/hooks qualify this commit under unchanged ceilings. Re-derivation uses actual complete public/source/carrier products and independent typed expectations; falsification uses the real pre-repair alias failure, unknown dependencies, shared equal transport corruption and exact predecessor stale-oracle reproduction; tracked producers/corpus/tests/facts and Git retain durability. The first source capsule lacked owned spec inputs; the next inherited main-repository temporary paths and correctly failed capsule output locality. Including exact committed specs/plugin inputs and sourcing the capsule locality helper closes both setup failures; neither earlier attempt is accepted as the full predecessor control. No foreign checkout/submodule implementation, genuine HDL runtime, external consumer signoff, full CI or push is changed.
+
+
+## Acceptance — scalar parameter member refusal and public failures `.60.4.3.2.3.6.2.1`
+
+The first public-matrix draft assumed nonnullable ISF diagnostic codes, schedule
+exit one and contextual API schedule errors. These are oracle defects: the
+published contract allows null codes and arbitrary nonzero native schedule
+failure; API/newline schedule failures are generic message-only errors. The
+corrected pre-product matrix fails only the width-aligned scalar drive-member
+case. The wider first probe fails check/semantic for width mismatch and never
+established member-path refusal. Those failed runs are not green qualification.
+The first book-test invocation used a nonexistent filename; the actual tracked
+T1376 test is t/1376-isf-book-example-lowering-audit.t. Its rerun, not the failed
+setup, supplies the book result. A standalone size invocation similarly guessed
+an absent .pl filename; the doctrine registry names check_live_document_size.sh.
+The registered size checker then correctly rejects task lines/bytes added after
+the measurement; final task evidence must precede its last capacity refresh.
+The indexed challenge reproduces the same member-delegation defect: T1988 RED
+fails indexed member reads/writes/expressions, and the actual width-aligned
+packet[0].flag source still publishes schedule JSON. The guard now recognizes
+members after scalar selectors without borrowing unresolved width facts; T2016
+adds indexed and sliced source cases. The earlier direct-member public PASS
+covers its original matrix only; the expanded matrix must qualify the final code.
+Neither filename error changes
+project code or makes its failed setup an accepted result.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'type_spec => undef' -1 --format='%H %s' -- perl/FSM/Support/ISFRecordPortScopes.pm` locates 5f843a3f59a1ab3fdaea9523c498afbbeb283388. Scope correctly masks the actor record with an unresolved local parameter, but context delegates its dotted member path without retaining the scalar-only grammar fact. Corrected pre-product T2016 fails only drive_parameter_member; native/API/newline check/semantic/schedule all publish success with one-bit start actual. Root T1988 RED reports ` at t/1988-isf-record-port-context-gates.t line 57.` for accepted invalid parameter member uses, independently of widths and downstream products.
+- [x] **ADDRESSED (verified)** — Private context scalar-parameter identities refuse member paths, including members after scalar selectors, before unknown-type delegation. Namespace classification remains first; raw value bindings retain their role/type-only schema and unknown widths. T1988 rejects member RHS, nested expressions and targets with literal first-cause witnesses, preserves bare/sliced values, enum/package meaning and complete caller JSON. Final guarded T2014/T2015/T2016 reports All tests successful, Files=3, Tests=42. Every authored accepted source retains literal recursive type/layout witnesses and strict every-carrier replay; every contextual refusal retains complete typed native/API/newline products, expected first causes, no successful declaration/semantic/schedule/HDL product and exact source/import bytes. The original direct-member matrix passed Files=3, Tests=40 before the indexed challenge; that earlier result is scoped to its original cases.
+- [x] **NO REGRESSION** — Guarded T1987/T1988/T1997 reports `All tests successful`, `Files=3, Tests=21`. Expanded indexed root controls retain that Files=3, Tests=21 result. Final runnable book T1376 reports All tests successful, Files=1, Tests=2; final mdBook build passes. The complete expanded public cohort passes Files=3, Tests=42, and Knowledge Map is current. Final staged doctrines and normal hooks must accompany the commit. Generated Knowledge Map, independently censused current capacity, claims and staged doctrines/hooks accompany the final commit. Re-derivation uses actual compiler/transport products and independently expected first causes; falsification is the pre-product aligned source/context RED plus negative member/role/type/path cases and successful namespace/shadow controls; tracked producers/tests/fact/book, this owner and Git preserve durability. Ordinary scalar-only actor activation is not established by the record-input context gate. No HDL runtime, full CI, external consumer or push is claimed.

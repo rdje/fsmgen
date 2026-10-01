@@ -135,8 +135,8 @@ resolve before local aliases; qualified names remain in their package namespace.
 Forward local aliases also work. Missing types and undeclared packages refuse.
 The scheduled carrier embeds the package root for independent strict replay.
 T2014 qualifies accepted nested/imported/nearest-shadow public sources; T2015
-qualifies scalar and nested imported dependencies. The contextual public refusal
-matrix and final frontend closure remain separate tracked work.
+qualifies scalar and nested imported dependencies. T2016 exercises contextual
+public refusals; final frontend closure remains separate tracked work.
 
 `packet` is one six-bit input; it does not become separate field pins.
 `packet.flag` occupies bit 5 and `packet.data` bits 4 through 0. The copy into
@@ -156,10 +156,19 @@ paths refuse. Repeated captures by one owner preserve their existing rules.
 Inputs cannot be assignment targets. Unknown members, out-of-range items,
 subaggregate scalar operands, whole-record conditions/arithmetic and whole-record
 sampling refuse. A nearest scalar formal or drive parameter masks an outer
-record; enum/package names retain their own namespace meaning. Named-domain
+record. A scalar drive parameter cannot read or write record members, even
+while its width is unresolved, including member access after a scalar selector.
+Bare scalar values and scalar slices keep their
+existing width validation; enum/package names retain their namespace meaning. Named-domain
 reads and copies require the declared owning domain or a supported crossing.
 Generated child scalar outputs still require their published explicit bindings.
 Strict width checks require width-aligned scalar assignments.
+
+Rejected check and semantic queries retain their complete failure reports and
+nullable diagnostic codes, without successful declarations or partial semantic
+payloads. Schedule failure emits no schedule JSON. Its API and newline transport
+retain the existing message-only error contract; the compiler diagnostic appears
+in native stderr. None of these queries modifies the source or imported package.
 
 Record outputs, root-list input ports, transaction-local aggregate ports,
 aggregate banks and variants remain deferred. Output copies/member writes keep

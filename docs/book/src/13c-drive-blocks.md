@@ -90,6 +90,11 @@ This is deliberate: the drive declaration defines fixed hardware roles for its
 actuals. Variadic arity belongs only on constructs whose runtime meaning is
 list-like or associative and whose lowering contract explicitly says so.
 
+In actors with record inputs, a parameter sharing the record's name masks its
+layout. Member access on that scalar parameter refuses before check, semantic
+export or schedule publication. Bare parameters and scalar slices retain their
+existing width rules; no width is invented from the masked record.
+
 Actual values may be scalar tokens or composed `.fsm` expression forms. This
 keeps parameterized drives useful inside realistic fixtures without requiring
 temporary variables for simple argument-level composition:

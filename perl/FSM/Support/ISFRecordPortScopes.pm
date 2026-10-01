@@ -98,6 +98,10 @@ sub record_context_scope {
     # A scalar/unresolved formal masking an actor record must not let an enum
     # namespace lend it that record's missing layout.
     $exclusions{$_} = 1 for grep {_aggregate($outer->{$_}{type_spec})} keys %$outer;
+    # Drive parameters carry scalar values even while their width/type facts
+    # remain unresolved. Keep this grammar fact separate from value bindings.
+    my %scalar_parameters = exists($args{drive})
+        ? map {$_ => 1} @{$args{drive}{params} || []} : ();
     my %declared = map {$_ => 1} keys %$outer;
     for my $entry (@{$actor->{storage} || []}) {
         _name(\%declared, $_->{name}) for @{$entry->{signals} || []};
@@ -109,7 +113,7 @@ sub record_context_scope {
     }
     return {roots => $roots, aggregate_roots => \%aggregates,
         enum_exclusion_roots => \%exclusions, namespaces => \%namespaces,
-        rule_declared_roots => \%declared};
+        rule_declared_roots => \%declared, scalar_parameter_roots => \%scalar_parameters};
 }
 
 sub record_reference_root_kind {

@@ -101,6 +101,28 @@ subtest 'rule and drive scalar reads keep selected scope' => sub {
     accepts(drives(['packet'], ['seen', 'packet']), 'untyped drive parameter masks actor record');
 };
 
+subtest 'scalar-only drive parameters reject members without inventing widths' => sub {
+    for my $name (qw(packet value)) {
+        accepts(drives([$name], ['seen', $name]), "$name bare scalar parameter");
+        accepts(drives([$name], ['seen', "${name}[0]"]), "$name scalar slice remains delegated");
+        for my $token ("$name.member", "$name.payload.data", "$name.member[0]",
+            "${name}[0].member", "${name}[1:0].member") {
+            refuses(drives([$name], ['seen', $token]), qr/member_on_non_record/,
+                "$token parameter RHS");
+            refuses(drives([$name], ['seen', ['+', 1, $token]]), qr/member_on_non_record/,
+                "$token nested parameter RHS");
+            refuses(drives([$name], [$token, 0]), qr/member_on_non_record/,
+                "$token parameter target");
+        }
+    }
+    my $shadow = drives(['packet'], ['seen', 'packet.data']);
+    $shadow->{enum_symbols}{local}{packet} = {data => 1};
+    refuses($shadow, qr/member_on_non_record/, 'enum cannot lend a masked record layout');
+    my $namespaces = drives(['mode', 'shared'], ['seen', 'mode.BUSY'], ['seen', 'shared.LIMIT']);
+    $namespaces->{constant_symbols}{packages}{shared} = {LIMIT => 1};
+    accepts($namespaces, 'existing local enum and package namespaces retain their owner');
+};
+
 subtest 'every selected scalar context rejects whole record ports' => sub {
     for my $value ('packet', '!packet', 'packet==1', '1==packet', ['+', 1, 'packet']) {
         for my $head (qw(when while until)) {
