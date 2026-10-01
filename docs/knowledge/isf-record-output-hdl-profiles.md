@@ -47,6 +47,8 @@ and first-touch JSON falsify inferred profile admission. The exact baseline
 module runs the same probe/test; full sources/actors/metadata/receipts, sealed
 baseline objects and hostile verifier, task/book/feedback and Git provide
 durability. Unstated scalar state models remain absent rather than being
-invented as two-state facts. Source syntax is still closed during this unit;
-actual output native/API/machine atomic checks follow declaration integration
-under SEM .60.4.3.3.4.3-.4. Generated/field/runtime promotion remains separate.
+invented as two-state facts. Source syntax was closed during the captured profile preparation. SEM
+.60.4.3.3.4.3 now integrates bounded authored output declarations/whole copies;
+see [source admission](isf-record-output-source-admission.md). Complete actual
+output native/API/machine atomic qualification remains .3.4.4 before execution
+promotion .3.5. Generated/field/runtime promotion remains separate.

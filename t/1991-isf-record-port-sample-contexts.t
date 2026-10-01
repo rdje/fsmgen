@@ -136,9 +136,9 @@ subtest 'complete ordinary products and source admission remain unchanged' => su
     accepts($a, 'currently admitted scalar/storage actor');
     is($json->encode($a), $before, 'first context consumer preserves current source facts');
     is($json->encode(FSM::Scheduler::ISF->new->lower($a)), $lowered, 'complete scheduled object and actual emitted bytes unchanged');
-    my $ok = eval {$parser->parse_source('(actor refused (types (type frame (record (data bit)))) (interface (output packet (type frame))) (transaction main (sample packet.data as q)))', 'refused.isf'); 1};
-    ok(!$ok, 'deferred record-output sample remains refused');
-    like((split /\n/,$@)[0], qr/interface port 'packet' references aggregate type/, 'source boundary remains exact');
+    my $ok = eval {$parser->parse_source('(actor refused (types (type frame (record (data bit)))) (interface (output packet (type frame))) (transaction main (sample packet as q)))', 'whole-sample-refused.isf'); 1};
+    ok(!$ok, 'whole record-output inferred sample remains refused');
+    like((split /\n/,$@)[0], qr/whole record/, 'whole-value sample boundary remains exact');
 };
 
 done_testing;

@@ -1,14 +1,16 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **13** facts · **45** uniquely owned question entries.
+> **14** facts · **49** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="are authored ISF record output declarations and whole copies admitted?" · facts=[isf-record-output-source-admission](../../docs/knowledge/isf-record-output-source-admission.md)
 - q="are spawned output bindings guarded by child completion?" · facts=[isf-record-input-generated-witness-preparation](../../docs/knowledge/isf-record-input-generated-witness-preparation.md)
 - q="are unused record inputs retained in the top or inherited child?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="can a child scalar formal share an actor record input name?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 - q="can empty conflict issues prove record output writer safety?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
+- q="can equal values or priority admit overlapping record output writers?" · facts=[isf-record-output-source-admission](../../docs/knowledge/isf-record-output-source-admission.md)
 - q="can scalar formals borrow an outer record output layout?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
 - q="can the original input runtime evidence be joined to current source profiles?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
 - q="do both record-input emitter observations prove Verilog-2005 syntax?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
@@ -17,6 +19,7 @@
 - q="does generated record-input runtime prove X/Z or reset-free initialization?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="does ordinary ISF reset provenance omit the domain key?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="does record output backend preparation open source declarations?" · facts=[isf-record-output-hdl-profiles](../../docs/knowledge/isf-record-output-hdl-profiles.md)
+- q="does record output source admission establish execution support?" · facts=[isf-record-output-source-admission](../../docs/knowledge/isf-record-output-source-admission.md)
 - q="does record-input runtime establish four-state behavior or native EPERM causality?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="does the binding identity repair admit record field actuals?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 - q="does the generic record port profile guard preserve input diagnostics?" · facts=[isf-record-output-hdl-profiles](../../docs/knowledge/isf-record-output-hdl-profiles.md)
@@ -34,6 +37,7 @@
 - q="where are detached record output writers inventoried?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="where do generated-top semantic reports retain authored record declarations?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="where does a generated record-input copy store and reset its target?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
+- q="where does mandatory record output physical writer admission run?" · facts=[isf-record-output-source-admission](../../docs/knowledge/isf-record-output-source-admission.md)
 - q="where is direct packed record-input runtime qualification owned?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 - q="where is fresh record-input observer qualification owned?" · facts=[isf-record-input-observer-preparation](../../docs/knowledge/isf-record-input-observer-preparation.md)
 - q="where is generated record-input runtime preparation owned?" · facts=[isf-record-input-generated-witness-preparation](../../docs/knowledge/isf-record-input-generated-witness-preparation.md)
@@ -129,6 +133,13 @@ _Prepared record outputs require precise unsupported HDL profile refusals_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-output-hdl-profiles.md`](../../docs/knowledge/isf-record-output-hdl-profiles.md)
+
+### isf-record-output-source-admission
+
+_Whole record outputs require exact types and mandatory realized-module writers_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-record-output-source-admission.md`](../../docs/knowledge/isf-record-output-source-admission.md)
 
 ### isf-record-output-source-contexts
 

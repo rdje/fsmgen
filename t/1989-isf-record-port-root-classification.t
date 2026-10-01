@@ -40,8 +40,9 @@ sub refuses {
 
 subtest 'actual declarations produce one coherent consumer projection' => sub {
     my $context = record_context_scope(actor => $actor);
-    is_deeply([sort keys %$context], [qw(aggregate_roots enum_exclusion_roots namespaces roots rule_declared_roots)],
+    is_deeply([sort keys %$context], [qw(aggregate_roots enum_exclusion_roots namespaces roots rule_declared_roots scalar_parameter_roots)],
         'complete projection has only the selected consumer maps');
+    is_deeply($context->{scalar_parameter_roots}, {}, 'outer actor statics do not invent lexical drive masks');
     is_deeply([sort keys %{$context->{roots}}], [qw(done held mode packet seen start)],
         'values are declarations rather than inferred assignment/constant names');
     is_deeply([sort keys %{$context->{aggregate_roots}}], [qw(held packet)], 'actor aggregates retain resolved identities');
@@ -83,6 +84,7 @@ subtest 'nearest formal and local scopes suppress borrowed aggregate namespaces'
 
 subtest 'drive and supplied record pin scopes retain real declaration roles' => sub {
     my $context = record_context_scope(actor => $actor, drive => $actor->{drives}{publish});
+    is_deeply($context->{scalar_parameter_roots}, {packet => 1}, 'explicit drive formal supplies its exact scalar mask');
     is_deeply($context->{roots}{packet}, {role => 'local', type_spec => undef}, 'parameter masks outer record');
     is(classify($context, 'packet.payload'), 'declaration', 'untyped parameter cannot borrow enum member');
     my $prepared = dclone($actor);
@@ -155,8 +157,8 @@ subtest 'closed context selection and current source admission remain unchanged'
     ok(validate_actor_record_contexts(actor => $actor), 'existing contextual consumer uses common projection');
     is($json->encode($actor), $before, 'complete parsed source unchanged');
     refuses(sub {$parser->parse_source('(actor refused (types (type frame (record (data bit))))'
-        . ' (interface (output packet (type frame))) (transaction main (wait 1)))', 'refused.isf')},
-        qr/interface port 'packet' references aggregate type/, 'authored record output still refused');
+        . ' (interface (output packet (type frame))) (transaction main (set packet.data 1)))', 'refused.isf')},
+        qr/record output field writes are not yet admitted/, 'authored record output field writer still refused');
 };
 
 done_testing;

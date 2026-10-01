@@ -26,7 +26,7 @@ evidence: t/1998-isf-record-input-source-admission.t; t/1997-isf-record-port-gat
 
 - Date: 2026-09-30
 - Type: ISF language, lowering and public report contract
-- Status: input authoring admitted; complete input/output and consumer qualification remain open
+- Status: bounded input/output authoring admitted; complete output/consumer qualification remain open
 - Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.2`
 
 ## Context

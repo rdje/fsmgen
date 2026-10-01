@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1249** facts · **6853** unique questions · **7030** answer occurrences · **177** topic shards.
+> **1250** facts · **6859** unique questions · **7036** answer occurrences · **177** topic shards.
 
 Query first:
 
@@ -40,7 +40,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `composition-two` | 1 | 3 | [`composition-two.md`](knowledge-map/generated/composition-two.md) |
 | `composition-vhdl` | 1 | 68 | [`composition-vhdl.md`](knowledge-map/generated/composition-vhdl.md) |
 | `darwin-inline` | 1 | 8 | [`darwin-inline.md`](knowledge-map/generated/darwin-inline.md) |
-| `decision-record` | 1 | 4 | [`decision-record.md`](knowledge-map/generated/decision-record.md) |
+| `decision-record` | 1 | 5 | [`decision-record.md`](knowledge-map/generated/decision-record.md) |
 | `declarative-aggregate` | 1 | 3 | [`declarative-aggregate.md`](knowledge-map/generated/declarative-aggregate.md) |
 | `direct-hdl` | 1 | 8 | [`direct-hdl.md`](knowledge-map/generated/direct-hdl.md) |
 | `direct-output` | 1 | 3 | [`direct-output.md`](knowledge-map/generated/direct-output.md) |
@@ -130,10 +130,10 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `isf-prepared` | 1 | 3 | [`isf-prepared.md`](knowledge-map/generated/isf-prepared.md) |
 | `isf-production` | 1 | 3 | [`isf-production.md`](knowledge-map/generated/isf-production.md) |
 | `isf-property` | 1 | 5 | [`isf-property.md`](knowledge-map/generated/isf-property.md) |
-| `isf-record` | 13 | 45 | [`isf-record.md`](knowledge-map/generated/isf-record.md) |
+| `isf-record` | 14 | 49 | [`isf-record.md`](knowledge-map/generated/isf-record.md) |
 | `isf-rule` | 4 | 23 | [`isf-rule.md`](knowledge-map/generated/isf-rule.md) |
 | `isf-sampled` | 2 | 10 | [`isf-sampled.md`](knowledge-map/generated/isf-sampled.md) |
-| `isf-scalar` | 2 | 4 | [`isf-scalar.md`](knowledge-map/generated/isf-scalar.md) |
+| `isf-scalar` | 2 | 5 | [`isf-scalar.md`](knowledge-map/generated/isf-scalar.md) |
 | `isf-schedule` | 1 | 5 | [`isf-schedule.md`](knowledge-map/generated/isf-schedule.md) |
 | `isf-storage` | 4 | 17 | [`isf-storage.md`](knowledge-map/generated/isf-storage.md) |
 | `isf-terminal` | 1 | 3 | [`isf-terminal.md`](knowledge-map/generated/isf-terminal.md) |

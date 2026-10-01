@@ -1,0 +1,77 @@
+use strict;
+use warnings;
+use lib 'perl', 't/lib';
+use JSON::PP;
+use Storable qw(dclone);
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
+use FSM::Scheduler::ISF::RecordOutputWriters;
+use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
+my ($output)=@ARGV;
+die 'receipt must be project-local' unless defined($output) && $output =~ m{\A\.artifacts/record-output-source/[^/]+\z};
+my $record='(record (tag (bits 2)) (payload (signed (four_state (bits 3)))))';
+my $json=JSON::PP->new->canonical;
+my $parser=FSM::Adapter::ISF->new;
+my $scheduler=FSM::Scheduler::ISF->new;
+my @rows;
+for my $row (
+ ['whole','(transaction main (on start) (set packet held) (complete done))'],
+ ['ordered','(transaction main (on start) (set packet held) (wait 1) (set packet held) (complete done))'],
+ ['competing','(transaction left (on start) (set packet held)) (transaction right (on other) (set packet held))'],
+ ['unused',''],
+ ['field','(transaction main (set packet.payload 1))'],
+) {
+ my ($name,$body)=@$row;
+ my $source='(actor probe_'.$name.' (clock clk) (types (type frame '.$record.'))'
+  .' (interface (input start) (input other) (output packet (type frame)) (output done))'
+  .' (storage (var held (type frame))) '.$body.')';
+ my ($actor,$reason);
+ my $ok=eval {$actor=$parser->parse_source($source,".artifacts/record-output-source/$name.isf");1};
+ $reason=(split /\n/,$@)[0] // '' unless $ok;
+ my %r=(case=>$name,source=>$source,parsed=>$ok ? JSON::PP::true : JSON::PP::false,parse_reason=>$reason // '');
+ if($ok) {
+  $r{actor}=dclone($actor);$r{before_json}=$json->encode($actor);$r{results}=results($actor);
+  $r{after_json}=$json->encode($actor);
+  if($name ne 'field') {
+   my $ir=$scheduler->{ir}->build_module($actor);$r{ir}=dclone($ir);
+   $r{inventory}=FSM::Scheduler::ISF::RecordOutputWriters->inventory(actor=>$actor,ir=>$ir);
+  }
+ }
+ push @rows,\%r;
+}
+my @prototypes;
+for my $row (
+ ['whole','(transaction main (on start) (set packet held) (complete done))'],
+ ['competing','(transaction left (on start) (set packet held)) (transaction right (on other) (set packet held))'],
+) {
+ my ($name,$body)=@$row;
+ my $source='(actor prototype_'.$name.' (clock clk) (types (type frame '.$record.'))'
+  .' (interface (input start) (input other) (output placeholder (width 5)) (output done))'
+  .' (storage (var packet (type frame)) (var held (type frame))) '.$body.')';
+ my $actor=$parser->parse_source($source,".artifacts/record-output-source/prototype_$name.isf");
+ my $donor=shift @{$actor->{storage}};
+ my ($port)=grep {$_->{name} eq 'placeholder'} @{$actor->{interface}{outputs}};
+ %$port=map {$_=>ref($donor->{$_}) ? dclone($donor->{$_}) : $donor->{$_}}
+  grep {exists $donor->{$_}} qw(name width type type_spec domain);
+ $actor->{interface_port_metadata}=capture_interface_port_metadata($actor->{interface},undef);
+ my $before=$json->encode($actor);
+ my $ir=$scheduler->{ir}->build_module($actor);
+ my $inventory=FSM::Scheduler::ISF::RecordOutputWriters->inventory(actor=>$actor,ir=>$ir);
+ push @prototypes,{case=>$name,source=>$source,actor=>dclone($actor),ir=>dclone($ir),inventory=>$inventory,
+  before_json=>$before,results=>results($actor),after_json=>$json->encode($actor)};
+}
+open my $fh,'>:raw',$output or die $!;
+print {$fh} $json->pretty->encode({cases=>\@rows,prototypes=>\@prototypes}) or die $!;
+close $fh or die $!;
+print "Actual source and matching source-derived prototype writer products captured without HDL execution.\n";
+sub results {
+ my ($actor)=@_;my @r;
+ for my $method(qw(lower report)) {
+  my $product;my $ok=eval {$product=$scheduler->$method($actor);1};
+  my $reason=$ok ? '' : (split /\n/,$@)[0] // '';
+  $product=JSON::PP->new->decode($product) if $ok && $method eq 'report';
+  push @r,{method=>$method,accepted=>$ok ? JSON::PP::true : JSON::PP::false,reason=>$reason,
+   product=>defined($product) ? $product : undef};
+ }
+ return \@r;
+}

@@ -171,8 +171,8 @@ subtest 'imported alias and prepared record pin keep actual resolved facts' => s
         'prepared input leaf cannot become a write');
     refuses(sub {$parser->parse_source('(actor refused (types (type frame (record (x bit))))'
         . ' (interface (output value (type frame)) (output done))'
-        . ' (transaction main (complete done)))', 'still-refused.isf')},
-        qr/interface port 'value' references aggregate type/, 'authored record output stays refused');
+        . ' (transaction main (set value.x 1) (complete done)))', 'field-refused.isf')},
+        qr/record output field writes are not yet admitted/, 'authored record output field writer stays refused');
 };
 
 subtest 'scope preparation leaves complete parser and scheduled products unchanged' => sub {

@@ -1,0 +1,51 @@
+ram-guard: PID 29499; host 76.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'owning bus module retains record alias'
+    #   at t/2033-isf-record-output-source-admission.t line 111.
+    #                   undef
+    #     doesn't match '(?^:\(packet frame\))'
+
+    #   Failed test 'primary refusal uses actual bus module identity'
+    #   at t/2033-isf-record-output-source-admission.t line 106.
+    #                   'ISF module 'domains__domain_bus' record output 'packet' cannot admit overlapping writers 'transaction/publish/state:publish_set_1' and 'transaction/competing/state:competing_set_1' to 'packet' and 'packet'; use one ordered state controller or disjoint physical targets. Qualified compatibility or exclusion is required.'
+    #     doesn't match '(?^:module 'domains__bus'.*record output 'packet' cannot admit overlapping writers)'
+
+    #   Failed test 'primary refusal uses actual bus module identity'
+    #   at t/2033-isf-record-output-source-admission.t line 106.
+    #                   'ISF module 'domains__domain_bus' record output 'packet' cannot admit overlapping writers 'transaction/publish/state:publish_set_1' and 'transaction/competing/state:competing_set_1' to 'packet' and 'packet'; use one ordered state controller or disjoint physical targets. Qualified compatibility or exclusion is required.'
+    #     doesn't match '(?^:module 'domains__bus'.*record output 'packet' cannot admit overlapping writers)'
+    # Looks like you failed 3 tests of 10.
+
+#   Failed test 'actual domain realization admits local record output and refuses local competing writers'
+#   at t/2033-isf-record-output-source-admission.t line 123.
+
+    #   Failed test 'mismatch contextual primary reason'
+    #   at t/2033-isf-record-output-source-admission.t line 138.
+    #                   'Invalid ISF record value: transaction 'main' set record port copy from 'mismatch' to 'packet' requires the same resolved record type'
+    #     doesn't match '(?^:resolved record types differ)'
+
+    #   Failed test 'port-specific explicit refusal remains'
+    #   at t/2033-isf-record-output-source-admission.t line 147.
+    #                   'Error: interface output 'packet' output reset/default metadata requires a resolved positive integer width; '(type ...)' outputs remain deferred'
+    #     doesn't match '(?^:(?:references aggregate type|type-referenced))'
+
+    #   Failed test 'port-specific explicit refusal remains'
+    #   at t/2033-isf-record-output-source-admission.t line 147.
+    #                   'Error: interface output 'packet' output reset/default metadata requires a resolved positive integer width; '(type ...)' outputs remain deferred'
+    #     doesn't match '(?^:(?:references aggregate type|type-referenced))'
+    # Looks like you failed 3 tests of 18.
+
+#   Failed test 'output member writes type mismatch input writes lists formals and reset forms stay precise'
+#   at t/2033-isf-record-output-source-admission.t line 149.
+# Looks like you failed 2 tests of 5.
+t/2033-isf-record-output-source-admission.t .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/5 subtests 
+
+Test Summary Report
+-------------------
+t/2033-isf-record-output-source-admission.t (Wstat: 512 Tests: 5 Failed: 2)
+  Failed tests:  4-5
+  Non-zero exit status: 2
+Files=1, Tests=5,  8 wallclock secs ( 0.01 usr  0.01 sys +  5.58 cusr  2.29 csys =  7.89 CPU)
+Result: FAIL

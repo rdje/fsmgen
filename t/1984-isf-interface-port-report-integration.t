@@ -152,7 +152,7 @@ subtest 'native source reports publish scalar/imported declarations and preserve
         ['empty.isf', '(actor empty)', []],
         ['bad.isf', '(actor bad (interface (input data (width 0))))', undef],
         ['record.isf', '(actor refused (types (type frame (record (flag bit))))'
-            . ' (interface (output packet (type frame))))', undef],
+            . ' (interface (output packet (type frame))) (transaction main (set packet.flag 1)))', undef],
         ['direct.fsm', '(?fsm:direct (+system (clock clk) (areset rst_n)) (idle (-> idle)))', undef]) {
         my $path = "$work/$case->[0]"; write_file($path, $case->[1]); $path =~ s/^\Q$root\E\///;
         for my $flags ([qw(--strict --check --json)], [qw(--strict --emit-semantic-json)]) {
@@ -166,8 +166,8 @@ subtest 'native source reports publish scalar/imported declarations and preserve
             } else {
                 ok(!exists($report->{source}{interface_ports}), 'failure/unrelated source has no ISF declarations');
             }
-            like($json->encode($report->{diagnostics}), qr/interface port 'packet' references aggregate type 'frame'/,
-                'record output source retains contextual refusal') if $case->[0] eq 'record.isf';
+            like($json->encode($report->{diagnostics}), qr/record output field writes are not yet admitted/,
+                'record output field writer retains contextual refusal') if $case->[0] eq 'record.isf';
         }
     }
 };

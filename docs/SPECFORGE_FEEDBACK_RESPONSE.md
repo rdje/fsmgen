@@ -115,9 +115,14 @@ and book.
   profile preparation `.3.4.2` now qualifies precise prepared output refusals
   for `verilog`/`v` and `vhdl`, with actor/output/type reasons and SystemVerilog
   guidance. Existing input diagnostics, schedule preview and scalar/storage
-  controls remain qualified. Declaration/whole-copy integration `.3.4.3` is
-  next, followed by public reconciliation `.3.4.4`. Record-output authoring and
-  generated handoff mappings stay refused until their integration gates qualify.
+  controls remain qualified. Declaration/whole-copy integration `.3.4.3` now
+  admits local/imported/alias/mixed/unused record outputs, exact-type whole
+  copies and scalar reads/samples through mandatory per-module physical writer
+  admission. Actual direct/domain carriers strictly replay. Unproved overlapping
+  independent writers refuse in both lower and report, including domain-local
+  writers; equal values/entry guards/priority do not arbitrate. Output member
+  writes and generated handoff mappings retain their separate gates. Complete
+  public reconciliation `.3.4.4` is next, with output execution still `.3.5`.
   The full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

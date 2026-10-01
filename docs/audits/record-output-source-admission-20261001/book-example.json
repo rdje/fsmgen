@@ -1,0 +1,86 @@
+{
+   "check_schema_version" : 1,
+   "command" : {
+      "json" : true,
+      "mode" : "check",
+      "strict_mode" : true,
+      "target_language" : "systemverilog"
+   },
+   "diagnostic_summary" : {
+      "code_counts" : {},
+      "codes" : [],
+      "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+      "diagnostic_count" : 0,
+      "diagnostic_summary_schema_version" : 1,
+      "has_diagnostics" : false,
+      "has_stable_codes" : false,
+      "matched_support_accounting" : false,
+      "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+      "severity_counts" : {},
+      "success" : true,
+      "unique_codes" : []
+   },
+   "diagnostics" : [],
+   "generated_output" : {
+      "emitted" : false
+   },
+   "producer" : {
+      "name" : "FSMGen",
+      "report_source" : "FSM::Support::CheckDiagnostics"
+   },
+   "result" : {
+      "composition_child_count" : null,
+      "module_name" : "record_output_example",
+      "signal_count" : 4,
+      "state_count" : 5
+   },
+   "source" : {
+      "input" : ".artifacts/record-output-source/book-example.isf",
+      "interface_ports" : [
+         {
+            "direction" : "input",
+            "name" : "start",
+            "width" : 1
+         },
+         {
+            "direction" : "output",
+            "fields" : [
+               {
+                  "lsb" : 3,
+                  "msb" : 4,
+                  "path" : "tag",
+                  "signed" : 0,
+                  "width" : 2
+               },
+               {
+                  "lsb" : 0,
+                  "msb" : 2,
+                  "path" : "payload",
+                  "signed" : 0,
+                  "width" : 3
+               }
+            ],
+            "name" : "packet",
+            "type" : "frame",
+            "type_kind" : "record",
+            "width" : 5
+         },
+         {
+            "direction" : "output",
+            "name" : "done",
+            "width" : 1
+         }
+      ],
+      "reset_provenance" : [
+         {
+            "domain" : null,
+            "origin" : "legacy_default"
+         }
+      ],
+      "resolved_path" : "<repo>/.artifacts/record-output-source/book-example.isf"
+   },
+   "success" : true,
+   "support_accounting" : {
+      "matched" : false
+   }
+}

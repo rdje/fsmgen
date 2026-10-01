@@ -305,7 +305,7 @@ my @required_non_claims = (
     'DEEPER-nested cross-domain',
     'Dynamic division/modulo nonzero proof is not shipped',
     'Enum members are not writable targets',
-    'Record output ports',
+    'Record output member writes',
     'root-list interface ports',
     'Backlog resource kinds',
     'Actor-level phase and stage metadata is report-only',

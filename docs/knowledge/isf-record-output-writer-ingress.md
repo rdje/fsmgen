@@ -32,7 +32,8 @@ reverify: >-
   t/1969-isf-implicit-write-targets.t
 ---
 
-At selected input signoff, authored local/imported record outputs still refuse.
+At the captured selected input signoff, authored local/imported record outputs
+refused.
 Existing resolved role/type/copy helpers include outputs, but source contexts are
 called under an input-only gate. Output-only admission must wire mandatory
 context/domain/profile checks and closed physical writer ownership first.
@@ -85,6 +86,7 @@ also admissible. Same active-container duplicate writes, state/DT pairs and
 independent source owners have no inferred exclusion; timed operators do not
 inherit ordinary state-write qualification. Equal RHS, complementary conditions,
 entry guards, priorities and declaration permutations cannot arbitrate. T2030
-qualifies these boundaries and unchanged native authored-output refusal. This
-private consumer grants neither source support nor independent runtime
-reachability. Output-only/mixed context and domain prerequisites are qualified under `.60.4.3.3.4.1`; see [the scoped-source card](isf-record-output-source-contexts.md). Unsupported target profiles are prepared under `.3.4.2`; see [the output-profile card](isf-record-output-hdl-profiles.md). Actual declaration/whole-copy and public integration remain `.3.4.3`–`.3.4.4`.
+qualifies the private rules; the old declaration-refusal witness now checks
+the still-closed authored field-write boundary. Mandatory public source
+integration under .3.4.3 reuses these rules on every actual bound module; the
+private inventory alone grants no publication or independent runtime reachability. Output-only/mixed context and domain prerequisites are qualified under `.60.4.3.3.4.1`; see [the scoped-source card](isf-record-output-source-contexts.md). Unsupported target profiles are prepared under `.3.4.2`; see [the output-profile card](isf-record-output-hdl-profiles.md). Actual declaration/whole-copy integration `.3.4.3` now admits bounded source and strict carriers; see [source admission](isf-record-output-source-admission.md). Complete public reconciliation remains `.3.4.4`.

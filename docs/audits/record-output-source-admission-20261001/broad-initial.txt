@@ -1,0 +1,51 @@
+ram-guard: PID 10412; host 75.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1983-isf-interface-port-metadata.t .............. ok
+t/1984-isf-interface-port-report-integration.t .... ok
+t/1985-isf-interface-port-public-qualification.t .. ok
+t/1987-isf-record-port-declaration-scopes.t ....... ok
+
+    #   Failed test 'complete projection has only the selected consumer maps'
+    #   at t/1989-isf-record-port-root-classification.t line 43.
+    #     Structures begin differing at:
+    #          $got->[5] = 'scalar_parameter_roots'
+    #     $expected->[5] = Does not exist
+    # Looks like you failed 1 test of 13.
+
+#   Failed test 'actual declarations produce one coherent consumer projection'
+#   at t/1989-isf-record-port-root-classification.t line 60.
+# Looks like you failed 1 test of 6.
+t/1989-isf-record-port-root-classification.t ...... 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/6 subtests 
+t/1990-isf-record-port-sample-facts.t ............. ok
+t/1991-isf-record-port-sample-contexts.t .......... ok
+t/1997-isf-record-port-gate-integration.t ......... ok
+
+    #   Failed test 'output refuses before successful lowering'
+    #   at t/1998-isf-record-input-source-admission.t line 94.
+
+    #   Failed test 'output names the first contextual cause'
+    #   at t/1998-isf-record-input-source-admission.t line 95.
+    #                   ''
+    #     doesn't match '(?^:interface port 'packet' references aggregate type)'
+    # Looks like you failed 2 tests of 10.
+
+#   Failed test 'unqualified aggregate carriers and unknown aliases stay closed'
+#   at t/1998-isf-record-input-source-admission.t line 180.
+# Looks like you failed 1 test of 5.
+t/1998-isf-record-input-source-admission.t ........ 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/5 subtests 
+t/2014-isf-record-input-public-sources.t .......... ok
+t/2016-isf-record-input-public-refusals.t ......... ok
+
+Test Summary Report
+-------------------
+t/1989-isf-record-port-root-classification.t    (Wstat: 256 Tests: 6 Failed: 1)
+  Failed test:  1
+  Non-zero exit status: 1
+t/1998-isf-record-input-source-admission.t      (Wstat: 256 Tests: 5 Failed: 1)
+  Failed test:  5
+  Non-zero exit status: 1
+Files=11, Tests=94, 754 wallclock secs ( 0.14 usr  0.04 sys + 514.29 cusr 213.77 csys = 728.24 CPU)
+Result: FAIL

@@ -1,0 +1,2 @@
+ram-guard: PID 31940; host 77.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Actual source and matching source-derived prototype writer products captured without HDL execution.

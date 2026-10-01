@@ -169,7 +169,7 @@ subtest 'unbound generated outputs remain closed for record and ordinary sources
 
 subtest 'unqualified aggregate carriers and unknown aliases stay closed' => sub {
     for my $case (
-        ['output', '(actor refused (types (type frame (record (flag bit)))) (interface (output packet (type frame))))', qr/interface port 'packet' references aggregate type/],
+        ['output field', '(actor refused (types (type frame (record (flag bit)))) (interface (output packet (type frame))) (transaction main (set packet.flag 1)))', qr/record output field writes are not yet admitted/],
         ['root list', '(actor refused (types (type lanes (list bit bit))) (interface (input packet (type lanes))))', qr/interface port 'packet' references aggregate type/],
         ['transaction', '(actor refused (types (type frame (record (flag bit)))) (transaction main (ports (input packet (type frame)))))', qr/transaction 'main' port 'packet' references aggregate type/],
         ['unknown alias', '(actor refused (interface (input packet (type missing))))', qr/interface port 'packet' references unknown type 'missing'/],

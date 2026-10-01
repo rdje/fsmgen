@@ -82,7 +82,11 @@ the same declaration. Unknown aliases fail before lowering.
 Packed `list` and `record` aliases are accepted on actor-owned storage variables.
 Packed records also support actor input ports, as described below.
 
-Record-output authoring remains closed while writer admission is qualified.
+Record-output declarations and exact-type whole copies are now source-admitted.
+Their complete public/generated/backend execution qualification remains open.
+The mandatory scheduler gate applies the qualified conservative writer rules
+to each actual bound module before publishing a schedule or scheduled `.fsm`;
+a multi-domain actor is checked through its separate owning domain modules.
 The preparatory inventory matches each resolved output declaration to its actual
 module port and joins every write to its packed range, explicit source owner
 and activation conditions. A whole output overlaps each of its members;
@@ -95,7 +99,8 @@ writer or ordinary `<-` assignments in different states of one explicitly owned
 transaction controller, together with disjoint physical targets. Overlapping
 independent writers, duplicate writes in one active state or DT, and timed
 operators have no inferred compatibility or exclusion. Caller-supplied filtered
-writer lists are refused. This preparatory gate is not yet source admission.
+writer lists are refused. The private inventory can inspect unresolved writer combinations; public
+scheduling and emission must pass admission.
 Generated output mappings remain closed until their handoff mapping is qualified. See the
 [inventory evidence](../../../docs/audits/record-output-writer-inventory-20261001/scope.txt).
 The [admission evidence](../../../docs/audits/record-output-admission-20261001/scope.txt)
@@ -108,18 +113,48 @@ samples preserve the leaf's width, signedness and state model in a private alias
 they cannot replace an existing declaration. Output record fields retain their
 owning clock domain, so a read in another domain requires an explicit crossing.
 The source policy keeps output member writes closed while preserving scalar
-output slices and the prepared type toolkit's member facts. These checks do not
-open authored output declarations or qualify output execution. See the
+output slices and the prepared type toolkit's member facts. These checks now guard authored output declarations and whole copies; they do
+not qualify output execution. See the
 [source-context evidence](../../../docs/audits/record-output-source-contexts-20261001/scope.txt).
 
-The shared HDL profile guard is also prepared for resolved record outputs.
+The shared HDL profile guard also applies to authored record outputs.
 Unsupported `verilog`/`v` and `vhdl` requests name the actor, output and authored
 type and recommend `systemverilog`. Mixed Verilog interfaces preserve the
 existing input diagnostic priority. The old input-only helper retains its
-contract, and target-neutral schedule preview stays available. Actual output
-source/public qualification still follows declaration and writer integration;
-these profile tests do not open output syntax or establish runtime support.
+contract, and target-neutral schedule preview stays available. Complete output public/backend qualification follows the current source
+integration; these profile tests do not establish runtime support.
 See the [profile evidence](../../../docs/audits/record-output-hdl-profiles-20261001/scope.txt).
+
+
+A whole copy can publish actor-owned storage through a declared record output:
+
+```lisp
+(actor record_output_example
+ (clock clk)
+ (types (type frame (record (tag (bits 2)) (payload (bits 3)))))
+ (interface (input start) (output packet (type frame)) (output done))
+ (storage (var held (type frame)))
+ (transaction main
+  (on start)
+  (set held.tag 1)
+  (set held.payload 5)
+  (set packet held)
+  (complete done)))
+```
+
+The output keeps the existing type alias and packing. Output-to-storage and
+output-to-output whole copies are also permitted when their complete resolved
+record types match and declared roles allow the read/write. Matching width alone
+is insufficient. Scalar output-field reads and explicit scalar captures retain
+the leaf's exact type. Undriven outputs promise no value. Typed output reset and
+default options, whole-record inferred captures and root-list/formal aggregates
+remain closed. Output member writes retain their separate qualification gate.
+Independent overlapping output writers refuse even with equal values, different
+entry guards or a priority declaration. Generated record-output mappings remain
+closed until their handoff qualification. Actual local/imported/alias/mixed,
+reverse-copy and owning-domain carriers strictly replay; this establishes source
+and carrier admission, with execution still pending. See the
+[source-integration evidence](../../../docs/audits/record-output-source-admission-20261001/scope.txt).
 
 ```lisp
 (storage
@@ -332,12 +367,11 @@ named producers and fixed scalar/storage controls. Historical compatibility
 comparisons permit only independently qualified additive metadata, exact source
 relocation and emitted date banners. HDL execution remains separately qualified.
 
-Record outputs, root-list input ports, transaction-local aggregate ports,
-aggregate banks and variants remain deferred. Output copies/member writes keep
-their separately owned writer prerequisites. Output delivery is now selected
-under SEM `.60.4.3.3`: imported physical-declaration tokens are repaired; qualify
-scoped whole-output writer admission, then admit and independently qualify
-record outputs/copies. Current output authoring remains refused. Whole-root and
+Record output declarations and exact-type whole copies are source-admitted
+under SEM `.60.4.3.3.4.3`. Output member writes, root-list actor ports,
+transaction-local aggregate ports, aggregate banks and variants remain deferred.
+Complete output public reconciliation `.3.4.4` and generated/backend execution
+qualification `.3.5` remain open. Whole-root and
 member writes must be compared by their packed ranges and actual owners; an
 empty conflict report does not establish compatibility. No implicit arbitration
 is added. Output-field admission remains the next separate lane.
@@ -403,7 +437,7 @@ precise VHDL refusals below. Final public/corpus reconciliation `.5.5.2` qualifi
 supplied sources, complete discovery, current catalog and JSON kinds, preserving
 the unchanged full-cohort and prior evidence. Independent input signoff
 `.5.5.3.2.3` closes the selected input portions of R1–R3 against their exact
-source, public, profile and original native evidence. Record outputs and their
+source, public, profile and original native evidence. Record-output execution and
 field writers, complete SPECFORGE aggregate delivery, X/Z behavior and historical
 native causality remain separate obligations.
 
@@ -650,7 +684,7 @@ record/list fail before lowering.
 | Named drive-call expression operand | `(drive publish (+ frame.mode mode_in))` | Aggregate leaf is valid as a scalar operand. |
 
 Aggregate paths in expression operator position remain rejected. Subaggregate
-operands, subaggregate updates, whole-record/whole-list truthiness, record-output and root-list
+operands, subaggregate updates, whole-record/whole-list truthiness, record-output member writes and root-list
 interface ports, transaction-local aggregate ports, aggregate storage banks,
 aggregate field/slice/update lowering beyond scalar leaves, and broader shape
 inference remain backlog.
@@ -800,9 +834,9 @@ the enum only contributes review metadata in this example.
 bit)))` declares a packed record alias with two members. `(storage
 (var frame (type frame_t)))` declares one actor-owned scalar
 storage `frame` whose width comes from the packed sum (`2 + 1 = 3`
-bits). Packed record aliases are also admitted on actor input ports under the
-record-input contract above. Record outputs, root-list inputs and transaction
-aggregate ports remain deferred. The
+bits). Packed record aliases are also admitted on actor input/output ports under the
+bounded record-port contracts above. Output member writes, root-list actor ports
+and transaction aggregate ports remain deferred. The
 scheduled `.fsm` keeps the alias `frame_t` in typed `+size`
 entries and the schedule report exposes the storage item with its
 packed width, authored type, and resolved `type_kind` (`record`).

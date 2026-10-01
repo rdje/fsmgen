@@ -13,7 +13,10 @@ Goal: let ISF use the same enum, type, and aggregate variable capability that
 
 Current boundary: ISF now ships scalar type aliases for width-bearing actor
 interface ports, transaction ports, and actor-owned storage, plus packed
-`list`/`record` aliases on actor-owned storage variables only.
+`list`/`record` aliases on actor-owned storage variables and qualified packed
+record actor inputs. Record output declarations and whole copies have bounded
+source/carrier admission under SEM `.60.4.3.3.4.3`; their complete public/generated/
+execution qualification remains open. Output member writes retain a separate gate.
 
 Actor bodies may carry `(types ...)` declarations whose payloads map directly
 to `.fsm` `+types`; existing `.fsm` packages may be referenced with `(imports
@@ -141,7 +144,8 @@ scalar values/expression operands, drive target tokens, drive body RHS scalar
 values/expression operands, inline drive target tokens, inline drive
 assignment RHS scalar values/expression operands, or drive-call actual scalar
 values/expression operands, subaggregate operands/updates, aggregate
-interface or transaction ports, aggregate storage banks, enum member
+root-list actor or transaction aggregate ports, record-output member writes,
+aggregate storage banks, enum member
 references in contexts not explicitly listed above as shipped, aggregate
 field/slice/update lowering, and broader aggregate shape inference require
 future task-tree ownership before they can ship.

@@ -1,0 +1,2 @@
+ram-guard: PID 81629; host 83.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Exact old/new resolved output profile and metadata decisions authenticate unsupported output reasons, legacy input bytes and input priority. Parser/lowering and prior sealed evidence are unchanged; full regression/docs/book receipts authenticate. Hostile success, cause, priority and width substitutions reject. No output source or HDL promotion.

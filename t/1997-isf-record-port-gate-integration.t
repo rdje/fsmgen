@@ -135,14 +135,14 @@ subtest 'formal and executable source preparation share contextual admission' =>
     }
 };
 
-subtest 'ordinary public authoring still refuses record outputs' => sub {
+subtest 'ordinary public authoring still refuses record output field writes' => sub {
     my $source = $header;
     $source =~ s/\(var packet \(type frame\)\)//;
     $source =~ s/\(input start\)/\(input start\) \(output packet \(type frame\)\)/;
-    my ($ok, $error) = first_error(sub { $parser->parse_source($source . ')', 'still-refused.isf') });
-    ok(!$ok, 'public record output remains deferred');
-    like($error, qr/interface port 'packet' references aggregate type 'frame'/,
-        'record-output refusal stays precise');
+    my ($ok, $error) = first_error(sub { $parser->parse_source($source . '(transaction main (set packet.data 1)))', 'field-refused.isf') });
+    ok(!$ok, 'public record output field writes remain deferred');
+    like($error, qr/record output field writes are not yet admitted/,
+        'record-output field refusal stays precise');
 };
 
 done_testing;

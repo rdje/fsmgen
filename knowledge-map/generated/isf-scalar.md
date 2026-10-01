@@ -1,13 +1,14 @@
 # Knowledge Map: `isf-scalar`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **4** uniquely owned question entries.
+> **2** facts · **5** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="how do public record-input refusals preserve their error contracts?" · facts=[isf-scalar-drive-parameter-member-validation](../../docs/knowledge/isf-scalar-drive-parameter-member-validation.md)
 - q="which project inputs does an isolated historical scalar alias test need?" · facts=[isf-scalar-alias-private-formal-regression](../../docs/knowledge/isf-scalar-alias-private-formal-regression.md)
 - q="why did a scalar drive parameter masking a record accept member access?" · facts=[isf-scalar-drive-parameter-member-validation](../../docs/knowledge/isf-scalar-drive-parameter-member-validation.md)
+- q="why did root classification reject the scalar parameter context map?" · facts=[isf-scalar-drive-parameter-member-validation](../../docs/knowledge/isf-scalar-drive-parameter-member-validation.md)
 - q="why did the scalar type alias regression expect wrong transaction carrier names?" · facts=[isf-scalar-alias-private-formal-regression](../../docs/knowledge/isf-scalar-alias-private-formal-regression.md)
 
 ## Facts

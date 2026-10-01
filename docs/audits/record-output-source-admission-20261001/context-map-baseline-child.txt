@@ -1,0 +1,84 @@
+ram-guard: PID 19016; host 52.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+# Subtest: actual declarations produce one coherent consumer projection
+    not ok 1 - complete projection has only the selected consumer maps
+    #   Failed test 'complete projection has only the selected consumer maps'
+    #   at .artifacts/record-output-source/baseline-root-classification.t line 43.
+    #     Structures begin differing at:
+    #          $got->[5] = 'scalar_parameter_roots'
+    #     $expected->[5] = Does not exist
+    ok 2 - values are declarations rather than inferred assignment/constant names
+    ok 3 - actor aggregates retain resolved identities
+    ok 4 - aggregate roots prevent namespace interpretation
+    ok 5 - actual local enum families remain namespaces
+    ok 6 - independent rule-declaration witness includes actor statics and system pins
+    ok 7 - scalar pin can share enum family name
+    ok 8 - declared record wins over same-named enum family
+    ok 9 - unknown member remains with declared path validator
+    ok 10 - unknown enum member remains with enum validator
+    ok 11 - scalar bit/slice root retains declaration
+    ok 12 - unknown namespace does not invent a declaration
+    ok 13 - literal is not a declaration reference
+    1..13
+    # Looks like you failed 1 test of 13.
+not ok 1 - actual declarations produce one coherent consumer projection
+#   Failed test 'actual declarations produce one coherent consumer projection'
+#   at .artifacts/record-output-source/baseline-root-classification.t line 60.
+# Subtest: nearest formal and local scopes suppress borrowed aggregate namespaces
+    ok 1 - scalar formal removes outer aggregate from traversal roots
+    ok 2 - shadowed outer record remains excluded from enum fallback
+    ok 3 - formal path is not borrowed enum token
+    ok 4 - scalar formal member access refuses
+    ok 5 - scalar formal member access names its first-line cause
+    ok 6 - formal slice uses its independent local width
+    ok 7 - transaction local cannot become an actor rule read operand
+    ok 8 - unresolved type stays unknown
+    ok 9 - unresolved formal still masks namespace and outer layout
+    ok 10 - unknown fact is delegated without invented type
+    1..10
+ok 2 - nearest formal and local scopes suppress borrowed aggregate namespaces
+# Subtest: drive and supplied record pin scopes retain real declaration roles
+    ok 1 - parameter masks outer record
+    ok 2 - untyped parameter cannot borrow enum member
+    ok 3 - supplied record declaration keeps input role
+    ok 4 - record pins and storage share resolved traversal facts
+    ok 5 - declared input field refuses
+    ok 6 - declared input field names its first-line cause
+    1..6
+ok 3 - drive and supplied record pin scopes retain real declaration roles
+# Subtest: package namespace and named-domain rules retain existing owners
+    ok 1 - package enum is not a scalar-pin member
+    ok 2 - package constant remains with existing static/value validator
+    ok 3 - actual imported enum remains in package namespace
+    ok 4 - actual imported constant retains its package owner
+    ok 5 - actual imported aggregate retains equivalent resolved traversal facts
+    ok 6 - independent named-domain clock/reset declaration witness
+    ok 7 - system names are not invented value/type roots
+    1..7
+ok 4 - package namespace and named-domain rules retain existing owners
+# Subtest: fresh copied facts stay detached across every consumer map
+    ok 1 - first complete projection preserves caller JSON kinds
+    ok 2 - mutating any projection leaves source facts unchanged
+    ok 3 - traversal map is detached from value map within projection
+    ok 4 - first complete projection preserves caller JSON kinds
+    ok 5 - mutating any projection leaves source facts unchanged
+    ok 6 - traversal map is detached from value map within projection
+    ok 7 - first complete projection preserves caller JSON kinds
+    ok 8 - mutating any projection leaves source facts unchanged
+    ok 9 - traversal map is detached from value map within projection
+    1..9
+ok 5 - fresh copied facts stay detached across every consumer map
+# Subtest: closed context selection and current source admission remain unchanged
+    ok 1 - ambiguous lexical selection refuses
+    ok 2 - ambiguous lexical selection names its first-line cause
+    ok 3 - unknown context argument refuses
+    ok 4 - unknown context argument names its first-line cause
+    ok 5 - missing classification maps refuses
+    ok 6 - missing classification maps names its first-line cause
+    ok 7 - existing contextual consumer uses common projection
+    ok 8 - complete parsed source unchanged
+    ok 9 - authored record output still refused refuses
+    ok 10 - authored record output still refused names its first-line cause
+    1..10
+ok 6 - closed context selection and current source admission remain unchanged
+1..6
+# Looks like you failed 1 test of 6.

@@ -9,6 +9,7 @@
   (input  name (width CONST))
   (input  name (type PACKED_RECORD_ALIAS))
   (output name)
+  (output name (type PACKED_RECORD_ALIAS))
   (output name (width N))
   (output name (width PARAM))
   (output name (width CONST))
@@ -87,7 +88,20 @@ including member names/order, nested shape, scalar kind/width, signed and
 optional state-model properties. Input writes, whole-record scalar operations,
 invalid paths and unsupported contexts fail before successful lowering.
 Declared domain ownership and nearest scalar formal/parameter masks still apply.
-Record outputs, root-list inputs and transaction aggregate ports remain deferred.
+Packed record actor outputs now accept the same local/imported aliases and
+whole same-type copies involving permitted actor port/storage roles. Input
+writes remain forbidden. Scalar field reads and explicit scalar samples retain
+exact leaf types; whole inferred record samples remain closed. Mandatory writer
+admission applies after binding to each actual module, including its owning
+clock-domain realization, before schedule or scheduled-FSM publication. Sole
+writers, disjoint physical targets and ordinary ordered states of one explicit
+controller admit; unproved independent overlap refuses without arbitration.
+Output member writes, generated output mappings, root-list actor ports and
+transaction aggregate ports remain deferred. Typed output reset/default forms
+keep their existing explicit refusal. Complete output public/backend execution
+qualification remains separately owned; source/carrier admission is not runtime
+qualification. Unsupported verilog/v and vhdl record-output HDL requests name
+actor/output/type/target and recommend SystemVerilog before publication.
 Record-input source acceptance is target-neutral. The qualified direct/generated
 HDL profile is SystemVerilog. Saved behavior observations exercise both emitter
 options with SystemVerilog syntax enabled; the historical `verilog` option

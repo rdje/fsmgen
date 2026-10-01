@@ -66,8 +66,8 @@ $foreign =~ s/\(input packet \(type frame\)\)/\(input packet (type frame) (domai
 push @cases, ['foreign_domain', $foreign . '(transaction main (on start) (set seen packet.payload.data)))',
     qr/clock-domain violation: .* read signal 'packet.payload.data' owned by domain 'aux' from domain 'core'/];
 for my $case (
-    ['record_output', '(types (type frame (record (flag bit)))) (interface (output packet (type frame)))',
-        qr/interface port 'packet' references aggregate type/],
+    ['record_output_field', '(types (type frame (record (flag bit)))) (interface (output packet (type frame))) (transaction main (set packet.flag 1))',
+        qr/record output field writes are not yet admitted/],
     ['root_list', '(types (type lanes (list bit bit))) (interface (input packet (type lanes)))',
         qr/interface port 'packet' references aggregate type/],
     ['transaction_record', '(types (type frame (record (flag bit)))) (transaction main (ports (input packet (type frame))))',

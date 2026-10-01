@@ -1,0 +1,11 @@
+(actor record_output_example
+ (clock clk)
+ (types (type frame (record (tag (bits 2)) (payload (bits 3)))))
+ (interface (input start) (output packet (type frame)) (output done))
+ (storage (var held (type frame)))
+ (transaction main
+  (on start)
+  (set held.tag 1)
+  (set held.payload 5)
+  (set packet held)
+  (complete done)))

@@ -1,0 +1,19 @@
+ram-guard: PID 49797; host 85.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Unknown regexp modifier "/e" at t/2033-isf-record-output-source-admission.t line 147, at end of line
+Unknown regexp modifier "/f" at t/2033-isf-record-output-source-admission.t line 147, at end of line
+Regexp modifiers "/d" and "/a" are mutually exclusive at t/2033-isf-record-output-source-admission.t line 147, at end of line
+Regexp modifiers "/d" and "/u" are mutually exclusive at t/2033-isf-record-output-source-admission.t line 147, at end of line
+Regexp modifiers "/d" and "/l" are mutually exclusive at t/2033-isf-record-output-source-admission.t line 147, at end of line
+Unknown regexp modifier "/t" at t/2033-isf-record-output-source-admission.t line 147, at end of line
+Unmatched ( in regex; marked by <-- HERE in m/( <-- HERE ?:references aggregate type|output reset/ at t/2033-isf-record-output-source-admission.t line 147.
+t/2033-isf-record-output-source-admission.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+No subtests run 
+
+Test Summary Report
+-------------------
+t/2033-isf-record-output-source-admission.t (Wstat: 65280 Tests: 0 Failed: 0)
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=0,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.30 cusr  0.04 csys =  0.36 CPU)
+Result: FAIL

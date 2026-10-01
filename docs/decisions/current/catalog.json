@@ -1204,15 +1204,15 @@
     },
     {
       "content": {
-        "bytes": 32766,
+        "bytes": 32771,
         "line_bytes": 795,
         "lines": 474,
-        "sha256": "5733d711157b2656977c825200abce92eeb03f10b4fbfc5d11c6f9bb3a17c44f"
+        "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
       },
       "id": "0113",
       "metadata": {
         "authority_status": [
-          "- Status: input authoring admitted; complete input/output and consumer qualification remain open"
+          "- Status: bounded input/output authoring admitted; complete output/consumer qualification remain open"
         ],
         "knowledge_id": "isf-aggregate-port-contract-selection",
         "knowledge_status": "current",

@@ -130,10 +130,10 @@ subtest 'local imported record empty and domain declarations preserve complete t
     }
 };
 
-subtest 'record output, list, malformed and unrelated sources retain their public boundaries' => sub {
+subtest 'record output fields, list, malformed and unrelated sources retain their public boundaries' => sub {
     for my $case (
-        ['record', '(actor refused (types (type frame (record (flag bit)))) (interface (output packet (type frame))))',
-            qr/interface port 'packet' references aggregate type 'frame'/],
+        ['record', '(actor refused (types (type frame (record (flag bit)))) (interface (output packet (type frame))) (transaction main (set packet.flag 1)))',
+            qr/record output field writes are not yet admitted/],
         ['list', '(actor refused (types (type array_t (list bit bit))) (interface (input packet (type array_t))))',
             qr/interface port 'packet' references aggregate type 'array_t'/],
         ['width', '(actor refused (interface (input packet (width UNKNOWN))))', qr/interface port 'packet' width token 'UNKNOWN'/],

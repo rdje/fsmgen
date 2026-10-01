@@ -57,5 +57,7 @@ readonly/shadow/alias/omission controls, complete caller JSON and the exact
 domain message falsify broader interpretations. Full source/IR/receipts,
 baseline objects, sealed verification, the task tree and Git provide durability.
 Input public/context/sample/carrier/ownership/replay contracts pass current
-checks. Authored outputs, output fields, generated mappings and output execution
-remain separately gated under SEM .60.4.3.3.4-.5 and .60.4.3.4.
+checks. SEM .60.4.3.3.4.3 now integrates authored output declarations and whole
+copies; see [source admission](isf-record-output-source-admission.md). Complete
+public/generated/execution and output field qualification remain .3.4.4-.5
+and .60.4.3.4. The original preparation evidence is immutable.

@@ -1,0 +1,176 @@
+use strict;
+use warnings;
+use lib 'perl', 't/lib';
+use Test::More;
+use File::Temp qw(tempdir);
+use JSON::PP;
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::SourceQueryRunner;
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
+
+my $work=tempdir(CLEANUP=>1);
+my $json=JSON::PP->new->canonical;
+my $parser=FSM::Adapter::ISF->new;
+my $scheduler=FSM::Scheduler::ISF->new;
+my $record='(record (tag (bits 2)) (body (record (data (signed (four_state (bits 3)))) (flag bit))))';
+write_file("$work/shared.fsm",'(?pkg:shared (+types (type frame '.$record.')))');
+my $fields=[
+    {path=>'tag',width=>2,msb=>5,lsb=>4,signed=>0},
+    {path=>'body.data',width=>3,msb=>3,lsb=>1,signed=>1,state_model=>'four_state'},
+    {path=>'body.flag',width=>1,msb=>0,lsb=>0,signed=>0},
+];
+
+subtest 'actual local imported alias mixed unused and reverse whole-copy sources strictly replay' => sub {
+    for my $case (
+        ['local','(transaction main (on start) (set packet held) (wait 1) (set packet held) (complete done))'],
+        ['imported','(transaction main (on start) (set packet held) (complete done))'],
+        ['alias','(transaction main (on start) (set packet held) (complete done))'],
+        ['mixed','(transaction main (on start) (set held incoming) (set packet held) (complete done))'],
+        ['reverse','(transaction main (on start) (set held packet) (set echo packet) (complete done))'],
+        ['unused',''],
+    ) {
+        my ($name,$body)=@$case;
+        my ($text,$type)=source($name,$body);
+        my $path="$work/$name.isf";write_file($path,$text);
+        my $actor;
+        my $ok=eval {$actor=$parser->parse_file($path);1};
+        ok($ok,"$name authored output source parses") or diag((split /\n/,$@)[0] // '');
+        next unless $ok;
+        my $before=$json->encode($actor);
+        my ($packet)=grep {$_->{name} eq 'packet'} @{$actor->{interface_port_metadata}};
+        is_deeply($packet,{name=>'packet',direction=>'output',width=>6,type=>$type,type_kind=>'record',fields=>$fields},
+            "$name literal complete record-output metadata");
+        my $product;
+        $ok=eval {$product=$scheduler->lower($actor);1};
+        ok($ok,"$name mandatory realized writer admission permits qualified source") or diag((split /\n/,$@)[0] // '');
+        next unless $ok;
+        my $report=$json->decode($scheduler->report($actor));
+        is_deeply([grep {$_->{name} eq 'packet'} @{$report->{interface_ports}}],[$packet],
+            "$name schedule preserves exact authored output declaration");
+        is($json->encode($actor),$before,"$name complete first-touch caller JSON unchanged");
+        mkdir "$work/$name" or die $!;
+        for my $file(sort keys %{$product->{files}}) {
+            my $path="$work/$name/$file";
+            write_file($path,$product->{files}{$file});
+            my $checked=capture([$^X,'bin/fsmgen','--strict','--quiet','--check','--json',$path]);
+            is($checked->{exit_code},0,"$name/$file actual typed carrier strictly replays") or diag($checked->{stdout},$checked->{stderr});
+            is($checked->{signal},0,"$name/$file carrier check terminates normally");
+            ok($json->decode($checked->{stdout})->{success},"$name/$file strict carrier success");
+        }
+        like($product->{files}{"source_$name.fsm"},qr/\(packet \Q$type\E\)/,"$name keeps authored output alias in size carrier");
+    }
+};
+
+subtest 'output scalar samples and reads preserve exact alias type' => sub {
+    my ($text)=source('sample','(transaction main (on start (sample packet.body.data as captured)) (set seen captured) (complete done))');
+    my $actor=$parser->parse_source($text,"$work/sample.isf");
+    my $ir=$scheduler->{ir}->build_module($actor);
+    my $alias=$ir->{signal_type_refs}{captured};
+    ok(defined($alias),'actual authored output sample has private resolved type');
+    is_deeply([grep {$_->[1] eq $alias} @{$ir->{type_declarations}}],
+        [['type',$alias,['four_state',['signed',['bits',3]]]]],'literal signed three-bit four-state capture is retained');
+    ok($scheduler->lower($actor),'output-derived scalar use retains mandatory writer path');
+};
+
+subtest 'mandatory lower and report cannot publish overlapping independent output writers' => sub {
+    for my $body (
+        '(transaction left (on start) (set packet held)) (transaction right (on other) (set packet held))',
+        '(transaction left (when start (sample start as yes)) (set packet held)) (transaction right (when (! start) (sample start as no)) (set packet held))',
+        '(transaction left (on start) (set packet held)) (transaction right (on other) (set packet held)) (priority left over right)',
+    ) {
+        my ($text)=source('overlap',$body);
+        my $actor=$parser->parse_source($text,"$work/overlap.isf");
+        my $before=$json->encode($actor);
+        for my $method(qw(lower report)) {
+            my $product;
+            my $ok=eval {$product=$scheduler->$method($actor);1};
+            ok(!$ok,"$method mandatory physical gate refuses unproved independent overlap");
+            like((split /\n/,$@)[0] // '',qr/record output 'packet' cannot admit overlapping writers/,
+                "$method primary reason names actual physical output");
+            ok(!defined($product),"$method publishes no partial scheduled product");
+        }
+        is($json->encode($actor),$before,'failed mandatory admission preserves complete actor JSON');
+    }
+};
+
+subtest 'actual domain realization admits local record output and refuses local competing writers' => sub {
+    for my $competing(0,1) {
+        my $text=domain_source($competing);
+        my $actor=$parser->parse_source($text,"$work/domains.isf");
+        for my $method(qw(lower report)) {
+            my $product;
+            my $ok=eval {$product=$scheduler->$method($actor);1};
+            if($competing) {
+                ok(!$ok,"$method domain-specific physical writer admission refuses overlap");
+                like((split /\n/,$@)[0] // '',qr/module 'domains__bus'.*record output 'packet' cannot admit overlapping writers/,
+                    'primary refusal uses actual bus module identity');
+            } else {
+                ok($ok,"$method admits actual selected domain module") or diag((split /\n/,$@)[0] // '');
+                if($ok && $method eq 'lower') {
+                    like($product->{files}{'domains__bus.fsm'},qr/\(packet frame\)/,'owning bus module retains record alias');
+                    unlike($product->{files}{'domains__core.fsm'},qr/\(packet frame\)/,'other physical module cannot acquire output layout');
+                }
+            }
+        }
+    }
+    my $text=domain_source(0);
+    $text =~ s/\(transaction publish \(domain bus\) \(on other\) \(set packet held\)\)/(transaction publish (domain core) (on start) (set seen packet.body.data))/;
+    my $ok=eval {my $actor=$parser->parse_source($text,"$work/foreign.isf");$scheduler->lower($actor);1};
+    ok(!$ok,'actual authored bus output leaf cannot be read from core');
+    like((split /\n/,$@)[0] // '',qr/read signal 'packet.body.data' owned by domain 'bus' from domain 'core'/,
+        'actual source preserves domain primary reason');
+};
+
+subtest 'output member writes type mismatch input writes lists formals and reset forms stay precise' => sub {
+    for my $case (
+        ['field','(transaction main (set packet.body.data 1))',qr/record output field writes are not yet admitted/],
+        ['literal','(transaction main (set packet 0))',qr/whole record port copy requires declared record roots/],
+        ['mismatch','(transaction main (set packet mismatch))',qr/resolved record types differ/],
+        ['input','(transaction main (set incoming held))',qr/cannot write declared input/],
+        ['formal','(transaction main (ports (input formal (type frame))))',qr/transaction 'main' port 'formal' references aggregate type/],
+        ['generated','(transaction worker (ports (output result (width 3))) (set result 1)) (transaction main (on start) (spawn worker as child (bind (output result seen))))',qr/generated record-output mappings require separate qualification/],
+    ) {
+        my ($name,$body,$reason)=@$case;
+        my ($text)=source($name eq 'input' ? 'mixed' : $name,$body);
+        my $ok=eval {my $actor=$parser->parse_source($text,"$work/$name.isf");$scheduler->lower($actor);1};
+        ok(!$ok,"$name source remains refused at its actual contract");
+        like((split /\n/,$@)[0] // '',$reason,"$name contextual primary reason");
+    }
+    for my $source (
+        '(actor closed (types (type words (list bit bit))) (interface (output packet (type words))))',
+        '(actor closed (types (type frame '.$record.')) (interface (output packet (type frame) (reset 0))))',
+        '(actor closed (types (type frame '.$record.')) (interface (output packet (type frame) (default 0))))',
+    ) {
+        my $ok=eval {$parser->parse_source($source,"$work/closed.isf");1};
+        ok(!$ok,'unqualified list-root/reset/default source form remains closed');
+        like((split /\n/,$@)[0] // '',qr/(?:references aggregate type|type-referenced)/,'port-specific explicit refusal remains');
+    }
+};
+done_testing;
+
+sub source {
+    my ($name,$body)=@_;
+    my $imported=$name eq 'imported' || $name eq 'alias';
+    my $type=$name eq 'imported' ? 'shared.frame' : 'frame';
+    my $types=$imported ? '(imports (package shared))'.($name eq 'alias' ? '(types (type frame shared.frame))' : '')
+        : '(types (type frame '.$record.') (type mismatch (record (tag (bits 2)) (body (record (data (four_state (bits 3))) (flag bit))))))';
+    my $incoming=$name eq 'mixed' ? '(input incoming (type frame))' : '';
+    my $echo=$name eq 'reverse' ? '(output echo (type frame))' : '';
+    my $mismatch=$imported ? '' : '(var mismatch (type mismatch))';
+    return ('(actor source_'.$name.' (clock clk) '.$types.' (interface (input start) (input other) '.$incoming
+        .' (output packet (type '.$type.')) '.$echo.' (output seen (width 3)) (output done))'
+        .' (storage (var held (type '.$type.')) '.$mismatch.') '.$body.')',$type);
+}
+sub domain_source {
+    my ($competing)=@_;
+    return '(actor domains (clock-domains (domain core (clock clk) :default) (domain bus (clock bus_clk)))'
+        .' (types (type frame '.$record.')) (interface (input start) (input other (domain bus))'
+        .' (output packet (type frame) (domain bus)) (output seen (width 3)))'
+        .' (storage (var held (type frame) (domain bus)))'
+        .' (transaction core_work (domain core) (on start) (set seen 1))'
+        .' (transaction publish (domain bus) (on other) (set packet held))'
+        .($competing ? ' (transaction competing (domain bus) (on other) (set packet held))' : '').')';
+}
+sub capture {FSM::Test::SourceQueryRunner::_capture($_[0],'')}
+sub write_file {open my $fh,'>:raw',$_[0] or die $!;print {$fh} $_[1] or die $!;close $fh or die $!}

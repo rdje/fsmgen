@@ -6,7 +6,8 @@ answers:
   - "does archiving a decision supersede its authority?"
   - "why do early decision files contain forwarding links?"
   - "how is decision archive reconstruction checked?"
-date: 2026-09-27
+  - "how must current decision edits synchronize the authenticated catalog?"
+date: 2026-10-01
 status: current
 tags: [memory, decisions, archive, continuity]
 evidence: docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md; docs/decisions/INDEX.md; scripts/decision_records.py; t/1923-decision-record-archive.t
@@ -30,3 +31,11 @@ index links, link destinations and affected Knowledge Map body-search commands.
 The regression test independently compares reader bytes with the fixed Git
 source and rejects planted retention and navigation defects. Root alias
 cardinality remains live file-count pressure and has a separate scheduled owner.
+
+Current decision bodies live in semantic parts under `docs/decisions/current/`.
+An edit must synchronize that ID's `content` dimensions/digest and `metadata`
+with `docs/decisions/current/catalog.json`; otherwise the reader and staged
+doctrine gate reject the changed body. `scripts/decision_records.py check`
+validates the complete worktree store; `--snapshot index --prior-snapshot HEAD
+check-continuity` verifies the staged store against its committed predecessor.
+Captured originals, compatibility pages and the transition census stay sealed.

@@ -1,0 +1,9 @@
+ram-guard: PID 7013; host 73.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2033-isf-record-output-source-admission.t .. ok
+t/2032-isf-record-output-hdl-profiles.t ...... ok
+t/2031-isf-record-output-source-contexts.t ... ok
+t/2030-isf-record-output-writer-admission.t .. ok
+t/2029-isf-record-output-writer-inventory.t .. ok
+All tests successful.
+Files=5, Tests=30, 30 wallclock secs ( 0.03 usr  0.02 sys + 19.07 cusr  8.62 csys = 27.74 CPU)
+Result: PASS

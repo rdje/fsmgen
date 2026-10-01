@@ -1,0 +1,58 @@
+ram-guard: PID 26203; host 81.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'local authored output source parses'
+    #   at t/2033-isf-record-output-source-admission.t line 38.
+    # Error: actor 'source_local' interface port 'packet' references aggregate type 'frame'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs
+
+    #   Failed test 'imported authored output source parses'
+    #   at t/2033-isf-record-output-source-admission.t line 38.
+    # Error: actor 'source_imported' interface port 'packet' references aggregate type 'shared.frame'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs
+
+    #   Failed test 'alias authored output source parses'
+    #   at t/2033-isf-record-output-source-admission.t line 38.
+    # Error: actor 'source_alias' interface port 'packet' references aggregate type 'frame'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs
+
+    #   Failed test 'mixed authored output source parses'
+    #   at t/2033-isf-record-output-source-admission.t line 38.
+    # Error: actor 'source_mixed' interface port 'packet' references aggregate type 'frame'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs
+
+    #   Failed test 'reverse authored output source parses'
+    #   at t/2033-isf-record-output-source-admission.t line 38.
+    # Error: actor 'source_reverse' interface port 'packet' references aggregate type 'frame'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs
+
+    #   Failed test 'unused authored output source parses'
+    #   at t/2033-isf-record-output-source-admission.t line 38.
+    # Error: actor 'source_unused' interface port 'packet' references aggregate type 'frame'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs
+    # Looks like you failed 6 tests of 6.
+
+#   Failed test 'actual local imported alias mixed unused and reverse whole-copy sources strictly replay'
+#   at t/2033-isf-record-output-source-admission.t line 63.
+    # No tests run!
+
+#   Failed test 'No tests run for subtest "output scalar samples and reads preserve exact alias type"'
+#   at t/2033-isf-record-output-source-admission.t line 74.
+Error: actor 'source_sample' interface port 'packet' references aggregate type 'frame'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs
+ at perl/FSM/Adapter/ISF/Parser.pm line 2879.
+	FSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x7a75cb7030), HASH(0x7a7609b6a8), HASH(0x7a76091a50), "actor 'source_sample' interface port 'packet'", "allow_record", 0) called at perl/FSM/Adapter/ISF/Parser.pm line 2820
+	FSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x7a75cb7030), HASH(0x7a7609b6a8)) called at perl/FSM/Adapter/ISF/Parser.pm line 390
+	FSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x7a75cb7030), ARRAY(0x7a6fba2840), "<repo>/.artifacts/tmp/tests/ogy"...) called at perl/FSM/Adapter/ISF/Parser.pm line 134
+	FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7a75cb7030), "(actor source_sample (clock clk) (types (type frame (record ("..., "<repo>/.artifacts/tmp/tests/ogy"...) called at perl/FSM/Adapter/ISF.pm line 72
+	FSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x7a75cb7ae0), "(actor source_sample (clock clk) (types (type frame (record ("..., "<repo>/.artifacts/tmp/tests/ogy"...) called at t/2033-isf-record-output-source-admission.t line 67
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x7a6d82a7c8), "output scalar samples and reads preserve exact alias type", CODE(0x10263d4c8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("output scalar samples and reads preserve exact alias type", CODE(0x10263d4c8)) called at t/2033-isf-record-output-source-admission.t line 74
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 25 just after 2.
+t/2033-isf-record-output-source-admission.t .. 
+Dubious, test returned 25 (wstat 6400, 0x1900)
+Failed 2/2 subtests 
+
+Test Summary Report
+-------------------
+t/2033-isf-record-output-source-admission.t (Wstat: 6400 Tests: 2 Failed: 2)
+  Failed tests:  1-2
+  Non-zero exit status: 25
+  Parse errors: No plan found in TAP output
+Files=1, Tests=2,  4 wallclock secs ( 0.01 usr  0.00 sys +  0.89 cusr  0.89 csys =  1.79 CPU)
+Result: FAIL

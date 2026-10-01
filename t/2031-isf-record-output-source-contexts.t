@@ -107,17 +107,17 @@ subtest 'output record roots participate in real clock-domain access validation'
     ok(build($same),'same-domain whole output copy remains a valid resolved prototype');
 };
 
-subtest 'caller first-touch and authored output declaration boundary remain exact' => sub {
+subtest 'caller first-touch and authored output field boundary remain exact' => sub {
     my $actor = resolved_output_prototype([['on','start'],['set','packet','held']]);
     stringify_widths($actor);
     my $before = $json->encode($actor);
     ok(validate_actor_record_contexts(actor=>$actor,whole_output_writes_only=>1),
         'string-width output-only source facts validate');
     is($json->encode($actor),$before,'first source validation preserves complete caller JSON kinds');
-    my $source='(actor closed (types (type frame '.$definition.')) (interface (output packet (type frame))))';
+    my $source='(actor closed (types (type frame '.$definition.')) (interface (output packet (type frame))) (transaction main (set packet.payload 1)))';
     eval {FSM::Adapter::ISF->new->parse_source($source,'closed.isf')};
-    like((split /\n/,$@)[0] // '',qr/interface port 'packet' references aggregate type 'frame'/,
-        'preparation does not open authored output declarations');
+    like((split /\n/,$@)[0] // '',qr/record output field writes are not yet admitted/,
+        'whole-output admission does not open authored field writes');
 };
 done_testing;
 

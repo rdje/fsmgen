@@ -1,0 +1,69 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.3
+Baseline: 0d4bb1801006235d816ebf519eb437752c303849
+
+Admit bounded actor record outputs and exact-type whole port/storage copies.
+Mandatory scheduler lower/report admission runs after binding/formal verification
+on each matching actual module; domain publication uses actual selected domain
+sources, not a combined view. The private IR builder remains inspectable for
+inventory/refusal probes. No independent writer arbitration is inferred. Fields,
+generated output mappings, inferred whole captures, lists/formals and typed
+reset/default output forms remain closed. Unsupported profiles use the committed
+shared guard before HDL publication; complete output public/profile products
+are the next unit, and no native HDL compiler/analyzer/simulation is invoked here.
+
+The same independent probe runs exact baseline Parser/Scheduler module objects
+and current code. Baseline authored outputs refuse, while baseline resolved
+source-derived prototypes publish competing writers through both public scheduler
+APIs. Current actual authored copies and unused outputs admit; overlapping actual
+and identical prototype writers refuse. Complete prototype actor/IR/inventory
+facts and sole-writer products remain identical. Full source/actor/products and
+first-touch JSON are retained. Literal layouts/counts, actual strict native source
+checks and direct/domain carrier replay qualify source admission, not execution.
+
+T2033's initial RED includes the expected declaration refusal and an uncaught
+second-subtest parse failure. The first post-integration draft fails only mistaken
+expected domain filenames and existing diagnostic wording. The first correction
+uses an unescaped slash in a regex, producing a syntax failure; preserve both
+exact drafts, then correct the delimiter and confirm syntax before rerun. Earlier
+focused success precedes added native authored-source and strict domain-carrier
+checks and a narrower resolved-record selector. Its exact contemporaneous test
+snapshot was not saved; the final complete focused band and snapshots own signoff.
+
+The broad band exposes a missed historical output-refusal case and pre-existing
+T1989 projection drift. Git pickaxe roots scalar_parameter_roots producer and
+consumer at ee81704239ca86545804eee4af357ffb3a838404. The first prove preload
+loads the harness but not the test child; its extra current-source boundary
+failure is preserved. Direct Perl child execution with exact baseline modules
+then reproduces only the stale map assertion. Correct the expected complete
+private map and check empty outer masks versus the explicit drive-formal mask.
+Scope/context production modules stay unchanged. The broad test version is
+reconstructed from the exact baseline object and saved boundary-update recipe;
+it is explicitly a reconstruction, not an original contemporaneous snapshot.
+
+The broad initial receipt ends FAIL (11 files/94 top-level assertions); its nine
+named unchanged files pass on the final production code. Separately rerunning
+the two repaired tests passes (2/11). The final output/prepared band passes
+(5/30). This split is intentional and honest, not a claimed all-green broad run.
+The initial book audit rejects its old blanket record-output non-claim literal;
+the exact deferred-member-write correction passes the final docs band (3/310).
+Book builds; its exact new source example passes native strict JSON check.
+
+Original sealed profile/context/inventory/admission evidence stays unchanged.
+Full current/baseline changed test/source snapshots, raw failure/pass receipts,
+Git identities and hostile substitutions retain durability. Absolute repository
+prefixes are normalized only in receipt projections with original identities,
+byte lengths and substitution counts. Read-only filename guesses during discovery
+were corrected through file inventories; those discovery commands were not
+independently archived. No complete output/SPECFORGE feature claim follows.
+
+The initial staged doctrine gate refuses current decision 0113 because its
+status edit lacks synchronized catalog content/metadata. This is a preparation
+omission, not an implementation failure. Update only the current 0113 row,
+preserve the failed gate receipt and independently verify reader continuity.
+The archive refresher now selects modified predecessor tests explicitly, so
+staging the new T2033 does not request a nonexistent baseline object. Its first
+post-stage refresh failed at that request; the subsequent verifier correctly
+refused the unfinished manifest until resealing completed.
+The gate also rejects the new long task-index status row at focused-document
+rollover pressure. Shorten that live status projection, retaining its precise
+frontier and open delivery boundaries, rather than changing limits or debt state.

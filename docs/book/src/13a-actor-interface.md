@@ -755,7 +755,10 @@ retains the authored local/imported alias and `type_kind` describes its resolved
 kind. Scalar aliases resolve to `bit` or `bits`. Packed record inputs also
 carry ordered scalar-leaf `fields` with port-relative `path`, `width`, inclusive
 `lsb`/`msb`, `signed` and optional `state_model`. Nested member/item paths retain
-their exact packed ranges. Record outputs and root-list ports remain deferred;
+their exact packed ranges. Record output declarations and whole copies now have bounded source/carrier
+admission with mandatory physical writer checks; complete public/generated/
+execution qualification and output member writes remain open. Root-list ports
+remain deferred;
 see [Types and Aggregates](13j-type-enum-aggregate.md).
 
 Discovery publishes the complete schema at

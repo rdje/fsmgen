@@ -475,10 +475,13 @@ body RHS scalar values or expression operands, inline drive target tokens,
 inline drive assignment RHS scalar values or operands, or drive-call actual
 scalar values/expression operands,
 aggregate paths in
-expression operator position, subaggregate writes/operands, record output or
-root-list interface ports, transaction aggregate ports and aggregate storage
-banks remain deferred. Record input leaves and strict same-type input-to-storage
-copies use their selected contextual contract.
+expression operator position, subaggregate writes/operands, record output
+member writes or root-list interface ports, transaction aggregate ports and
+aggregate storage banks remain deferred. Record actor input/output declarations,
+scalar reads/captures and strict same-type permitted port/storage copies use
+their selected contextual contract. Whole outputs additionally require mandatory
+physical writer admission per actual realized module; complete output public/
+generated/execution qualification remains separately owned.
 Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values

@@ -25,12 +25,15 @@ packed record aliases, supported live scalar reads/samples, exact resolved-type
 input-to-owned-storage copies, typed generated/domain carriers and complete
 native/API/newline declaration/layout reports. Original direct/generated binary
 observations and actual unsigned counterexamples remain immutable. Current
-SystemVerilog products are exact predecessors apart from date banners; the only
-production integration changes since generated runtime are the qualified shared
-ISF Verilog/v profile refusal. Selected VHDL profiles also refuse precisely.
+At input signoff, SystemVerilog products were exact predecessors apart from date
+banners; the only production integration changes since generated runtime were
+the qualified shared ISF Verilog/v profile refusal. Selected VHDL profiles also refuse precisely.
 
-The selected input portions of R1–R3 are complete; record outputs, output-field
-writers and full aggregate consumer qualification remain required work. Duration
+The selected input portions of R1–R3 are complete. Later output integration
+changes Parser/Scheduler, with unchanged current input public/source controls
+and immutable original native evidence. Record outputs now have bounded source/
+carrier admission; complete public/generated/execution, output-field writers and
+full aggregate consumer qualification remain required work. Duration
 and timer implementations remain open. Root-list ports and variants are optional.
 Binary execution establishes no X/Z, reset-free initialization, VHDL runtime or
 historical EPERM cause. Legacy `.fsm` aggregate Verilog standards qualification

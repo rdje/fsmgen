@@ -12,6 +12,7 @@ use FSM::Debug;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Scheduler::ISF::LoweringIR;
 use FSM::Scheduler::ISF::FormalLowering;
+use FSM::Scheduler::ISF::RecordOutputWriters;
 use FSM::Scheduler::ISF::DomainSource qw(_domain_actor_for_scheduled_artifact _entry_domain);
 use FSM::Scheduler::ISF::Emitter::FSM;
 use FSM::Scheduler::ISF::Emitter::CompositionTop;
@@ -68,6 +69,7 @@ sub lower($self, @args) {
         return { files => $files };
     }
     FSM::Scheduler::ISF::FormalLowering->verify($formal, {$ir->{actor_name} => $ir});
+    _assert_record_output_writers($actor, $ir);
     my %files;
 
     # Emit parent
@@ -97,6 +99,7 @@ sub report($self, @args) {
     my $ir   = $self->{ir}->build_module($actor);
     FSM::Scheduler::ISF::FormalLowering->verify($formal, {$ir->{actor_name} => $ir})
         unless _is_multi_domain_ir($ir);
+    _assert_record_output_writers($actor, $ir) unless _is_multi_domain_ir($ir);
     my $json = _is_multi_domain_ir($ir)
         ? $self->_emit_multi_domain_schedule_report($actor, $ir, $formal)
         : $self->{json_emitter}->emit(FSM::Scheduler::ISF::FormalLowering->report_ir($formal, $ir));
@@ -130,6 +133,17 @@ sub _validate_actor_arg($method, @args) {
 sub _is_multi_domain_ir($ir) {
     my $partition = $ir->{domain_partition};
     return ref($partition) eq 'HASH' && ($partition->{kind} // '') eq 'multi_domain';
+}
+
+# Public scheduling and emission consume actual bound modules. The private IR
+# builder remains available to inventory/refusal probes; a mixed-domain view
+# must be replaced by each matching domain source before physical admission.
+sub _assert_record_output_writers($actor, $ir) {
+    return unless grep {
+        ref($_->{type_spec}) eq 'HASH' && ($_->{type_spec}{kind} // '') eq 'record'
+    } @{$actor->{interface}{outputs} || []};
+    FSM::Scheduler::ISF::RecordOutputWriters->assert_admitted(actor => $actor, ir => $ir);
+    return;
 }
 
 sub _emit_multi_domain_schedule_report($self, $actor, $ir, $formal = undef) {
@@ -206,6 +220,7 @@ sub _multi_domain_realizations($self, $actor, $partition) {
     for my $domain (@{$partition->{domains}}) {
         my $domain_actor = _domain_actor_for_scheduled_artifact($actor, $domain, $partition->{default_domain});
         my $domain_ir = $self->{ir}->build_module($domain_actor);
+        _assert_record_output_writers($domain_actor, $domain_ir);
         my $names = { instances => { $domain_ir->{actor_name} => $domain->{instance} }, modules => {},
             wiring_name => "$domain->{instance}_child_wiring" };
         for my $child (sort keys %{$domain_ir->{children} || {}}) {

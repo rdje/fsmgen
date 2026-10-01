@@ -190,12 +190,12 @@ subtest 'missing or mismatched source, module, role, layout and owner facts refu
     }
 };
 
-subtest 'authored record output stays closed and scalar/source controls stay unchanged' => sub {
-    my $text='(actor closed (types (type frame '.$definition.')) (interface (output packet (type frame))))';
+subtest 'authored record output fields stay closed and scalar/source controls stay unchanged' => sub {
+    my $text='(actor closed (types (type frame '.$definition.')) (interface (output packet (type frame))) (transaction main (set packet.payload.data 1)))';
     my $ok=eval {FSM::Adapter::ISF->new->parse_source($text,'closed_output.isf');1};
     my ($first)=split /\n/,$@;
-    ok(!$ok,'preparation does not admit authored record output');
-    like($first // '',qr/interface port 'packet' references aggregate type 'frame'/,'current precise source boundary remains');
+    ok(!$ok,'whole-output admission does not admit authored field writes');
+    like($first // '',qr/record output field writes are not yet admitted/,'current precise source boundary remains');
     my $actor=FSM::Adapter::ISF->new->parse_source('(actor scalar (clock clk) (interface (input start) (output packet (width 3))) (transaction main (on start) (set packet 1)))','scalar.isf');
     my $ir=FSM::Scheduler::ISF->new->{ir}->build_module($actor);
     is_deeply(inventory($actor,$ir),{module=>'scalar',output_declarations=>[],writers=>[]},

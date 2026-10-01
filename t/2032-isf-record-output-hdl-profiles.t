@@ -94,9 +94,9 @@ subtest 'resolved prototypes preserve independently literal layout and authoring
             {path=>'body.flag',width=>1,msb=>0,lsb=>0,signed=>0},
         ],'authored traversal, exact signed/state layout and ranges are independently expected');
     }
-    eval {FSM::Adapter::ISF->new->parse_source('(actor still_closed (types (type frame '.$definition.')) (interface (output packet (type frame))))','still_closed.isf')};
-    like((split /\n/,$@)[0] // '',qr/interface port 'packet' references aggregate type 'frame'/,
-        'target-profile preparation does not widen authored output grammar');
+    eval {FSM::Adapter::ISF->new->parse_source('(actor still_closed (types (type frame '.$definition.')) (interface (output packet (type frame))) (transaction main (set packet.body.data 1)))','field_closed.isf')};
+    like((split /\n/,$@)[0] // '',qr/record output field writes are not yet admitted/,
+        'whole-output source admission preserves field-write qualification');
 };
 
 done_testing;

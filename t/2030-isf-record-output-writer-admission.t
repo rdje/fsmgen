@@ -141,12 +141,12 @@ subtest 'malformed unknown generated or caller-pruned writer facts refuse before
 
 subtest 'authored output public boundary and existing scalar inputs remain unchanged' => sub {
     my $path = write_file('authored_output.isf','(actor closed (types (type frame '.$definition.'))'
-        .' (interface (output packet (type frame))))');
+        .' (interface (output packet (type frame))) (transaction main (set packet.payload 1)))');
     my $checked = FSM::Test::SourceQueryRunner::_capture([$^X,'bin/fsmgen','--strict','--check','--json',$path],'');
-    is($checked->{exit_code},1,'preparatory gate does not silently admit authored record outputs');
+    is($checked->{exit_code},1,'whole-output admission does not silently admit authored field writes');
     my $report = $json->decode($checked->{stdout});
     ok(!$report->{success},'public check remains a failed product');
-    like($checked->{stdout},qr/interface port 'packet' references aggregate type 'frame'/,
+    like($checked->{stdout},qr/record output field writes are not yet admitted/,
         'existing primary declaration diagnostic remains visible');
     my $actor = FSM::Adapter::ISF->new->parse_source('(actor scalar (clock clk)'
         .' (interface (input start) (output packet (width 3)))'

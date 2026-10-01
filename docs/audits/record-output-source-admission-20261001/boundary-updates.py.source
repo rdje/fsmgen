@@ -1,0 +1,60 @@
+from pathlib import Path
+updates={
+ 't/1983-isf-interface-port-metadata.t':[
+  (". ' (transaction main (complete done)))', 'still-refused.isf'); 1 };", ". ' (transaction main (set packet.flag 1) (complete done)))', 'field-refused.isf'); 1 };"),
+  ("ok(!$ok, 'record output source remains deferred');", "ok(!$ok, 'record output field writer remains deferred');"),
+  ("qr/interface port 'packet' references aggregate type 'packet_t'/", "qr/record output field writes are not yet admitted/"),
+  ("existing authored-port refusal remains precise", "existing authored-field refusal remains precise")],
+ 't/1984-isf-interface-port-report-integration.t':[
+  (". ' (interface (output packet (type frame))))', undef]", ". ' (interface (output packet (type frame))) (transaction main (set packet.flag 1)))', undef]"),
+  ("qr/interface port 'packet' references aggregate type 'frame'/", "qr/record output field writes are not yet admitted/"),
+  ("record output source retains contextual refusal", "record output field writer retains contextual refusal")],
+ 't/1985-isf-interface-port-public-qualification.t':[
+  ("subtest 'record output, list, malformed and unrelated sources retain their public boundaries'", "subtest 'record output fields, list, malformed and unrelated sources retain their public boundaries'"),
+  ("(interface (output packet (type frame))))',\n            qr/interface port 'packet' references aggregate type 'frame'/", "(interface (output packet (type frame))) (transaction main (set packet.flag 1)))',\n            qr/record output field writes are not yet admitted/")],
+ 't/1987-isf-record-port-declaration-scopes.t':[
+  (". ' (transaction main (complete done)))', 'still-refused.isf')}", ". ' (transaction main (set value.x 1) (complete done)))', 'field-refused.isf')}"),
+  ("qr/interface port 'value' references aggregate type/, 'authored record output stays refused'", "qr/record output field writes are not yet admitted/, 'authored record output field writer stays refused'")],
+ 't/1989-isf-record-port-root-classification.t':[
+  ("(interface (output packet (type frame))) (transaction main (wait 1)))", "(interface (output packet (type frame))) (transaction main (set packet.data 1)))"),
+  ("qr/interface port 'packet' references aggregate type/, 'authored record output still refused'", "qr/record output field writes are not yet admitted/, 'authored record output field writer still refused'")],
+ 't/1990-isf-record-port-sample-facts.t':[
+  ("(interface (output packet (type frame))))', 'refused.isf')}", "(interface (output packet (type frame))) (transaction main (set packet.data 1)))', 'field-refused.isf')}"),
+  ("qr/interface port 'packet' references aggregate type/, 'authored record output remains refused'", "qr/record output field writes are not yet admitted/, 'authored record output field writer remains refused'")],
+ 't/1991-isf-record-port-sample-contexts.t':[
+  ("(transaction main (sample packet.data as q)))', 'refused.isf'", "(transaction main (sample packet as q)))', 'whole-sample-refused.isf'"),
+  ("deferred record-output sample remains refused", "whole record-output inferred sample remains refused"),
+  ("qr/interface port 'packet' references aggregate type/, 'source boundary remains exact'", "qr/whole record/, 'whole-value sample boundary remains exact'")],
+ 't/1997-isf-record-port-gate-integration.t':[
+  ("subtest 'ordinary public authoring still refuses record outputs'", "subtest 'ordinary public authoring still refuses record output field writes'"),
+  ("$parser->parse_source($source . ')', 'still-refused.isf')", "$parser->parse_source($source . '(transaction main (set packet.data 1)))', 'field-refused.isf')"),
+  ("public record output remains deferred", "public record output field writes remain deferred"),
+  ("qr/interface port 'packet' references aggregate type 'frame'/", "qr/record output field writes are not yet admitted/"),
+  ("record-output refusal stays precise", "record-output field refusal stays precise")],
+ 't/2016-isf-record-input-public-refusals.t':[
+  ("['record_output', '(types (type frame (record (flag bit)))) (interface (output packet (type frame)))',\n        qr/interface port 'packet' references aggregate type/]", "['record_output_field', '(types (type frame (record (flag bit)))) (interface (output packet (type frame))) (transaction main (set packet.flag 1))',\n        qr/record output field writes are not yet admitted/]")],
+ 't/2029-isf-record-output-writer-inventory.t':[
+  ("subtest 'authored record output stays closed and scalar/source controls stay unchanged'", "subtest 'authored record output fields stay closed and scalar/source controls stay unchanged'"),
+  ("(interface (output packet (type frame))))';", "(interface (output packet (type frame))) (transaction main (set packet.payload.data 1)))';"),
+  ("preparation does not admit authored record output", "whole-output admission does not admit authored field writes"),
+  ("qr/interface port 'packet' references aggregate type 'frame'/", "qr/record output field writes are not yet admitted/")],
+ 't/2030-isf-record-output-writer-admission.t':[
+  ("(interface (output packet (type frame))))');", "(interface (output packet (type frame))) (transaction main (set packet.payload 1)))');"),
+  ("preparatory gate does not silently admit authored record outputs", "whole-output admission does not silently admit authored field writes"),
+  ("qr/interface port 'packet' references aggregate type 'frame'/", "qr/record output field writes are not yet admitted/")],
+ 't/2031-isf-record-output-source-contexts.t':[
+  ("caller first-touch and authored output declaration boundary remain exact", "caller first-touch and authored output field boundary remain exact"),
+  ("(interface (output packet (type frame))))';", "(interface (output packet (type frame))) (transaction main (set packet.payload 1)))';"),
+  ("qr/interface port 'packet' references aggregate type 'frame'/", "qr/record output field writes are not yet admitted/"),
+  ("preparation does not open authored output declarations", "whole-output admission does not open authored field writes")],
+ 't/2032-isf-record-output-hdl-profiles.t':[
+  ("(interface (output packet (type frame))))','still_closed.isf'", "(interface (output packet (type frame))) (transaction main (set packet.body.data 1)))','field_closed.isf'"),
+  ("qr/interface port 'packet' references aggregate type 'frame'/", "qr/record output field writes are not yet admitted/"),
+  ("target-profile preparation does not widen authored output grammar", "whole-output source admission preserves field-write qualification")],
+}
+for path,changes in updates.items():
+ p=Path(path);s=p.read_text()
+ for old,new in changes:
+  assert s.count(old)==1,(path,old,s.count(old))
+  s=s.replace(old,new)
+ p.write_text(s)

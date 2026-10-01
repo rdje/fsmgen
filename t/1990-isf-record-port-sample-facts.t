@@ -174,8 +174,8 @@ subtest 'preparation does not mutate complete currently admitted products' => su
     record_transaction_samples(actor=>$a,transaction=>$a->{transactions}[1]);
     is($json->encode($a), $before, 'complete parsed object unchanged');
     is($json->encode(FSM::Scheduler::ISF->new->lower($a)), $lowered, 'complete scheduled object and emitted bytes unchanged');
-    refuses(sub {$parser->parse_source('(actor refused (types (type frame (record (data bit)))) (interface (output packet (type frame))))', 'refused.isf')},
-        qr/interface port 'packet' references aggregate type/, 'authored record output remains refused');
+    refuses(sub {$parser->parse_source('(actor refused (types (type frame (record (data bit)))) (interface (output packet (type frame))) (transaction main (set packet.data 1)))', 'field-refused.isf')},
+        qr/record output field writes are not yet admitted/, 'authored record output field writer remains refused');
 };
 
 done_testing;

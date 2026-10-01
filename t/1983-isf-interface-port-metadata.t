@@ -124,10 +124,10 @@ subtest 'resolved record preparation preserves independently expected leaf range
     my $ok = eval { $parser->parse_source(
         '(actor refused (types (type packet_t (record (flag bit))))'
         . ' (interface (output packet (type packet_t)) (output done))'
-        . ' (transaction main (complete done)))', 'still-refused.isf'); 1 };
-    ok(!$ok, 'record output source remains deferred');
-    like($@, qr/interface port 'packet' references aggregate type 'packet_t'/,
-        'existing authored-port refusal remains precise');
+        . ' (transaction main (set packet.flag 1) (complete done)))', 'field-refused.isf'); 1 };
+    ok(!$ok, 'record output field writer remains deferred');
+    like($@, qr/record output field writes are not yet admitted/,
+        'existing authored-field refusal remains precise');
 };
 
 subtest 'imported scalar and record aliases retain qualified identity' => sub {
