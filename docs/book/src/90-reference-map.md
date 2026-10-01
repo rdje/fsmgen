@@ -343,6 +343,8 @@ migration.
 Closed acceptance history uses an exact committed source and a unique legal
 heading. When a new boundary is needed, it is committed before the separate
 rollover; existing node contracts and active limits stay live throughout.
+The semantic task’s completed acceptance body is now retrieved through its
+bounded manifest, including the exact previous source and prior history chain.
 
 Ownership records belong inside the first `## Task Tree` section and their
 parent child list. Matching IDs elsewhere in a file does not establish live
