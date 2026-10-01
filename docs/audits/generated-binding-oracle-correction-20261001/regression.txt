@@ -1,0 +1,12 @@
+ram-guard: PID 80529; host 61.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2026-structural-two-state-carrier-declarations.t .. ok
+t/167-structural-connection-expr-helpers.t .......... ok
+t/281-structural-declared-type-contracts.t .......... ok
+t/278-composition-symbol-contract-forward-ir.t ...... ok
+t/178-composition-shared-datapath-support.t ......... ok
+t/2025-isf-record-input-generated-runtime.t ......... ok
+t/2019-isf-record-input-generated-carriers.t ........ ok
+t/2018-semantic-public-json-scalar-kinds.t .......... ok
+All tests successful.
+Files=8, Tests=50, 179 wallclock secs ( 0.03 usr  0.01 sys + 148.48 cusr 29.57 csys = 178.09 CPU)
+Result: PASS

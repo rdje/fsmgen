@@ -30,6 +30,11 @@ The first unqualified draft wrongly expected a guard on spawned reader outputs
 and renamed replay artifact files so normal child-source lookup failed. Correct
 literal call-role assignments and a complete same-directory artifact cohort
 repair those preparation oracles without changing production behavior.
+A subsequent real blocking run exposed the bench's late-retention assumption.
+Correction .5.4.3.3.2 observes the bound result during public phase 1 and checks
+its documented role at later completion/idle, retaining all packed state
+predicates. Exact old-bench RED, independent temporal/packed controls and sealed
+byte reconstruction qualify this test correction before fresh complete runtime.
 
 Actual parser/caller JSON, lowered artifacts, typed private packet/data/enable
 roles, exact whole public/private wiring, owning/reset-free declarations, strict

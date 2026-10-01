@@ -1,4 +1,5 @@
 module tb;
+ localparam bit COPY_RESULT_HOLDS = __COPY_RESULT_HOLDS__;
  logic clk=0, idle_clk=0, rst_n=1, start=0;
  logic run_idle=1;
  logic [9:0] packet=0, unused=0;
@@ -33,17 +34,30 @@ module tb;
  task automatic lap(input logic [9:0] entry_word, copy_word, live_word,
   input logic [4:0] entry_data, copy_data, live_data, prior_data,
   input logic [1:0] copy_tag, copy_piece, input logic copy_flag, live_negative);
+  bit copy_result_observed;
+  logic [4:0] late_copy_result;
+  copy_result_observed=0;
+  late_copy_result=COPY_RESULT_HOLDS ? copy_data : 5'b00000;
   @(negedge clk); packet=entry_word; start=1;
   @(negedge clk); start=0;
   wait(phase===2'd1);
   @(negedge clk); packet=copy_word;
-  wait(phase===2'd2);
-  @(negedge clk); packet=live_word;
+  // The blocking binding is valid at child completion, before phase 2.
+  // Sample public pins between active edges without changing input timing.
+  while (phase !== 2'd2) begin
+   if (phase===2'd1 && copy_seen===copy_data) copy_result_observed=1;
+   @(negedge clk);
+  end
+  if (!copy_result_observed) $fatal(1,"GENERATED_BOUND_RESULT_WINDOW_MISMATCH");
+  $display("GENERATED_COPY_WINDOW_PASS");
+  packet=live_word;
   wait(done===1'b1);
   #1;
   if (reset_seen !== prior_data || captured !== entry_data)
    $fatal(1,"GENERATED_PRIOR_OR_ENTRY_MISMATCH");
-  if (stored !== copy_data || copy_seen !== copy_data || copied_tag !== copy_tag
+  if (copy_seen !== late_copy_result)
+   $fatal(1,"GENERATED_BOUND_RESULT_RETENTION_MISMATCH");
+  if (stored !== copy_data || copied_tag !== copy_tag
    || stored_flag !== copy_flag || stored_piece !== copy_piece)
    $fatal(1,"GENERATED_WHOLE_COPY_MISMATCH");
   if (seen !== live_data || again !== live_data)
@@ -55,7 +69,9 @@ module tb;
   repeat(3) @(negedge clk);
   run_idle=1;
   repeat(3) @(negedge clk);
-  if (seen !== live_data || again !== live_data || stored !== copy_data || copy_seen !== copy_data
+  if (copy_seen !== late_copy_result)
+   $fatal(1,"GENERATED_BOUND_RESULT_IDLE_MISMATCH");
+  if (seen !== live_data || again !== live_data || stored !== copy_data
    || copied_tag !== copy_tag || stored_flag !== copy_flag || stored_piece !== copy_piece || captured !== entry_data || reset_seen !== prior_data
    || negative_seen !== live_negative || negative_again !== live_negative)
    $fatal(1,"GENERATED_HOLD_OR_ISOLATION_MISMATCH");

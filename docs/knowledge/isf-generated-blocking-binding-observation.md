@@ -24,9 +24,14 @@ HDL defaults copy_seen to zero outside that completion pulse. Parent phase 2,
 reader work and parent done follow child completion. The old bench incorrectly
 requires nonzero copied data in copy_seen at that later parent done and idle.
 The published composition contract agrees with the emitted behavior. This is
-a P2 test timing error, owned for immediate correction by SEM
-.60.4.3.2.5.4.3.3.2. Correct observation must check the bound result in its
-completion window and independently check held packed storage later. A binding
+a P2 test timing error. SEM .60.4.3.2.5.4.3.3.2 qualifies the correction:
+the bench checks the literal bound result during public phase 1, then
+independently checks held packed storage and the role-specific bound output
+later. Pure temporal controls reject missing/late-only results, wrong retention
+and each wrong packed leaf. Exact old-bench RED and complete byte reconstruction
+protect the correction scope; sealed evidence is in
+docs/audits/generated-binding-oracle-correction-20261001/. Complete actual
+runtime still requires fresh .3 committed authority. A binding
 does not provide implicit retained storage.
 
 The late-zero explanation derives from actual source/carrier/HDL; individual

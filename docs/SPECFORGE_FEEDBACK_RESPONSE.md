@@ -75,8 +75,9 @@ and book.
   runtime are not reached. Sealed diagnosis `.5.4.3.3.1` identifies a P2 test error: the
   blocking result binding is valid during the child completion pulse, while the
   test wrongly expects retention until later parent completion. Correction `.2`
-  will observe that window and retain all packed-storage checks before fresh
-  qualification `.3`. Individual failed blocking field values were not captured. The complete generated runtime request remains unqualified. Record outputs, root-list ports and variants
+  now qualifies the completion-window and role-specific late checks, preserving
+  all packed-storage predicates, with independent temporal controls and exact
+  old-bench rejection. Fresh complete execution `.3` remains pending. Individual failed blocking field values were not captured. The complete generated runtime request remains unqualified. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

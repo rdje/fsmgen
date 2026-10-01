@@ -354,8 +354,12 @@ The actual emitted logic and published contract establish this test timing
 error; individual failed blocking field values were not captured. Complete
 partial evidence is in
 `docs/audits/record-input-generated-observation-corrected-20261001/`.
-SEM `.3.3.2` corrects the binding observation window while preserving packed
-storage checks before fresh complete execution. Remaining blocking cases and
+SEM `.3.3.2` qualifies the corrected bench without HDL execution: it requires
+the literal copied result during public phase 1 before phase 2, then checks
+spawned forwarding or blocking default zero at later completion and idle.
+Every packed-storage, sampled/live/signed/reset/isolation predicate is retained.
+Independent temporal controls and exact old-bench rejection protect this
+correction. Fresh complete execution remains `.3.3.3`. Remaining blocking cases and
 the unsigned counterexample have not run. Runtime delivery is still open.
 
 

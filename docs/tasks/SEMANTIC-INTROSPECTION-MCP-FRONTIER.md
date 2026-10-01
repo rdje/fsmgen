@@ -3077,11 +3077,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Correct the blocking output-binding observation window.`
   Acceptance: `P2 witness requires late retention from a documented done-guarded combinational binding. Observe the independent literal copied result during the public copy phase; distinguish spawned forwarding from blocking pulse binding at later completion. Preserve all actual packed-storage and idle-hold predicates. Qualify temporal counterexamples without changing production retention semantics. Preserve selected input sampling/live/copy semantics, explicit output binding and physical owner/type/model contracts, with actual predecessor falsification and focused controls. Commit before another genuine execution; no arbitrary expectation weakening.`
-  Verification: `Causal schedule/carrier/HDL evidence is sealed by .1; correction follows its commit.`
-  Commit: `pending`
+  Verification: `The bench now observes the independently literal copied result during public phase 1 before phase 2, with negedge sampling preserving original live-input change timing. Explicit call-role literals retain spawned result expectations and require blocking combinational default zero at later parent done/idle. Every packed-storage, sampled/prior/live/signed/repeated/reset/isolation predicate is preserved. Pure temporal controls reject missing/late-only result, wrong retention and each packed leaf. Exact old bench makes corrected checks RED. Focused T2025/admission passes Files=2, Tests=23; structural/generated/caller regression passes Files=8, Tests=50, runtime explicitly disabled. Sealed independent verifier authenticates exact predecessor, complete other-predicate preservation and hostile receipts. Fixed observer paths/schema/target/coverage are unchanged; its sealed qualification and current dynamic-hash preparation pass. No production/source fixture/helper change; complete actual runtime remains fresh .3 after this commit.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.3`
   Status: `pending`
@@ -4163,3 +4163,17 @@ logic behavior; it is not a recording of individual failed pin values.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --emit-schedule-json of the unchanged blocking source reports copy_seen binding_timing done_guarded and main_copier_do_0_done. Actual carrier uses (= copy_seen child_result) under that pulse; emitted always_comb defaults the output to zero afterward. The child completes before parent phase 2 and later done. The bench at blocking_tb.sv line 48 wrongly requires copied nonzero data at that late parent done and during idle. The published composition contract agrees; P2 wrong witness timing, with other blocking values unqualified.
 - [x] **ADDRESSED (verified)** — Saved verification authenticates all reached positive named-domain pairs, ordinary blocking compile and first runtime failure, exact committed producers, complete original bounds/results/arguments/cleanup and empty native events/gaps. The actual carrier/HDL and hostile saved mutations establish the bounded diagnosis. Immediate correction is scheduled under .2 before any further HDL run; complete generated runtime remains open.
 - [x] **NO REGRESSION** — Independent saved verification passes without HDL replay and preserves all prior archives. Knowledge Map reports knowledge-map: OK; task integrity and local book build are checked before staged doctrine and normal commit hooks. No individual successful-child PID, remaining blocking values, unsigned runtime, X/Z or historical native causality proof is inferred.
+
+## Acceptance — completion-window oracle correction (2026-10-01)
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.2`. Immutable correction, exact predecessor and
+full positive/old-oracle receipts: `docs/audits/generated-binding-oracle-correction-20261001/`.
+Re-derivation uses actual unchanged binding products and corrected fixed bench.
+Independent temporal/packed literal counterexamples, exact old-bench RED and
+hostile receipt/predicate mutations provide falsification. Sealed recipes,
+source identities, task/book/response and Git provide durability. No HDL runs
+in this slice; complete behavior is the fresh committed-authority next leaf.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual --emit-schedule-json and retained carrier/HDL under .1 establish copy_seen as done_guarded combinational output before phase 2. The old bench wrongly demands copied data at later parent done/idle; its genuine blocking run fails. Exact committed predecessor bench also fails the corrected independent window/role checks and lacks the required binding-role token. P2 oracle error, not a new production retention requirement.
+- [x] **ADDRESSED (verified)** — T2025 declares each call role explicitly. The bench requires the copied value in phase 1, then distinguishes spawned forwarding from blocking default zero at parent completion/idle. Pure controls reject missing/late-only results, wrong retention and each packed leaf. Independent byte reconstruction protects all other original predicates and input timing; archived source fixtures and production/helper paths remain unchanged. Corrected current-hash preparation and unchanged saved observer qualification pass without scope widening.
+- [x] **NO REGRESSION** — Focused T2025/fixed-admission checks report All tests successful, Files=2, Tests=23; structural/typed/shared/generated/carrier/caller-JSON cohort reports All tests successful, Files=8, Tests=50 with runtime explicitly disabled. Sealed exact predecessor/old-oracle and hostile verification pass. Knowledge Map, task integrity and local book build are checked before staged doctrines and normal hooks. Full generated runtime remains unqualified until fresh .3; no X/Z/reset-free/native claim is added.

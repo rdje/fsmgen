@@ -1,0 +1,6 @@
+ram-guard: PID 79127; host 61.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2025-isf-record-input-generated-runtime.t .................. ok
+docs/audits/generated-input-observer-20261001/preparation.t .. ok
+All tests successful.
+Files=2, Tests=23, 27 wallclock secs ( 0.01 usr  0.00 sys + 22.87 cusr  4.08 csys = 26.96 CPU)
+Result: PASS

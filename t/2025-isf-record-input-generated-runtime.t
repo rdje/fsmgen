@@ -16,8 +16,8 @@ my $work = tempdir(CLEANUP => 1);
 my $json = JSON::PP->new->canonical;
 my $bench_path = 't/data/isf_record_input_generated_runtime_tb.sv';
 my @cases = (
-    {name=>'domains', module=>'packed_input_generated_domains', domains=>1, writer=>'writer'},
-    {name=>'blocking', module=>'packed_input_generated_blocking', domains=>0, writer=>'main_copier_do_0'},
+    {name=>'domains', module=>'packed_input_generated_domains', domains=>1, writer=>'writer', copy_result_holds=>1},
+    {name=>'blocking', module=>'packed_input_generated_blocking', domains=>0, writer=>'main_copier_do_0', copy_result_holds=>0},
 );
 $_->{source} = "t/data/isf_record_input_generated_$_->{name}_runtime.isf" for @cases;
 my @inputs = ($bench_path, (map {$_->{source}} @cases), qw(bin/fsmgen
@@ -37,6 +37,36 @@ my $fields = [
     {path=>'payload.flags[0]',width=>1,lsb=>2,msb=>2,signed=>0,state_model=>'two_state'},
     {path=>'payload.flags[1]',width=>2,lsb=>0,msb=>1,signed=>0,state_model=>'two_state'},
 ];
+
+subtest 'independent temporal counterexamples preserve binding and packed-copy checks' => sub {
+    my @vectors = ([7,19,29,18], [30,9,5,19], [3,24,17,18]);
+    for my $v (@vectors) {
+        my ($entry,$copy,$live,$prior) = @$v;
+        ok($copy && $copy != $entry && $copy != $live && $copy != $prior,
+            'each copied value is nonzero and distinct from entry, live and prior values');
+    }
+    like($bench,qr/while \(phase !== 2'd2\).*?phase===2'd1 && copy_seen===copy_data.*?if \(!copy_result_observed\)/s,
+        'actual bench requires copied result inside the public copy window');
+    like($bench,qr/late_copy_result=COPY_RESULT_HOLDS \? copy_data : 5'b00000;/,
+        'late bound-result expectation distinguishes forwarding from completion gating');
+    is(scalar(()=$bench=~/copy_seen !== late_copy_result/g),2,
+        'parent completion and idle independently check the role-specific result');
+    for my $holds (0,1) {
+        # Literal public-pin traces; no expected values come from FSMGen output.
+        my $late = $holds ? 19 : 0;
+        my $good = [[1,0], [1,19], [2,$late]];
+        ok(copy_trace_matches($good,$holds,19,2,0,1),"role $holds accepts completion-window result and all packed leaves");
+        ok(!copy_trace_matches([[1,0],[2,$late]],$holds,19,2,0,1),
+            "role $holds rejects result missing from the copy window");
+        ok(!copy_trace_matches([[1,0],[2,19]],$holds,19,2,0,1),
+            "role $holds rejects a correct result arriving only after the window");
+        ok(!copy_trace_matches([[1,19],[2,$holds ? 0 : 19]],$holds,19,2,0,1),
+            "role $holds rejects wrong late retention");
+        for my $wrong ([18,2,0,1],[19,3,0,1],[19,2,1,1],[19,2,0,2]) {
+            ok(!copy_trace_matches($good,$holds,@$wrong),"role $holds rejects an independently wrong packed leaf");
+        }
+    }
+};
 
 subtest 'fixed source, generated roles and both emitted families preserve independent declarations' => sub {
     for my $case (@cases) {
@@ -147,7 +177,9 @@ subtest 'fixed source, generated roles and both emitted families preserve indepe
             like($text,qr/logic signed \[4:0\] data;/,"$name $target preserves signed packed scalar declaration");
         }
         my $rendered_bench = read_file(bench_for($case));
-        unlike($rendered_bench,qr/__(?:DUT|IDLE_CLOCK)__/,"$name bench substitutes only fixed module/clock tokens");
+        unlike($rendered_bench,qr/__(?:DUT|IDLE_CLOCK|COPY_RESULT_HOLDS)__/,"$name bench substitutes only fixed module/clock/binding tokens");
+        like($rendered_bench,qr/localparam bit COPY_RESULT_HOLDS = \Q$case->{copy_result_holds}\E;/,
+            "$name rendered bench uses its independently declared binding role");
         my $bad = $copy_text;
         is($bad =~ s/\(isf_write_held_enable> 1\)/(isf_write_held_enable> 0)/g,1,"$name hostile copy changes exactly its enable");
         ok(!copy_edge_present($bad),"$name independent copy-edge witness rejects disabled actual handoff");
@@ -185,6 +217,7 @@ subtest 'generated behavior awaits independently qualified exact observation adm
             like($run->{stdout},qr/GENERATED_REPEATED_REQUEST_PASS/,'repeated generated requests complete');
             like($run->{stdout},qr/GENERATED_RESET_ABORT_PASS/,'generated reset/abort completes');
             is(scalar(()=$run->{stdout}=~/GENERATED_LAP_PASS/g),3,'all independent request laps complete');
+            is(scalar(()=$run->{stdout}=~/GENERATED_COPY_WINDOW_PASS/g),3,'each lap observes its bound result in the copy window');
         }
     }
     my $run = simulate($cases[0]{unsigned},bench_for($cases[0]),'unsigned');
@@ -201,12 +234,25 @@ done_testing;
 sub scalar_port { return {name=>$_[0],direction=>$_[1],width=>$_[2]}; }
 sub copy_edge_present { return $_[0] =~ /\(= \(isf_write_held_data> packet\)\)/
     && $_[0] =~ /\(= \(isf_write_held_enable> 1\)\)/ ? 1 : 0; }
+sub copy_trace_matches {
+    my ($trace,$holds,$stored,$tag,$flag,$piece) = @_;
+    my $observed = 0;
+    for my $pin (@$trace) {
+        if ($pin->[0] == 2) {
+            return $observed && $pin->[1] == ($holds ? 19 : 0)
+                && $stored == 19 && $tag == 2 && $flag == 0 && $piece == 1;
+        }
+        $observed = 1 if $pin->[0] == 1 && $pin->[1] == 19;
+    }
+    return 0;
+}
 sub bench_for {
     my ($case) = @_;
     my $text = $bench;
     die "fixed bench module token changed\n" unless $text =~ s/__DUT__/$case->{module}_top/g == 1;
     my $idle = $case->{domains} ? '.idle_clk(idle_clk), ' : '';
     die "fixed bench clock token changed\n" unless $text =~ s/__IDLE_CLOCK__/$idle/g == 1;
+    die "fixed bench binding token changed\n" unless $text =~ s/__COPY_RESULT_HOLDS__/$case->{copy_result_holds}/g == 1;
     return write_file("$work/$case->{name}_tb.sv",$text);
 }
 sub simulate {

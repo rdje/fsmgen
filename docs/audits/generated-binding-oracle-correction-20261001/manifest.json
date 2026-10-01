@@ -1,0 +1,41 @@
+{
+  "baseline_revision": "db1fea32a23e712df417b08c3d34aeb0191f42c4",
+  "hdl_execution": "not_run_in_this_correction",
+  "observer_scope": "unchanged fixed paths/schema/target and five compile/runtime pairs; new committed witness hashes required",
+  "prerequisites": {
+    "docs/audits/generated-input-observer-20261001/manifest.json": "3b8e4283eff97913662b725411a7213c2c7cdd72e42e3c3461a205249f19eb1a",
+    "docs/audits/record-input-generated-observation-corrected-20261001/manifest.json": "dc3d64a693bac999147b57aa8c0c871b5ff3fd744ddcee5be0b1522d1a67f83b"
+  },
+  "producers": {
+    "t/2025-isf-record-input-generated-runtime.t": {
+      "git_blob": "d3c163de218e94bd6a006e74f33fcd8ce6127650",
+      "sha256": "7f8f53435b060dcb16f8502dce659269c5d707948afa7754a4c438c67367dab7"
+    },
+    "t/data/isf_record_input_generated_blocking_runtime.isf": {
+      "git_blob": "1610592da677003c5094472ef1a7895d63b19782",
+      "sha256": "91afd1ac9e7acabfd6ebb47f391b242d830520e3a829124467bec093c88dc9ab"
+    },
+    "t/data/isf_record_input_generated_domains_runtime.isf": {
+      "git_blob": "af91810021c5d9f7d8d8915fe2709a65dc939f97",
+      "sha256": "d39955c46ff1421b899e0a6da8a6142377270b3e4f36ef37919507df9e675670"
+    },
+    "t/data/isf_record_input_generated_runtime_tb.sv": {
+      "git_blob": "8405b2b97ca4f73547907208c30cf495fa730719",
+      "sha256": "c9303b317e4151d9d1ef40f40232e24155e033ba0a5f97ccae6e72cbf8f419ac"
+    }
+  },
+  "schema": "fsmgen.generated_binding_oracle_correction.v1",
+  "scope": "Correct completion-window result observation and role-specific late result; preserve complete packed storage, entry/live, repeated, reset/abort and isolation predicates. Independent temporal controls are pure; complete runtime is pending.",
+  "sha256": {
+    "bench.sv.source": "c9303b317e4151d9d1ef40f40232e24155e033ba0a5f97ccae6e72cbf8f419ac",
+    "control-test.t.source": "e9fb8d0835e0d9a7dd1a4a60b117b17a1202af4df318cd67d9fc0ff99b0efc84",
+    "focused.txt": "7cae33189914e4db9a12909d7b7f8d5663f8d213e61289f236b9c3c67c93e3d5",
+    "observer-saved.txt": "140bc4afd743bdcf28757768d0384ba8793cf8a208cdbfb819a3735e3313639b",
+    "old-bench.sv.source": "15b3273be09e69c656da7e8de0e6d245fd616692e09421dd16d59644bb3b7e15",
+    "old-oracle-red.txt": "d6abddc0702b1ce0c6354cce67d240e872b2b9f0e6fd367d4204f82b1f98a166",
+    "old-test.t.source": "660a6d258731e6781bd866149713993acb21eaa8e324518f6ce6afc895b5c346",
+    "regression.txt": "3f0dec5a6fbf1ab9fd6f358eb4e3c2ead72caedf862b7b76610714d1a05f8687",
+    "test.t.source": "7f8f53435b060dcb16f8502dce659269c5d707948afa7754a4c438c67367dab7",
+    "verify.py": "17f959d7aa55033b69dbe6d4e456ba1fd017da102bcdce7d23b83b21aeefb14a"
+  }
+}
