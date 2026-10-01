@@ -4,6 +4,7 @@ use lib 'perl', 't/lib';
 use Test::More;
 use JSON::PP;
 use Storable qw(dclone);
+use Digest::SHA qw(sha256_hex);
 use Cwd qw(abs_path);
 use File::Temp qw(tempdir);
 use FSM::Test::ProjectDataLocality;
@@ -23,10 +24,17 @@ my $parser = FSM::Adapter::ISF->new;
 my $scheduler = FSM::Scheduler::ISF->new;
 my $actor = $parser->parse_file($path);
 my $api = FSM::Support::SemanticIntrospectionMCPAdapter->new(repo_root => $root, workspace_root => $root);
+my @unchanged = (qw(bin/fsmgen bin/fsmgen-mcp perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm
+    perl/FSM/Support/CapabilityManifest.pm perl/FSM/Support/RegressionCorpus.pm
+    perl/FSM/Support/ISFPublicInterfaceContract.pm perl/FSM/Support/ISFRecordPortContexts.pm
+    perl/FSM/Scheduler/ISF/LoweringIR.pm perl/FSM/Scheduler/ISF/Emitter/JSON.pm
+    t/lib/FSM/Test/SourceQueryRunner.pm), "$audit/baseline.json", sort glob("$audit/*.isf"));
+my $bytes_before = {map {$_ => sha256_hex(read_file($_))} @unchanged};
+
 
 subtest 'each domain publishes independently expected owned storage' => sub {
     my $report = $json->decode($scheduler->report($actor));
-    is_deeply($report->{inferred_storage}, [], 'generated top owns no domain storage');
+    same($report->{inferred_storage}, [], 'generated top owns no domain storage');
     my %expected = (
         core => [
             {name => 'core_word', kind => 'register', role => 'actor_storage', width => 8, access => 'rw',
@@ -42,14 +50,14 @@ subtest 'each domain publishes independently expected owned storage' => sub {
              fields => [{name => 'upper', msb => 11, lsb => 8, width => 4, access => 'reserved'}]},
         ],
     );
-    is_deeply([map { $_->{name} } @{$report->{clock_domains}}], [qw(core aux)], 'authored domain order preserved');
+    same([map { $_->{name} } @{$report->{clock_domains}}], [qw(core aux)], 'authored domain order preserved');
     for my $domain (@{$report->{clock_domains}}) {
         is(ref($domain->{inferred_storage}), 'ARRAY', 'domain has a concrete storage-detail array');
         next unless ref($domain->{inferred_storage}) eq 'ARRAY';
-        is_deeply([grep { ($_->{role} // '') eq 'actor_storage' } @{$domain->{inferred_storage}}],
+        same([grep { ($_->{role} // '') eq 'actor_storage' } @{$domain->{inferred_storage}}],
             $expected{$domain->{name}}, 'exact domain-local words, fields, types and bank elements');
         my @watchdogs = grep { ($_->{role} // '') eq 'watchdog_counter' } @{$domain->{inferred_storage}};
-        is_deeply(\@watchdogs, $domain->{name} eq 'core'
+        same(\@watchdogs, $domain->{name} eq 'core'
             ? [{name => 'main_wd', kind => 'counter', role => 'watchdog_counter', width => 3}] : [],
             'scheduler storage appears only in its owning domain');
     }
@@ -58,8 +66,8 @@ subtest 'each domain publishes independently expected owned storage' => sub {
     my $empty_actor = $parser->parse_source($with_empty_domain, 'empty-domain.isf');
     my $empty_report = $json->decode($scheduler->report($empty_actor));
     my ($empty_domain) = grep { $_->{name} eq 'spare' } @{$empty_report->{clock_domains}};
-    is_deeply($empty_domain->{storage}, [], 'empty domain has no declared storage names');
-    is_deeply($empty_domain->{inferred_storage}, [], 'realized empty domain has an empty detail census');
+    same($empty_domain->{storage}, [], 'empty domain has no declared storage names');
+    same($empty_domain->{inferred_storage}, [], 'realized empty domain has an empty detail census');
     my $single_actor = $parser->parse_source(<<'ISF', 'single-domain.isf');
 (actor single_storage_domain
   (clock-domains (domain only (clock clk) (reset rst_n)))
@@ -68,11 +76,11 @@ subtest 'each domain publishes independently expected owned storage' => sub {
   (transaction main (on start) (set value_reg 1) (complete done)))
 ISF
     my $single = $json->decode($scheduler->report($single_actor));
-    is_deeply($single->{clock_domains}[0]{inferred_storage}, [
+    same($single->{clock_domains}[0]{inferred_storage}, [
         {name => 'value_reg', kind => 'register', role => 'actor_storage', width => 8, access => 'rw'},
         {name => 'done', kind => 'register', role => 'completion_pulse', width => 1},
     ], 'named single-domain path also publishes concrete details');
-    is_deeply($single->{clock_domains}[0]{inferred_storage}, $single->{inferred_storage},
+    same($single->{clock_domains}[0]{inferred_storage}, $single->{inferred_storage},
         'single domain and its module describe the same storage owner');
 };
 
@@ -88,15 +96,15 @@ subtest 'full public reports add only domain storage while all hardware stays id
         my $request = {jsonrpc => '2.0', id => 1, method => 'tools/call', params => {
             name => $tools{$query}, arguments => {source_id => $path}}};
         my $response = $api->handle_jsonrpc_request($request);
-        is_deeply($response->{result}{structuredContent}{report}, $report, 'complete native/API parity');
-        is_deeply($json->decode($response->{result}{content}[0]{text}), $response->{result}{structuredContent},
+        same($response->{result}{structuredContent}{report}, $report, 'complete native/API parity');
+        same($json->decode($response->{result}{content}[0]{text}), $response->{result}{structuredContent},
             'text content preserves complete structured product');
         my $wire = capture([$^X, 'bin/fsmgen-mcp', '--workspace-root', '.'], $json->encode($request)."\n");
         is($wire->{exit_code}, 0, 'newline succeeds');
         is($wire->{stderr}, '', 'newline stderr clean');
-        is_deeply($json->decode($wire->{stdout}), $response, 'complete API/newline parity');
+        same($json->decode($wire->{stdout}), $response, 'complete API/newline parity');
         if ($query eq 'schedule') {
-            is_deeply($report, $json->decode($scheduler->report($actor)), 'public details equal actual scheduled domain report');
+            same($report, $json->decode($scheduler->report($actor)), 'public details equal actual scheduled domain report');
             is(ref(delete $report->{interface_ports}), 'ARRAY', 'declared-port addition is qualified by T1984');
             for my $domain (@{$report->{clock_domains}}) {
                 is(ref(delete $domain->{interface_ports}), 'ARRAY', 'domain declared-port addition is explicit');
@@ -106,9 +114,9 @@ subtest 'full public reports add only domain storage while all hardware stays id
         else {
             is(ref(delete $report->{source}{interface_ports}), 'ARRAY', 'source declared-port addition is explicit');
         }
-        is_deeply($report, $baseline->{queries}{$query}{report}, 'every previous public field preserved');
+        same($report, $baseline->{queries}{$query}{report}, 'every previous public field preserved');
     }
-    is_deeply($scheduler->lower($actor)->{files}, $baseline->{scheduled_files}, 'all scheduled FSM files unchanged');
+    same($scheduler->lower($actor)->{files}, $baseline->{scheduled_files}, 'all scheduled FSM files unchanged');
     for my $language (qw(systemverilog verilog)) {
         my $output = "$work/domains-$language." . ($language eq 'verilog' ? 'v' : 'sv');
         my $result = capture([$^X, 'bin/fsmgen', '--language', $language, '--output', $output, $path]);
@@ -128,7 +136,7 @@ subtest 'publication detaches nested metadata and distinguishes unavailable deta
     ]}};
     my $emitter = $scheduler->{json_emitter};
     my $copy = $emitter->_clock_domain_entry_summary($domain, 'core', $producer);
-    is_deeply($copy->{inferred_storage}, $producer->{core}{inferred_storage}, 'complete normalized producer copied');
+    same($copy->{inferred_storage}, $producer->{core}{inferred_storage}, 'complete normalized producer copied');
     if (ref($copy->{inferred_storage}) eq 'ARRAY') {
         $copy->{inferred_storage}[0]{fields}[0]{enum}[0]{value} = 9;
         is($producer->{core}{inferred_storage}[0]{fields}[0]{enum}[0]{value}, 1, 'nested report mutation cannot change producer');
@@ -141,21 +149,24 @@ subtest 'publication detaches nested metadata and distinguishes unavailable deta
 subtest 'capabilities advertise complete domain-detail shape through every transport' => sub {
     my $manifest = build_capability_manifest();
     my $contract = $manifest->{embedding}{isf_public_interface};
-    is_deeply($contract->{schedule_report_clock_domain_keys},
+    same($contract->{schedule_report_clock_domain_keys},
         [qw(name default clock reset scheduled_fsm ports storage transactions rules library_uses child_instances
             crossings state_count dt_block_count inferred_storage interface_ports)], 'complete bounded domain keys');
     like($contract->{schedule_report_multi_file_scope}, qr/inferred_storage.*same.*storage/s, 'shared storage schema is discoverable');
     my $native = capture([$^X, 'bin/fsmgen', '--capability-manifest']);
     is($native->{exit_code}, 0, 'native capabilities succeed');
-    is_deeply($json->decode($native->{stdout}), $manifest, 'complete native/API capabilities agree');
+    same($json->decode($native->{stdout}), $manifest, 'complete native/API capabilities agree');
     my $request = {jsonrpc => '2.0', id => 1, method => 'tools/call', params => {
         name => 'fsmgen_capability_query', arguments => {section => 'embedding'}}};
     my $response = $api->handle_jsonrpc_request($request);
-    is_deeply($response->{result}{structuredContent}{payload}, $manifest->{embedding}, 'API embedding contract agrees');
+    same($response->{result}{structuredContent}{payload}, $manifest->{embedding}, 'API embedding contract agrees');
     my $wire = capture([$^X, 'bin/fsmgen-mcp', '--workspace-root', '.'], $json->encode($request)."\n");
     is($wire->{exit_code}, 0, 'newline capabilities succeed');
-    is_deeply($json->decode($wire->{stdout}), $response, 'complete newline capabilities agree');
+    same($json->decode($wire->{stdout}), $response, 'complete newline capabilities agree');
 };
+
+same({map {$_ => sha256_hex(read_file($_))} @unchanged}, $bytes_before,
+    'complete named public producer and immutable baseline/source bytes remain unchanged');
 
 done_testing();
 
@@ -163,3 +174,5 @@ sub capture { FSM::Test::SourceQueryRunner::_capture($_[0], $_[1] // '') }
 sub normalize { FSM::Test::SourceQueryRunner::normalize_repository_paths($_[0], $root) }
 sub read_file { open my $fh, '<', $_[0] or die "$_[0]: $!"; local $/; return <$fh> }
 sub without_date { my $text = shift; $text =~ s/^\/\/ Date:[^\n]*\n//mg; return $text }
+
+sub same { is($json->encode($_[0]), $json->encode($_[1]), $_[2]) }

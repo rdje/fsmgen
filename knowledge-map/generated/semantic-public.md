@@ -1,11 +1,12 @@
 # Knowledge Map: `semantic-public`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **2** uniquely owned question entries.
+> **1** facts · **3** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="does serialized native API parity prove later copy stability?" · facts=[semantic-public-json-copy-stability](../../docs/knowledge/semantic-public-json-copy-stability.md)
+- q="how do fixed storage baselines preserve report JSON kinds during source relocation?" · facts=[semantic-public-json-copy-stability](../../docs/knowledge/semantic-public-json-copy-stability.md)
 - q="why did cloned normalized compiler reports turn JSON numbers into strings?" · facts=[semantic-public-json-copy-stability](../../docs/knowledge/semantic-public-json-copy-stability.md)
 
 ## Facts

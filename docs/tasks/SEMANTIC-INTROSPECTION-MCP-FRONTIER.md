@@ -2937,7 +2937,23 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Close generated/domain record-input qualification with exact prior controls.`
   Acceptance: `After accepted/refused matrices, requalify complete fixed prior scalar/storage products and carrier/HDL controls under narrowly declared differences, complete discovery/current supported applicability and final combined focused gates. Reconcile every .2.4 acceptance requirement, exact caller/import/type/ownership evidence and canonical feedback/book/Knowledge Map pointers. Close generated/domain frontend/carriers only and resume backend/native/consumer .2.5 with HIAL admission before genuine HDL execution.`
-  Verification: `Accepted full generated/domain products and contextual refusal/scalar-shadow matrices are committed through .1-.2. Next requalify complete fixed prior scalar/storage report/carrier/HDL controls and all-section native/API/newline discovery/current supported applicability, then reconcile .2.4 acceptance. No new native runtime before HIAL admission.`
+  Verification: `Accepted/refused generated/domain matrices are committed through .1-.2. Typed fixed scalar/storage prior controls are repaired and qualified under child .1. The untouched current discovery cohort is RED solely for a missing maintained generated-input declaration witness, owned next by child .2; T2017 and T248 complete positively within that failed cohort. Preserve those limits and qualify .2 before final reconciliation/closure. No new native runtime before HIAL admission.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3.1`
+  Status: `done`
+  Goal: `Preserve JSON kinds in fixed prior storage-report qualification.`
+  Acceptance: `P2 qualification defect: T1981 relocate stringifies nonreference expected scalars and older T1981/T1982 is_deeply public/baseline comparisons do not distinguish JSON numbers from strings. Root fresh decoded literal and full typed expected/native differences, preserve immutable receipts and exact prior permissions, then repair only oracle relocation and strengthen complete typed native/API/newline/declaration/baseline comparisons. Retain primitive/copy/caller witnesses and exact named producer/source/baseline bytes, complete unchanged FSM/HDL controls and scoped historical evidence limits. Complete-cohort discovery omission is separately owned .3.2; parent .3/.2.4 closures wait for that qualification.`
+  Verification: `Pre-repair typed T1981/T1982 is RED, Files=2, Tests=11: only T1981 literal/copy and fixed expected report comparisons fail; domain typed controls pass. Exact committed predecessor helper still converts numbers to strings after authorized path-only relocation. Repaired separate-scalar inspection returns untouched values unless text changes. Final T1981/T1982/T2018 reports All tests successful, Files=3, Tests=17, preserving complete JSON kinds and named producer/immutable baseline/source bytes, full prior reports/carriers and both emitted HDL targets. Book audit Files=1, Tests=2, book build and KM pass. Untouched T1985/T2017/T248 cohort Files=3, Tests=7216 is FAIL solely for missing generated catalog declaration witness; .3.2 owns it and parent closure remains active.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3.2`
+  Status: `active`
+  Goal: `Keep public declaration witnesses complete for the generated record-input catalog source.`
+  Acceptance: `P2 discovery qualification omission: the admitted maintained isf/record_input_children.isf catalog row joins the live ISF source-query cohort, but T1985's independent supported-source declaration table omits it. Current T1985 membership and complete literal metadata checks are RED. Preserve the complete-cohort guard; add independent literal authored packet/unused types, ordered packed ranges, domains, ports and widths for that actual maintained source, with full native/API/newline products/source/package preservation. Qualify the complete fixed catalog and prior controls, then reconcile and close generated/domain .2.4. Do not weaken or drop the row/guard or rewrite original catalog evidence. Finish the separate .3.1 typed storage-oracle repair and commit clean before this slice.`
+  Verification: `Actual current T1985 source-query membership reports the extra maintained generated record source without a corresponding literal witness. Next add the complete authored declarations after .3.1 commits.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.1`
@@ -6672,3 +6688,67 @@ by an authorized read-only process query, with no test retry or stopping.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Corrected pre-product actual native --strict --check --json reports success=false and first cause Invalid ISF record context: transaction 'main' spawn clause does not admit record port reference 'packet'. Calibrated T2023 actual scalar-only local/generated spawn/do/trigger sources lower while record-bearing identity positions fail. _unsupported recursively scans callee formal/target/instance/static metadata names as actor values; git log -L roots the unchanged scan in 48da7b698141e13a6c57eddca810a641e0baae9c and parser integration in 0d01ca3fc8f880acf926ae59305843a1172bf1d3. Exact 85b6fdfb460d93b632be9bfa3da880da83b9d3c8 module bytes match Git and retain identity RED with scalar/actual-record controls passing. Draft unused local params and unsupported standalone slice/member binding atoms are excluded from admission evidence.
 - [x] **ADDRESSED (verified)** — Final guarded T2021/T2023 reports All tests successful, Files=2, Tests=14. ISFRecordPortContexts separates structural activation identities from actual binding/parameter values, retaining conservative malformed/unknown scanning and complete grammar/endpoint/width/timing/domain/writer owners. Actual ordinary/domain/generated controls, exact scalar private handoff/top/child HIR and structural ports, full typed native/API/newline products, contextual first causes and complete source/import/producer/caller purity pass. Book adds a runnable generated scalar/record-name example and corrects the older aggregate-interface blanket refusal to the actual record-output/root-list boundary. Canonical feedback and task frontier close contextual .2 only; final prior/discovery, backend/native and consumer owners remain.
 - [x] **NO REGRESSION** — Prior binding/formal report/scope/context/JSON-kind T1933/T1928/T1961/T1987/T1988/T2018 passes All tests successful, Files=6, Tests=267; accepted generated/domain carriers and selector T2019/T2022 passes Files=2, Tests=12. Expanded late malformed numeric/null purity T2023/T2018 passes Files=2, Tests=10; runnable T1376 passes Files=1, Tests=2 and book builds. Knowledge Map reports knowledge-map: OK. Re-derivation is actual authored public/carrier/semantic evidence and independent literal declarations/physical identities; falsification is exact committed predecessor identity RED, hostile record actuals/metadata and complete independently authored widths/roles; tracked source/tests/book/card, this owner and Git provide durability. Current capacity/claim censuses and staged doctrines must pass before normal hooks/commit. No native HDL runtime, full CI, push or external SPECFORGE modification.
+
+## Prior-product closure `.60.4.3.2.4.2.3` — owned oracle prerequisite .1
+
+Commit 3dd7e2c09d9a0aac773dfb846b2f13767a0dfe1b is verified clean with normal
+hooks, an empty brief and no pending verification before this leaf starts.
+R11 composition/type ownership and the relevant record/transaction book contracts
+remain read. T1981/T1982/T1985/T2017 are read completely. Canonical
+semantic-public-json-copy-stability explicitly limits historical T1981/T1982
+value parity; their is_deeply comparisons cannot prove JSON primitive kinds.
+The actual T1981 relocate helper probe, using fresh decoded number/string/path/
+boolean/null literals, changes width from numeric 8 to string 8 in the returned
+and Storable-copied expected report. This is an oracle defect/gap, not evidence
+that production native/API/newline bytes are wrong. P2 child .3.1 owns the repair
+and complete typed prior qualification before source/carrier closure. Immutable
+baselines stay unchanged; actual sources, declarations, access/domain additions
+and HDL date differences retain their exact existing permissions.
+
+- [ ] **ROOT CAUSE (WHY + WHERE)** — pending full typed baseline/root RED evidence.
+- [ ] **ADDRESSED (verified)** — pending repaired oracle and complete typed prior products.
+- [ ] **NO REGRESSION** — pending discovery/current applicability, unchanged carriers/HDL and book/facts.
+
+The concurrent untouched discovery cohort exposes a separately owned P2 .3.2:
+T1985's reviewed supported-source table omits the new maintained generated
+record-input catalog source. Preserve its complete-cohort assertion and add
+literal authored declarations after .3.1 commits; do not classify the broad
+cohort as passing while that table remains incomplete. This omission does not
+change source admission or qualify another runtime. Parent .3/.2.4 stay active
+until .3.2 and final reconciliation pass.
+
+Full typed pre-repair T1981/T1982 terminates RED, Files=2, Tests=11: T1981
+fails its decoded primitive/copy root and the fixed supplied report comparisons;
+T1982's complete typed baseline and transport controls pass. T1981 failures name
+ at t/1981-isf-storage-word-access.t line 266. Native values remain numeric,
+while relocated expectations stringify schema/count/width fields. git log -L
+roots the unchanged relocate helper in 3fa482924ae93421918d955b916291cd3c741001.
+Exact 3dd7e2c09d9a0aac773dfb846b2f13767a0dfe1b T1981 bytes match Git with SHA256
+aef219ba115b2646ff79de8b9a45ecd15d20ee623235e9af20546ca57e4ecff0.
+The repair inspects a separate scalar and returns the original value unless
+the authorized source relocation changes text. All public/declaration/baseline
+comparisons now serialize complete JSON kinds, and permanent root/copy/caller
+literals plus exact named producer/baseline/source byte checks qualify the
+oracle. The untouched discovery cohort is still pending and has owned .3.2 RED;
+it cannot be counted as complete successful broader qualification.
+
+### Verified typed prior-storage oracle `.60.4.3.2.4.2.3.1`
+
+Final guarded T1981/T1982/T2018 reports All tests successful, Files=3, Tests=17.
+Complete typed native/API/newline and independent fixed baseline products pass;
+source relocation preserves decoded integers/fractions/negative numbers, numeric
+strings, booleans/nulls, nested values and later Storable copies. Caller literals
+and exact named public producer, immutable baseline and supplied source bytes
+remain unchanged. Every actual scheduled file and complete SystemVerilog/Verilog
+byte control retains its existing only-date permission. The original pre-change
+receipts are untouched. Exact predecessor helper remains RED for numeric kinds.
+
+Untouched T1985/T2017/T248 terminates FAIL, Files=3, Tests=7216 solely because
+T1985 lacks the new maintained generated-input row in its independent literal
+table. T2017 and the complete fixed catalog test finish positively; the aggregate
+cohort is not represented as passing. The new table witness belongs to .3.2 next
+after this commit. The parent generated/domain closure remains active.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Full pre-repair typed T1981/T1982 reports FAIL, Files=2, Tests=11, with actual TAP at t/1981-isf-storage-word-access.t line 266. Fresh decoded literal and copied outputs turn numeric width into a string, while the actual native report retains numeric schema/count/width values. T1981 relocate stringifies each expected scalar and is_deeply hides number/string distinctions; T1982 typed baseline controls pass. git log -L roots relocate in 3fa482924ae93421918d955b916291cd3c741001. Exact 3dd7e2c09d9a0aac773dfb846b2f13767a0dfe1b test bytes independently match Git with the recorded SHA256, and its extracted original helper remains RED. Existing canonical copy-stability limits identify the prior value-only scope; no production wire defect is inferred.
+- [x] **ADDRESSED (verified)** — Separate-scalar path inspection returns the original value when the authorized exact source relocation does not change text. All T1981/T1982 complete/declaration/native/API/newline/fixed baseline comparisons now preserve serialized JSON kinds. Final guarded T1981/T1982/T2018 reports All tests successful, Files=3, Tests=17, with independently decoded primitive/output/copy/caller controls, complete immutable prior reports/carriers/HDL and exact named public producer/baseline/source bytes. Canonical scalar/copy facts, book and SPECFORGE feedback retain dated receipt limits and current typed evidence. Parent closure stays active for separately owned complete-catalog witness .3.2.
+- [x] **NO REGRESSION** — Final guarded T1981/T1982/T2018 passes All tests successful, Files=3, Tests=17. Scalar access/field independence, malformed/carrier refusals, domain-local typed/bank/watchdog storage, empty/single/multiple domains, schema/discovery shapes and complete previous FSM/SystemVerilog/Verilog products remain. Runnable T1376 passes Files=1, Tests=2; book builds and knowledge-map: OK is required before the staged gate. Untouched T1985/T2017/T248 FAIL Files=3, Tests=7216 is explicitly excluded as aggregate success; its only omission is owned .3.2 before parent closure. Re-derivation is actual typed native/transport/fixed baseline outputs and source/product byte checks; falsification is fresh decoded primitive/copy literals and independently authenticated exact committed helper RED; permanent tests, immutable receipts, scoped book/facts, task and Git provide durability. No production source change, native HDL execution, full CI, push or external repository mutation.

@@ -50,5 +50,5 @@ _Actor storage variables reject target keywords before lowering_
 
 _Storage words carry independent checked access metadata without RTL policy_
 
-- **date:** 2026-09-30 · **status:** current
+- **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-storage-word-access.md`](../../docs/knowledge/isf-storage-word-access.md)

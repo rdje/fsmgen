@@ -4,6 +4,7 @@ use lib 'perl', 't/lib';
 use Test::More;
 use JSON::PP;
 use Storable qw(dclone);
+use Digest::SHA qw(sha256_hex);
 use Cwd qw(abs_path);
 use File::Temp qw(tempdir);
 use FSM::Test::ProjectDataLocality;
@@ -22,7 +23,25 @@ my $baseline = $json->decode(read_file("$audit/baseline.json"));
 my $parser = FSM::Adapter::ISF->new;
 my $scheduler = FSM::Scheduler::ISF->new;
 my $api = FSM::Support::SemanticIntrospectionMCPAdapter->new(repo_root => $root, workspace_root => $root);
+my @unchanged = (qw(bin/fsmgen bin/fsmgen-mcp perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm
+    perl/FSM/Support/CapabilityManifest.pm perl/FSM/Support/RegressionCorpus.pm
+    perl/FSM/Support/ISFPublicInterfaceContract.pm perl/FSM/Support/ISFRecordPortContexts.pm
+    perl/FSM/Scheduler/ISF/LoweringIR.pm perl/FSM/Scheduler/ISF/Emitter/JSON.pm
+    t/lib/FSM/Test/SourceQueryRunner.pm), "$audit/baseline.json", sort glob("$audit/*.isf"));
+my $bytes_before = {map {$_ => sha256_hex(read_file($_))} @unchanged};
+
 my @tokens = qw(ro rw wo w1c w0c rc rs warl wpri reserved);
+
+subtest 'source relocation preserves decoded primitive kinds and later copies' => sub {
+    my $literal = '{"integer":8,"negative":-3,"fraction":1.25,"numeric_text":"8","flag":true,"null":null,"source":"old.isf","nested":[4,"4","prefix old.isf suffix"]}';
+    my $expected = $json->decode('{"integer":8,"negative":-3,"fraction":1.25,"numeric_text":"8","flag":true,"null":null,"source":"new.isf","nested":[4,"4","prefix new.isf suffix"]}');
+    my $input = $json->decode($literal);
+    my $got = relocate($input, 'old.isf', 'new.isf');
+    same($got, $expected, 'complete decoded primitive/path output matches independent literal');
+    same(dclone($got), $expected, 'complete later detached copy retains every primitive kind');
+    same($input, $json->decode($literal), 'complete original literal input remains unchanged');
+    same(dclone($input), $json->decode($literal), 'original caller also remains copy-stable');
+};
 
 subtest 'word and field facts stay independent for both scalar spellings' => sub {
     for my $kind (qw(var variable)) {
@@ -41,8 +60,8 @@ subtest 'word and field facts stay independent for both scalar spellings' => sub
             my $control = $parser->parse_source($without, 'word.isf');
             my $expected = report($control);
             storage($expected, 'value_reg')->{access} = $token;
-            is_deeply($report, $expected, 'access is the only schedule difference');
-            is_deeply($scheduler->lower($actor)->{files}, $scheduler->lower($control)->{files},
+            same($report, $expected, 'access is the only schedule difference');
+            same($scheduler->lower($actor)->{files}, $scheduler->lower($control)->{files},
                 'complete scheduled artifacts unchanged');
             $entry->{access} = 'changed';
             is($actor->{storage}[0]{access}, $token, 'report does not mutate source');
@@ -97,7 +116,7 @@ subtest 'supplied controls and new word forms preserve all hardware products' =>
             my $ports = $query eq 'schedule' ? delete $actual->{interface_ports}
                 : delete $actual->{source}{interface_ports};
             is(ref($ports), 'ARRAY', 'additive declared interface metadata is explicit');
-            is_deeply($actual, $expected, "$case $query exact previous product plus only authored access");
+            same($actual, $expected, "$case $query exact previous product plus only authored access");
         }
         for my $flags ([qw(--check --json)], ['--emit-semantic-json']) {
             my $r = capture([$^X, 'bin/fsmgen', @$flags, $path]);
@@ -108,7 +127,7 @@ subtest 'supplied controls and new word forms preserve all hardware products' =>
         }
         next if $failure;
         my $actor = $parser->parse_file($path);
-        is_deeply($scheduler->lower($actor)->{files}, $baseline->{$control}{scheduled_files},
+        same($scheduler->lower($actor)->{files}, $baseline->{$control}{scheduled_files},
             'complete actual scheduled carrier equals pre-change control');
         for my $language (qw(systemverilog verilog)) {
             my $output = "$work/$case-$language." . ($language eq 'verilog' ? 'v' : 'sv');
@@ -138,13 +157,13 @@ ISF
     for my $domain (@{$ir->{domain_partition}{domains}}) {
         my $selected = _domain_actor_for_scheduled_artifact($actor, $domain, $ir->{domain_partition}{default_domain});
         my ($name, $access) = @{$expected{$domain->{name}}};
-        is_deeply([map { [$_->{name}, $_->{access}] } @{$selected->{storage}}], [[$name, $access]],
+        same([map { [$_->{name}, $_->{access}] } @{$selected->{storage}}], [[$name, $access]],
             'domain source selects only its independently authored fact');
         is(storage(report($selected), $name)->{access}, $access, 'domain report retains access');
     }
     my $without = $text; $without =~ s/\(access (?:ro|w1c)\)//g;
     my $control = $parser->parse_source($without, 'domains.isf');
-    is_deeply($scheduler->lower($actor)->{files}, $scheduler->lower($control)->{files}, 'all domain FSM files unchanged');
+    same($scheduler->lower($actor)->{files}, $scheduler->lower($control)->{files}, 'all domain FSM files unchanged');
     my $path = "$work/domains.isf"; write_file($path, $text); $path =~ s/^\Q$root\E\///;
     my $schedule = public_query($path, 'schedule', 0);
     my $expected_report = report($control);
@@ -152,9 +171,9 @@ ISF
         my ($name, $access) = @{$expected{$domain->{name}}};
         storage($domain, $name)->{access} = $access;
     }
-    is_deeply($schedule, $expected_report, 'word access is the only domain report difference');
-    is_deeply($schedule->{inferred_storage}, [], 'top owns no domain storage metadata');
-    is_deeply([map { $_->{storage} } @{$schedule->{clock_domains}}],
+    same($schedule, $expected_report, 'word access is the only domain report difference');
+    same($schedule->{inferred_storage}, [], 'top owns no domain storage metadata');
+    same([map { $_->{storage} } @{$schedule->{clock_domains}}],
         [['core_reg'], ['aux_reg']], 'existing domain storage-name lists are preserved');
 };
 
@@ -178,20 +197,20 @@ subtest 'non-token and carrier refusals retain complete public diagnostics' => s
 
 subtest 'public discovery and supported fixture expose the report contract' => sub {
     my $manifest = build_capability_manifest();
-    is_deeply($manifest->{embedding}{isf_public_interface}{schedule_report_storage_optional_keys},
+    same($manifest->{embedding}{isf_public_interface}{schedule_report_storage_optional_keys},
         [qw(role type type_kind width fields access)], 'exact optional storage keys advertised');
     like($manifest->{embedding}{isf_public_interface}{schedule_report_storage_width_shape},
         qr/word.*access.*independent/s, 'metadata independence is discoverable');
     my $native = capture([$^X, 'bin/fsmgen', '--capability-manifest']);
     is($native->{exit_code}, 0, 'native capabilities succeed');
-    is_deeply($json->decode($native->{stdout}), $manifest, 'full native/in-process capabilities agree');
+    same($json->decode($native->{stdout}), $manifest, 'full native/in-process capabilities agree');
     my $request = {jsonrpc => '2.0', id => 1, method => 'tools/call', params => {
         name => 'fsmgen_capability_query', arguments => {section => 'embedding'}}};
     my $response = $api->handle_jsonrpc_request($request);
-    is_deeply($response->{result}{structuredContent}{payload}, $manifest->{embedding}, 'API embedding contract agrees');
+    same($response->{result}{structuredContent}{payload}, $manifest->{embedding}, 'API embedding contract agrees');
     my $wire = capture([$^X, 'bin/fsmgen-mcp', '--workspace-root', '.'], $json->encode($request)."\n");
     is($wire->{exit_code}, 0, 'newline capability succeeds');
-    is_deeply($json->decode($wire->{stdout}), $response, 'complete newline capability agrees');
+    same($json->decode($wire->{stdout}), $response, 'complete newline capability agrees');
     for my $query (qw(check semantic schedule)) {
         my $report = public_query('isf/storage_word_access.isf', $query, 0);
         if ($query eq 'schedule') {
@@ -202,6 +221,9 @@ subtest 'public discovery and supported fixture expose the report contract' => s
         }
     }
 };
+
+same({map {$_ => sha256_hex(read_file($_))} @unchanged}, $bytes_before,
+    'complete named public producer and immutable baseline/source bytes remain unchanged');
 
 done_testing();
 
@@ -222,7 +244,9 @@ sub relocate {
     return {map {$_ => relocate($v->{$_},$old,$new)} keys %$v} if ref($v) eq 'HASH';
     return [map {relocate($_,$old,$new)} @$v] if ref($v) eq 'ARRAY';
     return $v if !defined($v) || ref($v);
-    my $text="$v"; $text =~ s/\Q$old\E/$new/g; return $text;
+    my $inspect = $v;
+    my $text = "$inspect";
+    return $text =~ s/\Q$old\E/$new/g ? $text : $v;
 }
 sub public_query {
     my ($path,$query,$failure,$diagnostic)=@_;
@@ -236,7 +260,7 @@ sub public_query {
     my $wire=capture([$^X,'bin/fsmgen-mcp','--workspace-root','.'],$json->encode($request)."\n");
     is($wire->{exit_code},0,'newline transport succeeds');
     is($wire->{stderr},'','newline stderr clean');
-    is_deeply($json->decode($wire->{stdout}),$response,'complete API/newline equality');
+    same($json->decode($wire->{stdout}),$response,'complete API/newline equality');
     if ($failure && $query eq 'schedule') {
         is($r->{stdout},'','refused schedule has no report');
         like($r->{stderr},$diagnostic,'schedule failure retains contextual cause');
@@ -245,9 +269,11 @@ sub public_query {
     }
     is($r->{stderr},'','machine report stderr clean');
     my $report=normalize($json->decode($r->{stdout}));
-    is_deeply($report,$response->{result}{structuredContent}{report},'complete native/API equality');
-    is_deeply($json->decode($response->{result}{content}[0]{text}),$response->{result}{structuredContent},'textual content equals structured content');
+    same($report,$response->{result}{structuredContent}{report},'complete native/API equality');
+    same($json->decode($response->{result}{content}[0]{text}),$response->{result}{structuredContent},'textual content equals structured content');
     is(!!$response->{result}{isError},!!$failure,'API error flag retains outcome');
     like($json->encode($report->{diagnostics}),$diagnostic,'failure retains contextual cause') if $failure;
     return $report;
 }
+
+sub same { is($json->encode($_[0]), $json->encode($_[1]), $_[2]) }

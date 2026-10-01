@@ -50,7 +50,9 @@ and exact source/package bytes stay unchanged. Ordinary reset provenance retains
 the required domain:null entry; named entries preserve authored domain order
 and explicit versus domain_absent origin. The draft oracle's omitted null field
 is corrected against ISFResetProvenance's closed schema, not removed from reports.
-Contextual refusals and final
-prior-product closure remain .2-.3; backend/native behavior and consumer completion
+Contextual refusals and scalar shadows are qualified under .2, including
+selector and binding-identity repairs. Typed prior scalar/storage products are
+qualified under .3.1; the missing maintained-source declaration witness and final
+prior/discovery closure remain .3.2. Backend/native behavior and consumer completion
 remain .2.5. Structural reset ownership is not executed reset behavior.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1.

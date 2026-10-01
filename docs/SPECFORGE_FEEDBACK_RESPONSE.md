@@ -59,8 +59,9 @@ Decision storage rollover is committed in
 `df7f692c8b94b083d2d078d62854d37869fbca6d`. Fixed-commit consumer/question
 closure is qualified in `5ef1133c59f6d1814ebe7d1bf95373bdd77cbbc8`; successful
 production-cohort birth, malformed-product refusal and post-publication
-identity/fact/question floors are also qualified. Final rollover closure under
-`.51.3.3.3.2` resumes record-input frontend qualification `.60.4.3.2.3.6`. Required
+identity/fact/question floors are also qualified. Rollover closure under
+`.51.3.3.3.2` returned work to record-input frontend qualification
+`.60.4.3.2.3.6`, which is now qualified. Required
 duration/timer deliveries precede optional banks, list ports and variants.
 Earlier configuration, verification and phase requests retain their tracked
 owners. These statuses do not claim complete SPECFORGE implementation or
@@ -1476,6 +1477,13 @@ and all public transports. Evidence is in
 remains `.38.2`; bank layout reporting does not imply that syntax is accepted. The previous blanket dependency
 on controller/runtime repairs is narrowed by decision 0109: this change proves
 unchanged hardware and makes no new execution claim. Those repairs remain open.
+
+Current fixed scalar/storage compatibility controls additionally preserve complete
+JSON primitive kinds through source relocation and later copies under SEM
+`.60.4.3.2.4.2.3.1`. Earlier value comparisons retain their dated evidence limits;
+immutable receipt, carrier and HDL bytes are preserved. The missing maintained
+generated-input declaration witness is tracked separately under `.3.2` before
+final generated/domain closure.
 
 SPECFORGE's integration remains its `FSMGEN-REQUESTS.5`; no external checkout,
 pin, ticket or message was changed here.

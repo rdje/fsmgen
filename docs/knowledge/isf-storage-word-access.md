@@ -8,7 +8,7 @@ answers:
   - "where is storage word access reported?"
   - "do multi-domain schedule reports expose storage details?"
   - "why is scalar access metadata independent of controller repair?"
-date: 2026-09-30
+date: 2026-10-01
 status: current
 tags: [isf, storage, register, access, metadata, specforge, mcp]
 evidence: t/1982-isf-domain-storage-report.t; docs/audits/domain-storage-report-20260930/manifest.json; t/1981-isf-storage-word-access.t; docs/audits/storage-word-access-20260930/manifest.json; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl/FSM/Support/ISFPublicInterfaceContract.pm; docs/decisions/0109-direct-transactions-have-independent-logical-controllers.md
@@ -45,6 +45,15 @@ Private pre-realization summaries use null for unavailable details; actual
 realized empty domains have empty arrays. Named single domains reuse their
 module storage details without changing existing domain counts. This adds no child-report flattening
 or hardware behavior.
+
+Current prior-product qualification under SEM .60.4.3.2.4.2.3.1 upgrades those
+value comparisons to complete serialized JSON-kind equality. Source relocation
+preserves decoded numeric/string/boolean/null kinds through later copies; only
+actual path changes produce replacement strings. Independently decoded literals,
+fixed report/carrier/HDL controls and exact named public producer plus immutable
+source/baseline bytes qualify the current oracle. Historical receipts retain
+their dated value/copy-stability limits. Complete generated-input catalog witness
+closure remains separately owned; no runtime result is inferred.
 
 Passive metadata does not depend on independent-controller execution. Decision
 0109's former blanket sequence is narrowed under SEM `.38.1`; unchanged emitted

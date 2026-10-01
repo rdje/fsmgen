@@ -288,6 +288,11 @@ therefore retain a complete schedule preview while strict check and semantic
 queries refuse. Use those strict queries to qualify the realized composition;
 a schedule preview alone does not prove its ports are connected.
 
+Public report qualification checks complete JSON primitive kinds, source bytes,
+named producers and fixed scalar/storage controls. Historical compatibility
+comparisons permit only independently qualified additive metadata, exact source
+relocation and emitted date banners. HDL execution remains separately qualified.
+
 Record outputs, root-list input ports, transaction-local aggregate ports,
 aggregate banks and variants remain deferred. Output copies/member writes keep
 their separately owned writer prerequisites. The compiler preserves typed
