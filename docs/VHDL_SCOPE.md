@@ -154,14 +154,16 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   VHDL package
   declaration/emission, full aggregate VHDL record/array lowering, broad
   expression parity, scalar division/modulo and broader scalar arithmetic,
-  signed arithmetic operators beyond the shipped same-width vector arithmetic
-  family, GHDL validation, packages, multi-clock domains, and full feature
+  signed arithmetic beyond the shipped scalar addition/subtraction/multiplication
+  and same-width vector families, GHDL validation, packages, multi-clock domains, and full feature
   parity remain deferred.
 - Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
   fail-closed direct VHDL boundary by focused pipeline and facade coverage.
-- Signed scalar addition/subtraction/multiplication arithmetic is locked as an
-  explicit fail-closed direct VHDL boundary by focused pipeline and facade
-  coverage.
+- Bounded signed scalar addition/subtraction/multiplication and their RHS chains
+  lower as one-bit `std_logic` bit-pattern logic: addition/subtraction use `xor`,
+  multiplication uses `and`. Signed scalar division/modulo and mixed
+  signed/unsigned scalar arithmetic remain fail-closed in pipeline and facade
+  coverage; this is not broad arithmetic or VHDL executable qualification.
 - Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
   explicit fail-closed direct VHDL boundaries by focused pipeline and facade
   coverage.

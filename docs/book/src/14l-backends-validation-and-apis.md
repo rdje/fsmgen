@@ -52,7 +52,8 @@ selects, unresolved/compound/malformed/residual shapes fail closed. The real
 named-drive, AMBA `HRESP`, and APB `wait_ctr`/`addr_q` outputs contain no
 SystemVerilog reduction token. Public source arity remains unchanged. Decision
 `0023` still prevents textual generation from being called executable VHDL
-qualification because no `ghdl`, `nvc`, or `vcom` is installed.
+qualification; `ghdl`, `nvc`, and `vcom` are currently unavailable on this
+environment's `PATH`.
 
 Composition VHDL now includes the bounded C3 external-RTL literal/concat top
 for `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
@@ -191,6 +192,9 @@ addition/subtraction/multiplication RHS assignments and chains now lower as
 one-bit `std_logic` bit-pattern logic: `+` and `-` become `xor` chains, and `*`
 becomes an `and` chain. Signed scalar division/modulo and mixed signed/unsigned
 scalar arithmetic remain fail-closed.
+This scalar subset requires matching target/operand signedness. Declared record
+inputs retain their separate VHDL profile refusal; file emission retains the
+analyzer/runtime qualification boundary above.
 Same-width signed vector addition/subtraction/multiplication/division/modulo
 RHS assignments now lower as signed VHDL arithmetic when the target and all operands are
 same-width signed vectors, so a signed direct-root `SUM = (+ A B)` assignment

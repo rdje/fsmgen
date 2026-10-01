@@ -1,0 +1,3 @@
+ghdl unavailable on PATH
+nvc unavailable on PATH
+vcom unavailable on PATH

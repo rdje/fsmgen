@@ -77,7 +77,9 @@ and book.
   selected record inputs and generated tops, with no new destination or partial
   successful product and existing destinations preserved. Scalar VHDL input
   and prior packed-output controls remain admitted; no VHDL analyzer/runtime
-  claim follows from emission. The qualified record-input HDL targets are
+  claim follows from emission. Existing bounded VHDL signed-scalar `+`/`-`/`*`
+  one-bit operations use `xor`/`and`; division/modulo and mixed-sign scalar
+  arithmetic remain refused. The qualified record-input HDL targets are
   SystemVerilog and Verilog. Final public/corpus reconciliation `.5.5.2`
   qualifies supplied sources, all-section discovery, current catalog and JSON
   kinds, with unchanged complete-cohort and prior evidence. The feature matrix's

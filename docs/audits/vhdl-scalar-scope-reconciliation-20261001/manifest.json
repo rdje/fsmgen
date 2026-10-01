@@ -1,0 +1,34 @@
+{
+  "baseline_revision": "b069b76e9072bbc3b9f83692e4092964404617cf",
+  "producers": {
+    "docs/VHDL_SCOPE.md": {
+      "git_blob": "d3525549e8f5becb5eab29d46daadb4640c669a9",
+      "sha256": "d3e3457e997378ce6aa6a6f0f4e37e6a646fab90938f8e4f77da2ca09cac8a49"
+    },
+    "perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm": {
+      "git_blob": "1862ed58ca17345ecd15fa278e70ad082316ca1e",
+      "sha256": "88dc965bf133cf2802770d96aa446d2eddcf3f42c781e65c003b42d77228081e"
+    },
+    "perl/FSM/Pipeline/HDLGenerator.pm": {
+      "git_blob": "42791c12bce7da869dbbc520c57567298692ee45",
+      "sha256": "7fac54cb00ae7e1840683e5674e4b72d3949355d1654b706ad5e06c16f3e9dff"
+    },
+    "t/1420-vhdl-direct-backend-scaffold.t": {
+      "git_blob": "27a593f3bdd84f0c5a4061c9cecd964d2e58850b",
+      "sha256": "a351699fbb1c593d4b61ed8a8525d2a964526d05ee306356a6d2fcc5e958f7ae"
+    },
+    "t/386-hdl-generator-facade-target-language-boundary-audit.t": {
+      "git_blob": "7c28496c0ce4e43194cd3881f1386fabbb018f31",
+      "sha256": "f7fba4087147d6c7c068e735ef91c4193f7560b8f1948816089ab1e3a7262b65"
+    }
+  },
+  "schema": "fsmgen.vhdl_scalar_scope_reconciliation.v1",
+  "sha256": {
+    "backend.txt": "dd9cdeb08cc2763ae9f14d0e9c54d00f0b9d588958ae2c2a834ba78dab884b10",
+    "history.txt": "df4ba11ce8368d8436b41e91bd0da2d638e67163364dd512946533861f6f539c",
+    "scope.md.source": "d12f48150f58335fbbd18b5989f031ab7167467722a5fed5cdd9dde732c72c9c",
+    "tools-discovery.txt": "0c7b1c52097d18c91f43daa91472150d8620e7ebe4a70af27dd0119eac063e44",
+    "tools-path.txt": "0c7b1c52097d18c91f43daa91472150d8620e7ebe4a70af27dd0119eac063e44",
+    "verify.py": "af9d51bee8b42bd63aaff1010183b9448e1aeabb4de9c693d8c6570d2d4ae920"
+  }
+}
