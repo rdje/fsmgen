@@ -111,7 +111,9 @@ Representative generated top instance:
 
 Input bindings are same-cycle handoff assignments owned by the parent. Output
 bindings are guarded by the generated child instance's `done` pulse so the
-parent copies the child output when the blocking call completes. A plain
+bound value is valid during that completion pulse. This combinational binding
+does not itself retain the value until the parent later finishes; use an
+explicit owned register when retention is required. A plain
 `(do child)` remains local when the child is not otherwise generated. If the
 same child transaction is already emitted as a generated child because of
 spawn or a parameterized `do`, a plain `do` to that child also uses a generated

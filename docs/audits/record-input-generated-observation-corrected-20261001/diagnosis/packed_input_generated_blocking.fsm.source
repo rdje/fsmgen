@@ -1,0 +1,205 @@
+(?fsm:packed_input_generated_blocking
+
+  (+types
+    (type frame (record (tag (bits 2)) (payload (record (data (signed (four_state (bits 5)))) (flags (list (two_state bit) (two_state (bits 2))))))))
+    (type _isf_sample_accepted (four_state (signed (bits 5))))
+  )
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input start)
+    (input packet)
+    (input unused)
+    (output phase)
+    (output seen)
+    (output again)
+    (output negative_seen)
+    (output negative_again)
+    (output copy_seen)
+    (output stored)
+    (output copied_tag)
+    (output stored_flag)
+    (output stored_piece)
+    (output captured)
+    (output reset_seen)
+    (output done)
+    (internal held)
+    (internal isf_completion_left_seen)
+    (internal isf_completion_left_ready)
+    (internal isf_completion_right_seen)
+    (internal isf_completion_right_ready)
+    (internal accepted)
+  )
+
+  (+size
+    (start 1)
+    (packet frame)
+    (unused frame)
+    (phase 2 (reset 0))
+    (seen 5 (reset 0))
+    (again 5 (reset 0))
+    (negative_seen 1 (reset 0))
+    (negative_again 1 (reset 0))
+    (copy_seen 5 (reset 0))
+    (stored 5 (reset 0))
+    (copied_tag 2 (reset 0))
+    (stored_flag 1 (reset 0))
+    (stored_piece 2 (reset 0))
+    (captured 5 (reset 0))
+    (reset_seen 5 (reset 0))
+    (done 1 (reset 0))
+    (main_copier_do_0_start 1)
+    (main_copier_do_0_done 1)
+    (main_copier_do_0_result 5)
+    (left_start 1)
+    (left_done 1)
+    (left_result 5)
+    (left_is_negative 1)
+    (right_start 1)
+    (right_done 1)
+    (right_result 5)
+    (right_is_negative 1)
+    (isf_write_main_copier_do_0_held_data frame)
+    (isf_write_main_copier_do_0_held_enable 1)
+    (held frame (reset 149))
+    (accepted _isf_sample_accepted)
+    (can_accept 1)
+    (isf_completion_left_ready 1)
+    (isf_completion_left_seen 1 (reset 0))
+    (isf_completion_right_ready 1)
+    (isf_completion_right_seen 1 (reset 0))
+  )
+
+  (main_idle_0
+    (= (can_accept 1))
+    (<= (accepted packet.payload.data) <start)
+    (<start
+      (-> main_set_1)
+    )
+  )
+
+  (main_set_1
+    (<- (reset_seen> held.payload.data))
+    (-> main_set_2)
+  )
+
+  (main_set_2
+    (<- (phase> 1))
+    (-> main_wait_3)
+  )
+
+  (main_wait_3
+    (-> main_wait_4)
+  )
+
+  (main_wait_4
+    (-> main_wait_5)
+  )
+
+  (main_wait_5
+    (-> main_do_6)
+  )
+
+  (main_do_6
+    (= (main_copier_do_0_start> 1))
+    (<main_copier_do_0_done
+      (-> main_set_7)
+    )
+  )
+
+  (main_set_7
+    (<- (phase> 2))
+    (-> main_wait_8)
+  )
+
+  (main_wait_8
+    (-> main_wait_9)
+  )
+
+  (main_wait_9
+    (-> main_wait_10)
+  )
+
+  (main_wait_10
+    (-> main_spawn_11)
+  )
+
+  (main_spawn_11
+    (= (left_start> 1))
+    (-> main_spawn_12)
+  )
+
+  (main_spawn_12
+    (= (right_start> 1))
+    (-> main_await_all_13)
+  )
+
+  (main_await_all_13
+    (-> main_set_14 <(& isf_completion_left_ready isf_completion_right_ready))
+  )
+
+  (main_set_14
+    (<- (stored> held.payload.data))
+    (-> main_set_15)
+  )
+
+  (main_set_15
+    (<- (copied_tag> held.tag))
+    (-> main_set_16)
+  )
+
+  (main_set_16
+    (<- (stored_flag> held.payload.flags[0]))
+    (-> main_set_17)
+  )
+
+  (main_set_17
+    (<- (stored_piece> held.payload.flags[1]))
+    (-> main_set_18)
+  )
+
+  (main_set_18
+    (<- (captured> accepted))
+    (-> main_done_19)
+  )
+
+  (main_done_19
+    (<1 (done> 1))
+    (-> main_idle_0)
+  )
+
+  (-main_copier_do_0_port_bindings
+    (= (copy_seen> main_copier_do_0_result) <main_copier_do_0_done)
+  )
+
+  (-left_port_bindings
+    (= (seen> left_result))
+    (= (negative_seen> left_is_negative))
+  )
+
+  (-right_port_bindings
+    (= (again> right_result))
+    (= (negative_again> right_is_negative))
+  )
+
+  (-isf_completion_left_seen
+    (<- (isf_completion_left_seen 0) <left_start)
+    (<- (isf_completion_left_seen 1) <(& (! left_start) left_done))
+    (= (isf_completion_left_ready (| left_done isf_completion_left_seen)))
+  )
+
+  (-isf_completion_right_seen
+    (<- (isf_completion_right_seen 0) <right_start)
+    (<- (isf_completion_right_seen 1) <(& (! right_start) right_done))
+    (= (isf_completion_right_ready (| right_done isf_completion_right_seen)))
+  )
+
+  (-isf_write_main_copier_do_0_held_enable
+    (<- (held isf_write_main_copier_do_0_held_data) <isf_write_main_copier_do_0_held_enable)
+  )
+
+)

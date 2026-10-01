@@ -1,0 +1,12 @@
+
+    #   Failed test 'blocking systemverilog independent generated public-pin behavior'
+    #   at ./t/2025-isf-record-input-generated-runtime.t line 182.
+    # {"capture_limit_bytes":67108864,"cleanup":{"containment":"test_runtime_process_group","group_gone":1,"kill_sent":0,"leader_reaped":1,"leader_started":1,"surviving_descendants":0,"term_sent":0},"diagnostic":"supervised process exited nonzero","exec_error":null,"exec_failed":0,"exec_handoff_monotonic_ns":784793007226000,"exec_to_first_output_ns":173759000,"execution_ns":234420000,"exit_code":1,"finished_monotonic_ns":784793241646000,"first_output_monotonic_ns":784793180985000,"first_output_to_exit_ns":60661000,"ok":0,"output_limited":0,"schema":"fsmgen.test.verilator_runtime_result.v1","schema_version":1,"signal":0,"spawn_to_exec_ns":4756000,"stage":"runtime","started_monotonic_ns":784793002470000,"status":"nonzero_exit","stderr":"","stderr_bytes":0,"stdout":"[406] %Fatal: blocking_tb.sv:48: Assertion failed in tb.lap: GENERATED_WHOLE_COPY_MISMATCH\n%Error: .artifacts/tmp/tests/pYyy9t3gHk/blocking_tb.sv:48: Verilog $stop\nAborting...\n","stdout_bytes":213,"timed_out":0,"timeout_seconds":30}
+    # Looks like you failed 1 test of 14.
+
+#   Failed test 'generated behavior awaits independently qualified exact observation admission'
+#   at ./t/2025-isf-record-input-generated-runtime.t line 197.
+original test failed: unexpected generated runtime result; diagnose retained evidence
+
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 25 just after 3.

@@ -1,0 +1,134 @@
+docs/audits/generated-input-observer-20261001/observe.t .. 
+# Subtest: fixed source, generated roles and both emitted families preserve independent declarations
+    ok 1 - domains complete authored pins and packed ranges are literal
+    ok 2 - domains lowering/report preserve complete caller JSON kinds
+    ok 3 - domains complete artifacts reuse exactly one reader definition
+    ok 4 - domains packed state/reset stays in its owner
+    ok 5 - domains only explicit entry sample captures input
+    ok 6 - domains parent does not duplicate the generated whole writer
+    ok 7 - domains complete private child identities and order
+    ok 8 - domains inherited packet retains one typed packed root
+    ok 9 - domains child has no unused input or owner register
+    ok 10 - domains child has exactly its owning clock/reset
+    ok 11 - domains complete private child identities and order
+    ok 12 - domains inherited packet retains one typed packed root
+    ok 13 - domains child has no unused input or owner register
+    ok 14 - domains child has exactly its owning clock/reset
+    ok 15 - domains private copy data and explicit enable retain their authored edge
+    ok 16 - domains private whole write data retains type
+    ok 17 - domains owner consumes the actual generated packed data/enable handoff
+    ok 18 - domains reused reader retains its live scalar read
+    ok 19 - domains child owns the signed comparison
+    ok 20 - domains left reuses the exact typed reader
+    ok 21 - domains left receives live packed input
+    ok 22 - domains spawned output binding retains its live forwarding assignment
+    ok 23 - domains right reuses the exact typed reader
+    ok 24 - domains right receives live packed input
+    ok 25 - domains spawned output binding retains its live forwarding assignment
+    ok 26 - domains sole writer receives packed input
+    ok 27 - domains complete private data endpoint ownership
+    ok 28 - domains complete private enable endpoint ownership
+    ok 29 - domains entire public/private wiring has exact endpoints
+    ok 30 - domains sole copier preserves its call-form output-binding contract
+    ok 31 - clock-only unused sibling gains no reset
+    ok 32 - clock-only sibling gains no state
+    ok 33 - whole-copy owner retains exact reset
+    ok 34 - unused declaration remains in the clock-only owner
+    ok 35 - domains packed_input_generated_domains__domain_io.fsm strictly replays
+    ok 36 - domains packed_input_generated_domains__domain_io__child_copier.fsm strictly replays
+    ok 37 - domains packed_input_generated_domains__domain_io__child_reader.fsm strictly replays
+    ok 38 - domains packed_input_generated_domains_top.fsm strictly replays
+    ok 39 - domains packed_input_generated_domains__domain_idle.fsm strictly replays
+    ok 40 - domains systemverilog original source emits
+    ok 41 - domains systemverilog emits one reused reader definition
+    ok 42 - domains systemverilog retains explicit generated top
+    ok 43 - domains systemverilog preserves signed packed scalar declaration
+    ok 44 - domains verilog original source emits
+    ok 45 - domains verilog emits one reused reader definition
+    ok 46 - domains verilog retains explicit generated top
+    ok 47 - domains verilog preserves signed packed scalar declaration
+    ok 48 - domains bench substitutes only fixed module/clock tokens
+    ok 49 - domains hostile copy changes exactly its enable
+    ok 50 - domains independent copy-edge witness rejects disabled actual handoff
+    ok 51 - blocking complete authored pins and packed ranges are literal
+    ok 52 - blocking lowering/report preserve complete caller JSON kinds
+    ok 53 - blocking complete artifacts reuse exactly one reader definition
+    ok 54 - blocking packed state/reset stays in its owner
+    ok 55 - blocking only explicit entry sample captures input
+    ok 56 - blocking parent does not duplicate the generated whole writer
+    ok 57 - blocking complete private child identities and order
+    ok 58 - blocking inherited packet retains one typed packed root
+    ok 59 - blocking child has no unused input or owner register
+    ok 60 - blocking child has exactly its owning clock/reset
+    ok 61 - blocking complete private child identities and order
+    ok 62 - blocking inherited packet retains one typed packed root
+    ok 63 - blocking child has no unused input or owner register
+    ok 64 - blocking child has exactly its owning clock/reset
+    ok 65 - blocking private copy data and explicit enable retain their authored edge
+    ok 66 - blocking private whole write data retains type
+    ok 67 - blocking owner consumes the actual generated packed data/enable handoff
+    ok 68 - blocking reused reader retains its live scalar read
+    ok 69 - blocking child owns the signed comparison
+    ok 70 - blocking left reuses the exact typed reader
+    ok 71 - blocking left receives live packed input
+    ok 72 - blocking spawned output binding retains its live forwarding assignment
+    ok 73 - blocking right reuses the exact typed reader
+    ok 74 - blocking right receives live packed input
+    ok 75 - blocking spawned output binding retains its live forwarding assignment
+    ok 76 - blocking sole writer receives packed input
+    ok 77 - blocking complete private data endpoint ownership
+    ok 78 - blocking complete private enable endpoint ownership
+    ok 79 - blocking entire public/private wiring has exact endpoints
+    ok 80 - blocking sole copier preserves its call-form output-binding contract
+    ok 81 - blocking packed_input_generated_blocking.fsm strictly replays
+    ok 82 - blocking copier.fsm strictly replays
+    ok 83 - blocking reader.fsm strictly replays
+    ok 84 - blocking packed_input_generated_blocking_top.fsm strictly replays
+    ok 85 - blocking systemverilog original source emits
+    ok 86 - blocking systemverilog emits one reused reader definition
+    ok 87 - blocking systemverilog retains explicit generated top
+    ok 88 - blocking systemverilog preserves signed packed scalar declaration
+    ok 89 - blocking verilog original source emits
+    ok 90 - blocking verilog emits one reused reader definition
+    ok 91 - blocking verilog retains explicit generated top
+    ok 92 - blocking verilog preserves signed packed scalar declaration
+    ok 93 - blocking bench substitutes only fixed module/clock tokens
+    ok 94 - blocking hostile copy changes exactly its enable
+    ok 95 - blocking independent copy-edge witness rejects disabled actual handoff
+    1..95
+ok 1 - fixed source, generated roles and both emitted families preserve independent declarations
+# Subtest: actual authored unsigned counterexample changes property without packed width
+    ok 1 - only authored signed property changes
+    ok 2 - actual unsigned input keeps packed width
+    ok 3 - actual unsigned declaration fails the unchanged independent leaf witness
+    ok 4 - actual unsigned generated source emits
+    1..4
+ok 2 - actual authored unsigned counterexample changes property without packed width
+# Subtest: generated behavior awaits independently qualified exact observation admission
+    ok 1 - domains_systemverilog fixed generated bench builds
+    ok 2 - domains systemverilog independent generated public-pin behavior
+    ok 3 - complete generated behavior marker
+    ok 4 - repeated generated requests complete
+    ok 5 - generated reset/abort completes
+    ok 6 - all independent request laps complete
+    ok 7 - domains_verilog fixed generated bench builds
+    ok 8 - domains verilog independent generated public-pin behavior
+    ok 9 - complete generated behavior marker
+    ok 10 - repeated generated requests complete
+    ok 11 - generated reset/abort completes
+    ok 12 - all independent request laps complete
+    ok 13 - blocking_systemverilog fixed generated bench builds
+    not ok 14 - blocking systemverilog independent generated public-pin behavior
+    1..14
+not ok 3 - generated behavior awaits independently qualified exact observation admission
+Dubious, test returned 25 (wstat 6400, 0x1900)
+Failed 1/3 subtests 
+
+Test Summary Report
+-------------------
+docs/audits/generated-input-observer-20261001/observe.t (Wstat: 6400 Tests: 3 Failed: 1)
+  Failed test:  3
+  Non-zero exit status: 25
+  Parse errors: No plan found in TAP output
+Files=1, Tests=3, 39 wallclock secs ( 0.01 usr  0.01 sys + 32.29 cusr  5.03 csys = 37.34 CPU)
+Result: FAIL

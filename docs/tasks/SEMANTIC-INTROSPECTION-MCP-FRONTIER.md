@@ -3061,10 +3061,33 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify corrected genuine generated/domain behavior from fresh authority.`
   Acceptance: `After .1-.2 commit, recheck qualified fixed observer scope and complete changed producer membership/identities; split new observer preparation/qualification if its closed contract needs widening. Use a new exclusive capture, never replay generated_input_oct01. Execute all required pairs and retain independent full saved/hostile verification and cleanup. Diagnose any new unexpected result before another execution. No X/Z, reset-free initialization or historical native causality claim.`
-  Verification: `pending committed repair and observer scope recheck`
+  Verification: `Fresh generated_input_fixed_oct01 after committed 7934f7a22769dbaf312ef489d31739caa169b4c0 repairs the typed-net compiler failure. Named-domain source compiles and passes complete public-pin behavior in both families. Ordinary blocking SystemVerilog compiles but fails GENERATED_WHOLE_COPY_MISMATCH in its first lap; no later case or unsigned runtime executes. Original stage results/argv/bounds/cleanup and before/after identities remain; native events/gaps empty and independent selected workspace/command census absent. Sealed diagnosis identifies a P2 witness error: completion-gated combinational copy_seen is wrongly checked for late retention. Named-domain behavior passes; other blocking fields remain unqualified. Children commit diagnosis and correct the observation window before fresh complete qualification.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.1`
+  Status: `done`
+  Goal: `Preserve partial generated runtime passes and diagnose blocking whole-copy mismatch.`
+  Acceptance: `Retain full actual generated_input_fixed_oct01 admission, all reached stage results/arguments/bounds, complete TAP, exact source/producer identities and cleanup. Independently authenticate the named-domain positives and ordinary blocking compile/runtime failure without treating the full target as PASS. Trace actual source/carrier/HDL binding, whole private handoff and owning state timing; determine product or oracle root cause. No further HDL execution before diagnosis is owned and committed; preserve native limits and old spent evidence.`
+  Verification: `Complete partial receipts and hostile saved controls pass independent authentication. Actual public schedule reports copy_seen binding_timing done_guarded; actual carrier uses combinational = guarded by child done. Emitted always_comb defaults copy_seen to zero outside that pulse, which precedes parent phase 2 and later parent done. Published composition contract agrees. The old bench requires nonzero copied data at late parent done and idle, so even correct packed storage fails this scalar predicate. Individual failed blocking values were not captured; no claim they passed. This is P2 witness timing error, immediately owned by .2. No further HDL execution; historical EPERM remains unattributed.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.2`
+  Status: `pending`
+  Goal: `Correct the blocking output-binding observation window.`
+  Acceptance: `P2 witness requires late retention from a documented done-guarded combinational binding. Observe the independent literal copied result during the public copy phase; distinguish spawned forwarding from blocking pulse binding at later completion. Preserve all actual packed-storage and idle-hold predicates. Qualify temporal counterexamples without changing production retention semantics. Preserve selected input sampling/live/copy semantics, explicit output binding and physical owner/type/model contracts, with actual predecessor falsification and focused controls. Commit before another genuine execution; no arbitrary expectation weakening.`
+  Verification: `Causal schedule/carrier/HDL evidence is sealed by .1; correction follows its commit.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.3`
+  Status: `pending`
+  Goal: `Qualify complete corrected generated/domain behavior after blocking repair.`
+  Acceptance: `After .1-.2 commits, recheck exact current witness and complete producer closure, qualify any changed observer contract before HDL use and choose a new exclusive capture. Execute complete positive and actual unsigned-negative coverage with unchanged independent public-pin predicates, full original records, hostile saved verification and cleanup. Stop and own any unexpected result before another execution. Preserve binary/XZ/reset-free/native limits and partial historical receipts.`
+  Verification: `pending committed causal correction`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.4`
@@ -4125,3 +4148,18 @@ inclusive ceiling and debt owner. No implementation test fails.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The retained actual %Error: domains_systemverilog.sv:1674:73 rejects a typed composition wire containing bit members at line 1636. StructuralRTLIREmitter::_render_net_line prefixes wire regardless of the preserved nested state model; its scalar branch similarly emits wire bit for explicit two_state metadata. Exact old-emitter T2026 RED shows the illegal aggregate and scalar declarations and fails the complete actual public source-product predicate. git log -S 'wire %s %s;' identifies 3ca803fc8946140c172aeb97da26d66dd8830aee as the typed-wire introduction. Supported LinkedPlanBuilder reserves unique target drivers and creates each carrier from one source-family key, so a typed variable preserves current single-source fanout.
 - [x] **ADDRESSED (verified)** — Shared recursive explicit two_state-leaf detection selects unchanged typed variable carriers; explicit scalar two_state wire metadata selects bit variables. T2026's independent declaration matrix in both families preserves literal widths, signed/state models, all-four-state and legacy wire controls, existing variable carriers and complete caller JSON. Its actual failing source product changes only the illegal carrier declaration and date. Exact old emitter fails both subtests; corrected focused and regression cohorts pass. Actual native compiler/runtime closure is deliberately pending .3.3, not inferred from static repair.
 - [x] **NO REGRESSION** — T2026/T167 reports All tests successful, Files=2, Tests=25. T2026/T167/T281/T278/T178/T2025/T2019/T2018 reports All tests successful, Files=8, Tests=49 with runtime explicitly disabled. Sealed saved repair and hostile receipt verification pass; first genuine failure, prepared target/source/bench and qualified observer/native/supervision bytes remain unchanged. Knowledge Map reports knowledge-map: OK; task integrity and local book build complete before staged doctrines and normal hooks. No broader backend or X/Z signoff is inferred.
+
+## Acceptance — blocking partial observation diagnosis (2026-10-01)
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.1`. Sealed complete partial outcomes and diagnosis:
+`docs/audits/record-input-generated-observation-corrected-20261001/`.
+Re-derivation uses original complete stage receipts and unchanged public emitted
+carrier/HDL, with the public schedule report. Independent hostile mutations and
+the literal completion-value versus late-zero counterexample provide
+falsification; the archive, source Git blobs, published binding contract,
+tracked immediate repair and Git provide durability. The counterexample derives
+logic behavior; it is not a recording of individual failed pin values.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual --emit-schedule-json of the unchanged blocking source reports copy_seen binding_timing done_guarded and main_copier_do_0_done. Actual carrier uses (= copy_seen child_result) under that pulse; emitted always_comb defaults the output to zero afterward. The child completes before parent phase 2 and later done. The bench at blocking_tb.sv line 48 wrongly requires copied nonzero data at that late parent done and during idle. The published composition contract agrees; P2 wrong witness timing, with other blocking values unqualified.
+- [x] **ADDRESSED (verified)** — Saved verification authenticates all reached positive named-domain pairs, ordinary blocking compile and first runtime failure, exact committed producers, complete original bounds/results/arguments/cleanup and empty native events/gaps. The actual carrier/HDL and hostile saved mutations establish the bounded diagnosis. Immediate correction is scheduled under .2 before any further HDL run; complete generated runtime remains open.
+- [x] **NO REGRESSION** — Independent saved verification passes without HDL replay and preserves all prior archives. Knowledge Map reports knowledge-map: OK; task integrity and local book build are checked before staged doctrine and normal commit hooks. No individual successful-child PID, remaining blocking values, unsigned runtime, X/Z or historical native causality proof is inferred.

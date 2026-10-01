@@ -1,0 +1,62 @@
+(?fsm:reader
+
+  (+types
+    (type frame (record (tag (bits 2)) (payload (record (data (signed (four_state (bits 5)))) (flags (list (two_state bit) (two_state (bits 2))))))))
+  )
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input start)
+    (input packet)
+    (output done)
+    (output result)
+    (output is_negative)
+    (internal isf_child_start_seen)
+  )
+
+  (+size
+    (start 1)
+    (packet frame)
+    (done 1 (reset 0))
+    (result 5)
+    (is_negative 1)
+    (can_accept 1)
+    (isf_child_start_seen 1 (reset 0))
+  )
+
+  (reader_idle_0
+    (-> reader_wait_0 <(& start (! isf_child_start_seen)))
+  )
+
+  (reader_wait_0
+    (-> reader_wait_1)
+  )
+
+  (reader_wait_1
+    (-> reader_set_2)
+  )
+
+  (reader_set_2
+    (<- (result> packet.payload.data))
+    (-> reader_set_3)
+  )
+
+  (reader_set_3
+    (<- (is_negative> (< packet.payload.data 0)))
+    (-> reader_done_4)
+  )
+
+  (reader_done_4
+    (<1 (done> 1))
+    (-> reader_idle_0)
+  )
+
+  (-isf_child_start_seen
+    (<- (isf_child_start_seen start))
+  )
+
+)

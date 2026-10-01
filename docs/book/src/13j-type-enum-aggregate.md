@@ -335,8 +335,8 @@ repeated requests, idle hold and reset/abort. The named source retains an unused
 clock-only sibling and checks that its changing input/clock cannot disturb the
 owned values; this implies no reset-free state initialization guarantee.
 Static declarations, private data/enable ownership, complete wiring, strict
-carrier replay and emitted products are checked. Genuine generated/domain
-execution remains pending. Its new exact fixed observer is qualified with fresh
+carrier replay and emitted products are checked. Complete generated/domain
+execution remains open. Its new exact fixed observer is qualified with fresh
 finite native controls, complete independent saved verification, source/coverage
 binding and original stage/bound/result/cleanup preservation. Observer controls
 do not establish generated-feature HDL behavior or historical native causality. The
@@ -346,8 +346,17 @@ preserved failure is in `docs/audits/record-input-generated-observation-20261001
 The declaration repair now uses the unchanged packed typedef as a variable
 carrier, preserving its two-state and four-state members. Independent structural
 checks, exact old-emitter counterexamples and the complete emitted source
-product qualify that repair under SEM `.60.4.3.2.5.4.3.2`. Fresh corrected
-compiler/runtime execution remains `.3.3`; runtime delivery is still pending.
+product qualify that repair under SEM `.60.4.3.2.5.4.3.2`. Fresh execution
+compiles and passes the named-domain source in both families. The ordinary
+blocking source compiles, then its first simulation fails a test that wrongly
+expects the completion-gated result binding to hold until later parent done.
+The actual emitted logic and published contract establish this test timing
+error; individual failed blocking field values were not captured. Complete
+partial evidence is in
+`docs/audits/record-input-generated-observation-corrected-20261001/`.
+SEM `.3.3.2` corrects the binding observation window while preserving packed
+storage checks before fresh complete execution. Remaining blocking cases and
+the unsigned counterexample have not run. Runtime delivery is still open.
 
 
 

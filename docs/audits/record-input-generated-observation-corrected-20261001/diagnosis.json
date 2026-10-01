@@ -1,0 +1,9 @@
+{
+  "causal_scope": "copy_seen zero at late parent completion is derived from actual source/HDL control and binding logic; individual failed component pin values were not captured. A correctly copied held record still fails this late scalar predicate. No claim is made that other failed blocking fields passed.",
+  "classification": "P2 witness late-hold oracle error; other blocking values remain unqualified",
+  "correction_owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.2",
+  "mechanism": "Published generated blocking binding is a combinational (= copy_seen child_result) guarded by child done. Actual emitted always_comb defaults copy_seen to zero outside done; the child completion pulse precedes parent phase 2, waits/readers and later parent done. The bench wrongly requires nonzero copy_data in copy_seen at that later parent completion and idle hold.",
+  "native_scope": "Typed-net repair compiles in both named families and ordinary blocking SystemVerilog; named complete public behavior passes. Native failure events/diagnostic gaps empty; no historical EPERM attribution.",
+  "next_contract": "Observe the bound scalar during the public copy phase; independently check complete packed copied state and hold later. Preserve the documented distinction between spawned forwarding and blocking completion-gated binding.",
+  "preflight_note": "An independent ad hoc scope-check command omitted the failure-only include directory; corrected complete include-path command passes. Actual one-shot observer uses its original complete include paths and preflight."
+}

@@ -1,0 +1,69 @@
+(?fsm:copier
+
+  (+types
+    (type frame (record (tag (bits 2)) (payload (record (data (signed (four_state (bits 5)))) (flags (list (two_state bit) (two_state (bits 2))))))))
+  )
+
+  (+params
+    (MODE 0)
+  )
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input start)
+    (input packet)
+    (output done)
+    (output result)
+    (output isf_write_held_data)
+    (output isf_write_held_enable)
+    (internal isf_child_start_seen)
+  )
+
+  (+size
+    (start 1)
+    (packet frame)
+    (done 1 (reset 0))
+    (result 5)
+    (isf_write_held_data frame)
+    (isf_write_held_enable 1)
+    (can_accept 1)
+    (isf_child_start_seen 1 (reset 0))
+  )
+
+  (copier_idle_0
+    (-> copier_wait_0 <(& start (! isf_child_start_seen)))
+  )
+
+  (copier_wait_0
+    (-> copier_wait_1)
+  )
+
+  (copier_wait_1
+    (-> copier_set_2)
+  )
+
+  (copier_set_2
+    (= (isf_write_held_data> packet))
+    (= (isf_write_held_enable> 1))
+    (-> copier_set_3)
+  )
+
+  (copier_set_3
+    (<- (result> packet.payload.data))
+    (-> copier_done_4)
+  )
+
+  (copier_done_4
+    (<1 (done> 1))
+    (-> copier_idle_0)
+  )
+
+  (-isf_child_start_seen
+    (<- (isf_child_start_seen start))
+  )
+
+)

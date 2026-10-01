@@ -22,8 +22,11 @@ strict public source re-emission reproduces both compiler-reported declaration
 and member locations. T167's old structural-only oracle expects the illegal
 mixed-state wire. Declaration repair .5.4.3.2 is now structurally qualified with exact old-emitter
 RED and complete public-product controls, preserving the typedef on a variable
-carrier. Fresh corrected compiler/runtime and executed P1 closure remain .3.3;
-generated runtime remains unqualified.
+carrier. Fresh corrected observation compiles and passes both named-domain
+families and compiles ordinary blocking SystemVerilog, closing this reached
+declaration rejection. Complete runtime remains open: the blocking test has a
+separately diagnosed late-hold oracle error under .3.3.1-.2. See the generated
+blocking binding fact for its partial scope.
 
 Original complete admission/stage/results/arguments/bounds/summary/cleanup,
 source and producer Git identities before/after and full TAP are sealed.

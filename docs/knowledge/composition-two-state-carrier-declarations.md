@@ -39,6 +39,8 @@ Actual literal declarations and complete emitted products re-derive the repair.
 Exact old-emitter RED and hostile receipt substitutions provide distinct
 falsification. Tracked producers/tests, original compiler failure, sealed repair
 records, fact/book/tasks and Git provide durability. No additional HDL compiles
-or runs in this repair slice. Corrected genuine compiler/runtime and executed
-P1 closure remain .5.4.3.3 after commit with fresh exact current identities.
+or runs in this repair slice. Subsequent fresh exact observation under .3.3
+compiles and passes both named-domain families and compiles ordinary blocking
+SystemVerilog. Complete runtime remains open behind its distinct test timing
+correction; see the generated blocking binding fact.
 X/Z, reset-free initialization and historical native causality remain unproved.

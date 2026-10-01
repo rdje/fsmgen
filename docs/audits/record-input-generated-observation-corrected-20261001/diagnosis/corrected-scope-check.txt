@@ -1,0 +1,1 @@
+Both changed existing producer members remain inside the fixed generated_input closure.
