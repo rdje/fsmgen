@@ -844,8 +844,8 @@ sub _is_source_failure_report {
     my $contract = $contracts{$kind} or return 0;
     my ($version_key, $producer, $mode) = @$contract;
     return 0 unless JSON::PP::is_bool($report->{success}) && !$report->{success};
-    return 0 unless defined($report->{$version_key}) && !ref($report->{$version_key})
-        && $report->{$version_key} eq '1';
+    my $version = $report->{$version_key};
+    return 0 unless defined($version) && !ref($version) && $version eq '1';
     return 0 unless ref($report->{producer}) eq 'HASH'
         && ($report->{producer}{name} // '') eq 'FSMGen'
         && ($report->{producer}{report_source} // '') eq $producer;
@@ -876,8 +876,9 @@ sub _is_vial_check_failure_report {
 sub _is_vial_inspection_failure_report {
     my ($report, $kind) = @_;
     return 0 unless defined($kind) && $kind eq 'inspection' && ref($report) eq 'HASH';
+    my $version = $report->{schema_version};
     return 0 unless ($report->{schema} // '') eq 'fsmgen.vial_source_inspection.v1'
-        && ($report->{schema_version} // '') eq '1'
+        && defined($version) && !ref($version) && $version eq '1'
         && JSON::PP::is_bool($report->{success}) && !$report->{success}
         && !defined($report->{inspection}) && ref($report->{check_result}) eq 'HASH'
         && ref($report->{diagnostics}) eq 'ARRAY' && @{$report->{diagnostics}};
@@ -922,8 +923,13 @@ sub _sanitize_public_payload {
     if (ref($value) eq 'ARRAY') {
         return [map { $self->_sanitize_public_payload($_) } @{$value}];
     }
-    return $self->_sanitize_public_string($value)
-        if defined($value) && !ref($value);
+    if (defined($value) && !ref($value)) {
+        # String inspection can change a decoded number's private scalar flags.
+        # Preserve the untouched value when no textual path substitution occurs.
+        my $original = $value;
+        my $public = $self->_sanitize_public_string($value);
+        return $public eq $value ? $original : $public;
+    }
     return $value;
 }
 

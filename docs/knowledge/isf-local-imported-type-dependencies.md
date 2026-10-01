@@ -30,6 +30,6 @@ types/ordered layouts and every-carrier strict replay provide re-derivation.
 The pre-repair imported-alias failure, unknown dependency controls and equal
 transport copies with planted layout/type corruption supply falsification.
 Tracked producers, maintained corpus/package inputs, tests, this fact and Git
-provide durability. Contextual public refusals and frontend closure remain
+provide durability. Contextual public refusals and frontend closure are qualified under
 SEM .60.4.3.2.3.6.2-.3; generated/domain/backend/native/consumer completion is
 separately owned. This proof does not execute HDL or qualify external consumers.

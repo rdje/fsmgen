@@ -43,5 +43,5 @@ Re-derivation uses these actual producers and full typed transport comparisons.
 Falsification is the pre-product public/context RED plus the independent member,
 role, layout/type and successful namespace/shadow controls. Permanent tests,
 source producers, this card and predecessor Git evidence provide durability.
-Final frontend closure and generated/domain/backend/native/consumer delivery
-remain separate owners. No HDL runtime or external consumer signoff is claimed.
+Frontend closure is qualified under SEM .60.4.3.2.3.6.3.
+Generated/domain/backend/native/consumer delivery retains separate owners. No HDL runtime or external consumer signoff is claimed.

@@ -135,8 +135,14 @@ resolve before local aliases; qualified names remain in their package namespace.
 Forward local aliases also work. Missing types and undeclared packages refuse.
 The scheduled carrier embeds the package root for independent strict replay.
 T2014 qualifies accepted nested/imported/nearest-shadow public sources; T2015
-qualifies scalar and nested imported dependencies. T2016 exercises contextual
-public refusals; final frontend closure remains separate tracked work.
+qualifies scalar and nested imported dependencies. T2016 qualifies contextual
+public refusals. T2017 qualifies the unchanged supplied SPECFORGE whole-copy and
+field-guard sources, the exact earlier storage-only products and complete public
+discovery. The supplied [whole-copy source](../../../docs/audits/specforge-aggregate-intake-20260930/record-port.isf)
+uses a sixteen-bit input: subtype occupies bits 15 through 12, payload bits 11
+through 0. Its [field guard](../../../docs/audits/specforge-aggregate-intake-20260930/record-port-field-guard.isf)
+reads that same layout. Frontend source/report/replay qualification is complete;
+generated/domain/backend/native and consumer completion retain separate owners.
 
 `packet` is one six-bit input; it does not become separate field pins.
 `packet.flag` occupies bit 5 and `packet.data` bits 4 through 0. The copy into

@@ -51,9 +51,9 @@ _Selected record ports reuse packed types and qualified writers_
 
 ### isf-aggregate-port-request-baseline
 
-_Authored record ports remain a separate boundary from typed storage_
+_Preserved aggregate-port intake precedes qualified record-input admission_
 
-- **date:** 2026-09-30 · **status:** current
+- **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-aggregate-port-request-baseline.md`](../../docs/knowledge/isf-aggregate-port-request-baseline.md)
 
 ### isf-aggregate-record-context-and-first-touch-validation

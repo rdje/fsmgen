@@ -2674,11 +2674,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Admit record inputs with qualified scalar reads and same-type copies.`
   Acceptance: `After .2, admit only local/imported resolved record input roots and wire all applicable transaction, rule, named-drive, enum-disambiguation and domain validators; qualify scalar leaf entry/body sampling width/type and existing capture timing while whole-record inferred samples refuse. Copies from an input to actor storage must use qualified recursive type identity from first admission; input writes and whole-record scalar contexts refuse. Root lists, outputs and transaction-local aggregate ports retain precise boundaries. Qualify nested paths, symbolic alias equivalence, lexical shadows, invalid members/types/roles and complete emitted IAL0 replay; synchronize accepted public reports and book.`
-  Verification: `Pure type/path/role gates are qualified. Split before source mutation into contextual/lexical ingress review, scoped AST/enum gate preparation, scalar-leaf sampling carriers, domain-root protection, first source admission and frontend/public replay qualification. All mandatory value/role/type/domain/sampling gates must precede admission; record source ports remain refused during preparation.`
-  Commit: `pending child qualification`
+  Verification: `Children .1-.6 qualify lexical/type/path/role/context/sample/domain prerequisites, first bounded record-input admission and complete authored frontend/public source/replay closure. Accepted local/imported/nested/shadow sources, contextual refusals, unchanged supplied sources and preserved scalar/storage products are qualified. Generated/domain carrier completion and backend/native/consumer delivery remain .2.4-.2.5.`
+  Commit: `children completed through .6.3.1 in this commit`
 
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6`
@@ -2827,11 +2827,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify frontend delivery and public replay before carrier/runtime completion.`
   Acceptance: `After .5, independently verify accepted local/imported/nested/shadow sources, all contextual failures, exact metadata/type/layout identities and complete native/API/actual newline check/semantic/schedule/discovery products. Strict-replay every emitted IAL0 carrier; preserve pre-change scalar/storage controls and exact source provenance. Close frontend work only with synchronized references while generated/domain behavior and independent native completion remain separately owned by .2.4-.2.5.`
-  Verification: `Accepted nested/import/nearest-shadow public sources and imported local type dependencies are qualified under .1. Contextual public refusal matrix .2 and its scalar-parameter repair are qualified; prior-control/discovery closure .3 remains before frontend closure and generated/domain/native completion.`
-  Commit: `pending`
+  Verification: `Accepted nested/import/nearest-shadow public sources and imported local type dependencies are qualified under .1. Contextual public refusal matrix .2 and its scalar-parameter repair are qualified; prior-control/discovery closure .3 and JSON-copy purity child are qualified. Complete frontend closes; generated/domain/backend/native/consumer completion remains separately owned.`
+  Commit: `children completed through .3.1 in this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.3`
 
@@ -2868,17 +2868,26 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.3`
-  Status: `active`
+  Status: `done`
   Goal: `Close frontend qualification with prior controls, discovery and exact handoff.`
   Acceptance: `After .1-.2, compare complete pre-admission scalar/storage public products and scheduled carriers with narrowly declared source/date/reset-origin differences. Qualify full native/API/newline discovery and current supported corpus applicability, reconcile exact positive/negative/strict-replay evidence, run focused combined gates and synchronize canonical record/book/feedback/frontiers. Close frontend only; generated/domain/backend/native and consumer completion remain .2.4-.2.5. Commit a clean handoff without claiming omitted external/runtime legs.`
-  Verification: `Accepted and refused public matrices are qualified through .1-.2. Next compare complete prior scalar/storage products and qualify current public discovery before closing frontend; preserve fixed historical evidence and generated/domain/native/consumer boundaries.`
-  Commit: `pending`
+  Verification: `Accepted and refused public matrices are qualified through .1-.2. T1981/T1982 own complete preserved scalar/storage products and actual carriers/HDL under declared access/domain/interface/date differences; T1985 owns current supported-source joins and public discovery. Reuse those finite controls and add T2017 for complete all-section native/API/newline discovery plus the unchanged supplied aggregate-intake sources: current whole-copy/field-guard admission with literal types/layouts, exact baseline check/semantic/schedule equality after only independently qualified declaration metadata, actual strict carrier replay and source/receipt preservation. Confirm full discovery applicability and preserve fixed historical evidence and later carrier/runtime owners. P3-owned doc defect: isf-aggregate-port-request-baseline.md describes captured storage-only admission in present tense despite source admission 25c01f0127144922ade78951b91439e1d9221c08; its offline verifier proves historical receipt only. Restate dated scope and route the live answer to qualified record-input products before closure. A stale guessed T1985 read basename failed; file enumeration resolves t/1985-isf-interface-port-public-qualification.t, with no source mutation or result inferred from the failed read.`
+  Commit: `completed through child .1 in this commit`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.3.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.6.3.1`
+  Status: `done`
+  Goal: `Resolve numeric JSON kinds changing across public path sanitization and its test oracle.`
+  Acceptance: `P1 qualification defect: T2017 exact historical baseline comparison fails check/semantic/schedule for string-versus-number kinds only, while transport parity passes after the current helper. Independently inspect untouched native JSON and actual API/newline products, trace primitive scalar flags through report admission/sanitization and test normalization, and identify every observed responsible boundary before mutation. Preserve numeric/string/boolean/null kinds and complete caller input while applying only authorized path substitutions/redactions. Add root first-touch controls and actual transport typed witnesses, retain original strict historical comparison and all path/diagnostic/VIAL contracts, repair qualified boundaries and rerun focused public/closure cohorts. Audit and own any historical typed-parity claims whose oracle erased distinctions; preserve dated receipts and correct current evidence limits. Do not classify or relax this foundational discrepancy without a verified root repair.`
+  Verification: `Initial T2017 completes Files=1, Tests=5, failing baseline-good only. Independently parsed diagnostic products differ solely in JSON primitive kinds: check 5, semantic 155, schedule 8 differences; no key/value/layout changes. Production _sanitize_public_payload applies scalar path processing to every nonreference value; test normalize_repository_paths stringifies each scalar before returning it. Untouched native and actual API probes retain numeric kinds. Independent stage probes show raw and raw-clone retain integers; normalized/sanitized JSON remains numeric, but cloning either projection changes selected numbers into strings, even after encoding. The first fresh-literal root controls pass serialized equality and therefore do not falsify copy stability; expanded post-projection copy controls precede product mutation. Existing scalar/storage/discovery/corpus cohort passes Files=4, Tests=7211 but is not strict detached-copy qualification.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify generated and named-domain record-input carriers.`
   Acceptance: `After .3, independently exercise live record reads and valid input-to-storage transfers through existing generated-child/domain ownership, including nested/imported aliases, reused instances and unused declarations. Preserve explicit top interfaces, typed private connections, reset/storage ownership and unchanged old sources; refuse unowned crossing and unqualified input targets. Split actual prerequisite fixes before mutation and retain backend-profile boundaries.`
-  Verification: `pending source admission`
+  Verification: `Authored source/frontend admission and public closure are qualified under .3. Next exercise actual generated/named-domain carriers, exact recursive types/interfaces and explicit ownership with fixed prior controls before backend/native/consumer completion.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5`
@@ -6239,3 +6248,39 @@ project code or makes its failed setup an accepted result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'type_spec => undef' -1 --format='%H %s' -- perl/FSM/Support/ISFRecordPortScopes.pm` locates 5f843a3f59a1ab3fdaea9523c498afbbeb283388. Scope correctly masks the actor record with an unresolved local parameter, but context delegates its dotted member path without retaining the scalar-only grammar fact. Corrected pre-product T2016 fails only drive_parameter_member; native/API/newline check/semantic/schedule all publish success with one-bit start actual. Root T1988 RED reports ` at t/1988-isf-record-port-context-gates.t line 57.` for accepted invalid parameter member uses, independently of widths and downstream products.
 - [x] **ADDRESSED (verified)** — Private context scalar-parameter identities refuse member paths, including members after scalar selectors, before unknown-type delegation. Namespace classification remains first; raw value bindings retain their role/type-only schema and unknown widths. T1988 rejects member RHS, nested expressions and targets with literal first-cause witnesses, preserves bare/sliced values, enum/package meaning and complete caller JSON. Final guarded T2014/T2015/T2016 reports All tests successful, Files=3, Tests=42. Every authored accepted source retains literal recursive type/layout witnesses and strict every-carrier replay; every contextual refusal retains complete typed native/API/newline products, expected first causes, no successful declaration/semantic/schedule/HDL product and exact source/import bytes. The original direct-member matrix passed Files=3, Tests=40 before the indexed challenge; that earlier result is scoped to its original cases.
 - [x] **NO REGRESSION** — Guarded T1987/T1988/T1997 reports `All tests successful`, `Files=3, Tests=21`. Expanded indexed root controls retain that Files=3, Tests=21 result. Final runnable book T1376 reports All tests successful, Files=1, Tests=2; final mdBook build passes. The complete expanded public cohort passes Files=3, Tests=42, and Knowledge Map is current. Final staged doctrines and normal hooks must accompany the commit. Generated Knowledge Map, independently censused current capacity, claims and staged doctrines/hooks accompany the final commit. Re-derivation uses actual compiler/transport products and independently expected first causes; falsification is the pre-product aligned source/context RED plus negative member/role/type/path cases and successful namespace/shadow controls; tracked producers/tests/fact/book, this owner and Git preserve durability. Ordinary scalar-only actor activation is not established by the record-input context gate. No HDL runtime, full CI, external consumer or push is claimed.
+
+
+The .60.4.3.2.3.6.3.1 root probe establishes that serialized native/API JSON
+already retains numeric kinds; hidden scalar flags change during textual path
+inspection, and a subsequent Storable copy changes selected integer kinds.
+Root T2018 initially checked serialization only and passed; adding later-copy
+oracles makes both path projections RED. Source failure signature checking also
+reads the decoded schema version as a string; local version copies protect the
+result. VIAL check already does this and remains a positive control; inspection
+needs the same protection. The first inspection fixture omitted the required
+nonempty diagnostics array and was correctly unrecognized. Its corrected
+fixture and exact ee817 adapter/helper snapshots supply final predecessor
+falsification; the failed fixture is not a claim about admission behavior.
+The first repaired combined run qualifies T2017's unchanged strict baseline and
+all supplied sources, but its aggregate fails solely for that inspection oracle.
+No wire numeric-kind defect or blanket retraction of earlier serialized parity
+is claimed. Plain parity alone did not establish later-copy stability.
+
+
+## Acceptance — JSON-copy purity and frontend closure `.60.4.3.2.3.6.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my $text = "$value"' -1 --format='%H %s' -- t/lib/FSM/Test/SourceQueryRunner.pm` returns 37f5ace88f474b751f5cfae2bb6e94a6cd875461; the public sanitizer starts in 129cfae085f10f55b606152a3c09c2ec21a28b4e. Exact stage probes show raw/native/API serialization remains numeric, while string inspection changes private scalar flags that Storable later copies as strings. T2017 strict cloned baseline comparison fails only primitive kinds. Expanded T2018 reports ` at t/2018-semantic-public-json-scalar-kinds.t line 45.` for copied public integers; helper copies and source/inspection schema-version reads also fail. Corrected fresh-literal controls with exact committed ee817 adapter/helper files fail all four root groups while the already detached VIAL-check version control remains positive. No product mutation precedes this child's tracked ownership.
+- [x] **ADDRESSED (verified)** — Test normalization inspects a separate scalar; public sanitization returns the untouched scalar when text does not change. Source and VIAL-inspection signatures compare local version copies. T2018 preserves literal integer/negative/fraction/string/boolean/null kinds, authorized substitutions/redaction, later detached copies and complete caller inputs, including valid failure signatures. T2017's unchanged strict check/semantic/schedule baseline comparison, supplied whole-copy/field-guard sources, independent recursive types/layouts, complete native/API/newline reports, every actual strict carrier and entire all-section manifest pass. Preserved capture remains immutable; the historical Knowledge Map card now separates dated refusal from current record-input support. Final guarded accepted/refused/source-runner T2014/T2016/T1884 reports All tests successful, Files=3, Tests=65. All source/front-end .3 descendants close; .2.4 is the next carrier frontier. Canonical SPECFORGE response, current cards, book and task/Memory pointers reflect that finite completion without claiming full request delivery.
+- [x] **NO REGRESSION** — Guarded T2018/T2017/T1441/T1868/T1930 reports `All tests successful`, `Files=5, Tests=24`, preserving source/error/path/quoted-division contracts. Earlier scalar/storage/current discovery/corpus T1981/T1982/T1985/T248 reports Files=4, Tests=7211; it is dated serialized/value compatibility evidence, not copy-stability proof. Runnable T1376 reports All tests successful, Files=1, Tests=2 and final book builds. Final accepted/refused/source-runner cohort reports All tests successful, Files=3, Tests=65. Knowledge Map and final rendered book are current. Current fact/card/map, direct Python versus Perl member census, unchanged capacity ceilings, claims and staged doctrines/hooks accompany the commit. Re-derivation uses untouched native/API/stage probes, exact historical products, current supplied sources and literal later-copy witnesses; falsification uses exact committed old boundaries, corrected failure signatures and independent field/path/type controls; tracked current tests/producers, immutable receipt, dated facts, this owner and Git supply durability. The initial serialization-only roots and malformed empty-diagnostics inspection fixture are explicitly insufficient; corrected controls precede qualification. Earlier wire parity is not reclassified as a global wire-kind defect. Native HDL, external consumer, full CI and push remain separate.
+
+The first closure gate identifies two new numeric packing prose candidates in
+the book. Both receive bounded derived-gate reviews with actual parser/source
+re-derivation, independent literal/hostile layout oracles and tracked durability.
+The fixed general_book group owns the review records; this slice owns the
+feature evidence. No review group, candidate completeness or policy ceiling is
+weakened. Regenerated inventory and final staged gates must qualify the join.
+
+The next claim gate rejects unsorted path arrays in the two new reviews. Their
+producer/oracle/watcher arrays are now sorted and unique as the existing schema
+requires. The evidence and group owner stay unchanged; failed gates are not
+qualification. Final declarations, inventory and staging follow this correction.

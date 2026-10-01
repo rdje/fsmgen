@@ -98,7 +98,9 @@ sub normalize_repository_paths {
         if ref($value) eq 'HASH';
     return [map {normalize_repository_paths($_, $root)} @$value] if ref($value) eq 'ARRAY';
     return $value if !defined($value) || ref($value);
-    my $text = "$value";
+    # Inspect a separate scalar so textual matching cannot poison the returned
+    # number's flags and change its kind on a later Storable copy.
+    my $text = $value;
     return $value unless index($text, $root) >= 0;
     return '.' if $text eq $root;
     $text =~ s{\Q$root\E/}{}g;

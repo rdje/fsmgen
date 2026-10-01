@@ -3228,7 +3228,10 @@ over stdio for the MCP transport.
 Tool calls return both structured and text forms. The `structuredContent`
 field carries the same bounded public JSON object serialized in the text
 content block, preserving compatibility with text-only clients while giving
-MCP clients a direct JSON result. Per-tool `outputSchema` metadata describes
+MCP clients a direct JSON result. Path sanitization preserves number, string,
+boolean and null kinds, including when a Perl caller later copies the result.
+A numeric-looking string remains a string; relative-path conversion does not
+reinterpret numeric values. Per-tool `outputSchema` metadata describes
 stable public envelope fields; volatile nested compiler reports and support
 catalog internals remain schema-light objects or arrays.
 
