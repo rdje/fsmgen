@@ -42,7 +42,10 @@ and book.
   public discovery are exercised. Generated/domain carrier structure and strict
   replay are qualified under `.60.4.3.2.4.1`, including reused readers, owned
   whole copies, unused declarations and embedded imported package context.
-  Generated/domain public closure, backend/native
+  Accepted generated/domain public products are qualified under `.60.4.3.2.4.2.1`,
+  including complete native/API/newline reports, recursive typed child
+  declarations and exact clock/reset provenance. Generated/domain contextual
+  refusals and final prior-product closure, backend/native
   execution and consumer signoff remain owned qualification work. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;

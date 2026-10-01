@@ -181,6 +181,28 @@ calls. Ordinary composition children now retain their source's embedded package
 context through the normal frontend; external children still resolve packages
 beside their own source. T2020 checks both boundaries.
 
+Accepted generated/domain check, semantic and schedule queries are also
+qualified through the native CLI, adapter API and actual newline MCP. The
+complete products agree, including declared layouts and reset provenance.
+Clock-only siblings retain an absent reset; each realized reader keeps its
+owning clock and explicit reset contract. Contextual generated/domain refusal
+and final prior-product closure remain separate qualification work.
+
+The semantic report distinguishes authored declarations from realized wiring:
+
+| Public location | Meaning |
+| --- | --- |
+| `source.interface_ports` | Authored record aliases, scalar leaf layout and declared domains. |
+| `semantic.forward_ir.intent_hir.signal_analysis` | The composition top's physical vector pins. |
+| `semantic.forward_ir.intent_hir.composition_children[].intent_hir.signal_analysis` | Each module's typed input/output declarations, including `declared_type_name` and the complete `declared_type_spec`. |
+| `semantic.forward_ir.intent_hir.composition_children[].structural_rtl_ir.ports` | The corresponding typed structural ports. |
+| Schedule `clock_domains[].interface_ports` | The declarations owned by each domain, including unused inputs. |
+
+Join children using `instance_name`, `module_name` and `source_name`. Reused
+readers have distinct instance identities and retain the same declared type.
+Private write-data ports carry the target's complete record type. Their presence
+does not add authored public pins or permit competing writers.
+
 `packet` is one six-bit input; it does not become separate field pins.
 `packet.flag` occupies bit 5 and `packet.data` bits 4 through 0. The copy into
 `held` requires the same resolved recursive record type. Equivalent local or

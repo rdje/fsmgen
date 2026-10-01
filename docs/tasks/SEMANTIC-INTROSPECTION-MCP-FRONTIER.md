@@ -2915,6 +2915,29 @@ For FSMGen, the analogs are:
   Verification: `Actual authored carrier qualification and embedded FSM/DT package-context prerequisite are qualified under .1. Next compare complete generated/domain native/API/newline products, prior scalar/storage carriers, contextual refusal matrices and independently expected ownership; then synchronize public closure before .2.5.`
   Commit: `pending`
 
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.1`
+  Status: `done`
+  Goal: `Qualify complete accepted generated/domain record-input public products.`
+  Acceptance: `Extend the authored carrier witnesses with actual native/API/newline check/semantic/schedule queries, complete typed product equality, literal declarations/domain snapshots, exact physical top pins and recursive typed child HIR/structural ports. Preserve imports, sources, public producers and caller facts. Keep outer vector-port representation distinct from authored record metadata and typed module declarations; no new schema or runtime claim. Independently reject shared corrupted ownership/type/layout projections before public closure.`
+  Verification: `Final T2019 reports All tests successful, Files=1, Tests=8 for all authored generated/domain and maintained sources over actual native/API/newline check/semantic/schedule products. Complete typed equality, literal declarations/ranges/domain snapshots, exact physical top pins and ordered instances, recursive child HIR/structural/private writer types, authored clock/reset contracts/provenance, source/package/public producer bytes and caller purity pass. Shared corrupted ownership/type/layout projections fail independent literals despite parity. Ordinary domain:null expectation is corrected against the unchanged closed schema. Prior T2018/T2017/T2020 controls Files=3, Tests=12, runnable T1376 Files=1, Tests=2, book build and KM pass. Contextual refusals .2 are next; final prior/discovery closure remains .3.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2`
+  Status: `active`
+  Goal: `Qualify generated/domain contextual record-input refusals and scalar shadows.`
+  Acceptance: `Use actual authored generated/domain sources to refuse unowned nested/sliced reads, whole copies and input targets with independent contextual causes and complete native/API/newline failure products. Preserve nearest scalar formal/local/drive identities, explicit child bindings and unsupported writer/aggregate boundaries. No partial successful declarations, schedule, semantic or HDL product; exact source/import bytes remain. Own any prerequisite defect before mutation.`
+  Verification: `Accepted full public matrix is qualified under .1. Next authored generated/domain foreign nested/sliced reads/copies and input targets, nearest scalar declarations and explicit writer/binding boundaries must retain independent first causes and full native/API/newline refusal products.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3`
+  Status: `pending`
+  Goal: `Close generated/domain record-input qualification with exact prior controls.`
+  Acceptance: `After accepted/refused matrices, requalify complete fixed prior scalar/storage products and carrier/HDL controls under narrowly declared differences, complete discovery/current supported applicability and final combined focused gates. Reconcile every .2.4 acceptance requirement, exact caller/import/type/ownership evidence and canonical feedback/book/Knowledge Map pointers. Close generated/domain frontend/carriers only and resume backend/native/consumer .2.5 with HIAL admission before genuine HDL execution.`
+  Verification: `pending accepted/refused public products`
+  Commit: `pending`
+
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5`
   Status: `pending`
   Goal: `Qualify packed input behavior and complete public delivery.`
@@ -6364,3 +6387,38 @@ The literal expectations are updated from that evidence, not relaxed.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my $child_ast = $composition_spec->embedded_fsm_sources' -1 --format='%H %s' -- perl/FSM/Composition/GeneratedChildRealizer.pm` locates extraction d008a23278f58c4875427f09a087082558f4012d; the selected child AST alone reaches the existing frontend and drops sibling packages. Actual isolated `--check --json` refuses imported_readers_top.fsm despite emitted package roots and successful individual modules. Corrected T2019 is RED only for that imported top. Canonical T2020 independently reports ` at t/2020-composition-child-embedded-packages.t line 37.` for actual embedded FSM/DT package admission. Final exact committed predecessor capsule fails both embedded positives while missing/undeclared import and external source controls remain green; the failed draft grammar, prefix, C2, syntax and capitalization oracles are explicitly excluded.
 - [x] **ADDRESSED (verified)** — Embedded children retain detached sibling package roots through the existing strict frontend/resolver; external children keep their own file context. Final guarded T2019/T2020 reports All tests successful, Files=2, Tests=10. Literal complete recursive types/ranges, child roles, exact top pins/wiring/artifact membership, live read expressions, generated typed data/enables, domain storage/reset ownership, complete caller kinds and source/package bytes qualify all authored witnesses and every strict actual carrier. Maintained imported/domain example is registered and actual native/API/newline queries pass. Book, canonical SPECFORGE response, facts, map and frontier identify finite carrier completion and preserve later public/runtime/consumer obligations.
 - [x] **NO REGRESSION** — Final guarded prior ingress/domain/drive and complete baseline domain-storage products T1998/T1995/T1996/T1982 report `All tests successful`, `Files=4, Tests=20`. Generated realizer/strict frontend/direct and composition package/copy controls T184/T197/T272/T273/T564 report All tests successful, Files=5, Tests=15. Maintained input and new generated/domain example selected in T1884 plus catalog T248 and runnable book T1376 report All tests successful, Files=3, Tests=7216 after the independently censused exact catalog addition. Final carrier/package witnesses pass Files=2, Tests=10; book builds and Knowledge Map is current. Re-derivation uses real source/lowering/report/carrier and transport products with literal types/roles/endpoints; falsification uses exact predecessor embedded-package RED plus missing/undeclared/external controls, independent full literal projections and exact prior catalog-row preservation; tracked producers/tests/source/package/book/facts, this owner and Git preserve durability. Generated/domain full transport/refusal closure, backend/native behavior, external consumer, full CI and push remain separately owned. Final measured capacity/claims, staged doctrines and normal hooks accompany the commit.
+
+
+## Qualification — accepted generated/domain public products `.60.4.3.2.4.2.1`
+
+T2019 now drives every authored generated/domain carrier source through actual
+native, adapter API and newline check/semantic/schedule queries. Full typed
+products and text/structured/envelope values are compared without dropping
+fields. Literal declarations/ranges, domain snapshots, exact physical top pins,
+ordered instance membership, recursive typed child HIR/structural ports and
+private writer types are independent of parity. Shared corrupted domain,
+presence, numeric kind, type, signed/state and range projections still agree
+across transport copies but fail the independent literal witness. Exact source,
+imported package, named public producer bytes and caller facts stay unchanged.
+
+The probe and accepted products locate authored metadata in source.interface_ports
+and full module types in composition_children child HIR/structural ports. Outer
+composition HIR pins are physical vectors; no new alias/type keys are invented
+there. Exact clock/reset contracts and declaration provenance are separately
+expected. The added ordinary reset oracle initially omits the required domain:null
+field. All transports consistently retain it. ISFResetProvenance declares the
+closed domain/origin shape; named io/idle cases already pass. The ordinary literal
+is corrected rather than removing a field from the product. An optional ps
+inspection returns Operation not permitted; tool-terminal receipts consume the
+jobs, and no process-inspection or native-execution success is inferred.
+
+The initial complete typed transport/type matrix passes Files=1, Tests=8 before
+clock/reset/producers assertions are added. Expanded qualification initially
+fails only the two ordinary sources' missing-null literal reset expectations;
+that result is not final qualification. Corrected final matrix and exact focused
+controls must qualify the complete current tests before commit. Contextual
+refusals remain .2 and exact prior/discovery closure remains .3.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual `--emit-semantic-json isf/record_input_children.isf` exposes physical vector top pins and recursive typed module declarations in composition_children child HIR/structural ports, with authored layout separately in source.interface_ports. Prior T2019 owned carrier structure and actual strict replay but not the entire authored public product matrix. The ordinary reset extension fails ` at t/2019-isf-record-input-generated-carriers.t line 310.` only because its literal omits required domain:null; ISFResetProvenance declares exact domain/origin keys, and all native/API/newline products preserve the same closed shape. This is a qualification/oracle gap, not a product metadata loss or new source admission.
+- [x] **ADDRESSED (verified)** — Final guarded T2019 reports All tests successful, Files=1, Tests=8. Every authored local/imported ordinary/domain reader/writer/blocking case and maintained imported example runs actual native/API/newline check/semantic/schedule queries with complete typed reports, text/structured/envelope equality, exact source provenance and literal ordered declarations/ranges/domain snapshots. Physical top input/output vectors expose no private handoffs; each actual instance retains complete recursive child HIR/structural input and private write-data identity. Exact owning clock/reset contracts and declaration provenance, caller facts, source/package bytes and named public producers remain. The book documents actual projection locations without inventing top type keys; canonical SPECFORGE response and fact/frontier pointers record accepted public completion only.
+- [x] **NO REGRESSION** — Guarded primitive JSON/copy, unchanged supplied frontend/discovery and embedded package controls T2018/T2017/T2020 report `All tests successful`, `Files=3, Tests=12`. Final expanded T2019 reports All tests successful, Files=1, Tests=8; runnable T1376 reports All tests successful, Files=1, Tests=2 and book builds. Knowledge Map reports knowledge-map: OK. Independent shared ownership/presence/numeric-kind/type/signed/state/range corruptions remain equal across transport copies but fail literal witnesses. Re-derivation uses actual native/API/newline full products and recursive/type/clock declarations; falsification uses those independently authored complete literals and hostile shared projections, retaining the omitted-null draft RED as an oracle limit; tracked public producers/tests/source/package/book/fact, this owner and Git preserve durability. Current capacity and claims are independently censused, with unchanged ceilings and no new open reviews. Staged doctrines and normal hooks accompany the commit. Generated/domain contextual refusals, exact prior-product closure, backend/native behavior, external consumer, full CI and push remain separately owned.

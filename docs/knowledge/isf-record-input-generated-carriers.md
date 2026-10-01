@@ -5,6 +5,8 @@ answers:
   - "how are generated and named-domain record-input carriers qualified?"
   - "where does a generated record-input copy store and reset its target?"
   - "are unused record inputs retained in the top or inherited child?"
+  - "where do generated-top semantic reports retain authored record declarations?"
+  - "does ordinary ISF reset provenance omit the domain key?"
 date: 2026-10-01
 status: current
 tags: [isf, record-ports, domains, composition, storage]
@@ -37,6 +39,18 @@ Literal layouts, roles, wiring endpoints and missing/external package controls
 are independent oracles; exact predecessor package failure supplies historical
 falsification. Tests, producer paths, maintained source/package, this fact and
 Git preserve durability. Complete generated/domain transport and refusal
-closure belongs to .2.4.2; backend/native behavior and consumer completion
+closure belongs to .2.4.2. Its .1 qualifies accepted complete native/API/newline
+check/semantic/schedule products, literal declarations/domain snapshots, exact
+physical top pins, recursive child HIR/structural ports and clock/reset provenance.
+Outer composition HIR pins are physical vectors; source.interface_ports retains
+authored record aliases/layout, and composition_children retains complete typed
+module declarations. Shared corrupted ownership/layout/type projections retain
+transport parity but fail the independent literal witnesses. Named producers
+and exact source/package bytes stay unchanged. Ordinary reset provenance retains
+the required domain:null entry; named entries preserve authored domain order
+and explicit versus domain_absent origin. The draft oracle's omitted null field
+is corrected against ISFResetProvenance's closed schema, not removed from reports.
+Contextual refusals and final
+prior-product closure remain .2-.3; backend/native behavior and consumer completion
 remain .2.5. Structural reset ownership is not executed reset behavior.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1.
