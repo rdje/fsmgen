@@ -1,0 +1,63 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.1
+Baseline: 008e629ced1b7d1bd2ff1f56e39ff7e793721179
+
+Complete actual local, forward alias, imported, imported alias, mixed, reverse,
+unused and domain output sources reach native check/semantic/schedule, in-process
+JSON-RPC API and actual newline MCP transports. Full products, including primitive
+JSON kinds, text/structured envelopes and exact authored declarations, are retained.
+The independent record has a leading two-bit kind, signed five-bit four-state data
+and nested one-bit plus two-bit two-state list leaves. Packing is literal, not
+constructed from production layout helpers. Successful semantic direct outputs
+retain authored type spelling and complete recursive record identity. Domain
+metadata includes actual ownership, complete top declarations and exactly the
+selected-domain interfaces. No undocumented scalar state is invented.
+
+Repeated schedule products are detached and the complete caller JSON is unchanged.
+Queries preserve exact authored/package and named producer bytes. Unknown/null/
+absent/empty metadata boundaries remain qualified by the focused existing metadata
+band, separately from the typed positive witnesses.
+
+Actual independent competing writers, field writes, literal whole RHS and whole
+record inferred captures refuse with no successful metadata/semantic/schedule
+product. Native check/semantic failures retain JSON false and machine-owned
+contextual diagnostics. The established schedule failure has exit 255 without a
+signal and no stdout product; API/newline preserve -32000 and the bounded existing
+message-only error, with no result or error data. It is not a structured check
+failure or unsupported-target profile claim.
+
+The first draft invents domain shape/name/ownership and schedule error expectations,
+and uses an inexact whole-sample phrase. Preserve its exact test and full failing
+TAP, then correct only the oracles against canonical existing contracts and actual
+source products. No production code changes accompany this qualification. The
+complete positive direct cases already pass that draft; the final complete rerun
+owns signoff. Shared role/primitive kind/signedness/state/offset/order/leaf loss and
+false success corruptions are independently refused even with all transports
+corrupted consistently.
+
+All witness JSON, full final and draft source/TAP, named producer Git objects,
+existing metadata/doc/book receipts and complete predecessor evidence fingerprints
+retain durability. Only the repository prefix is normalized in projected receipts,
+with original raw identity, size and replacement counts retained. No HDL compiler,
+analyzer or simulation runs. Actual target profiles, exact complete predecessor
+product comparisons and catalog/cohort promotion remain the following siblings;
+generated output mappings, output execution/fields and full SPECFORGE delivery
+remain separately owned and unfinished.
+
+The first corrected complete pass predates the additional per-query source-byte
+receipt binding. Retain its exact intermediate test and TAP; the final run and
+independent source-hash checks own the stronger byte-preservation claim.
+
+The first sealed verifier validates actual products but stops before its type
+mutation because it selects a scalar semantic output by positional index. Keep
+that draft/traceback, then select the independently named packet endpoint.
+Declared source-order metadata and semantic analysis inventories are distinct.
+
+The first normal guarded commit starts at host 88.2%, observes 88.1% against
+the unchanged 88% cutoff and exits 137 without hook output. It terminates only
+the owned PID tree 56300. HEAD remains the predecessor, with no index lock.
+Preserve this full receipt and defer the same commit until pressure falls;
+no foreign processes or memory limits are changed.
+A separate readonly OS-counter sample below cutoff with normal pressure and
+an absent exact-owned-PID census qualify resuming the same commit workflow.
+The initial sandbox hardware-counter read refused; the readonly outside-sandbox
+query succeeds. This is unrelated to the historical native group EPERM owner.

@@ -1,0 +1,11 @@
+{
+  "page_size": 16384,
+  "physical_bytes": 25769803776,
+  "pressure_probe_exit": 0,
+  "pressure_probe_stderr": "",
+  "pressure_probe_stdout": "1\n",
+  "raw_vm_stat": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   125645.\nPages active:                                 423047.\nPages inactive:                               511466.\nPages speculative:                             26136.\nPages throttled:                                   0.\nPages wired down:                             260785.\nPages purgeable:                                3955.\n\"Translation faults\":                    69428905684.\nPages copy-on-write:                     10877921160.\nPages zero filled:                       25606890101.\nPages reactivated:                        1386470240.\nPages purged:                               56647915.\nFile-backed pages:                            507998.\nAnonymous pages:                              452651.\nPages stored in compressor:                   387983.\nPages occupied by compressor:                 191986.\nDecompressions:                           1478208881.\nCompressions:                             1787800745.\nPageins:                                   795951127.\nPageouts:                                     337572.\nSwapins:                                    40901671.\nSwapouts:                                   46129854.\n",
+  "stats_compatible_capacity_pct": 57.31372833251953,
+  "time_utc": "2026-10-01T21:35:01.302705+00:00",
+  "used_pages": 901467
+}

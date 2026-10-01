@@ -1,0 +1,1 @@
+t/2034-isf-record-output-public-sources.t syntax OK

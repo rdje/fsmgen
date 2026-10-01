@@ -1,0 +1,220 @@
+"""Verify complete captured public output products; never replay HDL."""
+import copy
+import hashlib
+import json
+import re
+import subprocess
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+FIELDS = [
+    dict(path='kind', width=2, msb=9, lsb=8, signed=0),
+    dict(path='payload.data', width=5, msb=7, lsb=3, signed=1, state_model='four_state'),
+    dict(path='payload.flags[0]', width=1, msb=2, lsb=2, signed=0),
+    dict(path='payload.flags[1]', width=2, msb=1, lsb=0, signed=0, state_model='two_state'),
+]
+SPEC = dict(kind='record', width=10, signed=0, member_order=['kind', 'payload'], members={
+    'kind': dict(kind='bits', width=2, signed=0),
+    'payload': dict(kind='record', width=8, signed=0, member_order=['data', 'flags'], members={
+        'data': dict(kind='bits', width=5, signed=1, state_model='four_state'),
+        'flags': dict(kind='list', width=3, signed=0, items=[
+            dict(kind='bit', width=1, signed=0), dict(kind='bits', width=2, signed=0, state_model='two_state')]),
+    }),
+})
+TYPES = {'local': 'frame', 'forward_alias': 'alias', 'imported': 'shared.frame',
+         'imported_alias': 'alias', 'mixed': 'alias', 'reverse': 'frame', 'unused': 'alias', 'domains': 'alias'}
+REFUSALS = {'competing': "record output 'packet' cannot admit overlapping writers",
+            'field': 'record output field writes are not yet admitted',
+            'literal': 'whole record port copy requires declared record roots',
+            'whole_sample': "sample requires a scalar value; 'packet' is a whole record"}
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
+
+
+def scalar(name, direction, width):
+    return dict(name=name, direction=direction, width=width)
+
+
+def record(name, direction, type_name):
+    return dict(name=name, direction=direction, width=10, type=type_name,
+                type_kind='record', fields=copy.deepcopy(FIELDS))
+
+
+def normalized(value):
+    if isinstance(value, dict):
+        return {key: normalized(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [normalized(item) for item in value]
+    if type(value) is str:
+        return '.' if value == '<repo>' else value.replace('<repo>/', '')
+    return value
+
+
+def validate(value, name, kind):
+    o = value['observation']
+    native, wire, response = o['native'], o['wire'], o['response']
+    expected_sha = hashlib.sha256(value['source'].encode('utf-8')).hexdigest()
+    assert o['source_sha256_before'] == o['source_sha256_after'] == expected_sha
+    assert wire['exit_code'] == 0 and wire['signal'] == 0 and wire['stderr'] == ''
+    assert wire['stdout'].endswith('\n') and wire['stdout'].count('\n') == 1
+    assert canonical(json.loads(wire['stdout'])) == canonical(response)
+    assert response['jsonrpc'] == '2.0' and type(response['id']) is int and response['id'] == 1
+    assert native['signal'] == 0
+    if name.startswith('refused-'):
+        reason = REFUSALS[name[len('refused-'):]]
+        assert native['exit_code'] == (255 if kind == 'schedule' else 1)
+        if kind == 'schedule':
+            assert native['stdout'] == '' and reason in native['stderr']
+            assert 'result' not in response and set(response['error']) == {'code', 'message'}
+            assert response['error'] == dict(code=-32000, message='FSMGen command failed without a matching public failure report')
+            assert o['report'] is None
+            return
+        assert native['stderr'] == ''
+        report = o['report']
+        assert report['success'] is False
+        assert reason in report['diagnostics'][0]['message'] and 'code' in report['diagnostics'][0]
+        assert 'interface_ports' not in report['source'] and report.get('semantic') is None
+        assert response['result']['isError'] is True
+    else:
+        assert native['exit_code'] == 0 and native['stderr'] == ''
+        report = o['report']
+        ports = [scalar('start', 'input', 1)]
+        if name == 'mixed':
+            ports.append(record('incoming', 'input', 'frame'))
+        if name == 'domains':
+            ports.append(scalar('request', 'input', 1))
+        ports.append(record('packet', 'output', TYPES[name]))
+        ports.append(scalar('seen', 'output', 5))
+        if name != 'domains':
+            ports.append(scalar('done', 'output', 1))
+        if name == 'reverse':
+            ports.append(record('echo', 'output', 'frame'))
+        if name == 'domains':
+            for port, domain in zip(ports, ('core', 'bus', 'bus', 'core')):
+                port['domain'] = domain
+        declared = report['interface_ports'] if kind == 'schedule' else report['source']['interface_ports']
+        assert canonical(declared) == canonical(ports)
+        assert response['result']['isError'] is False
+        if kind != 'schedule':
+            assert report['success'] is True and report['generated_output']['emitted'] is False
+            assert report['diagnostics'] == []
+            module = 'public_output_' + name + ('_top' if name == 'domains' else '')
+            assert (report['result']['module_name'] if kind == 'check' else report['semantic']['module']['name']) == module
+        if kind == 'semantic' and name != 'domains':
+            signals = report['semantic']['forward_ir']['intent_hir']['signal_analysis']['outputs']
+            selected = [signal for signal in signals if signal['name'] == 'packet']
+            assert len(selected) == 1 and selected[0]['declared_type_name'] == TYPES[name]
+            assert canonical(selected[0]['declared_type_spec']) == canonical(SPEC)
+        if kind == 'schedule' and name == 'domains':
+            domains = {domain['name']: domain for domain in report['clock_domains']}
+            assert set(domains) == {'bus', 'core'}
+            assert canonical(domains['bus']['interface_ports']) == canonical([
+                dict(scalar('request', 'input', 1), domain='bus'), dict(record('packet', 'output', 'alias'), domain='bus')])
+            assert canonical(domains['core']['interface_ports']) == canonical([
+                dict(scalar('start', 'input', 1), domain='core'), dict(scalar('seen', 'output', 5), domain='core')])
+    assert canonical(normalized(json.loads(native['stdout']))) == canonical(report)
+    result = response['result']
+    assert canonical(result['structuredContent']['report']) == canonical(report)
+    assert canonical(json.loads(result['content'][0]['text'])) == canonical(result['structuredContent'])
+    assert result['structuredContent']['query_kind'] == kind
+    assert result['structuredContent']['source_id'] == o['request']['params']['arguments']['source_id']
+    assert result['structuredContent']['adapter_provenance']['read_only'] is True
+    assert result['structuredContent']['adapter_provenance']['shell_access'] is False
+
+
+def rejected(value, name, kind):
+    try:
+        validate(value, name, kind)
+    except (AssertionError, KeyError, TypeError):
+        return True
+    return False
+
+
+def main():
+    manifest = json.loads((HERE / 'manifest.json').read_bytes())
+    assert manifest['owner'] == 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.1'
+    assert set(manifest['sha256']) == {p.name for p in HERE.iterdir() if p.is_file() and p.name != 'manifest.json'}
+    for name, digest in manifest['sha256'].items():
+        assert hashlib.sha256((HERE / name).read_bytes()).hexdigest() == digest
+    expected = {(name, kind) for name in list(TYPES) + ['refused-' + n for n in REFUSALS]
+                for kind in ('check', 'semantic', 'schedule')}
+    assert set(map(tuple, manifest['witnesses'])) == expected
+    values = {}
+    for name, kind in sorted(expected):
+        value = json.loads((HERE / (name + '-' + kind + '.json')).read_bytes())
+        validate(value, name, kind)
+        values[name, kind] = value
+    assert manifest['baseline_revision'] == '008e629ced1b7d1bd2ff1f56e39ff7e793721179'
+    assert manifest['terminal_exit_codes'] == dict(draft_focused=1, intermediate_focused=0, focused=0, syntax=0, docs=0, book=0, preservation=0, draft_verify=1, commit_ram_cutoff=137)
+    root = HERE.parents[2]
+    for path, item in manifest['source_objects'].items():
+        blob = subprocess.check_output(['git', 'rev-parse', manifest['baseline_revision'] + ':' + path], cwd=root).decode().strip()
+        assert blob == item['git_blob']
+        assert hashlib.sha256(subprocess.check_output(['git', 'cat-file', 'blob', blob], cwd=root)).hexdigest() == item['sha256']
+    for dirname, members in manifest['parent_members'].items():
+        parent = root / 'docs/audits' / dirname
+        assert set(members) == {p.name for p in parent.iterdir() if p.is_file()}
+        for name, digest in members.items():
+            assert hashlib.sha256((parent / name).read_bytes()).hexdigest() == digest
+    for name, item in manifest['receipt_projections'].items():
+        assert len((HERE / name).read_bytes()) == item['raw_bytes'] - item['replacement_count'] * (item['root_prefix_bytes'] - len(b'<repo>'))
+    for filename, count in [('preservation.txt', 'Files=2, Tests=14'), ('docs.txt', 'Files=3, Tests=310')]:
+        receipt = (HERE / filename).read_text()
+        assert count in receipt and 'All tests successful' in receipt and 'Result: PASS' in receipt
+    assert 'HTML book written to' in (HERE / 'book.txt').read_text()
+    assert 'syntax OK' in (HERE / 'syntax.txt').read_text()
+    draft = (HERE / 'draft-focused.txt').read_text()
+    assert 'Result: FAIL' in draft and 'Files=1, Tests=11' in draft and 'Failed tests:  8-9' in draft
+    guard = (HERE / 'commit-ram-cutoff.txt').read_text()
+    assert 'PID 56300; host 88.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB' in guard
+    assert 'host memory 88.1% reached cutoff 88%' in guard
+    assert 'terminating PID tree: 56300' in guard
+    assert '[doctrine]' not in guard
+    assert (HERE / 'stopped-pid-census.txt').read_bytes() == (HERE / 'stopped-pid-census.stderr').read_bytes() == b''
+    host = json.loads((HERE / 'host-before-retry.json').read_bytes())
+    counters = dict((key, int(value)) for key, value in re.findall(r'^([^:\n]+):\s*(\d+)\.', host['raw_vm_stat'], re.M))
+    occupied = counters['Pages active'] + counters['Pages inactive'] + counters['Pages speculative'] + counters['Pages wired down'] + counters['Pages occupied by compressor'] - counters['Pages purgeable'] - counters['File-backed pages']
+    percent = occupied * host['page_size'] * 100 / host['physical_bytes']
+    assert percent == host['stats_compatible_capacity_pct'] and 0 <= percent < 88
+    assert host['pressure_probe_exit'] == 0 and host['pressure_probe_stdout'].strip() == '1'
+    final = (HERE / 'focused.txt').read_text()
+    assert 'All tests successful' in final and 'Result: PASS' in final
+    assert 'Files=1, Tests=11' in final
+    positive = values['local', 'semantic']
+    for mutate in (
+        lambda v: v['observation']['report']['source']['interface_ports'][1].update(direction='input'),
+        lambda v: v['observation']['report']['source']['interface_ports'][1].update(width='10'),
+        lambda v: v['observation']['report']['source']['interface_ports'][1]['fields'][1].update(signed=0),
+        lambda v: v['observation']['report']['source']['interface_ports'][1]['fields'].pop(),
+        lambda v: v['observation']['report']['source']['interface_ports'][1]['fields'][1].pop('state_model'),
+        lambda v: v['observation']['report']['source']['interface_ports'][1]['fields'][0].update(lsb=0),
+        lambda v: v['observation']['report']['source']['interface_ports'][1]['fields'].reverse(),
+        lambda v: v['observation']['report']['source']['interface_ports'][1]['fields'][0].update(state_model='two_state'),
+        lambda v: next(signal for signal in v['observation']['report']['semantic']['forward_ir']['intent_hir']['signal_analysis']['outputs'] if signal['name'] == 'packet')['declared_type_spec']['members']['payload']['members']['data'].update(signed=0),
+        lambda v: v['observation']['report'].update(success=False),
+    ):
+        bad = copy.deepcopy(positive); mutate(bad)
+        # Corrupt complete products consistently, so parity alone still agrees.
+        bad['observation']['response']['result']['structuredContent']['report'] = copy.deepcopy(bad['observation']['report'])
+        payload = bad['observation']['response']['result']['structuredContent']
+        bad['observation']['response']['result']['content'][0]['text'] = canonical(payload)
+        bad['observation']['wire']['stdout'] = canonical(bad['observation']['response']) + '\n'
+        bad['observation']['native']['stdout'] = canonical(bad['observation']['report']) + '\n'
+        assert rejected(bad, 'local', 'semantic')
+    domain_bad = copy.deepcopy(values['domains', 'schedule'])
+    bus = next(d for d in domain_bad['observation']['report']['clock_domains'] if d['name'] == 'bus')
+    bus['interface_ports'][1]['domain'] = 'core'
+    assert rejected(domain_bad, 'domains', 'schedule')
+    byte_bad = copy.deepcopy(values['local', 'check'])
+    byte_bad['observation']['source_sha256_after'] = '0' * 64
+    assert rejected(byte_bad, 'local', 'check')
+    negative = copy.deepcopy(values['refused-competing', 'check'])
+    negative['observation']['report']['success'] = True
+    assert rejected(negative, 'refused-competing', 'check')
+    print('Complete actual record-output native/API/newline products and public refusals authenticate literal packing, recursive identity, JSON kinds, domain ownership and no partial publication. Shared hostile corruption refuses; no HDL replay or full output-delivery claim.')
+
+
+if __name__ == '__main__':
+    main()

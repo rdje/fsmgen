@@ -122,8 +122,13 @@ and book.
   independent writers refuse in both lower and report, including domain-local
   writers; equal values/entry guards/priority do not arbitrate. Output member
   writes and generated handoff mappings retain their separate gates. Complete
-  public reconciliation `.3.4.4` is next, with output execution still `.3.5`.
-  The full aggregate-interface request is not complete.
+  public reconciliation `.3.4.4` is active. Its `.1` qualifies complete native,
+  in-process API and actual newline check/semantic/schedule products for local,
+  imported, forward aliases, mixed/reverse/unused and owning-domain outputs,
+  with literal nested signed/state/list layouts and precise no-partial-product
+  source/writer refusals. Actual target-profile atomic checks, predecessor
+  preservation and maintained corpus closure follow as `.2`–`.4`. Output
+  execution remains `.3.5`; the full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.
 

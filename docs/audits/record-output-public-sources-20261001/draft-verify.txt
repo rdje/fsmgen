@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<repo>/docs/audits/record-output-public-sources-20261001/verify.py", line 207, in <module>
+    main()
+    ~~~~^^
+  File "<repo>/docs/audits/record-output-public-sources-20261001/verify.py", line 185, in main
+    bad = copy.deepcopy(positive); mutate(bad)
+                                   ~~~~~~^^^^^
+  File "<repo>/docs/audits/record-output-public-sources-20261001/verify.py", line 182, in <lambda>
+    lambda v: v['observation']['report']['semantic']['forward_ir']['intent_hir']['signal_analysis']['outputs'][0]['declared_type_spec']['members']['payload']['members']['data'].update(signed=0),
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'declared_type_spec'

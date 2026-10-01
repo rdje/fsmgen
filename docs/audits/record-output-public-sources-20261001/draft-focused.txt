@@ -1,0 +1,138 @@
+ram-guard: PID 87970; host 49.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'check complete independent declaration/layout oracle'
+    #   at t/2034-isf-record-output-public-sources.t line 209.
+    #          got: '[{"direction":"input","domain":"core","name":"start","width":1},{"direction":"input","domain":"bus","name":"request","width":1},{"direction":"output","domain":"bus","fields":[{"lsb":8,"msb":9,"path":"kind","signed":0,"width":2},{"lsb":3,"msb":7,"path":"payload.data","signed":1,"state_model":"four_state","width":5},{"lsb":2,"msb":2,"path":"payload.flags[0]","signed":0,"width":1},{"lsb":0,"msb":1,"path":"payload.flags[1]","signed":0,"state_model":"two_state","width":2}],"name":"packet","type":"alias","type_kind":"record","width":10},{"direction":"output","domain":"core","name":"seen","width":5}]'
+    #     expected: '[{"direction":"input","name":"start","width":1},{"direction":"input","name":"request","width":1},{"direction":"output","fields":[{"lsb":8,"msb":9,"path":"kind","signed":0,"width":2},{"lsb":3,"msb":7,"path":"payload.data","signed":1,"state_model":"four_state","width":5},{"lsb":2,"msb":2,"path":"payload.flags[0]","signed":0,"width":1},{"lsb":0,"msb":1,"path":"payload.flags[1]","signed":0,"state_model":"two_state","width":2}],"name":"packet","type":"alias","type_kind":"record","width":10},{"direction":"output","name":"seen","width":5}]'
+
+    #   Failed test 'check independently named realized module'
+    #   at t/2034-isf-record-output-public-sources.t line 229.
+    #          got: 'public_output_domains_top'
+    #     expected: 'public_output_domains__top'
+
+    #   Failed test 'semantic complete independent declaration/layout oracle'
+    #   at t/2034-isf-record-output-public-sources.t line 209.
+    #          got: '[{"direction":"input","domain":"core","name":"start","width":1},{"direction":"input","domain":"bus","name":"request","width":1},{"direction":"output","domain":"bus","fields":[{"lsb":8,"msb":9,"path":"kind","signed":0,"width":2},{"lsb":3,"msb":7,"path":"payload.data","signed":1,"state_model":"four_state","width":5},{"lsb":2,"msb":2,"path":"payload.flags[0]","signed":0,"width":1},{"lsb":0,"msb":1,"path":"payload.flags[1]","signed":0,"state_model":"two_state","width":2}],"name":"packet","type":"alias","type_kind":"record","width":10},{"direction":"output","domain":"core","name":"seen","width":5}]'
+    #     expected: '[{"direction":"input","name":"start","width":1},{"direction":"input","name":"request","width":1},{"direction":"output","fields":[{"lsb":8,"msb":9,"path":"kind","signed":0,"width":2},{"lsb":3,"msb":7,"path":"payload.data","signed":1,"state_model":"four_state","width":5},{"lsb":2,"msb":2,"path":"payload.flags[0]","signed":0,"width":1},{"lsb":0,"msb":1,"path":"payload.flags[1]","signed":0,"state_model":"two_state","width":2}],"name":"packet","type":"alias","type_kind":"record","width":10},{"direction":"output","name":"seen","width":5}]'
+
+    #   Failed test 'semantic independently named realized module'
+    #   at t/2034-isf-record-output-public-sources.t line 229.
+    #          got: 'public_output_domains_top'
+    #     expected: 'public_output_domains__top'
+
+    #   Failed test 'schedule complete independent declaration/layout oracle'
+    #   at t/2034-isf-record-output-public-sources.t line 209.
+    #          got: '[{"direction":"input","domain":"core","name":"start","width":1},{"direction":"input","domain":"bus","name":"request","width":1},{"direction":"output","domain":"bus","fields":[{"lsb":8,"msb":9,"path":"kind","signed":0,"width":2},{"lsb":3,"msb":7,"path":"payload.data","signed":1,"state_model":"four_state","width":5},{"lsb":2,"msb":2,"path":"payload.flags[0]","signed":0,"width":1},{"lsb":0,"msb":1,"path":"payload.flags[1]","signed":0,"state_model":"two_state","width":2}],"name":"packet","type":"alias","type_kind":"record","width":10},{"direction":"output","domain":"core","name":"seen","width":5}]'
+    #     expected: '[{"direction":"input","name":"start","width":1},{"direction":"input","name":"request","width":1},{"direction":"output","fields":[{"lsb":8,"msb":9,"path":"kind","signed":0,"width":2},{"lsb":3,"msb":7,"path":"payload.data","signed":1,"state_model":"four_state","width":5},{"lsb":2,"msb":2,"path":"payload.flags[0]","signed":0,"width":1},{"lsb":0,"msb":1,"path":"payload.flags[1]","signed":0,"state_model":"two_state","width":2}],"name":"packet","type":"alias","type_kind":"record","width":10},{"direction":"output","name":"seen","width":5}]'
+
+    #   Failed test 'complete literal domain membership'
+    #   at t/2034-isf-record-output-public-sources.t line 131.
+    #     Structures begin differing at:
+    #          $got->[0] = Does not exist
+    #     $expected->[0] = 'bus'
+
+    #   Failed test 'bus domain owns exactly the declared record output and request'
+    #   at t/2034-isf-record-output-public-sources.t line 209.
+    #          got: 'null'
+    #     expected: '[{"direction":"input","name":"request","width":1},{"direction":"output","fields":[{"lsb":8,"msb":9,"path":"kind","signed":0,"width":2},{"lsb":3,"msb":7,"path":"payload.data","signed":1,"state_model":"four_state","width":5},{"lsb":2,"msb":2,"path":"payload.flags[0]","signed":0,"width":1},{"lsb":0,"msb":1,"path":"payload.flags[1]","signed":0,"state_model":"two_state","width":2}],"name":"packet","type":"alias","type_kind":"record","width":10}]'
+
+    #   Failed test 'core domain cannot acquire the other physical output'
+    #   at t/2034-isf-record-output-public-sources.t line 209.
+    #          got: 'null'
+    #     expected: '[{"direction":"input","name":"start","width":1},{"direction":"output","name":"seen","width":5}]'
+    # Looks like you failed 8 tests of 50.
+
+#   Failed test 'actual domain public reports retain complete top and selected-domain output metadata'
+#   at t/2034-isf-record-output-public-sources.t line 139.
+
+    #   Failed test 'competing/schedule normal native refusal'
+    #   at t/2034-isf-record-output-public-sources.t line 158.
+    #          got: '255'
+    #     expected: '1'
+
+    #   Failed test 'competing schedule retains the established JSON-RPC error'
+    #   at t/2034-isf-record-output-public-sources.t line 175.
+    #          got: '-32000'
+    #     expected: '-32603'
+
+    #   Failed test 'competing schedule retains the bounded message-only public contract'
+    #   at t/2034-isf-record-output-public-sources.t line 176.
+    #          got: 'FSMGen command failed without a matching public failure report'
+    #     expected: 'FSMGen source query failed'
+
+    #   Failed test 'field/schedule normal native refusal'
+    #   at t/2034-isf-record-output-public-sources.t line 158.
+    #          got: '255'
+    #     expected: '1'
+
+    #   Failed test 'field schedule retains the established JSON-RPC error'
+    #   at t/2034-isf-record-output-public-sources.t line 175.
+    #          got: '-32000'
+    #     expected: '-32603'
+
+    #   Failed test 'field schedule retains the bounded message-only public contract'
+    #   at t/2034-isf-record-output-public-sources.t line 176.
+    #          got: 'FSMGen command failed without a matching public failure report'
+    #     expected: 'FSMGen source query failed'
+
+    #   Failed test 'literal/schedule normal native refusal'
+    #   at t/2034-isf-record-output-public-sources.t line 158.
+    #          got: '255'
+    #     expected: '1'
+
+    #   Failed test 'literal schedule retains the established JSON-RPC error'
+    #   at t/2034-isf-record-output-public-sources.t line 175.
+    #          got: '-32000'
+    #     expected: '-32603'
+
+    #   Failed test 'literal schedule retains the bounded message-only public contract'
+    #   at t/2034-isf-record-output-public-sources.t line 176.
+    #          got: 'FSMGen command failed without a matching public failure report'
+    #     expected: 'FSMGen source query failed'
+
+    #   Failed test 'whole_sample/check precise authored primary reason'
+    #   at t/2034-isf-record-output-public-sources.t line 164.
+    #                   'Invalid ISF record value: transaction 'main' sample requires a scalar value; 'packet' is a whole record'
+    #     doesn't match '(?^:whole-record inferred sample)'
+
+    #   Failed test 'whole_sample/semantic precise authored primary reason'
+    #   at t/2034-isf-record-output-public-sources.t line 164.
+    #                   'Invalid ISF record value: transaction 'main' sample requires a scalar value; 'packet' is a whole record'
+    #     doesn't match '(?^:whole-record inferred sample)'
+
+    #   Failed test 'whole_sample/schedule normal native refusal'
+    #   at t/2034-isf-record-output-public-sources.t line 158.
+    #          got: '255'
+    #     expected: '1'
+
+    #   Failed test 'whole_sample schedule retains the actual primary refusal'
+    #   at t/2034-isf-record-output-public-sources.t line 173.
+    #                   'Invalid ISF record value: transaction 'main' sample requires a scalar value; 'packet' is a whole record
+    # '
+    #     doesn't match '(?^:whole-record inferred sample)'
+
+    #   Failed test 'whole_sample schedule retains the established JSON-RPC error'
+    #   at t/2034-isf-record-output-public-sources.t line 175.
+    #          got: '-32000'
+    #     expected: '-32603'
+
+    #   Failed test 'whole_sample schedule retains the bounded message-only public contract'
+    #   at t/2034-isf-record-output-public-sources.t line 176.
+    #          got: 'FSMGen command failed without a matching public failure report'
+    #     expected: 'FSMGen source query failed'
+    # Looks like you failed 15 tests of 172.
+
+#   Failed test 'actual public source and writer refusals cannot publish successful declaration or semantic products'
+#   at t/2034-isf-record-output-public-sources.t line 184.
+# Looks like you failed 2 tests of 11.
+t/2034-isf-record-output-public-sources.t .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/11 subtests 
+
+Test Summary Report
+-------------------
+t/2034-isf-record-output-public-sources.t (Wstat: 512 Tests: 11 Failed: 2)
+  Failed tests:  8-9
+  Non-zero exit status: 2
+Files=1, Tests=11, 134 wallclock secs ( 0.03 usr  0.01 sys + 93.01 cusr 36.69 csys = 129.74 CPU)
+Result: FAIL

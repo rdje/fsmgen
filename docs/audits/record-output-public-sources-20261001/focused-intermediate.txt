@@ -1,0 +1,5 @@
+ram-guard: PID 86863; host 67.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2034-isf-record-output-public-sources.t .. ok
+All tests successful.
+Files=1, Tests=11, 159 wallclock secs ( 0.03 usr  0.01 sys + 102.75 cusr 44.09 csys = 146.88 CPU)
+Result: PASS

@@ -33,7 +33,10 @@ retain the documented message-only adapter error.
 Default width is `1`. Interface entries lower into `.fsm` `+size` entries.
 Declared actor inputs and outputs additionally carry `+interface` roles, preserving
 unused inputs and undriven outputs in ordinary actor and partitioned domain module interfaces.
-Their presence does not depend on a scheduled read. Generated domain-top
+Their presence does not depend on a scheduled read. Declared output records retain
+the complete authored alias, recursive type and packed leaf layout in successful
+native/API/newline check, semantic and schedule products, including owning-domain
+metadata. Failed products do not publish a successful declaration snapshot. Generated domain-top
 routes therefore retain their declared endpoints. Width resolution remains
 owned by `+size`; this does not export inferred storage or unrelated generated
 transaction-child inputs. Semantic input analysis reflects the realized

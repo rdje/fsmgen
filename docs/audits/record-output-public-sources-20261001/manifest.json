@@ -1,0 +1,646 @@
+{
+  "baseline_revision": "008e629ced1b7d1bd2ff1f56e39ff7e793721179",
+  "meaning": "Complete actual public output-source responses and explicit refusals; no HDL execution.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.1",
+  "parent_members": {
+    "record-input-signoff-20261001": {
+      "book.txt": "01bf7a356520b48f2697e5ed7355062d8d983d6d436c1089768e14b7a80432ba",
+      "current-public.txt": "d7ccc63911cea89cb34b5ed17752540ae6372961b2382e3f5c72b84d45521d93",
+      "docs-before.txt": "7cee6c45a7d30e5ef3d672f97da9a7ae727e4913654b00df1fb6e54b10e8c60c",
+      "docs-final.txt": "a07d3b6c45cc6fda448948ee467b117d64dfc822e46bfda609a6fbe61cbc1fa9",
+      "manifest.json": "c86a2f67829157e7991bf4e141a97edc32a4639ea60c58c61ccb44e49fdab8bf",
+      "matrix-audit.t.source": "0bc6f7ccd02ca17984abc40969a66b9bf9de7da21f16efd9e59d70033e62d6b4",
+      "requirements.json": "3375d4e138bb5205db2e81640fee4ac0b981d3733c901cd3c286a51aba2d7c96",
+      "saved.json": "b028be3bebf782610bae744785e52d60c9a1c112a22fd342c8f73fc0104008f2",
+      "scope.txt": "c40dd1a514189867aa4f260d26abbd77ffce1770efa18666fcdd4f531902b668",
+      "source-boundary.json": "176c149086ff5433b3e3fe69bff9a75492ef0fef44dda92b89e4af9b834ae8b9",
+      "verify.py": "feb1355cf18446dbc735ae5cf350e8aa81ed433eb4ae149120ef312ded7223bb"
+    },
+    "record-output-source-admission-20261001": {
+      "1305-isf-book-feature-matrix-audit.t.source": "09a570c4d2f963ba4d4f9e48394398305b455bc0a561bd39a6b44e05ad6a6189",
+      "1983-isf-interface-port-metadata.t.source": "7b1d857a34258aeb09a6d26889790088d2dfdce7595b42eafa99325f5d5dc015",
+      "1984-isf-interface-port-report-integration.t.source": "0f24c3827d849484d4f5e27ca34ab7318e183cd402b42c4aede262db102c0bfb",
+      "1985-isf-interface-port-public-qualification.t.source": "72374de53ab4e929387d90e07ad90d5243984057a80c0603cbdd4026aaf08a36",
+      "1987-isf-record-port-declaration-scopes.t.source": "76775941a1ebad3fd5c1d339c092ff34cbe4d9453af77e48e1c584e6a4785aac",
+      "1989-isf-record-port-root-classification.t.source": "a764fd9500eb82c9bf530dd24fc7cb261d24ea0528d4c6ca03a7ebd23385fb2f",
+      "1990-isf-record-port-sample-facts.t.source": "d1c3f104992e33c1d8343ffcfbfddbccc0b36fcc861ea27818c4a121d048e967",
+      "1991-isf-record-port-sample-contexts.t.source": "18434ca620015296b50d92b17d03993920156efd791ef6c42fa36cd37cdfc31a",
+      "1997-isf-record-port-gate-integration.t.source": "ab304f8a08af6ea6df5acad75ee200a698fba32de2c145289da204bdb8579385",
+      "1998-isf-record-input-source-admission.t.source": "20bcb015200df2830bb124d9334d6575191e07f8767f845d9078d332f7f88a27",
+      "2016-isf-record-input-public-refusals.t.source": "bd370ec63422d7d348c095f4dcadb003de1deb19e040271e3d872858e6ebf605",
+      "2029-isf-record-output-writer-inventory.t.source": "2d11f21036814f042961a9fba2b55c3fd74746001078adb813e5448f22e73caf",
+      "2030-isf-record-output-writer-admission.t.source": "5e39650381a246ef8f9ec63131fcbecaa3803877caa357821645573c8473bf21",
+      "2031-isf-record-output-source-contexts.t.source": "d0f6e983ef1f0c38292b0426f7d1b1d08ee97e6b62e395826665b48831d8c678",
+      "2032-isf-record-output-hdl-profiles.t.source": "d0fbfb57057bc4eacf9439afd57cbf9eca5e52fbfff5c781669f63aa29508327",
+      "2033-isf-record-output-source-admission.t.source": "9fbfb60df85bd1c10b489b381d53676df1c3d5bf5dff8f0c370531215eb8ebea",
+      "baseline-1305-isf-book-feature-matrix-audit.t.source": "0bc6f7ccd02ca17984abc40969a66b9bf9de7da21f16efd9e59d70033e62d6b4",
+      "baseline-1983-isf-interface-port-metadata.t.source": "a76f55b2bd932addd0d8ca70b28b3ca1491f855aa22faa73edf7ec12696471d4",
+      "baseline-1984-isf-interface-port-report-integration.t.source": "e8f7ab706e9515a67e8591fe22d3c7ee133d85a4c1ddf530a80b551b1512d6dd",
+      "baseline-1985-isf-interface-port-public-qualification.t.source": "90854d887f7dc4225eceef1576932a20ca55b430905bece935e2c7abae594d4a",
+      "baseline-1987-isf-record-port-declaration-scopes.t.source": "170f26251fbea4c3dec848cf7d7f55caa7e7703aea6067d17b0e5fc29419f935",
+      "baseline-1989-isf-record-port-root-classification.t.source": "aa51ce03459a02856304f8463080e74adfddb886be85f7985f4482296cc399ca",
+      "baseline-1990-isf-record-port-sample-facts.t.source": "348300b3d5de2032d4d4a72b36663f73a6b5a03da662267acdd054eae707733b",
+      "baseline-1991-isf-record-port-sample-contexts.t.source": "a674688ba58529b63b594fe5c3950532627f49ef5fd7aa1628c01f59a351aab4",
+      "baseline-1997-isf-record-port-gate-integration.t.source": "34578f015730c1eeaccf46b31d5aaa522abe3ba4ee3add11b458f5b605bbdd87",
+      "baseline-1998-isf-record-input-source-admission.t.source": "5eb6802b85cc1254d80e5accbf33da2760786ee71f1768955f5efceea2aa9e51",
+      "baseline-2016-isf-record-input-public-refusals.t.source": "6089130afd6c25927251d65f9ea9b96a0c3a4d1ba81d0b18f9a68a11b985ae62",
+      "baseline-2029-isf-record-output-writer-inventory.t.source": "87f3b6ea2856babc415249ebcc885868da6c84b2b78d886580e6503f7f4b2989",
+      "baseline-2030-isf-record-output-writer-admission.t.source": "b41b37b0b62145ed84435da213cd026d676f1e441af5e55997e8cb7f9c031312",
+      "baseline-2031-isf-record-output-source-contexts.t.source": "0e7fec4b6699a2ab40b654ab9194f326b7b879c708dc5048891c4286a8c86768",
+      "baseline-2032-isf-record-output-hdl-profiles.t.source": "4d30478bedeea82751bd4583056a9e2e5ef52d2d35140e735859a60c54aebf27",
+      "baseline-parser.pm.source": "5157bdb8071a4d8813978eb98305321b08bbeb67838278c4dbef5dc4ffc24c61",
+      "baseline-probe.json": "c603e1f03fa9cc7b38387cbf86e69eeade4e6bb7a6740b99521d20c6d3d0c896",
+      "baseline-probe.txt": "275c5bc469a5459a3e03d33cbd37c3fd8b12dde4f91539c7d92decc3ed5211bf",
+      "baseline-root-classification.t.source": "aa51ce03459a02856304f8463080e74adfddb886be85f7985f4482296cc399ca",
+      "baseline-scheduler.pm.source": "db6864de99864ba5ca82431bf2802af8416aa296cd5189e7de462911e0676754",
+      "book-example.isf.source": "454a88a0e2b3f9a1d774e7bbf50ef63912cbd76fb0bad78576827bc6029b1b61",
+      "book-example.json": "8416c40bb07c7d4529d3fd6ca1af1009f3db3841e44b68d9c2799b43fbaf6b09",
+      "book-example.stderr": "90906e9e64e0e254aa6d54903ca5d89fb4583009219313f5fef7c954e4fedb06",
+      "book-initial.txt": "0022cba062ae054545ba58659c8eddc275c7ab5aa5dc6c068e9fbc427034edf7",
+      "book.txt": "03ca95a7b3333783e229211ff8953584665c8ec924700696fb52e3df14245efd",
+      "boundary-updates.py.source": "74ff95acab7a8ce1aed7ab63ca7e6dec2e766bd6d57375a4e8d6ac01cfcf4af4",
+      "broad-initial.txt": "c17ad77142d73f953e58496b4de3871634a422eb517de3b6bd93570b86e3587f",
+      "context-map-baseline-child.txt": "e9f2a35234f534f8e46504ec4e7eae9133c8eb5c34c035c8db71807ea1e4dedc",
+      "context-map-history.txt": "1ee44daf08d0130dfae3efeaa25152ae141e6e8e4c24505c52b064b33a959142",
+      "context-map-producer-history.txt": "0da0a2a817cb3c50a3342d4448afcd1c780327fd2f252e14b59646c35bbbb5da",
+      "decision-store-check.txt": "fa8a58e423238d1e332c2e2091a559ee7ffa209fcb63e11314dbfdab645f34af",
+      "decision-store-continuity.json": "392a54f476a359344e0520aafc3573061b2ef1a6465a6517de9f38190d8bb652",
+      "docs-initial.txt": "45fc010c009ac8ec2e8f479abbc59a709d5be19dcef6c2c822e04ef0513088d9",
+      "docs-repaired-initial.txt": "5ab547ccadc97c9f4d285cbf5f99c869f59a57a94adcc47ae1686002c15d1c5a",
+      "docs.txt": "a1415f5fa8d78ce1b581f5915d6f7bcbdea6cb587bda7a2a504944b803b39fe0",
+      "doctrines-catalog-repaired.txt": "afdfd897ddb4fe810185295acc7c7ca022f88d61503f7da1a438b4ea1d230855",
+      "doctrines-initial.txt": "230a997bd00875a1e885fdfd1a4cadc9fb0a286606c9b0ec62503b7eb8f334b4",
+      "draft-focused.txt": "41872ff1c93d49fb037d3dc21fbb3d81ad293ac5763872a721bd01311a7f1ddf",
+      "draft-regex-test.t.source": "6dbcece416b850c63ebefba6c633accda5184e9bbef5582c4e50258868b23275",
+      "draft-regex.txt": "edf005bfcf97fc57d4b2bbeb6659fbb540e61cdf1844d123f8fb28e7b5ba7680",
+      "draft-test.t.source": "015ba826f464944ed590a0cf6ad4b1e6b6d9ef582edc090d80c8c049d1bb4342",
+      "focused-initial.txt": "0575a4e34ffefec1c51cb04bfba11d2f8bee844bc77571fbe11b0bf8bdc6baa7",
+      "focused.txt": "8f94fd941990ab7461fc323c45bf2d6a3ac9509f070f783c506cce5a2c06855a",
+      "manifest.json": "c200263147baf1fc7d2f99d0926fa5a033f01f219b7df4f8af7ba98e631098fb",
+      "parent-verify.txt": "0ab399529c6bd7c01b73457032e5368e68a1cae814db334f26327b009aae39bf",
+      "parser.pm.source": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57",
+      "probe.json": "ad74b35afd7d40f9fa3b008274ed7880b48b930bc643cc21f5999e67d5d28193",
+      "probe.pl.source": "50c2d06dfb756e5d8f8b88f9a667aa9a4ebc40145c6963ee0af087119eb9c69a",
+      "probe.txt": "ec2fd11bdb4496e5019172f9191b9bd904304581b1752730c99bf808a3e8b18c",
+      "production-paths.txt": "d072714077a9a47db1a924cea75c8a352f4b7a864562e387c66506b3cc6e42c7",
+      "reconstructed-broad-root-classification.t.source": "8df7667eb419411e157f66273a16ebbbeaf1646746bd44b99e86efe1255a2642",
+      "red.txt": "03293ce8260b0b264fed4357b665fef79bfc6b19b5b5b418e1f793ec6036d2bc",
+      "repaired.txt": "4ede5a109eb0c0c6fc23fade2a9dad78be34e59a5aaa2a0cfd02ba97e70d46ba",
+      "scheduler.pm.source": "d73acba8305bf512985812012aba31c6d293290ab427cfc63ee6d799d82031e3",
+      "scope.txt": "6e7b3b433e052c4a5de15049f341939efe735c0978d707fe8955944c62e8e5b8",
+      "syntax.txt": "9a5a9866269851c687b409a86ef6c35dabfc442cae52684ea0edf55a66bd3dc1",
+      "verify.py": "1ecc6cc2ff2beb9f5fa3bb081b5c01825b45315f21a4058e42ddf5c3ad3266b4",
+      "wrong-baseline-harness.txt": "4ee876c0cba856fbc96e11a044e65dda16d5f854a756fee920224642fa7f61e5"
+    }
+  },
+  "receipt_projections": {
+    "book.txt": {
+      "raw_bytes": 285,
+      "raw_sha256": "2e9fcfeeede3c898d2417b1897797f02384a613de422f10160b03493ba66cca2",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "commit-ram-cutoff.txt": {
+      "raw_bytes": 179,
+      "raw_sha256": "0e9e007b744b24e5ad2b4f608dfda295d3c9833a67853488c71c078c48c1292b",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "docs.txt": {
+      "raw_bytes": 366,
+      "raw_sha256": "a313264c8af51fd3aadd8b48d6849b5a810ff10be2690d8dadcd54b984b88ae7",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "domains-check.json": {
+      "raw_bytes": 21508,
+      "raw_sha256": "537e60c7337a394f6591a580699ff4542c6d589613dbced5d5d5624f65368d0a",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "domains-schedule.json": {
+      "raw_bytes": 38287,
+      "raw_sha256": "0bc9d9adc2b3e0d463fb2803eb94444ce3b2eec8d18fb7bf577a2d8f7df2f49c",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "domains-semantic.json": {
+      "raw_bytes": 1699022,
+      "raw_sha256": "ee8edfaf1de818b4474dfa03f4ff9d9a83eae99fff15de8ff05aae1a535f2e62",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "draft-focused.txt": {
+      "raw_bytes": 10192,
+      "raw_sha256": "7eef0c28fd750299173a2ac42339252d5a56e35b5a7329117a9c4183b0143817",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "draft-test.t.source": {
+      "raw_bytes": 16427,
+      "raw_sha256": "a424f6ce6589d710a186b9646d3c4ec2aca3e07750ef472282c1bdaa6451e062",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "draft-verify.py.source": {
+      "raw_bytes": 12439,
+      "raw_sha256": "a14751e82a880e41d43f22ecb450bd28281b6fc2170733b46b2012ec06d4cab1",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "draft-verify.txt": {
+      "raw_bytes": 896,
+      "raw_sha256": "6cbe9c66fd69d556597a41851fb2e4ae9fbbbeeee7c47af12c33d15cde22dd82",
+      "replacement_count": 3,
+      "root_prefix_bytes": 36
+    },
+    "focused-intermediate.txt": {
+      "raw_bytes": 272,
+      "raw_sha256": "7c6a34bb93b68721ef0e88d722fd4ae76e5742730f4a80462148a3dabc2951b6",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "focused.txt": {
+      "raw_bytes": 271,
+      "raw_sha256": "912a9021478743d308481ee4eb33299cf7aa49d467b382f2699970bdb385e811",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "forward_alias-check.json": {
+      "raw_bytes": 20917,
+      "raw_sha256": "61f0273de18766457a68b82a31c9a6db76168fefa5d02de7892eec813ac803b9",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "forward_alias-schedule.json": {
+      "raw_bytes": 29816,
+      "raw_sha256": "4053331ae0645b41817a93788c7fface6e4b3d4f2f0c26bd00199c849286dfac",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "forward_alias-semantic.json": {
+      "raw_bytes": 535354,
+      "raw_sha256": "24c9a1cc429cb574024229bd637a4c70ef13e9496b8e1df2c974510ade1b763c",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "host-before-retry.json": {
+      "raw_bytes": 1572,
+      "raw_sha256": "f800bfdd14e4ca634c20897d22d3ead6acb84a4a6bbc9b097b10f3b4a4488c8c",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "imported-check.json": {
+      "raw_bytes": 20705,
+      "raw_sha256": "911253db4b667b160d30860f83c5ef946757ad8729eceb124a630a50ae552ba4",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "imported-schedule.json": {
+      "raw_bytes": 29676,
+      "raw_sha256": "480820dd96955d61be7736b048f5abd5f2e1f085214a51572a9072b44338dcd3",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "imported-semantic.json": {
+      "raw_bytes": 502473,
+      "raw_sha256": "ed36c1d7989dd37e7dbe22a8629f1dd08ec5f3d9ab59ab85c29531e02dbcbe1d",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "imported_alias-check.json": {
+      "raw_bytes": 20851,
+      "raw_sha256": "d63a98abac0a7c088390f8614fb9edf5ff3a707b0c4103b6d57710b0650df8e6",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "imported_alias-schedule.json": {
+      "raw_bytes": 29786,
+      "raw_sha256": "4dc0a06461bb3d6a2fa3d74207edc3d13eda18a65b6c712ea66ae606bb1627f7",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "imported_alias-semantic.json": {
+      "raw_bytes": 519281,
+      "raw_sha256": "70078323590d6552c4e8165104f7a6b25877309d9922aa590fb61da733c7abfa",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "intermediate-test.t.source": {
+      "raw_bytes": 16907,
+      "raw_sha256": "c792e90434c3b1606c5eb1510658d69ec2ea6758393bf99ae99ccf6d29171c62",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "local-check.json": {
+      "raw_bytes": 20693,
+      "raw_sha256": "e9aea420f6e360dbccb0e506ce79cdb3b96bb1ed24e8db702be0b63211286f7d",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "local-schedule.json": {
+      "raw_bytes": 29640,
+      "raw_sha256": "6c79f72b35bbfbf973a7aa85e063222f04ed484b6d42cd4821ef8d7e49c3e095",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "local-semantic.json": {
+      "raw_bytes": 534890,
+      "raw_sha256": "c738a7b0ca5dac170c6033c2f5cbbc4908280af66f11ae6518454dab45e0eb74",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "mixed-check.json": {
+      "raw_bytes": 26435,
+      "raw_sha256": "870721a03abee2812218eae20a9a3143c24a5d274d0e431da81ea8b0807e2fc3",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "mixed-schedule.json": {
+      "raw_bytes": 28279,
+      "raw_sha256": "d5aa8e06f48200314f2261af0b4bcb59c74c1e74d1950a4553ecac4fa5388832",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "mixed-semantic.json": {
+      "raw_bytes": 493492,
+      "raw_sha256": "f9ce3acd0f3c64432c3ddca7b66f7b3c10968ac3769b00efbc1908b706eb2290",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "preservation.txt": {
+      "raw_bytes": 327,
+      "raw_sha256": "eb7827e46685e7ff887fde4bced4272159d251929c492dea01197701930ac8e2",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "read-host-memory.py.source": {
+      "raw_bytes": 1058,
+      "raw_sha256": "6865e7c8f460f75075deb1fae757e400555ec6c5d496f65dea606d13d50f8538",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "refused-competing-check.json": {
+      "raw_bytes": 16160,
+      "raw_sha256": "17468bf840888b3af22ed529d18c1a8ed2ee882dda3f473e28c9c30134becdab",
+      "replacement_count": 2,
+      "root_prefix_bytes": 36
+    },
+    "refused-competing-schedule.json": {
+      "raw_bytes": 1516,
+      "raw_sha256": "01bf1772bdee462d47c3d75528b2eca8866bc24a095cee053d724a6b569be127",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "refused-competing-semantic.json": {
+      "raw_bytes": 17403,
+      "raw_sha256": "c941d3f4b0800b4d7f63b6f86468500cc8953939c0e93835aac3e1b401b33ba0",
+      "replacement_count": 2,
+      "root_prefix_bytes": 36
+    },
+    "refused-field-check.json": {
+      "raw_bytes": 15212,
+      "raw_sha256": "95b127e218e13d2916ea7852946b592ab65c368603dc9c621b1118573db0a77e",
+      "replacement_count": 2,
+      "root_prefix_bytes": 36
+    },
+    "refused-field-schedule.json": {
+      "raw_bytes": 1327,
+      "raw_sha256": "8d2701ad066de557751c093f18c12c04b96937a6009a405c61706df7ca5a1cd7",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "refused-field-semantic.json": {
+      "raw_bytes": 16455,
+      "raw_sha256": "b187f694ae4b01398318df40f6ff289ee65c0bb615983a7c0360d5873ed5d94b",
+      "replacement_count": 2,
+      "root_prefix_bytes": 36
+    },
+    "refused-literal-check.json": {
+      "raw_bytes": 14799,
+      "raw_sha256": "68a12ca3cc7defbedd1fa6fb68ef2d777a302cfc7cf7688d7d7ff604213d4002",
+      "replacement_count": 2,
+      "root_prefix_bytes": 36
+    },
+    "refused-literal-schedule.json": {
+      "raw_bytes": 1242,
+      "raw_sha256": "79c2bf140301cbc2bfd5feea3177cd7a86bfa9755e1787fc54d4999f70616d83",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "refused-literal-semantic.json": {
+      "raw_bytes": 16042,
+      "raw_sha256": "cc8338692a0134d5ae7a6266f9af6f724801f52d854ca0d8e02ed5fcc095553e",
+      "replacement_count": 2,
+      "root_prefix_bytes": 36
+    },
+    "refused-whole_sample-check.json": {
+      "raw_bytes": 14969,
+      "raw_sha256": "2b4f7d04891879ca78689d69e91ba8b0cd1c943a505d7d0e639a56fe076ecff6",
+      "replacement_count": 2,
+      "root_prefix_bytes": 36
+    },
+    "refused-whole_sample-schedule.json": {
+      "raw_bytes": 1277,
+      "raw_sha256": "37e02e5429b2b23341a6542e4246931002c823cb30445c245a6390b2d878e07f",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "refused-whole_sample-semantic.json": {
+      "raw_bytes": 16212,
+      "raw_sha256": "be64e2ecc4e398eaeb2b799d7ba15281684f0ce2b99e5c47729de2dd8223e66a",
+      "replacement_count": 2,
+      "root_prefix_bytes": 36
+    },
+    "reverse-check.json": {
+      "raw_bytes": 26465,
+      "raw_sha256": "955185a5712cd04ea43fdcfc15a9d03830d720acd26f1e6745c4b667c3b9a488",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "reverse-schedule.json": {
+      "raw_bytes": 28285,
+      "raw_sha256": "3dd9e0daf983bb03669f0e4915194e930ba5831d87bcad9e4ab8e822aaf8d8e4",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "reverse-semantic.json": {
+      "raw_bytes": 493192,
+      "raw_sha256": "7c5313d5cd3c0ec07604e1c6c4e12668e6b4f0155735aa656179592b8e595d8b",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "stopped-pid-census.stderr": {
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "stopped-pid-census.txt": {
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "syntax.txt": {
+      "raw_bytes": 52,
+      "raw_sha256": "08762e46e35e1599ecd9b3b42e0546739c5a8d66a521ea9d4566bdb7584667a5",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "unused-check.json": {
+      "raw_bytes": 20600,
+      "raw_sha256": "c6185b426273263a991d6e87271b9a052ab10b464d0bb4758547eb18cb891194",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "unused-schedule.json": {
+      "raw_bytes": 20195,
+      "raw_sha256": "8dffb5b966e8adeec8c3a1e22ee2b2bdbca92fe8197d04c9069839142cbadeb5",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "unused-semantic.json": {
+      "raw_bytes": 168266,
+      "raw_sha256": "64d28c48a39d256d84244c329e43c9ce3012f3f74d1d5d3a59537affffecc2cc",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    }
+  },
+  "sha256": {
+    "2034-isf-record-output-public-sources.t.source": "e03881c96e753f1e8c1b4056c48d9d8d003fe90f290ee7f1607b2a1b8c1df221",
+    "book.txt": "7147de5b65689902042288e4ebb3706deb570178c9b9e25093e1d122fd7a7209",
+    "commit-ram-cutoff.txt": "0e9e007b744b24e5ad2b4f608dfda295d3c9833a67853488c71c078c48c1292b",
+    "docs.txt": "a313264c8af51fd3aadd8b48d6849b5a810ff10be2690d8dadcd54b984b88ae7",
+    "domains-check.json": "881be978d33563d191086c9eeab90c228ee78de0ee85c44545d28bb26cbd0a0c",
+    "domains-schedule.json": "0bc9d9adc2b3e0d463fb2803eb94444ce3b2eec8d18fb7bf577a2d8f7df2f49c",
+    "domains-semantic.json": "06630dc8c36c061332097b997d43c1b607ccaec9fa247d2d8e644c47eadf99c3",
+    "draft-focused.txt": "7eef0c28fd750299173a2ac42339252d5a56e35b5a7329117a9c4183b0143817",
+    "draft-test.t.source": "a424f6ce6589d710a186b9646d3c4ec2aca3e07750ef472282c1bdaa6451e062",
+    "draft-verify.py.source": "a14751e82a880e41d43f22ecb450bd28281b6fc2170733b46b2012ec06d4cab1",
+    "draft-verify.txt": "a9c55814f102b5bc1ecfa268c3efd81031cec0fb61e6c9c04027d35d3e789a12",
+    "focused-intermediate.txt": "7c6a34bb93b68721ef0e88d722fd4ae76e5742730f4a80462148a3dabc2951b6",
+    "focused.txt": "912a9021478743d308481ee4eb33299cf7aa49d467b382f2699970bdb385e811",
+    "forward_alias-check.json": "7c49bbd4ecbe69bda225e131ed9c45a799d140ea5e39e6032587b695d6b5cfdc",
+    "forward_alias-schedule.json": "4053331ae0645b41817a93788c7fface6e4b3d4f2f0c26bd00199c849286dfac",
+    "forward_alias-semantic.json": "71ac584e1e048590f8a1135c83a710c33ac351db097f51033c8fd5b054a3a8e3",
+    "host-before-retry.json": "f800bfdd14e4ca634c20897d22d3ead6acb84a4a6bbc9b097b10f3b4a4488c8c",
+    "imported-check.json": "da3c5109210b160ea1257c3714959021f9bbd84cf068ada62d0eca4f9d519e6d",
+    "imported-schedule.json": "480820dd96955d61be7736b048f5abd5f2e1f085214a51572a9072b44338dcd3",
+    "imported-semantic.json": "adf55dad0b19494286cee1e2cb78da806b460cdac4c4356961397ffd19e5f2c7",
+    "imported_alias-check.json": "611933a8992598beb9904f289090964c55eaf2378b65ebff2b43c3ed66525e13",
+    "imported_alias-schedule.json": "4dc0a06461bb3d6a2fa3d74207edc3d13eda18a65b6c712ea66ae606bb1627f7",
+    "imported_alias-semantic.json": "796bb62e72ca3da93d948faf14dafd390d47dc89b3e36f7fd62e9b3a0e3b70e0",
+    "intermediate-test.t.source": "c792e90434c3b1606c5eb1510658d69ec2ea6758393bf99ae99ccf6d29171c62",
+    "local-check.json": "1887f9257a763106e5baf54ee0dd321d1724cff77974d1a5645dc9dd39030789",
+    "local-schedule.json": "6c79f72b35bbfbf973a7aa85e063222f04ed484b6d42cd4821ef8d7e49c3e095",
+    "local-semantic.json": "05447b5709d19a10972d1553949d75759d66834c6326b3ce55db96326a1098f1",
+    "mixed-check.json": "c65bb5cc89ae460770c3da3d822be88c12f4634e86c3696ad09162b930a9b2a5",
+    "mixed-schedule.json": "d5aa8e06f48200314f2261af0b4bcb59c74c1e74d1950a4553ecac4fa5388832",
+    "mixed-semantic.json": "e63a96a257e5671427f282b1718fa663a3409c673cf19c229b5c034faa4dbd06",
+    "preservation.txt": "eb7827e46685e7ff887fde4bced4272159d251929c492dea01197701930ac8e2",
+    "read-host-memory.py.source": "6865e7c8f460f75075deb1fae757e400555ec6c5d496f65dea606d13d50f8538",
+    "refused-competing-check.json": "9c0bfe87002799349396643a860d59252f0f6ffd9787763c5d251d66bcde461d",
+    "refused-competing-schedule.json": "01bf1772bdee462d47c3d75528b2eca8866bc24a095cee053d724a6b569be127",
+    "refused-competing-semantic.json": "470d4608e7bfffa5ea65f5114830ec2e06f9de2eefd28f5eb9dc87bc6fb606c3",
+    "refused-field-check.json": "37a0ad0208412391ec299b670b3dc02c3e97de72b3a53c2a17c782bae7c26379",
+    "refused-field-schedule.json": "8d2701ad066de557751c093f18c12c04b96937a6009a405c61706df7ca5a1cd7",
+    "refused-field-semantic.json": "71365c2d06fb357522d264cdb86df5d671a303e9ac9b503120d1c526b8535ab4",
+    "refused-literal-check.json": "269b87a62fc36b068050f1f02c83b7d8d325349a820d8d0bd0f6a570eb826e09",
+    "refused-literal-schedule.json": "79c2bf140301cbc2bfd5feea3177cd7a86bfa9755e1787fc54d4999f70616d83",
+    "refused-literal-semantic.json": "1ae3329f79210fc90f6ab44590fd40384be96b3fc8d0da91eb462a8f4e220882",
+    "refused-whole_sample-check.json": "7f1187811babde18a294328abf7448795518fcf670ac31a6601c876d36c91d08",
+    "refused-whole_sample-schedule.json": "37e02e5429b2b23341a6542e4246931002c823cb30445c245a6390b2d878e07f",
+    "refused-whole_sample-semantic.json": "9052c9e3f3669e55e3459292a7302a32079b43b1be21786e3dd830b35d12a70e",
+    "reverse-check.json": "b84037cd20c9b299f8ee0b353c66cd8f65da07cbbfaaf112aa72710696c4b782",
+    "reverse-schedule.json": "3dd9e0daf983bb03669f0e4915194e930ba5831d87bcad9e4ab8e822aaf8d8e4",
+    "reverse-semantic.json": "1bc4e698fbf6171e94868ceb707c56e118d41752e8965a051df09352b37750ec",
+    "scope.txt": "c9b7673bb5c4e24f26f3c44e0fe20bd862c5aea516592aaa7dbfbcc814679c1b",
+    "stopped-pid-census.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stopped-pid-census.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "syntax.txt": "08762e46e35e1599ecd9b3b42e0546739c5a8d66a521ea9d4566bdb7584667a5",
+    "unused-check.json": "9fb53889f4b912d34840bbea7a685d1e6599ed1bd6f7b1282107dbf1b94cbf43",
+    "unused-schedule.json": "8dffb5b966e8adeec8c3a1e22ee2b2bdbca92fe8197d04c9069839142cbadeb5",
+    "unused-semantic.json": "210ac81797f462026c17df9a6ffe5403fb5520220b744e92a45740a1d5fe6fa7",
+    "verify.py": "cbbe9cd20857479a6efcc24c6a3b531da266abfa8547b6968baa9d0d132f207c"
+  },
+  "source_objects": {
+    "bin/fsmgen": {
+      "git_blob": "c4b335bdc9ec273be8f8390ae7e549d0ef655eb8",
+      "sha256": "0521111b32623a0ab3bcd98d266e6fefaadc9d3273dc93ef40d9d00d22e99572"
+    },
+    "bin/fsmgen-mcp": {
+      "git_blob": "0a2a313f5fe750c704d79e3c82522c9fcec5534c",
+      "sha256": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d"
+    },
+    "perl/FSM/Adapter/ISF/Parser.pm": {
+      "git_blob": "794fb74e922677c4b371743a674bc09efd59ba77",
+      "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+    },
+    "perl/FSM/Scheduler/ISF.pm": {
+      "git_blob": "f3027200437525b37abfd150fcfd73fa6a1ddac1",
+      "sha256": "d73acba8305bf512985812012aba31c6d293290ab427cfc63ee6d799d82031e3"
+    },
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": {
+      "git_blob": "b5e9fb75ef4ef8878ac5e1b742d25b665f4311fb",
+      "sha256": "436ccca20ce154faa859c83759d7fce912e59475519a43003db76e9feebd5c87"
+    }
+  },
+  "terminal_exit_codes": {
+    "book": 0,
+    "commit_ram_cutoff": 137,
+    "docs": 0,
+    "draft_focused": 1,
+    "draft_verify": 1,
+    "focused": 0,
+    "intermediate_focused": 0,
+    "preservation": 0,
+    "syntax": 0
+  },
+  "witnesses": [
+    [
+      "local",
+      "check"
+    ],
+    [
+      "local",
+      "semantic"
+    ],
+    [
+      "local",
+      "schedule"
+    ],
+    [
+      "forward_alias",
+      "check"
+    ],
+    [
+      "forward_alias",
+      "semantic"
+    ],
+    [
+      "forward_alias",
+      "schedule"
+    ],
+    [
+      "imported",
+      "check"
+    ],
+    [
+      "imported",
+      "semantic"
+    ],
+    [
+      "imported",
+      "schedule"
+    ],
+    [
+      "imported_alias",
+      "check"
+    ],
+    [
+      "imported_alias",
+      "semantic"
+    ],
+    [
+      "imported_alias",
+      "schedule"
+    ],
+    [
+      "mixed",
+      "check"
+    ],
+    [
+      "mixed",
+      "semantic"
+    ],
+    [
+      "mixed",
+      "schedule"
+    ],
+    [
+      "reverse",
+      "check"
+    ],
+    [
+      "reverse",
+      "semantic"
+    ],
+    [
+      "reverse",
+      "schedule"
+    ],
+    [
+      "unused",
+      "check"
+    ],
+    [
+      "unused",
+      "semantic"
+    ],
+    [
+      "unused",
+      "schedule"
+    ],
+    [
+      "domains",
+      "check"
+    ],
+    [
+      "domains",
+      "semantic"
+    ],
+    [
+      "domains",
+      "schedule"
+    ],
+    [
+      "refused-competing",
+      "check"
+    ],
+    [
+      "refused-competing",
+      "semantic"
+    ],
+    [
+      "refused-competing",
+      "schedule"
+    ],
+    [
+      "refused-field",
+      "check"
+    ],
+    [
+      "refused-field",
+      "semantic"
+    ],
+    [
+      "refused-field",
+      "schedule"
+    ],
+    [
+      "refused-literal",
+      "check"
+    ],
+    [
+      "refused-literal",
+      "semantic"
+    ],
+    [
+      "refused-literal",
+      "schedule"
+    ],
+    [
+      "refused-whole_sample",
+      "check"
+    ],
+    [
+      "refused-whole_sample",
+      "semantic"
+    ],
+    [
+      "refused-whole_sample",
+      "schedule"
+    ]
+  ]
+}

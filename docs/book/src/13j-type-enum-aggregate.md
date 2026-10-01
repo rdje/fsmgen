@@ -156,6 +156,32 @@ reverse-copy and owning-domain carriers strictly replay; this establishes source
 and carrier admission, with execution still pending. See the
 [source-integration evidence](../../../docs/audits/record-output-source-admission-20261001/scope.txt).
 
+Native check and semantic reports return the successful authored declarations in
+`source.interface_ports`; schedule reports return `interface_ports` and
+`clock_domains[].interface_ports` for the selected domains. Inputs precede outputs,
+with authored order inside each role. Local, forward and imported aliases, mixed
+interfaces, reverse copies and unused outputs retain complete layouts and types
+through the in-process API and newline MCP tools. Signed and state-model facts
+remain explicit; absent state models stay absent. These public products are
+qualified separately from HDL execution. See the
+[public-source evidence](../../../docs/audits/record-output-public-sources-20261001/scope.txt).
+
+Save the example above as `.artifacts/record-output-example.isf`, then query it:
+
+```bash
+./bin/fsmgen --strict --check --json .artifacts/record-output-example.isf
+./bin/fsmgen --strict --emit-semantic-json .artifacts/record-output-example.isf
+./bin/fsmgen --emit-schedule-json .artifacts/record-output-example.isf
+```
+
+A failed check or semantic query returns `success: false` and its contextual
+diagnostic, without successful declaration metadata or a partial semantic result.
+A failed schedule query publishes no schedule JSON; API/MCP retain their existing
+message-only error contract. Target-profile atomic qualification and maintained
+corpus promotion follow in the tracked source-public closure; generated output
+mappings, field writes and execution remain separately gated.
+
+
 ```lisp
 (storage
   (var frame (type frame_t))

@@ -1,0 +1,17 @@
+import datetime
+import json
+import re
+import subprocess
+
+raw = subprocess.check_output(['vm_stat']).decode()
+total = int(subprocess.check_output(['sysctl', '-n', 'hw.memsize']))
+page_size = int(re.search(r'page size of (\d+) bytes', raw)[1])
+counters = {name: int(value) for name, value in re.findall(r'^([^:\n]+):\s*(\d+)\.', raw, re.M)}
+used = sum(counters[name] for name in ['Pages active', 'Pages inactive', 'Pages speculative',
+    'Pages wired down', 'Pages occupied by compressor']) - counters['Pages purgeable'] - counters['File-backed pages']
+pressure = subprocess.run(['sysctl', '-n', 'kern.memorystatus_vm_pressure_level'], capture_output=True, text=True)
+print(json.dumps(dict(time_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    raw_vm_stat=raw, physical_bytes=total, page_size=page_size, used_pages=used,
+    stats_compatible_capacity_pct=used * page_size * 100 / total,
+    pressure_probe_exit=pressure.returncode, pressure_probe_stdout=pressure.stdout,
+    pressure_probe_stderr=pressure.stderr), indent=2, sort_keys=True))
