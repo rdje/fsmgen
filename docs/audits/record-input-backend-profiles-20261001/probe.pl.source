@@ -1,0 +1,30 @@
+use strict;
+use warnings;
+use lib 'perl', 't/lib';
+use JSON::PP;
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::SourceQueryRunner;
+use FSM::Pipeline::HDLGenerator;
+my $json = JSON::PP->new->canonical->pretty;
+my @rows;
+my @paths = qw(t/data/isf_record_input_runtime.isf
+ t/data/isf_record_input_generated_domains_runtime.isf
+ t/data/isf_record_input_generated_blocking_runtime.isf
+ docs/audits/specforge-aggregate-intake-20260930/record-port.isf
+ docs/audits/specforge-aggregate-intake-20260930/record-port-field-guard.isf
+ docs/audits/specforge-aggregate-intake-20260930/baseline-good.isf
+ t/corpus/direct_aggregate_constant_target_autogrowth.fsm);
+for my $i (0..$#paths) {
+ my $path=$paths[$i];
+ my $output=".artifacts/record-input-backend-profile/probe_$i.vhd";
+ open my $fh,'>:raw',$output or die $!; print {$fh} "EXISTING DESTINATION\n"; close $fh or die $!;
+ my $native=FSM::Test::SourceQueryRunner::_capture([$^X,'bin/fsmgen','--strict','--quiet','--language','vhdl','--output',$output,$path],'');
+ open my $in,'<:raw',$output or die $!; local $/; my $bytes=<$in>; close $in;
+ my ($product,$error); eval {$product=FSM::Pipeline::HDLGenerator->new(debug_level=>0,target_language=>'vhdl',quiet=>1)->generate_hdl_from_file($path);1} or $error=$@;
+ push @rows,{source=>$path,native=>$native,destination_unchanged=>$bytes eq "EXISTING DESTINATION\n" ? JSON::PP::true:JSON::PP::false,
+   api_error=>$error,api_result_defined=>defined($product)?JSON::PP::true:JSON::PP::false,
+   api_hdl=>defined($product)?$product->{hdl_code}:undef};
+}
+open my $fh,'>:raw','.artifacts/record-input-backend-profile/probe.json' or die $!;
+print {$fh} $json->encode(\@rows); close $fh or die $!;
+for my $row (@rows) {my($first)=split /\n/,$row->{api_error}//''; print "$row->{source}: native=$row->{native}{exit_code} unchanged=$row->{destination_unchanged} api=$first\n";}

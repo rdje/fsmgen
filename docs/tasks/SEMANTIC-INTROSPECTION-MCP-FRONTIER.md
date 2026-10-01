@@ -2974,7 +2974,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Qualify packed input behavior and complete public delivery.`
   Acceptance: `After source/carrier qualification, consume current HIAL admission before genuine supervised native runtime. Independently observe packed layout, scalar signed/state properties, live versus explicitly sampled reads, whole-copy edge, holds, repeated requests and reset/domain behavior. Compare complete native/API/actual newline source/schedule/semantic/discovery products, supported corpus and baseline carriers/HDL. Keep unsupported profiles precise and synchronize all selected requirements/book/records; close input delivery only with recoverable behavior evidence.`
-  Verification: `Frontend and generated/domain source/carrier/public qualification are committed through .3-.4. Direct packed-input runtime .5.3 is qualified with recoverable sealed evidence. Next prepare generated/named-domain .5.4, consuming newly scheduled HIAL .3.2.10.11.6 before its different target executes. Historical EPERM remains separately owned; do not replay spent compiler captures.`
+  Verification: `Frontend and generated/domain source/carrier/public qualification and genuine direct/generated binary runtime are committed; generated execution reconciliation .5.4 is done. Remaining input closure is split under .5.5 into profile qualification, final public/corpus reconciliation and independent selected-input signoff. Historical EPERM and four-state execution remain separate; do not replay spent captures.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5`
 
@@ -3098,10 +3098,32 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Reconcile supported backend profiles and complete record-input delivery.`
   Acceptance: `After executed direct/generated witnesses, qualify supported VHDL subsets and precise unsupported profile refusals, full native/API/newline/discovery/corpus/baseline products and every selected input requirement. Keep four-state execution limits explicit. Synchronize book, capability/spec, canonical SPECFORGE response and facts; close only independently verified input delivery. Full aggregate consumer signoff stays .60.4.4 after output delivery.`
-  Verification: `pending behavior and backend evidence`
+  Verification: `Direct and generated binary runtime and generated execution reconciliation are committed. Split remaining profile, public/corpus and independent input closure before source or test changes; four-state execution and complete output/consumer delivery remain separate.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.1`
+  Status: `done`
+  Goal: `Qualify record-input backend profile boundaries against supported controls.`
+  Acceptance: `Read decision 0113 and supported VHDL scope, then characterize actual authored direct/generated/domain and supplied record-input generation through CLI and public pipeline. Require precise unsupported-profile refusal without successful or partial output, preserving existing destinations and supported scalar/packed-output VHDL controls. Retain independently expected declarations and Verilog-family support, producer/source purity and literal false-success/wrong-diagnostic controls. Own any newly exposed defect before further work. No native HDL execution, VHDL executable qualification, broader backend admission or historical-cause claim. Synchronize book, canonical response and fact evidence before committing.`
+  Verification: `Actual CLI/public pipeline selected direct mixed-member, supplied typed-input and generated/domain composition refusals retain precise primary reasons, no partial success and existing/absent destination preservation. Independent scalar-input and inferred packed-output VHDL controls remain admitted. T2027 plus published direct/facade/composition band reports All tests successful, Files=4, Tests=453. False-success/signal/absent/stack-only diagnostic controls and independent saved product/destination/width mutations reject. Baseline sources/producers are exact; no production code or HDL runtime changes. Complete census, draft diagnostic-link RED, corrected test/recipe and PASS evidence sealed under docs/audits/record-input-backend-profiles-20261001/. Final public/corpus .2 and selected-input signoff .3 remain open.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.2`
+  Status: `pending`
+  Goal: `Reconcile complete record-input public discovery, corpus and prior controls.`
+  Acceptance: `After profile qualification, join current native/API/actual newline check/semantic/schedule/discovery products and complete selected supported ISF cohort to independently authored declaration/type/layout and baseline carriers. Preserve supplied-source identity and capability/spec/book consistency, generated-private exclusion and contextual refusals. Reuse already qualified evidence where unchanged; investigate genuine drift. No implicit output/list/variant delivery or X/Z runtime claim.`
+  Verification: `pending final scoped public and corpus reconciliation`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3`
+  Status: `pending`
+  Goal: `Complete independently verified record-input delivery from selected requirements.`
+  Acceptance: `After .1-.2 commits, reconcile every input portion of selected R1-R3 against exact source, type/layout, lexical/domain, copy ownership, backend profile, complete public and genuine direct/generated behavior evidence. Authenticate original receipts and independent counterexamples without spent native replay. Close only input parents whose requirements are satisfied; update canonical response/book/facts and resume record outputs .60.4.3.3. Keep four-state execution, output/full aggregate consumer, durations/timers and historical native/startup/full-CI gates explicit.`
+  Verification: `pending independent selected-input signoff`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3`
@@ -4206,3 +4228,18 @@ receipts/prerequisites, tasks/book/response/facts and Git provide durability.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --emit-semantic-json and --emit-schedule-json products in T2019 retain complete typed children, physical/public/private endpoints, owning clocks/reset and authored declaration snapshots. T2021 actual --check --json and semantic refusals preserve contextual/read-only/binding/shadow boundaries without partial success. Runtime alone could not close these public contracts or prior scalar/storage baselines; the crosswalk now joins their independent producer oracles to genuine execution.
 - [x] **ADDRESSED (verified)** — Reconcile every selected generated/domain requirement against exact complete committed carrier/public and runtime evidence. Both fixed generated witnesses and the actual unsigned rejection are sealed; current public/package/refusal/scalar/domain-storage checks pass, and saved direct/generated hostile verification passes without HDL replay. Explicit variable carrier/type/private ownership and spawn/blocking binding semantics remain; no source, production, helper, arbitration or output-port change. Close .5.4 from recoverable evidence, preserving .5.5 backend/input closure.
 - [x] **NO REGRESSION** — T2019/T2020/T2021/T1985/T1981/T1982 reports All tests successful, Files=6, Tests=39. Both complete saved runtime verifiers and independent crosswalk/hostile receipt verification pass. All tracked bin/perl/t/isf source matches baseline Git; Knowledge Map, task integrity and local book build are checked before staged doctrines and normal hooks. Full aggregate, X/Z/reset-free initialization, historical native cause and startup/full-CI/push qualification are not inferred.
+
+## Acceptance — record-input backend profiles (2026-10-01)
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.1`.
+Re-derivation uses actual CLI and public pipeline generation plus literal
+source/declaration identities. Independent false-success, signal, primary-only
+reason and saved partial-product/destination/width substitutions provide
+falsification. Complete sealed census/test/recipe/receipts and baseline Git
+objects in `docs/audits/record-input-backend-profiles-20261001/`, task/book/spec,
+canonical response and facts provide durability. No HDL executable qualification
+or broader backend admission is inferred.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual public pipeline mixed-state record generation refuses unsupported packed struct member at perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm line 283; supplied typed record inputs refuse at that module line 232. Generated/domain tops retain the scoped composition target-support reason from PlanBuilder. The published scaffold admits scalar inputs and bounded inferred packed outputs, not these declared record profiles. Original complete census and error context are retained; primary-only controls prevent stack text from pretending to establish the reason.
+- [x] **ADDRESSED (verified)** — T2027 qualifies every selected refusal through actual CLI and public pipeline, existing and absent destination controls and no partial successful product. Independent admitted scalar and packed-output entity/width/literal controls pass. The draft omitted .md from its expected final diagnostic link; the exact RED and correction remain preserved, with no production change. Saved independent verification rejects false success, stack-only reason, partial product, destination overwrite and width substitutions. Book/spec/scope/response and canonical fact state the qualified Verilog-family support and precise VHDL boundary.
+- [x] **NO REGRESSION** — T2027/T1420/T386/T114 reports All tests successful, Files=4, Tests=453. Exact baseline selected source and producer Git objects and complete census products authenticate; no HDL compiler/simulator/analyzer executes. Knowledge Map, task integrity, book build and docs-path checks run before staged doctrines and normal hooks. Initial staged gate detects the missing fresh ISF-reference authority for the spec addition; independently measured baseline/delta and this owning authority are corrected with ceilings unchanged. The byte-exact immutable audit note uses notes.md.source alongside the sealed source copies rather than introducing an unclassified live document. The active-index row is shortened to current status/next action after its expanded historical prose triggers line-pressure classification; full evidence remains in canonical nodes and Git, with limits unchanged. Final public/corpus and selected-input signoff remain separate; X/Z, output/full consumer and historical native/startup/full-CI gates stay open.

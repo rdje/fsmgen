@@ -1,0 +1,99 @@
+{
+  "baseline_revision": "b76058bbfaa8f0d476b6beebd892d5559dbc3f2f",
+  "producers": {
+    "bin/fsmgen": {
+      "git_blob": "63d943ce91efecb31117c8b8d3b87428de5d35c7",
+      "sha256": "dd23a0ccaa0ab017fa25ed633731a78e211344ef50a41a9f783cc2660e3539cb"
+    },
+    "docs/audits/specforge-aggregate-intake-20260930/baseline-good.isf": {
+      "git_blob": "f7013542e6f1a48b06b98c833013748ca56c476b",
+      "sha256": "7084672b7ac3081b87d803f337e5a68514da98ff2d2ea09361074940d2e1b461"
+    },
+    "docs/audits/specforge-aggregate-intake-20260930/record-port-field-guard.isf": {
+      "git_blob": "1f8c60b2ab5117625e1d5af04ed3c86ec9e1e2ed",
+      "sha256": "56afac9a5a2223ed4ad8a35a31952ff7b14617a05293845ff80d82dfd61c3fa8"
+    },
+    "docs/audits/specforge-aggregate-intake-20260930/record-port.isf": {
+      "git_blob": "00a6bb8a44494dd77f74a3364d06513ae6aca680",
+      "sha256": "e52f192ab6ca3a2bd2e307ebf32258e24ff9c53cc584ed03058b05ea93501edc"
+    },
+    "perl/FSM/Adapter/ISF/Parser.pm": {
+      "git_blob": "6632044620ecb342dd4888c90a1bb8f221845356",
+      "sha256": "3d6e6d530e3ac471d2a42a0aaa05c433cfb0d17e5fb36716f10fb6079d0fa9ac"
+    },
+    "perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm": {
+      "git_blob": "b28045652c1856534fcee12142dfc6b14c7fea04",
+      "sha256": "71baec92c942326dafc7578d4e89e7997d994d971da4f727858e0477e0aa5bd0"
+    },
+    "perl/FSM/Composition/PlanBuilder.pm": {
+      "git_blob": "fe5367d85e5eb7e57a57f9233635065388784e8a",
+      "sha256": "9dd2181bee1d691fe10a2ad08fd72454823eff40ecc0e5366102e1f41f1a7840"
+    },
+    "perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm": {
+      "git_blob": "1862ed58ca17345ecd15fa278e70ad082316ca1e",
+      "sha256": "88dc965bf133cf2802770d96aa446d2eddcf3f42c781e65c003b42d77228081e"
+    },
+    "perl/FSM/Pipeline/HDLGenerator.pm": {
+      "git_blob": "42791c12bce7da869dbbc520c57567298692ee45",
+      "sha256": "7fac54cb00ae7e1840683e5674e4b72d3949355d1654b706ad5e06c16f3e9dff"
+    },
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": {
+      "git_blob": "21e744d12e828bb9cc57249810ed4815ca343e29",
+      "sha256": "b6fe0ea533b7f2ad0783ca67a49f632e4d37920a4ca6e6cb9d53ac8759b906a3"
+    },
+    "perl/FSM/Support/ISFPublicInterfaceContract.pm": {
+      "git_blob": "6f2fa684c653557e285548d00dde6e2b3445cad5",
+      "sha256": "c4fdeeee933d11c94106c7ca94ca7d2949d9e19401bd197016fb6252f26525d0"
+    },
+    "t/corpus/direct_aggregate_constant_target_autogrowth.fsm": {
+      "git_blob": "f566ffbca1ca78e7700dc8d1e1e7496c416430d6",
+      "sha256": "75cec8286c3eb4b998c0ddd2bf18e0cc0652a5d962174fe18ac468673f9e93be"
+    },
+    "t/data/isf_record_input_generated_blocking_runtime.isf": {
+      "git_blob": "1610592da677003c5094472ef1a7895d63b19782",
+      "sha256": "91afd1ac9e7acabfd6ebb47f391b242d830520e3a829124467bec093c88dc9ab"
+    },
+    "t/data/isf_record_input_generated_domains_runtime.isf": {
+      "git_blob": "af91810021c5d9f7d8d8915fe2709a65dc939f97",
+      "sha256": "d39955c46ff1421b899e0a6da8a6142377270b3e4f36ef37919507df9e675670"
+    },
+    "t/data/isf_record_input_runtime.isf": {
+      "git_blob": "a80de2bf0d754e232e0afe94261d087936c4860f",
+      "sha256": "f114a40d76286ec4f5cc74e3d77550d548a8925119cd909eb4c3ed113d86653c"
+    }
+  },
+  "projection": {
+    "census.json": {
+      "original_bytes": 50010,
+      "original_sha256": "48ab6c755e239acbdd348168414c122f93bd7040229b10f2a2365d818fdbe190",
+      "repository_prefix_occurrences": 101
+    },
+    "draft-red.txt": {
+      "original_bytes": 10181,
+      "original_sha256": "692969efb87d260956aee07feec5f89e04165e87f76f36d00325c3898889bccb",
+      "repository_prefix_occurrences": 19
+    },
+    "probe-log.txt": {
+      "original_bytes": 1578,
+      "original_sha256": "164ddda50cdc3daadfc64635baeee4a2c839dc74e8afbb024a13ae59170ce708",
+      "repository_prefix_occurrences": 5
+    },
+    "regression.txt": {
+      "original_bytes": 489,
+      "original_sha256": "a1e6aa5cd6ced75ec2e862bcadefa00572ce8f7775cbb9b71c8177c8ece72b16",
+      "repository_prefix_occurrences": 0
+    }
+  },
+  "schema": "fsmgen.record_input_backend_profiles.v1",
+  "sha256": {
+    "census.json": "dd2c230515459596516fb4a5e4166762b61d8ceb9564c87f385176f616072856",
+    "draft-red.txt": "c0ae7d520bc6eff76f8242679e5ae22ee439eae5ce60c706f93d54c50ee2d723",
+    "notes.md.source": "7c3373160e38bcafef60b06729bfda383b5b1886a6dab8e88567d0e95ea596d3",
+    "probe-log.txt": "8350e229c5e4f93491c304716a8cef87cfc7d70252d8b804a065e0126ed6223f",
+    "probe.pl.source": "9f620bf01a6a0bb212e6a85ae46e57a15a6d2c57a666784088a9998948a52c18",
+    "regression.txt": "a1e6aa5cd6ced75ec2e862bcadefa00572ce8f7775cbb9b71c8177c8ece72b16",
+    "test.t.source": "ebff4ae7cc42be919e74105d0390621b9db7c103f287a3bd37ae01d0c923297e",
+    "verify.py": "fae3fcd214808e7cfc87fd5c830e3828a2b97a381938f9f3167b8b7234797b86"
+  },
+  "test_source_sha256": "ebff4ae7cc42be919e74105d0390621b9db7c103f287a3bd37ae01d0c923297e"
+}

@@ -1,0 +1,76 @@
+ram-guard: PID 3607; host 59.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'native exit, signal and first diagnostic establish exact refusal'
+    #   at t/2027-isf-record-input-backend-profiles.t line 47.
+    # Wrote: {REPOSITORY_ROOT}/.artifacts/tmp/ial1-lowering/fsmgen-75xIUm4k/packed_input_generated_domains__domain_idle.fsm
+    # Wrote: {REPOSITORY_ROOT}/.artifacts/tmp/ial1-lowering/fsmgen-75xIUm4k/packed_input_generated_domains__domain_io.fsm
+    # Wrote: {REPOSITORY_ROOT}/.artifacts/tmp/ial1-lowering/fsmgen-75xIUm4k/packed_input_generated_domains__domain_io__child_copier.fsm
+    # Wrote: {REPOSITORY_ROOT}/.artifacts/tmp/ial1-lowering/fsmgen-75xIUm4k/packed_input_generated_domains__domain_io__child_reader.fsm
+    # Wrote: {REPOSITORY_ROOT}/.artifacts/tmp/ial1-lowering/fsmgen-75xIUm4k/packed_input_generated_domains_top.fsm
+    # === ISF Intent Scheduling ===
+    # 
+    # Actor: packed_input_generated_domains
+    # Source file: '{REPOSITORY_ROOT}/t/data/isf_record_input_generated_domains_runtime.isf'
+    # Composition source '?top:packed_input_generated_domains_top' in '{REPOSITORY_ROOT}/t/data/isf_record_input_generated_domains_runtime.isf' is recognized and parsed into typed composition IR, but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire/scalar-bitstring-one-bit-aggregate-generic structural top, and APB/C4 generated-FSM structural top. Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire/scalar-bitstring-one-bit-aggregate-generic and APB/C4 generated-FSM structural-top leaves. See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.
+
+    #   Failed test 'same profile refuses absent destination'
+    #   at t/2027-isf-record-input-backend-profiles.t line 54.
+    # Source file: '{REPOSITORY_ROOT}/t/data/isf_record_input_generated_domains_runtime.isf'
+    # Composition source '?top:packed_input_generated_domains_top' in '{REPOSITORY_ROOT}/t/data/isf_record_input_generated_domains_runtime.isf' is recognized and parsed into typed composition IR, but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire/scalar-bitstring-one-bit-aggregate-generic structural top, and APB/C4 generated-FSM structural top. Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire/scalar-bitstring-one-bit-aggregate-generic and APB/C4 generated-FSM structural-top leaves. See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.
+
+    #   Failed test 'public pipeline retains the same precise primary reason'
+    #   at t/2027-isf-record-input-backend-profiles.t line 60.
+    #                   'Composition source '?top:packed_input_generated_domains_top' in '{REPOSITORY_ROOT}/.artifacts/tmp/in-process-lowering/fsmgen-5p3DTlod/packed_input_generated_domains_top.fsm' is recognized and parsed into typed composition IR, but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire/scalar-bitstring-one-bit-aggregate-generic structural top, and APB/C4 generated-FSM structural top. Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire/scalar-bitstring-one-bit-aggregate-generic and APB/C4 generated-FSM structural-top leaves. See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.'
+    #     doesn't match '(?^:^Composition source '\?top:packed_input_generated_domains_top' .*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire/scalar-bitstring-one-bit-aggregate-generic and APB/C4 generated-FSM structural-top leaves\. See docs/COMPOSITION_SCOPE\.md and docs/COMPOSITION_LEGACY_MAPPING\.\z)'
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'VHDL profile refuses t/data/isf_record_input_generated_domains_runtime.isf before publication'
+#   at t/2027-isf-record-input-backend-profiles.t line 62.
+
+    #   Failed test 'native exit, signal and first diagnostic establish exact refusal'
+    #   at t/2027-isf-record-input-backend-profiles.t line 47.
+    # Wrote: {REPOSITORY_ROOT}/.artifacts/tmp/ial1-lowering/fsmgen-EgZVkql5/copier.fsm
+    # Wrote: {REPOSITORY_ROOT}/.artifacts/tmp/ial1-lowering/fsmgen-EgZVkql5/packed_input_generated_blocking.fsm
+    # Wrote: {REPOSITORY_ROOT}/.artifacts/tmp/ial1-lowering/fsmgen-EgZVkql5/packed_input_generated_blocking_top.fsm
+    # Wrote: {REPOSITORY_ROOT}/.artifacts/tmp/ial1-lowering/fsmgen-EgZVkql5/reader.fsm
+    # === ISF Intent Scheduling ===
+    # 
+    # Actor: packed_input_generated_blocking
+    # Source file: '{REPOSITORY_ROOT}/t/data/isf_record_input_generated_blocking_runtime.isf'
+    # Composition source '?top:packed_input_generated_blocking_top' in '{REPOSITORY_ROOT}/t/data/isf_record_input_generated_blocking_runtime.isf' is recognized and parsed into typed composition IR, but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire/scalar-bitstring-one-bit-aggregate-generic structural top, and APB/C4 generated-FSM structural top. Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire/scalar-bitstring-one-bit-aggregate-generic and APB/C4 generated-FSM structural-top leaves. See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.
+
+    #   Failed test 'same profile refuses absent destination'
+    #   at t/2027-isf-record-input-backend-profiles.t line 54.
+    # Source file: '{REPOSITORY_ROOT}/t/data/isf_record_input_generated_blocking_runtime.isf'
+    # Composition source '?top:packed_input_generated_blocking_top' in '{REPOSITORY_ROOT}/t/data/isf_record_input_generated_blocking_runtime.isf' is recognized and parsed into typed composition IR, but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire/scalar-bitstring-one-bit-aggregate-generic structural top, and APB/C4 generated-FSM structural top. Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire/scalar-bitstring-one-bit-aggregate-generic and APB/C4 generated-FSM structural-top leaves. See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.
+
+    #   Failed test 'public pipeline retains the same precise primary reason'
+    #   at t/2027-isf-record-input-backend-profiles.t line 60.
+    #                   'Composition source '?top:packed_input_generated_blocking_top' in '{REPOSITORY_ROOT}/.artifacts/tmp/in-process-lowering/fsmgen-C3Eot6Yj/packed_input_generated_blocking_top.fsm' is recognized and parsed into typed composition IR, but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire/scalar-bitstring-one-bit-aggregate-generic structural top, and APB/C4 generated-FSM structural top. Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire/scalar-bitstring-one-bit-aggregate-generic and APB/C4 generated-FSM structural-top leaves. See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.'
+    #     doesn't match '(?^:^Composition source '\?top:packed_input_generated_blocking_top' .*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire/scalar-bitstring-one-bit-aggregate-generic and APB/C4 generated-FSM structural-top leaves\. See docs/COMPOSITION_SCOPE\.md and docs/COMPOSITION_LEGACY_MAPPING\.\z)'
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'VHDL profile refuses t/data/isf_record_input_generated_blocking_runtime.isf before publication'
+#   at t/2027-isf-record-input-backend-profiles.t line 62.
+
+    #   Failed test 'actual selected negative calibrates oracle'
+    #   at t/2027-isf-record-input-backend-profiles.t line 90.
+
+    #   Failed test 'actual selected negative calibrates oracle'
+    #   at t/2027-isf-record-input-backend-profiles.t line 90.
+    # Looks like you failed 2 tests of 25.
+
+#   Failed test 'refusal oracle rejects false success and stack-only expected text'
+#   at t/2027-isf-record-input-backend-profiles.t line 97.
+# Looks like you failed 3 tests of 9.
+t/2027-isf-record-input-backend-profiles.t .. 
+Dubious, test returned 3 (wstat 768, 0x300)
+Failed 3/9 subtests 
+
+Test Summary Report
+-------------------
+t/2027-isf-record-input-backend-profiles.t (Wstat: 768 Tests: 9 Failed: 3)
+  Failed tests:  2-3, 8
+  Non-zero exit status: 3
+Files=1, Tests=9, 23 wallclock secs ( 0.01 usr  0.00 sys + 15.55 cusr  5.16 csys = 20.72 CPU)
+Result: FAIL

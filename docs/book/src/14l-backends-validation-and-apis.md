@@ -35,6 +35,15 @@ struct outputs as VHDL `std_logic_vector` ports with the generated packed
 widths.
 It is covered by direct pipeline, CLI, and facade tests.
 
+Authored ISF packed record inputs remain outside that VHDL scaffold. The supplied
+whole-copy and field-guard sources refuse their typed input declaration; the
+mixed signed/two-state direct witness refuses its packed member, and the generated
+record-input tops refuse their composition shape. CLI failure preserves an
+existing destination and creates no new HDL file; the public pipeline returns
+no partial success. Scalar input and existing inferred packed-output controls
+remain admitted. See [record-input profiles](13j-type-enum-aggregate.md) and
+T2027 for the exact boundary. This does not extend the scaffold to VHDL records.
+
 The direct-VHDL expression adapter now recognizes generated unary reductions
 before generic rewrites. Scalars/static bits use identity/complement; declared
 vectors use required-only backend-owned `std_logic` OR/AND/XOR fold helpers,

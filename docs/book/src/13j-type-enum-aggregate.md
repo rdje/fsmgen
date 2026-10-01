@@ -356,6 +356,28 @@ products and unchanged source/producers. Backend/input completion `.5.5` remains
 open. Complete SPECFORGE aggregate delivery, X/Z
 behavior and historical native causality are not inferred from these runs.
 
+Record-input HDL support is qualified separately for each backend. The direct,
+generated and named-domain witnesses above execute in both Verilog families.
+The VHDL scaffold refuses these record-input profiles: the mixed signed/two-state
+fixture identifies an unsupported packed member, the supplied whole-copy and
+field-guard fixtures identify their typed input declaration, and the generated
+tops identify their unsupported composition shape. Failure returns no successful
+pipeline product, creates no new HDL destination and preserves an existing one.
+Scalar VHDL inputs and the previously supported inferred packed-output fixtures
+remain supported. Their file emission does not establish VHDL analyzer or runtime
+qualification; see [the backend boundary](14l-backends-validation-and-apis.md).
+
+For example, this supplied input is accepted by the frontend but its VHDL
+generation refuses the typed `lmp_in` input:
+
+```bash
+./bin/fsmgen --strict --quiet --language vhdl --output .artifacts/record-input.vhd docs/audits/specforge-aggregate-intake-20260930/record-port.isf
+```
+
+Use `systemverilog` or `verilog` for its supported HDL target. T2027 retains
+the precise CLI/public-pipeline refusals, destination preservation, supported
+controls and false-success/wrong-diagnostic counterexamples.
+
 Run the authored source checks from the repository root:
 
 ```bash

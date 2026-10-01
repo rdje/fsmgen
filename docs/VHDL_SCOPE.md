@@ -168,6 +168,13 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - Bounded direct aggregate-output roots now lower as packed
   `std_logic_vector` ports for the two maintained fixtures; full VHDL
   record/array aggregate lowering remains deferred.
+- Authored ISF packed record inputs remain unsupported. T2027 qualifies the
+  actual direct mixed signed/two-state member refusal, supplied typed-input
+  declaration refusals and generated/named-domain composition-shape refusals
+  through CLI and public pipeline. Failure preserves existing destinations,
+  creates no new HDL file and returns no partial successful product. Scalar
+  input and existing inferred packed-output controls remain admitted; this
+  does not establish VHDL analyzer/runtime qualification.
 - Bounded direct vector output-port decimal literal assignments now lower
   through target-width `to_unsigned`; this is not broad expression-literal
   parity.

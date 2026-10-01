@@ -88,6 +88,11 @@ optional state-model properties. Input writes, whole-record scalar operations,
 invalid paths and unsupported contexts fail before successful lowering.
 Declared domain ownership and nearest scalar formal/parameter masks still apply.
 Record outputs, root-list inputs and transaction aggregate ports remain deferred.
+Record-input source acceptance is target-neutral. The qualified direct/generated
+HDL paths are SystemVerilog and Verilog. VHDL refuses the selected packed-record
+input or generated-composition profiles precisely before publishing HDL; scalar
+inputs and existing inferred packed-output VHDL controls retain their supported
+subset. VHDL file emission is not analyzer/runtime qualification.
 
 ### 5.1 Actor-Owned Storage
 

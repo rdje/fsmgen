@@ -1,0 +1,36 @@
+# Record-input backend profile qualification
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.1`.
+Baseline: `b76058bbfaa8f0d476b6beebd892d5559dbc3f2f`.
+
+The census runs actual CLI and public pipeline VHDL generation on unchanged
+direct/generated/domain and supplied inputs, with the scalar supplied baseline
+and existing inferred packed-output control. Complete census products are
+retained. The exact repository prefix is projected to `{REPOSITORY_ROOT}` so
+saved receipts remain movable; original local bytes have a separately declared
+digest. No other census projection is applied.
+
+The preliminary probe's presentation loop emitted uninitialized-value warnings
+for successful controls whose API error was absent. Complete JSON products and
+process results retain that absence correctly. This logger warning establishes
+no compiler failure and is not hidden. The first regression draft also omitted
+`.md` in the composition diagnostic's final expected link; its RED receipt is
+preserved before the corrected published-band PASS. Neither required a
+production change.
+
+T2027 additionally requires absent destinations to remain absent, existing
+destinations to stay byte-exact and the pipeline to return no partial product.
+It rejects zero exits, signals, absent reasons and expected text confined to a
+later stack line. Independently authored supported entity/width/literal checks
+retain the existing VHDL scalar-input and packed-output subset. The saved Python
+verifier independently checks census outcomes and hostile result, diagnostic,
+product, destination and declaration substitutions.
+
+Re-derivation uses actual public generation and literal producer/source
+identities. Independent refusal/declaration controls and saved hostile mutations
+provide falsification. Exact baseline Git objects, full census/test/recipe and
+regression receipts, task/book/spec/fact records and Git provide durability.
+The selected input behavior in both Verilog families has separate retained
+direct/generated runtime evidence. No HDL compiler/simulator/analyzer executes
+here; no VHDL executable qualification, broader profile admission, four-state
+runtime, output delivery or historical native-causality claim follows.

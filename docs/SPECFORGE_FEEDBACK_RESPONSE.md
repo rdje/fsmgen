@@ -73,7 +73,13 @@ and book.
   fresh run. Generated execution reconciliation `.5.4.4` is complete: the selected public,
   contextual refusal, package and prior scalar/storage contracts pass current
   checks, with unchanged source/producers and retained direct/generated evidence.
-  Backend/input completion `.5.5` remains open. Record outputs, root-list ports and variants
+  Backend profile qualification `.5.5.1` retains precise VHDL refusals for the
+  selected record inputs and generated tops, with no new destination or partial
+  successful product and existing destinations preserved. Scalar VHDL input
+  and prior packed-output controls remain admitted; no VHDL analyzer/runtime
+  claim follows from emission. The qualified record-input HDL targets are
+  SystemVerilog and Verilog. Final public/input signoff under `.5.5` remains
+  open. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

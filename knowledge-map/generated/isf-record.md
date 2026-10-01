@@ -1,18 +1,20 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **7** facts · **24** uniquely owned question entries.
+> **8** facts · **27** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are spawned output bindings guarded by child completion?" · facts=[isf-record-input-generated-witness-preparation](../../docs/knowledge/isf-record-input-generated-witness-preparation.md)
 - q="are unused record inputs retained in the top or inherited child?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="can a child scalar formal share an actor record input name?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
+- q="does VHDL support authored ISF packed record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="does generated record-input runtime prove X/Z or reset-free initialization?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="does ordinary ISF reset provenance omit the domain key?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="does record-input runtime establish four-state behavior or native EPERM causality?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="does the binding identity repair admit record field actuals?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 - q="does the prepared direct record-input bench establish native behavior?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
+- q="does unsupported record input VHDL generation replace an existing output?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="how are generated and named-domain record-input carriers qualified?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="how do generated input witnesses distinguish live reads and whole copies?" · facts=[isf-record-input-generated-witness-preparation](../../docs/knowledge/isf-record-input-generated-witness-preparation.md)
 - q="how does fixed record-input admission preserve caller JSON primitive kinds?" · facts=[isf-record-input-observer-preparation](../../docs/knowledge/isf-record-input-observer-preparation.md)
@@ -25,6 +27,7 @@
 - q="where is fresh record-input observer qualification owned?" · facts=[isf-record-input-observer-preparation](../../docs/knowledge/isf-record-input-observer-preparation.md)
 - q="where is generated record-input runtime preparation owned?" · facts=[isf-record-input-generated-witness-preparation](../../docs/knowledge/isf-record-input-generated-witness-preparation.md)
 - q="where is the recoverable direct packed-input runtime observation?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
+- q="which backend profiles are qualified for ISF record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="which direct record-input runtime behavior is qualified?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="which generated record-input storage and binding behaviors pass?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="why did a generated scalar binding formal name refuse as an actor record read?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
@@ -38,6 +41,13 @@ _Activation identities remain separate from record binding values_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-binding-identity-roles.md`](../../docs/knowledge/isf-record-binding-identity-roles.md)
+
+### isf-record-input-backend-profiles
+
+_Record input HDL profiles qualify both Verilog families and precise VHDL refusals_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-record-input-backend-profiles.md`](../../docs/knowledge/isf-record-input-backend-profiles.md)
 
 ### isf-record-input-direct-runtime
 

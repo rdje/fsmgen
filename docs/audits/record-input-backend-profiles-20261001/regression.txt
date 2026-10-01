@@ -1,0 +1,8 @@
+ram-guard: PID 14437; host 61.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2027-isf-record-input-backend-profiles.t ................... ok
+t/1420-vhdl-direct-backend-scaffold.t ........................ ok
+t/386-hdl-generator-facade-target-language-boundary-audit.t .. ok
+t/114-composition-target-support-diagnostics.t ............... ok
+All tests successful.
+Files=4, Tests=453, 167 wallclock secs ( 0.10 usr  0.02 sys + 113.39 cusr 41.96 csys = 155.47 CPU)
+Result: PASS

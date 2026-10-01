@@ -1,0 +1,10 @@
+ram-guard: PID 78861; host 50.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Use of uninitialized value $first in concatenation (.) or string at .artifacts/record-input-backend-profile/probe.pl line 30.
+Use of uninitialized value $first in concatenation (.) or string at .artifacts/record-input-backend-profile/probe.pl line 30.
+t/data/isf_record_input_runtime.isf: native=1 unchanged=1 api=Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/in-process-lowering/fsmgen-fUOxJiMx/packed_input_runtime.fsm'
+t/data/isf_record_input_generated_domains_runtime.isf: native=1 unchanged=1 api=Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/in-process-lowering/fsmgen-y2lV9Cp8/packed_input_generated_domains_top.fsm'
+t/data/isf_record_input_generated_blocking_runtime.isf: native=1 unchanged=1 api=Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/in-process-lowering/fsmgen-mXrrEyMm/packed_input_generated_blocking_top.fsm'
+docs/audits/specforge-aggregate-intake-20260930/record-port.isf: native=1 unchanged=1 api=Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/in-process-lowering/fsmgen-_KGi0GoF/link_rx.fsm'
+docs/audits/specforge-aggregate-intake-20260930/record-port-field-guard.isf: native=1 unchanged=1 api=Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/in-process-lowering/fsmgen-RkxOo4al/link_rx.fsm'
+docs/audits/specforge-aggregate-intake-20260930/baseline-good.isf: native=0 unchanged=0 api=
+t/corpus/direct_aggregate_constant_target_autogrowth.fsm: native=0 unchanged=0 api=
