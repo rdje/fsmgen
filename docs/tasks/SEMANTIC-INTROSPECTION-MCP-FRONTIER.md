@@ -2884,11 +2884,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify generated and named-domain record-input carriers.`
   Acceptance: `After .3, independently exercise live record reads and valid input-to-storage transfers through existing generated-child/domain ownership, including nested/imported aliases, reused instances and unused declarations. Preserve explicit top interfaces, typed private connections, reset/storage ownership and unchanged old sources; refuse unowned crossing and unqualified input targets. Split actual prerequisite fixes before mutation and retain backend-profile boundaries.`
-  Verification: `Authored source/frontend admission and public closure are qualified under .3. Next exercise actual generated/named-domain carriers, exact recursive types/interfaces and explicit ownership with fixed prior controls before backend/native/consumer completion.`
-  Commit: `pending`
+  Verification: `Full authored local/imported nested ordinary/domain sources retain reused readers, sole whole input-to-owned-storage spawn/do writers and unused declarations. Complete literal recursive types/layouts/roles/endpoints, exact explicit top/typed child carriers, reset/storage/domain ownership and every actual strict replay are qualified. Embedded package context, scalar selector identity and binding-formal identity prerequisites are repaired with exact predecessor falsification. Complete typed native/API/newline accepted/refused products, prior scalar/storage report/carrier/HDL controls, full discovery/current cohort/fixed catalog and source/package/caller/named producer purity reconcile through .1-.2. Final Files=3, Tests=7217 and Files=7, Tests=32 pass. Generated/domain source/carrier/public qualification closes; backend/native behavior and consumer completion remain .2.5.`
+  Commit: `completed through .2.3.2 in this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2`
 
@@ -2909,11 +2909,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Close generated/domain record-input public and refusal qualification.`
   Acceptance: `After .1, compare complete actual native/API/newline check/semantic/schedule products and source preservation for generated/domain sources. Preserve fixed older scalar/storage products and complete carrier controls; qualify foreign reads/copies, input targets and nearest scalar declarations with first-cause diagnostics. Reconcile all generated/domain ownership and carrier evidence, book and canonical feedback before backend/native/consumer .2.5; split prerequisite repairs before mutation.`
-  Verification: `Actual authored carriers and embedded package context are qualified under .1; accepted full native/API/newline products under .2.1 and complete contextual refusals/scalar shadows under .2.2, including its qualified selector and binding-identity repairs. Next .2.3 closes fixed prior scalar/storage products, complete discovery/current applicability and final generated/domain reconciliation before backend/native/consumer .2.5.`
-  Commit: `pending`
+  Verification: `Accepted complete typed native/API/newline generated/domain products and literal recursive HIR/structural/clock/reset/physical ports are qualified under .1; contextual refusals/scalar shadows and selector/binding identity repairs under .2; exact typed prior scalar/storage, complete current declaration cohort/all-section discovery/fixed catalog under .3. Every actual carrier strictly replays, sources/imports/caller/public producer bytes remain, and later-C2 intent preview retains its precise boundary. Final gates Files=3, Tests=7217 and Files=7, Tests=32 pass. Source/carrier/public closure only; no new HDL execution or external consumer signoff.`
+  Commit: `completed through .3 in this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3`
 
@@ -2934,11 +2934,11 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Close generated/domain record-input qualification with exact prior controls.`
   Acceptance: `After accepted/refused matrices, requalify complete fixed prior scalar/storage products and carrier/HDL controls under narrowly declared differences, complete discovery/current supported applicability and final combined focused gates. Reconcile every .2.4 acceptance requirement, exact caller/import/type/ownership evidence and canonical feedback/book/Knowledge Map pointers. Close generated/domain frontend/carriers only and resume backend/native/consumer .2.5 with HIAL admission before genuine HDL execution.`
-  Verification: `Accepted/refused generated/domain matrices are committed through .1-.2. Typed fixed scalar/storage prior controls are repaired and qualified under child .1. The untouched current discovery cohort is RED solely for a missing maintained generated-input declaration witness, owned next by child .2; T2017 and T248 complete positively within that failed cohort. Preserve those limits and qualify .2 before final reconciliation/closure. No new native runtime before HIAL admission.`
-  Commit: `pending`
+  Verification: `Completed through children .1-.2: fixed scalar/storage prior JSON-kind relocation/comparisons are qualified, then the complete current declaration-cohort omission is repaired without dropping its guard. Final native/API/newline/discovery/supplied-source/current catalog T1985/T2017/T248 passes Files=3, Tests=7217; final typed storage/copy/package/selector/binding/book focused gate passes Files=7, Tests=32. Immutable report/carrier/HDL baselines, metadata/source/date permissions, caller/source/import/producer bytes and prior contextual/accepted receipts remain. Every .2.4 requirement reconciles in final acceptance; generated/domain source/carrier/public closure is complete, backend/native/consumer remains .2.5.`
+  Commit: `completed through child .2 in this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3.2`
 
@@ -2950,11 +2950,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Keep public declaration witnesses complete for the generated record-input catalog source.`
   Acceptance: `P2 discovery qualification omission: the admitted maintained isf/record_input_children.isf catalog row joins the live ISF source-query cohort, but T1985's independent supported-source declaration table omits it. Current T1985 membership and complete literal metadata checks are RED. Preserve the complete-cohort guard; add independent literal authored packet/unused types, ordered packed ranges, domains, ports and widths for that actual maintained source, with full native/API/newline products/source/package preservation. Qualify the complete fixed catalog and prior controls, then reconcile and close generated/domain .2.4. Do not weaken or drop the row/guard or rewrite original catalog evidence. Finish the separate .3.1 typed storage-oracle repair and commit clean before this slice.`
-  Verification: `Actual current T1985 source-query membership reports the extra maintained generated record source without a corresponding literal witness. Next add the complete authored declarations after .3.1 commits.`
-  Commit: `pending`
+  Verification: `Exact omitted live cohort membership and typed declarations are RED at T1985 line 52/219. git log -S identifies the maintained source/catalog addition in 24a58de05d1bf72dc1c0bd26c0d48a3906bb3bbc with no T1985 table update. Independent literal source/package-derived input/output order, packed ranges, signed/state/type properties and domains now join the complete table; the guard remains unchanged. Final T1985/T2017/T248 reports All tests successful, Files=3, Tests=7217 with all current source-query applicability, complete typed native/API/newline products/all-section discovery and fixed catalog. Final focused T1981/T1982/T2018/T2020/T2022/T2023/T1376 passes Files=7, Tests=32. Exact source/package/named producer bytes remain. Existing full authored T2019 and contextual T2021 receipts at unchanged production source remain qualified; parent source/carrier/public closure reconciles below, native/backend/consumer stays .2.5.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.1`
   Status: `done`
@@ -2971,10 +2971,10 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify packed input behavior and complete public delivery.`
   Acceptance: `After source/carrier qualification, consume current HIAL admission before genuine supervised native runtime. Independently observe packed layout, scalar signed/state properties, live versus explicitly sampled reads, whole-copy edge, holds, repeated requests and reset/domain behavior. Compare complete native/API/actual newline source/schedule/semantic/discovery products, supported corpus and baseline carriers/HDL. Keep unsupported profiles precise and synchronize all selected requirements/book/records; close input delivery only with recoverable behavior evidence.`
-  Verification: `pending qualified carriers and HIAL admission`
+  Verification: `Frontend and generated/domain source/carrier/public qualification are committed through .3-.4. Next read and consume HIAL .3.2.10.11.5 failure-only observation admission, review selected backend/native requirements and plan the smallest genuine packed-input behavioral witness before any runtime mutation/execution. Historical EPERM remains separately owned; do not replay spent compiler captures.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3`
@@ -6752,3 +6752,72 @@ after this commit. The parent generated/domain closure remains active.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Full pre-repair typed T1981/T1982 reports FAIL, Files=2, Tests=11, with actual TAP at t/1981-isf-storage-word-access.t line 266. Fresh decoded literal and copied outputs turn numeric width into a string, while the actual native report retains numeric schema/count/width values. T1981 relocate stringifies each expected scalar and is_deeply hides number/string distinctions; T1982 typed baseline controls pass. git log -L roots relocate in 3fa482924ae93421918d955b916291cd3c741001. Exact 3dd7e2c09d9a0aac773dfb846b2f13767a0dfe1b test bytes independently match Git with the recorded SHA256, and its extracted original helper remains RED. Existing canonical copy-stability limits identify the prior value-only scope; no production wire defect is inferred.
 - [x] **ADDRESSED (verified)** — Separate-scalar path inspection returns the original value when the authorized exact source relocation does not change text. All T1981/T1982 complete/declaration/native/API/newline/fixed baseline comparisons now preserve serialized JSON kinds. Final guarded T1981/T1982/T2018 reports All tests successful, Files=3, Tests=17, with independently decoded primitive/output/copy/caller controls, complete immutable prior reports/carriers/HDL and exact named public producer/baseline/source bytes. Canonical scalar/copy facts, book and SPECFORGE feedback retain dated receipt limits and current typed evidence. Parent closure stays active for separately owned complete-catalog witness .3.2.
 - [x] **NO REGRESSION** — Final guarded T1981/T1982/T2018 passes All tests successful, Files=3, Tests=17. Scalar access/field independence, malformed/carrier refusals, domain-local typed/bank/watchdog storage, empty/single/multiple domains, schema/discovery shapes and complete previous FSM/SystemVerilog/Verilog products remain. Runnable T1376 passes Files=1, Tests=2; book builds and knowledge-map: OK is required before the staged gate. Untouched T1985/T2017/T248 FAIL Files=3, Tests=7216 is explicitly excluded as aggregate success; its only omission is owned .3.2 before parent closure. Re-derivation is actual typed native/transport/fixed baseline outputs and source/product byte checks; falsification is fresh decoded primitive/copy literals and independently authenticated exact committed helper RED; permanent tests, immutable receipts, scoped book/facts, task and Git provide durability. No production source change, native HDL execution, full CI, push or external repository mutation.
+
+## Complete generated catalog declaration witness `.60.4.3.2.4.2.3.2`
+
+Typed-prior repair ca7802f7271f550751d0bbb3e120fc72a0f10cbd is verified clean,
+with both doctrine gates passed and an empty brief before this leaf starts.
+The active owner, R11/record-input carrier requirements, full T1985/T2017 code,
+maintained authored ISF/package and relevant book/facts are read. Current prior
+cohort T1985/T2017/T248 terminates FAIL only in T1985: its exact source membership
+and check/semantic/schedule literal declarations lack record_input_children.
+T1985 reports at t/1985-isf-interface-port-public-qualification.t line 52/219.
+The maintained fixture is already publicly qualified by T2019 and admitted in
+the fixed catalog; preserve those actual products and complete-cohort gate.
+Add independently authored ordered input/output/domain metadata and both packed
+leaf ranges/type properties to T1985's literal table. Verify original package
+and named producer bytes as well as every actual source on all transports.
+No source, schema, catalog classification, hardware or runtime policy changes.
+
+- [ ] **ROOT CAUSE (WHY + WHERE)** — pending exact catalog/test omission history.
+- [ ] **ADDRESSED (verified)** — pending complete current public declaration cohort.
+- [ ] **NO REGRESSION** — pending discovery/prior/catalog and final reconciliation.
+
+The omission history is exact: git log -S feature.isf_record_input_children
+identifies the catalog/maintained-source addition in
+24a58de05d1bf72dc1c0bd26c0d48a3906bb3bbc; T1985 has no corresponding literal
+table edit after its 25c01f0127144922ade78951b91439e1d9221c08 record-input update.
+Current .3.2 adds only the authored declaration witness and package/producer
+byte checks. The full T1985/T2017/T248 public/cohort/catalog requalification
+and final combined focused storage/copy/package/selector/binding/book gate are
+in flight. Existing full authored T2019 and contextual T2021 matrices remain
+qualified at the unchanged production revision, with exact named producer
+bytes watched by current controls; no broad runtime or full CI is launched.
+
+### Final generated/domain source-carrier-public reconciliation
+
+Every .2.4 acceptance requirement is checked against its finite receipts:
+
+- Local/imported nested record aliases, unused authored declarations and reused
+  ordinary/domain readers: T2019 actual source/lowering/report/strict carriers.
+- Sole whole input-to-owned-storage spawn/do writers, typed private data/enable,
+  explicit top/child roles and owning reset/storage/domain: T2019 literal types,
+  range/wiring/artifact membership and public recursive HIR/structural witnesses.
+- Embedded package context: T2020 embedded FSM/DT, missing/undeclared/external
+  controls and exact predecessor realizer RED; actual imported tops strictly replay.
+- Foreign nested/sliced reads/copies, input targets, scalar formal/local/drive
+  masks and unsupported writers/bindings: T2021 full actual contextual/public
+  matrix, T2022 selector identity and T2023 role/metadata/caller controls.
+- Complete typed native/API/newline successful and refused products, literal
+  source declarations and physical top/child distinctions, owning clock/reset
+  provenance and source/import/public producer/caller bytes: T2019/T2021.
+- Fixed scalar/storage report/carrier/SystemVerilog/Verilog controls: upgraded
+  T1981/T1982 JSON-kind comparisons and T2018 later-copy controls; only existing
+  authored metadata, exact source relocation and HDL date differences are allowed.
+- Supplied unchanged aggregate-intake sources, fixed receipt/carriers and entire
+  all-section discovery: T2017. Complete current source-query declarations and
+  applicability, including maintained generated input: T1985; fixed catalog T248.
+
+Final T1985/T2017/T248 passes All tests successful, Files=3, Tests=7217; final
+T1981/T1982/T2018/T2020/T2022/T2023/T1376 passes Files=7, Tests=32. The latest
+full T2019/T2021 matrices remain qualified at unchanged production bytes; no
+production file changes follow their consumed terminal receipts. Exact named
+producer/package/source/baseline byte watchers pass. These close source/carrier/
+public qualification only. Backend profiles, packed-pin timing/live/sample/copy/
+hold/reset/repeated-request behavior, genuine native execution and external
+consumer qualification remain .2.5. Its HIAL observation admission precedes
+any real HDL execution; no spent compiler/native receipt is replayed here.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual prior T1985/T2017/T248 is FAIL, Files=3, Tests=7216 solely in T1985, with TAP at t/1985-isf-interface-port-public-qualification.t line 52 and line 219. Live source-query membership includes isf/record_input_children.isf but the independent declaration table lacks it, making check/semantic/schedule expected declarations null. git log -S feature.isf_record_input_children roots the catalog/fixture addition in 24a58de05d1bf72dc1c0bd26c0d48a3906bb3bbc; T1985 is unchanged since its older record-input admission update. The permanent completeness guard correctly catches the omission. Actual authored source/package and T2019 literal/public products independently establish the missing declaration requirements; no source admission defect is inferred.
+- [x] **ADDRESSED (verified)** — Independent authored input/output order, frame alias/record kind, both complete packed leaf ranges/signed/state properties and idle/io domains now cover the maintained generated source in T1985, preserving its exact complete-cohort guard. Final guarded T1985/T2017/T248 reports All tests successful, Files=3, Tests=7217. Complete typed native/API/newline reports, all-section discovery, supported applicability, exact source/package/named producer bytes and fixed catalog pass. The acceptance reconciliation above closes every generated/domain source/carrier/public requirement, with typed prior report/carrier/HDL controls and unchanged full accepted/refused receipts. Backend/native/consumer and record output/list/variant deliveries remain their own leaves; canonical feedback/book/facts and resume pointer reflect .2.5 next.
+- [x] **NO REGRESSION** — Final combined T1981/T1982/T2018/T2020/T2022/T2023/T1376 reports All tests successful, Files=7, Tests=32; current declaration/discovery/supplied-source/fixed catalog T1985/T2017/T248 reports Files=3, Tests=7217. Exact previous scalar/storage reports, all scheduled FSM and both emitted HDL targets, package-context negatives, scalar selector/formal/metadata identity and JSON copy/caller controls remain. Full T2019/T2021 matrices retain qualified unchanged production bytes; book and Knowledge Map are refreshed before gate. Re-derivation uses actual current native/public source products and complete independently authored declarations/catalog joins; falsification uses the captured missing-table RED, unchanged complete-cohort guard and independent hostile field/type/range/role/kind controls; permanent test/source/package/catalog/book/facts, immutable prior receipts, task and Git preserve durability. No runtime/full CI/push or external repository modification.

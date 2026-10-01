@@ -19,6 +19,13 @@ my $api = FSM::Support::SemanticIntrospectionMCPAdapter->new(repo_root => $root,
 my %flags = (check => [qw(--strict --check --json)], semantic => [qw(--strict --emit-semantic-json)],
              schedule => ['--emit-schedule-json']);
 my %tools = (check => 'fsmgen_check', semantic => 'fsmgen_semantic_introspect', schedule => 'fsmgen_schedule_preview');
+my @unchanged = qw(isf/record_input_types.fsm bin/fsmgen bin/fsmgen-mcp
+    perl/FSM/Support/RegressionCorpus.pm perl/FSM/Support/CapabilityManifest.pm
+    perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm
+    perl/FSM/Support/ISFPublicInterfaceContract.pm perl/FSM/Support/ISFRecordPortContexts.pm
+    perl/FSM/Scheduler/ISF/LoweringIR.pm perl/FSM/Scheduler/ISF/Emitter/JSON.pm
+    t/lib/FSM/Test/SourceQueryRunner.pm);
+my $bytes_before = {map {$_ => sha256_hex(read_file($_))} @unchanged};
 my %supported = (
     'isf/interface_port_metadata.isf' => [
         p('start','input',1), {name=>'data',direction=>'input',width=>8,type=>'byte',type_kind=>'bits'},
@@ -29,6 +36,18 @@ my %supported = (
             {path=>'flag',width=>1,lsb=>5,msb=>5,signed=>0},
             {path=>'data',width=>5,lsb=>0,msb=>4,signed=>1,state_model=>'four_state'}]},
         p('seen','output',5), p('done','output',1),
+    ],
+    'isf/record_input_children.isf' => [
+        {name=>'start',direction=>'input',width=>1,domain=>'io'},
+        {name=>'packet',direction=>'input',width=>6,type=>'frame',type_kind=>'record',domain=>'io',fields=>[
+            {path=>'flag',width=>1,lsb=>5,msb=>5,signed=>0},
+            {path=>'data',width=>5,lsb=>0,msb=>4,signed=>1,state_model=>'four_state'}]},
+        {name=>'unused',direction=>'input',width=>6,type=>'frame',type_kind=>'record',domain=>'idle',fields=>[
+            {path=>'flag',width=>1,lsb=>5,msb=>5,signed=>0},
+            {path=>'data',width=>5,lsb=>0,msb=>4,signed=>1,state_model=>'four_state'}]},
+        {name=>'seen',direction=>'output',width=>5,domain=>'io'},
+        {name=>'again',direction=>'output',width=>5,domain=>'io'},
+        {name=>'done',direction=>'output',width=>1,domain=>'io'},
     ],
     'isf/apb_requester.isf' => [
         p('start','input',1), p('req_write','input',1), p('req_addr','input',32), p('req_wdata','input',32),
@@ -213,6 +232,9 @@ subtest 'identical corrupt metadata cannot pass independent declaration expectat
             'independent typed expectation rejects shared field loss, width, role, order or private data');
     }
 };
+
+same({map {$_ => sha256_hex(read_file($_))} @unchanged}, $bytes_before,
+    'complete named public producer and imported package bytes remain unchanged');
 
 done_testing();
 sub p { return {name=>$_[0],direction=>$_[1],width=>$_[2]}; }

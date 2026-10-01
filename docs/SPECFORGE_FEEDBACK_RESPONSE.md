@@ -48,9 +48,11 @@ and book.
   qualification has verified scalar named-drive selector identity repair under
   `.60.4.3.2.4.2.2.1` and generated scalar binding identity repair under
   `.60.4.3.2.4.2.2.2`. Contextual refusals and scalar shadows are qualified
-  under `.60.4.3.2.4.2.2`; record binding actuals remain refused. Final
-  prior-product closure, backend/native
-  execution and consumer signoff remain owned qualification work. Record outputs, root-list ports and variants
+  under `.60.4.3.2.4.2.2`; record binding actuals remain refused. Typed
+  prior products and complete current declaration/discovery/catalog closure
+  are qualified under `.60.4.3.2.4.2.3`. Generated/domain source, carrier and
+  public qualification `.60.4.3.2.4` is complete; backend/native execution
+  and consumer signoff remain `.60.4.3.2.5`. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.
@@ -1481,9 +1483,10 @@ unchanged hardware and makes no new execution claim. Those repairs remain open.
 Current fixed scalar/storage compatibility controls additionally preserve complete
 JSON primitive kinds through source relocation and later copies under SEM
 `.60.4.3.2.4.2.3.1`. Earlier value comparisons retain their dated evidence limits;
-immutable receipt, carrier and HDL bytes are preserved. The missing maintained
-generated-input declaration witness is tracked separately under `.3.2` before
-final generated/domain closure.
+immutable receipt, carrier and HDL bytes are preserved. The maintained
+generated-input declaration witness and complete current discovery/catalog
+are qualified under `.3.2`, completing generated/domain source/carrier/public
+closure. Backend/native behavior and consumer qualification remain open.
 
 SPECFORGE's integration remains its `FSMGEN-REQUESTS.5`; no external checkout,
 pin, ticket or message was changed here.

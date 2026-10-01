@@ -297,8 +297,11 @@ Record outputs, root-list input ports, transaction-local aggregate ports,
 aggregate banks and variants remain deferred. Output copies/member writes keep
 their separately owned writer prerequisites. The compiler preserves typed
 `+size`, explicit `+interface`, exact declaration metadata and private sample
-carriers. Full generated/domain behavior, affected backend profiles, native HDL
-execution and supplied consumer signoff remain separate qualification work.
+carriers. Generated/domain source, carrier and complete public qualification
+includes current catalog declarations, full discovery, contextual refusals and
+fixed scalar/storage compatibility controls. Affected backend profiles, packed
+input behavior in native HDL execution and supplied consumer signoff remain
+separate qualification work.
 See [0113](../../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md#authored-record-input-admission--2026-09-30)
 and [declared interface metadata](13a-actor-interface.md#declared-interface-metadata).
 Existing declaration-collision refusals still apply.

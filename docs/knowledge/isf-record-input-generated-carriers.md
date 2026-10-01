@@ -7,10 +7,11 @@ answers:
   - "are unused record inputs retained in the top or inherited child?"
   - "where do generated-top semantic reports retain authored record declarations?"
   - "does ordinary ISF reset provenance omit the domain key?"
+  - "is generated and named-domain record-input public qualification complete?"
 date: 2026-10-01
 status: current
 tags: [isf, record-ports, domains, composition, storage]
-evidence: t/2019-isf-record-input-generated-carriers.t; t/2020-composition-child-embedded-packages.t; isf/record_input_children.isf; isf/record_input_types.fsm; perl/FSM/Scheduler/ISF/DomainSource.pm; perl/FSM/Composition/GeneratedChildRealizer.pm; docs/book/src/13j-type-enum-aggregate.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: t/1985-isf-interface-port-public-qualification.t; t/2017-isf-record-input-frontend-closure.t; t/1981-isf-storage-word-access.t; t/1982-isf-domain-storage-report.t; t/2021-isf-record-input-generated-refusals.t; t/2019-isf-record-input-generated-carriers.t; t/2020-composition-child-embedded-packages.t; isf/record_input_children.isf; isf/record_input_types.fsm; perl/FSM/Scheduler/ISF/DomainSource.pm; perl/FSM/Composition/GeneratedChildRealizer.pm; docs/book/src/13j-type-enum-aggregate.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2019-isf-record-input-generated-carriers.t t/2020-composition-child-embedded-packages.t
 ---
 
@@ -51,8 +52,11 @@ the required domain:null entry; named entries preserve authored domain order
 and explicit versus domain_absent origin. The draft oracle's omitted null field
 is corrected against ISFResetProvenance's closed schema, not removed from reports.
 Contextual refusals and scalar shadows are qualified under .2, including
-selector and binding-identity repairs. Typed prior scalar/storage products are
-qualified under .3.1; the missing maintained-source declaration witness and final
-prior/discovery closure remain .3.2. Backend/native behavior and consumer completion
-remain .2.5. Structural reset ownership is not executed reset behavior.
+selector and binding-identity repairs. Typed fixed prior scalar/storage report,
+carrier and HDL products are qualified under .3.1. The maintained-source literal
+declaration table is complete under .3.2, retaining the exact full current source
+cohort guard, complete typed native/API/newline/all-section discovery, supported
+applicability and fixed catalog. Source/package/named producer bytes remain.
+This closes generated/domain source/carrier/public .2.4; backend/native behavior
+and consumer completion remain .2.5. Structural reset ownership is not executed reset behavior.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1.
