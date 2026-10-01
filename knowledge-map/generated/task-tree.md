@@ -1,7 +1,7 @@
 # Knowledge Map: `task-tree`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **5** facts · **34** uniquely owned question entries.
+> **6** facts · **36** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -19,6 +19,7 @@
 - q="how can a task-tree file be bounded without losing completed nodes?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="how do I recheck stale task-tree status drift?" · facts=[task-tree-stale-status-drift-repair](../../docs/knowledge/task-tree-stale-status-drift-repair.md)
 - q="how does PNT select the next leaf?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
+- q="how is a closed task acceptance-history boundary selected?" · facts=[task-tree-closed-history-boundary](../../docs/knowledge/task-tree-closed-history-boundary.md)
 - q="how is active task-tree node integrity checked?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
 - q="how is completed task acceptance history retained?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="how is semantic node registration repaired without changing historical-view doctrine?" · facts=[task-tree-authoritative-section-registration](../../docs/knowledge/task-tree-authoritative-section-registration.md)
@@ -39,6 +40,7 @@
 - q="why does the task tree say PNT is exhausted while old task files mention pending or active?" · facts=[task-tree-stale-status-drift-repair](../../docs/knowledge/task-tree-stale-status-drift-repair.md)
 - q="why is IAL2-FEATURE-COMPLETENESS-FRONTIER.705 done now?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
 - q="why is the ## Current Frontier table in IAL2-FEATURE-COMPLETENESS-FRONTIER.md stale?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
+- q="why must the semantic history boundary commit before rollover?" · facts=[task-tree-closed-history-boundary](../../docs/knowledge/task-tree-closed-history-boundary.md)
 
 ## Facts
 
@@ -48,6 +50,13 @@ _Ownership registration requires the parsed Task Tree section and parent referen
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/task-tree-authoritative-section-registration.md`](../../docs/knowledge/task-tree-authoritative-section-registration.md)
+
+### task-tree-closed-history-boundary
+
+_Closed task-history suffixes require a committed legal heading_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/task-tree-closed-history-boundary.md`](../../docs/knowledge/task-tree-closed-history-boundary.md)
 
 ### task-tree-in-file-secondary-views-are-historical
 

@@ -3095,10 +3095,26 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.64`
-  Status: `pending`
+  Status: `active`
   Goal: `Seal completed semantic acceptance history before genuine record-input runtime.`
   Acceptance: `Activate before the task would reach the unchanged 7200-line milestone, following completed .54's exact-version acceptance-history protocol. Retire only closed optional acceptance prose behind exact committed source/suffix identities and the existing bounded manifest. Preserve every live node, active contract, unresolved failure and current native/feature qualification limits. Independently verify node/text preservation, archive chain and consumers; run focused history/integrity checks and book before commit. No ceiling change or deferred doctrine reassessment.`
   Verification: `Fresh observer integration is qualified under .60.4.3.2.5.2.2. The live task approaches its existing rollover milestone; own this bounded prerequisite before adding genuine runtime evidence. Resume .60.4.3.2.5.3 afterward.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.64.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.64.2`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.64.1`
+  Status: `done`
+  Goal: `Commit a legal boundary for the next closed acceptance-history suffix.`
+  Acceptance: `The current live file has no Decisions heading; its first closed acceptance heading contains backticks, which the unchanged closed manifest contract forbids. Insert one unique Completed Acceptance History heading immediately before historical .54 acceptance, preserve all existing node contracts and history bytes apart from this owned boundary, and commit before exact-source rollover .2. No history is removed, no manifest or ceiling is changed, and no feature/runtime work starts.`
+  Verification: `git log -S identifies former Decisions removal in 29ab49f217a82bacdd1ac83a8bcf2b687996f3ed. The unique legal Completed Acceptance History heading is inserted before closed .54 acceptance. Independent comparison preserves the entire historical body byte-for-byte except that insertion and every original node contract except owned parent .64 refinement. Actual integrity passes; no history, manifest, native evidence or ceiling changes. .2 consumes this committed source next.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.64.2`
+  Status: `pending`
+  Goal: `Seal and retire closed acceptance history from the committed legal boundary.`
+  Acceptance: `After .1 commits clean, use its exact Completed Acceptance History suffix and unchanged single-record bounded manifest. Independently authenticate full source/suffix hashes and dimensions, old manifest/source chain, all original live node contracts, anchors and native/feature scope limits. Keep complete predecessor retrieval and current pointer, qualify actual read-only integrity and hostile source/suffix/typed-dimension/pointer controls without other Git repository writes, and commit before .60.4.3.2.5.3. No ceiling or checker change.`
+  Verification: `pending committed boundary`
   Commit: `pending`
 
 
@@ -3812,6 +3828,8 @@ The T1921 pre-exec setpgid EPERM remains an unresolved native occurrence under
 Its full recorded failure, date-only HDL comparison and successful separate
 oracle execution survive in this exact history; no containment repair is claimed.
 Preserve spent compiler/startup evidence and the resume pointer's audit capture.
+
+## Completed Acceptance History
 
 ## Acceptance — historical task rollover `.54`
 
@@ -7117,3 +7135,20 @@ The first standalone gate passes all checks except TASK-ACCEPTANCE: this
 slice's fresh no-regression box omitted a configured evidence signature despite
 the successful map receipt. Add the actual knowledge-map: OK result within that
 box; keep the declaration/gate unchanged and exclude the failed aggregate.
+
+
+## Legal closed-history boundary preparation `.64.1`
+
+Registration repair 79d64ee150ed245d941a761485f6963e6a51528f is committed
+clean with both doctrine gates and empty brief. `git log -S` locates removal of
+the former Decisions heading in 29ab49f217a82bacdd1ac83a8bcf2b687996f3ed.
+The first remaining closed acceptance heading contains backticks; unchanged
+manifest heading rules reject them. Add exactly one legal Completed Acceptance
+History boundary before that closed body, preserving all old historical bytes
+except the insertion. No manifest update or retirement occurs in preparation.
+Independent full node comparison preserves all original contracts except the
+owned .64 split; actual integrity passes. Native feature execution remains open.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S identifies removal of the old Decisions boundary in 29ab49f217a82bacdd1ac83a8bcf2b687996f3ed; current exact source lacks it and the remaining .54 acceptance heading contains backticks forbidden by the unchanged closed heading contract. Exact-source retirement requires a committed legal boundary before mutation, with active nodes and native limits retained above it.
+- [x] **ADDRESSED (verified)** — Exactly one Completed Acceptance History heading is inserted before the closed .54 body. Independent old/current comparison preserves the complete historical suffix byte-for-byte after removing only that insertion and every original node contract except explicitly owned parent .64 refinement. New .1/.2 leaves own preparation and retirement separately; no history or prior manifest is removed or changed. Commit this preparation before deriving .2's exact source identities.
+- [x] **NO REGRESSION** — Actual read-only task-tree integrity reports all active task-tree invariants hold; independent unique-boundary, complete historical-byte and original-node comparisons pass. Product/test/checker, original/corrected native observer and prior history Git diffs are empty. Re-derivation uses exact predecessor/history and current heading rules; falsification uses independent complete byte/node comparisons and unique/legal-boundary predicates; tracked heading/nodes/fact/book and retained Git objects provide durability. The actual Knowledge Map check reports knowledge-map: OK and the book builds; the full staged gate remains required before normal commit. No feature/native execution, other repository write, ceiling change, full CI or push.

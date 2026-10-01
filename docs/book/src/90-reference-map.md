@@ -340,6 +340,10 @@ duplicated cross-tree terminal narration becomes query-first. User-directed
 leaf `.14` published a self-contained external review packet before the next
 migration.
 
+Closed acceptance history uses an exact committed source and a unique legal
+heading. When a new boundary is needed, it is committed before the separate
+rollover; existing node contracts and active limits stay live throughout.
+
 Ownership records belong inside the first `## Task Tree` section and their
 parent child list. Matching IDs elsewhere in a file does not establish live
 registration. Completed semantic reset-question, reset-grammar and historical
