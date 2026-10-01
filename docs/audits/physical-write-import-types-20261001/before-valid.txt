@@ -1,0 +1,45 @@
+ram-guard: PID 52233; host 50.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'direct actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'generated actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'generated actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'domain actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'generated_domain actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'generated_domain actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'imported signed scalar input/output aliases also collect'
+    #   at t/1968-isf-physical-write-declarations.t line 148.
+    # Physical write declaration 'value' has an invalid width token
+    # Looks like you failed 7 tests of 74.
+
+#   Failed test 'actual imported type tokens match direct, generated and domain carriers'
+#   at t/1968-isf-physical-write-declarations.t line 150.
+# Looks like you failed 1 test of 7.
+t/1968-isf-physical-write-declarations.t .. 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/7 subtests 
+
+Test Summary Report
+-------------------
+t/1968-isf-physical-write-declarations.t (Wstat: 256 Tests: 7 Failed: 1)
+  Failed test:  2
+  Non-zero exit status: 1
+Files=1, Tests=7, 16 wallclock secs ( 0.02 usr  0.01 sys + 10.15 cusr  4.48 csys = 14.66 CPU)
+Result: FAIL

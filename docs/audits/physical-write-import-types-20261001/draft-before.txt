@@ -1,0 +1,565 @@
+ram-guard: PID 30226; host 45.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'direct actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'direct actual direct.fsm strictly replays'
+    #   at t/1968-isf-physical-write-declarations.t line 136.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : null,
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : null,
+    #          "message" : "Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/direct.fsm'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment to 'seen' uses RHS 'packet.payload' with incompatible width 3 for LHS width 5; the current contract blocks implicit widening and requires an explicit width-aligned source expression before generation",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : null,
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/direct.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/direct.fsm",
+    #       "resolved_path" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/direct.fsm"
+    #    },
+    #    "success" : false
+    # }
+
+    #   Failed test 'direct actual carrier reports success'
+    #   at t/1968-isf-physical-write-declarations.t line 138.
+
+    #   Failed test 'local_alias actual local_alias.fsm strictly replays'
+    #   at t/1968-isf-physical-write-declarations.t line 136.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : null,
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : null,
+    #          "message" : "Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/local_alias.fsm'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment to 'seen' uses RHS 'packet.payload' with incompatible width 3 for LHS width 5; the current contract blocks implicit widening and requires an explicit width-aligned source expression before generation",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : null,
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/local_alias.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/local_alias.fsm",
+    #       "resolved_path" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/local_alias.fsm"
+    #    },
+    #    "success" : false
+    # }
+
+    #   Failed test 'local_alias actual carrier reports success'
+    #   at t/1968-isf-physical-write-declarations.t line 138.
+
+    #   Failed test 'generated actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'generated actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'generated actual generated_top.fsm strictly replays'
+    #   at t/1968-isf-physical-write-declarations.t line 136.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : null,
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : "?fsmc",
+    #          "message" : "Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_top.fsm'\nGenerated child source: '?fsmc' 'worker'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment to 'result' uses RHS 'packet.payload' with incompatible width 3 for LHS width 5; the current contract blocks implicit widening and requires an explicit width-aligned source expression before generation",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : null,
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_top.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_top.fsm",
+    #       "resolved_path" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_top.fsm"
+    #    },
+    #    "success" : false
+    # }
+
+    #   Failed test 'generated actual carrier reports success'
+    #   at t/1968-isf-physical-write-declarations.t line 138.
+
+    #   Failed test 'generated actual worker.fsm strictly replays'
+    #   at t/1968-isf-physical-write-declarations.t line 136.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : null,
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : null,
+    #          "message" : "Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/worker.fsm'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment to 'result' uses RHS 'packet.payload' with incompatible width 3 for LHS width 5; the current contract blocks implicit widening and requires an explicit width-aligned source expression before generation",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : null,
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/worker.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/worker.fsm",
+    #       "resolved_path" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/worker.fsm"
+    #    },
+    #    "success" : false
+    # }
+
+    #   Failed test 'generated actual carrier reports success'
+    #   at t/1968-isf-physical-write-declarations.t line 138.
+
+    #   Failed test 'domain actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'domain actual domain__domain_io.fsm strictly replays'
+    #   at t/1968-isf-physical-write-declarations.t line 136.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : null,
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : null,
+    #          "message" : "Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/domain__domain_io.fsm'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment to 'seen' uses RHS 'packet.payload' with incompatible width 3 for LHS width 5; the current contract blocks implicit widening and requires an explicit width-aligned source expression before generation",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : null,
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/domain__domain_io.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/domain__domain_io.fsm",
+    #       "resolved_path" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/domain__domain_io.fsm"
+    #    },
+    #    "success" : false
+    # }
+
+    #   Failed test 'domain actual carrier reports success'
+    #   at t/1968-isf-physical-write-declarations.t line 138.
+
+    #   Failed test 'domain actual domain_top.fsm strictly replays'
+    #   at t/1968-isf-physical-write-declarations.t line 136.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : null,
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : "?fsmc",
+    #          "message" : "Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/domain__domain_io.fsm'\nParent composition source: '{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/domain_top.fsm'\nGenerated child source: '?fsmc' 'domain__domain_io'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment to 'seen' uses RHS 'packet.payload' with incompatible width 3 for LHS width 5; the current contract blocks implicit widening and requires an explicit width-aligned source expression before generation",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/domain_top.fsm",
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/domain__domain_io.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/domain_top.fsm",
+    #       "resolved_path" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/domain_top.fsm"
+    #    },
+    #    "success" : false
+    # }
+
+    #   Failed test 'domain actual carrier reports success'
+    #   at t/1968-isf-physical-write-declarations.t line 138.
+
+    #   Failed test 'generated_domain actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'generated_domain actual realized module declarations collect'
+    #   at t/1968-isf-physical-write-declarations.t line 108.
+    # Physical write declaration 'packet' has an invalid width token
+
+    #   Failed test 'generated_domain actual generated_domain__domain_io__child_worker.fsm strictly replays'
+    #   at t/1968-isf-physical-write-declarations.t line 136.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : null,
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : null,
+    #          "message" : "Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_domain__domain_io__child_worker.fsm'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment to 'result' uses RHS 'packet.payload' with incompatible width 3 for LHS width 5; the current contract blocks implicit widening and requires an explicit width-aligned source expression before generation",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : null,
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_domain__domain_io__child_worker.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_domain__domain_io__child_worker.fsm",
+    #       "resolved_path" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_domain__domain_io__child_worker.fsm"
+    #    },
+    #    "success" : false
+    # }
+
+    #   Failed test 'generated_domain actual carrier reports success'
+    #   at t/1968-isf-physical-write-declarations.t line 138.
+
+    #   Failed test 'generated_domain actual generated_domain_top.fsm strictly replays'
+    #   at t/1968-isf-physical-write-declarations.t line 136.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : null,
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : "?fsmc",
+    #          "message" : "Source file: '{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_domain__domain_io__child_worker.fsm'\nParent composition source: '{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_domain_top.fsm'\nGenerated child source: '?fsmc' 'generated_domain__domain_io__child_worker'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment to 'result' uses RHS 'packet.payload' with incompatible width 3 for LHS width 5; the current contract blocks implicit widening and requires an explicit width-aligned source expression before generation",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_domain_top.fsm",
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_domain__domain_io__child_worker.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_domain_top.fsm",
+    #       "resolved_path" : "{REPOSITORY_ROOT}/.artifacts/tmp/tests/DyfmhoteSu/generated_domain_top.fsm"
+    #    },
+    #    "success" : false
+    # }
+
+    #   Failed test 'generated_domain actual carrier reports success'
+    #   at t/1968-isf-physical-write-declarations.t line 138.
+
+    #   Failed test 'imported signed scalar input/output aliases also collect'
+    #   at t/1968-isf-physical-write-declarations.t line 148.
+    # Physical write declaration 'value' has an invalid width token
+    # Looks like you failed 23 tests of 74.
+
+#   Failed test 'actual imported type tokens match direct, generated and domain carriers'
+#   at t/1968-isf-physical-write-declarations.t line 150.
+# Looks like you failed 1 test of 7.
+t/1968-isf-physical-write-declarations.t .. 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/7 subtests 
+
+Test Summary Report
+-------------------
+t/1968-isf-physical-write-declarations.t (Wstat: 256 Tests: 7 Failed: 1)
+  Failed test:  2
+  Non-zero exit status: 1
+Files=1, Tests=7, 15 wallclock secs ( 0.01 usr  0.01 sys +  9.14 cusr  3.96 csys = 13.12 CPU)
+Result: FAIL

@@ -9,6 +9,7 @@ date: 2026-10-01
 status: current
 tags: [isf, record, output, writers, imports, ownership]
 evidence: >-
+  docs/audits/physical-write-import-types-20261001/manifest.json;
   docs/audits/record-output-ingress-20261001/manifest.json;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md;
   perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm;
@@ -16,8 +17,10 @@ evidence: >-
   perl/FSM/Scheduler/ISF/SourceWriterOwners.pm;
   docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-output-ingress-20261001/verify.py
+  scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
+  t/1968-isf-physical-write-declarations.t
+  t/1967-isf-physical-write-targets.t
+  t/1969-isf-implicit-write-targets.t
 ---
 
 At selected input signoff, authored local/imported record outputs still refuse.
@@ -26,10 +29,14 @@ called under an input-only gate. Output-only admission must wire mandatory
 context/domain/profile checks and closed physical writer ownership first.
 
 Actual imported input/storage carriers preserve `shared.frame` and strictly
-replay. PhysicalWriteDeclarations rejects that valid token because its grammar
-allows only bare identifiers; an equivalent local alias passes. The defect
-originates in `1933c4f1` and is owned next as P2 under SEM `.60.4.3.3.2`.
-The collector is preparatory; no output source is widened by this finding.
+replay. At ingress selection, PhysicalWriteDeclarations rejected that valid token because
+its grammar allowed only bare identifiers; an equivalent local alias passed.
+The defect originates in `1933c4f1`. SEM `.60.4.3.3.2` repairs the type-token
+grammar to match the existing single package qualifier, retaining bare
+signal/module identities and conservative unresolved-width contracts. Actual
+direct/generated/domain record and imported scalar controls pass with emitted
+token parity and strict replay. The collector remains preparatory; record
+output source stays closed until its writer gate qualifies.
 
 An actual scalar sibling control has different writes to one full packed root,
 explicit distinct source owners and empty conflict issues. That existing broad
@@ -44,5 +51,5 @@ Actual parser/IR/emitter/core replay and independent packed-target tests re-deri
 the boundary. Alias-equivalent success and hostile false import repair, output
 admission and omitted competing assignments falsify unsafe interpretations.
 Sealed receipts, baseline Git objects, selected task children and this card provide
-durability. Writer preparation, source admission and generated/public/native
+durability. Closed writer preparation, source admission and generated/public/native
 qualification remain `.3.3`–`.3.5`; native execution requires fresh HIAL admission.

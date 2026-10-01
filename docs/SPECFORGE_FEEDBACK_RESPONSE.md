@@ -98,9 +98,10 @@ and book.
   source, public, profile and original native evidence. Record outputs and their
   field writers are next under `.60.4.3.3` and `.60.4.3.4`; root-list ports and
   variants remain optional. Output ingress `.60.4.3.3.1` has selected the closed
-  writer/source/qualification split. A valid imported type token rejected by the
-  preparatory physical-write collector is owned next under `.3.2`; output
-  authoring stays closed until that repair and sound writer admission qualify.
+  writer/source/qualification split. The valid imported type-token rejection in
+  the preparatory physical-write collector is repaired under `.3.2`, with actual
+  direct/generated/domain and scalar controls. Closed writer admission `.3.3`
+  is next; record-output authoring stays refused until its gates qualify.
   The full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

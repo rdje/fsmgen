@@ -4,7 +4,10 @@ use warnings;
 use Test::More;
 use Storable qw(dclone);
 use JSON::PP;
-use lib 'perl';
+use File::Temp qw(tempdir);
+use lib 'perl', 't/lib';
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::SourceQueryRunner;
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::FormalLowering;
@@ -29,7 +32,7 @@ sub compare_emitted {
     my ($size) = $fsm =~ /\(\+size\n(.*?)^  \)/ms;
     my %actual;
     for my $line (split /\n/, $size // '') {
-        my ($name, $token) = $line =~ /^    \((\w+) (\w+)(?:\s|\))/;
+        my ($name, $token) = $line =~ /^    \((\w+) ([^()\s]+)(?:\s|\))/;
         ok(defined($name), "$label size entry parsed") or diag($line);
         $actual{$name} = $token if defined $name;
     }
@@ -49,6 +52,101 @@ subtest 'actual baseline declarations cover all admitted writer targets' => sub 
             $result->{module}, $result->{declarations}, $_->{target})} @{$ir->{assignment_provenance}};
         is(scalar @targets, scalar @{$ir->{assignment_provenance}}, "$case->{case_id} resolves every actual assignment");
     }
+};
+
+subtest 'actual imported type tokens match direct, generated and domain carriers' => sub {
+    my $work = tempdir(CLEANUP => 1);
+    my $json = JSON::PP->new->canonical;
+    my $write = sub {
+        my ($name, $text) = @_;
+        my $path = "$work/$name";
+        open my $fh, '>:raw', $path or die $!;
+        print {$fh} $text or die $!;
+        close $fh or die $!;
+        return $path;
+    };
+    $write->('shared.fsm', '(?pkg:shared (+types '
+        . '(type frame (record (tag (bits 2)) (payload (bits 3)))) '
+        . '(type word (signed (bits 5)))))');
+    for my $case (
+        ['direct', 'shared.frame', 0, 0],
+        ['local_alias', 'alias', 0, 0],
+        ['generated', 'shared.frame', 1, 0],
+        ['domain', 'shared.frame', 0, 1],
+        ['generated_domain', 'shared.frame', 1, 1],
+    ) {
+        my ($name, $type, $generated, $domain) = @$case;
+        my $timing = $domain
+            ? '(clock-domains (domain core (clock clk) :default) (domain io (clock io_clk)))'
+            : '(clock clk)';
+        my $owned = $domain ? '(domain io)' : '';
+        my $types = $type eq 'alias' ? '(types (type alias shared.frame))' : '';
+        my $body = $generated
+            ? "(transaction worker $owned (ports (output result (width 3)))"
+                . ' (set held packet) (set result packet.payload) (complete done))'
+                . " (transaction main $owned (on start)"
+                . ' (spawn worker as job (bind (output result seen))) (await_all done) (complete done))'
+            : "(transaction main $owned (on start) (set held packet) (set seen packet.payload) (complete done))";
+        my $source = "(actor $name $timing (imports (package shared)) $types"
+            . " (interface (input start $owned) (input packet (type $type) $owned)"
+            . " (output seen (width 3) $owned) (output done $owned))"
+            . " (storage (var held (type $type) $owned)) $body)";
+        my $path = $write->("$name.isf", $source);
+        my $actor = FSM::Adapter::ISF->new->parse_file($path);
+        my $actor_before = $json->encode($actor);
+        my $formal = FSM::Scheduler::ISF::FormalLowering->prepare($scheduler->{ir}, $actor);
+        my $physical = $formal ? $formal->{actor} : $actor;
+        my $ir = $scheduler->{ir}->build_module($physical);
+        my @parents = $domain
+            ? map { $_->{ir} } @{$scheduler->_multi_domain_realizations($physical, $ir->{domain_partition})}
+            : ($ir);
+        for my $parent (@parents) {
+            for my $module ($parent, map { $parent->{children}{$_} } sort keys %{$parent->{children} || {}}) {
+                my ($result, $error);
+                eval { $result = compare_emitted($module, "$name $module->{actor_name}"); 1 }
+                    or $error = $@;
+                ok($result, "$name actual realized module declarations collect")
+                    or diag((split /\n/, $error // '')[0]);
+                next unless $result;
+                if (exists $result->{declarations}{held}) {
+                    my $range = FSM::Scheduler::ISF::PhysicalWriteTargets->resolve(
+                        $result->{module}, $result->{declarations}, 'held.tag');
+                    is_deeply([@{$range}{qw(low high width)}], [3,4,2],
+                        "$name storage leaf retains independently expected packed range");
+                }
+                for my $token (qw(shared. .frame shared..frame shared.frame.extra shared/frame)) {
+                    my $bad = dclone($module);
+                    next unless @{$bad->{ports}};
+                    $bad->{ports}[0]{type} = $token;
+                    my $ok = eval { $collector->collect($bad); 1 };
+                    my ($first) = split /\n/, $@;
+                    ok(!$ok, "$name malformed type token refuses");
+                    like($first // '', qr/^Physical write declaration '.*' has an invalid width token/,
+                        "$name malformed token has the primary declaration reason");
+                }
+            }
+        }
+        is($json->encode($actor), $actor_before, "$name complete parsed caller JSON is unchanged");
+        my $files = $scheduler->lower($actor)->{files};
+        for my $filename (sort keys %$files) {
+            my $carrier = $write->($filename, $files->{$filename});
+            my $native = FSM::Test::SourceQueryRunner::_capture(
+                [$^X, 'bin/fsmgen', '--quiet', '--strict', '--check', '--json', $carrier], '');
+            is($native->{exit_code}, 0, "$name actual $filename strictly replays")
+                or diag($native->{stdout}, $native->{stderr});
+            is($native->{signal}, 0, "$name carrier has no signal failure");
+            ok($json->decode($native->{stdout})->{success}, "$name actual carrier reports success");
+        }
+    }
+    my $scalar = $write->('scalar.isf', '(actor scalar (clock clk) (imports (package shared))'
+        . ' (interface (input value (type shared.word)) (output result (type shared.word)))'
+        . ' (transaction main (set result value)))');
+    my $actor = FSM::Adapter::ISF->new->parse_file($scalar);
+    my $ir = $scheduler->{ir}->build_module($actor);
+    my $result = eval { compare_emitted($ir, 'imported scalar') };
+    my $error = $@;
+    ok($result, 'imported signed scalar input/output aliases also collect')
+        or diag((split /\n/, $error // '')[0]);
 };
 
 subtest 'actual post-wiring parent and child declarations stay module-local' => sub {

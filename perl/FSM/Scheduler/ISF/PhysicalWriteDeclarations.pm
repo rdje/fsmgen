@@ -24,9 +24,13 @@ sub collect {
         return if exists $declarations{$name};
         $entry ||= {};
         my $token = $entry->{type} // $types->{$name} // $width;
+        # The emitter preserves actor-local and package-qualified type aliases.
+        # Signal/module names remain bare identifiers; only the type token may
+        # carry the single package qualifier accepted by the source resolver.
         confess "Physical write declaration '$name' has an invalid width token\n"
             unless defined($token) && !ref($token)
-                && ($token =~ /\A[1-9][0-9]*\z/ || _identifier($token));
+                && ($token =~ /\A[1-9][0-9]*\z/ || _identifier($token)
+                    || $token =~ /\A[A-Za-z_]\w*\.[A-Za-z_]\w*\z/);
         my $declaration = {width => $width, width_token => $token, origin => $origin};
         $declaration->{type_spec} = FSM::Package::AggregatePathSupport->clone_structured_value($entry->{type_spec})
             if exists $entry->{type_spec};

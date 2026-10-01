@@ -1,0 +1,84 @@
+{
+  "baseline_revision": "eaed5ba1738935556f8ebff5ee1972e03181fd50",
+  "baseline_sources": {
+    "perl/FSM/Adapter/ISF/Parser.pm": {
+      "git_blob": "6632044620ecb342dd4888c90a1bb8f221845356",
+      "sha256": "3d6e6d530e3ac471d2a42a0aaa05c433cfb0d17e5fb36716f10fb6079d0fa9ac"
+    },
+    "perl/FSM/Scheduler/ISF/Emitter/FSM.pm": {
+      "git_blob": "712f823ce641376672f212e01d5c49192792dd0f",
+      "sha256": "446c1c8c189f130fb7c4ae69244c1853f8ef9f30ace347e463eda18cd724a3bb"
+    },
+    "perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm": {
+      "git_blob": "304b397f6835483b9065f0c20d2dd3b85cef8cdd",
+      "sha256": "f4fa71f3c90f9f2210dec589a6f75b7c3561e5c9443e675cebc62c1ad94b74af"
+    },
+    "perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm": {
+      "git_blob": "0968fd03ff6a816c474e7e36ef93fe3312eadd34",
+      "sha256": "4cbaec3dd9c91239d2d7134cfd815a9b592c0249f6669e60a6f5748f6f0826a2"
+    },
+    "t/1968-isf-physical-write-declarations.t": {
+      "git_blob": "4d7f5896e17c54a0480e3ce27c7e747032332db5",
+      "sha256": "a8ea4a77016a555e254089ff13fa8357bd426dd213390cdf2388a0f3f1316eed"
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.2",
+  "receipts": {
+    "before-valid.txt": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 2161,
+      "raw_sha256": "8b5a15397e8f48d7920a113b1119fc70df967faf7509680bdd0b44431840405a",
+      "root_prefix_bytes": 36
+    },
+    "book.txt": {
+      "exact_root_replacements": 1,
+      "raw_bytes": 314,
+      "raw_sha256": "b1eb5a50677c92dc6dccb4821d6ce28285f13ccf14aeb25fe2637e018979d3f2",
+      "root_prefix_bytes": 36
+    },
+    "docs.txt": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 366,
+      "raw_sha256": "42bc08d25977b0eba6c52c59b8b4fd28d99b895f948aba3b19bf405c43c14f22",
+      "root_prefix_bytes": 36
+    },
+    "draft-before.txt": {
+      "exact_root_replacements": 36,
+      "raw_bytes": 25835,
+      "raw_sha256": "ad479a19a115210b0a3eb4211d1ceff9c30deb7ce7719b25903556f87ba25dcf",
+      "root_prefix_bytes": 36
+    },
+    "draft-test.t.source": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 13774,
+      "raw_sha256": "bc10ecdbecaf110d0476dd180b80f9aac896c1fa5be6dbdc09948e158fff8132",
+      "root_prefix_bytes": 36
+    },
+    "focused.txt": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 267,
+      "raw_sha256": "aa6847be02c02aa2ab16f3c1f3aa9d3d356d07eca4d6839a7582fc97074fe7f7",
+      "root_prefix_bytes": 36
+    },
+    "regression.txt": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 347,
+      "raw_sha256": "702459e3c3148e8c64ed0782d9627230f81d420c4248f096e105e6f91c650091",
+      "root_prefix_bytes": 36
+    }
+  },
+  "schema": "fsmgen.physical_write_import_types.v1",
+  "sha256": {
+    "baseline-production.txt": "11077f74b4477dc8fc443fbc8fbd50e75c2298d4b2e23d7816105de266c82243",
+    "before-valid.txt": "8b5a15397e8f48d7920a113b1119fc70df967faf7509680bdd0b44431840405a",
+    "book.txt": "acc79f1f1c89054c06b1fda2cc45e346ec2b1c7046fcb781902fb873fd31eaae",
+    "collector.pm.source": "2efba0f1b157266693921043d5aac4fa33420433c6d4f0e8f34bb3e123e61423",
+    "docs.txt": "42bc08d25977b0eba6c52c59b8b4fd28d99b895f948aba3b19bf405c43c14f22",
+    "draft-before.txt": "eb1eb7b4f5e7e7e86399371511e966c7632e6ef6435fce768dc06fa0fe771238",
+    "draft-test.t.source": "bc10ecdbecaf110d0476dd180b80f9aac896c1fa5be6dbdc09948e158fff8132",
+    "focused.txt": "aa6847be02c02aa2ab16f3c1f3aa9d3d356d07eca4d6839a7582fc97074fe7f7",
+    "regression.txt": "702459e3c3148e8c64ed0782d9627230f81d420c4248f096e105e6f91c650091",
+    "test.t.source": "2272f5095cbcd7eaa187c0dee54745e4cddfa31d9d5c126dd786609f6ee2229b",
+    "verify.py": "06511df03139b25b9dce61e392a78effd2a9d282ef9ae4b58edda8f46ec2015e"
+  }
+}

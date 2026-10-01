@@ -1,0 +1,7 @@
+ram-guard: PID 79908; host 76.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1305-isf-book-feature-matrix-audit.t ..... ok
+t/1414-docs-relative-paths-audit.t ......... ok
+t/1303-isf-public-live-book-paths-audit.t .. ok
+All tests successful.
+Files=3, Tests=310,  3 wallclock secs ( 0.02 usr  0.01 sys +  1.43 cusr  0.33 csys =  1.79 CPU)
+Result: PASS
