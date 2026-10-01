@@ -561,7 +561,7 @@ for clean stderr must remain compatible with the hosted Perl version.
 Keep diagnostic logs and captured native/compiler evidence when maintaining
 generated artifacts. Periodic cleanup removes only proven obsolete render
 copies; the current book output and its committed sources remain available.
-`docs/ARTIFACT_CLEANUP.md` records the latest repository-owned sweep.
+`docs/ARTIFACT_CLEANUP.md` records the latest repository-owned sweep. Rust sweeps inspect release, incremental and dependency directories for `.bin` and `.log` files; retained evidence is recorded separately from disposable render candidates.
 
 The repository RAM guard preserves standard input for the command it supervises.
 Pipes, input files and interpreter programs supplied on stdin therefore work:

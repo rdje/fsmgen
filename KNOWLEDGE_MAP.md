@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1252** facts · **6867** unique questions · **7044** answer occurrences · **177** topic shards.
+> **1253** facts · **6870** unique questions · **7047** answer occurrences · **178** topic shards.
 
 Query first:
 
@@ -22,6 +22,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `aggregate-parameter` | 1 | 4 | [`aggregate-parameter.md`](knowledge-map/generated/aggregate-parameter.md) |
 | `aggregate-typedef` | 1 | 3 | [`aggregate-typedef.md`](knowledge-map/generated/aggregate-typedef.md) |
 | `ahb-hburst` | 1 | 4 | [`ahb-hburst.md`](knowledge-map/generated/ahb-hburst.md) |
+| `artifact-cleanup` | 1 | 3 | [`artifact-cleanup.md`](knowledge-map/generated/artifact-cleanup.md) |
 | `axi-ial2` | 3 | 15 | [`axi-ial2.md`](knowledge-map/generated/axi-ial2.md) |
 | `axi-id` | 1 | 5 | [`axi-id.md`](knowledge-map/generated/axi-id.md) |
 | `axi-manager` | 2 | 10 | [`axi-manager.md`](knowledge-map/generated/axi-manager.md) |

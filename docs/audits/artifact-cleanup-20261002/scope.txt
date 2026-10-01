@@ -1,0 +1,31 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.5
+Baseline: c8c1e5ee45f8594f2f298876d95ab20e0127eccc
+
+The latest cleanup record is older than the daily threshold. Exact old cleanup
+revision is retrieved by Git pickaxe; the new fixed target is only the obsolete
+profile-preparation mdBook render. Its complete regular-node and member census
+reconciles os.walk and rg, identifies the generated project book, rejects symlink,
+foreign-volume and nested-Git boundaries, then authenticates the same inspection
+before exact deletion. Fresh residue is absent. No generic caller-controlled
+path or shared cache is deleted.
+
+Current book, named output/source/profile/input-native archive parents, current
+profile workspace and restored prior logs have separate before/after byte/hash
+captures immediately around deletion. Their equal captures are historical;
+the maintained current book is rebuilt afterward and its old rendered bytes are
+not asserted to equal the new build. Original obsolete bytes and their unknown
+producing revision are intentionally not retained or reproducible. Immutable
+parents remain available and their complete members are checked now.
+
+Rust release/deps/incremental paths are explicitly absent or censused, with no
+log/bin candidates at capture. Every log, native/receipt/spent compiler evidence
+and current rendered book is retained. No HDL execution or capture replay runs.
+The latest-only cleanup record and book guidance are synchronized; complete
+input/scalar/storage predecessor products are the resumed feature successor.
+
+Actual cleanup inspection/application/residue/protected products re-derive the
+dated result. Independent membership and saved allocation, exact target and
+hostile scope/path/loss/retention/identity controls provide falsification.
+Tracked fixed driver, complete candidate nodes/members, protected before/after
+identities, terminal receipts, immutable parents, verifier and task/book/Git
+retain durability with the raw obsolete-render reproduction gap explicit.

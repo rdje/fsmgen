@@ -1,0 +1,1 @@
+cleanup: exact generated renders removed; selected residue absent; current book and evidence retained

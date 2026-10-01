@@ -1,0 +1,54 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.5",
+  "receipt_projections": {
+    "apply.txt": {
+      "raw_bytes": 102,
+      "raw_sha256": "cdcdac2c2330acb29b4c1e0b12fbbb9bed86847ecd5ab32a4a7fa921f1f057d2",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "book.txt": {
+      "raw_bytes": 285,
+      "raw_sha256": "b513ada9d9d32ca0732c73e1423251e8883224782cb622ccf174a395e6788fdb",
+      "replacement_count": 1,
+      "root_prefix_bytes": 36
+    },
+    "docs.txt": {
+      "raw_bytes": 366,
+      "raw_sha256": "ae25bb626b218e6e07de827f5a1791bf3aabf77918422b363492b82f68da51f8",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "inspect.txt": {
+      "raw_bytes": 83,
+      "raw_sha256": "7b3f45d9dd630051c9efaa610f8e1cb3210fe2e5535788064cfbacd2b35dc0b3",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    },
+    "verify-saved.txt": {
+      "raw_bytes": 73,
+      "raw_sha256": "bb9f904fad4c048329240b240465260c496951cdc2909bd41184fdc887e32fc5",
+      "replacement_count": 0,
+      "root_prefix_bytes": 36
+    }
+  },
+  "sha256": {
+    "apply.txt": "cdcdac2c2330acb29b4c1e0b12fbbb9bed86847ecd5ab32a4a7fa921f1f057d2",
+    "book.txt": "9b1eee5097ec40d45b7621abc8d02c4d0fda8caa566da5adaf66d487ab75bdbc",
+    "cleanup.py": "e841e5191137ae9ba0c5887a5088e3e8be75383f1766f9cac2e168c105b26586",
+    "docs.txt": "ae25bb626b218e6e07de827f5a1791bf3aabf77918422b363492b82f68da51f8",
+    "inspect.txt": "7b3f45d9dd630051c9efaa610f8e1cb3210fe2e5535788064cfbacd2b35dc0b3",
+    "protected.json": "ea57fdfaba4fdf58b7591d083c94dccf52334fca8d004769804fd674610a9e18",
+    "result.json": "395fdc32d5d6b27bc4e4902646f82e3bd720c4c01400fd8d10f7a79e1aebb51b",
+    "scope.txt": "c65f05e0d24c6ff2a0e67b2e159a7bc5a38b3327a4b192c2097d3361134522dd",
+    "verify-saved.txt": "bb9f904fad4c048329240b240465260c496951cdc2909bd41184fdc887e32fc5",
+    "verify.py": "64e930cd4489cf643f1f766584c2a30aea737eaa94db0210fbb5f0f220249e36"
+  },
+  "terminal_exit_codes": {
+    "apply": 0,
+    "book": 0,
+    "docs": 0,
+    "inspect": 0,
+    "verify_saved": 0
+  }
+}

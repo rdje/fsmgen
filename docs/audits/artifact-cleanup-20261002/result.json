@@ -1,0 +1,1373 @@
+{
+  "cleanup_revision": "c8c1e5ee45f8594f2f298876d95ab20e0127eccc",
+  "independent_membership": "os.walk regular-file set equals rg --files --hidden --no-ignore",
+  "limits": [
+    "Deleted render bytes are intentionally not retained.",
+    "The old renders do not bind their original producing Git revision; their byte census is a dated capture, not a reproduced historical build."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.5",
+  "removed": [
+    {
+      "bytes_total": 26389300,
+      "files": [
+        {
+          "bytes": 72,
+          "path": ".artifacts/record-output-profiles/book/.nojekyll",
+          "sha256": "235d4f83c4c71612f43995dbda167720cd0c5384bf9ea64f9328b187c409b51d"
+        },
+        {
+          "bytes": 25151,
+          "path": ".artifacts/record-output-profiles/book/00-introduction.html",
+          "sha256": "ed273cf84c80b32f1eb15d585b370f476d13be1c7803ab2b5180551fea6b4894"
+        },
+        {
+          "bytes": 25490,
+          "path": ".artifacts/record-output-profiles/book/01-first-fsm.html",
+          "sha256": "1d2b0c46e56472bce8206ba0712d4f96045ed7314d901e283150b890299a9055"
+        },
+        {
+          "bytes": 47271,
+          "path": ".artifacts/record-output-profiles/book/02-language-basics.html",
+          "sha256": "f06ba2d726df56f012e8031993481c79eb2881227b5e6ebe91801ea9c84df0ed"
+        },
+        {
+          "bytes": 45911,
+          "path": ".artifacts/record-output-profiles/book/03-decision-trees-and-fsms.html",
+          "sha256": "29d0c2eca3b8d87da8cf3ce480fc5760909e3084062930227554e3633a358ac6"
+        },
+        {
+          "bytes": 44260,
+          "path": ".artifacts/record-output-profiles/book/04-symbols-types-and-imports.html",
+          "sha256": "b5bac6609086727bfe35e07208ff07faae9c3d7a18c8660042ad83bba764c717"
+        },
+        {
+          "bytes": 50832,
+          "path": ".artifacts/record-output-profiles/book/05-composition-basics.html",
+          "sha256": "ef569ebd234fda0aa5f7db5bed28db43361e3f5ec9fb17728b57efd665a72916"
+        },
+        {
+          "bytes": 56138,
+          "path": ".artifacts/record-output-profiles/book/06-composition-advanced.html",
+          "sha256": "feb28401d6565a2452a1b76650ebdbcfbedf1c98dac6d054eabe54a737f117d6"
+        },
+        {
+          "bytes": 25783,
+          "path": ".artifacts/record-output-profiles/book/07-packages-and-sharing.html",
+          "sha256": "830fe14aab120d0e14ca913dd26b6651db7df42c9f9ba0566b2405b67e719dfb"
+        },
+        {
+          "bytes": 38510,
+          "path": ".artifacts/record-output-profiles/book/08-type-inference-and-aggregate-data.html",
+          "sha256": "ce1db4c86ef773c78daf9eb6a239493cbcb94cc5d6b9b3d8af6ad388525d5363"
+        },
+        {
+          "bytes": 50950,
+          "path": ".artifacts/record-output-profiles/book/09-generated-hdl-debugging-and-inspection.html",
+          "sha256": "71c1b05b87957ab03413f7e33ea594f0f3defde8f9b5bd94777661d5a42d4fa5"
+        },
+        {
+          "bytes": 71238,
+          "path": ".artifacts/record-output-profiles/book/10-errors-strict-mode-and-troubleshooting.html",
+          "sha256": "0e8d331619c29c084f3e94453b833a9b1cbe444311f7b917a029619f5a336afb"
+        },
+        {
+          "bytes": 34443,
+          "path": ".artifacts/record-output-profiles/book/10a-downstream-issue-reporting.html",
+          "sha256": "9eb495b8aafda57c584e1ac726162fe62fd947e07aafdea07b9b9e34e5d8358e"
+        },
+        {
+          "bytes": 254430,
+          "path": ".artifacts/record-output-profiles/book/11-extensions-and-embedding.html",
+          "sha256": "b18e09065d067d84980e89dcd5968123d4ad37129c0b869345326d5abd5c496f"
+        },
+        {
+          "bytes": 35761,
+          "path": ".artifacts/record-output-profiles/book/12-cookbook.html",
+          "sha256": "2153be0e1f18c3aae0d2909c72b9c03e6532d07cac24ebffa913982f1e80cf9f"
+        },
+        {
+          "bytes": 87095,
+          "path": ".artifacts/record-output-profiles/book/13-intent-scheduling.html",
+          "sha256": "cf9b41c61fde6eba7eab58184613d137b981add8d2ed69f8eaa5d1c904057442"
+        },
+        {
+          "bytes": 81165,
+          "path": ".artifacts/record-output-profiles/book/13a-actor-interface.html",
+          "sha256": "01deb794c70178dd2e45524874ae0a8c6f08f0b2fba18a73e2f8a0b891b2c7a2"
+        },
+        {
+          "bytes": 146604,
+          "path": ".artifacts/record-output-profiles/book/13b-transactions.html",
+          "sha256": "ac06fbf1a31d8c8177e5cfbfc1882b89aceed973f4cfd51bf4f0892acf800195"
+        },
+        {
+          "bytes": 28588,
+          "path": ".artifacts/record-output-profiles/book/13c-drive-blocks.html",
+          "sha256": "cc559946f73eddd177c9e8af0c7fbe3e185dacbd5f77b2d09bfba2b005897a9f"
+        },
+        {
+          "bytes": 111591,
+          "path": ".artifacts/record-output-profiles/book/13d-control-flow.html",
+          "sha256": "018bc2842d2941fa47595121b7cacc428c81d22501a546c74d385b2e98d4f705"
+        },
+        {
+          "bytes": 63570,
+          "path": ".artifacts/record-output-profiles/book/13e-data-manipulation.html",
+          "sha256": "081251bfda35ad76d77a5b2efd756b06d6822141707602621952db81e50917db"
+        },
+        {
+          "bytes": 127712,
+          "path": ".artifacts/record-output-profiles/book/13f-composition.html",
+          "sha256": "2991f9f193e09143a9ef1af49f50e6c970cc632fb99d3a1ce74ff0f505e2c726"
+        },
+        {
+          "bytes": 59162,
+          "path": ".artifacts/record-output-profiles/book/13g-rules.html",
+          "sha256": "5763c7a550e1578b2571c471b3d33c3cd7af2c24bb86fd984332bc47c479efa7"
+        },
+        {
+          "bytes": 138861,
+          "path": ".artifacts/record-output-profiles/book/13h-lowering-reference.html",
+          "sha256": "de7d8d741164972cb7bb9cb0b233c007879413e466e6bedf375c82a09e79f603"
+        },
+        {
+          "bytes": 289110,
+          "path": ".artifacts/record-output-profiles/book/13i-downstream-integration.html",
+          "sha256": "fa1b266b50dc9a8aa4cc54d5cd7e2f01479e7fe3c9968beb1ad0460ece39e536"
+        },
+        {
+          "bytes": 73490,
+          "path": ".artifacts/record-output-profiles/book/13j-type-enum-aggregate.html",
+          "sha256": "a2493e3ec4ab40d38257183fc6468909586412c317778d5c1d4a4a03ab890150"
+        },
+        {
+          "bytes": 153838,
+          "path": ".artifacts/record-output-profiles/book/13k-isf-feature-support-matrix.html",
+          "sha256": "79d45fc99f1103236b3be32766269444cf60260d92118ce83b07596de565ca10"
+        },
+        {
+          "bytes": 30485,
+          "path": ".artifacts/record-output-profiles/book/13l-procedures.html",
+          "sha256": "d2aa6e5f336db19ada6b0050bb2e45f5a762d79a88c119dee1ef5382a2dff1de"
+        },
+        {
+          "bytes": 29046,
+          "path": ".artifacts/record-output-profiles/book/13m-local-variables.html",
+          "sha256": "c427dd264926f1494356b31c8565d9ac5137060a82c19433df77b20a0c7e1b46"
+        },
+        {
+          "bytes": 27610,
+          "path": ".artifacts/record-output-profiles/book/14-feature-backlog.html",
+          "sha256": "7b0110f9fef771c495cf8405fe9daa00fa9962ada0f67ee99775c55d75475db5"
+        },
+        {
+          "bytes": 33614,
+          "path": ".artifacts/record-output-profiles/book/14a-language-and-data.html",
+          "sha256": "bdeebcd2bd9ea433ae91a7c944c975fd763bd203a3bbece5ca14ddacc6be4063"
+        },
+        {
+          "bytes": 97502,
+          "path": ".artifacts/record-output-profiles/book/14b-composition-backlog.html",
+          "sha256": "127ffea218acb806c6394833700d37b0cdc9635fdc25c2c07a3ec7c9034c1f42"
+        },
+        {
+          "bytes": 69289,
+          "path": ".artifacts/record-output-profiles/book/14c-actor-network-orchestration.html",
+          "sha256": "c509bd0e4afd93be5334c2a349f85d3001916c0c65d1a027efba8f41984c502e"
+        },
+        {
+          "bytes": 127905,
+          "path": ".artifacts/record-output-profiles/book/14d-ial2-foundations.html",
+          "sha256": "f94c5f9cb54fe42e55c8df7821e40f1680f6511b19226527e56ac9b3af0ef53f"
+        },
+        {
+          "bytes": 30592,
+          "path": ".artifacts/record-output-profiles/book/14e-hial-vial-verification.html",
+          "sha256": "a2fff4631f4c68f541050f2ccd073d361b63216e03f9659f2a54d021ab18fa8a"
+        },
+        {
+          "bytes": 176098,
+          "path": ".artifacts/record-output-profiles/book/14f-axi-manager-core.html",
+          "sha256": "1df4ff684dfa6b70a0662007e978530bf8eb2578120a3409cf94ee8788966963"
+        },
+        {
+          "bytes": 233227,
+          "path": ".artifacts/record-output-profiles/book/14g-axi-dynamic-identity.html",
+          "sha256": "189adcbd46ac21d9b20da2cf77bdf70f91201c543d47ae768760bd8cdc6b3c0e"
+        },
+        {
+          "bytes": 193151,
+          "path": ".artifacts/record-output-profiles/book/14h-protocol-profiles-and-apb.html",
+          "sha256": "49652d36af5f976c7ac6767c5e3ac086bcdb1c1e8463b01e97a1055f09411684"
+        },
+        {
+          "bytes": 199527,
+          "path": ".artifacts/record-output-profiles/book/14i-ahb-and-integration.html",
+          "sha256": "8e57c0ea985f0f544a71e60efe6884f46664c4473241974eaf978ab5cb3dafa0"
+        },
+        {
+          "bytes": 151227,
+          "path": ".artifacts/record-output-profiles/book/14j-extended-axi.html",
+          "sha256": "50feb566db45a90b5985ef5e68a9900b18188c198b6f6fb5c65499aa76ee5e5e"
+        },
+        {
+          "bytes": 123155,
+          "path": ".artifacts/record-output-profiles/book/14k-isf-language-and-scheduling.html",
+          "sha256": "3dd8f1ada2b85ba725f5f97ed004cf014e981fbf649211fe534ac53e35057214"
+        },
+        {
+          "bytes": 96258,
+          "path": ".artifacts/record-output-profiles/book/14l-backends-validation-and-apis.html",
+          "sha256": "4eefb4e6c0c31e0828e67763be2cb5ebd8517be7ef9ab21bb71ebe81c4ba56a6"
+        },
+        {
+          "bytes": 29962,
+          "path": ".artifacts/record-output-profiles/book/15-implementation-blueprint.html",
+          "sha256": "d6ada3a98cec94cd0705d9f98a5123cdb512059657e80361978a065811d3a500"
+        },
+        {
+          "bytes": 25674,
+          "path": ".artifacts/record-output-profiles/book/15a-ial2-new-protocol-support.html",
+          "sha256": "e7a02ee4b29685a09ec6244c95b4bf8bbf3e4d5a591e75fc7ec67225206609c6"
+        },
+        {
+          "bytes": 30874,
+          "path": ".artifacts/record-output-profiles/book/16-ial2-protocol-platform-intent.html",
+          "sha256": "a30c7c1e722038d3e4c8e88f3383948410c1be2ddb633b148c55ce3b0a13fcca"
+        },
+        {
+          "bytes": 84992,
+          "path": ".artifacts/record-output-profiles/book/16a-ial2-axi.html",
+          "sha256": "bb8353dd1e1a222d8d0c8a25c116a3286d71675653320bb09b9ac79dc7e6fded"
+        },
+        {
+          "bytes": 60356,
+          "path": ".artifacts/record-output-profiles/book/16aa-ial2-axi-manager-capacity-status.html",
+          "sha256": "a8abe3b8b6ee73f33908264c5be78aa7cb94c224765e070caabe8d741bf7c689"
+        },
+        {
+          "bytes": 30397,
+          "path": ".artifacts/record-output-profiles/book/16b-ial2-apb.html",
+          "sha256": "477523f849ff010b65dc97847bf1dcae677cfc49672a043f3ccdb21f29254a6e"
+        },
+        {
+          "bytes": 254470,
+          "path": ".artifacts/record-output-profiles/book/16c-ial2-ahb.html",
+          "sha256": "99c15cb5624f385fda76a19393b87919c6cb76c4bf698d91afb3893b2443f98e"
+        },
+        {
+          "bytes": 330700,
+          "path": ".artifacts/record-output-profiles/book/16d-hial-vial-verification-architecture.html",
+          "sha256": "7eb0c7aa993d071bc9e7edabda240e7858ddfdce7f05551eb4d3bf346e230008"
+        },
+        {
+          "bytes": 46770,
+          "path": ".artifacts/record-output-profiles/book/16da-vial-balanced-portable-composition.html",
+          "sha256": "5691f38659c76e2c301ea205c044181049ad22411610c0715aa4bf5e88b2f454"
+        },
+        {
+          "bytes": 29523,
+          "path": ".artifacts/record-output-profiles/book/16db-vial-structural-backend-emission-matrix.html",
+          "sha256": "11e9333bd9b81c3c79cde182e9396e6c8e98d522cfa3ba9f660102eda47f9017"
+        },
+        {
+          "bytes": 321949,
+          "path": ".artifacts/record-output-profiles/book/16dc-vial-portable-verilator-runtime-measurement.html",
+          "sha256": "fda1e9bde999f8954a32e6385e691c1ecdce3967c3be8078f807b21768e29c5f"
+        },
+        {
+          "bytes": 62575,
+          "path": ".artifacts/record-output-profiles/book/16dd-vial-portable-vhdl-runtime-measurement.html",
+          "sha256": "1ab417be27d9b39f3b7f87aa10eaa910c1cc84d5a998f631bbd803ad83fde90b"
+        },
+        {
+          "bytes": 62366,
+          "path": ".artifacts/record-output-profiles/book/16de-vial-osvvm-runtime-execution-plan.html",
+          "sha256": "a0142c71db0390532e287bd1cfd3c12c4783eff08181056e5b3207d2081c883b"
+        },
+        {
+          "bytes": 204125,
+          "path": ".artifacts/record-output-profiles/book/16df-vial-architecture-scale-cap-closeout.html",
+          "sha256": "2daee785444cae27c7887c430483a603d2ac3f995b5603a05b75b5e3f49b6d3e"
+        },
+        {
+          "bytes": 57217,
+          "path": ".artifacts/record-output-profiles/book/16dg-vial-public-lifecycle-reference.html",
+          "sha256": "276b04d297a76da074efed9e009666fc663979d797f696d9d45377f14046cee3"
+        },
+        {
+          "bytes": 38420,
+          "path": ".artifacts/record-output-profiles/book/16dh-vial-ahb-end-to-end-tutorial.html",
+          "sha256": "c8c162f8f15e58910fb1980acd095280539b8c44ce1e75bf8b680b4d29cea081"
+        },
+        {
+          "bytes": 41447,
+          "path": ".artifacts/record-output-profiles/book/16di-vial-legacy-migration.html",
+          "sha256": "1543370f4a928d4f422c2a53371a13c8a101cb26c9c1912af04c5a728a4b67b3"
+        },
+        {
+          "bytes": 43133,
+          "path": ".artifacts/record-output-profiles/book/16dj-vial-capability-support-reference.html",
+          "sha256": "6cb4cab7dbb1c3f4725457af3e975fbee46ac114aa432935a31fbcef4449db08"
+        },
+        {
+          "bytes": 127215,
+          "path": ".artifacts/record-output-profiles/book/16dk-inactive-proxy-lifetimes.html",
+          "sha256": "cb000826448bd1806af81ee3d8f4077e353ef8fc788f508e6a47b3838157692e"
+        },
+        {
+          "bytes": 144907,
+          "path": ".artifacts/record-output-profiles/book/16e-nexsim-api-mcp-consumer-requirements.html",
+          "sha256": "17a2f7edf9b48db0697186efcd4e5760d22aef418243488392e38ab4cca736b7"
+        },
+        {
+          "bytes": 17673,
+          "path": ".artifacts/record-output-profiles/book/404.html",
+          "sha256": "781a0703e19b689e4aab8a1c24837e10702800db07fff3c341872e1fbbd34d61"
+        },
+        {
+          "bytes": 61283,
+          "path": ".artifacts/record-output-profiles/book/90-reference-map.html",
+          "sha256": "b8eca0b6436c71ee5dbc14d0c7775f53ce2fd66d920f61052175d5567f568a55"
+        },
+        {
+          "bytes": 45608,
+          "path": ".artifacts/record-output-profiles/book/91-live-document-containment-adoption.html",
+          "sha256": "2e3af04550a397d9a00b8611515b5bf734f84cc97e17fb32f9337078afa82140"
+        },
+        {
+          "bytes": 907,
+          "path": ".artifacts/record-output-profiles/book/ayu-highlight-3fdfc3ac.css",
+          "sha256": "3fdfc3ac5e435e0cef96dafee74da487e4846ffce4dff5973bb45d68b678dd7f"
+        },
+        {
+          "bytes": 30932,
+          "path": ".artifacts/record-output-profiles/book/book-609e4cb8.js",
+          "sha256": "609e4cb80f92aa954a3f48869c751f6f8848433604f1297bb70fde0e3e58a569"
+        },
+        {
+          "bytes": 10754,
+          "path": ".artifacts/record-output-profiles/book/clipboard-1626706a.min.js",
+          "sha256": "1626706afc88d95ebe1173b553ec732c6dc82a576989315fdf5e7779af738a44"
+        },
+        {
+          "bytes": 18032,
+          "path": ".artifacts/record-output-profiles/book/css/chrome-d279d366.css",
+          "sha256": "d279d366359c0d588c9c10cb46afe2b543fc731dea722803639b4e45016d5fe2"
+        },
+        {
+          "bytes": 11478,
+          "path": ".artifacts/record-output-profiles/book/css/general-e96d0476.css",
+          "sha256": "e96d0476741bfcbe8cc0ac02db00187c45a63946834361d0eab846016787c646"
+        },
+        {
+          "bytes": 689,
+          "path": ".artifacts/record-output-profiles/book/css/print-9e4910d8.css",
+          "sha256": "9e4910d8eb508863172430c60d49fd3b442e9e7f5963a18cd1d655c386ffeae9"
+        },
+        {
+          "bytes": 10422,
+          "path": ".artifacts/record-output-profiles/book/css/variables-8adf115d.css",
+          "sha256": "8adf115df892369c90b830767c4651a9e058b79273e219935f7c8a96c6eab9c0"
+        },
+        {
+          "bytes": 18051,
+          "path": ".artifacts/record-output-profiles/book/elasticlunr-ef4e11c1.min.js",
+          "sha256": "ef4e11c157b1e2e89782d30bd726f2d5ff7834ea5e26ad02474325f8b1f126c9"
+        },
+        {
+          "bytes": 5679,
+          "path": ".artifacts/record-output-profiles/book/favicon-8114d1fc.png",
+          "sha256": "8114d1fc74f4b5621ad9afde7746ed9cf7e420be317a6e29023d2298d58aa15b"
+        },
+        {
+          "bytes": 1835,
+          "path": ".artifacts/record-output-profiles/book/favicon-de23e50b.svg",
+          "sha256": "de23e50b1c4dd6e052b3e21d444fcd4b13568b3840ac3c99d9be4e9263c0ef59"
+        },
+        {
+          "bytes": 11358,
+          "path": ".artifacts/record-output-profiles/book/fonts/OPEN-SANS-LICENSE.txt",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "bytes": 4528,
+          "path": ".artifacts/record-output-profiles/book/fonts/SOURCE-CODE-PRO-LICENSE.txt",
+          "sha256": "d1e6d465a83ba1a3be52db6484868cf5812ae9bbf91abdad3900ba0165afcf93"
+        },
+        {
+          "bytes": 3818,
+          "path": ".artifacts/record-output-profiles/book/fonts/fonts-9644e21d.css",
+          "sha256": "94b5131beb9b75a55f9649fcf12de167350feae0fab2bab26c2703cd75c0c781"
+        },
+        {
+          "bytes": 44352,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-300-7736aa35.woff2",
+          "sha256": "7736aa3596c468515c3209f2f9d68cfae96d94c05689bcc11a5dce426a6ee2e8"
+        },
+        {
+          "bytes": 40656,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-300italic-2c7b95c0.woff2",
+          "sha256": "2c7b95c08df0d228caec6d4bfed06da0f7ab6b76ea5cc3f75b5c6ae416bc571b"
+        },
+        {
+          "bytes": 44936,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-600-486c6759.woff2",
+          "sha256": "486c67592731a0b36a89dba1fd0b97aeb73f236bbf60dbf28d7c6b5723c07989"
+        },
+        {
+          "bytes": 42120,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-600italic-1a3e8659.woff2",
+          "sha256": "1a3e865977024f444834a75a1b33b89b93134c93007ae3d6e14f24e6c88d8dfb"
+        },
+        {
+          "bytes": 44988,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-700-c22fe8c7.woff2",
+          "sha256": "c22fe8c70c36f1d862903b772eaed864d3a8fa849473c9caff224fdb852428e4"
+        },
+        {
+          "bytes": 40800,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-700italic-238ae959.woff2",
+          "sha256": "238ae9593944112bee8dd65f8ebc5f3d3862160a8a245fbe1ee3150bc9a2fd81"
+        },
+        {
+          "bytes": 44536,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-800-3d2c812a.woff2",
+          "sha256": "3d2c812adf74deb36fead3ff8469800d3c0b23eb2c858ae49310291f89490146"
+        },
+        {
+          "bytes": 40812,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-800italic-ba1521ec.woff2",
+          "sha256": "ba1521ec219db9bc5bfec0e3e7a897369d98b30d4e853ee4aa525322784428b8"
+        },
+        {
+          "bytes": 41076,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-italic-6c9463f7.woff2",
+          "sha256": "6c9463f7096c0b9d610e095ed248ac1e8a8da7e92d17e9be544f3baced7b62b2"
+        },
+        {
+          "bytes": 43236,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-regular-2e3b1d34.woff2",
+          "sha256": "2e3b1d34ac67763ab50652da19305d4b3694c6b6e6bf35f4b98411ce4af646d2"
+        },
+        {
+          "bytes": 59140,
+          "path": ".artifacts/record-output-profiles/book/fonts/source-code-pro-v11-all-charsets-500-2bdd9410.woff2",
+          "sha256": "2bdd9410b0141db3cbbf4cfc3818cc6fad279e8e63940940e06cd6af76ccbfcf"
+        },
+        {
+          "bytes": 1209,
+          "path": ".artifacts/record-output-profiles/book/highlight-493f70e1.css",
+          "sha256": "493f70e1527d895653b5ac7157abba8e2c656e43698da93b6c1997e2855a5059"
+        },
+        {
+          "bytes": 137537,
+          "path": ".artifacts/record-output-profiles/book/highlight-abc7f01d.js",
+          "sha256": "abc7f01d0ce8c64e4ba9e131d651e48ae1a567b2a1254fea8aab03502288de58"
+        },
+        {
+          "bytes": 25151,
+          "path": ".artifacts/record-output-profiles/book/index.html",
+          "sha256": "ed273cf84c80b32f1eb15d585b370f476d13be1c7803ab2b5180551fea6b4894"
+        },
+        {
+          "bytes": 17320,
+          "path": ".artifacts/record-output-profiles/book/mark-09e88c2c.min.js",
+          "sha256": "09e88c2cfaf23ea8a37b5681433eafea97033af632ecc948c8c1ee9944647743"
+        },
+        {
+          "bytes": 4658225,
+          "path": ".artifacts/record-output-profiles/book/print.html",
+          "sha256": "62960963d800e8238279b7a5bb53c48500b07a0592d39a69a6f9862b8279c6c3"
+        },
+        {
+          "bytes": 20294,
+          "path": ".artifacts/record-output-profiles/book/searcher-09f2665d.js",
+          "sha256": "f5a06a28f1760419751b3468aacd491f709460399b1c4798bb888576341e9785"
+        },
+        {
+          "bytes": 14929391,
+          "path": ".artifacts/record-output-profiles/book/searchindex-86587a27.js",
+          "sha256": "86587a27a7d666fe40d48b382b285429ab791699bdea477af93e5ed8a478ed7e"
+        },
+        {
+          "bytes": 31354,
+          "path": ".artifacts/record-output-profiles/book/toc-7727513f.js",
+          "sha256": "7727513f2246a8126695b48c218eeb52cf5eadf09d5e1d5c79420916901738e6"
+        },
+        {
+          "bytes": 14642,
+          "path": ".artifacts/record-output-profiles/book/toc.html",
+          "sha256": "c5c2db87908aa220460a64cd3007bf412e8d3a483e01cd543b7ce2d784ba1041"
+        },
+        {
+          "bytes": 1694,
+          "path": ".artifacts/record-output-profiles/book/tomorrow-night-4c0ae647.css",
+          "sha256": "4c0ae647a06ef1699806fb9b4b6d0ef72de026708c6e8581362641c9298cb5f7"
+        }
+      ],
+      "nodes": [
+        {
+          "device": 16777244,
+          "inode": 176234317,
+          "mode": 16877,
+          "mtime_ns": 1790885259370133086,
+          "path": ".artifacts/record-output-profiles/book",
+          "size": 2720
+        },
+        {
+          "device": 16777244,
+          "inode": 176234364,
+          "mode": 33188,
+          "mtime_ns": 1790885259330766472,
+          "path": ".artifacts/record-output-profiles/book/.nojekyll",
+          "size": 72
+        },
+        {
+          "device": 16777244,
+          "inode": 176234365,
+          "mode": 33188,
+          "mtime_ns": 1790885259333186382,
+          "path": ".artifacts/record-output-profiles/book/00-introduction.html",
+          "size": 25151
+        },
+        {
+          "device": 16777244,
+          "inode": 176234367,
+          "mode": 33188,
+          "mtime_ns": 1790885259333888672,
+          "path": ".artifacts/record-output-profiles/book/01-first-fsm.html",
+          "size": 25490
+        },
+        {
+          "device": 16777244,
+          "inode": 176234368,
+          "mode": 33188,
+          "mtime_ns": 1790885259334295172,
+          "path": ".artifacts/record-output-profiles/book/02-language-basics.html",
+          "size": 47271
+        },
+        {
+          "device": 16777244,
+          "inode": 176234369,
+          "mode": 33188,
+          "mtime_ns": 1790885259334922878,
+          "path": ".artifacts/record-output-profiles/book/03-decision-trees-and-fsms.html",
+          "size": 45911
+        },
+        {
+          "device": 16777244,
+          "inode": 176234370,
+          "mode": 33188,
+          "mtime_ns": 1790885259335294877,
+          "path": ".artifacts/record-output-profiles/book/04-symbols-types-and-imports.html",
+          "size": 44260
+        },
+        {
+          "device": 16777244,
+          "inode": 176234371,
+          "mode": 33188,
+          "mtime_ns": 1790885259335687627,
+          "path": ".artifacts/record-output-profiles/book/05-composition-basics.html",
+          "size": 50832
+        },
+        {
+          "device": 16777244,
+          "inode": 176234372,
+          "mode": 33188,
+          "mtime_ns": 1790885259336538916,
+          "path": ".artifacts/record-output-profiles/book/06-composition-advanced.html",
+          "size": 56138
+        },
+        {
+          "device": 16777244,
+          "inode": 176234373,
+          "mode": 33188,
+          "mtime_ns": 1790885259337074082,
+          "path": ".artifacts/record-output-profiles/book/07-packages-and-sharing.html",
+          "size": 25783
+        },
+        {
+          "device": 16777244,
+          "inode": 176234374,
+          "mode": 33188,
+          "mtime_ns": 1790885259337514081,
+          "path": ".artifacts/record-output-profiles/book/08-type-inference-and-aggregate-data.html",
+          "size": 38510
+        },
+        {
+          "device": 16777244,
+          "inode": 176234375,
+          "mode": 33188,
+          "mtime_ns": 1790885259338696453,
+          "path": ".artifacts/record-output-profiles/book/09-generated-hdl-debugging-and-inspection.html",
+          "size": 50950
+        },
+        {
+          "device": 16777244,
+          "inode": 176234376,
+          "mode": 33188,
+          "mtime_ns": 1790885259338976994,
+          "path": ".artifacts/record-output-profiles/book/10-errors-strict-mode-and-troubleshooting.html",
+          "size": 71238
+        },
+        {
+          "device": 16777244,
+          "inode": 176234377,
+          "mode": 33188,
+          "mtime_ns": 1790885259339271576,
+          "path": ".artifacts/record-output-profiles/book/10a-downstream-issue-reporting.html",
+          "size": 34443
+        },
+        {
+          "device": 16777244,
+          "inode": 176234378,
+          "mode": 33188,
+          "mtime_ns": 1790885259340145199,
+          "path": ".artifacts/record-output-profiles/book/11-extensions-and-embedding.html",
+          "size": 254430
+        },
+        {
+          "device": 16777244,
+          "inode": 176234379,
+          "mode": 33188,
+          "mtime_ns": 1790885259340683948,
+          "path": ".artifacts/record-output-profiles/book/12-cookbook.html",
+          "size": 35761
+        },
+        {
+          "device": 16777244,
+          "inode": 176234380,
+          "mode": 33188,
+          "mtime_ns": 1790885259341168238,
+          "path": ".artifacts/record-output-profiles/book/13-intent-scheduling.html",
+          "size": 87095
+        },
+        {
+          "device": 16777244,
+          "inode": 176234381,
+          "mode": 33188,
+          "mtime_ns": 1790885259341421529,
+          "path": ".artifacts/record-output-profiles/book/13a-actor-interface.html",
+          "size": 81165
+        },
+        {
+          "device": 16777244,
+          "inode": 176234382,
+          "mode": 33188,
+          "mtime_ns": 1790885259341734945,
+          "path": ".artifacts/record-output-profiles/book/13b-transactions.html",
+          "size": 146604
+        },
+        {
+          "device": 16777244,
+          "inode": 176234383,
+          "mode": 33188,
+          "mtime_ns": 1790885259342039028,
+          "path": ".artifacts/record-output-profiles/book/13c-drive-blocks.html",
+          "size": 28588
+        },
+        {
+          "device": 16777244,
+          "inode": 176234384,
+          "mode": 33188,
+          "mtime_ns": 1790885259342460610,
+          "path": ".artifacts/record-output-profiles/book/13d-control-flow.html",
+          "size": 111591
+        },
+        {
+          "device": 16777244,
+          "inode": 176234385,
+          "mode": 33188,
+          "mtime_ns": 1790885259342887234,
+          "path": ".artifacts/record-output-profiles/book/13e-data-manipulation.html",
+          "size": 63570
+        },
+        {
+          "device": 16777244,
+          "inode": 176234386,
+          "mode": 33188,
+          "mtime_ns": 1790885259343206900,
+          "path": ".artifacts/record-output-profiles/book/13f-composition.html",
+          "size": 127712
+        },
+        {
+          "device": 16777244,
+          "inode": 176234387,
+          "mode": 33188,
+          "mtime_ns": 1790885259343759441,
+          "path": ".artifacts/record-output-profiles/book/13g-rules.html",
+          "size": 59162
+        },
+        {
+          "device": 16777244,
+          "inode": 176234388,
+          "mode": 33188,
+          "mtime_ns": 1790885259344103481,
+          "path": ".artifacts/record-output-profiles/book/13h-lowering-reference.html",
+          "size": 138861
+        },
+        {
+          "device": 16777244,
+          "inode": 176234389,
+          "mode": 33188,
+          "mtime_ns": 1790885259344582397,
+          "path": ".artifacts/record-output-profiles/book/13i-downstream-integration.html",
+          "size": 289110
+        },
+        {
+          "device": 16777244,
+          "inode": 176234390,
+          "mode": 33188,
+          "mtime_ns": 1790885259345119396,
+          "path": ".artifacts/record-output-profiles/book/13j-type-enum-aggregate.html",
+          "size": 73490
+        },
+        {
+          "device": 16777244,
+          "inode": 176234391,
+          "mode": 33188,
+          "mtime_ns": 1790885259345488686,
+          "path": ".artifacts/record-output-profiles/book/13k-isf-feature-support-matrix.html",
+          "size": 153838
+        },
+        {
+          "device": 16777244,
+          "inode": 176234392,
+          "mode": 33188,
+          "mtime_ns": 1790885259345801102,
+          "path": ".artifacts/record-output-profiles/book/13l-procedures.html",
+          "size": 30485
+        },
+        {
+          "device": 16777244,
+          "inode": 176234393,
+          "mode": 33188,
+          "mtime_ns": 1790885259346067518,
+          "path": ".artifacts/record-output-profiles/book/13m-local-variables.html",
+          "size": 29046
+        },
+        {
+          "device": 16777244,
+          "inode": 176234394,
+          "mode": 33188,
+          "mtime_ns": 1790885259346353768,
+          "path": ".artifacts/record-output-profiles/book/14-feature-backlog.html",
+          "size": 27610
+        },
+        {
+          "device": 16777244,
+          "inode": 176234395,
+          "mode": 33188,
+          "mtime_ns": 1790885259347560556,
+          "path": ".artifacts/record-output-profiles/book/14a-language-and-data.html",
+          "size": 33614
+        },
+        {
+          "device": 16777244,
+          "inode": 176234396,
+          "mode": 33188,
+          "mtime_ns": 1790885259348516263,
+          "path": ".artifacts/record-output-profiles/book/14b-composition-backlog.html",
+          "size": 97502
+        },
+        {
+          "device": 16777244,
+          "inode": 176234397,
+          "mode": 33188,
+          "mtime_ns": 1790885259349076428,
+          "path": ".artifacts/record-output-profiles/book/14c-actor-network-orchestration.html",
+          "size": 69289
+        },
+        {
+          "device": 16777244,
+          "inode": 176234398,
+          "mode": 33188,
+          "mtime_ns": 1790885259349399177,
+          "path": ".artifacts/record-output-profiles/book/14d-ial2-foundations.html",
+          "size": 127905
+        },
+        {
+          "device": 16777244,
+          "inode": 176234399,
+          "mode": 33188,
+          "mtime_ns": 1790885259349592385,
+          "path": ".artifacts/record-output-profiles/book/14e-hial-vial-verification.html",
+          "size": 30592
+        },
+        {
+          "device": 16777244,
+          "inode": 176234400,
+          "mode": 33188,
+          "mtime_ns": 1790885259349941218,
+          "path": ".artifacts/record-output-profiles/book/14f-axi-manager-core.html",
+          "size": 176098
+        },
+        {
+          "device": 16777244,
+          "inode": 176234401,
+          "mode": 33188,
+          "mtime_ns": 1790885259350358716,
+          "path": ".artifacts/record-output-profiles/book/14g-axi-dynamic-identity.html",
+          "size": 233227
+        },
+        {
+          "device": 16777244,
+          "inode": 176234402,
+          "mode": 33188,
+          "mtime_ns": 1790885259350711674,
+          "path": ".artifacts/record-output-profiles/book/14h-protocol-profiles-and-apb.html",
+          "size": 193151
+        },
+        {
+          "device": 16777244,
+          "inode": 176234403,
+          "mode": 33188,
+          "mtime_ns": 1790885259351072340,
+          "path": ".artifacts/record-output-profiles/book/14i-ahb-and-integration.html",
+          "size": 199527
+        },
+        {
+          "device": 16777244,
+          "inode": 176234404,
+          "mode": 33188,
+          "mtime_ns": 1790885259351373589,
+          "path": ".artifacts/record-output-profiles/book/14j-extended-axi.html",
+          "size": 151227
+        },
+        {
+          "device": 16777244,
+          "inode": 176234405,
+          "mode": 33188,
+          "mtime_ns": 1790885259351654588,
+          "path": ".artifacts/record-output-profiles/book/14k-isf-language-and-scheduling.html",
+          "size": 123155
+        },
+        {
+          "device": 16777244,
+          "inode": 176234406,
+          "mode": 33188,
+          "mtime_ns": 1790885259351904088,
+          "path": ".artifacts/record-output-profiles/book/14l-backends-validation-and-apis.html",
+          "size": 96258
+        },
+        {
+          "device": 16777244,
+          "inode": 176234407,
+          "mode": 33188,
+          "mtime_ns": 1790885259352200754,
+          "path": ".artifacts/record-output-profiles/book/15-implementation-blueprint.html",
+          "size": 29962
+        },
+        {
+          "device": 16777244,
+          "inode": 176234408,
+          "mode": 33188,
+          "mtime_ns": 1790885259352662628,
+          "path": ".artifacts/record-output-profiles/book/15a-ial2-new-protocol-support.html",
+          "size": 25674
+        },
+        {
+          "device": 16777244,
+          "inode": 176234409,
+          "mode": 33188,
+          "mtime_ns": 1790885259353002877,
+          "path": ".artifacts/record-output-profiles/book/16-ial2-protocol-platform-intent.html",
+          "size": 30874
+        },
+        {
+          "device": 16777244,
+          "inode": 176234410,
+          "mode": 33188,
+          "mtime_ns": 1790885259353271751,
+          "path": ".artifacts/record-output-profiles/book/16a-ial2-axi.html",
+          "size": 84992
+        },
+        {
+          "device": 16777244,
+          "inode": 176234411,
+          "mode": 33188,
+          "mtime_ns": 1790885259353493001,
+          "path": ".artifacts/record-output-profiles/book/16aa-ial2-axi-manager-capacity-status.html",
+          "size": 60356
+        },
+        {
+          "device": 16777244,
+          "inode": 176234412,
+          "mode": 33188,
+          "mtime_ns": 1790885259353814458,
+          "path": ".artifacts/record-output-profiles/book/16b-ial2-apb.html",
+          "size": 30397
+        },
+        {
+          "device": 16777244,
+          "inode": 176234413,
+          "mode": 33188,
+          "mtime_ns": 1790885259354397790,
+          "path": ".artifacts/record-output-profiles/book/16c-ial2-ahb.html",
+          "size": 254470
+        },
+        {
+          "device": 16777244,
+          "inode": 176234414,
+          "mode": 33188,
+          "mtime_ns": 1790885259355310455,
+          "path": ".artifacts/record-output-profiles/book/16d-hial-vial-verification-architecture.html",
+          "size": 330700
+        },
+        {
+          "device": 16777244,
+          "inode": 176234419,
+          "mode": 33188,
+          "mtime_ns": 1790885259356359535,
+          "path": ".artifacts/record-output-profiles/book/16da-vial-balanced-portable-composition.html",
+          "size": 46770
+        },
+        {
+          "device": 16777244,
+          "inode": 176234420,
+          "mode": 33188,
+          "mtime_ns": 1790885259356531660,
+          "path": ".artifacts/record-output-profiles/book/16db-vial-structural-backend-emission-matrix.html",
+          "size": 29523
+        },
+        {
+          "device": 16777244,
+          "inode": 176234421,
+          "mode": 33188,
+          "mtime_ns": 1790885259356959492,
+          "path": ".artifacts/record-output-profiles/book/16dc-vial-portable-verilator-runtime-measurement.html",
+          "size": 321949
+        },
+        {
+          "device": 16777244,
+          "inode": 176234423,
+          "mode": 33188,
+          "mtime_ns": 1790885259357408449,
+          "path": ".artifacts/record-output-profiles/book/16dd-vial-portable-vhdl-runtime-measurement.html",
+          "size": 62575
+        },
+        {
+          "device": 16777244,
+          "inode": 176234424,
+          "mode": 33188,
+          "mtime_ns": 1790885259357599449,
+          "path": ".artifacts/record-output-profiles/book/16de-vial-osvvm-runtime-execution-plan.html",
+          "size": 62366
+        },
+        {
+          "device": 16777244,
+          "inode": 176234425,
+          "mode": 33188,
+          "mtime_ns": 1790885259357917532,
+          "path": ".artifacts/record-output-profiles/book/16df-vial-architecture-scale-cap-closeout.html",
+          "size": 204125
+        },
+        {
+          "device": 16777244,
+          "inode": 176234415,
+          "mode": 33188,
+          "mtime_ns": 1790885259355553704,
+          "path": ".artifacts/record-output-profiles/book/16dg-vial-public-lifecycle-reference.html",
+          "size": 57217
+        },
+        {
+          "device": 16777244,
+          "inode": 176234416,
+          "mode": 33188,
+          "mtime_ns": 1790885259355758370,
+          "path": ".artifacts/record-output-profiles/book/16dh-vial-ahb-end-to-end-tutorial.html",
+          "size": 38420
+        },
+        {
+          "device": 16777244,
+          "inode": 176234417,
+          "mode": 33188,
+          "mtime_ns": 1790885259355944828,
+          "path": ".artifacts/record-output-profiles/book/16di-vial-legacy-migration.html",
+          "size": 41447
+        },
+        {
+          "device": 16777244,
+          "inode": 176234418,
+          "mode": 33188,
+          "mtime_ns": 1790885259356156828,
+          "path": ".artifacts/record-output-profiles/book/16dj-vial-capability-support-reference.html",
+          "size": 43133
+        },
+        {
+          "device": 16777244,
+          "inode": 176234422,
+          "mode": 33188,
+          "mtime_ns": 1790885259357213450,
+          "path": ".artifacts/record-output-profiles/book/16dk-inactive-proxy-lifetimes.html",
+          "size": 127215
+        },
+        {
+          "device": 16777244,
+          "inode": 176234426,
+          "mode": 33188,
+          "mtime_ns": 1790885259358214448,
+          "path": ".artifacts/record-output-profiles/book/16e-nexsim-api-mcp-consumer-requirements.html",
+          "size": 144907
+        },
+        {
+          "device": 16777244,
+          "inode": 176234429,
+          "mode": 33188,
+          "mtime_ns": 1790885259358790071,
+          "path": ".artifacts/record-output-profiles/book/404.html",
+          "size": 17673
+        },
+        {
+          "device": 16777244,
+          "inode": 176234427,
+          "mode": 33188,
+          "mtime_ns": 1790885259358414405,
+          "path": ".artifacts/record-output-profiles/book/90-reference-map.html",
+          "size": 61283
+        },
+        {
+          "device": 16777244,
+          "inode": 176234428,
+          "mode": 33188,
+          "mtime_ns": 1790885259358597822,
+          "path": ".artifacts/record-output-profiles/book/91-live-document-containment-adoption.html",
+          "size": 45608
+        },
+        {
+          "device": 16777244,
+          "inode": 176234339,
+          "mode": 33188,
+          "mtime_ns": 1790885259317812877,
+          "path": ".artifacts/record-output-profiles/book/ayu-highlight-3fdfc3ac.css",
+          "size": 907
+        },
+        {
+          "device": 16777244,
+          "inode": 176234329,
+          "mode": 33188,
+          "mtime_ns": 1790885259316674797,
+          "path": ".artifacts/record-output-profiles/book/book-609e4cb8.js",
+          "size": 30932
+        },
+        {
+          "device": 16777244,
+          "inode": 176234341,
+          "mode": 33188,
+          "mtime_ns": 1790885259317979127,
+          "path": ".artifacts/record-output-profiles/book/clipboard-1626706a.min.js",
+          "size": 10754
+        },
+        {
+          "device": 16777244,
+          "inode": 176234330,
+          "mode": 16877,
+          "mtime_ns": 1790885259317233879,
+          "path": ".artifacts/record-output-profiles/book/css",
+          "size": 192
+        },
+        {
+          "device": 16777244,
+          "inode": 176234332,
+          "mode": 33188,
+          "mtime_ns": 1790885259317077671,
+          "path": ".artifacts/record-output-profiles/book/css/chrome-d279d366.css",
+          "size": 18032
+        },
+        {
+          "device": 16777244,
+          "inode": 176234331,
+          "mode": 33188,
+          "mtime_ns": 1790885259316819463,
+          "path": ".artifacts/record-output-profiles/book/css/general-e96d0476.css",
+          "size": 11478
+        },
+        {
+          "device": 16777244,
+          "inode": 176234333,
+          "mode": 33188,
+          "mtime_ns": 1790885259317195587,
+          "path": ".artifacts/record-output-profiles/book/css/print-9e4910d8.css",
+          "size": 689
+        },
+        {
+          "device": 16777244,
+          "inode": 176234334,
+          "mode": 33188,
+          "mtime_ns": 1790885259317345337,
+          "path": ".artifacts/record-output-profiles/book/css/variables-8adf115d.css",
+          "size": 10422
+        },
+        {
+          "device": 16777244,
+          "inode": 176234361,
+          "mode": 33188,
+          "mtime_ns": 1790885259330117598,
+          "path": ".artifacts/record-output-profiles/book/elasticlunr-ef4e11c1.min.js",
+          "size": 18051
+        },
+        {
+          "device": 16777244,
+          "inode": 176234335,
+          "mode": 33188,
+          "mtime_ns": 1790885259317425003,
+          "path": ".artifacts/record-output-profiles/book/favicon-8114d1fc.png",
+          "size": 5679
+        },
+        {
+          "device": 16777244,
+          "inode": 176234336,
+          "mode": 33188,
+          "mtime_ns": 1790885259317483295,
+          "path": ".artifacts/record-output-profiles/book/favicon-de23e50b.svg",
+          "size": 1835
+        },
+        {
+          "device": 16777244,
+          "inode": 176234342,
+          "mode": 16877,
+          "mtime_ns": 1790885259320221455,
+          "path": ".artifacts/record-output-profiles/book/fonts",
+          "size": 512
+        },
+        {
+          "device": 16777244,
+          "inode": 176234344,
+          "mode": 33188,
+          "mtime_ns": 1790885259318144585,
+          "path": ".artifacts/record-output-profiles/book/fonts/OPEN-SANS-LICENSE.txt",
+          "size": 11358
+        },
+        {
+          "device": 16777244,
+          "inode": 176234345,
+          "mode": 33188,
+          "mtime_ns": 1790885259318199252,
+          "path": ".artifacts/record-output-profiles/book/fonts/SOURCE-CODE-PRO-LICENSE.txt",
+          "size": 4528
+        },
+        {
+          "device": 16777244,
+          "inode": 176234343,
+          "mode": 33188,
+          "mtime_ns": 1790885259318093793,
+          "path": ".artifacts/record-output-profiles/book/fonts/fonts-9644e21d.css",
+          "size": 3818
+        },
+        {
+          "device": 16777244,
+          "inode": 176234346,
+          "mode": 33188,
+          "mtime_ns": 1790885259318353918,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-300-7736aa35.woff2",
+          "size": 44352
+        },
+        {
+          "device": 16777244,
+          "inode": 176234347,
+          "mode": 33188,
+          "mtime_ns": 1790885259318477459,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-300italic-2c7b95c0.woff2",
+          "size": 40656
+        },
+        {
+          "device": 16777244,
+          "inode": 176234350,
+          "mode": 33188,
+          "mtime_ns": 1790885259318928875,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-600-486c6759.woff2",
+          "size": 44936
+        },
+        {
+          "device": 16777244,
+          "inode": 176234351,
+          "mode": 33188,
+          "mtime_ns": 1790885259319415540,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-600italic-1a3e8659.woff2",
+          "size": 42120
+        },
+        {
+          "device": 16777244,
+          "inode": 176234352,
+          "mode": 33188,
+          "mtime_ns": 1790885259319494249,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-700-c22fe8c7.woff2",
+          "size": 44988
+        },
+        {
+          "device": 16777244,
+          "inode": 176234353,
+          "mode": 33188,
+          "mtime_ns": 1790885259319703706,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-700italic-238ae959.woff2",
+          "size": 40800
+        },
+        {
+          "device": 16777244,
+          "inode": 176234354,
+          "mode": 33188,
+          "mtime_ns": 1790885259319806956,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-800-3d2c812a.woff2",
+          "size": 44536
+        },
+        {
+          "device": 16777244,
+          "inode": 176234355,
+          "mode": 33188,
+          "mtime_ns": 1790885259320165539,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-800italic-ba1521ec.woff2",
+          "size": 40812
+        },
+        {
+          "device": 16777244,
+          "inode": 176234349,
+          "mode": 33188,
+          "mtime_ns": 1790885259318831417,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-italic-6c9463f7.woff2",
+          "size": 41076
+        },
+        {
+          "device": 16777244,
+          "inode": 176234348,
+          "mode": 33188,
+          "mtime_ns": 1790885259318655126,
+          "path": ".artifacts/record-output-profiles/book/fonts/open-sans-v17-all-charsets-regular-2e3b1d34.woff2",
+          "size": 43236
+        },
+        {
+          "device": 16777244,
+          "inode": 176234356,
+          "mode": 33188,
+          "mtime_ns": 1790885259320371205,
+          "path": ".artifacts/record-output-profiles/book/fonts/source-code-pro-v11-all-charsets-500-2bdd9410.woff2",
+          "size": 59140
+        },
+        {
+          "device": 16777244,
+          "inode": 176234337,
+          "mode": 33188,
+          "mtime_ns": 1790885259317543795,
+          "path": ".artifacts/record-output-profiles/book/highlight-493f70e1.css",
+          "size": 1209
+        },
+        {
+          "device": 16777244,
+          "inode": 176234340,
+          "mode": 33188,
+          "mtime_ns": 1790885259317889544,
+          "path": ".artifacts/record-output-profiles/book/highlight-abc7f01d.js",
+          "size": 137537
+        },
+        {
+          "device": 16777244,
+          "inode": 176234366,
+          "mode": 33188,
+          "mtime_ns": 1790885259333384132,
+          "path": ".artifacts/record-output-profiles/book/index.html",
+          "size": 25151
+        },
+        {
+          "device": 16777244,
+          "inode": 176234360,
+          "mode": 33188,
+          "mtime_ns": 1790885259330042598,
+          "path": ".artifacts/record-output-profiles/book/mark-09e88c2c.min.js",
+          "size": 17320
+        },
+        {
+          "device": 16777244,
+          "inode": 176234430,
+          "mode": 33188,
+          "mtime_ns": 1790885259370475293,
+          "path": ".artifacts/record-output-profiles/book/print.html",
+          "size": 4658225
+        },
+        {
+          "device": 16777244,
+          "inode": 176234359,
+          "mode": 33188,
+          "mtime_ns": 1790885259329950182,
+          "path": ".artifacts/record-output-profiles/book/searcher-09f2665d.js",
+          "size": 20294
+        },
+        {
+          "device": 16777244,
+          "inode": 176234358,
+          "mode": 33188,
+          "mtime_ns": 1790885259326041441,
+          "path": ".artifacts/record-output-profiles/book/searchindex-86587a27.js",
+          "size": 14929391
+        },
+        {
+          "device": 16777244,
+          "inode": 176234362,
+          "mode": 33188,
+          "mtime_ns": 1790885259330192181,
+          "path": ".artifacts/record-output-profiles/book/toc-7727513f.js",
+          "size": 31354
+        },
+        {
+          "device": 16777244,
+          "inode": 176234363,
+          "mode": 33188,
+          "mtime_ns": 1790885259330677555,
+          "path": ".artifacts/record-output-profiles/book/toc.html",
+          "size": 14642
+        },
+        {
+          "device": 16777244,
+          "inode": 176234338,
+          "mode": 33188,
+          "mtime_ns": 1790885259317720253,
+          "path": ".artifacts/record-output-profiles/book/tomorrow-night-4c0ae647.css",
+          "size": 1694
+        }
+      ],
+      "path": ".artifacts/record-output-profiles/book"
+    }
+  ],
+  "residue": {
+    ".artifacts/record-output-profiles/book": false
+  },
+  "retained": [
+    "all logs",
+    "native/receipt evidence",
+    "spent compiler workspaces",
+    "docs/book/book"
+  ],
+  "rust": [
+    {
+      "path": "target/release",
+      "retained": [],
+      "status": "absent"
+    },
+    {
+      "path": "target/debug/incremental",
+      "retained": [],
+      "status": "absent"
+    },
+    {
+      "path": "target/debug/deps",
+      "retained": [],
+      "status": "absent"
+    },
+    {
+      "path": "rust/target/release",
+      "retained": [],
+      "status": "absent"
+    },
+    {
+      "path": "rust/target/debug/incremental",
+      "retained": [],
+      "status": "censused"
+    },
+    {
+      "path": "rust/target/debug/deps",
+      "retained": [],
+      "status": "censused"
+    }
+  ],
+  "scope": "Fixed obsolete generated mdBook copies from completed local documentation slices; no source, existing nested Git repository, native evidence or shared cache deletion.",
+  "utc": "2026-10-01T22:08:31.268071+00:00"
+}

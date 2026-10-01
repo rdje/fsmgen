@@ -1,0 +1,1 @@
+{".artifacts/record-output-profiles/book": {"bytes_total": 26389300, "files": 99}}
