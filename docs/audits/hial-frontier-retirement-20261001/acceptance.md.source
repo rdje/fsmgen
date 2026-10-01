@@ -1,0 +1,13 @@
+
+## Acceptance — historical HIAL frontier retirement (2026-10-01)
+
+Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.13`. Complete exact source and retired section
+are authenticated by `docs/audits/hial-frontier-retirement-20261001/`.
+Re-derivation uses the complete fixed Git source and current document; distinct
+Python/Perl byte, digest and line accounting and hostile pointer/node/suffix
+mutations provide falsification. Exact source object, sealed manifest/verifier,
+canonical policy/fact, current nodes/pointer and Git provide durability.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '10.11.5` owns observation' identifies 588028b01271a706ec78c0f66a4b5e1a00bd0b70 as the historical snapshot introduction. The optional Current Frontier opening still names completed .11.5; authoritative nodes and current Memory are correct. Decision 0019 makes this view historical, with no per-slice maintenance requirement. Its missing historical label causes P2 discovery ambiguity.
+- [x] **ADDRESSED (verified)** — Replace only the complete optional Current Frontier section with an explicit historical stamp and exact committed Git retrieval. Independent complete source/section and current-document proof preserves every other authoritative node and all adjacent decisions/questions/acceptance bytes, allowing only this owner's completion and fresh acceptance. No second live projection, product/native/helper change or ceiling increase.
+- [x] **NO REGRESSION** — Independent exact-source/section, Python/Perl accounting and hostile pointer/node/suffix controls pass. Knowledge Map reports knowledge-map: OK; task integrity and local book build are checked before staged doctrines and normal hooks. All completed generated runtime evidence and open historical-native/full-CI/backend/input gates remain unchanged.

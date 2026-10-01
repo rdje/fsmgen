@@ -78,6 +78,10 @@ The repository still keeps a few focused technical references:
 - `MEMORY.md` plus `docs/TASK_TREE.md`: bounded current state and the exact
   live implementation frontier for maintainers
 
+Optional `Current Frontier` sections inside task files are historical snapshots.
+Maintainers resume from the authoritative task nodes, live index and bounded
+Memory pointer; a historical snapshot does not describe current delivery.
+
 The goal is not to duplicate every narrow maintainer artifact here immediately.
 
 The goal is to give users one friendly, transparent path through the product

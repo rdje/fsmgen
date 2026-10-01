@@ -1,0 +1,24 @@
+{
+  "boundaries": [
+    "## Current Frontier\n",
+    "## Decisions\n"
+  ],
+  "current_git_blob": "c3ab655e287521f1ee7bf3bd58585692117a1150",
+  "current_sha256": "694d65389a9d6f8ef422d2519685f4c76158e2e2632b543a7ec951685c1e4c1d",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.13",
+  "schema": "fsmgen.historical_task_view_retirement.v1",
+  "section_bytes": 18108,
+  "section_lines": 239,
+  "section_sha256": "19a7b7126c94d355fbbe9eeeb15956c27e5b4fc42a06b8efe70e371f95d91c3f",
+  "sha256": {
+    "acceptance.md.source": "88754859580105cc65e794a1c71b419b96c87833fc46bd1c87b449381b4e26dc",
+    "history-pickaxe.txt": "2863b201a8dc21070f10f299ad543e98422806be0c710def8f94223c32467c64",
+    "stamp.md.source": "3e733ef0bbc4ac9ee552340c8cb1d2d2fdca7f17adbc20c164b0cdfcf85c388e",
+    "verify.py": "88e9871108377c7bbf75e6890ce0cdba3b2c9a3855db71b9e62f54425a705cd2"
+  },
+  "source_bytes": 1283633,
+  "source_git_blob": "91003a42994f551f485fae91bf6b1fa5a02a9ee7",
+  "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+  "source_revision": "889d7e1beb7bcec1b214f4209d1cf725cb2f5239",
+  "source_sha256": "5a48f8d736a21b893fea84037d4f46a4a1b287045be3e777ce8b07921de6005a"
+}

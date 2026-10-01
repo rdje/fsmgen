@@ -1,7 +1,7 @@
 # Knowledge Map: `task-tree`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **6** facts · **36** uniquely owned question entries.
+> **6** facts · **37** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -24,6 +24,7 @@
 - q="how is completed task acceptance history retained?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="how is semantic node registration repaired without changing historical-view doctrine?" · facts=[task-tree-authoritative-section-registration](../../docs/knowledge/task-tree-authoritative-section-registration.md)
 - q="how is task-tree migration completeness proved?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
+- q="is the HIAL task tree Current Frontier prose a live resume source?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
 - q="is the semantic task tree Current Frontier prose a live resume source?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
 - q="what does TASK-TREE-INTEGRITY enforce?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
 - q="what is a compact completed task-tree terminal?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)

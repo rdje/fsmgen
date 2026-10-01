@@ -9,6 +9,7 @@ answers:
   - "why is the ## Current Frontier table in IAL2-FEATURE-COMPLETENESS-FRONTIER.md stale?"
   - "how can I retrieve the former completed task-tree index?"
   - "is the semantic task tree Current Frontier prose a live resume source?"
+  - "is the HIAL task tree Current Frontier prose a live resume source?"
 date: 2026-10-01
 status: current
 tags: [task-tree, continuity, convention, frontier, pnt, decision-0019]
@@ -61,3 +62,12 @@ Current Frontier prose with exact retrieval from
 Its authoritative nodes/index already had the correct statuses. The retirement
 adds no second live projection or per-slice maintenance obligation. The live
 node list, cross-tree index and bounded Memory pointer remain resume sources.
+
+HIAL's unlabelled Current Frontier snapshot is likewise retired under
+.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.13. Its complete section is recoverable
+from 889d7e1beb7bcec1b214f4209d1cf725cb2f5239:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md.
+The snapshot named completed .11.5; the authoritative nodes were correct.
+Independent full-source/section and current-document verification preserves
+every other node and adjacent material, with hostile pointer/node/suffix
+controls, in docs/audits/hial-frontier-retirement-20261001/. This retirement
+adds no live projection or per-slice snapshot maintenance obligation.

@@ -1,0 +1,9 @@
+## Historical Frontier Snapshot
+
+The former optional `Current Frontier` narrative is historical under decision
+`0019`, not a live resume source. Its complete unchanged section is recoverable
+from `889d7e1beb7bcec1b214f4209d1cf725cb2f5239:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`.
+
+Use this file's authoritative `Task Tree` nodes, `docs/TASK_TREE.md` and the
+bounded `MEMORY.md` pointer for current work. Do not backfill a second frontier.
+

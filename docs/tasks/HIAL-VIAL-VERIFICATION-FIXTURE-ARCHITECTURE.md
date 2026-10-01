@@ -4631,250 +4631,20 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.13`
-  Status: `pending`
+  Status: `done`
   Goal: `Retire the misleading unlabelled historical HIAL frontier snapshot.`
   Acceptance: `P2 continuity ambiguity: reproduce the optional Current Frontier opening naming completed .11.5 while authoritative nodes/Memory/index have advanced. Decision 0019 and the canonical secondary-view card explicitly make this optional narrative historical; no node-status failure or per-slice backfill obligation follows. After current SEM .5.4.3.3.3 commits clean, preserve the complete exact committed Current Frontier section through Git retrieval, retire that duplicate view with a historical stamp and verify unchanged authoritative nodes, adjacent decisions/questions/acceptance and native limits. Update bounded resume sources/book as appropriate, commit, then return clean to SEM .5.4.4. No production/native execution or new projection/ceiling.`
-  Verification: `Current optional heading/first paragraph names .11.5 as next, although that node is done and current generated observation .11.6 has completed. Canonical node list and decision 0019 are correct. Immediate scheduled next slice after committed runtime evidence; priority P2.`
-  Commit: `pending`
+  Verification: `The complete 889d7e1beb7bcec1b214f4209d1cf725cb2f5239 Current Frontier section is retired behind an explicit historical stamp and exact Git retrieval. Independent full source/section bytes, digests and Python/Perl accounting reconstruct it; current-document proof preserves every other node and all adjacent decisions/questions/acceptance. Hostile pointer/node/suffix mutations reject. Decision 0019 and canonical node/index/Memory sources stay unchanged; no second live projection, native execution, producer/helper or ceiling change. Return clean to SEM .5.4.4 after commit.`
+  Commit: `this commit`
 
-## Current Frontier
+## Historical Frontier Snapshot
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5` owns observation at the next genuine roadmap runtime; .11.4 completes priority qualification with no native rejection. Prior assertion/test failures remain retained. Independent guard runtime evidence closes the literal-guard repair; the detached activation collector resumes under SEMANTIC-INTROSPECTION-MCP-FRONTIER. Historical containment causality remains open. Bounded nested stream delivery under `.19.2.3.1.2.2.5.5.2.3.4.4` remains pending after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
+The former optional `Current Frontier` narrative is historical under decision
+`0019`, not a live resume source. Its complete unchanged section is recoverable
+from `889d7e1beb7bcec1b214f4209d1cf725cb2f5239:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`.
 
-Architecture audit `.1` is complete. Decision `0032` selects one public
-`.vial` source language, private immutable `VIALSemanticIR` and
-`VIALExecutionIR`, bounded versioned `HIALVIALBridgeManifest`, typed external
-native extensions, normalized result parity, plain SystemVerilog/Verilator as
-the first runnable backend, and independently qualified UVM, VHDL methodology,
-and mixed-language profiles. The canonical audit maps the handwritten AHB
-fixture and exact migration/scale/public-surface boundaries. Clean audit commit
-`2e2f7d25e` activated only `.2` through a separate continuity transition.
-Completed `.2` accepts decision `0033` and the exact source/semantic-IR v1
-contract. Clean contract commit `08f59167b` activated `.3` through a separate
-continuity transition; `.3` now ships the bounded semantic-only parser,
-validator, immutable `VIALSemanticIR`, sanitized report, checked AHB source,
-and exact support/capability accounting. Clean implementation commit
-`be9c74163` activated documentation contract `.4` through a separate
-continuity transition. Completed `.4` accepts decision `0035` and the exact
-review-routed `HIALVIALBridgeManifest` v1 contract. Clean selection commit
-`0366dfe30` activated implementation `.5` through a separate continuity
-transition. Completed `.5` now ships the private in-process/no-file bridge
-producer through direct IAL0, direct IAL1, and generated/reparsed IAL1 for
-IAL2. Clean implementation commit `51434a2ae` and activation commit
-`bf1e25274` permit completed `.6` to accept decision `0036` and the exact
-target-neutral ExecutionIR/logical-time/random-replay/native/plan/result/parity
-contract. Clean selection commit `eaf3f95dc` permits this separate continuity
-transition to activate `.7`; activation committed cleanly at `3ec8eab93`.
-Audit `.7.1` then confirmed the exact type-binding mismatch. Completed `.7.2`
-and accepted decision `0037` select a closed directional proof relation
-between independently authoritative VIAL semantic and HIAL carrier types.
-Completed `.7.3` now ships the private bounded binder, immutable ExecutionIR,
-deterministic random/replay, and defensive in-process plan after clean
-selection commit `2a1b3cefc` and its separate continuity activation. Completed
-`.8` selects the public tooling contract under decision `0039`; clean commit
-`d34da3254` activated `.9`. Completed `.9` accepts decision `0043` and the
-exact `sv_portable_verilator` contract: static partial evaluation, inactive-
-edge deterministic scheduling, declared probe adapters, source maps, closed
-runtime trace/result projection, and exact Verilator 5.046 qualification with
-an explicit known-value/two-state limit. Clean selection commit `ab3e73b72`
-activates `.10` alone for public-tool/backend/result implementation. Clean
-activation commit `5fd766600` decomposes that parent, and completed `.10.1`
-now ships public capabilities/check/canonical normal-terse formatting through
-one defensive source-only CLI/API with exact discovery/support accounting.
-Both source styles enter the same typed semantic builder. Completed `.10.2`
-now ships canonical HIAL-routed planning and virtual/atomic repository-local
-artifact transactions. Clean `.10.2` commit `045629c97` activates `.10.3`
-alone for backend/trace implementation. Completed `.10.3` now ships the
-private deterministic `sv_portable_verilator` emitter, eight-artifact virtual
-graph, source-mapped one-scheduler fixture, honest emission-only tool records,
-and pure closed-JSONL trace validator. Completed `.10.4` now ships public run,
-exact Verilator 5.046 compile/runtime, validated trace capture, normalized
-results, deterministic reruns, and atomic cleanup. `.11` retains cross-backend
-parity ownership after clean `.10.4` implementation commit `dfe87f536`.
-Completed `.11` now qualifies 19 shared AHB outcome paths against the
-handwritten oracle on byte-identical DUT source, while general cross-backend
-parity remains unclaimed.
-Clean cross-tree predecessor `ea1b76dd54` activated `.12` alone. Completed
-`.12` accepts decision `0050`, selects simulator-neutral IEEE 1800.2-2020 and
-exact Accellera UVM 2020-3.1 source, and separates deterministic emission from
-optional experimental probes and future PGEN+NEXSIM runtime qualification.
-Active container `.13` and completed `.13.1` own five full-shaped reviewable emission
-leaves that do not wait for simulation. Completed `.13.1.1` ships the private
-emitter substrate, structural validator, exact capability truth, and first
-byte-checked artifact gallery. Completed `.13.1.2` ships complete topology,
-timed interfaces, lifecycle, and notification/interception structures.
-Completed `.13.1.3` ships active stimulus, TLM, scoped factory/configuration,
-private RAL, and constrained-decision replay/preview structures. Completed
-`.13.1.4` ships public coverage/property/model/scoreboard/fault structures,
-typed diagnostic/result collection, and a bound SVA review checker in the
-revision-4 fourteen-artifact graph. Completed `.13.1.5` ships the revision-5
-sixteen-artifact graph, 25-row selected mapping matrix, deterministic gallery
-workflow, and exact deferred-runtime defect boundary. Completed `.13.2` ships
-the exact reusable Verilator-5.046/UVM-2020.3.1-vlt experimental probe, repairs
-the invalid generated `context` identifier, proves the isolated UVM library
-through runtime smoke, and classifies the complete generated fixture as
-tool-limited before runtime without advertising support. Director-deferred
-`.13.3` remains unavailable until capability-ready PGEN and NEXSIM releases
-provide exact provider evidence. Clean predecessor
-`adc88817e` activates `.14` alone for VHDL-2008 methodology/backend contract
-selection; selection and implementation remain unperformed.
-Decision `0034` records that
-this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
-machinery is compiler-owned in the same architectural sense that assembly is
-compiler-owned beneath C/C++ or Rust.
-
-Completed `.15.5` repository-locally materializes and qualifies the exact
-official macOS ARM64 GHDL 6.0.0 LLVM-JIT profile. Analysis, elaboration,
-bounded runtime, timed four-state behavior, a closed normalized result,
-deterministic rerun, applicable portable-SV parity, resource controls, and
-exact same-volume cleanup pass. Completed `.15.6` materializes exact recursive
-OSVVM 2026.05 and ships its structurally reviewed advanced adapter/gallery.
-Completed `.15.7` qualifies the combined exact tuple through 61-source
-provider compilation, generated analysis/elaboration/runtime, unchanged
-normalized result and parity, deterministic OSVVM reports, bounded support,
-and exact same-volume cleanup.
-
-The 2026-08-10 tool census leaves `.16` proposed: separately available
-Verilator, Icarus, and repository-local GHDL are not a mixed-language runtime,
-and no compatible mixed-language simulator is installed. Completed `.17.1`
-selects decisions `0055`/`0056` and the architecture-scale contracts without claiming
-capacity. Its audit finds one pre-existing support-snapshot limit drift;
-completed `.17.7` removes the stale focused-document regression shadow without
-storing a replacement count. Completed `.17.6` aligns the support snapshot and
-completed `.17.8` records that execution in the accepted decisions. Decision
-`0057` and completed `.17.2.1` now ship the bounded source-only workload
-catalog, identity, payload, and staging foundation without claiming capacity.
-Completed `.17.9` then repaired the independently reproduced
-`ArtifactTransaction` failed-stage cleanup collector and proved exact residue
-removal, unblocking semantic-family generation.
-
-Generation now proceeds family by family. Completed `.17.2.2` ships the
-canonical semantic-catalog workloads through the ordinary parser and validator.
-Completed `.17.2.3` activated the bridge-fanout family; `.17.2.3.1` selected
-decision `0060`'s qualification-only direct-IAL1 profile and `.17.2.3.2`
-shipped its canonical workloads. Completed `.17.2.4` now ships the execution-
-graph family: `.17.2.4.1` selects decision `0061` and the exact 13-axis
-reachability matrix, `.17.2.4.3` selects decision `0072`, and `.17.2.4.2`
-implements the 40 selected shapes across the binding, topology, fiber, type, and
-map gates, the complete random and serialized-plan ladders, the full scenario
-ladder, the complete operations-per-scenario ladder, and both complete fiber
-ladders. The operation ladder is the first selected pair whose own nominal cap
-never wins: the serialized-plan cap rejects 65,536 operations and the semantic
-expanded-action cap rejects 65,537, each recorded as a
-`VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`. The live-fiber
-ladder is the first axis to reach its own cap with an accepted plan, at exactly
-16,384. The total-fiber ladder closes the pair and is the first whose limit and
-over-limit levels answer to *different* authorities: both are authored compactly
-with the ordinary `repeat` form because the literal one-record-per-fiber source
-saturates at 22,536 fibers, `limit_v1` reaches the structural 65,536 cap and is
-then rejected by the 16-MiB plan cap with one discrepancy routed to `.17.4`, and
-`over_limit_v1` is rejected by the total-fiber cap itself before any plan is
-serialized, with none. The total-operation ladder then closes the family and is
-the first whose two levels differ in *proof method* rather than only in
-authority. Its literal 32-scenario recipe can author neither: 1,000,000 literal
-resets need 14,003,075 source bytes against the 1,048,576-byte parser cap, so
-that form saturates at 74,656 operations, and 1,000,001 is not divisible by the
-fixed fanout at all. Both levels therefore use the same ordinary `repeat` form,
-which puts either count into 4,003 source bytes. Measurement decides the rest:
-an operation graph costs about 5.0 KiB of resident state per operation, so
-`over_limit_v1` is proved by a real run at a measured 11 seconds and 5,216-MiB
-peak descendant RSS, opt-in behind `FSMGEN_VIAL_SCALE_EXACT` at a raised
-6,144-MiB cutoff, and rejects at its own cap with no discrepancy; while
-`limit_v1` is `preflight_dominated`/`not_materialized` under decision `0061`
-clause 8 against the 65,536-operation witness that already serializes
-21,511,563 bytes past the 16-MiB cap, recording one
-`VIAL_SCALE_LIMIT_INTERACTION` and one `VIAL_SCALE_PREFLIGHT_DOMINANCE` routed
-to `.17.4`. The execution-type qualification level closes next and is the first whose
-authority moved because the *stage order* was corrected rather than because a
-count changed: decision `0061` clause 4 evaluates VIAL source and SemanticIR
-before the canonical bridge, the direct-IAL1 route did not, and with that fixed
-the ordinary parser's own 4,096-declaration package-section cap rejects 8,192
-types at `/packages/0/types` from a source comfortably inside the byte cap. The
-route's measured boundary is lower still at 1,043 types, bounded by the 16-MiB
-serialized bridge-manifest cap rather than by the 4,096-type or 4,096-endpoint
-cap, so this axis also has no nominal operating point above its 512-type gate.
-The high `bindings`, `execution_types`, and `source_map_records` levels all
-share the same selected-authority mismatch: the generated source
-exceeds the workload's own 1,114,112-byte construction envelope before any
-product cap is consulted, and unlike fibers and operations, event, type, and
-endpoint declarations have no compact `repeat` form to reach the product cap.
-Each axis's genuine boundary is measured and far lower than its selected levels
-— 2,054 bindings at the bridge's 2,048-event cap, 1,043 execution types at the
-16-MiB serialized-manifest cap, and 46,294 source-map records at the 16-MiB
-serialized-plan cap. Completed `.17.2.4.3` and accepted decision
-`0072` now select the treatment: keep both the levels and the envelope, because
-the levels are the execution contract's own declared caps and the envelope is
-only the first obstacle, and instead require every unreachable level to report
-three numbers — its declared cap, the earliest cap that actually decides, and
-its measured route boundary — under an `envelope_unconstructible` /
-`not_constructed` outcome carrying paired `VIAL_SCALE_LIMIT_INTERACTION` and
-`VIAL_SCALE_ROUTE_BOUNDARY` records. The measured boundaries are 2,054 bindings,
-1,043 execution types, and 46,294 source-map records, 32x, 63x, and 22x below
-their declared 65,536 / 65,536 / 1,000,000 caps; the cross-layer inconsistency
-between `VIALExecutionContract` and `HIALVIALBridgeContract` that causes it is
-routed to `.17.4`. `.17.2.4.2` is unblocked and owns implementation, and the
-binding ladder is the first axis authored under the new rule: all three levels
-above its gate report `envelope_unconstructible` / `not_constructed` with the
-constructor's exact diagnostic, no retained source, no stage identity, a refused
-build, and both required records — the fixture-bound interaction and the measured
-2,054/2,055 boundary at the bridge's 2,048-event cap. The two highest
-execution-type levels now report the same selected result with exact
-2,413,815/2,413,852-byte HIAL sources and the measured 1,043/1,044 route
-boundary. The three source-map levels now complete the treatment with exact
-3,670,808 / 14,000,792 / 14,000,806-byte VIAL sources, the input-1 envelope
-diagnostic, no retained source or stage identity, refused builds, and the
-measured 46,294/46,295 route boundary. The partitioned reachability cards retain
-every prior answer key exactly once. Final RAM-guarded qualification passes all
-29 architecture-scale files / 135 tests in 1,114 seconds. `t/1603` freezes the
-completed selection as 40 owned shapes, 13 deliberately unselected reference
-profiles, and 12 deliberately unselected fixed-scalar profiles, all fail-
-closed. Completed `.17.2.5` implements and qualifies every checking-state axis:
-32 selected non-reference shapes are owned, the eight reference profiles fail
-closed, default t/1629-t/1635 passes at Files=7/Tests=36, and the complete exact
-matrix passes at Files=5/Tests=27 under the repository RAM guard. Completed
-backend-emission selection `.17.2.6.1` and decision `0075` now own the exact
-portable operation ladders, native-UVM adjacent negotiation boundary,
-profile-local structural oracles, and four diagnosed behavior defects. Completed
-repair parent `.17.2.6.2` closes its five ordered leaves: `.17.2.6.2.1` through
-`.17.2.6.2.4` provide linear portable-VHDL
-validation and source-map anchoring, callback-scoped sealed OSVVM provider
-verification, complete wrapper map translation, and fail-closed native-UVM
-selected-shape negotiation; `.17.2.6.2.5` aligns one closed exact catalog and
-support authority and qualifies the repaired family. Completed generator
-`.17.2.6.3` includes shared foundation `.1`, portable-SV `.2`, portable-VHDL
-`.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`; all six children
-are complete and freeze the exact thirteen-emitted/seven-rejected profile
-partition. Completed runtime/balanced parent `.17.2.7` owns runtime-stream
-construction `.1`, balanced revision-2 composition and portable structural
-emission `.2`, and unified provider-free qualification `.3`; parent `.17.2`
-therefore closes deterministic generation. Architecture-scale activity `.17`
-is complete at clean closeout commit `35d06790a`. Documentation and migration
-activity `.18` is complete. Child `.18.1` selected the exact public-surface
-matrix; `.18.2` through `.18.6` published the stable entry path, lifecycle
-reference, runnable AHB tutorial, migration guidance, and capability/support
-reference; `.18.7` independently closes their commands, links, truth
-boundaries, containment, and continuity. Expressive VIAL activity `.19` is
-active. Foundation parent `.19.1` and all seven children are complete: the
-additive v2 source/compiler substrate now includes explicit public source
-tooling, non-mutating v1-to-v2 migration, empty-family planning, and
-target-neutral lifecycle-control compilation. Every other expressive family
-and every v2 backend/run/result/parity route remains unavailable.
-Lifecycle-control parent `.19.2` is active. Clean foundation closeout commit
-`984271755` and activation commit `06c331cb7` permit child `.19.2.1` to select
-the target-neutral lifecycle semantic/source contract. Selection child
-`.19.2.1` and target-neutral compiler child `.19.2.2` are complete.
-Portable-SystemVerilog lifecycle child `.19.2.3` is active. Its contract
-selection parent `.19.2.3.1` has completed prerequisite readiness-condition
-repair `.19.2.3.1.1` at clean commit `1b25880f8`. Mapping selection
-`.19.2.3.1.2` has selected and executable-contract-watched the exact static
-controller and backend evidence contract without promoting a version-2
-backend. Its proposed repair child `.19.2.3.1.2.1` must close the independently
-characterized private v1 trace-validator envelope gap before emission begins.
-The selection commit reaches the 300-local-commit cadence, so full pre-push and
-hosted qualification precede activation of that child. Output-policy qualification
-`.19.2.3.1.2.2.3.2` is blocked after the consumed recovery gate: startup repairs
-`.4`/`.5`/`.6` and a complete guarded rerun are required. The next eligible
-leaf is `.19.2.3.1.2.2.4`, bounded Rust parity policy selection.
+Use this file's authoritative `Task Tree` nodes, `docs/TASK_TREE.md` and the
+bounded `MEMORY.md` pointer for current work. Do not backfill a second frontier.
 
 ## Decisions
 
@@ -7097,3 +6867,16 @@ correction supplies its proper scope and is reflected in the canonical fact/book
 - [x] **NO REGRESSION** — `knowledge-map: OK`, task-tree integrity, independent claim census, book and staged doctrine checks qualify this documentation-only rollover. No runtime, source, active contract or ceiling changes.
 
 Re-derivation uses exact Git source retrieval; falsification compares the unchanged contract prefix and scope correction independently of the production manifest/count checker; durability is the bounded manifest, immutable predecessor and mandatory task-integrity gate. Open native causality stays owned by .11.
+
+## Acceptance — historical HIAL frontier retirement (2026-10-01)
+
+Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.13`. Complete exact source and retired section
+are authenticated by `docs/audits/hial-frontier-retirement-20261001/`.
+Re-derivation uses the complete fixed Git source and current document; distinct
+Python/Perl byte, digest and line accounting and hostile pointer/node/suffix
+mutations provide falsification. Exact source object, sealed manifest/verifier,
+canonical policy/fact, current nodes/pointer and Git provide durability.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '10.11.5` owns observation' identifies 588028b01271a706ec78c0f66a4b5e1a00bd0b70 as the historical snapshot introduction. The optional Current Frontier opening still names completed .11.5; authoritative nodes and current Memory are correct. Decision 0019 makes this view historical, with no per-slice maintenance requirement. Its missing historical label causes P2 discovery ambiguity.
+- [x] **ADDRESSED (verified)** — Replace only the complete optional Current Frontier section with an explicit historical stamp and exact committed Git retrieval. Independent complete source/section and current-document proof preserves every other authoritative node and all adjacent decisions/questions/acceptance bytes, allowing only this owner's completion and fresh acceptance. No second live projection, product/native/helper change or ceiling increase.
+- [x] **NO REGRESSION** — Independent exact-source/section, Python/Perl accounting and hostile pointer/node/suffix controls pass. Knowledge Map reports knowledge-map: OK; task integrity and local book build are checked before staged doctrines and normal hooks. All completed generated runtime evidence and open historical-native/full-CI/backend/input gates remain unchanged.
