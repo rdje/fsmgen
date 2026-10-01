@@ -121,8 +121,12 @@ The shared HDL profile guard also applies to authored record outputs.
 Unsupported `verilog`/`v` and `vhdl` requests name the actor, output and authored
 type and recommend `systemverilog`. Mixed Verilog interfaces preserve the
 existing input diagnostic priority. The old input-only helper retains its
-contract, and target-neutral schedule preview stays available. Complete output public/backend qualification follows the current source
-integration; these profile tests do not establish runtime support.
+contract, and target-neutral schedule preview stays available. Actual local,
+imported, aliased, mixed and unused output sources now qualify the same normal
+native/facade refusals, complete machine error products and atomic destinations.
+SystemVerilog and its `sv` alias retain complete supported native HDL text apart
+from date banners; these generation checks do not establish runtime support.
+See the [actual target-profile evidence](../../../docs/audits/record-output-target-profiles-20261001/scope.txt).
 See the [profile evidence](../../../docs/audits/record-output-hdl-profiles-20261001/scope.txt).
 
 
@@ -177,8 +181,8 @@ Save the example above as `.artifacts/record-output-example.isf`, then query it:
 A failed check or semantic query returns `success: false` and its contextual
 diagnostic, without successful declaration metadata or a partial semantic result.
 A failed schedule query publishes no schedule JSON; API/MCP retain their existing
-message-only error contract. Target-profile atomic qualification and maintained
-corpus promotion follow in the tracked source-public closure; generated output
+message-only error contract. Target-profile atomic qualification is complete; exact predecessor products and
+maintained corpus promotion follow in the tracked source-public closure; generated output
 mappings, field writes and execution remain separately gated.
 
 

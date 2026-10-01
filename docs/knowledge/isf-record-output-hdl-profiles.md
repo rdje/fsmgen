@@ -50,5 +50,6 @@ durability. Unstated scalar state models remain absent rather than being
 invented as two-state facts. Source syntax was closed during the captured profile preparation. SEM
 .60.4.3.3.4.3 now integrates bounded authored output declarations/whole copies;
 see [source admission](isf-record-output-source-admission.md). Complete actual
-output native/API/machine atomic qualification remains .3.4.4 before execution
-promotion .3.5. Generated/field/runtime promotion remains separate.
+output native/API source products and actual atomic target-profile products are
+qualified separately in .3.4.4.1-.2; see [actual target profiles](isf-record-output-target-profiles.md).
+Exact predecessor/corpus closure .3-.4 remains before execution promotion .3.5. Generated/field/runtime promotion remains separate.

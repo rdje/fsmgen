@@ -1,0 +1,12 @@
+{
+  ".artifacts/record-output-profiles/focused.log": {
+    "archived_source": "docs/audits/record-output-hdl-profiles-20261001/focused.txt",
+    "bytes": 266,
+    "sha256": "a0dcd10d73ac2ad2d84e5427baf7b543fcce500dcec6c5b5fed8c91e0d3b7e7e"
+  },
+  ".artifacts/record-output-profiles/syntax.log": {
+    "archived_source": "docs/audits/record-output-hdl-profiles-20261001/syntax.txt",
+    "bytes": 249,
+    "sha256": "f4e743dd6085b8abdb4f4e8f13094380ed6b821dd712189d41bb44c5891b0d7d"
+  }
+}

@@ -1,0 +1,15 @@
+ram-guard: PID 22765; host 68.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+encountered object 'FSM::CoreAST::FSMModule=HASH(0x7cbd1e6210)', but neither allow_blessed, convert_blessed nor allow_tags settings are enabled (or TO_JSON/FREEZE method missing) at t/2035-isf-record-output-target-profiles.t line 155.
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 1.
+t/2035-isf-record-output-target-profiles.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+All 1 subtests passed 
+
+Test Summary Report
+-------------------
+t/2035-isf-record-output-target-profiles.t (Wstat: 65280 Tests: 1 Failed: 0)
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=1, 18 wallclock secs ( 0.01 usr  0.01 sys + 12.10 cusr  5.31 csys = 17.43 CPU)
+Result: FAIL

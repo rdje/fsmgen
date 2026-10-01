@@ -1,0 +1,8 @@
+ram-guard: PID 69030; host 59.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2028-isf-record-input-verilog-profile.t .................... ok
+t/2027-isf-record-input-backend-profiles.t ................... ok
+t/386-hdl-generator-facade-target-language-boundary-audit.t .. ok
+t/2032-isf-record-output-hdl-profiles.t ...................... ok
+All tests successful.
+Files=4, Tests=121, 113 wallclock secs ( 0.05 usr  0.01 sys + 74.17 cusr 26.90 csys = 101.13 CPU)
+Result: PASS

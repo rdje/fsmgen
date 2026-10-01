@@ -1,0 +1,159 @@
+use strict;
+use warnings;
+use lib 'perl', 't/lib';
+use Test::More;
+use Cwd qw(abs_path);
+use Digest::SHA qw(sha256_hex);
+use File::Temp qw(tempdir);
+use JSON::PP;
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::SourceQueryRunner;
+use FSM::Pipeline::HDLGenerator;
+
+my $root = abs_path('.');
+my $work = tempdir(CLEANUP => 1);
+my $json = JSON::PP->new->canonical->utf8;
+my $definition = '(record (tag (bits 2)) (body (record (data (signed (four_state (bits 3)))) (flag bit))))';
+my $package = '(?pkg:shared (+types (type frame ' . $definition . ')))';
+write_file("$work/shared.fsm", $package);
+my @producers = qw(bin/fsmgen perl/FSM/Pipeline/HDLGenerator.pm perl/FSM/Adapter/ISF/Parser.pm
+    perl/FSM/Scheduler/ISF.pm perl/FSM/Support/ISFHDLProfile.pm);
+my $before = fingerprints(@producers);
+my $sentinel = "EXISTING DESTINATION\nkeep every byte\n";
+my @observed;
+
+for my $name (qw(local imported alias mixed unused)) {
+    subtest "actual record-output target profiles $name" => sub {
+        my ($types, $type) = $name eq 'imported'
+            ? ('(imports (package shared))', 'shared.frame')
+            : $name eq 'alias' ? ('(imports (package shared)) (types (type alias shared.frame))', 'alias')
+            : ('(types (type frame ' . $definition . '))', 'frame');
+        my $source = '(actor target_output_' . $name . ' (clock clk) ' . $types
+            . ' (interface (output packet (type ' . $type . ')) (input start)'
+            . ($name eq 'mixed' ? ' (input incoming (type frame))' : '') . ' (output done))'
+            . ' (storage (var held (type ' . $type . ')))'
+            . ($name eq 'unused' ? '' : ' (transaction main (on start) (set packet held) (complete done))') . ')';
+        my $path = "$work/$name.isf";
+        write_file($path, $source);
+        my @results;
+        for my $target (qw(verilog v vhdl)) {
+            my $reason = reason($name, $type, $target);
+            my $output = "$work/refused_${name}_$target.hdl";
+            write_file($output, $sentinel);
+            my $existing = capture([$^X, 'bin/fsmgen', '--strict', '--quiet', '--language', $target,
+                '--output', $output, $path]);
+            ok(refused($existing, $reason), "$target exact contextual primary refusal ends normally")
+                or diag($existing->{stdout}, $existing->{stderr});
+            is(read_file($output), $sentinel, "$target existing destination stays byte-exact");
+            is($existing->{stdout}, '', "$target failure publishes no stdout HDL payload");
+            my $destination_sha = sha256_hex(read_file($output));
+            unlink $output or die $!;
+            my $absent = capture([$^X, 'bin/fsmgen', '--strict', '--quiet', '--language', $target,
+                '--output', $output, $path]);
+            ok(refused($absent, $reason), "$target absent destination has the same precise normal refusal")
+                or diag($absent->{stderr});
+            ok(!-e $output, "$target refusal creates no destination");
+            my ($product, $error);
+            eval {$product = FSM::Pipeline::HDLGenerator->new(target_language => $target, quiet => 1, strict_mode => 1)
+                ->generate_hdl_from_file($path); 1} or $error = $@;
+            ok(!defined($product), "$target public HDL facade publishes no partial product");
+            like($error // '', qr/^\Q$reason\E(?:\n| at |$)/, "$target facade retains exact contextual primary reason");
+            my %machine;
+            for my $kind (['check', qw(--check --json)], ['semantic', '--emit-semantic-json']) {
+                my ($mode, @flags) = @$kind;
+                my $native = capture([$^X, 'bin/fsmgen', '--strict', '--quiet', '--language', $target, @flags, $path]);
+                is($native->{exit_code}, 1, "$target/$mode normal profile refusal status");
+                is($native->{signal}, 0, "$target/$mode no signal");
+                is($native->{stderr}, '', "$target/$mode machine product owns the diagnostic");
+                my $report = $json->decode($native->{stdout});
+                is($json->encode($report->{success}), 'false', "$target/$mode exact JSON false kind");
+                is($report->{diagnostics}[0]{message}, $reason, "$target/$mode exact primary reason without stack");
+                ok(exists($report->{diagnostics}[0]{code}), "$target/$mode retained nullable diagnostic code");
+                ok(!exists($report->{source}{interface_ports}), "$target/$mode no successful declaration metadata");
+                ok(!defined($report->{semantic}), "$target/$mode no partial semantic product");
+                $machine{$mode} = {native => $native, report => $report};
+            }
+            my $schedule = capture([$^X, 'bin/fsmgen', '--strict', '--quiet', '--language', $target,
+                '--emit-schedule-json', $path]);
+            is($schedule->{exit_code}, 0, "$target target-neutral schedule remains available");
+            is($schedule->{signal}, 0, "$target schedule ends normally");
+            is($schedule->{stderr}, '', "$target schedule machine stderr stays clean");
+            my $report = $json->decode($schedule->{stdout});
+            my ($packet) = grep {$_->{name} eq 'packet'} @{$report->{interface_ports}};
+            is($packet->{width}, 6, "$target schedule retains literal complete output width");
+            is($packet->{type}, $type, "$target schedule retains authored output type");
+            is_deeply($packet->{fields}, [
+                {path => 'tag', width => 2, msb => 5, lsb => 4, signed => 0},
+                {path => 'body.data', width => 3, msb => 3, lsb => 1, signed => 1, state_model => 'four_state'},
+                {path => 'body.flag', width => 1, msb => 0, lsb => 0, signed => 0},
+            ], "$target schedule literal nested signed/state layout survives profile refusal");
+            push @observed, [$existing, $reason];
+            push @results, {target => $target, reason => $reason, existing => $existing, absent => $absent,
+                destination_sha256 => $destination_sha, absent_destination_exists => (-e $output ? JSON::PP::true : JSON::PP::false),
+                facade_product => $product, facade_error => $error, machine => \%machine, schedule => $schedule};
+        }
+        my %supported;
+        for my $target (qw(systemverilog sv)) {
+            my $output = "$work/supported_${name}_$target.sv";
+            my $native = capture([$^X, 'bin/fsmgen', '--strict', '--quiet', '--language', $target, '--output', $output, $path]);
+            is($native->{exit_code}, 0, "$target source generation succeeds") or diag($native->{stderr});
+            is($native->{signal}, 0, "$target generation ends normally");
+            is($native->{stderr}, '', "$target supported generation stderr stays clean");
+            my $hdl = read_file($output);
+            like($hdl, qr/\bmodule target_output_\Q$name\E\b/, "$target independently named module remains");
+            like($hdl, qr/typedef struct packed/, "$target retains packed record type declarations");
+            like($hdl, qr/logic signed \[2:0\] data;/, "$target signed three-bit data remains explicit");
+            like($hdl, qr/\boutput\b[^\n]*\bpacket\b/, "$target retains the authored output endpoint");
+            my $product = FSM::Pipeline::HDLGenerator->new(target_language => $target, quiet => 1, strict_mode => 1)
+                ->generate_hdl_from_file($path);
+            like($product->{hdl_code}, qr/\bmodule target_output_\Q$name\E\b/, "$target public facade admits the same source module");
+            like($product->{hdl_code}, qr/logic signed \[2:0\] data;/, "$target public facade retains exact signed leaf text");
+            $supported{$target} = {native => $native, hdl => $hdl, facade => {hdl_code => $product->{hdl_code}, source_info => $product->{source_info},
+                result_keys => [sort keys %$product]}};
+        }
+        is(normalize_date($supported{sv}{hdl}), normalize_date($supported{systemverilog}{hdl}),
+            'complete native alias products are equal except dated banners');
+        is(sha256_hex(read_file($path)), sha256_hex($source), 'complete profile qualification preserves source bytes');
+        is(sha256_hex(read_file("$work/shared.fsm")), sha256_hex($package), 'complete profile qualification preserves package bytes');
+        preserve($name, {source => $source, package => $package, type => $type, sentinel => $sentinel,
+            refused => \@results, supported => \%supported});
+    };
+}
+
+subtest 'profile refusal oracle rejects false success signal absent and secondary causes' => sub {
+    for my $row (@observed) {
+        my ($r, $reason) = @$row;
+        ok(!refused({%$r, exit_code => 0}, $reason), 'false success cannot qualify refusal');
+        ok(!refused({%$r, signal => 9}, $reason), 'signal failure cannot qualify precise profile refusal');
+        ok(!refused({%$r, stderr => ''}, $reason), 'missing diagnostic cannot qualify refusal');
+        ok(!refused({%$r, stderr => "Error generating HDL: unrelated cause\n$reason\n"}, $reason),
+            'expected reason only later in stderr cannot replace the primary cause');
+    }
+};
+is_deeply(fingerprints(@producers), $before, 'complete named producer bytes remain unchanged');
+done_testing;
+
+sub reason {
+    my ($name, $type, $target) = @_;
+    $target = 'verilog' if $target eq 'v';
+    my $input = $name eq 'mixed' && $target eq 'verilog';
+    return "ISF actor 'target_output_$name' record " . ($input ? "input 'incoming' (type 'frame')" : "output 'packet' (type '$type')")
+        . " cannot generate target '$target': packed record " . ($input ? 'inputs' : 'outputs')
+        . ' require SystemVerilog; use --language systemverilog. '
+        . ($target eq 'verilog' ? 'Verilog-2005 record lowering is not implemented.' : 'VHDL record-output lowering is not implemented.');
+}
+sub refused {
+    my ($r, $reason) = @_;
+    my $first = (split /\n/, $r->{stderr})[0] // '';
+    return $r->{exit_code} == 1 && $r->{signal} == 0
+        && $first =~ /^(?:Error generating HDL: )?\Q$reason\E(?: at |$)/ ? 1 : 0;
+}
+sub normalize_date {my $text = $_[0]; $text =~ s{^// Date:[^\n]*$}{// Date: omitted}mg; return $text}
+sub capture {FSM::Test::SourceQueryRunner::_capture($_[0], '')}
+sub fingerprints {return {map {$_ => sha256_hex(read_file($_))} @_}}
+sub preserve {
+    return unless ($ENV{FSMGEN_RECORD_OUTPUT_PROFILE_CAPTURE} // '') eq '1';
+    write_file('.artifacts/record-output-target-profiles/' . $_[0] . '.json', $json->encode($_[1]) . "\n");
+}
+sub read_file {open my $fh, '<:raw', $_[0] or die $!; local $/; return <$fh>}
+sub write_file {open my $fh, '>:raw', $_[0] or die $!; print {$fh} $_[1] or die $!; close $fh or die $!}

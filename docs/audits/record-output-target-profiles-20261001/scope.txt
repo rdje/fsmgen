@@ -1,0 +1,46 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.2
+Baseline: 4b4f988a5ceafb446383ed48de2913f8be5d7a62
+
+Actual local/imported/imported-alias/mixed/unused output declarations and whole
+copies reach native CLI and public HDL generation facade. Verilog/v/VHDL refusals
+name actual actor/role/authored type/target and recommend SystemVerilog. v keeps
+the canonical verilog spelling. Mixed Verilog interfaces retain original record
+input diagnostic priority; mixed VHDL has the precise output guard before the
+older shape-specific input backend refusal. All observed native profile failures
+have exit 1 and no signal. Existing destination bytes are exact and absent
+outputs remain uncreated; failure stdout publishes no HDL payload. The facade
+returns no partial product and retains the same primary contextual reason.
+
+Complete native machine check/semantic failures retain JSON false, nullable code,
+precise contextual message and no successful declaration snapshot or semantic
+product. All unsupported languages retain target-neutral complete schedule JSON
+and independently literal nested six-bit signed/four-state output layout. Full
+SystemVerilog/sv native HDL texts agree apart from dated banners. Public facade
+HDL text and complete public source metadata retain the same endpoint, signed
+leaf and authored source identity. No runtime, X/Z, reset-free value or VHDL
+execution is inferred from these generation products.
+
+The HDL facade is a typed Perl API, not a JSON-only result. Initial local
+behavioral checks pass, but raw complete-result JSON capture correctly encounters
+a CoreAST module and exits without a test plan. Preserve the complete draft and
+TAP, then capture complete hdl_code, source_info and the complete result-key list.
+Typed AST/IR object serialization and complete typed-object equality are outside
+this slice; no allow_blessed/null substitution silently erases them.
+
+The initial scratch directory reuses the earlier private profile preparation.
+Preserve the new draft receipts separately, restore only the two overwritten old
+focused/syntax logs from exact immutable archived raw hashes (no prefix changes),
+verify those hashes and switch to the distinct current target-profile directory.
+All earlier committed profile/input/public evidence stays byte-exact. Production
+code is unchanged.
+
+Actual source/profile/destination products re-derive the boundary. Independently
+literal type/layout/message/role expectations and hostile false success, signal,
+secondary cause, destination, partial metadata/semantic, signedness and mixed
+priority mutations provide falsification. Full source/HDL/machine/facade metadata
+snapshots, draft/final tests/TAP, exact producer Git objects, immutable predecessor
+fingerprints and verified scratch restoration, sealed verifier and task/book/
+facts/feedback/Git retain durability. Exact full predecessor product comparisons
+and maintained corpus closure remain the next siblings before source-public
+parent signoff; generated outputs, field writes and output execution remain open.
+No HDL compiler, analyzer or simulator is invoked.

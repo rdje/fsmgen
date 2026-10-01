@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **15** facts · **53** uniquely owned question entries.
+> **16** facts · **57** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -13,10 +13,12 @@
 - q="can empty conflict issues prove record output writer safety?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="can equal values or priority admit overlapping record output writers?" · facts=[isf-record-output-source-admission](../../docs/knowledge/isf-record-output-source-admission.md)
 - q="can scalar formals borrow an outer record output layout?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
+- q="can the HDL facade result be captured as raw complete JSON?" · facts=[isf-record-output-target-profiles](../../docs/knowledge/isf-record-output-target-profiles.md)
 - q="can the original input runtime evidence be joined to current source profiles?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
 - q="do both record-input emitter observations prove Verilog-2005 syntax?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
 - q="do output record scalar samples preserve signed and state traits?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
 - q="do record output domain reports retain the complete declared layout?" · facts=[isf-record-output-public-sources](../../docs/knowledge/isf-record-output-public-sources.md)
+- q="do record output profile failures preserve existing and absent destinations?" · facts=[isf-record-output-target-profiles](../../docs/knowledge/isf-record-output-target-profiles.md)
 - q="does VHDL support authored ISF packed record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="does generated record-input runtime prove X/Z or reset-free initialization?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="does ordinary ISF reset provenance omit the domain key?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
@@ -48,7 +50,9 @@
 - q="where is the recoverable direct packed-input runtime observation?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="which HDL profiles are prepared for ISF record outputs?" · facts=[isf-record-output-hdl-profiles](../../docs/knowledge/isf-record-output-hdl-profiles.md)
 - q="which SPECFORGE aggregate request portions remain after input signoff?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
+- q="which actual record output HDL target profiles are qualified?" · facts=[isf-record-output-target-profiles](../../docs/knowledge/isf-record-output-target-profiles.md)
 - q="which backend profiles are qualified for ISF record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
+- q="which diagnostic wins for mixed record input and output target profiles?" · facts=[isf-record-output-target-profiles](../../docs/knowledge/isf-record-output-target-profiles.md)
 - q="which direct record-input runtime behavior is qualified?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="which generated record-input storage and binding behaviors pass?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="which parser mode did record-input native behavior qualify?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
@@ -158,6 +162,13 @@ _Output-only records require scoped source, sample and clock-domain gates_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-output-source-contexts.md`](../../docs/knowledge/isf-record-output-source-contexts.md)
+
+### isf-record-output-target-profiles
+
+_Actual authored record output target profiles preserve atomic failure products_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-record-output-target-profiles.md`](../../docs/knowledge/isf-record-output-target-profiles.md)
 
 ### isf-record-output-writer-ingress
 

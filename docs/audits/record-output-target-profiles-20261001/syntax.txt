@@ -1,0 +1,1 @@
+t/2035-isf-record-output-target-profiles.t syntax OK

@@ -126,8 +126,11 @@ and book.
   in-process API and actual newline check/semantic/schedule products for local,
   imported, forward aliases, mixed/reverse/unused and owning-domain outputs,
   with literal nested signed/state/list layouts and precise no-partial-product
-  source/writer refusals. Actual target-profile atomic checks, predecessor
-  preservation and maintained corpus closure follow as `.2`–`.4`. Output
+  source/writer refusals. Actual target-profile atomic qualification `.2` now
+  covers native/facade Verilog/v/VHDL errors, unchanged existing/absent
+  destinations, complete machine failure products, neutral schedules and
+  supported SystemVerilog/sv text. Exact predecessor preservation and maintained
+  corpus closure follow as `.3`–`.4`. Output
   execution remains `.3.5`; the full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

@@ -36,7 +36,10 @@ unused inputs and undriven outputs in ordinary actor and partitioned domain modu
 Their presence does not depend on a scheduled read. Declared output records retain
 the complete authored alias, recursive type and packed leaf layout in successful
 native/API/newline check, semantic and schedule products, including owning-domain
-metadata. Failed products do not publish a successful declaration snapshot. Generated domain-top
+metadata. Failed products do not publish a successful declaration snapshot. Authored record-output
+Verilog/v/VHDL generation refusals preserve existing destinations and create no
+absent destination; schedule preview remains target-neutral. Mixed Verilog ports
+keep the existing record-input diagnostic priority. Generated domain-top
 routes therefore retain their declared endpoints. Width resolution remains
 owned by `+size`; this does not export inferred storage or unrelated generated
 transaction-child inputs. Semantic input analysis reflects the realized
