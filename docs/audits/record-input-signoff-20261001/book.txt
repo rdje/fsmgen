@@ -1,0 +1,5 @@
+ram-guard: PID 84565; host 52.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ INFO Book building has started
+ INFO Running the html backend
+ WARN search index is very large (14884110 bytes)
+ INFO HTML book written to `{REPOSITORY_ROOT}/.artifacts/record-input-signoff/book`

@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--name-only",
+    "889d7e1beb7bcec1b214f4209d1cf725cb2f5239",
+    "1fccd22bea883f63ba9782db52b2eff139c7f665",
+    "--",
+    "bin",
+    "perl",
+    "t/data",
+    "isf"
+  ],
+  "exit_code": 0,
+  "stderr": "",
+  "stdout": "bin/fsmgen\nperl/FSM/Pipeline/HDLGenerator.pm\nperl/FSM/Support/ISFHDLProfile.pm\n"
+}

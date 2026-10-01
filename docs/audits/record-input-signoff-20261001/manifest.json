@@ -1,0 +1,295 @@
+{
+  "baseline_revision": "1fccd22bea883f63ba9782db52b2eff139c7f665",
+  "evidence_members": {
+    "docs/audits/generated-input-execution-reconciliation-20261001/direct-saved.txt": "e22139951cd4ecd551ecb6cf9e52c9719e74820494ab2ae638975ccd37bbfd74",
+    "docs/audits/generated-input-execution-reconciliation-20261001/generated-saved.txt": "a9a6910863e9233f9dd8897a15db240a17c44325e80fd4f47c5748a11c389768",
+    "docs/audits/generated-input-execution-reconciliation-20261001/manifest.json": "74b19721788bff21e89c4ced1457fe5976106a147d51bf02c8a0a613395d4e2a",
+    "docs/audits/generated-input-execution-reconciliation-20261001/public-regression.txt": "43269c49e0b2a4df70f9555ac60964a6d5814aacc6580b6399aff20eb0c7da4d",
+    "docs/audits/generated-input-execution-reconciliation-20261001/requirements.json": "68766d1e7e3a9830a42fe3f03f3dc1d1c1a65bcc5abd09648eccf2d846c16052",
+    "docs/audits/generated-input-execution-reconciliation-20261001/verify.py": "d7770b1f85b2d73828b75a2e65474e351e114d8e4389ca6110cd99c51aadf128",
+    "docs/audits/record-input-backend-profiles-20261001/census.json": "dd2c230515459596516fb4a5e4166762b61d8ceb9564c87f385176f616072856",
+    "docs/audits/record-input-backend-profiles-20261001/draft-red.txt": "c0ae7d520bc6eff76f8242679e5ae22ee439eae5ce60c706f93d54c50ee2d723",
+    "docs/audits/record-input-backend-profiles-20261001/manifest.json": "e2075f2e3d4dfb60d16c4bd031aa010d899aa37dbdab2fa24f66d20efbf65b20",
+    "docs/audits/record-input-backend-profiles-20261001/notes.md.source": "7c3373160e38bcafef60b06729bfda383b5b1886a6dab8e88567d0e95ea596d3",
+    "docs/audits/record-input-backend-profiles-20261001/probe-log.txt": "8350e229c5e4f93491c304716a8cef87cfc7d70252d8b804a065e0126ed6223f",
+    "docs/audits/record-input-backend-profiles-20261001/probe.pl.source": "9f620bf01a6a0bb212e6a85ae46e57a15a6d2c57a666784088a9998948a52c18",
+    "docs/audits/record-input-backend-profiles-20261001/regression.txt": "a1e6aa5cd6ced75ec2e862bcadefa00572ce8f7775cbb9b71c8177c8ece72b16",
+    "docs/audits/record-input-backend-profiles-20261001/test.t.source": "ebff4ae7cc42be919e74105d0390621b9db7c103f287a3bd37ae01d0c923297e",
+    "docs/audits/record-input-backend-profiles-20261001/verify.py": "fae3fcd214808e7cfc87fd5c830e3828a2b97a381938f9f3167b8b7234797b86",
+    "docs/audits/record-input-direct-observation-20261001/after.json": "d7808dc3ca49ccf3f2791e0e33920ed2d51e76c313bc6022aa8853b313de3c05",
+    "docs/audits/record-input-direct-observation-20261001/before.json": "fed48a12f2abdd796e395974af80954de6c33385e1b6ef671f133919f6eb7ce9",
+    "docs/audits/record-input-direct-observation-20261001/manifest.json": "681ea1cdcf32536e0cc2b8a367ad982ebd393ddf724aad82e43a77c7dff83657",
+    "docs/audits/record-input-direct-observation-20261001/observation-command.py.source": "be33c790a33e9e77b0189de3ea7dafec4eaaf64c55370916ef9c96365879d3a2",
+    "docs/audits/record-input-direct-observation-20261001/observation/admission.json": "0e47a286dd2533476ac0e32c4d52e7b70398b9d853caeda455acb659333ddf93",
+    "docs/audits/record-input-direct-observation-20261001/observation/compile_a.json": "9598fecc16054d3fb4579cef1622a09e38d3c2b758091e47e97aac02b23ecc5d",
+    "docs/audits/record-input-direct-observation-20261001/observation/compile_c.json": "1d24b5bc406e7ec2dfd9f2d8caa92bc35fd228036ce5b3bf851d316945b62d14",
+    "docs/audits/record-input-direct-observation-20261001/observation/compile_e.json": "39ae1b146a346f5e13ee25efb55e8b725e8dc52adb0576d76aa2b5acb4ea0847",
+    "docs/audits/record-input-direct-observation-20261001/observation/events.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/audits/record-input-direct-observation-20261001/observation/runtime_b.json": "aa30a77e507479fd625aa09b41c04b4b22cd3a9189916a2e04dbdbc54535a55e",
+    "docs/audits/record-input-direct-observation-20261001/observation/runtime_d.json": "d7ae45c86e8d8301a4056cfc92bb3108e2792116cbbdc476faae48609bea5e79",
+    "docs/audits/record-input-direct-observation-20261001/observation/runtime_f.json": "ad0b575f9716b1b1925baea80414890967607469f86b867e27f4513d0ee6d2cb",
+    "docs/audits/record-input-direct-observation-20261001/observation/summary.json": "b8ba0add4b5bbdf9b2ed3b3206b774185c4bb86c8bf5d1ebeecd8a4315d4b41f",
+    "docs/audits/record-input-direct-observation-20261001/observe.py": "be33c790a33e9e77b0189de3ea7dafec4eaaf64c55370916ef9c96365879d3a2",
+    "docs/audits/record-input-direct-observation-20261001/observed-bench.sv.source": "4b9ed57a09b413d22c932af42706fe45a6196f9222bf8480639de75e0721fde0",
+    "docs/audits/record-input-direct-observation-20261001/observed-result.json": "48952c5c3f8afd8c145ee63d1bf9a8dfce89637f1f74c700deedfdbf2af081bc",
+    "docs/audits/record-input-direct-observation-20261001/observed-source.isf": "f114a40d76286ec4f5cc74e3d77550d548a8925119cd909eb4c3ed113d86653c",
+    "docs/audits/record-input-direct-observation-20261001/observed-test.t.source": "f10bd79e447455da556435608de128c01e52be690b24e3005e5afe70890953a7",
+    "docs/audits/record-input-direct-observation-20261001/postcheck.json": "5f9d71f81a9bbca8a4cef59a8bd4fb9d7aab8445d03cf16ca24c538c904a6a4f",
+    "docs/audits/record-input-direct-observation-20261001/prove-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/audits/record-input-direct-observation-20261001/prove-stdout.txt": "a303c722eb45e728e56b0a0ece889c0f809e57c2a4da056a5d7176c430bef871",
+    "docs/audits/record-input-direct-observation-20261001/verify.py": "f7eea2a7a7b831210f1af8fc38585df3f3270ff1bf5a2aa41c6be7a4fe026709",
+    "docs/audits/record-input-generated-observation-complete-20261001/after.json": "a0e1e1a62af2db8a33e4be6b102b07c499450c8adf23051f9242ecd2eea2ab0b",
+    "docs/audits/record-input-generated-observation-complete-20261001/before.json": "74d95a9c39af2e3e19acf925bde126551314d1ad6ccda45bd829ed1e537881f3",
+    "docs/audits/record-input-generated-observation-complete-20261001/manifest.json": "e129f857bea84dc0e76d9fc9bc4c3f8ab4068062b1397ba734bdd2a1c3072db7",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation-command.py.source": "f5ac6c2883109f35d0b27a0fb59c3b25bcdf4154382d412ad8d866d5bd319768",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/admission.json": "a0a0f30f2a3a0b5b5e120fc2cc1125dcb016fd11772024d4ef8d53d9608ca296",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/compile_a.json": "691115efba3b0a6010df92249c7a66f312fb54b5ffe2d33db756cf896d8a66ed",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/compile_c.json": "21de1d043d91f74a51e615f6cbede177bb8346609edd9ba0a249c0308069bb79",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/compile_e.json": "71cbce402534f4546cb11579092bad587d82562fa98c947833d08cea50a14f7c",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/compile_g.json": "f0105e8d30c2157356277d138a3b71893736e7cc915c2ef0b4b86b56dd68569c",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/compile_i.json": "c662cac7198f124ab0840ff793c2ec92f4ce066fde21e59997853564eebf8079",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/events.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/runtime_b.json": "015e701a9d16aff11a19db7b7a2bed9ee2539b67c769026be2c104129b5d1345",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/runtime_d.json": "6d1db41d4e3638b42dc4602868d714e559973ecb515afa98b0d0d4177f038e76",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/runtime_f.json": "82d7e5404fe04cf18ad2d155f490be6cb4f0a95a368c9c53bde73b5d02317359",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/runtime_h.json": "8cbaa23113b2eafdb4591a201f6cb5059941d1dd767ae9acaf11c6e9eb64a9c9",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/runtime_j.json": "7d969cccf192736d51a5da4d27285243ee20f37f22d92ea722688d16ae35f6d3",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/summary.json": "ea2a6b143e4d88da3eed78ea08ea1d72199da84a4971b542d06d6ac74aeb5d96",
+    "docs/audits/record-input-generated-observation-complete-20261001/observe.py": "f5ac6c2883109f35d0b27a0fb59c3b25bcdf4154382d412ad8d866d5bd319768",
+    "docs/audits/record-input-generated-observation-complete-20261001/observed-bench.sv.source": "c9303b317e4151d9d1ef40f40232e24155e033ba0a5f97ccae6e72cbf8f419ac",
+    "docs/audits/record-input-generated-observation-complete-20261001/observed-blocking.isf.source": "91afd1ac9e7acabfd6ebb47f391b242d830520e3a829124467bec093c88dc9ab",
+    "docs/audits/record-input-generated-observation-complete-20261001/observed-domains.isf.source": "d39955c46ff1421b899e0a6da8a6142377270b3e4f36ef37919507df9e675670",
+    "docs/audits/record-input-generated-observation-complete-20261001/observed-result.json": "2654d0d825fe0033f3f2dfc47e9d4533fe0dd31cfe077c60abee6e3d4903830f",
+    "docs/audits/record-input-generated-observation-complete-20261001/observed-test.t.source": "7f8f53435b060dcb16f8502dce659269c5d707948afa7754a4c438c67367dab7",
+    "docs/audits/record-input-generated-observation-complete-20261001/postcheck.json": "6e28f406366507503c4ab6aa8955adaf1063e85fcdc640357481a5978a749d42",
+    "docs/audits/record-input-generated-observation-complete-20261001/prove-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/audits/record-input-generated-observation-complete-20261001/prove-stdout.txt": "7c24c0352e91867e1b1b9f7e0e832cdee4b7327f57d5d3d707fbe4867421fa65",
+    "docs/audits/record-input-generated-observation-complete-20261001/verify.py": "2f1548ffe80e5bc1ad6040f2a72166947a2b5c1a42109b56f164e2e6e960e909",
+    "docs/audits/record-input-language-profile-20261001/blocking_systemverilog.hdl.source": "db3590fd96253b2bbb528629464c68422f8761d556671cd9a7e4c869b560630d",
+    "docs/audits/record-input-language-profile-20261001/blocking_verilog.hdl.source": "1e2639da8067fdb5a57fb99cd0bd28120b45a9670af6e83f47a46f0ec8728dea",
+    "docs/audits/record-input-language-profile-20261001/book-replacements.json": "49476a27b2efe38efe20dad6f69bb61e94f698cf697b649138b4bc9c1ed1f70c",
+    "docs/audits/record-input-language-profile-20261001/book.md.source": "fbe4bc2a76004cc927c67d30d42ab12f54a4843357f83486a63d08ab6dca53e7",
+    "docs/audits/record-input-language-profile-20261001/capture.py": "f8a2d7421f8338c6c1e8227028d73fa8d99568b2871da309fb3e8520b7de6a92",
+    "docs/audits/record-input-language-profile-20261001/capture.txt": "d0ac68922aa85b6b228fe12f6a8bfb425a7cc720d551a2c32bdd852dadac9bd6",
+    "docs/audits/record-input-language-profile-20261001/direct-saved.txt": "1d3bf467b602847c2a4773d7a4a29838d1421d3a84d101dea093211b1cf7430a",
+    "docs/audits/record-input-language-profile-20261001/direct_systemverilog.hdl.source": "78b279d1d68eb717b7528339434b31e32147a56155a1a7bcf3518673f97d0565",
+    "docs/audits/record-input-language-profile-20261001/direct_verilog.hdl.source": "5f8e419c9ab6fa25b2648d7d5080b007177b2839918667523e5482228d85641d",
+    "docs/audits/record-input-language-profile-20261001/docs.txt": "3e302fb3f7b6c4e365a49e438628dda631488af3a01f8819006efdbec7a804d6",
+    "docs/audits/record-input-language-profile-20261001/domains_systemverilog.hdl.source": "c34ca110cf0cc04c7825b9cb89304cbda0fb60ccc1220dd22d90a7482144288f",
+    "docs/audits/record-input-language-profile-20261001/domains_verilog.hdl.source": "2e098f3ca7d781a04dd8696e1edd4a66fbe80c22403c198e428ec5ab908ceb05",
+    "docs/audits/record-input-language-profile-20261001/emissions.json": "703fc6bbb4a61723cc2ef0dd6c5c1051944669faa36c3fb218b79d4434b0ee82",
+    "docs/audits/record-input-language-profile-20261001/generated-saved.txt": "f7453fa90845922bb71d822b867269b8f4c8a5f6d5844ababcba08b6b4b7a6fe",
+    "docs/audits/record-input-language-profile-20261001/history.json": "13eed77bda7a18c9ba5103c09ab62272fb32bb610ab7ca857d8d8dc60d53d917",
+    "docs/audits/record-input-language-profile-20261001/manifest.json": "c0f2795fdca7b920187bbd5cbce57bb777a94bfa6a913aa6c01e20460370e464",
+    "docs/audits/record-input-language-profile-20261001/source-equivalence.json": "307358aa17584acf094b4bbcd00a0913b2ba7c500b94f161be3f67e5f544c930",
+    "docs/audits/record-input-language-profile-20261001/tool-contract.json": "b042a588da5d4ef3ddf2c490ba47b5f8e2afe23a6a9d97a998fbe900b1e3e5e1",
+    "docs/audits/record-input-language-profile-20261001/verify.py": "fcdd56dfe360c264c7ee1f02f70a87894b9f9759f4422908c1f52d0005fbccdb",
+    "docs/audits/record-input-public-reconciliation-20261001/cohort.json": "74d701e59399b01f84772c38ea2d64fcc3a6cf0fdd591c055b7ac93d88f23ea6",
+    "docs/audits/record-input-public-reconciliation-20261001/discovery.json": "e153ea068abb924d1e868d68b76cc14e50e537d451e4f90cc9eb1a6bea4ffbab",
+    "docs/audits/record-input-public-reconciliation-20261001/json-kind-equality.txt": "e232c6ae28897d783fe1a6bda8ea17350267a0d4f356bf100a233f7ad35d3223",
+    "docs/audits/record-input-public-reconciliation-20261001/manifest.json": "8f13c064ffccb50484942c3210d79b3cf937961ecfef0036c9c2f3ecae7917e0",
+    "docs/audits/record-input-public-reconciliation-20261001/matrix-history.txt": "c26f616013a6f9558f7289e63ef12a34d9e2be1267c4e4a920ca7859737886e3",
+    "docs/audits/record-input-public-reconciliation-20261001/matrix.md.source": "a89576680496cf0cc2bd084897a2b7cd501ab010a6603d2d0130fb9af2b8cd0a",
+    "docs/audits/record-input-public-reconciliation-20261001/prior-saved.txt": "dbed4dbe088c9e4323d63ebf030231862583c1b316e96943d057c7cfae14e62c",
+    "docs/audits/record-input-public-reconciliation-20261001/public.txt": "4203b3ca365fde7e4945a5f6b875e8f63f5c4f108ef567cb103cf62765cfa4c8",
+    "docs/audits/record-input-public-reconciliation-20261001/source-equivalence.json": "a9d3a458656b659f053a366f37ca34d12006adb432a7b4e35c23620b3b33a024",
+    "docs/audits/record-input-public-reconciliation-20261001/verify.py": "816089b0b5fad2fd6b6872e68fbbba86cb0510fcdb949920e1adb699c35ff888",
+    "docs/audits/record-input-verilog-boundary-20261001/before-test.t.source": "b43ba7a3ceee8e051b1f3a6147099dffb4a0d80f2a688e77ccafba7fa47b96ca",
+    "docs/audits/record-input-verilog-boundary-20261001/before.txt": "943afba4b24a0a56f09e3ecbd45ec224f1200d447afda6e22d0c555bad7ab3b0",
+    "docs/audits/record-input-verilog-boundary-20261001/book.txt": "031eb7bdcb56de044e4d373c5eab486e5b701fb63c237a3071e5483d24554ca7",
+    "docs/audits/record-input-verilog-boundary-20261001/direct-saved.txt": "e337ac698db020c847d0f08bf56266a27c684ba01e2d5bb1736b1bfd24fe9844",
+    "docs/audits/record-input-verilog-boundary-20261001/docs.txt": "fc4b32c5c6d46b5c6a37db2ce62b6ea5f1f8a7218149c33f2a8707ecb4812c55",
+    "docs/audits/record-input-verilog-boundary-20261001/draft-check.json": "db2642827a3f56654387e444fa7027c9d583a580007537acd7c9c975509ee053",
+    "docs/audits/record-input-verilog-boundary-20261001/draft-cli.source": "b6995c8c0ba9c2d41b2e72d2a186df3f3a27edf175fce5490f7e956e81534dc7",
+    "docs/audits/record-input-verilog-boundary-20261001/draft-status.json": "79a7f3a1ef59e83e559ef74eb4c5a0ff0769634b995d582864a6e236c2b0d9e3",
+    "docs/audits/record-input-verilog-boundary-20261001/draft-status.txt": "c23f5a6147eb6728d98171a137b331c41290fa1e2fcdd2cb09e3d4c0fe427aa7",
+    "docs/audits/record-input-verilog-boundary-20261001/final-focused.txt": "5b6b5456946bddc299adfca91bb41037c08c815187a13bc8b565e5b476a9a218",
+    "docs/audits/record-input-verilog-boundary-20261001/generated-saved.txt": "ba2ac78fc82e6db259b967ec65fb3dd3f2b634f9ddbf482c48a30bc192c073b9",
+    "docs/audits/record-input-verilog-boundary-20261001/intermediate-focused.txt": "6ccb36c628b816e97069fdefaeb62a233c2504cc6a7a9e2297b4e7ae49172dd3",
+    "docs/audits/record-input-verilog-boundary-20261001/manifest.json": "8d69815bd819c8e1a63143d5f92a3bad413880598355c48505a8c37cd0ffaf9e",
+    "docs/audits/record-input-verilog-boundary-20261001/producer-0.source": "a1e8ab6168439c775d03d589d917fe0b991d2243b396fbec58dd8f726af28a40",
+    "docs/audits/record-input-verilog-boundary-20261001/producer-1.source": "7a0ea00f68148d761cfbe0c6e91028c8c1d9e6bd69d4f0f285b1c86cccba1dd5",
+    "docs/audits/record-input-verilog-boundary-20261001/producer-2.source": "870fae0f8d734714153a7a5196d9714d175d3396dd2f1d8f29ee7ab7df41333b",
+    "docs/audits/record-input-verilog-boundary-20261001/producer-3.source": "38cbcd1206fa473ae7637ac4e3b0a723b6147900fd9cdcc3dbe64d1e9ff8dbdc",
+    "docs/audits/record-input-verilog-boundary-20261001/producer-4.source": "c349562a9dde3aa06360f69a0c9c1d31763533637d5c7f5fb30740ecb9afb120",
+    "docs/audits/record-input-verilog-boundary-20261001/producer-5.source": "dda0f8bd4c169859f8ebb364feb2d0078705b8b3afd9215828ec6cf918c156b6",
+    "docs/audits/record-input-verilog-boundary-20261001/regression.txt": "a9c6c9e094db99677e90d325e57b6e5da74d46bbf0b7deb005d191466fda3c6e",
+    "docs/audits/record-input-verilog-boundary-20261001/scope.txt": "95e568395d4c954aed7130fb1a0dcc6411f0e901a3f74e0ffe7123b02cccb52f",
+    "docs/audits/record-input-verilog-boundary-20261001/verify.py": "9d05929d2b25ab3533d3fc26d422532042e51c1b59f80c40197a432866076842",
+    "docs/audits/specforge-aggregate-intake-20260930/baseline-good.isf": "7084672b7ac3081b87d803f337e5a68514da98ff2d2ea09361074940d2e1b461",
+    "docs/audits/specforge-aggregate-intake-20260930/capture.t": "53b662cc3b7c337f3772ae7eaf3f6dd33a7b5c74034f9861643a42e60fbe7c5e",
+    "docs/audits/specforge-aggregate-intake-20260930/current.json": "311b8a7f66e479961b70136f2e01d1a588657414a152a41656933ab748dd0c76",
+    "docs/audits/specforge-aggregate-intake-20260930/logs.json": "0e4929e95f544162f71189d6c86a58c9788f03bb61915f63bd5efec658120bea",
+    "docs/audits/specforge-aggregate-intake-20260930/manifest.json": "866067ee56747cae77394de467b3768fe04db97572b0ad82c71ca5b2619192c9",
+    "docs/audits/specforge-aggregate-intake-20260930/packet.json": "7e16064a5c0d3d28f19f105413399473665ea7f3e7540366edfb930337aca2fe",
+    "docs/audits/specforge-aggregate-intake-20260930/record-port-field-guard.isf": "56afac9a5a2223ed4ad8a35a31952ff7b14617a05293845ff80d82dfd61c3fa8",
+    "docs/audits/specforge-aggregate-intake-20260930/record-port.isf": "e52f192ab6ca3a2bd2e307ebf32258e24ff9c53cc584ed03058b05ea93501edc",
+    "docs/audits/specforge-aggregate-intake-20260930/verify.py": "50a3fcee9f03b5dd018a7262d96a26fec2b1b5e0d06ef4e88a52991aabc0a68a"
+  },
+  "native_revision": "889d7e1beb7bcec1b214f4209d1cf725cb2f5239",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.3",
+  "receipts": {
+    "book.txt": {
+      "exact_root_replacements": 1,
+      "projected_sha256": "01bf7a356520b48f2697e5ed7355062d8d983d6d436c1089768e14b7a80432ba",
+      "raw_bytes": 307,
+      "raw_sha256": "1a257be94eda805ea3122a3122cae8ec7c36477e90b9111fbf9bde1c9523bce7",
+      "root_prefix_bytes": 36
+    },
+    "current-public.txt": {
+      "exact_root_replacements": 0,
+      "projected_sha256": "d7ccc63911cea89cb34b5ed17752540ae6372961b2382e3f5c72b84d45521d93",
+      "raw_bytes": 372,
+      "raw_sha256": "d7ccc63911cea89cb34b5ed17752540ae6372961b2382e3f5c72b84d45521d93",
+      "root_prefix_bytes": 36
+    },
+    "docs-before.txt": {
+      "exact_root_replacements": 0,
+      "projected_sha256": "7cee6c45a7d30e5ef3d672f97da9a7ae727e4913654b00df1fb6e54b10e8c60c",
+      "raw_bytes": 122572,
+      "raw_sha256": "7cee6c45a7d30e5ef3d672f97da9a7ae727e4913654b00df1fb6e54b10e8c60c",
+      "root_prefix_bytes": 36
+    },
+    "docs-final.txt": {
+      "exact_root_replacements": 0,
+      "projected_sha256": "a07d3b6c45cc6fda448948ee467b117d64dfc822e46bfda609a6fbe61cbc1fa9",
+      "raw_bytes": 366,
+      "raw_sha256": "a07d3b6c45cc6fda448948ee467b117d64dfc822e46bfda609a6fbe61cbc1fa9",
+      "root_prefix_bytes": 36
+    },
+    "saved.json": {
+      "exact_root_replacements": 0,
+      "projected_sha256": "b028be3bebf782610bae744785e52d60c9a1c112a22fd342c8f73fc0104008f2",
+      "raw_bytes": 3858,
+      "raw_sha256": "b028be3bebf782610bae744785e52d60c9a1c112a22fd342c8f73fc0104008f2",
+      "root_prefix_bytes": 36
+    }
+  },
+  "schema": "fsmgen.record_input_signoff.v1",
+  "sha256": {
+    "book.txt": "01bf7a356520b48f2697e5ed7355062d8d983d6d436c1089768e14b7a80432ba",
+    "current-public.txt": "d7ccc63911cea89cb34b5ed17752540ae6372961b2382e3f5c72b84d45521d93",
+    "docs-before.txt": "7cee6c45a7d30e5ef3d672f97da9a7ae727e4913654b00df1fb6e54b10e8c60c",
+    "docs-final.txt": "a07d3b6c45cc6fda448948ee467b117d64dfc822e46bfda609a6fbe61cbc1fa9",
+    "matrix-audit.t.source": "0bc6f7ccd02ca17984abc40969a66b9bf9de7da21f16efd9e59d70033e62d6b4",
+    "requirements.json": "3375d4e138bb5205db2e81640fee4ac0b981d3733c901cd3c286a51aba2d7c96",
+    "saved.json": "b028be3bebf782610bae744785e52d60c9a1c112a22fd342c8f73fc0104008f2",
+    "scope.txt": "c40dd1a514189867aa4f260d26abbd77ffce1770efa18666fcdd4f531902b668",
+    "source-boundary.json": "176c149086ff5433b3e3fe69bff9a75492ef0fef44dda92b89e4af9b834ae8b9",
+    "verify.py": "feb1355cf18446dbc735ae5cf350e8aa81ed433eb4ae149120ef312ded7223bb"
+  },
+  "source_objects": {
+    "bin/fsmgen": {
+      "git_blob": "0a17b9350012c03ee1bbcdbb18674885a4df40a6",
+      "sha256": "a1e8ab6168439c775d03d589d917fe0b991d2243b396fbec58dd8f726af28a40"
+    },
+    "docs/audits/record-input-backend-profiles-20261001/manifest.json": {
+      "git_blob": "a8bf4521529b959af745a6d146de455010a09e63",
+      "sha256": "e2075f2e3d4dfb60d16c4bd031aa010d899aa37dbdab2fa24f66d20efbf65b20"
+    },
+    "docs/audits/record-input-direct-observation-20261001/manifest.json": {
+      "git_blob": "6ea5707a85a35f7a36b9634a9fdefeb54ba9d5de",
+      "sha256": "681ea1cdcf32536e0cc2b8a367ad982ebd393ddf724aad82e43a77c7dff83657"
+    },
+    "docs/audits/record-input-generated-observation-complete-20261001/manifest.json": {
+      "git_blob": "c42c58c6af069c3f9db8ffa91d9659a5a17e7cd0",
+      "sha256": "e129f857bea84dc0e76d9fc9bc4c3f8ab4068062b1397ba734bdd2a1c3072db7"
+    },
+    "docs/audits/record-input-verilog-boundary-20261001/manifest.json": {
+      "git_blob": "2292127b3e48977e2b46e88cd88a2fd84f6862b3",
+      "sha256": "8d69815bd819c8e1a63143d5f92a3bad413880598355c48505a8c37cd0ffaf9e"
+    },
+    "perl/FSM/Pipeline/HDLGenerator.pm": {
+      "git_blob": "41f50a89548dd8397271e80ebee0d9d48fc3ac99",
+      "sha256": "7a0ea00f68148d761cfbe0c6e91028c8c1d9e6bd69d4f0f285b1c86cccba1dd5"
+    },
+    "perl/FSM/Support/ISFHDLProfile.pm": {
+      "git_blob": "62a276a74671e4d4488914310ff7c6fdcb81de0a",
+      "sha256": "870fae0f8d734714153a7a5196d9714d175d3396dd2f1d8f29ee7ab7df41333b"
+    },
+    "t/1305-isf-book-feature-matrix-audit.t": {
+      "git_blob": "db53ebe6bcaf90cbdef130cfc8c2623e18161ec4",
+      "sha256": "16c0244b40080b07a7f93fbd61853341016c23f1c4fd18c7af4878e432fd9549"
+    },
+    "t/1983-isf-interface-port-metadata.t": {
+      "git_blob": "7fe7badfe7f0691020f8c52f893337106f6a2b55",
+      "sha256": "a76f55b2bd932addd0d8ca70b28b3ca1491f855aa22faa73edf7ec12696471d4"
+    },
+    "t/1984-isf-interface-port-report-integration.t": {
+      "git_blob": "7627569e6830554bfe5c0567d20d9ec84369011e",
+      "sha256": "e8f7ab706e9515a67e8591fe22d3c7ee133d85a4c1ddf530a80b551b1512d6dd"
+    },
+    "t/1985-isf-interface-port-public-qualification.t": {
+      "git_blob": "ede315281e7ede6ba7ece8914c94eada63b4577d",
+      "sha256": "90854d887f7dc4225eceef1576932a20ca55b430905bece935e2c7abae594d4a"
+    },
+    "t/1986-isf-record-port-value-gates.t": {
+      "git_blob": "326c2f12f2a9db5f2b20221d3a108e615d33b6e3",
+      "sha256": "437136acc36d66adc8f1be3c460ec718ba722671b33e5e2fc8031009428eacb1"
+    },
+    "t/1998-isf-record-input-source-admission.t": {
+      "git_blob": "34358bd94af159fbebee679a50ae42025247a2ce",
+      "sha256": "5eb6802b85cc1254d80e5accbf33da2760786ee71f1768955f5efceea2aa9e51"
+    },
+    "t/2014-isf-record-input-public-sources.t": {
+      "git_blob": "a768f2b4860c38ddd8dbadde6f699ba4d7aa30ad",
+      "sha256": "8627696dae025cb5da86561162386ded0f347f5c5979bbc5722f92ad45afc1dc"
+    },
+    "t/2015-isf-local-imported-type-aliases.t": {
+      "git_blob": "93020a115af6277b78f9c618231e9ac0f44f96a5",
+      "sha256": "e7d161c14b61936091b22f7f87e9dd5ffa11134627b0a3cb7968f7765df87ccb"
+    },
+    "t/2016-isf-record-input-public-refusals.t": {
+      "git_blob": "a15fa456c9d7059d6c13628fb15ed1bebd77657b",
+      "sha256": "6089130afd6c25927251d65f9ea9b96a0c3a4d1ba81d0b18f9a68a11b985ae62"
+    },
+    "t/2017-isf-record-input-frontend-closure.t": {
+      "git_blob": "3b15d28cb81199da82c17455ccd932813c6f525a",
+      "sha256": "251e2892693de1a9413cae8c655f11ffc8914c917fa1850c6342999f9d008157"
+    },
+    "t/2018-semantic-public-json-scalar-kinds.t": {
+      "git_blob": "9032da1641aeba2f390101c8b0fc46848ef8e830",
+      "sha256": "240937b52a2add3182aee952760538450d70bf45b1a69a31820bb24df2d228ce"
+    },
+    "t/2019-isf-record-input-generated-carriers.t": {
+      "git_blob": "11c7c8da638e55bbe1cf370240dd9079de2773e7",
+      "sha256": "ebaae76da2836361374b5f07e6d02a204fdaef6068b1f230886f0dfb4cdc0390"
+    },
+    "t/2021-isf-record-input-generated-refusals.t": {
+      "git_blob": "f32ae190aa49e106b89fd1ae9ff727e99da54e72",
+      "sha256": "798479e8370af1d0c00d35ef4fbe4a3290a68b570cbc4c2e185c3fc951b5c755"
+    },
+    "t/2024-isf-record-input-runtime.t": {
+      "git_blob": "e5122441ef59151f0f63a7154eb01207ae3dcc59",
+      "sha256": "38cbcd1206fa473ae7637ac4e3b0a723b6147900fd9cdcc3dbe64d1e9ff8dbdc"
+    },
+    "t/2025-isf-record-input-generated-runtime.t": {
+      "git_blob": "838c5e3793845fb64e0dca6f542aaabab8771268",
+      "sha256": "c349562a9dde3aa06360f69a0c9c1d31763533637d5c7f5fb30740ecb9afb120"
+    },
+    "t/2028-isf-record-input-verilog-profile.t": {
+      "git_blob": "7f71e5f74dde2a8f671c985a9006fa8dc08e06a4",
+      "sha256": "dda0f8bd4c169859f8ebb364feb2d0078705b8b3afd9215828ec6cf918c156b6"
+    },
+    "t/data/isf_record_input_generated_blocking_runtime.isf": {
+      "git_blob": "1610592da677003c5094472ef1a7895d63b19782",
+      "sha256": "91afd1ac9e7acabfd6ebb47f391b242d830520e3a829124467bec093c88dc9ab"
+    },
+    "t/data/isf_record_input_generated_domains_runtime.isf": {
+      "git_blob": "af91810021c5d9f7d8d8915fe2709a65dc939f97",
+      "sha256": "d39955c46ff1421b899e0a6da8a6142377270b3e4f36ef37919507df9e675670"
+    },
+    "t/data/isf_record_input_generated_runtime_tb.sv": {
+      "git_blob": "8405b2b97ca4f73547907208c30cf495fa730719",
+      "sha256": "c9303b317e4151d9d1ef40f40232e24155e033ba0a5f97ccae6e72cbf8f419ac"
+    },
+    "t/data/isf_record_input_runtime.isf": {
+      "git_blob": "a80de2bf0d754e232e0afe94261d087936c4860f",
+      "sha256": "f114a40d76286ec4f5cc74e3d77550d548a8925119cd909eb4c3ed113d86653c"
+    },
+    "t/data/isf_record_input_runtime_tb.sv": {
+      "git_blob": "c52af2ebd7dd3ebf459e4f1e1d99f580d619d40f",
+      "sha256": "4b9ed57a09b413d22c932af42706fe45a6196f9222bf8480639de75e0721fde0"
+    }
+  }
+}

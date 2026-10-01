@@ -94,8 +94,10 @@ and book.
   qualifies supplied sources, all-section discovery, current catalog and JSON
   kinds, with unchanged complete-cohort and prior evidence. The feature matrix's
   stale public/runtime pending wording is corrected. Independent input signoff
-  `.5.5.3` remains open. Record outputs, root-list ports and variants
-  remain deferred; the aggregate-interface request is not complete.
+  `.5.5.3.2.3` completes the selected R1–R3 input portions by joining the complete
+  source, public, profile and original native evidence. Record outputs and their
+  field writers are next under `.60.4.3.3` and `.60.4.3.4`; root-list ports and
+  variants remain optional. The full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.
 

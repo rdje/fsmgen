@@ -8,7 +8,7 @@ answers:
 date: 2026-10-01
 status: current
 tags: [isf, record-ports, composition, domains, runtime, verification]
-evidence: docs/audits/record-input-generated-observation-complete-20261001/manifest.json; docs/audits/generated-binding-oracle-correction-20261001/manifest.json; docs/audits/typed-composition-carrier-repair-20261001/manifest.json; t/2025-isf-record-input-generated-runtime.t; t/data/isf_record_input_generated_domains_runtime.isf; t/data/isf_record_input_generated_blocking_runtime.isf; t/data/isf_record_input_generated_runtime_tb.sv; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: docs/audits/record-input-signoff-20261001/manifest.json; docs/audits/record-input-generated-observation-complete-20261001/manifest.json; docs/audits/generated-binding-oracle-correction-20261001/manifest.json; docs/audits/typed-composition-carrier-repair-20261001/manifest.json; t/2025-isf-record-input-generated-runtime.t; t/data/isf_record_input_generated_domains_runtime.isf; t/data/isf_record_input_generated_blocking_runtime.isf; t/data/isf_record_input_generated_runtime_tb.sv; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 docs/audits/record-input-generated-observation-complete-20261001/verify.py
 ---
 
@@ -21,8 +21,8 @@ its bound-result observation and reaches the expected signed mismatch.
 
 Both emitter options used `.sv` DUTs and Verilator default SystemVerilog parsing.
 This is not IEEE 1364 Verilog-2005 qualification; the compatibility emitter
-retains packed typedefs. SEM `.60.4.3.2.5.5.3.2.2` owns the precise profile
-boundary before input signoff. Original positive/negative receipts stay immutable.
+retains packed typedefs. SEM `.60.4.3.2.5.5.3.2.2` qualifies the precise current ISF Verilog/v
+refusal; `.3.2.3` closes selected input delivery. Original positive/negative receipts stay immutable.
 
 Positive predicates cover each copied packed leaf, prior held/entry sampled
 values, reused live readers, signed comparisons, repeated requests, owning
@@ -47,7 +47,7 @@ reconciliation .5.4.4 is complete, joining current complete native/API/newline,
 contextual refusal, package and prior scalar/storage checks to retained runtime.
 Exact source/crosswalk/receipt evidence is in
 docs/audits/generated-input-execution-reconciliation-20261001/. Supported
-backend/input completion .5.5 remains open;
+backend/input completion .5.5 is qualified;
 record outputs and complete SPECFORGE aggregate delivery are separate.
 
 Full original genuine receipts and fixed source/bench products re-derive these

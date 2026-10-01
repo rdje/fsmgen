@@ -141,17 +141,17 @@ field-guard sources, the exact earlier storage-only products and complete public
 discovery. The supplied [whole-copy source](../../../docs/audits/specforge-aggregate-intake-20260930/record-port.isf)
 uses a sixteen-bit input: subtype occupies bits 15 through 12, payload bits 11
 through 0. Its [field guard](../../../docs/audits/specforge-aggregate-intake-20260930/record-port-field-guard.isf)
-reads that same layout. Frontend source/report/replay qualification is complete;
-generated/domain public closure, backend/native and consumer completion retain
-separate owners.
+reads that same layout. Frontend and generated/domain source, report and replay
+qualification is complete. Supported input backend and binary execution profiles
+are qualified below; complete output-dependent consumer delivery remains open.
 
 Generated readers retain one typed packed input in their private interface.
 Reused instances receive the live actor input independently; an unread inherited
 input is omitted from the child while the authored top declaration remains.
 An input-to-storage copy keeps the register and its reset in the actor or domain
 owner. A sole generated writer supplies typed private write data and an explicit
-enable to that owner. These carrier checks establish structure and strict replay;
-native timing and reset behavior still require execution qualification.
+enable to that owner. Carrier checks establish structure and strict replay; the
+separate direct/generated observations below qualify their timing and reset behavior.
 
 The runnable [record_input_children.isf](../../../isf/record_input_children.isf)
 imports the same package and reuses a reader in domain `io`:
@@ -185,8 +185,8 @@ Accepted generated/domain check, semantic and schedule queries are also
 qualified through the native CLI, adapter API and actual newline MCP. The
 complete products agree, including declared layouts and reset provenance.
 Clock-only siblings retain an absent reset; each realized reader keeps its
-owning clock and explicit reset contract. Contextual generated/domain refusal
-and final prior-product closure remain separate qualification work.
+owning clock and explicit reset contract. Contextual generated/domain refusals
+and prior-product closure are also qualified by T2021 and the execution reconciliation.
 
 The semantic report distinguishes authored declarations from realized wiring:
 
@@ -299,9 +299,9 @@ their separately owned writer prerequisites. The compiler preserves typed
 `+size`, explicit `+interface`, exact declaration metadata and private sample
 carriers. Generated/domain source, carrier and complete public qualification
 includes current catalog declarations, full discovery, contextual refusals and
-fixed scalar/storage compatibility controls. Affected backend profiles, packed
-input behavior in native HDL execution and supplied consumer signoff remain
-separate qualification work.
+fixed scalar/storage compatibility controls. Supported input backend profiles and
+packed binary behavior are independently qualified below. Supplied output-dependent
+consumer signoff remains separate work.
 The direct public-pin behavioral witness is executed and qualified for both
 emitted Verilog families. It checks packed layout, entry sampling, live reads,
 whole-copy timing, held values, idle holds, repeated requests and asynchronous
@@ -355,9 +355,11 @@ scalar/domain-storage contracts pass, with complete typed native/API/newline
 products and unchanged source/producers. Backend profiles `.5.5.1` retain the
 precise VHDL refusals below. Final public/corpus reconciliation `.5.5.2` qualifies
 supplied sources, complete discovery, current catalog and JSON kinds, preserving
-the unchanged full-cohort and prior evidence. Independent input signoff `.5.5.3`
-remains open. Complete SPECFORGE aggregate delivery, X/Z
-behavior and historical native causality are not inferred from these runs.
+the unchanged full-cohort and prior evidence. Independent input signoff
+`.5.5.3.2.3` closes the selected input portions of R1–R3 against their exact
+source, public, profile and original native evidence. Record outputs and their
+field writers, complete SPECFORGE aggregate delivery, X/Z behavior and historical
+native causality remain separate obligations.
 
 Record-input HDL support is qualified separately for each backend. The direct,
 generated and named-domain witnesses above execute in both Verilog families.

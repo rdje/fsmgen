@@ -1,0 +1,7 @@
+ram-guard: PID 32615; host 58.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2014-isf-record-input-public-sources.t .... ok
+t/2016-isf-record-input-public-refusals.t ... ok
+t/1998-isf-record-input-source-admission.t .. ok
+All tests successful.
+Files=3, Tests=42, 465 wallclock secs ( 0.08 usr  0.02 sys + 303.14 cusr 116.56 csys = 419.80 CPU)
+Result: PASS

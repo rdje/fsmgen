@@ -1,0 +1,22 @@
+Selected record-input delivery signoff under decision 0113.
+
+requirements.json maps every selected input clause of the preserved R1-R3 request
+onto exact source, value, carrier, public and execution controls. Current actual
+source/native/API/newline controls pass. Saved verifiers authenticate complete
+original positive/negative receipts and counterexamples without HDL replay.
+Source closure since the original generated observation permits only the separately
+qualified shared profile guard/integration; complete SystemVerilog predecessor
+products are authenticated by that prerequisite. Bench/source/lowering code is
+unchanged. Four-state execution, reset-free initialization, VHDL runtime, legacy
+.fsm Verilog standards qualification and historical native causality remain open
+boundaries, with existing ownership. Full aggregate R1-R3 is not closed: outputs,
+field writers and full consumer delivery are still required.
+
+The first documentation check correctly rejects T1305's old pending-status
+snapshot after promotion. Its exact single-row update and terminal focused pass
+are retained. No behavioral source/test oracle is relaxed. Receipts replace only
+the exact repository-root prefix; raw SHA/byte size/replacement count remain in
+the manifest. Run python3 -B docs/audits/record-input-signoff-20261001/verify.py
+from the repository root. The verifier authenticates the join, Git identities,
+complete parent members and terminal receipts, rejecting missing clauses,
+width-only identity and broader parser-scope claims. It launches no HDL tool.

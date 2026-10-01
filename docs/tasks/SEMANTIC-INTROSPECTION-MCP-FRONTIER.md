@@ -2651,10 +2651,10 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Deliver packed record inputs, scalar field reads and whole input-to-storage copies.`
   Acceptance: `After .3.1, split further as needed before implementation. Admit local/imported resolved record roots, existing nested scalar paths and same resolved record-type copies. Qualify all existing scalar-expression contexts and declared input-write refusals, type/path mismatches, whole-record scalar-context refusal, unused ports, domain ownership and generated-child routing. Compare public IAL0 replay, independent packed-value HDL observations and complete native/API/newline products under HIAL admission; preserve scalar/storage-only sources and publish supported examples.`
-  Verification: `Declaration metadata is qualified. Split before input source changes into ingress/qualification design, closed type/role preparation, parser admission with mandatory value gates, generated/domain carrier qualification and native/public completion. No record source form is newly admitted by this decomposition.`
+  Verification: `Selected R1–R3 input portions are independently qualified through committed ingress, type/role/context/domain/sample/source, generated/public, backend/profile and genuine direct/generated execution children. Exact requirement/evidence join and current public checks are sealed under .5.5.3.2.3. Record outputs/field writers and full aggregate consumer delivery remain required; X/Z and historical-native limits stay explicit.`
   Commit: `pending child qualification`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5`
@@ -2971,11 +2971,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify packed input behavior and complete public delivery.`
   Acceptance: `After source/carrier qualification, consume current HIAL admission before genuine supervised native runtime. Independently observe packed layout, scalar signed/state properties, live versus explicitly sampled reads, whole-copy edge, holds, repeated requests and reset/domain behavior. Compare complete native/API/actual newline source/schedule/semantic/discovery products, supported corpus and baseline carriers/HDL. Keep unsupported profiles precise and synchronize all selected requirements/book/records; close input delivery only with recoverable behavior evidence.`
-  Verification: `Frontend and generated/domain source/carrier/public qualification and genuine direct/generated binary runtime are committed; generated execution reconciliation .5.4 is done. Remaining input closure is split under .5.5 into profile qualification, final public/corpus reconciliation and independent selected-input signoff. Historical EPERM and four-state execution remain separate; do not replay spent captures.`
-  Commit: `pending`
+  Verification: `Complete input delivery joins qualified frontend/generated/public contracts, genuine direct/generated binary observations, contextual unsupported profiles and independent selected requirement signoff. Original native evidence is immutable; current full SystemVerilog products match predecessors except dates. Final source/public checks and sealed join complete .5.5.3.2.3. No X/Z, reset-free guarantee or broader consumer closure.`
+  Commit: `this commit`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.1`
@@ -3098,11 +3098,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5`
-  Status: `active`
+  Status: `done`
   Goal: `Reconcile supported backend profiles and complete record-input delivery.`
   Acceptance: `After executed direct/generated witnesses, qualify supported VHDL subsets and precise unsupported profile refusals, full native/API/newline/discovery/corpus/baseline products and every selected input requirement. Keep four-state execution limits explicit. Synchronize book, capability/spec, canonical SPECFORGE response and facts; close only independently verified input delivery. Full aggregate consumer signoff stays .60.4.4 after output delivery.`
-  Verification: `Direct and generated binary runtime and generated execution reconciliation are committed. Split remaining profile, public/corpus and independent input closure before source or test changes; four-state execution and complete output/consumer delivery remain separate.`
-  Commit: `pending`
+  Verification: `Profile qualification and current public/corpus reconciliation are complete. Independent .3.2.3 joins every selected input clause to exact source/type/layout/copy/domain/public and original native evidence. SystemVerilog is qualified; current Verilog/v and selected VHDL requests refuse precisely. Input parents close; output/field writer/full consumer and stated execution limits remain owned.`
+  Commit: `this commit`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.1`
@@ -3120,11 +3120,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3`
-  Status: `active`
+  Status: `done`
   Goal: `Complete independently verified record-input delivery from selected requirements.`
   Acceptance: `After .1-.2 commits, reconcile every input portion of selected R1-R3 against exact source, type/layout, lexical/domain, copy ownership, backend profile, complete public and genuine direct/generated behavior evidence. Authenticate original receipts and independent counterexamples without spent native replay. Close only input parents whose requirements are satisfied; update canonical response/book/facts and resume record outputs .60.4.3.3. Keep four-state execution, output/full aggregate consumer, durations/timers and historical native/startup/full-CI gates explicit.`
-  Verification: `Before signoff, confirmed P2 VHDL_SCOPE contradiction: the old signed scalar addition/subtraction/multiplication fail-closed bullet remains beside the shipped bounded support statement. Current T1420/386 and book show bounded support with division/modulo and mixed-sign refusals. git log -S traces the old boundary to 0f31a983ffaafb606b41e1e42c965523279f37db and later support to b4033eb3f62856b8d60d3554475883e13490dfcd. Child .1 reconciles both stale signed-scalar scope statements from exact history and current controls; independent input signoff .2 remains next. No backend expansion or executable VHDL claim.`
-  Commit: `pending`
+  Verification: `Children reconcile stale VHDL scalar scope and record-input language-profile claims, implement precise unsupported Verilog/v refusal and independently sign off selected input delivery. Original sources/receipts authenticate without replay, current public controls pass and complete SystemVerilog RTL is unchanged except dates. Output/full consumer, X/Z and historical-native obligations remain separate.`
+  Commit: `this commit`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.1`
@@ -3135,11 +3135,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Sign off every independently qualified selected record-input requirement.`
   Acceptance: `After parent prerequisites and child .1 commit, reconcile every input portion of selected R1-R3 against exact source/type/layout/context/domain/copy/profile/public and genuine direct/generated evidence. Authenticate complete original positive/negative receipts and counterexamples without spent HDL replay. Close only satisfied input parents and synchronize capability/spec/book/response/facts, preserving X/Z, output/full consumer, durations/timers and historical-native/startup/full-CI gates. Resume record outputs .60.4.3.3 from a clean committed frontier.`
-  Verification: `P2 language-profile qualification gap: T2024/T2025 and original actual compile argv exercise systemverilog/verilog emitter options with .sv sources and no IEEE 1364 mode. Verilog.pm converts procedural forms but retains packed SystemVerilog typedefs. Verilator v5.050 published default is SystemVerilog. Genuine binary behavior remains valid; pure Verilog compatibility is unproved. Child .1 reconciles current claims and seals exact receipt/emission/parser-mode evidence; .2 owns a precise qualified Verilog record-input boundary before .3 final signoff. No spent HDL replay or production change has occurred.`
-  Commit: `pending`
+  Verification: `Children preserve original SystemVerilog parser scope, qualify precise ISF Verilog/v refusal and complete the selected input requirement/evidence join. No full aggregate request closure, legacy aggregate Verilog standards qualification, X/Z or historical-native cause follows. Record outputs .60.4.3.3 are next.`
+  Commit: `this commit`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.1`
@@ -3157,17 +3157,25 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Complete selected-input signoff after precise backend profiles qualify.`
   Acceptance: `After siblings commit, reconcile every selected R1-R3 input requirement with original complete frontend/generated/public/profile/native evidence and independent counterexamples. Close only satisfied input parents, preserve X/Z, output/full consumer, duration/timer and historical-native limits, and resume record outputs .60.4.3.3 from a clean committed frontier.`
-  Verification: `pending independent input signoff after language-profile boundary`
-  Commit: `pending`
+  Verification: `Every selected R1–R3 input clause joins exact source/value/carrier/public/profile and genuine direct/generated evidence in docs/audits/record-input-signoff-20261001/. All selected immutable verifiers authenticate complete original receipts and counterexamples without HDL replay. git diff shows only the separately qualified shared profile integration changed production since original generated runtime; source/benches/lowering stay unchanged. Current T2014/T2016/T1998 passes All tests successful, Files=3/Tests=42. The first docs band rejects the old T1305 pending-status literal after promotion; its exact status update then passes T1305/T1414/T1303, Files=3/Tests=310. Book builds. Missing-clause, width-only identity and parser-scope substitutions reject. Input parents close; record outputs/field writers/full consumer, X/Z, reset-free guarantees, VHDL runtime, legacy .fsm standards qualification and historical native/startup/full-CI limits stay owned. Next output ingress leaf .60.4.3.3.1 is pending.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Deliver record outputs and whole copies with physical writer admission.`
   Acceptance: `After qualified input delivery, map whole output writers to scoped physical packed roots. Preserve input/output roles, actor ownership, source-order semantics and existing exclusion/compatibility proofs. Refuse unresolved overlap, type mismatches and unqualified generated writers. Split any prerequisite repair before changing source; independently qualify hold, timing, repeated requests, reset and domain behavior and all public surfaces.`
   Verification: `pending`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.1`
+  Status: `pending`
+  Goal: `Trace record-output whole-copy writers and select closed admission slices.`
+  Acceptance: `After committed input signoff, read selected output/type/role/domain and physical writer contracts. Trace actual parsed targets, scoped owner identities, post-binding/generated module assignments and backend/public paths through their public interfaces. Reproduce current record-output refusal and independent packed target/overlap controls without HDL execution. Select the smallest sound output admission and qualification split; preserve input/scalar/storage semantics and refuse unresolved/competing writers without invented arbitration. Own every genuine prerequisite before source changes and keep output authoring closed until gates qualify.`
+  Verification: `pending after selected input closure`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.4`
@@ -4354,3 +4362,16 @@ and Git provide durability. No native HDL execution follows from this slice.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Original T2028 reports Failed 5/8 subtests: Verilog/v emits packed record inputs and replaces destinations instead of the selected unsupported-profile refusal. The converter changes procedural forms without qualifying record syntax; prior git log -S and sealed language-profile evidence locate this boundary. Draft actual status is 255/signal 0 because the existing CLI lowering error path dies after the profile exception. Actual --check --json probe also exposes implementation stack text. A distinct shared profile guard and dedicated normal-failure handler address these exact mechanisms; legacy .fsm/storage standards qualification stays under .60.4.3.5.1.
 - [x] **ADDRESSED (verified)** — The shared validated declaration guard refuses Verilog/v only for ISF record inputs before lowering/publication. Final T2028 reports Files=1, Tests=10, Result: PASS; imported/unused/direct/generated/supplied inputs retain exact reasons, normal status 1, machine reports, facade refusal and destination atomicity. Target-neutral schedule metadata remains available. Complete SystemVerilog products equal the committed predecessor except date banners; scalar Verilog and SystemVerilog storage controls pass. Original RED/draft evidence is preserved; hostile target/direction/validation and actual false-success/signal/secondary-diagnostic controls reject. Existing native archives are immutable; changed future test membership requires fresh HIAL admission.
 - [x] **NO REGRESSION** — Seven-file focused regression reports All tests successful, Files=7, Tests=7328, Result: PASS before the final diagnostic-format change; final T2028 verifies that exact latest change and full SystemVerilog equivalence. Docs T1305/T1414/T1303 reports All tests successful, Files=3, Tests=310; mdBook builds. New helper, facade and CLI report syntax OK. Both original saved runtime verifiers and the new sealed profile verifier pass without HDL execution. Task integrity, Knowledge Map, measured capacity, claim inventory and staged doctrines precede normal commit hooks. The first staged gate rejects an audit README outside registered live-document surfaces; preserve its scoped evidence prose as the normal sealed scope.txt member and reseal, without expanding a surface or weakening the gate. No X/Z, VHDL runtime, legacy aggregate profile or full consumer signoff is claimed.
+
+## Acceptance — selected record-input delivery (2026-10-01)
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.3`.
+Current source/native/API/newline products and exact original receipt/Git identities
+re-derive the selected requirements. Independent layout/type/context literals,
+actual compiled unsigned counterexamples and hostile incomplete/width-only/parser
+joins provide falsification. The complete sealed requirement join, canonical
+book/feedback/fact and Git provide durability; original HDL is never replayed.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The selected contract splits input portions of R1–R3 from required outputs/field writes. Exact current --check --json, semantic and schedule controls join complete native/API/newline products, contextual refusals, packed metadata and preserved supplied sources to original native behavior. Production Git comparison since the generated observation names only the separately qualified CLI/facade/shared profile integration; lowering/source/bench bytes are unchanged. Book inherited pending statements and T1305's old pending-status literal still describe an earlier frontier. The first docs band fails exactly that status row after justified promotion.
+- [x] **ADDRESSED (verified)** — The sealed requirements join covers all selected input aliases, scalar contexts/samples, exact-type owned copies, layout/carriers/public reports and supported execution/profiles. Current T2014/T2016/T1998 reports All tests successful, Files=3, Tests=42; every selected saved verifier passes without native replay. Missing clauses, width-only identity and parser-scope mutations reject. Promote the bounded input matrix row, reconcile stale current book/fact/feedback status and its exact T1305 expectation. Close satisfied input parents only; output writer ingress .60.4.3.3.1 becomes the next pending leaf.
+- [x] **NO REGRESSION** — T1305/T1414/T1303 reports All tests successful, Files=3, Tests=310 after the exact single-row status update; mdBook builds. Current source/public checks and complete immutable prior verifiers pass; no behavioral oracle or original receipt changes. Only input closure is claimed: outputs/field writers/full aggregate consumer, X/Z, reset-free guarantees, VHDL runtime, legacy .fsm Verilog standards qualification and historical native/startup/full-CI gates remain owned. Knowledge Map, task integrity, measured capacity, claim inventory and staged doctrines precede normal commit hooks.

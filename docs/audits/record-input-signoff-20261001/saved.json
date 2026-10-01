@@ -1,0 +1,82 @@
+[
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/specforge-aggregate-intake-20260930/verify.py"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "aggregate-port baseline: identities, complete reports, actual typed storage carrier and hostile controls PASS\n"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/record-input-public-reconciliation-20261001/verify.py"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Complete current ISF cohort and literal discovery descriptors authenticate; fresh supplied-source/all-discovery/catalog/JSON-kind checks and unchanged complete-cohort/prior evidence pass. Hostile membership/applicability/schema/kind controls reject. Only stale matrix rows change; final input signoff and output/consumer delivery remain open.\n"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/record-input-backend-profiles-20261001/verify.py"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Exact record-input backend refusals, destination preservation and supported VHDL controls authenticated; hostile false-success, stack-only diagnostic, partial-product, destination and width substitutions reject. Published backend regression passes. No HDL/analyzer/runtime replay or wider-profile claim.\n"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/generated-input-execution-reconciliation-20261001/verify.py"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Complete scoped requirement crosswalk, exact baseline source objects and public/scalar/storage regression authenticated. Saved direct/generated positive and actual unsigned-negative verification pass; hostile receipt controls reject. Backend/input and full aggregate delivery remain open.\n"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/record-input-language-profile-20261001/verify.py"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Original version-matched argv and complete prior evidence authenticate; current direct/domain/blocking text retains packed SystemVerilog types for both emitter options. Missing pairs, language selectors, type erasure and wrong JSON kinds reject. Current profile and walkthrough scope are reconciled; pure Verilog-2005 admission remains owned. No HDL tool or spent capture runs.\n"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/record-input-direct-observation-20261001/verify.py"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Both direct packed-input targets and actual unsigned-property rejection verified with exact sources, original bounds/results and cleanup; hostile saved controls reject. X/Z behavior and historical native causality remain unproved.\n"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/record-input-generated-observation-complete-20261001/verify.py"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Both generated/domain witnesses in both Verilog-family targets and actual unsigned-property rejection verified with exact sources, original bounds/results and cleanup; hostile saved controls reject. X/Z, reset-free initialization and historical native causality remain unproved.\n"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/record-input-verilog-boundary-20261001/verify.py"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Saved RED/draft-status and final contextual profile checks authenticate, including imported/unused declarations, destination atomicity, machine/facade reports, full SystemVerilog predecessor products and supported controls. Broader regression and original runtime archives remain valid at their declared revision boundaries; hostile target/direction/validation controls reject. No HDL execution or spent capture replay.\n"
+  }
+]

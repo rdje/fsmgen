@@ -145,7 +145,7 @@ my @required_rows = (
     ['Actor-owned scalar storage', 'shipped'],
     ['Actor-owned banks', 'shipped bounded surface'],
     ['Type aliases and package imports', 'shipped bounded surface'],
-    ['Packed record actor inputs', 'source admitted; qualification pending'],
+    ['Packed record actor inputs', 'shipped bounded surface'],
     ['Enum member values', 'shipped bounded surface'],
     ['Aggregate scalar leaves', 'shipped bounded surface'],
     ['Transaction entry', 'shipped'],

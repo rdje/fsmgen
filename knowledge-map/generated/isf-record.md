@@ -1,13 +1,14 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **9** facts · **30** uniquely owned question entries.
+> **10** facts · **33** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are spawned output bindings guarded by child completion?" · facts=[isf-record-input-generated-witness-preparation](../../docs/knowledge/isf-record-input-generated-witness-preparation.md)
 - q="are unused record inputs retained in the top or inherited child?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="can a child scalar formal share an actor record input name?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
+- q="can the original input runtime evidence be joined to current source profiles?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
 - q="do both record-input emitter observations prove Verilog-2005 syntax?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
 - q="does VHDL support authored ISF packed record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="does generated record-input runtime prove X/Z or reset-free initialization?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
@@ -22,12 +23,14 @@
 - q="how does the packed-input witness separate live sample and whole-copy values?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 - q="is generated and named-domain record-input public qualification complete?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="is generated record-input native behavior qualified?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
+- q="is selected packed record input delivery complete?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
 - q="where do generated-top semantic reports retain authored record declarations?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="where does a generated record-input copy store and reset its target?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="where is direct packed record-input runtime qualification owned?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 - q="where is fresh record-input observer qualification owned?" · facts=[isf-record-input-observer-preparation](../../docs/knowledge/isf-record-input-observer-preparation.md)
 - q="where is generated record-input runtime preparation owned?" · facts=[isf-record-input-generated-witness-preparation](../../docs/knowledge/isf-record-input-generated-witness-preparation.md)
 - q="where is the recoverable direct packed-input runtime observation?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
+- q="which SPECFORGE aggregate request portions remain after input signoff?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
 - q="which backend profiles are qualified for ISF record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="which direct record-input runtime behavior is qualified?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="which generated record-input storage and binding behaviors pass?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
@@ -51,6 +54,13 @@ _Record input profiles qualify SystemVerilog behavior and precise VHDL refusals_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-input-backend-profiles.md`](../../docs/knowledge/isf-record-input-backend-profiles.md)
+
+### isf-record-input-delivery
+
+_Selected packed record input delivery is qualified; outputs remain required_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-record-input-delivery.md`](../../docs/knowledge/isf-record-input-delivery.md)
 
 ### isf-record-input-direct-runtime
 

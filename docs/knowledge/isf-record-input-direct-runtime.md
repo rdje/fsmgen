@@ -8,7 +8,7 @@ answers:
 date: 2026-10-01
 status: current
 tags: [isf, record-ports, verification, runtime]
-evidence: docs/audits/record-input-direct-observation-20261001/manifest.json; t/2024-isf-record-input-runtime.t; t/data/isf_record_input_runtime_tb.sv; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: docs/audits/record-input-signoff-20261001/manifest.json; docs/audits/record-input-direct-observation-20261001/manifest.json; t/2024-isf-record-input-runtime.t; t/data/isf_record_input_runtime_tb.sv; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 docs/audits/record-input-direct-observation-20261001/verify.py
 ---
 
@@ -24,8 +24,8 @@ cleanup remain, with exact admitted plus extra producer identities before/after.
 
 Both emitter options used `.sv` DUTs and Verilator default SystemVerilog parsing.
 This is not IEEE 1364 Verilog-2005 qualification; the compatibility emitter
-retains packed typedefs. SEM `.60.4.3.2.5.5.3.2.2` owns the precise profile
-boundary before input signoff. Original positive/negative receipts stay immutable.
+retains packed typedefs. SEM `.60.4.3.2.5.5.3.2.2` qualifies the precise current ISF Verilog/v
+refusal; `.3.2.3` closes selected input delivery. Original positive/negative receipts stay immutable.
 
 The sealed archive retains full receipts, test/source/bench, producer Git blobs,
 TAP/stdout/stderr and independent workspace/command census. Normal temporary
@@ -43,4 +43,4 @@ falsification. Tracked immutable evidence, source/test/bench, tasks, book and Gi
 provide durability. Binary Verilator values do not establish X/Z behavior;
 signed/state declarations have separate structural witnesses. Generated/domain
 execution .5.4 is subsequently qualified and reconciled; backend/input
-completion .5.5, record outputs and aggregate consumer delivery remain open. Reverify consumes saved records only.
+completion .5.5 is qualified; record outputs and aggregate consumer delivery remain open. Reverify consumes saved records only.

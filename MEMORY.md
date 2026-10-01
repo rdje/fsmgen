@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.3` (pending)
-- next_action: Complete independent selected-record-input signoff from the sealed frontend/generated/public/profile/native evidence; close only satisfied input parents, then resume record outputs .60.4.3.3.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.1` (pending)
+- next_action: Trace record-output whole-copy writers and select closed admission slices from the selected type/role/domain and physical writer contracts; preserve input/scalar/storage behavior and split prerequisites before source admission.
 - in_flight_uncommitted: none after commit.
 - in_flight_background: none.
 - blockers: Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
