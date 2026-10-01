@@ -1966,7 +1966,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `pending`
   Goal: `Capture native causality at the next newly required feature HDL qualification.`
   Acceptance: `Historical pre-exec EPERM remains P1-owned. Select the next genuinely needed roadmap HDL witness after generated-input completion, including backend/input closure .60.4.3.2.5.5 if it requires runtime, otherwise record-output .60.4.3.3. Before use, prepare and commit its exact test/source/bench and separately qualify any changed fixed observer target/profile/coverage with unchanged failure-only/native helper contracts. Preserve complete original bounds/results/identities/errors/gaps and independent cleanup. Diagnose any captured rejection before further execution; a pass schedules the next ordinary opportunity. Never replay spent originals or run a recurrence-only campaign, change host protections or request authentication.`
-  Verification: `pending newly required runtime selection; current generated capture has no native event or diagnostic gap`
+  Verification: `SEM .60.4.3.2.5.5.3.2.2 changes current T2024/T2025 target membership to SystemVerilog-only after precise Verilog profile refusal. Future direct/generated runs require fresh fixed observer identity/scope/count qualification: direct now has two compile/runtime pairs, generated three. Earlier two-emitter admissions and spent captures remain immutable and must not be reused. No new HDL execution occurs in this profile repair. Next genuinely required observation remains pending newly required runtime selection; current generated capture has no native event or diagnostic gap`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.12`

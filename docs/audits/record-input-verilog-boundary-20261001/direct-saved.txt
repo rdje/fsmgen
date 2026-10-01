@@ -1,0 +1,2 @@
+ram-guard: PID 24014; host 53.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Both direct packed-input targets and actual unsigned-property rejection verified with exact sources, original bounds/results and cleanup; hostile saved controls reject. X/Z behavior and historical native causality remain unproved.

@@ -1,0 +1,5 @@
+ram-guard: PID 12242; host 66.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2028-isf-record-input-verilog-profile.t .. ok
+All tests successful.
+Files=1, Tests=10, 57 wallclock secs ( 0.02 usr  0.00 sys + 39.00 cusr 14.53 csys = 53.55 CPU)
+Result: PASS

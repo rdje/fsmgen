@@ -9,6 +9,8 @@ date: 2026-10-01
 status: current
 tags: [isf, record, input, vhdl, backend, specforge]
 evidence: >-
+  docs/audits/record-input-verilog-boundary-20261001/manifest.json;
+  t/2028-isf-record-input-verilog-profile.t;
   t/2027-isf-record-input-backend-profiles.t;
   docs/VHDL_SCOPE.md; docs/book/src/13j-type-enum-aggregate.md;
   docs/isf-spec/02-interface-transactions.md;
@@ -17,6 +19,7 @@ evidence: >-
   docs/knowledge/isf-record-input-generated-runtime.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
+  t/2028-isf-record-input-verilog-profile.t
   t/2027-isf-record-input-backend-profiles.t
   t/1420-vhdl-direct-backend-scaffold.t
   t/386-hdl-generator-facade-target-language-boundary-audit.t
@@ -25,8 +28,11 @@ reverify: >-
 
 Direct and generated record-input binary behavior is qualified for both emitter
 options under SystemVerilog parsing by the separate runtime cards. The `verilog`
-option retains packed typedefs; IEEE 1364 Verilog-2005 is unqualified. SEM
-`.60.4.3.2.5.5.3.2.2` owns precise target-profile admission or refusal.
+historical option retained packed typedefs; IEEE 1364 Verilog-2005 was unqualified.
+SEM `.60.4.3.2.5.5.3.2.2` qualifies current `verilog`/`v` refusal for declared ISF
+record inputs from detached validated metadata. Native/public generation names
+actor/input/type and recommends SystemVerilog, preserving destinations and
+publishing no partial product. Schedule preview remains target-neutral.
 Selected VHDL profiles refuse precisely:
 mixed signed/two-state direct members, supplied typed record inputs and generated
 composition shapes. No successful pipeline product or new HDL destination is

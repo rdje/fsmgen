@@ -58,7 +58,7 @@ subtest 'fixed authored behavior witness preserves literal layout and carrier ed
     ok($report->{success},'semantic report records complete source success');
     same($report->{source}{interface_ports}[1],$actor->{interface_port_metadata}[1],
         'native source declaration matches the independently checked literal');
-    for my $target (qw(systemverilog verilog)) {
+    for my $target (qw(systemverilog)) {
         $hdl{$target} = "$work/design_$target.sv";
         my $result = capture([$^X,'bin/fsmgen','--strict','--quiet','--language',$target,
             '--output',$hdl{$target},$source_path]);
@@ -113,13 +113,15 @@ subtest 'independent metadata rejects equal-width layout and leaf-property corru
 };
 
 subtest 'genuine public-pin behavior requires separate native observation admission' => sub {
+    # Historical two-emitter captures remain sealed. This SystemVerilog-only
+    # target needs fresh observer qualification before another runtime admission.
     plan skip_all=>'fixed observer qualification and explicit record-input runtime admission required'
         unless ($ENV{FSMGEN_RECORD_INPUT_RUNTIME} // '') eq '1';
     plan skip_all=>'qualified Darwin Verilator runtime unavailable'
         unless darwin_verilator_runtime_qualified();
     plan skip_all=>'Verilator unavailable' unless can_run('verilator');
     my $tb = write_file("$work/tb.sv",$bench);
-    for my $target (qw(systemverilog verilog)) {
+    for my $target (qw(systemverilog)) {
         my $obj = "$work/obj_$target";
         my $build = run_verilator_compile(['verilator','--binary','--timing','--assert','-Wno-fatal',
             '-j','1','--top-module','tb','--Mdir',$obj,$hdl{$target},$tb]);

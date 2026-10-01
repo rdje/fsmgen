@@ -1,0 +1,223 @@
+{
+  "baseline_revision": "f3c4436d6466c699f93ac962a6199a90f6422092",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.2",
+  "prerequisites": {
+    "docs/audits/record-input-direct-observation-20261001/after.json": "d7808dc3ca49ccf3f2791e0e33920ed2d51e76c313bc6022aa8853b313de3c05",
+    "docs/audits/record-input-direct-observation-20261001/before.json": "fed48a12f2abdd796e395974af80954de6c33385e1b6ef671f133919f6eb7ce9",
+    "docs/audits/record-input-direct-observation-20261001/manifest.json": "681ea1cdcf32536e0cc2b8a367ad982ebd393ddf724aad82e43a77c7dff83657",
+    "docs/audits/record-input-direct-observation-20261001/observation-command.py.source": "be33c790a33e9e77b0189de3ea7dafec4eaaf64c55370916ef9c96365879d3a2",
+    "docs/audits/record-input-direct-observation-20261001/observation/admission.json": "0e47a286dd2533476ac0e32c4d52e7b70398b9d853caeda455acb659333ddf93",
+    "docs/audits/record-input-direct-observation-20261001/observation/compile_a.json": "9598fecc16054d3fb4579cef1622a09e38d3c2b758091e47e97aac02b23ecc5d",
+    "docs/audits/record-input-direct-observation-20261001/observation/compile_c.json": "1d24b5bc406e7ec2dfd9f2d8caa92bc35fd228036ce5b3bf851d316945b62d14",
+    "docs/audits/record-input-direct-observation-20261001/observation/compile_e.json": "39ae1b146a346f5e13ee25efb55e8b725e8dc52adb0576d76aa2b5acb4ea0847",
+    "docs/audits/record-input-direct-observation-20261001/observation/events.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/audits/record-input-direct-observation-20261001/observation/runtime_b.json": "aa30a77e507479fd625aa09b41c04b4b22cd3a9189916a2e04dbdbc54535a55e",
+    "docs/audits/record-input-direct-observation-20261001/observation/runtime_d.json": "d7ae45c86e8d8301a4056cfc92bb3108e2792116cbbdc476faae48609bea5e79",
+    "docs/audits/record-input-direct-observation-20261001/observation/runtime_f.json": "ad0b575f9716b1b1925baea80414890967607469f86b867e27f4513d0ee6d2cb",
+    "docs/audits/record-input-direct-observation-20261001/observation/summary.json": "b8ba0add4b5bbdf9b2ed3b3206b774185c4bb86c8bf5d1ebeecd8a4315d4b41f",
+    "docs/audits/record-input-direct-observation-20261001/observe.py": "be33c790a33e9e77b0189de3ea7dafec4eaaf64c55370916ef9c96365879d3a2",
+    "docs/audits/record-input-direct-observation-20261001/observed-bench.sv.source": "4b9ed57a09b413d22c932af42706fe45a6196f9222bf8480639de75e0721fde0",
+    "docs/audits/record-input-direct-observation-20261001/observed-result.json": "48952c5c3f8afd8c145ee63d1bf9a8dfce89637f1f74c700deedfdbf2af081bc",
+    "docs/audits/record-input-direct-observation-20261001/observed-source.isf": "f114a40d76286ec4f5cc74e3d77550d548a8925119cd909eb4c3ed113d86653c",
+    "docs/audits/record-input-direct-observation-20261001/observed-test.t.source": "f10bd79e447455da556435608de128c01e52be690b24e3005e5afe70890953a7",
+    "docs/audits/record-input-direct-observation-20261001/postcheck.json": "5f9d71f81a9bbca8a4cef59a8bd4fb9d7aab8445d03cf16ca24c538c904a6a4f",
+    "docs/audits/record-input-direct-observation-20261001/prove-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/audits/record-input-direct-observation-20261001/prove-stdout.txt": "a303c722eb45e728e56b0a0ece889c0f809e57c2a4da056a5d7176c430bef871",
+    "docs/audits/record-input-direct-observation-20261001/verify.py": "f7eea2a7a7b831210f1af8fc38585df3f3270ff1bf5a2aa41c6be7a4fe026709",
+    "docs/audits/record-input-generated-observation-complete-20261001/after.json": "a0e1e1a62af2db8a33e4be6b102b07c499450c8adf23051f9242ecd2eea2ab0b",
+    "docs/audits/record-input-generated-observation-complete-20261001/before.json": "74d95a9c39af2e3e19acf925bde126551314d1ad6ccda45bd829ed1e537881f3",
+    "docs/audits/record-input-generated-observation-complete-20261001/manifest.json": "e129f857bea84dc0e76d9fc9bc4c3f8ab4068062b1397ba734bdd2a1c3072db7",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation-command.py.source": "f5ac6c2883109f35d0b27a0fb59c3b25bcdf4154382d412ad8d866d5bd319768",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/admission.json": "a0a0f30f2a3a0b5b5e120fc2cc1125dcb016fd11772024d4ef8d53d9608ca296",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/compile_a.json": "691115efba3b0a6010df92249c7a66f312fb54b5ffe2d33db756cf896d8a66ed",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/compile_c.json": "21de1d043d91f74a51e615f6cbede177bb8346609edd9ba0a249c0308069bb79",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/compile_e.json": "71cbce402534f4546cb11579092bad587d82562fa98c947833d08cea50a14f7c",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/compile_g.json": "f0105e8d30c2157356277d138a3b71893736e7cc915c2ef0b4b86b56dd68569c",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/compile_i.json": "c662cac7198f124ab0840ff793c2ec92f4ce066fde21e59997853564eebf8079",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/events.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/runtime_b.json": "015e701a9d16aff11a19db7b7a2bed9ee2539b67c769026be2c104129b5d1345",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/runtime_d.json": "6d1db41d4e3638b42dc4602868d714e559973ecb515afa98b0d0d4177f038e76",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/runtime_f.json": "82d7e5404fe04cf18ad2d155f490be6cb4f0a95a368c9c53bde73b5d02317359",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/runtime_h.json": "8cbaa23113b2eafdb4591a201f6cb5059941d1dd767ae9acaf11c6e9eb64a9c9",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/runtime_j.json": "7d969cccf192736d51a5da4d27285243ee20f37f22d92ea722688d16ae35f6d3",
+    "docs/audits/record-input-generated-observation-complete-20261001/observation/summary.json": "ea2a6b143e4d88da3eed78ea08ea1d72199da84a4971b542d06d6ac74aeb5d96",
+    "docs/audits/record-input-generated-observation-complete-20261001/observe.py": "f5ac6c2883109f35d0b27a0fb59c3b25bcdf4154382d412ad8d866d5bd319768",
+    "docs/audits/record-input-generated-observation-complete-20261001/observed-bench.sv.source": "c9303b317e4151d9d1ef40f40232e24155e033ba0a5f97ccae6e72cbf8f419ac",
+    "docs/audits/record-input-generated-observation-complete-20261001/observed-blocking.isf.source": "91afd1ac9e7acabfd6ebb47f391b242d830520e3a829124467bec093c88dc9ab",
+    "docs/audits/record-input-generated-observation-complete-20261001/observed-domains.isf.source": "d39955c46ff1421b899e0a6da8a6142377270b3e4f36ef37919507df9e675670",
+    "docs/audits/record-input-generated-observation-complete-20261001/observed-result.json": "2654d0d825fe0033f3f2dfc47e9d4533fe0dd31cfe077c60abee6e3d4903830f",
+    "docs/audits/record-input-generated-observation-complete-20261001/observed-test.t.source": "7f8f53435b060dcb16f8502dce659269c5d707948afa7754a4c438c67367dab7",
+    "docs/audits/record-input-generated-observation-complete-20261001/postcheck.json": "6e28f406366507503c4ab6aa8955adaf1063e85fcdc640357481a5978a749d42",
+    "docs/audits/record-input-generated-observation-complete-20261001/prove-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/audits/record-input-generated-observation-complete-20261001/prove-stdout.txt": "7c24c0352e91867e1b1b9f7e0e832cdee4b7327f57d5d3d707fbe4867421fa65",
+    "docs/audits/record-input-generated-observation-complete-20261001/verify.py": "2f1548ffe80e5bc1ad6040f2a72166947a2b5c1a42109b56f164e2e6e960e909",
+    "docs/audits/record-input-language-profile-20261001/blocking_systemverilog.hdl.source": "db3590fd96253b2bbb528629464c68422f8761d556671cd9a7e4c869b560630d",
+    "docs/audits/record-input-language-profile-20261001/blocking_verilog.hdl.source": "1e2639da8067fdb5a57fb99cd0bd28120b45a9670af6e83f47a46f0ec8728dea",
+    "docs/audits/record-input-language-profile-20261001/book-replacements.json": "49476a27b2efe38efe20dad6f69bb61e94f698cf697b649138b4bc9c1ed1f70c",
+    "docs/audits/record-input-language-profile-20261001/book.md.source": "fbe4bc2a76004cc927c67d30d42ab12f54a4843357f83486a63d08ab6dca53e7",
+    "docs/audits/record-input-language-profile-20261001/capture.py": "f8a2d7421f8338c6c1e8227028d73fa8d99568b2871da309fb3e8520b7de6a92",
+    "docs/audits/record-input-language-profile-20261001/capture.txt": "d0ac68922aa85b6b228fe12f6a8bfb425a7cc720d551a2c32bdd852dadac9bd6",
+    "docs/audits/record-input-language-profile-20261001/direct-saved.txt": "1d3bf467b602847c2a4773d7a4a29838d1421d3a84d101dea093211b1cf7430a",
+    "docs/audits/record-input-language-profile-20261001/direct_systemverilog.hdl.source": "78b279d1d68eb717b7528339434b31e32147a56155a1a7bcf3518673f97d0565",
+    "docs/audits/record-input-language-profile-20261001/direct_verilog.hdl.source": "5f8e419c9ab6fa25b2648d7d5080b007177b2839918667523e5482228d85641d",
+    "docs/audits/record-input-language-profile-20261001/docs.txt": "3e302fb3f7b6c4e365a49e438628dda631488af3a01f8819006efdbec7a804d6",
+    "docs/audits/record-input-language-profile-20261001/domains_systemverilog.hdl.source": "c34ca110cf0cc04c7825b9cb89304cbda0fb60ccc1220dd22d90a7482144288f",
+    "docs/audits/record-input-language-profile-20261001/domains_verilog.hdl.source": "2e098f3ca7d781a04dd8696e1edd4a66fbe80c22403c198e428ec5ab908ceb05",
+    "docs/audits/record-input-language-profile-20261001/emissions.json": "703fc6bbb4a61723cc2ef0dd6c5c1051944669faa36c3fb218b79d4434b0ee82",
+    "docs/audits/record-input-language-profile-20261001/generated-saved.txt": "f7453fa90845922bb71d822b867269b8f4c8a5f6d5844ababcba08b6b4b7a6fe",
+    "docs/audits/record-input-language-profile-20261001/history.json": "13eed77bda7a18c9ba5103c09ab62272fb32bb610ab7ca857d8d8dc60d53d917",
+    "docs/audits/record-input-language-profile-20261001/manifest.json": "c0f2795fdca7b920187bbd5cbce57bb777a94bfa6a913aa6c01e20460370e464",
+    "docs/audits/record-input-language-profile-20261001/source-equivalence.json": "307358aa17584acf094b4bbcd00a0913b2ba7c500b94f161be3f67e5f544c930",
+    "docs/audits/record-input-language-profile-20261001/tool-contract.json": "b042a588da5d4ef3ddf2c490ba47b5f8e2afe23a6a9d97a998fbe900b1e3e5e1",
+    "docs/audits/record-input-language-profile-20261001/verify.py": "fcdd56dfe360c264c7ee1f02f70a87894b9f9759f4422908c1f52d0005fbccdb"
+  },
+  "producers": {
+    "bin/fsmgen": {
+      "baseline_git_blob": "63d943ce91efecb31117c8b8d3b87428de5d35c7",
+      "baseline_sha256": "dd23a0ccaa0ab017fa25ed633731a78e211344ef50a41a9f783cc2660e3539cb",
+      "sha256": "a1e8ab6168439c775d03d589d917fe0b991d2243b396fbec58dd8f726af28a40",
+      "snapshot": "producer-0.source"
+    },
+    "perl/FSM/Pipeline/HDLGenerator.pm": {
+      "baseline_git_blob": "42791c12bce7da869dbbc520c57567298692ee45",
+      "baseline_sha256": "7fac54cb00ae7e1840683e5674e4b72d3949355d1654b706ad5e06c16f3e9dff",
+      "sha256": "7a0ea00f68148d761cfbe0c6e91028c8c1d9e6bd69d4f0f285b1c86cccba1dd5",
+      "snapshot": "producer-1.source"
+    },
+    "perl/FSM/Support/ISFHDLProfile.pm": {
+      "sha256": "870fae0f8d734714153a7a5196d9714d175d3396dd2f1d8f29ee7ab7df41333b",
+      "snapshot": "producer-2.source"
+    },
+    "t/2024-isf-record-input-runtime.t": {
+      "baseline_git_blob": "bc8d536d30ac55489c445eef60009eb7300eaff8",
+      "baseline_sha256": "f10bd79e447455da556435608de128c01e52be690b24e3005e5afe70890953a7",
+      "sha256": "38cbcd1206fa473ae7637ac4e3b0a723b6147900fd9cdcc3dbe64d1e9ff8dbdc",
+      "snapshot": "producer-3.source"
+    },
+    "t/2025-isf-record-input-generated-runtime.t": {
+      "baseline_git_blob": "d3c163de218e94bd6a006e74f33fcd8ce6127650",
+      "baseline_sha256": "7f8f53435b060dcb16f8502dce659269c5d707948afa7754a4c438c67367dab7",
+      "sha256": "c349562a9dde3aa06360f69a0c9c1d31763533637d5c7f5fb30740ecb9afb120",
+      "snapshot": "producer-4.source"
+    },
+    "t/2028-isf-record-input-verilog-profile.t": {
+      "sha256": "dda0f8bd4c169859f8ebb364feb2d0078705b8b3afd9215828ec6cf918c156b6",
+      "snapshot": "producer-5.source"
+    }
+  },
+  "receipts": {
+    "before.txt": {
+      "exact_root_replacements": 18,
+      "projected_sha256": "943afba4b24a0a56f09e3ecbd45ec224f1200d447afda6e22d0c555bad7ab3b0",
+      "raw_bytes": 407879,
+      "raw_sha256": "1d4d6ef507a8f01bb307f18e2217e94b1b91f182a6981756db7b55b5a6f6ae6a",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/before.log"
+    },
+    "book.txt": {
+      "exact_root_replacements": 1,
+      "projected_sha256": "031eb7bdcb56de044e4d373c5eab486e5b701fb63c237a3071e5483d24554ca7",
+      "raw_bytes": 316,
+      "raw_sha256": "4002c1d719e5272ea00eb59d3f4faed629a69a530699c3c9e64e351e9b63cef1",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/book.log"
+    },
+    "direct-saved.txt": {
+      "exact_root_replacements": 0,
+      "projected_sha256": "e337ac698db020c847d0f08bf56266a27c684ba01e2d5bb1736b1bfd24fe9844",
+      "raw_bytes": 322,
+      "raw_sha256": "e337ac698db020c847d0f08bf56266a27c684ba01e2d5bb1736b1bfd24fe9844",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/direct-saved.log"
+    },
+    "docs.txt": {
+      "exact_root_replacements": 0,
+      "projected_sha256": "fc4b32c5c6d46b5c6a37db2ce62b6ea5f1f8a7218149c33f2a8707ecb4812c55",
+      "raw_bytes": 366,
+      "raw_sha256": "fc4b32c5c6d46b5c6a37db2ce62b6ea5f1f8a7218149c33f2a8707ecb4812c55",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/docs.log"
+    },
+    "draft-check.json": {
+      "exact_root_replacements": 3,
+      "projected_sha256": "db2642827a3f56654387e444fa7027c9d583a580007537acd7c9c975509ee053",
+      "raw_bytes": 2558,
+      "raw_sha256": "a959f3c15b0963cd789e09e6a07cd4fd329b32a3f34fa414ec43340c7846c85a",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/check-probe.json"
+    },
+    "draft-status.json": {
+      "exact_root_replacements": 1,
+      "projected_sha256": "79a7f3a1ef59e83e559ef74eb4c5a0ff0769634b995d582864a6e236c2b0d9e3",
+      "raw_bytes": 361,
+      "raw_sha256": "b2323d88bde03144037afdd5cc30c38fe5dd8bf59f201fc0261d4445d52ee673",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/status-probe.json"
+    },
+    "draft-status.txt": {
+      "exact_root_replacements": 30,
+      "projected_sha256": "c23f5a6147eb6728d98171a137b331c41290fa1e2fcdd2cb09e3d4c0fe427aa7",
+      "raw_bytes": 22528,
+      "raw_sha256": "ae6bab0522b05fc763bff1b83d92e08a2402ebad2b65bfb3a3eb956cebe2d72b",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/after.log"
+    },
+    "final-focused.txt": {
+      "exact_root_replacements": 0,
+      "projected_sha256": "5b6b5456946bddc299adfca91bb41037c08c815187a13bc8b565e5b476a9a218",
+      "raw_bytes": 269,
+      "raw_sha256": "5b6b5456946bddc299adfca91bb41037c08c815187a13bc8b565e5b476a9a218",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/final-focused.log"
+    },
+    "generated-saved.txt": {
+      "exact_root_replacements": 0,
+      "projected_sha256": "ba2ac78fc82e6db259b967ec65fb3dd3f2b634f9ddbf482c48a30bc192c073b9",
+      "raw_bytes": 370,
+      "raw_sha256": "ba2ac78fc82e6db259b967ec65fb3dd3f2b634f9ddbf482c48a30bc192c073b9",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/generated-saved.log"
+    },
+    "intermediate-focused.txt": {
+      "exact_root_replacements": 0,
+      "projected_sha256": "6ccb36c628b816e97069fdefaeb62a233c2504cc6a7a9e2297b4e7ae49172dd3",
+      "raw_bytes": 269,
+      "raw_sha256": "6ccb36c628b816e97069fdefaeb62a233c2504cc6a7a9e2297b4e7ae49172dd3",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/focused.log"
+    },
+    "regression.txt": {
+      "exact_root_replacements": 0,
+      "projected_sha256": "a9c6c9e094db99677e90d325e57b6e5da74d46bbf0b7deb005d191466fda3c6e",
+      "raw_bytes": 685,
+      "raw_sha256": "a9c6c9e094db99677e90d325e57b6e5da74d46bbf0b7deb005d191466fda3c6e",
+      "root_prefix_bytes": 36,
+      "source": ".artifacts/record-input-verilog-boundary/regression.log"
+    }
+  },
+  "revision_boundary": "Seven-file regression passed before the final change from Carp stack diagnostics to one-line die; final T2028 then verifies that exact latest guard, full SystemVerilog predecessor equality and native plain/check/semantic/facade reports. Documentation/book passed before task-only signoff edits. No HDL compiler or simulator invoked.",
+  "schema": "fsmgen.record_input_verilog_boundary.v1",
+  "sha256": {
+    "before-test.t.source": "b43ba7a3ceee8e051b1f3a6147099dffb4a0d80f2a688e77ccafba7fa47b96ca",
+    "before.txt": "943afba4b24a0a56f09e3ecbd45ec224f1200d447afda6e22d0c555bad7ab3b0",
+    "book.txt": "031eb7bdcb56de044e4d373c5eab486e5b701fb63c237a3071e5483d24554ca7",
+    "direct-saved.txt": "e337ac698db020c847d0f08bf56266a27c684ba01e2d5bb1736b1bfd24fe9844",
+    "docs.txt": "fc4b32c5c6d46b5c6a37db2ce62b6ea5f1f8a7218149c33f2a8707ecb4812c55",
+    "draft-check.json": "db2642827a3f56654387e444fa7027c9d583a580007537acd7c9c975509ee053",
+    "draft-cli.source": "b6995c8c0ba9c2d41b2e72d2a186df3f3a27edf175fce5490f7e956e81534dc7",
+    "draft-status.json": "79a7f3a1ef59e83e559ef74eb4c5a0ff0769634b995d582864a6e236c2b0d9e3",
+    "draft-status.txt": "c23f5a6147eb6728d98171a137b331c41290fa1e2fcdd2cb09e3d4c0fe427aa7",
+    "final-focused.txt": "5b6b5456946bddc299adfca91bb41037c08c815187a13bc8b565e5b476a9a218",
+    "generated-saved.txt": "ba2ac78fc82e6db259b967ec65fb3dd3f2b634f9ddbf482c48a30bc192c073b9",
+    "intermediate-focused.txt": "6ccb36c628b816e97069fdefaeb62a233c2504cc6a7a9e2297b4e7ae49172dd3",
+    "producer-0.source": "a1e8ab6168439c775d03d589d917fe0b991d2243b396fbec58dd8f726af28a40",
+    "producer-1.source": "7a0ea00f68148d761cfbe0c6e91028c8c1d9e6bd69d4f0f285b1c86cccba1dd5",
+    "producer-2.source": "870fae0f8d734714153a7a5196d9714d175d3396dd2f1d8f29ee7ab7df41333b",
+    "producer-3.source": "38cbcd1206fa473ae7637ac4e3b0a723b6147900fd9cdcc3dbe64d1e9ff8dbdc",
+    "producer-4.source": "c349562a9dde3aa06360f69a0c9c1d31763533637d5c7f5fb30740ecb9afb120",
+    "producer-5.source": "dda0f8bd4c169859f8ebb364feb2d0078705b8b3afd9215828ec6cf918c156b6",
+    "regression.txt": "a9c6c9e094db99677e90d325e57b6e5da74d46bbf0b7deb005d191466fda3c6e",
+    "scope.txt": "95e568395d4c954aed7130fb1a0dcc6411f0e901a3f74e0ffe7123b02cccb52f",
+    "verify.py": "9d05929d2b25ab3533d3fc26d422532042e51c1b59f80c40197a432866076842"
+  }
+}

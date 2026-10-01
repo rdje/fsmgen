@@ -81,11 +81,16 @@ and book.
   one-bit operations use `xor`/`and`; division/modulo and mixed-sign scalar
   arithmetic remain refused. The qualified record-input HDL profile is
   SystemVerilog. Both emitter options passed binary behavior with `.sv` inputs
-  and Verilator's default SystemVerilog parser. The `verilog` option retains
+  and Verilator's default SystemVerilog parser. The historical `verilog` emission retained
   packed typedefs; these runs do not qualify IEEE 1364 Verilog-2005. P2 scope
   reconciliation `.5.5.3.2.1` preserves the genuine results and corrects the
-  broader claim. Precise Verilog-profile admission or refusal is owned by
-  `.5.5.3.2.2` before final input signoff. Final public/corpus reconciliation `.5.5.2`
+  broader claim. `.5.5.3.2.2` now qualifies precise `verilog`/`v` refusal
+  for declared ISF record inputs, naming actor/input/type and recommending
+  SystemVerilog. Native and public generation preserve destinations and return
+  no partial successful product; schedule preview stays target-neutral. Complete
+  SystemVerilog RTL is unchanged apart from date banners. Original native
+  two-emitter observations remain immutable; any new T2024/T2025 native run
+  needs fresh observer qualification. Final public/corpus reconciliation `.5.5.2`
   qualifies supplied sources, all-section discovery, current catalog and JSON
   kinds, with unchanged complete-cohort and prior evidence. The feature matrix's
   stale public/runtime pending wording is corrected. Independent input signoff

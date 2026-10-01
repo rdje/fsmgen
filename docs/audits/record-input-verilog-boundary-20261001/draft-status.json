@@ -1,0 +1,1 @@
+{"exit_code":255,"first_line":"ISF actor 'packed_input_runtime' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.","signal":0}

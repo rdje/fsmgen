@@ -165,7 +165,7 @@ subtest 'fixed source, generated roles and both emitted families preserve indepe
             is($checked->{exit_code},0,"$name $file strictly replays") or diag($checked->{stdout},$checked->{stderr});
             die "fixed carrier replay failed\n" if $checked->{exit_code};
         }
-        for my $target (qw(systemverilog verilog)) {
+        for my $target (qw(systemverilog)) {
             my $path = "$work/${name}_$target.sv";
             my $emitted = capture([$^X,'bin/fsmgen','--strict','--quiet','--language',$target,'--output',$path,$case->{source}]);
             is($emitted->{exit_code},0,"$name $target original source emits") or diag($emitted->{stdout},$emitted->{stderr});
@@ -202,6 +202,8 @@ subtest 'actual authored unsigned counterexample changes property without packed
 };
 
 subtest 'generated behavior awaits independently qualified exact observation admission' => sub {
+    # Historical two-emitter captures remain sealed. This SystemVerilog-only
+    # target needs fresh observer qualification before another runtime admission.
     plan skip_all=>'fixed generated observer and explicit runtime admission required'
         unless ($ENV{FSMGEN_RECORD_INPUT_GENERATED_RUNTIME} // '') eq '1';
     plan skip_all=>'qualified Darwin Verilator runtime unavailable'
@@ -209,7 +211,7 @@ subtest 'generated behavior awaits independently qualified exact observation adm
     plan skip_all=>'Verilator unavailable' unless can_run('verilator');
     for my $case (@cases) {
         my $tb = bench_for($case);
-        for my $target (qw(systemverilog verilog)) {
+        for my $target (qw(systemverilog)) {
             my $run = simulate($case->{hdl}{$target},$tb,"$case->{name}_$target");
             ok($run->{ok},"$case->{name} $target independent generated public-pin behavior") or diag($json->encode($run));
             die "unexpected generated runtime result; diagnose retained evidence\n" unless $run->{ok};

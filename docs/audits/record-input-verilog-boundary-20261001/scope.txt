@@ -1,0 +1,27 @@
+# Record-input Verilog profile boundary
+
+Owned by SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.2.
+Run `python3 -B docs/audits/record-input-verilog-boundary-20261001/verify.py`
+from the repository root to authenticate the saved evidence without executing HDL.
+
+The original focused RED identifies successful unsupported emission and destination
+replacement. The draft guard correctly refuses but the existing lowering error
+handler returns status 255. Its exact draft CLI and actual status probe are retained.
+A dedicated profile handler repairs normal status 1; the final one-line diagnostic
+also qualifies plain, check JSON, semantic JSON and facade failures. The full latest
+test covers imported/unused declarations, literal actor/input/type diagnostics,
+destination atomicity, target-neutral previews and complete predecessor SystemVerilog
+products with only date banners normalized. Seven-file regression predates the
+final diagnostic-format change; the latest focused receipt covers that change.
+The expanded draft test was not separately snapshotted; no exact snapshot is claimed.
+
+Receipts retain every byte except exact repository-root prefix substitution with
+`{REPOSITORY_ROOT}`. The manifest records raw SHA, size and replacement count; no
+other path, diagnostic, failure or process result is normalized. Captured producer
+sources and baseline Git objects authenticate the code boundary. Original native
+archives and their saved verifiers remain immutable. Current direct/generated test
+membership is SystemVerilog-only; any future native observation requires fresh
+fixed-observer qualification under the existing HIAL owner. No HDL compiler or
+simulator was invoked here. Broader legacy `.fsm` aggregate Verilog standards
+qualification is separately owned by .60.4.3.5.1; record outputs and final selected
+input signoff remain open.

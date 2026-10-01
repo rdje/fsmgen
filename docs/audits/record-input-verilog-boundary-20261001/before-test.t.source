@@ -1,0 +1,99 @@
+use strict;
+use warnings;
+use lib 'perl', 't/lib';
+use Test::More;
+use Digest::SHA qw(sha256_hex);
+use File::Temp qw(tempdir);
+use JSON::PP;
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::SourceQueryRunner;
+use FSM::Pipeline::HDLGenerator;
+
+my $work = tempdir(CLEANUP => 1);
+my $json = JSON::PP->new->canonical;
+my @cases = (
+    ['t/data/isf_record_input_runtime.isf', 'packed_input_runtime', 'packet', 'frame', 'direct'],
+    ['t/data/isf_record_input_generated_domains_runtime.isf', 'packed_input_generated_domains', 'packet', 'frame', 'domains'],
+    ['t/data/isf_record_input_generated_blocking_runtime.isf', 'packed_input_generated_blocking', 'packet', 'frame', 'blocking'],
+    ['docs/audits/specforge-aggregate-intake-20260930/record-port.isf', 'link_rx', 'lmp_in', 'lmp_t'],
+    ['docs/audits/specforge-aggregate-intake-20260930/record-port-field-guard.isf', 'link_rx', 'lmp_in', 'lmp_t'],
+);
+my @sources = (map {$_->[0]} @cases);
+push @sources, qw(bin/fsmgen perl/FSM/Pipeline/HDLGenerator.pm
+    perl/FSM/Adapter/ISF/Parser.pm perl/FSM/Scheduler/ISF/LoweringIR.pm
+    t/data/isf_record_input_runtime_tb.sv
+    t/data/isf_record_input_generated_runtime_tb.sv);
+my $before = {map {$_ => sha256_hex(read_file($_))} @sources};
+my @observed;
+
+for my $index (0..$#cases) {
+    my ($source,$actor,$port,$type,$old_name)=@{$cases[$index]};
+    my $reason = "ISF actor '$actor' record input '$port' (type '$type') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.";
+    subtest "precise record-input Verilog boundary for $source" => sub {
+        for my $target (qw(verilog v)) {
+            my $output = "$work/refused_${index}_$target.v";
+            write_file($output,"EXISTING DESTINATION\n");
+            my $native = capture([$^X,'bin/fsmgen','--strict','--quiet','--language',$target,'--output',$output,$source]);
+            ok(refused($native,$reason),'normal native failure names authored actor, record port, type and supported alternative')
+                or diag($native->{stdout},$native->{stderr});
+            is(read_file($output),"EXISTING DESTINATION\n",'existing output is byte-exact');
+            push @observed,[$native,$reason];
+            unlink $output or die $!;
+            my $absent = capture([$^X,'bin/fsmgen','--strict','--quiet','--language',$target,'--output',$output,$source]);
+            ok(refused($absent,$reason),'absent output has the same precise normal refusal') or diag($absent->{stderr});
+            ok(!-e $output,'no new destination is published');
+            my ($product,$error);
+            eval {$product=FSM::Pipeline::HDLGenerator->new(target_language=>$target,quiet=>1,strict_mode=>1)
+                ->generate_hdl_from_file($source);1} or $error=$@;
+            ok(!defined($product),'facade publishes no partial successful product');
+            like($error // '',qr/^\Q$reason\E(?: at |\n|$)/,'facade retains the same primary contextual reason');
+        }
+        my $schedule = capture([$^X,'bin/fsmgen','--strict','--quiet','--language','verilog','--emit-schedule-json',$source]);
+        is($schedule->{exit_code},0,'target-neutral schedule preview remains available');
+        ok($json->decode($schedule->{stdout})->{interface_ports},'preview retains declared interface metadata');
+        if (defined $old_name) {
+            my $output = "$work/supported_$index.sv";
+            my $native=capture([$^X,'bin/fsmgen','--strict','--quiet','--language','systemverilog','--output',$output,$source]);
+            is($native->{exit_code},0,'SystemVerilog source generation remains supported') or diag($native->{stderr});
+            is(normalize_date(read_file($output)),normalize_date(read_file("docs/audits/record-input-language-profile-20261001/${old_name}_systemverilog.hdl.source")),
+                'complete SystemVerilog HDL equals committed predecessor except dated banners');
+        }
+    };
+}
+
+subtest 'scalar Verilog and SystemVerilog storage controls remain supported' => sub {
+    for my $case (
+        ['docs/audits/specforge-aggregate-intake-20260930/baseline-good.isf','verilog','link_rx'],
+        ['isf/storage_fields.isf','systemverilog','storage_fields'],
+    ) {
+        my ($source,$target,$module)=@$case;
+        my $output="$work/control_$target.sv";
+        my $native=capture([$^X,'bin/fsmgen','--strict','--quiet','--language',$target,'--output',$output,$source]);
+        is($native->{exit_code},0,'unchanged supported control generates HDL') or diag($native->{stderr});
+        like(read_file($output),qr/\bmodule \Q$module\E\b/,'independently named module remains');
+    }
+};
+
+subtest 'refusal oracle rejects false success, signal and secondary diagnostic' => sub {
+    for my $row (@observed) {
+        my ($native,$reason)=@$row;
+        ok(!refused({%$native,exit_code=>0},$reason),'successful emission cannot qualify a refusal');
+        ok(!refused({%$native,signal=>9},$reason),'signal failure cannot qualify a profile refusal');
+        ok(!refused({%$native,stderr=>"Error generating HDL: unrelated failure\n$reason\n"},$reason),
+            'later expected text cannot replace primary diagnostic');
+        ok(!refused({%$native,stderr=>''},$reason),'missing diagnostic cannot qualify');
+    }
+};
+is_deeply({map {$_ => sha256_hex(read_file($_))} @sources},$before,'source, bench and named producer bytes remain unchanged during qualification');
+done_testing;
+
+sub refused {
+    my ($result,$reason)=@_;
+    my $first=(split /\n/,$result->{stderr})[0] // '';
+    return $result->{exit_code}==1 && $result->{signal}==0
+        && $first =~ /^(?:Error generating HDL: )?\Q$reason\E(?: at |$)/ ? 1 : 0;
+}
+sub normalize_date {my ($text)=@_;$text =~ s{^// Date:[^\n]*$}{// Date: omitted}mg;return $text;}
+sub capture { FSM::Test::SourceQueryRunner::_capture($_[0],''); }
+sub read_file {open my $fh,'<:raw',$_[0] or die $!;local $/;my $s=<$fh>;close $fh or die $!;return $s;}
+sub write_file {open my $fh,'>:raw',$_[0] or die $!;print {$fh} $_[1] or die $!;close $fh or die $!;}

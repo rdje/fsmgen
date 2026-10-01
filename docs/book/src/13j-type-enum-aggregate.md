@@ -377,14 +377,21 @@ generation refuses the typed `lmp_in` input:
 ./bin/fsmgen --strict --quiet --language vhdl --output .artifacts/record-input.vhd docs/audits/specforge-aggregate-intake-20260930/record-port.isf
 ```
 
-Use `systemverilog` for the qualified record-input HDL profile. The `verilog`
-emitter option retains packed SystemVerilog typedefs in these fixtures. The
+Use `systemverilog` for the qualified record-input HDL profile. HDL requests for these ISF record inputs now refuse `verilog` and its `v` alias,
+naming the actor, input and declared type and recommending `systemverilog`.
+They preserve an existing destination and publish no new or partial HDL product.
+Source parsing, declaration metadata and schedule preview remain target-neutral.
+The historical `verilog` emitter observation retained packed SystemVerilog
+typedefs in these fixtures. The
 record-input behavior observations compiled both emitter options as `.sv`
 sources with Verilator's default SystemVerilog parser. They establish those
 recorded binary behaviors, but do not qualify IEEE 1364 Verilog-2005 syntax.
 The [version-matched Verilator contract](https://raw.githubusercontent.com/verilator/verilator/v5.050/docs/guide/exe_verilator.rst)
 defines the default parser and separate language selectors. SEM `.5.5.3.2.2`
-owns precise Verilog-profile admission or refusal before final input signoff.
+qualifies the precise current profile refusal and preserves complete SystemVerilog
+HDL against the predecessor apart from date banners. The historical two-emitter
+native archives remain immutable. Current T2024/T2025 preparation targets
+SystemVerilog; any new native execution requires fresh observer qualification.
 T2027 retains
 the precise CLI/public-pipeline refusals, destination preservation, supported
 controls and false-success/wrong-diagnostic counterexamples.

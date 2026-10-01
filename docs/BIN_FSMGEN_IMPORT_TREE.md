@@ -22,8 +22,18 @@ count inferred from this scoped dependency update.
 The same date's private sample-carrier integration makes LoweringIR import
 `FSM::Scheduler::ISF::RecordSamples`, which consumes `ISFRecordPortSamples`
 and its detached scope/value dependencies for supplied record-input actors.
-Context/enum frontend gates remain unwired and authored record ports still
-refuse. This is a scoped dependency update, not a fresh closure census.
+Context/enum frontend gates are now wired and packed actor record inputs are
+admitted under the selected contract. Record outputs and root-list inputs remain
+deferred. This corrects the stale pre-admission statement; no fresh closure
+census is inferred.
+
+Scoped update on `2026-10-01`: native ISF HDL realization and the public
+HDLGenerator facade require `FSM::Support::ISFHDLProfile`. It consumes detached
+validated declared-port metadata and refuses `verilog`/`v` record inputs before
+lowering/publication, preserving target-neutral schedule preview and the
+SystemVerilog path. T2028 qualifies imported/unused/direct/generated sources and
+destination atomicity. The older closure dimensions below keep their capture
+boundary.
 
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.

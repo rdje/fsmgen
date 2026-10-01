@@ -1,0 +1,1884 @@
+#!/usr/bin/perl
+use v5.20;
+use strict;
+use warnings;
+use feature qw(signatures postderef);
+use Getopt::Long;
+use JSON::PP ();
+use Cwd qw(abs_path);
+use File::Basename;
+use File::Spec;
+
+use FindBin;
+use File::Spec;
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+# Load required modules
+use FSM::Backend::GeneratedModuleEmitter;
+use FSM::Composition::FailureReportBuilder;
+use FSM::Composition::ProvenanceReportBuilder;
+use FSM::Debug;  # Global debug system
+use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_signal_summary_text);
+use FSM::Pipeline::HDLGenerator;
+use FSM::ProjectDataLocality qw(
+    create_project_tempdir
+    create_project_tempfile
+    ensure_project_artifact_dir
+    ensure_project_output_directory
+    project_output_path
+);
+use FSM::SourcePathResolver;
+use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::CheckDiagnostics qw(build_check_failure_report build_check_success_report);
+use FSM::Support::HDLExternalValidation qw(validate_systemverilog_file);
+use FSM::Support::NormalizedSemanticReport qw(
+    build_normalized_semantic_failure_report
+    build_normalized_semantic_success_report
+);
+use FSM::VerificationOutput::UVM::PassiveMonitorSkeleton qw(
+    write_uvm_passive_monitor_skeleton
+);
+use FSM::VerificationOutput::VHDL::ObservationPackageSkeleton qw(
+    write_vhdl_observation_package_skeleton
+);
+
+# FSM file resolution function using FSMLIB environment variable
+sub resolve_fsm_file {
+    my ($fsm_input, $path_resolver) = @_;
+    
+    # Case 3 & 4: Path contains slash - treat as relative or absolute path
+    if ($fsm_input =~ m{/}) {
+        # Path specified - don't search FSMLIB, use path as-is
+        unless (-f $fsm_input) {
+            die format_cli_artifact_error(
+                "Error: FSM file not found at specified path: $fsm_input\n",
+                ['Requested source', $fsm_input],
+            );
+        }
+        return $fsm_input;
+    }
+    
+    # Cases 1 & 2: No slash - search in FSMLIB paths and current directory
+    my $target_filename;
+    
+    # Case 1: Bare name (no known source extension) - append .fsm
+    if ($fsm_input !~ /\.(?:fsm|isf|ppif|axi|pif|ppi|chi|ace|ahb|apb|atb|smbus|i2s)\z/i) {
+        $target_filename = "$fsm_input.fsm";
+    } else {
+        # Case 2: Already has a known source or known unsupported-alias extension
+        $target_filename = $fsm_input;
+    }
+    
+    my @search_paths = ();
+    my @searched_paths = ();  # For error reporting
+    my $fsmlib = $ENV{FSMLIB} || '';
+    my @explicit_paths = @{ $path_resolver ? $path_resolver->extra_search_paths : [] };
+    @search_paths = @{ $path_resolver
+        ? $path_resolver->normalized_search_paths(include_cwd => 1)
+        : FSM::SourcePathResolver->new()->normalized_search_paths(include_cwd => 1) };
+    
+    # Search for the file in each path
+    for my $search_path (@search_paths) {
+        my $candidate = File::Spec->catfile($search_path, $target_filename);
+        push @searched_paths, $candidate;
+        
+        if (-f $candidate) {
+            return $candidate;
+        }
+    }
+    
+    # File not found - generate comprehensive error message
+    my $error_msg = "Error: FSM file '$target_filename' not found\n";
+    $error_msg .= "Original input: $fsm_input\n";
+
+    if (@explicit_paths) {
+        $error_msg .= "Explicit --path roots searched: " . join(':', @explicit_paths) . "\n";
+    } else {
+        $error_msg .= "Explicit --path roots searched: none\n";
+    }
+
+    if ($fsmlib) {
+        $error_msg .= "FSMLIB paths searched: " . join(':', split(/:/, $fsmlib)) . "\n";
+    } else {
+        $error_msg .= "FSMLIB environment variable not set\n";
+    }
+    
+    $error_msg .= "Searched locations:\n";
+    for my $path (@searched_paths) {
+        $error_msg .= "  - $path\n";
+    }
+    
+    # Suggest available .fsm files in search paths
+    my @available_fsm_files = ();
+    for my $search_path (@search_paths) {
+        if (-d $search_path) {
+            opendir(my $dh, $search_path) or next;
+            my @fsm_files = grep { /\.fsm$/i && -f File::Spec->catfile($search_path, $_) } readdir($dh);
+            closedir($dh);
+            
+            for my $fsm_file (@fsm_files) {
+                my $full_path = File::Spec->catfile($search_path, $fsm_file);
+                push @available_fsm_files, "$fsm_file (in $search_path)";
+            }
+        }
+    }
+    
+    if (@available_fsm_files) {
+        $error_msg .= "\nAvailable .fsm files in search paths:\n";
+        for my $available (@available_fsm_files) {
+            $error_msg .= "  - $available\n";
+        }
+    }
+    
+    die format_cli_artifact_error(
+        $error_msg,
+        ['Requested source', $fsm_input],
+    );
+}
+
+sub shared_endpoint_binding_summary {
+    my ($entry, $target_language) = @_;
+    return 'unknown_endpoint' unless ref($entry) eq 'HASH';
+
+    my $endpoint = $entry->{endpoint} || 'unknown_endpoint';
+    my $binding = binding_signal_summary_text($entry, $target_language);
+    return $endpoint unless length $binding;
+    return $endpoint . ' <= ' . $binding;
+}
+
+# Only files written by this invocation have an authored-source origin. Do not
+# infer origins from directory names: real composition children keep their paths.
+sub register_lowered_source_origin {
+    my ($origins, $generated, $authored) = @_;
+    $origins->{$_} = $authored
+        for grep { defined } ($generated, File::Spec->rel2abs($generated), abs_path($generated));
+}
+
+sub project_lowered_source_diagnostic {
+    my ($error, $origins) = @_;
+    my $text = "$error";
+    # Project exact quoted source identities, including inline "in source"
+    # context. Unregistered child/metadata lookup targets remain physical paths.
+    $text =~ s{'([^'\n]+)'}{"'" . ($origins->{$1} // $1) . "'"}ge;
+    return $text;
+}
+
+sub normalize_cli_error_text {
+    my ($error) = @_;
+    return "$error" if ref($error);
+
+    my $text = "$error";
+
+    my @lines = split /\n/, $text, -1;
+    my @kept;
+    for (my $i = 0; $i < @lines; $i++) {
+        if ($lines[$i] =~ /^\s*at [^\n]+ line \d+\.\s*$/) {
+            $i++ while $i + 1 < @lines && $lines[$i + 1] =~ /^\t/;
+            $i++ while $i + 1 < @lines && $lines[$i + 1] eq '';
+            next;
+        }
+        push @kept, $lines[$i];
+    }
+
+    while (@kept && $kept[-1] eq '') {
+        pop @kept;
+    }
+    if (@kept) {
+        my $line = $kept[-1];
+        my $idx = rindex($line, ' at ');
+        if ($idx >= 0) {
+            my $suffix = substr($line, $idx);
+            if ($suffix =~ /^ at [^\n]+ line \d+\.\z/) {
+                $kept[-1] = substr($line, 0, $idx);
+            }
+        }
+    }
+
+    $text = join("\n", @kept);
+    $text =~ s/\n{3,}/\n\n/g;
+    $text =~ s/\s+\z//s;
+    return $text . "\n";
+}
+
+sub source_suffix {
+    my ($path) = @_;
+    return undef unless defined($path) && length($path);
+    return lc($1) if $path =~ /(\.[^\/.]*)\z/;
+    return undef;
+}
+
+sub unsupported_ial2_alias_suffix {
+    my ($path) = @_;
+    my $suffix = source_suffix($path);
+    return undef unless defined $suffix;
+    my %unsupported = map { $_ => 1 } qw(.pif .ppi .chi .ace .atb .smbus .i2s);
+    return $suffix if $unsupported{$suffix};
+    return undef;
+}
+
+sub known_source_suffix {
+    my ($path) = @_;
+    my $suffix = source_suffix($path);
+    return 0 unless defined $suffix;
+    my %known = map { $_ => 1 } qw(.fsm .isf .ppif .axi .pif .ppi .chi .ace .ahb .apb .atb .smbus .i2s);
+    return $known{$suffix} ? 1 : 0;
+}
+
+sub format_cli_artifact_error {
+    my ($message, @artifacts) = @_;
+
+    my $text = normalize_cli_error_text($message);
+    my $prefix = join '', map {
+        my ($label, $value) = @{$_};
+        "$label: '$value'\n";
+    } @artifacts;
+
+    return $prefix . $text;
+}
+
+sub resolve_cli_project_output_path {
+    my ($path, $label) = @_;
+    my $resolved = eval { project_output_path($path, label => $label); };
+    die normalize_cli_error_text($@) if $@;
+    return $resolved;
+}
+
+sub default_hdl_artifact_dir {
+    my ($lang_info) = @_;
+
+    my %subdir_for_ext = (
+        '.sv'  => 'sv',
+        '.vhd' => 'vhd',
+        '.v'   => 'v',
+    );
+    my $subdir = $subdir_for_ext{$lang_info->{ext}} // 'hdl';
+    return ensure_project_artifact_dir($subdir);
+}
+
+sub emit_machine_failure_if_requested {
+    my (%args) = @_;
+
+    my $display_error = normalize_cli_error_text($args{message});
+    if ($args{emit_semantic_json}) {
+        my $report = build_normalized_semantic_failure_report(
+            input => $args{input},
+            source_file => $args{source_file},
+            target_language => $args{target_language},
+            strict_mode => $args{strict_mode},
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+    if ($args{check_json_mode}) {
+        my $report = build_check_failure_report(
+            input => $args{input},
+            source_file => $args{source_file},
+            target_language => $args{target_language},
+            strict_mode => $args{strict_mode},
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+
+    return $display_error;
+}
+
+sub ppif_bundle_module_name {
+    my ($ppif_result) = @_;
+    my $source = $ppif_result->{report}{source_object} || {};
+    return $source->{intent_name}
+        || $source->{id}
+        || 'ppif_valid_ready_bundle';
+}
+
+sub ppif_generated_fsm_check_summary_threshold_bytes {
+    return 1_000_000;
+}
+
+sub ppif_generated_ial0_entry {
+    my ($ppif_result) = @_;
+
+    my $files = $ppif_result->{generated_ial0}{files} || {};
+    my $report = ref($ppif_result->{report}) eq 'HASH' ? $ppif_result->{report} : {};
+    my $generated_artifacts = ref($report->{generated_artifacts}) eq 'HASH'
+        ? $report->{generated_artifacts}
+        : {};
+    my $hdl_entry_artifact = ref($generated_artifacts->{hdl_entry}) eq 'HASH'
+        ? $generated_artifacts->{hdl_entry}{entry_artifact}
+        : undef;
+    my $ial0_files = ref($generated_artifacts->{ial0}) eq 'HASH'
+        && ref($generated_artifacts->{ial0}{files}) eq 'ARRAY'
+            ? $generated_artifacts->{ial0}{files}
+            : [];
+    my @candidates;
+
+    push @candidates, $hdl_entry_artifact
+        if defined($hdl_entry_artifact) && length($hdl_entry_artifact);
+    push @candidates, @$ial0_files;
+
+    my %seen;
+    for my $entry_basename (@candidates) {
+        next unless defined($entry_basename) && length($entry_basename);
+        next if $seen{$entry_basename}++;
+        next unless exists $files->{$entry_basename};
+        return ($entry_basename, $files->{$entry_basename});
+    }
+
+    return (undef, undef);
+}
+
+sub ppif_generated_ial1_items {
+    my ($ppif_result) = @_;
+
+    my $ial1 = ref($ppif_result->{generated_ial1}) eq 'HASH'
+        ? $ppif_result->{generated_ial1}
+        : {};
+    return @{$ial1->{items}}
+        if ref($ial1->{items}) eq 'ARRAY';
+
+    return ({
+        format => $ial1->{format},
+        name   => $ial1->{name},
+        text   => $ial1->{text},
+    }) if defined($ial1->{name}) && defined($ial1->{text});
+
+    return ();
+}
+
+sub ppif_generated_fsm_needs_bounded_check_summary {
+    my ($ppif_result) = @_;
+    my (undef, $entry_text) = ppif_generated_ial0_entry($ppif_result);
+    return 0 unless defined($entry_text);
+    return length($entry_text) > ppif_generated_fsm_check_summary_threshold_bytes();
+}
+
+sub build_ppif_generated_fsm_check_module_info {
+    my ($ppif_result, $target_language) = @_;
+
+    my ($entry_basename, $entry_text) = ppif_generated_ial0_entry($ppif_result);
+    my $summary = summarize_ppif_generated_fsm_source($entry_text);
+    my $module_name = $summary->{module_name};
+
+    if (!defined($module_name) || !length($module_name)) {
+        $module_name = $entry_basename // 'ppif_generated_fsm';
+        $module_name =~ s/\.fsm\z//i;
+    }
+
+    return {
+        module_name => $module_name,
+        source_root_kind => $summary->{source_root_kind} || 'fsm',
+        target_language => $target_language || 'systemverilog',
+        state_count => $summary->{state_count},
+        signal_count => $summary->{signal_count},
+        composition_child_count => undef,
+    };
+}
+
+sub summarize_ppif_generated_fsm_source {
+    my ($source_text) = @_;
+    $source_text //= '';
+
+    my %summary = (
+        module_name => undef,
+        source_root_kind => 'fsm',
+        state_count => 0,
+        signal_count => 0,
+    );
+
+    if ($source_text =~ /^\(\?(fsm|dt|mod|module):([A-Za-z_][A-Za-z0-9_]*)\b/m) {
+        $summary{source_root_kind} = $1 eq 'module' ? 'module' : $1;
+        $summary{module_name} = $2;
+    }
+
+    if ($source_text =~ /^  \(\+size\b(.*?)^  \)\s*$/ms) {
+        my $size_block = $1;
+        while ($size_block =~ /^    \([A-Za-z_][A-Za-z0-9_]*\s+[^()\s]+\)\s*$/mg) {
+            $summary{signal_count}++;
+        }
+    }
+
+    while ($source_text =~ /^  \(([A-Za-z_][A-Za-z0-9_]*)\b/mg) {
+        $summary{state_count}++;
+    }
+
+    return \%summary;
+}
+
+sub build_ppif_bundle_semantic_export {
+    my ($ppif_result, $target_language) = @_;
+
+    my $report = $ppif_result->{report} || {};
+    my $module_name = ppif_bundle_module_name($ppif_result);
+    my $channel_count = scalar(@{$report->{channels} || []});
+    my $source_root_kind = 'ppif_bundle';
+
+    my $module_info = {
+        module_name => $module_name,
+        source_root_kind => $source_root_kind,
+        target_language => $target_language || 'systemverilog',
+        state_count => 0,
+        regular_state_count => 0,
+        regular_state_names => [],
+        standalone_dt_count => 0,
+        standalone_dt_names => [],
+        signal_count => 0,
+        signal_names => [],
+        parameter_count => 0,
+        parameter_names => [],
+        requires_implicit_system_ports => 0,
+        composition_child_count => $channel_count,
+    };
+
+    my $semantic_stub = {
+        module_name => $module_name,
+        source_root_kind => $source_root_kind,
+        state_count => 0,
+        signal_count => 0,
+        bundle_channel_count => $channel_count,
+    };
+
+    my $result = {
+        module_info => $module_info,
+        source_info => {
+            kind => $source_root_kind,
+            header => $report->{schema},
+        },
+        intent_hir => { %$semantic_stub },
+        lowered_rtl_ir => {
+            %$semantic_stub,
+            target_language => $target_language || 'systemverilog',
+        },
+        structural_rtl_ir => {
+            %$semantic_stub,
+            target_language => $target_language || 'systemverilog',
+        },
+        protocol_intent_bundle => build_ppif_bundle_semantic_payload($ppif_result),
+    };
+
+    return ($result, $module_info);
+}
+
+sub build_ppif_bundle_semantic_payload {
+    my ($ppif_result) = @_;
+
+    my $report = $ppif_result->{report} || {};
+    my @schedule_reports = map {
+        my $schedule = $_->{report} || {};
+        {
+            object_name => $_->{object_name},
+            channel => $_->{channel},
+            schema => $schedule->{schema},
+        }
+    } @{$ppif_result->{generated_ial1_schedule_reports} || []};
+
+    return {
+        schema => $report->{schema},
+        mode => $report->{mode},
+        source_object => clone_jsonish($report->{source_object}),
+        bundle => clone_jsonish($report->{bundle}),
+        channels => clone_jsonish($report->{channels} || []),
+        generated_artifacts => clone_jsonish($report->{generated_artifacts}),
+        generated_ial1_schedule_report_count => scalar(@schedule_reports),
+        generated_ial1_schedule_reports => \@schedule_reports,
+        unsupported_residue => clone_jsonish($report->{unsupported_residue} || []),
+    };
+}
+
+sub clone_jsonish {
+    my ($value) = @_;
+    return undef unless defined $value;
+    return [map { clone_jsonish($_) } @$value] if ref($value) eq 'ARRAY';
+    return { map { $_ => clone_jsonish($value->{$_}) } sort keys %$value } if ref($value) eq 'HASH';
+    return $value;
+}
+
+if (@ARGV && $ARGV[0] eq 'vial') {
+    shift @ARGV;
+    require FSM::VIAL::ToolCLI;
+    exit FSM::VIAL::ToolCLI->run({
+        argv => \@ARGV,
+        repo_root => File::Spec->catdir($FindBin::Bin, '..'),
+    });
+}
+
+# Command line options
+my $debug_level = 0;  # Numeric compatibility mode (0..4)
+my $help = 0;
+my $quiet = 0;
+my $strict_mode = 0;
+my $output_file = "";
+my $outdir = "";
+my $target_language = "systemverilog";  # Default to SystemVerilog
+my $trace_verbosity = "";               # Named mode: none|low|medium|high|debug
+my $trace_log_path = "";                # Bare trace logging uses .artifacts/logs/trace.log
+my $trace_log_enabled = 0;
+my $trace_emojis = 1;
+my @extension_modules = ();
+my @extension_config_files = ();
+my @source_search_paths = ();
+my $emit_capability_manifest = 0;
+my $check_mode = 0;
+my $json_output = 0;
+my $emit_semantic_json = 0;
+my $emit_schedule_json = 0;
+my $emit_verification_output = "";
+my $verification_outdir = "";
+my $verify_hdl = 0;
+my $isf_schedule_report;
+my $isf_reset_provenance;
+my $isf_interface_ports;
+my $isf_declarations_known = 0;
+
+# Store original ARGV to check for bare flags before GetOptions processes them
+my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
+my $has_trace_log_flag = grep { /^--trace-log(?:=.*)?$/ } @ARGV;
+my $has_language_flag = grep { /^(?:--language(?:=|\z)|-l(?:=|\z|.+))/ } @ARGV;
+
+GetOptions(
+    'debug|d:i'   => \$debug_level,  # Optional integer value (0-4)
+    'quiet|q'     => \$quiet,
+    'strict'      => \$strict_mode,
+    'help|h'      => \$help,
+    'output|o=s'  => \$output_file,
+    'outdir=s'    => \$outdir,
+    'language|l=s' => \$target_language,
+    'trace-verbosity|verbosity=s' => \$trace_verbosity,
+    'trace-log:s' => \$trace_log_path,
+    'trace-emojis!' => \$trace_emojis,
+    'path=s@' => \@source_search_paths,
+    'extension-module=s@' => \@extension_modules,
+    'extension-config=s@' => \@extension_config_files,
+    'capability-manifest|emit-capability-manifest' => \$emit_capability_manifest,
+    'check' => \$check_mode,
+    'json' => \$json_output,
+    'check-json' => sub {
+        $check_mode = 1;
+        $json_output = 1;
+    },
+    'emit-semantic-json|semantic-json|emit-normalized-json|normalized-json' => \$emit_semantic_json,
+    'emit-schedule-json' => \$emit_schedule_json,
+    'emit-verification-output=s' => \$emit_verification_output,
+    'verification-outdir=s' => \$verification_outdir,
+    'verify-hdl|validate-hdl' => \$verify_hdl,
+) or die "Error in command line arguments\n";
+
+# Handle legacy --debug flag behavior: if no value specified, default to level 4
+if (defined $debug_level && $debug_level == 0 && $has_bare_debug_flag) {
+    $debug_level = 4;  # Default to full trace when just --debug is used
+}
+
+# Resolve effective trace verbosity from explicit named option or numeric compatibility option.
+my $effective_trace_verbosity = (defined($trace_verbosity) && $trace_verbosity ne '')
+    ? $trace_verbosity
+    : $debug_level;
+set_fsm_trace_verbosity($effective_trace_verbosity);
+set_fsm_trace_emojis($trace_emojis);
+
+# Enable trace log routing whenever tracing is enabled, or when --trace-log is explicitly requested.
+# Note: Getopt sets the optional-string target to '' when --trace-log is passed with no value.
+if ($has_trace_log_flag || get_fsm_debug_level() > 0) {
+    $trace_log_enabled = 1;
+}
+
+# Validate target language
+$target_language = lc($target_language);  # Convert to lowercase
+my %valid_languages = (
+    'systemverilog' => { ext => '.sv', name => 'SystemVerilog' },
+    'sv'           => { ext => '.sv', name => 'SystemVerilog' },
+    'verilog'      => { ext => '.v',  name => 'Verilog' },
+    'v'            => { ext => '.v',  name => 'Verilog' },
+    'vhdl'         => { ext => '.vhd', name => 'VHDL' },
+);
+
+unless (exists $valid_languages{$target_language}) {
+    die "Error: Unsupported target language '$target_language'\n" .
+        "Supported languages: " . join(", ", sort keys %valid_languages) . "\n";
+}
+
+my $lang_info = $valid_languages{$target_language};
+
+if ($help) {
+    print <<'EOF';
+FSM HDL Generator - Generate HDL code (SystemVerilog, Verilog, VHDL) from FSM specifications
+
+Usage: ./bin/fsmgen [OPTIONS] <fsm_file>
+
+Subcommands:
+  vial            Public VIAL source tooling, typed inspection, planning and execution
+                  Run './bin/fsmgen vial --help' for the source-tooling boundary
+
+Arguments:
+  fsm_file        FSM file specification - one of:
+                  • bare_name         - searches explicit --path roots, FSMLIB, then current directory
+                  • bare_name.fsm     - searches explicit --path roots, FSMLIB, then current directory
+                  • bare_name.isf     - lowers IAL1 intent scheduling to .fsm before HDL
+                  • bare_name.ppif    - lowers IAL2 protocol/platform intent to .isf, then .fsm before HDL
+                  • bare_name.axi     - lowers the first AXI IAL2 profile alias through .isf, then .fsm
+                  • bare_name.apb     - lowers bounded APB IAL2 profile aliases through .isf, then .fsm
+                  • bare_name.ahb     - lowers bounded AHB requester/subordinate IAL2 profile aliases through .isf, then .fsm
+                  • relative/path.fsm - uses relative path (no FSMLIB search)
+                  • /absolute/path.fsm - uses absolute path (no FSMLIB search)
+
+Options:
+  -d, --debug[=N] Numeric trace compatibility level (0-4, default: 4 when no level specified)
+                  0 = none, 1 = low, 2 = medium, 3 = high, 4 = debug
+  --trace-verbosity <none|low|medium|high|debug>
+                  Preferred named verbosity selector
+  --trace-log[=FILE]
+                  Route all trace output to FILE
+                  Default: .artifacts/logs/trace.log under repository root
+                  When trace logging is active, trace lines are written to FILE
+                  instead of stdout
+  --trace-emojis / --notrace-emojis
+                  Enable/disable emoji markers in trace formatting
+  --path <dir>
+                  Add an explicit search root for bare .fsm names and related lookup
+                  May be repeated; searched before FSMLIB
+  --extension-module <Module::Name>
+                  Load an explicit typed extension module from @INC
+                  May be repeated
+  --extension-config <file>
+                  Load extension modules from an explicit config file
+                  May be repeated
+  --capability-manifest
+                  Print the versioned JSON FSMGen capability manifest and exit
+                  Alias: --emit-capability-manifest
+  --check --json  Run the full pipeline as a check, emit JSON, and do not write HDL
+                  Alias: --check-json
+  --emit-semantic-json
+                  Run the full pipeline, emit normalized semantic JSON, and do not write HDL
+                  Alias: --semantic-json
+  --emit-verification-output <target>
+                  Emit generated verification artifacts for a supported target
+                  Current targets: uvm-passive-monitor, vhdl-observation-package
+  --verification-outdir <dir>
+                  Required output directory for --emit-verification-output
+  --verify-hdl    After writing generated SystemVerilog, run Verilator lint and
+                  Yosys synthesis lowering as external validation gates
+                  Alias: --validate-hdl
+  -q, --quiet     Suppress informational messages
+  --strict        Enable strict support-tier enforcement
+                  Current first strict slice rejects legacy '+fsm' roots and
+                  requires the modern explicit '?fsm:module_name' family
+  -l, --language  Target HDL language: systemverilog|sv|verilog|v|vhdl (default: systemverilog)
+  -o, --output    Specify output file (default: .artifacts/<language>/<fsm_name>.<ext>)
+                  Explicit output paths must resolve inside the repository
+  -h, --help      Show this help message
+
+Environment Variables:
+  FSMLIB          Colon-separated list of directories to search for .fsm files
+                  Example: export FSMLIB="/path/to/fsm1:/path/to/fsm2:~/fsm"
+                  If not set, bare-name lookup falls back to explicit --path roots and current directory
+
+FSM File Resolution:
+  The tool uses different strategies based on the fsm_file argument:
+  
+  1. Bare name (e.g., 'lte_dif_pmaster')
+     • Appends '.fsm' to get 'lte_dif_pmaster.fsm'
+     • Searches each explicit --path directory in order
+     • Searches each FSMLIB directory in order
+     • Falls back to current directory if not found in explicit roots or FSMLIB
+  
+  2. Name with .fsm extension (e.g., 'lte_dif_pmaster.fsm')
+     • Searches each explicit --path directory in order
+     • Searches each FSMLIB directory in order
+     • Falls back to current directory if not found in explicit roots or FSMLIB
+  
+  3. Relative path (e.g., '../fsm/lte_dif_pmaster.fsm')
+     • Uses the specified path directly (no bare-name search)
+     • Path is relative to current working directory
+  
+  4. Absolute path (e.g., '/home/user/fsm/lte_dif_pmaster.fsm')
+     • Uses the specified path directly (no bare-name search)
+
+Supported Languages:
+  - SystemVerilog (systemverilog, sv) - generates .sv files
+  - Verilog       (verilog, v)        - generates .v files  
+  - VHDL          (vhdl)              - generates .vhd files
+
+FSMLIB Examples:
+  # Set up FSMLIB environment
+  export FSMLIB="/project/fsm:~/my_fsm:/shared/fsm_lib"
+  
+  # Add explicit per-invocation search roots ahead of FSMLIB
+  ./bin/fsmgen --path ./fsm --path ../shared_fsm my_block
+
+  # Use bare name - searches FSMLIB paths
+  ./bin/fsmgen lte_dif_pmaster
+  
+  # Use .fsm name - searches FSMLIB paths  
+  ./bin/fsmgen lte_dif_pmaster.fsm
+  
+  # Use relative path - no FSMLIB search
+  ./bin/fsmgen ../fsm/lte_dif_pmaster.fsm
+  
+  # Use absolute path - no FSMLIB search
+  ./bin/fsmgen /full/path/to/lte_dif_pmaster.fsm
+
+Debug Examples:
+  # No trace output (default)
+  ./bin/fsmgen my_fsm
+  
+  # Low trace verbosity (numeric compatibility)
+  ./bin/fsmgen --debug=1 my_fsm
+  
+  # Medium trace verbosity
+  ./bin/fsmgen --debug=2 my_fsm
+  
+  # High / debug trace verbosity
+  ./bin/fsmgen --debug=3 my_fsm
+  ./bin/fsmgen --debug=4 my_fsm
+  ./bin/fsmgen --debug my_fsm
+  
+  # Named verbosity with trace file routing
+  ./bin/fsmgen --trace-verbosity=debug --trace-log=.artifacts/logs/my_fsm.trace.log my_fsm
+  
+  # Short form numeric trace
+  ./bin/fsmgen -d2 my_fsm
+
+Other Examples:
+  # Generate Verilog RTL with debug tracing using FSMLIB lookup
+  ./bin/fsmgen --language verilog --debug=2 lte_dif_pmaster
+  
+  # Generate VHDL RTL quietly to specific file using relative path
+  ./bin/fsmgen --language vhdl --quiet --output .artifacts/vhd/my_output.vhd ../fsm/my_fsm.fsm
+  
+  # Debug SystemVerilog with custom output using FSMLIB lookup
+  ./bin/fsmgen -l sv -d3 -o .artifacts/sv/debug_output.sv my_fsm
+
+  # Enforce the current strict-mode boundary
+  ./bin/fsmgen --strict my_fsm
+
+  # Emit the machine-readable capability manifest
+  ./bin/fsmgen --capability-manifest
+
+  # Check a source and emit machine-readable diagnostics without writing HDL
+  ./bin/fsmgen --strict --check --json my_fsm
+
+  # Emit normalized machine-readable semantics without writing HDL
+  ./bin/fsmgen --strict --emit-semantic-json my_fsm
+
+  # Emit the bounded passive UVM monitor skeleton for an ISF observe source
+  ./bin/fsmgen --emit-verification-output uvm-passive-monitor \
+    --verification-outdir .artifacts/verification \
+    isf/verification_observation_metadata.isf
+
+  # Emit the bounded VHDL observation metadata package for an ISF observe source
+  ./bin/fsmgen --emit-verification-output vhdl-observation-package \
+    --verification-outdir .artifacts/verification \
+    isf/verification_observation_metadata.isf
+
+  # Generate SystemVerilog and validate it with Verilator plus Yosys
+  ./bin/fsmgen --verify-hdl my_fsm
+
+  # Load an explicit typed extension module from @INC
+  PERL5LIB=./my_extensions ./bin/fsmgen \
+    --extension-module My::Extension \
+    my_fsm
+
+  # Load extension modules from an explicit config file
+  PERL5LIB=./my_extensions ./bin/fsmgen \
+    --extension-config extensions.fsmext \
+    my_fsm
+
+EOF
+    exit 0;
+}
+
+if ($emit_capability_manifest) {
+    my $json = JSON::PP->new->ascii->canonical->pretty->encode(build_capability_manifest());
+    print $json;
+    exit 0;
+}
+
+my $check_json_mode = $check_mode && $json_output;
+my $machine_json_mode = $check_json_mode || $emit_semantic_json;
+if ($emit_semantic_json && ($check_mode || $json_output)) {
+    die "Error: --emit-semantic-json cannot be combined with --check, --json, or --check-json\n";
+}
+if (length($verification_outdir) && !length($emit_verification_output)) {
+    die "Error: --verification-outdir requires --emit-verification-output\n";
+}
+if (length($emit_verification_output)) {
+    my %supported_verification_outputs = map { $_ => 1 } qw(
+        uvm-passive-monitor
+        vhdl-observation-package
+    );
+    if (!$supported_verification_outputs{$emit_verification_output}) {
+        die "Error: unsupported verification output target '$emit_verification_output'; supported targets: uvm-passive-monitor, vhdl-observation-package\n";
+    }
+    if (!length($verification_outdir)) {
+        die "Error: --verification-outdir is required for --emit-verification-output $emit_verification_output\n";
+    }
+    if ($check_mode || $json_output || $emit_semantic_json || $emit_schedule_json) {
+        die "Error: --emit-verification-output cannot be combined with --check, --json, --check-json, --emit-semantic-json, or --emit-schedule-json\n";
+    }
+    if (length($outdir) || length($output_file) || $verify_hdl || $has_language_flag) {
+        die "Error: --emit-verification-output cannot be combined with --outdir, --output, --language, or --verify-hdl\n";
+    }
+}
+if ($check_mode && !$json_output) {
+    die "Error: --check currently requires --json for the bounded public check surface\n";
+}
+if ($json_output && !$check_mode) {
+    die "Error: --json is currently only supported together with --check\n";
+}
+if ($verify_hdl && ($check_mode || $emit_semantic_json)) {
+    die "Error: --verify-hdl cannot be combined with --check, --json, --check-json, or --emit-semantic-json because no HDL file is written\n";
+}
+if ($verify_hdl && $target_language !~ /^(?:systemverilog|sv)$/) {
+    die "Error: --verify-hdl currently supports generated SystemVerilog only\n";
+}
+
+# Output and trace destinations are project-owned. Resolve them once, before
+# any lowering or writer can create data, and fail closed on repository escape
+# or a symlink to another filesystem volume.
+$output_file = resolve_cli_project_output_path($output_file, '--output path')
+    if length($output_file);
+$outdir = resolve_cli_project_output_path($outdir, '--outdir path')
+    if length($outdir);
+$verification_outdir = resolve_cli_project_output_path(
+    $verification_outdir,
+    '--verification-outdir path',
+) if length($verification_outdir);
+if ($trace_log_enabled) {
+    $trace_log_path = File::Spec->catfile(
+        ensure_project_artifact_dir('logs'),
+        'trace.log',
+    ) unless defined($trace_log_path) && length($trace_log_path);
+    $trace_log_path = resolve_cli_project_output_path(
+        $trace_log_path,
+        '--trace-log path',
+    );
+}
+
+# Check for required positional argument
+if (@ARGV != 1) {
+    die "Error: Exactly one FSM file must be specified as argument\n" .
+        "Usage: ./bin/fsmgen [OPTIONS] <fsm_file>\n" .
+        "Use --help for more information\n";
+}
+
+my $fsm_input = $ARGV[0];
+my $path_resolver = FSM::SourcePathResolver->new(
+    extra_search_paths => \@source_search_paths,
+);
+
+# Resolve FSM file path using FSMLIB-aware logic
+my $fsm_file = eval {
+    resolve_fsm_file($fsm_input, $path_resolver);
+};
+
+if ($@) {
+    my $display_error = normalize_cli_error_text($@);
+    if ($emit_semantic_json) {
+        my $report = build_normalized_semantic_failure_report(
+            input => $fsm_input,
+            source_file => undef,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+    if ($check_json_mode) {
+        my $report = build_check_failure_report(
+            input => $fsm_input,
+            source_file => undef,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+    die $display_error;
+}
+
+# Convert to absolute path for consistency
+$fsm_file = File::Spec->rel2abs($fsm_file);
+my $public_source_file = $fsm_file;
+my %lowered_source_origins;
+
+if (my $unsupported_alias = unsupported_ial2_alias_suffix($fsm_file)) {
+    my $display_error = emit_machine_failure_if_requested(
+        input => $fsm_input,
+        source_file => $public_source_file,
+        target_language => $target_language,
+        strict_mode => $strict_mode,
+        emit_semantic_json => $emit_semantic_json,
+        check_json_mode => $check_json_mode,
+        message => format_cli_artifact_error(
+            "Error: source suffix '$unsupported_alias' is a known IAL2 alias candidate but is not supported in this slice\n",
+            ['Requested source', $public_source_file],
+        ),
+    );
+    die $display_error;
+}
+
+if (defined(source_suffix($fsm_file)) && !known_source_suffix($fsm_file)) {
+    my $unknown_suffix = source_suffix($fsm_file);
+    my $display_error = emit_machine_failure_if_requested(
+        input => $fsm_input,
+        source_file => $public_source_file,
+        target_language => $target_language,
+        strict_mode => $strict_mode,
+        emit_semantic_json => $emit_semantic_json,
+        check_json_mode => $check_json_mode,
+        message => format_cli_artifact_error(
+            "Error: source suffix '$unknown_suffix' is not a known FSMGen source suffix\n",
+            ['Requested source', $public_source_file],
+        ),
+    );
+    die $display_error;
+}
+
+if (length($emit_verification_output)) {
+    if ($fsm_file !~ /\.isf\z/i) {
+        die format_cli_artifact_error(
+            "Error: --emit-verification-output $emit_verification_output currently supports .isf sources only\n",
+            ['Requested source', $public_source_file],
+            ['Verification target', $emit_verification_output],
+            ['Verification output directory', $verification_outdir],
+        );
+    }
+
+    require FSM::Adapter::ISF;
+    require FSM::Scheduler::ISF;
+
+    my $adapter = FSM::Adapter::ISF->new();
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $actor = eval { $adapter->parse_file($fsm_file); };
+    if ($@) {
+        die format_cli_artifact_error(
+            normalize_cli_error_text($@),
+            ['Requested source', $public_source_file],
+            ['Verification target', $emit_verification_output],
+            ['Verification output directory', $verification_outdir],
+        );
+    }
+
+    my $schedule_report = eval { JSON::PP->new->decode($scheduler->report($actor)); };
+    if ($@) {
+        die format_cli_artifact_error(
+            normalize_cli_error_text($@),
+            ['Requested source', $public_source_file],
+            ['Verification target', $emit_verification_output],
+            ['Verification output directory', $verification_outdir],
+        );
+    }
+
+    my $verification_output_dir = $verification_outdir;
+    my $verification_result = eval {
+        if ($emit_verification_output eq 'uvm-passive-monitor') {
+            write_uvm_passive_monitor_skeleton(
+                actor => $actor,
+                schedule_report => $schedule_report,
+                source_file => $public_source_file,
+                output_dir => $verification_output_dir,
+            );
+        } else {
+            write_vhdl_observation_package_skeleton(
+                actor => $actor,
+                schedule_report => $schedule_report,
+                source_file => $public_source_file,
+                output_dir => $verification_output_dir,
+            );
+        }
+    };
+    if ($@) {
+        die format_cli_artifact_error(
+            normalize_cli_error_text($@),
+            ['Requested source', $public_source_file],
+            ['Verification target', $emit_verification_output],
+            ['Verification output directory', $verification_output_dir],
+        );
+    }
+
+    unless ($quiet) {
+        print "=== Verification Output ===\n\n";
+        print "Target: $emit_verification_output\n";
+        print "Package: " . $verification_result->{package_name} . "\n";
+        print "Artifact: " . $verification_result->{artifact_path} . "\n";
+        print "Manifest: " . $verification_result->{manifest_path} . "\n";
+    }
+    exit 0;
+}
+
+# PPIF pipeline: if input is .ppif or a supported profile alias, lower through
+# generated .isf to .fsm first.
+if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
+    require FSM::Adapter::IAL2::PPIF;
+
+    my $adapter = FSM::Adapter::IAL2::PPIF->new();
+    my $ppif_result = eval { $adapter->parse_file($fsm_file); };
+
+    if ($@) {
+        my $display_error = normalize_cli_error_text($@);
+        if ($emit_semantic_json) {
+            my $report = build_normalized_semantic_failure_report(
+                input => $fsm_input, source_file => $fsm_file,
+                target_language => $target_language, strict_mode => $strict_mode,
+                message => $display_error,
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 1;
+        }
+        if ($check_json_mode) {
+            my $report = build_check_failure_report(
+                input => $fsm_input, source_file => $fsm_file,
+                target_language => $target_language, strict_mode => $strict_mode,
+                message => $display_error,
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 1;
+        }
+        die $display_error;
+    }
+
+    if ($emit_schedule_json) {
+        print JSON::PP->new->ascii->canonical->pretty->encode($ppif_result->{report});
+        exit 0;
+    }
+
+    if (($ppif_result->{kind} // '') eq 'protocol_intent.valid_ready_bundle') {
+        if ($emit_semantic_json) {
+            my ($semantic_result, $module_info) = build_ppif_bundle_semantic_export(
+                $ppif_result,
+                $target_language,
+            );
+            my $report = build_normalized_semantic_success_report(
+                input => $fsm_input,
+                source_file => $public_source_file,
+                target_language => $target_language,
+                strict_mode => $strict_mode,
+                result => $semantic_result,
+                module_info => $module_info,
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 0;
+        }
+
+        if ($check_json_mode) {
+            my $report = build_check_success_report(
+                input => $fsm_input,
+                source_file => $public_source_file,
+                target_language => $target_language,
+                strict_mode => $strict_mode,
+                module_info => {
+                    module_name => ppif_bundle_module_name($ppif_result),
+                    source_root_kind => 'ppif_bundle',
+                    state_count => 0,
+                    signal_count => 0,
+                    composition_child_count => scalar(@{$ppif_result->{report}{channels} || []}),
+                },
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 0;
+        }
+
+        my $files = $ppif_result->{generated_ial0}{files} || {};
+        my $entry_basename = $ppif_result->{report}{generated_artifacts}{hdl_entry}{entry_artifact};
+        if (!defined($entry_basename) || !exists $files->{$entry_basename}) {
+            my $display_error = emit_machine_failure_if_requested(
+                input => $fsm_input,
+                source_file => $public_source_file,
+                target_language => $target_language,
+                strict_mode => $strict_mode,
+                emit_semantic_json => $emit_semantic_json,
+                check_json_mode => $check_json_mode,
+                message => "PPIF multi-channel bundle emitted no aggregate wrapper/top HDL entry artifact\n",
+            );
+            die $display_error;
+        }
+
+        my $dir = $outdir || undef;
+        if (!$dir) {
+            my ($fh, $tmp_path) = create_project_tempfile(
+                purpose => 'ial2-lowering',
+                suffix => '.fsm',
+            );
+            print $fh $files->{$entry_basename};
+            close $fh;
+            register_lowered_source_origin(\%lowered_source_origins, $tmp_path, $public_source_file);
+            $fsm_file = $tmp_path;
+        } else {
+            ensure_project_output_directory($dir, label => '--outdir path');
+
+            for my $item (@{$ppif_result->{generated_ial1}{items} || []}) {
+                my $isf_path = File::Spec->catfile($dir, $item->{name});
+                open my $isf_fh, '>', $isf_path or die "Cannot write $isf_path: $!\n";
+                print $isf_fh $item->{text};
+                close $isf_fh;
+                print "Wrote: $isf_path\n" unless $machine_json_mode;
+            }
+
+            for my $fname (sort keys %$files) {
+                my $path = File::Spec->catfile($dir, $fname);
+                open my $fh, '>', $path or die "Cannot write $path: $!\n";
+                print $fh $files->{$fname};
+                close $fh;
+                register_lowered_source_origin(\%lowered_source_origins, $path, $public_source_file);
+                print "Wrote: $path\n" unless $machine_json_mode;
+            }
+
+            $fsm_file = File::Spec->catfile($dir, $entry_basename);
+        }
+
+        unless ($machine_json_mode) {
+            print "=== IAL2 Protocol/Platform Intent Bundle ===\n\n";
+            print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
+            print "Channels: " . scalar(@{$ppif_result->{report}{channels} || []}) . "\n";
+            print "Generated review artifacts in: $dir\n" if $dir;
+            print "HDL entry: " . $entry_basename . "\n" if $dir && !$quiet;
+            print "Lowered aggregate HDL entry to: $fsm_file\n\n" unless $quiet;
+        }
+    } else {
+        $isf_schedule_report = $ppif_result->{generated_ial1_schedule_report};
+        my $files = $ppif_result->{generated_ial0}{files} || {};
+        my ($entry_basename, $entry_text) = ppif_generated_ial0_entry($ppif_result);
+        if (!defined($entry_basename) || !defined($entry_text)) {
+            my $display_error = emit_machine_failure_if_requested(
+                input => $fsm_input,
+                source_file => $public_source_file,
+                target_language => $target_language,
+                strict_mode => $strict_mode,
+                emit_semantic_json => $emit_semantic_json,
+                check_json_mode => $check_json_mode,
+                message => "PPIF lowering emitted no generated .fsm entry artifact\n",
+            );
+            die $display_error;
+        }
+
+        if ($check_json_mode && ppif_generated_fsm_needs_bounded_check_summary($ppif_result)) {
+            my $report = build_check_success_report(
+                input => $fsm_input,
+                source_file => $public_source_file,
+                target_language => $target_language,
+                strict_mode => $strict_mode,
+                module_info => build_ppif_generated_fsm_check_module_info(
+                    $ppif_result,
+                    $target_language,
+                ),
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 0;
+        }
+
+        my $dir = $outdir || undef;
+        if (!$dir) {
+            my ($fh, $tmp_path) = create_project_tempfile(
+                purpose => 'ial2-lowering',
+                suffix => '.fsm',
+            );
+            print $fh $entry_text;
+            close $fh;
+            register_lowered_source_origin(\%lowered_source_origins, $tmp_path, $public_source_file);
+            $fsm_file = $tmp_path;
+        } else {
+            ensure_project_output_directory($dir, label => '--outdir path');
+
+            for my $item (ppif_generated_ial1_items($ppif_result)) {
+                next unless defined($item->{name}) && defined($item->{text});
+                my $isf_path = File::Spec->catfile($dir, $item->{name});
+                open my $isf_fh, '>', $isf_path or die "Cannot write $isf_path: $!\n";
+                print $isf_fh $item->{text};
+                close $isf_fh;
+                print "Wrote: $isf_path\n" unless $machine_json_mode;
+            }
+
+            for my $fname (sort keys %$files) {
+                my $path = File::Spec->catfile($dir, $fname);
+                open my $fh, '>', $path or die "Cannot write $path: $!\n";
+                print $fh $files->{$fname};
+                close $fh;
+                register_lowered_source_origin(\%lowered_source_origins, $path, $public_source_file);
+                print "Wrote: $path\n" unless $machine_json_mode;
+            }
+            $fsm_file = File::Spec->catfile($dir, $entry_basename);
+        }
+
+        unless ($machine_json_mode) {
+            print "=== IAL2 Protocol/Platform Intent ===\n\n";
+            print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
+            my @ial1_names = map { $_->{name} } grep { defined($_->{name}) } ppif_generated_ial1_items($ppif_result);
+            print "Generated IAL1: " . (@ial1_names == 1 ? $ial1_names[0] : join(', ', @ial1_names)) . "\n"
+                if @ial1_names;
+            print "Lowered to: $fsm_file\n\n" unless $quiet;
+        }
+    }
+}
+
+# ISF pipeline: if input is .isf, lower to .fsm first
+if ($fsm_file =~ /\.isf$/i) {
+    require FSM::Adapter::ISF;
+    require FSM::Scheduler::ISF;
+
+    my $adapter   = FSM::Adapter::ISF->new();
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $actor     = eval { $adapter->parse_file($fsm_file); };
+
+    if ($@) {
+        my $display_error = normalize_cli_error_text($@);
+        if ($emit_semantic_json) {
+            my $report = build_normalized_semantic_failure_report(
+                input => $fsm_input, source_file => $fsm_file,
+                target_language => $target_language, strict_mode => $strict_mode,
+                message => $display_error,
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 1;
+        }
+        if ($check_json_mode) {
+            my $report = build_check_failure_report(
+                input => $fsm_input, source_file => $fsm_file,
+                target_language => $target_language, strict_mode => $strict_mode,
+                message => $display_error,
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 1;
+        }
+        die $display_error;
+    }
+
+    $isf_reset_provenance = $actor->{reset_provenance};
+    $isf_interface_ports = $actor->{interface_port_metadata};
+    $isf_declarations_known = 1;
+
+    if ($emit_schedule_json) {
+        my $json = eval { $scheduler->report($actor); };
+        if ($@) { die normalize_cli_error_text($@); }
+        print $json;
+        exit 0;
+    }
+
+    my $result = eval {
+        require FSM::Support::ISFHDLProfile;
+        FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile(
+            actor_name => $actor->{actor_name},
+            interface_ports => $isf_interface_ports,
+            target_language => $target_language,
+        );
+        $scheduler->lower($actor);
+    };
+    if ($@) {
+        my $display_error = emit_machine_failure_if_requested(
+            input => $fsm_input,
+            source_file => $public_source_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            emit_semantic_json => $emit_semantic_json,
+            check_json_mode => $check_json_mode,
+            message => $@,
+        );
+        die $display_error;
+    }
+    $isf_schedule_report = eval { JSON::PP->new->decode($scheduler->report($actor)); };
+    if ($@) {
+        my $display_error = emit_machine_failure_if_requested(
+            input => $fsm_input,
+            source_file => $public_source_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            emit_semantic_json => $emit_semantic_json,
+            check_json_mode => $check_json_mode,
+            message => $@,
+        );
+        die $display_error;
+    }
+
+    my $files = $result->{files};
+    my $entry_basename = exists $files->{"$actor->{actor_name}_top.fsm"}
+        ? "$actor->{actor_name}_top.fsm"
+        : exists $files->{"$actor->{actor_name}.fsm"}
+            ? "$actor->{actor_name}.fsm"
+            : undef;
+
+    if (!defined $entry_basename) {
+        my $display_error = emit_machine_failure_if_requested(
+            input => $fsm_input,
+            source_file => $public_source_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            emit_semantic_json => $emit_semantic_json,
+            check_json_mode => $check_json_mode,
+            message => "ISF multi-domain lowering emitted domain scheduled .fsm artifacts, "
+                . "but generated top/HDL entry emission is not implemented yet\n",
+        );
+        die $display_error;
+    }
+
+    my $dir = $outdir || undef;
+
+    if (!$dir && scalar(keys %$files) == 1) {
+        # Single file, no outdir: write to temp and feed to normal pipeline
+        my $only_file = $files->{$entry_basename};
+        my ($fh, $tmp_path) = create_project_tempfile(
+            purpose => 'ial1-lowering',
+            suffix => '.fsm',
+        );
+        print $fh $only_file;
+        close $fh;
+        register_lowered_source_origin(\%lowered_source_origins, $tmp_path, $public_source_file);
+        $fsm_file = $tmp_path;
+    } else {
+        # Keep implicit multi-file handoff artifacts temporary; only an
+        # explicit --outdir makes the lowered files durable review artifacts.
+        $dir ||= create_project_tempdir(purpose => 'ial1-lowering');
+        ensure_project_output_directory($dir, label => 'IAL1 lowering directory');
+        for my $fname (sort keys %$files) {
+            my $path = File::Spec->catfile($dir, $fname);
+            open my $fh, '>', $path or die "Cannot write $path: $!\n";
+            print $fh $files->{$fname};
+            close $fh;
+            register_lowered_source_origin(\%lowered_source_origins, $path, $public_source_file);
+            print "Wrote: $path\n" unless $machine_json_mode;
+        }
+        $fsm_file = File::Spec->catfile($dir, $entry_basename);
+    }
+
+    unless ($machine_json_mode) {
+        print "=== ISF Intent Scheduling ===\n\n";
+        print "Actor: " . $actor->{actor_name} . "\n";
+        print "Lowered to: $fsm_file\n\n" unless $quiet;
+    }
+}
+
+# Set default output file if not specified
+if (!$check_mode && !$emit_semantic_json && !$output_file) {
+    # Extract FSM bare name from the original input
+    my $fsm_bare_name;
+    if ($fsm_input =~ m{/}) {
+        # Path provided - extract basename and remove the source extension
+        my ($name, $path, $suffix) = fileparse($fsm_input, qr/\.[^.]*/);
+        $fsm_bare_name = $name;
+    } else {
+        # Bare name or source filename provided - extract bare name
+        $fsm_bare_name = $fsm_input;
+        $fsm_bare_name =~ s/\.(?:fsm|isf|ppif|axi|ahb|apb)$//i;  # Remove source extension if present
+    }
+    
+    # Keep implicit generated HDL out of the repository root.
+    my $artifact_dir = default_hdl_artifact_dir($lang_info);
+    $output_file = File::Spec->catfile($artifact_dir, "${fsm_bare_name}$lang_info->{ext}");
+}
+
+# Validate the implicit destination through the same containment boundary used
+# for caller-selected output paths.
+$output_file = resolve_cli_project_output_path($output_file, 'generated HDL output path')
+    if defined $output_file && length $output_file;
+# Set up trace routing
+if ($trace_log_enabled) {
+    ensure_project_output_directory(
+        dirname($trace_log_path),
+        label => '--trace-log parent directory',
+    );
+    set_fsm_trace_output_file($trace_log_path);
+    print "Trace logging enabled - trace output will be saved to: $trace_log_path\n\n"
+        unless $machine_json_mode;
+}
+
+unless ($machine_json_mode || $quiet) {
+    print "=== FSM HDL Generator ===\n\n";
+    print "Processing FSM file: $fsm_file\n";
+}
+
+# Create and run the HDL generation pipeline
+my $pipeline = eval {
+    FSM::Pipeline::HDLGenerator->new(
+        debug_level => get_fsm_debug_level(),
+        target_language => $target_language,
+        quiet => ($quiet || $machine_json_mode),
+        strict_mode => $strict_mode,
+        source_search_paths => \@source_search_paths,
+        extension_modules => \@extension_modules,
+        extension_config_files => \@extension_config_files,
+    );
+};
+
+if ($@) {
+    my $display_error = normalize_cli_error_text($@);
+    if ($emit_semantic_json) {
+        my $report = build_normalized_semantic_failure_report(
+            input => $fsm_input,
+            source_file => $public_source_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+    if ($check_json_mode) {
+        my $report = build_check_failure_report(
+            input => $fsm_input,
+            source_file => $public_source_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+    print STDERR $display_error;
+    exit 1;
+}
+
+my $result = eval {
+    $pipeline->generate_hdl_from_file($fsm_file);
+};
+
+if ($@) {
+    my $error = $@;
+    my $display_error = normalize_cli_error_text(
+        project_lowered_source_diagnostic($error, \%lowered_source_origins),
+    );
+    my $failure_report = FSM::Composition::FailureReportBuilder->build_report($display_error);
+
+    if ($emit_semantic_json) {
+        my $report = build_normalized_semantic_failure_report(
+            input => $fsm_input,
+            source_file => $public_source_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+
+    if ($check_json_mode) {
+        my $report = build_check_failure_report(
+            input => $fsm_input,
+            source_file => $public_source_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+
+    unless ($quiet || !$failure_report) {
+        print "\n=== Composition Failure Summary ===\n";
+        print "Top: " . $failure_report->{top_name} . "\n"
+            if defined $failure_report->{top_name} && length $failure_report->{top_name};
+        print "RTL module: " . $failure_report->{rtl_module_name} . "\n"
+            if defined $failure_report->{rtl_module_name} && length $failure_report->{rtl_module_name};
+        print "Lane: " . $failure_report->{lane} . "\n"
+            if defined $failure_report->{lane} && length $failure_report->{lane};
+        print "Construct: " . $failure_report->{construct_summary} . "\n"
+            if defined $failure_report->{construct_summary} && length $failure_report->{construct_summary};
+        print $failure_report->{artifact_label} . ": " . $failure_report->{artifact_value} . "\n"
+            if defined $failure_report->{artifact_label} && length $failure_report->{artifact_label}
+            && defined $failure_report->{artifact_value} && length $failure_report->{artifact_value};
+        print $failure_report->{search_roots_label} . ": " . $failure_report->{search_roots_value} . "\n"
+            if defined $failure_report->{search_roots_label} && length $failure_report->{search_roots_label}
+            && defined $failure_report->{search_roots_value} && length $failure_report->{search_roots_value};
+        print "Context: " . $failure_report->{context_summary} . "\n"
+            if defined $failure_report->{context_summary} && length $failure_report->{context_summary};
+        print "Blocked boundary: " . $failure_report->{blocked_boundary_label} . "\n"
+            if defined $failure_report->{blocked_boundary_label} && length $failure_report->{blocked_boundary_label};
+        print "Reason: " . $failure_report->{blocked_reason} . "\n"
+            if defined $failure_report->{blocked_reason} && length $failure_report->{blocked_reason};
+    }
+
+    print STDERR $display_error;
+    exit 1;
+}
+
+if ($isf_schedule_report) {
+    $result->{hdl_code} = FSM::Backend::GeneratedModuleEmitter->augment_with_temporal_contract_assertions(
+        hdl_code => $result->{hdl_code},
+        schedule_report => $isf_schedule_report,
+        target_language => $target_language,
+    );
+}
+
+if ($emit_semantic_json) {
+    my $report = build_normalized_semantic_success_report(
+        input => $fsm_input,
+        source_file => $public_source_file,
+        reset_provenance => $isf_reset_provenance,
+        ($isf_declarations_known ? (interface_ports => $isf_interface_ports) : ()),
+        target_language => $target_language,
+        strict_mode => $strict_mode,
+        result => $result,
+        module_info => $result->{module_info},
+    );
+    print JSON::PP->new->ascii->canonical->pretty->encode($report);
+    exit 0;
+}
+
+if ($check_json_mode) {
+    my $report = build_check_success_report(
+        input => $fsm_input,
+        source_file => $public_source_file,
+        reset_provenance => $isf_reset_provenance,
+        ($isf_declarations_known ? (interface_ports => $isf_interface_ports) : ()),
+        target_language => $target_language,
+        strict_mode => $strict_mode,
+        module_info => $result->{module_info},
+    );
+    print JSON::PP->new->ascii->canonical->pretty->encode($report);
+    exit 0;
+}
+
+my $hdl_code = $result->{hdl_code};
+my $module_info = $result->{module_info};
+my $statistics = $result->{statistics};
+my $composition_report = $result->{composition_report};
+
+# Output HDL code to stdout unless quiet mode
+unless ($quiet) {
+    print "\n=== Generated $lang_info->{name} Code ===\n\n";
+    print $hdl_code;
+}
+
+# Save to file
+ensure_project_output_directory(
+    dirname($output_file),
+    label => 'generated HDL output directory',
+);
+open my $fh, '>', $output_file or die format_cli_artifact_error(
+    "Cannot write to output file: $!\n",
+    ['Source file', $fsm_file],
+    ['Output file', $output_file],
+);
+print $fh $hdl_code;
+close $fh;
+
+if ($verify_hdl) {
+    my $validation_report = eval {
+        validate_systemverilog_file(
+            source_file => $output_file,
+            top_module => $module_info->{module_name},
+        );
+    };
+    if ($@) {
+        print STDERR normalize_cli_error_text($@);
+        exit 1;
+    }
+    unless ($quiet) {
+        print "\n=== External HDL Validation ===\n";
+        for my $step (@{$validation_report->{steps} || []}) {
+            print "  - $step->{name}: PASS\n";
+        }
+    }
+}
+
+unless ($quiet) {
+    print "\n=== Code Generation Summary ===\n";
+    print "$lang_info->{name} code saved to: $output_file\n";
+    
+    # Print FSM module information
+    print "\nModule: " . $module_info->{module_name} . "\n";
+    print "States: " . $module_info->{state_count} . "\n";
+    print "Signals: " . $module_info->{signal_count} . "\n";
+    
+    # Print signal breakdown
+    my $signal_analysis = $module_info->{signal_analysis};
+    print "  - Input signals: " . scalar(@{$signal_analysis->{inputs}}) . "\n";
+    print "  - Output signals: " . scalar(@{$signal_analysis->{outputs}}) . "\n";
+    print "  - Multi-bit signals: " . scalar(@{$signal_analysis->{multi_bit}}) . "\n";
+}
+
+unless ($quiet) {
+    if ($composition_report) {
+        print "\n=== Composition Summary ===\n";
+        print "Lane: " . ($composition_report->{lane} // 'unknown') . "\n";
+        print "Children: " . ($module_info->{composition_child_count} // 0) . "\n";
+        print "Top ports: " . ($composition_report->{top_port_count} // 0) . "\n";
+        print "Resolved links: " . ($composition_report->{resolved_link_count} // 0) . "\n";
+        print "Convention overrides: " . ($composition_report->{override_count} // 0) . "\n";
+        print "Convention blocks: " . ($composition_report->{block_count} // 0) . "\n";
+        print "Internal nets: " . ($module_info->{composition_net_count} // 0) . "\n";
+
+        if (@{$composition_report->{ordered_port_origins} || []}) {
+            print "\nTop Port Provenance:\n";
+            for my $origin_kind (@{$composition_report->{ordered_port_origins}}) {
+                my $label = FSM::Composition::ProvenanceReportBuilder->provenance_label($origin_kind);
+                my $count = $composition_report->{port_origin_counts}{$origin_kind} || 0;
+                my $example = $composition_report->{port_origin_examples}{$origin_kind} || '';
+                print "  - $label: $count";
+                print " (example: $example)" if length $example;
+                print "\n";
+            }
+        }
+
+        if (@{$composition_report->{ordered_resolved_link_origins} || []}) {
+            print "\nResolved Link Provenance:\n";
+            for my $origin_kind (@{$composition_report->{ordered_resolved_link_origins}}) {
+                my $label = FSM::Composition::ProvenanceReportBuilder->provenance_label($origin_kind);
+                my $count = $composition_report->{resolved_link_origin_counts}{$origin_kind} || 0;
+                my $example = $composition_report->{resolved_link_origin_examples}{$origin_kind} || '';
+                print "  - $label: $count";
+                print " (example: $example)" if length $example;
+                print "\n";
+            }
+        }
+
+        if (@{$composition_report->{ordered_override_kinds} || []}) {
+            print "\nConvention Overrides:\n";
+            for my $kind (@{$composition_report->{ordered_override_kinds}}) {
+                my $label = FSM::Composition::ProvenanceReportBuilder->override_label($kind);
+                my $count = $composition_report->{override_kind_counts}{$kind} || 0;
+                my $example = $composition_report->{override_kind_examples}{$kind} || '';
+                print "  - $label: $count";
+                print " (example: $example)" if length $example;
+                print "\n";
+            }
+        }
+
+        if (@{$composition_report->{ordered_block_kinds} || []}) {
+            print "\nConvention Blocks:\n";
+            for my $kind (@{$composition_report->{ordered_block_kinds}}) {
+                my $label = FSM::Composition::ProvenanceReportBuilder->block_label($kind);
+                my $count = $composition_report->{block_kind_counts}{$kind} || 0;
+                my $example = $composition_report->{block_kind_examples}{$kind} || '';
+                print "  - $label: $count";
+                print " (example: $example)" if length $example;
+                print "\n";
+            }
+        }
+
+        if (($module_info->{composition_generated_child_count} || 0) > 0) {
+            print "\nGenerated Children:\n";
+            print "  - Count: " . ($module_info->{composition_generated_child_count} || 0) . "\n";
+            print "  - FSM children: " . ($module_info->{composition_generated_fsm_child_count} || 0) . "\n";
+            print "  - Standalone-DT children: " . ($module_info->{composition_generated_dt_child_count} || 0) . "\n";
+
+            for my $child (@{$module_info->{composition_generated_children} || []}) {
+                my $kind = $child->{kind} || 'unknown_kind';
+                my $source_root_kind = $child->{source_root_kind} || 'unknown_root';
+                my $detail_label = $kind eq 'dtc' ? 'blocks' : 'states';
+                my $detail_count = $kind eq 'dtc'
+                    ? ($child->{standalone_dt_count} || 0)
+                    : ($child->{regular_state_count} || 0);
+
+                print "  - " . ($child->{instance_name} || 'unknown_instance')
+                    . " => " . ($child->{module_name} || 'unknown_module')
+                    . " (kind: ?" . $kind
+                    . ", root: ?" . $source_root_kind
+                    . ", source: " . ($child->{source_name} || 'unknown_source')
+                    . ", " . $detail_label . ": " . $detail_count
+                    . ", output drive families: " . ($child->{output_drive_family_count} || 0);
+
+                if ($kind eq 'dtc') {
+                    print ", grouped shared targets: " . ($child->{standalone_dt_multi_drive_target_count} || 0);
+                }
+
+                print ")\n";
+            }
+        }
+
+        if (($module_info->{composition_standalone_dt_child_count} || 0) > 0) {
+            print "\nReusable Standalone-DT Children:\n";
+            print "  - Count: " . ($module_info->{composition_standalone_dt_child_count} || 0) . "\n";
+            print "  - Standalone-DT blocks: " . ($module_info->{composition_standalone_dt_block_count} || 0) . "\n";
+            print "  - Grouped shared targets: " . ($module_info->{composition_standalone_dt_multi_drive_target_count} || 0) . "\n";
+
+            for my $child (@{$module_info->{composition_standalone_dt_children} || []}) {
+                print "  - " . ($child->{instance_name} || 'unknown_instance')
+                    . " => " . ($child->{module_name} || 'unknown_module')
+                    . " (source: " . ($child->{source_name} || 'unknown_source')
+                    . ", blocks: " . ($child->{standalone_dt_count} || 0)
+                    . ", grouped shared targets: " . ($child->{standalone_dt_multi_drive_target_count} || 0)
+                    . ")\n";
+
+                for my $target (@{$child->{standalone_dt_multi_drive_targets} || []}) {
+                    my $assertion = $target->{multi_drive_assertion} || {};
+                    next unless ($assertion->{input_count} || 0) > 1;
+                    my $inputs = join(', ', @{$assertion->{input_enable_signals} || []});
+                    next unless length $inputs;
+
+                    print "    * " . ($target->{signal_name} || 'unknown_signal')
+                        . " onehot0 over " . $inputs . "\n";
+                }
+            }
+        }
+
+        if (($module_info->{composition_shared_datapath_candidate_count} || 0) > 0) {
+            print "\nShared-Datapath Candidates:\n";
+            print "  - Count: " . ($module_info->{composition_shared_datapath_candidate_count} || 0) . "\n";
+
+            for my $candidate (@{$module_info->{composition_shared_datapath_candidates} || []}) {
+                my $contributors = join(', ', map {
+                    shared_endpoint_binding_summary($_, $target_language)
+                } @{$candidate->{contributors} || []});
+                my $top_outputs = join(', ', @{$candidate->{top_output_signals} || []});
+                print "  - " . ($candidate->{signal_name} || 'unknown_signal')
+                    . " [width=" . ($candidate->{width} || 1)
+                    . ", type=" . ($candidate->{interface_type} || 'data')
+                    . "] from " . $contributors;
+                print " (top outputs: $top_outputs)" if length $top_outputs;
+                print "\n";
+                if (my $storage_class = $candidate->{storage_class}) {
+                    print "    * storage class: $storage_class\n";
+                }
+                if (my $visibility = $candidate->{default_lifted_visibility}) {
+                    print "    * default lifted visibility: $visibility\n";
+                }
+                if (($candidate->{peer_input_count} || 0) > 0) {
+                    my $peer_inputs = join(', ', map {
+                        shared_endpoint_binding_summary($_, $target_language)
+                    } @{$candidate->{peer_input_endpoints} || []});
+                    print "    * peer-read inputs: $peer_inputs\n" if length $peer_inputs;
+                }
+                if (my $peer_read_policy = $candidate->{peer_read_policy}) {
+                    my %policy_label = (
+                        registered_loopback => 'registered loopback eligible',
+                        top_output_only => 'top-output-only',
+                        top_local_only => 'top-local-combinational-only',
+                    );
+                    print "    * peer-read policy: "
+                        . ($policy_label{$peer_read_policy} || $peer_read_policy) . "\n";
+                }
+                if (my $peer_read_block_reason = $candidate->{peer_read_block_reason}) {
+                    print "    * peer-read constraint: $peer_read_block_reason\n";
+                }
+                if (@{$candidate->{planned_reexport_top_output_signals} || []}) {
+                    print "    * planned top re-exports: "
+                        . join(', ', @{$candidate->{planned_reexport_top_output_signals} || []}) . "\n";
+                }
+                if (my $lifted_runtime_kind = $candidate->{lifted_runtime_kind}) {
+                    my %runtime_label = (
+                        registered_shared_reexport => 'registered shared re-export active',
+                        registered_shared_internal => 'registered shared internal lift active',
+                        registered_shared_public_fanout => 'registered shared public fanout active',
+                        combinational_shared_reexport => 'combinational shared top-facing carrier active',
+                        combinational_shared_public_fanout => 'combinational shared public fanout active',
+                        combinational_shared_internal => 'combinational shared top-local carrier active',
+                    );
+                    print "    * lifted runtime: "
+                        . ($runtime_label{$lifted_runtime_kind} || $lifted_runtime_kind) . "\n";
+                }
+                if (my $lifted_runtime_signal = $candidate->{lifted_runtime_signal}) {
+                    print "    * lifted signal: $lifted_runtime_signal\n";
+                }
+                if (my $lifted_runtime_reset_value = $candidate->{lifted_runtime_reset_value}) {
+                    print "    * lifted reset: $lifted_runtime_reset_value\n";
+                }
+                if (exists $candidate->{loopback_allowed}) {
+                    print "    * loopback allowed: " . ($candidate->{loopback_allowed} ? 'yes' : 'no') . "\n";
+                }
+                if (my $target_enable = $candidate->{aggregate_target_enable_signal}) {
+                    print "    * aggregate target enable: $target_enable\n";
+                }
+                if (my $multi_value_conflict = $candidate->{multi_value_conflict_signal}) {
+                    print "    * multi-value conflict: $multi_value_conflict\n";
+                }
+                if (my $multi_value_assertion = $candidate->{multi_value_assertion}) {
+                    my $inputs = join(', ', @{$multi_value_assertion->{input_enable_signals} || []});
+                    if (($multi_value_assertion->{input_count} || 0) > 1 && length $inputs) {
+                        print "    * multi-value onehot0 over $inputs"
+                            . " => " . ($multi_value_assertion->{result_signal} || 'unknown_signal') . "\n";
+                    }
+                }
+
+                for my $family (@{$candidate->{aggregate_enable_families} || []}) {
+                    my $family_refs = join(', ', map {
+                        ($_->{endpoint} || 'unknown_endpoint')
+                            . "/"
+                            . ($_->{family_enable_signal} || 'unknown_enable')
+                    } @{$family->{contributors} || []});
+                    print "    * aggregate value " . ($family->{rhs_value} || 'unknown')
+                        . " => " . ($family->{aggregate_enable_signal} || 'unknown_enable');
+                    print " from $family_refs" if length $family_refs;
+                    print "\n";
+                    if (my $same_value_conflict = $family->{same_value_conflict_signal}) {
+                        print "    * same-value conflict " . ($family->{rhs_value} || 'unknown')
+                            . " => " . $same_value_conflict . "\n";
+                    }
+                    if (my $same_value_assertion = $family->{same_value_assertion}) {
+                        my $inputs = join(', ', @{$same_value_assertion->{input_enable_signals} || []});
+                        if (($same_value_assertion->{input_count} || 0) > 1 && length $inputs) {
+                            print "    * same-value onehot0 " . ($family->{rhs_value} || 'unknown')
+                                . " over " . $inputs
+                                . " => " . ($same_value_assertion->{result_signal} || 'unknown_signal') . "\n";
+                        }
+                    }
+                }
+
+                for my $contributor (@{$candidate->{contributors} || []}) {
+                    my $intent_hir = $contributor->{intent_hir} || {};
+                    my $lowered_rtl_ir = $contributor->{lowered_rtl_ir} || {};
+                    my $source_root_kind = $intent_hir->{source_root_kind}
+                        || $contributor->{kind}
+                        || 'unknown_root';
+                    my $source_name = $contributor->{source_name}
+                        || $contributor->{module_name}
+                        || 'unknown_source';
+                    my $state_or_block_label = (($contributor->{kind} || '') eq 'fsmc') ? 'states' : 'blocks';
+                    my $state_or_block_count = (($contributor->{kind} || '') eq 'fsmc')
+                        ? ($intent_hir->{regular_state_count} || 0)
+                        : ($intent_hir->{standalone_dt_count} || 0);
+                    my $output_drive_family_count = $lowered_rtl_ir->{output_drive_family_count} || 0;
+
+                    print "    * contributor context: " . ($contributor->{endpoint} || 'unknown_endpoint')
+                        . " => ?" . $source_root_kind
+                        . " (" . $state_or_block_label . ": " . $state_or_block_count
+                        . ", output drive families: " . $output_drive_family_count
+                        . ", source: " . $source_name . ")\n";
+
+                    my $drive_intent = $contributor->{drive_intent} || {};
+                    next unless ($drive_intent->{driver_count} || 0) > 0;
+
+                    my $driver_blocks = join(', ', @{$drive_intent->{driver_blocks} || []});
+                    my $rhs_values = join(', ', @{$drive_intent->{rhs_values} || []});
+                    my $mux_type = $drive_intent->{multiplexer_type} || 'unknown';
+
+                    print "    * " . ($contributor->{endpoint} || 'unknown_endpoint')
+                        . " drives via " . $mux_type
+                        . " blocks [" . $driver_blocks . "]";
+                    print " with RHS [" . $rhs_values . "]" if length $rhs_values;
+                    print "\n";
+                }
+            }
+        }
+    }
+}
+
+# Print expression factoring statistics only if not quiet
+unless ($quiet) {
+    if ($statistics->{factoring_enabled}) {
+        print "\n=== Expression Factoring Statistics ===\n";
+        print "Total Intermediate Signals: " . $statistics->{intermediate_signals} . "\n";
+        print "Global Expressions Factored: " . $statistics->{global_expressions} . "\n";
+        
+        my $raw_intermediate = $statistics->{raw_intermediate_signals} || {};
+        my $raw_usage = $statistics->{raw_expression_usage} || {};
+        
+        if (%$raw_intermediate) {
+            print "\nIntermediate Signals Created:\n";
+            for my $signal_name (sort keys %$raw_intermediate) {
+                my $expression = $raw_intermediate->{$signal_name};
+                my $usage = $raw_usage->{$signal_name} || 1;
+                print "  - $signal_name = $expression (used $usage time" . ($usage > 1 ? "s" : "") . ")\n";
+            }
+        }
+        
+        # Print reused expressions from pipeline results
+        if (@{$statistics->{reused_expressions}}) {
+            print "\nMost Reused Expressions:\n";
+            for my $reused (@{$statistics->{reused_expressions}}) {
+                print "  - $reused->{signal}: $reused->{usage_count} uses ($reused->{expression})\n";
+            }
+        }
+    } else {
+        print "\nNo complex expressions found requiring factoring.\n";
+    }
+    
+    print "\n=== Code Generation Complete ===\n";
+}
+
+# Cleanup trace output file and report location
+if ($trace_log_enabled) {
+    clear_fsm_trace_output_file();
+    unless ($quiet) {
+        print "\nTrace log saved to: $trace_log_path\n";
+    }
+}

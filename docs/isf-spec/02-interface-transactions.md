@@ -90,9 +90,12 @@ Declared domain ownership and nearest scalar formal/parameter masks still apply.
 Record outputs, root-list inputs and transaction aggregate ports remain deferred.
 Record-input source acceptance is target-neutral. The qualified direct/generated
 HDL profile is SystemVerilog. Saved behavior observations exercise both emitter
-options with SystemVerilog syntax enabled; the `verilog` option retains packed
-typedefs and is not IEEE 1364 Verilog-2005 qualification. Precise Verilog-profile
-admission or refusal remains owned before final input signoff. VHDL refuses the selected packed-record
+options with SystemVerilog syntax enabled; the historical `verilog` option
+retained packed typedefs and is not IEEE 1364 Verilog-2005 qualification.
+Current ISF record-input HDL requests refuse `verilog`/`v` before publishing HDL,
+identifying the actor, input and declared type and recommending SystemVerilog.
+Existing destinations stay byte-exact; schedule preview and declaration metadata
+retain their source-level contract. VHDL refuses the selected packed-record
 input or generated-composition profiles precisely before publishing HDL; scalar
 inputs and existing inferred packed-output VHDL controls retain their supported
 subset. VHDL file emission is not analyzer/runtime qualification.

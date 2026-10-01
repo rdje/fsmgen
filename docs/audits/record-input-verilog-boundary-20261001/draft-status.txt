@@ -1,0 +1,209 @@
+ram-guard: PID 11799; host 72.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'imported_record_profile' record input 'packet' (type 'alias') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "imported_record_profile", "interface_ports", ARRAY(0x77332c4030), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'imported_record_profile' record input 'packet' (type 'alias') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "imported_record_profile", "interface_ports", ARRAY(0x75e66e25a0), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'imported_record_profile' record input 'packet' (type 'alias') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "imported_record_profile", "interface_ports", ARRAY(0x7976579318), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'imported_record_profile' record input 'packet' (type 'alias') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "imported_record_profile", "interface_ports", ARRAY(0x79fef35eb8), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+    # Looks like you failed 4 tests of 14.
+
+#   Failed test 'precise record-input Verilog boundary for {REPOSITORY_ROOT}/.artifacts/tmp/tests/wEkRB8jMiq/imported.isf'
+#   at t/2028-isf-record-input-verilog-profile.t line 66.
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'unused_record_profile' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "unused_record_profile", "interface_ports", ARRAY(0x7643ea07b0), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'unused_record_profile' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "unused_record_profile", "interface_ports", ARRAY(0x7bf7656090), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'unused_record_profile' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "unused_record_profile", "interface_ports", ARRAY(0x7afd18f0a8), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'unused_record_profile' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "unused_record_profile", "interface_ports", ARRAY(0x7cf2b23be8), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+    # Looks like you failed 4 tests of 14.
+
+#   Failed test 'precise record-input Verilog boundary for {REPOSITORY_ROOT}/.artifacts/tmp/tests/wEkRB8jMiq/unused.isf'
+#   at t/2028-isf-record-input-verilog-profile.t line 66.
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'packed_input_runtime' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_runtime", "interface_ports", ARRAY(0x79408c5528), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'packed_input_runtime' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_runtime", "interface_ports", ARRAY(0x7a9a9cab40), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'packed_input_runtime' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_runtime", "interface_ports", ARRAY(0x77ba7f7558), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'packed_input_runtime' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_runtime", "interface_ports", ARRAY(0x7c3aaa5228), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+    # Looks like you failed 4 tests of 16.
+
+#   Failed test 'precise record-input Verilog boundary for t/data/isf_record_input_runtime.isf'
+#   at t/2028-isf-record-input-verilog-profile.t line 66.
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'packed_input_generated_domains' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_generated_domains", "interface_ports", ARRAY(0x78e9af8870), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'packed_input_generated_domains' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_generated_domains", "interface_ports", ARRAY(0x791f4fa138), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'packed_input_generated_domains' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_generated_domains", "interface_ports", ARRAY(0x7b7f363ee8), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'packed_input_generated_domains' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_generated_domains", "interface_ports", ARRAY(0x754d276c78), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+    # Looks like you failed 4 tests of 16.
+
+#   Failed test 'precise record-input Verilog boundary for t/data/isf_record_input_generated_domains_runtime.isf'
+#   at t/2028-isf-record-input-verilog-profile.t line 66.
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'packed_input_generated_blocking' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_generated_blocking", "interface_ports", ARRAY(0x7a990aaf00), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'packed_input_generated_blocking' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_generated_blocking", "interface_ports", ARRAY(0x79eea92408), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'packed_input_generated_blocking' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_generated_blocking", "interface_ports", ARRAY(0x74e72f4d50), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'packed_input_generated_blocking' record input 'packet' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "packed_input_generated_blocking", "interface_ports", ARRAY(0x776d246e88), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+    # Looks like you failed 4 tests of 16.
+
+#   Failed test 'precise record-input Verilog boundary for t/data/isf_record_input_generated_blocking_runtime.isf'
+#   at t/2028-isf-record-input-verilog-profile.t line 66.
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'link_rx' record input 'lmp_in' (type 'lmp_t') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "link_rx", "interface_ports", ARRAY(0x7bb1202f78), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'link_rx' record input 'lmp_in' (type 'lmp_t') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "link_rx", "interface_ports", ARRAY(0x7c9af04438), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'link_rx' record input 'lmp_in' (type 'lmp_t') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "link_rx", "interface_ports", ARRAY(0x7977740e10), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'link_rx' record input 'lmp_in' (type 'lmp_t') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "link_rx", "interface_ports", ARRAY(0x799a3c90a8), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+    # Looks like you failed 4 tests of 14.
+
+#   Failed test 'precise record-input Verilog boundary for docs/audits/specforge-aggregate-intake-20260930/record-port.isf'
+#   at t/2028-isf-record-input-verilog-profile.t line 66.
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'link_rx' record input 'lmp_in' (type 'lmp_t') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "link_rx", "interface_ports", ARRAY(0x7b42b5b540), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'link_rx' record input 'lmp_in' (type 'lmp_t') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "link_rx", "interface_ports", ARRAY(0x76fb4626f0), "target_language", "verilog") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'normal native failure names authored actor, record port, type and supported alternative'
+    #   at t/2028-isf-record-input-verilog-profile.t line 43.
+    # ISF actor 'link_rx' record input 'lmp_in' (type 'lmp_t') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "link_rx", "interface_ports", ARRAY(0x755b5665b8), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+
+    #   Failed test 'absent output has the same precise normal refusal'
+    #   at t/2028-isf-record-input-verilog-profile.t line 48.
+    # ISF actor 'link_rx' record input 'lmp_in' (type 'lmp_t') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented. at {REPOSITORY_ROOT}/bin/../perl/FSM/Support/ISFHDLProfile.pm line 23.
+    # 	FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile("actor_name", "link_rx", "interface_ports", ARRAY(0x78426c24b0), "target_language", "v") called at bin/fsmgen line 1262
+    # 	eval {...} called at bin/fsmgen line 1258
+    # Looks like you failed 4 tests of 14.
+
+#   Failed test 'precise record-input Verilog boundary for docs/audits/specforge-aggregate-intake-20260930/record-port-field-guard.isf'
+#   at t/2028-isf-record-input-verilog-profile.t line 66.
+# Looks like you failed 7 tests of 10.
+t/2028-isf-record-input-verilog-profile.t .. 
+Dubious, test returned 7 (wstat 1792, 0x700)
+Failed 7/10 subtests 
+
+Test Summary Report
+-------------------
+t/2028-isf-record-input-verilog-profile.t (Wstat: 1792 Tests: 10 Failed: 7)
+  Failed tests:  1-7
+  Non-zero exit status: 7
+Files=1, Tests=10, 73 wallclock secs ( 0.02 usr  0.01 sys + 44.87 cusr 18.67 csys = 63.57 CPU)
+Result: FAIL

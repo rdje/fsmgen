@@ -1,0 +1,11 @@
+ram-guard: PID 805; host 81.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2024-isf-record-input-runtime.t ............................ ok
+t/2025-isf-record-input-generated-runtime.t .................. ok
+t/2027-isf-record-input-backend-profiles.t ................... ok
+t/2017-isf-record-input-frontend-closure.t ................... ok
+t/2018-semantic-public-json-scalar-kinds.t ................... ok
+t/248-regression-corpus-accounting.t ......................... ok
+t/386-hdl-generator-facade-target-language-boundary-audit.t .. ok
+All tests successful.
+Files=7, Tests=7328, 128 wallclock secs ( 0.21 usr  0.03 sys + 88.16 cusr 26.07 csys = 114.47 CPU)
+Result: PASS
