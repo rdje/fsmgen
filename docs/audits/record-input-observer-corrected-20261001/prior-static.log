@@ -1,0 +1,7 @@
+ram-guard: PID 91755; host 70.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2024-isf-record-input-runtime.t ........... ok
+t/1994-isf-record-port-sample-replay.t ...... ok
+t/2018-semantic-public-json-scalar-kinds.t .. ok
+All tests successful.
+Files=3, Tests=13, 16 wallclock secs ( 0.01 usr  0.01 sys + 11.54 cusr  3.49 csys = 15.05 CPU)
+Result: PASS

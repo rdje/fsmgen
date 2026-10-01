@@ -2991,6 +2991,21 @@ For FSMGen, the analogs are:
   Acceptance: `After .1 commits, bind only its exact maintained target/fixture/producer identities through a new exclusive admission. Consume the committed native/failure-only witness and preserve original arguments, returns, errno, bounds, capture gaps and cleanup. Independently qualify silent success, controlled real rejection, diagnostic gaps, source drift, wrong targets and reused captures before genuine HDL use. Existing archived observer admission and receipts remain immutable. Link HIAL .3.2.10.11.5 ownership; no actual feature HDL execution in observer qualification.`
   Verification: `Fixed T2024/source/public-pin bench and static signed/state/layout/emission controls are committed at 49ef15cba77bdb8572beb079a1a3e81bfa04a85e. Read and qualify a new exact failure-only observer admission for that target, preserving archived controls and original native bounds/results. No genuine feature HDL execution until this integration commits.`
   Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2.1`
+  Status: `done`
+  Goal: `Repair fixed-admission diagnostics and caller purity before fresh qualification.`
+  Acceptance: `P2 new integration defect: finite controls pass but saved verification rejects outer stderr because return sort (...) emits a Perl interpreted-as-function warning at RecordInputAdmission.pm line 18. Preserve complete initial source/admission/results/cleanup/manifest and exact failed verifier result. Prepare a corrected separate fixed observer using explicit path array plus sort @paths and add exact outer stderr checks to the finite qualifier. Independently prove the warning is the sole saved integration failure, syntax is clean, and admitted target/count/source bounds remain unchanged. Fresh JSON calibration also proves aliased scalar inspection mutates accepted numeric-string kinds; detach the closed root/count/digest values while preserving accepted values and owned CLI numeric serialization. Commit this bounded repair/preparation before fresh native controls; no feature HDL execution or archived-helper change.`
+  Verification: `Initial sealed oct01 controls and failed saved verifier remain byte-exact and unqualified. Independent warning-only normalization passes all original saved checks and hostile controls without native rerun. Corrected syntax is clean, and pure preparation passes All tests successful, Files=1, Tests=25, including unchanged targets/bounds, complete caller JSON kinds on success/refusal and the preserved actual-before counterexample. Strict finite outer-stderr checks are prepared. Fresh native observer qualification remains child .2; no feature HDL execution.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2.2`
+  Status: `pending`
+  Goal: `Requalify the corrected fixed observer from fresh exclusive native controls.`
+  Acceptance: `After .1 commits, use the corrected fixed recipe with new exclusive captures. Require both finite TAP and complete sealed independent verification, exact stderr including deliberate gaps, unchanged stage/argument/result/errno/bounds, fixed target/source/coverage and independent PID/group cleanup. Preserve first warning-bearing evidence. Close observer integration only after all saved hostile controls and doctrines pass and commit before genuine packed-input HDL execution.`
+  Verification: `pending committed warning repair`
+  Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.3`
   Status: `pending`
@@ -6940,3 +6955,58 @@ capacity then inventory, restage and require the complete gate before commit.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S for the exact next .6.2 phrase records its historical introduction; exact predecessor 49ef15cba77bdb8572beb079a1a3e81bfa04a85e retains that optional narrative beside already-correct done frontend/generated nodes. Canonical decision 0019 explicitly rejects per-slice backfill and makes the view historical. The misleading unlabelled secondary prose is the locus, not the authoritative node graph. The initial backfill inference is withdrawn. The staged gate additionally identifies doctrine/live_document_size/surfaces.jsonl and doctrine/claim_verification/inventory.jsonl as configured implementation paths requiring these fresh boxes; no acceptance exemption or policy change is applied.
 - [x] **ADDRESSED (verified)** — Only the historical narrative is retired with its exact committed retrieval and historical stamp; the .63 node moves into the authoritative node area. Independent Git/byte/node verification preserves the exact complete node set and all contracts except the owned .63 disposition and .2.5.2 activation. Missing/changed/extra node and reference mutations are rejected. The exact former view digest is retained above, with unchanged production/test bytes. Active index/Memory advance to the fixed observer; book/canonical feedback already state the correct prepared/unexecuted scope. Capacity ratchets and inventory remain independently regenerated under unchanged limits.
 - [x] **NO REGRESSION** — Task-tree integrity reports all active task-tree invariants hold, and knowledge-map: OK verifies complete generated query parity. Independent exact node/text preservation and hostile missing/changed/extra/reference controls pass; production/test Git diff is empty. Re-derivation uses canonical decision 0019 and exact committed/current data; falsification uses independent hostile node/reference mutations; tracked node/card/pointer and exact predecessor Git object provide durability. The corrected complete staged doctrine gate and normal hooks remain required; the first acceptance-only failed aggregate is excluded. No code behavior, native HDL execution, full CI, push or external repository changes.
+
+The new preparation oracle also exposes private admission caller-kind mutation:
+regex/numeric inspection of aliased coverage values changes their serialized
+JSON kinds. The first Storable-cloned draft is excluded as a primitive-kind
+reference; calibrate with fresh JSON-decoded packets and explicit numeric-string
+coverage before repair. This small new admission defect is owned by .5.2.1:
+inspect detached closed packet/count/digest scalar copies while retaining the
+existing admitted target/coverage/value bounds. Original helper/module/receipts
+remain immutable; no public wire or supervisor defect is inferred.
+
+
+## Fixed observer preparation repair `.60.4.3.2.5.2.1`
+
+Initial finite oct01 controls pass Files=1, Tests=58, but independent saved
+verification fails at verify.py line 61: outer stderr contains exactly the
+Perl `sort (...) interpreted as function` warning at RecordInputAdmission.pm
+line 18. The initial sources, admissions, native events, original stage results,
+cleanup, postcheck and manifest remain sealed and byte-exact in
+`docs/audits/record-input-observer-20261001/`; that integration is unqualified.
+The exact failed verifier log is retained in the corrected sibling directory.
+An independent verifier removes only that exact single warning from detached
+saved rows and then runs all original native/result/gap/cleanup and hostile
+checks. It passes without a native fixture rerun or original-data modification.
+
+The corrected sibling uses an explicit path array and `sort @paths`, plus
+exact declared outer-stderr assertions for every finite scenario. Pure syntax
+is clean. Fresh JSON-decoded caller calibration fails one of 21 assertions:
+accepted numeric-string stage counts change JSON kind during aliased numeric
+inspection. The Storable-cloned draft is excluded from that diagnosis. The
+small repair copies the closed root/count/digest scalars before inspection;
+the newly constructed CLI packet explicitly keeps numeric counts on disk.
+The accepted values, fixed target set, source identity set and stage limits
+remain unchanged. The preserved actual before module and RED log are tracked;
+its isolated package-only rename still falsifies caller-kind preservation.
+
+Final pure preparation passes All tests successful, Files=1, Tests=25,
+including complete caller JSON on acceptance and refusals, exact source/bench
+identity membership, count bounds and the actual-before counterexample. Neighboring static T2024/T1994/T2018 passes Files=3, Tests=13, with native
+execution disabled. Clean observer/qualifier/CLI syntax, warning-root saved verification and unchanged
+product/test/archived-helper bytes supplement this scope. No fresh finite
+native control, real feature HDL compilation/runtime, host-protection change,
+full CI, push or external repository write occurs. Fresh exclusive native
+qualification remains .2 and HIAL .3.2.10.11.5.1; genuine runtime remains .5.3.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Initial saved verifier fails at docs/audits/record-input-observer-20261001/verify.py line 61 on the exact admission-module Perl diagnostic at docs/audits/record-input-observer-20261001/RecordInputAdmission.pm line 18. Detached warning-only normalization passes every original saved invariant and hostile control. Fresh JSON/string-count preparation fails at docs/audits/record-input-observer-corrected-20261001/preparation.t line 50 solely on caller primitive kinds: aliased regex/numeric inspection sets scalar flags. Exact before source and RED result are retained; no native supervisor or public product defect is inferred.
+- [x] **ADDRESSED (verified)** — Separate corrected path-array syntax is clean; finite qualifier now requires exact outer stderr before loading saved summaries. Closed root/count/digest scalar copies preserve complete caller JSON kinds for existing numeric and numeric-string acceptance and refusal; owned CLI construction retains numeric disk coverage. The preserved actual-before module, changed only in package name for isolation, still falsifies preservation. Original initial manifest/source/results remain byte-exact and explicitly unqualified. Fresh native qualification must occur after this preparation commit.
+- [x] **NO REGRESSION** — Guarded final pure preparation reports All tests successful, Files=1, Tests=25; neighboring T2024/T1994/T2018 passes Files=3, Tests=13 with native execution disabled. Unchanged fixed target, ordered existing identity membership and source/bench requirements pass. Observer and qualifier syntax are clean; independent initial saved verification passes every original check and hostile control after removing only the exact known warning, with no native rerun. Product/test and archived helper Git diff remains empty. Re-derivation uses actual saved complete receipts, fresh caller serialization and syntax; falsification uses exact warning removal, original hostile saved controls and preserved actual-before implementation; tracked sealed sources/results, RED/final evidence, tests/fact/book/feedback/task and Git provide durability. Full fresh native integration and genuine feature behavior are explicitly pending separate slices.
+
+The first standalone staged gate rejects only live-document coverage and its
+dependent README entrypoint gate: the new redundant audit README.md has no
+declared live surface. Remove that unneeded duplicate; canonical task/fact/book
+retain its preparation and qualification instructions. No coverage declaration,
+ceiling or acceptance requirement changes. All remaining gates, including
+fresh task acceptance, pass in that failed aggregate; it is excluded from
+commit qualification. Refresh capacity then inventory before the corrected gate.

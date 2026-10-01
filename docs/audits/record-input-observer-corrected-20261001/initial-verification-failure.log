@@ -1,0 +1,13 @@
+ram-guard: PID 75375; host 69.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Failure-only context, silent success, retained native errors, explicit capture gaps and cleanup verified.
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-input-observer-20261001/verify.py", line 205, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-input-observer-20261001/verify.py", line 178, in main
+    validate(rows, cases, postcheck)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-input-observer-20261001/verify.py", line 61, in validate
+    assert outer['stderr'] == expected_stderr
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

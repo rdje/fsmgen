@@ -1918,10 +1918,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit with SEM runtime qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Own native causal observation at the next genuinely required roadmap runtime.`
   Acceptance: `Before a selected roadmap leaf needs supervised HDL runtime, identify its exact fixed target and qualify any required observer integration separately using the committed failure-only witness. Existing T1974 admission cannot authorize a different target. Preserve original limits/arguments/results and native return/errno, retain query/capture gaps and source identities, and independently check cleanup. Diagnose captured rejection before further execution; a pass leaves historical causality open and schedules its next normal opportunity. No host-protection change, privilege request or recurrence-only original retry.`
-  Verification: `Pending the next genuinely required runtime after completed priority qualification. Independent non-runtime grant/invocation work may proceed under SEM .32.1.3.3.1.3.3.2.2.3.2.2.2.2.3; original startup/full-CI qualification remains separate.`
+  Verification: `SEM .60.4.3.2.5.1 commits the fixed T2024 packed-input source/public-pin bench and static controls; .5.2 now qualifies a new exact observer using committed failure-only/native witnesses. Child .1 owns that integration before child .2 and SEM .5.3 genuinely execute HDL. Historical native cause and original startup/full-CI remain separate.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.1`
+  Status: `active`
+  Goal: `Qualify the fixed T2024 record-input failure-only observer integration.`
+  Acceptance: `Linked SEM .60.4.3.2.5.2 prepares a new closed admission for exactly committed T2024 and its source/bench/producers. Reuse unchanged qualified FailureWitness/StageObserver and immutable finite control sources, with a separate exclusive capture namespace. Qualify ordinary/stale silent success, deliberate real session rejection, query/capture/retention/errno gaps, original stage/result/argument/bound invariance, exact identities and wrong/reused admissions. Independently check native child PID/group absence and sealed hostile evidence. No feature HDL execution, old capture replay, original recurrence campaign, host-protection or supervisor-policy change. Commit before actual observation.`
+  Verification: `Current native helper binary matches its committed qualification digest. Initial finite controls pass but saved verification rejects a new admission-module Perl sort warning. SEM .5.2.1 repairs path-array syntax, exact stderr checks and detached caller scalar inspection, with pure preparation and warning-only saved diagnosis qualified. Fresh .5.2.2 control qualification remains required; observer integration is active and feature HDL execution is not admitted.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.2`
+  Status: `pending`
+  Goal: `Consume genuine direct record-input observation with the qualified fixed observer.`
+  Acceptance: `After child .1 commits, SEM .60.4.3.2.5.3 uses fresh exclusive admission for exact T2024/source/bench/producers and declared complete stage coverage. Preserve all original bounds/results, capture gaps and input identities, independently check cleanup and retain recoverable observations. Stop and diagnose any native or HDL failure before another execution. A pass leaves historical EPERM causal repair open and schedules its next normal opportunity; no recurrence-only retry.`
+  Verification: `pending committed observer qualification`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.12`

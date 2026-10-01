@@ -1,0 +1,4 @@
+ram-guard: PID 92608; host 68.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+docs/audits/record-input-observer-corrected-20261001/observe.t syntax OK
+docs/audits/record-input-observer-corrected-20261001/qualify.t syntax OK
+docs/audits/record-input-observer-corrected-20261001/prepare.pl syntax OK

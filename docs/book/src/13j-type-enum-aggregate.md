@@ -305,6 +305,9 @@ separate qualification work.
 The direct public-pin behavioral witness is prepared and statically checked for
 packed layout, entry sampling, live reads, whole-copy timing, held values and
 reset. Its native execution awaits a separately qualified fixed observer.
+Observer preparation preserves the initial failed diagnostic evidence and
+repairs admission validation without changing its fixed target or stage limits;
+fresh native observer qualification remains pending.
 Binary-valued Verilator execution will not establish four-state X/Z behavior;
 signed/state declarations and execution claims are qualified separately.
 See [0113](../../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md#authored-record-input-admission--2026-09-30)

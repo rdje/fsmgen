@@ -54,7 +54,9 @@ and book.
   public qualification `.60.4.3.2.4` is complete; backend/native execution
   and consumer signoff remain `.60.4.3.2.5`. Its direct public-pin witness is
   prepared under `.5.1`; genuine HDL execution waits for new fixed observer
-  qualification, and generated/domain execution remains open. Record outputs, root-list ports and variants
+  qualification. Its fixed-admission diagnostic/caller-purity repair is prepared
+  under `.5.2.1`; fresh observer qualification remains `.5.2.2`, with no feature
+  HDL execution yet. Generated/domain execution remains open. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.
