@@ -35,7 +35,9 @@ sub validate_actor_record_contexts {
                 _assignment($action->[1], $action->[2], $scope, "$context assignment");
             } elsif ($head eq 'pulse') {
                 _scalar_target($action->[1], $scope, "$context pulse target");
-            } elsif ($head =~ /\A(?:trigger|atl_trigger|atl_trigger_batch|priority|store|load)\z/) {
+            } elsif ($head eq 'trigger') {
+                _activation($action, $scope, "$context $head");
+            } elsif ($head =~ /\A(?:atl_trigger|atl_trigger_batch|priority|store|load)\z/) {
                 _unsupported($action, $scope, "$context $head");
             } else {
                 _assignment($head, $action->[1], $scope, "$context assignment");
@@ -84,6 +86,8 @@ sub _clauses {
         } elsif ($head eq 'on') {
             _unsupported($clause->[1], $scope, "$context on trigger");
             _clauses([@{$clause}[2 .. $#$clause]], $scope, $actor, "$context on body");
+        } elsif ($head eq 'spawn' || $head eq 'do') {
+            _activation($clause, $scope, "$context $head clause");
         } elsif ($head eq 'sample' && actor_has_record_input(actor => $actor)) {
             # The ordered sample plan has already validated source paths, roles,
             # private aliases and exact scalar types. Existing source validators
@@ -103,6 +107,54 @@ sub _clauses {
         }
     }
 }
+
+sub _activation {
+    my ($clause, $scope, $context) = @_;
+    my $head = $clause->[0];
+    my $first = $head eq 'spawn' ? 4 : 2;
+    return _unsupported($clause, $scope, $context)
+        unless @$clause >= $first && _identifier($clause->[1])
+            && ($head ne 'spawn' || (defined($clause->[2]) && !ref($clause->[2])
+                && $clause->[2] eq 'as' && _identifier($clause->[3])));
+    # Target/instance, callee formal, parameter key and domain/timing names
+    # are identities. Only actual values inherit the unsupported-record gate.
+    # Complete grammar, endpoint, width and timing admission stay with their
+    # existing owners; malformed/unknown forms retain the conservative scan.
+    for my $option (@{$clause}[$first .. $#$clause]) {
+        unless (ref($option) eq 'ARRAY' && @$option && defined($option->[0]) && !ref($option->[0])) {
+            _unsupported($option, $scope, $context);
+            next;
+        }
+        if ($option->[0] eq 'bind') {
+            for my $entry (@{$option}[1 .. $#$option]) {
+                unless (ref($entry) eq 'ARRAY' && @$entry >= 3
+                    && defined($entry->[0]) && !ref($entry->[0])
+                    && ($entry->[0] eq 'input' || $entry->[0] eq 'output') && _identifier($entry->[1])) {
+                    _unsupported($entry, $scope, $context);
+                    next;
+                }
+                _unsupported($entry->[2], $scope, $context);
+                for my $extra (@{$entry}[3 .. $#$entry]) {
+                    next if $entry->[0] eq 'input' && ref($extra) eq 'ARRAY' && @$extra == 2
+                        && defined($extra->[0]) && !ref($extra->[0]) && $extra->[0] eq 'timing'
+                        && defined($extra->[1]) && !ref($extra->[1]) && $extra->[1] =~ /\A(?:snapshot|live)\z/;
+                    _unsupported($extra, $scope, $context);
+                }
+            }
+        } elsif ($option->[0] eq 'params') {
+            for my $entry (@{$option}[1 .. $#$option]) {
+                _unsupported(ref($entry) eq 'ARRAY' && @$entry == 2 && _identifier($entry->[0])
+                    ? $entry->[1] : $entry, $scope, $context);
+            }
+        } elsif ($option->[0] eq 'domain' && $head ne 'trigger' && @$option == 2 && _identifier($option->[1])) {
+            next;
+        } else {
+            _unsupported($option, $scope, $context);
+        }
+    }
+}
+
+sub _identifier {return defined($_[0]) && !ref($_[0]) && $_[0] =~ /\A[A-Za-z_]\w*\z/;}
 
 sub _drive_body {
     my ($body, $scope, $context) = @_;

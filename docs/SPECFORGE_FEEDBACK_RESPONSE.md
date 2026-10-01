@@ -46,8 +46,9 @@ and book.
   including complete native/API/newline reports, recursive typed child
   declarations and exact clock/reset provenance. Generated/domain contextual
   qualification has verified scalar named-drive selector identity repair under
-  `.60.4.3.2.4.2.2.1`; a false record-read refusal of generated scalar binding
-  formal names is owned next under `.60.4.3.2.4.2.2.2`. Final contextual and
+  `.60.4.3.2.4.2.2.1` and generated scalar binding identity repair under
+  `.60.4.3.2.4.2.2.2`. Contextual refusals and scalar shadows are qualified
+  under `.60.4.3.2.4.2.2`; record binding actuals remain refused. Final
   prior-product closure, backend/native
   execution and consumer signoff remain owned qualification work. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.

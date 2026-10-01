@@ -2912,7 +2912,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Close generated/domain record-input public and refusal qualification.`
   Acceptance: `After .1, compare complete actual native/API/newline check/semantic/schedule products and source preservation for generated/domain sources. Preserve fixed older scalar/storage products and complete carrier controls; qualify foreign reads/copies, input targets and nearest scalar declarations with first-cause diagnostics. Reconcile all generated/domain ownership and carrier evidence, book and canonical feedback before backend/native/consumer .2.5; split prerequisite repairs before mutation.`
-  Verification: `Actual authored carrier qualification and embedded FSM/DT package-context prerequisite are qualified under .1. Next compare complete generated/domain native/API/newline products, prior scalar/storage carriers, contextual refusal matrices and independently expected ownership; then synchronize public closure before .2.5.`
+  Verification: `Actual authored carriers and embedded package context are qualified under .1; accepted full native/API/newline products under .2.1 and complete contextual refusals/scalar shadows under .2.2, including its qualified selector and binding-identity repairs. Next .2.3 closes fixed prior scalar/storage products, complete discovery/current applicability and final generated/domain reconciliation before backend/native/consumer .2.5.`
   Commit: `pending`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3`
@@ -2925,19 +2925,19 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify generated/domain contextual record-input refusals and scalar shadows.`
-  Acceptance: `Use actual authored generated/domain sources to refuse unowned nested/sliced reads, whole copies and input targets with independent contextual causes and complete native/API/newline failure products. Preserve nearest scalar formal/local/drive identities, explicit child bindings and unsupported writer/aggregate boundaries. No partial successful declarations, schedule, semantic or HDL product; exact source/import bytes remain. Own any prerequisite defect before mutation.`
-  Verification: `Accepted full public matrix is qualified under .1. Next authored generated/domain foreign nested/sliced reads/copies and input targets, nearest scalar declarations and explicit writer/binding boundaries must retain independent first causes and full native/API/newline refusal products.`
-  Commit: `pending`
+  Acceptance: `Use actual authored generated/domain sources to refuse unowned nested/sliced reads, whole copies and input targets with independent contextual causes and complete native/API/newline failure products. Preserve nearest scalar formal/local/drive identities, explicit child bindings and unsupported writer/aggregate boundaries. Contextual refusals yield no declarations, schedule, semantic or HDL success; later C2 wiring refusals retain the documented pre-HDL intent preview. Exact source/import bytes remain. Own any prerequisite defect before mutation.`
+  Verification: `Final guarded T2021/T2023 reports All tests successful, Files=2, Tests=14. Complete typed native/API/newline contextual failures and admitted direct/generated scalar shadows, exact carrier/semantic identities, source/package/public producer bytes and caller purity pass. Scalar-selector .1 and binding-identity .2 are repaired and independently falsified against exact committed predecessors. Later unbound C2 output retains only its documented complete intent preview; strict check/semantic refuse. Record binding actuals, input targets, aggregate formals and unsupported writers remain closed. Focused binding/scope/JSON-kind controls Files=6, Tests=267; accepted carriers/selectors Files=2, Tests=12; late malformed numeric/null purity Files=2, Tests=10; runnable book Files=1, Tests=2 and KM pass. Exact prior/discovery closure .3 is next.`
+  Commit: `completed through child .2 in this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Close generated/domain record-input qualification with exact prior controls.`
   Acceptance: `After accepted/refused matrices, requalify complete fixed prior scalar/storage products and carrier/HDL controls under narrowly declared differences, complete discovery/current supported applicability and final combined focused gates. Reconcile every .2.4 acceptance requirement, exact caller/import/type/ownership evidence and canonical feedback/book/Knowledge Map pointers. Close generated/domain frontend/carriers only and resume backend/native/consumer .2.5 with HIAL admission before genuine HDL execution.`
-  Verification: `pending accepted/refused public products`
+  Verification: `Accepted full generated/domain products and contextual refusal/scalar-shadow matrices are committed through .1-.2. Next requalify complete fixed prior scalar/storage report/carrier/HDL controls and all-section native/API/newline discovery/current supported applicability, then reconcile .2.4 acceptance. No new native runtime before HIAL admission.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.1`
@@ -2948,11 +2948,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Keep generated binding formal identities out of actor record-read scanning.`
   Acceptance: `P1 qualification defect: an actual generated worker with scalar input packet width 3 and explicit caller binding (input packet scalar[2:0]) falsely refuses because ISFRecordPortContexts recursively treats the callee formal name as an actor record value. Reproduce the actual authored public refusal, trace the unsupported-context scan and declared binding grammar before mutation, then retain identity positions separately from actual value positions without admitting unqualified record actuals or aggregate formals. Qualify generated scalar shadows, exact private ports/bindings, actual strict carriers and complete native/API/newline products with hostile actual-record reads and caller purity. Finish .1's selector commit first; close parent .2 only after this repair and matrix qualification.`
-  Verification: `Next reproduce the tracked generated scalar formal/binding source, trace declared activation binding roles and repair only identity-as-value scanning. Selector .1 and bounded contextual/public matrix are committed first; parent .2 remains active until generated scalar binding closure.`
-  Commit: `pending`
+  Verification: `Calibrated actual native --strict --check --json first reproduces identity-as-record-read refusal; corrected T2023 is RED only for identity positions while scalar-only activation controls and actual record-value refusals pass. Role-directed activation scanning preserves actual value/profile gates and existing complete grammar/width/timing/domain admission. Exact 85b6fdfb460d93b632be9bfa3da880da83b9d3c8 module capsule remains RED for formal/output/target/instance/static metadata identities with scalar/record-actual controls passing. Final T2021/T2023 Files=2, Tests=14 PASS; late numeric/null malformed purity plus T2018 Files=2, Tests=10 PASS. Literal generated private handoffs, public scalar child HIR/structural ports and all actual strict carriers/full native/API/newline products pass. Prior binding/scope/JSON controls Files=6, Tests=267, accepted T2019/T2022 Files=2, Tests=12, runnable book Files=1, Tests=2, book build and KM pass. Parent .2 closes; next exact prior/discovery .3.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5`
   Status: `pending`
@@ -6593,3 +6593,82 @@ The ordered writer and independent current-surface census both finish with exit
 bytes_total and lines_total constant rows; all other inventory rows are equal.
 This isolates the drift to refreshed capacity inputs. Repeat the same ordered
 refresh after this evidence note, then require staged gate success before commit.
+
+## Binding identity prerequisite `.60.4.3.2.4.2.2.2` — work in flight
+
+Selector commit 85b6fdfb460d93b632be9bfa3da880da83b9d3c8 is clean and its
+normal hooks and standalone staged gate passed before this leaf starts. The
+active leaf owns the P1 false binding-formal record read. R11 type/composition
+requirements, book transaction binding/scoped-formal contracts and the canonical
+formal source-binding/production-scope cards are read. The resolved record
+context gate currently falls through to recursive unsupported scanning for
+transaction spawn/do and rule trigger. Declared activation grammar distinguishes
+target and instance identities, formal-name identities and actual value operands.
+The repair must preserve unsupported record actuals, malformed grammar, widths,
+timing, domain and generated writer ownership. No runtime execution is admitted.
+The initial book search guessed an absent transaction basename; its partial
+results are not evidence. Enumerated 13b-transactions.md supplies the contract.
+
+The first root-test draft gives unused LAT params to local callees, which the
+existing contract correctly refuses. Remove them only from local controls.
+Standalone packet.data and scalar[2:0] binding atoms are also outside the
+published bare signal/literal/list-expression grammar; preserve those grammar
+refusals rather than widening binding syntax. The earlier pending generated
+positive therefore is not a complete admitted-source witness. The calibrated
+root witness uses a three-bit caller scalar and an existing scalar selector
+inside the worker. Nested list record actuals still exercise contextual refusal.
+Actual scalar-only control lowering must pass before product mutation.
+
+Corrected T2023 is RED only for formal/output/target/instance identities; all
+scalar-only activation-family lowerings and actual record-value refusals pass.
+Actual native --strict --check --json returns success=false with first cause
+Invalid ISF record context: transaction 'main' spawn clause does not admit record
+port reference 'packet'. _unsupported is unchanged since its original gate
+introduction in 48da7b698141e13a6c57eddca810a641e0baae9c; parser production
+integration is owned by 0d01ca3fc8f880acf926ae59305843a1172bf1d3. Exact predecessor
+85b6fdfb460d93b632be9bfa3da880da83b9d3c8 module bytes independently match Git
+with SHA256 67abf4f355b0e821e6cde0dfaba3b46ab1df3227a19ba03826becb4b06bbbca3.
+Loading that capsule retains the same identity RED and scalar/record-actual
+controls. No historical public subprocess parity is inferred from the capsule.
+
+The repaired role-directed scan visits actual binding operands and parameter
+values, while target/instance/formal/static metadata identities remain with the
+existing grammar owners. Unknown/malformed forms retain conservative record
+scanning. Initial T2023 and actual native witness pass, then authored parameter
+key/domain/timing identity controls pass. Expanded public products and hostile
+actuals are pending. The book's older storage-path paragraph still blanket-refuses
+aggregate interface ports despite the current admitted record-input section.
+This leaf owns that small stale-contract correction alongside binding examples,
+without changing any output/list/aggregate-formal admission.
+
+- [ ] **ROOT CAUSE (WHY + WHERE)** — pending final calibrated identity/immutable evidence.
+- [ ] **ADDRESSED (verified)** — pending complete actual generated public products.
+- [ ] **NO REGRESSION** — pending expanded contextual, accepted and prior binding controls.
+
+### Verified binding identity prerequisite `.60.4.3.2.4.2.2.2`
+
+Final full T2021/T2023 completes All tests successful, Files=2, Tests=14.
+All actual contextual refusal and direct/generated scalar shadow products pass,
+including complete native/API/newline check/semantic/schedule products and every
+actual strict carrier. Generated packet retains the literal scalar public input
+in both child HIR and structural IR, while the foreign imported actor packet
+retains its independent recursive type/layout/domain. Explicit private caller
+handoff and top connection are qualified independently of transport equality.
+No record root/leaf binding actual, aggregate formal, writer or implicit crossing
+is admitted. Existing later-C2 preview contract remains separate from realized
+strict check/semantic success. Final actual sources/packages/producer bytes and
+complete caller facts stay unchanged.
+
+The final exact predecessor root probe is RED for all selected identity families
+while scalar-only and record-actual controls pass. Its original module bytes
+are verified against Git; it proves root-context behavior, not historical
+subprocess transport equality. Late malformed numeric/null target, instance,
+formal, parameter/domain/timing cases retain complete typed caller facts; the
+expanded T2023 plus T2018 reports All tests successful, Files=2, Tests=10. No
+product code changes follow the full matrix receipt. Read-only process
+inspection confirms the long matrix is running; sandbox ps denial is resolved
+by an authorized read-only process query, with no test retry or stopping.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Corrected pre-product actual native --strict --check --json reports success=false and first cause Invalid ISF record context: transaction 'main' spawn clause does not admit record port reference 'packet'. Calibrated T2023 actual scalar-only local/generated spawn/do/trigger sources lower while record-bearing identity positions fail. _unsupported recursively scans callee formal/target/instance/static metadata names as actor values; git log -L roots the unchanged scan in 48da7b698141e13a6c57eddca810a641e0baae9c and parser integration in 0d01ca3fc8f880acf926ae59305843a1172bf1d3. Exact 85b6fdfb460d93b632be9bfa3da880da83b9d3c8 module bytes match Git and retain identity RED with scalar/actual-record controls passing. Draft unused local params and unsupported standalone slice/member binding atoms are excluded from admission evidence.
+- [x] **ADDRESSED (verified)** — Final guarded T2021/T2023 reports All tests successful, Files=2, Tests=14. ISFRecordPortContexts separates structural activation identities from actual binding/parameter values, retaining conservative malformed/unknown scanning and complete grammar/endpoint/width/timing/domain/writer owners. Actual ordinary/domain/generated controls, exact scalar private handoff/top/child HIR and structural ports, full typed native/API/newline products, contextual first causes and complete source/import/producer/caller purity pass. Book adds a runnable generated scalar/record-name example and corrects the older aggregate-interface blanket refusal to the actual record-output/root-list boundary. Canonical feedback and task frontier close contextual .2 only; final prior/discovery, backend/native and consumer owners remain.
+- [x] **NO REGRESSION** — Prior binding/formal report/scope/context/JSON-kind T1933/T1928/T1961/T1987/T1988/T2018 passes All tests successful, Files=6, Tests=267; accepted generated/domain carriers and selector T2019/T2022 passes Files=2, Tests=12. Expanded late malformed numeric/null purity T2023/T2018 passes Files=2, Tests=10; runnable T1376 passes Files=1, Tests=2 and book builds. Knowledge Map reports knowledge-map: OK. Re-derivation is actual authored public/carrier/semantic evidence and independent literal declarations/physical identities; falsification is exact committed predecessor identity RED, hostile record actuals/metadata and complete independently authored widths/roles; tracked source/tests/book/card, this owner and Git provide durability. Current capacity/claim censuses and staged doctrines must pass before normal hooks/commit. No native HDL runtime, full CI, push or external SPECFORGE modification.

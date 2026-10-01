@@ -131,11 +131,36 @@ subtest 'explicit binding and sole whole writer boundaries remain closed' => sub
         qr/transaction 'worker' port 'payload' references aggregate type/);
 };
 
+subtest 'activation binding values do not inherit record leaf-read permission' => sub {
+    for my $site (qw(spawn local_do generated_do local_trigger generated_trigger)) {
+        my $generated = $site =~ /generated/;
+        my $rule = $site =~ /trigger/;
+        my $local_rule = $site eq 'local_trigger';
+        my $params = $generated ? '(params (LAT 1))' : '';
+        my $ports = '(ports (input payload (width 5))' . ($local_rule ? '' : ' (output result (width 5))') . ')';
+        my $worker = "(transaction worker (domain core) $params $ports (set "
+            . ($local_rule ? 'seen' : 'result') . ' payload) (complete done))';
+        my $bindings = '(bind (input payload (+ packet.payload.data 0))'
+            . ($local_rule ? '' : ' (output result seen)') . ')';
+        my $caller = $rule ? "(rule launch (domain core) start (trigger worker $params $bindings))"
+            : parent($site eq 'spawn' ? "(spawn worker as job $bindings) (await_all done)"
+                : "(do worker $params $bindings)");
+        refuses("record_actual_$site", source($worker . $caller, imported => 1),
+            qr/Invalid ISF record context: (?:transaction 'main' (?:spawn|do) clause|rule 'launch' trigger) does not admit record port reference 'packet.payload.data'/);
+    }
+};
+
 subtest 'admitted scalar formal and drive slices retain exact local physical identities' => sub {
     my $formal = '(transaction main (domain core) (ports (input packet (width 3))) (on start)'
         . ' (set seen packet[2:0]) (complete done))';
     accepts('formal_slice', source($formal, foreign => 1, width => 3, imported => 1),
         qr/isf_port_main_packet\[2:0\]/, 3, 3);
+    my $generated = '(transaction worker (domain core) (ports (input packet (width 5)) (output result (width 5)))'
+        . ' (set result packet[4:0]) (complete done))'
+        . ' (transaction main (domain core) (on start) (spawn worker as job'
+        . ' (bind (input packet scalar) (output result seen))) (await_all done) (complete done))';
+    accepts('generated_formal_slice', source($generated, foreign => 1, imported => 1),
+        qr/\(job_packet 5\)/, undef, 5, 1);
     my $drive = '(drive (publish packet) (whole packet) (seen packet[3:0])) ' . parent('(drive publish scalar)');
     accepts('drive_slice', source($drive, foreign => 1, width => 4), qr/seen>\s+publish_packet\[3:0\]/, undef, 4);
     my $local = parent('(local count (width 3) (default 2)) (set count scalar[2:0]) (set seen count)');
@@ -211,7 +236,7 @@ sub refuses {
 }
 
 sub accepts {
-    my ($name, $text, $identity, $formal_width, $seen_width) = @_;
+    my ($name, $text, $identity, $formal_width, $seen_width, $generated) = @_;
     my $path = fixture($name, $text);
     my $actor = FSM::Adapter::ISF->new->parse_file($path);
     my $before = $json->encode($actor);
@@ -238,6 +263,16 @@ sub accepts {
         "$name foreign record declaration remains only in aux");
     like($owner, qr/\(isf_port_main_packet \Q$formal_width\E\)/, "$name scalar formal width stays independent")
         if defined $formal_width;
+    if ($generated) {
+        my $child = $product->{files}{'contextual_records__domain_core__child_worker.fsm'};
+        like($child, qr/\(input packet\)/, 'generated child retains its authored scalar public input');
+        like($child, qr/\(packet 5\)/, 'generated input keeps its independently declared scalar width');
+        like($child, qr/\(<- \(result> packet\[4:0\]\)\)/, 'generated assignment uses its own scalar input selector');
+        unlike($child, qr/\(packet frame\)/, 'generated child borrows no actor record type');
+        like($owner, qr/\(= \(job_packet> scalar\)\)/, 'caller explicitly feeds only the scalar handoff');
+        like($product->{files}{'contextual_records_top.fsm'}, qr/\(core\.job_packet core__job\.packet\)/,
+            'actual top connects the private caller handoff to the published child formal');
+    }
     my $dir = "$work/$name";
     mkdir $dir or die $!;
     for my $file (sort keys %{$product->{files}}) {
@@ -263,6 +298,16 @@ sub accepts {
         same($json->decode($response->{result}{content}[0]{text}), $response->{result}{structuredContent},
             "$name $kind complete text/structured success equality");
         wire_equal(request($path, $kind), $response, "$name $kind");
+        if ($generated && $kind eq 'semantic') {
+            my $children = $report->{semantic}{forward_ir}{intent_hir}{composition_children};
+            my @child = grep {$_->{instance_name} eq 'core__job'} @$children;
+            is(scalar @child, 1, 'complete semantic product contains exactly the intended generated instance');
+            my $expected = {name => 'packet', direction => 'input', width => 5, signed => 0};
+            same([grep {$_->{name} eq 'packet'} @{$child[0]{intent_hir}{signal_analysis}{inputs}}], [$expected],
+                'entire independently expected generated HIR input has scalar identity');
+            same([grep {$_->{name} eq 'packet'} @{$child[0]{structural_rtl_ir}{ports}}], [{%$expected, type => 'wire'}],
+                'entire independently expected generated structural input has scalar identity');
+        }
     }
     unchanged($path, $text, $name);
 }

@@ -250,6 +250,32 @@ access such as `packet.data` still refuses. The same parameter identity applies
 to an explicitly bound generated invocation and to the drive's owning domain.
 Transaction locals retain their existing interface-name collision refusals.
 
+A generated child's scalar formal can share an actor record input name. In a
+binding, the formal name identifies the callee port; the actual value belongs
+to the caller. The binding below sends `value` to the child's scalar `packet`:
+
+```lisp
+(actor scalar_record_binding
+ (clock clk) (reset (rst_n async active_low))
+ (types (type frame (record (flag bit) (data (bits 5)))))
+ (interface (input start) (input value (width 3)) (input packet (type frame))
+  (output observed (width 3)) (output done))
+ (transaction worker (ports (input packet (width 3)) (output result (width 3)))
+  (set result packet[2:0]) (complete done))
+ (transaction main (on start)
+  (spawn worker as job (bind (input packet value) (output result observed)))
+  (await_all done) (complete done)))
+```
+
+The child keeps its scalar public port and selector. The actor record keeps its
+own type, width and domain; no automatic record connection is added. Transaction
+targets, instance labels and static parameter/domain/timing names also retain
+their identity roles. Existing endpoint, width, timing and domain checks still
+apply. This does not admit record input roots or field reads as binding actuals:
+`(input packet actor_record)` and `(input packet (+ actor_record.data 0))` remain
+refused. Bare slices are outside the existing signal/literal/list-expression
+binding grammar; this repair does not introduce another binding form.
+
 Rejected check and semantic queries retain their complete failure reports and
 nullable diagnostic codes, without successful declarations or partial semantic
 payloads. Schedule failure emits no schedule JSON. Its API and newline transport
@@ -466,7 +492,7 @@ record/list fail before lowering.
 | Named drive-call expression operand | `(drive publish (+ frame.mode mode_in))` | Aggregate leaf is valid as a scalar operand. |
 
 Aggregate paths in expression operator position remain rejected. Subaggregate
-operands, subaggregate updates, whole-record/whole-list truthiness, aggregate
+operands, subaggregate updates, whole-record/whole-list truthiness, record-output and root-list
 interface ports, transaction-local aggregate ports, aggregate storage banks,
 aggregate field/slice/update lowering beyond scalar leaves, and broader shape
 inference remain backlog.

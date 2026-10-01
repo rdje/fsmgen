@@ -287,6 +287,11 @@ automatic same-name wiring does not add a second driver. The actor pin remains
 separate. See [Composition](13f-composition.md#spawn-child-as-name--parallel-fork)
 for a complete example.
 
+A callee formal name in `(bind ...)` is an identity, including when it shares an
+actor record input name. The caller actual still follows the admitted scalar
+binding contract. See the [record-input binding example](13j-type-enum-aggregate.md)
+for the separate actor and child declarations.
+
 Local rule triggers bind transaction inputs only. Generated/parameterized rule
 triggers also support scalar output bindings through completion-qualified
 handoffs. `do` and the shipped spawn path retain their documented output timing.
