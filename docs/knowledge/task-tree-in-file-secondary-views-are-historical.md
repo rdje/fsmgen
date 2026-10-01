@@ -8,10 +8,11 @@ answers:
   - "how does PNT select the next leaf?"
   - "why is the ## Current Frontier table in IAL2-FEATURE-COMPLETENESS-FRONTIER.md stale?"
   - "how can I retrieve the former completed task-tree index?"
-date: 2026-07-12
+  - "is the semantic task tree Current Frontier prose a live resume source?"
+date: 2026-10-01
 status: current
 tags: [task-tree, continuity, convention, frontier, pnt, decision-0019]
-evidence: docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md; docs/TASK_TREE.md; docs/tasks/TEMPLATE.md; docs/tasks/TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
+evidence: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md; docs/TASK_TREE.md; docs/tasks/TEMPLATE.md; docs/tasks/TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
 reverify: (scripts/decision_records.py read 0019 0042 && cat docs/TASK_TREE.md docs/tasks/TEMPLATE.md) | rg -n 'node list|sealed segments|optional historical|decision 0019|0042'
 ---
 
@@ -53,3 +54,10 @@ the node list + git and carry nothing unique (the `0007` re-narration
 anti-pattern); retiring makes drift structurally impossible with no generator or
 doctrine check to maintain. Owner: `TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION`
 (`done`).
+
+SEMANTIC-INTROSPECTION-MCP-FRONTIER.63 retires its unlabelled historical
+Current Frontier prose with exact retrieval from
+49ef15cba77bdb8572beb079a1a3e81bfa04a85e:docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md.
+Its authoritative nodes/index already had the correct statuses. The retirement
+adds no second live projection or per-slice maintenance obligation. The live
+node list, cross-tree index and bounded Memory pointer remain resume sources.

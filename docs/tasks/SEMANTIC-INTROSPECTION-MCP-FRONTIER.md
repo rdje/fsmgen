@@ -2986,10 +2986,10 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify a fixed failure-only observer for the direct packed-input test.`
   Acceptance: `After .1 commits, bind only its exact maintained target/fixture/producer identities through a new exclusive admission. Consume the committed native/failure-only witness and preserve original arguments, returns, errno, bounds, capture gaps and cleanup. Independently qualify silent success, controlled real rejection, diagnostic gaps, source drift, wrong targets and reused captures before genuine HDL use. Existing archived observer admission and receipts remain immutable. Link HIAL .3.2.10.11.5 ownership; no actual feature HDL execution in observer qualification.`
-  Verification: `pending fixed prepared target`
+  Verification: `Fixed T2024/source/public-pin bench and static signed/state/layout/emission controls are committed at 49ef15cba77bdb8572beb079a1a3e81bfa04a85e. Read and qualify a new exact failure-only observer admission for that target, preserving archived controls and original native bounds/results. No genuine feature HDL execution until this integration commits.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.3`
@@ -3718,6 +3718,13 @@ before editing code. No discovered defect is closed by this audit alone.
   Verification: `Parser closes reset arity and options while retaining explicit sync, suffix inference, modifier order and undefined Lispish tails. A late public probe exposed authored () collapsed to undef by own normalization; reset payload normalization now preserves empty lists for rejection, without changing other contexts. Final T1979 Files=1, Tests=3 PASS; normalizer/storage/output/timing/provenance regressions Files=10, Tests=43 PASS, including complete unchanged valid-source carriers and HDL. Ordinary/strict native check and semantic failures, API/newline equality and schedule refusal qualify the fix; no simulator executed. Historical singleton-tail handling at 8dc7bb3d6f262be760bbe11ca1ec968bf6bdd792 is preserved. Lossless red/intermediate/final logs, public AST cause capture and exact identities: docs/audits/isf-reset-grammar-20260930/. Book/spec/downstream and canonical fact align; .60.3.4 is next.`
   Commit: `this commit`
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.63`
+  Status: `done`
+  Goal: `Retire misleading historical resume prose without backfilling a duplicate frontier.`
+  Acceptance: `P2 discovery ambiguity: the optional Current Frontier narrative appears current and names an obsolete next leaf. Decision 0019 and the canonical secondary-view fact explicitly make it historical; the authoritative nodes/index are correct. After .60.4.3.2.5.1 commits clean, retire only that unlabelled duplicate prose with exact committed retrieval and a historical stamp pointing to live sources. Do not backfill a second frontier. Preserve every node and active dependency, verify exact old narrative retrieval and unchanged node contracts, sync current pointers and commit before .2.5.2. No production change or new delivery claim.`
+  Verification: `Exact 49ef15cba77bdb8572beb079a1a3e81bfa04a85e narrative names completed frontend refusals as next; the actual nodes and index are correct. Decision 0019 explicitly makes the secondary view historical, so no node-status defect or per-slice backfill requirement is inferred. Only that unlabelled prose is retired behind exact Git retrieval; .63 moves into the live node list. Independent exact predecessor/node-contract and historical-text verification passes; task-tree integrity reports all active task-tree invariants hold. Active index and Memory advance to the prepared direct target fixed-observer .60.4.3.2.5.2; book/canonical feedback already state its correct unexecuted scope.`
+  Commit: `this commit`
+
 ## Reset question scope disposition
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.61`
@@ -3729,40 +3736,14 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.63`
-  Status: `active`
-  Goal: `Repair the stale narrative resume frontier after direct witness preparation.`
-  Acceptance: `P2 documentation defect: the Current Frontier prose still names .60.4.3.2.3.6.2 as next although the live nodes and canonical SPECFORGE response qualify frontend closure and generated/domain .2.4. Reproduce by comparing this block with its exact node statuses and docs/TASK_TREE.md active row. After .60.4.3.2.5.1 commits clean, replace the obsolete narrative with a bounded pointer to current .2.5 and its fixed-observer next action, preserving separately owned pending/blocked dependencies. Verify all named frontier statuses against current nodes, sync Memory/book as needed and commit before .2.5.2. No production change or new delivery claim.`
-  Verification: `Scheduled next after the current static witness slice; rg finds the obsolete next .6.2 sentence in Current Frontier while .3.6 and .2.4 nodes are done.`
-  Commit: `pending`
+Historical convenience view, retired under decision `0019`. Its former prose is
+retrievable exactly from Git; it is not the live frontier and is not backfilled.
+Read the eligible leaf nodes above, `docs/TASK_TREE.md`, and the bounded
+`MEMORY.md` pointer for current work.
 
-Formal identity integration and its family qualification are complete under
-`.49.2.2`; the live node records above carry exact status and evidence.
-Local rule snapshots are qualified under `.32.1.3.3.1.3.2`. Stale named-drive
-verification facts are repaired under `.57`. After the qualified strict
-reset-token repair `.62`, `.60.3.4` closes the SPECFORGE reset question. The
-duration and named-timer baselines `.60.1.1` and `.60.2.1` are qualified.
-Aggregate intake `.60.4.1` is also qualified. Required scalar storage access `.38.1` is qualified. Domain storage details `.38.3` are also qualified. Decision 0113 selects bounded record-port delivery. Actual scoped contextual/enum/root preparation `.60.4.3.2.3.2` is qualified. Scalar-leaf sample facts `.60.4.3.2.3.3.1` are qualified. Contextual explicit sampling, private module carriers and actual helper/writer ownership are qualified under `.60.4.3.2.3.3.2`. Complete replay and existing capture-state preservation are qualified under `.60.4.3.2.3.3.3`. Record/formal domain roots and existing drive ingress repairs are qualified under `.60.4.3.2.3.4.2`. Unused named-drive domain carrier leakage is repaired under `.60.4.3.2.3.4.3`. Prepared parser/module gates are integrated under `.60.4.3.2.3.5.1`. Bounded authored record inputs are admitted under `.60.4.3.2.3.5.2`. The exact decision identity/cardinality audit `.51.3.1` is qualified. Reader/authority prerequisites and hostile-mode qualification are complete. Atomic real-source rollover `.51.3.2.3` is committed. Feedback/book status is synchronized under `.51.3.3.1.1`. Complete fixed-commit consumer/question closure `.51.3.3.1.2` is qualified. Positive production growth `.51.3.3.2.1` is qualified. RAM-guard stdin loss is repaired under `.51.3.3.2.4`. Malformed production products are qualified under `.51.3.3.2.2`. Published floors are qualified under `.51.3.3.2.3`. Rollover `.51` is closed. Accepted public sources `.60.4.3.2.3.6.1` and imported alias repair `.1.1` are qualified; next `.6.2` completes public refusals before `.6.3` frontend closure; duration and timer contracts remain owned, and
-optional banks `.38.2` follow the required SPECFORGE features. The resource activation validator is qualified; target-local priority
-`.32.1.3.3.1.3.3.2.2.3.2.2.2.2.3.2.3` remains a writer prerequisite,
-with complete observed priority repair qualification,
-after literal-guard repair and independently retained runtime qualification, after
-exact named-drive invocation sources, following
-source identities, declaration and implicit whole-root qualification, following
-the physical target resolver and retained admission baseline. Conservative admission precedes independent controllers and local-call
-timing under the following sibling leaves. `.49.2.3` qualifies direct-call runtime;
-`.49.3` owns explicit-local physical scope. These remain prerequisites to execution promotion. Decision 0109 narrows the
-former blanket dependency on passive metadata: scalar access `.38.1` proves
-unchanged hardware; domain detail `.38.3` is qualified and optional banks `.38.2` remain owned.
-
-Remaining partial/bank/competing writer work is under `.39.2.2.4.3` onward;
-watchdog rearming is `.32.1.3.3.3` and broad behavior/API/MCP signoff is
-`.32.1.3.3.2`. `.50` retains the MCP response gap. Bundle provenance and
-executable interconnect are `.32.2` and `.32.4`; later actor checks, knownness,
-phase and generic-width/optional-port work follows the dependencies recorded in
-`.33` and `.32.3`. Full-source API coverage and historical native qualification
-remain open. Preserve spent compiler/startup evidence; current runtime passes
-do not close the separately tracked containment occurrence.
+```sh
+git show 49ef15cba77bdb8572beb079a1a3e81bfa04a85e:docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+```
 
 ## Version-Retrievable Historical Views
 
@@ -6916,3 +6897,46 @@ in their task nodes and keep debt classification/ceilings unchanged. Task
 acceptance, inventory and every other staged doctrine pass in that failed run;
 the failed aggregate is not commit qualification. The corrected standalone
 gate must finish successfully before normal hooks.
+
+## Historical secondary-view disposition `.63`
+
+Direct witness preparation 49ef15cba77bdb8572beb079a1a3e81bfa04a85e is committed
+clean with both doctrine gates passed and brief empty. Initial review found
+Current Frontier naming .3.6.2 as next despite its done node. Canonical Knowledge
+Map query stale returns task-tree-in-file-secondary-views-are-historical.md;
+exact decision 0019, docs/TASK_TREE.md and TEMPLATE.md explicitly make this view
+an optional historical snapshot. The nodes/index were already correct. Therefore
+retire the unlabelled duplicate prose with exact predecessor retrieval rather than
+backfilling another status projection. The initial inferred requirement to keep
+it current is withdrawn. Its owning .63 node moves above the historical view.
+
+The task records remain authoritative; active index/Memory point to fixed
+observer .60.4.3.2.5.2. The existing book and canonical SPECFORGE feedback accurately
+retain prepared/unexecuted direct input behavior, open output/duration/timer and
+consumer work. No user-visible feature or runtime claim changes. Exact Git
+retrieval preserves the removed narrative; independent node/byte comparisons,
+hostile preservation controls and task-tree integrity qualify this retirement.
+
+The independent preservation result is .artifacts/semantic-secondary-view-qualified.json.
+It verifies the complete exact predecessor node set and byte-identical node
+contracts except the explicitly owned .63 disposition and .2.5.2 activation.
+Missing, changed and added-node controls are rejected. The exact former view
+SHA256 is 154d06c16fbbf615545956f55de4f738587c6805db22d81de98aab2c5e28422c;
+its committed retrieval/stamp and a hostile missing-reference control pass.
+Production and test Git bytes are unchanged. Task-tree integrity reports all
+active task-tree invariants hold; map generation and final map check accompany
+the commit. Re-derivation uses canonical decision 0019 plus exact predecessor/
+current node and text reads; falsification uses independent missing/changed/
+extra node and reference mutations; tracked node/card/pointer and the exact
+Git object provide durability. No new status projection, source/test change,
+HDL execution, full CI, push or external write occurs.
+
+The first standalone gate passes every doctrine except TASK-ACCEPTANCE:
+capacity/inventory data paths are declared implementation paths and require
+fresh box-scoped evidence even in this prose-only retirement. Preserve that
+gate, add this slice's actual diagnosis/qualification evidence below, refresh
+capacity then inventory, restage and require the complete gate before commit.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S for the exact next .6.2 phrase records its historical introduction; exact predecessor 49ef15cba77bdb8572beb079a1a3e81bfa04a85e retains that optional narrative beside already-correct done frontend/generated nodes. Canonical decision 0019 explicitly rejects per-slice backfill and makes the view historical. The misleading unlabelled secondary prose is the locus, not the authoritative node graph. The initial backfill inference is withdrawn. The staged gate additionally identifies doctrine/live_document_size/surfaces.jsonl and doctrine/claim_verification/inventory.jsonl as configured implementation paths requiring these fresh boxes; no acceptance exemption or policy change is applied.
+- [x] **ADDRESSED (verified)** — Only the historical narrative is retired with its exact committed retrieval and historical stamp; the .63 node moves into the authoritative node area. Independent Git/byte/node verification preserves the exact complete node set and all contracts except the owned .63 disposition and .2.5.2 activation. Missing/changed/extra node and reference mutations are rejected. The exact former view digest is retained above, with unchanged production/test bytes. Active index/Memory advance to the fixed observer; book/canonical feedback already state the correct prepared/unexecuted scope. Capacity ratchets and inventory remain independently regenerated under unchanged limits.
+- [x] **NO REGRESSION** — Task-tree integrity reports all active task-tree invariants hold, and knowledge-map: OK verifies complete generated query parity. Independent exact node/text preservation and hostile missing/changed/extra/reference controls pass; production/test Git diff is empty. Re-derivation uses canonical decision 0019 and exact committed/current data; falsification uses independent hostile node/reference mutations; tracked node/card/pointer and exact predecessor Git object provide durability. The corrected complete staged doctrine gate and normal hooks remain required; the first acceptance-only failed aggregate is excluded. No code behavior, native HDL execution, full CI, push or external repository changes.
