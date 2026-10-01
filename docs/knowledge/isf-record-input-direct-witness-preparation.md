@@ -39,6 +39,6 @@ X/Z semantics. Generated/domain execution and backend/input completion remain
 Actual source/semantic/carrier/emitted products re-derive the prepared structure;
 independent literals and actual authored counterexamples provide structural
 falsification. Tracked source/bench/test, this fact, task nodes and Git provide
-durability. Runtime re-derivation and behavioral falsification are explicitly
-pending the separate observation slices. The reverify command checks preparation
+durability. Runtime re-derivation and behavioral falsification are separately qualified
+under .5.3; see docs/knowledge/isf-record-input-direct-runtime.md. The reverify command checks preparation
 only unless a genuine runtime has its separately qualified admission.

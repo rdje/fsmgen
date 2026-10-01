@@ -35,8 +35,10 @@ verification qualify the corrected integration under .5.2.2 / HIAL .11.5.1.
 Exact stderr, fixed admission refusals, original result/argument/bound/native
 context/errno preservation, explicit modeled gaps and independent captured
 PID/group absence pass. Hostile saved mutations reject. Genuine direct HDL
-execution remains .5.3. No public wire/supervisor defect,
-feature runtime signoff or historical EPERM repair follows. Actual saved
+execution is separately qualified under .5.3; see
+docs/knowledge/isf-record-input-direct-runtime.md. Observer qualification alone
+does not establish a public wire/supervisor defect, feature runtime signoff or
+historical EPERM repair. Actual saved
 receipts and caller serialization re-derive these facts; warning-only removal,
 hostile saved controls and the actual-before implementation falsify weaker
 claims. Tracked sources, RED/final receipts, tests, task and Git provide durability.

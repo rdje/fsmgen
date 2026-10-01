@@ -1,0 +1,63 @@
+docs/audits/record-input-observer-corrected-20261001/observe.t .. 
+# Subtest: fixed authored behavior witness preserves literal layout and carrier edges
+    ok 1 - entire packed declaration is independently authored
+    ok 2 - lowering preserves complete caller JSON kinds
+    ok 3 - direct witness produces exactly one carrier
+    ok 4 - record remains a single typed input
+    ok 5 - entry sample has its explicit start-qualified registered leaf capture
+    ok 6 - whole copy preserves its authored assignment
+    ok 7 - later scalar read remains live
+    ok 8 - sample alias adds no public pin
+    ok 9 - actual authored native semantic query succeeds
+    ok 10 - semantic report records complete source success
+    ok 11 - native source declaration matches the independently checked literal
+    ok 12 - systemverilog emits actual authored source
+    ok 13 - systemverilog exposes exactly one typed packed record pin
+    ok 14 - systemverilog complete authored packed type preserves field order and leaf properties
+    ok 15 - systemverilog adds no scalarized field pins
+    ok 16 - systemverilog private sample preserves signed scalar declaration
+    ok 17 - verilog emits actual authored source
+    ok 18 - verilog exposes exactly one typed packed record pin
+    ok 19 - verilog complete authored packed type preserves field order and leaf properties
+    ok 20 - verilog adds no scalarized field pins
+    ok 21 - verilog private sample preserves signed scalar declaration
+    1..21
+ok 1 - fixed authored behavior witness preserves literal layout and carrier edges
+# Subtest: independent metadata rejects equal-width layout and leaf-property corruption
+    ok 1 - unsigned changes exactly its selected authored property
+    ok 2 - unsigned keeps the same packed width
+    ok 3 - unsigned actual parsed declarations fail the unchanged independent literal witness
+    ok 4 - deliberately unsigned source emits through the actual backend
+    ok 5 - data_state changes exactly its selected authored property
+    ok 6 - data_state keeps the same packed width
+    ok 7 - data_state actual parsed declarations fail the unchanged independent literal witness
+    ok 8 - flag_state changes exactly its selected authored property
+    ok 9 - flag_state keeps the same packed width
+    ok 10 - flag_state actual parsed declarations fail the unchanged independent literal witness
+    ok 11 - reordered authored members keep the same packed width
+    ok 12 - actual reordered declarations fail the unchanged independent layout witness
+    1..12
+ok 2 - independent metadata rejects equal-width layout and leaf-property corruption
+# Subtest: genuine public-pin behavior requires separate native observation admission
+    ok 1 - systemverilog fixed public-pin bench builds
+    ok 2 - systemverilog independent packed-input oracle passes
+    ok 3 - systemverilog completes PACKED_REPEATED_REQUEST_PASS
+    ok 4 - systemverilog completes PACKED_RESET_ABORT_PASS
+    ok 5 - systemverilog completes PACKED_INPUT_RUNTIME_PASS
+    ok 6 - systemverilog completes every independent request lap
+    ok 7 - verilog fixed public-pin bench builds
+    ok 8 - verilog independent packed-input oracle passes
+    ok 9 - verilog completes PACKED_REPEATED_REQUEST_PASS
+    ok 10 - verilog completes PACKED_RESET_ABORT_PASS
+    ok 11 - verilog completes PACKED_INPUT_RUNTIME_PASS
+    ok 12 - verilog completes every independent request lap
+    ok 13 - same-width unsigned counterexample builds
+    ok 14 - public-pin oracle rejects the deliberately lost signed property
+    1..14
+ok 3 - genuine public-pin behavior requires separate native observation admission
+ok 4 - complete source, bench and named production/supervision bytes remain unchanged
+1..4
+ok
+All tests successful.
+Files=1, Tests=4, 18 wallclock secs ( 0.01 usr  0.00 sys + 14.12 cusr  2.32 csys = 16.45 CPU)
+Result: PASS

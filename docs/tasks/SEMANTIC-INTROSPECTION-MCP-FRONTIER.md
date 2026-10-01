@@ -2974,7 +2974,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Qualify packed input behavior and complete public delivery.`
   Acceptance: `After source/carrier qualification, consume current HIAL admission before genuine supervised native runtime. Independently observe packed layout, scalar signed/state properties, live versus explicitly sampled reads, whole-copy edge, holds, repeated requests and reset/domain behavior. Compare complete native/API/actual newline source/schedule/semantic/discovery products, supported corpus and baseline carriers/HDL. Keep unsupported profiles precise and synchronize all selected requirements/book/records; close input delivery only with recoverable behavior evidence.`
-  Verification: `Frontend and generated/domain source/carrier/public qualification are committed through .3-.4. Next read and consume HIAL .3.2.10.11.5 failure-only observation admission, review selected backend/native requirements and plan the smallest genuine packed-input behavioral witness before any runtime mutation/execution. Historical EPERM remains separately owned; do not replay spent compiler captures.`
+  Verification: `Frontend and generated/domain source/carrier/public qualification are committed through .3-.4. Direct packed-input runtime .5.3 is qualified with recoverable sealed evidence. Next prepare generated/named-domain .5.4, consuming newly scheduled HIAL .3.2.10.11.6 before its different target executes. Historical EPERM remains separately owned; do not replay spent compiler captures.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5`
 
@@ -3008,11 +3008,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Observe and qualify genuine direct packed-input runtime behavior.`
   Acceptance: `After .1-.2 commit, execute the actual direct test under its freshly qualified failure-only observer. Independently observe both emitted Verilog families through public pins, complete unchanged stage results, exact source/producer identities and cleanup. Stop and own any native or HDL failure before further execution. Retain recoverable outcomes and hostile saved-record verification. Binary-valued execution does not establish four-state X/Z semantics or historical EPERM repair.`
-  Verification: `pending qualified observer`
-  Commit: `pending`
+  Verification: `Fresh exclusive record_input_direct_oct01 runs actual T2024 with the committed qualified fixed observer. Both emitted Verilog families pass the independent public-pin bench, three request laps, entry sample/live/whole-copy edges, held reset/prior values, idle holds and reset/abort. The actual same-width unsigned source compiles and reaches PACKED_SIGNED_MISMATCH with nonzero exit, preserving all original stage arguments/results/bounds. Full TAP reports All tests successful, Files=1, Tests=4, with no skipped runtime. Sealed independent verification authenticates all six receipts, exact admitted/extra producer Git blobs and before/after identities, empty native events/diagnostic gaps and saved hostile controls. Independent workspace/selected-command census is absent; successful-child native PID identities are deliberately uncaptured. Source/test/bench/observer/supervisor remain unchanged. Evidence is docs/audits/record-input-direct-observation-20261001/. Binary-valued execution leaves X/Z and historical EPERM causality unproved; generated/domain execution remains .5.4.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4`
   Status: `pending`
@@ -3834,7 +3834,7 @@ Preserve spent compiler/startup evidence and the resume pointer's audit capture.
 
 Current record-input generated/domain source/carrier/public qualification and
 the fixed failure-only observer integration are complete. Genuine direct HDL
-behavior, generated/domain execution, backend/input completion, record outputs
+behavior is qualified under .5.3; generated/domain execution, backend/input completion, record outputs
 and full consumer signoff remain their own live leaves. The canonical response
 is docs/SPECFORGE_FEEDBACK_RESPONSE.md. Binary-valued execution cannot establish
 four-state X/Z behavior, and no historical native EPERM repair is claimed.
@@ -3865,3 +3865,39 @@ execution, native retry, host-protection/privilege change, full CI or push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S locates the former Decisions rollover in 29ab49f217a82bacdd1ac83a8bcf2b687996f3ed; current accumulated closed acceptance is the scaling term approaching the unchanged milestone. Committed b2669c3fafe36b40f8f1897f48a954dcbf94a9bb supplies the legal unique boundary while every authoritative node and active native/feature limit precedes it. Exact source/suffix and old manifest retrieval establish the bounded retirement locus without changing the checker or policy.
 - [x] **ADDRESSED (verified)** — The existing single-record manifest authenticates the complete predecessor and closed suffix with unchanged registry bounds and retention contract. Independent Python and Perl digest/dimension census agree. Every original node contract remains byte-identical except owned .64/.2 dispositions; prior manifest/source chain, active contracts and spent native evidence remain available. Actual correct-rollover fixture passes and corrupt source/suffix, string dimension, missing boundary, displaced pointer and changed-contract controls reject. Only closed optional prose is retired.
 - [x] **NO REGRESSION** — Actual task-tree integrity reports all active task-tree invariants hold; independent full source/suffix/chain/node reconstruction and actual hostile checker controls pass. Product/test/checker and original/corrected observer/registration audit diffs are empty; removed-anchor consumer census is empty. Re-derivation uses exact Git objects plus distinct Python/Perl census and full original-node comparison; falsification uses real corrupted digest/dimension/boundary/pointer and changed-contract controls; tracked bounded manifest, authenticated audit, original retained Git objects, nodes/fact/book/pointer provide durability. The actual Knowledge Map check reports knowledge-map: OK and the book builds; staged doctrines remain required before normal hooks. No feature/native execution, other repository write, ceiling change, full CI or push.
+
+
+## Genuine direct record-input observation `.60.4.3.2.5.3`
+
+The clean committed qualified observer and .64/.65 continuity prerequisites
+are consumed. Exact admission predeclares the three compile/runtime pairs.
+Actual SystemVerilog and Verilog-family public-pin behavior passes every
+literal bench vector and marker, including repeated requests and asynchronous
+reset/abort; the intentionally unsigned same-width source reaches the expected
+signed-property assertion. No unplanned native rejection occurs. Full stage
+arguments/results, TAP/stdout/stderr, source/test/bench and admitted plus extra
+producer Git identities are sealed in the observation archive. Generated HDL
+and binaries follow normal temporary cleanup. Independent process/workspace
+census finds no selected residue; successful-child PID identities were not
+captured by the failure-only native hook. This is the precise artifact limit.
+
+Re-derivation consumes actual complete stage receipts and exact Git blobs.
+Falsification includes the actually compiled unsigned source and detached
+hostile saved records for bounds, markers, cleanup, assertions, target, drift,
+gaps, native events and negative result kinds. The immutable manifest/archive,
+fixed source/bench/test, task nodes, fact/book/response and Git provide durability.
+The first staged doctrine run rejects the new numeric book rows for missing
+claim dispositions. Their independent literal-vector watcher also exposes an
+unsigned display of the signed prior-held reset member: bits 10010 represent
+-14 in this signed field. Correct signed table values, actual saved bench-word
+and expected-literal derivation, and hostile wrong-value/missing-row controls
+repair that P2 documentation defect within this owner; no HDL rerun is needed.
+Explicit three-leg dispositions and the tracked watcher complete publication.
+Four-state declarations have structural witnesses; binary Verilator values do
+not establish X/Z behavior. Historical native causality remains P1-open, with
+HIAL .11.6 scheduled before generated/domain runtime. No external repository,
+submodule pin, original supervisor/observer, host protection or CI/push change.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual --emit-semantic-json and scheduled carrier checks bind the authored nested packed input and scalar leaf declarations to the independently literal test/bench. Source/carrier admission alone left direct runtime behavior unqualified. The fresh exact observer admission executes the real T2024 target; saved original results identify both positive targets and the deliberate unsigned PACKED_SIGNED_MISMATCH at tb.sv line 45.
+- [x] **ADDRESSED (verified)** — Actual native HDL execution passes both emitted families, all literal entry/copy/live/reset/prior/hold vectors and complete request markers. The same-width unsigned authored property counterexample fails the unchanged public-pin predicate. Sealed independent verifier authenticates exact stage order/coverage, unchanged source/producer identities, original limits/arguments/results and cleanup and rejects corrupted saved evidence. Native events and diagnostic gaps are empty; historical EPERM remains unresolved.
+- [x] **NO REGRESSION** — The genuine guarded T2024 observation reports All tests successful, Files=1, Tests=4 with runtime enabled and no skips; independent saved verification passes, exact production/test/bench/observer/supervision identities match before/after and every stage retains original cleanup. Focused T2024/T1994/T2018 and actual runnable-book T1376 pass All tests successful, Files=4, Tests=15 with this separate static T2024 runtime deliberately skipped. Actual task-tree integrity passes and Knowledge Map reports knowledge-map: OK; book build and staged doctrines complete before normal commit hooks. No broader profile or X/Z signoff is inferred.

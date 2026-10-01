@@ -302,13 +302,28 @@ includes current catalog declarations, full discovery, contextual refusals and
 fixed scalar/storage compatibility controls. Affected backend profiles, packed
 input behavior in native HDL execution and supplied consumer signoff remain
 separate qualification work.
-The direct public-pin behavioral witness is prepared and statically checked for
-packed layout, entry sampling, live reads, whole-copy timing, held values and
-reset. Its fixed observer integration is qualified through fresh finite native
-controls and complete independent saved verification. Genuine feature HDL
-execution remains pending; the observer preserves original stage results,
-bounds and explicit diagnostic gaps.
-Binary-valued Verilator execution will not establish four-state X/Z behavior;
+The direct public-pin behavioral witness is executed and qualified for both
+emitted Verilog families. It checks packed layout, entry sampling, live reads,
+whole-copy timing, held values, idle holds, repeated requests and asynchronous
+reset/abort. Its independently authored
+[source](../../../t/data/isf_record_input_runtime.isf) and
+[bench](../../../t/data/isf_record_input_runtime_tb.sv) change the input around
+public phase outputs. The data member is signed and five bits wide:
+
+| Request | Entry-sampled data | Whole-copy data | Later live data | Prior held data |
+| --- | ---: | ---: | ---: | ---: |
+| First | 7 | -13 | -3 | -14 |
+| Repeated | -2 | 9 | 5 | -13 |
+| After reset/abort | 3 | -8 | -15 | -14 |
+
+These independent literals distinguish each read/copy edge; outputs retain
+their assigned values while idle. An actually compiled source with the same
+width but an unsigned data member reaches the bench's signed-comparison
+rejection. Complete original stage results, source identities, bounds and
+cleanup are retained in the
+[sealed observation](../../../docs/audits/record-input-direct-observation-20261001/manifest.json).
+Generated/domain execution and backend/input completion remain separately open.
+Binary-valued Verilator execution does not establish four-state X/Z behavior;
 signed/state declarations and execution claims are qualified separately.
 See [0113](../../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md#authored-record-input-admission--2026-09-30)
 and [declared interface metadata](13a-actor-interface.md#declared-interface-metadata).

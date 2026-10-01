@@ -55,8 +55,13 @@ and book.
   and consumer signoff remain `.60.4.3.2.5`. Its direct public-pin witness is
   prepared under `.5.1`. Corrected fixed observer qualification `.5.2` is
   complete, including fresh finite native controls and sealed independent
-  verification. Genuine direct HDL execution remains `.5.3`; no feature
-  runtime signoff is claimed yet. Generated/domain execution remains open. Record outputs, root-list ports and variants
+  verification. Genuine direct HDL behavior is qualified under `.5.3`: both emitted
+  Verilog families pass entry/live/whole-copy, repeated-request and reset/abort
+  public-pin checks; an actually compiled unsigned property counterexample
+  reaches the expected signed mismatch. Complete sealed evidence is in
+  `docs/audits/record-input-direct-observation-20261001/`. Binary execution
+  does not establish X/Z behavior or historical native causality. Generated/domain
+  execution `.5.4` and backend/input completion `.5.5` remain open. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

@@ -1888,7 +1888,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `P1 follow-up for the original unexplained pre-exec failures. Before the next roadmap slice genuinely needs supervised HDL runtime, consume the committed failure-only qualification and own a fixed bounded observer integration for that selected test. Preserve original arguments/results/limits, parent race closure and admission; retain source identities, explicit capture errors, native failure context and exact cleanup. Attribute only a captured mechanism joined to the failed child; qualify a repair with independent controls before closing causality. A pass leaves the historical defect open and schedules the next normal opportunity. Do not launch originals merely to obtain recurrence, enable probes, ask for authentication or change host protections. Independent non-runtime feature work may proceed; historical startup/full-CI qualification remains separate.`
   Verification: `Scheduled before the next genuine supervised HDL runtime, using docs/audits/native-group-witness-20260927/failure-only/ at 0881d31cc73e32683a09920041a2085e33974ed2. Historical cause remains missing; no finite successful control can recover the reaped child's session.`
   Commit: `pending observed causal evidence and repair`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.1`
   Status: `done`
@@ -1918,11 +1918,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit with SEM runtime qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5`
-  Status: `active`
+  Status: `done`
   Goal: `Own native causal observation at the next genuinely required roadmap runtime.`
   Acceptance: `Before a selected roadmap leaf needs supervised HDL runtime, identify its exact fixed target and qualify any required observer integration separately using the committed failure-only witness. Existing T1974 admission cannot authorize a different target. Preserve original limits/arguments/results and native return/errno, retain query/capture gaps and source identities, and independently check cleanup. Diagnose captured rejection before further execution; a pass leaves historical causality open and schedules its next normal opportunity. No host-protection change, privilege request or recurrence-only original retry.`
-  Verification: `SEM .60.4.3.2.5.1 commits the fixed T2024 packed-input source/public-pin bench and static controls; .5.2 qualifies and seals the new exact observer using committed failure-only/native witnesses. Child .1 is done; child .2 and SEM .5.3 own genuine HDL observation after the bounded history prerequisite. Historical native cause and original startup/full-CI remain separate.`
-  Commit: `pending`
+  Verification: `Fresh exact record_input_direct_oct01 admission completes all three compile/runtime pairs under the qualified fixed observer. Both positive targets pass; the deliberately unsigned property reaches the expected public-pin rejection. Native failure events, source drift and diagnostic gaps are absent; full original arguments/results/bounds and cleanup remain. Sealed independent hostile verification and workspace/command census pass in docs/audits/record-input-direct-observation-20261001/. Successful-child native PID identities remain uncaptured by design. Historical EPERM causality stays open; .11.6 schedules the next genuine generated/domain opportunity without recurrence-only retry.`
+  Commit: `this commit with SEM direct observation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.1`
@@ -1933,10 +1933,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit with SEM observer qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Consume genuine direct record-input observation with the qualified fixed observer.`
   Acceptance: `After child .1 commits, SEM .60.4.3.2.5.3 uses fresh exclusive admission for exact T2024/source/bench/producers and declared complete stage coverage. Preserve all original bounds/results, capture gaps and input identities, independently check cleanup and retain recoverable observations. Stop and diagnose any native or HDL failure before another execution. A pass leaves historical EPERM causal repair open and schedules its next normal opportunity; no recurrence-only retry.`
-  Verification: `pending committed observer qualification`
+  Verification: `Fresh exact record_input_direct_oct01 admission completes all three compile/runtime pairs under the qualified fixed observer. Both positive targets pass; the deliberately unsigned property reaches the expected public-pin rejection. Native failure events, source drift and diagnostic gaps are absent; full original arguments/results/bounds and cleanup remain. Sealed independent hostile verification and workspace/command census pass in docs/audits/record-input-direct-observation-20261001/. Successful-child native PID identities remain uncaptured by design. Historical EPERM causality stays open; .11.6 schedules the next genuine generated/domain opportunity without recurrence-only retry.`
+  Commit: `this commit with SEM direct observation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.6`
+  Status: `pending`
+  Goal: `Own native causal observation before the next genuine generated/domain record-input runtime.`
+  Acceptance: `Linked SEM .60.4.3.2.5.4 must select and prepare its exact fixed source/test/bench, separately qualify a new admission/observer integration for that different target, and commit before execution. Preserve original helper, stage bounds/arguments/results, input identities, native return/errno, diagnostic gaps and cleanup. Diagnose any captured rejection before further execution; a pass keeps historical causality open and schedules the next normal roadmap opportunity. No T2024/T1974 admission reuse, original recurrence campaign, host-protection or privilege change.`
+  Verification: `Scheduled after qualified direct .11.5.2; generated/domain witness preparation is next under SEM .5.4.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.12`

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "prove",
+    "-v",
+    "docs/audits/record-input-observer-corrected-20261001/observe.t",
+    "::",
+    "record_input_direct_oct01"
+  ],
+  "completed_utc": "2026-10-01T06:51:55.533669+00:00",
+  "exit_code": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "a303c722eb45e728e56b0a0ece889c0f809e57c2a4da056a5d7176c430bef871"
+}
