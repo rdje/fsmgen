@@ -2976,6 +2976,42 @@ For FSMGen, the analogs are:
   Acceptance: `After source/carrier qualification, consume current HIAL admission before genuine supervised native runtime. Independently observe packed layout, scalar signed/state properties, live versus explicitly sampled reads, whole-copy edge, holds, repeated requests and reset/domain behavior. Compare complete native/API/actual newline source/schedule/semantic/discovery products, supported corpus and baseline carriers/HDL. Keep unsupported profiles precise and synchronize all selected requirements/book/records; close input delivery only with recoverable behavior evidence.`
   Verification: `Frontend and generated/domain source/carrier/public qualification are committed through .3-.4. Next read and consume HIAL .3.2.10.11.5 failure-only observation admission, review selected backend/native requirements and plan the smallest genuine packed-input behavioral witness before any runtime mutation/execution. Historical EPERM remains separately owned; do not replay spent compiler captures.`
   Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.1`
+  Status: `done`
+  Goal: `Prepare a direct packed-input behavioral witness without executing HDL.`
+  Acceptance: `Consume decision 0113, R13/R14, current frontend/generated evidence and HIAL .3.2.10.11.5. Own a fixed independently authored nested-record source and public-pin bench for packed ranges, live versus entry-sampled reads, whole-copy edge, hold, repeated requests and asynchronous reset. Check literal declaration/caller facts, scheduled carriers and both emitted Verilog families without HDL compilation/execution. Signed/state declarations retain independent structural witnesses; a binary-valued Verilator observation cannot claim X/Z behavior. Include hostile literal/bench controls and preserve production bytes. Native execution is explicitly pending .2-.3 and must not occur in this slice.`
+  Verification: `T2024 and fixed source/bench preserve literal nested packed fields, actual native semantic declarations, guarded entry sample, authored whole copy, live read and both emitted typed Verilog-family products. Authored equal-width signed/state/member-order variants fail the unchanged literal witness; unsigned behavioral counterexample is prepared. Final guarded T2024/T1994/T2018 passes All tests successful, Files=3, Tests=13 with the native subtest explicitly skipped. Production/source/bench/supervision bytes remain. The independent single-transaction bench uses literal entry/copy/live words, prior held value, repeated requests, idle hold and reset/abort; execution remains unqualified. HIAL .11.5 is consumed and requires a new exact fixed observer. Repair stale narrative pointer .63 before .5.2 observer qualification.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2`
+  Status: `pending`
+  Goal: `Qualify a fixed failure-only observer for the direct packed-input test.`
+  Acceptance: `After .1 commits, bind only its exact maintained target/fixture/producer identities through a new exclusive admission. Consume the committed native/failure-only witness and preserve original arguments, returns, errno, bounds, capture gaps and cleanup. Independently qualify silent success, controlled real rejection, diagnostic gaps, source drift, wrong targets and reused captures before genuine HDL use. Existing archived observer admission and receipts remain immutable. Link HIAL .3.2.10.11.5 ownership; no actual feature HDL execution in observer qualification.`
+  Verification: `pending fixed prepared target`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.3`
+  Status: `pending`
+  Goal: `Observe and qualify genuine direct packed-input runtime behavior.`
+  Acceptance: `After .1-.2 commit, execute the actual direct test under its freshly qualified failure-only observer. Independently observe both emitted Verilog families through public pins, complete unchanged stage results, exact source/producer identities and cleanup. Stop and own any native or HDL failure before further execution. Retain recoverable outcomes and hostile saved-record verification. Binary-valued execution does not establish four-state X/Z semantics or historical EPERM repair.`
+  Verification: `pending qualified observer`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4`
+  Status: `pending`
+  Goal: `Qualify generated and named-domain packed-input execution.`
+  Acceptance: `Select the smallest independently authored public-pin runtime witnesses for reused live readers and a sole generated whole-copy writer, including owning/reset-free sibling domains, repeated requests and reset. Split preparation, fixed observer admission and genuine observation before each runtime when necessary. Preserve explicit output binding, domain ownership and exact packed private data/enable edges; no arbitration or record-output admission.`
+  Verification: `pending direct witness and observation`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5`
+  Status: `pending`
+  Goal: `Reconcile supported backend profiles and complete record-input delivery.`
+  Acceptance: `After executed direct/generated witnesses, qualify supported VHDL subsets and precise unsupported profile refusals, full native/API/newline/discovery/corpus/baseline products and every selected input requirement. Keep four-state execution limits explicit. Synchronize book, capability/spec, canonical SPECFORGE response and facts; close only independently verified input delivery. Full aggregate consumer signoff stays .60.4.4 after output delivery.`
+  Verification: `pending behavior and backend evidence`
+  Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3`
   Status: `pending`
@@ -3692,6 +3728,13 @@ before editing code. No discovered defect is closed by this audit alone.
   Commit: `this commit`
 
 ## Current Frontier
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.63`
+  Status: `active`
+  Goal: `Repair the stale narrative resume frontier after direct witness preparation.`
+  Acceptance: `P2 documentation defect: the Current Frontier prose still names .60.4.3.2.3.6.2 as next although the live nodes and canonical SPECFORGE response qualify frontend closure and generated/domain .2.4. Reproduce by comparing this block with its exact node statuses and docs/TASK_TREE.md active row. After .60.4.3.2.5.1 commits clean, replace the obsolete narrative with a bounded pointer to current .2.5 and its fixed-observer next action, preserving separately owned pending/blocked dependencies. Verify all named frontier statuses against current nodes, sync Memory/book as needed and commit before .2.5.2. No production change or new delivery claim.`
+  Verification: `Scheduled next after the current static witness slice; rg finds the obsolete next .6.2 sentence in Current Frontier while .3.6 and .2.4 nodes are done.`
+  Commit: `pending`
 
 Formal identity integration and its family qualification are complete under
 `.49.2.2`; the live node records above carry exact status and evidence.
@@ -6821,3 +6864,55 @@ any real HDL execution; no spent compiler/native receipt is replayed here.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual prior T1985/T2017/T248 is FAIL, Files=3, Tests=7216 solely in T1985, with TAP at t/1985-isf-interface-port-public-qualification.t line 52 and line 219. Live source-query membership includes isf/record_input_children.isf but the independent declaration table lacks it, making check/semantic/schedule expected declarations null. git log -S feature.isf_record_input_children roots the catalog/fixture addition in 24a58de05d1bf72dc1c0bd26c0d48a3906bb3bbc; T1985 is unchanged since its older record-input admission update. The permanent completeness guard correctly catches the omission. Actual authored source/package and T2019 literal/public products independently establish the missing declaration requirements; no source admission defect is inferred.
 - [x] **ADDRESSED (verified)** — Independent authored input/output order, frame alias/record kind, both complete packed leaf ranges/signed/state properties and idle/io domains now cover the maintained generated source in T1985, preserving its exact complete-cohort guard. Final guarded T1985/T2017/T248 reports All tests successful, Files=3, Tests=7217. Complete typed native/API/newline reports, all-section discovery, supported applicability, exact source/package/named producer bytes and fixed catalog pass. The acceptance reconciliation above closes every generated/domain source/carrier/public requirement, with typed prior report/carrier/HDL controls and unchanged full accepted/refused receipts. Backend/native/consumer and record output/list/variant deliveries remain their own leaves; canonical feedback/book/facts and resume pointer reflect .2.5 next.
 - [x] **NO REGRESSION** — Final combined T1981/T1982/T2018/T2020/T2022/T2023/T1376 reports All tests successful, Files=7, Tests=32; current declaration/discovery/supplied-source/fixed catalog T1985/T2017/T248 reports Files=3, Tests=7217. Exact previous scalar/storage reports, all scheduled FSM and both emitted HDL targets, package-context negatives, scalar selector/formal/metadata identity and JSON copy/caller controls remain. Full T2019/T2021 matrices retain qualified unchanged production bytes; book and Knowledge Map are refreshed before gate. Re-derivation uses actual current native/public source products and complete independently authored declarations/catalog joins; falsification uses the captured missing-table RED, unchanged complete-cohort guard and independent hostile field/type/range/role/kind controls; permanent test/source/package/catalog/book/facts, immutable prior receipts, task and Git preserve durability. No runtime/full CI/push or external repository modification.
+
+## Direct packed-input witness preparation `.60.4.3.2.5.1`
+
+Predecessor 4e35014fa665a0f4f3084e0cbf851368e54b979d is committed clean,
+with both doctrine gates passed, empty brief and derived ahead count recorded
+by Git. Relevant R13/R14, decision 0113, interface/storage/sample contracts,
+T2014/T2019/T1994/T1966/T1974, current book and canonical carrier/native facts
+are read. HIAL .3.2.10.11.5 admission is consumed: the exact T1974 admission
+cannot authorize another target. This slice prepares only the new fixed T2024
+source/bench and static qualification; no HDL compiler or runtime is launched.
+
+Actual --emit-semantic-json and both target emissions expose the single typed
+packed input with nested field order and signed/state declarations. The carrier
+retains a start-qualified entry sample, explicit whole copy and later live reads.
+An independently authored public-pin bench changes literal input words after
+public phase markers; it expects distinct entry/copy/live values, reads the
+prior held word before replacement, and checks repeated requests/hold/reset/abort.
+It uses one transaction to isolate input semantics from independent-controller
+work. Same-width unsigned/state/member-order source variants statically defeat
+the complete literal declarations; the unsigned emitted counterexample is
+prepared for genuine later behavioral falsification. That native leg is pending.
+
+The first draft run is retained in .artifacts/record-direct-preparation-first.log:
+T2024 is RED at line 50/62 because its regex assumed unguarded sample syntax and
+a flattened vector declaration. Actual products retain <start and a packed typedef.
+The oracle is corrected to those already-supported representations; no product
+change is inferred. The separate malformed focused invocation names a nonexistent
+T2018 filename and exits two; it is excluded from qualification. Enumerated actual
+T2018 is used in every final receipt. No prior capture, host protection, privilege,
+process policy, source schema, record-output or external repository is changed.
+
+Final .artifacts/record-direct-preparation-current.log reports All tests successful,
+Files=3, Tests=13 for T2024/T1994/T2018. The native subtest is explicitly skipped;
+this is static preparation and prior sampling/JSON-kind qualification only.
+T2024 verifies complete current source/bench and named parser/lowerer/type/HDL/
+supervision bytes. Book/canonical feedback and the new fact retain this scope.
+The stale Current Frontier narrative is P2-owned .63 and scheduled next before
+fixed-observer .5.2, genuine direct .5.3, generated/domain .5.4 and final profiles .5.5.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual --emit-semantic-json and emitted HDL for the fixed authored source expose nested packed layout, start-qualified entry sample and separate whole-copy/live-read assignments; the first draft T2024 at t/2024-isf-record-input-runtime.t line 50/62 assumed different existing renderings. Current actual source/parser/carrier products establish the required independent behavior witness without inferring behavior from emission. HIAL .3.2.10.11.5 requires a new fixed target and cannot reuse T1974 admission. This is missing qualification preparation, not a proved production defect; malformed filename and draft regex failures are excluded from delivery claims.
+- [x] **ADDRESSED (verified)** — Fixed T2024/source/bench now independently specify nested packed ranges, signed/state declarations, entry/copy/live words, prior held/reset value, idle holds, repeated requests and reset abort. Literal metadata, complete typed emitted struct and private scalar sample, actual native semantic and authored carrier assignments pass. Actual same-width unsigned/state/member-order sources fail unchanged literal expectations; unsigned real emitted HDL is retained for later behavioral falsification. The static native subtest remains skipped; fixed observer and genuine behavior remain .5.2-.5.3 before any execution claim.
+- [x] **NO REGRESSION** — Guarded final T2024/T1994/T2018 reports All tests successful, Files=3, Tests=13. Existing entry/await/body/nested/drive/sample states, actual core typed sample replay, malformed/nearest-mask contexts and typed public JSON copy controls remain. Named producer/source/bench/supervisor byte checks pass. Re-derivation is actual parsed/native semantic/carrier/emitted structure; structural falsification is independently authored literal types and real equal-width property/member-order counterexamples; permanent source/bench/test/fact/book/task and Git preserve durability. Behavioral re-derivation/falsification explicitly remain pending new fixed observation admission. Book/KM/capacity/claim and staged doctrines must pass before normal hooks/commit. No HDL compile/runtime, full CI, push or external mutation.
+
+The first staged doctrine run rejects LIVE-DOCUMENT-SIZE and its dependent
+README-ENTRYPOINT check: the expanded active status row has physical length
+935 bytes against the unchanged focused-document health target 1024. Independent
+Python registry-target census locates that exact maximum at docs/TASK_TREE.md
+line 53. Compact the same current frontier row; retain all detailed statuses
+in their task nodes and keep debt classification/ceilings unchanged. Task
+acceptance, inventory and every other staged doctrine pass in that failed run;
+the failed aggregate is not commit qualification. The corrected standalone
+gate must finish successfully before normal hooks.

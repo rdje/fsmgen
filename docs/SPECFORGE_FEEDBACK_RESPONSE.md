@@ -52,7 +52,9 @@ and book.
   prior products and complete current declaration/discovery/catalog closure
   are qualified under `.60.4.3.2.4.2.3`. Generated/domain source, carrier and
   public qualification `.60.4.3.2.4` is complete; backend/native execution
-  and consumer signoff remain `.60.4.3.2.5`. Record outputs, root-list ports and variants
+  and consumer signoff remain `.60.4.3.2.5`. Its direct public-pin witness is
+  prepared under `.5.1`; genuine HDL execution waits for new fixed observer
+  qualification, and generated/domain execution remains open. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

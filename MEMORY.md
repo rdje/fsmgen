@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5` (active)
-- next_action: Read and consume HIAL .3.2.10.11.5 failure-only observation admission; review .60.4.3.2.5 backend/native behavior requirements and plan the smallest genuine packed-input runtime witness.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.63` (active)
+- next_action: Repair the stale Current Frontier narrative against live task nodes and the active index; commit before fixed direct-input observer qualification .60.4.3.2.5.2.
   Before genuine supervised HDL runtime, consume HIAL .3.2.10.11.5 for failure-only native observation; never retry merely to seek recurrence.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.

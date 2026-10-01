@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **9** uniquely owned question entries.
+> **3** facts · **12** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -9,10 +9,13 @@
 - q="can a child scalar formal share an actor record input name?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 - q="does ordinary ISF reset provenance omit the domain key?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="does the binding identity repair admit record field actuals?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
+- q="does the prepared direct record-input bench establish native behavior?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 - q="how are generated and named-domain record-input carriers qualified?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
+- q="how does the packed-input witness separate live sample and whole-copy values?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 - q="is generated and named-domain record-input public qualification complete?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="where do generated-top semantic reports retain authored record declarations?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="where does a generated record-input copy store and reset its target?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
+- q="where is direct packed record-input runtime qualification owned?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 - q="why did a generated scalar binding formal name refuse as an actor record read?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 
 ## Facts
@@ -23,6 +26,13 @@ _Activation identities remain separate from record binding values_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-binding-identity-roles.md`](../../docs/knowledge/isf-record-binding-identity-roles.md)
+
+### isf-record-input-direct-witness-preparation
+
+_Direct packed-input witness separates preparation from native execution_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-record-input-direct-witness-preparation.md`](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 
 ### isf-record-input-generated-carriers
 
