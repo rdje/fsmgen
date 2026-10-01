@@ -1,0 +1,222 @@
+#!/usr/bin/env python3
+"""Independently verify sealed generated/domain packed-input evidence without native work."""
+import copy
+import hashlib
+import json
+from pathlib import Path
+import re
+import subprocess
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+LABELS = ["compile_a", "runtime_b", "compile_c", "runtime_d", "compile_e", "runtime_f", "compile_g", "runtime_h", "compile_i", "runtime_j"]
+TARGET = "t/2025-isf-record-input-generated-runtime.t"
+
+FIXED_FIXTURES = {
+    't/data/isf_record_input_generated_domains_runtime.isf',
+    't/data/isf_record_input_generated_blocking_runtime.isf',
+    't/data/isf_record_input_generated_runtime_tb.sv',
+}
+FIXED_INPUTS = FIXED_FIXTURES | {
+    'docs/audits/generated-input-observer-20261001/' + name
+    for name in ('GeneratedInputAdmission.pm', 'observe.t', 'prepare.pl', 'qualify.t', 'seal.py', 'verify.py')
+} | {
+    'docs/audits/native-group-witness-20260927/manifest.json',
+    'docs/audits/native-group-witness-20260927/failure-only/manifest.json',
+    'docs/audits/native-group-witness-20260927/GroupWitness.pm',
+    'docs/audits/native-group-witness-20260927/failure-only/FailureWitness.pm',
+    'docs/audits/native-group-witness-20260927/priority-observer/StageObserver.pm',
+    'docs/audits/native-group-witness-20260927/priority-observer/manifest.json',
+    't/lib/FSM/Test/VerilatorRuntime.pm', 't/lib/FSM/Test/ProcessSupervisor.pm',
+    't/lib/FSM/Test/SourceQueryRunner.pm', 't/lib/FSM/Test/ProjectDataLocality.pm',
+    'perl/FSM/Support/ProcessSupervisor.pm', 't/2025-isf-record-input-generated-runtime.t',
+    'bin/fsmgen', 'perl/FSM/Adapter/ISF/Parser.pm',
+    'perl/FSM/Scheduler/ISF/LoweringIR.pm', 'perl/FSM/Scheduler/ISF/Emitter/FSM.pm',
+    'perl/FSM/Scheduler/ISF/Emitter/JSON.pm', 'perl/FSM/Scheduler/ISF/RecordSamples.pm',
+    'perl/FSM/Scheduler/ISF/DomainSource.pm', 'perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm',
+    'perl/FSM/Composition/GeneratedChildRealizer.pm', 'perl/FSM/Backend/GeneratedModuleEmitter.pm',
+    'perl/FSM/Support/ISFRecordPortContexts.pm', 'perl/FSM/Support/ISFRecordPortValues.pm',
+    'perl/FSM/Support/ISFRecordPortScopes.pm', 'perl/FSM/Support/ISFInterfacePortMetadata.pm',
+    'perl/FSM/Package/AggregatePathSupport.pm',
+    'perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm',
+    'perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm',
+}
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def load(name):
+    return json.loads((HERE / name).read_bytes())
+
+
+def verify_book_vectors(book, bench):
+    calls = re.findall(r"lap\(10'b([01_]+),10'b([01_]+),10'b([01_]+),(.*?)\);", bench, re.S)
+    assert len(calls) == 3
+    rows = []
+    for label, (entry, copied, live, arguments) in zip(("First", "Repeated", "After reset/abort"), calls):
+        words = [word.replace("_", "") for word in (entry, copied, live)]
+        assert all(len(word) == 10 for word in words)
+        literals = re.findall(r"5'b([01]{5})", arguments)
+        assert len(literals) == 4
+        values = [int(word[2:7], 2) for word in words]
+        assert values == [int(bits, 2) for bits in literals[:3]]
+        values.append(int(literals[3], 2))
+        signed = [value - 32 if value >= 16 else value for value in values]
+        rows.append("| " + label + " | " + " | ".join(map(str, signed)) + " |")
+    actual = [line for line in book.splitlines() if any(line.startswith("| " + label + " |")
+              for label in ("First", "Repeated", "After reset/abort"))]
+    assert actual == rows
+
+
+def validate(admission, summary, stages, events, before, after, postcheck):
+    assert admission["schema"] == "fsmgen.fixed_generated_input_observer_admission.v1"
+    assert admission["capture"] == "generated_input_oct01"
+    assert admission["mode"] == "generated_input" and admission["scenario"] == "none"
+    assert admission["target"] == TARGET
+    assert set(admission) == {"schema", "capture", "mode", "scenario", "target", "expected_stages", "sha256"}
+    assert set(admission["sha256"]) == FIXED_INPUTS
+    assert admission["expected_stages"] == {"compile": 5, "runtime": 5}
+    assert all(type(value) is int for value in admission["expected_stages"].values())
+    assert summary["schema"] == "fsmgen.priority_stage_observation.v1"
+    assert summary["stages"] == 10
+    assert [row["label"] for row in summary["receipts"]] == LABELS
+    assert summary["input_error"] is None and summary["test_error"] is None
+    assert summary["capture_gaps"] == summary["retention_errors"] == []
+    assert events == b""
+    assert before == after
+    assert {name: before[name]["sha256"] for name in admission["sha256"]} == admission["sha256"]
+    objects = []
+    for index, label in enumerate(LABELS):
+        record = stages[label]
+        result, args = record["result"], record["arguments"]
+        stage = "compile" if index % 2 == 0 else "runtime"
+        assert result["schema"] == "fsmgen.test.verilator_runtime_result.v1"
+        assert result["schema_version"] == 1 and result["stage"] == stage
+        assert result["exec_failed"] == 0 and result["exec_error"] is None
+        assert result["timed_out"] == result["output_limited"] == result["signal"] == 0
+        assert result["timeout_seconds"] == (120 if stage == "compile" else 30)
+        assert result["capture_limit_bytes"] == (8_388_608 if stage == "compile" else 67_108_864)
+        assert result["cleanup"] == {"containment": "test_runtime_process_group", "group_gone": 1,
+            "kill_sent": 0, "leader_reaped": 1, "leader_started": 1,
+            "surviving_descendants": 0, "term_sent": 0}
+        assert len(args) == 1 and isinstance(args[0], list)
+        argv = args[0]
+        if stage == "compile":
+            assert argv[:10] == ["verilator", "--binary", "--timing", "--assert", "-Wno-fatal",
+                                 "-j", "1", "--top-module", "tb", "--Mdir"]
+            assert len(argv) == 13
+            objects.append(argv[10])
+            work = str(Path(argv[10]).parent)
+            filename = ("domains_systemverilog.sv", "domains_verilog.sv", "blocking_systemverilog.sv", "blocking_verilog.sv", "unsigned.sv")[index // 2]
+            benchname = "blocking_tb.sv" if index // 2 in (2, 3) else "domains_tb.sv"
+            assert argv[11:] == [work + "/" + filename, work + "/" + benchname]
+        else:
+            assert argv == [objects[-1] + "/Vtb"]
+            assert result["stderr"] == ""
+        if label == "runtime_j":
+            assert result["ok"] == 0 and result["status"] == "nonzero_exit" and result["exit_code"] == 1
+            assert "Assertion failed in tb.lap: GENERATED_SIGNED_MISMATCH\n" in result["stdout"]
+            assert "GENERATED_INPUT_RUNTIME_PASS" not in result["stdout"]
+            assert "GENERATED_RUNTIME_TIMEOUT" not in result["stdout"]
+        else:
+            assert result["ok"] == 1 and result["status"] == "success" and result["exit_code"] == 0
+            assert "%Error" not in result["stdout"] + result["stderr"]
+            if stage == "runtime":
+                markers = [line for line in result["stdout"].splitlines() if line.startswith("GENERATED_")]
+                assert markers == ["GENERATED_LAP_PASS", "GENERATED_LAP_PASS", "GENERATED_REPEATED_REQUEST_PASS",
+                                   "GENERATED_LAP_PASS", "GENERATED_RESET_ABORT_PASS", "GENERATED_INPUT_RUNTIME_PASS"]
+    work = str(Path(objects[0]).parent)
+    assert work.startswith(".artifacts/tmp/tests/") and ".." not in Path(work).parts
+    assert objects == [work + "/obj_" + name for name in ("domains_systemverilog", "domains_verilog", "blocking_systemverilog", "blocking_verilog", "unsigned")]
+    assert postcheck["workspaces"] == [work] and postcheck["workspace_absent"] == {work: True}
+    assert postcheck["selected_command_residue"] == []
+    assert postcheck["native_pid_absence"].startswith("not independently measured;")
+
+
+def main():
+    manifest = load("manifest.json")
+    assert manifest["schema"] == "fsmgen.generated_record_input_runtime_observation.v1"
+    assert manifest["native_cause"] == "historical_EPERM_not_attributed"
+    paths = {str(path.relative_to(HERE)) for path in HERE.rglob("*") if path.is_file() and path.name != "manifest.json"}
+    assert set(manifest["sha256"]) == paths
+    for name, expected in manifest["sha256"].items():
+        assert digest((HERE / name).read_bytes()) == expected, name
+    for name, record in manifest["producers"].items():
+        original = subprocess.check_output(["git", "cat-file", "blob", record["git_blob"]], cwd=ROOT)
+        assert digest(original) == record["sha256"], name
+    for name, expected in manifest["prerequisites"].items():
+        assert digest((ROOT / name).read_bytes()) == expected, name
+    admission_bytes = (HERE / "observation/admission.json").read_bytes()
+    admission, summary = json.loads(admission_bytes), load("observation/summary.json")
+    stages = {label: load("observation/" + label + ".json") for label in LABELS}
+    events = (HERE / "observation/events.jsonl").read_bytes()
+    before, after = load("before.json")["producers"], load("after.json")["producers"]
+    postcheck = load("postcheck.json")
+    assert before == manifest["producers"]
+    assert load("before.json")["baseline_revision"] == manifest["baseline_revision"]
+    assert summary["admission_sha256"] == digest(admission_bytes)
+    for row in summary["receipts"]:
+        assert row["path"] == row["label"] + ".json"
+        assert row["stage"] == row["label"].split("_")[0]
+        assert row["sha256"] == digest((HERE / "observation" / row["path"]).read_bytes())
+    result = load("observed-result.json")
+    stdout = (HERE / "prove-stdout.txt").read_bytes()
+    stderr = (HERE / "prove-stderr.txt").read_bytes()
+    assert result["exit_code"] == 0 and stderr == b""
+    assert result["stdout_sha256"] == digest(stdout) and result["stderr_sha256"] == digest(stderr)
+    assert b"All tests successful." in stdout and b"Files=1, Tests=4," in stdout
+    assert b"# skip" not in stdout and b"not ok" not in stdout
+    assert b"generated public-pin predicate rejects actual unsigned property loss" in stdout
+    for saved, original in [("observed-test.t.source", TARGET),
+                             ("observed-domains.isf.source", "t/data/isf_record_input_generated_domains_runtime.isf"),
+                             ("observed-blocking.isf.source", "t/data/isf_record_input_generated_blocking_runtime.isf"),
+                             ("observed-bench.sv.source", "t/data/isf_record_input_generated_runtime_tb.sv")]:
+        assert digest((HERE / saved).read_bytes()) == before[original]["sha256"]
+    args = (admission, summary, stages, events, before, after, postcheck)
+    validate(*args)
+    controls = []
+    for label, key, value in [("compile_a", "timeout_seconds", 121),
+                              ("runtime_b", "capture_limit_bytes", 67_108_865),
+                              ("runtime_d", "stdout", "GENERATED_INPUT_RUNTIME_PASS\n"),
+                              ("runtime_j", "stdout", "unrelated failure"),
+                              ("runtime_j", "exec_failed", 1),
+                              ("runtime_j", "signal", 6),
+                              ("runtime_b", "ok", 0)]:
+        candidate = copy.deepcopy(args)
+        candidate[2][label]["result"][key] = value
+        controls.append(candidate)
+    candidate = copy.deepcopy(args); candidate[2]["runtime_d"]["result"]["cleanup"]["group_gone"] = 0; controls.append(candidate)
+    candidate = copy.deepcopy(args); candidate[2]["compile_c"]["arguments"][0][3] = "--no-assert"; controls.append(candidate)
+    candidate = copy.deepcopy(args); candidate[5][TARGET]["sha256"] = "0" * 64; controls.append(candidate)
+    candidate = copy.deepcopy(args); candidate[6]["workspace_absent"][postcheck["workspaces"][0]] = False; controls.append(candidate)
+    candidate = copy.deepcopy(args); candidate[1]["stages"] = 4; controls.append(candidate)
+    candidate = copy.deepcopy(args); candidate[1]["capture_gaps"] = [{"kind": "native_context_query"}]; controls.append(candidate)
+    candidate = copy.deepcopy(args); candidate[0]["target"] = "t/1974-isf-priority-contributor-union.t"; controls.append(candidate)
+    controls.append((admission, summary, stages, b"failure\n", before, after, postcheck))
+    for candidate in controls:
+        try:
+            validate(*candidate)
+        except AssertionError:
+            continue
+        raise AssertionError("corrupt saved generated-input observation accepted")
+    bench = (HERE / "observed-bench.sv.source").read_text()
+    book = (ROOT / "docs/book/src/13j-type-enum-aggregate.md").read_text()
+    for name in ("t/data/isf_record_input_generated_domains_runtime.isf", "t/data/isf_record_input_generated_blocking_runtime.isf", "t/data/isf_record_input_generated_runtime_tb.sv"):
+        assert digest((ROOT / name).read_bytes()) == before[name]["sha256"]
+    verify_book_vectors(book, bench)
+    for bad in (book.replace("| First | 7 |", "| First | 8 |"),
+                book.replace("| First | 7 | -13 | -3 | -14 |", "| First | 7 | -13 | -3 | 18 |"),
+                book.replace("| After reset/abort | 3 | -8 | -15 | -14 |", "")):
+        assert bad != book
+        try:
+            verify_book_vectors(bad, bench)
+        except AssertionError:
+            continue
+        raise AssertionError("corrupt published signed vector accepted")
+    print("Both generated/domain witnesses in both Verilog-family targets and actual unsigned-property rejection verified with exact sources, original bounds/results and cleanup; hostile saved controls reject. X/Z, reset-free initialization and historical native causality remain unproved.")
+
+
+if __name__ == "__main__":
+    main()

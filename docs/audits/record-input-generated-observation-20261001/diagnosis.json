@@ -1,0 +1,9 @@
+{
+  "classification": "P1 accepted generated whole-copy source emits illegal typed composition net",
+  "historical_native_cause": "not attributed; native events and diagnostic gaps empty",
+  "mechanism": "StructuralRTLIREmitter::_render_net_line prefixes wire to an aggregate typedef with nested two_state bit members; TypeDeclarationSupport faithfully preserves those member declarations. Verilator rejects the resulting typed net.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.2",
+  "re_emission": "Unchanged committed source re-emitted through the public strict systemverilog interface without HDL execution. Original temporary compiled HDL was removed by ordinary cleanup; re-emission is diagnosis evidence, not a claim of captured original HDL bytes.",
+  "runtime_observed": false,
+  "unqualified_draft": "unqualified-success-verifier.py.source was authored before observing the first failure and never passed or ran."
+}

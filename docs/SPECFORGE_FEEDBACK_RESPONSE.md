@@ -65,7 +65,11 @@ and book.
   spawned and ordinary blocking witnesses are prepared under `.5.4.1`; their
   separate fixed observer `.5.4.2` is qualified by fresh finite controls and
   complete sealed independent verification. Genuine generated/domain HDL
-  execution remains `.5.4.3`; no runtime delivery follows from observer controls. Record outputs, root-list ports and variants
+  execution remains `.5.4.3`: its first real compile rejects the generated
+  whole-copy link for a mixed two-state/four-state record. The preserved failure
+  and root cause are `.5.4.3.1`; immediate P1 declaration repair is `.5.4.3.2`, followed
+  by fresh corrected observation `.5.4.3.3`. No simulation ran and no generated runtime
+  delivery is claimed. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

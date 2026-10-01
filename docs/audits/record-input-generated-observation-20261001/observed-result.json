@@ -1,0 +1,15 @@
+{
+  "archive_path_projection": "Only exact active repository prefix removed from outer stderr; original stderr hash and complete stage results remain.",
+  "archived_stderr_sha256": "9c03b961bc359fad76520d75925e0d525dc6a9e5f6baa5ed193fe6ae8acc67ca",
+  "command": [
+    "prove",
+    "-v",
+    "docs/audits/generated-input-observer-20261001/observe.t",
+    "::",
+    "generated_input_oct01"
+  ],
+  "completed_utc": "2026-10-01T08:33:11.563854+00:00",
+  "exit_code": 1,
+  "stderr_sha256": "577fe56a5e437203fbb766296fd237d8e1efdbb5d0bcd692c43fb3f1742590a4",
+  "stdout_sha256": "55b77c4afd7f48edcd698e879f7c36ca51401433b7d1c54c923db224948ab187"
+}

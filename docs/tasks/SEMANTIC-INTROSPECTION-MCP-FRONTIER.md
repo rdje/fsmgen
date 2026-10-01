@@ -3038,10 +3038,33 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Observe genuine generated/domain record-input behavior.`
   Acceptance: `After .1-.2 commit, execute the exact fixed witness under fresh qualified failure-only admission. Observe both emitted families for named spawned and ordinary blocking copies plus reused readers, repeated requests, hold, owning reset/abort and clock-only sibling isolation. Retain full original stage results/bounds, source identities, explicit gaps, independent cleanup and hostile saved verification. Stop and own unexpected failure before another execution. No X/Z, reset-free initialization or historical native-cause claim.`
-  Verification: `pending`
+  Verification: `Fresh exclusive generated_input_oct01 stops after first domains SystemVerilog compile. Actual Verilator rejects wire comp_link_io__writer_isf_write_held_data over a packed typedef containing nested two_state bit members, at regenerated HDL line 1674 / member line 1636. Runtime and remaining pairs never execute. Original nonzero compile result/bounds/argv and cleanup remain; native events and diagnostic gaps are empty, source identities match before/after and selected workspace/commands are absent. Own P1 emitted-HDL defect; preserve/root-cause under child .1, fix under .2, then fresh corrected behavior under .3. No feature success or native EPERM attribution.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.1`
+  Status: `done`
+  Goal: `Preserve and diagnose the first genuine generated-input compile failure.`
+  Acceptance: `Retain full original TAP/stdout/stderr/admission/stage/result/summary/source identities/cleanup from spent generated_input_oct01. Independently authenticate only the actually reached stage and rejection with hostile saved controls. Trace authored mixed nested state-model types through actual public re-emission and the structural composition declaration path, distinguishing illegal typed net from property/layout changes. No further HDL execution before diagnosis and commit; retain any unqualified success verifier draft honestly.`
+  Verification: `Full original spent generated_input_oct01 first-compile failure is sealed in docs/audits/record-input-generated-observation-20261001/. Independent saved verification authenticates the reached compile only, exact sources/Git producer blobs, nonzero HDL rejection, original argv/bounds/result/cleanup, empty native events/gaps and absent selected workspace/commands; hostile saved mutations reject. Actual unchanged strict public re-emission reproduces exact wire declaration and nested bit locations without compiling/executing HDL. StructuralRTLIREmitter::_render_net_line prefixes wire to typed aggregates; TypeDeclarationSupport preserves authored two_state leaves. Existing T167 explicitly expects this illegal mixed-state wire, exposing a structural-only oracle gap. Git pickaxe identifies 3ca803fc8946140c172aeb97da26d66dd8830aee as introduction. No product fix or genuine behavior is claimed; .2 owns the immediate P1 repair.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.2`
+  Status: `pending`
+  Goal: `Repair typed composition carriers containing two-state members.`
+  Acceptance: `P1 accepted source emits illegal wire-over-bit-containing packed typedef. Review actual StructuralRTLIR declaration/driver/type contracts, corresponding scalar and nested list/record cases, supported backends and book before source change. Preserve complete layout/signed/state intent and driver ownership; no silent four-state widening or arbitration. Add independent structural legality and old-emitter counterexamples, focused producer/integration tests and exact baseline controls. Commit the verified bounded fix before genuine HDL execution.`
+  Verification: `pending diagnosed declaration contract`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3`
+  Status: `pending`
+  Goal: `Qualify corrected genuine generated/domain behavior from fresh authority.`
+  Acceptance: `After .1-.2 commit, recheck qualified fixed observer scope and complete changed producer membership/identities; split new observer preparation/qualification if its closed contract needs widening. Use a new exclusive capture, never replay generated_input_oct01. Execute all required pairs and retain independent full saved/hostile verification and cleanup. Diagnose any new unexpected result before another execution. No X/Z, reset-free initialization or historical native causality claim.`
+  Verification: `pending committed repair and observer scope recheck`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.4`
@@ -4014,3 +4037,43 @@ causality, X/Z and complete backend/input delivery remain separately owned.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '2024-isf-record-input-runtime.t' identifies the corrected direct observer's fixed-target introduction. Its RecordInputAdmission.pm target/coverage contract permits T2024 and three feature pairs; it cannot authorize prepared generated/domain T2025. Actual new pure/finite refusals identify old_target, wrong_count and omitted_fixture before any target execution. A separate exact target/fixture authority is required before genuine generated-input behavior can be observed.
 - [x] **ADDRESSED (verified)** — Separate GeneratedInputAdmission, driver, finite controls and saved verifier bind the closed generated_input schema, exact T2025 target, complete producer/fixture identities and declared feature coverage. Fresh finite capture passes actual rejection/context and modeled diagnostic gaps; complete sealed verification authenticates original bounds/results/arguments and independent captured PID/group cleanup, with hostile corruptions rejected. Original helpers, direct observer and production/test/source/bench remain unchanged.
 - [x] **NO REGRESSION** — Pure exact-target/fixture/caller-kind checks report All tests successful, Files=1, Tests=18. Fresh finite qualification reports All tests successful, Files=1, Tests=63; independent sealed saved verification passes. Actual Knowledge Map reports knowledge-map: OK; task integrity and corrected repository-local book build pass before staged doctrines and normal hooks. The owned misplaced-build defect is fixed and its verified copy/use/delete/residue record is tracked. No feature HDL execution, historical EPERM repair or broader profile signoff is inferred.
+
+
+## First generated-input compile diagnosis `.60.4.3.2.5.4.3.1`
+
+Fresh exclusive generated_input_oct01 executes the committed exact T2025
+observer. Static original-source/carrier checks and the authored unsigned source
+emission pass. The first named-domain SystemVerilog compile then rejects the
+whole-copy composition link: wire is applied to a packed typedef containing
+nested authored two-state bit members. No runtime or later pair executes.
+This is a P1 accepted-source emitted-HDL defect, owned for immediate repair by
+.5.4.3.2; actual generated behavior remains unqualified. No native process-group
+rejection or diagnostic gap is captured, and historical EPERM remains open.
+
+The complete failure is immutable in
+`docs/audits/record-input-generated-observation-20261001/`. It retains exact
+admission, original stage/summary/results/bounds/argv/cleanup, source and
+producer Git identities before/after, complete TAP and independent selected
+workspace/command absence. Only the exact active repository prefix in outer
+stderr is projected away; the original stderr hash and complete stage record
+remain. Successful native PID identities were deliberately uncaptured, so
+individual PID absence is not independently measured. Normal cleanup removed
+compiled temporary HDL/binaries. The unchanged source's strict public
+re-emission is separately labeled diagnosis evidence rather than captured
+original HDL bytes. The pre-result success-verifier draft is explicitly
+unqualified and never passed or executed.
+
+The re-emitted declaration and compiler member locations agree.
+StructuralRTLIREmitter::_render_net_line unconditionally prefixes wire for its
+typed-net branch; TypeDeclarationSupport faithfully renders nested two_state
+leaves as bit. Existing T167 expects this mixed-state wire without a compiler
+leg, explaining why structural/public qualification did not catch legality.
+Actual retained rejection, complete identities and public re-emission provide
+re-derivation. Hostile saved result/bounds/cleanup/identity/gap/coverage/target
+mutations provide distinct falsification. Immutable archive, fixed source,
+producer Git blobs, scheduled repair leaf, fact/book/response and Git provide
+durability. Diagnose and commit before further HDL execution.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual %Error: domains_systemverilog.sv:1674:73 rejects comp_link_io__writer_isf_write_held_data because its typed wire contains the nested bit member at line 1636. Unchanged public strict source re-emission reproduces both locations. StructuralRTLIREmitter::_render_net_line applies wire to the preserved typedef, while TypeDeclarationSupport renders authored two_state members as bit. git log -S 'wire %s %s;' identifies introduction 3ca803fc8946140c172aeb97da26d66dd8830aee; T167's old structural oracle explicitly expects the illegal form.
+- [x] **ADDRESSED (verified)** — This diagnosis slice seals the actual failed first compile, proves no runtime/later pair occurred, independently authenticates original source/producer identities and full rejection/bounds/arguments/cleanup, and reproduces its declaration through public emission without another HDL execution. Hostile saved failure/coverage/identity/native/gap/cleanup mutations reject. The product defect is scheduled immediately under .5.4.3.2 and remains unresolved; no feature success or historical native cause is inferred.
+- [x] **NO REGRESSION** — The independent saved first-failure verifier passes complete archive/Git identity and hostile controls; unchanged strict public SystemVerilog re-emission succeeds. Original production, fixed test/source/bench, qualified observer/native helpers and earlier archives remain unchanged. Actual Knowledge Map reports knowledge-map: OK; task integrity and local book build complete before staged doctrines and normal hooks. The original genuine TAP is retained as FAIL, not relabeled a passing behavioral check.

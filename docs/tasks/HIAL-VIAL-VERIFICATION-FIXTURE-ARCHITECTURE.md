@@ -1956,10 +1956,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit with SEM fixed integration`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.6.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Observe genuine generated/domain record-input runtime with the committed observer.`
   Acceptance: `After child .1 and SEM .5.4.2 commit, use fresh exclusive exact admission for T2025 and full declared stage coverage under SEM .5.4.3. Preserve complete original bounds/results, exact identities, native failure context/errno, diagnostic gaps and independent cleanup. Diagnose any unexpected outcome before further execution. A pass leaves historical EPERM causality open and schedules its next genuine opportunity, with no original recurrence retry.`
-  Verification: `pending committed integration qualification`
+  Verification: `Fresh exclusive generated_input_oct01 executes the committed fixed observer but stops at first HDL compile: Verilator rejects a mixed-state packed typed wire. No runtime/later pair executes. Native failure events and diagnostic gaps are empty; original compile argv/bounds/nonzero result and cleanup remain, with exact before/after identities and independent workspace/command absence. Sealed failure diagnosis is SEM .5.4.3.1; P1 emitted-HDL repair is immediately .3.2 and fresh corrected observation .3.3. Historical EPERM remains unattributed; no original recurrence retry.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.12`
