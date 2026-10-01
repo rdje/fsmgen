@@ -57,6 +57,10 @@ carrier and HDL products are qualified under .3.1. The maintained-source literal
 declaration table is complete under .3.2, retaining the exact full current source
 cohort guard, complete typed native/API/newline/all-section discovery, supported
 applicability and fixed catalog. Source/package/named producer bytes remain.
-This closes generated/domain source/carrier/public .2.4; backend/native behavior
-and consumer completion remain .2.5. Structural reset ownership is not executed reset behavior.
+This closes generated/domain source/carrier/public .2.4. Direct and generated
+native behavior and generated execution reconciliation are now qualified under
+.2.5.3 and .2.5.4, including actual reset/abort checks; current complete public,
+refusal, package and prior scalar/storage products pass. Source/carrier reset
+ownership alone is not executed reset behavior. Supported backend/input closure
+.2.5.5 and full aggregate consumer delivery remain open.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1.

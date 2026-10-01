@@ -1,0 +1,52 @@
+{
+  "baseline_revision": "153c79aca9b75354dd0753c448688a4f032f3956",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.4",
+  "remaining": [
+    "supported backend/input completion .5.5",
+    "record outputs and full aggregate delivery",
+    "X/Z and reset-free initialization qualification",
+    "historical native EPERM cause and startup/full-CI/push gates"
+  ],
+  "requirements": [
+    {
+      "execution": "All copied data/tag/flag/piece and signed reader predicates in complete generated observation",
+      "limit": "Binary execution does not qualify X/Z.",
+      "requirement": "Exact ordered packed layout and signed/state leaf declarations",
+      "structural": "T2019/T2025 literal recursive metadata, typed child declarations and complete physical wiring"
+    },
+    {
+      "execution": "Later live word differs from sampled entry and stored copy; both readers and signed results pass",
+      "requirement": "Live inherited inputs and reused readers",
+      "structural": "Distinct child instances share exactly one reader definition; live input links and scalar binding identities"
+    },
+    {
+      "execution": "Complete copied leaves, prior held values, idle hold and reset/abort pass",
+      "requirement": "Sole generated whole-copy writer and owner reset",
+      "structural": "Typed private packed data plus explicit enable; parent/domain owns register/reset; no duplicate parent write"
+    },
+    {
+      "execution": "Per-lap public phase-1 result window; forwarding or zero at later parent completion/idle",
+      "limit": "No implicit blocking binding retention is added.",
+      "requirement": "Call-role scalar output binding",
+      "structural": "Spawn forwarding and blocking done_guarded combinational assignment"
+    },
+    {
+      "execution": "Owning reset/abort and independent unused input/clock toggling and stop/restart pass",
+      "limit": "No reset-free initialization guarantee.",
+      "requirement": "Ordinary and named-domain ownership",
+      "structural": "Exact authored clock/reset provenance; clock-only unused input remains in idle and absent from readers/writer"
+    },
+    {
+      "execution": "All positive request laps and fresh requests pass; actual unsigned source reaches expected signed mismatch",
+      "requirement": "Repeated activation and signed-property falsification",
+      "structural": "Original child activation/start-history contract and unchanged typed widths"
+    },
+    {
+      "current_public_recheck": "All tests successful, Files=6, Tests=39; no HDL/native fixture replay.",
+      "execution": "Saved direct and generated runtime verifiers pass without replay",
+      "requirement": "Public products, refusals and prior baselines",
+      "structural": "Complete native/API/newline check/semantic/schedule and independent literal declarations; contextual/domain/read-only/binding/shadow refusals; prior scalar/storage and package contracts"
+    }
+  ],
+  "schema": "fsmgen.generated_input_execution_reconciliation.v1"
+}

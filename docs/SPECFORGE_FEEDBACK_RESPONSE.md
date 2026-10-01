@@ -70,8 +70,10 @@ and book.
   `docs/audits/record-input-generated-observation-complete-20261001/`.
   Original typed-wire compile and blocking late-hold test failures remain
   preserved; their declaration and oracle repairs are qualified before this
-  fresh run. Generated execution reconciliation `.5.4.4` and backend/input
-  completion `.5.5` remain open. Record outputs, root-list ports and variants
+  fresh run. Generated execution reconciliation `.5.4.4` is complete: the selected public,
+  contextual refusal, package and prior scalar/storage contracts pass current
+  checks, with unchanged source/producers and retained direct/generated evidence.
+  Backend/input completion `.5.5` remains open. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

@@ -3015,11 +3015,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify generated and named-domain packed-input execution.`
   Acceptance: `Select the smallest independently authored public-pin runtime witnesses for reused live readers and a sole generated whole-copy writer, including owning/reset-free sibling domains, repeated requests and reset. Split preparation, fixed observer admission and genuine observation before each runtime when necessary. Preserve explicit output binding, domain ownership and exact packed private data/enable edges; no arbitration or record-output admission.`
-  Verification: `Qualified direct .5.3 is committed at f084b5f69d2265ca6f47412944369822f5273551. Child .1 prepares two independently authored witnesses: named-domain spawned copier plus reused readers, and ordinary parameterized blocking copier plus reused readers. Parent-owned phase pins select input changes. Spawned output bindings forward child outputs; parameterized blocking-do bindings are completion-guarded. Child .2 qualifies the exact generated observer; genuine runtime remains .3.`
-  Commit: `pending`
+  Verification: `All children complete: fixed independent source/bench preparation, separately qualified exact observer, bounded typed-carrier and oracle repairs before full genuine positive/unsigned-negative execution, then .4 requirement/public/baseline reconciliation. Both fixed generated sources pass both Verilog families. Existing complete declaration/private ownership/clock-reset/refusal contracts remain; no record output or arbitration admission. Supported backend/input completion is .5.5; historical native causality and X/Z/reset-free initialization stay open.`
+  Commit: `this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.4`
 
@@ -3091,11 +3091,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Reconcile and close generated/domain execution qualification.`
   Acceptance: `After actual .3 qualification, verify each selected generated/domain behavioral requirement, exact explicit binding and private packed data/enable ownership, prior direct/public/carrier controls and affected book/response/facts. Preserve unsupported profiles and explicit native/X/Z limits; backend/input completeness remains .5.5. Run focused meaningful checks and close parent only from recoverable evidence.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The bounded requirement crosswalk reconciles complete literal layout/state declarations, live/reused readers, typed private sole-writer data/enable and owning reset, explicit spawn/blocking binding roles, domain/unused isolation, repeated/signed/reset/hold execution and complete public/refusal/prior baselines. Saved direct and complete generated verifiers pass without HDL replay. Fresh T2019/T2020/T2021/T1985/T1981/T1982 public/package/refusal/scalar/storage checks report All tests successful, Files=6, Tests=39; complete native/API/newline equality and independent literal/corrupt-product/refusal oracles pass. All tracked bin/perl/t/isf code/source remains baseline 153c79aca9b75354dd0753c448688a4f032f3956. Sealed exact-source/receipt and hostile verification: docs/audits/generated-input-execution-reconciliation-20261001/. Backend/input closure remains .5.5, outputs/aggregate consumer delivery separate; no X/Z/reset-free/native causal closure.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5`
   Status: `pending`
@@ -4192,3 +4192,17 @@ Native PID and X/Z/reset-free/historical-cause gaps remain explicit.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --check --json strict carrier replay and retained public --emit-schedule-json provenance bind the fixed typed copier/readers, owning packed data/enable and done-guarded blocking result to the selected public-pin witness. Earlier real compile rejected the mixed-state typed wire; later real blocking execution rejected the wrong late-hold test. Their bounded committed repairs precede this fresh complete runtime. Source/carrier-only tests could not establish these executed behaviors.
 - [x] **ADDRESSED (verified)** — Fresh generated_input_window_oct01 executes all admitted pairs on committed f606ce2. Named-domain and ordinary blocking sources pass both families with complete copy-window/packed-leaf/live/signed/entry/prior/repeated/reset/idle isolation checks. The actual unsigned source passes its bound-result window and reaches only the expected signed rejection. Complete original result/argument/bound/cleanup receipts and before/after Git identities authenticate; no skip, drift, native event or diagnostic gap.
 - [x] **NO REGRESSION** — Genuine T2025 reports All tests successful, Files=1, Tests=5 with runtime unskipped and unchanged fixed sources/producers/helpers. Independent complete saved verification rejects hostile coverage, argument/bound/result/identity/cleanup/native-gap and signed-vector mutations. Knowledge Map, task integrity and local book build are checked before staged doctrines and normal hooks. Broader record-input/backend closure, full CI and historical native causality remain separately owned.
+
+## Acceptance — generated execution reconciliation (2026-10-01)
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.4`. Requirement-to-evidence crosswalk and
+complete public/saved receipts: `docs/audits/generated-input-execution-reconciliation-20261001/`.
+Re-derivation uses actual current native/API/newline products and complete saved
+positive/negative runtime. Independent literal layouts/roles, shared-corruption
+and contextual-refusal oracles, actual unsigned rejection and hostile saved
+receipt controls provide falsification. Exact baseline Git objects, sealed
+receipts/prerequisites, tasks/book/response/facts and Git provide durability.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual --emit-semantic-json and --emit-schedule-json products in T2019 retain complete typed children, physical/public/private endpoints, owning clocks/reset and authored declaration snapshots. T2021 actual --check --json and semantic refusals preserve contextual/read-only/binding/shadow boundaries without partial success. Runtime alone could not close these public contracts or prior scalar/storage baselines; the crosswalk now joins their independent producer oracles to genuine execution.
+- [x] **ADDRESSED (verified)** — Reconcile every selected generated/domain requirement against exact complete committed carrier/public and runtime evidence. Both fixed generated witnesses and the actual unsigned rejection are sealed; current public/package/refusal/scalar/domain-storage checks pass, and saved direct/generated hostile verification passes without HDL replay. Explicit variable carrier/type/private ownership and spawn/blocking binding semantics remain; no source, production, helper, arbitration or output-port change. Close .5.4 from recoverable evidence, preserving .5.5 backend/input closure.
+- [x] **NO REGRESSION** — T2019/T2020/T2021/T1985/T1981/T1982 reports All tests successful, Files=6, Tests=39. Both complete saved runtime verifiers and independent crosswalk/hostile receipt verification pass. All tracked bin/perl/t/isf source matches baseline Git; Knowledge Map, task integrity and local book build are checked before staged doctrines and normal hooks. Full aggregate, X/Z/reset-free initialization, historical native cause and startup/full-CI/push qualification are not inferred.

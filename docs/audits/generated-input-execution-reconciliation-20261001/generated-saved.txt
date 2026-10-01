@@ -1,0 +1,2 @@
+ram-guard: PID 48951; host 61.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Both generated/domain witnesses in both Verilog-family targets and actual unsigned-property rejection verified with exact sources, original bounds/results and cleanup; hostile saved controls reject. X/Z, reset-free initialization and historical native causality remain unproved.

@@ -38,7 +38,11 @@ or historical native EPERM cause. HIAL .11.7 owns the next genuine opportunity.
 The original typed-wire compile rejection and partial blocking late-hold test
 failure remain immutable. Their declaration and oracle corrections precede
 this new capture; never replay any spent generated capture. Generated execution
-reconciliation .5.4.4 and supported backend/input completion .5.5 remain open;
+reconciliation .5.4.4 is complete, joining current complete native/API/newline,
+contextual refusal, package and prior scalar/storage checks to retained runtime.
+Exact source/crosswalk/receipt evidence is in
+docs/audits/generated-input-execution-reconciliation-20261001/. Supported
+backend/input completion .5.5 remains open;
 record outputs and complete SPECFORGE aggregate delivery are separate.
 
 Full original genuine receipts and fixed source/bench products re-derive these

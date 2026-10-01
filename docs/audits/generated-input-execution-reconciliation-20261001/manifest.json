@@ -1,0 +1,68 @@
+{
+  "baseline_revision": "153c79aca9b75354dd0753c448688a4f032f3956",
+  "prerequisites": {
+    "docs/audits/generated-binding-oracle-correction-20261001/manifest.json": "1b36eb950be9475072ffa1fa8a9dc873f5517aeb8dff1350bb7cfb2cc30431e4",
+    "docs/audits/record-input-direct-observation-20261001/manifest.json": "681ea1cdcf32536e0cc2b8a367ad982ebd393ddf724aad82e43a77c7dff83657",
+    "docs/audits/record-input-generated-observation-complete-20261001/manifest.json": "e129f857bea84dc0e76d9fc9bc4c3f8ab4068062b1397ba734bdd2a1c3072db7",
+    "docs/audits/typed-composition-carrier-repair-20261001/manifest.json": "63ae3313b1c8d5dcba88d246d39ac97b0d799c404498236949e4ad07bc3dc411"
+  },
+  "producers": {
+    "perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm": {
+      "git_blob": "5578152199ca0f638d6654e0fd6b4b3db5c137c9",
+      "sha256": "60f634e9d7be9306f11a3ee676e2eabd9b6eb91c6c95d379b1e407526bb3d6dc"
+    },
+    "perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm": {
+      "git_blob": "6e770f53bc750b8c5136fe0ad82e89daccd7ea79",
+      "sha256": "b29a9adcbb9c16698b36c71a5a32ba4858649c58f93ee4dccfea19ae3050a3d9"
+    },
+    "t/1981-isf-storage-word-access.t": {
+      "git_blob": "264aa088edb9a9f5f8f9b5d591ec619e310f2b4a",
+      "sha256": "525f82f1bbb0fbb036a300bbdc947792ec311ec07fb2dc3f5a2c80bce4e5c566"
+    },
+    "t/1982-isf-domain-storage-report.t": {
+      "git_blob": "a32f014dc3dc488e4e79ea2ce11e9869004b2ee4",
+      "sha256": "6923c63c105a0242431bc13e3f01a10f981713ac2a132c137475fbbf4bc7facd"
+    },
+    "t/1985-isf-interface-port-public-qualification.t": {
+      "git_blob": "ede315281e7ede6ba7ece8914c94eada63b4577d",
+      "sha256": "90854d887f7dc4225eceef1576932a20ca55b430905bece935e2c7abae594d4a"
+    },
+    "t/2019-isf-record-input-generated-carriers.t": {
+      "git_blob": "11c7c8da638e55bbe1cf370240dd9079de2773e7",
+      "sha256": "ebaae76da2836361374b5f07e6d02a204fdaef6068b1f230886f0dfb4cdc0390"
+    },
+    "t/2020-composition-child-embedded-packages.t": {
+      "git_blob": "1599bafa24a71b59a06e1bdab141db3e2e31a260",
+      "sha256": "a49ab8a6b6d68f9165d2108ebc389112e54ca6a478b1f4e5e1194072edcf41dd"
+    },
+    "t/2021-isf-record-input-generated-refusals.t": {
+      "git_blob": "f32ae190aa49e106b89fd1ae9ff727e99da54e72",
+      "sha256": "798479e8370af1d0c00d35ef4fbe4a3290a68b570cbc4c2e185c3fc951b5c755"
+    },
+    "t/2025-isf-record-input-generated-runtime.t": {
+      "git_blob": "d3c163de218e94bd6a006e74f33fcd8ce6127650",
+      "sha256": "7f8f53435b060dcb16f8502dce659269c5d707948afa7754a4c438c67367dab7"
+    },
+    "t/data/isf_record_input_generated_blocking_runtime.isf": {
+      "git_blob": "1610592da677003c5094472ef1a7895d63b19782",
+      "sha256": "91afd1ac9e7acabfd6ebb47f391b242d830520e3a829124467bec093c88dc9ab"
+    },
+    "t/data/isf_record_input_generated_domains_runtime.isf": {
+      "git_blob": "af91810021c5d9f7d8d8915fe2709a65dc939f97",
+      "sha256": "d39955c46ff1421b899e0a6da8a6142377270b3e4f36ef37919507df9e675670"
+    },
+    "t/data/isf_record_input_generated_runtime_tb.sv": {
+      "git_blob": "8405b2b97ca4f73547907208c30cf495fa730719",
+      "sha256": "c9303b317e4151d9d1ef40f40232e24155e033ba0a5f97ccae6e72cbf8f419ac"
+    }
+  },
+  "schema": "fsmgen.generated_input_execution_reconciliation_manifest.v1",
+  "sha256": {
+    "direct-saved.txt": "e22139951cd4ecd551ecb6cf9e52c9719e74820494ab2ae638975ccd37bbfd74",
+    "generated-saved.txt": "a9a6910863e9233f9dd8897a15db240a17c44325e80fd4f47c5748a11c389768",
+    "public-regression.txt": "43269c49e0b2a4df70f9555ac60964a6d5814aacc6580b6399aff20eb0c7da4d",
+    "requirements.json": "68766d1e7e3a9830a42fe3f03f3dc1d1c1a65bcc5abd09648eccf2d846c16052",
+    "verify.py": "d7770b1f85b2d73828b75a2e65474e351e114d8e4389ca6110cd99c51aadf128"
+  },
+  "source_scope": "All tracked bin/perl/t/isf code and source unchanged from baseline; selected tests also guard their named producers during calls. No new HDL/native fixture execution."
+}

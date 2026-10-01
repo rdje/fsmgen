@@ -27,8 +27,9 @@ TAP/stdout/stderr and independent workspace/command census. Normal temporary
 cleanup removes generated HDL/binaries. Successful native calls intentionally
 produce no context records, so individual successful-child PID absence is not
 independently measured. Native events and diagnostic gaps are empty. Historical
-EPERM remains P1-open; HIAL .11.6 schedules observation at the next genuinely
-required generated/domain runtime. No recurrence-only retry follows this pass.
+EPERM remains P1-open. HIAL .11.6 subsequently completes generated/domain
+observation without native rejection; .11.7 schedules the next genuinely required
+feature HDL qualification. No recurrence-only retry follows this pass.
 
 Actual stage receipts, literal bench expectations and exact Git sources provide
 re-derivation. The compiled unsigned source and hostile saved bounds, marker,
@@ -36,5 +37,5 @@ cleanup, assertion, identity, gap, target and result mutations provide distinct
 falsification. Tracked immutable evidence, source/test/bench, tasks, book and Git
 provide durability. Binary Verilator values do not establish X/Z behavior;
 signed/state declarations have separate structural witnesses. Generated/domain
-execution .5.4, backend/input completion .5.5, record outputs and aggregate
-consumer delivery remain open. Reverify consumes saved records only.
+execution .5.4 is subsequently qualified and reconciled; backend/input
+completion .5.5, record outputs and aggregate consumer delivery remain open. Reverify consumes saved records only.

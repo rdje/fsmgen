@@ -349,8 +349,11 @@ the carrier now preserves the same packed typedef on a variable declaration.
 A subsequent blocking test used the wrong late-retention expectation; its
 completion-window correction preserves all packed-storage predicates. Both
 diagnoses, exact predecessor controls and original partial receipts remain
-tracked. SEM `.60.4.3.2.5.4.4` reconciles generated execution; backend/input
-completion `.5.5` remains open. Complete SPECFORGE aggregate delivery, X/Z
+tracked. SEM `.60.4.3.2.5.4.4` completes generated execution reconciliation:
+current public reports, contextual refusals, package integration and prior
+scalar/domain-storage contracts pass, with complete typed native/API/newline
+products and unchanged source/producers. Backend/input completion `.5.5` remains
+open. Complete SPECFORGE aggregate delivery, X/Z
 behavior and historical native causality are not inferred from these runs.
 
 Run the authored source checks from the repository root:
