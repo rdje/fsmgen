@@ -1,0 +1,2 @@
+ram-guard: PID 44056; host 65.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Complete scoped requirement crosswalk, exact baseline source objects and public/scalar/storage regression authenticated. Saved direct/generated positive and actual unsigned-negative verification pass; hostile receipt controls reject. Backend/input and full aggregate delivery remain open.

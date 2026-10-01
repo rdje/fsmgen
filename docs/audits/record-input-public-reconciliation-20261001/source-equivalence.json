@@ -1,0 +1,17 @@
+{
+  "baseline_revision": "f69a464cfdcbe00128bb3923cbd6921a913887c4",
+  "argv": [
+    "git",
+    "diff",
+    "--exit-code",
+    "f69a464cfdcbe00128bb3923cbd6921a913887c4",
+    "--",
+    "bin",
+    "perl",
+    "t",
+    "isf"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

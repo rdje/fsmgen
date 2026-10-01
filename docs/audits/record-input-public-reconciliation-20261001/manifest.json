@@ -1,0 +1,113 @@
+{
+  "baseline_revision": "f69a464cfdcbe00128bb3923cbd6921a913887c4",
+  "matrix_predecessor": {
+    "git_blob": "0162ef3092203e88ac5c03d982fa6b7e8866acc4",
+    "sha256": "76b0167868be77b79baff8514fb51603674c6d5db8594b4304607d0513e8e189"
+  },
+  "prerequisites": {
+    "docs/audits/generated-input-execution-reconciliation-20261001/manifest.json": "74b19721788bff21e89c4ced1457fe5976106a147d51bf02c8a0a613395d4e2a",
+    "docs/audits/record-input-backend-profiles-20261001/manifest.json": "e2075f2e3d4dfb60d16c4bd031aa010d899aa37dbdab2fa24f66d20efbf65b20"
+  },
+  "producers": {
+    "bin/fsmgen": {
+      "git_blob": "63d943ce91efecb31117c8b8d3b87428de5d35c7",
+      "sha256": "dd23a0ccaa0ab017fa25ed633731a78e211344ef50a41a9f783cc2660e3539cb"
+    },
+    "bin/fsmgen-mcp": {
+      "git_blob": "0a2a313f5fe750c704d79e3c82522c9fcec5534c",
+      "sha256": "054988b146ff8acb50ec4d063c2bfd4cbb605ad7465994fbe80a8bc9c055503d"
+    },
+    "docs/book/src/13k-isf-feature-support-matrix.md": {
+      "git_blob": "0162ef3092203e88ac5c03d982fa6b7e8866acc4",
+      "sha256": "76b0167868be77b79baff8514fb51603674c6d5db8594b4304607d0513e8e189"
+    },
+    "isf/apb_requester.isf": {
+      "git_blob": "95f348a277eb42857a2cb20d627a64c817a7b9d0",
+      "sha256": "82f0113741b602862c9425b2ab2eb8a5dd6d127c66a66ded86b87bb581e937bd"
+    },
+    "isf/interface_port_metadata.isf": {
+      "git_blob": "515575e600be0992582898ee955adfec7c06d96c",
+      "sha256": "ea78bc36299bd55887ef5175b7deab4ea23f21e8fcf7fd9b8850d754ad232287"
+    },
+    "isf/record_input.isf": {
+      "git_blob": "9a0cf189b8027475ef52c02154e7b0f931cf6fba",
+      "sha256": "d444ca92ac52ad56258038ae0f1a4bfa6cf6686c8d5d62ab271c23204ba8616f"
+    },
+    "isf/record_input_children.isf": {
+      "git_blob": "711576b92a7c4f35cddf0475f66f8891ee9dc56e",
+      "sha256": "f69ad37b3908f44542b027354a756eefac3b13512b36ba3c7f5db07fdd2535af"
+    },
+    "isf/record_input_types.fsm": {
+      "git_blob": "b4f91278e2a1466d9c3fdf1f626f3d79a8d62f7e",
+      "sha256": "d8f39e67cb8ea7c12920c33c7288f7e5737c9e49d058a80504ebd23538d4f868"
+    },
+    "isf/storage_fields.isf": {
+      "git_blob": "664ccafe42502e3cca998e1f0144b7bbab218782",
+      "sha256": "7a583f66dc9acccd4b9b2158449b74505d2b8dc0267e405baa5dca474a0fb184"
+    },
+    "isf/storage_word_access.isf": {
+      "git_blob": "5ba2cab7dc1c61f23cf51109bfcfa4d7286ed12f",
+      "sha256": "0b7c2815d950d8c9cba71339fa8a9f2c4f806893a3f19a2b2f59442132de1b5f"
+    },
+    "isf/verification_observation_metadata.isf": {
+      "git_blob": "4e26a179247a145d04c85de85eef682a453ecc6d",
+      "sha256": "43fab06c87254fd773666e0eb9d80a909a52a7f9137c0e506555d19d8c99d899"
+    },
+    "perl/FSM/Support/CapabilityManifest.pm": {
+      "git_blob": "99de8af52fc26fb301471c2138dd75bdd94527e5",
+      "sha256": "549e00f75579d2de3ad42ace32ac72ba2b79c85797c5cd2cdaee4a86aa9a6970"
+    },
+    "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+      "git_blob": "3594e96224fcb854354721276c3764c8f15a3fe8",
+      "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+    },
+    "perl/FSM/Support/ISFPublicInterfaceContract.pm": {
+      "git_blob": "6f2fa684c653557e285548d00dde6e2b3445cad5",
+      "sha256": "c4fdeeee933d11c94106c7ca94ca7d2949d9e19401bd197016fb6252f26525d0"
+    },
+    "perl/FSM/Support/RegressionCorpus.pm": {
+      "git_blob": "e2e2e81c891eb4fa259fdb640526cd2038fd0727",
+      "sha256": "a751e673717f7993c1a5304fdc72443ef2918dc360a94c544b94c1cd89592df6"
+    },
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": {
+      "git_blob": "b5e9fb75ef4ef8878ac5e1b742d25b665f4311fb",
+      "sha256": "436ccca20ce154faa859c83759d7fce912e59475519a43003db76e9feebd5c87"
+    },
+    "t/1985-isf-interface-port-public-qualification.t": {
+      "git_blob": "ede315281e7ede6ba7ece8914c94eada63b4577d",
+      "sha256": "90854d887f7dc4225eceef1576932a20ca55b430905bece935e2c7abae594d4a"
+    },
+    "t/2017-isf-record-input-frontend-closure.t": {
+      "git_blob": "3b15d28cb81199da82c17455ccd932813c6f525a",
+      "sha256": "251e2892693de1a9413cae8c655f11ffc8914c917fa1850c6342999f9d008157"
+    },
+    "t/2018-semantic-public-json-scalar-kinds.t": {
+      "git_blob": "9032da1641aeba2f390101c8b0fc46848ef8e830",
+      "sha256": "240937b52a2add3182aee952760538450d70bf45b1a69a31820bb24df2d228ce"
+    },
+    "t/248-regression-corpus-accounting.t": {
+      "git_blob": "b7c90d9158113da0119c561c49a9b4c770e062b2",
+      "sha256": "e02ee585453607f59a1e7077b465120d339d11c807627207c75f9264be9006b4"
+    },
+    "t/lib/FSM/Test/SourceQueryCoverage.pm": {
+      "git_blob": "e761a6dc5024da0b0244e07caa5cb8d43289fb01",
+      "sha256": "7aac9a8cd88183fe5bcd2d5cbeae4009d022bfb014c83b6d56f3b205834aa783"
+    },
+    "t/lib/FSM/Test/SourceQueryRunner.pm": {
+      "git_blob": "53a0996d9461c496438832520912874bd958982f",
+      "sha256": "a2e0267c102a55ec5125605892afea3166008ffa80e51d866ee0f36837e8e207"
+    }
+  },
+  "schema": "fsmgen.record_input_public_reconciliation.v1",
+  "sha256": {
+    "cohort.json": "74d701e59399b01f84772c38ea2d64fcc3a6cf0fdd591c055b7ac93d88f23ea6",
+    "discovery.json": "e153ea068abb924d1e868d68b76cc14e50e537d451e4f90cc9eb1a6bea4ffbab",
+    "json-kind-equality.txt": "e232c6ae28897d783fe1a6bda8ea17350267a0d4f356bf100a233f7ad35d3223",
+    "matrix-history.txt": "c26f616013a6f9558f7289e63ef12a34d9e2be1267c4e4a920ca7859737886e3",
+    "matrix.md.source": "a89576680496cf0cc2bd084897a2b7cd501ab010a6603d2d0130fb9af2b8cd0a",
+    "prior-saved.txt": "dbed4dbe088c9e4323d63ebf030231862583c1b316e96943d057c7cfae14e62c",
+    "public.txt": "4203b3ca365fde7e4945a5f6b875e8f63f5c4f108ef567cb103cf62765cfa4c8",
+    "source-equivalence.json": "a9d3a458656b659f053a366f37ca34d12006adb432a7b4e35c23620b3b33a024",
+    "verify.py": "816089b0b5fad2fd6b6872e68fbbba86cb0510fcdb949920e1adb699c35ff888"
+  }
+}

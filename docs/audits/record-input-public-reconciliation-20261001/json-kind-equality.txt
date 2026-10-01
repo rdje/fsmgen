@@ -1,0 +1,2 @@
+Python dictionary equality aliases boolean/integer fields: True
+Canonical JSON equality distinguishes their primitive kinds: False

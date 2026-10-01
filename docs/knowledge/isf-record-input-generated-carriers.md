@@ -61,6 +61,11 @@ This closes generated/domain source/carrier/public .2.4. Direct and generated
 native behavior and generated execution reconciliation are now qualified under
 .2.5.3 and .2.5.4, including actual reset/abort checks; current complete public,
 refusal, package and prior scalar/storage products pass. Source/carrier reset
-ownership alone is not executed reset behavior. Supported backend/input closure
-.2.5.5 and full aggregate consumer delivery remain open.
+ownership alone is not executed reset behavior. Backend profile .2.5.5.1 and
+final public/corpus reconciliation .2.5.5.2 now qualify precise VHDL refusals,
+current literal discovery descriptors, complete selected ISF cohort, supplied
+sources/catalog and JSON kinds, preserving unchanged prior evidence. The book
+matrix's stale pending public/runtime prose is repaired. Sealed reconciliation:
+docs/audits/record-input-public-reconciliation-20261001/. Independent input signoff
+.2.5.5.3 and full aggregate consumer delivery remain open.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1.

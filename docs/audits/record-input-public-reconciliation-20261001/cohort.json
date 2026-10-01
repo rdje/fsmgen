@@ -1,0 +1,230 @@
+[
+   {
+      "catalog_entries" : [
+         {
+            "coverage" : "isf_pipeline_cli",
+            "explicit_nonclaims" : [],
+            "family" : "protocol_fixture",
+            "id" : "intent.isf_apb_requester",
+            "required_capabilities" : [],
+            "supported_phases" : []
+         }
+      ],
+      "coverage_buckets" : [
+         "isf_pipeline_cli"
+      ],
+      "expectations" : {
+         "expected_module_name" : "apb_requester",
+         "expected_semantic_source_root_kind" : "fsm"
+      },
+      "file_kind" : "isf",
+      "language_version" : null,
+      "query_kinds" : [
+         "check",
+         "semantic",
+         "schedule"
+      ],
+      "search_path_relpaths" : [],
+      "source_id" : "isf/apb_requester.isf",
+      "source_kind" : "isf",
+      "strict" : true
+   },
+   {
+      "catalog_entries" : [
+         {
+            "coverage" : "isf_pipeline_cli",
+            "explicit_nonclaims" : [],
+            "family" : "language_feature_fixture",
+            "id" : "feature.isf_verification_observation_metadata",
+            "required_capabilities" : [],
+            "supported_phases" : []
+         },
+         {
+            "coverage" : "isf_verification_output_uvm_passive_monitor_skeleton_cli",
+            "explicit_nonclaims" : [],
+            "family" : "language_feature_fixture",
+            "id" : "feature.isf_verification_observation_uvm_passive_monitor_skeleton",
+            "required_capabilities" : [],
+            "supported_phases" : []
+         },
+         {
+            "coverage" : "isf_verification_output_vhdl_observation_package_skeleton_cli",
+            "explicit_nonclaims" : [],
+            "family" : "language_feature_fixture",
+            "id" : "feature.isf_verification_observation_vhdl_package_skeleton",
+            "required_capabilities" : [],
+            "supported_phases" : []
+         }
+      ],
+      "coverage_buckets" : [
+         "isf_pipeline_cli",
+         "isf_verification_output_uvm_passive_monitor_skeleton_cli",
+         "isf_verification_output_vhdl_observation_package_skeleton_cli"
+      ],
+      "expectations" : {
+         "expected_module_name" : "verification_observation_metadata",
+         "expected_semantic_source_root_kind" : "fsm"
+      },
+      "file_kind" : "isf",
+      "language_version" : null,
+      "query_kinds" : [
+         "check",
+         "semantic",
+         "schedule"
+      ],
+      "search_path_relpaths" : [],
+      "source_id" : "isf/verification_observation_metadata.isf",
+      "source_kind" : "isf",
+      "strict" : true
+   },
+   {
+      "catalog_entries" : [
+         {
+            "coverage" : "isf_pipeline_cli",
+            "explicit_nonclaims" : [],
+            "family" : "language_feature_fixture",
+            "id" : "feature.isf_storage_field_metadata",
+            "required_capabilities" : [],
+            "supported_phases" : []
+         }
+      ],
+      "coverage_buckets" : [
+         "isf_pipeline_cli"
+      ],
+      "expectations" : {
+         "expected_module_name" : "storage_fields",
+         "expected_semantic_source_root_kind" : "fsm"
+      },
+      "file_kind" : "isf",
+      "language_version" : null,
+      "query_kinds" : [
+         "check",
+         "semantic",
+         "schedule"
+      ],
+      "search_path_relpaths" : [],
+      "source_id" : "isf/storage_fields.isf",
+      "source_kind" : "isf",
+      "strict" : true
+   },
+   {
+      "catalog_entries" : [
+         {
+            "coverage" : "isf_pipeline_cli",
+            "explicit_nonclaims" : [],
+            "family" : "language_feature_fixture",
+            "id" : "feature.isf_storage_word_access",
+            "required_capabilities" : [],
+            "supported_phases" : []
+         }
+      ],
+      "coverage_buckets" : [
+         "isf_pipeline_cli"
+      ],
+      "expectations" : {
+         "expected_module_name" : "storage_word_access",
+         "expected_semantic_source_root_kind" : "fsm"
+      },
+      "file_kind" : "isf",
+      "language_version" : null,
+      "query_kinds" : [
+         "check",
+         "semantic",
+         "schedule"
+      ],
+      "search_path_relpaths" : [],
+      "source_id" : "isf/storage_word_access.isf",
+      "source_kind" : "isf",
+      "strict" : true
+   },
+   {
+      "catalog_entries" : [
+         {
+            "coverage" : "isf_pipeline_cli",
+            "explicit_nonclaims" : [],
+            "family" : "language_feature_fixture",
+            "id" : "feature.isf_declared_interface_metadata",
+            "required_capabilities" : [],
+            "supported_phases" : []
+         }
+      ],
+      "coverage_buckets" : [
+         "isf_pipeline_cli"
+      ],
+      "expectations" : {
+         "expected_module_name" : "interface_port_metadata",
+         "expected_semantic_source_root_kind" : "fsm"
+      },
+      "file_kind" : "isf",
+      "language_version" : null,
+      "query_kinds" : [
+         "check",
+         "semantic",
+         "schedule"
+      ],
+      "search_path_relpaths" : [],
+      "source_id" : "isf/interface_port_metadata.isf",
+      "source_kind" : "isf",
+      "strict" : true
+   },
+   {
+      "catalog_entries" : [
+         {
+            "coverage" : "isf_pipeline_cli",
+            "explicit_nonclaims" : [],
+            "family" : "language_feature_fixture",
+            "id" : "feature.isf_record_input",
+            "required_capabilities" : [],
+            "supported_phases" : []
+         }
+      ],
+      "coverage_buckets" : [
+         "isf_pipeline_cli"
+      ],
+      "expectations" : {
+         "expected_module_name" : "record_input",
+         "expected_semantic_source_root_kind" : "fsm"
+      },
+      "file_kind" : "isf",
+      "language_version" : null,
+      "query_kinds" : [
+         "check",
+         "semantic",
+         "schedule"
+      ],
+      "search_path_relpaths" : [],
+      "source_id" : "isf/record_input.isf",
+      "source_kind" : "isf",
+      "strict" : true
+   },
+   {
+      "catalog_entries" : [
+         {
+            "coverage" : "isf_pipeline_cli",
+            "explicit_nonclaims" : [],
+            "family" : "language_feature_fixture",
+            "id" : "feature.isf_record_input_children",
+            "required_capabilities" : [],
+            "supported_phases" : []
+         }
+      ],
+      "coverage_buckets" : [
+         "isf_pipeline_cli"
+      ],
+      "expectations" : {
+         "expected_module_name" : "record_input_children_top",
+         "expected_semantic_source_root_kind" : "top"
+      },
+      "file_kind" : "isf",
+      "language_version" : null,
+      "query_kinds" : [
+         "check",
+         "semantic",
+         "schedule"
+      ],
+      "search_path_relpaths" : [],
+      "source_id" : "isf/record_input_children.isf",
+      "source_kind" : "isf",
+      "strict" : true
+   }
+]

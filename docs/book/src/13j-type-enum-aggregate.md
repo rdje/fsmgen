@@ -352,8 +352,11 @@ diagnoses, exact predecessor controls and original partial receipts remain
 tracked. SEM `.60.4.3.2.5.4.4` completes generated execution reconciliation:
 current public reports, contextual refusals, package integration and prior
 scalar/domain-storage contracts pass, with complete typed native/API/newline
-products and unchanged source/producers. Backend/input completion `.5.5` remains
-open. Complete SPECFORGE aggregate delivery, X/Z
+products and unchanged source/producers. Backend profiles `.5.5.1` retain the
+precise VHDL refusals below. Final public/corpus reconciliation `.5.5.2` qualifies
+supplied sources, complete discovery, current catalog and JSON kinds, preserving
+the unchanged full-cohort and prior evidence. Independent input signoff `.5.5.3`
+remains open. Complete SPECFORGE aggregate delivery, X/Z
 behavior and historical native causality are not inferred from these runs.
 
 Record-input HDL support is qualified separately for each backend. The direct,

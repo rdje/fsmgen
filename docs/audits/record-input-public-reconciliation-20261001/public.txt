@@ -1,0 +1,7 @@
+ram-guard: PID 44461; host 64.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2017-isf-record-input-frontend-closure.t .. ok
+t/248-regression-corpus-accounting.t ........ ok
+t/2018-semantic-public-json-scalar-kinds.t .. ok
+All tests successful.
+Files=3, Tests=7214, 40 wallclock secs ( 0.14 usr  0.02 sys + 28.64 cusr  9.98 csys = 38.78 CPU)
+Result: PASS
