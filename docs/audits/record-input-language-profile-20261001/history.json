@@ -1,0 +1,38 @@
+[
+  {
+    "argv": [
+      "git",
+      "log",
+      "-S",
+      "Use `systemverilog` or `verilog`",
+      "--format=%H %s",
+      "--",
+      "docs/book/src/13j-type-enum-aggregate.md"
+    ],
+    "stdout": "f69a464cfdcbe00128bb3923cbd6921a913887c4 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.1: qualify record-input backend profiles\n"
+  },
+  {
+    "argv": [
+      "git",
+      "log",
+      "-S",
+      "convert_systemverilog_to_verilog",
+      "--format=%H %s",
+      "--",
+      "perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm"
+    ],
+    "stdout": "5de2f44d8e68b1124a3736c30e8479a005188768 Add dedicated Verilog backend for FlattenedDT\n"
+  },
+  {
+    "argv": [
+      "git",
+      "log",
+      "-S",
+      "are not yet accepted as interface or transaction ports.",
+      "--format=%H %s",
+      "--",
+      "docs/book/src/13j-type-enum-aggregate.md"
+    ],
+    "stdout": "aa2404ebe7822c53c048460abf7d10961924da12 ISF-G6-13J-EXAMPLES.2: ship 13j type/enum/aggregate examples\n"
+  }
+]

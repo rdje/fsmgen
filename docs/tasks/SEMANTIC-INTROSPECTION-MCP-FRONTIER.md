@@ -3135,10 +3135,32 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Sign off every independently qualified selected record-input requirement.`
   Acceptance: `After parent prerequisites and child .1 commit, reconcile every input portion of selected R1-R3 against exact source/type/layout/context/domain/copy/profile/public and genuine direct/generated evidence. Authenticate complete original positive/negative receipts and counterexamples without spent HDL replay. Close only satisfied input parents and synchronize capability/spec/book/response/facts, preserving X/Z, output/full consumer, durations/timers and historical-native/startup/full-CI gates. Resume record outputs .60.4.3.3 from a clean committed frontier.`
-  Verification: `pending independent selected-input signoff`
+  Verification: `P2 language-profile qualification gap: T2024/T2025 and original actual compile argv exercise systemverilog/verilog emitter options with .sv sources and no IEEE 1364 mode. Verilog.pm converts procedural forms but retains packed SystemVerilog typedefs. Verilator v5.050 published default is SystemVerilog. Genuine binary behavior remains valid; pure Verilog compatibility is unproved. Child .1 reconciles current claims and seals exact receipt/emission/parser-mode evidence; .2 owns a precise qualified Verilog record-input boundary before .3 final signoff. No spent HDL replay or production change has occurred.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.1`
+  Status: `done`
+  Goal: `Reconcile current record-input backend and authoring scope statements.`
+  Acceptance: `P2 scope defect: generic qualified Verilog wording omits that the actual complete original positive and unsigned-negative receipts compile .sv DUTs with default SystemVerilog syntax. Authenticate exact immutable original argv/results, independently capture current direct/generated text without any HDL compiler or simulator, and compare retained packed typedefs/procedural forms with the published version-matched tool contract and exact converter history. Preserve genuine binary behavior and all prior archives; correct book/spec/feedback/facts to recommend SystemVerilog and identify pure Verilog-2005 as unqualified. Also repair the inherited book storage walkthrough that still refuses all aggregate interface ports after record-input admission, using exact history and current actual authored controls. Own a precise boundary repair in sibling .2; do not infer a pure-mode failure or silently retire a supported emitter option.`
+  Verification: `git log -S roots the overbroad target recommendation at f69a464cfdcbe00128bb3923cbd6921a913887c4, procedural-only conversion at 5de2f44d8e68b1124a3736c30e8479a005188768 and stale walkthrough at aa2404ebe7822c53c048460abf7d10961924da12. Complete original direct/generated receipts authenticate Verilator 5.050, .sv DUTs and no IEEE 1364 selector; its published version-matched default is SystemVerilog. All six actual FSMGen-only direct/domain/blocking emissions retain packed typedefs; no HDL tool runs. Exact source/producers match baseline 40a51936. Scope/authoring statements now agree across book/spec/feedback/facts; preserved positive/unsigned-negative behavior remains valid. Missing-pair, language-selector, erased-type and false-zero JSON-kind controls reject. Sealed docs/audits/record-input-language-profile-20261001/ retains complete inputs/emissions/original identities and exact book replacements. Focused docs T1305/T1414/T1303 passes All tests successful, Files=3, Tests=310; book builds. Precise Verilog-profile qualification .2 precedes independent signoff .3.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.2`
+  Status: `pending`
+  Goal: `Qualify a precise record-input Verilog language boundary.`
+  Acceptance: `After .1 commits, inspect the selected contract and actual direct/generated target handoffs. Retained packed SystemVerilog syntax must not be advertised as IEEE 1364 qualification. Select and implement the smallest correct profile behavior: valid standards-qualified lowering, or an explicit contextual refusal for an unsupported record-input profile. Preserve scalar and already qualified SystemVerilog/storage behavior, public destination atomicity and archived native evidence. Split native-profile admission and observations before any new HDL invocation; do not replay spent captures. Log broader existing aggregate/Verilog issues with independently established ownership before changing their scope.`
+  Verification: `pending exact target-profile admission/repair; genuine SystemVerilog behavior remains qualified`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.3`
+  Status: `pending`
+  Goal: `Complete selected-input signoff after precise backend profiles qualify.`
+  Acceptance: `After siblings commit, reconcile every selected R1-R3 input requirement with original complete frontend/generated/public/profile/native evidence and independent counterexamples. Close only satisfied input parents, preserve X/Z, output/full consumer, duration/timer and historical-native limits, and resume record outputs .60.4.3.3 from a clean committed frontier.`
+  Verification: `pending independent input signoff after language-profile boundary`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3`
@@ -4287,3 +4309,19 @@ VHDL executable behavior is changed or newly qualified.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S traces the blanket scalar-arithmetic refusal to 0f31a983ffaafb606b41e1e42c965523279f37db. Support ships in b4033eb3f62856b8d60d3554475883e13490dfcd; its exact diff updates other VHDL_SCOPE support bullets but leaves the old separate refusal. Current T1420 and T386 actual source generation qualifies one-bit signed +, -, * and RHS chains, retaining division/modulo and mixed-sign refusal. The contradictory maintained bullet is P2 documentation drift.
 - [x] **ADDRESSED (verified)** — Replace that obsolete bullet and the related overbroad vector-only signed deferral with exact bounded xor/and support and precise remaining limits. Independent byte comparison protects every other scope line and the unsupported record-input boundary. Stale, operator-substituted and record-support mutations reject. Book, canonical fact and SPECFORGE response preserve the same supported profile and analyzer/runtime limits. Exact current backend/test/pipeline bytes match baseline b069b76; no implementation or HDL native execution changes.
 - [x] **NO REGRESSION** — Focused pipeline/facade T1420/T386 reports All tests successful, Files=2, Tests=160. Independent saved history/source/receipt/scope and hostile verification pass. Initial staged doctrines catch the draft pinned-card mutation; restore the exact historical partition and add a separate dated reconciliation card. Knowledge Map, task integrity, docs-relative paths and local book build run before staged doctrines and normal hooks. Declared record VHDL and broad backend/executable parity remain unsupported; independent input signoff and output/full consumer qualification remain open.
+
+
+## Acceptance — record-input language and authoring scope (2026-10-01)
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5.3.2.1`.
+Original complete native arguments/results, exact converter/history objects and
+current FSMGen-only text reproduce the scoped observation. Independently literal
+syntax/argv and hostile missing-pair, selector, type-erasure and false-zero
+JSON-kind controls falsify a broader claim. The version-matched published tool
+contract, sealed `docs/audits/record-input-language-profile-20261001/`, baseline
+producer objects, canonical docs/facts and Git provide durability. No new HDL
+compiler or simulator is invoked; pure-mode failure is not claimed.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S identifies the overbroad qualified-target recommendation at f69a464cfdcbe00128bb3923cbd6921a913887c4. Verilog.pm's procedural-only conversion predates the feature at 5de2f44d8e68b1124a3736c30e8479a005188768. Original T2024/T2025 argv use .sv DUTs and default SystemVerilog parsing; current packed typedef emission does not establish IEEE 1364 syntax. The inherited all-interface refusal in the storage walkthrough traces to aa2404ebe7822c53c048460abf7d10961924da12 and contradicts actual admitted record inputs. Both P2 prose defects are owned here.
+- [x] **ADDRESSED (verified)** — Correct the supported-profile recommendation and walkthrough; book/spec/feedback/facts distinguish both genuine emitter observations under SystemVerilog parsing from unqualified Verilog-2005. All six actual direct/domain/blocking emissions retain independently expected packed signed/two-state syntax. Original full positive and unsigned-negative receipts authenticate without replay; exact book replacement comparison protects other bytes. Selector, missing-pair, type-erasure and false-zero JSON-kind mutations reject. Record-output/root-list/transaction boundaries remain closed. Sibling .2 owns precise target-profile admission or refusal before final signoff.
+- [x] **NO REGRESSION** — T1305/T1414/T1303 reports All tests successful, Files=3, Tests=310; mdBook builds. Both original runtime verifiers and the new complete saved emission/argv/source/history/scope verifier pass. bin/perl/t/isf bytes remain baseline 40a51936. Initial staged claim dispositions rejects the new standard-name sentence as an unreviewed numeric candidate. IEEE 1364/Verilog-2005 are reviewed structural identifiers; the actual semantic qualification limit retains the sealed argv/emission evidence. Add that exact disposition in required candidate-ID order and regenerate the inventory after final measured-capacity edits without weakening completeness. Knowledge Map, task integrity, capacity/claim inventory and staged doctrines run before normal commit hooks. One final staged run is stopped by the unchanged RAM guard at host 88.0%, exit 137; named children 69305/69480 are absent in an independently escalated read-only ps census. The initial sandbox census refuses; escalation succeeds. Preserve the cutoff and rerun only after headroom returns. No unrelated process is changed. No HDL tool invocation, spent native replay, X/Z qualification or broader backend/signoff closure follows.

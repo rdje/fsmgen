@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--exit-code",
+    "40a51936ed3424acccd65d9812cbc0c1e892da5b",
+    "--",
+    "bin",
+    "perl",
+    "t",
+    "isf"
+  ],
+  "exit_code": 0,
+  "stderr": "",
+  "stdout": ""
+}

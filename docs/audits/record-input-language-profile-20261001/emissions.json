@@ -1,0 +1,116 @@
+[
+  {
+    "argv": [
+      "perl",
+      "bin/fsmgen",
+      "--quiet",
+      "--strict",
+      "--language",
+      "systemverilog",
+      "--output",
+      ".artifacts/record-input-language-profile/direct_systemverilog.sv",
+      "t/data/isf_record_input_runtime.isf"
+    ],
+    "case": "direct",
+    "exit_code": 0,
+    "source": "t/data/isf_record_input_runtime.isf",
+    "stderr": "",
+    "stdout": "=== ISF Intent Scheduling ===\n\nActor: packed_input_runtime\n",
+    "target": "systemverilog"
+  },
+  {
+    "argv": [
+      "perl",
+      "bin/fsmgen",
+      "--quiet",
+      "--strict",
+      "--language",
+      "verilog",
+      "--output",
+      ".artifacts/record-input-language-profile/direct_verilog.sv",
+      "t/data/isf_record_input_runtime.isf"
+    ],
+    "case": "direct",
+    "exit_code": 0,
+    "source": "t/data/isf_record_input_runtime.isf",
+    "stderr": "",
+    "stdout": "=== ISF Intent Scheduling ===\n\nActor: packed_input_runtime\n",
+    "target": "verilog"
+  },
+  {
+    "argv": [
+      "perl",
+      "bin/fsmgen",
+      "--quiet",
+      "--strict",
+      "--language",
+      "systemverilog",
+      "--output",
+      ".artifacts/record-input-language-profile/domains_systemverilog.sv",
+      "t/data/isf_record_input_generated_domains_runtime.isf"
+    ],
+    "case": "domains",
+    "exit_code": 0,
+    "source": "t/data/isf_record_input_generated_domains_runtime.isf",
+    "stderr": "",
+    "stdout": "Wrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-dN4ILefk/packed_input_generated_domains__domain_idle.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-dN4ILefk/packed_input_generated_domains__domain_io.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-dN4ILefk/packed_input_generated_domains__domain_io__child_copier.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-dN4ILefk/packed_input_generated_domains__domain_io__child_reader.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-dN4ILefk/packed_input_generated_domains_top.fsm\n=== ISF Intent Scheduling ===\n\nActor: packed_input_generated_domains\n",
+    "target": "systemverilog"
+  },
+  {
+    "argv": [
+      "perl",
+      "bin/fsmgen",
+      "--quiet",
+      "--strict",
+      "--language",
+      "verilog",
+      "--output",
+      ".artifacts/record-input-language-profile/domains_verilog.sv",
+      "t/data/isf_record_input_generated_domains_runtime.isf"
+    ],
+    "case": "domains",
+    "exit_code": 0,
+    "source": "t/data/isf_record_input_generated_domains_runtime.isf",
+    "stderr": "",
+    "stdout": "Wrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-Mb6y81Fs/packed_input_generated_domains__domain_idle.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-Mb6y81Fs/packed_input_generated_domains__domain_io.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-Mb6y81Fs/packed_input_generated_domains__domain_io__child_copier.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-Mb6y81Fs/packed_input_generated_domains__domain_io__child_reader.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-Mb6y81Fs/packed_input_generated_domains_top.fsm\n=== ISF Intent Scheduling ===\n\nActor: packed_input_generated_domains\n",
+    "target": "verilog"
+  },
+  {
+    "argv": [
+      "perl",
+      "bin/fsmgen",
+      "--quiet",
+      "--strict",
+      "--language",
+      "systemverilog",
+      "--output",
+      ".artifacts/record-input-language-profile/blocking_systemverilog.sv",
+      "t/data/isf_record_input_generated_blocking_runtime.isf"
+    ],
+    "case": "blocking",
+    "exit_code": 0,
+    "source": "t/data/isf_record_input_generated_blocking_runtime.isf",
+    "stderr": "",
+    "stdout": "Wrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-s9enmwjN/copier.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-s9enmwjN/packed_input_generated_blocking.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-s9enmwjN/packed_input_generated_blocking_top.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-s9enmwjN/reader.fsm\n=== ISF Intent Scheduling ===\n\nActor: packed_input_generated_blocking\n",
+    "target": "systemverilog"
+  },
+  {
+    "argv": [
+      "perl",
+      "bin/fsmgen",
+      "--quiet",
+      "--strict",
+      "--language",
+      "verilog",
+      "--output",
+      ".artifacts/record-input-language-profile/blocking_verilog.sv",
+      "t/data/isf_record_input_generated_blocking_runtime.isf"
+    ],
+    "case": "blocking",
+    "exit_code": 0,
+    "source": "t/data/isf_record_input_generated_blocking_runtime.isf",
+    "stderr": "",
+    "stdout": "Wrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-423d88pG/copier.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-423d88pG/packed_input_generated_blocking.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-423d88pG/packed_input_generated_blocking_top.fsm\nWrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/ial1-lowering/fsmgen-423d88pG/reader.fsm\n=== ISF Intent Scheduling ===\n\nActor: packed_input_generated_blocking\n",
+    "target": "verilog"
+  }
+]

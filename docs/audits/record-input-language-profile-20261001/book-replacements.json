@@ -1,0 +1,10 @@
+[
+  {
+    "new": "Use `systemverilog` for the qualified record-input HDL profile. The `verilog`\nemitter option retains packed SystemVerilog typedefs in these fixtures. The\nrecord-input behavior observations compiled both emitter options as `.sv`\nsources with Verilator's default SystemVerilog parser. They establish those\nrecorded binary behaviors, but do not qualify IEEE 1364 Verilog-2005 syntax.\nThe [version-matched Verilator contract](https://raw.githubusercontent.com/verilator/verilator/v5.050/docs/guide/exe_verilator.rst)\ndefines the default parser and separate language selectors. SEM `.5.5.3.2.2`\nowns precise Verilog-profile admission or refusal before final input signoff.\nT2027 retains",
+    "old": "Use `systemverilog` or `verilog` for its supported HDL target. T2027 retains"
+  },
+  {
+    "new": "bits). Packed record aliases are also admitted on actor input ports under the\nrecord-input contract above. Record outputs, root-list inputs and transaction\naggregate ports remain deferred.",
+    "old": "bits). Aggregate carriers are accepted in actor-owned storage; they\nare not yet accepted as interface or transaction ports."
+  }
+]

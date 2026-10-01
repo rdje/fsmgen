@@ -1,0 +1,246 @@
+{
+  "baseline_revision": "40a51936ed3424acccd65d9812cbc0c1e892da5b",
+  "prerequisites": {
+    "docs/audits/record-input-direct-observation-20261001/manifest.json": "681ea1cdcf32536e0cc2b8a367ad982ebd393ddf724aad82e43a77c7dff83657",
+    "docs/audits/record-input-generated-observation-complete-20261001/manifest.json": "e129f857bea84dc0e76d9fc9bc4c3f8ab4068062b1397ba734bdd2a1c3072db7"
+  },
+  "producers": {
+    "bin/fsmgen": {
+      "git_blob": "63d943ce91efecb31117c8b8d3b87428de5d35c7",
+      "sha256": "dd23a0ccaa0ab017fa25ed633731a78e211344ef50a41a9f783cc2660e3539cb"
+    },
+    "docs/audits/generated-input-observer-20261001/GeneratedInputAdmission.pm": {
+      "git_blob": "8ef6ad8c7e5f6ee802926c942f17577a86db6ea3",
+      "sha256": "a67b00cf4441be8e7a4c6e06e75b25c8dcc69cb3ea7c933d826ffe00cb595207"
+    },
+    "docs/audits/generated-input-observer-20261001/observe.t": {
+      "git_blob": "8f52d7474ba521eb21d7d5e885e03d97e78a8411",
+      "sha256": "9e907e90e19e5eb189476a97ef36afc81e6bb6309dd62c4d983c333bc2fb9b54"
+    },
+    "docs/audits/generated-input-observer-20261001/prepare.pl": {
+      "git_blob": "ddacdd258cb35c9f20f7405181a2ed7d158413d7",
+      "sha256": "eefa7062c774e33aed4c59513313542f299d5c6d4471a908ef0127a276650461"
+    },
+    "docs/audits/generated-input-observer-20261001/qualify.t": {
+      "git_blob": "9677e6e18e2f0b7a28537522f4c619e5004f6f35",
+      "sha256": "8afa121303806697cc92f3efbd2e93f1d45002db51ef7a0d9c603433331c0995"
+    },
+    "docs/audits/generated-input-observer-20261001/seal.py": {
+      "git_blob": "e1c02f96697f3e1b260fa64d64f72b203fd8268a",
+      "sha256": "1e941873272d1123b8abc4110c6d2cf2e62d4a21f701d2eab08628162627d163"
+    },
+    "docs/audits/generated-input-observer-20261001/verify.py": {
+      "git_blob": "a5bea25c7a8c03f5832c3d83b94b462edf1b06d9",
+      "sha256": "ca9937a973fed28d4a9267274a490325e9ec39005ee844ee8241db7e6e22711c"
+    },
+    "docs/audits/native-group-witness-20260927/GroupWitness.pm": {
+      "git_blob": "517f582c66dbf3375af5e9bbd18b2e0e12f95373",
+      "sha256": "b577d3a27c8c75423cdbfa5bb9c047c6dcd6e7237357370d076d8ea055528a66"
+    },
+    "docs/audits/native-group-witness-20260927/failure-only/FailureWitness.pm": {
+      "git_blob": "ef7bc76e8de1a2c54f35d4665d07707250b12942",
+      "sha256": "30346e10a9d3a4c148dd706d2505bcbb78f805485d6257056820573389718804"
+    },
+    "docs/audits/native-group-witness-20260927/failure-only/manifest.json": {
+      "git_blob": "35d0521cf2809d7e823ac49e92d92955d28f594d",
+      "sha256": "ef9704102e86a5f85b303818f5a3e40be65dfb5583a5791df717c050685b0620"
+    },
+    "docs/audits/native-group-witness-20260927/manifest.json": {
+      "git_blob": "46afa7e59dec75d32b1fd21a137dcd50cb08a690",
+      "sha256": "577379cc6abb34b90a237f687daf942f4200c7b1211476218bee95d8e4c4bfae"
+    },
+    "docs/audits/native-group-witness-20260927/priority-observer/StageObserver.pm": {
+      "git_blob": "cc532a3a6abff90c328a0c788a0273e7ef6c96b4",
+      "sha256": "36fc461976ee9ea58265748fa0ac94a36d0444324f87ae94d4dfea9f33721669"
+    },
+    "docs/audits/native-group-witness-20260927/priority-observer/manifest.json": {
+      "git_blob": "801df23b164c30a1adecb5651eaa4e955136d067",
+      "sha256": "a833a356b44c573ac95eded0b54a345ec621210ff093a70c5e934f5460190a23"
+    },
+    "docs/audits/record-input-observer-corrected-20261001/RecordInputAdmission.pm": {
+      "git_blob": "e557329c58898d48712b93839207e566c1e9dcc9",
+      "sha256": "956fbedf99f9a8cd0f2a2c563819a0d99982a8fb344142a2e124ceb6a58c3b78"
+    },
+    "docs/audits/record-input-observer-corrected-20261001/observe.t": {
+      "git_blob": "11118d1dcabbcbd4f70cfa59724c27d2a69e2275",
+      "sha256": "233e948cee8b08a42c3827ba1b7bbc3d31bb2d364742f1d60752a9bec22186cc"
+    },
+    "docs/audits/record-input-observer-corrected-20261001/prepare.pl": {
+      "git_blob": "6d07f84a66d2aeb65383c3dec1efa148694552ab",
+      "sha256": "a8a7e2a865dc2c8c61a0305471a9fdefa3ee1f6c23ae50ffbcfc61e4d9f00e1f"
+    },
+    "docs/audits/record-input-observer-corrected-20261001/qualify.t": {
+      "git_blob": "e0bea68ca29899c4ccb9a409ad5c060e126ea374",
+      "sha256": "004776c66bcd6d7606d411d724d0251dba834879e8d175166cbdb0ee7af5659e"
+    },
+    "docs/audits/record-input-observer-corrected-20261001/seal.py": {
+      "git_blob": "e4dd681177897272bed9bf75d26429a73b78ab12",
+      "sha256": "58cdc5a2554678e644940f0e4900d6632c12e419901015c3e83d931d5b4d8f01"
+    },
+    "docs/audits/record-input-observer-corrected-20261001/verify.py": {
+      "git_blob": "8e525424f2d59a6c356092584b51919782a52e5a",
+      "sha256": "cb669c4e2f8bd3a889eb955ce1dc8f5ffada96d14fd76fbf57deb52af47891bf"
+    },
+    "docs/book/src/13j-type-enum-aggregate.md": {
+      "git_blob": "e2c025e3c9213b3f6c3a827e3f40ef1ddc4cddfa",
+      "sha256": "e28a69670eba2b3f6b3c20f87686d007d9914d54d856a4876462e24fedd17808"
+    },
+    "docs/isf-spec/02-interface-transactions.md": {
+      "git_blob": "74814c6f6a572b11b8156e0e3fd5ceff2643521f",
+      "sha256": "a9628f989602ef9f259725574b817b5ec756ba41d4eac9b0c6c58383e4a9f514"
+    },
+    "perl/FSM/Adapter/ISF.pm": {
+      "git_blob": "e4b841ac114538cd63c6427fc5e097ea463d711c",
+      "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+    },
+    "perl/FSM/Adapter/ISF/Parser.pm": {
+      "git_blob": "6632044620ecb342dd4888c90a1bb8f221845356",
+      "sha256": "3d6e6d530e3ac471d2a42a0aaa05c433cfb0d17e5fb36716f10fb6079d0fa9ac"
+    },
+    "perl/FSM/Backend/GeneratedModuleEmitter.pm": {
+      "git_blob": "c9f3165db7e4d80f267acad879d8faad3c377810",
+      "sha256": "79f3094b802338ba0a2262325c5d6cb3e1913fcc6602618aef2475637eb9eab2"
+    },
+    "perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm": {
+      "git_blob": "5578152199ca0f638d6654e0fd6b4b3db5c137c9",
+      "sha256": "60f634e9d7be9306f11a3ee676e2eabd9b6eb91c6c95d379b1e407526bb3d6dc"
+    },
+    "perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm": {
+      "git_blob": "6e770f53bc750b8c5136fe0ad82e89daccd7ea79",
+      "sha256": "b29a9adcbb9c16698b36c71a5a32ba4858649c58f93ee4dccfea19ae3050a3d9"
+    },
+    "perl/FSM/Composition/GeneratedChildRealizer.pm": {
+      "git_blob": "87cdff417dd10b966352313585e552004fdfaec9",
+      "sha256": "989bfeeb77e95f7f7fb9c8ece927fffffdf30189a33bc7c19ec118fb590c930c"
+    },
+    "perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm": {
+      "git_blob": "8ff2947a9964c482aeac22a796aede684068858b",
+      "sha256": "31dc9532715299942751a9ea0e2b31f4a3218349cd581e1921fecbed67d33bc0"
+    },
+    "perl/FSM/IR/LoweredRTLIRBuilder.pm": {
+      "git_blob": "3ef3dd3acd6db766f1fb1072b8d74b4018f3086d",
+      "sha256": "97b80c3cc99a97db9a9a34dcf0be38b9024b9d0da1210b01f60398fdb38d084b"
+    },
+    "perl/FSM/Package/AggregatePathSupport.pm": {
+      "git_blob": "5658c7570751d47e0a95c5bc1796aeeb98091cb7",
+      "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+    },
+    "perl/FSM/Scheduler/ISF.pm": {
+      "git_blob": "4fa4e1c8d71fb0573d3cd9c62fd296c753b9bb85",
+      "sha256": "db6864de99864ba5ca82431bf2802af8416aa296cd5189e7de462911e0676754"
+    },
+    "perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm": {
+      "git_blob": "e72135f52f3ac8a6d348a80329a223334c657941",
+      "sha256": "32e202ffd4950517c5b14c21312468b895a2aab5aae5688e8cb0b5afeb9c8fa9"
+    },
+    "perl/FSM/Scheduler/ISF/DomainSource.pm": {
+      "git_blob": "3463fe138ef6d37201eed30101fb0f63de631a10",
+      "sha256": "ea2154d3f40cf1e830b596e62638370014598158af63d6dba367b31abe08c93c"
+    },
+    "perl/FSM/Scheduler/ISF/Emitter/FSM.pm": {
+      "git_blob": "712f823ce641376672f212e01d5c49192792dd0f",
+      "sha256": "446c1c8c189f130fb7c4ae69244c1853f8ef9f30ace347e463eda18cd724a3bb"
+    },
+    "perl/FSM/Scheduler/ISF/Emitter/JSON.pm": {
+      "git_blob": "4b707f7a10fcc0967f140d9e0ffb5222a6575107",
+      "sha256": "e36355c51a282fb00b3ee28b68e645e44051909e699cde1aad97047b2fbeb28a"
+    },
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": {
+      "git_blob": "21e744d12e828bb9cc57249810ed4815ca343e29",
+      "sha256": "b6fe0ea533b7f2ad0783ca67a49f632e4d37920a4ca6e6cb9d53ac8759b906a3"
+    },
+    "perl/FSM/Scheduler/ISF/RecordSamples.pm": {
+      "git_blob": "864b8f9d25400e0ed5119655e205eb68fc702eac",
+      "sha256": "99d2db4d786af684362c8b39baf80b5d7351cb950c68b09b2a6753d9362f49c6"
+    },
+    "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+      "git_blob": "3594e96224fcb854354721276c3764c8f15a3fe8",
+      "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+    },
+    "perl/FSM/Support/ISFRecordPortContexts.pm": {
+      "git_blob": "317508c423d6e70408c256e0a141f7a203690aaf",
+      "sha256": "59fd11a796531e146a1f9121126bc6e8c9d37af578f88a6d5d93d58ccc85d7bb"
+    },
+    "perl/FSM/Support/ISFRecordPortScopes.pm": {
+      "git_blob": "ec282a1ecca8eae8e760e720d469e003a26a144c",
+      "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+    },
+    "perl/FSM/Support/ISFRecordPortValues.pm": {
+      "git_blob": "a0c7263e5b34bdd3fbab31b63dd0ac44b541e4da",
+      "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+    },
+    "perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm": {
+      "git_blob": "a24e2861b25542254126d7ae189cad8d7b9db693",
+      "sha256": "a4b289d1528c2ef89e4f3bcace309bcdd91fc6cea508b97318cf3d6b7eff721e"
+    },
+    "perl/FSM/Support/ProcessSupervisor.pm": {
+      "git_blob": "2ffc5446d62fb2130c26f5c0640a6f04851cda58",
+      "sha256": "9cd65fb73974f2c5a9a213836f291641fa366637e966118968557d4aba973ea6"
+    },
+    "t/2024-isf-record-input-runtime.t": {
+      "git_blob": "bc8d536d30ac55489c445eef60009eb7300eaff8",
+      "sha256": "f10bd79e447455da556435608de128c01e52be690b24e3005e5afe70890953a7"
+    },
+    "t/2025-isf-record-input-generated-runtime.t": {
+      "git_blob": "d3c163de218e94bd6a006e74f33fcd8ce6127650",
+      "sha256": "7f8f53435b060dcb16f8502dce659269c5d707948afa7754a4c438c67367dab7"
+    },
+    "t/data/isf_record_input_generated_blocking_runtime.isf": {
+      "git_blob": "1610592da677003c5094472ef1a7895d63b19782",
+      "sha256": "91afd1ac9e7acabfd6ebb47f391b242d830520e3a829124467bec093c88dc9ab"
+    },
+    "t/data/isf_record_input_generated_domains_runtime.isf": {
+      "git_blob": "af91810021c5d9f7d8d8915fe2709a65dc939f97",
+      "sha256": "d39955c46ff1421b899e0a6da8a6142377270b3e4f36ef37919507df9e675670"
+    },
+    "t/data/isf_record_input_generated_runtime_tb.sv": {
+      "git_blob": "8405b2b97ca4f73547907208c30cf495fa730719",
+      "sha256": "c9303b317e4151d9d1ef40f40232e24155e033ba0a5f97ccae6e72cbf8f419ac"
+    },
+    "t/data/isf_record_input_runtime.isf": {
+      "git_blob": "a80de2bf0d754e232e0afe94261d087936c4860f",
+      "sha256": "f114a40d76286ec4f5cc74e3d77550d548a8925119cd909eb4c3ed113d86653c"
+    },
+    "t/data/isf_record_input_runtime_tb.sv": {
+      "git_blob": "c52af2ebd7dd3ebf459e4f1e1d99f580d619d40f",
+      "sha256": "4b9ed57a09b413d22c932af42706fe45a6196f9222bf8480639de75e0721fde0"
+    },
+    "t/lib/FSM/Test/ProcessSupervisor.pm": {
+      "git_blob": "407369115e6fbb50e115f14bc447b253199ace23",
+      "sha256": "d52a014ce7c242a97a5fbcf27a76db48be64eee0959a2b701e88fbc78f0be9f1"
+    },
+    "t/lib/FSM/Test/ProjectDataLocality.pm": {
+      "git_blob": "652a6b3343d196eb6f312d3ec81fdc40be932ac3",
+      "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+    },
+    "t/lib/FSM/Test/SourceQueryRunner.pm": {
+      "git_blob": "53a0996d9461c496438832520912874bd958982f",
+      "sha256": "a2e0267c102a55ec5125605892afea3166008ffa80e51d866ee0f36837e8e207"
+    },
+    "t/lib/FSM/Test/VerilatorRuntime.pm": {
+      "git_blob": "828f3ed9833b0f4827af6ea84c0c610bc381e043",
+      "sha256": "36dcf875785bd0aea3422e647c02dbe765a47e249ef6476e3cdbdc454f96538a"
+    }
+  },
+  "schema": "fsmgen.record_input_language_profile.v1",
+  "sha256": {
+    "blocking_systemverilog.hdl.source": "db3590fd96253b2bbb528629464c68422f8761d556671cd9a7e4c869b560630d",
+    "blocking_verilog.hdl.source": "1e2639da8067fdb5a57fb99cd0bd28120b45a9670af6e83f47a46f0ec8728dea",
+    "book-replacements.json": "49476a27b2efe38efe20dad6f69bb61e94f698cf697b649138b4bc9c1ed1f70c",
+    "book.md.source": "fbe4bc2a76004cc927c67d30d42ab12f54a4843357f83486a63d08ab6dca53e7",
+    "capture.py": "f8a2d7421f8338c6c1e8227028d73fa8d99568b2871da309fb3e8520b7de6a92",
+    "capture.txt": "d0ac68922aa85b6b228fe12f6a8bfb425a7cc720d551a2c32bdd852dadac9bd6",
+    "direct-saved.txt": "1d3bf467b602847c2a4773d7a4a29838d1421d3a84d101dea093211b1cf7430a",
+    "direct_systemverilog.hdl.source": "78b279d1d68eb717b7528339434b31e32147a56155a1a7bcf3518673f97d0565",
+    "direct_verilog.hdl.source": "5f8e419c9ab6fa25b2648d7d5080b007177b2839918667523e5482228d85641d",
+    "docs.txt": "3e302fb3f7b6c4e365a49e438628dda631488af3a01f8819006efdbec7a804d6",
+    "domains_systemverilog.hdl.source": "c34ca110cf0cc04c7825b9cb89304cbda0fb60ccc1220dd22d90a7482144288f",
+    "domains_verilog.hdl.source": "2e098f3ca7d781a04dd8696e1edd4a66fbe80c22403c198e428ec5ab908ceb05",
+    "emissions.json": "703fc6bbb4a61723cc2ef0dd6c5c1051944669faa36c3fb218b79d4434b0ee82",
+    "generated-saved.txt": "f7453fa90845922bb71d822b867269b8f4c8a5f6d5844ababcba08b6b4b7a6fe",
+    "history.json": "13eed77bda7a18c9ba5103c09ab62272fb32bb610ab7ca857d8d8dc60d53d917",
+    "source-equivalence.json": "307358aa17584acf094b4bbcd00a0913b2ba7c500b94f161be3f67e5f544c930",
+    "tool-contract.json": "b042a588da5d4ef3ddf2c490ba47b5f8e2afe23a6a9d97a998fbe900b1e3e5e1",
+    "verify.py": "fcdd56dfe360c264c7ee1f02f70a87894b9f9759f4422908c1f52d0005fbccdb"
+  }
+}

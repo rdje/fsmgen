@@ -1,0 +1,9 @@
+{
+  "consulted_on": "2026-10-01",
+  "version": "v5.050",
+  "url": "https://raw.githubusercontent.com/verilator/verilator/v5.050/docs/guide/exe_verilator.rst",
+  "section": "--default-language",
+  "summary": "With neither a language selector nor an extension-specific language option, this documented version selects the latest SystemVerilog parser. It lists IEEE 1364-2005 as a distinct selectable language. Emission target labels alone cannot establish that parser mode.",
+  "bounded_quote": "the latest SystemVerilog language (IEEE 1800-2023) is used.",
+  "limit": "A version-matched published tool contract supports the argv inference; it is not an observed pure-Verilog rejection. Original native successes remain valid for their recorded arguments."
+}

@@ -1,13 +1,14 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **8** facts · **27** uniquely owned question entries.
+> **9** facts · **30** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are spawned output bindings guarded by child completion?" · facts=[isf-record-input-generated-witness-preparation](../../docs/knowledge/isf-record-input-generated-witness-preparation.md)
 - q="are unused record inputs retained in the top or inherited child?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="can a child scalar formal share an actor record input name?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
+- q="do both record-input emitter observations prove Verilog-2005 syntax?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
 - q="does VHDL support authored ISF packed record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="does generated record-input runtime prove X/Z or reset-free initialization?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="does ordinary ISF reset provenance omit the domain key?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
@@ -30,6 +31,8 @@
 - q="which backend profiles are qualified for ISF record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="which direct record-input runtime behavior is qualified?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="which generated record-input storage and binding behaviors pass?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
+- q="which parser mode did record-input native behavior qualify?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
+- q="why did Verilog record-input output retain packed typedefs?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
 - q="why did a generated scalar binding formal name refuse as an actor record read?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 - q="why did the initial fixed record-input observer remain unqualified?" · facts=[isf-record-input-observer-preparation](../../docs/knowledge/isf-record-input-observer-preparation.md)
 
@@ -44,7 +47,7 @@ _Activation identities remain separate from record binding values_
 
 ### isf-record-input-backend-profiles
 
-_Record input HDL profiles qualify both Verilog families and precise VHDL refusals_
+_Record input profiles qualify SystemVerilog behavior and precise VHDL refusals_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-input-backend-profiles.md`](../../docs/knowledge/isf-record-input-backend-profiles.md)
@@ -72,7 +75,7 @@ _Authored packed record inputs retain generated and named-domain carriers_
 
 ### isf-record-input-generated-runtime
 
-_Fixed generated record-input behavior passes both Verilog families_
+_Generated record-input behavior passes under SystemVerilog parsing_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-input-generated-runtime.md`](../../docs/knowledge/isf-record-input-generated-runtime.md)
@@ -90,3 +93,10 @@ _Fixed record-input observer preparation preserves diagnostics and caller kinds_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-input-observer-preparation.md`](../../docs/knowledge/isf-record-input-observer-preparation.md)
+
+### isf-record-input-parser-mode
+
+_Both record-input emitter observations use the SystemVerilog parser_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-record-input-parser-mode.md`](../../docs/knowledge/isf-record-input-parser-mode.md)

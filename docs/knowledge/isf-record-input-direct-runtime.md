@@ -22,6 +22,11 @@ compiles and reaches the expected PACKED_SIGNED_MISMATCH rejection. Complete
 TAP has no runtime skip. Original stage arguments/results/bounds and supervisor
 cleanup remain, with exact admitted plus extra producer identities before/after.
 
+Both emitter options used `.sv` DUTs and Verilator default SystemVerilog parsing.
+This is not IEEE 1364 Verilog-2005 qualification; the compatibility emitter
+retains packed typedefs. SEM `.60.4.3.2.5.5.3.2.2` owns the precise profile
+boundary before input signoff. Original positive/negative receipts stay immutable.
+
 The sealed archive retains full receipts, test/source/bench, producer Git blobs,
 TAP/stdout/stderr and independent workspace/command census. Normal temporary
 cleanup removes generated HDL/binaries. Successful native calls intentionally

@@ -1,6 +1,6 @@
 ---
 id: isf-record-input-backend-profiles
-title: Record input HDL profiles qualify both Verilog families and precise VHDL refusals
+title: Record input profiles qualify SystemVerilog behavior and precise VHDL refusals
 answers:
   - "does VHDL support authored ISF packed record inputs?"
   - "which backend profiles are qualified for ISF record inputs?"
@@ -23,8 +23,11 @@ reverify: >-
   t/114-composition-target-support-diagnostics.t
 ---
 
-Direct and generated record-input behavior is qualified in both Verilog-family
-targets by the separate runtime cards. Selected VHDL profiles refuse precisely:
+Direct and generated record-input binary behavior is qualified for both emitter
+options under SystemVerilog parsing by the separate runtime cards. The `verilog`
+option retains packed typedefs; IEEE 1364 Verilog-2005 is unqualified. SEM
+`.60.4.3.2.5.5.3.2.2` owns precise target-profile admission or refusal.
+Selected VHDL profiles refuse precisely:
 mixed signed/two-state direct members, supplied typed record inputs and generated
 composition shapes. No successful pipeline product or new HDL destination is
 published; existing destinations remain byte-exact. Scalar-input and prior

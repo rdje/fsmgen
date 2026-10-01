@@ -377,7 +377,15 @@ generation refuses the typed `lmp_in` input:
 ./bin/fsmgen --strict --quiet --language vhdl --output .artifacts/record-input.vhd docs/audits/specforge-aggregate-intake-20260930/record-port.isf
 ```
 
-Use `systemverilog` or `verilog` for its supported HDL target. T2027 retains
+Use `systemverilog` for the qualified record-input HDL profile. The `verilog`
+emitter option retains packed SystemVerilog typedefs in these fixtures. The
+record-input behavior observations compiled both emitter options as `.sv`
+sources with Verilator's default SystemVerilog parser. They establish those
+recorded binary behaviors, but do not qualify IEEE 1364 Verilog-2005 syntax.
+The [version-matched Verilator contract](https://raw.githubusercontent.com/verilator/verilator/v5.050/docs/guide/exe_verilator.rst)
+defines the default parser and separate language selectors. SEM `.5.5.3.2.2`
+owns precise Verilog-profile admission or refusal before final input signoff.
+T2027 retains
 the precise CLI/public-pipeline refusals, destination preservation, supported
 controls and false-success/wrong-diagnostic counterexamples.
 
@@ -737,8 +745,9 @@ the enum only contributes review metadata in this example.
 bit)))` declares a packed record alias with two members. `(storage
 (var frame (type frame_t)))` declares one actor-owned scalar
 storage `frame` whose width comes from the packed sum (`2 + 1 = 3`
-bits). Aggregate carriers are accepted in actor-owned storage; they
-are not yet accepted as interface or transaction ports. The
+bits). Packed record aliases are also admitted on actor input ports under the
+record-input contract above. Record outputs, root-list inputs and transaction
+aggregate ports remain deferred. The
 scheduled `.fsm` keeps the alias `frame_t` in typed `+size`
 entries and the schedule report exposes the storage item with its
 packed width, authored type, and resolved `type_kind` (`record`).

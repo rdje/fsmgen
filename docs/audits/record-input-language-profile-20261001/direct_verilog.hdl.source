@@ -1,0 +1,657 @@
+//=============================================================================
+// Flattened Decision Tree FSM: packed_input_runtime
+// Generated using Enable-based Methodology with WEN/EN Signals
+// Date: Thu Oct  1 17:01:56 2026
+// 
+// This implementation uses:
+// - Flattened decision tree approach
+// - Enable-based logic with assign statements
+// - Write Enable (WEN) and Enable (EN) signals for each LHS
+// - Flat Boolean expressions from DT traversal
+//=============================================================================
+
+typedef struct packed {
+    logic [1:0] tag;
+    struct packed {
+        logic signed [4:0] data;
+        struct packed {
+            bit item_0;
+            bit [1:0] item_1;
+        } flags;
+    } payload;
+} fsmgen_m20_packed_input_runtime__frame__fsmgen_t; // frame
+
+module packed_input_runtime (
+  input  wire clk,
+  input  wire rst_n,
+  input fsmgen_m20_packed_input_runtime__frame__fsmgen_t packet,
+  input  wire start,
+  output reg  [4:0] captured,
+  output reg  [1:0] copied_tag,
+  output reg  done,
+  output reg  flag,
+  output reg  [4:0] live,
+  output reg  negative,
+  output reg  [1:0] phase,
+  output reg  [1:0] piece,
+  output reg  [4:0] reset_seen,
+  output reg  [4:0] stored
+);
+
+  // State encoding
+  localparam MAIN_IDLE_0 = 5'd0;
+  localparam MAIN_SET_1 = 5'd1;
+  localparam MAIN_SET_2 = 5'd2;
+  localparam MAIN_WAIT_3 = 5'd3;
+  localparam MAIN_WAIT_4 = 5'd4;
+  localparam MAIN_WAIT_5 = 5'd5;
+  localparam MAIN_SET_6 = 5'd6;
+  localparam MAIN_SET_7 = 5'd7;
+  localparam MAIN_WAIT_8 = 5'd8;
+  localparam MAIN_WAIT_9 = 5'd9;
+  localparam MAIN_WAIT_10 = 5'd10;
+  localparam MAIN_SET_11 = 5'd11;
+  localparam MAIN_SET_12 = 5'd12;
+  localparam MAIN_SET_13 = 5'd13;
+  localparam MAIN_SET_14 = 5'd14;
+  localparam MAIN_SET_15 = 5'd15;
+  localparam MAIN_SET_16 = 5'd16;
+  localparam MAIN_SET_17 = 5'd17;
+  localparam MAIN_DONE_18 = 5'd18;
+
+  // State registers
+  reg [4:0] current_state, next_state;
+
+  // State sequential logic
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      current_state <= MAIN_IDLE_0;
+    end else begin
+      current_state <= next_state;
+    end
+  end
+
+  // Internal signal declarations
+  logic signed [4:0] accepted;
+  reg can_accept;
+  fsmgen_m20_packed_input_runtime__frame__fsmgen_t held;
+  // Internal mux helper registers
+  logic signed [4:0] accepted_q;
+  reg [4:0] captured_next;
+  reg [1:0] copied_tag_next;
+  reg done_pulse_delay_pipe;
+  reg flag_next;
+  fsmgen_m20_packed_input_runtime__frame__fsmgen_t held_next;
+  reg [4:0] live_next;
+  reg negative_next;
+  reg [1:0] phase_next;
+  reg [1:0] piece_next;
+  reg [4:0] reset_seen_next;
+  reg [4:0] stored_next;
+  // Generated enable wires
+  wire accepted_packet_payload_data_en;
+  wire can_accept_1_en;
+  wire captured_accepted_en;
+  wire copied_tag_held_tag_en;
+  wire done_1_en;
+  wire flag_packet_payload_flags_item_0_en;
+  wire held_packet_en;
+  wire live_packet_payload_data_en;
+  wire main_done_18_done_1_en;
+  wire main_done_18_en;
+  wire main_done_18_next_state_main_idle_0_en;
+  wire main_idle_0_accepted_packet_payload_data_en;
+  wire main_idle_0_can_accept_1_en;
+  wire main_idle_0_en;
+  wire main_idle_0_next_state_main_set_1_en;
+  wire main_set_11_en;
+  wire main_set_11_live_packet_payload_data_en;
+  wire main_set_11_next_state_main_set_12_en;
+  wire main_set_12_captured_accepted_en;
+  wire main_set_12_en;
+  wire main_set_12_next_state_main_set_13_en;
+  wire main_set_13_en;
+  wire main_set_13_next_state_main_set_14_en;
+  wire main_set_13_stored_held_payload_data_en;
+  wire main_set_14_copied_tag_held_tag_en;
+  wire main_set_14_en;
+  wire main_set_14_next_state_main_set_15_en;
+  wire main_set_15_en;
+  wire main_set_15_flag_packet_payload_flags_item_0_en;
+  wire main_set_15_next_state_main_set_16_en;
+  wire main_set_16_en;
+  wire main_set_16_next_state_main_set_17_en;
+  wire main_set_16_piece_packet_payload_flags_item_1_en;
+  wire main_set_17_en;
+  wire main_set_17_negative_packet_payload_data_0_en;
+  wire main_set_17_next_state_main_done_18_en;
+  wire main_set_1_en;
+  wire main_set_1_next_state_main_set_2_en;
+  wire main_set_1_reset_seen_held_payload_data_en;
+  wire main_set_2_en;
+  wire main_set_2_next_state_main_wait_3_en;
+  wire main_set_2_phase_1_en;
+  wire main_set_6_en;
+  wire main_set_6_held_packet_en;
+  wire main_set_6_next_state_main_set_7_en;
+  wire main_set_7_en;
+  wire main_set_7_next_state_main_wait_8_en;
+  wire main_set_7_phase__2_en;
+  wire main_wait_10_en;
+  wire main_wait_10_next_state_main_set_11_en;
+  wire main_wait_3_en;
+  wire main_wait_3_next_state_main_wait_4_en;
+  wire main_wait_4_en;
+  wire main_wait_4_next_state_main_wait_5_en;
+  wire main_wait_5_en;
+  wire main_wait_5_next_state_main_set_6_en;
+  wire main_wait_8_en;
+  wire main_wait_8_next_state_main_wait_9_en;
+  wire main_wait_9_en;
+  wire main_wait_9_next_state_main_wait_10_en;
+  wire negative_expr_en;
+  wire next_state_main_done_18_en;
+  wire next_state_main_idle_0_en;
+  wire next_state_main_set_11_en;
+  wire next_state_main_set_12_en;
+  wire next_state_main_set_13_en;
+  wire next_state_main_set_14_en;
+  wire next_state_main_set_15_en;
+  wire next_state_main_set_16_en;
+  wire next_state_main_set_17_en;
+  wire next_state_main_set_1_en;
+  wire next_state_main_set_2_en;
+  wire next_state_main_set_6_en;
+  wire next_state_main_set_7_en;
+  wire next_state_main_wait_10_en;
+  wire next_state_main_wait_3_en;
+  wire next_state_main_wait_4_en;
+  wire next_state_main_wait_5_en;
+  wire next_state_main_wait_8_en;
+  wire next_state_main_wait_9_en;
+  wire phase_1_en;
+  wire phase__2_en;
+  wire piece_packet_payload_flags_item_1_en;
+  wire reset_seen_held_payload_data_en;
+  wire stored_held_payload_data_en;
+
+  // FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN
+  // State and DT Enable Conditions
+  assign main_done_18_en = current_state == MAIN_DONE_18;
+  assign main_idle_0_en = current_state == MAIN_IDLE_0;
+  assign main_set_1_en = current_state == MAIN_SET_1;
+  assign main_set_11_en = current_state == MAIN_SET_11;
+  assign main_set_12_en = current_state == MAIN_SET_12;
+  assign main_set_13_en = current_state == MAIN_SET_13;
+  assign main_set_14_en = current_state == MAIN_SET_14;
+  assign main_set_15_en = current_state == MAIN_SET_15;
+  assign main_set_16_en = current_state == MAIN_SET_16;
+  assign main_set_17_en = current_state == MAIN_SET_17;
+  assign main_set_2_en = current_state == MAIN_SET_2;
+  assign main_set_6_en = current_state == MAIN_SET_6;
+  assign main_set_7_en = current_state == MAIN_SET_7;
+  assign main_wait_10_en = current_state == MAIN_WAIT_10;
+  assign main_wait_3_en = current_state == MAIN_WAIT_3;
+  assign main_wait_4_en = current_state == MAIN_WAIT_4;
+  assign main_wait_5_en = current_state == MAIN_WAIT_5;
+  assign main_wait_8_en = current_state == MAIN_WAIT_8;
+  assign main_wait_9_en = current_state == MAIN_WAIT_9;
+
+  // FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_END
+  // Unified WEN/EN Signal Generation from Phase 1 Analysis
+  // DT-Specific Enable Signals from Unified Analysis
+
+
+  // === DT: main_done_18 ===
+  // done
+  assign main_done_18_done_1_en = main_done_18_en;  // done <- 1
+  // next_state
+  assign main_done_18_next_state_main_idle_0_en = main_done_18_en;  // next_state <- MAIN_IDLE_0
+
+
+  // === DT: main_idle_0 ===
+  // accepted
+  assign main_idle_0_accepted_packet_payload_data_en = main_idle_0_en & start;  // accepted <- packet.payload.data
+  // can_accept
+  assign main_idle_0_can_accept_1_en = main_idle_0_en;  // can_accept <- 1
+  // next_state
+  assign main_idle_0_next_state_main_set_1_en = main_idle_0_en & start;  // next_state <- MAIN_SET_1
+
+
+  // === DT: main_set_1 ===
+  // next_state
+  assign main_set_1_next_state_main_set_2_en = main_set_1_en;  // next_state <- MAIN_SET_2
+  // reset_seen
+  assign main_set_1_reset_seen_held_payload_data_en = main_set_1_en;  // reset_seen <- held.payload.data
+
+
+  // === DT: main_set_11 ===
+  // live
+  assign main_set_11_live_packet_payload_data_en = main_set_11_en;  // live <- packet.payload.data
+  // next_state
+  assign main_set_11_next_state_main_set_12_en = main_set_11_en;  // next_state <- MAIN_SET_12
+
+
+  // === DT: main_set_12 ===
+  // captured
+  assign main_set_12_captured_accepted_en = main_set_12_en;  // captured <- accepted
+  // next_state
+  assign main_set_12_next_state_main_set_13_en = main_set_12_en;  // next_state <- MAIN_SET_13
+
+
+  // === DT: main_set_13 ===
+  // next_state
+  assign main_set_13_next_state_main_set_14_en = main_set_13_en;  // next_state <- MAIN_SET_14
+  // stored
+  assign main_set_13_stored_held_payload_data_en = main_set_13_en;  // stored <- held.payload.data
+
+
+  // === DT: main_set_14 ===
+  // copied_tag
+  assign main_set_14_copied_tag_held_tag_en = main_set_14_en;  // copied_tag <- held.tag
+  // next_state
+  assign main_set_14_next_state_main_set_15_en = main_set_14_en;  // next_state <- MAIN_SET_15
+
+
+  // === DT: main_set_15 ===
+  // flag
+  assign main_set_15_flag_packet_payload_flags_item_0_en = main_set_15_en;  // flag <- packet.payload.flags.item_0
+  // next_state
+  assign main_set_15_next_state_main_set_16_en = main_set_15_en;  // next_state <- MAIN_SET_16
+
+
+  // === DT: main_set_16 ===
+  // next_state
+  assign main_set_16_next_state_main_set_17_en = main_set_16_en;  // next_state <- MAIN_SET_17
+  // piece
+  assign main_set_16_piece_packet_payload_flags_item_1_en = main_set_16_en;  // piece <- packet.payload.flags.item_1
+
+
+  // === DT: main_set_17 ===
+  // negative
+  assign main_set_17_negative_packet_payload_data_0_en = main_set_17_en;  // negative <- packet.payload.data < 0
+  // next_state
+  assign main_set_17_next_state_main_done_18_en = main_set_17_en;  // next_state <- MAIN_DONE_18
+
+
+  // === DT: main_set_2 ===
+  // next_state
+  assign main_set_2_next_state_main_wait_3_en = main_set_2_en;  // next_state <- MAIN_WAIT_3
+  // phase
+  assign main_set_2_phase_1_en = main_set_2_en;  // phase <- 1
+
+
+  // === DT: main_set_6 ===
+  // held
+  assign main_set_6_held_packet_en = main_set_6_en;  // held <- packet
+  // next_state
+  assign main_set_6_next_state_main_set_7_en = main_set_6_en;  // next_state <- MAIN_SET_7
+
+
+  // === DT: main_set_7 ===
+  // next_state
+  assign main_set_7_next_state_main_wait_8_en = main_set_7_en;  // next_state <- MAIN_WAIT_8
+  // phase
+  assign main_set_7_phase__2_en = main_set_7_en;  // phase <- 2
+
+
+  // === DT: main_wait_10 ===
+  // next_state
+  assign main_wait_10_next_state_main_set_11_en = main_wait_10_en;  // next_state <- MAIN_SET_11
+
+
+  // === DT: main_wait_3 ===
+  // next_state
+  assign main_wait_3_next_state_main_wait_4_en = main_wait_3_en;  // next_state <- MAIN_WAIT_4
+
+
+  // === DT: main_wait_4 ===
+  // next_state
+  assign main_wait_4_next_state_main_wait_5_en = main_wait_4_en;  // next_state <- MAIN_WAIT_5
+
+
+  // === DT: main_wait_5 ===
+  // next_state
+  assign main_wait_5_next_state_main_set_6_en = main_wait_5_en;  // next_state <- MAIN_SET_6
+
+
+  // === DT: main_wait_8 ===
+  // next_state
+  assign main_wait_8_next_state_main_wait_9_en = main_wait_8_en;  // next_state <- MAIN_WAIT_9
+
+
+  // === DT: main_wait_9 ===
+  // next_state
+  assign main_wait_9_next_state_main_wait_10_en = main_wait_9_en;  // next_state <- MAIN_WAIT_10
+
+  // LHS-Level Enable Signals from Unified Analysis
+
+  // LHS-level enables for: accepted
+  assign accepted_packet_payload_data_en = main_idle_0_accepted_packet_payload_data_en;
+
+  // LHS-level enables for: can_accept
+  assign can_accept_1_en = main_idle_0_can_accept_1_en;
+
+  // LHS-level enables for: captured
+  assign captured_accepted_en = main_set_12_captured_accepted_en;
+
+  // LHS-level enables for: copied_tag
+  assign copied_tag_held_tag_en = main_set_14_copied_tag_held_tag_en;
+
+  // LHS-level enables for: done
+  assign done_1_en = main_done_18_done_1_en;
+
+  // LHS-level enables for: flag
+  assign flag_packet_payload_flags_item_0_en = main_set_15_flag_packet_payload_flags_item_0_en;
+
+  // LHS-level enables for: held
+  assign held_packet_en = main_set_6_held_packet_en;
+
+  // LHS-level enables for: live
+  assign live_packet_payload_data_en = main_set_11_live_packet_payload_data_en;
+
+  // LHS-level enables for: negative
+  assign negative_expr_en = main_set_17_negative_packet_payload_data_0_en;
+
+  // LHS-level enables for: next_state
+  assign next_state_main_done_18_en = main_set_17_next_state_main_done_18_en;
+  assign next_state_main_idle_0_en = main_done_18_next_state_main_idle_0_en;
+  assign next_state_main_set_1_en = main_idle_0_next_state_main_set_1_en;
+  assign next_state_main_set_11_en = main_wait_10_next_state_main_set_11_en;
+  assign next_state_main_set_12_en = main_set_11_next_state_main_set_12_en;
+  assign next_state_main_set_13_en = main_set_12_next_state_main_set_13_en;
+  assign next_state_main_set_14_en = main_set_13_next_state_main_set_14_en;
+  assign next_state_main_set_15_en = main_set_14_next_state_main_set_15_en;
+  assign next_state_main_set_16_en = main_set_15_next_state_main_set_16_en;
+  assign next_state_main_set_17_en = main_set_16_next_state_main_set_17_en;
+  assign next_state_main_set_2_en = main_set_1_next_state_main_set_2_en;
+  assign next_state_main_set_6_en = main_wait_5_next_state_main_set_6_en;
+  assign next_state_main_set_7_en = main_set_6_next_state_main_set_7_en;
+  assign next_state_main_wait_10_en = main_wait_9_next_state_main_wait_10_en;
+  assign next_state_main_wait_3_en = main_set_2_next_state_main_wait_3_en;
+  assign next_state_main_wait_4_en = main_wait_3_next_state_main_wait_4_en;
+  assign next_state_main_wait_5_en = main_wait_4_next_state_main_wait_5_en;
+  assign next_state_main_wait_8_en = main_set_7_next_state_main_wait_8_en;
+  assign next_state_main_wait_9_en = main_wait_8_next_state_main_wait_9_en;
+
+  // LHS-level enables for: phase
+  assign phase_1_en = main_set_2_phase_1_en;
+  assign phase__2_en = main_set_7_phase__2_en;
+
+  // LHS-level enables for: piece
+  assign piece_packet_payload_flags_item_1_en = main_set_16_piece_packet_payload_flags_item_1_en;
+
+  // LHS-level enables for: reset_seen
+  assign reset_seen_held_payload_data_en = main_set_1_reset_seen_held_payload_data_en;
+
+  // LHS-level enables for: stored
+  assign stored_held_payload_data_en = main_set_13_stored_held_payload_data_en;
+
+  // Unified Multiplexer Logic from Phase 1 Analysis
+
+  // Unified Multiplexer for LHS: accepted
+  // Unified flop with mux for: accepted (register_in assignment)
+  always @* begin
+    accepted = accepted_q;  // Default value is feedback from flop output
+    if (accepted_packet_payload_data_en) begin
+      accepted = packet.payload.data;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      accepted_q <= 5'h00;
+    end else begin
+      accepted_q <= accepted;
+    end
+  end
+
+  // Unified Multiplexer for LHS: can_accept
+  // Unified combinational mux for: can_accept
+  always @* begin
+    can_accept = 1'b0;  // Default value
+    if (can_accept_1_en) begin
+      can_accept = 1;
+    end
+  end
+
+  // Unified Multiplexer for LHS: captured
+  // Unified flop with mux for: captured (register_out assignment)
+  always @* begin
+    captured_next = captured;  // Default value
+    if (captured_accepted_en) begin
+      captured_next = accepted;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      captured <= 5'b00000;
+    end else begin
+      captured <= captured_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: copied_tag
+  // Unified flop with mux for: copied_tag (register_out assignment)
+  always @* begin
+    copied_tag_next = copied_tag;  // Default value
+    if (copied_tag_held_tag_en) begin
+      copied_tag_next = held.tag;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      copied_tag <= 2'b00;
+    end else begin
+      copied_tag <= copied_tag_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: done
+  // Delayed pulse logic for: done (<1, exact Q+1)
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      done <= 1'b0;
+      done_pulse_delay_pipe <= 1'b0;
+    end else begin
+      done <= 1'b0;
+      if (done_pulse_delay_pipe) begin
+        done <= 1'b1;
+      end
+      done_pulse_delay_pipe <= done_1_en;
+    end
+  end
+
+  // Unified Multiplexer for LHS: flag
+  // Unified flop with mux for: flag (register_out assignment)
+  always @* begin
+    flag_next = flag;  // Default value
+    if (flag_packet_payload_flags_item_0_en) begin
+      flag_next = packet.payload.flags.item_0;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      flag <= 0;
+    end else begin
+      flag <= flag_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: held
+  // Unified flop with mux for: held (register_out assignment)
+  always @* begin
+    held_next = held;  // Default value
+    if (held_packet_en) begin
+      held_next = packet;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      held <= 149;
+    end else begin
+      held <= held_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: live
+  // Unified flop with mux for: live (register_out assignment)
+  always @* begin
+    live_next = live;  // Default value
+    if (live_packet_payload_data_en) begin
+      live_next = packet.payload.data;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      live <= 5'b00000;
+    end else begin
+      live <= live_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: negative
+  // Unified flop with mux for: negative (register_out assignment)
+  always @* begin
+    negative_next = negative;  // Default value
+    if (negative_expr_en) begin
+      negative_next = packet.payload.data < 0;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      negative <= 0;
+    end else begin
+      negative <= negative_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: next_state
+  // Unified combinational mux for: next_state
+  always @* begin
+    next_state = current_state;  // Default value
+    if (next_state_main_done_18_en) begin
+      next_state = MAIN_DONE_18;
+    end
+    if (next_state_main_idle_0_en) begin
+      next_state = MAIN_IDLE_0;
+    end
+    if (next_state_main_set_1_en) begin
+      next_state = MAIN_SET_1;
+    end
+    if (next_state_main_set_11_en) begin
+      next_state = MAIN_SET_11;
+    end
+    if (next_state_main_set_12_en) begin
+      next_state = MAIN_SET_12;
+    end
+    if (next_state_main_set_13_en) begin
+      next_state = MAIN_SET_13;
+    end
+    if (next_state_main_set_14_en) begin
+      next_state = MAIN_SET_14;
+    end
+    if (next_state_main_set_15_en) begin
+      next_state = MAIN_SET_15;
+    end
+    if (next_state_main_set_16_en) begin
+      next_state = MAIN_SET_16;
+    end
+    if (next_state_main_set_17_en) begin
+      next_state = MAIN_SET_17;
+    end
+    if (next_state_main_set_2_en) begin
+      next_state = MAIN_SET_2;
+    end
+    if (next_state_main_set_6_en) begin
+      next_state = MAIN_SET_6;
+    end
+    if (next_state_main_set_7_en) begin
+      next_state = MAIN_SET_7;
+    end
+    if (next_state_main_wait_10_en) begin
+      next_state = MAIN_WAIT_10;
+    end
+    if (next_state_main_wait_3_en) begin
+      next_state = MAIN_WAIT_3;
+    end
+    if (next_state_main_wait_4_en) begin
+      next_state = MAIN_WAIT_4;
+    end
+    if (next_state_main_wait_5_en) begin
+      next_state = MAIN_WAIT_5;
+    end
+    if (next_state_main_wait_8_en) begin
+      next_state = MAIN_WAIT_8;
+    end
+    if (next_state_main_wait_9_en) begin
+      next_state = MAIN_WAIT_9;
+    end
+  end
+
+  // Unified Multiplexer for LHS: phase
+  // Unified flop with mux for: phase (register_out assignment)
+  always @* begin
+    phase_next = phase;  // Default value
+    if (phase_1_en) begin
+      phase_next = 1;
+    end
+    if (phase__2_en) begin
+      phase_next = 2;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      phase <= 2'b00;
+    end else begin
+      phase <= phase_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: piece
+  // Unified flop with mux for: piece (register_out assignment)
+  always @* begin
+    piece_next = piece;  // Default value
+    if (piece_packet_payload_flags_item_1_en) begin
+      piece_next = packet.payload.flags.item_1;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      piece <= 2'b00;
+    end else begin
+      piece <= piece_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: reset_seen
+  // Unified flop with mux for: reset_seen (register_out assignment)
+  always @* begin
+    reset_seen_next = reset_seen;  // Default value
+    if (reset_seen_held_payload_data_en) begin
+      reset_seen_next = held.payload.data;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      reset_seen <= 5'b00000;
+    end else begin
+      reset_seen <= reset_seen_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: stored
+  // Unified flop with mux for: stored (register_out assignment)
+  always @* begin
+    stored_next = stored;  // Default value
+    if (stored_held_payload_data_en) begin
+      stored_next = held.payload.data;
+    end
+  end
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      stored <= 5'b00000;
+    end else begin
+      stored <= stored_next;
+    end
+  end
+endmodule

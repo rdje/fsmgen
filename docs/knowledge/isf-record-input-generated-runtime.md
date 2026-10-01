@@ -1,6 +1,6 @@
 ---
 id: isf-record-input-generated-runtime
-title: Fixed generated record-input behavior passes both Verilog families
+title: Generated record-input behavior passes under SystemVerilog parsing
 answers:
   - "is generated record-input native behavior qualified?"
   - "which generated record-input storage and binding behaviors pass?"
@@ -18,6 +18,11 @@ qualified fixed observer. Named-domain spawned and ordinary parameterized
 blocking sources compile and pass all selected public-pin predicates in both
 Verilog-family targets. The actual same-width unsigned source compiles, passes
 its bound-result observation and reaches the expected signed mismatch.
+
+Both emitter options used `.sv` DUTs and Verilator default SystemVerilog parsing.
+This is not IEEE 1364 Verilog-2005 qualification; the compatibility emitter
+retains packed typedefs. SEM `.60.4.3.2.5.5.3.2.2` owns the precise profile
+boundary before input signoff. Original positive/negative receipts stay immutable.
 
 Positive predicates cover each copied packed leaf, prior held/entry sampled
 values, reused live readers, signed comparisons, repeated requests, owning

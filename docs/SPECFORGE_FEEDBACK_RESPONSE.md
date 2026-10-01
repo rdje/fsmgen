@@ -79,8 +79,13 @@ and book.
   and prior packed-output controls remain admitted; no VHDL analyzer/runtime
   claim follows from emission. Existing bounded VHDL signed-scalar `+`/`-`/`*`
   one-bit operations use `xor`/`and`; division/modulo and mixed-sign scalar
-  arithmetic remain refused. The qualified record-input HDL targets are
-  SystemVerilog and Verilog. Final public/corpus reconciliation `.5.5.2`
+  arithmetic remain refused. The qualified record-input HDL profile is
+  SystemVerilog. Both emitter options passed binary behavior with `.sv` inputs
+  and Verilator's default SystemVerilog parser. The `verilog` option retains
+  packed typedefs; these runs do not qualify IEEE 1364 Verilog-2005. P2 scope
+  reconciliation `.5.5.3.2.1` preserves the genuine results and corrects the
+  broader claim. Precise Verilog-profile admission or refusal is owned by
+  `.5.5.3.2.2` before final input signoff. Final public/corpus reconciliation `.5.5.2`
   qualifies supplied sources, all-section discovery, current catalog and JSON
   kinds, with unchanged complete-cohort and prior evidence. The feature matrix's
   stale public/runtime pending wording is corrected. Independent input signoff
