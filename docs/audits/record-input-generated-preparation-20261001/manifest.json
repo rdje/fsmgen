@@ -1,0 +1,63 @@
+{
+  "baseline_revision": "f084b5f69d2265ca6f47412944369822f5273551",
+  "feature_runtime": "not_executed",
+  "inputs": {
+    "bin/fsmgen": {
+      "git_blob": "63d943ce91efecb31117c8b8d3b87428de5d35c7",
+      "sha256": "dd23a0ccaa0ab017fa25ed633731a78e211344ef50a41a9f783cc2660e3539cb"
+    },
+    "perl/FSM/Composition/GeneratedChildRealizer.pm": {
+      "git_blob": "87cdff417dd10b966352313585e552004fdfaec9",
+      "sha256": "989bfeeb77e95f7f7fb9c8ece927fffffdf30189a33bc7c19ec118fb590c930c"
+    },
+    "perl/FSM/Scheduler/ISF/ChildStorageOwnership.pm": {
+      "git_blob": "e72135f52f3ac8a6d348a80329a223334c657941",
+      "sha256": "32e202ffd4950517c5b14c21312468b895a2aab5aae5688e8cb0b5afeb9c8fa9"
+    },
+    "perl/FSM/Scheduler/ISF/DomainSource.pm": {
+      "git_blob": "3463fe138ef6d37201eed30101fb0f63de631a10",
+      "sha256": "ea2154d3f40cf1e830b596e62638370014598158af63d6dba367b31abe08c93c"
+    },
+    "perl/FSM/Scheduler/ISF/Emitter/FSM.pm": {
+      "git_blob": "712f823ce641376672f212e01d5c49192792dd0f",
+      "sha256": "446c1c8c189f130fb7c4ae69244c1853f8ef9f30ace347e463eda18cd724a3bb"
+    },
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": {
+      "git_blob": "21e744d12e828bb9cc57249810ed4815ca343e29",
+      "sha256": "b6fe0ea533b7f2ad0783ca67a49f632e4d37920a4ca6e6cb9d53ac8759b906a3"
+    },
+    "t/2025-isf-record-input-generated-runtime.t": {
+      "git_blob": "0b52f3d7af3111c07212239b01eb0601420c7399",
+      "sha256": "660a6d258731e6781bd866149713993acb21eaa8e324518f6ce6afc895b5c346"
+    },
+    "t/data/isf_record_input_generated_blocking_runtime.isf": {
+      "git_blob": "1610592da677003c5094472ef1a7895d63b19782",
+      "sha256": "91afd1ac9e7acabfd6ebb47f391b242d830520e3a829124467bec093c88dc9ab"
+    },
+    "t/data/isf_record_input_generated_domains_runtime.isf": {
+      "git_blob": "af91810021c5d9f7d8d8915fe2709a65dc939f97",
+      "sha256": "d39955c46ff1421b899e0a6da8a6142377270b3e4f36ef37919507df9e675670"
+    },
+    "t/data/isf_record_input_generated_runtime_tb.sv": {
+      "git_blob": "25723e1abdd66fcf43afaf5b9cac5408bef454f3",
+      "sha256": "15b3273be09e69c656da7e8de0e6d245fd616692e09421dd16d59644bb3b7e15"
+    },
+    "t/lib/FSM/Test/ProcessSupervisor.pm": {
+      "git_blob": "407369115e6fbb50e115f14bc447b253199ace23",
+      "sha256": "d52a014ce7c242a97a5fbcf27a76db48be64eee0959a2b701e88fbc78f0be9f1"
+    },
+    "t/lib/FSM/Test/VerilatorRuntime.pm": {
+      "git_blob": "828f3ed9833b0f4827af6ea84c0c610bc381e043",
+      "sha256": "36dcf875785bd0aea3422e647c02dbe765a47e249ef6476e3cdbdc454f96538a"
+    }
+  },
+  "receipt_projection": "Runtime-derived repository root is replaced with a dot; all other saved receipt bytes are preserved. This is static preparation, not a native observation archive.",
+  "schema": "fsmgen.generated_record_input_witness_preparation.v1",
+  "sha256": {
+    "final.txt": "d058212df3799fe212111e2e972229d8e8781849fe379e9eb31935ebd6302780",
+    "first-red.txt": "5dbe814fdc38ec4bb06f5df7b6d337899b6179abe29b5f400d8b0754f78bc8ed",
+    "focused.txt": "dedee172d4b85c68c4d3e5dfce43bae59e3586c80f3d3fbcc5c4c76a5c2c80ea",
+    "verbose-final.txt": "30da861414d9f5106f1ffb97f201872a0f74cd81fedabfab42847c814a1ae2d5",
+    "verify.py": "69797791cc7485518cbf32383da363e6e8456f616d030259ee9bbe4b143ded3f"
+  }
+}

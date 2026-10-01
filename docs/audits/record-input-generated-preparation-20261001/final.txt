@@ -1,0 +1,7 @@
+ram-guard: PID 90814; host 62.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2025-isf-record-input-generated-runtime.t .. ok
+# audit summary: 112 complete fixtures lowered cleanly, 275 fragments skipped (did not start with (actor))
+t/1376-isf-book-example-lowering-audit.t ..... ok
+All tests successful.
+Files=2, Tests=6, 28 wallclock secs ( 0.01 usr  0.00 sys + 23.64 cusr  4.02 csys = 27.67 CPU)
+Result: PASS

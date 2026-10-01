@@ -3015,10 +3015,40 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify generated and named-domain packed-input execution.`
   Acceptance: `Select the smallest independently authored public-pin runtime witnesses for reused live readers and a sole generated whole-copy writer, including owning/reset-free sibling domains, repeated requests and reset. Split preparation, fixed observer admission and genuine observation before each runtime when necessary. Preserve explicit output binding, domain ownership and exact packed private data/enable edges; no arbitration or record-output admission.`
-  Verification: `pending direct witness and observation`
+  Verification: `Qualified direct .5.3 is committed at f084b5f69d2265ca6f47412944369822f5273551. Child .1 prepares two independently authored witnesses: named-domain spawned copier plus reused readers, and ordinary parameterized blocking copier plus reused readers. Parent-owned phase pins select input changes; generated output binding is completion-guarded. Native execution remains gated by .2-.3.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.1`
+  Status: `done`
+  Goal: `Prepare fixed generated/domain input source and behavioral witnesses without HDL execution.`
+  Acceptance: `Use independently authored nested packed declarations, parent-owned public phase outputs, literal entry/copy/live/prior/reset words, repeated requests, idle hold and reset/abort. Include named-domain spawned sole writer/reused readers with clock-only unused sibling and ordinary parameterized blocking sole writer/reused readers. Check exact roles, artifacts, data/enable edges, typed packed endpoints, domain/reset ownership, both emitted families and strict carrier replay, caller/source/producer purity and hostile structural/property witnesses. Prepare actual unsigned behavioral counterexample. No native HDL compilation/execution, reset-free initialization, X/Z or complete delivery claim.`
+  Verification: `Fixed T2025 named-domain spawned and ordinary parameterized blocking copier sources preserve independent complete packed declarations, caller JSON kinds, exact private child roles, reused reader definitions, whole typed data/enable ownership and entire public/private wiring. Original authored sources emit both Verilog families; every unchanged-basename artifact strictly replays. Clock-only unused sibling gains no reset/state and live declarations stay in io. Disabled actual write-enable and authored same-width unsigned property fail independent structural witnesses; the unsigned actual source emits for later behavioral falsification. Fixed bench distinguishes entry/copy/live and all copied packed leaves, prior held values, repeated requests, holds and asynchronous reset/abort. First draft guard-scope and replay-basename oracle errors are diagnosed and corrected without product changes. Focused generated/package/direct/JSON checks pass Files=5, Tests=23; final readable witness/book passes Files=2, Tests=6. Authenticated static receipts are docs/audits/record-input-generated-preparation-20261001/. Runtime is explicitly skipped. Genuine HDL execution remains .2-.3, historical cause/XZ unproved.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.2`
+  Status: `pending`
+  Goal: `Qualify a fixed observer for the exact generated record-input witness.`
+  Acceptance: `After .1 commits, bind exactly T2025 and its fixed sources/bench/producer identities through a new exclusive admission and predeclared five compile/runtime pairs. Reuse immutable qualified failure-only/native/stage helpers; separately qualify finite silent/rejection/gap/admission/cleanup controls and sealed hostile verification before feature execution. Link HIAL .11.6; no T2024/T1974 admission reuse or original supervisor change.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3`
+  Status: `pending`
+  Goal: `Observe genuine generated/domain record-input behavior.`
+  Acceptance: `After .1-.2 commit, execute the exact fixed witness under fresh qualified failure-only admission. Observe both emitted families for named spawned and ordinary blocking copies plus reused readers, repeated requests, hold, owning reset/abort and clock-only sibling isolation. Retain full original stage results/bounds, source identities, explicit gaps, independent cleanup and hostile saved verification. Stop and own unexpected failure before another execution. No X/Z, reset-free initialization or historical native-cause claim.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.4`
+  Status: `pending`
+  Goal: `Reconcile and close generated/domain execution qualification.`
+  Acceptance: `After actual .3 qualification, verify each selected generated/domain behavioral requirement, exact explicit binding and private packed data/enable ownership, prior direct/public/carrier controls and affected book/response/facts. Preserve unsupported profiles and explicit native/X/Z limits; backend/input completeness remains .5.5. Run focused meaningful checks and close parent only from recoverable evidence.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.5`
@@ -3901,3 +3931,38 @@ submodule pin, original supervisor/observer, host protection or CI/push change.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --emit-semantic-json and scheduled carrier checks bind the authored nested packed input and scalar leaf declarations to the independently literal test/bench. Source/carrier admission alone left direct runtime behavior unqualified. The fresh exact observer admission executes the real T2024 target; saved original results identify both positive targets and the deliberate unsigned PACKED_SIGNED_MISMATCH at tb.sv line 45.
 - [x] **ADDRESSED (verified)** — Actual native HDL execution passes both emitted families, all literal entry/copy/live/reset/prior/hold vectors and complete request markers. The same-width unsigned authored property counterexample fails the unchanged public-pin predicate. Sealed independent verifier authenticates exact stage order/coverage, unchanged source/producer identities, original limits/arguments/results and cleanup and rejects corrupted saved evidence. Native events and diagnostic gaps are empty; historical EPERM remains unresolved.
 - [x] **NO REGRESSION** — The genuine guarded T2024 observation reports All tests successful, Files=1, Tests=4 with runtime enabled and no skips; independent saved verification passes, exact production/test/bench/observer/supervision identities match before/after and every stage retains original cleanup. Focused T2024/T1994/T2018 and actual runnable-book T1376 pass All tests successful, Files=4, Tests=15 with this separate static T2024 runtime deliberately skipped. Actual task-tree integrity passes and Knowledge Map reports knowledge-map: OK; book build and staged doctrines complete before normal commit hooks. No broader profile or X/Z signoff is inferred.
+
+
+## Generated/domain witness preparation `.60.4.3.2.5.4.1`
+
+T2025 owns fixed independently authored sources for a named-domain spawned
+whole copier and an ordinary parameterized blocking copier, each with reused
+live readers. Parent phase outputs separate explicit entry sampling, generated
+whole-copy and later live reads without inferring pipeline edges. The literal
+bench observes every copied packed leaf, copier and reader scalar results,
+signed comparisons, held reset/prior values, idle holds, repeated requests and
+reset/abort. Changing the unused clock-only sibling input/clock is an isolation
+control; it establishes no guarantee about reset-free initial state.
+
+The first unqualified static run diagnoses two draft oracle errors. A
+blocking-call completion guard was wrongly generalized to spawned bindings,
+whose actual emitted assignments forward their child's registered output.
+Prefixing individual artifact basenames also broke published same-directory
+child lookup. Correct call-role literals and a complete unchanged-basename
+artifact cohort repair those errors; a bound copier result explicitly contrasts
+spawn and parameterized blocking call publication. No production defect or
+source/profile widening follows. The retained first RED is projected only to
+repository-relative paths in the preparation audit.
+
+Actual source/caller JSON, exact roles, complete public/private wiring, strict
+native every-carrier replay and both emitted families provide re-derivation.
+Independently authored declarations, disabled actual private write enable and
+an authored unsigned same-width property provide structural falsification.
+Fixed source/test/bench, saved preparation records, fact/book/response, task
+nodes and Git provide durability. Actual behavioral falsification and runtime
+remain missing, owned by committed-observer .2 and genuine-observation .3.
+Historical native causality, X/Z and full input/backend completion remain open.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual --check --json identifies failed child-source lookup after the first draft renamed emitted artifact basenames. Initial T2025 at line 91 also incorrectly expected the documented parameterized-do completion guard on spawned reader output forwarding. The actual complete carrier and blocking-call documentation establish those role/source-boundary loci. Existing source/structure qualification still lacks executed generated/domain behavior, so this slice prepares an independent fixed oracle before observer qualification.
+- [x] **ADDRESSED (verified)** — T2025 checks independently literal packed declarations, complete caller JSON, exact artifacts/private roles/data/enable/wiring, owning and clock-only sibling facts, actual strict source/carrier products and both emitted families. Correct spawned versus blocking bindings and original artifact basenames pass. Disabled actual copy enable and actual equal-width unsigned declaration fail unchanged independent structural predicates. The fixed public-pin bench and actual unsigned HDL are prepared; runtime is explicitly skipped.
+- [x] **NO REGRESSION** — Focused T2025/T2019/T2020/T2024/T2018 reports All tests successful, Files=5, Tests=23, retaining prior complete generated/public/package, direct sample and JSON-kind controls. Final readable T2025/runnable-book passes Files=2, Tests=6; book build and actual task integrity pass, Knowledge Map reports knowledge-map: OK, and the sealed saved preparation verifier rejects unrelated receipts. Staged doctrines complete before normal hooks. Production, previous direct/native archives, source syntax/schema/profiles and original supervision remain unchanged. This preparation does not qualify HDL behavior.

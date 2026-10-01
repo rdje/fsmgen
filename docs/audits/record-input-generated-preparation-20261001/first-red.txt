@@ -1,0 +1,519 @@
+ram-guard: PID 78892; host 65.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'domains explicit output binding is completion-guarded'
+    #   at t/2025-isf-record-input-generated-runtime.t line 91.
+    #                   '(?fsm:packed_input_generated_domains__domain_io
+    # 
+    #   (+types
+    #     (type frame (record (tag (bits 2)) (payload (record (data (signed (four_state (bits 5)))) (flags (list (two_state bit) (two_state (bits 2))))))))
+    #     (type _isf_sample_accepted (four_state (signed (bits 5))))
+    #   )
+    # 
+    #   (+system
+    #     (clock clk)
+    #     (areset rst_n)
+    #   )
+    # 
+    #   (+interface
+    #     (input start)
+    #     (input packet)
+    #     (output phase)
+    #     (output seen)
+    #     (output again)
+    #     (output negative_seen)
+    #     (output negative_again)
+    #     (output stored)
+    #     (output copied_tag)
+    #     (output captured)
+    #     (output reset_seen)
+    #     (output done)
+    #     (internal held)
+    #     (internal isf_completion_left_seen)
+    #     (internal isf_completion_left_ready)
+    #     (internal isf_completion_right_seen)
+    #     (internal isf_completion_right_ready)
+    #     (internal isf_completion_writer_seen)
+    #     (internal isf_completion_writer_ready)
+    #     (internal accepted)
+    #   )
+    # 
+    #   (+size
+    #     (start 1)
+    #     (packet frame)
+    #     (phase 2 (reset 0))
+    #     (seen 5 (reset 0))
+    #     (again 5 (reset 0))
+    #     (negative_seen 1 (reset 0))
+    #     (negative_again 1 (reset 0))
+    #     (stored 5 (reset 0))
+    #     (copied_tag 2 (reset 0))
+    #     (captured 5 (reset 0))
+    #     (reset_seen 5 (reset 0))
+    #     (done 1 (reset 0))
+    #     (writer_start 1)
+    #     (writer_done 1)
+    #     (left_start 1)
+    #     (left_done 1)
+    #     (left_result 5)
+    #     (left_is_negative 1)
+    #     (right_start 1)
+    #     (right_done 1)
+    #     (right_result 5)
+    #     (right_is_negative 1)
+    #     (isf_write_writer_held_data frame)
+    #     (isf_write_writer_held_enable 1)
+    #     (held frame (reset 149))
+    #     (accepted _isf_sample_accepted)
+    #     (can_accept 1)
+    #     (isf_completion_left_ready 1)
+    #     (isf_completion_left_seen 1 (reset 0))
+    #     (isf_completion_right_ready 1)
+    #     (isf_completion_right_seen 1 (reset 0))
+    #     (isf_completion_writer_ready 1)
+    #     (isf_completion_writer_seen 1 (reset 0))
+    #   )
+    # 
+    #   (main_idle_0
+    #     (= (can_accept 1))
+    #     (<= (accepted packet.payload.data) <start)
+    #     (<start
+    #       (-> main_set_1)
+    #     )
+    #   )
+    # 
+    #   (main_set_1
+    #     (<- (reset_seen> held.payload.data))
+    #     (-> main_set_2)
+    #   )
+    # 
+    #   (main_set_2
+    #     (<- (phase> 1))
+    #     (-> main_wait_3)
+    #   )
+    # 
+    #   (main_wait_3
+    #     (-> main_wait_4)
+    #   )
+    # 
+    #   (main_wait_4
+    #     (-> main_wait_5)
+    #   )
+    # 
+    #   (main_wait_5
+    #     (-> main_spawn_6)
+    #   )
+    # 
+    #   (main_spawn_6
+    #     (= (writer_start> 1))
+    #     (-> main_await_all_7)
+    #   )
+    # 
+    #   (main_await_all_7
+    #     (-> main_set_8 <isf_completion_writer_ready)
+    #   )
+    # 
+    #   (main_set_8
+    #     (<- (phase> 2))
+    #     (-> main_wait_9)
+    #   )
+    # 
+    #   (main_wait_9
+    #     (-> main_wait_10)
+    #   )
+    # 
+    #   (main_wait_10
+    #     (-> main_wait_11)
+    #   )
+    # 
+    #   (main_wait_11
+    #     (-> main_spawn_12)
+    #   )
+    # 
+    #   (main_spawn_12
+    #     (= (left_start> 1))
+    #     (-> main_spawn_13)
+    #   )
+    # 
+    #   (main_spawn_13
+    #     (= (right_start> 1))
+    #     (-> main_await_all_14)
+    #   )
+    # 
+    #   (main_await_all_14
+    #     (-> main_set_15 <(& isf_completion_left_ready isf_completion_right_ready))
+    #   )
+    # 
+    #   (main_set_15
+    #     (<- (stored> held.payload.data))
+    #     (-> main_set_16)
+    #   )
+    # 
+    #   (main_set_16
+    #     (<- (copied_tag> held.tag))
+    #     (-> main_set_17)
+    #   )
+    # 
+    #   (main_set_17
+    #     (<- (captured> accepted))
+    #     (-> main_done_18)
+    #   )
+    # 
+    #   (main_done_18
+    #     (<1 (done> 1))
+    #     (-> main_idle_0)
+    #   )
+    # 
+    #   (-left_port_bindings
+    #     (= (seen> left_result))
+    #     (= (negative_seen> left_is_negative))
+    #   )
+    # 
+    #   (-right_port_bindings
+    #     (= (again> right_result))
+    #     (= (negative_again> right_is_negative))
+    #   )
+    # 
+    #   (-isf_completion_left_seen
+    #     (<- (isf_completion_left_seen 0) <left_start)
+    #     (<- (isf_completion_left_seen 1) <(& (! left_start) left_done))
+    #     (= (isf_completion_left_ready (| left_done isf_completion_left_seen)))
+    #   )
+    # 
+    #   (-isf_completion_right_seen
+    #     (<- (isf_completion_right_seen 0) <right_start)
+    #     (<- (isf_completion_right_seen 1) <(& (! right_start) right_done))
+    #     (= (isf_completion_right_ready (| right_done isf_completion_right_seen)))
+    #   )
+    # 
+    #   (-isf_completion_writer_seen
+    #     (<- (isf_completion_writer_seen 0) <writer_start)
+    #     (<- (isf_completion_writer_seen 1) <(& (! writer_start) writer_done))
+    #     (= (isf_completion_writer_ready (| writer_done isf_completion_writer_seen)))
+    #   )
+    # 
+    #   (-isf_write_writer_held_enable
+    #     (<- (held isf_write_writer_held_data) <isf_write_writer_held_enable)
+    #   )
+    # 
+    # )
+    # '
+    #     doesn't match '(?^:\(seen> left_result\) <left_done)'
+
+    #   Failed test 'domains explicit output binding is completion-guarded'
+    #   at t/2025-isf-record-input-generated-runtime.t line 91.
+    #                   '(?fsm:packed_input_generated_domains__domain_io
+    # 
+    #   (+types
+    #     (type frame (record (tag (bits 2)) (payload (record (data (signed (four_state (bits 5)))) (flags (list (two_state bit) (two_state (bits 2))))))))
+    #     (type _isf_sample_accepted (four_state (signed (bits 5))))
+    #   )
+    # 
+    #   (+system
+    #     (clock clk)
+    #     (areset rst_n)
+    #   )
+    # 
+    #   (+interface
+    #     (input start)
+    #     (input packet)
+    #     (output phase)
+    #     (output seen)
+    #     (output again)
+    #     (output negative_seen)
+    #     (output negative_again)
+    #     (output stored)
+    #     (output copied_tag)
+    #     (output captured)
+    #     (output reset_seen)
+    #     (output done)
+    #     (internal held)
+    #     (internal isf_completion_left_seen)
+    #     (internal isf_completion_left_ready)
+    #     (internal isf_completion_right_seen)
+    #     (internal isf_completion_right_ready)
+    #     (internal isf_completion_writer_seen)
+    #     (internal isf_completion_writer_ready)
+    #     (internal accepted)
+    #   )
+    # 
+    #   (+size
+    #     (start 1)
+    #     (packet frame)
+    #     (phase 2 (reset 0))
+    #     (seen 5 (reset 0))
+    #     (again 5 (reset 0))
+    #     (negative_seen 1 (reset 0))
+    #     (negative_again 1 (reset 0))
+    #     (stored 5 (reset 0))
+    #     (copied_tag 2 (reset 0))
+    #     (captured 5 (reset 0))
+    #     (reset_seen 5 (reset 0))
+    #     (done 1 (reset 0))
+    #     (writer_start 1)
+    #     (writer_done 1)
+    #     (left_start 1)
+    #     (left_done 1)
+    #     (left_result 5)
+    #     (left_is_negative 1)
+    #     (right_start 1)
+    #     (right_done 1)
+    #     (right_result 5)
+    #     (right_is_negative 1)
+    #     (isf_write_writer_held_data frame)
+    #     (isf_write_writer_held_enable 1)
+    #     (held frame (reset 149))
+    #     (accepted _isf_sample_accepted)
+    #     (can_accept 1)
+    #     (isf_completion_left_ready 1)
+    #     (isf_completion_left_seen 1 (reset 0))
+    #     (isf_completion_right_ready 1)
+    #     (isf_completion_right_seen 1 (reset 0))
+    #     (isf_completion_writer_ready 1)
+    #     (isf_completion_writer_seen 1 (reset 0))
+    #   )
+    # 
+    #   (main_idle_0
+    #     (= (can_accept 1))
+    #     (<= (accepted packet.payload.data) <start)
+    #     (<start
+    #       (-> main_set_1)
+    #     )
+    #   )
+    # 
+    #   (main_set_1
+    #     (<- (reset_seen> held.payload.data))
+    #     (-> main_set_2)
+    #   )
+    # 
+    #   (main_set_2
+    #     (<- (phase> 1))
+    #     (-> main_wait_3)
+    #   )
+    # 
+    #   (main_wait_3
+    #     (-> main_wait_4)
+    #   )
+    # 
+    #   (main_wait_4
+    #     (-> main_wait_5)
+    #   )
+    # 
+    #   (main_wait_5
+    #     (-> main_spawn_6)
+    #   )
+    # 
+    #   (main_spawn_6
+    #     (= (writer_start> 1))
+    #     (-> main_await_all_7)
+    #   )
+    # 
+    #   (main_await_all_7
+    #     (-> main_set_8 <isf_completion_writer_ready)
+    #   )
+    # 
+    #   (main_set_8
+    #     (<- (phase> 2))
+    #     (-> main_wait_9)
+    #   )
+    # 
+    #   (main_wait_9
+    #     (-> main_wait_10)
+    #   )
+    # 
+    #   (main_wait_10
+    #     (-> main_wait_11)
+    #   )
+    # 
+    #   (main_wait_11
+    #     (-> main_spawn_12)
+    #   )
+    # 
+    #   (main_spawn_12
+    #     (= (left_start> 1))
+    #     (-> main_spawn_13)
+    #   )
+    # 
+    #   (main_spawn_13
+    #     (= (right_start> 1))
+    #     (-> main_await_all_14)
+    #   )
+    # 
+    #   (main_await_all_14
+    #     (-> main_set_15 <(& isf_completion_left_ready isf_completion_right_ready))
+    #   )
+    # 
+    #   (main_set_15
+    #     (<- (stored> held.payload.data))
+    #     (-> main_set_16)
+    #   )
+    # 
+    #   (main_set_16
+    #     (<- (copied_tag> held.tag))
+    #     (-> main_set_17)
+    #   )
+    # 
+    #   (main_set_17
+    #     (<- (captured> accepted))
+    #     (-> main_done_18)
+    #   )
+    # 
+    #   (main_done_18
+    #     (<1 (done> 1))
+    #     (-> main_idle_0)
+    #   )
+    # 
+    #   (-left_port_bindings
+    #     (= (seen> left_result))
+    #     (= (negative_seen> left_is_negative))
+    #   )
+    # 
+    #   (-right_port_bindings
+    #     (= (again> right_result))
+    #     (= (negative_again> right_is_negative))
+    #   )
+    # 
+    #   (-isf_completion_left_seen
+    #     (<- (isf_completion_left_seen 0) <left_start)
+    #     (<- (isf_completion_left_seen 1) <(& (! left_start) left_done))
+    #     (= (isf_completion_left_ready (| left_done isf_completion_left_seen)))
+    #   )
+    # 
+    #   (-isf_completion_right_seen
+    #     (<- (isf_completion_right_seen 0) <right_start)
+    #     (<- (isf_completion_right_seen 1) <(& (! right_start) right_done))
+    #     (= (isf_completion_right_ready (| right_done isf_completion_right_seen)))
+    #   )
+    # 
+    #   (-isf_completion_writer_seen
+    #     (<- (isf_completion_writer_seen 0) <writer_start)
+    #     (<- (isf_completion_writer_seen 1) <(& (! writer_start) writer_done))
+    #     (= (isf_completion_writer_ready (| writer_done isf_completion_writer_seen)))
+    #   )
+    # 
+    #   (-isf_write_writer_held_enable
+    #     (<- (held isf_write_writer_held_data) <isf_write_writer_held_enable)
+    #   )
+    # 
+    # )
+    # '
+    #     doesn't match '(?^:\(again> right_result\) <right_done)'
+
+    #   Failed test 'domains packed_input_generated_domains_top.fsm strictly replays'
+    #   at t/2025-isf-record-input-generated-runtime.t line 111.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : "packed_input_generated_domains__domain_idle.fsm",
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : "?fsmc",
+    #          "message" : "Source file: './.artifacts/tmp/tests/jZ9BBt3tGP/domains_packed_input_generated_domains_top.fsm'\nExpected child source file: 'packed_input_generated_domains__domain_idle.fsm'\nSearch roots: ./.artifacts/tmp/tests/jZ9BBt3tGP, ./fx/fsm, .\nSearched locations: ./.artifacts/tmp/tests/jZ9BBt3tGP/packed_input_generated_domains__domain_idle.fsm, ./fx/fsm/packed_input_generated_domains__domain_idle.fsm, ./packed_input_generated_domains__domain_idle.fsm\nGenerated child source: '?fsmc' 'packed_input_generated_domains__domain_idle'\nComposition source '?top:packed_input_generated_domains_top' in './.artifacts/tmp/tests/jZ9BBt3tGP/domains_packed_input_generated_domains_top.fsm' declares '?fsmc' child 'packed_input_generated_domains__domain_idle', but child-source resolution is blocked because no active child FSM source was found either embedded in the same file or in an external '.fsm' file. The active composition contract currently allows generated child instances to realize embedded sources or external '.fsm' module files found beside the composition source, through repeated '--path DIR' roots, through 'FSMLIB', or in the current directory. See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : null,
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : "./.artifacts/tmp/tests/jZ9BBt3tGP/domains_packed_input_generated_domains_top.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : "./.artifacts/tmp/tests/jZ9BBt3tGP/domains_packed_input_generated_domains_top.fsm",
+    #       "resolved_path" : "./.artifacts/tmp/tests/jZ9BBt3tGP/domains_packed_input_generated_domains_top.fsm"
+    #    },
+    #    "success" : false
+    # }
+    # Looks like you failed 3 tests of 36.
+
+#   Failed test 'fixed source, generated roles and both emitted families preserve independent declarations'
+#   at t/2025-isf-record-input-generated-runtime.t line 129.
+fixed carrier replay failed
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 1.
+t/2025-isf-record-input-generated-runtime.t .. 
+# Subtest: fixed source, generated roles and both emitted families preserve independent declarations
+    ok 1 - domains complete authored pins and packed ranges are literal
+    ok 2 - domains lowering/report preserve complete caller JSON kinds
+    ok 3 - domains complete artifacts reuse exactly one reader definition
+    ok 4 - domains packed state/reset stays in its owner
+    ok 5 - domains only explicit entry sample captures input
+    ok 6 - domains parent does not duplicate the generated whole writer
+    ok 7 - domains complete private child identities and order
+    ok 8 - domains inherited packet retains one typed packed root
+    ok 9 - domains child has no unused input or owner register
+    ok 10 - domains child has exactly its owning clock/reset
+    ok 11 - domains complete private child identities and order
+    ok 12 - domains inherited packet retains one typed packed root
+    ok 13 - domains child has no unused input or owner register
+    ok 14 - domains child has exactly its owning clock/reset
+    ok 15 - domains private copy data and explicit enable retain their authored edge
+    ok 16 - domains private whole write data retains type
+    ok 17 - domains owner consumes the actual generated packed data/enable handoff
+    ok 18 - domains reused reader retains its live scalar read
+    ok 19 - domains child owns the signed comparison
+    ok 20 - domains left reuses the exact typed reader
+    ok 21 - domains left receives live packed input
+    not ok 22 - domains explicit output binding is completion-guarded
+    ok 23 - domains right reuses the exact typed reader
+    ok 24 - domains right receives live packed input
+    not ok 25 - domains explicit output binding is completion-guarded
+    ok 26 - domains sole writer receives packed input
+    ok 27 - domains complete private data endpoint ownership
+    ok 28 - domains complete private enable endpoint ownership
+    ok 29 - clock-only unused sibling gains no reset
+    ok 30 - clock-only sibling gains no state
+    ok 31 - whole-copy owner retains exact reset
+    ok 32 - unused declaration remains in the clock-only owner
+    ok 33 - domains packed_input_generated_domains__domain_io.fsm strictly replays
+    ok 34 - domains packed_input_generated_domains__domain_io__child_copier.fsm strictly replays
+    ok 35 - domains packed_input_generated_domains__domain_io__child_reader.fsm strictly replays
+    not ok 36 - domains packed_input_generated_domains_top.fsm strictly replays
+    1..36
+not ok 1 - fixed source, generated roles and both emitted families preserve independent declarations
+Dubious, test returned 255 (wstat 65280, 0xff00)
+Failed 1/1 subtests 
+
+Test Summary Report
+-------------------
+t/2025-isf-record-input-generated-runtime.t (Wstat: 65280 Tests: 1 Failed: 1)
+  Failed test:  1
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=1,  6 wallclock secs ( 0.01 usr  0.01 sys +  3.93 cusr  1.26 csys =  5.21 CPU)
+Result: FAIL

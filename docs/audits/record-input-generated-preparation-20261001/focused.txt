@@ -1,0 +1,9 @@
+ram-guard: PID 84378; host 67.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2025-isf-record-input-generated-runtime.t ... ok
+t/2019-isf-record-input-generated-carriers.t .. ok
+t/2020-composition-child-embedded-packages.t .. ok
+t/2024-isf-record-input-runtime.t ............. ok
+t/2018-semantic-public-json-scalar-kinds.t .... ok
+All tests successful.
+Files=5, Tests=23, 179 wallclock secs ( 0.03 usr  0.01 sys + 148.57 cusr 29.35 csys = 177.96 CPU)
+Result: PASS

@@ -323,6 +323,27 @@ rejection. Complete original stage results, source identities, bounds and
 cleanup are retained in the
 [sealed observation](../../../docs/audits/record-input-direct-observation-20261001/manifest.json).
 Generated/domain execution and backend/input completion remain separately open.
+The generated behavioral witness is prepared separately in the
+[named-domain source](../../../t/data/isf_record_input_generated_domains_runtime.isf)
+and [ordinary blocking source](../../../t/data/isf_record_input_generated_blocking_runtime.isf).
+Both reuse two live readers and give the packed register one generated copier.
+Parent-owned phase outputs separate entry, whole-copy and later live input
+changes. Spawned scalar output bindings forward the child output; the
+parameterized blocking copier's output binding publishes at completion. The
+fixed bench checks every copied packed leaf, prior held and sampled values,
+repeated requests, idle hold and reset/abort. The named source retains an unused
+clock-only sibling and checks that its changing input/clock cannot disturb the
+owned values; this implies no reset-free state initialization guarantee.
+Static declarations, private data/enable ownership, complete wiring, strict
+carrier replay and emitted products are checked. Genuine generated/domain
+execution requires its separately qualified exact observer and remains pending.
+
+Run the prepared authored source checks from the repository root:
+
+```bash
+./bin/fsmgen --strict --check --json t/data/isf_record_input_generated_domains_runtime.isf
+./bin/fsmgen --strict --check --json t/data/isf_record_input_generated_blocking_runtime.isf
+```
 Binary-valued Verilator execution does not establish four-state X/Z behavior;
 signed/state declarations and execution claims are qualified separately.
 See [0113](../../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md#authored-record-input-admission--2026-09-30)
