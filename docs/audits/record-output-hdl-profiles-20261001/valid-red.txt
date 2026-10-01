@@ -1,0 +1,286 @@
+ram-guard: PID 55376; host 56.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'local/verilog names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_local' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.
+    # '
+
+    #   Failed test 'local/v names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_local' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.
+    # '
+
+    #   Failed test 'local/vhdl names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_local' record output 'packet' (type 'frame') cannot generate target 'vhdl': packed record outputs require SystemVerilog; use --language systemverilog. VHDL record-output lowering is not implemented.
+    # '
+
+    #   Failed test 'imported/verilog names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_imported' record output 'packet' (type 'shared.frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.
+    # '
+
+    #   Failed test 'imported/v names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_imported' record output 'packet' (type 'shared.frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.
+    # '
+
+    #   Failed test 'imported/vhdl names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_imported' record output 'packet' (type 'shared.frame') cannot generate target 'vhdl': packed record outputs require SystemVerilog; use --language systemverilog. VHDL record-output lowering is not implemented.
+    # '
+
+    #   Failed test 'alias/verilog names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_alias' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.
+    # '
+
+    #   Failed test 'alias/v names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_alias' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.
+    # '
+
+    #   Failed test 'alias/vhdl names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_alias' record output 'packet' (type 'frame') cannot generate target 'vhdl': packed record outputs require SystemVerilog; use --language systemverilog. VHDL record-output lowering is not implemented.
+    # '
+
+    #   Failed test 'unused/verilog names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_unused' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.
+    # '
+
+    #   Failed test 'unused/v names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_unused' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.
+    # '
+
+    #   Failed test 'unused/vhdl names exact actor, output, authored type and alternative'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 25.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_unused' record output 'packet' (type 'frame') cannot generate target 'vhdl': packed record outputs require SystemVerilog; use --language systemverilog. VHDL record-output lowering is not implemented.
+    # '
+    # Looks like you failed 12 tests of 16.
+
+#   Failed test 'output-only declared records receive exact unsupported target reasons'
+#   at t/2032-isf-record-output-hdl-profiles.t line 29.
+
+    #   Failed test 'mixed profile retains exact existing first record-input refusal'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 35.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_mixed' record input 'incoming' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.
+    # '
+
+    #   Failed test 'mixed profile retains exact existing first record-input refusal'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 35.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_mixed' record input 'incoming' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.
+    # '
+
+    #   Failed test 'prepared VHDL output boundary does not invent a blanket input refusal'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 38.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: 'ISF actor 'profile_mixed' record output 'packet' (type 'frame') cannot generate target 'vhdl': packed record outputs require SystemVerilog; use --language systemverilog. VHDL record-output lowering is not implemented.
+    # '
+    # Looks like you failed 3 tests of 5.
+
+#   Failed test 'mixed declarations preserve current input priority and input diagnostic bytes'
+#   at t/2032-isf-record-output-hdl-profiles.t line 40.
+
+    #   Failed test 'SystemVerilog profile permits validated declarations for later source/writer qualification'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 45.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'SystemVerilog profile permits validated declarations for later source/writer qualification'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 45.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'SystemVerilog profile permits validated declarations for later source/writer qualification'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 45.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'SystemVerilog profile permits validated declarations for later source/writer qualification'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 45.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'SystemVerilog profile permits validated declarations for later source/writer qualification'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 45.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'SystemVerilog profile permits validated declarations for later source/writer qualification'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 45.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'SystemVerilog profile permits validated declarations for later source/writer qualification'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 45.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'SystemVerilog profile permits validated declarations for later source/writer qualification'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 45.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'SystemVerilog profile permits validated declarations for later source/writer qualification'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 45.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'SystemVerilog profile permits validated declarations for later source/writer qualification'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 45.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+
+    #   Failed test 'absent/empty/scalar facts do not imply a record output'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 53.
+    #          got: 'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.
+    # '
+    #     expected: ''
+    # Looks like you failed 22 tests of 34.
+
+#   Failed test 'supported and unknown profiles do not fabricate record evidence'
+#   at t/2032-isf-record-output-hdl-profiles.t line 57.
+
+    #   Failed test 'malformed layout/order/entry receives canonical primary diagnostic'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 79.
+    #                   'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.'
+    #     doesn't match '(?^:^Invalid ISF interface port metadata: )'
+
+    #   Failed test 'malformed layout/order/entry receives canonical primary diagnostic'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 79.
+    #                   'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.'
+    #     doesn't match '(?^:^Invalid ISF interface port metadata: )'
+
+    #   Failed test 'malformed layout/order/entry receives canonical primary diagnostic'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 79.
+    #                   'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.'
+    #     doesn't match '(?^:^Invalid ISF interface port metadata: )'
+
+    #   Failed test 'malformed layout/order/entry receives canonical primary diagnostic'
+    #   at t/2032-isf-record-output-hdl-profiles.t line 79.
+    #                   'Undefined subroutine &FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile called at t/2032-isf-record-output-hdl-profiles.t line 138.'
+    #     doesn't match '(?^:^Invalid ISF interface port metadata: )'
+    # Looks like you failed 4 tests of 12.
+
+#   Failed test 'canonical metadata validation precedes unsupported profile interpretation'
+#   at t/2032-isf-record-output-hdl-profiles.t line 84.
+# Looks like you failed 4 tests of 6.
+t/2032-isf-record-output-hdl-profiles.t .. 
+Dubious, test returned 4 (wstat 1024, 0x400)
+Failed 4/6 subtests 
+
+Test Summary Report
+-------------------
+t/2032-isf-record-output-hdl-profiles.t (Wstat: 1024 Tests: 6 Failed: 4)
+  Failed tests:  1-3, 5
+  Non-zero exit status: 4
+Files=1, Tests=6,  2 wallclock secs ( 0.01 usr  0.01 sys +  0.63 cusr  0.40 csys =  1.05 CPU)
+Result: FAIL

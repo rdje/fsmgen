@@ -87,4 +87,4 @@ inherit ordinary state-write qualification. Equal RHS, complementary conditions,
 entry guards, priorities and declaration permutations cannot arbitrate. T2030
 qualifies these boundaries and unchanged native authored-output refusal. This
 private consumer grants neither source support nor independent runtime
-reachability. Output-only/mixed context and domain prerequisites are qualified under `.60.4.3.3.4.1`; see [the scoped-source card](isf-record-output-source-contexts.md). Profile, declaration/whole-copy and public integration remain `.3.4.2`–`.3.4.4`.
+reachability. Output-only/mixed context and domain prerequisites are qualified under `.60.4.3.3.4.1`; see [the scoped-source card](isf-record-output-source-contexts.md). Unsupported target profiles are prepared under `.3.4.2`; see [the output-profile card](isf-record-output-hdl-profiles.md). Actual declaration/whole-copy and public integration remain `.3.4.3`–`.3.4.4`.

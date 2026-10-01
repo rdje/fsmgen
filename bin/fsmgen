@@ -1257,7 +1257,7 @@ if ($fsm_file =~ /\.isf$/i) {
 
     eval {
         require FSM::Support::ISFHDLProfile;
-        FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile(
+        FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile(
             actor_name => $actor->{actor_name},
             interface_ports => $isf_interface_ports,
             target_language => $target_language,

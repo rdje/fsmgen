@@ -1,0 +1,28 @@
+use strict;
+use warnings;
+use lib 'perl', 't/lib';
+use JSON::PP;
+use Storable qw(dclone);
+my ($destination,$tap)=@ARGV;
+die 'receipt paths must be project-local task artifacts' unless defined($destination) && defined($tap)
+    && $destination =~ m{\A\.artifacts/record-output-profiles/[^/]+\z}
+    && $tap =~ m{\A\.artifacts/record-output-profiles/[^/]+\z};
+{
+    open my $sink,'>:raw',$tap or die $!;
+    local *STDOUT=$sink;
+    do './t/2032-isf-record-output-hdl-profiles.t';
+    die $@ if $@;
+}
+my @rows;
+for my $name (qw(local imported alias mixed unused)) {
+    my $case=main::resolved_output_case($name);
+    my @targets;
+    for my $target(qw(verilog v vhdl systemverilog sv)) {
+        push @targets,{target=>$target,legacy_error=>main::legacy_error($case,$target),profile_error=>main::profile_error($case,$target)};
+    }
+    push @rows,{case=>$name,source=>$case->{source},actor=>dclone($case->{actor}),targets=>\@targets};
+}
+open my $out,'>:raw',$destination or die $!;
+print {$out} JSON::PP->new->canonical->pretty->encode({cases=>\@rows}) or die $!;
+close $out or die $!;
+print "Complete resolved output profile source/declaration/metadata and legacy/current decisions captured.\n";

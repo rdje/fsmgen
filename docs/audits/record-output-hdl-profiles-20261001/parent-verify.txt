@@ -1,0 +1,2 @@
+ram-guard: PID 68936; host 65.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Exact baseline/current parsed-role probes and final baseline RED authenticate copy/field/domain omissions and typed sample repair. Input selector and Parser declaration boundary stay exact; valid writer refinement, policy diagnosis, complete regressions/docs/book and immutable parents authenticate. Hostile domain, sample-width, cause and JSON-kind substitutions reject. No output source or HDL promotion.

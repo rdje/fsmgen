@@ -386,7 +386,7 @@ sub _generate_hdl_from_isf_file ($pipeline, $isf_path) {
     my $scheduler = FSM::Scheduler::ISF->new();
     my $actor = $adapter->parse_file($isf_path);
     require FSM::Support::ISFHDLProfile;
-    FSM::Support::ISFHDLProfile::assert_record_input_hdl_profile(
+    FSM::Support::ISFHDLProfile::assert_record_port_hdl_profile(
         actor_name => $actor->{actor_name},
         interface_ports => $actor->{interface_port_metadata},
         target_language => $pipeline->{target_language},

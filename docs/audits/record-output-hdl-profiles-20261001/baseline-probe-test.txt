@@ -1,0 +1,119 @@
+# Subtest: output-only declared records receive exact unsupported target reasons
+    not ok 1 - local/verilog names exact actor, output, authored type and alternative
+    not ok 2 - local/v names exact actor, output, authored type and alternative
+    not ok 3 - local/vhdl names exact actor, output, authored type and alternative
+    ok 4 - complete first-touch metadata JSON remains unchanged
+    not ok 5 - imported/verilog names exact actor, output, authored type and alternative
+    not ok 6 - imported/v names exact actor, output, authored type and alternative
+    not ok 7 - imported/vhdl names exact actor, output, authored type and alternative
+    ok 8 - complete first-touch metadata JSON remains unchanged
+    not ok 9 - alias/verilog names exact actor, output, authored type and alternative
+    not ok 10 - alias/v names exact actor, output, authored type and alternative
+    not ok 11 - alias/vhdl names exact actor, output, authored type and alternative
+    ok 12 - complete first-touch metadata JSON remains unchanged
+    not ok 13 - unused/verilog names exact actor, output, authored type and alternative
+    not ok 14 - unused/v names exact actor, output, authored type and alternative
+    not ok 15 - unused/vhdl names exact actor, output, authored type and alternative
+    ok 16 - complete first-touch metadata JSON remains unchanged
+    1..16
+not ok 1 - output-only declared records receive exact unsupported target reasons
+# Subtest: mixed declarations preserve current input priority and input diagnostic bytes
+    not ok 1 - mixed profile retains exact existing first record-input refusal
+    ok 2 - legacy input helper retains identical contract
+    not ok 3 - mixed profile retains exact existing first record-input refusal
+    ok 4 - legacy input helper retains identical contract
+    not ok 5 - prepared VHDL output boundary does not invent a blanket input refusal
+    1..5
+not ok 2 - mixed declarations preserve current input priority and input diagnostic bytes
+# Subtest: supported and unknown profiles do not fabricate record evidence
+    not ok 1 - SystemVerilog profile permits validated declarations for later source/writer qualification
+    not ok 2 - SystemVerilog profile permits validated declarations for later source/writer qualification
+    not ok 3 - SystemVerilog profile permits validated declarations for later source/writer qualification
+    not ok 4 - SystemVerilog profile permits validated declarations for later source/writer qualification
+    not ok 5 - SystemVerilog profile permits validated declarations for later source/writer qualification
+    not ok 6 - SystemVerilog profile permits validated declarations for later source/writer qualification
+    not ok 7 - SystemVerilog profile permits validated declarations for later source/writer qualification
+    not ok 8 - SystemVerilog profile permits validated declarations for later source/writer qualification
+    not ok 9 - SystemVerilog profile permits validated declarations for later source/writer qualification
+    not ok 10 - SystemVerilog profile permits validated declarations for later source/writer qualification
+    not ok 11 - absent/empty/scalar facts do not imply a record output
+    ok 12 - unknown and scalar facts stay byte-exact
+    not ok 13 - absent/empty/scalar facts do not imply a record output
+    ok 14 - unknown and scalar facts stay byte-exact
+    not ok 15 - absent/empty/scalar facts do not imply a record output
+    ok 16 - unknown and scalar facts stay byte-exact
+    not ok 17 - absent/empty/scalar facts do not imply a record output
+    ok 18 - unknown and scalar facts stay byte-exact
+    not ok 19 - absent/empty/scalar facts do not imply a record output
+    ok 20 - unknown and scalar facts stay byte-exact
+    not ok 21 - absent/empty/scalar facts do not imply a record output
+    ok 22 - unknown and scalar facts stay byte-exact
+    not ok 23 - absent/empty/scalar facts do not imply a record output
+    ok 24 - unknown and scalar facts stay byte-exact
+    not ok 25 - absent/empty/scalar facts do not imply a record output
+    ok 26 - unknown and scalar facts stay byte-exact
+    not ok 27 - absent/empty/scalar facts do not imply a record output
+    ok 28 - unknown and scalar facts stay byte-exact
+    not ok 29 - absent/empty/scalar facts do not imply a record output
+    ok 30 - unknown and scalar facts stay byte-exact
+    not ok 31 - absent/empty/scalar facts do not imply a record output
+    ok 32 - unknown and scalar facts stay byte-exact
+    not ok 33 - absent/empty/scalar facts do not imply a record output
+    ok 34 - unknown and scalar facts stay byte-exact
+    1..34
+not ok 3 - supported and unknown profiles do not fabricate record evidence
+# Subtest: legacy input helper keeps its input-only prepared output behavior
+    ok 1 - compatibility helper remains input-only
+    ok 2 - compatibility helper remains input-only
+    ok 3 - compatibility helper remains input-only
+    ok 4 - compatibility helper remains input-only
+    ok 5 - compatibility helper remains input-only
+    ok 6 - compatibility helper remains input-only
+    ok 7 - compatibility helper remains input-only
+    ok 8 - compatibility helper remains input-only
+    ok 9 - compatibility helper remains input-only
+    ok 10 - compatibility helper remains input-only
+    ok 11 - compatibility helper remains input-only
+    ok 12 - compatibility helper remains input-only
+    ok 13 - compatibility helper remains input-only
+    ok 14 - compatibility helper remains input-only
+    ok 15 - compatibility helper remains input-only
+    ok 16 - compatibility helper remains input-only
+    1..16
+ok 4 - legacy input helper keeps its input-only prepared output behavior
+# Subtest: canonical metadata validation precedes unsupported profile interpretation
+    not ok 1 - malformed layout/order/entry receives canonical primary diagnostic
+    ok 2 - bad metadata cannot be accepted as a valid record declaration
+    ok 3 - malformed first-touch caller facts remain unchanged
+    not ok 4 - malformed layout/order/entry receives canonical primary diagnostic
+    ok 5 - bad metadata cannot be accepted as a valid record declaration
+    ok 6 - malformed first-touch caller facts remain unchanged
+    not ok 7 - malformed layout/order/entry receives canonical primary diagnostic
+    ok 8 - bad metadata cannot be accepted as a valid record declaration
+    ok 9 - malformed first-touch caller facts remain unchanged
+    not ok 10 - malformed layout/order/entry receives canonical primary diagnostic
+    ok 11 - bad metadata cannot be accepted as a valid record declaration
+    ok 12 - malformed first-touch caller facts remain unchanged
+    1..12
+not ok 5 - canonical metadata validation precedes unsupported profile interpretation
+# Subtest: resolved prototypes preserve independently literal layout and authoring boundary
+    ok 1 - resolved donor is explicitly projected into output role
+    ok 2 - literal nested packed width
+    ok 3 - authored traversal, exact signed/state layout and ranges are independently expected
+    ok 4 - resolved donor is explicitly projected into output role
+    ok 5 - literal nested packed width
+    ok 6 - authored traversal, exact signed/state layout and ranges are independently expected
+    ok 7 - resolved donor is explicitly projected into output role
+    ok 8 - literal nested packed width
+    ok 9 - authored traversal, exact signed/state layout and ranges are independently expected
+    ok 10 - resolved donor is explicitly projected into output role
+    ok 11 - literal nested packed width
+    ok 12 - authored traversal, exact signed/state layout and ranges are independently expected
+    ok 13 - resolved donor is explicitly projected into output role
+    ok 14 - literal nested packed width
+    ok 15 - authored traversal, exact signed/state layout and ranges are independently expected
+    ok 16 - target-profile preparation does not widen authored output grammar
+    1..16
+ok 6 - resolved prototypes preserve independently literal layout and authoring boundary
+1..6
+Complete resolved output profile source/declaration/metadata and legacy/current decisions captured.

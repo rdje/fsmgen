@@ -112,8 +112,11 @@ and book.
   output-only and mixed selection, exact whole-copy identity, typed scalar
   samples, declaration/shadow safety and output-field domain ownership. Its
   mandatory source policy keeps output member writes closed. Unsupported target
-  profile preparation `.3.4.2` is next, before declaration/whole-copy integration
-  `.3.4.3` and public reconciliation `.3.4.4`. Record-output authoring and
+  profile preparation `.3.4.2` now qualifies precise prepared output refusals
+  for `verilog`/`v` and `vhdl`, with actor/output/type reasons and SystemVerilog
+  guidance. Existing input diagnostics, schedule preview and scalar/storage
+  controls remain qualified. Declaration/whole-copy integration `.3.4.3` is
+  next, followed by public reconciliation `.3.4.4`. Record-output authoring and
   generated handoff mappings stay refused until their integration gates qualify.
   The full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;

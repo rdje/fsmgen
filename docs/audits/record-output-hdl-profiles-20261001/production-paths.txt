@@ -1,0 +1,3 @@
+bin/fsmgen
+perl/FSM/Pipeline/HDLGenerator.pm
+perl/FSM/Support/ISFHDLProfile.pm

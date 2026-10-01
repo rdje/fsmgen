@@ -1,0 +1,5 @@
+ram-guard: PID 7979; host 59.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+perl/FSM/Support/ISFHDLProfile.pm syntax OK
+perl/FSM/Pipeline/HDLGenerator.pm syntax OK
+bin/fsmgen syntax OK
+t/2032-isf-record-output-hdl-profiles.t syntax OK

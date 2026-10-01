@@ -112,6 +112,15 @@ output slices and the prepared type toolkit's member facts. These checks do not
 open authored output declarations or qualify output execution. See the
 [source-context evidence](../../../docs/audits/record-output-source-contexts-20261001/scope.txt).
 
+The shared HDL profile guard is also prepared for resolved record outputs.
+Unsupported `verilog`/`v` and `vhdl` requests name the actor, output and authored
+type and recommend `systemverilog`. Mixed Verilog interfaces preserve the
+existing input diagnostic priority. The old input-only helper retains its
+contract, and target-neutral schedule preview stays available. Actual output
+source/public qualification still follows declaration and writer integration;
+these profile tests do not open output syntax or establish runtime support.
+See the [profile evidence](../../../docs/audits/record-output-hdl-profiles-20261001/scope.txt).
+
 ```lisp
 (storage
   (var frame (type frame_t))

@@ -1,0 +1,39 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.2
+Baseline: 05469eb51d62d0e1d1511145b58aaee06ecd5010
+
+Prepare generic declared-port HDL profile admission before output authoring.
+The actual parsed local/imported/alias/mixed/unused storage declarations are
+projected into private resolved output roles; no native output grammar success
+is asserted. Full actor/source/metadata and each legacy/generic decision are
+saved for baseline and current modules. Exact baseline preloading uses only a
+repository-local module copy and the same final test/probe. Baseline probe
+writes complete JSON but its embedded Test::More harness exits 4 for absent
+method failures. That nonzero result is preserved, not classified as success.
+
+The first ordinary sandbox guard cannot inspect processes and exits 2. Approved
+RAM-guarded tests then run with unchanged cutoffs. The first test draft assumes
+unstated scalar metadata has explicit two-state facts; actual canonical metadata
+correctly keeps those fields absent. Preserve draft/receipt, fix only that oracle
+assumption, and obtain valid RED solely for the missing generic helper. Explicit
+signed/four-state members keep their authored traits. Earlier read-only discovery
+commands guessed a test/card filename and a registry extension; their terminal
+errors were consumed and corrected through file discovery, with no writes.
+These discovery commands were not independently archived as receipts.
+
+Current generic guard retains legacy input-only helper bytes and input priority,
+then validates declared outputs for verilog/v and vhdl. SystemVerilog/sv remains
+profile-admitted for later source/writer qualification. Canonical malformed known
+metadata refuses without mutation; null/empty/scalar facts invent no records.
+Native CLI and public facade change only the helper call name, preserving their
+existing failure/atomic handling and schedule-before-profile ordering. Existing
+actual input/profile/metadata/context/writer and scalar/storage tests pass; current
+SystemVerilog input RTL equals its qualified predecessor except date banners.
+
+Only profile module and CLI/facade call sites change production. Saved baseline
+objects authenticate those snapshots; Parser/lowering/input profile witnesses
+are unchanged at capture. Prior context archive members and verifier are preserved.
+verify.py authenticates sealed receipts, source boundaries and hostile substitutions.
+Recorded test counts are receipt-local, not a wider corpus or runtime claim.
+No HDL compiler, analyzer or simulation is invoked. Actual output native/API/
+machine atomic qualification remains .3.4.3-.4, generated/runtime .3.5 and fields
+.60.4.3.4. Full aggregate feature requests are not closed by this preparation.

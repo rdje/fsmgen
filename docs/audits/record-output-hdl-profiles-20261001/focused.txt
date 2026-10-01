@@ -1,0 +1,5 @@
+ram-guard: PID 63416; host 60.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2032-isf-record-output-hdl-profiles.t .. ok
+All tests successful.
+Files=1, Tests=6,  2 wallclock secs ( 0.01 usr  0.01 sys +  0.62 cusr  0.37 csys =  1.01 CPU)
+Result: PASS

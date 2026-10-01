@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **12** facts · **42** uniquely owned question entries.
+> **13** facts · **45** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -16,8 +16,10 @@
 - q="does VHDL support authored ISF packed record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="does generated record-input runtime prove X/Z or reset-free initialization?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="does ordinary ISF reset provenance omit the domain key?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
+- q="does record output backend preparation open source declarations?" · facts=[isf-record-output-hdl-profiles](../../docs/knowledge/isf-record-output-hdl-profiles.md)
 - q="does record-input runtime establish four-state behavior or native EPERM causality?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="does the binding identity repair admit record field actuals?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
+- q="does the generic record port profile guard preserve input diagnostics?" · facts=[isf-record-output-hdl-profiles](../../docs/knowledge/isf-record-output-hdl-profiles.md)
 - q="does the physical write collector accept imported type tokens?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="does the prepared direct record-input bench establish native behavior?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 - q="does unsupported record input VHDL generation replace an existing output?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
@@ -36,6 +38,7 @@
 - q="where is fresh record-input observer qualification owned?" · facts=[isf-record-input-observer-preparation](../../docs/knowledge/isf-record-input-observer-preparation.md)
 - q="where is generated record-input runtime preparation owned?" · facts=[isf-record-input-generated-witness-preparation](../../docs/knowledge/isf-record-input-generated-witness-preparation.md)
 - q="where is the recoverable direct packed-input runtime observation?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
+- q="which HDL profiles are prepared for ISF record outputs?" · facts=[isf-record-output-hdl-profiles](../../docs/knowledge/isf-record-output-hdl-profiles.md)
 - q="which SPECFORGE aggregate request portions remain after input signoff?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
 - q="which backend profiles are qualified for ISF record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="which direct record-input runtime behavior is qualified?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
@@ -119,6 +122,13 @@ _Both record-input emitter observations use the SystemVerilog parser_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-input-parser-mode.md`](../../docs/knowledge/isf-record-input-parser-mode.md)
+
+### isf-record-output-hdl-profiles
+
+_Prepared record outputs require precise unsupported HDL profile refusals_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-record-output-hdl-profiles.md`](../../docs/knowledge/isf-record-output-hdl-profiles.md)
 
 ### isf-record-output-source-contexts
 

@@ -1,0 +1,1988 @@
+{
+   "cases" : [
+      {
+         "actor" : {
+            "actor_name" : "profile_local",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : null,
+            "constant_symbols" : {
+               "packages" : {}
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {}
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "name" : "start",
+                     "width" : 1
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "name" : "done",
+                     "width" : 1
+                  },
+                  {
+                     "name" : "packet",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "body"
+                        ],
+                        "members" : {
+                           "body" : {
+                              "kind" : "record",
+                              "member_order" : [
+                                 "data",
+                                 "flag"
+                              ],
+                              "members" : {
+                                 "data" : {
+                                    "kind" : "bits",
+                                    "signed" : 1,
+                                    "state_model" : "four_state",
+                                    "width" : "3"
+                                 },
+                                 "flag" : {
+                                    "kind" : "bit",
+                                    "signed" : 0,
+                                    "width" : "1"
+                                 }
+                              },
+                              "signed" : 0,
+                              "width" : 4
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 6
+                     },
+                     "width" : 6
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : "1"
+               },
+               {
+                  "direction" : "output",
+                  "name" : "done",
+                  "width" : "1"
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : "4",
+                        "msb" : "5",
+                        "path" : "tag",
+                        "signed" : "0",
+                        "width" : "2"
+                     },
+                     {
+                        "lsb" : "1",
+                        "msb" : "3",
+                        "path" : "body.data",
+                        "signed" : "1",
+                        "state_model" : "four_state",
+                        "width" : "3"
+                     },
+                     {
+                        "lsb" : "0",
+                        "msb" : "0",
+                        "path" : "body.flag",
+                        "signed" : "0",
+                        "width" : "1"
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : "6"
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "body"
+                           ],
+                           "members" : {
+                              "body" : {
+                                 "kind" : "record",
+                                 "member_order" : [
+                                    "data",
+                                    "flag"
+                                 ],
+                                 "members" : {
+                                    "data" : {
+                                       "kind" : "bits",
+                                       "signed" : 1,
+                                       "state_model" : "four_state",
+                                       "width" : "3"
+                                    },
+                                    "flag" : {
+                                       "kind" : "bit",
+                                       "signed" : 0,
+                                       "width" : "1"
+                                    }
+                                 },
+                                 "signed" : 0,
+                                 "width" : 4
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : "2"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 6
+                        },
+                        "width" : 6
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "body"
+                     ],
+                     "members" : {
+                        "body" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "data",
+                              "flag"
+                           ],
+                           "members" : {
+                              "data" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : "3"
+                              },
+                              "flag" : {
+                                 "kind" : "bit",
+                                 "signed" : 0,
+                                 "width" : "1"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 4
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : "2"
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 6
+                  },
+                  "width" : 6
+               }
+            ],
+            "transactions" : [
+               {
+                  "clauses" : [
+                     [
+                        "on",
+                        "start"
+                     ],
+                     [
+                        "set",
+                        "held.tag",
+                        "1"
+                     ],
+                     [
+                        "complete",
+                        "done"
+                     ]
+                  ],
+                  "name" : "main",
+                  "ports" : {
+                     "inputs" : [],
+                     "outputs" : []
+                  }
+               }
+            ],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "body",
+                        [
+                           "record",
+                           [
+                              "data",
+                              [
+                                 "signed",
+                                 [
+                                    "four_state",
+                                    [
+                                       "bits",
+                                       "3"
+                                    ]
+                                 ]
+                              ]
+                           ],
+                           [
+                              "flag",
+                              "bit"
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "type_symbols" : {
+               "local" : {
+                  "frame" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "body"
+                     ],
+                     "members" : {
+                        "body" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "data",
+                              "flag"
+                           ],
+                           "members" : {
+                              "data" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : "3"
+                              },
+                              "flag" : {
+                                 "kind" : "bit",
+                                 "signed" : 0,
+                                 "width" : "1"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 4
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : "2"
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 6
+                  }
+               },
+               "packages" : {}
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "case" : "local",
+         "source" : "(actor profile_local (clock clk) (types (type frame (record (tag (bits 2)) (body (record (data (signed (four_state (bits 3)))) (flag bit)))))) (interface (input start)  (output done) (output placeholder (width 6))) (storage (var packet (type frame)) (var held (type frame))) (transaction main (on start) (set held.tag 1) (complete done)))",
+         "targets" : [
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_local' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "target" : "verilog"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_local' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "target" : "v"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_local' record output 'packet' (type 'frame') cannot generate target 'vhdl': packed record outputs require SystemVerilog; use --language systemverilog. VHDL record-output lowering is not implemented.\n",
+               "target" : "vhdl"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "",
+               "target" : "systemverilog"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "",
+               "target" : "sv"
+            }
+         ]
+      },
+      {
+         "actor" : {
+            "actor_name" : "profile_imported",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : null,
+            "constant_symbols" : {
+               "packages" : {
+                  "shared" : {}
+               }
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {
+                  "shared" : {}
+               }
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "name" : "start",
+                     "width" : 1
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "name" : "done",
+                     "width" : 1
+                  },
+                  {
+                     "name" : "packet",
+                     "type" : "shared.frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "body"
+                        ],
+                        "members" : {
+                           "body" : {
+                              "kind" : "record",
+                              "member_order" : [
+                                 "data",
+                                 "flag"
+                              ],
+                              "members" : {
+                                 "data" : {
+                                    "kind" : "bits",
+                                    "signed" : 1,
+                                    "state_model" : "four_state",
+                                    "width" : "3"
+                                 },
+                                 "flag" : {
+                                    "kind" : "bit",
+                                    "signed" : 0,
+                                    "width" : "1"
+                                 }
+                              },
+                              "signed" : 0,
+                              "width" : 4
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 6
+                     },
+                     "width" : 6
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : "1"
+               },
+               {
+                  "direction" : "output",
+                  "name" : "done",
+                  "width" : "1"
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : "4",
+                        "msb" : "5",
+                        "path" : "tag",
+                        "signed" : "0",
+                        "width" : "2"
+                     },
+                     {
+                        "lsb" : "1",
+                        "msb" : "3",
+                        "path" : "body.data",
+                        "signed" : "1",
+                        "state_model" : "four_state",
+                        "width" : "3"
+                     },
+                     {
+                        "lsb" : "0",
+                        "msb" : "0",
+                        "path" : "body.flag",
+                        "signed" : "0",
+                        "width" : "1"
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "shared.frame",
+                  "type_kind" : "record",
+                  "width" : "6"
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [
+               "shared"
+            ],
+            "package_roots" : [
+               [
+                  "?pkg:shared",
+                  [
+                     "+types",
+                     [
+                        "type",
+                        "frame",
+                        [
+                           "record",
+                           [
+                              "tag",
+                              [
+                                 "bits",
+                                 "2"
+                              ]
+                           ],
+                           [
+                              "body",
+                              [
+                                 "record",
+                                 [
+                                    "data",
+                                    [
+                                       "signed",
+                                       [
+                                          "four_state",
+                                          [
+                                             "bits",
+                                             "3"
+                                          ]
+                                       ]
+                                    ]
+                                 ],
+                                 [
+                                    "flag",
+                                    "bit"
+                                 ]
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "shared.frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "body"
+                           ],
+                           "members" : {
+                              "body" : {
+                                 "kind" : "record",
+                                 "member_order" : [
+                                    "data",
+                                    "flag"
+                                 ],
+                                 "members" : {
+                                    "data" : {
+                                       "kind" : "bits",
+                                       "signed" : 1,
+                                       "state_model" : "four_state",
+                                       "width" : "3"
+                                    },
+                                    "flag" : {
+                                       "kind" : "bit",
+                                       "signed" : 0,
+                                       "width" : "1"
+                                    }
+                                 },
+                                 "signed" : 0,
+                                 "width" : 4
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : "2"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 6
+                        },
+                        "width" : 6
+                     }
+                  ],
+                  "type" : "shared.frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "body"
+                     ],
+                     "members" : {
+                        "body" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "data",
+                              "flag"
+                           ],
+                           "members" : {
+                              "data" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : "3"
+                              },
+                              "flag" : {
+                                 "kind" : "bit",
+                                 "signed" : 0,
+                                 "width" : "1"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 4
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : "2"
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 6
+                  },
+                  "width" : 6
+               }
+            ],
+            "transactions" : [
+               {
+                  "clauses" : [
+                     [
+                        "on",
+                        "start"
+                     ],
+                     [
+                        "set",
+                        "held.tag",
+                        "1"
+                     ],
+                     [
+                        "complete",
+                        "done"
+                     ]
+                  ],
+                  "name" : "main",
+                  "ports" : {
+                     "inputs" : [],
+                     "outputs" : []
+                  }
+               }
+            ],
+            "type_declarations" : [],
+            "type_symbols" : {
+               "local" : {},
+               "packages" : {
+                  "shared" : {
+                     "frame" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "body"
+                        ],
+                        "members" : {
+                           "body" : {
+                              "kind" : "record",
+                              "member_order" : [
+                                 "data",
+                                 "flag"
+                              ],
+                              "members" : {
+                                 "data" : {
+                                    "kind" : "bits",
+                                    "signed" : 1,
+                                    "state_model" : "four_state",
+                                    "width" : "3"
+                                 },
+                                 "flag" : {
+                                    "kind" : "bit",
+                                    "signed" : 0,
+                                    "width" : "1"
+                                 }
+                              },
+                              "signed" : 0,
+                              "width" : 4
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 6
+                     }
+                  }
+               }
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "case" : "imported",
+         "source" : "(actor profile_imported (clock clk) (imports (package shared)) (interface (input start)  (output done) (output placeholder (width 6))) (storage (var packet (type shared.frame)) (var held (type shared.frame))) (transaction main (on start) (set held.tag 1) (complete done)))",
+         "targets" : [
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_imported' record output 'packet' (type 'shared.frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "target" : "verilog"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_imported' record output 'packet' (type 'shared.frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "target" : "v"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_imported' record output 'packet' (type 'shared.frame') cannot generate target 'vhdl': packed record outputs require SystemVerilog; use --language systemverilog. VHDL record-output lowering is not implemented.\n",
+               "target" : "vhdl"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "",
+               "target" : "systemverilog"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "",
+               "target" : "sv"
+            }
+         ]
+      },
+      {
+         "actor" : {
+            "actor_name" : "profile_alias",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : null,
+            "constant_symbols" : {
+               "packages" : {
+                  "shared" : {}
+               }
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {
+                  "shared" : {}
+               }
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "name" : "start",
+                     "width" : 1
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "name" : "done",
+                     "width" : 1
+                  },
+                  {
+                     "name" : "packet",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "body"
+                        ],
+                        "members" : {
+                           "body" : {
+                              "kind" : "record",
+                              "member_order" : [
+                                 "data",
+                                 "flag"
+                              ],
+                              "members" : {
+                                 "data" : {
+                                    "kind" : "bits",
+                                    "signed" : 1,
+                                    "state_model" : "four_state",
+                                    "width" : "3"
+                                 },
+                                 "flag" : {
+                                    "kind" : "bit",
+                                    "signed" : 0,
+                                    "width" : "1"
+                                 }
+                              },
+                              "signed" : 0,
+                              "width" : 4
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 6
+                     },
+                     "width" : 6
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : "1"
+               },
+               {
+                  "direction" : "output",
+                  "name" : "done",
+                  "width" : "1"
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : "4",
+                        "msb" : "5",
+                        "path" : "tag",
+                        "signed" : "0",
+                        "width" : "2"
+                     },
+                     {
+                        "lsb" : "1",
+                        "msb" : "3",
+                        "path" : "body.data",
+                        "signed" : "1",
+                        "state_model" : "four_state",
+                        "width" : "3"
+                     },
+                     {
+                        "lsb" : "0",
+                        "msb" : "0",
+                        "path" : "body.flag",
+                        "signed" : "0",
+                        "width" : "1"
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : "6"
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [
+               "shared"
+            ],
+            "package_roots" : [
+               [
+                  "?pkg:shared",
+                  [
+                     "+types",
+                     [
+                        "type",
+                        "frame",
+                        [
+                           "record",
+                           [
+                              "tag",
+                              [
+                                 "bits",
+                                 "2"
+                              ]
+                           ],
+                           [
+                              "body",
+                              [
+                                 "record",
+                                 [
+                                    "data",
+                                    [
+                                       "signed",
+                                       [
+                                          "four_state",
+                                          [
+                                             "bits",
+                                             "3"
+                                          ]
+                                       ]
+                                    ]
+                                 ],
+                                 [
+                                    "flag",
+                                    "bit"
+                                 ]
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "body"
+                           ],
+                           "members" : {
+                              "body" : {
+                                 "kind" : "record",
+                                 "member_order" : [
+                                    "data",
+                                    "flag"
+                                 ],
+                                 "members" : {
+                                    "data" : {
+                                       "kind" : "bits",
+                                       "signed" : 1,
+                                       "state_model" : "four_state",
+                                       "width" : "3"
+                                    },
+                                    "flag" : {
+                                       "kind" : "bit",
+                                       "signed" : 0,
+                                       "width" : "1"
+                                    }
+                                 },
+                                 "signed" : 0,
+                                 "width" : 4
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : "2"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 6
+                        },
+                        "width" : 6
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "body"
+                     ],
+                     "members" : {
+                        "body" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "data",
+                              "flag"
+                           ],
+                           "members" : {
+                              "data" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : "3"
+                              },
+                              "flag" : {
+                                 "kind" : "bit",
+                                 "signed" : 0,
+                                 "width" : "1"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 4
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : "2"
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 6
+                  },
+                  "width" : 6
+               }
+            ],
+            "transactions" : [
+               {
+                  "clauses" : [
+                     [
+                        "on",
+                        "start"
+                     ],
+                     [
+                        "set",
+                        "held.tag",
+                        "1"
+                     ],
+                     [
+                        "complete",
+                        "done"
+                     ]
+                  ],
+                  "name" : "main",
+                  "ports" : {
+                     "inputs" : [],
+                     "outputs" : []
+                  }
+               }
+            ],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  "shared.frame"
+               ]
+            ],
+            "type_symbols" : {
+               "local" : {
+                  "frame" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "body"
+                     ],
+                     "members" : {
+                        "body" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "data",
+                              "flag"
+                           ],
+                           "members" : {
+                              "data" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : "3"
+                              },
+                              "flag" : {
+                                 "kind" : "bit",
+                                 "signed" : 0,
+                                 "width" : "1"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 4
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : "2"
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 6
+                  }
+               },
+               "packages" : {
+                  "shared" : {
+                     "frame" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "body"
+                        ],
+                        "members" : {
+                           "body" : {
+                              "kind" : "record",
+                              "member_order" : [
+                                 "data",
+                                 "flag"
+                              ],
+                              "members" : {
+                                 "data" : {
+                                    "kind" : "bits",
+                                    "signed" : 1,
+                                    "state_model" : "four_state",
+                                    "width" : "3"
+                                 },
+                                 "flag" : {
+                                    "kind" : "bit",
+                                    "signed" : 0,
+                                    "width" : "1"
+                                 }
+                              },
+                              "signed" : 0,
+                              "width" : 4
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 6
+                     }
+                  }
+               }
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "case" : "alias",
+         "source" : "(actor profile_alias (clock clk) (imports (package shared))(types (type frame shared.frame)) (interface (input start)  (output done) (output placeholder (width 6))) (storage (var packet (type frame)) (var held (type frame))) (transaction main (on start) (set held.tag 1) (complete done)))",
+         "targets" : [
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_alias' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "target" : "verilog"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_alias' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "target" : "v"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_alias' record output 'packet' (type 'frame') cannot generate target 'vhdl': packed record outputs require SystemVerilog; use --language systemverilog. VHDL record-output lowering is not implemented.\n",
+               "target" : "vhdl"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "",
+               "target" : "systemverilog"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "",
+               "target" : "sv"
+            }
+         ]
+      },
+      {
+         "actor" : {
+            "actor_name" : "profile_mixed",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : null,
+            "constant_symbols" : {
+               "packages" : {}
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {}
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "name" : "start",
+                     "width" : 1
+                  },
+                  {
+                     "name" : "incoming",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "body"
+                        ],
+                        "members" : {
+                           "body" : {
+                              "kind" : "record",
+                              "member_order" : [
+                                 "data",
+                                 "flag"
+                              ],
+                              "members" : {
+                                 "data" : {
+                                    "kind" : "bits",
+                                    "signed" : 1,
+                                    "state_model" : "four_state",
+                                    "width" : "3"
+                                 },
+                                 "flag" : {
+                                    "kind" : "bit",
+                                    "signed" : 0,
+                                    "width" : "1"
+                                 }
+                              },
+                              "signed" : 0,
+                              "width" : 4
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 6
+                     },
+                     "width" : 6
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "name" : "done",
+                     "width" : 1
+                  },
+                  {
+                     "name" : "packet",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "body"
+                        ],
+                        "members" : {
+                           "body" : {
+                              "kind" : "record",
+                              "member_order" : [
+                                 "data",
+                                 "flag"
+                              ],
+                              "members" : {
+                                 "data" : {
+                                    "kind" : "bits",
+                                    "signed" : 1,
+                                    "state_model" : "four_state",
+                                    "width" : "3"
+                                 },
+                                 "flag" : {
+                                    "kind" : "bit",
+                                    "signed" : 0,
+                                    "width" : "1"
+                                 }
+                              },
+                              "signed" : 0,
+                              "width" : 4
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 6
+                     },
+                     "width" : 6
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : "1"
+               },
+               {
+                  "direction" : "input",
+                  "fields" : [
+                     {
+                        "lsb" : "4",
+                        "msb" : "5",
+                        "path" : "tag",
+                        "signed" : "0",
+                        "width" : "2"
+                     },
+                     {
+                        "lsb" : "1",
+                        "msb" : "3",
+                        "path" : "body.data",
+                        "signed" : "1",
+                        "state_model" : "four_state",
+                        "width" : "3"
+                     },
+                     {
+                        "lsb" : "0",
+                        "msb" : "0",
+                        "path" : "body.flag",
+                        "signed" : "0",
+                        "width" : "1"
+                     }
+                  ],
+                  "name" : "incoming",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : "6"
+               },
+               {
+                  "direction" : "output",
+                  "name" : "done",
+                  "width" : "1"
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : "4",
+                        "msb" : "5",
+                        "path" : "tag",
+                        "signed" : "0",
+                        "width" : "2"
+                     },
+                     {
+                        "lsb" : "1",
+                        "msb" : "3",
+                        "path" : "body.data",
+                        "signed" : "1",
+                        "state_model" : "four_state",
+                        "width" : "3"
+                     },
+                     {
+                        "lsb" : "0",
+                        "msb" : "0",
+                        "path" : "body.flag",
+                        "signed" : "0",
+                        "width" : "1"
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : "6"
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "body"
+                           ],
+                           "members" : {
+                              "body" : {
+                                 "kind" : "record",
+                                 "member_order" : [
+                                    "data",
+                                    "flag"
+                                 ],
+                                 "members" : {
+                                    "data" : {
+                                       "kind" : "bits",
+                                       "signed" : 1,
+                                       "state_model" : "four_state",
+                                       "width" : "3"
+                                    },
+                                    "flag" : {
+                                       "kind" : "bit",
+                                       "signed" : 0,
+                                       "width" : "1"
+                                    }
+                                 },
+                                 "signed" : 0,
+                                 "width" : 4
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : "2"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 6
+                        },
+                        "width" : 6
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "body"
+                     ],
+                     "members" : {
+                        "body" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "data",
+                              "flag"
+                           ],
+                           "members" : {
+                              "data" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : "3"
+                              },
+                              "flag" : {
+                                 "kind" : "bit",
+                                 "signed" : 0,
+                                 "width" : "1"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 4
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : "2"
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 6
+                  },
+                  "width" : 6
+               }
+            ],
+            "transactions" : [
+               {
+                  "clauses" : [
+                     [
+                        "on",
+                        "start"
+                     ],
+                     [
+                        "set",
+                        "held.tag",
+                        "1"
+                     ],
+                     [
+                        "complete",
+                        "done"
+                     ]
+                  ],
+                  "name" : "main",
+                  "ports" : {
+                     "inputs" : [],
+                     "outputs" : []
+                  }
+               }
+            ],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "body",
+                        [
+                           "record",
+                           [
+                              "data",
+                              [
+                                 "signed",
+                                 [
+                                    "four_state",
+                                    [
+                                       "bits",
+                                       "3"
+                                    ]
+                                 ]
+                              ]
+                           ],
+                           [
+                              "flag",
+                              "bit"
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "type_symbols" : {
+               "local" : {
+                  "frame" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "body"
+                     ],
+                     "members" : {
+                        "body" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "data",
+                              "flag"
+                           ],
+                           "members" : {
+                              "data" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : "3"
+                              },
+                              "flag" : {
+                                 "kind" : "bit",
+                                 "signed" : 0,
+                                 "width" : "1"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 4
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : "2"
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 6
+                  }
+               },
+               "packages" : {}
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "case" : "mixed",
+         "source" : "(actor profile_mixed (clock clk) (types (type frame (record (tag (bits 2)) (body (record (data (signed (four_state (bits 3)))) (flag bit)))))) (interface (input start) (input incoming (type frame)) (output done) (output placeholder (width 6))) (storage (var packet (type frame)) (var held (type frame))) (transaction main (on start) (set held.tag 1) (complete done)))",
+         "targets" : [
+            {
+               "legacy_error" : "ISF actor 'profile_mixed' record input 'incoming' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "profile_error" : "ISF actor 'profile_mixed' record input 'incoming' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "target" : "verilog"
+            },
+            {
+               "legacy_error" : "ISF actor 'profile_mixed' record input 'incoming' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "profile_error" : "ISF actor 'profile_mixed' record input 'incoming' (type 'frame') cannot generate target 'verilog': packed record inputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "target" : "v"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_mixed' record output 'packet' (type 'frame') cannot generate target 'vhdl': packed record outputs require SystemVerilog; use --language systemverilog. VHDL record-output lowering is not implemented.\n",
+               "target" : "vhdl"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "",
+               "target" : "systemverilog"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "",
+               "target" : "sv"
+            }
+         ]
+      },
+      {
+         "actor" : {
+            "actor_name" : "profile_unused",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : null,
+            "constant_symbols" : {
+               "packages" : {}
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {}
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "name" : "start",
+                     "width" : 1
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "name" : "done",
+                     "width" : 1
+                  },
+                  {
+                     "name" : "packet",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "body"
+                        ],
+                        "members" : {
+                           "body" : {
+                              "kind" : "record",
+                              "member_order" : [
+                                 "data",
+                                 "flag"
+                              ],
+                              "members" : {
+                                 "data" : {
+                                    "kind" : "bits",
+                                    "signed" : 1,
+                                    "state_model" : "four_state",
+                                    "width" : "3"
+                                 },
+                                 "flag" : {
+                                    "kind" : "bit",
+                                    "signed" : 0,
+                                    "width" : "1"
+                                 }
+                              },
+                              "signed" : 0,
+                              "width" : 4
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 6
+                     },
+                     "width" : 6
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : "1"
+               },
+               {
+                  "direction" : "output",
+                  "name" : "done",
+                  "width" : "1"
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : "4",
+                        "msb" : "5",
+                        "path" : "tag",
+                        "signed" : "0",
+                        "width" : "2"
+                     },
+                     {
+                        "lsb" : "1",
+                        "msb" : "3",
+                        "path" : "body.data",
+                        "signed" : "1",
+                        "state_model" : "four_state",
+                        "width" : "3"
+                     },
+                     {
+                        "lsb" : "0",
+                        "msb" : "0",
+                        "path" : "body.flag",
+                        "signed" : "0",
+                        "width" : "1"
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : "6"
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "body"
+                           ],
+                           "members" : {
+                              "body" : {
+                                 "kind" : "record",
+                                 "member_order" : [
+                                    "data",
+                                    "flag"
+                                 ],
+                                 "members" : {
+                                    "data" : {
+                                       "kind" : "bits",
+                                       "signed" : 1,
+                                       "state_model" : "four_state",
+                                       "width" : "3"
+                                    },
+                                    "flag" : {
+                                       "kind" : "bit",
+                                       "signed" : 0,
+                                       "width" : "1"
+                                    }
+                                 },
+                                 "signed" : 0,
+                                 "width" : 4
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : "2"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 6
+                        },
+                        "width" : 6
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "body"
+                     ],
+                     "members" : {
+                        "body" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "data",
+                              "flag"
+                           ],
+                           "members" : {
+                              "data" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : "3"
+                              },
+                              "flag" : {
+                                 "kind" : "bit",
+                                 "signed" : 0,
+                                 "width" : "1"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 4
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : "2"
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 6
+                  },
+                  "width" : 6
+               }
+            ],
+            "transactions" : [],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "body",
+                        [
+                           "record",
+                           [
+                              "data",
+                              [
+                                 "signed",
+                                 [
+                                    "four_state",
+                                    [
+                                       "bits",
+                                       "3"
+                                    ]
+                                 ]
+                              ]
+                           ],
+                           [
+                              "flag",
+                              "bit"
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "type_symbols" : {
+               "local" : {
+                  "frame" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "body"
+                     ],
+                     "members" : {
+                        "body" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "data",
+                              "flag"
+                           ],
+                           "members" : {
+                              "data" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : "3"
+                              },
+                              "flag" : {
+                                 "kind" : "bit",
+                                 "signed" : 0,
+                                 "width" : "1"
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 4
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : "2"
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 6
+                  }
+               },
+               "packages" : {}
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "case" : "unused",
+         "source" : "(actor profile_unused (clock clk) (types (type frame (record (tag (bits 2)) (body (record (data (signed (four_state (bits 3)))) (flag bit)))))) (interface (input start)  (output done) (output placeholder (width 6))) (storage (var packet (type frame)) (var held (type frame))) )",
+         "targets" : [
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_unused' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "target" : "verilog"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_unused' record output 'packet' (type 'frame') cannot generate target 'verilog': packed record outputs require SystemVerilog; use --language systemverilog. Verilog-2005 record lowering is not implemented.\n",
+               "target" : "v"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "ISF actor 'profile_unused' record output 'packet' (type 'frame') cannot generate target 'vhdl': packed record outputs require SystemVerilog; use --language systemverilog. VHDL record-output lowering is not implemented.\n",
+               "target" : "vhdl"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "",
+               "target" : "systemverilog"
+            },
+            {
+               "legacy_error" : "",
+               "profile_error" : "",
+               "target" : "sv"
+            }
+         ]
+      }
+   ]
+}
