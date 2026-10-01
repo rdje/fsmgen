@@ -39,7 +39,10 @@ and book.
   repair of scalar drive-parameter member access before product publication.
   Frontend closure is qualified under `.60.4.3.2.3.6.3`: unchanged supplied
   whole-copy/field-guard sources, prior scalar/storage products and complete
-  public discovery are exercised. Generated/domain carriers, backend/native
+  public discovery are exercised. Generated/domain carrier structure and strict
+  replay are qualified under `.60.4.3.2.4.1`, including reused readers, owned
+  whole copies, unused declarations and embedded imported package context.
+  Generated/domain public closure, backend/native
   execution and consumer signoff remain owned qualification work. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;

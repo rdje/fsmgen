@@ -47,6 +47,8 @@ sub realize_fsmc_child_instance ($class, %args) {
 
     my $source_name = $instance->source_name;
     my $child_ast = $composition_spec->embedded_fsm_sources->{$source_name};
+    $child_ast = _embedded_child_source_with_packages($composition_spec, $child_ast)
+        if $child_ast;
     my $child_source_path;
     my $child_source_info;
 
@@ -88,6 +90,8 @@ sub realize_dtc_child_instance ($class, %args) {
 
     my $source_name = $instance->source_name;
     my $child_ast = $composition_spec->embedded_dt_sources->{$source_name};
+    $child_ast = _embedded_child_source_with_packages($composition_spec, $child_ast)
+        if $child_ast;
     my $child_source_path;
 
     unless ($child_ast) {
@@ -111,6 +115,16 @@ sub realize_dtc_child_instance ($class, %args) {
         child_source_path => $child_source_path,
         add_shared_datapath_source_exports => 0,
     );
+}
+
+sub _embedded_child_source_with_packages ($composition_spec, $child_ast) {
+    # The child is a single root selected from the composition source. Retain
+    # its sibling package roots so the ordinary frontend can resolve imports.
+    # Spec accessors detach both maps; external children keep their own source
+    # context and deliberately never pass through this helper.
+    my $packages = $composition_spec->embedded_package_sources;
+    return $child_ast unless %$packages;
+    return [$child_ast, map { $packages->{$_} } sort keys %$packages];
 }
 
 sub load_external_fsmc_child_source ($class, %args) {

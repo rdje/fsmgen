@@ -2890,6 +2890,31 @@ For FSMGen, the analogs are:
   Verification: `Authored source/frontend admission and public closure are qualified under .3. Next exercise actual generated/named-domain carriers, exact recursive types/interfaces and explicit ownership with fixed prior controls before backend/native/consumer completion.`
   Commit: `pending`
 
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1`
+  Status: `done`
+  Goal: `Qualify actual generated record-input carriers and domain ownership.`
+  Acceptance: `Use authored local and imported nested record inputs, reused generated readers, unused declarations and input-to-storage transfers through ordinary and named-domain lowering. Independently assert complete resolved types, explicit top interfaces, typed child connections, instance bindings, storage/reset ownership and complete caller purity; strictly replay every actual carrier. Retain scalar/storage controls and root all discrepancies before repair. No native HDL execution or backend completion is claimed.`
+  Verification: `Completed through owned prerequisite child .1.1: actual authored local/imported ordinary/domain reused readers, unused inputs, sole generated spawn/do whole copies and maintained imported example retain exact literal types/layouts, complete child/top roles and endpoints, artifact membership, register/reset ownership and caller/source/package purity. Every actual carrier strictly replays. Complete generated/domain transport/refusal closure remains .2; static carrier/reset structure does not qualify HDL execution.`
+  Commit: `completed through child .1.1 in this commit`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1.1`
+  Status: `done`
+  Goal: `Retain embedded package context when realizing generated composition children.`
+  Acceptance: `P1 authored carrier defect: local aliases to imported record inputs lower, and individual parent/child artifacts strictly replay, but the ordinary generated top refuses when its embedded modules import shared. Trace actual authored and isolated carrier checks to the responsible handoff before repair. Emitted top already contains package roots; GeneratedChildRealizer selects only the child AST and create_fsm_module can no longer collect sibling packages. Preserve the composition's detached package context for embedded FSM/DT children only, through the existing frontend and resolver. Keep external-source package locality, exact imported type spelling, caller purity, prior local/domain/scalar/storage products and independent hostile controls. No external repo or submodule access, profile widening or native runtime.`
+  Verification: `Exact 9aaa27bbb7c072dab52b486b64f93309e55cfa99 realizer source with final T2020 fails embedded FSM/DT positives only; missing/undeclared import and external local-package controls pass. Corrected T2019/T2020 final carrier matrix reports All tests successful, Files=2, Tests=10. Detaching sibling packages into the existing embedded child frontend repairs ordinary imported top replay without changing emitted carrier bytes or external dependency lookup. Final prior-domain/storage controls Files=4, Tests=20, realizer/frontend/package controls Files=5, Tests=15 and maintained native/API/newline/corpus/book controls Files=3, Tests=7216 pass. Durable acceptance below distinguishes draft setup/oracle failures and exact catalog addition.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.2`
+  Status: `active`
+  Goal: `Close generated/domain record-input public and refusal qualification.`
+  Acceptance: `After .1, compare complete actual native/API/newline check/semantic/schedule products and source preservation for generated/domain sources. Preserve fixed older scalar/storage products and complete carrier controls; qualify foreign reads/copies, input targets and nearest scalar declarations with first-cause diagnostics. Reconcile all generated/domain ownership and carrier evidence, book and canonical feedback before backend/native/consumer .2.5; split prerequisite repairs before mutation.`
+  Verification: `Actual authored carrier qualification and embedded FSM/DT package-context prerequisite are qualified under .1. Next compare complete generated/domain native/API/newline products, prior scalar/storage carriers, contextual refusal matrices and independently expected ownership; then synchronize public closure before .2.5.`
+  Commit: `pending`
+
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5`
   Status: `pending`
   Goal: `Qualify packed input behavior and complete public delivery.`
@@ -6284,3 +6309,58 @@ The next claim gate rejects unsorted path arrays in the two new reviews. Their
 producer/oracle/watcher arrays are now sorted and unique as the existing schema
 requires. The evidence and group owner stay unchanged; failed gates are not
 qualification. Final declarations, inventory and staging follow this correction.
+
+
+## Qualification — generated/domain carriers and embedded package context `.60.4.3.2.4.1.1`
+
+Authored T2019 replaces the prepared-input inference with complete literal
+recursive types, source-order declarations, packed ranges, child roles, artifact
+membership and every public/private endpoint. Ordinary and named-domain local
+and imported nested aliases, reused readers, unused declarations, sole generated
+copies and blocking calls strictly replay. Registers and authored reset values
+stay in the owner; no native clock/reset behavior follows from carrier structure.
+The maintained imported example is isf/record_input_children.isf, registered as
+feature.isf_record_input_children. Complete caller kinds and exact sources/packages
+remain unchanged. Generated/domain transport/refusal closure is still .2.4.2.
+
+Initial draft wiring extraction also scanned embedded module declarations and
+blocking-instance spelling omitted the main caller prefix. Correcting both
+leaves only the genuine imported ordinary top failure. Emitted parent, child
+and top already contain the package root. GeneratedChildRealizer selects only
+the child AST; SourceFrontend's package collection no longer sees its sibling
+roots. The repair combines the detached embedded child and detached package
+roots before the existing strict frontend/resolver. External children bypass
+this path and keep source-relative dependencies. No new type system, implicit
+import, emitted root rewrite, frontend schema or profile admission is added.
+
+T2020's first draft uses strict-incompatible infix pairs; its first diagnostic
+projection also captures source-context prefixes instead of the cause. Correct
+canonical pair witnesses reproduce missing package context for both embedded
+FSM/DT families before mutation. Full composition witnesses must use the
+existing two-child C2 subset; SystemVerilog emits a packed struct member rather
+than a bit-vector reference. Correct independent member/type witnesses and
+reused instances qualify those boundaries. A later undeclared-import assertion
+expects lower-case malformed but the core diagnostic uses Malformed. All these
+oracle/setup errors are corrected and excluded from product qualification.
+Several guessed read basenames fail without changing source; enumerated actual
+files resolve the reads. Root investigation precedes product mutation.
+
+Exact committed predecessor 9aaa27bbb7c072dab52b486b64f93309e55cfa99
+GeneratedChildRealizer source is loaded through a repository-local source
+capsule for the final T2020 witnesses. Embedded FSM/DT positives are RED;
+missing/undeclared imports and same-name external-package precedence/refusal
+controls retain their expected outcomes. This is a bounded owned source audit,
+not an inspection or mutation of any external repository or submodule.
+
+The initial catalog gate fails only its fixed expected totals after the new
+fixture. Independent Perl producer projections and Python identity/set census
+show every old catalog row unchanged and exactly the maintained fixture added:
+supported_smoke 386 to 387; positive strict entries 376 to 377. Re-derivation
+is the real current catalog projection, falsification is exact predecessor row
+preservation plus the original fixed-count RED and independent added-identity
+census, and tracked catalog/accounting/public fixture watchers retain durability.
+The literal expectations are updated from that evidence, not relaxed.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my $child_ast = $composition_spec->embedded_fsm_sources' -1 --format='%H %s' -- perl/FSM/Composition/GeneratedChildRealizer.pm` locates extraction d008a23278f58c4875427f09a087082558f4012d; the selected child AST alone reaches the existing frontend and drops sibling packages. Actual isolated `--check --json` refuses imported_readers_top.fsm despite emitted package roots and successful individual modules. Corrected T2019 is RED only for that imported top. Canonical T2020 independently reports ` at t/2020-composition-child-embedded-packages.t line 37.` for actual embedded FSM/DT package admission. Final exact committed predecessor capsule fails both embedded positives while missing/undeclared import and external source controls remain green; the failed draft grammar, prefix, C2, syntax and capitalization oracles are explicitly excluded.
+- [x] **ADDRESSED (verified)** — Embedded children retain detached sibling package roots through the existing strict frontend/resolver; external children keep their own file context. Final guarded T2019/T2020 reports All tests successful, Files=2, Tests=10. Literal complete recursive types/ranges, child roles, exact top pins/wiring/artifact membership, live read expressions, generated typed data/enables, domain storage/reset ownership, complete caller kinds and source/package bytes qualify all authored witnesses and every strict actual carrier. Maintained imported/domain example is registered and actual native/API/newline queries pass. Book, canonical SPECFORGE response, facts, map and frontier identify finite carrier completion and preserve later public/runtime/consumer obligations.
+- [x] **NO REGRESSION** — Final guarded prior ingress/domain/drive and complete baseline domain-storage products T1998/T1995/T1996/T1982 report `All tests successful`, `Files=4, Tests=20`. Generated realizer/strict frontend/direct and composition package/copy controls T184/T197/T272/T273/T564 report All tests successful, Files=5, Tests=15. Maintained input and new generated/domain example selected in T1884 plus catalog T248 and runnable book T1376 report All tests successful, Files=3, Tests=7216 after the independently censused exact catalog addition. Final carrier/package witnesses pass Files=2, Tests=10; book builds and Knowledge Map is current. Re-derivation uses real source/lowering/report/carrier and transport products with literal types/roles/endpoints; falsification uses exact predecessor embedded-package RED plus missing/undeclared/external controls, independent full literal projections and exact prior catalog-row preservation; tracked producers/tests/source/package/book/facts, this owner and Git preserve durability. Generated/domain full transport/refusal closure, backend/native behavior, external consumer, full CI and push remain separately owned. Final measured capacity/claims, staged doctrines and normal hooks accompany the commit.

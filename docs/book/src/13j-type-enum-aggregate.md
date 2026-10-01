@@ -142,7 +142,44 @@ discovery. The supplied [whole-copy source](../../../docs/audits/specforge-aggre
 uses a sixteen-bit input: subtype occupies bits 15 through 12, payload bits 11
 through 0. Its [field guard](../../../docs/audits/specforge-aggregate-intake-20260930/record-port-field-guard.isf)
 reads that same layout. Frontend source/report/replay qualification is complete;
-generated/domain/backend/native and consumer completion retain separate owners.
+generated/domain public closure, backend/native and consumer completion retain
+separate owners.
+
+Generated readers retain one typed packed input in their private interface.
+Reused instances receive the live actor input independently; an unread inherited
+input is omitted from the child while the authored top declaration remains.
+An input-to-storage copy keeps the register and its reset in the actor or domain
+owner. A sole generated writer supplies typed private write data and an explicit
+enable to that owner. These carrier checks establish structure and strict replay;
+native timing and reset behavior still require execution qualification.
+
+The runnable [record_input_children.isf](../../../isf/record_input_children.isf)
+imports the same package and reuses a reader in domain `io`:
+
+```lisp
+(transaction worker (domain io)
+  (ports (output result (width 5)))
+  (wait 2)
+  (set result packet.data)
+  (complete done))
+(transaction main (domain io)
+  (on start)
+  (set held packet)
+  (spawn worker as left (bind (output result seen)))
+  (spawn worker as right (bind (output result again)))
+  (await_all done)
+  (complete done))
+```
+
+Run `./bin/fsmgen --strict --check --json isf/record_input_children.isf`.
+Its explicit top exposes the declared inputs and outputs, plus each domain's
+clock and declared reset. `unused` stays in clock-only domain `idle`; `packet`,
+`held` and the readers belong to `io`. There is no implicit crossing or child
+register copy. T2019 independently qualifies local/imported nested aliases,
+reused readers, unused inputs and sole generated copies, including blocking
+calls. Ordinary composition children now retain their source's embedded package
+context through the normal frontend; external children still resolve packages
+beside their own source. T2020 checks both boundaries.
 
 `packet` is one six-bit input; it does not become separate field pins.
 `packet.flag` occupies bit 5 and `packet.data` bits 4 through 0. The copy into

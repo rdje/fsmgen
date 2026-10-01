@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1227** facts · **6779** unique questions · **6956** answer occurrences · **173** topic shards.
+> **1229** facts · **6785** unique questions · **6962** answer occurrences · **175** topic shards.
 
 Query first:
 
@@ -33,6 +33,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `ci-perl` | 1 | 16 | [`ci-perl.md`](knowledge-map/generated/ci-perl.md) |
 | `ci-ppif` | 1 | 5 | [`ci-ppif.md`](knowledge-map/generated/ci-ppif.md) |
 | `claim-verification` | 4 | 53 | [`claim-verification.md`](knowledge-map/generated/claim-verification.md) |
+| `composition-embedded` | 1 | 3 | [`composition-embedded.md`](knowledge-map/generated/composition-embedded.md) |
 | `composition-explicit` | 1 | 3 | [`composition-explicit.md`](knowledge-map/generated/composition-explicit.md) |
 | `composition-plan` | 1 | 4 | [`composition-plan.md`](knowledge-map/generated/composition-plan.md) |
 | `composition-shared` | 1 | 5 | [`composition-shared.md`](knowledge-map/generated/composition-shared.md) |
@@ -128,6 +129,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `isf-prepared` | 1 | 3 | [`isf-prepared.md`](knowledge-map/generated/isf-prepared.md) |
 | `isf-production` | 1 | 3 | [`isf-production.md`](knowledge-map/generated/isf-production.md) |
 | `isf-property` | 1 | 5 | [`isf-property.md`](knowledge-map/generated/isf-property.md) |
+| `isf-record` | 1 | 3 | [`isf-record.md`](knowledge-map/generated/isf-record.md) |
 | `isf-rule` | 4 | 23 | [`isf-rule.md`](knowledge-map/generated/isf-rule.md) |
 | `isf-sampled` | 2 | 10 | [`isf-sampled.md`](knowledge-map/generated/isf-sampled.md) |
 | `isf-scalar` | 2 | 4 | [`isf-scalar.md`](knowledge-map/generated/isf-scalar.md) |

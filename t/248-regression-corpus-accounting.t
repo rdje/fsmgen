@@ -1525,7 +1525,7 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    386,
+    387,
     'catalog retains the independently recounted supported-smoke entries including storage-word access, declared-interface metadata and packed record inputs',
 );
 is(
@@ -1540,7 +1540,7 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    376,
+    377,
     'catalog retains the independently recounted positive strict-mode acceptance entries',
 );
 for my $strict_supported_id (qw(
