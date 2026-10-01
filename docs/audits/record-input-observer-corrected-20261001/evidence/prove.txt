@@ -1,0 +1,70 @@
+ram-guard: PID 15605; host 64.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+docs/audits/record-input-observer-corrected-20261001/qualify.t .. 
+ok 1 - healthy has intended observer status
+ok 2 - healthy completes all original invariance assertions
+ok 3 - healthy preserves original assertions
+ok 4 - healthy driver cleanup
+ok 5 - healthy has exact declared stderr
+ok 6 - healthy traverses fixed adapters
+ok 7 - healthy has explicit expected capture outcome
+ok 8 - query_gap has intended observer status
+ok 9 - query_gap completes all original invariance assertions
+ok 10 - query_gap preserves original assertions
+ok 11 - query_gap driver cleanup
+ok 12 - query_gap has exact declared stderr
+ok 13 - query_gap traverses fixed adapters
+ok 14 - query_gap has explicit expected capture outcome
+ok 15 - capture_gap has intended observer status
+ok 16 - capture_gap completes all original invariance assertions
+ok 17 - capture_gap preserves original assertions
+ok 18 - capture_gap driver cleanup
+ok 19 - capture_gap has exact declared stderr
+ok 20 - capture_gap traverses fixed adapters
+ok 21 - capture_gap has explicit expected capture outcome
+ok 22 - retention_gap has intended observer status
+ok 23 - retention_gap completes all original invariance assertions
+ok 24 - retention_gap preserves original assertions
+ok 25 - retention_gap driver cleanup
+ok 26 - retention_gap has exact declared stderr
+ok 27 - retention_gap traverses fixed adapters
+ok 28 - retention_gap has explicit expected capture outcome
+ok 29 - diagnostic_errno has intended observer status
+ok 30 - diagnostic_errno completes all original invariance assertions
+ok 31 - diagnostic_errno preserves original assertions
+ok 32 - diagnostic_errno driver cleanup
+ok 33 - diagnostic_errno has exact declared stderr
+ok 34 - diagnostic_errno traverses fixed adapters
+ok 35 - diagnostic_errno has explicit expected capture outcome
+ok 36 - empty_inputs rejects admission
+ok 37 - empty_inputs creates no observation or child stage
+ok 38 - empty_inputs exact driver cleanup
+ok 39 - changed_digest rejects admission
+ok 40 - changed_digest creates no observation or child stage
+ok 41 - changed_digest exact driver cleanup
+ok 42 - wrong_target rejects admission
+ok 43 - wrong_target creates no observation or child stage
+ok 44 - wrong_target exact driver cleanup
+ok 45 - extra_field rejects admission
+ok 46 - extra_field creates no observation or child stage
+ok 47 - extra_field exact driver cleanup
+ok 48 - wrong_count rejects admission
+ok 49 - wrong_count creates no observation or child stage
+ok 50 - wrong_count exact driver cleanup
+ok 51 - wrong_scenario rejects admission
+ok 52 - wrong_scenario creates no observation or child stage
+ok 53 - wrong_scenario exact driver cleanup
+ok 54 - capture reuse fails before overwrite
+ok 55 - only the exact prepared T2024 target has native admission
+ok 56 - record_input old_target rejects before any target execution
+ok 57 - record_input wrong_count rejects before any target execution
+ok 58 - record_input omitted_fixture rejects before any target execution
+ok 59 - record_input extra_identity rejects before any target execution
+ok 60 - record_input changed_fixture rejects before any target execution
+ok 61 - genuine target cannot execute before observer qualification is sealed
+ok 62 - missing qualification creates no observation or HDL stage
+ok 63 - unqualified driver cleanup completes
+1..63
+ok
+All tests successful.
+Files=1, Tests=63,  7 wallclock secs ( 0.01 usr  0.00 sys +  3.99 cusr  0.65 csys =  4.65 CPU)
+Result: PASS

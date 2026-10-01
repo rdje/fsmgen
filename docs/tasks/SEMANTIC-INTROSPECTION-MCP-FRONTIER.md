@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57, SEMANTIC-INTROSPECTION-MCP-FRONTIER.58, SEMANTIC-INTROSPECTION-MCP-FRONTIER.59, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57, SEMANTIC-INTROSPECTION-MCP-FRONTIER.58, SEMANTIC-INTROSPECTION-MCP-FRONTIER.59, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60, SEMANTIC-INTROSPECTION-MCP-FRONTIER.64, SEMANTIC-INTROSPECTION-MCP-FRONTIER.65`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -2986,11 +2986,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify a fixed failure-only observer for the direct packed-input test.`
   Acceptance: `After .1 commits, bind only its exact maintained target/fixture/producer identities through a new exclusive admission. Consume the committed native/failure-only witness and preserve original arguments, returns, errno, bounds, capture gaps and cleanup. Independently qualify silent success, controlled real rejection, diagnostic gaps, source drift, wrong targets and reused captures before genuine HDL use. Existing archived observer admission and receipts remain immutable. Link HIAL .3.2.10.11.5 ownership; no actual feature HDL execution in observer qualification.`
-  Verification: `Fixed T2024/source/public-pin bench and static signed/state/layout/emission controls are committed at 49ef15cba77bdb8572beb079a1a3e81bfa04a85e. Read and qualify a new exact failure-only observer admission for that target, preserving archived controls and original native bounds/results. No genuine feature HDL execution until this integration commits.`
-  Commit: `pending`
+  Verification: `Corrected admission preparation is committed at 786aa4466133f8f2c47575f3c81fbd21a9ad2f89. Fresh exclusive finite controls and complete sealed independent verification close the exact fixed observer integration. Source identities, original helper/adapter limits/results, silent success, controlled real native rejection, explicit gaps and independent PID/group absence are qualified. Original warning-bearing integration remains unqualified and immutable. Genuine T2024 execution is separately .5.3; historical native cause remains open.`
+  Commit: `this commit`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2.1`
@@ -3001,11 +3001,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Requalify the corrected fixed observer from fresh exclusive native controls.`
   Acceptance: `After .1 commits, use the corrected fixed recipe with new exclusive captures. Require both finite TAP and complete sealed independent verification, exact stderr including deliberate gaps, unchanged stage/argument/result/errno/bounds, fixed target/source/coverage and independent PID/group cleanup. Preserve first warning-bearing evidence. Close observer integration only after all saved hostile controls and doctrines pass and commit before genuine packed-input HDL execution.`
-  Verification: `pending committed warning repair`
-  Commit: `pending`
+  Verification: `Fresh exclusive oct01fix finite controls pass All tests successful, Files=1, Tests=63. Complete sealed saved verification passes exact stderr, silent ordinary/stale success, intentional real session rejection and native context/errno, modeled query/capture/retention gaps, original stage arguments/results/bounds and independent captured PID/group absence. Hostile saved mutations reject. Exact sources and original unqualified warning-bearing evidence remain unchanged. No feature HDL execution; genuine direct observation remains .5.3 after bounded history rollover .64.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.3`
   Status: `pending`
@@ -3071,6 +3071,22 @@ For FSMGen, the analogs are:
   Verification: `Optional request remains unimplemented under decision 0113.`
   Commit: `pending`
   Blocked by: `Required R1-R3 and director-prioritized SPECFORGE duration/timer delivery; unblock after those required outcomes qualify.`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.64`
+  Status: `pending`
+  Goal: `Seal completed semantic acceptance history before genuine record-input runtime.`
+  Acceptance: `Activate before the task would reach the unchanged 7200-line milestone, following completed .54's exact-version acceptance-history protocol. Retire only closed optional acceptance prose behind exact committed source/suffix identities and the existing bounded manifest. Preserve every live node, active contract, unresolved failure and current native/feature qualification limits. Independently verify node/text preservation, archive chain and consumers; run focused history/integrity checks and book before commit. No ceiling change or deferred doctrine reassessment.`
+  Verification: `Fresh observer integration is qualified under .60.4.3.2.5.2.2. The live task approaches its existing rollover milestone; own this bounded prerequisite before adding genuine runtime evidence. Resume .60.4.3.2.5.3 afterward.`
+  Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.65`
+  Status: `pending`
+  Goal: `Repair completed ownership records outside the authoritative task section.`
+  Acceptance: `P2 continuity defect exposed by current observer qualification gate: the new .64 record is outside parsed Task Tree, and independent section extraction finds completed .61-.63 there as well. After the current qualified observer commit, trace their exact introduction and move only those existing records into the live Task Tree, adding exact root child references. Preserve every complete node contract, outcome, historical prose and source bytes except the owned registration repair. Correct the earlier global-regex preservation claim's registration limit, qualify actual checker extraction and hostile missing/changed/misplaced node controls, and commit before .64 or feature execution. Do not change the checker or historical-view doctrine.`
+  Verification: `scripts/check_task_tree_integrity.pl extracts only the first Task Tree section, ending at Implementation Notes From .4. Whole-file IDs .61-.63 are outside it; .63's global node-preservation oracle did not test authoritative registration. Current .64 placement is corrected in its creating slice; this leaf owns past .61-.63 repair next.`
+  Commit: `pending`
+
 
 ## Implementation Notes From `.4`
 
@@ -3739,6 +3755,7 @@ before editing code. No discovered defect is closed by this audit alone.
   Acceptance: `P2 discovery ambiguity: the optional Current Frontier narrative appears current and names an obsolete next leaf. Decision 0019 and the canonical secondary-view fact explicitly make it historical; the authoritative nodes/index are correct. After .60.4.3.2.5.1 commits clean, retire only that unlabelled duplicate prose with exact committed retrieval and a historical stamp pointing to live sources. Do not backfill a second frontier. Preserve every node and active dependency, verify exact old narrative retrieval and unchanged node contracts, sync current pointers and commit before .2.5.2. No production change or new delivery claim.`
   Verification: `Exact 49ef15cba77bdb8572beb079a1a3e81bfa04a85e narrative names completed frontend refusals as next; the actual nodes and index are correct. Decision 0019 explicitly makes the secondary view historical, so no node-status defect or per-slice backfill requirement is inferred. Only that unlabelled prose is retired behind exact Git retrieval; .63 moves into the live node list. Independent exact predecessor/node-contract and historical-text verification passes; task-tree integrity reports all active task-tree invariants hold. Active index and Memory advance to the prepared direct target fixed-observer .60.4.3.2.5.2; book/canonical feedback already state its correct unexecuted scope.`
   Commit: `this commit`
+
 
 ## Reset question scope disposition
 
@@ -7010,3 +7027,49 @@ retain its preparation and qualification instructions. No coverage declaration,
 ceiling or acceptance requirement changes. All remaining gates, including
 fresh task acceptance, pass in that failed aggregate; it is excluded from
 commit qualification. Refresh capacity then inventory before the corrected gate.
+
+
+## Fresh fixed observer qualification `.60.4.3.2.5.2.2`
+
+Preparation 786aa4466133f8f2c47575f3c81fbd21a9ad2f89 is committed clean,
+with both doctrine gates passed and brief empty. Fresh exclusive `oct01fix`
+finite controls report All tests successful, Files=1, Tests=63. All five
+scenarios preserve the original 39 invariance assertions, actual native hook
+behavior, session rejection, captured return/errno and unchanged stage bounds,
+arguments, complete results and cleanup. Every scenario's outer stderr exactly
+matches its declared success or modeled diagnostic gaps. Wrong, incomplete,
+changed and reused admissions refuse before any feature HDL execution.
+
+Complete sources, admissions, native events, original stage/control results,
+postcheck and TAP are sealed in the corrected sibling manifest. Independent
+saved verification consumes unchanged native/failure-only qualifications,
+checks complete exact manifest membership/source hashes and every saved
+result/context/gap/cleanup field, and rejects all hostile saved mutations.
+A separate TAP census reconstructs the 63 passing assertions and 15 exact
+captured native PID/group absence records. Initial warning-bearing evidence
+remains byte-exact and unqualified; no old capture is replayed. The corrected
+observer is qualified only for its fixed finite integration and exact target.
+
+This closes SEM .5.2 and HIAL .3.2.10.11.5.1. Genuine direct feature HDL
+execution remains .5.3 / HIAL .11.5.2; generated/domain and backend/input
+completion remain .5.4-.5. Historical EPERM causal repair and original
+startup/full-CI/push qualification remain open. No feature compiler/runtime,
+production/source/bench change, native helper rebuild, host-protection change,
+privilege request, original recurrence retry, full CI, push or external write.
+Before adding genuine runtime evidence, .64 applies the already-selected
+7200-line history milestone; it preserves active contracts and all ceilings.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The original saved verifier fails at docs/audits/record-input-observer-20261001/verify.py line 61 solely on the exact admission-module warning; preparation repair is committed at 786aa4466133f8f2c47575f3c81fbd21a9ad2f89 with clean syntax, caller-kind preservation and strict finite stderr assertions. Actual original native/stage/gap/cleanup evidence remains sealed and unqualified. Fresh fixed-target integration, rather than replaying an old capture or reusing T1974 admission, is the required missing qualification.
+- [x] **ADDRESSED (verified)** — New exclusive oct01fix finite controls pass Files=1, Tests=63, including exact outer stderr, all original invariance assertions, wrong/changed/omitted/reused admissions and refusal of genuine target execution before sealing. The new complete manifest and independent saved verifier pass unchanged original native/failure-only proof, source and admission identities, exact results/arguments/errno/bounds, explicit modeled gaps and independently captured PID/group absence. Hostile saved mutations reject; initial evidence and all archived helpers remain byte-exact. This closes observer integration only.
+- [x] **NO REGRESSION** — Guarded fresh qualification reports All tests successful, Files=1, Tests=63; independent full saved verification and hostile silent-success/native-errno/session/gap/result/cleanup mutations pass. Separate complete TAP and postcheck census confirms the saved finite counts. Product/test/source/bench/archived-helper/initial-evidence Git diff is empty. Re-derivation uses fresh native controls and complete original saved results plus independent TAP/identity/cleanup reconstruction; falsification uses wrong/reused admissions, deliberate actual session rejection, explicit modeled gaps and hostile saved mutations; sealed sources/manifests/receipts, canonical fact/book/feedback/task and Git provide durability. Genuine feature HDL behavior and historical native causality remain explicitly pending their own leaves.
+
+
+The first standalone qualification gate rejects task-tree registration and its
+live-document dependents: the newly created .64 record is placed after the
+first Task Tree section ends. Move this new record into that section and own
+past .61-.63 outside-section records under new .65 before fixing them. Actual
+checker extraction, not whole-file ID matching, establishes this defect; .63's
+earlier global preservation proof has that explicit registration limitation.
+All native qualifications and other doctrine checks pass; the failed aggregate
+is excluded. Complete .2's corrected gate/commit, then .65, then .64 before
+any feature execution. No checker, coverage policy or ceiling is changed.

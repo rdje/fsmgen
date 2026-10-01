@@ -1921,16 +1921,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Own native causal observation at the next genuinely required roadmap runtime.`
   Acceptance: `Before a selected roadmap leaf needs supervised HDL runtime, identify its exact fixed target and qualify any required observer integration separately using the committed failure-only witness. Existing T1974 admission cannot authorize a different target. Preserve original limits/arguments/results and native return/errno, retain query/capture gaps and source identities, and independently check cleanup. Diagnose captured rejection before further execution; a pass leaves historical causality open and schedules its next normal opportunity. No host-protection change, privilege request or recurrence-only original retry.`
-  Verification: `SEM .60.4.3.2.5.1 commits the fixed T2024 packed-input source/public-pin bench and static controls; .5.2 now qualifies a new exact observer using committed failure-only/native witnesses. Child .1 owns that integration before child .2 and SEM .5.3 genuinely execute HDL. Historical native cause and original startup/full-CI remain separate.`
+  Verification: `SEM .60.4.3.2.5.1 commits the fixed T2024 packed-input source/public-pin bench and static controls; .5.2 qualifies and seals the new exact observer using committed failure-only/native witnesses. Child .1 is done; child .2 and SEM .5.3 own genuine HDL observation after the bounded history prerequisite. Historical native cause and original startup/full-CI remain separate.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.1`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify the fixed T2024 record-input failure-only observer integration.`
   Acceptance: `Linked SEM .60.4.3.2.5.2 prepares a new closed admission for exactly committed T2024 and its source/bench/producers. Reuse unchanged qualified FailureWitness/StageObserver and immutable finite control sources, with a separate exclusive capture namespace. Qualify ordinary/stale silent success, deliberate real session rejection, query/capture/retention/errno gaps, original stage/result/argument/bound invariance, exact identities and wrong/reused admissions. Independently check native child PID/group absence and sealed hostile evidence. No feature HDL execution, old capture replay, original recurrence campaign, host-protection or supervisor-policy change. Commit before actual observation.`
-  Verification: `Current native helper binary matches its committed qualification digest. Initial finite controls pass but saved verification rejects a new admission-module Perl sort warning. SEM .5.2.1 repairs path-array syntax, exact stderr checks and detached caller scalar inspection, with pure preparation and warning-only saved diagnosis qualified. Fresh .5.2.2 control qualification remains required; observer integration is active and feature HDL execution is not admitted.`
-  Commit: `pending`
+  Verification: `SEM .5.2.2 fresh exclusive oct01fix controls pass Files=1, Tests=63 and complete sealed independent verification. Exact stderr, original results/arguments/bounds, silent ordinary/stale success, intentional real native session rejection/context/errno, diagnostic gaps, fixed admission refusals and independent PID/group absence pass; hostile saved mutations reject. Initial warning-bearing integration and all original helpers remain immutable. No feature HDL execution; child .2 owns the next genuine direct observation after committed qualification.`
+  Commit: `this commit with SEM observer qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.5.2`
   Status: `pending`
