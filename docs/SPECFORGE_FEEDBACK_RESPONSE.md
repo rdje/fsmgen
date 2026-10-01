@@ -60,24 +60,18 @@ and book.
   public-pin checks; an actually compiled unsigned property counterexample
   reaches the expected signed mismatch. Complete sealed evidence is in
   `docs/audits/record-input-direct-observation-20261001/`. Binary execution
-  does not establish X/Z behavior or historical native causality. Generated/domain
-  execution `.5.4` and backend/input completion `.5.5` remain open. Fixed named-domain
-  spawned and ordinary blocking witnesses are prepared under `.5.4.1`; their
-  separate fixed observer `.5.4.2` is qualified by fresh finite controls and
-  complete sealed independent verification. Genuine generated/domain HDL
-  execution remains `.5.4.3`: its first real compile rejected the generated
-  whole-copy link for a mixed two-state/four-state record. The preserved failure
-  and root cause are `.5.4.3.1`. Declaration repair `.5.4.3.2` now preserves
-  the packed mixed-state typedef on a variable carrier, with independent structural,
-  exact old-emitter and complete emitted-product controls. Fresh corrected observation `.5.4.3.3` now compiles and passes the named-domain
-  source in both families. The ordinary blocking source compiles but its first
-  simulation fails the whole-copy predicate; remaining cases and the unsigned
-  runtime are not reached. Sealed diagnosis `.5.4.3.3.1` identifies a P2 test error: the
-  blocking result binding is valid during the child completion pulse, while the
-  test wrongly expects retention until later parent completion. Correction `.2`
-  now qualifies the completion-window and role-specific late checks, preserving
-  all packed-storage predicates, with independent temporal controls and exact
-  old-bench rejection. Fresh complete execution `.3` remains pending. Individual failed blocking field values were not captured. The complete generated runtime request remains unqualified. Record outputs, root-list ports and variants
+  does not establish X/Z behavior or historical native causality.
+  Generated/domain runtime is now independently qualified under
+  `.5.4.3.3.3`: named-domain spawned and ordinary blocking sources pass both
+  Verilog targets, all copied packed leaves, completion-window binding checks,
+  reused live reads, repeated requests, reset/abort and idle isolation. The
+  actually compiled unsigned counterexample reaches the expected signed mismatch.
+  Complete sealed evidence is
+  `docs/audits/record-input-generated-observation-complete-20261001/`.
+  Original typed-wire compile and blocking late-hold test failures remain
+  preserved; their declaration and oracle repairs are qualified before this
+  fresh run. Generated execution reconciliation `.5.4.4` and backend/input
+  completion `.5.5` remain open. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

@@ -24,9 +24,11 @@ mixed-state wire. Declaration repair .5.4.3.2 is now structurally qualified with
 RED and complete public-product controls, preserving the typedef on a variable
 carrier. Fresh corrected observation compiles and passes both named-domain
 families and compiles ordinary blocking SystemVerilog, closing this reached
-declaration rejection. Complete runtime remains open: the blocking test has a
-separately diagnosed late-hold oracle error under .3.3.1-.2. See the generated
-blocking binding fact for its partial scope.
+declaration rejection. The separate blocking late-hold oracle error is
+diagnosed and corrected under .3.3.1-.2. Subsequent fresh complete .3.3.3
+execution passes both fixed generated sources in both families and the actual
+unsigned counterexample reaches the expected signed rejection. Full input
+backend/delivery closure remains separate; see the generated runtime fact.
 
 Original complete admission/stage/results/arguments/bounds/summary/cleanup,
 source and producer Git identities before/after and full TAP are sealed.

@@ -30,13 +30,17 @@ independently checks held packed storage and the role-specific bound output
 later. Pure temporal controls reject missing/late-only results, wrong retention
 and each wrong packed leaf. Exact old-bench RED and complete byte reconstruction
 protect the correction scope; sealed evidence is in
-docs/audits/generated-binding-oracle-correction-20261001/. Complete actual
-runtime still requires fresh .3 committed authority. A binding
+docs/audits/generated-binding-oracle-correction-20261001/. Fresh complete
+.3 committed-authority execution now passes both sources in
+both Verilog families, including these timing predicates and every packed leaf.
+The actual unsigned counterexample reaches the expected signed rejection; see
+the generated runtime card and complete observation archive. A binding
 does not provide implicit retained storage.
 
 The late-zero explanation derives from actual source/carrier/HDL; individual
-failed component pin values were not captured. Other blocking fields remain
-unqualified. Complete partial receipts preserve source/producer identities,
+failed component pin values were not captured. That partial archive does not qualify other blocking fields; subsequent
+complete execution qualifies the fixed positive witnesses. Complete partial
+receipts preserve source/producer identities,
 original bounds/results/arguments and cleanup. Native events/gaps are empty;
 historical EPERM is unattributed. Successful-child PID absence is not measured.
 
@@ -45,4 +49,5 @@ Hostile saved mutations and the independently literal completion-value versus
 late-zero counterexample provide falsification. The sealed archive, published
 contract, source Git blobs, scheduled repair, task/book/response and Git provide
 durability. Saved reverify executes no HDL. Never replay either spent generated
-capture; complete corrected runtime requires fresh committed authority.
+capture. Fresh generated_input_window_oct01 independently qualifies the
+corrected runtime; backend/input and full aggregate delivery remain open.

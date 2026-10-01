@@ -41,6 +41,8 @@ falsification. Tracked producers/tests, original compiler failure, sealed repair
 records, fact/book/tasks and Git provide durability. No additional HDL compiles
 or runs in this repair slice. Subsequent fresh exact observation under .3.3
 compiles and passes both named-domain families and compiles ordinary blocking
-SystemVerilog. Complete runtime remains open behind its distinct test timing
-correction; see the generated blocking binding fact.
+SystemVerilog. After the distinct test timing correction, fresh complete
+.3.3.3 execution passes both fixed sources in both families, with actual
+unsigned-property rejection. See the generated runtime fact; full input backend
+and aggregate delivery remain separate.
 X/Z, reset-free initialization and historical native causality remain unproved.

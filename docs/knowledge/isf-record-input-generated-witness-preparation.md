@@ -44,5 +44,6 @@ authored property counterexamples falsify weaker structural claims. Fixed
 test/source/bench, tasks, this card, book and Git provide durability. An actual
 unsigned behavioral counterexample is emitted for later execution. Genuine
 HDL compilation/execution remains gated by separately qualified fixed observer
-.5.4.2 and fresh observation .5.4.3; preparation does not establish runtime,
+.5.4.2. Fresh complete observation .5.4.3.3.3 now qualifies the fixed positives
+and actual unsigned rejection; preparation alone does not establish runtime,
 X/Z behavior, historical EPERM repair or complete record-input delivery.

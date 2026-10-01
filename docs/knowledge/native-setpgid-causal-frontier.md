@@ -5,7 +5,7 @@ answers:
   - "what caused the T1972 pre-exec setpgid EPERM?"
   - "do parent and child setpgid timing controls explain the original failure?"
   - "can a correct process group coexist with native setpgid EPERM?"
-date: 2026-09-28
+date: 2026-10-01
 status: current
 tags: [process, supervision, containment, native, diagnosis]
 evidence: docs/audits/native-group-tracing-capability-20260927/administrator/manifest.json; docs/audits/native-group-tracing-capability-20260927/manifest.json; docs/audits/native-group-host-correlation-20260927/manifest.json; docs/audits/native-group-witness-20260927/manifest.json; docs/audits/native-group-witness-20260927/original/manifest.json; docs/audits/native-group-discriminator-20260927/manifest.json; docs/audits/native-group-discriminator-20260927/result.jsonl; docs/audits/native-group-discriminator-20260927/probe.c; docs/audits/native-group-discriminator-20260927/verify.py; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
@@ -121,7 +121,11 @@ real different-value assertion. Original stage bounds/results/cleanup and
 unchanged admitted/extra producer identities are retained, with no native event
 or capture gap. Independent workspace/command residue is absent; successful-child
 PID identities are not independently captured. This closes that feature repair,
-not the historical EPERM. Child .11.5 owns qualified observation before the next
-genuinely required roadmap runtime; independent static feature work proceeds.
+not the historical EPERM. Child .11.5 subsequently consumes complete direct input behavior and .11.6
+complete generated input behavior under independently qualified exact observers.
+Neither captures a native event or diagnostic gap; original bounds/results and
+identities remain. Historical causality stays P1-open, with .11.7 selecting the
+next newly required backend/input or output feature HDL witness. No spent
+recurrence retry or host-protection change follows.
 Verify the sealed result with
 `python3 -B docs/audits/priority-runtime-qualified-20260928/verify.py`.

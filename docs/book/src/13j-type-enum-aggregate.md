@@ -322,49 +322,38 @@ width but an unsigned data member reaches the bench's signed-comparison
 rejection. Complete original stage results, source identities, bounds and
 cleanup are retained in the
 [sealed observation](../../../docs/audits/record-input-direct-observation-20261001/manifest.json).
-Generated/domain execution and backend/input completion remain separately open.
-The generated behavioral witness is prepared separately in the
+Generated/domain public-pin behavior is also qualified for the
 [named-domain source](../../../t/data/isf_record_input_generated_domains_runtime.isf)
-and [ordinary blocking source](../../../t/data/isf_record_input_generated_blocking_runtime.isf).
-Both reuse two live readers and give the packed register one generated copier.
-Parent-owned phase outputs separate entry, whole-copy and later live input
-changes. Spawned scalar output bindings forward the child output; the
-parameterized blocking copier's output binding publishes at completion. The
-fixed bench checks every copied packed leaf, prior held and sampled values,
-repeated requests, idle hold and reset/abort. The named source retains an unused
-clock-only sibling and checks that its changing input/clock cannot disturb the
-owned values; this implies no reset-free state initialization guarantee.
-Static declarations, private data/enable ownership, complete wiring, strict
-carrier replay and emitted products are checked. Complete generated/domain
-execution remains open. Its new exact fixed observer is qualified with fresh
-finite native controls, complete independent saved verification, source/coverage
-binding and original stage/bound/result/cleanup preservation. Observer controls
-do not establish generated-feature HDL behavior or historical native causality. The
-first genuine named-domain compile exposed a typed whole-copy wire containing
-nested two-state members that Verilator rejected; no simulation ran. The
-preserved failure is in `docs/audits/record-input-generated-observation-20261001/`.
-The declaration repair now uses the unchanged packed typedef as a variable
-carrier, preserving its two-state and four-state members. Independent structural
-checks, exact old-emitter counterexamples and the complete emitted source
-product qualify that repair under SEM `.60.4.3.2.5.4.3.2`. Fresh execution
-compiles and passes the named-domain source in both families. The ordinary
-blocking source compiles, then its first simulation fails a test that wrongly
-expects the completion-gated result binding to hold until later parent done.
-The actual emitted logic and published contract establish this test timing
-error; individual failed blocking field values were not captured. Complete
-partial evidence is in
-`docs/audits/record-input-generated-observation-corrected-20261001/`.
-SEM `.3.3.2` qualifies the corrected bench without HDL execution: it requires
-the literal copied result during public phase 1 before phase 2, then checks
-spawned forwarding or blocking default zero at later completion and idle.
-Every packed-storage, sampled/live/signed/reset/isolation predicate is retained.
-Independent temporal controls and exact old-bench rejection protect this
-correction. Fresh complete execution remains `.3.3.3`. Remaining blocking cases and
-the unsigned counterexample have not run. Runtime delivery is still open.
+and [ordinary blocking source](../../../t/data/isf_record_input_generated_blocking_runtime.isf)
+in both emitted Verilog families. Both use the table's independently literal
+entry/copy/live/prior words, reuse live reader instances and give the packed
+register one generated copier. Parent-owned phase outputs separate input
+changes: the bench requires the copied scalar result during phase 1 before
+phase 2, then checks every copied packed leaf and later live reads. Spawned
+scalar bindings forward the child's retained output; the parameterized blocking
+binding is valid during child completion and defaults to zero afterward.
+The bench checks that distinction again at parent completion and idle.
 
+Repeated requests, sampled/prior-held values, owning asynchronous reset/abort
+and idle hold pass. The named source retains an unused clock-only sibling;
+changing its input/clock and stopping/restarting that clock do not disturb
+owned values. This establishes no initial-state guarantee for reset-free
+hardware. The actually compiled unsigned counterexample passes its copied
+result observation, then reaches the expected signed-comparison rejection.
+Complete original results, source/producer identities, stage bounds and cleanup
+are retained in the
+[complete generated observation](../../../docs/audits/record-input-generated-observation-complete-20261001/manifest.json).
 
+The first compile exposed an illegal typed wire containing two-state members;
+the carrier now preserves the same packed typedef on a variable declaration.
+A subsequent blocking test used the wrong late-retention expectation; its
+completion-window correction preserves all packed-storage predicates. Both
+diagnoses, exact predecessor controls and original partial receipts remain
+tracked. SEM `.60.4.3.2.5.4.4` reconciles generated execution; backend/input
+completion `.5.5` remains open. Complete SPECFORGE aggregate delivery, X/Z
+behavior and historical native causality are not inferred from these runs.
 
-Run the prepared authored source checks from the repository root:
+Run the authored source checks from the repository root:
 
 ```bash
 ./bin/fsmgen --strict --check --json t/data/isf_record_input_generated_domains_runtime.isf

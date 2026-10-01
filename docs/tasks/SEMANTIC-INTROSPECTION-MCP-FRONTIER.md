@@ -3038,11 +3038,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3`
-  Status: `active`
+  Status: `done`
   Goal: `Observe genuine generated/domain record-input behavior.`
   Acceptance: `After .1-.2 commit, execute the exact fixed witness under fresh qualified failure-only admission. Observe both emitted families for named spawned and ordinary blocking copies plus reused readers, repeated requests, hold, owning reset/abort and clock-only sibling isolation. Retain full original stage results/bounds, source identities, explicit gaps, independent cleanup and hostile saved verification. Stop and own unexpected failure before another execution. No X/Z, reset-free initialization or historical native-cause claim.`
-  Verification: `Fresh exclusive generated_input_oct01 stops after first domains SystemVerilog compile. Actual Verilator rejects wire comp_link_io__writer_isf_write_held_data over a packed typedef containing nested two_state bit members, at regenerated HDL line 1674 / member line 1636. Runtime and remaining pairs never execute. Original nonzero compile result/bounds/argv and cleanup remain; native events and diagnostic gaps are empty, source identities match before/after and selected workspace/commands are absent. Own P1 emitted-HDL defect; preserve/root-cause under child .1, fix under .2, then fresh corrected behavior under .3. No feature success or native EPERM attribution.`
-  Commit: `pending`
+  Verification: `First compile and later partial failures remain immutable under child diagnoses. Typed variable carrier repair and completion-window oracle correction are committed; .3.3.3 now independently qualifies complete genuine generated/domain behavior. Generated execution reconciliation remains .5.4.4 and backend/input closure .5.5; no full request or historical native-cause closure is inferred.`
+  Commit: `this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3`
 
@@ -3061,11 +3061,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify corrected genuine generated/domain behavior from fresh authority.`
   Acceptance: `After .1-.2 commit, recheck qualified fixed observer scope and complete changed producer membership/identities; split new observer preparation/qualification if its closed contract needs widening. Use a new exclusive capture, never replay generated_input_oct01. Execute all required pairs and retain independent full saved/hostile verification and cleanup. Diagnose any new unexpected result before another execution. No X/Z, reset-free initialization or historical native causality claim.`
-  Verification: `Fresh generated_input_fixed_oct01 after committed 7934f7a22769dbaf312ef489d31739caa169b4c0 repairs the typed-net compiler failure. Named-domain source compiles and passes complete public-pin behavior in both families. Ordinary blocking SystemVerilog compiles but fails GENERATED_WHOLE_COPY_MISMATCH in its first lap; no later case or unsigned runtime executes. Original stage results/argv/bounds/cleanup and before/after identities remain; native events/gaps empty and independent selected workspace/command census absent. Sealed diagnosis identifies a P2 witness error: completion-gated combinational copy_seen is wrongly checked for late retention. Named-domain behavior passes; other blocking fields remain unqualified. Children commit diagnosis and correct the observation window before fresh complete qualification.`
-  Commit: `pending`
+  Verification: `Children diagnose and repair the illegal mixed-state typed wire and wrong late-hold oracle before fresh complete qualification. Fresh exclusive generated_input_window_oct01 consumes committed f606ce2fd01461039d279d13fa863478fe91d375 and the unchanged qualified observer. All five compile/runtime pairs execute: named-domain spawned and ordinary blocking positives pass both Verilog families; the actually compiled unsigned property reaches the expected signed mismatch after its bound-result window passes. Every positive covers all packed leaves, sampled/prior/live/signed/repeated/reset/hold/isolation predicates and all request laps. Overall Files=1, Tests=5 PASS, no skips. Full original arguments/results/bounds, exact before/after producer Git identities and cleanup are sealed in docs/audits/record-input-generated-observation-complete-20261001/. Independent saved hostile verification and workspace/command census pass; native events/drift/gaps empty. Successful-child PID identities, X/Z, reset-free initialization and historical EPERM causality remain unproved. All earlier spent evidence is preserved.`
+  Commit: `this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.3`
 
@@ -3084,11 +3084,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify complete corrected generated/domain behavior after blocking repair.`
   Acceptance: `After .1-.2 commits, recheck exact current witness and complete producer closure, qualify any changed observer contract before HDL use and choose a new exclusive capture. Execute complete positive and actual unsigned-negative coverage with unchanged independent public-pin predicates, full original records, hostile saved verification and cleanup. Stop and own any unexpected result before another execution. Preserve binary/XZ/reset-free/native limits and partial historical receipts.`
-  Verification: `pending committed causal correction`
-  Commit: `pending`
+  Verification: `Fresh exclusive generated_input_window_oct01 consumes committed f606ce2fd01461039d279d13fa863478fe91d375 and the unchanged qualified observer. All five compile/runtime pairs execute: named-domain spawned and ordinary blocking positives pass both Verilog families; the actually compiled unsigned property reaches the expected signed mismatch after its bound-result window passes. Every positive covers all packed leaves, sampled/prior/live/signed/repeated/reset/hold/isolation predicates and all request laps. Overall Files=1, Tests=5 PASS, no skips. Full original arguments/results/bounds, exact before/after producer Git identities and cleanup are sealed in docs/audits/record-input-generated-observation-complete-20261001/. Independent saved hostile verification and workspace/command census pass; native events/drift/gaps empty. Successful-child PID identities, X/Z, reset-free initialization and historical EPERM causality remain unproved. All earlier spent evidence is preserved.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.4`
   Status: `pending`
@@ -4177,3 +4177,18 @@ in this slice; complete behavior is the fresh committed-authority next leaf.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --emit-schedule-json and retained carrier/HDL under .1 establish copy_seen as done_guarded combinational output before phase 2. The old bench wrongly demands copied data at later parent done/idle; its genuine blocking run fails. Exact committed predecessor bench also fails the corrected independent window/role checks and lacks the required binding-role token. P2 oracle error, not a new production retention requirement.
 - [x] **ADDRESSED (verified)** — T2025 declares each call role explicitly. The bench requires the copied value in phase 1, then distinguishes spawned forwarding from blocking default zero at parent completion/idle. Pure controls reject missing/late-only results, wrong retention and each packed leaf. Independent byte reconstruction protects all other original predicates and input timing; archived source fixtures and production/helper paths remain unchanged. Corrected current-hash preparation and unchanged saved observer qualification pass without scope widening.
 - [x] **NO REGRESSION** — Focused T2025/fixed-admission checks report All tests successful, Files=2, Tests=23; structural/typed/shared/generated/carrier/caller-JSON cohort reports All tests successful, Files=8, Tests=50 with runtime explicitly disabled. Sealed exact predecessor/old-oracle and hostile verification pass. Knowledge Map, task integrity and local book build are checked before staged doctrines and normal hooks. Full generated runtime remains unqualified until fresh .3; no X/Z/reset-free/native claim is added.
+
+## Acceptance — complete generated input runtime (2026-10-01)
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3.3`. Re-derivation: complete original genuine
+positive/negative stage receipts and fixed source/bench/producers. Falsification:
+actually compiled same-width unsigned source reaches the unchanged signed
+predicate, plus independent hostile saved scope/result/bounds/identity/cleanup
+and published-vector mutations. Durability: sealed
+`docs/audits/record-input-generated-observation-complete-20261001/`, fixed
+qualified observer, committed source objects, task/book/response/facts and Git.
+Native PID and X/Z/reset-free/historical-cause gaps remain explicit.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual --check --json strict carrier replay and retained public --emit-schedule-json provenance bind the fixed typed copier/readers, owning packed data/enable and done-guarded blocking result to the selected public-pin witness. Earlier real compile rejected the mixed-state typed wire; later real blocking execution rejected the wrong late-hold test. Their bounded committed repairs precede this fresh complete runtime. Source/carrier-only tests could not establish these executed behaviors.
+- [x] **ADDRESSED (verified)** — Fresh generated_input_window_oct01 executes all admitted pairs on committed f606ce2. Named-domain and ordinary blocking sources pass both families with complete copy-window/packed-leaf/live/signed/entry/prior/repeated/reset/idle isolation checks. The actual unsigned source passes its bound-result window and reaches only the expected signed rejection. Complete original result/argument/bound/cleanup receipts and before/after Git identities authenticate; no skip, drift, native event or diagnostic gap.
+- [x] **NO REGRESSION** — Genuine T2025 reports All tests successful, Files=1, Tests=5 with runtime unskipped and unchanged fixed sources/producers/helpers. Independent complete saved verification rejects hostile coverage, argument/bound/result/identity/cleanup/native-gap and signed-vector mutations. Knowledge Map, task integrity and local book build are checked before staged doctrines and normal hooks. Broader record-input/backend closure, full CI and historical native causality remain separately owned.
