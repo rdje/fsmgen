@@ -1,0 +1,29 @@
+Record-output writer ingress selection, owned by SEM .60.4.3.3.1.
+
+Current authored local/imported record outputs refuse at Parser type finalization.
+Prepared type/value/scoped metadata machinery already understands output roles,
+but input-only caller gates are insufficient for output-only source. Admission
+must wire full output contexts/domains and backend boundaries; output-field writes
+stay under .60.4.3.4. Typed output reset/default and root lists retain their bounds.
+
+The existing PhysicalWriteDeclarations helper claims emitter-token parity but
+rejects a valid qualified imported type token. Actual parsed imported record input
+and storage emit shared.frame and strictly replay, while an equivalent local alias
+passes the helper. Its bare-identifier-only token grammar originates in 1933c4f1.
+This P2 prerequisite is owned and scheduled next under .60.4.3.3.2. No source
+admission depends on the broken helper until fixed and independently verified.
+
+An actual admitted scalar sibling control writes different values to one packed
+root with explicit left/right source owners and empty conflict_issues. The existing
+controller/writer tree owns the broad baseline; the output lane must use actual
+physical roots and ownership, not that empty report as a safety proof. Existing
+physical range/declaration tests pass, including whole/member overlap, disjoint
+leaves and distinct modules. .3.3 prepares closed output-writer admission; .3.4
+then admits qualified whole outputs/copies; .3.5 qualifies generated/public/native
+delivery with fresh HIAL admission. No arbitration or exclusion is invented.
+
+Saved recipes/sources/results, exact baseline Git objects and hostile saved
+interpretation controls retain the cause and selected scope. Receipts replace only
+the exact repository-root prefix; the manifest retains raw SHA/size/count. Run
+python3 -B docs/audits/record-output-ingress-20261001/verify.py from the root.
+No compiler/simulator was invoked and no output source was admitted by this unit.

@@ -1,0 +1,454 @@
+{
+   "imported_alias_input" : {
+      "assignment_provenance" : [
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "main_idle_0",
+               "state_guard" : {
+                  "port" : "start"
+               },
+               "state_kind" : "entry"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "helper",
+            "operator" : "=",
+            "owner" : "main",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : 1,
+            "source_kind" : "scheduler_can_accept",
+            "target" : "can_accept"
+         },
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "main_set_1",
+               "state_guard" : null,
+               "state_kind" : "sequential"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "data",
+            "operator" : "<-",
+            "owner" : "main",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : "packet",
+            "source_kind" : "set",
+            "target" : "held"
+         },
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "main_done_2",
+               "state_guard" : null,
+               "state_kind" : "terminal"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "pulse",
+            "operator" : "<1",
+            "owner" : "main",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : 1,
+            "source_kind" : "complete_pulse",
+            "target" : "done"
+         }
+      ],
+      "carrier" : "(?fsm:imported_alias_input\n\n  (+import\n    shared\n  )\n\n  (+types\n    (type alias shared.frame)\n  )\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+interface\n    (input start)\n    (input packet)\n    (output done)\n    (internal held)\n  )\n\n  (+size\n    (start 1)\n    (packet alias)\n    (done 1)\n    (held alias)\n    (can_accept 1)\n  )\n\n  (main_idle_0\n    (= (can_accept 1))\n    (<start\n      (-> main_set_1)\n    )\n  )\n\n  (main_set_1\n    (<- (held packet))\n    (-> main_done_2)\n  )\n\n  (main_done_2\n    (<1 (done> 1))\n    (-> main_idle_0)\n  )\n\n)\n\n(?pkg:shared (+types (type frame (record (tag (bits 2)) (payload (bits 3))))))\n",
+      "conflict_issues" : [],
+      "parse_error" : "",
+      "parse_success" : true,
+      "physical_error" : "",
+      "physical_success" : true,
+      "physical_targets" : {
+         "can_accept" : {
+            "high" : 0,
+            "low" : 0,
+            "module" : "imported_alias_input",
+            "path_segments" : [],
+            "root" : "can_accept",
+            "root_width" : 1,
+            "target" : "can_accept",
+            "width" : 1
+         },
+         "done" : {
+            "high" : 0,
+            "low" : 0,
+            "module" : "imported_alias_input",
+            "path_segments" : [],
+            "root" : "done",
+            "root_width" : 1,
+            "target" : "done",
+            "width" : 1
+         },
+         "held" : {
+            "high" : 4,
+            "low" : 0,
+            "module" : "imported_alias_input",
+            "path_segments" : [],
+            "root" : "held",
+            "root_width" : 5,
+            "target" : "held",
+            "width" : 5
+         }
+      },
+      "ports" : [
+         {
+            "direction" : "input",
+            "name" : "start",
+            "width" : 1
+         },
+         {
+            "direction" : "input",
+            "name" : "packet",
+            "type" : "alias",
+            "width" : 5
+         },
+         {
+            "direction" : "output",
+            "name" : "done",
+            "width" : 1
+         }
+      ],
+      "source" : ".artifacts/record-output-ingress/imported_alias_input.isf",
+      "source_owners" : [
+         {
+            "container_kind" : "state",
+            "container_name" : "main_idle_0",
+            "domain" : null,
+            "module" : "imported_alias_input",
+            "source_kind" : "transaction",
+            "source_name" : "main"
+         },
+         {
+            "container_kind" : "state",
+            "container_name" : "main_set_1",
+            "domain" : null,
+            "module" : "imported_alias_input",
+            "source_kind" : "transaction",
+            "source_name" : "main"
+         },
+         {
+            "container_kind" : "state",
+            "container_name" : "main_done_2",
+            "domain" : null,
+            "module" : "imported_alias_input",
+            "source_kind" : "transaction",
+            "source_name" : "main"
+         }
+      ],
+      "source_sha256" : "371964332467c3ea1d4183e1df6e06dde8ac04bc87209caf6e30c8824e2cf07d",
+      "source_unchanged" : true
+   },
+   "imported_input" : {
+      "assignment_provenance" : [
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "main_idle_0",
+               "state_guard" : {
+                  "port" : "start"
+               },
+               "state_kind" : "entry"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "helper",
+            "operator" : "=",
+            "owner" : "main",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : 1,
+            "source_kind" : "scheduler_can_accept",
+            "target" : "can_accept"
+         },
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "main_set_1",
+               "state_guard" : null,
+               "state_kind" : "sequential"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "data",
+            "operator" : "<-",
+            "owner" : "main",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : "packet",
+            "source_kind" : "set",
+            "target" : "held"
+         },
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "main_done_2",
+               "state_guard" : null,
+               "state_kind" : "terminal"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "pulse",
+            "operator" : "<1",
+            "owner" : "main",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : 1,
+            "source_kind" : "complete_pulse",
+            "target" : "done"
+         }
+      ],
+      "carrier" : "(?fsm:imported_input\n\n  (+import\n    shared\n  )\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+interface\n    (input start)\n    (input packet)\n    (output done)\n    (internal held)\n  )\n\n  (+size\n    (start 1)\n    (packet shared.frame)\n    (done 1)\n    (held shared.frame)\n    (can_accept 1)\n  )\n\n  (main_idle_0\n    (= (can_accept 1))\n    (<start\n      (-> main_set_1)\n    )\n  )\n\n  (main_set_1\n    (<- (held packet))\n    (-> main_done_2)\n  )\n\n  (main_done_2\n    (<1 (done> 1))\n    (-> main_idle_0)\n  )\n\n)\n\n(?pkg:shared (+types (type frame (record (tag (bits 2)) (payload (bits 3))))))\n",
+      "conflict_issues" : [],
+      "parse_error" : "",
+      "parse_success" : true,
+      "physical_error" : "Physical write declaration 'packet' has an invalid width token\n at perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm line 27.\n\tFSM::Scheduler::ISF::PhysicalWriteDeclarations::__ANON__(\"packet\", 5, \"port\", HASH(0x78cbd117f8)) called at perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm line 37\n\tFSM::Scheduler::ISF::PhysicalWriteDeclarations::collect(\"FSM::Scheduler::ISF::PhysicalWriteDeclarations\", HASH(0x78cbd06108)) called at perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm line 84\n\tFSM::Scheduler::ISF::PhysicalWriteDeclarations::target_contracts(\"FSM::Scheduler::ISF::PhysicalWriteDeclarations\", HASH(0x78cbd06108)) called at .artifacts/record-output-ingress/probe.pl line 30\n\teval {...} called at .artifacts/record-output-ingress/probe.pl line 30\n",
+      "physical_success" : false,
+      "ports" : [
+         {
+            "direction" : "input",
+            "name" : "start",
+            "width" : 1
+         },
+         {
+            "direction" : "input",
+            "name" : "packet",
+            "type" : "shared.frame",
+            "width" : 5
+         },
+         {
+            "direction" : "output",
+            "name" : "done",
+            "width" : 1
+         }
+      ],
+      "source" : ".artifacts/record-output-ingress/imported_input.isf",
+      "source_owners" : [
+         {
+            "container_kind" : "state",
+            "container_name" : "main_idle_0",
+            "domain" : null,
+            "module" : "imported_input",
+            "source_kind" : "transaction",
+            "source_name" : "main"
+         },
+         {
+            "container_kind" : "state",
+            "container_name" : "main_set_1",
+            "domain" : null,
+            "module" : "imported_input",
+            "source_kind" : "transaction",
+            "source_name" : "main"
+         },
+         {
+            "container_kind" : "state",
+            "container_name" : "main_done_2",
+            "domain" : null,
+            "module" : "imported_input",
+            "source_kind" : "transaction",
+            "source_name" : "main"
+         }
+      ],
+      "source_sha256" : "87c884888e509118d013887422829b99854f2beea015e06e38aae6d8da1ef351",
+      "source_unchanged" : true
+   },
+   "imported_output" : {
+      "parse_error" : "Error: actor 'imported_output' interface port 'packet' references aggregate type 'shared.frame'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs\n at perl/FSM/Adapter/ISF/Parser.pm line 2879.\n\tFSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x78cb5d4f18), HASH(0x78cbd22de0), HASH(0x78cbd09df8), \"actor 'imported_output' interface port 'packet'\", \"allow_record\", 0) called at perl/FSM/Adapter/ISF/Parser.pm line 2820\n\tFSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x78cb5d4f18), HASH(0x78cbd22de0)) called at perl/FSM/Adapter/ISF/Parser.pm line 390\n\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x78cb5d4f18), ARRAY(0x78cbd0cf90), \".artifacts/record-output-ingress/imported_output.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x78cb5d4f18), \"(actor imported_output (clock clk) (imports (package shared))\"..., \".artifacts/record-output-ingress/imported_output.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 100\n\tFSM::Adapter::ISF::Parser::parse_file(FSM::Adapter::ISF::Parser=HASH(0x78cb5d4f18), \".artifacts/record-output-ingress/imported_output.isf\") called at perl/FSM/Adapter/ISF.pm line 63\n\tFSM::Adapter::ISF::parse_file(FSM::Adapter::ISF=HASH(0x78cbcffbe8), \".artifacts/record-output-ingress/imported_output.isf\") called at .artifacts/record-output-ingress/probe.pl line 23\n\teval {...} called at .artifacts/record-output-ingress/probe.pl line 23\n",
+      "parse_success" : false,
+      "source" : ".artifacts/record-output-ingress/imported_output.isf",
+      "source_sha256" : "fb09798e9e63b49af915a4c8482e65ad3520498c8c123d06ef7468d730b41968"
+   },
+   "local_output" : {
+      "parse_error" : "Error: actor 'local_output' interface port 'packet' references aggregate type 'frame'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs\n at perl/FSM/Adapter/ISF/Parser.pm line 2879.\n\tFSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x78cbd260c0), HASH(0x78cbd079c0), HASH(0x78cbd0cf90), \"actor 'local_output' interface port 'packet'\", \"allow_record\", 0) called at perl/FSM/Adapter/ISF/Parser.pm line 2820\n\tFSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x78cbd260c0), HASH(0x78cbd079c0)) called at perl/FSM/Adapter/ISF/Parser.pm line 390\n\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x78cbd260c0), ARRAY(0x78cbcffbe8), \".artifacts/record-output-ingress/local_output.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x78cbd260c0), \"(actor local_output (clock clk) (types (type frame (record (t\"..., \".artifacts/record-output-ingress/local_output.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 100\n\tFSM::Adapter::ISF::Parser::parse_file(FSM::Adapter::ISF::Parser=HASH(0x78cbd260c0), \".artifacts/record-output-ingress/local_output.isf\") called at perl/FSM/Adapter/ISF.pm line 63\n\tFSM::Adapter::ISF::parse_file(FSM::Adapter::ISF=HASH(0x78cbd05090), \".artifacts/record-output-ingress/local_output.isf\") called at .artifacts/record-output-ingress/probe.pl line 23\n\teval {...} called at .artifacts/record-output-ingress/probe.pl line 23\n",
+      "parse_success" : false,
+      "source" : ".artifacts/record-output-ingress/local_output.isf",
+      "source_sha256" : "b61268c16f7bfda88fd32702ec4424e97f38f6f2a353b93fbca343546ea5f2c6"
+   },
+   "scalar_writer_overlap" : {
+      "assignment_provenance" : [
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "left_idle_0",
+               "state_guard" : {
+                  "port" : "a"
+               },
+               "state_kind" : "entry"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "helper",
+            "operator" : "=",
+            "owner" : "left",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : 1,
+            "source_kind" : "scheduler_can_accept",
+            "target" : "can_accept"
+         },
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "left_set_1",
+               "state_guard" : null,
+               "state_kind" : "sequential"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "data",
+            "operator" : "<-",
+            "owner" : "left",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : "1",
+            "source_kind" : "set",
+            "target" : "value"
+         },
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "right_idle_0",
+               "state_guard" : {
+                  "port" : "b"
+               },
+               "state_kind" : "entry"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "helper",
+            "operator" : "=",
+            "owner" : "right",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : 1,
+            "source_kind" : "scheduler_can_accept",
+            "target" : "can_accept"
+         },
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "right_set_1",
+               "state_guard" : null,
+               "state_kind" : "sequential"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "data",
+            "operator" : "<-",
+            "owner" : "right",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : "2",
+            "source_kind" : "set",
+            "target" : "value"
+         }
+      ],
+      "carrier" : "(?fsm:scalar_writer_overlap\n\n  (+system\n    (clock clk)\n    (areset rst_n)\n  )\n\n  (+interface\n    (input a)\n    (input b)\n    (output value)\n  )\n\n  (+size\n    (a 1)\n    (b 1)\n    (value 5)\n    (can_accept 1)\n  )\n\n  (left_idle_0\n    (= (can_accept 1))\n    (<a\n      (-> left_set_1)\n    )\n  )\n\n  (left_set_1\n    (<- (value> 1))\n  )\n\n  (right_idle_0\n    (= (can_accept 1))\n    (<b\n      (-> right_set_1)\n    )\n  )\n\n  (right_set_1\n    (<- (value> 2))\n  )\n\n)\n",
+      "conflict_issues" : [],
+      "parse_error" : "",
+      "parse_success" : true,
+      "physical_error" : "",
+      "physical_success" : true,
+      "physical_targets" : {
+         "can_accept" : {
+            "high" : 0,
+            "low" : 0,
+            "module" : "scalar_writer_overlap",
+            "path_segments" : [],
+            "root" : "can_accept",
+            "root_width" : 1,
+            "target" : "can_accept",
+            "width" : 1
+         },
+         "value" : {
+            "high" : 4,
+            "low" : 0,
+            "module" : "scalar_writer_overlap",
+            "path_segments" : [],
+            "root" : "value",
+            "root_width" : 5,
+            "target" : "value",
+            "width" : 5
+         }
+      },
+      "ports" : [
+         {
+            "direction" : "input",
+            "name" : "a",
+            "width" : 1
+         },
+         {
+            "direction" : "input",
+            "name" : "b",
+            "width" : 1
+         },
+         {
+            "direction" : "output",
+            "name" : "value",
+            "width" : "5"
+         }
+      ],
+      "source" : ".artifacts/record-output-ingress/scalar_writer_overlap.isf",
+      "source_owners" : [
+         {
+            "container_kind" : "state",
+            "container_name" : "left_idle_0",
+            "domain" : null,
+            "module" : "scalar_writer_overlap",
+            "source_kind" : "transaction",
+            "source_name" : "left"
+         },
+         {
+            "container_kind" : "state",
+            "container_name" : "left_set_1",
+            "domain" : null,
+            "module" : "scalar_writer_overlap",
+            "source_kind" : "transaction",
+            "source_name" : "left"
+         },
+         {
+            "container_kind" : "state",
+            "container_name" : "right_idle_0",
+            "domain" : null,
+            "module" : "scalar_writer_overlap",
+            "source_kind" : "transaction",
+            "source_name" : "right"
+         },
+         {
+            "container_kind" : "state",
+            "container_name" : "right_set_1",
+            "domain" : null,
+            "module" : "scalar_writer_overlap",
+            "source_kind" : "transaction",
+            "source_name" : "right"
+         }
+      ],
+      "source_sha256" : "3541c11ef56cfbb61e49e808187c3e48d1732277440e9e32fe8aa4efb4b1842c",
+      "source_unchanged" : true
+   }
+}

@@ -97,7 +97,11 @@ and book.
   `.5.5.3.2.3` completes the selected R1–R3 input portions by joining the complete
   source, public, profile and original native evidence. Record outputs and their
   field writers are next under `.60.4.3.3` and `.60.4.3.4`; root-list ports and
-  variants remain optional. The full aggregate-interface request is not complete.
+  variants remain optional. Output ingress `.60.4.3.3.1` has selected the closed
+  writer/source/qualification split. A valid imported type token rejected by the
+  preparatory physical-write collector is owned next under `.3.2`; output
+  authoring stays closed until that repair and sound writer admission qualify.
+  The full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.
 

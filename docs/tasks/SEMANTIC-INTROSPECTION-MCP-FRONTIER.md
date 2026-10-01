@@ -3169,13 +3169,41 @@ For FSMGen, the analogs are:
   Acceptance: `After qualified input delivery, map whole output writers to scoped physical packed roots. Preserve input/output roles, actor ownership, source-order semantics and existing exclusion/compatibility proofs. Refuse unresolved overlap, type mismatches and unqualified generated writers. Split any prerequisite repair before changing source; independently qualify hold, timing, repeated requests, reset and domain behavior and all public surfaces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.1`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Trace record-output whole-copy writers and select closed admission slices.`
   Acceptance: `After committed input signoff, read selected output/type/role/domain and physical writer contracts. Trace actual parsed targets, scoped owner identities, post-binding/generated module assignments and backend/public paths through their public interfaces. Reproduce current record-output refusal and independent packed target/overlap controls without HDL execution. Select the smallest sound output admission and qualification split; preserve input/scalar/storage semantics and refuse unresolved/competing writers without invented arbitration. Own every genuine prerequisite before source changes and keep output authoring closed until gates qualify.`
-  Verification: `pending after selected input closure`
+  Verification: `Current authored local/imported record outputs refuse at Parser type finalization. Existing output roles/copy primitives are prepared, but input-only caller/context/profile gates need qualified extension. Actual imported input/storage emits shared.frame and strictly replays; PhysicalWriteDeclarations rejects packet as an invalid token while the equivalent local alias passes. git log -S roots the bare-identifier token grammar at 1933c4f1255802f191aa6efd016aa5063e9188d2. P2 repair .3.2 is owned next before closed writer preparation .3.3, source admission .3.4 and generated/public/native qualification .3.5. An admitted scalar sibling control retains distinct explicit owners, same packed root, different values and empty conflict issues; the broader writer tree owns that baseline, which is not reused as a safety proof. Guarded T1967/T1968 passes All tests successful, Files=2/Tests=9. Sealed docs/audits/record-output-ingress-20261001/ retains full probes/carriers/replay/history and hostile false-admission/omission controls; caller actors are unchanged. Inputs/scalar/storage production bytes stay baseline 33de1d53. Output fields/full consumer and new native admission remain separate; no source or HDL execution is added.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.2`
+  Status: `pending`
+  Goal: `Repair imported type tokens in physical write declarations.`
+  Acceptance: `P2 prerequisite reproduced at committed input signoff: accepted authored imported record input/storage emits (packet shared.frame) and (held shared.frame), but PhysicalWriteDeclarations::collect rejects packet as an invalid width token because its token grammar allows only a bare identifier. An equivalent local alias of the same imported record passes. Correct this declaration/emitter contract without guessing widths or widening source grammar. Qualify actual direct/generated/domain imported records and existing scalar aliases, exact emitted token parity, immutable caller JSON, packed storage ranges, malformed tokens/widths and unchanged scalar/storage/public controls. Do not admit record outputs until the separate writer gate qualifies.`
+  Verification: `Owned next prerequisite; exact current output-ingress probe retains qualified-name failure and alias-equivalent success, emitted typed carriers and unchanged parsed actors. No HDL execution.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.3`
+  Status: `pending`
+  Goal: `Prepare closed physical record-output writer admission before source widening.`
+  Acceptance: `After imported declaration repair, inventory every actual record-output write in its realized module/root with validated type/role, full packed target and explicit source owner through binding/domain/generated handoffs. Reuse physical target and owner primitives; do not infer owners from names or trust current empty conflict_issues as safe admission. Qualify sole/ordered writers, distinct roots/modules, whole/member overlap, output-only actors, unknown/missing identities and generated competing sources. Preserve established completion-pulse/resource compatibility only with actual evidence; otherwise refuse unresolved overlaps without arbitration. Keep output source closed until mandatory gates qualify; split again before source changes if dependencies require it.`
+  Verification: `pending closed inventory/admission preparation`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4`
+  Status: `pending`
+  Goal: `Admit qualified record outputs and exact-type whole copies.`
+  Acceptance: `After .3, wire mandatory output-only and mixed input/output type/role/context/domain gates before allowing packed output aliases. Reuse strict resolved whole-copy identity and physical writer admission for storage/input-to-output and permitted reverse reads; preserve scalar/storage/input contracts, lexical shadows and source ordering. Extend the shared unsupported Verilog/v record profile guard to authored outputs before any HDL publication, preserving precise input reasons and target-neutral schedules. Keep output-member writes owned by .60.4.3.4, unsupported transaction/root-list carriers closed and output reset/default forms at their existing explicit boundary. Qualify local/imported/nested/unused declarations, exact public metadata and strict IAL0 replay. Split bounded admission before edits as necessary.`
+  Verification: `pending source admission after gates`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5`
+  Status: `pending`
+  Goal: `Qualify generated/public and executable record-output whole-copy delivery.`
+  Acceptance: `After admitted source, independently qualify generated/domain ownership, complete native/API/actual newline products, explicit interfaces/imports, repeated requests/reset/holds/copy edges and exact supported backend profiles. Native HDL requires fresh HIAL admission before invocation; preserve original evidence and do not reuse spent captures. Keep unresolved/generated competing writers precise. Decompose observed prerequisites before repairs and close whole-output delivery only against exact selected requirements; field writes/full backend/full consumer retain their separate owners.`
+  Verification: `pending qualification after source admission`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.4`
@@ -4375,3 +4403,16 @@ book/feedback/fact and Git provide durability; original HDL is never replayed.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The selected contract splits input portions of R1–R3 from required outputs/field writes. Exact current --check --json, semantic and schedule controls join complete native/API/newline products, contextual refusals, packed metadata and preserved supplied sources to original native behavior. Production Git comparison since the generated observation names only the separately qualified CLI/facade/shared profile integration; lowering/source/bench bytes are unchanged. Book inherited pending statements and T1305's old pending-status literal still describe an earlier frontier. The first docs band fails exactly that status row after justified promotion.
 - [x] **ADDRESSED (verified)** — The sealed requirements join covers all selected input aliases, scalar contexts/samples, exact-type owned copies, layout/carriers/public reports and supported execution/profiles. Current T2014/T2016/T1998 reports All tests successful, Files=3, Tests=42; every selected saved verifier passes without native replay. Missing clauses, width-only identity and parser-scope mutations reject. Promote the bounded input matrix row, reconcile stale current book/fact/feedback status and its exact T1305 expectation. Close satisfied input parents only; output writer ingress .60.4.3.3.1 becomes the next pending leaf.
 - [x] **NO REGRESSION** — T1305/T1414/T1303 reports All tests successful, Files=3, Tests=310 after the exact single-row status update; mdBook builds. Current source/public checks and complete immutable prior verifiers pass; no behavioral oracle or original receipt changes. Only input closure is claimed: outputs/field writers/full aggregate consumer, X/Z, reset-free guarantees, VHDL runtime, legacy .fsm Verilog standards qualification and historical native/startup/full-CI gates remain owned. Knowledge Map, task integrity, measured capacity, claim inventory and staged doctrines precede normal commit hooks.
+
+## Acceptance — record-output writer ingress (2026-10-01)
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.1`.
+Actual parser/IR/emitter/core replay and exact helper history re-derive the selected
+boundary. Alias-equivalent successes, independent whole/member/disjoint-module
+ranges and hostile false-admission/omitted-writer interpretations falsify unsafe
+claims. Sealed probes, exact baseline objects, canonical fact/book/response and
+scheduled repair/admission children provide durability. No output is admitted.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual local/imported record output declarations refuse at Parser type finalization. Actual imported input/storage preserves shared.frame in emitted size entries and passes --check --json strict carrier replay, yet PhysicalWriteDeclarations rejects packet as an invalid width token. Alias-equivalent input/storage passes the same collector. git log -S roots the bare-identifier-only token grammar at 1933c4f1255802f191aa6efd016aa5063e9188d2. Actual admitted scalar siblings retain different values, distinct owners and one packed root despite empty conflict issues; no safety inference follows.
+- [x] **ADDRESSED (verified)** — Select owned P2 import-token repair .3.2 before closed physical output-writer preparation .3.3, source admission .3.4 and generated/public/native qualification .3.5. Each preserves actual type/role/module/owner/domain contracts; unknown competing writers refuse without arbitration. Output-only context and explicit backend gates must qualify before source widening. Output-member writes/full consumer remain separate. The sealed verifier rejects false repaired import/output admission and omitted competing assignments; caller JSON stays unchanged. This design slice schedules the verified repair and keeps output authoring closed.
+- [x] **NO REGRESSION** — Guarded T1967/T1968 reports All tests successful, Files=2, Tests=9. Both qualified-name and alias-equivalent actual emitted carriers strictly replay with success. Production bin/perl/t/isf remains baseline 33de1d53. Book/feedback/fact expose the current output boundary and scheduled prerequisite; focused docs and book build, Knowledge Map, task integrity, measured capacity, claim inventory and staged doctrines precede normal commit hooks. No source admission, native HDL run, independent-controller promotion or completed output/consumer claim follows.

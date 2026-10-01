@@ -295,7 +295,14 @@ relocation and emitted date banners. HDL execution remains separately qualified.
 
 Record outputs, root-list input ports, transaction-local aggregate ports,
 aggregate banks and variants remain deferred. Output copies/member writes keep
-their separately owned writer prerequisites. The compiler preserves typed
+their separately owned writer prerequisites. Output delivery is now selected
+under SEM `.60.4.3.3`: repair imported physical-declaration tokens, qualify
+scoped whole-output writer admission, then admit and independently qualify
+record outputs/copies. Current output authoring remains refused. Whole-root and
+member writes must be compared by their packed ranges and actual owners; an
+empty conflict report does not establish compatibility. No implicit arbitration
+is added. Output-field admission remains the next separate lane.
+The compiler preserves typed
 `+size`, explicit `+interface`, exact declaration metadata and private sample
 carriers. Generated/domain source, carrier and complete public qualification
 includes current catalog declarations, full discovery, contextual refusals and

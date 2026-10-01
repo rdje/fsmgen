@@ -1,0 +1,38 @@
+use strict; use warnings; use lib 'perl';
+use JSON::PP; use Digest::SHA qw(sha256_hex); use Storable qw(dclone);
+use FSM::Adapter::ISF; use FSM::Scheduler::ISF; use FSM::Scheduler::ISF::FormalLowering;
+use FSM::Scheduler::ISF::PhysicalWriteDeclarations;
+use FSM::Scheduler::ISF::PhysicalWriteTargets;
+use FSM::Scheduler::ISF::SourceWriterOwners;
+use FSM::Scheduler::ISF::Emitter::FSM;
+my $dir='.artifacts/record-output-ingress';
+my $j=JSON::PP->new->canonical->pretty;
+sub write_file {my($p,$s)=@_;open my $f,'>:raw',$p or die $!;print {$f} $s;close $f or die $!;}
+write_file("$dir/shared.fsm",'(?pkg:shared (+types (type frame (record (tag (bits 2)) (payload (bits 3))))))');
+my %sources=(
+ local_output=>'(actor local_output (clock clk) (types (type frame (record (tag (bits 2)) (payload (bits 3))))) (interface (input start) (output packet (type frame)) (output done)) (storage (var held (type frame))) (transaction main (on start) (set packet held) (complete done)))',
+ imported_output=>'(actor imported_output (clock clk) (imports (package shared)) (interface (input start) (output packet (type shared.frame)) (output done)) (storage (var held (type shared.frame))) (transaction main (on start) (set packet held) (complete done)))',
+ imported_alias_input=>'(actor imported_alias_input (clock clk) (imports (package shared)) (types (type alias shared.frame)) (interface (input start) (input packet (type alias)) (output done)) (storage (var held (type alias))) (transaction main (on start) (set held packet) (complete done)))',
+ imported_input=>'(actor imported_input (clock clk) (imports (package shared)) (interface (input start) (input packet (type shared.frame)) (output done)) (storage (var held (type shared.frame))) (transaction main (on start) (set held packet) (complete done)))',
+ scalar_writer_overlap=>'(actor scalar_writer_overlap (clock clk) (interface (input a) (input b) (output value (width 5))) (transaction left (on a) (set value 1)) (transaction right (on b) (set value 2)))',
+);
+my %results;
+for my $name(sort keys %sources){
+ my $path="$dir/$name.isf";write_file($path,$sources{$name});
+ my $parser=FSM::Adapter::ISF->new;my $scheduler=FSM::Scheduler::ISF->new;
+ my $actor;my $ok=eval{$actor=$parser->parse_file($path);1};my $err=$@;
+ my $r={source=>$path,source_sha256=>sha256_hex($sources{$name}),parse_success=>$ok?JSON::PP::true:JSON::PP::false,parse_error=>$err};$results{$name}=$r;
+ next unless $ok;
+ my $before=$j->encode($actor);my $formal=FSM::Scheduler::ISF::FormalLowering->prepare($scheduler->{ir},$actor);my $physical=$formal ? $formal->{actor}:$actor;
+ my $ir=$scheduler->{ir}->build_module($physical);
+ $r->{carrier}=FSM::Scheduler::ISF::Emitter::FSM->new->emit($ir);
+ $r->{ports}=$ir->{ports};$r->{conflict_issues}=$ir->{conflict_issues};$r->{assignment_provenance}=$ir->{assignment_provenance};
+ my $contracts; $ok=eval{$contracts=FSM::Scheduler::ISF::PhysicalWriteDeclarations->target_contracts($ir);1};
+ $r->{physical_success}=$ok?JSON::PP::true:JSON::PP::false;$r->{physical_error}=$@;$r->{physical_targets}=$contracts if $ok;
+ $r->{source_unchanged}=($j->encode($actor) eq $before)?JSON::PP::true:JSON::PP::false;
+ my @owners;
+ for my $state(@{$ir->{states}}){next unless @{$state->{assignments}||[]};push @owners,FSM::Scheduler::ISF::SourceWriterOwners->resolve($ir,$physical,'state',$state)}
+ $r->{source_owners}=\@owners;
+}
+write_file("$dir/probe.json",$j->encode(\%results));
+print "Record-output source boundary and admitted scalar/imported writer controls captured.\n";

@@ -1,0 +1,32 @@
+[
+  {
+    "argv": [
+      "perl",
+      "bin/fsmgen",
+      "--quiet",
+      "--strict",
+      "--check",
+      "--json",
+      ".artifacts/record-output-ingress/imported_input.fsm"
+    ],
+    "case": "imported_input",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : null,\n      \"module_name\" : \"imported_input\",\n      \"signal_count\" : 4,\n      \"state_count\" : 3\n   },\n   \"source\" : {\n      \"input\" : \".artifacts/record-output-ingress/imported_input.fsm\",\n      \"resolved_path\" : \"{REPOSITORY_ROOT}/.artifacts/record-output-ingress/imported_input.fsm\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"matched\" : false\n   }\n}\n"
+  },
+  {
+    "argv": [
+      "perl",
+      "bin/fsmgen",
+      "--quiet",
+      "--strict",
+      "--check",
+      "--json",
+      ".artifacts/record-output-ingress/imported_alias_input.fsm"
+    ],
+    "case": "imported_alias_input",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : null,\n      \"module_name\" : \"imported_alias_input\",\n      \"signal_count\" : 4,\n      \"state_count\" : 3\n   },\n   \"source\" : {\n      \"input\" : \".artifacts/record-output-ingress/imported_alias_input.fsm\",\n      \"resolved_path\" : \"{REPOSITORY_ROOT}/.artifacts/record-output-ingress/imported_alias_input.fsm\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"matched\" : false\n   }\n}\n"
+  }
+]

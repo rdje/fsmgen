@@ -1,13 +1,14 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **10** facts · **33** uniquely owned question entries.
+> **11** facts · **36** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are spawned output bindings guarded by child completion?" · facts=[isf-record-input-generated-witness-preparation](../../docs/knowledge/isf-record-input-generated-witness-preparation.md)
 - q="are unused record inputs retained in the top or inherited child?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="can a child scalar formal share an actor record input name?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
+- q="can empty conflict issues prove record output writer safety?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="can the original input runtime evidence be joined to current source profiles?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
 - q="do both record-input emitter observations prove Verilog-2005 syntax?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
 - q="does VHDL support authored ISF packed record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
@@ -15,6 +16,7 @@
 - q="does ordinary ISF reset provenance omit the domain key?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="does record-input runtime establish four-state behavior or native EPERM causality?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="does the binding identity repair admit record field actuals?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
+- q="does the physical write collector accept imported type tokens?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="does the prepared direct record-input bench establish native behavior?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 - q="does unsupported record input VHDL generation replace an existing output?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="how are generated and named-domain record-input carriers qualified?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
@@ -24,6 +26,7 @@
 - q="is generated and named-domain record-input public qualification complete?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="is generated record-input native behavior qualified?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="is selected packed record input delivery complete?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
+- q="what blocks record output whole-copy admission?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="where do generated-top semantic reports retain authored record declarations?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="where does a generated record-input copy store and reset its target?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="where is direct packed record-input runtime qualification owned?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
@@ -110,3 +113,10 @@ _Both record-input emitter observations use the SystemVerilog parser_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-input-parser-mode.md`](../../docs/knowledge/isf-record-input-parser-mode.md)
+
+### isf-record-output-writer-ingress
+
+_Record output admission requires imported writer tokens and closed physical ownership_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-record-output-writer-ingress.md`](../../docs/knowledge/isf-record-output-writer-ingress.md)

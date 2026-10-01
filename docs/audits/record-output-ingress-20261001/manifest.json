@@ -1,0 +1,113 @@
+{
+  "baseline_revision": "33de1d53162d7614060dca226c3081ebc3959df1",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.1",
+  "producers": {
+    "perl/FSM/Adapter/ISF/Parser.pm": {
+      "git_blob": "6632044620ecb342dd4888c90a1bb8f221845356",
+      "sha256": "3d6e6d530e3ac471d2a42a0aaa05c433cfb0d17e5fb36716f10fb6079d0fa9ac"
+    },
+    "perl/FSM/Scheduler/ISF/Emitter/FSM.pm": {
+      "git_blob": "712f823ce641376672f212e01d5c49192792dd0f",
+      "sha256": "446c1c8c189f130fb7c4ae69244c1853f8ef9f30ace347e463eda18cd724a3bb"
+    },
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm": {
+      "git_blob": "21e744d12e828bb9cc57249810ed4815ca343e29",
+      "sha256": "b6fe0ea533b7f2ad0783ca67a49f632e4d37920a4ca6e6cb9d53ac8759b906a3"
+    },
+    "perl/FSM/Scheduler/ISF/PhysicalWriteDeclarations.pm": {
+      "git_blob": "304b397f6835483b9065f0c20d2dd3b85cef8cdd",
+      "sha256": "f4fa71f3c90f9f2210dec589a6f75b7c3561e5c9443e675cebc62c1ad94b74af"
+    },
+    "perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm": {
+      "git_blob": "0968fd03ff6a816c474e7e36ef93fe3312eadd34",
+      "sha256": "4cbaec3dd9c91239d2d7134cfd815a9b592c0249f6669e60a6f5748f6f0826a2"
+    },
+    "perl/FSM/Scheduler/ISF/SourceWriterOwners.pm": {
+      "git_blob": "c3fcd7e6dd4273df7984449ad00d3d8bb9a4c25c",
+      "sha256": "4a2621ba5846ed1551df88687a33ac0524fce74f80b2e5b130464a1ddbe4ae8d"
+    },
+    "perl/FSM/Support/ISFRecordPortContexts.pm": {
+      "git_blob": "317508c423d6e70408c256e0a141f7a203690aaf",
+      "sha256": "59fd11a796531e146a1f9121126bc6e8c9d37af578f88a6d5d93d58ccc85d7bb"
+    },
+    "perl/FSM/Support/ISFRecordPortScopes.pm": {
+      "git_blob": "ec282a1ecca8eae8e760e720d469e003a26a144c",
+      "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+    },
+    "perl/FSM/Support/ISFRecordPortValues.pm": {
+      "git_blob": "a0c7263e5b34bdd3fbab31b63dd0ac44b541e4da",
+      "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+    },
+    "t/1967-isf-physical-write-targets.t": {
+      "git_blob": "e41d95a74bc83e6516d48200b2e411ea9da55a25",
+      "sha256": "0fbd2a01d9704838d2701e3f8a01287db895001eccb71436954fdbdf35d7ca43"
+    },
+    "t/1968-isf-physical-write-declarations.t": {
+      "git_blob": "4d7f5896e17c54a0480e3ce27c7e747032332db5",
+      "sha256": "a8ea4a77016a555e254089ff13fa8357bd426dd213390cdf2388a0f3f1316eed"
+    }
+  },
+  "receipts": {
+    "book.txt": {
+      "exact_root_replacements": 1,
+      "raw_bytes": 308,
+      "raw_sha256": "ce29847754d81b0fa23ef916d24b018c8e64b15800a871aea116d836f4dc6efe",
+      "root_prefix_bytes": 36
+    },
+    "carrier-replay.json": {
+      "exact_root_replacements": 2,
+      "raw_bytes": 3433,
+      "raw_sha256": "f62188c5660b26f11afc55ce689d3060c01b05314aa74d28c36effe32412ba67",
+      "root_prefix_bytes": 36
+    },
+    "docs.txt": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 366,
+      "raw_sha256": "c2fe7e25d9882ca7c8afcc4a103253a854b48d97fce738373b04c4b8e5bba8a6",
+      "root_prefix_bytes": 36
+    },
+    "history.json": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 356,
+      "raw_sha256": "c1283e601108dd025d08c4d6753aa1ce7a56dbfddb800a8a19d6352b31d1b117",
+      "root_prefix_bytes": 36
+    },
+    "probe.json": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 19960,
+      "raw_sha256": "63d83fd19a9ceceb3f785b7fc7684d1981b3300b9bad87f4342df5086ac1cd51",
+      "root_prefix_bytes": 36
+    },
+    "probe.pl.source": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 3523,
+      "raw_sha256": "24f4dc8512135e92089791c71c05d4c0149d54fa62ec974402e1df6d11e79fba",
+      "root_prefix_bytes": 36
+    },
+    "shared.fsm.source": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 78,
+      "raw_sha256": "8eadc13a84a1e9576a9562443109b5834073ae0051c5af6061a86a44c4e8b579",
+      "root_prefix_bytes": 36
+    },
+    "substrate.txt": {
+      "exact_root_replacements": 0,
+      "raw_bytes": 314,
+      "raw_sha256": "b7ac4ab60114bb2a99443ab2c5ab09c070b5cc968fb79714615bb4ce195c9d49",
+      "root_prefix_bytes": 36
+    }
+  },
+  "schema": "fsmgen.record_output_ingress.v1",
+  "sha256": {
+    "book.txt": "f07ea5d0269d3ef146681f7560b4e71b9dee81ffecf949dff0660468b6783bf8",
+    "carrier-replay.json": "681fd8269f552c174709da6a1ec7d423bbd41c2335d8f05b5764394f9897f8c0",
+    "docs.txt": "c2fe7e25d9882ca7c8afcc4a103253a854b48d97fce738373b04c4b8e5bba8a6",
+    "history.json": "c1283e601108dd025d08c4d6753aa1ce7a56dbfddb800a8a19d6352b31d1b117",
+    "probe.json": "63d83fd19a9ceceb3f785b7fc7684d1981b3300b9bad87f4342df5086ac1cd51",
+    "probe.pl.source": "24f4dc8512135e92089791c71c05d4c0149d54fa62ec974402e1df6d11e79fba",
+    "scope.txt": "d7d086175004d15709832b7db0610a9be278c307496219f426e31a351040c7bd",
+    "shared.fsm.source": "8eadc13a84a1e9576a9562443109b5834073ae0051c5af6061a86a44c4e8b579",
+    "substrate.txt": "b7ac4ab60114bb2a99443ab2c5ab09c070b5cc968fb79714615bb4ce195c9d49",
+    "verify.py": "1cd092ea3aeef587eb9faa6006a3d103c67fde11a13a46b5f26280ba3f82420c"
+  }
+}
