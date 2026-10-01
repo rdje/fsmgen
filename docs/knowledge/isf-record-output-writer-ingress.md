@@ -6,10 +6,13 @@ answers:
   - "does the physical write collector accept imported type tokens?"
   - "can empty conflict issues prove record output writer safety?"
   - "where are detached record output writers inventoried?"
+  - "which prepared record output writers pass conservative admission?"
 date: 2026-10-01
 status: current
 tags: [isf, record, output, writers, imports, ownership]
 evidence: >-
+  docs/audits/record-output-admission-20261001/manifest.json;
+  t/2030-isf-record-output-writer-admission.t;
   docs/audits/record-output-writer-inventory-20261001/manifest.json;
   perl/FSM/Scheduler/ISF/RecordOutputWriters.pm;
   t/2029-isf-record-output-writer-inventory.t;
@@ -22,6 +25,7 @@ evidence: >-
   docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
+  t/2030-isf-record-output-writer-admission.t
   t/2029-isf-record-output-writer-inventory.t
   t/1968-isf-physical-write-declarations.t
   t/1967-isf-physical-write-targets.t
@@ -71,4 +75,16 @@ layouts, whole/member ranges, same-value competing owners, scalar shadows,
 omitted/mismatched facts and first-touch complete caller JSON. The source
 prototype starts from admitted scalar output syntax and resolved storage types;
 it does not constitute authored record-output support. Conservative admission
-remains SEM `.60.4.3.3.3.2`, before source widening.
+is qualified under SEM `.60.4.3.3.3.2`, before source widening.
+
+RecordOutputWriters::assert_admitted collects its inventory internally from the
+actual actor/module arguments, so caller-pruned writer lists cannot bypass it.
+It accepts disjoint physical targets and overlapping ordinary `<-` assignments
+in distinct states of the same explicit transaction controller. A sole DT is
+also admissible. Same active-container duplicate writes, state/DT pairs and
+independent source owners have no inferred exclusion; timed operators do not
+inherit ordinary state-write qualification. Equal RHS, complementary conditions,
+entry guards, priorities and declaration permutations cannot arbitrate. T2030
+qualifies these boundaries and unchanged native authored-output refusal. This
+private consumer grants neither source support nor independent runtime
+reachability. Output-only/mixed source integration remains `.60.4.3.3.4`.

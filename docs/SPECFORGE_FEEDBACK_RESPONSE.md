@@ -103,9 +103,13 @@ and book.
   direct/generated/domain and scalar controls. Detached writer inventory
   `.3.3.1` now qualifies matching local/imported nested declarations, actual
   packed ranges, explicit state/rule/drive owners, domain realization,
-  activation records and caller immutability. This is preparation only;
-  conservative writer admission `.3.3.2` is next. Record-output authoring stays
-  refused until its gates qualify, including generated handoff mappings.
+  activation records and caller immutability. Conservative writer admission
+  `.3.3.2` now qualifies sole writers, ordinary ordered states of one controller
+  and disjoint physical targets. Unproved overlapping independent writers,
+  duplicate active-container writes and timed operators refuse; equal values,
+  entry conditions or priority declarations do not arbitrate. This is private
+  preparation only. Source admission `.3.4` is next; record-output authoring and
+  generated handoff mappings stay refused until their integration gates qualify.
   The full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

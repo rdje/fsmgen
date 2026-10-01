@@ -3186,11 +3186,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare closed physical record-output writer admission before source widening.`
   Acceptance: `After imported declaration repair, inventory every actual record-output write in its realized module/root with validated type/role, full packed target and explicit source owner through binding/domain/generated handoffs. Reuse physical target and owner primitives; do not infer owners from names or trust current empty conflict_issues as safe admission. Qualify sole/ordered writers, distinct roots/modules, whole/member overlap, output-only actors, unknown/missing identities and generated competing sources. Preserve established completion-pulse/resource compatibility only with actual evidence; otherwise refuse unresolved overlaps without arbitration. Keep output source closed until mandatory gates qualify; split again before source changes if dependencies require it.`
-  Verification: `pending closed inventory/admission preparation`
-  Commit: `pending`
+  Verification: `Detached inventory and conservative admission children are qualified. Actual local/imported/state/rule/drive/domain facts retain all writers; ordinary different states of one explicit controller and disjoint targets admit. Unknown overlap, duplicate active-container writes, timed operators and actual sole/reused generated mappings refuse. Source integration .3.4 is next; generated handoff qualification remains .3.5 before its promotion.`
+  Commit: `this commit`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.3.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.3.1`
@@ -3201,11 +3201,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify conservative physical record-output writer admission.`
   Acceptance: `After .1 commits, consume the complete detached inventory. Admit qualified sole/ordered state-controller or supported single DT writers and distinct physical roots/modules; require exact existing compatibility/exclusion evidence for overlapping independent producers or refuse precisely. Do not treat transaction names on DTs as state exclusion, empty conflict_issues as safety, entry guards as whole-body grants, or declaration order as arbitration. Qualify whole/member overlap, missing writers, same-value/guard variants, unsupported generated mappings, input/scalar/storage preservation and all actual public boundary controls. Source admission .3.4 remains closed until this gate qualifies.`
-  Verification: `pending detached inventory qualification`
-  Commit: `pending`
+  Verification: `RecordOutputWriters::assert_admitted reconstructs the complete inventory internally and compares physical packed overlap. Sole writers, disjoint roots/leaves and ordinary <- writes in distinct states of one explicit transaction controller pass. Equal/different RHS, complementary conditions, priority/order, whole/member overlap, same-state/DT duplicates, transaction-owned auxiliary DTs and timed operators cannot infer compatibility. Actual sole/reused generated output sources lower and then refuse by the mapping boundary. Missing declarations/owners/assignments, mixed views and caller-pruned inventories refuse. T2030 passes All tests successful, Files=1/Tests=6. Inventory/owner/activation/input-profile band passes Files=4/Tests=24; docs passes Files=3/Tests=310 and book builds. Sealed docs/audits/record-output-admission-20261001/ preserves missing-method RED and exact corrected guard drafts. Production source callers stay baseline 6b39c7d1; output source and independent reachability remain separate.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4`
   Status: `pending`
@@ -4457,3 +4457,17 @@ sealed verification, this tree, book/feedback/fact and Git provide durability.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual emitted prototype output packet retains frame/width but no recursive type_spec, so PhysicalWriteTargets reports missing_declared_type for packet.tag. Resolved source storage supplies the authoritative layout. The unparenthesized draft grep swallowed its error-message argument; the first test draft called Perl builtin prototype; the later negative draft treated record members as an array and reports Not an ARRAY reference at t/2029-isf-record-output-writer-inventory.t line 176. Their full receipts are retained; exact test drafts are retained for the latter two, while the first draft module snapshot was not captured. These are corrected draft errors, not published feature defects.
 - [x] **ADDRESSED (verified)** — Add private RecordOutputWriters::inventory, cloning before numeric reads and joining matching declaration/port/type/role/module facts before target/owner/activation helpers. Enrich only private ports from validated source layout. Retain actual assignment order/operator/RHS/guards and every repeated/competing state or rule/drive writer. Actual selected bus module joins its declared source and domain; mixed views, unknown/mismatched facts, missing owners and generated mappings refuse. T2029 literal nested ranges and complete first-touch caller JSON pass. Inventory grants no compatibility/exclusion; authored outputs remain refused and conservative admission is the next owned sibling.
 - [x] **NO REGRESSION** — T2029 reports All tests successful, Files=1, Tests=7. T1967/T1968/T1970/T1973 reports All tests successful, Files=4, Tests=17. Scalar output/source-formal shadows retain no invented record writers. Source admission and all existing production callers remain unchanged from f2aab272; only the new private inventory module is added. Focused docs/book, sealed receipt/baseline/hostile verification, task integrity, Knowledge Map, measured capacity, claim inventory and staged doctrines precede normal hooks. No generated mapping, arbitration, output feature completion or HDL execution follows.
+
+## Acceptance — conservative record-output writer admission (2026-10-01)
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.3.2`.
+Actual resolved source/module prototypes and complete inventories re-derive
+writer targets and owners. Independent literal counts/ranges, unsafe guard/value/
+priority variants and caller omission controls falsify broader admission.
+Full source/IR/receipt snapshots, sealed verification, book/feedback/fact, this
+task tree and Git provide durability. Independent runtime reachability and
+generated output mapping remain separately owned; no HDL is invoked.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The committed inventory supplies physical targets and explicit owners but has no admission consumer: the first focused receipt reports Can't locate object method assert_admitted at t/2030-isf-record-output-writer-admission.t line 167. Independent actual equal-RHS siblings retain both overlapping physical writers; entry conditions, priority declarations and source order cannot prove body exclusion under decision 0109. Two test drafts use incomplete when and expression-valued on forms; existing lowering correctly refuses at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6306 and line 6234. Full errors and exact drafts are preserved before adopting the already supported conditional sample witness.
+- [x] **ADDRESSED (verified)** — Add private assert_admitted to reconstruct inventory from actor/module arguments, preventing supplied filtered lists. Compare every pair through canonical packed overlap. Accept disjoint targets and ordinary <- assignments in different states of the same explicit transaction controller; a sole writer also passes. Refuse overlapping independent owners, whole/member ambiguity, duplicate same-container writes, auxiliary DT/state pairs and timed operators without qualified compatibility/exclusion. Actual sole/reused generated output topology refuses until its mapping qualifies. Equal/different values, complementary conditions and priority/order variants refuse with module/output/owner/target reasons. T2030 passes literal ranges/counts, complete returned inventory, caller JSON and native --check --json closed-output control.
+- [x] **NO REGRESSION** — T2030 reports All tests successful, Files=1, Tests=6. T2029/T1970/T1973/T2028 reports All tests successful, Files=4, Tests=24, preserving prior inventory, native/API/newline owner products, activation and precise input target-profile behavior. T1305/T1414/T1303 reports All tests successful, Files=3, Tests=310; mdBook builds. Only RecordOutputWriters private methods/comment/import change from 6b39c7d1; its inventory function and all existing production callers remain exact. Original sealed inventory authenticates without replay. Actual probe/classification, saved hostile/baseline verification, task integrity, Knowledge Map, measured capacity, claim inventory and staged doctrines precede normal hooks. Source authoring/generated mappings and independent-controller runtime remain closed/owned.

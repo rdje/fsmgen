@@ -1,0 +1,5 @@
+ram-guard: PID 55008; host 60.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2030-isf-record-output-writer-admission.t .. ok
+All tests successful.
+Files=1, Tests=6,  4 wallclock secs ( 0.02 usr  0.01 sys +  2.10 cusr  0.82 csys =  2.95 CPU)
+Result: PASS

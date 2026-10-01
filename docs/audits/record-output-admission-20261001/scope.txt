@@ -1,0 +1,42 @@
+Conservative record-output writer admission — 2026-10-01
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.3.2.
+Baseline: 6b39c7d18305697021135dad6c6b1902d6644e61.
+
+Private preparation consumes actual resolved actor/module arguments and collects
+its complete inventory internally. It admits sole writers, disjoint targets and
+ordinary <- writes in distinct states of one explicit transaction controller.
+It does not infer equal-value compatibility, entry-condition/body exclusion,
+priority arbitration, source-order precedence or timed-operator behavior.
+Overlapping independent owners, duplicate active-container writes and state/DT
+pairs refuse. Generated mappings and authored record outputs remain closed.
+Independent-controller runtime reachability retains its separate tasks.
+
+T2030 uses actual scalar-output syntax and resolved storage to prepare private
+record output prototypes; these are not authored output support. Independent
+literal packed ranges and writer counts, complete returned inventory, actual
+state/rule/drive sources, different/equal RHS, conditions, priority/order,
+whole/member overlap, duplicate writes, auxiliary DTs, timing operators and
+omitted/malformed facts falsify broader interpretations. Native check preserves
+the existing authored aggregate-output declaration failure; no HDL is invoked.
+
+The baseline missing-method receipt is retained. Two drafts used incomplete when
+syntax and an unsupported expression in on; the existing lowering validator
+correctly refused those test witnesses. Exact drafts and full errors survive.
+The corrected witness uses the already supported conditional sample syntax.
+An initial regression launcher used a nonexistent profile-test filename; its
+full failure is retained separately from corrected valid checks.
+
+Re-derivation: actual source/resolver/lowering and independent ranges/counts.
+Falsification: complete competing-writer and omission controls, timing/DT
+boundaries, immutable callers, native closed-source control and sealed hostile
+substitutions. Durability: exact snapshots, baseline Git objects, full terminal
+receipts, task tree, canonical feedback/book/fact and Git.
+
+Receipts project only the absolute repository prefix to <repo>; raw SHA256,
+bytes, prefix length and replacement count are in manifest.json. Verification
+never replays HDL. Prior immutable inventory evidence remains unchanged.
+
+Verify: python3 -B docs/audits/record-output-admission-20261001/verify.py
+Reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
+ t/2030-isf-record-output-writer-admission.t

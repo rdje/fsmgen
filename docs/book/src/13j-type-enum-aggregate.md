@@ -90,9 +90,17 @@ different members may be disjoint. Repeated states of one controller and
 independent controllers require different admission evidence. Equal values,
 entry conditions and an empty legacy conflict report do not establish exclusion.
 Local/imported nested layouts, rule/drive writers and actual domain modules are
-qualified for inventory only. Generated output mappings remain closed until
-their handoff mapping is qualified. See the
+qualified for inventory. Its private admission consumer now accepts a sole
+writer or ordinary `<-` assignments in different states of one explicitly owned
+transaction controller, together with disjoint physical targets. Overlapping
+independent writers, duplicate writes in one active state or DT, and timed
+operators have no inferred compatibility or exclusion. Caller-supplied filtered
+writer lists are refused. This preparatory gate is not yet source admission.
+Generated output mappings remain closed until their handoff mapping is qualified. See the
 [inventory evidence](../../../docs/audits/record-output-writer-inventory-20261001/scope.txt).
+The [admission evidence](../../../docs/audits/record-output-admission-20261001/scope.txt)
+retains the bounded rules and counterexamples. Independent-controller runtime
+reachability remains governed by its separate repair and qualification tasks.
 
 ```lisp
 (storage

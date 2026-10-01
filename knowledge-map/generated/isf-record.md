@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **11** facts · **37** uniquely owned question entries.
+> **11** facts · **38** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -39,6 +39,7 @@
 - q="which direct record-input runtime behavior is qualified?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="which generated record-input storage and binding behaviors pass?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="which parser mode did record-input native behavior qualify?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
+- q="which prepared record output writers pass conservative admission?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="why did Verilog record-input output retain packed typedefs?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
 - q="why did a generated scalar binding formal name refuse as an actor record read?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 - q="why did the initial fixed record-input observer remain unqualified?" · facts=[isf-record-input-observer-preparation](../../docs/knowledge/isf-record-input-observer-preparation.md)

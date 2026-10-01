@@ -1,0 +1,39 @@
+use strict;use warnings;use lib 'perl';
+use JSON::PP;use Storable qw(dclone);
+use FSM::Adapter::ISF;use FSM::Scheduler::ISF;use FSM::Scheduler::ISF::FormalLowering;
+use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
+use FSM::Scheduler::ISF::RecordOutputWriters;
+my $json=JSON::PP->new->canonical->pretty;
+my @cases=(
+ ['sole','(transaction main (on start) (set packet held))'],
+ ['ordered','(transaction main (on start) (set packet held) (wait 1) (set packet held))'],
+ ['competing','(transaction left (on start) (set packet held)) (transaction right (on other) (set packet held))'],
+ ['roots','(transaction left (on start) (set packet held)) (transaction right (on other) (set spare held))'],
+ ['rule','(rule publish (when start) (set packet held))'],
+ ['generated','(transaction main (on start) (spawn worker as one) (spawn worker as two) (complete done)) (transaction worker (set packet held))'],
+);
+my @results;
+for my $case(@cases) {
+ my ($name,$body)=@$case;
+ my $source="(actor $name (clock clk) (types (type frame (record (tag (bits 2)) (payload (signed (four_state (bits 3)))))))"
+  .' (interface (input start) (input other) (output packet (width 5)) (output spare (width 5)) (output done))'
+  ." (storage (var held (type frame))) $body)";
+ my $actor=FSM::Adapter::ISF->new->parse_source($source,'record_output_probe.isf');
+ for my $port(grep {$_->{name} eq 'packet'||$_->{name} eq 'spare'} @{$actor->{interface}{outputs}}) {
+  $port->{type}='frame';$port->{type_spec}=dclone($actor->{storage}[0]{type_spec});
+ }
+ $actor->{interface_port_metadata}=capture_interface_port_metadata($actor->{interface});
+ my $scheduler=FSM::Scheduler::ISF->new;
+ my $formal=FSM::Scheduler::ISF::FormalLowering->prepare($scheduler->{ir},$actor);
+ $actor=$formal->{actor} if $formal;
+ my $ir=$scheduler->{ir}->build_module($actor);
+ my ($before_actor,$before_ir)=map {$json->encode($_)} ($actor,$ir);
+ my ($inventory,$inventory_error,$admitted,$reason);
+ eval {$inventory=FSM::Scheduler::ISF::RecordOutputWriters->inventory(actor=>$actor,ir=>$ir);1} or $inventory_error=(split /\n/,$@)[0];
+ $admitted=eval {FSM::Scheduler::ISF::RecordOutputWriters->assert_admitted(actor=>$actor,ir=>$ir);1};
+ $reason=(split /\n/,$@)[0] unless $admitted;
+ push @results,{case=>$name,source=>$source,actor=>$actor,ir=>$ir,inventory=>$inventory,inventory_error=>$inventory_error,
+  admitted=>$admitted?JSON::PP::true:JSON::PP::false,reason=>$reason,
+  caller_unchanged=>($before_actor eq $json->encode($actor)&&$before_ir eq $json->encode($ir))?JSON::PP::true:JSON::PP::false};
+}
+print $json->encode({meaning=>'Actual scalar-source/resolved-storage output prototypes; private admission only',cases=>\@results});

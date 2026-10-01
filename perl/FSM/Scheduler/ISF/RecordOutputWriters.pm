@@ -8,11 +8,12 @@ use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
 use FSM::Support::ISFRecordPortScopes qw(record_actor_scope);
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Scheduler::ISF::PhysicalWriteDeclarations;
+use FSM::Scheduler::ISF::PhysicalWriteTargets;
 use FSM::Scheduler::ISF::SourceWriterOwners;
 use FSM::Scheduler::ISF::WriterActivation;
 
-# Detached evidence only. Source admission and competing-writer decisions are
-# separate consumers; neither an entry guard nor a source name proves exclusion.
+# Inventory and its conservative admission consumer are private preparation.
+# Neither an entry guard nor a source name alone proves exclusion.
 sub inventory {
     my ($class, %args) = @_;
     _require(keys(%args) == 2 && ref($args{actor}) eq 'HASH' && ref($args{ir}) eq 'HASH',
@@ -89,6 +90,49 @@ sub inventory {
         }
     }
     return {module => $ir->{actor_name}, output_declarations => \@outputs, writers => \@writers};
+}
+
+sub assert_admitted {
+    my ($class, %args) = @_;
+    # Always collect from actual source/module arguments. A supplied filtered
+    # inventory cannot hide a writer before this pairwise check.
+    my $inventory = $class->inventory(%args);
+    my $writers = $inventory->{writers};
+    for my $left_index (0 .. $#$writers) {
+        for my $right_index ($left_index + 1 .. $#$writers) {
+            my ($left, $right) = @{$writers}[$left_index, $right_index];
+            next unless FSM::Scheduler::ISF::PhysicalWriteTargets->overlaps(
+                $left->{target}, $right->{target});
+            next if _ordered_state_pair($left, $right);
+            confess "ISF module '$inventory->{module}' record output '$left->{output}' "
+                . "cannot admit overlapping writers '" . _owner_label($left->{owner})
+                . "' and '" . _owner_label($right->{owner})
+                . "' to '$left->{assignment}{lhs}' and '$right->{assignment}{lhs}'; "
+                . "use one ordered state controller or disjoint physical targets. "
+                . "Qualified compatibility or exclusion is required.\n";
+        }
+    }
+    return $inventory;
+}
+
+sub _ordered_state_pair {
+    my ($left, $right) = @_;
+    my ($a, $b) = ($left->{owner}, $right->{owner});
+    return 0 unless $a->{container_kind} eq 'state' && $b->{container_kind} eq 'state'
+        && $a->{source_kind} eq 'transaction' && $b->{source_kind} eq 'transaction'
+        && $a->{container_name} ne $b->{container_name}
+        && $left->{activation}{operator} eq '<-' && $right->{activation}{operator} eq '<-';
+    # Different point-active states of this one source controller are exclusive.
+    # Its entry condition and transaction-owned DTs confer no such guarantee.
+    for my $key (qw(module domain source_kind source_name)) {
+        return 0 unless ($a->{$key} // '') eq ($b->{$key} // '');
+    }
+    return 1;
+}
+
+sub _owner_label {
+    my ($owner) = @_;
+    return "$owner->{source_kind}/$owner->{source_name}/$owner->{container_kind}:$owner->{container_name}";
 }
 
 sub _records {

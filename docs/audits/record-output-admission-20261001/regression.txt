@@ -1,0 +1,8 @@
+ram-guard: PID 10995; host 72.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2029-isf-record-output-writer-inventory.t .. ok
+t/1970-isf-source-writer-owners.t ............ ok
+t/1973-isf-writer-activation-predicates.t .... ok
+t/2028-isf-record-input-verilog-profile.t .... ok
+All tests successful.
+Files=4, Tests=24, 91 wallclock secs ( 0.04 usr  0.01 sys + 61.64 cusr 24.33 csys = 86.02 CPU)
+Result: PASS

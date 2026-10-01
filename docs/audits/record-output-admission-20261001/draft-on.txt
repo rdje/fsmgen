@@ -1,0 +1,26 @@
+ram-guard: PID 48280; host 62.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Transaction 'right': on requires '(on port [sample...])' in transaction body
+ at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6234.
+	FSM::Scheduler::ISF::LoweringIR::_validate_on_clause(ARRAY(0x79a40135e8), "right", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6152
+	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x79a4521840), "right", "transaction", undef, HASH(0x79a17a99c0), HASH(0x79a452b750)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5923
+	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x79a4529ee8), HASH(0x79a450c420), HASH(0x79a452b750), 1, HASH(0x79a17a99c0), HASH(0x79a1988240)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1582
+	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x79a4529ee8), HASH(0x79a452b750), HASH(0x79a17a99c0), HASH(0x79a17a9a08)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x79a4529ee8), HASH(0x79a452b750)) called at t/2030-isf-record-output-writer-admission.t line 170
+	main::fixture("complementary_entry", "(transaction left (on start) (set packet held)) (transaction "...) called at t/2030-isf-record-output-writer-admission.t line 72
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x799f01f648), "overlapping independent owners refuse regardless of values en"..., CODE(0x79a3e61210)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("overlapping independent owners refuse regardless of values en"..., CODE(0x79a3e61210)) called at t/2030-isf-record-output-writer-admission.t line 85
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 25 just after 3.
+t/2030-isf-record-output-writer-admission.t .. 
+Dubious, test returned 25 (wstat 6400, 0x1900)
+All 3 subtests passed 
+
+Test Summary Report
+-------------------
+t/2030-isf-record-output-writer-admission.t (Wstat: 6400 Tests: 3 Failed: 0)
+  Non-zero exit status: 25
+  Parse errors: No plan found in TAP output
+Files=1, Tests=3,  2 wallclock secs ( 0.01 usr  0.01 sys +  1.02 cusr  0.41 csys =  1.45 CPU)
+Result: FAIL

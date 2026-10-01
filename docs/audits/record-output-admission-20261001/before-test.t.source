@@ -1,0 +1,181 @@
+use strict;
+use warnings;
+use lib 'perl', 't/lib';
+use Test::More;
+use JSON::PP;
+use Storable qw(dclone);
+use File::Temp qw(tempdir);
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::SourceQueryRunner;
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
+use FSM::Scheduler::ISF::FormalLowering;
+use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
+use FSM::Scheduler::ISF::RecordOutputWriters;
+
+my $json = JSON::PP->new->canonical;
+my $work = tempdir(CLEANUP => 1);
+my $definition = '(record (tag (bits 2)) (payload (signed (four_state (bits 3)))))';
+write_file('shared.fsm', '(?pkg:shared (+types (type frame '.$definition.')))');
+
+subtest 'sole writers and ordered states retain the complete unpruned inventory' => sub {
+    for my $case (
+        ['unused', '', 0],
+        ['sole', '(transaction main (on start) (set packet held))', 1],
+        ['ordered', '(transaction main (on start) (set packet held) (wait 1) (set packet held))', 2],
+        ['rule', '(rule publish (when start) (set packet held))', 1],
+        ['drive', '(drive publish (packet held)) (transaction main (on start) (drive publish))', 1],
+    ) {
+        my ($name,$body,$count) = @$case;
+        for my $type ('frame','shared.frame') {
+            my ($actor,$ir) = fixture($name,$body,$type);
+            my ($a,$i) = map {$json->encode($_)} ($actor,$ir);
+            my $expected = FSM::Scheduler::ISF::RecordOutputWriters->inventory(actor=>$actor,ir=>$ir);
+            my $admitted = admit($actor,$ir);
+            is_deeply($admitted,$expected,"$name/$type admission returns every original inventory fact");
+            is(scalar @{$admitted->{writers}},$count,"$name/$type independent actual writer count");
+            is($json->encode($actor),$a,"$name/$type actor remains unchanged");
+            is($json->encode($ir),$i,"$name/$type module remains unchanged");
+        }
+    }
+};
+
+subtest 'independent physical roots and independently resolved leaves are disjoint' => sub {
+    my ($actor,$ir) = fixture('distinct_roots',
+        '(transaction left (on start) (set packet held)) (transaction right (on other) (set spare held))');
+    my $writers = admit($actor,$ir)->{writers};
+    is_deeply([sort map {$_->{target}{root}} @$writers],['packet','spare'],
+        'actual different declared output roots admit independent source owners');
+    my ($member_actor,$member_ir) = fixture('distinct_leaves', competing_body());
+    for my $state (@{$member_ir->{states}}) {
+        for my $assignment (@{$state->{assignments}}) {
+            next unless $assignment->{lhs} eq 'packet';
+            $assignment->{lhs} = $state->{transaction} eq 'left' ? 'packet.tag' : 'packet.payload';
+        }
+    }
+    my $members = admit($member_actor,$member_ir)->{writers};
+    is_deeply([sort map {join(':',@{$_->{target}}{qw(low high width)})} @$members],
+        ['0:2:3','3:4:2'],'literal packed field ranges establish physical disjointness');
+    my ($other_actor,$other_ir) = fixture('other_module','(transaction main (on start) (set packet held))');
+    is(admit($other_actor,$other_ir)->{writers}[0]{target}{module},'other_module',
+        'separate actual module admission retains its own identity');
+};
+
+subtest 'overlapping independent owners refuse regardless of values entry guards priority or declaration order' => sub {
+    for my $case (
+        ['equal_values', competing_body()],
+        ['different_values', '(transaction left (on start) (set packet held)) (transaction right (on other) (set packet 0))'],
+        ['complementary_entry', '(transaction left (when start) (set packet held)) (transaction right (when (! start)) (set packet held))'],
+        ['priority', competing_body().' (priority left over right)'],
+    ) {
+        my ($name,$body) = @$case;
+        my ($actor,$ir) = fixture($name,$body);
+        for my $reverse (0,1) {
+            my $ordered = dclone($ir);
+            @{$ordered->{states}} = reverse @{$ordered->{states}} if $reverse;
+            my ($a,$i) = map {$json->encode($_)} ($actor,$ordered);
+            my $error = refusal($actor,$ordered);
+            like($error,qr/record output 'packet' cannot admit overlapping writers/,"$name/$reverse primary output reason");
+            like($error,qr/transaction\/left\/state:/,"$name/$reverse explicit left owner");
+            like($error,qr/transaction\/right\/state:/,"$name/$reverse explicit right owner");
+            is($json->encode($actor),$a,"$name/$reverse failed admission preserves actor");
+            is($json->encode($ordered),$i,"$name/$reverse failed admission preserves module");
+        }
+    }
+};
+
+subtest 'whole-member overlap and duplicate point-active writes stay closed' => sub {
+    my ($actor,$ir) = fixture('whole_member',competing_body());
+    my ($right) = grep {($_->{transaction}//'') eq 'right' && grep {$_->{lhs} eq 'packet'} @{$_->{assignments}}} @{$ir->{states}};
+    $right->{assignments}[0]{lhs} = 'packet.tag';
+    like(refusal($actor,$ir),qr/to 'packet' and 'packet.tag'/,
+        'distinct spellings cannot hide whole-root versus member physical overlap');
+    my ($one_actor,$one_ir) = fixture('same_state','(transaction main (on start) (set packet held))');
+    my ($state) = grep {grep {$_->{lhs} eq 'packet'} @{$_->{assignments}}} @{$one_ir->{states}};
+    push @{$state->{assignments}},dclone($state->{assignments}[0]);
+    like(refusal($one_actor,$one_ir),qr/cannot admit overlapping writers/,
+        'same active state does not acquire unqualified assignment precedence');
+    my ($dt_actor,$dt_ir) = fixture('same_dt','(rule publish (when start) (set packet held) (set packet held))');
+    like(refusal($dt_actor,$dt_ir),qr/rule\/publish\/dt:/,
+        'repeated same DT output assignments do not acquire inferred precedence');
+    my ($aux_actor,$aux_ir) = fixture('aux_dt',
+        '(transaction main (on start) (set packet held) (latency (min 1) (max 9)))');
+    my ($aux) = grep {$_->{kind} eq 'latency_counter'} @{$aux_ir->{dt_blocks}};
+    push @{$aux->{assignments}},{lhs=>'packet',rhs=>'held',op=>'<-',guard=>{port=>'1'}};
+    like(refusal($aux_actor,$aux_ir),qr/transaction\/main\/dt:/,
+        'a transaction-owned auxiliary DT is not a mutually exclusive transaction state');
+};
+
+subtest 'malformed unknown generated or caller-pruned writer facts refuse before admission' => sub {
+    my ($actor,$ir) = fixture('bad_facts','(transaction main (on start) (set packet held))');
+    for my $case (
+        ['generated',sub {$_[1]{children}={worker=>{}}},qr/generated record-output mappings/],
+        ['unknown owner',sub {delete $_->{transaction} for @{$_[1]{states}}},qr/explicit source identity/],
+        ['missing assignments',sub {delete $_[1]{states}[0]{assignments}},qr/complete 'assignments'/],
+        ['missing declaration',sub {$_[1]{ports}=[grep {$_->{name} ne 'packet'} @{$_[1]{ports}}]},qr/lacks its realized output port/],
+        ['mixed module',sub {$_[1]{domain_partition}={kind=>'multi_domain'}},qr/actual realized clock-domain/],
+    ) {
+        my ($name,$mutate,$reason) = @$case;
+        my ($a,$i) = map {dclone($_)} ($actor,$ir);
+        $mutate->($a,$i);
+        like(refusal($a,$i),$reason,"$name remains a precise closed boundary");
+    }
+    eval {FSM::Scheduler::ISF::RecordOutputWriters->assert_admitted(actor=>$actor,ir=>$ir,inventory=>{writers=>[]})};
+    like((split /\n/,$@)[0],qr/requires resolved actor and realized module maps/,
+        'caller cannot omit actual writers with a supplied prefiltered inventory');
+};
+
+subtest 'authored output public boundary and existing scalar inputs remain unchanged' => sub {
+    my $path = write_file('authored_output.isf','(actor closed (types (type frame '.$definition.'))'
+        .' (interface (output packet (type frame))))');
+    my $checked = FSM::Test::SourceQueryRunner::_capture([$^X,'bin/fsmgen','--strict','--check','--json',$path],'');
+    is($checked->{exit_code},1,'preparatory gate does not silently admit authored record outputs');
+    my $report = $json->decode($checked->{stdout});
+    ok(!$report->{success},'public check remains a failed product');
+    like($checked->{stdout},qr/interface port 'packet' references aggregate type 'frame'/,
+        'existing primary declaration diagnostic remains visible');
+    my $actor = FSM::Adapter::ISF->new->parse_source('(actor scalar (clock clk)'
+        .' (interface (input start) (output packet (width 3)))'
+        .' (transaction main (on start) (set packet 1)))','scalar.isf');
+    my $ir = FSM::Scheduler::ISF->new->{ir}->build_module($actor);
+    is_deeply(admit($actor,$ir),{module=>'scalar',output_declarations=>[],writers=>[]},
+        'scalar-only actors have no invented record admission facts');
+};
+
+done_testing;
+
+sub fixture {
+    my ($name,$body,$type) = @_;
+    $type //= 'frame';
+    my $types = $type eq 'shared.frame' ? '(imports (package shared))' : '(types (type frame '.$definition.'))';
+    my $path = write_file("$name.isf","(actor $name (clock clk) $types"
+        .' (interface (input start) (input other) (output packet (width 5)) (output spare (width 5)) (output done))'
+        ." (storage (var held (type $type))) $body)");
+    my $actor = FSM::Adapter::ISF->new->parse_file($path);
+    # Private resolved-output prototypes, not authored output grammar admission.
+    for my $port (grep {$_->{name} eq 'packet' || $_->{name} eq 'spare'} @{$actor->{interface}{outputs}}) {
+        $port->{type} = $type;
+        $port->{type_spec} = dclone($actor->{storage}[0]{type_spec});
+    }
+    $actor->{interface_port_metadata} = capture_interface_port_metadata($actor->{interface});
+    my $scheduler = FSM::Scheduler::ISF->new;
+    my $formal = FSM::Scheduler::ISF::FormalLowering->prepare($scheduler->{ir},$actor);
+    $actor = $formal->{actor} if $formal;
+    return ($actor,$scheduler->{ir}->build_module($actor));
+}
+sub competing_body {'(transaction left (on start) (set packet held)) (transaction right (on other) (set packet held))'}
+sub admit {FSM::Scheduler::ISF::RecordOutputWriters->assert_admitted(actor=>$_[0],ir=>$_[1])}
+sub refusal {
+    my ($actor,$ir) = @_;
+    my $ok = eval {admit($actor,$ir);1};
+    ok(!$ok,'unsafe or unsupported combination refuses');
+    return (split /\n/,$@)[0] // '';
+}
+sub write_file {
+    my ($name,$text) = @_;
+    my $path = "$work/$name";
+    open my $fh,'>:raw',$path or die $!;
+    print {$fh} $text or die $!;
+    close $fh or die $!;
+    return $path;
+}

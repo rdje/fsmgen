@@ -1,0 +1,20 @@
+ram-guard: PID 43347; host 56.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+    # No tests run!
+
+#   Failed test 'No tests run for subtest "sole writers and ordered states retain the complete unpruned inventory"'
+#   at t/2030-isf-record-output-writer-admission.t line 41.
+Can't locate object method "assert_admitted" via package "FSM::Scheduler::ISF::RecordOutputWriters" at t/2030-isf-record-output-writer-admission.t line 167.
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 25 just after 1.
+t/2030-isf-record-output-writer-admission.t .. 
+Dubious, test returned 25 (wstat 6400, 0x1900)
+Failed 1/1 subtests 
+
+Test Summary Report
+-------------------
+t/2030-isf-record-output-writer-admission.t (Wstat: 6400 Tests: 1 Failed: 1)
+  Failed test:  1
+  Non-zero exit status: 25
+  Parse errors: No plan found in TAP output
+Files=1, Tests=1,  2 wallclock secs ( 0.01 usr  0.01 sys +  0.79 cusr  0.41 csys =  1.22 CPU)
+Result: FAIL
