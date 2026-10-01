@@ -1,0 +1,40 @@
+ram-guard: PID 38034; host 69.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Useless use of private variable in void context at t/2029-isf-record-output-writer-inventory.t line 36.
+Useless use of private variable in void context at t/2029-isf-record-output-writer-inventory.t line 36.
+Useless use of private variable in void context at t/2029-isf-record-output-writer-inventory.t line 36.
+Useless use of a constant ("competing") in void context at t/2029-isf-record-output-writer-inventory.t line 82.
+Useless use of a constant ("frame") in void context at t/2029-isf-record-output-writer-inventory.t line 82.
+Useless use of concatenation (.) or string in void context at t/2029-isf-record-output-writer-inventory.t line 82.
+Useless use of a constant ("other_module") in void context at t/2029-isf-record-output-writer-inventory.t line 90.
+Useless use of a constant ("frame") in void context at t/2029-isf-record-output-writer-inventory.t line 90.
+Useless use of concatenation (.) or string in void context at t/2029-isf-record-output-writer-inventory.t line 90.
+Useless use of a constant ("shadow") in void context at t/2029-isf-record-output-writer-inventory.t line 104.
+Useless use of a constant ("frame") in void context at t/2029-isf-record-output-writer-inventory.t line 104.
+Useless use of concatenation (.) or string in void context at t/2029-isf-record-output-writer-inventory.t line 104.
+    # No tests run!
+
+#   Failed test 'No tests run for subtest "actual source-derived resolved output prototypes retain complete writer facts"'
+#   at t/2029-isf-record-output-writer-inventory.t line 66.
+Invalid record-output writer inventory: requires resolved actor and realized module maps
+ at perl/FSM/Scheduler/ISF/RecordOutputWriters.pm line 103.
+	FSM::Scheduler::ISF::RecordOutputWriters::_require("", "requires resolved actor and realized module maps") called at perl/FSM/Scheduler/ISF/RecordOutputWriters.pm line 18
+	FSM::Scheduler::ISF::RecordOutputWriters::inventory("FSM::Scheduler::ISF::RecordOutputWriters", "actor", undef, "ir", undef) called at t/2029-isf-record-output-writer-inventory.t line 165
+	main::inventory(undef, undef) called at t/2029-isf-record-output-writer-inventory.t line 38
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x777b01b7f8), "actual source-derived resolved output prototypes retain compl"..., CODE(0x777b00df48)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("actual source-derived resolved output prototypes retain compl"..., CODE(0x777b00df48)) called at t/2029-isf-record-output-writer-inventory.t line 66
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 25 just after 1.
+t/2029-isf-record-output-writer-inventory.t .. 
+Dubious, test returned 25 (wstat 6400, 0x1900)
+Failed 1/1 subtests 
+
+Test Summary Report
+-------------------
+t/2029-isf-record-output-writer-inventory.t (Wstat: 6400 Tests: 1 Failed: 1)
+  Failed test:  1
+  Non-zero exit status: 25
+  Parse errors: No plan found in TAP output
+Files=1, Tests=1,  0 wallclock secs ( 0.01 usr  0.00 sys +  0.13 cusr  0.02 csys =  0.16 CPU)
+Result: FAIL

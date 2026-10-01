@@ -1,0 +1,15 @@
+ram-guard: PID 34678; host 78.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Not an ARRAY reference at t/2029-isf-record-output-writer-inventory.t line 176.
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 25 just after 6.
+t/2029-isf-record-output-writer-inventory.t .. 
+Dubious, test returned 25 (wstat 6400, 0x1900)
+All 6 subtests passed 
+
+Test Summary Report
+-------------------
+t/2029-isf-record-output-writer-inventory.t (Wstat: 6400 Tests: 6 Failed: 0)
+  Non-zero exit status: 25
+  Parse errors: No plan found in TAP output
+Files=1, Tests=6,  2 wallclock secs ( 0.01 usr  0.01 sys +  0.74 cusr  0.36 csys =  1.12 CPU)
+Result: FAIL

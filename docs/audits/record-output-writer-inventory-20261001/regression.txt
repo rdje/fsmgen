@@ -1,0 +1,8 @@
+ram-guard: PID 36332; host 70.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1967-isf-physical-write-targets.t ........ ok
+t/1968-isf-physical-write-declarations.t ... ok
+t/1970-isf-source-writer-owners.t .......... ok
+t/1973-isf-writer-activation-predicates.t .. ok
+All tests successful.
+Files=4, Tests=17, 34 wallclock secs ( 0.02 usr  0.01 sys + 24.17 cusr  8.91 csys = 33.11 CPU)
+Result: PASS

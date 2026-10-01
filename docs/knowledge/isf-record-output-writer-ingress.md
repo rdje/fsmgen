@@ -5,10 +5,14 @@ answers:
   - "what blocks record output whole-copy admission?"
   - "does the physical write collector accept imported type tokens?"
   - "can empty conflict issues prove record output writer safety?"
+  - "where are detached record output writers inventoried?"
 date: 2026-10-01
 status: current
 tags: [isf, record, output, writers, imports, ownership]
 evidence: >-
+  docs/audits/record-output-writer-inventory-20261001/manifest.json;
+  perl/FSM/Scheduler/ISF/RecordOutputWriters.pm;
+  t/2029-isf-record-output-writer-inventory.t;
   docs/audits/physical-write-import-types-20261001/manifest.json;
   docs/audits/record-output-ingress-20261001/manifest.json;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md;
@@ -18,6 +22,7 @@ evidence: >-
   docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
+  t/2029-isf-record-output-writer-inventory.t
   t/1968-isf-physical-write-declarations.t
   t/1967-isf-physical-write-targets.t
   t/1969-isf-implicit-write-targets.t
@@ -53,3 +58,17 @@ admission and omitted competing assignments falsify unsafe interpretations.
 Sealed receipts, baseline Git objects, selected task children and this card provide
 durability. Closed writer preparation, source admission and generated/public/native
 qualification remain `.3.3`–`.3.5`; native execution requires fresh HIAL admission.
+
+RecordOutputWriters::inventory now joins matching resolved actor declarations
+and actual module ports on private clones before collecting packed targets,
+explicit source owners and per-assignment activation. Emitted output ports
+retain alias/width but lack recursive layouts; matching source facts enrich
+only the detached copy. It retains every actual state/rule/drive output write,
+including repeated and competing owners, without deciding compatibility.
+Actual domain realization is supported; pre-partition views and generated
+child mappings refuse. T2029 independently qualifies nested local/imported
+layouts, whole/member ranges, same-value competing owners, scalar shadows,
+omitted/mismatched facts and first-touch complete caller JSON. The source
+prototype starts from admitted scalar output syntax and resolved storage types;
+it does not constitute authored record-output support. Conservative admission
+remains SEM `.60.4.3.3.3.2`, before source widening.

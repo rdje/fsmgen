@@ -1,0 +1,89 @@
+{
+   "module" : "prototype",
+   "output_declarations" : [
+      {
+         "direction" : "output",
+         "fields" : [
+            {
+               "lsb" : 3,
+               "msb" : 4,
+               "path" : "tag",
+               "signed" : 0,
+               "width" : 2
+            },
+            {
+               "lsb" : 0,
+               "msb" : 2,
+               "path" : "payload",
+               "signed" : 0,
+               "width" : 3
+            }
+         ],
+         "name" : "packet",
+         "type" : "frame",
+         "type_kind" : "record",
+         "width" : 5
+      }
+   ],
+   "writers" : [
+      {
+         "activation" : {
+            "assignment_enable" : {
+               "predicate" : {
+                  "kind" : "always"
+               },
+               "raw" : null
+            },
+            "assignment_guard_placement" : "suffix",
+            "assignment_index" : 0,
+            "container_enable" : {
+               "kind" : "state_active",
+               "state" : "main_set_1"
+            },
+            "container_kind" : "state",
+            "container_name" : "main_set_1",
+            "operator" : "<-",
+            "state_transition_context" : {
+               "guard" : {
+                  "predicate" : {
+                     "kind" : "always"
+                  },
+                  "raw" : null
+               },
+               "state_kind" : "sequential",
+               "transitions" : [
+                  {
+                     "target" : "main_done_2"
+                  }
+               ]
+            },
+            "target" : "packet"
+         },
+         "assignment" : {
+            "lhs" : "packet",
+            "op" : "<-",
+            "rhs" : "held",
+            "source_kind" : "set"
+         },
+         "output" : "packet",
+         "owner" : {
+            "container_kind" : "state",
+            "container_name" : "main_set_1",
+            "domain" : null,
+            "module" : "prototype",
+            "source_kind" : "transaction",
+            "source_name" : "main"
+         },
+         "target" : {
+            "high" : 4,
+            "low" : 0,
+            "module" : "prototype",
+            "path_segments" : [],
+            "root" : "packet",
+            "root_width" : 5,
+            "target" : "packet",
+            "width" : 5
+         }
+      }
+   ]
+}

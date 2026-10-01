@@ -82,6 +82,18 @@ the same declaration. Unknown aliases fail before lowering.
 Packed `list` and `record` aliases are accepted on actor-owned storage variables.
 Packed records also support actor input ports, as described below.
 
+Record-output authoring remains closed while writer admission is qualified.
+The preparatory inventory matches each resolved output declaration to its actual
+module port and joins every write to its packed range, explicit source owner
+and activation conditions. A whole output overlaps each of its members;
+different members may be disjoint. Repeated states of one controller and
+independent controllers require different admission evidence. Equal values,
+entry conditions and an empty legacy conflict report do not establish exclusion.
+Local/imported nested layouts, rule/drive writers and actual domain modules are
+qualified for inventory only. Generated output mappings remain closed until
+their handoff mapping is qualified. See the
+[inventory evidence](../../../docs/audits/record-output-writer-inventory-20261001/scope.txt).
+
 ```lisp
 (storage
   (var frame (type frame_t))

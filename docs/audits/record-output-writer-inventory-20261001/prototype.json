@@ -1,0 +1,716 @@
+{
+   "actor" : {
+      "actor_name" : "prototype",
+      "actor_network" : null,
+      "clock" : "clk",
+      "clock_domains" : null,
+      "constant_symbols" : {
+         "packages" : {}
+      },
+      "constants" : [],
+      "crossings" : [],
+      "drives" : {},
+      "enum_declarations" : [],
+      "enum_symbols" : {
+         "local" : {},
+         "packages" : {}
+      },
+      "handshakes" : {},
+      "imports" : [],
+      "interface" : {
+         "inputs" : [
+            {
+               "name" : "start",
+               "width" : 1
+            }
+         ],
+         "outputs" : [
+            {
+               "name" : "packet",
+               "type" : "frame",
+               "type_spec" : {
+                  "kind" : "record",
+                  "member_order" : [
+                     "tag",
+                     "payload"
+                  ],
+                  "members" : {
+                     "payload" : {
+                        "kind" : "bits",
+                        "signed" : 0,
+                        "width" : "3"
+                     },
+                     "tag" : {
+                        "kind" : "bits",
+                        "signed" : 0,
+                        "width" : "2"
+                     }
+                  },
+                  "signed" : 0,
+                  "width" : 5
+               },
+               "width" : 5
+            },
+            {
+               "name" : "done",
+               "width" : 1
+            }
+         ]
+      },
+      "interface_port_metadata" : [
+         {
+            "direction" : "input",
+            "name" : "start",
+            "width" : 1
+         },
+         {
+            "direction" : "output",
+            "fields" : [
+               {
+                  "lsb" : 3,
+                  "msb" : 4,
+                  "path" : "tag",
+                  "signed" : 0,
+                  "width" : 2
+               },
+               {
+                  "lsb" : 0,
+                  "msb" : 2,
+                  "path" : "payload",
+                  "signed" : 0,
+                  "width" : 3
+               }
+            ],
+            "name" : "packet",
+            "type" : "frame",
+            "type_kind" : "record",
+            "width" : 5
+         },
+         {
+            "direction" : "output",
+            "name" : "done",
+            "width" : 1
+         }
+      ],
+      "library_uses" : [],
+      "package_imports" : [],
+      "package_roots" : [],
+      "params" : [],
+      "phases" : [],
+      "priorities" : [],
+      "procs" : {},
+      "reset" : {
+         "kind" : "async",
+         "name" : "rst_n",
+         "polarity" : "active_low"
+      },
+      "reset_provenance" : [
+         {
+            "domain" : null,
+            "origin" : "legacy_default"
+         }
+      ],
+      "resources" : [],
+      "rules" : [],
+      "stages" : [],
+      "storage" : [
+         {
+            "kind" : "var",
+            "name" : "held",
+            "signals" : [
+               {
+                  "name" : "held",
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "type" : "frame",
+            "type_spec" : {
+               "kind" : "record",
+               "member_order" : [
+                  "tag",
+                  "payload"
+               ],
+               "members" : {
+                  "payload" : {
+                     "kind" : "bits",
+                     "signed" : 0,
+                     "width" : 3
+                  },
+                  "tag" : {
+                     "kind" : "bits",
+                     "signed" : 0,
+                     "width" : 2
+                  }
+               },
+               "signed" : 0,
+               "width" : 5
+            },
+            "width" : 5
+         }
+      ],
+      "transactions" : [
+         {
+            "clauses" : [
+               [
+                  "on",
+                  "start"
+               ],
+               [
+                  "set",
+                  "packet",
+                  "held"
+               ],
+               [
+                  "complete",
+                  "done"
+               ]
+            ],
+            "name" : "main",
+            "ports" : {
+               "inputs" : [],
+               "outputs" : []
+            }
+         }
+      ],
+      "type_declarations" : [
+         [
+            "type",
+            "frame",
+            [
+               "record",
+               [
+                  "tag",
+                  [
+                     "bits",
+                     "2"
+                  ]
+               ],
+               [
+                  "payload",
+                  [
+                     "bits",
+                     "3"
+                  ]
+               ]
+            ]
+         ]
+      ],
+      "type_symbols" : {
+         "local" : {
+            "frame" : {
+               "kind" : "record",
+               "member_order" : [
+                  "tag",
+                  "payload"
+               ],
+               "members" : {
+                  "payload" : {
+                     "kind" : "bits",
+                     "signed" : 0,
+                     "width" : 3
+                  },
+                  "tag" : {
+                     "kind" : "bits",
+                     "signed" : 0,
+                     "width" : 2
+                  }
+               },
+               "signed" : 0,
+               "width" : 5
+            }
+         },
+         "packages" : {}
+      },
+      "uses" : [],
+      "verification_bridge" : null,
+      "verification_observations" : [],
+      "watchdog" : "65535"
+   },
+   "declarations" : {
+      "declarations" : {
+         "can_accept" : {
+            "origin" : "counter",
+            "width" : 1,
+            "width_token" : 1
+         },
+         "done" : {
+            "origin" : "port",
+            "width" : 1,
+            "width_token" : 1
+         },
+         "held" : {
+            "origin" : "storage",
+            "type_spec" : {
+               "kind" : "record",
+               "member_order" : [
+                  "tag",
+                  "payload"
+               ],
+               "members" : {
+                  "payload" : {
+                     "kind" : "bits",
+                     "signed" : 0,
+                     "width" : 3
+                  },
+                  "tag" : {
+                     "kind" : "bits",
+                     "signed" : 0,
+                     "width" : 2
+                  }
+               },
+               "signed" : 0,
+               "width" : 5
+            },
+            "width" : 5,
+            "width_token" : "frame"
+         },
+         "packet" : {
+            "origin" : "port",
+            "width" : 5,
+            "width_token" : "frame"
+         },
+         "start" : {
+            "origin" : "port",
+            "width" : 1,
+            "width_token" : 1
+         }
+      },
+      "module" : "prototype",
+      "unresolved_targets" : []
+   },
+   "ir" : {
+      "actor_name" : "prototype",
+      "actor_network" : null,
+      "actor_phases" : [],
+      "actor_stages" : [],
+      "assignment_provenance" : [
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "main_idle_0",
+               "state_guard" : {
+                  "port" : "start"
+               },
+               "state_kind" : "entry"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "helper",
+            "operator" : "=",
+            "owner" : "main",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : 1,
+            "source_kind" : "scheduler_can_accept",
+            "target" : "can_accept"
+         },
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "main_set_1",
+               "state_guard" : null,
+               "state_kind" : "sequential"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "data",
+            "operator" : "<-",
+            "owner" : "main",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : "held",
+            "source_kind" : "set",
+            "target" : "packet"
+         },
+         {
+            "activation" : {
+               "assignment_guard" : null,
+               "container_kind" : "state",
+               "container_name" : "main_done_2",
+               "state_guard" : null,
+               "state_kind" : "terminal"
+            },
+            "assignment_index" : 0,
+            "condition_terms" : {},
+            "domain" : "pulse",
+            "operator" : "<1",
+            "owner" : "main",
+            "owner_kind" : "transaction",
+            "priority_suppressed_by" : [],
+            "resource_suppressed_by" : [],
+            "rhs" : 1,
+            "source_kind" : "complete_pulse",
+            "target" : "done"
+         }
+      ],
+      "atl_top_instances" : [],
+      "bank_accesses" : [],
+      "children" : {},
+      "clock" : "clk",
+      "compatible_fanin_groups" : [],
+      "conflict_issues" : [],
+      "constants" : [],
+      "counters" : {
+         "can_accept" : 1
+      },
+      "declared_storage" : [
+         {
+            "kind" : "var",
+            "name" : "held",
+            "signals" : [
+               {
+                  "name" : "held",
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "type" : "frame",
+            "type_spec" : {
+               "kind" : "record",
+               "member_order" : [
+                  "tag",
+                  "payload"
+               ],
+               "members" : {
+                  "payload" : {
+                     "kind" : "bits",
+                     "signed" : 0,
+                     "width" : 3
+                  },
+                  "tag" : {
+                     "kind" : "bits",
+                     "signed" : 0,
+                     "width" : 2
+                  }
+               },
+               "signed" : 0,
+               "width" : 5
+            },
+            "width" : 5
+         }
+      ],
+      "dt_blocks" : [],
+      "enum_declarations" : [],
+      "explicit_interface_ports" : [
+         {
+            "direction" : "input",
+            "name" : "start",
+            "width" : 1
+         },
+         {
+            "direction" : "output",
+            "name" : "packet",
+            "width" : 5
+         },
+         {
+            "direction" : "output",
+            "name" : "done",
+            "width" : 1
+         }
+      ],
+      "explicit_internal_signals" : [
+         "held"
+      ],
+      "immediate_assertions" : [],
+      "interface_port_metadata" : [
+         {
+            "direction" : "input",
+            "name" : "start",
+            "width" : 1
+         },
+         {
+            "direction" : "output",
+            "fields" : [
+               {
+                  "lsb" : 3,
+                  "msb" : 4,
+                  "path" : "tag",
+                  "signed" : 0,
+                  "width" : 2
+               },
+               {
+                  "lsb" : 0,
+                  "msb" : 2,
+                  "path" : "payload",
+                  "signed" : 0,
+                  "width" : 3
+               }
+            ],
+            "name" : "packet",
+            "type" : "frame",
+            "type_kind" : "record",
+            "width" : 5
+         },
+         {
+            "direction" : "output",
+            "name" : "done",
+            "width" : 1
+         }
+      ],
+      "library_uses" : [],
+      "logical_controllers" : {
+         "controllers" : [
+            {
+               "clock" : "clk",
+               "domain" : null,
+               "entries" : [
+                  "main_idle_0"
+               ],
+               "identity" : [
+                  "prototype",
+                  null,
+                  "main"
+               ],
+               "initial_state" : "main_idle_0",
+               "reset" : {
+                  "kind" : "async",
+                  "name" : "rst_n",
+                  "polarity" : "active_low"
+               },
+               "states" : [
+                  {
+                     "kind" : "entry",
+                     "name" : "main_idle_0"
+                  },
+                  {
+                     "kind" : "sequential",
+                     "name" : "main_set_1"
+                  },
+                  {
+                     "kind" : "terminal",
+                     "name" : "main_done_2"
+                  }
+               ],
+               "transaction" : "main"
+            }
+         ],
+         "issues" : [],
+         "model" : "isf_logical_controllers_shadow_v1",
+         "module" : "prototype",
+         "references" : [
+            {
+               "field" : "transitions[0].target",
+               "role" : "transition",
+               "state" : "main_idle_0",
+               "target" : "main_set_1"
+            },
+            {
+               "field" : "transitions[0].target",
+               "role" : "transition",
+               "state" : "main_set_1",
+               "target" : "main_done_2"
+            },
+            {
+               "field" : "transitions[0].target",
+               "role" : "transition",
+               "state" : "main_done_2",
+               "target" : "main_idle_0"
+            }
+         ],
+         "state_owner" : {
+            "main_done_2" : "main",
+            "main_idle_0" : "main",
+            "main_set_1" : "main"
+         }
+      },
+      "output_defaults" : {},
+      "package_imports" : [],
+      "package_roots" : [],
+      "params" : [],
+      "ports" : [
+         {
+            "direction" : "input",
+            "name" : "start",
+            "width" : 1
+         },
+         {
+            "direction" : "output",
+            "name" : "packet",
+            "type" : "frame",
+            "width" : 5
+         },
+         {
+            "direction" : "output",
+            "name" : "done",
+            "width" : 1
+         }
+      ],
+      "priority_resolution" : {
+         "issues" : [],
+         "resolutions" : []
+      },
+      "reset" : {
+         "kind" : "async",
+         "name" : "rst_n",
+         "polarity" : "active_low"
+      },
+      "reset_provenance" : [
+         {
+            "domain" : null,
+            "origin" : "legacy_default"
+         }
+      ],
+      "reset_values" : {},
+      "resource_activation" : {
+         "requests" : {},
+         "steps" : []
+      },
+      "resource_arbitration" : {
+         "grants" : [],
+         "issues" : []
+      },
+      "signal_type_refs" : {
+         "held" : "frame",
+         "packet" : "frame"
+      },
+      "signal_widths" : {
+         "done" : 1,
+         "held" : 5,
+         "packet" : 5,
+         "start" : 1
+      },
+      "spawn_instances" : [],
+      "states" : [
+         {
+            "assignments" : [
+               {
+                  "lhs" : "can_accept",
+                  "op" : "=",
+                  "rhs" : 1
+               }
+            ],
+            "guard" : {
+               "port" : "start"
+            },
+            "kind" : "entry",
+            "name" : "main_idle_0",
+            "transaction" : "main",
+            "transitions" : [
+               {
+                  "condition" : {
+                     "port" : "start"
+                  },
+                  "target" : "main_set_1"
+               }
+            ]
+         },
+         {
+            "assignments" : [
+               {
+                  "lhs" : "packet",
+                  "op" : "<-",
+                  "rhs" : "held",
+                  "source_kind" : "set"
+               }
+            ],
+            "kind" : "sequential",
+            "name" : "main_set_1",
+            "transaction" : "main",
+            "transitions" : [
+               {
+                  "target" : "main_done_2"
+               }
+            ]
+         },
+         {
+            "assignments" : [
+               {
+                  "lhs" : "done",
+                  "op" : "<1",
+                  "rhs" : 1,
+                  "source_kind" : "complete_pulse"
+               }
+            ],
+            "kind" : "terminal",
+            "name" : "main_done_2",
+            "transaction" : "main",
+            "transitions" : [
+               {
+                  "target" : "main_idle_0"
+               }
+            ]
+         }
+      ],
+      "storage_roles" : {
+         "held" : "actor_storage"
+      },
+      "temporal_contracts" : [],
+      "transaction_port_bindings" : [],
+      "type_declarations" : [
+         [
+            "type",
+            "frame",
+            [
+               "record",
+               [
+                  "tag",
+                  [
+                     "bits",
+                     "2"
+                  ]
+               ],
+               [
+                  "payload",
+                  [
+                     "bits",
+                     "3"
+                  ]
+               ]
+            ]
+         ]
+      ],
+      "verification_bridge" : null,
+      "verification_observations" : [],
+      "watchdog" : "65535"
+   },
+   "meaning" : "Prepared resolved output prototype derived from admitted scalar source; not authored record-output admission",
+   "source" : "(actor prototype (clock clk) (types (type frame (record (tag (bits 2)) (payload (bits 3))))) (interface (input start) (output packet (width 5)) (output done)) (storage (var held (type frame))) (transaction main (on start) (set packet held) (complete done)))",
+   "unresolved_member_error" : "Physical write target 'packet.tag' has unresolved aggregate path: missing_declared_type\n at perl/FSM/Scheduler/ISF/PhysicalWriteTargets.pm line 31.\n\tFSM::Scheduler::ISF::PhysicalWriteTargets::resolve(\"FSM::Scheduler::ISF::PhysicalWriteTargets\", \"prototype\", HASH(0x754aebdb58), \"packet.tag\") called at .artifacts/record-output-writers/prototype.pl line 14\n\teval {...} called at .artifacts/record-output-writers/prototype.pl line 14\n"
+}

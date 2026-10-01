@@ -100,8 +100,12 @@ and book.
   variants remain optional. Output ingress `.60.4.3.3.1` has selected the closed
   writer/source/qualification split. The valid imported type-token rejection in
   the preparatory physical-write collector is repaired under `.3.2`, with actual
-  direct/generated/domain and scalar controls. Closed writer admission `.3.3`
-  is next; record-output authoring stays refused until its gates qualify.
+  direct/generated/domain and scalar controls. Detached writer inventory
+  `.3.3.1` now qualifies matching local/imported nested declarations, actual
+  packed ranges, explicit state/rule/drive owners, domain realization,
+  activation records and caller immutability. This is preparation only;
+  conservative writer admission `.3.3.2` is next. Record-output authoring stays
+  refused until its gates qualify, including generated handoff mappings.
   The full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

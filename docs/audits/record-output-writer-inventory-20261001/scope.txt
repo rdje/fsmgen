@@ -1,0 +1,39 @@
+Detached record-output writer inventory — 2026-10-01
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.3.1.
+Baseline: f2aab272fac2d625bfc611a580484eaf8d9348d7.
+
+The original source is admitted scalar-output syntax. Its prepared output gets
+its recursive type from actual resolved storage before lowering. This is a
+private declaration prototype, not authored record-output support. The actual
+emitted output retains frame/width but no recursive layout; member resolution
+fails until matching resolved source facts enrich a detached port copy.
+
+T2029 independently covers local/imported/alias nested declarations, all actual
+repeated/competing state and rule/drive writers, selected bus realization,
+whole/member/disjoint-module ranges, source-formal shadows, malformed/missing
+facts and complete first-touch caller JSON. Existing declaration/target/owner/
+activation tests qualify reused primitives. Inventory alone decides no safety;
+generated mappings and authored output source remain closed.
+
+Draft failures are preserved: grep argument precedence, builtin prototype name
+collision, and negative-test record members incorrectly treated as an array.
+Exact test drafts accompany the latter two. The first draft module source was
+not captured; only its full diagnostic receipt survives. An invalid documentation
+launcher used nonexistent test names; its failure is separate from valid checks.
+
+Receipts are terminal outcomes already consumed by the agent. Absolute repository
+prefixes are projected to <repo> for portability; manifest records raw bytes,
+SHA256, root-prefix length and replacement count. No other substitutions occur.
+Full prototype actors/IR and inventory remain available, including original
+stack diagnostics. Baseline named producer Git objects authenticate scope.
+
+Re-derivation: actual source/resolver/lowering and independent literal metadata.
+Falsification: omission/type/owner/domain controls, equal-RHS competing rows,
+whole/member overlaps, scalar shadows, immutable callers and sealed hostile
+substitutions. Durability: exact snapshots, full receipts, manifests, task owner,
+canonical book/feedback/fact and Git. No HDL compiler/simulator runs here.
+
+Verify: python3 -B docs/audits/record-output-writer-inventory-20261001/verify.py
+Reverify current behavior: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
+t/2029-isf-record-output-writer-inventory.t

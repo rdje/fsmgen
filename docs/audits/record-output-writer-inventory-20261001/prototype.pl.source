@@ -1,0 +1,17 @@
+use strict;use warnings;use lib 'perl';
+use JSON::PP;use Storable qw(dclone);
+use FSM::Adapter::ISF;use FSM::Scheduler::ISF;use FSM::Scheduler::ISF::FormalLowering;
+use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
+use FSM::Scheduler::ISF::PhysicalWriteDeclarations;
+use FSM::Scheduler::ISF::PhysicalWriteTargets;
+my $j=JSON::PP->new->canonical->pretty;
+my $source='(actor prototype (clock clk) (types (type frame (record (tag (bits 2)) (payload (bits 3))))) (interface (input start) (output packet (width 5)) (output done)) (storage (var held (type frame))) (transaction main (on start) (set packet held) (complete done)))';
+my $actor=FSM::Adapter::ISF->new->parse_source($source,'record_output_prototype.isf');
+my $output=$actor->{interface}{outputs}[0];$output->{type}='frame';$output->{type_spec}=dclone($actor->{storage}[0]{type_spec});$output->{width}=$output->{type_spec}{width};
+$actor->{interface_port_metadata}=capture_interface_port_metadata($actor->{interface});
+my $scheduler=FSM::Scheduler::ISF->new;my $formal=FSM::Scheduler::ISF::FormalLowering->prepare($scheduler->{ir},$actor);my $physical=$formal ? $formal->{actor}:$actor;my $ir=$scheduler->{ir}->build_module($physical);
+my $decls=FSM::Scheduler::ISF::PhysicalWriteDeclarations->collect($ir);
+my ($member,$error);eval{$member=FSM::Scheduler::ISF::PhysicalWriteTargets->resolve($ir->{actor_name},$decls->{declarations},'packet.tag');1} or $error=$@;
+my $report={meaning=>'Prepared resolved output prototype derived from admitted scalar source; not authored record-output admission',source=>$source,actor=>$actor,ir=>$ir,declarations=>$decls,unresolved_member_error=>$error};
+open my $fh,'>:raw','.artifacts/record-output-writers/prototype.json' or die$!;print {$fh}$j->encode($report);close$fh or die$!;
+print "Actual source-derived resolved output prototype captured; emitted port alias/width lacks member layout until matched source facts are detached.\n";
