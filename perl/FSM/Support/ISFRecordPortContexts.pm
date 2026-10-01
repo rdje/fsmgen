@@ -6,7 +6,7 @@ use Carp qw(confess);
 use Exporter 'import';
 use FSM::Support::ISFRecordPortScopes qw(record_context_scope record_reference_root_kind);
 use FSM::Support::ISFRecordPortValues qw(record_value_scope record_value_reference validate_record_port_copy);
-use FSM::Support::ISFRecordPortSamples qw(actor_has_record_input record_transaction_samples);
+use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port record_transaction_samples);
 
 our @EXPORT_OK = qw(validate_actor_record_contexts);
 
@@ -15,12 +15,19 @@ our @EXPORT_OK = qw(validate_actor_record_contexts);
 # tokens, arity, operators and namespace/static symbols; domain gates are separate.
 sub validate_actor_record_contexts {
     my %args = @_;
-    _require(keys(%args) == 1 && ref($args{actor}) eq 'HASH', 'requires one actor map');
+    my %allowed = map {$_ => 1} qw(actor whole_output_writes_only);
+    _require(!(grep {!$allowed{$_}} keys %args) && ref($args{actor}) eq 'HASH',
+        'requires an actor map and supported context options');
+    my $whole_only = exists($args{whole_output_writes_only}) ? $args{whole_output_writes_only} : 0;
+    _require(defined($whole_only) && !ref($whole_only) && scalar($whole_only =~ /\A[01]\z/),
+        'whole-output source-write policy must be binary');
     my $actor = $args{actor};
     my $scope = record_context_scope(actor => $actor);
+    $scope->{whole_output_writes_only} = $whole_only;
     for my $tx (@{$actor->{transactions} || []}) {
         my $local = record_context_scope(actor => $actor, transaction => $tx);
-        if (actor_has_record_input(actor => $actor)) {
+        $local->{whole_output_writes_only} = $whole_only;
+        if (actor_has_record_port(actor => $actor)) {
             my $samples = record_transaction_samples(actor => $actor, transaction => $tx, port_only => 1);
             $local->{roots} = record_value_scope(outer => $local->{roots}, local => $samples->{bindings});
         }
@@ -47,6 +54,7 @@ sub validate_actor_record_contexts {
     for my $name (sort keys %{$actor->{drives} || {}}) {
         my $drive = $actor->{drives}{$name};
         my $local = record_context_scope(actor => $actor, drive => $drive);
+        $local->{whole_output_writes_only} = $whole_only;
         _drive_body($drive->{body}, $local, "drive '$name'");
     }
     return 1;
@@ -88,7 +96,7 @@ sub _clauses {
             _clauses([@{$clause}[2 .. $#$clause]], $scope, $actor, "$context on body");
         } elsif ($head eq 'spawn' || $head eq 'do') {
             _activation($clause, $scope, "$context $head clause");
-        } elsif ($head eq 'sample' && actor_has_record_input(actor => $actor)) {
+        } elsif ($head eq 'sample' && actor_has_record_port(actor => $actor)) {
             # The ordered sample plan has already validated source paths, roles,
             # private aliases and exact scalar types. Existing source validators
             # still own placement; no capture assignment or state is introduced.
@@ -244,8 +252,16 @@ sub _reference {
     # they cannot conceal a record port or an aggregate path here.
     return undef if length($suffix) && $suffix !~ /\A[.\[]/
         && !_aggregate($roots->{$name}{type_spec});
-    return record_value_reference(scope => $roots, token => $token, access => $access,
+    my $value = record_value_reference(scope => $roots, token => $token, access => $access,
         allow_whole => 1, context => $context);
+    # Prepared type/reference facts retain output members. Authored source
+    # admission explicitly selects whole writes until field writers qualify.
+    _require(!($scope->{whole_output_writes_only} && $access eq 'write' && $value
+            && $value->{role} eq 'output' && length($value->{path_text})
+            && _port_root($roots->{$name})),
+        "$context record output field writes are not yet admitted; "
+            . "target '$token' requires output-field writer qualification");
+    return $value;
 }
 sub _aggregate {
     my ($spec) = @_;

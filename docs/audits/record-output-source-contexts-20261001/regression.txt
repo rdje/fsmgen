@@ -1,0 +1,12 @@
+ram-guard: PID 92397; host 85.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2029-isf-record-output-writer-inventory.t .. ok
+t/1988-isf-record-port-context-gates.t ....... ok
+t/1991-isf-record-port-sample-contexts.t ..... ok
+t/1992-isf-record-port-sample-carriers.t ..... ok
+t/1993-isf-record-port-sample-ownership.t .... ok
+t/1994-isf-record-port-sample-replay.t ....... ok
+t/2014-isf-record-input-public-sources.t ..... ok
+t/2016-isf-record-input-public-refusals.t .... ok
+All tests successful.
+Files=8, Tests=71, 385 wallclock secs ( 0.09 usr  0.02 sys + 273.85 cusr 103.93 csys = 377.89 CPU)
+Result: PASS

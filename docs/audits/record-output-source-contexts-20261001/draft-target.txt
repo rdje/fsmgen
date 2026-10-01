@@ -1,0 +1,41 @@
+ram-guard: PID 84686; host 53.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'literal whole target refuses before module publication'
+    #   at t/2031-isf-record-output-source-contexts.t line 27.
+
+    #   Failed test 'literal whole target identifies the mandatory source contract'
+    #   at t/2031-isf-record-output-source-contexts.t line 28.
+    #                   ''
+    #     doesn't match '(?^:whole record port copy requires declared record roots)'
+    # Looks like you failed 2 tests of 2.
+
+#   Failed test 'shared module source gate cannot bypass whole-copy identity or field qualification'
+#   at t/2031-isf-record-output-source-contexts.t line 30.
+Error: transaction 'main' set target references enum member 'packet.payload'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults or aggregate/list parameter default leaves, transaction scalar parameter defaults or aggregate/list parameter default leaves, activation scalar parameter overrides or aggregate/list override leaves, reusable-library use-site parameter override values or leaves, transaction condition scalar values or expression operands, transaction set RHS scalar values or operands, transaction switch selector or branch values, rule guard scalar values or expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, and drive-call actual scalar values or operands
+ at perl/FSM/Adapter/ISF/Parser.pm line 6402.
+	FSM::Adapter::ISF::Parser::_reject_enum_member_value_contexts("packet.payload", HASH(0x7661c652a0), HASH(0x7661338390), "transaction 'main' set target") called at perl/FSM/Adapter/ISF/Parser.pm line 5543
+	FSM::Adapter::ISF::Parser::_validate_transaction_enum_member_value_clause(ARRAY(0x7661c5e618), HASH(0x7661c652a0), HASH(0x7661338390), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 5522
+	FSM::Adapter::ISF::Parser::_validate_transaction_enum_member_value_contexts(ARRAY(0x7661c54d08), HASH(0x7661c652a0), HASH(0x7661338390), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 5027
+	FSM::Adapter::ISF::Parser::_validate_actor_enum_member_value_contexts(FSM::Adapter::ISF::Parser=HASH(0x7661c5fb40), HASH(0x7661c652a0)) called at perl/FSM/Adapter/ISF/Parser.pm line 399
+	FSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x7661c5fb40), ARRAY(0x7661c50438), "output_contexts.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+	FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7661c5fb40), "(actor output_contexts (clock clk) (types (type frame (record"..., "output_contexts.isf") called at perl/FSM/Adapter/ISF.pm line 72
+	FSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x7661c559c0), "(actor output_contexts (clock clk) (types (type frame (record"..., "output_contexts.isf") called at t/2031-isf-record-output-source-contexts.t line 129
+	main::resolved_output_prototype("(transaction main (on start) (set packet.payload 1))") called at t/2031-isf-record-output-source-contexts.t line 24
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x765f03f7c8), "shared module source gate cannot bypass whole-copy identity o"..., CODE(0x765fd3ec30)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("shared module source gate cannot bypass whole-copy identity o"..., CODE(0x765fd3ec30)) called at t/2031-isf-record-output-source-contexts.t line 30
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 1.
+t/2031-isf-record-output-source-contexts.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+Failed 1/1 subtests 
+
+Test Summary Report
+-------------------
+t/2031-isf-record-output-source-contexts.t (Wstat: 65280 Tests: 1 Failed: 1)
+  Failed test:  1
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=1,  2 wallclock secs ( 0.00 usr  0.00 sys +  0.58 cusr  0.63 csys =  1.21 CPU)
+Result: FAIL

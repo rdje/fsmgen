@@ -4,13 +4,13 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use Storable qw(dclone);
-use FSM::Support::ISFRecordPortSamples qw(actor_has_record_input record_transaction_samples record_sample_type_products);
+use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port record_transaction_samples record_sample_type_products);
 
-# Consume finalized record-input facts through the existing transaction products.
+# Consume finalized record-port facts through the existing transaction products.
 # Private sample types and ownership do not change the transaction product ABI.
 sub transaction_plan {
     my ($class, $actor, $transaction) = @_;
-    return undef unless actor_has_record_input(actor => $actor);
+    return undef unless actor_has_record_port(actor => $actor);
     return record_transaction_samples(actor => $actor, transaction => $transaction, port_only => 1);
 }
 
@@ -31,7 +31,7 @@ sub declare_transaction_aliases {
 # their roles, widths, reset/default metadata or a different physical owner.
 sub apply_to_module {
     my ($class, $ir, $actor, $transactions) = @_;
-    return unless actor_has_record_input(actor => $actor);
+    return unless actor_has_record_port(actor => $actor);
     my (%bindings, %record_aliases, %owners, %sample_owners);
     for my $transaction (@$transactions) {
         my $plan = $class->transaction_plan($actor, $transaction);

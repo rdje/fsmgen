@@ -108,7 +108,12 @@ and book.
   and disjoint physical targets. Unproved overlapping independent writers,
   duplicate active-container writes and timed operators refuse; equal values,
   entry conditions or priority declarations do not arbitrate. This is private
-  preparation only. Source admission `.3.4` is next; record-output authoring and
+  preparation only. Source-context/domain preparation `.3.4.1` now qualifies
+  output-only and mixed selection, exact whole-copy identity, typed scalar
+  samples, declaration/shadow safety and output-field domain ownership. Its
+  mandatory source policy keeps output member writes closed. Unsupported target
+  profile preparation `.3.4.2` is next, before declaration/whole-copy integration
+  `.3.4.3` and public reconciliation `.3.4.4`. Record-output authoring and
   generated handoff mappings stay refused until their integration gates qualify.
   The full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;

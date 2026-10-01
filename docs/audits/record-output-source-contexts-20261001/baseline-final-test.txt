@@ -1,0 +1,36 @@
+ram-guard: PID 45255; host 80.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'literal whole target refuses before module publication'
+    #   at t/2031-isf-record-output-source-contexts.t line 27.
+
+    #   Failed test 'literal whole target identifies the mandatory source contract'
+    #   at t/2031-isf-record-output-source-contexts.t line 28.
+    #                   ''
+    #     doesn't match '(?^:whole record port copy requires declared record roots)'
+
+    #   Failed test 'unqualified field target refuses before module publication'
+    #   at t/2031-isf-record-output-source-contexts.t line 27.
+
+    #   Failed test 'unqualified field target identifies the mandatory source contract'
+    #   at t/2031-isf-record-output-source-contexts.t line 28.
+    #                   ''
+    #     doesn't match '(?^:record output field writes are not yet admitted)'
+    # Looks like you failed 4 tests of 4.
+
+#   Failed test 'shared module source gate cannot bypass whole-copy identity or field qualification'
+#   at t/2031-isf-record-output-source-contexts.t line 30.
+Undefined subroutine &FSM::Support::ISFRecordPortSamples::actor_has_record_port called at t/2031-isf-record-output-source-contexts.t line 150.
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 2.
+t/2031-isf-record-output-source-contexts.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+Failed 1/2 subtests 
+
+Test Summary Report
+-------------------
+t/2031-isf-record-output-source-contexts.t (Wstat: 65280 Tests: 2 Failed: 1)
+  Failed test:  1
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=2,  1 wallclock secs ( 0.01 usr  0.00 sys +  0.60 cusr  0.39 csys =  1.00 CPU)
+Result: FAIL

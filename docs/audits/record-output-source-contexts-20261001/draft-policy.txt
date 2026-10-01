@@ -1,0 +1,23 @@
+ram-guard: PID 65395; host 81.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'malformed source policy refuses'
+    #   at t/2031-isf-record-output-source-contexts.t line 94.
+    #                   'Invalid ISF record context: validation requires a predicate and message'
+    #     doesn't match '(?^:source-write policy must be binary)'
+    # Looks like you failed 1 test of 8.
+
+#   Failed test 'whole-output policy preserves prepared facts scalar slices and nearest shadows'
+#   at t/2031-isf-record-output-source-contexts.t line 96.
+# Looks like you failed 1 test of 6.
+t/2031-isf-record-output-source-contexts.t ... 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/6 subtests 
+t/2030-isf-record-output-writer-admission.t .. ok
+
+Test Summary Report
+-------------------
+t/2031-isf-record-output-source-contexts.t (Wstat: 256 Tests: 6 Failed: 1)
+  Failed test:  4
+  Non-zero exit status: 1
+Files=2, Tests=12,  5 wallclock secs ( 0.02 usr  0.00 sys +  2.92 cusr  1.01 csys =  3.95 CPU)
+Result: FAIL

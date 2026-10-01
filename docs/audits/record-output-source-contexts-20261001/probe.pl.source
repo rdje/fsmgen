@@ -1,0 +1,37 @@
+use strict;use warnings;use lib 'perl';
+use JSON::PP;use Storable qw(dclone);
+use FSM::Adapter::ISF;use FSM::Scheduler::ISF;use FSM::Scheduler::ISF::FormalLowering;
+use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
+my $json=JSON::PP->new->canonical->pretty;
+my @cases=(
+ ['literal','(transaction main (on start) (set packet 0))',0,0],
+ ['field','(transaction main (on start) (set packet.payload 1))',0,0],
+ ['whole','(transaction main (on start) (set packet held))',0,0],
+ ['sample','(transaction main (on start) (sample packet.payload as captured) (set seen captured))',0,1],
+ ['foreign_domain','(transaction main (domain core) (on start) (set seen packet.payload))',1,0],
+ ['same_domain','(transaction main (domain bus) (on other) (set packet held))',1,0],
+);
+my @rows;
+for my $case(@cases) {
+ my ($name,$body,$domains,$sample)=@$case;
+ my $clock=$domains?'(clock-domains (domain core (clock clk) :default) (domain bus (clock bus_clk)))':'(clock clk)';
+ my $core=$domains?'(domain core)':'';my $bus=$domains?'(domain bus)':'';
+ my $decl=$sample?"(input packet (type frame) $bus)":'';
+ my $store=$sample?'':"(var packet (type frame) $bus)";
+ my $source="(actor $name $clock (types (type frame (record (tag (bits 2)) (payload (signed (four_state (bits 3)))))))"
+  ." (interface (input start $core) (input other $bus) $decl (output placeholder (width 5) $bus) (output seen (width 3) $core))"
+  ." (storage $store (var held (type frame) $bus)) $body)";
+ my $actor=FSM::Adapter::ISF->new->parse_source($source,'output_context_probe.isf');
+ my $donor=$sample?pop @{$actor->{interface}{inputs}}:shift @{$actor->{storage}};
+ my ($port)=grep {$_->{name} eq 'placeholder'} @{$actor->{interface}{outputs}};
+ %$port=map {$_=>ref($donor->{$_})?dclone($donor->{$_}):$donor->{$_}}
+  grep {exists $donor->{$_}} qw(name width type type_spec domain);
+ $actor->{interface_port_metadata}=capture_interface_port_metadata($actor->{interface},($actor->{clock_domains}||{})->{default});
+ my $scheduler=FSM::Scheduler::ISF->new;
+ my ($ir,$reason);
+ my $formal=FSM::Scheduler::ISF::FormalLowering->prepare($scheduler->{ir},$actor);
+ my $ok=eval {$ir=$scheduler->{ir}->build_module($formal?$formal->{actor}:$actor);1};
+ $reason=(split /\n/,$@)[0] unless $ok;
+ push @rows,{case=>$name,source=>$source,actor=>$actor,ir=>$ir,built=>$ok?JSON::PP::true:JSON::PP::false,reason=>$reason};
+}
+print $json->encode({meaning=>'Parsed storage/input declaration roles projected into private output prototypes; source grammar remains closed',cases=>\@rows});

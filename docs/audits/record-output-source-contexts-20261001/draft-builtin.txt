@@ -1,0 +1,43 @@
+ram-guard: PID 66846; host 51.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Useless use of a constant ("(transaction main (domain core) "...) in void context at t/2031-isf-record-output-source-contexts.t line 99.
+Useless use of a constant ("(transaction main (domain bus) ("...) in void context at t/2031-isf-record-output-source-contexts.t line 103.
+
+    #   Failed test 'literal whole target identifies the mandatory source contract'
+    #   at t/2031-isf-record-output-source-contexts.t line 28.
+    #                   'Invalid ISF record sample: record-input selection requires an actor'
+    #     doesn't match '(?^:whole record port copy requires declared record roots)'
+
+    #   Failed test 'unqualified field target identifies the mandatory source contract'
+    #   at t/2031-isf-record-output-source-contexts.t line 28.
+    #                   'Invalid ISF record sample: record-input selection requires an actor'
+    #     doesn't match '(?^:record output field writes are not yet admitted)'
+    # Looks like you failed 2 tests of 4.
+
+#   Failed test 'shared module source gate cannot bypass whole-copy identity or field qualification'
+#   at t/2031-isf-record-output-source-contexts.t line 30.
+    # No tests run!
+
+#   Failed test 'No tests run for subtest "complete record-port selection covers output-only mixed and malformed facts without mutation"'
+#   at t/2031-isf-record-output-source-contexts.t line 52.
+Invalid ISF record sample: record-input selection requires an actor
+ at perl/FSM/Support/ISFRecordPortSamples.pm line 161.
+	FSM::Support::ISFRecordPortSamples::_require("", "record-input selection requires an actor") called at perl/FSM/Support/ISFRecordPortSamples.pm line 17
+	FSM::Support::ISFRecordPortSamples::actor_has_record_input("actor", undef) called at t/2031-isf-record-output-source-contexts.t line 34
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x748b01b7f8), "complete record-port selection covers output-only mixed and m"..., CODE(0x748b00de88)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("complete record-port selection covers output-only mixed and m"..., CODE(0x748b00de88)) called at t/2031-isf-record-output-source-contexts.t line 52
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 2.
+t/2031-isf-record-output-source-contexts.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+Failed 2/2 subtests 
+
+Test Summary Report
+-------------------
+t/2031-isf-record-output-source-contexts.t (Wstat: 65280 Tests: 2 Failed: 2)
+  Failed tests:  1-2
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=2,  0 wallclock secs ( 0.00 usr  0.00 sys +  0.12 cusr  0.01 csys =  0.13 CPU)
+Result: FAIL

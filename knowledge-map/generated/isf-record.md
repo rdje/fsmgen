@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **11** facts · **38** uniquely owned question entries.
+> **12** facts · **42** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -9,8 +9,10 @@
 - q="are unused record inputs retained in the top or inherited child?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="can a child scalar formal share an actor record input name?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 - q="can empty conflict issues prove record output writer safety?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
+- q="can scalar formals borrow an outer record output layout?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
 - q="can the original input runtime evidence be joined to current source profiles?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
 - q="do both record-input emitter observations prove Verilog-2005 syntax?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
+- q="do output record scalar samples preserve signed and state traits?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
 - q="does VHDL support authored ISF packed record inputs?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="does generated record-input runtime prove X/Z or reset-free initialization?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="does ordinary ISF reset provenance omit the domain key?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
@@ -40,9 +42,11 @@
 - q="which generated record-input storage and binding behaviors pass?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="which parser mode did record-input native behavior qualify?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
 - q="which prepared record output writers pass conservative admission?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
+- q="which source checks must run for an output-only record actor?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
 - q="why did Verilog record-input output retain packed typedefs?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
 - q="why did a generated scalar binding formal name refuse as an actor record read?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 - q="why did the initial fixed record-input observer remain unqualified?" · facts=[isf-record-input-observer-preparation](../../docs/knowledge/isf-record-input-observer-preparation.md)
+- q="why do record output field reads cross clock-domain boundaries?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
 
 ## Facts
 
@@ -115,6 +119,13 @@ _Both record-input emitter observations use the SystemVerilog parser_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-input-parser-mode.md`](../../docs/knowledge/isf-record-input-parser-mode.md)
+
+### isf-record-output-source-contexts
+
+_Output-only records require scoped source, sample and clock-domain gates_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-record-output-source-contexts.md`](../../docs/knowledge/isf-record-output-source-contexts.md)
 
 ### isf-record-output-writer-ingress
 

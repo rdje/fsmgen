@@ -25,7 +25,7 @@ use FSM::SourcePathResolver;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
 use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
-use FSM::Support::ISFRecordPortSamples qw(actor_has_record_input);
+use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port);
 use FSM::Support::ISFRecordPortScopes qw(record_context_scope);
 use FSM::Support::ISFResourceCatalog qw(
     isf_resource_arbiter_values
@@ -392,8 +392,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_verification_bridge($result);
     $self->_validate_deferred_atl_drive_sink_expression_candidates($result);
     $self->_validate_rule_pulse_targets($result);
-    validate_actor_record_contexts(actor => $result)
-        if actor_has_record_input(actor => $result);
+    validate_actor_record_contexts(actor => $result, whole_output_writes_only => 1)
+        if actor_has_record_port(actor => $result);
     $self->_validate_actor_aggregate_storage_paths($result);
     $self->_validate_actor_atl_reserved_qualified_forms($result);
     $self->_validate_actor_enum_member_value_contexts($result);
@@ -4923,7 +4923,7 @@ sub _validate_actor_rule_operands($self, $actor) {
     }
     my %aggregate_roots = map { $_->{name} => $_->{type_spec} }
         grep { _is_aggregate_type_spec($_->{type_spec}) } @{$actor->{storage} || []};
-    if (actor_has_record_input(actor => $actor)) {
+    if (actor_has_record_port(actor => $actor)) {
         my $context = record_context_scope(actor => $actor);
         %declared = %{$context->{rule_declared_roots}};
         %aggregate_roots = %{$context->{aggregate_roots}};
@@ -5014,7 +5014,7 @@ sub _validate_actor_enum_member_value_contexts($self, $actor) {
     my %aggregate_roots = map { $_->{name} => 1 }
         grep { _is_aggregate_type_spec($_->{type_spec}) }
         @{$actor->{storage} || []};
-    my $has_records = actor_has_record_input(actor => $actor);
+    my $has_records = actor_has_record_port(actor => $actor);
     %aggregate_roots = %{record_context_scope(actor => $actor)->{enum_exclusion_roots}}
         if $has_records;
 

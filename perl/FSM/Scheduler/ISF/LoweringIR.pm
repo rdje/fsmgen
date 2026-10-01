@@ -26,7 +26,7 @@ use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
 use FSM::Scheduler::ISF::RecordSamples;
 use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
-use FSM::Support::ISFRecordPortSamples qw(actor_has_record_input);
+use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port);
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 
@@ -86,8 +86,8 @@ my %TRANSACTION_CONTEXT_LABEL = (
 );
 
 sub _prepare_module_source($self, $actor) {
-    validate_actor_record_contexts(actor => $actor)
-        if actor_has_record_input(actor => $actor);
+    validate_actor_record_contexts(actor => $actor, whole_output_writes_only => 1)
+        if actor_has_record_port(actor => $actor);
     $self->_validate_static_zero_repeat_child_activation_prune_surface($actor);
     $self->_validate_child_transaction_refs($actor);
     $self->_validate_activation_domain_names($actor);
@@ -2967,6 +2967,9 @@ sub _actor_domain_signal_map {
             domain => _domain_for_entry($output, $default_domain),
             kind   => 'actor_output',
         };
+        $signals{$output->{name}}{record_root} = 1
+            if ref($output->{type_spec}) eq 'HASH'
+                && ($output->{type_spec}{kind} // '') eq 'record';
     }
     for my $storage (@{$actor->{storage} || []}) {
         my $domain = _domain_for_entry($storage, $default_domain);
@@ -3430,7 +3433,7 @@ sub _validate_domain_signal_access {
     if (!_is_hdl_identifier($root)) {
         # Indexed scalar references inherit any declared root's domain, with
         # local/formal ownership selected below. Dotted paths require storage
-        # or a resolved record input, preserving scalar enum/package names.
+        # or a resolved record port, preserving scalar enum/package names.
         return 1 unless $name =~ /\A([A-Za-z_]\w*)((?:\.[A-Za-z_]\w*|\[\d+(?::\d+)?\])+)\z/;
         $root = $1;
         my $path = $2;

@@ -102,6 +102,16 @@ The [admission evidence](../../../docs/audits/record-output-admission-20261001/s
 retains the bounded rules and counterexamples. Independent-controller runtime
 reachability remains governed by its separate repair and qualification tasks.
 
+Output-only and mixed record contexts now have their mandatory preparatory
+source gates. Whole copies require the same resolved record type. Scalar
+samples preserve the leaf's width, signedness and state model in a private alias;
+they cannot replace an existing declaration. Output record fields retain their
+owning clock domain, so a read in another domain requires an explicit crossing.
+The source policy keeps output member writes closed while preserving scalar
+output slices and the prepared type toolkit's member facts. These checks do not
+open authored output declarations or qualify output execution. See the
+[source-context evidence](../../../docs/audits/record-output-source-contexts-20261001/scope.txt).
+
 ```lisp
 (storage
   (var frame (type frame_t))

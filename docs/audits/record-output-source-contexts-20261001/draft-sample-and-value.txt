@@ -1,0 +1,56 @@
+ram-guard: PID 43442; host 55.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+    # No tests run!
+
+#   Failed test 'No tests run for subtest "output scalar samples retain exact private type and mandatory alias safety"'
+#   at t/2031-isf-record-output-source-contexts.t line 73.
+Error: transaction 'main' references aggregate storage path 'packet.payload'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition scalar values or expression scalar operands, transaction switch selector or branch scalar values, rule assignment target scalar leaf writes, rule assignment RHS scalar values or operands, rule guard scalar values or expression scalar operands, drive target scalar leaf writes, drive body RHS scalar values or operands, inline drive target scalar leaf writes, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands
+ at perl/FSM/Adapter/ISF/Parser.pm line 6965.
+	FSM::Adapter::ISF::Parser::_reject_aggregate_storage_paths("packet.payload", HASH(0x7a99e675e8), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 6971
+	FSM::Adapter::ISF::Parser::_reject_aggregate_storage_paths(ARRAY(0x7a9b717030), HASH(0x7a99e675e8), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 6529
+	FSM::Adapter::ISF::Parser::_validate_transaction_aggregate_storage_clause(ARRAY(0x7a9b717030), HASH(0x7a99e675e8), "transaction 'main'", HASH(0x7a9b737e28)) called at perl/FSM/Adapter/ISF/Parser.pm line 6426
+	FSM::Adapter::ISF::Parser::_validate_transaction_aggregate_storage_paths(ARRAY(0x7a9b12a630), HASH(0x7a99e675e8), "transaction 'main'", HASH(0x7a9b737e28)) called at perl/FSM/Adapter/ISF/Parser.pm line 2909
+	FSM::Adapter::ISF::Parser::_validate_actor_aggregate_storage_paths(FSM::Adapter::ISF::Parser=HASH(0x7a9b718e88), HASH(0x7a9b737e28)) called at perl/FSM/Adapter/ISF/Parser.pm line 397
+	FSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x7a9b718e88), ARRAY(0x7a9b73fee8), "output_contexts.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+	FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7a9b718e88), "(actor output_contexts (clock clk) (types (type frame (record"..., "output_contexts.isf") called at perl/FSM/Adapter/ISF.pm line 72
+	FSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x7a9b73dcd8), "(actor output_contexts (clock clk) (types (type frame (record"..., "output_contexts.isf") called at t/2031-isf-record-output-source-contexts.t line 129
+	main::resolved_output_prototype("(transaction main (on start) (sample packet.payload as captur"...) called at t/2031-isf-record-output-source-contexts.t line 55
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x7a9703f7f8), "output scalar samples retain exact private type and mandatory"..., CODE(0x7a99d04240)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("output scalar samples retain exact private type and mandatory"..., CODE(0x7a99d04240)) called at t/2031-isf-record-output-source-contexts.t line 73
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 3.
+t/2031-isf-record-output-source-contexts.t ... 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+Failed 1/3 subtests 
+Invalid ISF record value: transaction 'right' set whole record port copy requires declared record roots
+ at perl/FSM/Support/ISFRecordPortValues.pm line 202.
+	FSM::Support::ISFRecordPortValues::_require(0, "transaction 'right' set whole record port copy requires decla"...) called at perl/FSM/Support/ISFRecordPortValues.pm line 105
+	FSM::Support::ISFRecordPortValues::validate_record_port_copy("source", undef, "target", HASH(0x7b34a30510), "context", "transaction 'right' set") called at perl/FSM/Support/ISFRecordPortContexts.pm line 180
+	FSM::Support::ISFRecordPortContexts::_assignment("packet", 0, HASH(0x7b3393ca80), "transaction 'right' set") called at perl/FSM/Support/ISFRecordPortContexts.pm line 70
+	FSM::Support::ISFRecordPortContexts::_clauses(ARRAY(0x7b344c3570), HASH(0x7b3393ca80), HASH(0x7b34a0c498), "transaction 'right'") called at perl/FSM/Support/ISFRecordPortContexts.pm line 34
+	FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts("actor", HASH(0x7b34a0c498), "whole_output_writes_only", 1) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 89
+	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x7b349f9060), HASH(0x7b34a0c498)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 105
+	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x7b349f9060), HASH(0x7b34a0c498)) called at t/2030-isf-record-output-writer-admission.t line 178
+	main::fixture("different_values", "(transaction left (on start) (set packet held)) (transaction "...) called at t/2030-isf-record-output-writer-admission.t line 72
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x7b2f03f7c8), "overlapping independent owners refuse regardless of values en"..., CODE(0x7b34738b28)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("overlapping independent owners refuse regardless of values en"..., CODE(0x7b34738b28)) called at t/2030-isf-record-output-writer-admission.t line 85
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 25 just after 3.
+t/2030-isf-record-output-writer-admission.t .. 
+Dubious, test returned 25 (wstat 6400, 0x1900)
+All 3 subtests passed 
+
+Test Summary Report
+-------------------
+t/2031-isf-record-output-source-contexts.t (Wstat: 65280 Tests: 3 Failed: 1)
+  Failed test:  3
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+t/2030-isf-record-output-writer-admission.t (Wstat: 6400 Tests: 3 Failed: 0)
+  Non-zero exit status: 25
+  Parse errors: No plan found in TAP output
+Files=2, Tests=6,  3 wallclock secs ( 0.01 usr  0.01 sys +  1.63 cusr  0.67 csys =  2.32 CPU)
+Result: FAIL

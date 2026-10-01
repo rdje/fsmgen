@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4` (pending)
-- next_action: Integrate qualified record-output declarations and whole copies with mandatory output-only/mixed context/domain gates, conservative physical admission and unsupported target-profile refusal; split bounded source slices before editing.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.2` (pending)
+- next_action: Prepare shared unsupported record-output HDL profile refusals with precise actor/output/type/target reasons, preserved input errors and schedule neutrality before actual output declaration/whole-copy integration.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
 - blockers: Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

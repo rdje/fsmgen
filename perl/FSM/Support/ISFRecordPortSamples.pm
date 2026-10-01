@@ -9,7 +9,7 @@ use FSM::Support::ISFRecordPortScopes qw(record_context_scope record_reference_r
 use FSM::Support::ISFRecordPortValues qw(record_value_scope record_value_reference);
 use FSM::Composition::InterfacePortBuilder;
 
-our @EXPORT_OK = qw(record_transaction_samples record_sample_type_products actor_has_record_input);
+our @EXPORT_OK = qw(record_transaction_samples record_sample_type_products actor_has_record_input actor_has_record_port);
 
 sub actor_has_record_input {
     my %args = @_;
@@ -29,13 +29,29 @@ sub actor_has_record_input {
     return $found;
 }
 
+sub actor_has_record_port {
+    my %args = @_;
+    # Keep the legacy input selector's contract and diagnostics intact, but
+    # always inspect the complete output list even when an input is known.
+    my $found = actor_has_record_input(%args);
+    my $outputs = ($args{actor}{interface} || {})->{outputs};
+    _require(!defined($outputs) || ref($outputs) eq 'ARRAY',
+        'record-port selection requires an output list');
+    for my $entry (@{$outputs || []}) {
+        _require(ref($entry) eq 'HASH', 'record-port selection requires declared output maps');
+        $found = 1 if ref($entry->{type_spec}) eq 'HASH'
+            && ($entry->{type_spec}{kind} // '') eq 'record';
+    }
+    return $found;
+}
+
 # Detached preparation only. Neither capture states nor authored admission are
 # changed here. Existing grammar/context validators still own clause placement.
 sub record_transaction_samples {
     my %args = @_;
     _arguments(\%args, [qw(actor transaction)], [qw(port_only)]);
     my $port_only = $args{port_only} // 0;
-    _require(defined($port_only) && !ref($port_only) && $port_only =~ /\A[01]\z/, 'port-only selection must be binary');
+    _require(defined($port_only) && !ref($port_only) && scalar($port_only =~ /\A[01]\z/), 'port-only selection must be binary');
     my $context = record_context_scope(actor => $args{actor}, transaction => $args{transaction});
     my %declared = map {$_ => 1} (keys %{$context->{roots}}, keys %{$context->{rule_declared_roots}});
     my @clauses;

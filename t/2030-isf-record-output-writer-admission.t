@@ -64,7 +64,7 @@ subtest 'independent physical roots and independently resolved leaves are disjoi
 subtest 'overlapping independent owners refuse regardless of values entry guards priority or declaration order' => sub {
     for my $case (
         ['equal_values', competing_body()],
-        ['different_values', '(transaction left (on start) (set packet held)) (transaction right (on other) (set packet 0))'],
+        ['different_values', '(transaction left (on start) (set held.payload 1) (set packet held)) (transaction right (on other) (set alternate.payload 2) (set packet alternate))'],
         ['complementary_conditions', '(transaction left (when start (sample start as accepted_left)) (set packet held)) (transaction right (when (! start) (sample start as accepted_right)) (set packet held))'],
         ['priority', competing_body().' (priority left over right)'],
     ) {
@@ -164,7 +164,7 @@ sub fixture {
     my $types = $type eq 'shared.frame' ? '(imports (package shared))' : '(types (type frame '.$definition.'))';
     my $path = write_file("$name.isf","(actor $name (clock clk) $types"
         .' (interface (input start) (input other) (output packet (width 5)) (output spare (width 5)) (output done))'
-        ." (storage (var held (type $type))) $body)");
+        ." (storage (var held (type $type)) (var alternate (type $type))) $body)");
     my $actor = FSM::Adapter::ISF->new->parse_file($path);
     # Private resolved-output prototypes, not authored output grammar admission.
     for my $port (grep {$_->{name} eq 'packet' || $_->{name} eq 'spare'} @{$actor->{interface}{outputs}}) {

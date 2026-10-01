@@ -1,0 +1,2940 @@
+{
+   "cases" : [
+      {
+         "actor" : {
+            "actor_name" : "literal",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : null,
+            "constant_symbols" : {
+               "packages" : {}
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {}
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "name" : "start",
+                     "width" : 1
+                  },
+                  {
+                     "name" : "other",
+                     "width" : 1
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "name" : "packet",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "payload"
+                        ],
+                        "members" : {
+                           "payload" : {
+                              "kind" : "bits",
+                              "signed" : 1,
+                              "state_model" : "four_state",
+                              "width" : "3"
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 5
+                     },
+                     "width" : 5
+                  },
+                  {
+                     "name" : "seen",
+                     "width" : "3"
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : 3,
+                        "msb" : 4,
+                        "path" : "tag",
+                        "signed" : 0,
+                        "width" : 2
+                     },
+                     {
+                        "lsb" : 0,
+                        "msb" : 2,
+                        "path" : "payload",
+                        "signed" : 1,
+                        "state_model" : "four_state",
+                        "width" : 3
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : 3
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "payload"
+                           ],
+                           "members" : {
+                              "payload" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : 3
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : 2
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 5
+                        },
+                        "width" : 5
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "transactions" : [
+               {
+                  "clauses" : [
+                     [
+                        "on",
+                        "start"
+                     ],
+                     [
+                        "set",
+                        "packet",
+                        "0"
+                     ]
+                  ],
+                  "name" : "main",
+                  "ports" : {
+                     "inputs" : [],
+                     "outputs" : []
+                  }
+               }
+            ],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "payload",
+                        [
+                           "signed",
+                           [
+                              "four_state",
+                              [
+                                 "bits",
+                                 "3"
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "type_symbols" : {
+               "local" : {
+                  "frame" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  }
+               },
+               "packages" : {}
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "built" : false,
+         "case" : "literal",
+         "ir" : null,
+         "reason" : "Invalid ISF record value: transaction 'main' set whole record port copy requires declared record roots",
+         "source" : "(actor literal (clock clk) (types (type frame (record (tag (bits 2)) (payload (signed (four_state (bits 3))))))) (interface (input start ) (input other )  (output placeholder (width 5) ) (output seen (width 3) )) (storage (var packet (type frame) ) (var held (type frame) )) (transaction main (on start) (set packet 0)))"
+      },
+      {
+         "actor" : {
+            "actor_name" : "field",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : null,
+            "constant_symbols" : {
+               "packages" : {}
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {}
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "name" : "start",
+                     "width" : 1
+                  },
+                  {
+                     "name" : "other",
+                     "width" : 1
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "name" : "packet",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "payload"
+                        ],
+                        "members" : {
+                           "payload" : {
+                              "kind" : "bits",
+                              "signed" : 1,
+                              "state_model" : "four_state",
+                              "width" : "3"
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 5
+                     },
+                     "width" : 5
+                  },
+                  {
+                     "name" : "seen",
+                     "width" : "3"
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : 3,
+                        "msb" : 4,
+                        "path" : "tag",
+                        "signed" : 0,
+                        "width" : 2
+                     },
+                     {
+                        "lsb" : 0,
+                        "msb" : 2,
+                        "path" : "payload",
+                        "signed" : 1,
+                        "state_model" : "four_state",
+                        "width" : 3
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : 3
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "payload"
+                           ],
+                           "members" : {
+                              "payload" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : 3
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : 2
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 5
+                        },
+                        "width" : 5
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "transactions" : [
+               {
+                  "clauses" : [
+                     [
+                        "on",
+                        "start"
+                     ],
+                     [
+                        "set",
+                        "packet.payload",
+                        "1"
+                     ]
+                  ],
+                  "name" : "main",
+                  "ports" : {
+                     "inputs" : [],
+                     "outputs" : []
+                  }
+               }
+            ],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "payload",
+                        [
+                           "signed",
+                           [
+                              "four_state",
+                              [
+                                 "bits",
+                                 "3"
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "type_symbols" : {
+               "local" : {
+                  "frame" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  }
+               },
+               "packages" : {}
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "built" : false,
+         "case" : "field",
+         "ir" : null,
+         "reason" : "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'packet.payload' requires output-field writer qualification",
+         "source" : "(actor field (clock clk) (types (type frame (record (tag (bits 2)) (payload (signed (four_state (bits 3))))))) (interface (input start ) (input other )  (output placeholder (width 5) ) (output seen (width 3) )) (storage (var packet (type frame) ) (var held (type frame) )) (transaction main (on start) (set packet.payload 1)))"
+      },
+      {
+         "actor" : {
+            "actor_name" : "whole",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : null,
+            "constant_symbols" : {
+               "packages" : {}
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {}
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "name" : "start",
+                     "width" : 1
+                  },
+                  {
+                     "name" : "other",
+                     "width" : 1
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "name" : "packet",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "payload"
+                        ],
+                        "members" : {
+                           "payload" : {
+                              "kind" : "bits",
+                              "signed" : 1,
+                              "state_model" : "four_state",
+                              "width" : "3"
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 5
+                     },
+                     "width" : 5
+                  },
+                  {
+                     "name" : "seen",
+                     "width" : "3"
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : 3,
+                        "msb" : 4,
+                        "path" : "tag",
+                        "signed" : 0,
+                        "width" : 2
+                     },
+                     {
+                        "lsb" : 0,
+                        "msb" : 2,
+                        "path" : "payload",
+                        "signed" : 1,
+                        "state_model" : "four_state",
+                        "width" : 3
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : 3
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "payload"
+                           ],
+                           "members" : {
+                              "payload" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : 3
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : 2
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 5
+                        },
+                        "width" : 5
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "transactions" : [
+               {
+                  "clauses" : [
+                     [
+                        "on",
+                        "start"
+                     ],
+                     [
+                        "set",
+                        "packet",
+                        "held"
+                     ]
+                  ],
+                  "name" : "main",
+                  "ports" : {
+                     "inputs" : [],
+                     "outputs" : []
+                  }
+               }
+            ],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "payload",
+                        [
+                           "signed",
+                           [
+                              "four_state",
+                              [
+                                 "bits",
+                                 "3"
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "type_symbols" : {
+               "local" : {
+                  "frame" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  }
+               },
+               "packages" : {}
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "built" : true,
+         "case" : "whole",
+         "ir" : {
+            "actor_name" : "whole",
+            "actor_network" : null,
+            "actor_phases" : [],
+            "actor_stages" : [],
+            "assignment_provenance" : [
+               {
+                  "activation" : {
+                     "assignment_guard" : null,
+                     "container_kind" : "state",
+                     "container_name" : "main_idle_0",
+                     "state_guard" : {
+                        "port" : "start"
+                     },
+                     "state_kind" : "entry"
+                  },
+                  "assignment_index" : 0,
+                  "condition_terms" : {},
+                  "domain" : "helper",
+                  "operator" : "=",
+                  "owner" : "main",
+                  "owner_kind" : "transaction",
+                  "priority_suppressed_by" : [],
+                  "resource_suppressed_by" : [],
+                  "rhs" : 1,
+                  "source_kind" : "scheduler_can_accept",
+                  "target" : "can_accept"
+               },
+               {
+                  "activation" : {
+                     "assignment_guard" : null,
+                     "container_kind" : "state",
+                     "container_name" : "main_set_1",
+                     "state_guard" : null,
+                     "state_kind" : "sequential"
+                  },
+                  "assignment_index" : 0,
+                  "condition_terms" : {},
+                  "domain" : "data",
+                  "operator" : "<-",
+                  "owner" : "main",
+                  "owner_kind" : "transaction",
+                  "priority_suppressed_by" : [],
+                  "resource_suppressed_by" : [],
+                  "rhs" : "held",
+                  "source_kind" : "set",
+                  "target" : "packet"
+               }
+            ],
+            "atl_top_instances" : [],
+            "bank_accesses" : [],
+            "children" : {},
+            "clock" : "clk",
+            "compatible_fanin_groups" : [],
+            "conflict_issues" : [],
+            "constants" : [],
+            "counters" : {
+               "can_accept" : 1
+            },
+            "declared_storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "payload"
+                           ],
+                           "members" : {
+                              "payload" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : 3
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : 2
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 5
+                        },
+                        "width" : 5
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "dt_blocks" : [],
+            "enum_declarations" : [],
+            "explicit_interface_ports" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "name" : "packet",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : "3"
+               }
+            ],
+            "explicit_internal_signals" : [
+               "held"
+            ],
+            "immediate_assertions" : [],
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : 3,
+                        "msb" : 4,
+                        "path" : "tag",
+                        "signed" : 0,
+                        "width" : 2
+                     },
+                     {
+                        "lsb" : 0,
+                        "msb" : 2,
+                        "path" : "payload",
+                        "signed" : 1,
+                        "state_model" : "four_state",
+                        "width" : 3
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : 3
+               }
+            ],
+            "library_uses" : [],
+            "logical_controllers" : {
+               "controllers" : [
+                  {
+                     "clock" : "clk",
+                     "domain" : null,
+                     "entries" : [
+                        "main_idle_0"
+                     ],
+                     "identity" : [
+                        "whole",
+                        null,
+                        "main"
+                     ],
+                     "initial_state" : "main_idle_0",
+                     "reset" : {
+                        "kind" : "async",
+                        "name" : "rst_n",
+                        "polarity" : "active_low"
+                     },
+                     "states" : [
+                        {
+                           "kind" : "entry",
+                           "name" : "main_idle_0"
+                        },
+                        {
+                           "kind" : "sequential",
+                           "name" : "main_set_1"
+                        }
+                     ],
+                     "transaction" : "main"
+                  }
+               ],
+               "issues" : [],
+               "model" : "isf_logical_controllers_shadow_v1",
+               "module" : "whole",
+               "references" : [
+                  {
+                     "field" : "transitions[0].target",
+                     "role" : "transition",
+                     "state" : "main_idle_0",
+                     "target" : "main_set_1"
+                  }
+               ],
+               "state_owner" : {
+                  "main_idle_0" : "main",
+                  "main_set_1" : "main"
+               }
+            },
+            "output_defaults" : {},
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "ports" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "name" : "packet",
+                  "type" : "frame",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : "3"
+               }
+            ],
+            "priority_resolution" : {
+               "issues" : [],
+               "resolutions" : []
+            },
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "reset_values" : {},
+            "resource_activation" : {
+               "requests" : {},
+               "steps" : []
+            },
+            "resource_arbitration" : {
+               "grants" : [],
+               "issues" : []
+            },
+            "signal_type_refs" : {
+               "held" : "frame",
+               "packet" : "frame"
+            },
+            "signal_widths" : {
+               "held" : 5,
+               "other" : 1,
+               "packet" : 5,
+               "seen" : 3,
+               "start" : 1
+            },
+            "spawn_instances" : [],
+            "states" : [
+               {
+                  "assignments" : [
+                     {
+                        "lhs" : "can_accept",
+                        "op" : "=",
+                        "rhs" : 1
+                     }
+                  ],
+                  "guard" : {
+                     "port" : "start"
+                  },
+                  "kind" : "entry",
+                  "name" : "main_idle_0",
+                  "transaction" : "main",
+                  "transitions" : [
+                     {
+                        "condition" : {
+                           "port" : "start"
+                        },
+                        "target" : "main_set_1"
+                     }
+                  ]
+               },
+               {
+                  "assignments" : [
+                     {
+                        "lhs" : "packet",
+                        "op" : "<-",
+                        "rhs" : "held",
+                        "source_kind" : "set"
+                     }
+                  ],
+                  "kind" : "sequential",
+                  "name" : "main_set_1",
+                  "transaction" : "main",
+                  "transitions" : []
+               }
+            ],
+            "storage_roles" : {
+               "held" : "actor_storage"
+            },
+            "temporal_contracts" : [],
+            "transaction_port_bindings" : [],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "payload",
+                        [
+                           "signed",
+                           [
+                              "four_state",
+                              [
+                                 "bits",
+                                 "3"
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "reason" : null,
+         "source" : "(actor whole (clock clk) (types (type frame (record (tag (bits 2)) (payload (signed (four_state (bits 3))))))) (interface (input start ) (input other )  (output placeholder (width 5) ) (output seen (width 3) )) (storage (var packet (type frame) ) (var held (type frame) )) (transaction main (on start) (set packet held)))"
+      },
+      {
+         "actor" : {
+            "actor_name" : "sample",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : null,
+            "constant_symbols" : {
+               "packages" : {}
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {}
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "name" : "start",
+                     "width" : 1
+                  },
+                  {
+                     "name" : "other",
+                     "width" : 1
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "name" : "packet",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "payload"
+                        ],
+                        "members" : {
+                           "payload" : {
+                              "kind" : "bits",
+                              "signed" : 1,
+                              "state_model" : "four_state",
+                              "width" : "3"
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 5
+                     },
+                     "width" : 5
+                  },
+                  {
+                     "name" : "seen",
+                     "width" : "3"
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : 3,
+                        "msb" : 4,
+                        "path" : "tag",
+                        "signed" : 0,
+                        "width" : 2
+                     },
+                     {
+                        "lsb" : 0,
+                        "msb" : 2,
+                        "path" : "payload",
+                        "signed" : 1,
+                        "state_model" : "four_state",
+                        "width" : 3
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : 3
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "payload"
+                           ],
+                           "members" : {
+                              "payload" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : 3
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : 2
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 5
+                        },
+                        "width" : 5
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "transactions" : [
+               {
+                  "clauses" : [
+                     [
+                        "on",
+                        "start"
+                     ],
+                     [
+                        "sample",
+                        "packet.payload",
+                        "as",
+                        "captured"
+                     ],
+                     [
+                        "set",
+                        "seen",
+                        "captured"
+                     ]
+                  ],
+                  "name" : "main",
+                  "ports" : {
+                     "inputs" : [],
+                     "outputs" : []
+                  }
+               }
+            ],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "payload",
+                        [
+                           "signed",
+                           [
+                              "four_state",
+                              [
+                                 "bits",
+                                 "3"
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "type_symbols" : {
+               "local" : {
+                  "frame" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  }
+               },
+               "packages" : {}
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "built" : true,
+         "case" : "sample",
+         "ir" : {
+            "actor_name" : "sample",
+            "actor_network" : null,
+            "actor_phases" : [],
+            "actor_stages" : [],
+            "assignment_provenance" : [
+               {
+                  "activation" : {
+                     "assignment_guard" : null,
+                     "container_kind" : "state",
+                     "container_name" : "main_idle_0",
+                     "state_guard" : {
+                        "port" : "start"
+                     },
+                     "state_kind" : "entry"
+                  },
+                  "assignment_index" : 0,
+                  "condition_terms" : {},
+                  "domain" : "helper",
+                  "operator" : "=",
+                  "owner" : "main",
+                  "owner_kind" : "transaction",
+                  "priority_suppressed_by" : [],
+                  "resource_suppressed_by" : [],
+                  "rhs" : 1,
+                  "source_kind" : "scheduler_can_accept",
+                  "target" : "can_accept"
+               },
+               {
+                  "activation" : {
+                     "assignment_guard" : null,
+                     "container_kind" : "state",
+                     "container_name" : "main_sample_1",
+                     "state_guard" : null,
+                     "state_kind" : "sequential"
+                  },
+                  "assignment_index" : 0,
+                  "condition_terms" : {},
+                  "domain" : "capture",
+                  "operator" : "<=",
+                  "owner" : "main",
+                  "owner_kind" : "transaction",
+                  "priority_suppressed_by" : [],
+                  "resource_suppressed_by" : [],
+                  "rhs" : "packet.payload",
+                  "source_kind" : "sample_capture",
+                  "target" : "captured"
+               },
+               {
+                  "activation" : {
+                     "assignment_guard" : null,
+                     "container_kind" : "state",
+                     "container_name" : "main_set_2",
+                     "state_guard" : null,
+                     "state_kind" : "sequential"
+                  },
+                  "assignment_index" : 0,
+                  "condition_terms" : {},
+                  "domain" : "data",
+                  "operator" : "<-",
+                  "owner" : "main",
+                  "owner_kind" : "transaction",
+                  "priority_suppressed_by" : [],
+                  "resource_suppressed_by" : [],
+                  "rhs" : "captured",
+                  "source_kind" : "set",
+                  "target" : "seen"
+               }
+            ],
+            "atl_top_instances" : [],
+            "bank_accesses" : [],
+            "children" : {},
+            "clock" : "clk",
+            "compatible_fanin_groups" : [],
+            "conflict_issues" : [],
+            "constants" : [],
+            "counters" : {
+               "can_accept" : 1,
+               "captured" : 3
+            },
+            "declared_storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "payload"
+                           ],
+                           "members" : {
+                              "payload" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : 3
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : 2
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 5
+                        },
+                        "width" : 5
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "dt_blocks" : [],
+            "enum_declarations" : [],
+            "explicit_interface_ports" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "name" : "packet",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : "3"
+               }
+            ],
+            "explicit_internal_signals" : [
+               "held",
+               "captured"
+            ],
+            "immediate_assertions" : [],
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "fields" : [
+                     {
+                        "lsb" : 3,
+                        "msb" : 4,
+                        "path" : "tag",
+                        "signed" : 0,
+                        "width" : 2
+                     },
+                     {
+                        "lsb" : 0,
+                        "msb" : 2,
+                        "path" : "payload",
+                        "signed" : 1,
+                        "state_model" : "four_state",
+                        "width" : 3
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : 3
+               }
+            ],
+            "library_uses" : [],
+            "logical_controllers" : {
+               "controllers" : [
+                  {
+                     "clock" : "clk",
+                     "domain" : null,
+                     "entries" : [
+                        "main_idle_0"
+                     ],
+                     "identity" : [
+                        "sample",
+                        null,
+                        "main"
+                     ],
+                     "initial_state" : "main_idle_0",
+                     "reset" : {
+                        "kind" : "async",
+                        "name" : "rst_n",
+                        "polarity" : "active_low"
+                     },
+                     "states" : [
+                        {
+                           "kind" : "entry",
+                           "name" : "main_idle_0"
+                        },
+                        {
+                           "kind" : "sequential",
+                           "name" : "main_sample_1"
+                        },
+                        {
+                           "kind" : "sequential",
+                           "name" : "main_set_2"
+                        }
+                     ],
+                     "transaction" : "main"
+                  }
+               ],
+               "issues" : [],
+               "model" : "isf_logical_controllers_shadow_v1",
+               "module" : "sample",
+               "references" : [
+                  {
+                     "field" : "transitions[0].target",
+                     "role" : "transition",
+                     "state" : "main_idle_0",
+                     "target" : "main_sample_1"
+                  },
+                  {
+                     "field" : "transitions[0].target",
+                     "role" : "transition",
+                     "state" : "main_sample_1",
+                     "target" : "main_set_2"
+                  }
+               ],
+               "state_owner" : {
+                  "main_idle_0" : "main",
+                  "main_sample_1" : "main",
+                  "main_set_2" : "main"
+               }
+            },
+            "output_defaults" : {},
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "ports" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "name" : "packet",
+                  "type" : "frame",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : "3"
+               }
+            ],
+            "priority_resolution" : {
+               "issues" : [],
+               "resolutions" : []
+            },
+            "reset" : {
+               "kind" : "async",
+               "name" : "rst_n",
+               "polarity" : "active_low"
+            },
+            "reset_provenance" : [
+               {
+                  "domain" : null,
+                  "origin" : "legacy_default"
+               }
+            ],
+            "reset_values" : {},
+            "resource_activation" : {
+               "requests" : {},
+               "steps" : []
+            },
+            "resource_arbitration" : {
+               "grants" : [],
+               "issues" : []
+            },
+            "signal_type_refs" : {
+               "captured" : "_isf_sample_captured",
+               "held" : "frame",
+               "packet" : "frame"
+            },
+            "signal_widths" : {
+               "captured" : 3,
+               "held" : 5,
+               "other" : 1,
+               "packet" : 5,
+               "seen" : 3,
+               "start" : 1
+            },
+            "spawn_instances" : [],
+            "states" : [
+               {
+                  "assignments" : [
+                     {
+                        "lhs" : "can_accept",
+                        "op" : "=",
+                        "rhs" : 1
+                     }
+                  ],
+                  "guard" : {
+                     "port" : "start"
+                  },
+                  "kind" : "entry",
+                  "name" : "main_idle_0",
+                  "transaction" : "main",
+                  "transitions" : [
+                     {
+                        "condition" : {
+                           "port" : "start"
+                        },
+                        "target" : "main_sample_1"
+                     }
+                  ]
+               },
+               {
+                  "assignments" : [
+                     {
+                        "lhs" : "captured",
+                        "op" : "<=",
+                        "rhs" : "packet.payload",
+                        "source_kind" : "sample_capture"
+                     }
+                  ],
+                  "kind" : "sequential",
+                  "name" : "main_sample_1",
+                  "transaction" : "main",
+                  "transitions" : [
+                     {
+                        "target" : "main_set_2"
+                     }
+                  ]
+               },
+               {
+                  "assignments" : [
+                     {
+                        "lhs" : "seen",
+                        "op" : "<-",
+                        "rhs" : "captured",
+                        "source_kind" : "set"
+                     }
+                  ],
+                  "kind" : "sequential",
+                  "name" : "main_set_2",
+                  "transaction" : "main",
+                  "transitions" : []
+               }
+            ],
+            "storage_roles" : {
+               "captured" : "sample_alias",
+               "held" : "actor_storage"
+            },
+            "temporal_contracts" : [],
+            "transaction_port_bindings" : [],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "payload",
+                        [
+                           "signed",
+                           [
+                              "four_state",
+                              [
+                                 "bits",
+                                 "3"
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ],
+               [
+                  "type",
+                  "_isf_sample_captured",
+                  [
+                     "four_state",
+                     [
+                        "signed",
+                        [
+                           "bits",
+                           3
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "reason" : null,
+         "source" : "(actor sample (clock clk) (types (type frame (record (tag (bits 2)) (payload (signed (four_state (bits 3))))))) (interface (input start ) (input other ) (input packet (type frame) ) (output placeholder (width 5) ) (output seen (width 3) )) (storage  (var held (type frame) )) (transaction main (on start) (sample packet.payload as captured) (set seen captured)))"
+      },
+      {
+         "actor" : {
+            "actor_name" : "foreign_domain",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : {
+               "default" : "core",
+               "domains" : [
+                  {
+                     "clock" : "clk",
+                     "default" : 1,
+                     "name" : "core"
+                  },
+                  {
+                     "clock" : "bus_clk",
+                     "name" : "bus"
+                  }
+               ]
+            },
+            "constant_symbols" : {
+               "packages" : {}
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {}
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "domain" : "core",
+                     "name" : "start",
+                     "width" : 1
+                  },
+                  {
+                     "domain" : "bus",
+                     "name" : "other",
+                     "width" : 1
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "domain" : "bus",
+                     "name" : "packet",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "payload"
+                        ],
+                        "members" : {
+                           "payload" : {
+                              "kind" : "bits",
+                              "signed" : 1,
+                              "state_model" : "four_state",
+                              "width" : "3"
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 5
+                     },
+                     "width" : 5
+                  },
+                  {
+                     "domain" : "core",
+                     "name" : "seen",
+                     "width" : "3"
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "domain" : "core",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "domain" : "bus",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "domain" : "bus",
+                  "fields" : [
+                     {
+                        "lsb" : 3,
+                        "msb" : 4,
+                        "path" : "tag",
+                        "signed" : 0,
+                        "width" : 2
+                     },
+                     {
+                        "lsb" : 0,
+                        "msb" : 2,
+                        "path" : "payload",
+                        "signed" : 1,
+                        "state_model" : "four_state",
+                        "width" : 3
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "domain" : "core",
+                  "name" : "seen",
+                  "width" : 3
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : null,
+            "reset_provenance" : [
+               {
+                  "domain" : "core",
+                  "origin" : "domain_absent"
+               },
+               {
+                  "domain" : "bus",
+                  "origin" : "domain_absent"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "domain" : "bus",
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "domain" : "bus",
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "payload"
+                           ],
+                           "members" : {
+                              "payload" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : 3
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : 2
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 5
+                        },
+                        "width" : 5
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "transactions" : [
+               {
+                  "clauses" : [
+                     [
+                        "on",
+                        "start"
+                     ],
+                     [
+                        "set",
+                        "seen",
+                        "packet.payload"
+                     ]
+                  ],
+                  "domain" : "core",
+                  "name" : "main",
+                  "ports" : {
+                     "inputs" : [],
+                     "outputs" : []
+                  }
+               }
+            ],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "payload",
+                        [
+                           "signed",
+                           [
+                              "four_state",
+                              [
+                                 "bits",
+                                 "3"
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "type_symbols" : {
+               "local" : {
+                  "frame" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  }
+               },
+               "packages" : {}
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "built" : false,
+         "case" : "foreign_domain",
+         "ir" : null,
+         "reason" : "ISF clock-domain violation: transaction 'main' set clause read signal 'packet.payload' owned by domain 'bus' from domain 'core' without a crossing primitive",
+         "source" : "(actor foreign_domain (clock-domains (domain core (clock clk) :default) (domain bus (clock bus_clk))) (types (type frame (record (tag (bits 2)) (payload (signed (four_state (bits 3))))))) (interface (input start (domain core)) (input other (domain bus))  (output placeholder (width 5) (domain bus)) (output seen (width 3) (domain core))) (storage (var packet (type frame) (domain bus)) (var held (type frame) (domain bus))) (transaction main (domain core) (on start) (set seen packet.payload)))"
+      },
+      {
+         "actor" : {
+            "actor_name" : "same_domain",
+            "actor_network" : null,
+            "clock" : "clk",
+            "clock_domains" : {
+               "default" : "core",
+               "domains" : [
+                  {
+                     "clock" : "clk",
+                     "default" : 1,
+                     "name" : "core"
+                  },
+                  {
+                     "clock" : "bus_clk",
+                     "name" : "bus"
+                  }
+               ]
+            },
+            "constant_symbols" : {
+               "packages" : {}
+            },
+            "constants" : [],
+            "crossings" : [],
+            "drives" : {},
+            "enum_declarations" : [],
+            "enum_symbols" : {
+               "local" : {},
+               "packages" : {}
+            },
+            "handshakes" : {},
+            "imports" : [],
+            "interface" : {
+               "inputs" : [
+                  {
+                     "domain" : "core",
+                     "name" : "start",
+                     "width" : 1
+                  },
+                  {
+                     "domain" : "bus",
+                     "name" : "other",
+                     "width" : 1
+                  }
+               ],
+               "outputs" : [
+                  {
+                     "domain" : "bus",
+                     "name" : "packet",
+                     "type" : "frame",
+                     "type_spec" : {
+                        "kind" : "record",
+                        "member_order" : [
+                           "tag",
+                           "payload"
+                        ],
+                        "members" : {
+                           "payload" : {
+                              "kind" : "bits",
+                              "signed" : 1,
+                              "state_model" : "four_state",
+                              "width" : "3"
+                           },
+                           "tag" : {
+                              "kind" : "bits",
+                              "signed" : 0,
+                              "width" : "2"
+                           }
+                        },
+                        "signed" : 0,
+                        "width" : 5
+                     },
+                     "width" : 5
+                  },
+                  {
+                     "domain" : "core",
+                     "name" : "seen",
+                     "width" : "3"
+                  }
+               ]
+            },
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "domain" : "core",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "domain" : "bus",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "domain" : "bus",
+                  "fields" : [
+                     {
+                        "lsb" : 3,
+                        "msb" : 4,
+                        "path" : "tag",
+                        "signed" : 0,
+                        "width" : 2
+                     },
+                     {
+                        "lsb" : 0,
+                        "msb" : 2,
+                        "path" : "payload",
+                        "signed" : 1,
+                        "state_model" : "four_state",
+                        "width" : 3
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "domain" : "core",
+                  "name" : "seen",
+                  "width" : 3
+               }
+            ],
+            "library_uses" : [],
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "phases" : [],
+            "priorities" : [],
+            "procs" : {},
+            "reset" : null,
+            "reset_provenance" : [
+               {
+                  "domain" : "core",
+                  "origin" : "domain_absent"
+               },
+               {
+                  "domain" : "bus",
+                  "origin" : "domain_absent"
+               }
+            ],
+            "resources" : [],
+            "rules" : [],
+            "stages" : [],
+            "storage" : [
+               {
+                  "domain" : "bus",
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "domain" : "bus",
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "payload"
+                           ],
+                           "members" : {
+                              "payload" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : 3
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : 2
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 5
+                        },
+                        "width" : 5
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "transactions" : [
+               {
+                  "clauses" : [
+                     [
+                        "on",
+                        "other"
+                     ],
+                     [
+                        "set",
+                        "packet",
+                        "held"
+                     ]
+                  ],
+                  "domain" : "bus",
+                  "name" : "main",
+                  "ports" : {
+                     "inputs" : [],
+                     "outputs" : []
+                  }
+               }
+            ],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "payload",
+                        [
+                           "signed",
+                           [
+                              "four_state",
+                              [
+                                 "bits",
+                                 "3"
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "type_symbols" : {
+               "local" : {
+                  "frame" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  }
+               },
+               "packages" : {}
+            },
+            "uses" : [],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "built" : true,
+         "case" : "same_domain",
+         "ir" : {
+            "actor_name" : "same_domain",
+            "actor_network" : null,
+            "actor_phases" : [],
+            "actor_stages" : [],
+            "assignment_provenance" : [
+               {
+                  "activation" : {
+                     "assignment_guard" : null,
+                     "container_kind" : "state",
+                     "container_name" : "main_idle_0",
+                     "state_guard" : {
+                        "port" : "other"
+                     },
+                     "state_kind" : "entry"
+                  },
+                  "assignment_index" : 0,
+                  "condition_terms" : {},
+                  "domain" : "helper",
+                  "operator" : "=",
+                  "owner" : "main",
+                  "owner_kind" : "transaction",
+                  "priority_suppressed_by" : [],
+                  "resource_suppressed_by" : [],
+                  "rhs" : 1,
+                  "source_kind" : "scheduler_can_accept",
+                  "target" : "can_accept"
+               },
+               {
+                  "activation" : {
+                     "assignment_guard" : null,
+                     "container_kind" : "state",
+                     "container_name" : "main_set_1",
+                     "state_guard" : null,
+                     "state_kind" : "sequential"
+                  },
+                  "assignment_index" : 0,
+                  "condition_terms" : {},
+                  "domain" : "data",
+                  "operator" : "<-",
+                  "owner" : "main",
+                  "owner_kind" : "transaction",
+                  "priority_suppressed_by" : [],
+                  "resource_suppressed_by" : [],
+                  "rhs" : "held",
+                  "source_kind" : "set",
+                  "target" : "packet"
+               }
+            ],
+            "atl_top_instances" : [],
+            "bank_accesses" : [],
+            "children" : {},
+            "clock" : "clk",
+            "compatible_fanin_groups" : [],
+            "conflict_issues" : [],
+            "constants" : [],
+            "counters" : {
+               "can_accept" : 1
+            },
+            "declared_storage" : [
+               {
+                  "kind" : "var",
+                  "name" : "held",
+                  "signals" : [
+                     {
+                        "name" : "held",
+                        "type" : "frame",
+                        "type_spec" : {
+                           "kind" : "record",
+                           "member_order" : [
+                              "tag",
+                              "payload"
+                           ],
+                           "members" : {
+                              "payload" : {
+                                 "kind" : "bits",
+                                 "signed" : 1,
+                                 "state_model" : "four_state",
+                                 "width" : 3
+                              },
+                              "tag" : {
+                                 "kind" : "bits",
+                                 "signed" : 0,
+                                 "width" : 2
+                              }
+                           },
+                           "signed" : 0,
+                           "width" : 5
+                        },
+                        "width" : 5
+                     }
+                  ],
+                  "type" : "frame",
+                  "type_spec" : {
+                     "kind" : "record",
+                     "member_order" : [
+                        "tag",
+                        "payload"
+                     ],
+                     "members" : {
+                        "payload" : {
+                           "kind" : "bits",
+                           "signed" : 1,
+                           "state_model" : "four_state",
+                           "width" : 3
+                        },
+                        "tag" : {
+                           "kind" : "bits",
+                           "signed" : 0,
+                           "width" : 2
+                        }
+                     },
+                     "signed" : 0,
+                     "width" : 5
+                  },
+                  "width" : 5
+               }
+            ],
+            "domain_partition" : {
+               "crossings" : [],
+               "default_domain" : "core",
+               "domains" : [
+                  {
+                     "child_instances" : [],
+                     "clock" : "clk",
+                     "crossings" : [],
+                     "drive_names" : [],
+                     "instance" : "core",
+                     "library_uses" : [],
+                     "name" : "core",
+                     "ports" : {
+                        "inputs" : [
+                           "start"
+                        ],
+                        "outputs" : [
+                           "seen"
+                        ]
+                     },
+                     "reset" : null,
+                     "rules" : [],
+                     "scheduled_fsm" : "same_domain__domain_core.fsm",
+                     "storage" : [],
+                     "transactions" : []
+                  },
+                  {
+                     "child_instances" : [],
+                     "clock" : "bus_clk",
+                     "crossings" : [],
+                     "drive_names" : [],
+                     "instance" : "bus_instance",
+                     "library_uses" : [],
+                     "name" : "bus",
+                     "ports" : {
+                        "inputs" : [
+                           "other"
+                        ],
+                        "outputs" : [
+                           "packet"
+                        ]
+                     },
+                     "reset" : null,
+                     "rules" : [],
+                     "scheduled_fsm" : "same_domain__domain_bus.fsm",
+                     "storage" : [
+                        "held"
+                     ],
+                     "transactions" : [
+                        "main"
+                     ]
+                  }
+               ],
+               "kind" : "multi_domain",
+               "top_fsm" : "same_domain_top.fsm"
+            },
+            "dt_blocks" : [],
+            "enum_declarations" : [],
+            "explicit_interface_ports" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "name" : "packet",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : "3"
+               }
+            ],
+            "explicit_internal_signals" : [
+               "held"
+            ],
+            "immediate_assertions" : [],
+            "interface_port_metadata" : [
+               {
+                  "direction" : "input",
+                  "domain" : "core",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "domain" : "bus",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "domain" : "bus",
+                  "fields" : [
+                     {
+                        "lsb" : 3,
+                        "msb" : 4,
+                        "path" : "tag",
+                        "signed" : 0,
+                        "width" : 2
+                     },
+                     {
+                        "lsb" : 0,
+                        "msb" : 2,
+                        "path" : "payload",
+                        "signed" : 1,
+                        "state_model" : "four_state",
+                        "width" : 3
+                     }
+                  ],
+                  "name" : "packet",
+                  "type" : "frame",
+                  "type_kind" : "record",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "domain" : "core",
+                  "name" : "seen",
+                  "width" : 3
+               }
+            ],
+            "library_uses" : [],
+            "logical_controllers" : {
+               "controllers" : [
+                  {
+                     "clock" : "bus_clk",
+                     "domain" : "bus",
+                     "entries" : [
+                        "main_idle_0"
+                     ],
+                     "identity" : [
+                        "same_domain",
+                        "bus",
+                        "main"
+                     ],
+                     "initial_state" : "main_idle_0",
+                     "reset" : null,
+                     "states" : [
+                        {
+                           "kind" : "entry",
+                           "name" : "main_idle_0"
+                        },
+                        {
+                           "kind" : "sequential",
+                           "name" : "main_set_1"
+                        }
+                     ],
+                     "transaction" : "main"
+                  }
+               ],
+               "issues" : [],
+               "model" : "isf_logical_controllers_shadow_v1",
+               "module" : "same_domain",
+               "references" : [
+                  {
+                     "field" : "transitions[0].target",
+                     "role" : "transition",
+                     "state" : "main_idle_0",
+                     "target" : "main_set_1"
+                  }
+               ],
+               "state_owner" : {
+                  "main_idle_0" : "main",
+                  "main_set_1" : "main"
+               }
+            },
+            "output_defaults" : {},
+            "package_imports" : [],
+            "package_roots" : [],
+            "params" : [],
+            "ports" : [
+               {
+                  "direction" : "input",
+                  "name" : "start",
+                  "width" : 1
+               },
+               {
+                  "direction" : "input",
+                  "name" : "other",
+                  "width" : 1
+               },
+               {
+                  "direction" : "output",
+                  "name" : "packet",
+                  "type" : "frame",
+                  "width" : 5
+               },
+               {
+                  "direction" : "output",
+                  "name" : "seen",
+                  "width" : "3"
+               }
+            ],
+            "priority_resolution" : {
+               "issues" : [],
+               "resolutions" : []
+            },
+            "reset" : null,
+            "reset_provenance" : [
+               {
+                  "domain" : "core",
+                  "origin" : "domain_absent"
+               },
+               {
+                  "domain" : "bus",
+                  "origin" : "domain_absent"
+               }
+            ],
+            "reset_values" : {},
+            "resource_activation" : {
+               "requests" : {},
+               "steps" : []
+            },
+            "resource_arbitration" : {
+               "grants" : [],
+               "issues" : []
+            },
+            "signal_type_refs" : {
+               "held" : "frame",
+               "packet" : "frame"
+            },
+            "signal_widths" : {
+               "held" : 5,
+               "other" : 1,
+               "packet" : 5,
+               "seen" : 3,
+               "start" : 1
+            },
+            "spawn_instances" : [],
+            "states" : [
+               {
+                  "assignments" : [
+                     {
+                        "lhs" : "can_accept",
+                        "op" : "=",
+                        "rhs" : 1
+                     }
+                  ],
+                  "guard" : {
+                     "port" : "other"
+                  },
+                  "kind" : "entry",
+                  "name" : "main_idle_0",
+                  "transaction" : "main",
+                  "transitions" : [
+                     {
+                        "condition" : {
+                           "port" : "other"
+                        },
+                        "target" : "main_set_1"
+                     }
+                  ]
+               },
+               {
+                  "assignments" : [
+                     {
+                        "lhs" : "packet",
+                        "op" : "<-",
+                        "rhs" : "held",
+                        "source_kind" : "set"
+                     }
+                  ],
+                  "kind" : "sequential",
+                  "name" : "main_set_1",
+                  "transaction" : "main",
+                  "transitions" : []
+               }
+            ],
+            "storage_roles" : {
+               "held" : "actor_storage"
+            },
+            "temporal_contracts" : [],
+            "transaction_port_bindings" : [],
+            "type_declarations" : [
+               [
+                  "type",
+                  "frame",
+                  [
+                     "record",
+                     [
+                        "tag",
+                        [
+                           "bits",
+                           "2"
+                        ]
+                     ],
+                     [
+                        "payload",
+                        [
+                           "signed",
+                           [
+                              "four_state",
+                              [
+                                 "bits",
+                                 "3"
+                              ]
+                           ]
+                        ]
+                     ]
+                  ]
+               ]
+            ],
+            "verification_bridge" : null,
+            "verification_observations" : [],
+            "watchdog" : "65535"
+         },
+         "reason" : null,
+         "source" : "(actor same_domain (clock-domains (domain core (clock clk) :default) (domain bus (clock bus_clk))) (types (type frame (record (tag (bits 2)) (payload (signed (four_state (bits 3))))))) (interface (input start (domain core)) (input other (domain bus))  (output placeholder (width 5) (domain bus)) (output seen (width 3) (domain core))) (storage (var packet (type frame) (domain bus)) (var held (type frame) (domain bus))) (transaction main (domain bus) (on other) (set packet held)))"
+      }
+   ],
+   "meaning" : "Parsed storage/input declaration roles projected into private output prototypes; source grammar remains closed"
+}

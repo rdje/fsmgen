@@ -1,0 +1,4 @@
+ INFO Book building has started
+ INFO Running the html backend
+ WARN search index is very large (14889687 bytes)
+ INFO HTML book written to `<repo>/.artifacts/record-output-contexts/book`

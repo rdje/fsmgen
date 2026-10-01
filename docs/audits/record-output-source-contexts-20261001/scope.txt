@@ -1,0 +1,46 @@
+Record-output source context and domain preparation — 2026-10-01
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.1.
+Baseline: 8f31768d06083a1eccaec31d4b4d482eeb89e6c6.
+
+Five exact baseline modules are retained in repository-local scratch and
+preloaded before tests/probes; other production code is unchanged. Baseline and
+current probes share actual parsed declaration/body facts projected from storage
+or input into the private output role. Baseline accepts literal whole targets,
+field writes and a bus-to-core field read; current source policy/type/domain
+gates refuse them by the exact primary cause. Whole/same-domain copies remain
+valid. Scalar output samples now retain their private signed three-bit four-state
+declaration. These are resolved prototypes, not authored output admission.
+
+T2031 additionally supplies explicit prototype clauses after projecting actual
+parsed declarations. This avoids widening existing storage-sample grammar or
+pretending scalar output placeholders have record member layouts. A first draft
+collided with Perl builtin prototype; its failed rename command made no change
+and the unchanged harness was rerun. Exact draft/full receipts survive. Another
+draft parsed member targets against scalar placeholders; another attempted an
+unsupported storage-leaf sample. Their exact witnesses/full refusals survive.
+Final baseline RED uses the same final prototype test as current PASS.
+
+The newly mandatory copy gate correctly rejects T2030's old literal whole-record
+port RHS. Its witness is refined to two declared records with independently
+written payload values before their whole output copies. Original admission
+evidence remains immutable. Malformed policy 2 previously loses the predicate
+in Perl regex list context and reaches the argument-count guard. The source and
+existing sample selection predicates now explicitly use scalar regex results.
+
+Re-derivation: actual parsed facts, baseline/current complete source/IR probes,
+canonical source selection/sample/domain consumers and exact saved code changes.
+Falsification: literal copy, field policy, domain, scalar-shadow/alias/declaration,
+malformed suffix/policy, caller JSON and independent current input/context/sample/
+carrier/ownership/replay controls. Durability: full terminal receipts and snapshots,
+baseline Git objects, sealed verification, task tree, fact/book/response and Git.
+
+Only the five named source modules and the refined/new tests change; Parser's
+output declaration boundary remains unchanged. No HDL compiler/simulator is run.
+Raw receipts project only the absolute repository prefix to <repo>; manifest
+records raw SHA256/bytes, prefix length and replacement count. Original inventory
+and admission evidence authenticate without replay and remain byte-identical.
+
+Verify: python3 -B docs/audits/record-output-source-contexts-20261001/verify.py
+Reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
+ t/2031-isf-record-output-source-contexts.t t/2030-isf-record-output-writer-admission.t
