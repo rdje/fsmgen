@@ -63,7 +63,9 @@ and book.
   does not establish X/Z behavior or historical native causality. Generated/domain
   execution `.5.4` and backend/input completion `.5.5` remain open. Fixed named-domain
   spawned and ordinary blocking witnesses are prepared under `.5.4.1`; their
-  separate observer and genuine execution remain `.5.4.2-.3`. Record outputs, root-list ports and variants
+  separate fixed observer `.5.4.2` is qualified by fresh finite controls and
+  complete sealed independent verification. Genuine generated/domain HDL
+  execution remains `.5.4.3`; no runtime delivery follows from observer controls. Record outputs, root-list ports and variants
   remain deferred; the aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

@@ -1,0 +1,1 @@
+{"arguments":[0,0],"context":null,"context_completed_monotonic_ns":779814386443000,"context_error":"modeled query failure\n","errno":1,"event":"child_setpgid_failure","label":"runtime_c","observed_monotonic_ns":779814386397000,"pid":25204,"result":null,"sequence":1}

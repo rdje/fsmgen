@@ -1,12 +1,13 @@
 # Knowledge Map: `isf-generated`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **8** facts · **30** uniquely owned question entries.
+> **9** facts · **33** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are ATL actor event waits allowed in multi-domain actors?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="are generated completion storage roles advertised to API consumers?" · facts=[isf-generated-report-enumerations](../../docs/knowledge/isf-generated-report-enumerations.md)
+- q="can a T2024 or T1974 admission authorize generated record-input runtime?" · facts=[isf-generated-input-observer-qualification](../../docs/knowledge/isf-generated-input-observer-qualification.md)
 - q="can a child read a parent record or list after spawn?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
 - q="can a child transaction input or output share an actor storage name?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
 - q="can a generated child write an entire actor-owned record or list?" · facts=[isf-generated-child-whole-aggregate-writes](../../docs/knowledge/isf-generated-child-whole-aggregate-writes.md)
@@ -18,6 +19,7 @@
 - q="do aggregate child writes preserve imported aliases and owner resets?" · facts=[isf-generated-child-whole-aggregate-writes](../../docs/knowledge/isf-generated-child-whole-aggregate-writes.md)
 - q="does a child storage write wait until completion or add a register cycle?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="does an actor register reset or type leak into a same-named child port?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
+- q="does fixed generated-input observer qualification execute feature HDL?" · facts=[isf-generated-input-observer-qualification](../../docs/knowledge/isf-generated-input-observer-qualification.md)
 - q="does outer domain emission add declarations to a formal module scope?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="does storage_port arbitrate generated child transaction writes?" · facts=[isf-generated-child-writer-contract-frontier](../../docs/knowledge/isf-generated-child-writer-contract-frontier.md)
 - q="how are child named completion outputs combined with parent completion?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
@@ -29,6 +31,7 @@
 - q="is set-field a partial child storage write?" · facts=[isf-generated-child-writer-contract-frontier](../../docs/knowledge/isf-generated-child-writer-contract-frontier.md)
 - q="what is the next generated child storage writer contract?" · facts=[isf-generated-child-writer-contract-frontier](../../docs/knowledge/isf-generated-child-writer-contract-frontier.md)
 - q="where do generated child storage resets and registers live?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
+- q="where is the fixed T2025 generated-input observer qualification?" · facts=[isf-generated-input-observer-qualification](../../docs/knowledge/isf-generated-input-observer-qualification.md)
 - q="which schedule kinds describe generated actor storage handoffs?" · facts=[isf-generated-report-enumerations](../../docs/knowledge/isf-generated-report-enumerations.md)
 - q="why are competing child or parent storage writers rejected?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="why did a generated child completing a named output fail to release its parent?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
@@ -86,6 +89,13 @@ _ISF logical domains retain identity through portable generated names and case-s
 
 - **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-generated-domain-identities.md`](../../docs/knowledge/isf-generated-domain-identities.md)
+
+### isf-generated-input-observer-qualification
+
+_Exact T2025 observer qualification gates genuine generated input runtime_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-generated-input-observer-qualification.md`](../../docs/knowledge/isf-generated-input-observer-qualification.md)
 
 ### isf-generated-report-enumerations
 

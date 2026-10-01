@@ -1940,10 +1940,26 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit with SEM direct observation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.6`
-  Status: `pending`
+  Status: `active`
   Goal: `Own native causal observation before the next genuine generated/domain record-input runtime.`
   Acceptance: `Linked SEM .60.4.3.2.5.4 must select and prepare its exact fixed source/test/bench, separately qualify a new admission/observer integration for that different target, and commit before execution. Preserve original helper, stage bounds/arguments/results, input identities, native return/errno, diagnostic gaps and cleanup. Diagnose any captured rejection before further execution; a pass keeps historical causality open and schedules the next normal roadmap opportunity. No T2024/T1974 admission reuse, original recurrence campaign, host-protection or privilege change.`
-  Verification: `Scheduled after qualified direct .11.5.2; generated/domain witness preparation is next under SEM .5.4.`
+  Verification: `SEM .5.4.1 commits exact T2025 named-domain spawned and ordinary blocking witnesses at b0f1974d0b9da85d583dc18cd03919b04101cb39. Child .1 consumes unchanged witnesses and qualifies the new fixed integration; child .2 observes genuine feature execution only after .1 commits.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.6.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.6.1`
+  Status: `done`
+  Goal: `Qualify the fixed generated-input T2025 observer before HDL use.`
+  Acceptance: `Linked SEM .60.4.3.2.5.4.2 binds the committed target and both source fixtures/bench/producers through a new exclusive generated admission with five compile/runtime pairs. Consume immutable qualified native/failure-only/stage helpers, preserve bounds/results/errno, qualify silent success and deliberate real rejection plus explicit gaps, reject other/reused admissions, and independently seal hostile evidence/PID/group cleanup. No feature HDL execution or original helper/supervisor/host-protection change; commit before genuine use.`
+  Verification: `SEM .5.4.2 fresh oct01gen finite controls pass Files=1, Tests=63, with exact stderr and original stage/result/argument/errno/bound/cleanup invariance. Pure caller/target checks pass Files=1, Tests=18. Complete sealed independent verification authenticates exact fixed T2025/fixture/producer coverage, silent success, controlled real native rejection/context, modeled diagnostic gaps and independent PID/group absence; hostile saved controls reject. No genuine feature HDL execution; child .2 observes it only after this integration commit.`
+  Commit: `this commit with SEM fixed integration`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.6.2`
+  Status: `pending`
+  Goal: `Observe genuine generated/domain record-input runtime with the committed observer.`
+  Acceptance: `After child .1 and SEM .5.4.2 commit, use fresh exclusive exact admission for T2025 and full declared stage coverage under SEM .5.4.3. Preserve complete original bounds/results, exact identities, native failure context/errno, diagnostic gaps and independent cleanup. Diagnose any unexpected outcome before further execution. A pass leaves historical EPERM causality open and schedules its next genuine opportunity, with no original recurrence retry.`
+  Verification: `pending committed integration qualification`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.12`

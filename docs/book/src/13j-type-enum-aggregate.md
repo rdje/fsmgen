@@ -336,7 +336,10 @@ clock-only sibling and checks that its changing input/clock cannot disturb the
 owned values; this implies no reset-free state initialization guarantee.
 Static declarations, private data/enable ownership, complete wiring, strict
 carrier replay and emitted products are checked. Genuine generated/domain
-execution requires its separately qualified exact observer and remains pending.
+execution remains pending. Its new exact fixed observer is qualified with fresh
+finite native controls, complete independent saved verification, source/coverage
+binding and original stage/bound/result/cleanup preservation. Observer controls
+do not establish generated-feature HDL behavior or historical native causality.
 
 Run the prepared authored source checks from the repository root:
 

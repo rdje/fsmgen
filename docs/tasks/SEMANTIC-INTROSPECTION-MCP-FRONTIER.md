@@ -3018,7 +3018,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Qualify generated and named-domain packed-input execution.`
   Acceptance: `Select the smallest independently authored public-pin runtime witnesses for reused live readers and a sole generated whole-copy writer, including owning/reset-free sibling domains, repeated requests and reset. Split preparation, fixed observer admission and genuine observation before each runtime when necessary. Preserve explicit output binding, domain ownership and exact packed private data/enable edges; no arbitration or record-output admission.`
-  Verification: `Qualified direct .5.3 is committed at f084b5f69d2265ca6f47412944369822f5273551. Child .1 prepares two independently authored witnesses: named-domain spawned copier plus reused readers, and ordinary parameterized blocking copier plus reused readers. Parent-owned phase pins select input changes; generated output binding is completion-guarded. Native execution remains gated by .2-.3.`
+  Verification: `Qualified direct .5.3 is committed at f084b5f69d2265ca6f47412944369822f5273551. Child .1 prepares two independently authored witnesses: named-domain spawned copier plus reused readers, and ordinary parameterized blocking copier plus reused readers. Parent-owned phase pins select input changes. Spawned output bindings forward child outputs; parameterized blocking-do bindings are completion-guarded. Child .2 qualifies the exact generated observer; genuine runtime remains .3.`
   Commit: `pending`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.4`
@@ -3031,11 +3031,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify a fixed observer for the exact generated record-input witness.`
   Acceptance: `After .1 commits, bind exactly T2025 and its fixed sources/bench/producer identities through a new exclusive admission and predeclared five compile/runtime pairs. Reuse immutable qualified failure-only/native/stage helpers; separately qualify finite silent/rejection/gap/admission/cleanup controls and sealed hostile verification before feature execution. Link HIAL .11.6; no T2024/T1974 admission reuse or original supervisor change.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Fresh exclusive oct01gen finite controls pass All tests successful, Files=1, Tests=63; pure exact target/fixture/caller-kind checks pass Files=1, Tests=18. Complete sealed independent verification passes fixed generated_input schema/target/five-pair admission, complete producer membership/identities, original stage arguments/results/bounds/errno, exact outer stderr, silent ordinary/stale success, controlled real session rejection/context, explicit modeled gaps and independent captured child PID/group absence. Hostile saved source/scope/coverage/result/context/cleanup controls reject. Original helpers/direct observers and exact committed T2025/source/bench remain unchanged. Qualified evidence is docs/audits/generated-input-observer-20261001/. Genuine feature HDL is not executed; fresh observation remains .5.4.3 after this integration commit.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3`
   Status: `pending`
@@ -3966,3 +3966,51 @@ Historical native causality, X/Z and full input/backend completion remain open.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --check --json identifies failed child-source lookup after the first draft renamed emitted artifact basenames. Initial T2025 at line 91 also incorrectly expected the documented parameterized-do completion guard on spawned reader output forwarding. The actual complete carrier and blocking-call documentation establish those role/source-boundary loci. Existing source/structure qualification still lacks executed generated/domain behavior, so this slice prepares an independent fixed oracle before observer qualification.
 - [x] **ADDRESSED (verified)** — T2025 checks independently literal packed declarations, complete caller JSON, exact artifacts/private roles/data/enable/wiring, owning and clock-only sibling facts, actual strict source/carrier products and both emitted families. Correct spawned versus blocking bindings and original artifact basenames pass. Disabled actual copy enable and actual equal-width unsigned declaration fail unchanged independent structural predicates. The fixed public-pin bench and actual unsigned HDL are prepared; runtime is explicitly skipped.
 - [x] **NO REGRESSION** — Focused T2025/T2019/T2020/T2024/T2018 reports All tests successful, Files=5, Tests=23, retaining prior complete generated/public/package, direct sample and JSON-kind controls. Final readable T2025/runnable-book passes Files=2, Tests=6; book build and actual task integrity pass, Knowledge Map reports knowledge-map: OK, and the sealed saved preparation verifier rejects unrelated receipts. Staged doctrines complete before normal hooks. Production, previous direct/native archives, source syntax/schema/profiles and original supervision remain unchanged. This preparation does not qualify HDL behavior.
+
+
+## Fixed generated-input observer qualification `.60.4.3.2.5.4.2`
+
+The separately sealed generated_input observer admits exactly T2025, both
+prepared source fixtures, the fixed public-pin bench and the complete declared
+producer closure. Its distinct schema, mode and capture namespace predeclare
+all positive and unsigned-negative compile/runtime pairs. Prior direct-input
+and priority target authority cannot be reused. Detached admission inspection
+preserves complete caller JSON kinds on both acceptance and refusal.
+
+Fresh exclusive oct01gen finite controls pass with unchanged native helpers,
+original stage bounds/arguments/results, exact outer stderr, silent success,
+controlled real session rejection/context/errno and explicit modeled diagnostic
+gaps. Independent captured child PID/group absence is checked after cleanup.
+The sealed saved verifier authenticates the complete fixed feature identity
+closure and rejects foreign targets, older coverage, omitted or additional
+fixtures/producers and corrupted native/result/context/cleanup evidence.
+No genuine feature HDL compiles or runs in this qualification. The actual
+runtime observation belongs to .5.4.3 after this integration is committed.
+The parent frontier retained a draft overgeneralization of completion guards;
+reconcile it with the qualified literal call-role witnesses: spawned outputs
+forward live child outputs, while parameterized blocking-do bindings are
+completion-guarded. This bounded P2 task-prose defect is fixed within this leaf.
+
+Owned P2 validation-artifact defect: this slice's mdbook invocation used
+--dest-dir ../../.artifacts/mdbook-generated-input-observer-qualified. Actual
+build output resolved from the repository root rather than the book directory,
+placing this generated directory outside the repository. Read-only census
+confirms no enclosing Git repository, no symlink, and the repository volume.
+Fixed and verified within this leaf: copied the exact generated directory to
+the repository-derived .artifacts destination, verified complete relative file
+membership and bytes/hashes, successfully rebuilt at the correct local
+destination, then deleted exactly the old owned output. Independent path
+census confirms absence. The complete receipt is
+docs/audits/generated-input-observer-book-placement-20261001.json. Future
+invocation uses --dest-dir .artifacts/mdbook-generated-input-observer-qualified.
+
+
+Actual complete finite receipts and exact identities provide re-derivation.
+Controlled rejection, modeled gaps and hostile saved mutations provide distinct
+falsification. Immutable archive/manifest, fixed source/bench, task nodes,
+Knowledge Map, book/response and Git provide durability. Historical native EPERM
+causality, X/Z and complete backend/input delivery remain separately owned.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '2024-isf-record-input-runtime.t' identifies the corrected direct observer's fixed-target introduction. Its RecordInputAdmission.pm target/coverage contract permits T2024 and three feature pairs; it cannot authorize prepared generated/domain T2025. Actual new pure/finite refusals identify old_target, wrong_count and omitted_fixture before any target execution. A separate exact target/fixture authority is required before genuine generated-input behavior can be observed.
+- [x] **ADDRESSED (verified)** — Separate GeneratedInputAdmission, driver, finite controls and saved verifier bind the closed generated_input schema, exact T2025 target, complete producer/fixture identities and declared feature coverage. Fresh finite capture passes actual rejection/context and modeled diagnostic gaps; complete sealed verification authenticates original bounds/results/arguments and independent captured PID/group cleanup, with hostile corruptions rejected. Original helpers, direct observer and production/test/source/bench remain unchanged.
+- [x] **NO REGRESSION** — Pure exact-target/fixture/caller-kind checks report All tests successful, Files=1, Tests=18. Fresh finite qualification reports All tests successful, Files=1, Tests=63; independent sealed saved verification passes. Actual Knowledge Map reports knowledge-map: OK; task integrity and corrected repository-local book build pass before staged doctrines and normal hooks. The owned misplaced-build defect is fixed and its verified copy/use/delete/residue record is tracked. No feature HDL execution, historical EPERM repair or broader profile signoff is inferred.

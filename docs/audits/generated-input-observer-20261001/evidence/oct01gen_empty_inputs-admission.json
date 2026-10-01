@@ -1,0 +1,1 @@
+{"capture":"oct01gen_empty_inputs","expected_stages":{"compile":1,"runtime":2},"mode":"qualification","scenario":"healthy","schema":"fsmgen.fixed_generated_input_observer_admission.v1","sha256":{},"target":"docs/audits/native-group-witness-20260927/priority-observer/control.t"}
