@@ -1,0 +1,4232 @@
+ram-guard: PID 2100; host 64.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'systemverilog literal legal carrier: fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 67.
+    #                   'typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__mixed__fsmgen_t; // mixed
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             logic item_0;
+    #             logic [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__four__fsmgen_t; // four
+    # 
+    # typedef struct packed {
+    #     logic [1:0] item_0;
+    #     struct packed {
+    #         bit flag;
+    #         logic signed [2:0] data;
+    #     } item_1;
+    # } fsmgen_m14_typed_carriers__list__fsmgen_t; // list
+    # 
+    # typedef struct packed {
+    #     bit flag;
+    #     bit signed [1:0] data;
+    # } fsmgen_m14_typed_carriers__two__fsmgen_t; // two
+    # 
+    # module typed_carriers (
+    # 
+    # );
+    # 
+    #     wire fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    #     wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    #     wire fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    #     wire fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    #     fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    #     wire bit signed [4:0] two_scalar;
+    #     wire logic signed [4:0] four_scalar;
+    #     wire [4:0] legacy_scalar;
+    # endmodule'
+    #     doesn't match '(?^m:^    fsmgen_m14_typed_carriers__mixed__fsmgen_t\ mixed_bus\;$)'
+
+    #   Failed test 'systemverilog literal legal carrier: fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 67.
+    #                   'typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__mixed__fsmgen_t; // mixed
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             logic item_0;
+    #             logic [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__four__fsmgen_t; // four
+    # 
+    # typedef struct packed {
+    #     logic [1:0] item_0;
+    #     struct packed {
+    #         bit flag;
+    #         logic signed [2:0] data;
+    #     } item_1;
+    # } fsmgen_m14_typed_carriers__list__fsmgen_t; // list
+    # 
+    # typedef struct packed {
+    #     bit flag;
+    #     bit signed [1:0] data;
+    # } fsmgen_m14_typed_carriers__two__fsmgen_t; // two
+    # 
+    # module typed_carriers (
+    # 
+    # );
+    # 
+    #     wire fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    #     wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    #     wire fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    #     wire fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    #     fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    #     wire bit signed [4:0] two_scalar;
+    #     wire logic signed [4:0] four_scalar;
+    #     wire [4:0] legacy_scalar;
+    # endmodule'
+    #     doesn't match '(?^m:^    fsmgen_m14_typed_carriers__list__fsmgen_t\ list_bus\;$)'
+
+    #   Failed test 'systemverilog literal legal carrier: fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 67.
+    #                   'typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__mixed__fsmgen_t; // mixed
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             logic item_0;
+    #             logic [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__four__fsmgen_t; // four
+    # 
+    # typedef struct packed {
+    #     logic [1:0] item_0;
+    #     struct packed {
+    #         bit flag;
+    #         logic signed [2:0] data;
+    #     } item_1;
+    # } fsmgen_m14_typed_carriers__list__fsmgen_t; // list
+    # 
+    # typedef struct packed {
+    #     bit flag;
+    #     bit signed [1:0] data;
+    # } fsmgen_m14_typed_carriers__two__fsmgen_t; // two
+    # 
+    # module typed_carriers (
+    # 
+    # );
+    # 
+    #     wire fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    #     wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    #     wire fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    #     wire fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    #     fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    #     wire bit signed [4:0] two_scalar;
+    #     wire logic signed [4:0] four_scalar;
+    #     wire [4:0] legacy_scalar;
+    # endmodule'
+    #     doesn't match '(?^m:^    fsmgen_m14_typed_carriers__two__fsmgen_t\ two_bus\;$)'
+
+    #   Failed test 'systemverilog literal legal carrier: bit signed [4:0] two_scalar;'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 67.
+    #                   'typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__mixed__fsmgen_t; // mixed
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             logic item_0;
+    #             logic [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__four__fsmgen_t; // four
+    # 
+    # typedef struct packed {
+    #     logic [1:0] item_0;
+    #     struct packed {
+    #         bit flag;
+    #         logic signed [2:0] data;
+    #     } item_1;
+    # } fsmgen_m14_typed_carriers__list__fsmgen_t; // list
+    # 
+    # typedef struct packed {
+    #     bit flag;
+    #     bit signed [1:0] data;
+    # } fsmgen_m14_typed_carriers__two__fsmgen_t; // two
+    # 
+    # module typed_carriers (
+    # 
+    # );
+    # 
+    #     wire fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    #     wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    #     wire fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    #     wire fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    #     fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    #     wire bit signed [4:0] two_scalar;
+    #     wire logic signed [4:0] four_scalar;
+    #     wire [4:0] legacy_scalar;
+    # endmodule'
+    #     doesn't match '(?^m:^    bit\ signed\ \[4\:0\]\ two_scalar\;$)'
+
+    #   Failed test 'systemverilog never places a two-state carrier on a wire'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 69.
+    #                   'typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__mixed__fsmgen_t; // mixed
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             logic item_0;
+    #             logic [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__four__fsmgen_t; // four
+    # 
+    # typedef struct packed {
+    #     logic [1:0] item_0;
+    #     struct packed {
+    #         bit flag;
+    #         logic signed [2:0] data;
+    #     } item_1;
+    # } fsmgen_m14_typed_carriers__list__fsmgen_t; // list
+    # 
+    # typedef struct packed {
+    #     bit flag;
+    #     bit signed [1:0] data;
+    # } fsmgen_m14_typed_carriers__two__fsmgen_t; // two
+    # 
+    # module typed_carriers (
+    # 
+    # );
+    # 
+    #     wire fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    #     wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    #     wire fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    #     wire fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    #     fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    #     wire bit signed [4:0] two_scalar;
+    #     wire logic signed [4:0] four_scalar;
+    #     wire [4:0] legacy_scalar;
+    # endmodule'
+    #           matches '(?^m:^    wire .*\b(?:mixed_bus|list_bus|two_bus|two_scalar);$)'
+
+    #   Failed test 'verilog literal legal carrier: fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 67.
+    #                   'typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__mixed__fsmgen_t; // mixed
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             logic item_0;
+    #             logic [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__four__fsmgen_t; // four
+    # 
+    # typedef struct packed {
+    #     logic [1:0] item_0;
+    #     struct packed {
+    #         bit flag;
+    #         logic signed [2:0] data;
+    #     } item_1;
+    # } fsmgen_m14_typed_carriers__list__fsmgen_t; // list
+    # 
+    # typedef struct packed {
+    #     bit flag;
+    #     bit signed [1:0] data;
+    # } fsmgen_m14_typed_carriers__two__fsmgen_t; // two
+    # 
+    # module typed_carriers (
+    # 
+    # );
+    # 
+    #     wire fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    #     wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    #     wire fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    #     wire fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    #     fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    #     wire bit signed [4:0] two_scalar;
+    #     wire logic signed [4:0] four_scalar;
+    #     wire [4:0] legacy_scalar;
+    # endmodule'
+    #     doesn't match '(?^m:^    fsmgen_m14_typed_carriers__mixed__fsmgen_t\ mixed_bus\;$)'
+
+    #   Failed test 'verilog literal legal carrier: fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 67.
+    #                   'typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__mixed__fsmgen_t; // mixed
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             logic item_0;
+    #             logic [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__four__fsmgen_t; // four
+    # 
+    # typedef struct packed {
+    #     logic [1:0] item_0;
+    #     struct packed {
+    #         bit flag;
+    #         logic signed [2:0] data;
+    #     } item_1;
+    # } fsmgen_m14_typed_carriers__list__fsmgen_t; // list
+    # 
+    # typedef struct packed {
+    #     bit flag;
+    #     bit signed [1:0] data;
+    # } fsmgen_m14_typed_carriers__two__fsmgen_t; // two
+    # 
+    # module typed_carriers (
+    # 
+    # );
+    # 
+    #     wire fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    #     wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    #     wire fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    #     wire fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    #     fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    #     wire bit signed [4:0] two_scalar;
+    #     wire logic signed [4:0] four_scalar;
+    #     wire [4:0] legacy_scalar;
+    # endmodule'
+    #     doesn't match '(?^m:^    fsmgen_m14_typed_carriers__list__fsmgen_t\ list_bus\;$)'
+
+    #   Failed test 'verilog literal legal carrier: fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 67.
+    #                   'typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__mixed__fsmgen_t; // mixed
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             logic item_0;
+    #             logic [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__four__fsmgen_t; // four
+    # 
+    # typedef struct packed {
+    #     logic [1:0] item_0;
+    #     struct packed {
+    #         bit flag;
+    #         logic signed [2:0] data;
+    #     } item_1;
+    # } fsmgen_m14_typed_carriers__list__fsmgen_t; // list
+    # 
+    # typedef struct packed {
+    #     bit flag;
+    #     bit signed [1:0] data;
+    # } fsmgen_m14_typed_carriers__two__fsmgen_t; // two
+    # 
+    # module typed_carriers (
+    # 
+    # );
+    # 
+    #     wire fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    #     wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    #     wire fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    #     wire fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    #     fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    #     wire bit signed [4:0] two_scalar;
+    #     wire logic signed [4:0] four_scalar;
+    #     wire [4:0] legacy_scalar;
+    # endmodule'
+    #     doesn't match '(?^m:^    fsmgen_m14_typed_carriers__two__fsmgen_t\ two_bus\;$)'
+
+    #   Failed test 'verilog literal legal carrier: bit signed [4:0] two_scalar;'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 67.
+    #                   'typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__mixed__fsmgen_t; // mixed
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             logic item_0;
+    #             logic [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__four__fsmgen_t; // four
+    # 
+    # typedef struct packed {
+    #     logic [1:0] item_0;
+    #     struct packed {
+    #         bit flag;
+    #         logic signed [2:0] data;
+    #     } item_1;
+    # } fsmgen_m14_typed_carriers__list__fsmgen_t; // list
+    # 
+    # typedef struct packed {
+    #     bit flag;
+    #     bit signed [1:0] data;
+    # } fsmgen_m14_typed_carriers__two__fsmgen_t; // two
+    # 
+    # module typed_carriers (
+    # 
+    # );
+    # 
+    #     wire fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    #     wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    #     wire fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    #     wire fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    #     fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    #     wire bit signed [4:0] two_scalar;
+    #     wire logic signed [4:0] four_scalar;
+    #     wire [4:0] legacy_scalar;
+    # endmodule'
+    #     doesn't match '(?^m:^    bit\ signed\ \[4\:0\]\ two_scalar\;$)'
+
+    #   Failed test 'verilog never places a two-state carrier on a wire'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 69.
+    #                   'typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__mixed__fsmgen_t; // mixed
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             logic item_0;
+    #             logic [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m14_typed_carriers__four__fsmgen_t; // four
+    # 
+    # typedef struct packed {
+    #     logic [1:0] item_0;
+    #     struct packed {
+    #         bit flag;
+    #         logic signed [2:0] data;
+    #     } item_1;
+    # } fsmgen_m14_typed_carriers__list__fsmgen_t; // list
+    # 
+    # typedef struct packed {
+    #     bit flag;
+    #     bit signed [1:0] data;
+    # } fsmgen_m14_typed_carriers__two__fsmgen_t; // two
+    # 
+    # module typed_carriers (
+    # 
+    # );
+    # 
+    #     wire fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    #     wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    #     wire fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    #     wire fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    #     fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    #     wire bit signed [4:0] two_scalar;
+    #     wire logic signed [4:0] four_scalar;
+    #     wire [4:0] legacy_scalar;
+    # endmodule'
+    #           matches '(?^m:^    wire .*\b(?:mixed_bus|list_bus|two_bus|two_scalar);$)'
+    # Looks like you failed 10 tests of 26.
+
+#   Failed test 'typed carriers preserve exact nested data models with legal declaration classes'
+#   at t/2026-structural-two-state-carrier-declarations.t line 78.
+
+    #   Failed test 'complete public product preserves all types, layout, roles, wiring and logic except the repaired declaration and date'
+    #   at t/2026-structural-two-state-carrier-declarations.t line 94.
+    #          got: '//=============================================================================
+    # // Flattened Decision Tree FSM: packed_input_generated_domains__domain_idle
+    # // Generated using Enable-based Methodology with WEN/EN Signals
+    # // 
+    # // This implementation uses:
+    # // - Flattened decision tree approach
+    # // - Enable-based logic with assign statements
+    # // - Write Enable (WEN) and Enable (EN) signals for each LHS
+    # // - Flat Boolean expressions from DT traversal
+    # //=============================================================================
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m43_packed_input_generated_domains__domain_idle__frame__fsmgen_t; // frame
+    # 
+    # module packed_input_generated_domains__domain_idle (
+    #   input  wire idle_clk,
+    #   input fsmgen_m43_packed_input_generated_domains__domain_idle__frame__fsmgen_t unused
+    # );
+    # 
+    #   // State encoding
+    # 
+    #   // No state registers needed - FSM contains only decision trees
+    # 
+    #   // State and DT Enable Conditions
+    # 
+    #   // Unified WEN/EN Signal Generation from Phase 1 Analysis
+    #   // DT-Specific Enable Signals from Unified Analysis
+    # 
+    #   // LHS-Level Enable Signals from Unified Analysis
+    # 
+    #   // Unified Multiplexer Logic from Phase 1 Analysis
+    # endmodule
+    # 
+    # 
+    # //=============================================================================
+    # // Flattened Decision Tree FSM: packed_input_generated_domains__domain_io
+    # // Generated using Enable-based Methodology with WEN/EN Signals
+    # // 
+    # // This implementation uses:
+    # // - Flattened decision tree approach
+    # // - Enable-based logic with assign statements
+    # // - Write Enable (WEN) and Enable (EN) signals for each LHS
+    # // - Flat Boolean expressions from DT traversal
+    # //=============================================================================
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m41_packed_input_generated_domains__domain_io__frame__fsmgen_t; // frame
+    # 
+    # module packed_input_generated_domains__domain_io (
+    #   input  wire clk,
+    #   input  wire rst_n,
+    #   input fsmgen_m41_packed_input_generated_domains__domain_io__frame__fsmgen_t isf_write_writer_held_data,
+    #   input  wire isf_write_writer_held_enable,
+    #   input  wire left_done,
+    #   input  wire left_is_negative,
+    #   input  wire [4:0] left_result,
+    #   input fsmgen_m41_packed_input_generated_domains__domain_io__frame__fsmgen_t packet,
+    #   input  wire right_done,
+    #   input  wire right_is_negative,
+    #   input  wire [4:0] right_result,
+    #   input  wire start,
+    #   input  wire writer_done,
+    #   input  wire [4:0] writer_result,
+    #   output reg  [4:0] again,
+    #   output reg  [4:0] captured,
+    #   output reg  [1:0] copied_tag,
+    #   output reg  [4:0] copy_seen,
+    #   output reg  done,
+    #   output reg  left_start,
+    #   output reg  negative_again,
+    #   output reg  negative_seen,
+    #   output reg  [1:0] phase,
+    #   output reg  [4:0] reset_seen,
+    #   output reg  right_start,
+    #   output reg  [4:0] seen,
+    #   output reg  [4:0] stored,
+    #   output reg  stored_flag,
+    #   output reg  [1:0] stored_piece,
+    #   output reg  writer_start
+    # ,
+    #   output  wire shared_dp_export_again_right_result_en,
+    #   output  wire shared_dp_export_captured_accepted_en,
+    #   output  wire shared_dp_export_copied_tag_held_tag_en,
+    #   output  wire shared_dp_export_copy_seen_writer_result_en,
+    #   output  wire shared_dp_export_done_1_en,
+    #   output  wire shared_dp_export_left_start_1_en,
+    #   output  wire shared_dp_export_negative_again_right_is_negative_en,
+    #   output  wire shared_dp_export_negative_seen_left_is_negative_en,
+    #   output  wire shared_dp_export_phase_1_en,
+    #   output  wire shared_dp_export_phase_2_en,
+    #   output  wire shared_dp_export_reset_seen_held_payload_data_en,
+    #   output  wire shared_dp_export_right_start_1_en,
+    #   output  wire shared_dp_export_seen_left_result_en,
+    #   output  wire shared_dp_export_stored_held_payload_data_en,
+    #   output  wire shared_dp_export_stored_flag_held_payload_flags_item_0_en,
+    #   output  wire shared_dp_export_stored_piece_held_payload_flags_item_1_en,
+    #   output  wire shared_dp_export_writer_start_1_en
+    # );
+    # 
+    #   // State encoding
+    #   localparam MAIN_IDLE_0 = 5'd0;
+    #   localparam MAIN_SET_1 = 5'd1;
+    #   localparam MAIN_SET_2 = 5'd2;
+    #   localparam MAIN_WAIT_3 = 5'd3;
+    #   localparam MAIN_WAIT_4 = 5'd4;
+    #   localparam MAIN_WAIT_5 = 5'd5;
+    #   localparam MAIN_SPAWN_6 = 5'd6;
+    #   localparam MAIN_AWAIT_ALL_7 = 5'd7;
+    #   localparam MAIN_SET_8 = 5'd8;
+    #   localparam MAIN_WAIT_9 = 5'd9;
+    #   localparam MAIN_WAIT_10 = 5'd10;
+    #   localparam MAIN_WAIT_11 = 5'd11;
+    #   localparam MAIN_SPAWN_12 = 5'd12;
+    #   localparam MAIN_SPAWN_13 = 5'd13;
+    #   localparam MAIN_AWAIT_ALL_14 = 5'd14;
+    #   localparam MAIN_SET_15 = 5'd15;
+    #   localparam MAIN_SET_16 = 5'd16;
+    #   localparam MAIN_SET_17 = 5'd17;
+    #   localparam MAIN_SET_18 = 5'd18;
+    #   localparam MAIN_SET_19 = 5'd19;
+    #   localparam MAIN_DONE_20 = 5'd20;
+    # 
+    #   // State registers
+    #   reg [4:0] current_state, next_state;
+    # 
+    #   // State sequential logic
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       current_state <= MAIN_IDLE_0;
+    #     end else begin
+    #       current_state <= next_state;
+    #     end
+    #   end
+    # 
+    #   // Internal signal declarations
+    #   logic signed [4:0] accepted;
+    #   reg can_accept;
+    #   fsmgen_m41_packed_input_generated_domains__domain_io__frame__fsmgen_t held;
+    #   reg isf_completion_left_ready;
+    #   reg isf_completion_left_seen;
+    #   reg isf_completion_right_ready;
+    #   reg isf_completion_right_seen;
+    #   reg isf_completion_writer_ready;
+    #   reg isf_completion_writer_seen;
+    #   // Internal mux helper registers
+    #   logic signed [4:0] accepted_q;
+    #   reg [4:0] captured_next;
+    #   reg [1:0] copied_tag_next;
+    #   reg done_pulse_delay_pipe;
+    #   fsmgen_m41_packed_input_generated_domains__domain_io__frame__fsmgen_t held_next;
+    #   reg isf_completion_left_seen_next;
+    #   reg isf_completion_right_seen_next;
+    #   reg isf_completion_writer_seen_next;
+    #   reg [1:0] phase_next;
+    #   reg [4:0] reset_seen_next;
+    #   reg stored_flag_next;
+    #   reg [4:0] stored_next;
+    #   reg [1:0] stored_piece_next;
+    #   // Generated enable wires
+    #   wire accepted_packet_payload_data_en;
+    #   wire again_right_result_en;
+    #   wire can_accept_1_en;
+    #   wire captured_accepted_en;
+    #   wire copied_tag_held_tag_en;
+    #   wire copy_seen_writer_result_en;
+    #   wire done_1_en;
+    #   wire held_isf_write_writer_held_data_en;
+    #   wire isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en;
+    #   wire isf_completion_left_seen_0_en;
+    #   wire isf_completion_left_seen_1_en;
+    #   wire isf_completion_left_seen_en;
+    #   wire isf_completion_left_seen_isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en;
+    #   wire isf_completion_left_seen_isf_completion_left_seen_0_en;
+    #   wire isf_completion_left_seen_isf_completion_left_seen_1_en;
+    #   wire isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en;
+    #   wire isf_completion_right_seen_0_en;
+    #   wire isf_completion_right_seen_1_en;
+    #   wire isf_completion_right_seen_en;
+    #   wire isf_completion_right_seen_isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en;
+    #   wire isf_completion_right_seen_isf_completion_right_seen_0_en;
+    #   wire isf_completion_right_seen_isf_completion_right_seen_1_en;
+    #   wire isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en;
+    #   wire isf_completion_writer_seen_0_en;
+    #   wire isf_completion_writer_seen_1_en;
+    #   wire isf_completion_writer_seen_en;
+    #   wire isf_completion_writer_seen_isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en;
+    #   wire isf_completion_writer_seen_isf_completion_writer_seen_0_en;
+    #   wire isf_completion_writer_seen_isf_completion_writer_seen_1_en;
+    #   wire isf_write_writer_held_enable_en;
+    #   wire isf_write_writer_held_enable_held_isf_write_writer_held_data_en;
+    #   wire left_port_bindings_en;
+    #   wire left_port_bindings_negative_seen_left_is_negative_en;
+    #   wire left_port_bindings_seen_left_result_en;
+    #   wire left_start_1_en;
+    #   wire main_await_all_14_en;
+    #   wire main_await_all_14_next_state_main_set_15_en;
+    #   wire main_await_all_7_en;
+    #   wire main_await_all_7_next_state_main_set_8_en;
+    #   wire main_done_20_done_1_en;
+    #   wire main_done_20_en;
+    #   wire main_done_20_next_state_main_idle_0_en;
+    #   wire main_idle_0_accepted_packet_payload_data_en;
+    #   wire main_idle_0_can_accept_1_en;
+    #   wire main_idle_0_en;
+    #   wire main_idle_0_next_state_main_set_1_en;
+    #   wire main_set_15_en;
+    #   wire main_set_15_next_state_main_set_16_en;
+    #   wire main_set_15_stored_held_payload_data_en;
+    #   wire main_set_16_copied_tag_held_tag_en;
+    #   wire main_set_16_en;
+    #   wire main_set_16_next_state_main_set_17_en;
+    #   wire main_set_17_en;
+    #   wire main_set_17_next_state_main_set_18_en;
+    #   wire main_set_17_stored_flag_held_payload_flags_item_0_en;
+    #   wire main_set_18_en;
+    #   wire main_set_18_next_state_main_set_19_en;
+    #   wire main_set_18_stored_piece_held_payload_flags_item_1_en;
+    #   wire main_set_19_captured_accepted_en;
+    #   wire main_set_19_en;
+    #   wire main_set_19_next_state_main_done_20_en;
+    #   wire main_set_1_en;
+    #   wire main_set_1_next_state_main_set_2_en;
+    #   wire main_set_1_reset_seen_held_payload_data_en;
+    #   wire main_set_2_en;
+    #   wire main_set_2_next_state_main_wait_3_en;
+    #   wire main_set_2_phase_1_en;
+    #   wire main_set_8_en;
+    #   wire main_set_8_next_state_main_wait_9_en;
+    #   wire main_set_8_phase__2_en;
+    #   wire main_spawn_12_en;
+    #   wire main_spawn_12_left_start_1_en;
+    #   wire main_spawn_12_next_state_main_spawn_13_en;
+    #   wire main_spawn_13_en;
+    #   wire main_spawn_13_next_state_main_await_all_14_en;
+    #   wire main_spawn_13_right_start_1_en;
+    #   wire main_spawn_6_en;
+    #   wire main_spawn_6_next_state_main_await_all_7_en;
+    #   wire main_spawn_6_writer_start_1_en;
+    #   wire main_wait_10_en;
+    #   wire main_wait_10_next_state_main_wait_11_en;
+    #   wire main_wait_11_en;
+    #   wire main_wait_11_next_state_main_spawn_12_en;
+    #   wire main_wait_3_en;
+    #   wire main_wait_3_next_state_main_wait_4_en;
+    #   wire main_wait_4_en;
+    #   wire main_wait_4_next_state_main_wait_5_en;
+    #   wire main_wait_5_en;
+    #   wire main_wait_5_next_state_main_spawn_6_en;
+    #   wire main_wait_9_en;
+    #   wire main_wait_9_next_state_main_wait_10_en;
+    #   wire negative_again_right_is_negative_en;
+    #   wire negative_seen_left_is_negative_en;
+    #   wire next_state_main_await_all_14_en;
+    #   wire next_state_main_await_all_7_en;
+    #   wire next_state_main_done_20_en;
+    #   wire next_state_main_idle_0_en;
+    #   wire next_state_main_set_15_en;
+    #   wire next_state_main_set_16_en;
+    #   wire next_state_main_set_17_en;
+    #   wire next_state_main_set_18_en;
+    #   wire next_state_main_set_19_en;
+    #   wire next_state_main_set_1_en;
+    #   wire next_state_main_set_2_en;
+    #   wire next_state_main_set_8_en;
+    #   wire next_state_main_spawn_12_en;
+    #   wire next_state_main_spawn_13_en;
+    #   wire next_state_main_spawn_6_en;
+    #   wire next_state_main_wait_10_en;
+    #   wire next_state_main_wait_11_en;
+    #   wire next_state_main_wait_3_en;
+    #   wire next_state_main_wait_4_en;
+    #   wire next_state_main_wait_5_en;
+    #   wire next_state_main_wait_9_en;
+    #   wire phase_1_en;
+    #   wire phase__2_en;
+    #   wire reset_seen_held_payload_data_en;
+    #   wire right_port_bindings_again_right_result_en;
+    #   wire right_port_bindings_en;
+    #   wire right_port_bindings_negative_again_right_is_negative_en;
+    #   wire right_start_1_en;
+    #   wire seen_left_result_en;
+    #   wire stored_flag_held_payload_flags_item_0_en;
+    #   wire stored_held_payload_data_en;
+    #   wire stored_piece_held_payload_flags_item_1_en;
+    #   wire writer_port_bindings_copy_seen_writer_result_en;
+    #   wire writer_port_bindings_en;
+    #   wire writer_start_1_en;
+    # 
+    #   // State and DT Enable Conditions
+    #   assign main_await_all_14_en = current_state == MAIN_AWAIT_ALL_14;
+    #   assign main_await_all_7_en = current_state == MAIN_AWAIT_ALL_7;
+    #   assign main_done_20_en = current_state == MAIN_DONE_20;
+    #   assign main_idle_0_en = current_state == MAIN_IDLE_0;
+    #   assign main_set_1_en = current_state == MAIN_SET_1;
+    #   assign main_set_15_en = current_state == MAIN_SET_15;
+    #   assign main_set_16_en = current_state == MAIN_SET_16;
+    #   assign main_set_17_en = current_state == MAIN_SET_17;
+    #   assign main_set_18_en = current_state == MAIN_SET_18;
+    #   assign main_set_19_en = current_state == MAIN_SET_19;
+    #   assign main_set_2_en = current_state == MAIN_SET_2;
+    #   assign main_set_8_en = current_state == MAIN_SET_8;
+    #   assign main_spawn_12_en = current_state == MAIN_SPAWN_12;
+    #   assign main_spawn_13_en = current_state == MAIN_SPAWN_13;
+    #   assign main_spawn_6_en = current_state == MAIN_SPAWN_6;
+    #   assign main_wait_10_en = current_state == MAIN_WAIT_10;
+    #   assign main_wait_11_en = current_state == MAIN_WAIT_11;
+    #   assign main_wait_3_en = current_state == MAIN_WAIT_3;
+    #   assign main_wait_4_en = current_state == MAIN_WAIT_4;
+    #   assign main_wait_5_en = current_state == MAIN_WAIT_5;
+    #   assign main_wait_9_en = current_state == MAIN_WAIT_9;
+    #   assign isf_completion_left_seen_en = 1'b1;
+    #   assign isf_completion_right_seen_en = 1'b1;
+    #   assign isf_completion_writer_seen_en = 1'b1;
+    #   assign isf_write_writer_held_enable_en = 1'b1;
+    #   assign left_port_bindings_en = 1'b1;
+    #   assign right_port_bindings_en = 1'b1;
+    #   assign writer_port_bindings_en = 1'b1;
+    # 
+    #   // Consolidated intermediate signals (AST factorization + pre-scan)
+    #   wire intermediate_and_isf_completion_left_ready_isf_comple_etc_1;
+    #   wire intermediate_and_not_left_start_left_done_2;
+    #   wire intermediate_and_not_right_start_right_done_4;
+    #   wire intermediate_and_not_writer_start_writer_done_6;
+    #   wire intermediate_or_left_done_isf_completion_left_seen_3;
+    #   wire intermediate_or_right_done_isf_completion_right_seen_5;
+    #   wire intermediate_or_writer_done_isf_completion_writer_see_etc_7;
+    # 
+    #   assign intermediate_and_isf_completion_left_ready_isf_comple_etc_1 = isf_completion_left_ready & isf_completion_right_ready; // Source: fsmgen_parsing
+    #   assign intermediate_and_not_left_start_left_done_2 = !left_start & left_done; // Source: fsmgen_parsing
+    #   assign intermediate_and_not_right_start_right_done_4 = !right_start & right_done; // Source: fsmgen_parsing
+    #   assign intermediate_and_not_writer_start_writer_done_6 = !writer_start & writer_done; // Source: fsmgen_parsing
+    #   assign intermediate_or_left_done_isf_completion_left_seen_3 = left_done | isf_completion_left_seen; // Source: fsmgen_parsing
+    #   assign intermediate_or_right_done_isf_completion_right_seen_5 = right_done | isf_completion_right_seen; // Source: fsmgen_parsing
+    #   assign intermediate_or_writer_done_isf_completion_writer_see_etc_7 = writer_done | isf_completion_writer_seen; // Source: fsmgen_parsing
+    # 
+    #   // Unified WEN/EN Signal Generation from Phase 1 Analysis
+    #   // DT-Specific Enable Signals from Unified Analysis
+    # 
+    # 
+    #   // === DT: -isf_completion_left_seen ===
+    #   // isf_completion_left_ready
+    #   assign isf_completion_left_seen_isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en = isf_completion_left_seen_en;  // isf_completion_left_ready <- intermediate_or_left_done_isf_completion_left_seen_3
+    #   // isf_completion_left_seen
+    #   assign isf_completion_left_seen_isf_completion_left_seen_0_en = isf_completion_left_seen_en & left_start;  // isf_completion_left_seen <- 0
+    #   assign isf_completion_left_seen_isf_completion_left_seen_1_en = isf_completion_left_seen_en & intermediate_and_not_left_start_left_done_2;  // isf_completion_left_seen <- 1
+    # 
+    # 
+    #   // === DT: -isf_completion_right_seen ===
+    #   // isf_completion_right_ready
+    #   assign isf_completion_right_seen_isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en = isf_completion_right_seen_en;  // isf_completion_right_ready <- intermediate_or_right_done_isf_completion_right_seen_5
+    #   // isf_completion_right_seen
+    #   assign isf_completion_right_seen_isf_completion_right_seen_0_en = isf_completion_right_seen_en & right_start;  // isf_completion_right_seen <- 0
+    #   assign isf_completion_right_seen_isf_completion_right_seen_1_en = isf_completion_right_seen_en & intermediate_and_not_right_start_right_done_4;  // isf_completion_right_seen <- 1
+    # 
+    # 
+    #   // === DT: -isf_completion_writer_seen ===
+    #   // isf_completion_writer_ready
+    #   assign isf_completion_writer_seen_isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en = isf_completion_writer_seen_en;  // isf_completion_writer_ready <- intermediate_or_writer_done_isf_completion_writer_see_etc_7
+    #   // isf_completion_writer_seen
+    #   assign isf_completion_writer_seen_isf_completion_writer_seen_0_en = isf_completion_writer_seen_en & writer_start;  // isf_completion_writer_seen <- 0
+    #   assign isf_completion_writer_seen_isf_completion_writer_seen_1_en = isf_completion_writer_seen_en & intermediate_and_not_writer_start_writer_done_6;  // isf_completion_writer_seen <- 1
+    # 
+    # 
+    #   // === DT: -isf_write_writer_held_enable ===
+    #   // held
+    #   assign isf_write_writer_held_enable_held_isf_write_writer_held_data_en = isf_write_writer_held_enable_en & isf_write_writer_held_enable;  // held <- isf_write_writer_held_data
+    # 
+    # 
+    #   // === DT: -left_port_bindings ===
+    #   // negative_seen
+    #   assign left_port_bindings_negative_seen_left_is_negative_en = left_port_bindings_en;  // negative_seen <- left_is_negative
+    #   // seen
+    #   assign left_port_bindings_seen_left_result_en = left_port_bindings_en;  // seen <- left_result
+    # 
+    # 
+    #   // === DT: -right_port_bindings ===
+    #   // again
+    #   assign right_port_bindings_again_right_result_en = right_port_bindings_en;  // again <- right_result
+    #   // negative_again
+    #   assign right_port_bindings_negative_again_right_is_negative_en = right_port_bindings_en;  // negative_again <- right_is_negative
+    # 
+    # 
+    #   // === DT: -writer_port_bindings ===
+    #   // copy_seen
+    #   assign writer_port_bindings_copy_seen_writer_result_en = writer_port_bindings_en;  // copy_seen <- writer_result
+    # 
+    # 
+    #   // === DT: main_await_all_14 ===
+    #   // next_state
+    #   assign main_await_all_14_next_state_main_set_15_en = main_await_all_14_en & intermediate_and_isf_completion_left_ready_isf_comple_etc_1;  // next_state <- MAIN_SET_15
+    # 
+    # 
+    #   // === DT: main_await_all_7 ===
+    #   // next_state
+    #   assign main_await_all_7_next_state_main_set_8_en = main_await_all_7_en & isf_completion_writer_ready;  // next_state <- MAIN_SET_8
+    # 
+    # 
+    #   // === DT: main_done_20 ===
+    #   // done
+    #   assign main_done_20_done_1_en = main_done_20_en;  // done <- 1
+    #   // next_state
+    #   assign main_done_20_next_state_main_idle_0_en = main_done_20_en;  // next_state <- MAIN_IDLE_0
+    # 
+    # 
+    #   // === DT: main_idle_0 ===
+    #   // accepted
+    #   assign main_idle_0_accepted_packet_payload_data_en = main_idle_0_en & start;  // accepted <- packet.payload.data
+    #   // can_accept
+    #   assign main_idle_0_can_accept_1_en = main_idle_0_en;  // can_accept <- 1
+    #   // next_state
+    #   assign main_idle_0_next_state_main_set_1_en = main_idle_0_en & start;  // next_state <- MAIN_SET_1
+    # 
+    # 
+    #   // === DT: main_set_1 ===
+    #   // next_state
+    #   assign main_set_1_next_state_main_set_2_en = main_set_1_en;  // next_state <- MAIN_SET_2
+    #   // reset_seen
+    #   assign main_set_1_reset_seen_held_payload_data_en = main_set_1_en;  // reset_seen <- held.payload.data
+    # 
+    # 
+    #   // === DT: main_set_15 ===
+    #   // next_state
+    #   assign main_set_15_next_state_main_set_16_en = main_set_15_en;  // next_state <- MAIN_SET_16
+    #   // stored
+    #   assign main_set_15_stored_held_payload_data_en = main_set_15_en;  // stored <- held.payload.data
+    # 
+    # 
+    #   // === DT: main_set_16 ===
+    #   // copied_tag
+    #   assign main_set_16_copied_tag_held_tag_en = main_set_16_en;  // copied_tag <- held.tag
+    #   // next_state
+    #   assign main_set_16_next_state_main_set_17_en = main_set_16_en;  // next_state <- MAIN_SET_17
+    # 
+    # 
+    #   // === DT: main_set_17 ===
+    #   // next_state
+    #   assign main_set_17_next_state_main_set_18_en = main_set_17_en;  // next_state <- MAIN_SET_18
+    #   // stored_flag
+    #   assign main_set_17_stored_flag_held_payload_flags_item_0_en = main_set_17_en;  // stored_flag <- held.payload.flags.item_0
+    # 
+    # 
+    #   // === DT: main_set_18 ===
+    #   // next_state
+    #   assign main_set_18_next_state_main_set_19_en = main_set_18_en;  // next_state <- MAIN_SET_19
+    #   // stored_piece
+    #   assign main_set_18_stored_piece_held_payload_flags_item_1_en = main_set_18_en;  // stored_piece <- held.payload.flags.item_1
+    # 
+    # 
+    #   // === DT: main_set_19 ===
+    #   // captured
+    #   assign main_set_19_captured_accepted_en = main_set_19_en;  // captured <- accepted
+    #   // next_state
+    #   assign main_set_19_next_state_main_done_20_en = main_set_19_en;  // next_state <- MAIN_DONE_20
+    # 
+    # 
+    #   // === DT: main_set_2 ===
+    #   // next_state
+    #   assign main_set_2_next_state_main_wait_3_en = main_set_2_en;  // next_state <- MAIN_WAIT_3
+    #   // phase
+    #   assign main_set_2_phase_1_en = main_set_2_en;  // phase <- 1
+    # 
+    # 
+    #   // === DT: main_set_8 ===
+    #   // next_state
+    #   assign main_set_8_next_state_main_wait_9_en = main_set_8_en;  // next_state <- MAIN_WAIT_9
+    #   // phase
+    #   assign main_set_8_phase__2_en = main_set_8_en;  // phase <- 2
+    # 
+    # 
+    #   // === DT: main_spawn_12 ===
+    #   // left_start
+    #   assign main_spawn_12_left_start_1_en = main_spawn_12_en;  // left_start <- 1
+    #   // next_state
+    #   assign main_spawn_12_next_state_main_spawn_13_en = main_spawn_12_en;  // next_state <- MAIN_SPAWN_13
+    # 
+    # 
+    #   // === DT: main_spawn_13 ===
+    #   // next_state
+    #   assign main_spawn_13_next_state_main_await_all_14_en = main_spawn_13_en;  // next_state <- MAIN_AWAIT_ALL_14
+    #   // right_start
+    #   assign main_spawn_13_right_start_1_en = main_spawn_13_en;  // right_start <- 1
+    # 
+    # 
+    #   // === DT: main_spawn_6 ===
+    #   // next_state
+    #   assign main_spawn_6_next_state_main_await_all_7_en = main_spawn_6_en;  // next_state <- MAIN_AWAIT_ALL_7
+    #   // writer_start
+    #   assign main_spawn_6_writer_start_1_en = main_spawn_6_en;  // writer_start <- 1
+    # 
+    # 
+    #   // === DT: main_wait_10 ===
+    #   // next_state
+    #   assign main_wait_10_next_state_main_wait_11_en = main_wait_10_en;  // next_state <- MAIN_WAIT_11
+    # 
+    # 
+    #   // === DT: main_wait_11 ===
+    #   // next_state
+    #   assign main_wait_11_next_state_main_spawn_12_en = main_wait_11_en;  // next_state <- MAIN_SPAWN_12
+    # 
+    # 
+    #   // === DT: main_wait_3 ===
+    #   // next_state
+    #   assign main_wait_3_next_state_main_wait_4_en = main_wait_3_en;  // next_state <- MAIN_WAIT_4
+    # 
+    # 
+    #   // === DT: main_wait_4 ===
+    #   // next_state
+    #   assign main_wait_4_next_state_main_wait_5_en = main_wait_4_en;  // next_state <- MAIN_WAIT_5
+    # 
+    # 
+    #   // === DT: main_wait_5 ===
+    #   // next_state
+    #   assign main_wait_5_next_state_main_spawn_6_en = main_wait_5_en;  // next_state <- MAIN_SPAWN_6
+    # 
+    # 
+    #   // === DT: main_wait_9 ===
+    #   // next_state
+    #   assign main_wait_9_next_state_main_wait_10_en = main_wait_9_en;  // next_state <- MAIN_WAIT_10
+    # 
+    #   // LHS-Level Enable Signals from Unified Analysis
+    # 
+    #   // LHS-level enables for: accepted
+    #   assign accepted_packet_payload_data_en = main_idle_0_accepted_packet_payload_data_en;
+    # 
+    #   // LHS-level enables for: again
+    #   assign again_right_result_en = right_port_bindings_again_right_result_en;
+    # 
+    #   // LHS-level enables for: can_accept
+    #   assign can_accept_1_en = main_idle_0_can_accept_1_en;
+    # 
+    #   // LHS-level enables for: captured
+    #   assign captured_accepted_en = main_set_19_captured_accepted_en;
+    # 
+    #   // LHS-level enables for: copied_tag
+    #   assign copied_tag_held_tag_en = main_set_16_copied_tag_held_tag_en;
+    # 
+    #   // LHS-level enables for: copy_seen
+    #   assign copy_seen_writer_result_en = writer_port_bindings_copy_seen_writer_result_en;
+    # 
+    #   // LHS-level enables for: done
+    #   assign done_1_en = main_done_20_done_1_en;
+    # 
+    #   // LHS-level enables for: held
+    #   assign held_isf_write_writer_held_data_en = isf_write_writer_held_enable_held_isf_write_writer_held_data_en;
+    # 
+    #   // LHS-level enables for: isf_completion_left_ready
+    #   assign isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en = isf_completion_left_seen_isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en;
+    # 
+    #   // LHS-level enables for: isf_completion_left_seen
+    #   assign isf_completion_left_seen_0_en = isf_completion_left_seen_isf_completion_left_seen_0_en;
+    #   assign isf_completion_left_seen_1_en = isf_completion_left_seen_isf_completion_left_seen_1_en;
+    # 
+    #   // LHS-level enables for: isf_completion_right_ready
+    #   assign isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en = isf_completion_right_seen_isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en;
+    # 
+    #   // LHS-level enables for: isf_completion_right_seen
+    #   assign isf_completion_right_seen_0_en = isf_completion_right_seen_isf_completion_right_seen_0_en;
+    #   assign isf_completion_right_seen_1_en = isf_completion_right_seen_isf_completion_right_seen_1_en;
+    # 
+    #   // LHS-level enables for: isf_completion_writer_ready
+    #   assign isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en = isf_completion_writer_seen_isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en;
+    # 
+    #   // LHS-level enables for: isf_completion_writer_seen
+    #   assign isf_completion_writer_seen_0_en = isf_completion_writer_seen_isf_completion_writer_seen_0_en;
+    #   assign isf_completion_writer_seen_1_en = isf_completion_writer_seen_isf_completion_writer_seen_1_en;
+    # 
+    #   // LHS-level enables for: left_start
+    #   assign left_start_1_en = main_spawn_12_left_start_1_en;
+    # 
+    #   // LHS-level enables for: negative_again
+    #   assign negative_again_right_is_negative_en = right_port_bindings_negative_again_right_is_negative_en;
+    # 
+    #   // LHS-level enables for: negative_seen
+    #   assign negative_seen_left_is_negative_en = left_port_bindings_negative_seen_left_is_negative_en;
+    # 
+    #   // LHS-level enables for: next_state
+    #   assign next_state_main_await_all_14_en = main_spawn_13_next_state_main_await_all_14_en;
+    #   assign next_state_main_await_all_7_en = main_spawn_6_next_state_main_await_all_7_en;
+    #   assign next_state_main_done_20_en = main_set_19_next_state_main_done_20_en;
+    #   assign next_state_main_idle_0_en = main_done_20_next_state_main_idle_0_en;
+    #   assign next_state_main_set_1_en = main_idle_0_next_state_main_set_1_en;
+    #   assign next_state_main_set_15_en = main_await_all_14_next_state_main_set_15_en;
+    #   assign next_state_main_set_16_en = main_set_15_next_state_main_set_16_en;
+    #   assign next_state_main_set_17_en = main_set_16_next_state_main_set_17_en;
+    #   assign next_state_main_set_18_en = main_set_17_next_state_main_set_18_en;
+    #   assign next_state_main_set_19_en = main_set_18_next_state_main_set_19_en;
+    #   assign next_state_main_set_2_en = main_set_1_next_state_main_set_2_en;
+    #   assign next_state_main_set_8_en = main_await_all_7_next_state_main_set_8_en;
+    #   assign next_state_main_spawn_12_en = main_wait_11_next_state_main_spawn_12_en;
+    #   assign next_state_main_spawn_13_en = main_spawn_12_next_state_main_spawn_13_en;
+    #   assign next_state_main_spawn_6_en = main_wait_5_next_state_main_spawn_6_en;
+    #   assign next_state_main_wait_10_en = main_wait_9_next_state_main_wait_10_en;
+    #   assign next_state_main_wait_11_en = main_wait_10_next_state_main_wait_11_en;
+    #   assign next_state_main_wait_3_en = main_set_2_next_state_main_wait_3_en;
+    #   assign next_state_main_wait_4_en = main_wait_3_next_state_main_wait_4_en;
+    #   assign next_state_main_wait_5_en = main_wait_4_next_state_main_wait_5_en;
+    #   assign next_state_main_wait_9_en = main_set_8_next_state_main_wait_9_en;
+    # 
+    #   // LHS-level enables for: phase
+    #   assign phase_1_en = main_set_2_phase_1_en;
+    #   assign phase__2_en = main_set_8_phase__2_en;
+    # 
+    #   // LHS-level enables for: reset_seen
+    #   assign reset_seen_held_payload_data_en = main_set_1_reset_seen_held_payload_data_en;
+    # 
+    #   // LHS-level enables for: right_start
+    #   assign right_start_1_en = main_spawn_13_right_start_1_en;
+    # 
+    #   // LHS-level enables for: seen
+    #   assign seen_left_result_en = left_port_bindings_seen_left_result_en;
+    # 
+    #   // LHS-level enables for: stored
+    #   assign stored_held_payload_data_en = main_set_15_stored_held_payload_data_en;
+    # 
+    #   // LHS-level enables for: stored_flag
+    #   assign stored_flag_held_payload_flags_item_0_en = main_set_17_stored_flag_held_payload_flags_item_0_en;
+    # 
+    #   // LHS-level enables for: stored_piece
+    #   assign stored_piece_held_payload_flags_item_1_en = main_set_18_stored_piece_held_payload_flags_item_1_en;
+    # 
+    #   // LHS-level enables for: writer_start
+    #   assign writer_start_1_en = main_spawn_6_writer_start_1_en;
+    # 
+    #   // Unified Multiplexer Logic from Phase 1 Analysis
+    # 
+    #   // Unified Multiplexer for LHS: accepted
+    #   // Unified flop with mux for: accepted (register_in assignment)
+    #   always_comb begin
+    #     accepted = accepted_q;  // Default value is feedback from flop output
+    #     if (accepted_packet_payload_data_en) begin
+    #       accepted = packet.payload.data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       accepted_q <= 5'h00;
+    #     end else begin
+    #       accepted_q <= accepted;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: again
+    #   // Unified combinational mux for: again
+    #   always_comb begin
+    #     again = 0;  // Default value
+    #     if (again_right_result_en) begin
+    #       again = right_result;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: can_accept
+    #   // Unified combinational mux for: can_accept
+    #   always_comb begin
+    #     can_accept = 1'b0;  // Default value
+    #     if (can_accept_1_en) begin
+    #       can_accept = 1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: captured
+    #   // Unified flop with mux for: captured (register_out assignment)
+    #   always_comb begin
+    #     captured_next = captured;  // Default value
+    #     if (captured_accepted_en) begin
+    #       captured_next = accepted;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       captured <= 5'b00000;
+    #     end else begin
+    #       captured <= captured_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: copied_tag
+    #   // Unified flop with mux for: copied_tag (register_out assignment)
+    #   always_comb begin
+    #     copied_tag_next = copied_tag;  // Default value
+    #     if (copied_tag_held_tag_en) begin
+    #       copied_tag_next = held.tag;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       copied_tag <= 2'b00;
+    #     end else begin
+    #       copied_tag <= copied_tag_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: copy_seen
+    #   // Unified combinational mux for: copy_seen
+    #   always_comb begin
+    #     copy_seen = 0;  // Default value
+    #     if (copy_seen_writer_result_en) begin
+    #       copy_seen = writer_result;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: done
+    #   // Delayed pulse logic for: done (<1, exact Q+1)
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       done <= 1'b0;
+    #       done_pulse_delay_pipe <= 1'b0;
+    #     end else begin
+    #       done <= 1'b0;
+    #       if (done_pulse_delay_pipe) begin
+    #         done <= 1'b1;
+    #       end
+    #       done_pulse_delay_pipe <= done_1_en;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: held
+    #   // Unified flop with mux for: held (register_out assignment)
+    #   always_comb begin
+    #     held_next = held;  // Default value
+    #     if (held_isf_write_writer_held_data_en) begin
+    #       held_next = isf_write_writer_held_data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       held <= 149;
+    #     end else begin
+    #       held <= held_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_left_ready
+    #   // Unified combinational mux for: isf_completion_left_ready
+    #   always_comb begin
+    #     isf_completion_left_ready = 1'b0;  // Default value
+    #     if (isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en) begin
+    #       isf_completion_left_ready = intermediate_or_left_done_isf_completion_left_seen_3;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_left_seen
+    #   // Unified flop with mux for: isf_completion_left_seen (register_out assignment)
+    #   always_comb begin
+    #     isf_completion_left_seen_next = isf_completion_left_seen;  // Default value
+    #     if (isf_completion_left_seen_0_en) begin
+    #       isf_completion_left_seen_next = 0;
+    #     end
+    #     if (isf_completion_left_seen_1_en) begin
+    #       isf_completion_left_seen_next = 1;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       isf_completion_left_seen <= 0;
+    #     end else begin
+    #       isf_completion_left_seen <= isf_completion_left_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_right_ready
+    #   // Unified combinational mux for: isf_completion_right_ready
+    #   always_comb begin
+    #     isf_completion_right_ready = 1'b0;  // Default value
+    #     if (isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en) begin
+    #       isf_completion_right_ready = intermediate_or_right_done_isf_completion_right_seen_5;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_right_seen
+    #   // Unified flop with mux for: isf_completion_right_seen (register_out assignment)
+    #   always_comb begin
+    #     isf_completion_right_seen_next = isf_completion_right_seen;  // Default value
+    #     if (isf_completion_right_seen_0_en) begin
+    #       isf_completion_right_seen_next = 0;
+    #     end
+    #     if (isf_completion_right_seen_1_en) begin
+    #       isf_completion_right_seen_next = 1;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       isf_completion_right_seen <= 0;
+    #     end else begin
+    #       isf_completion_right_seen <= isf_completion_right_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_writer_ready
+    #   // Unified combinational mux for: isf_completion_writer_ready
+    #   always_comb begin
+    #     isf_completion_writer_ready = 1'b0;  // Default value
+    #     if (isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en) begin
+    #       isf_completion_writer_ready = intermediate_or_writer_done_isf_completion_writer_see_etc_7;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_writer_seen
+    #   // Unified flop with mux for: isf_completion_writer_seen (register_out assignment)
+    #   always_comb begin
+    #     isf_completion_writer_seen_next = isf_completion_writer_seen;  // Default value
+    #     if (isf_completion_writer_seen_0_en) begin
+    #       isf_completion_writer_seen_next = 0;
+    #     end
+    #     if (isf_completion_writer_seen_1_en) begin
+    #       isf_completion_writer_seen_next = 1;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       isf_completion_writer_seen <= 0;
+    #     end else begin
+    #       isf_completion_writer_seen <= isf_completion_writer_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: left_start
+    #   // Unified combinational mux for: left_start
+    #   always_comb begin
+    #     left_start = 1'b0;  // Default value
+    #     if (left_start_1_en) begin
+    #       left_start = 1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: negative_again
+    #   // Unified combinational mux for: negative_again
+    #   always_comb begin
+    #     negative_again = 0;  // Default value
+    #     if (negative_again_right_is_negative_en) begin
+    #       negative_again = right_is_negative;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: negative_seen
+    #   // Unified combinational mux for: negative_seen
+    #   always_comb begin
+    #     negative_seen = 0;  // Default value
+    #     if (negative_seen_left_is_negative_en) begin
+    #       negative_seen = left_is_negative;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: next_state
+    #   // Unified combinational mux for: next_state
+    #   always_comb begin
+    #     next_state = current_state;  // Default value
+    #     if (next_state_main_await_all_14_en) begin
+    #       next_state = MAIN_AWAIT_ALL_14;
+    #     end
+    #     if (next_state_main_await_all_7_en) begin
+    #       next_state = MAIN_AWAIT_ALL_7;
+    #     end
+    #     if (next_state_main_done_20_en) begin
+    #       next_state = MAIN_DONE_20;
+    #     end
+    #     if (next_state_main_idle_0_en) begin
+    #       next_state = MAIN_IDLE_0;
+    #     end
+    #     if (next_state_main_set_1_en) begin
+    #       next_state = MAIN_SET_1;
+    #     end
+    #     if (next_state_main_set_15_en) begin
+    #       next_state = MAIN_SET_15;
+    #     end
+    #     if (next_state_main_set_16_en) begin
+    #       next_state = MAIN_SET_16;
+    #     end
+    #     if (next_state_main_set_17_en) begin
+    #       next_state = MAIN_SET_17;
+    #     end
+    #     if (next_state_main_set_18_en) begin
+    #       next_state = MAIN_SET_18;
+    #     end
+    #     if (next_state_main_set_19_en) begin
+    #       next_state = MAIN_SET_19;
+    #     end
+    #     if (next_state_main_set_2_en) begin
+    #       next_state = MAIN_SET_2;
+    #     end
+    #     if (next_state_main_set_8_en) begin
+    #       next_state = MAIN_SET_8;
+    #     end
+    #     if (next_state_main_spawn_12_en) begin
+    #       next_state = MAIN_SPAWN_12;
+    #     end
+    #     if (next_state_main_spawn_13_en) begin
+    #       next_state = MAIN_SPAWN_13;
+    #     end
+    #     if (next_state_main_spawn_6_en) begin
+    #       next_state = MAIN_SPAWN_6;
+    #     end
+    #     if (next_state_main_wait_10_en) begin
+    #       next_state = MAIN_WAIT_10;
+    #     end
+    #     if (next_state_main_wait_11_en) begin
+    #       next_state = MAIN_WAIT_11;
+    #     end
+    #     if (next_state_main_wait_3_en) begin
+    #       next_state = MAIN_WAIT_3;
+    #     end
+    #     if (next_state_main_wait_4_en) begin
+    #       next_state = MAIN_WAIT_4;
+    #     end
+    #     if (next_state_main_wait_5_en) begin
+    #       next_state = MAIN_WAIT_5;
+    #     end
+    #     if (next_state_main_wait_9_en) begin
+    #       next_state = MAIN_WAIT_9;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: phase
+    #   // Unified flop with mux for: phase (register_out assignment)
+    #   always_comb begin
+    #     phase_next = phase;  // Default value
+    #     if (phase_1_en) begin
+    #       phase_next = 1;
+    #     end
+    #     if (phase__2_en) begin
+    #       phase_next = 2;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       phase <= 2'b00;
+    #     end else begin
+    #       phase <= phase_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: reset_seen
+    #   // Unified flop with mux for: reset_seen (register_out assignment)
+    #   always_comb begin
+    #     reset_seen_next = reset_seen;  // Default value
+    #     if (reset_seen_held_payload_data_en) begin
+    #       reset_seen_next = held.payload.data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       reset_seen <= 5'b00000;
+    #     end else begin
+    #       reset_seen <= reset_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: right_start
+    #   // Unified combinational mux for: right_start
+    #   always_comb begin
+    #     right_start = 1'b0;  // Default value
+    #     if (right_start_1_en) begin
+    #       right_start = 1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: seen
+    #   // Unified combinational mux for: seen
+    #   always_comb begin
+    #     seen = 0;  // Default value
+    #     if (seen_left_result_en) begin
+    #       seen = left_result;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: stored
+    #   // Unified flop with mux for: stored (register_out assignment)
+    #   always_comb begin
+    #     stored_next = stored;  // Default value
+    #     if (stored_held_payload_data_en) begin
+    #       stored_next = held.payload.data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       stored <= 5'b00000;
+    #     end else begin
+    #       stored <= stored_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: stored_flag
+    #   // Unified flop with mux for: stored_flag (register_out assignment)
+    #   always_comb begin
+    #     stored_flag_next = stored_flag;  // Default value
+    #     if (stored_flag_held_payload_flags_item_0_en) begin
+    #       stored_flag_next = held.payload.flags.item_0;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       stored_flag <= 0;
+    #     end else begin
+    #       stored_flag <= stored_flag_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: stored_piece
+    #   // Unified flop with mux for: stored_piece (register_out assignment)
+    #   always_comb begin
+    #     stored_piece_next = stored_piece;  // Default value
+    #     if (stored_piece_held_payload_flags_item_1_en) begin
+    #       stored_piece_next = held.payload.flags.item_1;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       stored_piece <= 2'b00;
+    #     end else begin
+    #       stored_piece <= stored_piece_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: writer_start
+    #   // Unified combinational mux for: writer_start
+    #   always_comb begin
+    #     writer_start = 1'b0;  // Default value
+    #     if (writer_start_1_en) begin
+    #       writer_start = 1;
+    #     end
+    #   end
+    # 
+    #   `ifndef SYNTHESIS
+    #   always_comb begin
+    #     assert ($onehot0({isf_completion_left_seen_0_en, isf_completion_left_seen_1_en})) else $error("selector multi-value conflict: isf_completion_left_seen");
+    #     assert ($onehot0({isf_completion_right_seen_0_en, isf_completion_right_seen_1_en})) else $error("selector multi-value conflict: isf_completion_right_seen");
+    #     assert ($onehot0({isf_completion_writer_seen_0_en, isf_completion_writer_seen_1_en})) else $error("selector multi-value conflict: isf_completion_writer_seen");
+    #     assert ($onehot0({next_state_main_await_all_14_en, next_state_main_await_all_7_en, next_state_main_done_20_en, next_state_main_idle_0_en, next_state_main_set_1_en, next_state_main_set_15_en, next_state_main_set_16_en, next_state_main_set_17_en, next_state_main_set_18_en, next_state_main_set_19_en, next_state_main_set_2_en, next_state_main_set_8_en, next_state_main_spawn_12_en, next_state_main_spawn_13_en, next_state_main_spawn_6_en, next_state_main_wait_10_en, next_state_main_wait_11_en, next_state_main_wait_3_en, next_state_main_wait_4_en, next_state_main_wait_5_en, next_state_main_wait_9_en})) else $error("selector multi-value conflict: next_state");
+    #     assert ($onehot0({phase_1_en, phase__2_en})) else $error("selector multi-value conflict: phase");
+    #   end
+    #   `endif
+    #   // Shared-datapath source-enable exports
+    #   assign shared_dp_export_again_right_result_en = again_right_result_en;
+    #   assign shared_dp_export_captured_accepted_en = captured_accepted_en;
+    #   assign shared_dp_export_copied_tag_held_tag_en = copied_tag_held_tag_en;
+    #   assign shared_dp_export_copy_seen_writer_result_en = copy_seen_writer_result_en;
+    #   assign shared_dp_export_done_1_en = done_1_en;
+    #   assign shared_dp_export_left_start_1_en = left_start_1_en;
+    #   assign shared_dp_export_negative_again_right_is_negative_en = negative_again_right_is_negative_en;
+    #   assign shared_dp_export_negative_seen_left_is_negative_en = negative_seen_left_is_negative_en;
+    #   assign shared_dp_export_phase_1_en = phase_1_en;
+    #   assign shared_dp_export_phase_2_en = phase__2_en;
+    #   assign shared_dp_export_reset_seen_held_payload_data_en = reset_seen_held_payload_data_en;
+    #   assign shared_dp_export_right_start_1_en = right_start_1_en;
+    #   assign shared_dp_export_seen_left_result_en = seen_left_result_en;
+    #   assign shared_dp_export_stored_held_payload_data_en = stored_held_payload_data_en;
+    #   assign shared_dp_export_stored_flag_held_payload_flags_item_0_en = stored_flag_held_payload_flags_item_0_en;
+    #   assign shared_dp_export_stored_piece_held_payload_flags_item_1_en = stored_piece_held_payload_flags_item_1_en;
+    #   assign shared_dp_export_writer_start_1_en = writer_start_1_en;
+    # endmodule
+    # 
+    # 
+    # //=============================================================================
+    # // Flattened Decision Tree FSM: packed_input_generated_domains__domain_io__child_copier
+    # // Generated using Enable-based Methodology with WEN/EN Signals
+    # // 
+    # // This implementation uses:
+    # // - Flattened decision tree approach
+    # // - Enable-based logic with assign statements
+    # // - Write Enable (WEN) and Enable (EN) signals for each LHS
+    # // - Flat Boolean expressions from DT traversal
+    # //=============================================================================
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m55_packed_input_generated_domains__domain_io__child_copier__frame__fsmgen_t; // frame
+    # 
+    # module packed_input_generated_domains__domain_io__child_copier #(
+    #   parameter MODE = 0
+    # ) (
+    #   input  wire clk,
+    #   input  wire rst_n,
+    #   input fsmgen_m55_packed_input_generated_domains__domain_io__child_copier__frame__fsmgen_t packet,
+    #   input  wire start,
+    #   output reg  done,
+    #   output fsmgen_m55_packed_input_generated_domains__domain_io__child_copier__frame__fsmgen_t isf_write_held_data,
+    #   output reg  isf_write_held_enable,
+    #   output reg  [4:0] result
+    # ,
+    #   output  wire shared_dp_export_done_1_en,
+    #   output  wire shared_dp_export_isf_write_held_data_packet_en,
+    #   output  wire shared_dp_export_isf_write_held_enable_1_en,
+    #   output  wire shared_dp_export_result_packet_payload_data_en
+    # );
+    # 
+    #   // State encoding
+    #   localparam COPIER_IDLE_0 = 3'd0;
+    #   localparam COPIER_WAIT_0 = 3'd1;
+    #   localparam COPIER_WAIT_1 = 3'd2;
+    #   localparam COPIER_SET_2 = 3'd3;
+    #   localparam COPIER_SET_3 = 3'd4;
+    #   localparam COPIER_DONE_4 = 3'd5;
+    # 
+    #   // State registers
+    #   reg [2:0] current_state, next_state;
+    # 
+    #   // State sequential logic
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       current_state <= COPIER_IDLE_0;
+    #     end else begin
+    #       current_state <= next_state;
+    #     end
+    #   end
+    # 
+    #   // Internal signal declarations
+    #   reg isf_child_start_seen;
+    #   // Internal mux helper registers
+    #   reg done_pulse_delay_pipe;
+    #   reg isf_child_start_seen_next;
+    #   reg [4:0] result_next;
+    #   // Generated enable wires
+    #   wire copier_done_4_done_1_en;
+    #   wire copier_done_4_en;
+    #   wire copier_done_4_next_state_copier_idle_0_en;
+    #   wire copier_idle_0_en;
+    #   wire copier_idle_0_next_state_copier_wait_0_en;
+    #   wire copier_set_2_en;
+    #   wire copier_set_2_isf_write_held_data_packet_en;
+    #   wire copier_set_2_isf_write_held_enable_1_en;
+    #   wire copier_set_2_next_state_copier_set_3_en;
+    #   wire copier_set_3_en;
+    #   wire copier_set_3_next_state_copier_done_4_en;
+    #   wire copier_set_3_result_packet_payload_data_en;
+    #   wire copier_wait_0_en;
+    #   wire copier_wait_0_next_state_copier_wait_1_en;
+    #   wire copier_wait_1_en;
+    #   wire copier_wait_1_next_state_copier_set_2_en;
+    #   wire done_1_en;
+    #   wire isf_child_start_seen_en;
+    #   wire isf_child_start_seen_isf_child_start_seen_start_en;
+    #   wire isf_child_start_seen_start_en;
+    #   wire isf_write_held_data_packet_en;
+    #   wire isf_write_held_enable_1_en;
+    #   wire next_state_copier_done_4_en;
+    #   wire next_state_copier_idle_0_en;
+    #   wire next_state_copier_set_2_en;
+    #   wire next_state_copier_set_3_en;
+    #   wire next_state_copier_wait_0_en;
+    #   wire next_state_copier_wait_1_en;
+    #   wire result_packet_payload_data_en;
+    # 
+    #   // State and DT Enable Conditions
+    #   assign copier_done_4_en = current_state == COPIER_DONE_4;
+    #   assign copier_idle_0_en = current_state == COPIER_IDLE_0;
+    #   assign copier_set_2_en = current_state == COPIER_SET_2;
+    #   assign copier_set_3_en = current_state == COPIER_SET_3;
+    #   assign copier_wait_0_en = current_state == COPIER_WAIT_0;
+    #   assign copier_wait_1_en = current_state == COPIER_WAIT_1;
+    #   assign isf_child_start_seen_en = 1'b1;
+    # 
+    #   // Consolidated intermediate signals (AST factorization + pre-scan)
+    #   wire intermediate_and_start_not_isf_child_start_seen_1;
+    # 
+    #   assign intermediate_and_start_not_isf_child_start_seen_1 = start & !isf_child_start_seen; // Source: fsmgen_parsing
+    # 
+    #   // Unified WEN/EN Signal Generation from Phase 1 Analysis
+    #   // DT-Specific Enable Signals from Unified Analysis
+    # 
+    # 
+    #   // === DT: -isf_child_start_seen ===
+    #   // isf_child_start_seen
+    #   assign isf_child_start_seen_isf_child_start_seen_start_en = isf_child_start_seen_en;  // isf_child_start_seen <- start
+    # 
+    # 
+    #   // === DT: copier_done_4 ===
+    #   // done
+    #   assign copier_done_4_done_1_en = copier_done_4_en;  // done <- 1
+    #   // next_state
+    #   assign copier_done_4_next_state_copier_idle_0_en = copier_done_4_en;  // next_state <- COPIER_IDLE_0
+    # 
+    # 
+    #   // === DT: copier_idle_0 ===
+    #   // next_state
+    #   assign copier_idle_0_next_state_copier_wait_0_en = copier_idle_0_en & intermediate_and_start_not_isf_child_start_seen_1;  // next_state <- COPIER_WAIT_0
+    # 
+    # 
+    #   // === DT: copier_set_2 ===
+    #   // isf_write_held_data
+    #   assign copier_set_2_isf_write_held_data_packet_en = copier_set_2_en;  // isf_write_held_data <- packet
+    #   // isf_write_held_enable
+    #   assign copier_set_2_isf_write_held_enable_1_en = copier_set_2_en;  // isf_write_held_enable <- 1
+    #   // next_state
+    #   assign copier_set_2_next_state_copier_set_3_en = copier_set_2_en;  // next_state <- COPIER_SET_3
+    # 
+    # 
+    #   // === DT: copier_set_3 ===
+    #   // next_state
+    #   assign copier_set_3_next_state_copier_done_4_en = copier_set_3_en;  // next_state <- COPIER_DONE_4
+    #   // result
+    #   assign copier_set_3_result_packet_payload_data_en = copier_set_3_en;  // result <- packet.payload.data
+    # 
+    # 
+    #   // === DT: copier_wait_0 ===
+    #   // next_state
+    #   assign copier_wait_0_next_state_copier_wait_1_en = copier_wait_0_en;  // next_state <- COPIER_WAIT_1
+    # 
+    # 
+    #   // === DT: copier_wait_1 ===
+    #   // next_state
+    #   assign copier_wait_1_next_state_copier_set_2_en = copier_wait_1_en;  // next_state <- COPIER_SET_2
+    # 
+    #   // LHS-Level Enable Signals from Unified Analysis
+    # 
+    #   // LHS-level enables for: done
+    #   assign done_1_en = copier_done_4_done_1_en;
+    # 
+    #   // LHS-level enables for: isf_child_start_seen
+    #   assign isf_child_start_seen_start_en = isf_child_start_seen_isf_child_start_seen_start_en;
+    # 
+    #   // LHS-level enables for: isf_write_held_data
+    #   assign isf_write_held_data_packet_en = copier_set_2_isf_write_held_data_packet_en;
+    # 
+    #   // LHS-level enables for: isf_write_held_enable
+    #   assign isf_write_held_enable_1_en = copier_set_2_isf_write_held_enable_1_en;
+    # 
+    #   // LHS-level enables for: next_state
+    #   assign next_state_copier_done_4_en = copier_set_3_next_state_copier_done_4_en;
+    #   assign next_state_copier_idle_0_en = copier_done_4_next_state_copier_idle_0_en;
+    #   assign next_state_copier_set_2_en = copier_wait_1_next_state_copier_set_2_en;
+    #   assign next_state_copier_set_3_en = copier_set_2_next_state_copier_set_3_en;
+    #   assign next_state_copier_wait_0_en = copier_idle_0_next_state_copier_wait_0_en;
+    #   assign next_state_copier_wait_1_en = copier_wait_0_next_state_copier_wait_1_en;
+    # 
+    #   // LHS-level enables for: result
+    #   assign result_packet_payload_data_en = copier_set_3_result_packet_payload_data_en;
+    # 
+    #   // Unified Multiplexer Logic from Phase 1 Analysis
+    # 
+    #   // Unified Multiplexer for LHS: done
+    #   // Delayed pulse logic for: done (<1, exact Q+1)
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       done <= 1'b0;
+    #       done_pulse_delay_pipe <= 1'b0;
+    #     end else begin
+    #       done <= 1'b0;
+    #       if (done_pulse_delay_pipe) begin
+    #         done <= 1'b1;
+    #       end
+    #       done_pulse_delay_pipe <= done_1_en;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_child_start_seen
+    #   // Unified flop with mux for: isf_child_start_seen (register_out assignment)
+    #   always_comb begin
+    #     isf_child_start_seen_next = isf_child_start_seen;  // Default value
+    #     if (isf_child_start_seen_start_en) begin
+    #       isf_child_start_seen_next = start;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       isf_child_start_seen <= 0;
+    #     end else begin
+    #       isf_child_start_seen <= isf_child_start_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_write_held_data
+    #   // Unified combinational mux for: isf_write_held_data
+    #   always_comb begin
+    #     isf_write_held_data = 10'b0000000000;  // Default value
+    #     if (isf_write_held_data_packet_en) begin
+    #       isf_write_held_data = packet;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_write_held_enable
+    #   // Unified combinational mux for: isf_write_held_enable
+    #   always_comb begin
+    #     isf_write_held_enable = 1'b0;  // Default value
+    #     if (isf_write_held_enable_1_en) begin
+    #       isf_write_held_enable = 1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: next_state
+    #   // Unified combinational mux for: next_state
+    #   always_comb begin
+    #     next_state = current_state;  // Default value
+    #     if (next_state_copier_done_4_en) begin
+    #       next_state = COPIER_DONE_4;
+    #     end
+    #     if (next_state_copier_idle_0_en) begin
+    #       next_state = COPIER_IDLE_0;
+    #     end
+    #     if (next_state_copier_set_2_en) begin
+    #       next_state = COPIER_SET_2;
+    #     end
+    #     if (next_state_copier_set_3_en) begin
+    #       next_state = COPIER_SET_3;
+    #     end
+    #     if (next_state_copier_wait_0_en) begin
+    #       next_state = COPIER_WAIT_0;
+    #     end
+    #     if (next_state_copier_wait_1_en) begin
+    #       next_state = COPIER_WAIT_1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: result
+    #   // Unified flop with mux for: result (register_out assignment)
+    #   always_comb begin
+    #     result_next = result;  // Default value
+    #     if (result_packet_payload_data_en) begin
+    #       result_next = packet.payload.data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       result <= 5'h00;
+    #     end else begin
+    #       result <= result_next;
+    #     end
+    #   end
+    # 
+    #   `ifndef SYNTHESIS
+    #   always_comb begin
+    #     assert ($onehot0({next_state_copier_done_4_en, next_state_copier_idle_0_en, next_state_copier_set_2_en, next_state_copier_set_3_en, next_state_copier_wait_0_en, next_state_copier_wait_1_en})) else $error("selector multi-value conflict: next_state");
+    #   end
+    #   `endif
+    #   // Shared-datapath source-enable exports
+    #   assign shared_dp_export_done_1_en = done_1_en;
+    #   assign shared_dp_export_isf_write_held_data_packet_en = isf_write_held_data_packet_en;
+    #   assign shared_dp_export_isf_write_held_enable_1_en = isf_write_held_enable_1_en;
+    #   assign shared_dp_export_result_packet_payload_data_en = result_packet_payload_data_en;
+    # endmodule
+    # 
+    # 
+    # //=============================================================================
+    # // Flattened Decision Tree FSM: packed_input_generated_domains__domain_io__child_reader
+    # // Generated using Enable-based Methodology with WEN/EN Signals
+    # // 
+    # // This implementation uses:
+    # // - Flattened decision tree approach
+    # // - Enable-based logic with assign statements
+    # // - Write Enable (WEN) and Enable (EN) signals for each LHS
+    # // - Flat Boolean expressions from DT traversal
+    # //=============================================================================
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m55_packed_input_generated_domains__domain_io__child_reader__frame__fsmgen_t; // frame
+    # 
+    # module packed_input_generated_domains__domain_io__child_reader (
+    #   input  wire clk,
+    #   input  wire rst_n,
+    #   input fsmgen_m55_packed_input_generated_domains__domain_io__child_reader__frame__fsmgen_t packet,
+    #   input  wire start,
+    #   output reg  done,
+    #   output reg  is_negative,
+    #   output reg  [4:0] result
+    # ,
+    #   output  wire shared_dp_export_done_1_en,
+    #   output  wire shared_dp_export_is_negative_expr_en,
+    #   output  wire shared_dp_export_result_packet_payload_data_en
+    # );
+    # 
+    #   // State encoding
+    #   localparam READER_IDLE_0 = 3'd0;
+    #   localparam READER_WAIT_0 = 3'd1;
+    #   localparam READER_WAIT_1 = 3'd2;
+    #   localparam READER_SET_2 = 3'd3;
+    #   localparam READER_SET_3 = 3'd4;
+    #   localparam READER_DONE_4 = 3'd5;
+    # 
+    #   // State registers
+    #   reg [2:0] current_state, next_state;
+    # 
+    #   // State sequential logic
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       current_state <= READER_IDLE_0;
+    #     end else begin
+    #       current_state <= next_state;
+    #     end
+    #   end
+    # 
+    #   // Internal signal declarations
+    #   reg isf_child_start_seen;
+    #   // Internal mux helper registers
+    #   reg done_pulse_delay_pipe;
+    #   reg is_negative_next;
+    #   reg isf_child_start_seen_next;
+    #   reg [4:0] result_next;
+    #   // Generated enable wires
+    #   wire done_1_en;
+    #   wire is_negative_expr_en;
+    #   wire isf_child_start_seen_en;
+    #   wire isf_child_start_seen_isf_child_start_seen_start_en;
+    #   wire isf_child_start_seen_start_en;
+    #   wire next_state_reader_done_4_en;
+    #   wire next_state_reader_idle_0_en;
+    #   wire next_state_reader_set_2_en;
+    #   wire next_state_reader_set_3_en;
+    #   wire next_state_reader_wait_0_en;
+    #   wire next_state_reader_wait_1_en;
+    #   wire reader_done_4_done_1_en;
+    #   wire reader_done_4_en;
+    #   wire reader_done_4_next_state_reader_idle_0_en;
+    #   wire reader_idle_0_en;
+    #   wire reader_idle_0_next_state_reader_wait_0_en;
+    #   wire reader_set_2_en;
+    #   wire reader_set_2_next_state_reader_set_3_en;
+    #   wire reader_set_2_result_packet_payload_data_en;
+    #   wire reader_set_3_en;
+    #   wire reader_set_3_is_negative_packet_payload_data_0_en;
+    #   wire reader_set_3_next_state_reader_done_4_en;
+    #   wire reader_wait_0_en;
+    #   wire reader_wait_0_next_state_reader_wait_1_en;
+    #   wire reader_wait_1_en;
+    #   wire reader_wait_1_next_state_reader_set_2_en;
+    #   wire result_packet_payload_data_en;
+    # 
+    #   // State and DT Enable Conditions
+    #   assign reader_done_4_en = current_state == READER_DONE_4;
+    #   assign reader_idle_0_en = current_state == READER_IDLE_0;
+    #   assign reader_set_2_en = current_state == READER_SET_2;
+    #   assign reader_set_3_en = current_state == READER_SET_3;
+    #   assign reader_wait_0_en = current_state == READER_WAIT_0;
+    #   assign reader_wait_1_en = current_state == READER_WAIT_1;
+    #   assign isf_child_start_seen_en = 1'b1;
+    # 
+    #   // Consolidated intermediate signals (AST factorization + pre-scan)
+    #   wire intermediate_and_start_not_isf_child_start_seen_1;
+    # 
+    #   assign intermediate_and_start_not_isf_child_start_seen_1 = start & !isf_child_start_seen; // Source: fsmgen_parsing
+    # 
+    #   // Unified WEN/EN Signal Generation from Phase 1 Analysis
+    #   // DT-Specific Enable Signals from Unified Analysis
+    # 
+    # 
+    #   // === DT: -isf_child_start_seen ===
+    #   // isf_child_start_seen
+    #   assign isf_child_start_seen_isf_child_start_seen_start_en = isf_child_start_seen_en;  // isf_child_start_seen <- start
+    # 
+    # 
+    #   // === DT: reader_done_4 ===
+    #   // done
+    #   assign reader_done_4_done_1_en = reader_done_4_en;  // done <- 1
+    #   // next_state
+    #   assign reader_done_4_next_state_reader_idle_0_en = reader_done_4_en;  // next_state <- READER_IDLE_0
+    # 
+    # 
+    #   // === DT: reader_idle_0 ===
+    #   // next_state
+    #   assign reader_idle_0_next_state_reader_wait_0_en = reader_idle_0_en & intermediate_and_start_not_isf_child_start_seen_1;  // next_state <- READER_WAIT_0
+    # 
+    # 
+    #   // === DT: reader_set_2 ===
+    #   // next_state
+    #   assign reader_set_2_next_state_reader_set_3_en = reader_set_2_en;  // next_state <- READER_SET_3
+    #   // result
+    #   assign reader_set_2_result_packet_payload_data_en = reader_set_2_en;  // result <- packet.payload.data
+    # 
+    # 
+    #   // === DT: reader_set_3 ===
+    #   // is_negative
+    #   assign reader_set_3_is_negative_packet_payload_data_0_en = reader_set_3_en;  // is_negative <- packet.payload.data < 0
+    #   // next_state
+    #   assign reader_set_3_next_state_reader_done_4_en = reader_set_3_en;  // next_state <- READER_DONE_4
+    # 
+    # 
+    #   // === DT: reader_wait_0 ===
+    #   // next_state
+    #   assign reader_wait_0_next_state_reader_wait_1_en = reader_wait_0_en;  // next_state <- READER_WAIT_1
+    # 
+    # 
+    #   // === DT: reader_wait_1 ===
+    #   // next_state
+    #   assign reader_wait_1_next_state_reader_set_2_en = reader_wait_1_en;  // next_state <- READER_SET_2
+    # 
+    #   // LHS-Level Enable Signals from Unified Analysis
+    # 
+    #   // LHS-level enables for: done
+    #   assign done_1_en = reader_done_4_done_1_en;
+    # 
+    #   // LHS-level enables for: is_negative
+    #   assign is_negative_expr_en = reader_set_3_is_negative_packet_payload_data_0_en;
+    # 
+    #   // LHS-level enables for: isf_child_start_seen
+    #   assign isf_child_start_seen_start_en = isf_child_start_seen_isf_child_start_seen_start_en;
+    # 
+    #   // LHS-level enables for: next_state
+    #   assign next_state_reader_done_4_en = reader_set_3_next_state_reader_done_4_en;
+    #   assign next_state_reader_idle_0_en = reader_done_4_next_state_reader_idle_0_en;
+    #   assign next_state_reader_set_2_en = reader_wait_1_next_state_reader_set_2_en;
+    #   assign next_state_reader_set_3_en = reader_set_2_next_state_reader_set_3_en;
+    #   assign next_state_reader_wait_0_en = reader_idle_0_next_state_reader_wait_0_en;
+    #   assign next_state_reader_wait_1_en = reader_wait_0_next_state_reader_wait_1_en;
+    # 
+    #   // LHS-level enables for: result
+    #   assign result_packet_payload_data_en = reader_set_2_result_packet_payload_data_en;
+    # 
+    #   // Unified Multiplexer Logic from Phase 1 Analysis
+    # 
+    #   // Unified Multiplexer for LHS: done
+    #   // Delayed pulse logic for: done (<1, exact Q+1)
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       done <= 1'b0;
+    #       done_pulse_delay_pipe <= 1'b0;
+    #     end else begin
+    #       done <= 1'b0;
+    #       if (done_pulse_delay_pipe) begin
+    #         done <= 1'b1;
+    #       end
+    #       done_pulse_delay_pipe <= done_1_en;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: is_negative
+    #   // Unified flop with mux for: is_negative (register_out assignment)
+    #   always_comb begin
+    #     is_negative_next = is_negative;  // Default value
+    #     if (is_negative_expr_en) begin
+    #       is_negative_next = packet.payload.data < 0;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       is_negative <= 1'b0;
+    #     end else begin
+    #       is_negative <= is_negative_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_child_start_seen
+    #   // Unified flop with mux for: isf_child_start_seen (register_out assignment)
+    #   always_comb begin
+    #     isf_child_start_seen_next = isf_child_start_seen;  // Default value
+    #     if (isf_child_start_seen_start_en) begin
+    #       isf_child_start_seen_next = start;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       isf_child_start_seen <= 0;
+    #     end else begin
+    #       isf_child_start_seen <= isf_child_start_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: next_state
+    #   // Unified combinational mux for: next_state
+    #   always_comb begin
+    #     next_state = current_state;  // Default value
+    #     if (next_state_reader_done_4_en) begin
+    #       next_state = READER_DONE_4;
+    #     end
+    #     if (next_state_reader_idle_0_en) begin
+    #       next_state = READER_IDLE_0;
+    #     end
+    #     if (next_state_reader_set_2_en) begin
+    #       next_state = READER_SET_2;
+    #     end
+    #     if (next_state_reader_set_3_en) begin
+    #       next_state = READER_SET_3;
+    #     end
+    #     if (next_state_reader_wait_0_en) begin
+    #       next_state = READER_WAIT_0;
+    #     end
+    #     if (next_state_reader_wait_1_en) begin
+    #       next_state = READER_WAIT_1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: result
+    #   // Unified flop with mux for: result (register_out assignment)
+    #   always_comb begin
+    #     result_next = result;  // Default value
+    #     if (result_packet_payload_data_en) begin
+    #       result_next = packet.payload.data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       result <= 5'h00;
+    #     end else begin
+    #       result <= result_next;
+    #     end
+    #   end
+    # 
+    #   `ifndef SYNTHESIS
+    #   always_comb begin
+    #     assert ($onehot0({next_state_reader_done_4_en, next_state_reader_idle_0_en, next_state_reader_set_2_en, next_state_reader_set_3_en, next_state_reader_wait_0_en, next_state_reader_wait_1_en})) else $error("selector multi-value conflict: next_state");
+    #   end
+    #   `endif
+    #   // Shared-datapath source-enable exports
+    #   assign shared_dp_export_done_1_en = done_1_en;
+    #   assign shared_dp_export_is_negative_expr_en = is_negative_expr_en;
+    #   assign shared_dp_export_result_packet_payload_data_en = result_packet_payload_data_en;
+    # endmodule
+    # 
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m34_packed_input_generated_domains_top__frame__fsmgen_t; // frame
+    # 
+    # module packed_input_generated_domains_top (
+    #     input idle_clk,
+    #     input clk,
+    #     input rst_n,
+    #     input start,
+    #     input [9:0] packet,
+    #     input [9:0] unused,
+    #     output [1:0] phase,
+    #     output [4:0] seen,
+    #     output [4:0] again,
+    #     output negative_seen,
+    #     output negative_again,
+    #     output [4:0] copy_seen,
+    #     output [4:0] stored,
+    #     output [1:0] copied_tag,
+    #     output stored_flag,
+    #     output [1:0] stored_piece,
+    #     output [4:0] captured,
+    #     output [4:0] reset_seen,
+    #     output done
+    # );
+    # 
+    #     wire comp_link_io_left_start;
+    #     wire comp_link_io_right_start;
+    #     wire comp_link_io_writer_start;
+    #     wire comp_link_io__left_done;
+    #     wire comp_link_io__left_is_negative;
+    #     wire [4:0] comp_link_io__left_result;
+    #     wire comp_link_io__right_done;
+    #     wire comp_link_io__right_is_negative;
+    #     wire [4:0] comp_link_io__right_result;
+    #     wire comp_link_io__writer_done;
+    #     wire fsmgen_m34_packed_input_generated_domains_top__frame__fsmgen_t comp_link_io__writer_isf_write_held_data;
+    #     wire comp_link_io__writer_isf_write_held_enable;
+    #     wire [4:0] comp_link_io__writer_result;
+    #     wire io_writer_result_packet_payload_data_src_en;
+    #     wire io_left_is_negative_packet_payload_data_0_src_en;
+    #     wire io_left_result_packet_payload_data_src_en;
+    #     wire io_right_is_negative_packet_payload_data_0_src_en;
+    #     wire io_right_result_packet_payload_data_src_en;
+    #     wire shared_dp_unused_io_shared_dp_export_again_right_result_en;
+    #     wire shared_dp_unused_io_shared_dp_export_captured_accepted_en;
+    #     wire shared_dp_unused_io_shared_dp_export_copied_tag_held_tag_en;
+    #     wire shared_dp_unused_io_shared_dp_export_copy_seen_writer_result_en;
+    #     wire shared_dp_unused_io_shared_dp_export_done_1_en;
+    #     wire shared_dp_unused_io_shared_dp_export_left_start_1_en;
+    #     wire shared_dp_unused_io_shared_dp_export_negative_again_right_is_negative_en;
+    #     wire shared_dp_unused_io_shared_dp_export_negative_seen_left_is_negative_en;
+    #     wire shared_dp_unused_io_shared_dp_export_phase_1_en;
+    #     wire shared_dp_unused_io_shared_dp_export_phase_2_en;
+    #     wire shared_dp_unused_io_shared_dp_export_reset_seen_held_payload_data_en;
+    #     wire shared_dp_unused_io_shared_dp_export_right_start_1_en;
+    #     wire shared_dp_unused_io_shared_dp_export_seen_left_result_en;
+    #     wire shared_dp_unused_io_shared_dp_export_stored_held_payload_data_en;
+    #     wire shared_dp_unused_io_shared_dp_export_stored_flag_held_payload_flags_item_0_en;
+    #     wire shared_dp_unused_io_shared_dp_export_stored_piece_held_payload_flags_item_1_en;
+    #     wire shared_dp_unused_io_shared_dp_export_writer_start_1_en;
+    #     wire shared_dp_unused_io_writer_shared_dp_export_done_1_en;
+    #     wire shared_dp_unused_io_writer_shared_dp_export_isf_write_held_data_packet_en;
+    #     wire shared_dp_unused_io_writer_shared_dp_export_isf_write_held_enable_1_en;
+    #     wire shared_dp_unused_io_left_shared_dp_export_done_1_en;
+    #     wire shared_dp_unused_io_right_shared_dp_export_done_1_en;
+    #     wire is_negative_shared_en;
+    #     wire is_negative_multi_value_conflict;
+    #     wire is_negative_packet_payload_data_0_shared_en;
+    #     wire is_negative_packet_payload_data_0_multi_src_conflict;
+    #     wire result_shared_en;
+    #     wire result_multi_value_conflict;
+    #     wire result_packet_payload_data_shared_en;
+    #     wire result_packet_payload_data_multi_src_conflict;
+    # 
+    #   assign is_negative_packet_payload_data_0_shared_en = io_left_is_negative_packet_payload_data_0_src_en | io_right_is_negative_packet_payload_data_0_src_en;
+    #   assign is_negative_packet_payload_data_0_multi_src_conflict = (io_left_is_negative_packet_payload_data_0_src_en & io_right_is_negative_packet_payload_data_0_src_en);
+    #   assign is_negative_shared_en = is_negative_packet_payload_data_0_shared_en;
+    #   assign is_negative_multi_value_conflict = 1'b0;
+    #   assign result_packet_payload_data_shared_en = io_left_result_packet_payload_data_src_en | io_right_result_packet_payload_data_src_en | io_writer_result_packet_payload_data_src_en;
+    #   assign result_packet_payload_data_multi_src_conflict = (io_left_result_packet_payload_data_src_en & io_right_result_packet_payload_data_src_en) | (io_left_result_packet_payload_data_src_en & io_writer_result_packet_payload_data_src_en) | (io_right_result_packet_payload_data_src_en & io_writer_result_packet_payload_data_src_en);
+    #   assign result_shared_en = result_packet_payload_data_shared_en;
+    #   assign result_multi_value_conflict = 1'b0;
+    # 
+    #     `ifndef SYNTHESIS
+    #     always_comb begin
+    #       assert (!is_negative_packet_payload_data_0_multi_src_conflict) else $error("shared-datapath same-value conflict: is_negative packet.payload.data < 0");
+    #     end
+    #     `endif
+    #     `ifndef SYNTHESIS
+    #     always_comb begin
+    #       assert (!result_packet_payload_data_multi_src_conflict) else $error("shared-datapath same-value conflict: result packet.payload.data");
+    #     end
+    #     `endif
+    # 
+    #     packed_input_generated_domains__domain_idle idle (
+    #         .idle_clk(idle_clk),
+    #         .unused(unused)
+    #     );
+    # 
+    #     packed_input_generated_domains__domain_io io (
+    #         .clk(clk),
+    #         .rst_n(rst_n),
+    #         .again(again),
+    #         .captured(captured),
+    #         .copied_tag(copied_tag),
+    #         .copy_seen(copy_seen),
+    #         .done(done),
+    #         .isf_write_writer_held_data(comp_link_io__writer_isf_write_held_data),
+    #         .isf_write_writer_held_enable(comp_link_io__writer_isf_write_held_enable),
+    #         .left_done(comp_link_io__left_done),
+    #         .left_is_negative(comp_link_io__left_is_negative),
+    #         .left_result(comp_link_io__left_result),
+    #         .left_start(comp_link_io_left_start),
+    #         .negative_again(negative_again),
+    #         .negative_seen(negative_seen),
+    #         .packet(packet),
+    #         .phase(phase),
+    #         .reset_seen(reset_seen),
+    #         .right_done(comp_link_io__right_done),
+    #         .right_is_negative(comp_link_io__right_is_negative),
+    #         .right_result(comp_link_io__right_result),
+    #         .right_start(comp_link_io_right_start),
+    #         .seen(seen),
+    #         .start(start),
+    #         .stored(stored),
+    #         .stored_flag(stored_flag),
+    #         .stored_piece(stored_piece),
+    #         .writer_done(comp_link_io__writer_done),
+    #         .writer_result(comp_link_io__writer_result),
+    #         .writer_start(comp_link_io_writer_start),
+    #         .shared_dp_export_again_right_result_en(shared_dp_unused_io_shared_dp_export_again_right_result_en),
+    #         .shared_dp_export_captured_accepted_en(shared_dp_unused_io_shared_dp_export_captured_accepted_en),
+    #         .shared_dp_export_copied_tag_held_tag_en(shared_dp_unused_io_shared_dp_export_copied_tag_held_tag_en),
+    #         .shared_dp_export_copy_seen_writer_result_en(shared_dp_unused_io_shared_dp_export_copy_seen_writer_result_en),
+    #         .shared_dp_export_done_1_en(shared_dp_unused_io_shared_dp_export_done_1_en),
+    #         .shared_dp_export_left_start_1_en(shared_dp_unused_io_shared_dp_export_left_start_1_en),
+    #         .shared_dp_export_negative_again_right_is_negative_en(shared_dp_unused_io_shared_dp_export_negative_again_right_is_negative_en),
+    #         .shared_dp_export_negative_seen_left_is_negative_en(shared_dp_unused_io_shared_dp_export_negative_seen_left_is_negative_en),
+    #         .shared_dp_export_phase_1_en(shared_dp_unused_io_shared_dp_export_phase_1_en),
+    #         .shared_dp_export_phase_2_en(shared_dp_unused_io_shared_dp_export_phase_2_en),
+    #         .shared_dp_export_reset_seen_held_payload_data_en(shared_dp_unused_io_shared_dp_export_reset_seen_held_payload_data_en),
+    #         .shared_dp_export_right_start_1_en(shared_dp_unused_io_shared_dp_export_right_start_1_en),
+    #         .shared_dp_export_seen_left_result_en(shared_dp_unused_io_shared_dp_export_seen_left_result_en),
+    #         .shared_dp_export_stored_held_payload_data_en(shared_dp_unused_io_shared_dp_export_stored_held_payload_data_en),
+    #         .shared_dp_export_stored_flag_held_payload_flags_item_0_en(shared_dp_unused_io_shared_dp_export_stored_flag_held_payload_flags_item_0_en),
+    #         .shared_dp_export_stored_piece_held_payload_flags_item_1_en(shared_dp_unused_io_shared_dp_export_stored_piece_held_payload_flags_item_1_en),
+    #         .shared_dp_export_writer_start_1_en(shared_dp_unused_io_shared_dp_export_writer_start_1_en)
+    #     );
+    # 
+    #     packed_input_generated_domains__domain_io__child_copier io__writer (
+    #         .clk(clk),
+    #         .rst_n(rst_n),
+    #         .done(comp_link_io__writer_done),
+    #         .isf_write_held_data(comp_link_io__writer_isf_write_held_data),
+    #         .isf_write_held_enable(comp_link_io__writer_isf_write_held_enable),
+    #         .packet(packet),
+    #         .result(comp_link_io__writer_result),
+    #         .start(comp_link_io_writer_start),
+    #         .shared_dp_export_result_packet_payload_data_en(io_writer_result_packet_payload_data_src_en),
+    #         .shared_dp_export_done_1_en(shared_dp_unused_io_writer_shared_dp_export_done_1_en),
+    #         .shared_dp_export_isf_write_held_data_packet_en(shared_dp_unused_io_writer_shared_dp_export_isf_write_held_data_packet_en),
+    #         .shared_dp_export_isf_write_held_enable_1_en(shared_dp_unused_io_writer_shared_dp_export_isf_write_held_enable_1_en)
+    #     );
+    # 
+    #     packed_input_generated_domains__domain_io__child_reader io__left (
+    #         .clk(clk),
+    #         .rst_n(rst_n),
+    #         .done(comp_link_io__left_done),
+    #         .is_negative(comp_link_io__left_is_negative),
+    #         .packet(packet),
+    #         .result(comp_link_io__left_result),
+    #         .start(comp_link_io_left_start),
+    #         .shared_dp_export_is_negative_expr_en(io_left_is_negative_packet_payload_data_0_src_en),
+    #         .shared_dp_export_result_packet_payload_data_en(io_left_result_packet_payload_data_src_en),
+    #         .shared_dp_export_done_1_en(shared_dp_unused_io_left_shared_dp_export_done_1_en)
+    #     );
+    # 
+    #     packed_input_generated_domains__domain_io__child_reader io__right (
+    #         .clk(clk),
+    #         .rst_n(rst_n),
+    #         .done(comp_link_io__right_done),
+    #         .is_negative(comp_link_io__right_is_negative),
+    #         .packet(packet),
+    #         .result(comp_link_io__right_result),
+    #         .start(comp_link_io_right_start),
+    #         .shared_dp_export_is_negative_expr_en(io_right_is_negative_packet_payload_data_0_src_en),
+    #         .shared_dp_export_result_packet_payload_data_en(io_right_result_packet_payload_data_src_en),
+    #         .shared_dp_export_done_1_en(shared_dp_unused_io_right_shared_dp_export_done_1_en)
+    #     );
+    # 
+    # endmodule
+    # '
+    #     expected: '//=============================================================================
+    # // Flattened Decision Tree FSM: packed_input_generated_domains__domain_idle
+    # // Generated using Enable-based Methodology with WEN/EN Signals
+    # // 
+    # // This implementation uses:
+    # // - Flattened decision tree approach
+    # // - Enable-based logic with assign statements
+    # // - Write Enable (WEN) and Enable (EN) signals for each LHS
+    # // - Flat Boolean expressions from DT traversal
+    # //=============================================================================
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m43_packed_input_generated_domains__domain_idle__frame__fsmgen_t; // frame
+    # 
+    # module packed_input_generated_domains__domain_idle (
+    #   input  wire idle_clk,
+    #   input fsmgen_m43_packed_input_generated_domains__domain_idle__frame__fsmgen_t unused
+    # );
+    # 
+    #   // State encoding
+    # 
+    #   // No state registers needed - FSM contains only decision trees
+    # 
+    #   // State and DT Enable Conditions
+    # 
+    #   // Unified WEN/EN Signal Generation from Phase 1 Analysis
+    #   // DT-Specific Enable Signals from Unified Analysis
+    # 
+    #   // LHS-Level Enable Signals from Unified Analysis
+    # 
+    #   // Unified Multiplexer Logic from Phase 1 Analysis
+    # endmodule
+    # 
+    # 
+    # //=============================================================================
+    # // Flattened Decision Tree FSM: packed_input_generated_domains__domain_io
+    # // Generated using Enable-based Methodology with WEN/EN Signals
+    # // 
+    # // This implementation uses:
+    # // - Flattened decision tree approach
+    # // - Enable-based logic with assign statements
+    # // - Write Enable (WEN) and Enable (EN) signals for each LHS
+    # // - Flat Boolean expressions from DT traversal
+    # //=============================================================================
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m41_packed_input_generated_domains__domain_io__frame__fsmgen_t; // frame
+    # 
+    # module packed_input_generated_domains__domain_io (
+    #   input  wire clk,
+    #   input  wire rst_n,
+    #   input fsmgen_m41_packed_input_generated_domains__domain_io__frame__fsmgen_t isf_write_writer_held_data,
+    #   input  wire isf_write_writer_held_enable,
+    #   input  wire left_done,
+    #   input  wire left_is_negative,
+    #   input  wire [4:0] left_result,
+    #   input fsmgen_m41_packed_input_generated_domains__domain_io__frame__fsmgen_t packet,
+    #   input  wire right_done,
+    #   input  wire right_is_negative,
+    #   input  wire [4:0] right_result,
+    #   input  wire start,
+    #   input  wire writer_done,
+    #   input  wire [4:0] writer_result,
+    #   output reg  [4:0] again,
+    #   output reg  [4:0] captured,
+    #   output reg  [1:0] copied_tag,
+    #   output reg  [4:0] copy_seen,
+    #   output reg  done,
+    #   output reg  left_start,
+    #   output reg  negative_again,
+    #   output reg  negative_seen,
+    #   output reg  [1:0] phase,
+    #   output reg  [4:0] reset_seen,
+    #   output reg  right_start,
+    #   output reg  [4:0] seen,
+    #   output reg  [4:0] stored,
+    #   output reg  stored_flag,
+    #   output reg  [1:0] stored_piece,
+    #   output reg  writer_start
+    # ,
+    #   output  wire shared_dp_export_again_right_result_en,
+    #   output  wire shared_dp_export_captured_accepted_en,
+    #   output  wire shared_dp_export_copied_tag_held_tag_en,
+    #   output  wire shared_dp_export_copy_seen_writer_result_en,
+    #   output  wire shared_dp_export_done_1_en,
+    #   output  wire shared_dp_export_left_start_1_en,
+    #   output  wire shared_dp_export_negative_again_right_is_negative_en,
+    #   output  wire shared_dp_export_negative_seen_left_is_negative_en,
+    #   output  wire shared_dp_export_phase_1_en,
+    #   output  wire shared_dp_export_phase_2_en,
+    #   output  wire shared_dp_export_reset_seen_held_payload_data_en,
+    #   output  wire shared_dp_export_right_start_1_en,
+    #   output  wire shared_dp_export_seen_left_result_en,
+    #   output  wire shared_dp_export_stored_held_payload_data_en,
+    #   output  wire shared_dp_export_stored_flag_held_payload_flags_item_0_en,
+    #   output  wire shared_dp_export_stored_piece_held_payload_flags_item_1_en,
+    #   output  wire shared_dp_export_writer_start_1_en
+    # );
+    # 
+    #   // State encoding
+    #   localparam MAIN_IDLE_0 = 5'd0;
+    #   localparam MAIN_SET_1 = 5'd1;
+    #   localparam MAIN_SET_2 = 5'd2;
+    #   localparam MAIN_WAIT_3 = 5'd3;
+    #   localparam MAIN_WAIT_4 = 5'd4;
+    #   localparam MAIN_WAIT_5 = 5'd5;
+    #   localparam MAIN_SPAWN_6 = 5'd6;
+    #   localparam MAIN_AWAIT_ALL_7 = 5'd7;
+    #   localparam MAIN_SET_8 = 5'd8;
+    #   localparam MAIN_WAIT_9 = 5'd9;
+    #   localparam MAIN_WAIT_10 = 5'd10;
+    #   localparam MAIN_WAIT_11 = 5'd11;
+    #   localparam MAIN_SPAWN_12 = 5'd12;
+    #   localparam MAIN_SPAWN_13 = 5'd13;
+    #   localparam MAIN_AWAIT_ALL_14 = 5'd14;
+    #   localparam MAIN_SET_15 = 5'd15;
+    #   localparam MAIN_SET_16 = 5'd16;
+    #   localparam MAIN_SET_17 = 5'd17;
+    #   localparam MAIN_SET_18 = 5'd18;
+    #   localparam MAIN_SET_19 = 5'd19;
+    #   localparam MAIN_DONE_20 = 5'd20;
+    # 
+    #   // State registers
+    #   reg [4:0] current_state, next_state;
+    # 
+    #   // State sequential logic
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       current_state <= MAIN_IDLE_0;
+    #     end else begin
+    #       current_state <= next_state;
+    #     end
+    #   end
+    # 
+    #   // Internal signal declarations
+    #   logic signed [4:0] accepted;
+    #   reg can_accept;
+    #   fsmgen_m41_packed_input_generated_domains__domain_io__frame__fsmgen_t held;
+    #   reg isf_completion_left_ready;
+    #   reg isf_completion_left_seen;
+    #   reg isf_completion_right_ready;
+    #   reg isf_completion_right_seen;
+    #   reg isf_completion_writer_ready;
+    #   reg isf_completion_writer_seen;
+    #   // Internal mux helper registers
+    #   logic signed [4:0] accepted_q;
+    #   reg [4:0] captured_next;
+    #   reg [1:0] copied_tag_next;
+    #   reg done_pulse_delay_pipe;
+    #   fsmgen_m41_packed_input_generated_domains__domain_io__frame__fsmgen_t held_next;
+    #   reg isf_completion_left_seen_next;
+    #   reg isf_completion_right_seen_next;
+    #   reg isf_completion_writer_seen_next;
+    #   reg [1:0] phase_next;
+    #   reg [4:0] reset_seen_next;
+    #   reg stored_flag_next;
+    #   reg [4:0] stored_next;
+    #   reg [1:0] stored_piece_next;
+    #   // Generated enable wires
+    #   wire accepted_packet_payload_data_en;
+    #   wire again_right_result_en;
+    #   wire can_accept_1_en;
+    #   wire captured_accepted_en;
+    #   wire copied_tag_held_tag_en;
+    #   wire copy_seen_writer_result_en;
+    #   wire done_1_en;
+    #   wire held_isf_write_writer_held_data_en;
+    #   wire isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en;
+    #   wire isf_completion_left_seen_0_en;
+    #   wire isf_completion_left_seen_1_en;
+    #   wire isf_completion_left_seen_en;
+    #   wire isf_completion_left_seen_isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en;
+    #   wire isf_completion_left_seen_isf_completion_left_seen_0_en;
+    #   wire isf_completion_left_seen_isf_completion_left_seen_1_en;
+    #   wire isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en;
+    #   wire isf_completion_right_seen_0_en;
+    #   wire isf_completion_right_seen_1_en;
+    #   wire isf_completion_right_seen_en;
+    #   wire isf_completion_right_seen_isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en;
+    #   wire isf_completion_right_seen_isf_completion_right_seen_0_en;
+    #   wire isf_completion_right_seen_isf_completion_right_seen_1_en;
+    #   wire isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en;
+    #   wire isf_completion_writer_seen_0_en;
+    #   wire isf_completion_writer_seen_1_en;
+    #   wire isf_completion_writer_seen_en;
+    #   wire isf_completion_writer_seen_isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en;
+    #   wire isf_completion_writer_seen_isf_completion_writer_seen_0_en;
+    #   wire isf_completion_writer_seen_isf_completion_writer_seen_1_en;
+    #   wire isf_write_writer_held_enable_en;
+    #   wire isf_write_writer_held_enable_held_isf_write_writer_held_data_en;
+    #   wire left_port_bindings_en;
+    #   wire left_port_bindings_negative_seen_left_is_negative_en;
+    #   wire left_port_bindings_seen_left_result_en;
+    #   wire left_start_1_en;
+    #   wire main_await_all_14_en;
+    #   wire main_await_all_14_next_state_main_set_15_en;
+    #   wire main_await_all_7_en;
+    #   wire main_await_all_7_next_state_main_set_8_en;
+    #   wire main_done_20_done_1_en;
+    #   wire main_done_20_en;
+    #   wire main_done_20_next_state_main_idle_0_en;
+    #   wire main_idle_0_accepted_packet_payload_data_en;
+    #   wire main_idle_0_can_accept_1_en;
+    #   wire main_idle_0_en;
+    #   wire main_idle_0_next_state_main_set_1_en;
+    #   wire main_set_15_en;
+    #   wire main_set_15_next_state_main_set_16_en;
+    #   wire main_set_15_stored_held_payload_data_en;
+    #   wire main_set_16_copied_tag_held_tag_en;
+    #   wire main_set_16_en;
+    #   wire main_set_16_next_state_main_set_17_en;
+    #   wire main_set_17_en;
+    #   wire main_set_17_next_state_main_set_18_en;
+    #   wire main_set_17_stored_flag_held_payload_flags_item_0_en;
+    #   wire main_set_18_en;
+    #   wire main_set_18_next_state_main_set_19_en;
+    #   wire main_set_18_stored_piece_held_payload_flags_item_1_en;
+    #   wire main_set_19_captured_accepted_en;
+    #   wire main_set_19_en;
+    #   wire main_set_19_next_state_main_done_20_en;
+    #   wire main_set_1_en;
+    #   wire main_set_1_next_state_main_set_2_en;
+    #   wire main_set_1_reset_seen_held_payload_data_en;
+    #   wire main_set_2_en;
+    #   wire main_set_2_next_state_main_wait_3_en;
+    #   wire main_set_2_phase_1_en;
+    #   wire main_set_8_en;
+    #   wire main_set_8_next_state_main_wait_9_en;
+    #   wire main_set_8_phase__2_en;
+    #   wire main_spawn_12_en;
+    #   wire main_spawn_12_left_start_1_en;
+    #   wire main_spawn_12_next_state_main_spawn_13_en;
+    #   wire main_spawn_13_en;
+    #   wire main_spawn_13_next_state_main_await_all_14_en;
+    #   wire main_spawn_13_right_start_1_en;
+    #   wire main_spawn_6_en;
+    #   wire main_spawn_6_next_state_main_await_all_7_en;
+    #   wire main_spawn_6_writer_start_1_en;
+    #   wire main_wait_10_en;
+    #   wire main_wait_10_next_state_main_wait_11_en;
+    #   wire main_wait_11_en;
+    #   wire main_wait_11_next_state_main_spawn_12_en;
+    #   wire main_wait_3_en;
+    #   wire main_wait_3_next_state_main_wait_4_en;
+    #   wire main_wait_4_en;
+    #   wire main_wait_4_next_state_main_wait_5_en;
+    #   wire main_wait_5_en;
+    #   wire main_wait_5_next_state_main_spawn_6_en;
+    #   wire main_wait_9_en;
+    #   wire main_wait_9_next_state_main_wait_10_en;
+    #   wire negative_again_right_is_negative_en;
+    #   wire negative_seen_left_is_negative_en;
+    #   wire next_state_main_await_all_14_en;
+    #   wire next_state_main_await_all_7_en;
+    #   wire next_state_main_done_20_en;
+    #   wire next_state_main_idle_0_en;
+    #   wire next_state_main_set_15_en;
+    #   wire next_state_main_set_16_en;
+    #   wire next_state_main_set_17_en;
+    #   wire next_state_main_set_18_en;
+    #   wire next_state_main_set_19_en;
+    #   wire next_state_main_set_1_en;
+    #   wire next_state_main_set_2_en;
+    #   wire next_state_main_set_8_en;
+    #   wire next_state_main_spawn_12_en;
+    #   wire next_state_main_spawn_13_en;
+    #   wire next_state_main_spawn_6_en;
+    #   wire next_state_main_wait_10_en;
+    #   wire next_state_main_wait_11_en;
+    #   wire next_state_main_wait_3_en;
+    #   wire next_state_main_wait_4_en;
+    #   wire next_state_main_wait_5_en;
+    #   wire next_state_main_wait_9_en;
+    #   wire phase_1_en;
+    #   wire phase__2_en;
+    #   wire reset_seen_held_payload_data_en;
+    #   wire right_port_bindings_again_right_result_en;
+    #   wire right_port_bindings_en;
+    #   wire right_port_bindings_negative_again_right_is_negative_en;
+    #   wire right_start_1_en;
+    #   wire seen_left_result_en;
+    #   wire stored_flag_held_payload_flags_item_0_en;
+    #   wire stored_held_payload_data_en;
+    #   wire stored_piece_held_payload_flags_item_1_en;
+    #   wire writer_port_bindings_copy_seen_writer_result_en;
+    #   wire writer_port_bindings_en;
+    #   wire writer_start_1_en;
+    # 
+    #   // State and DT Enable Conditions
+    #   assign main_await_all_14_en = current_state == MAIN_AWAIT_ALL_14;
+    #   assign main_await_all_7_en = current_state == MAIN_AWAIT_ALL_7;
+    #   assign main_done_20_en = current_state == MAIN_DONE_20;
+    #   assign main_idle_0_en = current_state == MAIN_IDLE_0;
+    #   assign main_set_1_en = current_state == MAIN_SET_1;
+    #   assign main_set_15_en = current_state == MAIN_SET_15;
+    #   assign main_set_16_en = current_state == MAIN_SET_16;
+    #   assign main_set_17_en = current_state == MAIN_SET_17;
+    #   assign main_set_18_en = current_state == MAIN_SET_18;
+    #   assign main_set_19_en = current_state == MAIN_SET_19;
+    #   assign main_set_2_en = current_state == MAIN_SET_2;
+    #   assign main_set_8_en = current_state == MAIN_SET_8;
+    #   assign main_spawn_12_en = current_state == MAIN_SPAWN_12;
+    #   assign main_spawn_13_en = current_state == MAIN_SPAWN_13;
+    #   assign main_spawn_6_en = current_state == MAIN_SPAWN_6;
+    #   assign main_wait_10_en = current_state == MAIN_WAIT_10;
+    #   assign main_wait_11_en = current_state == MAIN_WAIT_11;
+    #   assign main_wait_3_en = current_state == MAIN_WAIT_3;
+    #   assign main_wait_4_en = current_state == MAIN_WAIT_4;
+    #   assign main_wait_5_en = current_state == MAIN_WAIT_5;
+    #   assign main_wait_9_en = current_state == MAIN_WAIT_9;
+    #   assign isf_completion_left_seen_en = 1'b1;
+    #   assign isf_completion_right_seen_en = 1'b1;
+    #   assign isf_completion_writer_seen_en = 1'b1;
+    #   assign isf_write_writer_held_enable_en = 1'b1;
+    #   assign left_port_bindings_en = 1'b1;
+    #   assign right_port_bindings_en = 1'b1;
+    #   assign writer_port_bindings_en = 1'b1;
+    # 
+    #   // Consolidated intermediate signals (AST factorization + pre-scan)
+    #   wire intermediate_and_isf_completion_left_ready_isf_comple_etc_1;
+    #   wire intermediate_and_not_left_start_left_done_2;
+    #   wire intermediate_and_not_right_start_right_done_4;
+    #   wire intermediate_and_not_writer_start_writer_done_6;
+    #   wire intermediate_or_left_done_isf_completion_left_seen_3;
+    #   wire intermediate_or_right_done_isf_completion_right_seen_5;
+    #   wire intermediate_or_writer_done_isf_completion_writer_see_etc_7;
+    # 
+    #   assign intermediate_and_isf_completion_left_ready_isf_comple_etc_1 = isf_completion_left_ready & isf_completion_right_ready; // Source: fsmgen_parsing
+    #   assign intermediate_and_not_left_start_left_done_2 = !left_start & left_done; // Source: fsmgen_parsing
+    #   assign intermediate_and_not_right_start_right_done_4 = !right_start & right_done; // Source: fsmgen_parsing
+    #   assign intermediate_and_not_writer_start_writer_done_6 = !writer_start & writer_done; // Source: fsmgen_parsing
+    #   assign intermediate_or_left_done_isf_completion_left_seen_3 = left_done | isf_completion_left_seen; // Source: fsmgen_parsing
+    #   assign intermediate_or_right_done_isf_completion_right_seen_5 = right_done | isf_completion_right_seen; // Source: fsmgen_parsing
+    #   assign intermediate_or_writer_done_isf_completion_writer_see_etc_7 = writer_done | isf_completion_writer_seen; // Source: fsmgen_parsing
+    # 
+    #   // Unified WEN/EN Signal Generation from Phase 1 Analysis
+    #   // DT-Specific Enable Signals from Unified Analysis
+    # 
+    # 
+    #   // === DT: -isf_completion_left_seen ===
+    #   // isf_completion_left_ready
+    #   assign isf_completion_left_seen_isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en = isf_completion_left_seen_en;  // isf_completion_left_ready <- intermediate_or_left_done_isf_completion_left_seen_3
+    #   // isf_completion_left_seen
+    #   assign isf_completion_left_seen_isf_completion_left_seen_0_en = isf_completion_left_seen_en & left_start;  // isf_completion_left_seen <- 0
+    #   assign isf_completion_left_seen_isf_completion_left_seen_1_en = isf_completion_left_seen_en & intermediate_and_not_left_start_left_done_2;  // isf_completion_left_seen <- 1
+    # 
+    # 
+    #   // === DT: -isf_completion_right_seen ===
+    #   // isf_completion_right_ready
+    #   assign isf_completion_right_seen_isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en = isf_completion_right_seen_en;  // isf_completion_right_ready <- intermediate_or_right_done_isf_completion_right_seen_5
+    #   // isf_completion_right_seen
+    #   assign isf_completion_right_seen_isf_completion_right_seen_0_en = isf_completion_right_seen_en & right_start;  // isf_completion_right_seen <- 0
+    #   assign isf_completion_right_seen_isf_completion_right_seen_1_en = isf_completion_right_seen_en & intermediate_and_not_right_start_right_done_4;  // isf_completion_right_seen <- 1
+    # 
+    # 
+    #   // === DT: -isf_completion_writer_seen ===
+    #   // isf_completion_writer_ready
+    #   assign isf_completion_writer_seen_isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en = isf_completion_writer_seen_en;  // isf_completion_writer_ready <- intermediate_or_writer_done_isf_completion_writer_see_etc_7
+    #   // isf_completion_writer_seen
+    #   assign isf_completion_writer_seen_isf_completion_writer_seen_0_en = isf_completion_writer_seen_en & writer_start;  // isf_completion_writer_seen <- 0
+    #   assign isf_completion_writer_seen_isf_completion_writer_seen_1_en = isf_completion_writer_seen_en & intermediate_and_not_writer_start_writer_done_6;  // isf_completion_writer_seen <- 1
+    # 
+    # 
+    #   // === DT: -isf_write_writer_held_enable ===
+    #   // held
+    #   assign isf_write_writer_held_enable_held_isf_write_writer_held_data_en = isf_write_writer_held_enable_en & isf_write_writer_held_enable;  // held <- isf_write_writer_held_data
+    # 
+    # 
+    #   // === DT: -left_port_bindings ===
+    #   // negative_seen
+    #   assign left_port_bindings_negative_seen_left_is_negative_en = left_port_bindings_en;  // negative_seen <- left_is_negative
+    #   // seen
+    #   assign left_port_bindings_seen_left_result_en = left_port_bindings_en;  // seen <- left_result
+    # 
+    # 
+    #   // === DT: -right_port_bindings ===
+    #   // again
+    #   assign right_port_bindings_again_right_result_en = right_port_bindings_en;  // again <- right_result
+    #   // negative_again
+    #   assign right_port_bindings_negative_again_right_is_negative_en = right_port_bindings_en;  // negative_again <- right_is_negative
+    # 
+    # 
+    #   // === DT: -writer_port_bindings ===
+    #   // copy_seen
+    #   assign writer_port_bindings_copy_seen_writer_result_en = writer_port_bindings_en;  // copy_seen <- writer_result
+    # 
+    # 
+    #   // === DT: main_await_all_14 ===
+    #   // next_state
+    #   assign main_await_all_14_next_state_main_set_15_en = main_await_all_14_en & intermediate_and_isf_completion_left_ready_isf_comple_etc_1;  // next_state <- MAIN_SET_15
+    # 
+    # 
+    #   // === DT: main_await_all_7 ===
+    #   // next_state
+    #   assign main_await_all_7_next_state_main_set_8_en = main_await_all_7_en & isf_completion_writer_ready;  // next_state <- MAIN_SET_8
+    # 
+    # 
+    #   // === DT: main_done_20 ===
+    #   // done
+    #   assign main_done_20_done_1_en = main_done_20_en;  // done <- 1
+    #   // next_state
+    #   assign main_done_20_next_state_main_idle_0_en = main_done_20_en;  // next_state <- MAIN_IDLE_0
+    # 
+    # 
+    #   // === DT: main_idle_0 ===
+    #   // accepted
+    #   assign main_idle_0_accepted_packet_payload_data_en = main_idle_0_en & start;  // accepted <- packet.payload.data
+    #   // can_accept
+    #   assign main_idle_0_can_accept_1_en = main_idle_0_en;  // can_accept <- 1
+    #   // next_state
+    #   assign main_idle_0_next_state_main_set_1_en = main_idle_0_en & start;  // next_state <- MAIN_SET_1
+    # 
+    # 
+    #   // === DT: main_set_1 ===
+    #   // next_state
+    #   assign main_set_1_next_state_main_set_2_en = main_set_1_en;  // next_state <- MAIN_SET_2
+    #   // reset_seen
+    #   assign main_set_1_reset_seen_held_payload_data_en = main_set_1_en;  // reset_seen <- held.payload.data
+    # 
+    # 
+    #   // === DT: main_set_15 ===
+    #   // next_state
+    #   assign main_set_15_next_state_main_set_16_en = main_set_15_en;  // next_state <- MAIN_SET_16
+    #   // stored
+    #   assign main_set_15_stored_held_payload_data_en = main_set_15_en;  // stored <- held.payload.data
+    # 
+    # 
+    #   // === DT: main_set_16 ===
+    #   // copied_tag
+    #   assign main_set_16_copied_tag_held_tag_en = main_set_16_en;  // copied_tag <- held.tag
+    #   // next_state
+    #   assign main_set_16_next_state_main_set_17_en = main_set_16_en;  // next_state <- MAIN_SET_17
+    # 
+    # 
+    #   // === DT: main_set_17 ===
+    #   // next_state
+    #   assign main_set_17_next_state_main_set_18_en = main_set_17_en;  // next_state <- MAIN_SET_18
+    #   // stored_flag
+    #   assign main_set_17_stored_flag_held_payload_flags_item_0_en = main_set_17_en;  // stored_flag <- held.payload.flags.item_0
+    # 
+    # 
+    #   // === DT: main_set_18 ===
+    #   // next_state
+    #   assign main_set_18_next_state_main_set_19_en = main_set_18_en;  // next_state <- MAIN_SET_19
+    #   // stored_piece
+    #   assign main_set_18_stored_piece_held_payload_flags_item_1_en = main_set_18_en;  // stored_piece <- held.payload.flags.item_1
+    # 
+    # 
+    #   // === DT: main_set_19 ===
+    #   // captured
+    #   assign main_set_19_captured_accepted_en = main_set_19_en;  // captured <- accepted
+    #   // next_state
+    #   assign main_set_19_next_state_main_done_20_en = main_set_19_en;  // next_state <- MAIN_DONE_20
+    # 
+    # 
+    #   // === DT: main_set_2 ===
+    #   // next_state
+    #   assign main_set_2_next_state_main_wait_3_en = main_set_2_en;  // next_state <- MAIN_WAIT_3
+    #   // phase
+    #   assign main_set_2_phase_1_en = main_set_2_en;  // phase <- 1
+    # 
+    # 
+    #   // === DT: main_set_8 ===
+    #   // next_state
+    #   assign main_set_8_next_state_main_wait_9_en = main_set_8_en;  // next_state <- MAIN_WAIT_9
+    #   // phase
+    #   assign main_set_8_phase__2_en = main_set_8_en;  // phase <- 2
+    # 
+    # 
+    #   // === DT: main_spawn_12 ===
+    #   // left_start
+    #   assign main_spawn_12_left_start_1_en = main_spawn_12_en;  // left_start <- 1
+    #   // next_state
+    #   assign main_spawn_12_next_state_main_spawn_13_en = main_spawn_12_en;  // next_state <- MAIN_SPAWN_13
+    # 
+    # 
+    #   // === DT: main_spawn_13 ===
+    #   // next_state
+    #   assign main_spawn_13_next_state_main_await_all_14_en = main_spawn_13_en;  // next_state <- MAIN_AWAIT_ALL_14
+    #   // right_start
+    #   assign main_spawn_13_right_start_1_en = main_spawn_13_en;  // right_start <- 1
+    # 
+    # 
+    #   // === DT: main_spawn_6 ===
+    #   // next_state
+    #   assign main_spawn_6_next_state_main_await_all_7_en = main_spawn_6_en;  // next_state <- MAIN_AWAIT_ALL_7
+    #   // writer_start
+    #   assign main_spawn_6_writer_start_1_en = main_spawn_6_en;  // writer_start <- 1
+    # 
+    # 
+    #   // === DT: main_wait_10 ===
+    #   // next_state
+    #   assign main_wait_10_next_state_main_wait_11_en = main_wait_10_en;  // next_state <- MAIN_WAIT_11
+    # 
+    # 
+    #   // === DT: main_wait_11 ===
+    #   // next_state
+    #   assign main_wait_11_next_state_main_spawn_12_en = main_wait_11_en;  // next_state <- MAIN_SPAWN_12
+    # 
+    # 
+    #   // === DT: main_wait_3 ===
+    #   // next_state
+    #   assign main_wait_3_next_state_main_wait_4_en = main_wait_3_en;  // next_state <- MAIN_WAIT_4
+    # 
+    # 
+    #   // === DT: main_wait_4 ===
+    #   // next_state
+    #   assign main_wait_4_next_state_main_wait_5_en = main_wait_4_en;  // next_state <- MAIN_WAIT_5
+    # 
+    # 
+    #   // === DT: main_wait_5 ===
+    #   // next_state
+    #   assign main_wait_5_next_state_main_spawn_6_en = main_wait_5_en;  // next_state <- MAIN_SPAWN_6
+    # 
+    # 
+    #   // === DT: main_wait_9 ===
+    #   // next_state
+    #   assign main_wait_9_next_state_main_wait_10_en = main_wait_9_en;  // next_state <- MAIN_WAIT_10
+    # 
+    #   // LHS-Level Enable Signals from Unified Analysis
+    # 
+    #   // LHS-level enables for: accepted
+    #   assign accepted_packet_payload_data_en = main_idle_0_accepted_packet_payload_data_en;
+    # 
+    #   // LHS-level enables for: again
+    #   assign again_right_result_en = right_port_bindings_again_right_result_en;
+    # 
+    #   // LHS-level enables for: can_accept
+    #   assign can_accept_1_en = main_idle_0_can_accept_1_en;
+    # 
+    #   // LHS-level enables for: captured
+    #   assign captured_accepted_en = main_set_19_captured_accepted_en;
+    # 
+    #   // LHS-level enables for: copied_tag
+    #   assign copied_tag_held_tag_en = main_set_16_copied_tag_held_tag_en;
+    # 
+    #   // LHS-level enables for: copy_seen
+    #   assign copy_seen_writer_result_en = writer_port_bindings_copy_seen_writer_result_en;
+    # 
+    #   // LHS-level enables for: done
+    #   assign done_1_en = main_done_20_done_1_en;
+    # 
+    #   // LHS-level enables for: held
+    #   assign held_isf_write_writer_held_data_en = isf_write_writer_held_enable_held_isf_write_writer_held_data_en;
+    # 
+    #   // LHS-level enables for: isf_completion_left_ready
+    #   assign isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en = isf_completion_left_seen_isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en;
+    # 
+    #   // LHS-level enables for: isf_completion_left_seen
+    #   assign isf_completion_left_seen_0_en = isf_completion_left_seen_isf_completion_left_seen_0_en;
+    #   assign isf_completion_left_seen_1_en = isf_completion_left_seen_isf_completion_left_seen_1_en;
+    # 
+    #   // LHS-level enables for: isf_completion_right_ready
+    #   assign isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en = isf_completion_right_seen_isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en;
+    # 
+    #   // LHS-level enables for: isf_completion_right_seen
+    #   assign isf_completion_right_seen_0_en = isf_completion_right_seen_isf_completion_right_seen_0_en;
+    #   assign isf_completion_right_seen_1_en = isf_completion_right_seen_isf_completion_right_seen_1_en;
+    # 
+    #   // LHS-level enables for: isf_completion_writer_ready
+    #   assign isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en = isf_completion_writer_seen_isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en;
+    # 
+    #   // LHS-level enables for: isf_completion_writer_seen
+    #   assign isf_completion_writer_seen_0_en = isf_completion_writer_seen_isf_completion_writer_seen_0_en;
+    #   assign isf_completion_writer_seen_1_en = isf_completion_writer_seen_isf_completion_writer_seen_1_en;
+    # 
+    #   // LHS-level enables for: left_start
+    #   assign left_start_1_en = main_spawn_12_left_start_1_en;
+    # 
+    #   // LHS-level enables for: negative_again
+    #   assign negative_again_right_is_negative_en = right_port_bindings_negative_again_right_is_negative_en;
+    # 
+    #   // LHS-level enables for: negative_seen
+    #   assign negative_seen_left_is_negative_en = left_port_bindings_negative_seen_left_is_negative_en;
+    # 
+    #   // LHS-level enables for: next_state
+    #   assign next_state_main_await_all_14_en = main_spawn_13_next_state_main_await_all_14_en;
+    #   assign next_state_main_await_all_7_en = main_spawn_6_next_state_main_await_all_7_en;
+    #   assign next_state_main_done_20_en = main_set_19_next_state_main_done_20_en;
+    #   assign next_state_main_idle_0_en = main_done_20_next_state_main_idle_0_en;
+    #   assign next_state_main_set_1_en = main_idle_0_next_state_main_set_1_en;
+    #   assign next_state_main_set_15_en = main_await_all_14_next_state_main_set_15_en;
+    #   assign next_state_main_set_16_en = main_set_15_next_state_main_set_16_en;
+    #   assign next_state_main_set_17_en = main_set_16_next_state_main_set_17_en;
+    #   assign next_state_main_set_18_en = main_set_17_next_state_main_set_18_en;
+    #   assign next_state_main_set_19_en = main_set_18_next_state_main_set_19_en;
+    #   assign next_state_main_set_2_en = main_set_1_next_state_main_set_2_en;
+    #   assign next_state_main_set_8_en = main_await_all_7_next_state_main_set_8_en;
+    #   assign next_state_main_spawn_12_en = main_wait_11_next_state_main_spawn_12_en;
+    #   assign next_state_main_spawn_13_en = main_spawn_12_next_state_main_spawn_13_en;
+    #   assign next_state_main_spawn_6_en = main_wait_5_next_state_main_spawn_6_en;
+    #   assign next_state_main_wait_10_en = main_wait_9_next_state_main_wait_10_en;
+    #   assign next_state_main_wait_11_en = main_wait_10_next_state_main_wait_11_en;
+    #   assign next_state_main_wait_3_en = main_set_2_next_state_main_wait_3_en;
+    #   assign next_state_main_wait_4_en = main_wait_3_next_state_main_wait_4_en;
+    #   assign next_state_main_wait_5_en = main_wait_4_next_state_main_wait_5_en;
+    #   assign next_state_main_wait_9_en = main_set_8_next_state_main_wait_9_en;
+    # 
+    #   // LHS-level enables for: phase
+    #   assign phase_1_en = main_set_2_phase_1_en;
+    #   assign phase__2_en = main_set_8_phase__2_en;
+    # 
+    #   // LHS-level enables for: reset_seen
+    #   assign reset_seen_held_payload_data_en = main_set_1_reset_seen_held_payload_data_en;
+    # 
+    #   // LHS-level enables for: right_start
+    #   assign right_start_1_en = main_spawn_13_right_start_1_en;
+    # 
+    #   // LHS-level enables for: seen
+    #   assign seen_left_result_en = left_port_bindings_seen_left_result_en;
+    # 
+    #   // LHS-level enables for: stored
+    #   assign stored_held_payload_data_en = main_set_15_stored_held_payload_data_en;
+    # 
+    #   // LHS-level enables for: stored_flag
+    #   assign stored_flag_held_payload_flags_item_0_en = main_set_17_stored_flag_held_payload_flags_item_0_en;
+    # 
+    #   // LHS-level enables for: stored_piece
+    #   assign stored_piece_held_payload_flags_item_1_en = main_set_18_stored_piece_held_payload_flags_item_1_en;
+    # 
+    #   // LHS-level enables for: writer_start
+    #   assign writer_start_1_en = main_spawn_6_writer_start_1_en;
+    # 
+    #   // Unified Multiplexer Logic from Phase 1 Analysis
+    # 
+    #   // Unified Multiplexer for LHS: accepted
+    #   // Unified flop with mux for: accepted (register_in assignment)
+    #   always_comb begin
+    #     accepted = accepted_q;  // Default value is feedback from flop output
+    #     if (accepted_packet_payload_data_en) begin
+    #       accepted = packet.payload.data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       accepted_q <= 5'h00;
+    #     end else begin
+    #       accepted_q <= accepted;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: again
+    #   // Unified combinational mux for: again
+    #   always_comb begin
+    #     again = 0;  // Default value
+    #     if (again_right_result_en) begin
+    #       again = right_result;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: can_accept
+    #   // Unified combinational mux for: can_accept
+    #   always_comb begin
+    #     can_accept = 1'b0;  // Default value
+    #     if (can_accept_1_en) begin
+    #       can_accept = 1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: captured
+    #   // Unified flop with mux for: captured (register_out assignment)
+    #   always_comb begin
+    #     captured_next = captured;  // Default value
+    #     if (captured_accepted_en) begin
+    #       captured_next = accepted;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       captured <= 5'b00000;
+    #     end else begin
+    #       captured <= captured_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: copied_tag
+    #   // Unified flop with mux for: copied_tag (register_out assignment)
+    #   always_comb begin
+    #     copied_tag_next = copied_tag;  // Default value
+    #     if (copied_tag_held_tag_en) begin
+    #       copied_tag_next = held.tag;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       copied_tag <= 2'b00;
+    #     end else begin
+    #       copied_tag <= copied_tag_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: copy_seen
+    #   // Unified combinational mux for: copy_seen
+    #   always_comb begin
+    #     copy_seen = 0;  // Default value
+    #     if (copy_seen_writer_result_en) begin
+    #       copy_seen = writer_result;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: done
+    #   // Delayed pulse logic for: done (<1, exact Q+1)
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       done <= 1'b0;
+    #       done_pulse_delay_pipe <= 1'b0;
+    #     end else begin
+    #       done <= 1'b0;
+    #       if (done_pulse_delay_pipe) begin
+    #         done <= 1'b1;
+    #       end
+    #       done_pulse_delay_pipe <= done_1_en;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: held
+    #   // Unified flop with mux for: held (register_out assignment)
+    #   always_comb begin
+    #     held_next = held;  // Default value
+    #     if (held_isf_write_writer_held_data_en) begin
+    #       held_next = isf_write_writer_held_data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       held <= 149;
+    #     end else begin
+    #       held <= held_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_left_ready
+    #   // Unified combinational mux for: isf_completion_left_ready
+    #   always_comb begin
+    #     isf_completion_left_ready = 1'b0;  // Default value
+    #     if (isf_completion_left_ready_intermediate_or_left_done_isf_completion_left_seen_3_en) begin
+    #       isf_completion_left_ready = intermediate_or_left_done_isf_completion_left_seen_3;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_left_seen
+    #   // Unified flop with mux for: isf_completion_left_seen (register_out assignment)
+    #   always_comb begin
+    #     isf_completion_left_seen_next = isf_completion_left_seen;  // Default value
+    #     if (isf_completion_left_seen_0_en) begin
+    #       isf_completion_left_seen_next = 0;
+    #     end
+    #     if (isf_completion_left_seen_1_en) begin
+    #       isf_completion_left_seen_next = 1;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       isf_completion_left_seen <= 0;
+    #     end else begin
+    #       isf_completion_left_seen <= isf_completion_left_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_right_ready
+    #   // Unified combinational mux for: isf_completion_right_ready
+    #   always_comb begin
+    #     isf_completion_right_ready = 1'b0;  // Default value
+    #     if (isf_completion_right_ready_intermediate_or_right_done_isf_completion_right_seen_5_en) begin
+    #       isf_completion_right_ready = intermediate_or_right_done_isf_completion_right_seen_5;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_right_seen
+    #   // Unified flop with mux for: isf_completion_right_seen (register_out assignment)
+    #   always_comb begin
+    #     isf_completion_right_seen_next = isf_completion_right_seen;  // Default value
+    #     if (isf_completion_right_seen_0_en) begin
+    #       isf_completion_right_seen_next = 0;
+    #     end
+    #     if (isf_completion_right_seen_1_en) begin
+    #       isf_completion_right_seen_next = 1;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       isf_completion_right_seen <= 0;
+    #     end else begin
+    #       isf_completion_right_seen <= isf_completion_right_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_writer_ready
+    #   // Unified combinational mux for: isf_completion_writer_ready
+    #   always_comb begin
+    #     isf_completion_writer_ready = 1'b0;  // Default value
+    #     if (isf_completion_writer_ready_intermediate_or_writer_done_isf_completion_writer_see_etc_7_en) begin
+    #       isf_completion_writer_ready = intermediate_or_writer_done_isf_completion_writer_see_etc_7;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_completion_writer_seen
+    #   // Unified flop with mux for: isf_completion_writer_seen (register_out assignment)
+    #   always_comb begin
+    #     isf_completion_writer_seen_next = isf_completion_writer_seen;  // Default value
+    #     if (isf_completion_writer_seen_0_en) begin
+    #       isf_completion_writer_seen_next = 0;
+    #     end
+    #     if (isf_completion_writer_seen_1_en) begin
+    #       isf_completion_writer_seen_next = 1;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       isf_completion_writer_seen <= 0;
+    #     end else begin
+    #       isf_completion_writer_seen <= isf_completion_writer_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: left_start
+    #   // Unified combinational mux for: left_start
+    #   always_comb begin
+    #     left_start = 1'b0;  // Default value
+    #     if (left_start_1_en) begin
+    #       left_start = 1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: negative_again
+    #   // Unified combinational mux for: negative_again
+    #   always_comb begin
+    #     negative_again = 0;  // Default value
+    #     if (negative_again_right_is_negative_en) begin
+    #       negative_again = right_is_negative;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: negative_seen
+    #   // Unified combinational mux for: negative_seen
+    #   always_comb begin
+    #     negative_seen = 0;  // Default value
+    #     if (negative_seen_left_is_negative_en) begin
+    #       negative_seen = left_is_negative;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: next_state
+    #   // Unified combinational mux for: next_state
+    #   always_comb begin
+    #     next_state = current_state;  // Default value
+    #     if (next_state_main_await_all_14_en) begin
+    #       next_state = MAIN_AWAIT_ALL_14;
+    #     end
+    #     if (next_state_main_await_all_7_en) begin
+    #       next_state = MAIN_AWAIT_ALL_7;
+    #     end
+    #     if (next_state_main_done_20_en) begin
+    #       next_state = MAIN_DONE_20;
+    #     end
+    #     if (next_state_main_idle_0_en) begin
+    #       next_state = MAIN_IDLE_0;
+    #     end
+    #     if (next_state_main_set_1_en) begin
+    #       next_state = MAIN_SET_1;
+    #     end
+    #     if (next_state_main_set_15_en) begin
+    #       next_state = MAIN_SET_15;
+    #     end
+    #     if (next_state_main_set_16_en) begin
+    #       next_state = MAIN_SET_16;
+    #     end
+    #     if (next_state_main_set_17_en) begin
+    #       next_state = MAIN_SET_17;
+    #     end
+    #     if (next_state_main_set_18_en) begin
+    #       next_state = MAIN_SET_18;
+    #     end
+    #     if (next_state_main_set_19_en) begin
+    #       next_state = MAIN_SET_19;
+    #     end
+    #     if (next_state_main_set_2_en) begin
+    #       next_state = MAIN_SET_2;
+    #     end
+    #     if (next_state_main_set_8_en) begin
+    #       next_state = MAIN_SET_8;
+    #     end
+    #     if (next_state_main_spawn_12_en) begin
+    #       next_state = MAIN_SPAWN_12;
+    #     end
+    #     if (next_state_main_spawn_13_en) begin
+    #       next_state = MAIN_SPAWN_13;
+    #     end
+    #     if (next_state_main_spawn_6_en) begin
+    #       next_state = MAIN_SPAWN_6;
+    #     end
+    #     if (next_state_main_wait_10_en) begin
+    #       next_state = MAIN_WAIT_10;
+    #     end
+    #     if (next_state_main_wait_11_en) begin
+    #       next_state = MAIN_WAIT_11;
+    #     end
+    #     if (next_state_main_wait_3_en) begin
+    #       next_state = MAIN_WAIT_3;
+    #     end
+    #     if (next_state_main_wait_4_en) begin
+    #       next_state = MAIN_WAIT_4;
+    #     end
+    #     if (next_state_main_wait_5_en) begin
+    #       next_state = MAIN_WAIT_5;
+    #     end
+    #     if (next_state_main_wait_9_en) begin
+    #       next_state = MAIN_WAIT_9;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: phase
+    #   // Unified flop with mux for: phase (register_out assignment)
+    #   always_comb begin
+    #     phase_next = phase;  // Default value
+    #     if (phase_1_en) begin
+    #       phase_next = 1;
+    #     end
+    #     if (phase__2_en) begin
+    #       phase_next = 2;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       phase <= 2'b00;
+    #     end else begin
+    #       phase <= phase_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: reset_seen
+    #   // Unified flop with mux for: reset_seen (register_out assignment)
+    #   always_comb begin
+    #     reset_seen_next = reset_seen;  // Default value
+    #     if (reset_seen_held_payload_data_en) begin
+    #       reset_seen_next = held.payload.data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       reset_seen <= 5'b00000;
+    #     end else begin
+    #       reset_seen <= reset_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: right_start
+    #   // Unified combinational mux for: right_start
+    #   always_comb begin
+    #     right_start = 1'b0;  // Default value
+    #     if (right_start_1_en) begin
+    #       right_start = 1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: seen
+    #   // Unified combinational mux for: seen
+    #   always_comb begin
+    #     seen = 0;  // Default value
+    #     if (seen_left_result_en) begin
+    #       seen = left_result;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: stored
+    #   // Unified flop with mux for: stored (register_out assignment)
+    #   always_comb begin
+    #     stored_next = stored;  // Default value
+    #     if (stored_held_payload_data_en) begin
+    #       stored_next = held.payload.data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       stored <= 5'b00000;
+    #     end else begin
+    #       stored <= stored_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: stored_flag
+    #   // Unified flop with mux for: stored_flag (register_out assignment)
+    #   always_comb begin
+    #     stored_flag_next = stored_flag;  // Default value
+    #     if (stored_flag_held_payload_flags_item_0_en) begin
+    #       stored_flag_next = held.payload.flags.item_0;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       stored_flag <= 0;
+    #     end else begin
+    #       stored_flag <= stored_flag_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: stored_piece
+    #   // Unified flop with mux for: stored_piece (register_out assignment)
+    #   always_comb begin
+    #     stored_piece_next = stored_piece;  // Default value
+    #     if (stored_piece_held_payload_flags_item_1_en) begin
+    #       stored_piece_next = held.payload.flags.item_1;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       stored_piece <= 2'b00;
+    #     end else begin
+    #       stored_piece <= stored_piece_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: writer_start
+    #   // Unified combinational mux for: writer_start
+    #   always_comb begin
+    #     writer_start = 1'b0;  // Default value
+    #     if (writer_start_1_en) begin
+    #       writer_start = 1;
+    #     end
+    #   end
+    # 
+    #   `ifndef SYNTHESIS
+    #   always_comb begin
+    #     assert ($onehot0({isf_completion_left_seen_0_en, isf_completion_left_seen_1_en})) else $error("selector multi-value conflict: isf_completion_left_seen");
+    #     assert ($onehot0({isf_completion_right_seen_0_en, isf_completion_right_seen_1_en})) else $error("selector multi-value conflict: isf_completion_right_seen");
+    #     assert ($onehot0({isf_completion_writer_seen_0_en, isf_completion_writer_seen_1_en})) else $error("selector multi-value conflict: isf_completion_writer_seen");
+    #     assert ($onehot0({next_state_main_await_all_14_en, next_state_main_await_all_7_en, next_state_main_done_20_en, next_state_main_idle_0_en, next_state_main_set_1_en, next_state_main_set_15_en, next_state_main_set_16_en, next_state_main_set_17_en, next_state_main_set_18_en, next_state_main_set_19_en, next_state_main_set_2_en, next_state_main_set_8_en, next_state_main_spawn_12_en, next_state_main_spawn_13_en, next_state_main_spawn_6_en, next_state_main_wait_10_en, next_state_main_wait_11_en, next_state_main_wait_3_en, next_state_main_wait_4_en, next_state_main_wait_5_en, next_state_main_wait_9_en})) else $error("selector multi-value conflict: next_state");
+    #     assert ($onehot0({phase_1_en, phase__2_en})) else $error("selector multi-value conflict: phase");
+    #   end
+    #   `endif
+    #   // Shared-datapath source-enable exports
+    #   assign shared_dp_export_again_right_result_en = again_right_result_en;
+    #   assign shared_dp_export_captured_accepted_en = captured_accepted_en;
+    #   assign shared_dp_export_copied_tag_held_tag_en = copied_tag_held_tag_en;
+    #   assign shared_dp_export_copy_seen_writer_result_en = copy_seen_writer_result_en;
+    #   assign shared_dp_export_done_1_en = done_1_en;
+    #   assign shared_dp_export_left_start_1_en = left_start_1_en;
+    #   assign shared_dp_export_negative_again_right_is_negative_en = negative_again_right_is_negative_en;
+    #   assign shared_dp_export_negative_seen_left_is_negative_en = negative_seen_left_is_negative_en;
+    #   assign shared_dp_export_phase_1_en = phase_1_en;
+    #   assign shared_dp_export_phase_2_en = phase__2_en;
+    #   assign shared_dp_export_reset_seen_held_payload_data_en = reset_seen_held_payload_data_en;
+    #   assign shared_dp_export_right_start_1_en = right_start_1_en;
+    #   assign shared_dp_export_seen_left_result_en = seen_left_result_en;
+    #   assign shared_dp_export_stored_held_payload_data_en = stored_held_payload_data_en;
+    #   assign shared_dp_export_stored_flag_held_payload_flags_item_0_en = stored_flag_held_payload_flags_item_0_en;
+    #   assign shared_dp_export_stored_piece_held_payload_flags_item_1_en = stored_piece_held_payload_flags_item_1_en;
+    #   assign shared_dp_export_writer_start_1_en = writer_start_1_en;
+    # endmodule
+    # 
+    # 
+    # //=============================================================================
+    # // Flattened Decision Tree FSM: packed_input_generated_domains__domain_io__child_copier
+    # // Generated using Enable-based Methodology with WEN/EN Signals
+    # // 
+    # // This implementation uses:
+    # // - Flattened decision tree approach
+    # // - Enable-based logic with assign statements
+    # // - Write Enable (WEN) and Enable (EN) signals for each LHS
+    # // - Flat Boolean expressions from DT traversal
+    # //=============================================================================
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m55_packed_input_generated_domains__domain_io__child_copier__frame__fsmgen_t; // frame
+    # 
+    # module packed_input_generated_domains__domain_io__child_copier #(
+    #   parameter MODE = 0
+    # ) (
+    #   input  wire clk,
+    #   input  wire rst_n,
+    #   input fsmgen_m55_packed_input_generated_domains__domain_io__child_copier__frame__fsmgen_t packet,
+    #   input  wire start,
+    #   output reg  done,
+    #   output fsmgen_m55_packed_input_generated_domains__domain_io__child_copier__frame__fsmgen_t isf_write_held_data,
+    #   output reg  isf_write_held_enable,
+    #   output reg  [4:0] result
+    # ,
+    #   output  wire shared_dp_export_done_1_en,
+    #   output  wire shared_dp_export_isf_write_held_data_packet_en,
+    #   output  wire shared_dp_export_isf_write_held_enable_1_en,
+    #   output  wire shared_dp_export_result_packet_payload_data_en
+    # );
+    # 
+    #   // State encoding
+    #   localparam COPIER_IDLE_0 = 3'd0;
+    #   localparam COPIER_WAIT_0 = 3'd1;
+    #   localparam COPIER_WAIT_1 = 3'd2;
+    #   localparam COPIER_SET_2 = 3'd3;
+    #   localparam COPIER_SET_3 = 3'd4;
+    #   localparam COPIER_DONE_4 = 3'd5;
+    # 
+    #   // State registers
+    #   reg [2:0] current_state, next_state;
+    # 
+    #   // State sequential logic
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       current_state <= COPIER_IDLE_0;
+    #     end else begin
+    #       current_state <= next_state;
+    #     end
+    #   end
+    # 
+    #   // Internal signal declarations
+    #   reg isf_child_start_seen;
+    #   // Internal mux helper registers
+    #   reg done_pulse_delay_pipe;
+    #   reg isf_child_start_seen_next;
+    #   reg [4:0] result_next;
+    #   // Generated enable wires
+    #   wire copier_done_4_done_1_en;
+    #   wire copier_done_4_en;
+    #   wire copier_done_4_next_state_copier_idle_0_en;
+    #   wire copier_idle_0_en;
+    #   wire copier_idle_0_next_state_copier_wait_0_en;
+    #   wire copier_set_2_en;
+    #   wire copier_set_2_isf_write_held_data_packet_en;
+    #   wire copier_set_2_isf_write_held_enable_1_en;
+    #   wire copier_set_2_next_state_copier_set_3_en;
+    #   wire copier_set_3_en;
+    #   wire copier_set_3_next_state_copier_done_4_en;
+    #   wire copier_set_3_result_packet_payload_data_en;
+    #   wire copier_wait_0_en;
+    #   wire copier_wait_0_next_state_copier_wait_1_en;
+    #   wire copier_wait_1_en;
+    #   wire copier_wait_1_next_state_copier_set_2_en;
+    #   wire done_1_en;
+    #   wire isf_child_start_seen_en;
+    #   wire isf_child_start_seen_isf_child_start_seen_start_en;
+    #   wire isf_child_start_seen_start_en;
+    #   wire isf_write_held_data_packet_en;
+    #   wire isf_write_held_enable_1_en;
+    #   wire next_state_copier_done_4_en;
+    #   wire next_state_copier_idle_0_en;
+    #   wire next_state_copier_set_2_en;
+    #   wire next_state_copier_set_3_en;
+    #   wire next_state_copier_wait_0_en;
+    #   wire next_state_copier_wait_1_en;
+    #   wire result_packet_payload_data_en;
+    # 
+    #   // State and DT Enable Conditions
+    #   assign copier_done_4_en = current_state == COPIER_DONE_4;
+    #   assign copier_idle_0_en = current_state == COPIER_IDLE_0;
+    #   assign copier_set_2_en = current_state == COPIER_SET_2;
+    #   assign copier_set_3_en = current_state == COPIER_SET_3;
+    #   assign copier_wait_0_en = current_state == COPIER_WAIT_0;
+    #   assign copier_wait_1_en = current_state == COPIER_WAIT_1;
+    #   assign isf_child_start_seen_en = 1'b1;
+    # 
+    #   // Consolidated intermediate signals (AST factorization + pre-scan)
+    #   wire intermediate_and_start_not_isf_child_start_seen_1;
+    # 
+    #   assign intermediate_and_start_not_isf_child_start_seen_1 = start & !isf_child_start_seen; // Source: fsmgen_parsing
+    # 
+    #   // Unified WEN/EN Signal Generation from Phase 1 Analysis
+    #   // DT-Specific Enable Signals from Unified Analysis
+    # 
+    # 
+    #   // === DT: -isf_child_start_seen ===
+    #   // isf_child_start_seen
+    #   assign isf_child_start_seen_isf_child_start_seen_start_en = isf_child_start_seen_en;  // isf_child_start_seen <- start
+    # 
+    # 
+    #   // === DT: copier_done_4 ===
+    #   // done
+    #   assign copier_done_4_done_1_en = copier_done_4_en;  // done <- 1
+    #   // next_state
+    #   assign copier_done_4_next_state_copier_idle_0_en = copier_done_4_en;  // next_state <- COPIER_IDLE_0
+    # 
+    # 
+    #   // === DT: copier_idle_0 ===
+    #   // next_state
+    #   assign copier_idle_0_next_state_copier_wait_0_en = copier_idle_0_en & intermediate_and_start_not_isf_child_start_seen_1;  // next_state <- COPIER_WAIT_0
+    # 
+    # 
+    #   // === DT: copier_set_2 ===
+    #   // isf_write_held_data
+    #   assign copier_set_2_isf_write_held_data_packet_en = copier_set_2_en;  // isf_write_held_data <- packet
+    #   // isf_write_held_enable
+    #   assign copier_set_2_isf_write_held_enable_1_en = copier_set_2_en;  // isf_write_held_enable <- 1
+    #   // next_state
+    #   assign copier_set_2_next_state_copier_set_3_en = copier_set_2_en;  // next_state <- COPIER_SET_3
+    # 
+    # 
+    #   // === DT: copier_set_3 ===
+    #   // next_state
+    #   assign copier_set_3_next_state_copier_done_4_en = copier_set_3_en;  // next_state <- COPIER_DONE_4
+    #   // result
+    #   assign copier_set_3_result_packet_payload_data_en = copier_set_3_en;  // result <- packet.payload.data
+    # 
+    # 
+    #   // === DT: copier_wait_0 ===
+    #   // next_state
+    #   assign copier_wait_0_next_state_copier_wait_1_en = copier_wait_0_en;  // next_state <- COPIER_WAIT_1
+    # 
+    # 
+    #   // === DT: copier_wait_1 ===
+    #   // next_state
+    #   assign copier_wait_1_next_state_copier_set_2_en = copier_wait_1_en;  // next_state <- COPIER_SET_2
+    # 
+    #   // LHS-Level Enable Signals from Unified Analysis
+    # 
+    #   // LHS-level enables for: done
+    #   assign done_1_en = copier_done_4_done_1_en;
+    # 
+    #   // LHS-level enables for: isf_child_start_seen
+    #   assign isf_child_start_seen_start_en = isf_child_start_seen_isf_child_start_seen_start_en;
+    # 
+    #   // LHS-level enables for: isf_write_held_data
+    #   assign isf_write_held_data_packet_en = copier_set_2_isf_write_held_data_packet_en;
+    # 
+    #   // LHS-level enables for: isf_write_held_enable
+    #   assign isf_write_held_enable_1_en = copier_set_2_isf_write_held_enable_1_en;
+    # 
+    #   // LHS-level enables for: next_state
+    #   assign next_state_copier_done_4_en = copier_set_3_next_state_copier_done_4_en;
+    #   assign next_state_copier_idle_0_en = copier_done_4_next_state_copier_idle_0_en;
+    #   assign next_state_copier_set_2_en = copier_wait_1_next_state_copier_set_2_en;
+    #   assign next_state_copier_set_3_en = copier_set_2_next_state_copier_set_3_en;
+    #   assign next_state_copier_wait_0_en = copier_idle_0_next_state_copier_wait_0_en;
+    #   assign next_state_copier_wait_1_en = copier_wait_0_next_state_copier_wait_1_en;
+    # 
+    #   // LHS-level enables for: result
+    #   assign result_packet_payload_data_en = copier_set_3_result_packet_payload_data_en;
+    # 
+    #   // Unified Multiplexer Logic from Phase 1 Analysis
+    # 
+    #   // Unified Multiplexer for LHS: done
+    #   // Delayed pulse logic for: done (<1, exact Q+1)
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       done <= 1'b0;
+    #       done_pulse_delay_pipe <= 1'b0;
+    #     end else begin
+    #       done <= 1'b0;
+    #       if (done_pulse_delay_pipe) begin
+    #         done <= 1'b1;
+    #       end
+    #       done_pulse_delay_pipe <= done_1_en;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_child_start_seen
+    #   // Unified flop with mux for: isf_child_start_seen (register_out assignment)
+    #   always_comb begin
+    #     isf_child_start_seen_next = isf_child_start_seen;  // Default value
+    #     if (isf_child_start_seen_start_en) begin
+    #       isf_child_start_seen_next = start;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       isf_child_start_seen <= 0;
+    #     end else begin
+    #       isf_child_start_seen <= isf_child_start_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_write_held_data
+    #   // Unified combinational mux for: isf_write_held_data
+    #   always_comb begin
+    #     isf_write_held_data = 10'b0000000000;  // Default value
+    #     if (isf_write_held_data_packet_en) begin
+    #       isf_write_held_data = packet;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_write_held_enable
+    #   // Unified combinational mux for: isf_write_held_enable
+    #   always_comb begin
+    #     isf_write_held_enable = 1'b0;  // Default value
+    #     if (isf_write_held_enable_1_en) begin
+    #       isf_write_held_enable = 1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: next_state
+    #   // Unified combinational mux for: next_state
+    #   always_comb begin
+    #     next_state = current_state;  // Default value
+    #     if (next_state_copier_done_4_en) begin
+    #       next_state = COPIER_DONE_4;
+    #     end
+    #     if (next_state_copier_idle_0_en) begin
+    #       next_state = COPIER_IDLE_0;
+    #     end
+    #     if (next_state_copier_set_2_en) begin
+    #       next_state = COPIER_SET_2;
+    #     end
+    #     if (next_state_copier_set_3_en) begin
+    #       next_state = COPIER_SET_3;
+    #     end
+    #     if (next_state_copier_wait_0_en) begin
+    #       next_state = COPIER_WAIT_0;
+    #     end
+    #     if (next_state_copier_wait_1_en) begin
+    #       next_state = COPIER_WAIT_1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: result
+    #   // Unified flop with mux for: result (register_out assignment)
+    #   always_comb begin
+    #     result_next = result;  // Default value
+    #     if (result_packet_payload_data_en) begin
+    #       result_next = packet.payload.data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       result <= 5'h00;
+    #     end else begin
+    #       result <= result_next;
+    #     end
+    #   end
+    # 
+    #   `ifndef SYNTHESIS
+    #   always_comb begin
+    #     assert ($onehot0({next_state_copier_done_4_en, next_state_copier_idle_0_en, next_state_copier_set_2_en, next_state_copier_set_3_en, next_state_copier_wait_0_en, next_state_copier_wait_1_en})) else $error("selector multi-value conflict: next_state");
+    #   end
+    #   `endif
+    #   // Shared-datapath source-enable exports
+    #   assign shared_dp_export_done_1_en = done_1_en;
+    #   assign shared_dp_export_isf_write_held_data_packet_en = isf_write_held_data_packet_en;
+    #   assign shared_dp_export_isf_write_held_enable_1_en = isf_write_held_enable_1_en;
+    #   assign shared_dp_export_result_packet_payload_data_en = result_packet_payload_data_en;
+    # endmodule
+    # 
+    # 
+    # //=============================================================================
+    # // Flattened Decision Tree FSM: packed_input_generated_domains__domain_io__child_reader
+    # // Generated using Enable-based Methodology with WEN/EN Signals
+    # // 
+    # // This implementation uses:
+    # // - Flattened decision tree approach
+    # // - Enable-based logic with assign statements
+    # // - Write Enable (WEN) and Enable (EN) signals for each LHS
+    # // - Flat Boolean expressions from DT traversal
+    # //=============================================================================
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m55_packed_input_generated_domains__domain_io__child_reader__frame__fsmgen_t; // frame
+    # 
+    # module packed_input_generated_domains__domain_io__child_reader (
+    #   input  wire clk,
+    #   input  wire rst_n,
+    #   input fsmgen_m55_packed_input_generated_domains__domain_io__child_reader__frame__fsmgen_t packet,
+    #   input  wire start,
+    #   output reg  done,
+    #   output reg  is_negative,
+    #   output reg  [4:0] result
+    # ,
+    #   output  wire shared_dp_export_done_1_en,
+    #   output  wire shared_dp_export_is_negative_expr_en,
+    #   output  wire shared_dp_export_result_packet_payload_data_en
+    # );
+    # 
+    #   // State encoding
+    #   localparam READER_IDLE_0 = 3'd0;
+    #   localparam READER_WAIT_0 = 3'd1;
+    #   localparam READER_WAIT_1 = 3'd2;
+    #   localparam READER_SET_2 = 3'd3;
+    #   localparam READER_SET_3 = 3'd4;
+    #   localparam READER_DONE_4 = 3'd5;
+    # 
+    #   // State registers
+    #   reg [2:0] current_state, next_state;
+    # 
+    #   // State sequential logic
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       current_state <= READER_IDLE_0;
+    #     end else begin
+    #       current_state <= next_state;
+    #     end
+    #   end
+    # 
+    #   // Internal signal declarations
+    #   reg isf_child_start_seen;
+    #   // Internal mux helper registers
+    #   reg done_pulse_delay_pipe;
+    #   reg is_negative_next;
+    #   reg isf_child_start_seen_next;
+    #   reg [4:0] result_next;
+    #   // Generated enable wires
+    #   wire done_1_en;
+    #   wire is_negative_expr_en;
+    #   wire isf_child_start_seen_en;
+    #   wire isf_child_start_seen_isf_child_start_seen_start_en;
+    #   wire isf_child_start_seen_start_en;
+    #   wire next_state_reader_done_4_en;
+    #   wire next_state_reader_idle_0_en;
+    #   wire next_state_reader_set_2_en;
+    #   wire next_state_reader_set_3_en;
+    #   wire next_state_reader_wait_0_en;
+    #   wire next_state_reader_wait_1_en;
+    #   wire reader_done_4_done_1_en;
+    #   wire reader_done_4_en;
+    #   wire reader_done_4_next_state_reader_idle_0_en;
+    #   wire reader_idle_0_en;
+    #   wire reader_idle_0_next_state_reader_wait_0_en;
+    #   wire reader_set_2_en;
+    #   wire reader_set_2_next_state_reader_set_3_en;
+    #   wire reader_set_2_result_packet_payload_data_en;
+    #   wire reader_set_3_en;
+    #   wire reader_set_3_is_negative_packet_payload_data_0_en;
+    #   wire reader_set_3_next_state_reader_done_4_en;
+    #   wire reader_wait_0_en;
+    #   wire reader_wait_0_next_state_reader_wait_1_en;
+    #   wire reader_wait_1_en;
+    #   wire reader_wait_1_next_state_reader_set_2_en;
+    #   wire result_packet_payload_data_en;
+    # 
+    #   // State and DT Enable Conditions
+    #   assign reader_done_4_en = current_state == READER_DONE_4;
+    #   assign reader_idle_0_en = current_state == READER_IDLE_0;
+    #   assign reader_set_2_en = current_state == READER_SET_2;
+    #   assign reader_set_3_en = current_state == READER_SET_3;
+    #   assign reader_wait_0_en = current_state == READER_WAIT_0;
+    #   assign reader_wait_1_en = current_state == READER_WAIT_1;
+    #   assign isf_child_start_seen_en = 1'b1;
+    # 
+    #   // Consolidated intermediate signals (AST factorization + pre-scan)
+    #   wire intermediate_and_start_not_isf_child_start_seen_1;
+    # 
+    #   assign intermediate_and_start_not_isf_child_start_seen_1 = start & !isf_child_start_seen; // Source: fsmgen_parsing
+    # 
+    #   // Unified WEN/EN Signal Generation from Phase 1 Analysis
+    #   // DT-Specific Enable Signals from Unified Analysis
+    # 
+    # 
+    #   // === DT: -isf_child_start_seen ===
+    #   // isf_child_start_seen
+    #   assign isf_child_start_seen_isf_child_start_seen_start_en = isf_child_start_seen_en;  // isf_child_start_seen <- start
+    # 
+    # 
+    #   // === DT: reader_done_4 ===
+    #   // done
+    #   assign reader_done_4_done_1_en = reader_done_4_en;  // done <- 1
+    #   // next_state
+    #   assign reader_done_4_next_state_reader_idle_0_en = reader_done_4_en;  // next_state <- READER_IDLE_0
+    # 
+    # 
+    #   // === DT: reader_idle_0 ===
+    #   // next_state
+    #   assign reader_idle_0_next_state_reader_wait_0_en = reader_idle_0_en & intermediate_and_start_not_isf_child_start_seen_1;  // next_state <- READER_WAIT_0
+    # 
+    # 
+    #   // === DT: reader_set_2 ===
+    #   // next_state
+    #   assign reader_set_2_next_state_reader_set_3_en = reader_set_2_en;  // next_state <- READER_SET_3
+    #   // result
+    #   assign reader_set_2_result_packet_payload_data_en = reader_set_2_en;  // result <- packet.payload.data
+    # 
+    # 
+    #   // === DT: reader_set_3 ===
+    #   // is_negative
+    #   assign reader_set_3_is_negative_packet_payload_data_0_en = reader_set_3_en;  // is_negative <- packet.payload.data < 0
+    #   // next_state
+    #   assign reader_set_3_next_state_reader_done_4_en = reader_set_3_en;  // next_state <- READER_DONE_4
+    # 
+    # 
+    #   // === DT: reader_wait_0 ===
+    #   // next_state
+    #   assign reader_wait_0_next_state_reader_wait_1_en = reader_wait_0_en;  // next_state <- READER_WAIT_1
+    # 
+    # 
+    #   // === DT: reader_wait_1 ===
+    #   // next_state
+    #   assign reader_wait_1_next_state_reader_set_2_en = reader_wait_1_en;  // next_state <- READER_SET_2
+    # 
+    #   // LHS-Level Enable Signals from Unified Analysis
+    # 
+    #   // LHS-level enables for: done
+    #   assign done_1_en = reader_done_4_done_1_en;
+    # 
+    #   // LHS-level enables for: is_negative
+    #   assign is_negative_expr_en = reader_set_3_is_negative_packet_payload_data_0_en;
+    # 
+    #   // LHS-level enables for: isf_child_start_seen
+    #   assign isf_child_start_seen_start_en = isf_child_start_seen_isf_child_start_seen_start_en;
+    # 
+    #   // LHS-level enables for: next_state
+    #   assign next_state_reader_done_4_en = reader_set_3_next_state_reader_done_4_en;
+    #   assign next_state_reader_idle_0_en = reader_done_4_next_state_reader_idle_0_en;
+    #   assign next_state_reader_set_2_en = reader_wait_1_next_state_reader_set_2_en;
+    #   assign next_state_reader_set_3_en = reader_set_2_next_state_reader_set_3_en;
+    #   assign next_state_reader_wait_0_en = reader_idle_0_next_state_reader_wait_0_en;
+    #   assign next_state_reader_wait_1_en = reader_wait_0_next_state_reader_wait_1_en;
+    # 
+    #   // LHS-level enables for: result
+    #   assign result_packet_payload_data_en = reader_set_2_result_packet_payload_data_en;
+    # 
+    #   // Unified Multiplexer Logic from Phase 1 Analysis
+    # 
+    #   // Unified Multiplexer for LHS: done
+    #   // Delayed pulse logic for: done (<1, exact Q+1)
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       done <= 1'b0;
+    #       done_pulse_delay_pipe <= 1'b0;
+    #     end else begin
+    #       done <= 1'b0;
+    #       if (done_pulse_delay_pipe) begin
+    #         done <= 1'b1;
+    #       end
+    #       done_pulse_delay_pipe <= done_1_en;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: is_negative
+    #   // Unified flop with mux for: is_negative (register_out assignment)
+    #   always_comb begin
+    #     is_negative_next = is_negative;  // Default value
+    #     if (is_negative_expr_en) begin
+    #       is_negative_next = packet.payload.data < 0;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       is_negative <= 1'b0;
+    #     end else begin
+    #       is_negative <= is_negative_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: isf_child_start_seen
+    #   // Unified flop with mux for: isf_child_start_seen (register_out assignment)
+    #   always_comb begin
+    #     isf_child_start_seen_next = isf_child_start_seen;  // Default value
+    #     if (isf_child_start_seen_start_en) begin
+    #       isf_child_start_seen_next = start;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       isf_child_start_seen <= 0;
+    #     end else begin
+    #       isf_child_start_seen <= isf_child_start_seen_next;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: next_state
+    #   // Unified combinational mux for: next_state
+    #   always_comb begin
+    #     next_state = current_state;  // Default value
+    #     if (next_state_reader_done_4_en) begin
+    #       next_state = READER_DONE_4;
+    #     end
+    #     if (next_state_reader_idle_0_en) begin
+    #       next_state = READER_IDLE_0;
+    #     end
+    #     if (next_state_reader_set_2_en) begin
+    #       next_state = READER_SET_2;
+    #     end
+    #     if (next_state_reader_set_3_en) begin
+    #       next_state = READER_SET_3;
+    #     end
+    #     if (next_state_reader_wait_0_en) begin
+    #       next_state = READER_WAIT_0;
+    #     end
+    #     if (next_state_reader_wait_1_en) begin
+    #       next_state = READER_WAIT_1;
+    #     end
+    #   end
+    # 
+    #   // Unified Multiplexer for LHS: result
+    #   // Unified flop with mux for: result (register_out assignment)
+    #   always_comb begin
+    #     result_next = result;  // Default value
+    #     if (result_packet_payload_data_en) begin
+    #       result_next = packet.payload.data;
+    #     end
+    #   end
+    #   always_ff @(posedge clk or negedge rst_n) begin
+    #     if (!rst_n) begin
+    #       result <= 5'h00;
+    #     end else begin
+    #       result <= result_next;
+    #     end
+    #   end
+    # 
+    #   `ifndef SYNTHESIS
+    #   always_comb begin
+    #     assert ($onehot0({next_state_reader_done_4_en, next_state_reader_idle_0_en, next_state_reader_set_2_en, next_state_reader_set_3_en, next_state_reader_wait_0_en, next_state_reader_wait_1_en})) else $error("selector multi-value conflict: next_state");
+    #   end
+    #   `endif
+    #   // Shared-datapath source-enable exports
+    #   assign shared_dp_export_done_1_en = done_1_en;
+    #   assign shared_dp_export_is_negative_expr_en = is_negative_expr_en;
+    #   assign shared_dp_export_result_packet_payload_data_en = result_packet_payload_data_en;
+    # endmodule
+    # 
+    # 
+    # typedef struct packed {
+    #     logic [1:0] tag;
+    #     struct packed {
+    #         logic signed [4:0] data;
+    #         struct packed {
+    #             bit item_0;
+    #             bit [1:0] item_1;
+    #         } flags;
+    #     } payload;
+    # } fsmgen_m34_packed_input_generated_domains_top__frame__fsmgen_t; // frame
+    # 
+    # module packed_input_generated_domains_top (
+    #     input idle_clk,
+    #     input clk,
+    #     input rst_n,
+    #     input start,
+    #     input [9:0] packet,
+    #     input [9:0] unused,
+    #     output [1:0] phase,
+    #     output [4:0] seen,
+    #     output [4:0] again,
+    #     output negative_seen,
+    #     output negative_again,
+    #     output [4:0] copy_seen,
+    #     output [4:0] stored,
+    #     output [1:0] copied_tag,
+    #     output stored_flag,
+    #     output [1:0] stored_piece,
+    #     output [4:0] captured,
+    #     output [4:0] reset_seen,
+    #     output done
+    # );
+    # 
+    #     wire comp_link_io_left_start;
+    #     wire comp_link_io_right_start;
+    #     wire comp_link_io_writer_start;
+    #     wire comp_link_io__left_done;
+    #     wire comp_link_io__left_is_negative;
+    #     wire [4:0] comp_link_io__left_result;
+    #     wire comp_link_io__right_done;
+    #     wire comp_link_io__right_is_negative;
+    #     wire [4:0] comp_link_io__right_result;
+    #     wire comp_link_io__writer_done;
+    #     fsmgen_m34_packed_input_generated_domains_top__frame__fsmgen_t comp_link_io__writer_isf_write_held_data;
+    #     wire comp_link_io__writer_isf_write_held_enable;
+    #     wire [4:0] comp_link_io__writer_result;
+    #     wire io_writer_result_packet_payload_data_src_en;
+    #     wire io_left_is_negative_packet_payload_data_0_src_en;
+    #     wire io_left_result_packet_payload_data_src_en;
+    #     wire io_right_is_negative_packet_payload_data_0_src_en;
+    #     wire io_right_result_packet_payload_data_src_en;
+    #     wire shared_dp_unused_io_shared_dp_export_again_right_result_en;
+    #     wire shared_dp_unused_io_shared_dp_export_captured_accepted_en;
+    #     wire shared_dp_unused_io_shared_dp_export_copied_tag_held_tag_en;
+    #     wire shared_dp_unused_io_shared_dp_export_copy_seen_writer_result_en;
+    #     wire shared_dp_unused_io_shared_dp_export_done_1_en;
+    #     wire shared_dp_unused_io_shared_dp_export_left_start_1_en;
+    #     wire shared_dp_unused_io_shared_dp_export_negative_again_right_is_negative_en;
+    #     wire shared_dp_unused_io_shared_dp_export_negative_seen_left_is_negative_en;
+    #     wire shared_dp_unused_io_shared_dp_export_phase_1_en;
+    #     wire shared_dp_unused_io_shared_dp_export_phase_2_en;
+    #     wire shared_dp_unused_io_shared_dp_export_reset_seen_held_payload_data_en;
+    #     wire shared_dp_unused_io_shared_dp_export_right_start_1_en;
+    #     wire shared_dp_unused_io_shared_dp_export_seen_left_result_en;
+    #     wire shared_dp_unused_io_shared_dp_export_stored_held_payload_data_en;
+    #     wire shared_dp_unused_io_shared_dp_export_stored_flag_held_payload_flags_item_0_en;
+    #     wire shared_dp_unused_io_shared_dp_export_stored_piece_held_payload_flags_item_1_en;
+    #     wire shared_dp_unused_io_shared_dp_export_writer_start_1_en;
+    #     wire shared_dp_unused_io_writer_shared_dp_export_done_1_en;
+    #     wire shared_dp_unused_io_writer_shared_dp_export_isf_write_held_data_packet_en;
+    #     wire shared_dp_unused_io_writer_shared_dp_export_isf_write_held_enable_1_en;
+    #     wire shared_dp_unused_io_left_shared_dp_export_done_1_en;
+    #     wire shared_dp_unused_io_right_shared_dp_export_done_1_en;
+    #     wire is_negative_shared_en;
+    #     wire is_negative_multi_value_conflict;
+    #     wire is_negative_packet_payload_data_0_shared_en;
+    #     wire is_negative_packet_payload_data_0_multi_src_conflict;
+    #     wire result_shared_en;
+    #     wire result_multi_value_conflict;
+    #     wire result_packet_payload_data_shared_en;
+    #     wire result_packet_payload_data_multi_src_conflict;
+    # 
+    #   assign is_negative_packet_payload_data_0_shared_en = io_left_is_negative_packet_payload_data_0_src_en | io_right_is_negative_packet_payload_data_0_src_en;
+    #   assign is_negative_packet_payload_data_0_multi_src_conflict = (io_left_is_negative_packet_payload_data_0_src_en & io_right_is_negative_packet_payload_data_0_src_en);
+    #   assign is_negative_shared_en = is_negative_packet_payload_data_0_shared_en;
+    #   assign is_negative_multi_value_conflict = 1'b0;
+    #   assign result_packet_payload_data_shared_en = io_left_result_packet_payload_data_src_en | io_right_result_packet_payload_data_src_en | io_writer_result_packet_payload_data_src_en;
+    #   assign result_packet_payload_data_multi_src_conflict = (io_left_result_packet_payload_data_src_en & io_right_result_packet_payload_data_src_en) | (io_left_result_packet_payload_data_src_en & io_writer_result_packet_payload_data_src_en) | (io_right_result_packet_payload_data_src_en & io_writer_result_packet_payload_data_src_en);
+    #   assign result_shared_en = result_packet_payload_data_shared_en;
+    #   assign result_multi_value_conflict = 1'b0;
+    # 
+    #     `ifndef SYNTHESIS
+    #     always_comb begin
+    #       assert (!is_negative_packet_payload_data_0_multi_src_conflict) else $error("shared-datapath same-value conflict: is_negative packet.payload.data < 0");
+    #     end
+    #     `endif
+    #     `ifndef SYNTHESIS
+    #     always_comb begin
+    #       assert (!result_packet_payload_data_multi_src_conflict) else $error("shared-datapath same-value conflict: result packet.payload.data");
+    #     end
+    #     `endif
+    # 
+    #     packed_input_generated_domains__domain_idle idle (
+    #         .idle_clk(idle_clk),
+    #         .unused(unused)
+    #     );
+    # 
+    #     packed_input_generated_domains__domain_io io (
+    #         .clk(clk),
+    #         .rst_n(rst_n),
+    #         .again(again),
+    #         .captured(captured),
+    #         .copied_tag(copied_tag),
+    #         .copy_seen(copy_seen),
+    #         .done(done),
+    #         .isf_write_writer_held_data(comp_link_io__writer_isf_write_held_data),
+    #         .isf_write_writer_held_enable(comp_link_io__writer_isf_write_held_enable),
+    #         .left_done(comp_link_io__left_done),
+    #         .left_is_negative(comp_link_io__left_is_negative),
+    #         .left_result(comp_link_io__left_result),
+    #         .left_start(comp_link_io_left_start),
+    #         .negative_again(negative_again),
+    #         .negative_seen(negative_seen),
+    #         .packet(packet),
+    #         .phase(phase),
+    #         .reset_seen(reset_seen),
+    #         .right_done(comp_link_io__right_done),
+    #         .right_is_negative(comp_link_io__right_is_negative),
+    #         .right_result(comp_link_io__right_result),
+    #         .right_start(comp_link_io_right_start),
+    #         .seen(seen),
+    #         .start(start),
+    #         .stored(stored),
+    #         .stored_flag(stored_flag),
+    #         .stored_piece(stored_piece),
+    #         .writer_done(comp_link_io__writer_done),
+    #         .writer_result(comp_link_io__writer_result),
+    #         .writer_start(comp_link_io_writer_start),
+    #         .shared_dp_export_again_right_result_en(shared_dp_unused_io_shared_dp_export_again_right_result_en),
+    #         .shared_dp_export_captured_accepted_en(shared_dp_unused_io_shared_dp_export_captured_accepted_en),
+    #         .shared_dp_export_copied_tag_held_tag_en(shared_dp_unused_io_shared_dp_export_copied_tag_held_tag_en),
+    #         .shared_dp_export_copy_seen_writer_result_en(shared_dp_unused_io_shared_dp_export_copy_seen_writer_result_en),
+    #         .shared_dp_export_done_1_en(shared_dp_unused_io_shared_dp_export_done_1_en),
+    #         .shared_dp_export_left_start_1_en(shared_dp_unused_io_shared_dp_export_left_start_1_en),
+    #         .shared_dp_export_negative_again_right_is_negative_en(shared_dp_unused_io_shared_dp_export_negative_again_right_is_negative_en),
+    #         .shared_dp_export_negative_seen_left_is_negative_en(shared_dp_unused_io_shared_dp_export_negative_seen_left_is_negative_en),
+    #         .shared_dp_export_phase_1_en(shared_dp_unused_io_shared_dp_export_phase_1_en),
+    #         .shared_dp_export_phase_2_en(shared_dp_unused_io_shared_dp_export_phase_2_en),
+    #         .shared_dp_export_reset_seen_held_payload_data_en(shared_dp_unused_io_shared_dp_export_reset_seen_held_payload_data_en),
+    #         .shared_dp_export_right_start_1_en(shared_dp_unused_io_shared_dp_export_right_start_1_en),
+    #         .shared_dp_export_seen_left_result_en(shared_dp_unused_io_shared_dp_export_seen_left_result_en),
+    #         .shared_dp_export_stored_held_payload_data_en(shared_dp_unused_io_shared_dp_export_stored_held_payload_data_en),
+    #         .shared_dp_export_stored_flag_held_payload_flags_item_0_en(shared_dp_unused_io_shared_dp_export_stored_flag_held_payload_flags_item_0_en),
+    #         .shared_dp_export_stored_piece_held_payload_flags_item_1_en(shared_dp_unused_io_shared_dp_export_stored_piece_held_payload_flags_item_1_en),
+    #         .shared_dp_export_writer_start_1_en(shared_dp_unused_io_shared_dp_export_writer_start_1_en)
+    #     );
+    # 
+    #     packed_input_generated_domains__domain_io__child_copier io__writer (
+    #         .clk(clk),
+    #         .rst_n(rst_n),
+    #         .done(comp_link_io__writer_done),
+    #         .isf_write_held_data(comp_link_io__writer_isf_write_held_data),
+    #         .isf_write_held_enable(comp_link_io__writer_isf_write_held_enable),
+    #         .packet(packet),
+    #         .result(comp_link_io__writer_result),
+    #         .start(comp_link_io_writer_start),
+    #         .shared_dp_export_result_packet_payload_data_en(io_writer_result_packet_payload_data_src_en),
+    #         .shared_dp_export_done_1_en(shared_dp_unused_io_writer_shared_dp_export_done_1_en),
+    #         .shared_dp_export_isf_write_held_data_packet_en(shared_dp_unused_io_writer_shared_dp_export_isf_write_held_data_packet_en),
+    #         .shared_dp_export_isf_write_held_enable_1_en(shared_dp_unused_io_writer_shared_dp_export_isf_write_held_enable_1_en)
+    #     );
+    # 
+    #     packed_input_generated_domains__domain_io__child_reader io__left (
+    #         .clk(clk),
+    #         .rst_n(rst_n),
+    #         .done(comp_link_io__left_done),
+    #         .is_negative(comp_link_io__left_is_negative),
+    #         .packet(packet),
+    #         .result(comp_link_io__left_result),
+    #         .start(comp_link_io_left_start),
+    #         .shared_dp_export_is_negative_expr_en(io_left_is_negative_packet_payload_data_0_src_en),
+    #         .shared_dp_export_result_packet_payload_data_en(io_left_result_packet_payload_data_src_en),
+    #         .shared_dp_export_done_1_en(shared_dp_unused_io_left_shared_dp_export_done_1_en)
+    #     );
+    # 
+    #     packed_input_generated_domains__domain_io__child_reader io__right (
+    #         .clk(clk),
+    #         .rst_n(rst_n),
+    #         .done(comp_link_io__right_done),
+    #         .is_negative(comp_link_io__right_is_negative),
+    #         .packet(packet),
+    #         .result(comp_link_io__right_result),
+    #         .start(comp_link_io_right_start),
+    #         .shared_dp_export_is_negative_expr_en(io_right_is_negative_packet_payload_data_0_src_en),
+    #         .shared_dp_export_result_packet_payload_data_en(io_right_result_packet_payload_data_src_en),
+    #         .shared_dp_export_done_1_en(shared_dp_unused_io_right_shared_dp_export_done_1_en)
+    #     );
+    # 
+    # endmodule
+    # '
+    # Looks like you failed 1 test of 3.
+
+#   Failed test 'actual previously failing source changes only its illegal carrier declaration'
+#   at t/2026-structural-two-state-carrier-declarations.t line 95.
+# Looks like you failed 2 tests of 2.
+t/2026-structural-two-state-carrier-declarations.t .. 
+# Subtest: typed carriers preserve exact nested data models with legal declaration classes
+    ok 1 - systemverilog preserves complete input IR JSON kinds and declarations
+    not ok 2 - systemverilog literal legal carrier: fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    ok 3 - systemverilog literal legal carrier: wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    not ok 4 - systemverilog literal legal carrier: fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    not ok 5 - systemverilog literal legal carrier: fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    ok 6 - systemverilog literal legal carrier: fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    not ok 7 - systemverilog literal legal carrier: bit signed [4:0] two_scalar;
+    ok 8 - systemverilog literal legal carrier: wire logic signed [4:0] four_scalar;
+    ok 9 - systemverilog literal legal carrier: wire [4:0] legacy_scalar;
+    not ok 10 - systemverilog never places a two-state carrier on a wire
+    ok 11 - systemverilog preserves mixed signed/four-state data and nested two-state list leaves
+    ok 12 - systemverilog preserves the independently authored list-of-record declaration
+    ok 13 - systemverilog preserves every two-state record leaf without widening
+    ok 14 - verilog preserves complete input IR JSON kinds and declarations
+    not ok 15 - verilog literal legal carrier: fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    ok 16 - verilog literal legal carrier: wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    not ok 17 - verilog literal legal carrier: fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    not ok 18 - verilog literal legal carrier: fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    ok 19 - verilog literal legal carrier: fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    not ok 20 - verilog literal legal carrier: bit signed [4:0] two_scalar;
+    ok 21 - verilog literal legal carrier: wire logic signed [4:0] four_scalar;
+    ok 22 - verilog literal legal carrier: wire [4:0] legacy_scalar;
+    not ok 23 - verilog never places a two-state carrier on a wire
+    ok 24 - verilog preserves mixed signed/four-state data and nested two-state list leaves
+    ok 25 - verilog preserves the independently authored list-of-record declaration
+    ok 26 - verilog preserves every two-state record leaf without widening
+    1..26
+not ok 1 - typed carriers preserve exact nested data models with legal declaration classes
+# Subtest: actual previously failing source changes only its illegal carrier declaration
+    ok 1 - unchanged failing authored source still emits through the public strict interface
+    ok 2 - immutable diagnosed product has exactly the illegal generated whole-copy carrier
+    not ok 3 - complete public product preserves all types, layout, roles, wiring and logic except the repaired declaration and date
+    1..3
+not ok 2 - actual previously failing source changes only its illegal carrier declaration
+1..2
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/2 subtests 
+
+Test Summary Report
+-------------------
+t/2026-structural-two-state-carrier-declarations.t (Wstat: 512 Tests: 2 Failed: 2)
+  Failed tests:  1-2
+  Non-zero exit status: 2
+Files=1, Tests=2,  4 wallclock secs ( 0.01 usr  0.00 sys +  2.80 cusr  0.36 csys =  3.17 CPU)
+Result: FAIL

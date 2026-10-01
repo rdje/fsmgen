@@ -1,0 +1,6 @@
+Counterfactual control (already consumed; plain local include tree, no Git checkout):
+Copy fcd1186f6bd05d173413f81b89c8b31f75331a7e:perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm
+into .artifacts/typed-carrier-old-emitter/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm.
+PERL5OPT='-Iperl -I.artifacts/typed-carrier-old-emitter -MFSM::Backend::VerilogFamily::StructuralRTLIREmitter' scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib -v t/2026-structural-two-state-carrier-declarations.t
+Expected result: nonzero; both independent declaration matrix and complete public-product subtests fail.
+This is static emission only. No new HDL compile/runtime occurs in the repair.

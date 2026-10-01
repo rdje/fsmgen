@@ -1,0 +1,34 @@
+{
+  "first_failure_manifest": "docs/audits/record-input-generated-observation-20261001/manifest.json",
+  "first_failure_sha256": "133ea42c58d9adfe536e5aaa3877ad8548591af3b745beb3b6cd33d54408a523",
+  "hdl_execution": "pending fresh qualified observation; no repair-slice HDL execution",
+  "normalization": "Only exact active repository prefix removed from saved log text; other bytes retained.",
+  "predecessor": "fcd1186f6bd05d173413f81b89c8b31f75331a7e",
+  "schema": "fsmgen.typed_composition_carrier_repair.v1",
+  "sha256": {
+    "control-recipe.txt": "a8f4e34527fb2910b2e68630f0951fee25958882bb8e5411177de54759d45a77",
+    "focused.txt": "283262e4baff3d4723bade110145b42ab2d7338556ebaad6c4a23f70e8f551a7",
+    "old-emitter-red.txt": "b3a9f693ab8c910e6c6de10ceff3151914da8b45d245c379003a160aa9cc998c",
+    "old-emitter.pm.source": "db32772902d0b463da1c2292279f7b0000431f29cf247c9015c392cf15e90994",
+    "regression.txt": "018f3bd5e5a372926c713abb05f159a503c0970fa248c1a3d6b4f59c2a6c8e8b",
+    "verify.py": "ab5eece3bc17d23ae97dc14f984a9529ceb3b5cb2e139fed7a3ece6c2149a7bb"
+  },
+  "sources": {
+    "perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm": {
+      "git_blob": "5578152199ca0f638d6654e0fd6b4b3db5c137c9",
+      "sha256": "60f634e9d7be9306f11a3ee676e2eabd9b6eb91c6c95d379b1e407526bb3d6dc"
+    },
+    "perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm": {
+      "git_blob": "6e770f53bc750b8c5136fe0ad82e89daccd7ea79",
+      "sha256": "b29a9adcbb9c16698b36c71a5a32ba4858649c58f93ee4dccfea19ae3050a3d9"
+    },
+    "t/167-structural-connection-expr-helpers.t": {
+      "git_blob": "9b78c28b857c6cf2458a5fa752b1b6fc0cc62f52",
+      "sha256": "34adb7fb8a2596d6294dac87d346e17716df02db5c1c78ed36fdbef1a6924309"
+    },
+    "t/2026-structural-two-state-carrier-declarations.t": {
+      "git_blob": "d60eaf60cba95ed4e168dcc4ce22b4196a6acc60",
+      "sha256": "751d60e1a6bb21c83a46341a79f05a6843f227aba6e9df2adc5e4c6cf9b2e6d0"
+    }
+  }
+}

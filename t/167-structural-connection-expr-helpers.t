@@ -1094,8 +1094,8 @@ subtest 'aggregate declared-type ports and nets emit packed typedefs through the
     );
     like(
         $rendered,
-        qr/wire ${type_scope}frame_t__fsmgen_t frame_bus;/s,
-        'structural backend reuses aggregate typedefs on typed wire nets',
+        qr/^\s+${type_scope}frame_t__fsmgen_t frame_bus;$/m,
+        'structural backend preserves mixed-state typedefs on variable carriers',
     );
     like(
         $rendered,

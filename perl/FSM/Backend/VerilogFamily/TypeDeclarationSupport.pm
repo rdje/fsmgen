@@ -103,6 +103,25 @@ sub state_model_keyword ($class, $state_model) {
     return undef;
 }
 
+sub contains_two_state_leaf ($class, $type_spec) {
+    return 0 unless ref($type_spec) eq 'HASH';
+    my $kind = $type_spec->{kind} // '';
+    return ($type_spec->{state_model} // '') eq 'two_state' ? 1 : 0
+        if $kind eq 'bit' || $kind eq 'bits';
+
+    my @children;
+    if ($kind eq 'list') {
+        @children = @{$type_spec->{items} || []};
+    } elsif ($kind eq 'record') {
+        @children = map { ($type_spec->{members} || {})->{$_} }
+            @{$type_spec->{member_order} || []};
+    }
+    for my $child (@children) {
+        return 1 if $class->contains_two_state_leaf($child);
+    }
+    return 0;
+}
+
 sub _aggregate_typedef_lookup_key ($class, $declared_type_name, $declared_type_spec) {
     return join("\n", $declared_type_name, FSM::Package::PayloadTypeSupport->type_spec_label($declared_type_spec));
 }
@@ -202,5 +221,11 @@ Returns the already-collected typedef name for one typed entry.
 =head2 render_scalar_data_type
 
 Renders the scalar leaf data type used inside generated packed typedefs.
+
+=head2 contains_two_state_leaf
+
+Reports whether a scalar or nested packed aggregate contains an explicitly
+two-state leaf. Such data types require variable declarations rather than
+wire declarations; preserving the typedef preserves its member state models.
 
 =cut

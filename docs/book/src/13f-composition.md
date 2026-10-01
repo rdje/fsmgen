@@ -299,6 +299,14 @@ ports do not extend the authored aggregate-port surface. Authored transaction
 ports remain present even when unused; unread inherited actor inputs are omitted, keeping
 emitted interfaces consistent with wiring.
 
+A packed Verilog-family carrier containing explicitly two-state members uses
+its packed typedef as a variable declaration, preserving each member's declared
+state model. Its existing source drives the connection directly, with the same
+fanout and owning registers. All-four-state aggregate carriers retain their
+wire declarations. This selection also preserves bit variables for explicitly
+two-state scalar carrier metadata.
+
+
 Read handoff names also reserve existing state and rule/DT names, including
 case-folded collisions. For example, a rule named
 `isf_storage_read_value_reg` may guard `(flag 1)` with `fire` while a spawned

@@ -111,7 +111,11 @@ sub _render_net_line ($net, $aggregate_typedef_lookup) {
     my $typedef_name = _aggregate_typedef_name_for($net, $aggregate_typedef_lookup);
     if (defined $typedef_name) {
         my $declaration_keyword = $net->{declaration_keyword} // 'wire';
-        return $declaration_keyword eq 'wire'
+        # Composition carriers have one source and may fan out. A packed
+        # type containing bit members cannot be the data type of a wire.
+        my $wire_type = !FSM::Backend::VerilogFamily::TypeDeclarationSupport
+            ->contains_two_state_leaf($net->{declared_type_spec});
+        return $declaration_keyword eq 'wire' && $wire_type
             ? sprintf("    wire %s %s;", $typedef_name, $net->{name})
             : sprintf("    %s %s;", $typedef_name, $net->{name});
     }
@@ -120,6 +124,8 @@ sub _render_net_line ($net, $aggregate_typedef_lookup) {
     my $signed = ($net->{signed} // 0) ? 'signed ' : '';
     my $declaration_keyword = $net->{declaration_keyword} // 'wire';
     my $state_model = _state_model_keyword($net->{state_model});
+    $declaration_keyword = 'bit'
+        if $declaration_keyword eq 'wire' && ($state_model // '') eq 'bit';
     my $type_prefix = $declaration_keyword eq 'wire'
         ? (defined($state_model) ? "${state_model} ${signed}" : $signed)
         : $signed;

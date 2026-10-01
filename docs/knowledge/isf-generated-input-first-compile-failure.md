@@ -20,8 +20,10 @@ StructuralRTLIREmitter::_render_net_line prefixes wire to the aggregate typedef;
 TypeDeclarationSupport preserves the authored leaf state models. Unchanged
 strict public source re-emission reproduces both compiler-reported declaration
 and member locations. T167's old structural-only oracle expects the illegal
-mixed-state wire. P1 product repair is immediately owned by .5.4.3.2, followed
-by fresh corrected behavior .3.3; generated runtime remains unqualified.
+mixed-state wire. Declaration repair .5.4.3.2 is now structurally qualified with exact old-emitter
+RED and complete public-product controls, preserving the typedef on a variable
+carrier. Fresh corrected compiler/runtime and executed P1 closure remain .3.3;
+generated runtime remains unqualified.
 
 Original complete admission/stage/results/arguments/bounds/summary/cleanup,
 source and producer Git identities before/after and full TAP are sealed.

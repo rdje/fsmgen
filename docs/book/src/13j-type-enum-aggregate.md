@@ -340,12 +340,15 @@ execution remains pending. Its new exact fixed observer is qualified with fresh
 finite native controls, complete independent saved verification, source/coverage
 binding and original stage/bound/result/cleanup preservation. Observer controls
 do not establish generated-feature HDL behavior or historical native causality. The
-first genuine named-domain compile exposes a current limitation: a generated
-whole-copy link for a record containing nested two-state members is emitted as
-a typed wire that Verilator rejects. No simulation runs. The complete failure
-and diagnosis are retained in
-`docs/audits/record-input-generated-observation-20261001/`; immediate declaration
-repair and fresh corrected runtime are tracked under SEM `.60.4.3.2.5.4.3.2-.3`.
+first genuine named-domain compile exposed a typed whole-copy wire containing
+nested two-state members that Verilator rejected; no simulation ran. The
+preserved failure is in `docs/audits/record-input-generated-observation-20261001/`.
+The declaration repair now uses the unchanged packed typedef as a variable
+carrier, preserving its two-state and four-state members. Independent structural
+checks, exact old-emitter counterexamples and the complete emitted source
+product qualify that repair under SEM `.60.4.3.2.5.4.3.2`. Fresh corrected
+compiler/runtime execution remains `.3.3`; runtime delivery is still pending.
+
 
 
 Run the prepared authored source checks from the repository root:

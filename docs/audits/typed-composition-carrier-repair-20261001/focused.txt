@@ -1,0 +1,214 @@
+ram-guard: PID 1751; host 63.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2026-structural-two-state-carrier-declarations.t .. 
+# Subtest: typed carriers preserve exact nested data models with legal declaration classes
+    ok 1 - systemverilog preserves complete input IR JSON kinds and declarations
+    ok 2 - systemverilog literal legal carrier: fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    ok 3 - systemverilog literal legal carrier: wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    ok 4 - systemverilog literal legal carrier: fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    ok 5 - systemverilog literal legal carrier: fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    ok 6 - systemverilog literal legal carrier: fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    ok 7 - systemverilog literal legal carrier: bit signed [4:0] two_scalar;
+    ok 8 - systemverilog literal legal carrier: wire logic signed [4:0] four_scalar;
+    ok 9 - systemverilog literal legal carrier: wire [4:0] legacy_scalar;
+    ok 10 - systemverilog never places a two-state carrier on a wire
+    ok 11 - systemverilog preserves mixed signed/four-state data and nested two-state list leaves
+    ok 12 - systemverilog preserves the independently authored list-of-record declaration
+    ok 13 - systemverilog preserves every two-state record leaf without widening
+    ok 14 - verilog preserves complete input IR JSON kinds and declarations
+    ok 15 - verilog literal legal carrier: fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_bus;
+    ok 16 - verilog literal legal carrier: wire fsmgen_m14_typed_carriers__four__fsmgen_t four_bus;
+    ok 17 - verilog literal legal carrier: fsmgen_m14_typed_carriers__list__fsmgen_t list_bus;
+    ok 18 - verilog literal legal carrier: fsmgen_m14_typed_carriers__two__fsmgen_t two_bus;
+    ok 19 - verilog literal legal carrier: fsmgen_m14_typed_carriers__mixed__fsmgen_t mixed_variable;
+    ok 20 - verilog literal legal carrier: bit signed [4:0] two_scalar;
+    ok 21 - verilog literal legal carrier: wire logic signed [4:0] four_scalar;
+    ok 22 - verilog literal legal carrier: wire [4:0] legacy_scalar;
+    ok 23 - verilog never places a two-state carrier on a wire
+    ok 24 - verilog preserves mixed signed/four-state data and nested two-state list leaves
+    ok 25 - verilog preserves the independently authored list-of-record declaration
+    ok 26 - verilog preserves every two-state record leaf without widening
+    1..26
+ok 1 - typed carriers preserve exact nested data models with legal declaration classes
+# Subtest: actual previously failing source changes only its illegal carrier declaration
+    ok 1 - unchanged failing authored source still emits through the public strict interface
+    ok 2 - immutable diagnosed product has exactly the illegal generated whole-copy carrier
+    ok 3 - complete public product preserves all types, layout, roles, wiring and logic except the repaired declaration and date
+    1..3
+ok 2 - actual previously failing source changes only its illegal carrier declaration
+1..2
+ok
+t/167-structural-connection-expr-helpers.t .......... 
+# Subtest: backend-neutral open connection expressions render without inventing fake signal dependencies
+    ok 1 - open helper builds the explicit unconnected actual-binding node
+    ok 2 - open expressions render as an empty actual connection for the current verilog-family backend
+    ok 3 - open expressions already render to the portable VHDL open keyword
+    ok 4 - open expressions do not report fake signal dependencies
+    ok 5 - binding text rendering preserves an explicit open connection as an empty current-language actual
+    ok 6 - structural backend emitter walks explicit open connection expressions directly
+    1..6
+ok 1 - backend-neutral open connection expressions render without inventing fake signal dependencies
+# Subtest: signal_ref helper builds the first bounded structural connection node
+    ok 1 - signal_ref helper returns the backend-neutral signal_ref expression shape
+    ok 2 - expr signal-name recovery understands the bounded signal_ref form
+    ok 3 - signal_ref binding helper builds the bounded binding payload with both compatibility and typed fields
+    1..3
+ok 2 - signal_ref helper builds the first bounded structural connection node
+# Subtest: binding signal summary centralizes leaf, dependency, and typed-expression projection
+    ok 1 - binding signal summary keeps flat signal-ref bindings as one leaf carrier plus one dependency
+    ok 2 - binding signal summary keeps non-leaf bindings honest by separating flat carriers from broader dependencies
+    ok 3 - binding signal summary clones the typed expression payload instead of aliasing caller-owned hashes
+    1..3
+ok 3 - binding signal summary centralizes leaf, dependency, and typed-expression projection
+# Subtest: binding signal summary metadata centralizes normalized cloned export payloads
+    ok 1 - binding signal summary metadata accepts raw bindings and returns the normalized cloned export payload
+    ok 2 - binding signal summary metadata clones precomputed summary payloads instead of aliasing caller-owned state
+    1..2
+ok 4 - binding signal summary metadata centralizes normalized cloned export payloads
+# Subtest: binding signal summaries by port centralize binding-list indexing through normalized summary payloads
+    ok 1 - binding signal summaries by port skip unnamed entries and keep cloned normalized summary payloads per formal port
+    1..1
+ok 5 - binding signal summaries by port centralize binding-list indexing through normalized summary payloads
+# Subtest: binding signal summary leaf helper prefers typed signal refs over stale mirrors
+    ok 1 - leaf helper follows the typed signal-ref expression before the compatibility mirror
+    ok 2 - leaf helper refuses to misclassify non-leaf typed expressions as flat carriers
+    ok 3 - leaf helper still falls back to the compatibility mirror when no typed expression is present
+    1..3
+ok 6 - binding signal summary leaf helper prefers typed signal refs over stale mirrors
+# Subtest: binding signal summary text centralizes rendered summary fallback rules
+    ok 1 - summary text rendering accepts the short sv alias and renders typed signal-ref payloads
+    ok 2 - summary text rendering falls back to dependency names when a typed expression is unsupported for the target backend
+    ok 3 - summary text rendering still joins dependency names when no typed payload or flat carrier mirror is present
+    1..3
+ok 7 - binding signal summary text centralizes rendered summary fallback rules
+# Subtest: bounded fixed-size index-access connection expressions render through the helper and the structural emitter
+    ok 1 - index-access helper builds a nested structural connection expression
+    ok 2 - index-access expressions render through the current verilog-family helper path
+    ok 3 - index-access expressions also render through the current VHDL helper path
+    ok 4 - index-access signal discovery preserves the referenced base signal
+    ok 5 - index-access expressions do not pretend to be one flat bound signal name
+    ok 6 - binding text rendering walks index-access expressions
+    ok 7 - structural backend emitter walks fixed-size index-access expressions directly
+    1..7
+ok 8 - bounded fixed-size index-access connection expressions render through the helper and the structural emitter
+# Subtest: bounded member-access connection expressions render through the helper and the structural emitter
+    ok 1 - member-access helper builds a nested structural connection expression
+    ok 2 - member-access expressions render through the current systemverilog helper path
+    ok 3 - member-access expressions also render through the current VHDL helper path
+    ok 4 - member-access signal discovery preserves the referenced base signal
+    ok 5 - member-access expressions do not pretend to be one flat bound signal name
+    ok 6 - binding text rendering walks member-access expressions
+    ok 7 - structural backend emitter walks member-access connection expressions directly
+    ok 8 - member-access rendering fails explicitly for backends that do not support the bounded helper form yet
+    1..8
+ok 9 - bounded member-access connection expressions render through the helper and the structural emitter
+# Subtest: binding signal-name lookup prefers the typed connection expression when present
+    ok 1 - binding signal-name recovery follows the typed expression instead of the compatibility mirror
+    ok 2 - binding signal-name recovery still falls back to the mirrored signal_name field
+    ok 3 - binding expression recovery synthesizes the bounded signal_ref node from the compatibility mirror when needed
+    1..3
+ok 10 - binding signal-name lookup prefers the typed connection expression when present
+# Subtest: recursive signal discovery follows richer typed connection expressions without flattening them into fake plain-wire names
+    ok 1 - slice expressions still report their referenced source signal
+    ok 2 - concat signal discovery preserves referenced signal order while deduplicating repeats
+    ok 3 - binding signal discovery follows the typed connection expression recursively
+    ok 4 - plain binding signal-name lookup still refuses to mislabel a non-leaf connection as one flat wire
+    1..4
+ok 11 - recursive signal discovery follows richer typed connection expressions without flattening them into fake plain-wire names
+# Subtest: binding expression text rendering stays backend-neutral for the bounded signal_ref case
+    ok 1 - binding text rendering emits the signal name for the current bounded signal_ref form
+    ok 2 - binding text rendering still supports the mirrored signal_name fallback path
+    1..2
+ok 12 - binding expression text rendering stays backend-neutral for the bounded signal_ref case
+# Subtest: bounded indexed and sliced connection expressions render through the current verilog-family and vhdl helper paths
+    ok 1 - bit-select helper builds a nested structural connection expression
+    ok 2 - slice helper builds a nested structural connection expression
+    ok 3 - bit-select expressions render through the current verilog-family backend
+    ok 4 - bit-select expressions also render through the current VHDL helper path
+    ok 5 - slice expressions render through the current verilog-family backend
+    ok 6 - slice expressions also render through the current VHDL helper path with downto semantics
+    ok 7 - slice expressions preserve ascending VHDL direction when the bounds are declared low-to-high
+    ok 8 - binding text rendering walks a sliced connection expression
+    ok 9 - non-signal-ref connection expressions do not pretend to be a plain bound signal name
+    1..9
+ok 13 - bounded indexed and sliced connection expressions render through the current verilog-family and vhdl helper paths
+# Subtest: bounded concat connection expressions render through the helper and the structural emitter
+    ok 1 - concat helper preserves nested structural operand expressions
+    ok 2 - concat expressions render through the current verilog-family backend
+    ok 3 - concat expressions also render through the current VHDL helper path
+    ok 4 - binding text rendering walks nested concat expressions
+    ok 5 - binding text rendering walks nested concat expressions through the current VHDL helper path too
+    ok 6 - structural backend emitter walks concat connection expressions directly
+    1..6
+ok 14 - bounded concat connection expressions render through the helper and the structural emitter
+# Subtest: bounded repeat connection expressions render through the helper and the structural emitter
+    ok 1 - repeat helper preserves the nested structural operand expression and repeat count
+    ok 2 - repeat expressions render through the current verilog-family backend
+    ok 3 - repeat expressions expand through the current VHDL helper path
+    ok 4 - repeat signal discovery preserves the referenced base signal
+    ok 5 - binding text rendering walks repeat expressions directly
+    ok 6 - structural backend emitter walks repeat connection expressions directly
+    1..6
+ok 15 - bounded repeat connection expressions render through the helper and the structural emitter
+# Subtest: bounded bit-vector literal connection expressions render through the helper and the structural emitter
+    ok 1 - bit-vector literal helper builds a backend-neutral literal node
+    ok 2 - bit-vector literal expressions render through the current verilog-family backend
+    ok 3 - literal expressions do not report fake signal dependencies
+    ok 4 - binding text rendering walks bit-vector literal expressions
+    ok 5 - bit-vector literal expressions also render through the current VHDL helper path
+    ok 6 - single-bit literal expressions render as VHDL character literals
+    ok 7 - binding text rendering walks bit-vector literals through the current VHDL helper path too
+    ok 8 - structural backend emitter walks literal connection expressions directly
+    1..8
+ok 16 - bounded bit-vector literal connection expressions render through the helper and the structural emitter
+# Subtest: aggregate declared-type ports and nets emit packed typedefs through the structural backend
+    ok 1 - structural backend emits a packed struct typedef for declared record aliases
+    ok 2 - structural backend emits a deterministic packed struct typedef for declared list aliases
+    ok 3 - structural backend reuses the generated aggregate typedefs on typed module ports
+    ok 4 - structural backend preserves mixed-state typedefs on variable carriers
+    ok 5 - structural backend reuses aggregate typedefs on typed variable-style nets
+    1..5
+ok 17 - aggregate declared-type ports and nets emit packed typedefs through the structural backend
+# Subtest: verilog-family structural emitter rejects unsupported target-language values directly
+    ok 1 - structural backend emitter fails explicitly outside the current Verilog-family boundary
+    1..1
+ok 18 - verilog-family structural emitter rejects unsupported target-language values directly
+# Subtest: signal_ref binding updates keep compatibility and typed fields aligned
+    ok 1 - signal_ref binding update returns the same binding reference for in-place callers
+    ok 2 - signal_ref binding update keeps the compatibility and typed fields aligned
+    1..2
+ok 19 - signal_ref binding updates keep compatibility and typed fields aligned
+# Subtest: binding-list ensure and set helpers now own bounded signal-ref port-binding updates
+    ok 1 - ensure helper reuses an existing matching binding
+    ok 2 - ensure helper does not duplicate an existing matching binding
+    ok 3 - ensure helper returns the appended binding for a new port
+    ok 4 - ensure helper appends a bounded signal-ref binding when the port is new
+    ok 5 - set helper updates the existing binding in place
+    ok 6 - set helper keeps the compatibility and typed fields aligned on existing bindings
+    ok 7 - set helper appends a new binding when the port is missing
+    1..7
+ok 20 - binding-list ensure and set helpers now own bounded signal-ref port-binding updates
+# Subtest: normalized binding cloning and backfilling now live in the structural helper module
+    ok 1 - normalized binding backfills the compatibility mirror from the typed signal_ref expression
+    ok 2 - normalized binding synthesizes the bounded signal_ref node from the compatibility mirror
+    ok 3 - normalized binding returns its own cloned payload instead of aliasing caller-owned hashes
+    1..3
+ok 21 - normalized binding cloning and backfilling now live in the structural helper module
+# Subtest: normalized bindings and summaries preserve connection type contracts
+    ok 1 - normalized binding preserves the authored connection type name
+    ok 2 - normalized binding preserves the connection type kind
+    ok 3 - normalized binding preserves connection type member order
+    ok 4 - binding summaries preserve the connection type name
+    ok 5 - binding summaries preserve the connection type width
+    ok 6 - binding summary metadata preserves the connection type name
+    ok 7 - binding summary metadata clones the connection type payload instead of aliasing caller-owned state
+    1..7
+ok 22 - normalized bindings and summaries preserve connection type contracts
+# Subtest: unsupported structural connection kinds fail explicitly
+    ok 1 - unsupported structural connection kinds fail with clear bounded wording
+    1..1
+ok 23 - unsupported structural connection kinds fail explicitly
+1..23
+ok
+All tests successful.
+Files=2, Tests=25,  4 wallclock secs ( 0.01 usr  0.00 sys +  2.85 cusr  0.38 csys =  3.24 CPU)
+Result: PASS

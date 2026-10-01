@@ -3054,11 +3054,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair typed composition carriers containing two-state members.`
   Acceptance: `P1 accepted source emits illegal wire-over-bit-containing packed typedef. Review actual StructuralRTLIR declaration/driver/type contracts, corresponding scalar and nested list/record cases, supported backends and book before source change. Preserve complete layout/signed/state intent and driver ownership; no silent four-state widening or arbitration. Add independent structural legality and old-emitter counterexamples, focused producer/integration tests and exact baseline controls. Commit the verified bounded fix before genuine HDL execution.`
-  Verification: `pending diagnosed declaration contract`
-  Commit: `pending`
+  Verification: `The shared type renderer recursively identifies explicit two_state scalar leaves in nested records/lists. Structural emission preserves those exact typedefs on variable carriers instead of illegal typed wires; explicit scalar two_state wire metadata renders bit variables. Existing all-four-state typed wires, legacy scalar nets and explicit typed variable carriers remain. T2026 independently checks both family declaration classes and complete caller JSON, and its actual unchanged failing source full HDL differs from sealed predecessor solely by removal of the illegal carrier wire keyword and date. Exact old emitter preload makes both T2026 subtests RED. Focused T2026/T167 passes Files=2, Tests=25; structural/typed/shared/generated/carrier/JSON regression passes Files=8, Tests=49 with runtime explicitly disabled. Sealed independent saved verification rejects unrelated/weakened controls. Prepared T2025/source/bench and fixed observer/native helpers remain unchanged. The declaration fix is qualified structurally; actual compiler/runtime defect closure remains fresh .3.3 after this commit.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.5.4.3.3`
   Status: `pending`
@@ -4077,3 +4077,51 @@ durability. Diagnose and commit before further HDL execution.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual %Error: domains_systemverilog.sv:1674:73 rejects comp_link_io__writer_isf_write_held_data because its typed wire contains the nested bit member at line 1636. Unchanged public strict source re-emission reproduces both locations. StructuralRTLIREmitter::_render_net_line applies wire to the preserved typedef, while TypeDeclarationSupport renders authored two_state members as bit. git log -S 'wire %s %s;' identifies introduction 3ca803fc8946140c172aeb97da26d66dd8830aee; T167's old structural oracle explicitly expects the illegal form.
 - [x] **ADDRESSED (verified)** — This diagnosis slice seals the actual failed first compile, proves no runtime/later pair occurred, independently authenticates original source/producer identities and full rejection/bounds/arguments/cleanup, and reproduces its declaration through public emission without another HDL execution. Hostile saved failure/coverage/identity/native/gap/cleanup mutations reject. The product defect is scheduled immediately under .5.4.3.2 and remains unresolved; no feature success or historical native cause is inferred.
 - [x] **NO REGRESSION** — The independent saved first-failure verifier passes complete archive/Git identity and hostile controls; unchanged strict public SystemVerilog re-emission succeeds. Original production, fixed test/source/bench, qualified observer/native helpers and earlier archives remain unchanged. Actual Knowledge Map reports knowledge-map: OK; task integrity and local book build complete before staged doctrines and normal hooks. The original genuine TAP is retained as FAIL, not relabeled a passing behavioral check.
+
+
+## Typed composition declaration repair `.60.4.3.2.5.4.3.2`
+
+Supported composition plans reserve each target's driver and create carriers
+by one stable source-family key, adding only fanout targets. A variable-style
+connection therefore preserves the supported connectivity contract. The shared
+type renderer detects explicit two_state scalar leaves recursively across
+ordered record members and list items. Structural emission uses the unchanged
+aggregate typedef as a variable for those carriers; all-four-state aggregate
+wire declarations and existing explicit variable declarations stay intact.
+Explicit scalar two_state wire metadata similarly renders bit variables with
+its existing width and signedness. This fixes the corresponding direct scalar
+wire-bit declaration defect too. No layout, member model, ownership, clock or
+pipeline edge changes; authored source, schema and supported lanes stay fixed.
+
+T2026's independent literal declaration matrix retains nested record/list and
+all-two-state/four-state controls, signed leaves and complete caller JSON.
+Actual public strict emission of the unchanged failed source matches the sealed
+full predecessor product except exactly the illegal carrier wire keyword and
+generated date comments. The exact committed old emitter, preloaded from a
+plain repository-local include tree, makes both matrix and full-product
+subtests fail. It emits the actual illegal typed wires and wire bit scalar.
+Focused and broader structural/typed/shared/generated/carrier/JSON controls
+pass. Full saved old-emitter RED and positive receipts, source hashes/Git
+identities and hostile receipt verification are sealed in
+`docs/audits/typed-composition-carrier-repair-20261001/`.
+
+Actual emitted complete products and literal declarations provide re-derivation.
+The exact old-emitter counterfactual and hostile receipt substitution provide
+independent falsification. Tracked code/tests, first genuine compiler failure,
+immutable repair archive, fact/book/response/tasks and Git provide durability.
+No additional HDL compiles or runs in this slice. Actual corrected compiler
+and runtime qualification remains .3.3 after the fix commits, including fresh
+complete current producer identities under the fixed observer's closed scope.
+The P1 defect's executed closure, X/Z, reset-free initialization and historical
+native causality remain open; prior spent evidence is untouched.
+
+The first staged doctrine gate catches a final acceptance-text addition after
+the pressure census: task_evidence total bytes exceed the recorded owned
+transition allowance. Re-census final documents independently with Python and
+Perl and refresh only the existing transition allowance, preserving every
+inclusive ceiling and debt owner. No implementation test fails.
+
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained actual %Error: domains_systemverilog.sv:1674:73 rejects a typed composition wire containing bit members at line 1636. StructuralRTLIREmitter::_render_net_line prefixes wire regardless of the preserved nested state model; its scalar branch similarly emits wire bit for explicit two_state metadata. Exact old-emitter T2026 RED shows the illegal aggregate and scalar declarations and fails the complete actual public source-product predicate. git log -S 'wire %s %s;' identifies 3ca803fc8946140c172aeb97da26d66dd8830aee as the typed-wire introduction. Supported LinkedPlanBuilder reserves unique target drivers and creates each carrier from one source-family key, so a typed variable preserves current single-source fanout.
+- [x] **ADDRESSED (verified)** — Shared recursive explicit two_state-leaf detection selects unchanged typed variable carriers; explicit scalar two_state wire metadata selects bit variables. T2026's independent declaration matrix in both families preserves literal widths, signed/state models, all-four-state and legacy wire controls, existing variable carriers and complete caller JSON. Its actual failing source product changes only the illegal carrier declaration and date. Exact old emitter fails both subtests; corrected focused and regression cohorts pass. Actual native compiler/runtime closure is deliberately pending .3.3, not inferred from static repair.
+- [x] **NO REGRESSION** — T2026/T167 reports All tests successful, Files=2, Tests=25. T2026/T167/T281/T278/T178/T2025/T2019/T2018 reports All tests successful, Files=8, Tests=49 with runtime explicitly disabled. Sealed saved repair and hostile receipt verification pass; first genuine failure, prepared target/source/bench and qualified observer/native/supervision bytes remain unchanged. Knowledge Map reports knowledge-map: OK; task integrity and local book build complete before staged doctrines and normal hooks. No broader backend or X/Z signoff is inferred.
