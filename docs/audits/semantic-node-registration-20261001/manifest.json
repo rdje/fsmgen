@@ -1,0 +1,9 @@
+{
+  "baseline_revision": "8abcbd6444d22c876d7addd998d0781649655f5f",
+  "baseline_sha256": "a959bf449968a5479e50453c4e85cc7aa4a723ef9903aa1104fa6a81e7a6f5de",
+  "qualified_blob": "c8dec2921cb422efbf1e2522e4cf32eb317a62de",
+  "qualified_sha256": "b51834f0e3bf7e9ec781702dd550295f267102c9780008bc107ce6b54611fa42",
+  "schema": "fsmgen.semantic_node_registration_repair.v1",
+  "source_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+  "verifier_sha256": "38974e36015f2aa8b7a0d44f870c74e2fcba600f39e285b03ed7e515a19db27c"
+}

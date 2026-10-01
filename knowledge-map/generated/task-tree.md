@@ -1,7 +1,7 @@
 # Knowledge Map: `task-tree`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **31** uniquely owned question entries.
+> **5** facts · **34** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -21,6 +21,7 @@
 - q="how does PNT select the next leaf?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
 - q="how is active task-tree node integrity checked?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
 - q="how is completed task acceptance history retained?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
+- q="how is semantic node registration repaired without changing historical-view doctrine?" · facts=[task-tree-authoritative-section-registration](../../docs/knowledge/task-tree-authoritative-section-registration.md)
 - q="how is task-tree migration completeness proved?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="is the semantic task tree Current Frontier prose a live resume source?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
 - q="what does TASK-TREE-INTEGRITY enforce?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
@@ -32,12 +33,21 @@
 - q="where is older semantic-introspection task acceptance evidence?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="where is the live frontier of a task tree?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
 - q="which commit field was missing from the IAL2 task tree?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
+- q="which completed semantic nodes were outside the authoritative task section?" · facts=[task-tree-authoritative-section-registration](../../docs/knowledge/task-tree-authoritative-section-registration.md)
 - q="which live IAL2 task-ledger defects did .843 repair?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
+- q="why can whole-file task IDs miss authoritative ownership registration?" · facts=[task-tree-authoritative-section-registration](../../docs/knowledge/task-tree-authoritative-section-registration.md)
 - q="why does the task tree say PNT is exhausted while old task files mention pending or active?" · facts=[task-tree-stale-status-drift-repair](../../docs/knowledge/task-tree-stale-status-drift-repair.md)
 - q="why is IAL2-FEATURE-COMPLETENESS-FRONTIER.705 done now?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
 - q="why is the ## Current Frontier table in IAL2-FEATURE-COMPLETENESS-FRONTIER.md stale?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
 
 ## Facts
+
+### task-tree-authoritative-section-registration
+
+_Ownership registration requires the parsed Task Tree section and parent reference_
+
+- **date:** 2026-10-01 · **status:** current
+- **source and verification:** [`docs/knowledge/task-tree-authoritative-section-registration.md`](../../docs/knowledge/task-tree-authoritative-section-registration.md)
 
 ### task-tree-in-file-secondary-views-are-historical
 

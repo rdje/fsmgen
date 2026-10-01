@@ -340,6 +340,12 @@ duplicated cross-tree terminal narration becomes query-first. User-directed
 leaf `.14` published a self-contained external review packet before the next
 migration.
 
+Ownership records belong inside the first `## Task Tree` section and their
+parent child list. Matching IDs elsewhere in a file does not establish live
+registration. Completed semantic reset-question, reset-grammar and historical
+view records now retain their original contracts in that authoritative graph;
+optional historical views keep decision 0019’s separate historical role.
+
 The bounded [review front door](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md)
 summarizes the current architecture and routes forensic readers to the
 content-identified

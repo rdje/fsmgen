@@ -85,7 +85,7 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
   Status: `active`
   Goal: `Track first-class semantic introspection and MCP query API work.`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57, SEMANTIC-INTROSPECTION-MCP-FRONTIER.58, SEMANTIC-INTROSPECTION-MCP-FRONTIER.59, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60, SEMANTIC-INTROSPECTION-MCP-FRONTIER.64, SEMANTIC-INTROSPECTION-MCP-FRONTIER.65`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.16, SEMANTIC-INTROSPECTION-MCP-FRONTIER.17, SEMANTIC-INTROSPECTION-MCP-FRONTIER.18, SEMANTIC-INTROSPECTION-MCP-FRONTIER.19, SEMANTIC-INTROSPECTION-MCP-FRONTIER.20, SEMANTIC-INTROSPECTION-MCP-FRONTIER.21, SEMANTIC-INTROSPECTION-MCP-FRONTIER.22, SEMANTIC-INTROSPECTION-MCP-FRONTIER.23, SEMANTIC-INTROSPECTION-MCP-FRONTIER.24, SEMANTIC-INTROSPECTION-MCP-FRONTIER.25, SEMANTIC-INTROSPECTION-MCP-FRONTIER.26, SEMANTIC-INTROSPECTION-MCP-FRONTIER.27, SEMANTIC-INTROSPECTION-MCP-FRONTIER.28, SEMANTIC-INTROSPECTION-MCP-FRONTIER.29, SEMANTIC-INTROSPECTION-MCP-FRONTIER.30, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32, SEMANTIC-INTROSPECTION-MCP-FRONTIER.33, SEMANTIC-INTROSPECTION-MCP-FRONTIER.34, SEMANTIC-INTROSPECTION-MCP-FRONTIER.35, SEMANTIC-INTROSPECTION-MCP-FRONTIER.36, SEMANTIC-INTROSPECTION-MCP-FRONTIER.37, SEMANTIC-INTROSPECTION-MCP-FRONTIER.38, SEMANTIC-INTROSPECTION-MCP-FRONTIER.39, SEMANTIC-INTROSPECTION-MCP-FRONTIER.40, SEMANTIC-INTROSPECTION-MCP-FRONTIER.41, SEMANTIC-INTROSPECTION-MCP-FRONTIER.42, SEMANTIC-INTROSPECTION-MCP-FRONTIER.43, SEMANTIC-INTROSPECTION-MCP-FRONTIER.44, SEMANTIC-INTROSPECTION-MCP-FRONTIER.45, SEMANTIC-INTROSPECTION-MCP-FRONTIER.46, SEMANTIC-INTROSPECTION-MCP-FRONTIER.47, SEMANTIC-INTROSPECTION-MCP-FRONTIER.48, SEMANTIC-INTROSPECTION-MCP-FRONTIER.49, SEMANTIC-INTROSPECTION-MCP-FRONTIER.50, SEMANTIC-INTROSPECTION-MCP-FRONTIER.51, SEMANTIC-INTROSPECTION-MCP-FRONTIER.52, SEMANTIC-INTROSPECTION-MCP-FRONTIER.53, SEMANTIC-INTROSPECTION-MCP-FRONTIER.54, SEMANTIC-INTROSPECTION-MCP-FRONTIER.55, SEMANTIC-INTROSPECTION-MCP-FRONTIER.56, SEMANTIC-INTROSPECTION-MCP-FRONTIER.57, SEMANTIC-INTROSPECTION-MCP-FRONTIER.58, SEMANTIC-INTROSPECTION-MCP-FRONTIER.59, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60, SEMANTIC-INTROSPECTION-MCP-FRONTIER.61, SEMANTIC-INTROSPECTION-MCP-FRONTIER.62, SEMANTIC-INTROSPECTION-MCP-FRONTIER.63, SEMANTIC-INTROSPECTION-MCP-FRONTIER.64, SEMANTIC-INTROSPECTION-MCP-FRONTIER.65`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -3072,6 +3072,28 @@ For FSMGen, the analogs are:
   Commit: `pending`
   Blocked by: `Required R1-R3 and director-prioritized SPECFORGE duration/timer delivery; unblock after those required outcomes qualify.`
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.61`
+  Status: `superseded`
+  Goal: `Disposition the inferred implementation-configurable reset follow-on.`
+  Acceptance: `Respect the supplied packet's question classification and the director's explicit clarification. Answer whether an instantiation-selected reset form exists without converting that question into a new reset feature request.`
+  Verification: `The director clarified that sf-isf-unstated-reset is a question. The packet already declared that kind; the additional configurable-reset implementation plan was an over-expansion and is withdrawn. Current forms and the report ambiguity are answered under .60.3; no configurable-reset implementation is on this packet's delivery path. A separately requested future capability would need its own contract. Duration units, named timers and aggregate ports remain feature requests; storage access remains independently owned.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.62`
+  Status: `done`
+  Goal: `Reject malformed reset clauses instead of silently selecting a different reset policy.`
+  Acceptance: `P1 reset-policy correctness follow-up immediately after the current provenance implementation commit and before consumer closure. Reproduce unknown timing/polarity tokens and extra operands through strict public queries; Parser::_parse_reset currently loops recognized tokens and ignores all other values. Own exact accepted/rejected grammar, preserved valid shorthand and domain behavior, precise diagnostics, native/API/newline failure equality and book/spec alignment. Split if the compatibility census reveals an intended accepted alias; do not speculate that parse success proves authored reset intent.`
+  Verification: `Parser closes reset arity and options while retaining explicit sync, suffix inference, modifier order and undefined Lispish tails. A late public probe exposed authored () collapsed to undef by own normalization; reset payload normalization now preserves empty lists for rejection, without changing other contexts. Final T1979 Files=1, Tests=3 PASS; normalizer/storage/output/timing/provenance regressions Files=10, Tests=43 PASS, including complete unchanged valid-source carriers and HDL. Ordinary/strict native check and semantic failures, API/newline equality and schedule refusal qualify the fix; no simulator executed. Historical singleton-tail handling at 8dc7bb3d6f262be760bbe11ca1ec968bf6bdd792 is preserved. Lossless red/intermediate/final logs, public AST cause capture and exact identities: docs/audits/isf-reset-grammar-20260930/. Book/spec/downstream and canonical fact align; .60.3.4 is next.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.63`
+  Status: `done`
+  Goal: `Retire misleading historical resume prose without backfilling a duplicate frontier.`
+  Acceptance: `P2 discovery ambiguity: the optional Current Frontier narrative appears current and names an obsolete next leaf. Decision 0019 and the canonical secondary-view fact explicitly make it historical; the authoritative nodes/index are correct. After .60.4.3.2.5.1 commits clean, retire only that unlabelled duplicate prose with exact committed retrieval and a historical stamp pointing to live sources. Do not backfill a second frontier. Preserve every node and active dependency, verify exact old narrative retrieval and unchanged node contracts, sync current pointers and commit before .2.5.2. No production change or new delivery claim.`
+  Verification: `Exact 49ef15cba77bdb8572beb079a1a3e81bfa04a85e narrative names completed frontend refusals as next; the actual nodes and index are correct. Decision 0019 explicitly makes the secondary view historical, so no node-status defect or per-slice backfill requirement is inferred. Only that unlabelled prose is retired behind exact Git retrieval; .63 moves into the live node list. Independent exact predecessor/node-contract and historical-text verification passes; task-tree integrity reports all active task-tree invariants hold. Active index and Memory advance to the prepared direct target fixed-observer .60.4.3.2.5.2; book/canonical feedback already state its correct unexecuted scope.`
+  Commit: `this commit`
+
+
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.64`
   Status: `pending`
   Goal: `Seal completed semantic acceptance history before genuine record-input runtime.`
@@ -3081,11 +3103,11 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.65`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair completed ownership records outside the authoritative task section.`
   Acceptance: `P2 continuity defect exposed by current observer qualification gate: the new .64 record is outside parsed Task Tree, and independent section extraction finds completed .61-.63 there as well. After the current qualified observer commit, trace their exact introduction and move only those existing records into the live Task Tree, adding exact root child references. Preserve every complete node contract, outcome, historical prose and source bytes except the owned registration repair. Correct the earlier global-regex preservation claim's registration limit, qualify actual checker extraction and hostile missing/changed/misplaced node controls, and commit before .64 or feature execution. Do not change the checker or historical-view doctrine.`
-  Verification: `scripts/check_task_tree_integrity.pl extracts only the first Task Tree section, ending at Implementation Notes From .4. Whole-file IDs .61-.63 are outside it; .63's global node-preservation oracle did not test authoritative registration. Current .64 placement is corrected in its creating slice; this leaf owns past .61-.63 repair next.`
-  Commit: `pending`
+  Verification: `Exact git log -S introduction objects place .61-.63 after the first Task Tree boundary; .63 whole-file node preservation did not establish registration. All original node contracts are byte-preserved except the owned root references and .65 disposition, and all IDs now register inside the authoritative section. Public read-only checker and plain fixture controls pass: misplaced/missing/duplicate nodes and absent root references reject, including equal whole-file ID sets; independent contract mutation rejects. Product/native/history/checker bytes remain unchanged. Audit source/blob manifest and verifier preserve replay; .64 is next.`
+  Commit: `this commit`
 
 
 ## Implementation Notes From `.4`
@@ -3742,29 +3764,11 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Reset grammar defect ownership
 
-- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.62`
-  Status: `done`
-  Goal: `Reject malformed reset clauses instead of silently selecting a different reset policy.`
-  Acceptance: `P1 reset-policy correctness follow-up immediately after the current provenance implementation commit and before consumer closure. Reproduce unknown timing/polarity tokens and extra operands through strict public queries; Parser::_parse_reset currently loops recognized tokens and ignores all other values. Own exact accepted/rejected grammar, preserved valid shorthand and domain behavior, precise diagnostics, native/API/newline failure equality and book/spec alignment. Split if the compatibility census reveals an intended accepted alias; do not speculate that parse success proves authored reset intent.`
-  Verification: `Parser closes reset arity and options while retaining explicit sync, suffix inference, modifier order and undefined Lispish tails. A late public probe exposed authored () collapsed to undef by own normalization; reset payload normalization now preserves empty lists for rejection, without changing other contexts. Final T1979 Files=1, Tests=3 PASS; normalizer/storage/output/timing/provenance regressions Files=10, Tests=43 PASS, including complete unchanged valid-source carriers and HDL. Ordinary/strict native check and semantic failures, API/newline equality and schedule refusal qualify the fix; no simulator executed. Historical singleton-tail handling at 8dc7bb3d6f262be760bbe11ca1ec968bf6bdd792 is preserved. Lossless red/intermediate/final logs, public AST cause capture and exact identities: docs/audits/isf-reset-grammar-20260930/. Book/spec/downstream and canonical fact align; .60.3.4 is next.`
-  Commit: `this commit`
-
-- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.63`
-  Status: `done`
-  Goal: `Retire misleading historical resume prose without backfilling a duplicate frontier.`
-  Acceptance: `P2 discovery ambiguity: the optional Current Frontier narrative appears current and names an obsolete next leaf. Decision 0019 and the canonical secondary-view fact explicitly make it historical; the authoritative nodes/index are correct. After .60.4.3.2.5.1 commits clean, retire only that unlabelled duplicate prose with exact committed retrieval and a historical stamp pointing to live sources. Do not backfill a second frontier. Preserve every node and active dependency, verify exact old narrative retrieval and unchanged node contracts, sync current pointers and commit before .2.5.2. No production change or new delivery claim.`
-  Verification: `Exact 49ef15cba77bdb8572beb079a1a3e81bfa04a85e narrative names completed frontend refusals as next; the actual nodes and index are correct. Decision 0019 explicitly makes the secondary view historical, so no node-status defect or per-slice backfill requirement is inferred. Only that unlabelled prose is retired behind exact Git retrieval; .63 moves into the live node list. Independent exact predecessor/node-contract and historical-text verification passes; task-tree integrity reports all active task-tree invariants hold. Active index and Memory advance to the prepared direct target fixed-observer .60.4.3.2.5.2; book/canonical feedback already state its correct unexecuted scope.`
-  Commit: `this commit`
-
+Canonical ownership is live node `.62` in the Task Tree above.
 
 ## Reset question scope disposition
 
-- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.61`
-  Status: `superseded`
-  Goal: `Disposition the inferred implementation-configurable reset follow-on.`
-  Acceptance: `Respect the supplied packet's question classification and the director's explicit clarification. Answer whether an instantiation-selected reset form exists without converting that question into a new reset feature request.`
-  Verification: `The director clarified that sf-isf-unstated-reset is a question. The packet already declared that kind; the additional configurable-reset implementation plan was an over-expansion and is withdrawn. Current forms and the report ambiguity are answered under .60.3; no configurable-reset implementation is on this packet's delivery path. A separately requested future capability would need its own contract. Duration units, named timers and aggregate ports remain feature requests; storage access remains independently owned.`
-  Commit: `this commit`
+Canonical ownership is live node `.61` in the Task Tree above.
 
 ## Current Frontier
 
@@ -7073,3 +7077,43 @@ earlier global preservation proof has that explicit registration limitation.
 All native qualifications and other doctrine checks pass; the failed aggregate
 is excluded. Complete .2's corrected gate/commit, then .65, then .64 before
 any feature execution. No checker, coverage policy or ceiling is changed.
+
+
+## Authoritative completed-node registration `.65`
+
+Observer qualification 8abcbd6444d22c876d7addd998d0781649655f5f is committed
+clean with both doctrine gates passed and brief empty. Actual checker extraction
+ends the first Task Tree at Implementation Notes From .4. Whole-file .61-.63
+records are beyond that boundary. `git log -S` identifies their introductions:
+.61 in 0fa7943104a0d684f1974ff7be5eaf9f8b5401be, .62 in
+ d5c1806c2bf68af97ff7eff103f723cce8f74173, and .63 in
+49ef15cba77bdb8572beb079a1a3e81bfa04a85e. Exact source reads put each record
+outside the parsed section on introduction. Later .63 relocation still left
+it outside; its global-regex preservation proof did not establish registration.
+This corrects that explicit evidence limitation, not decision 0019's doctrine.
+
+Move only those complete original records into the live Task Tree and add their
+exact root references. Every original node field remains byte-identical except
+this owned root-reference addition and .65 disposition. Historical headings and
+prose remain, with bounded references to the canonical reset ownership above.
+Code, tests, source/bench, old/corrected observer sources/manifests/receipts and
+historical acceptance manifest remain unchanged. Complete current integrity
+passes, now including the restored records; no feature/native outcome changes.
+
+The tracked audit authenticates exact predecessor and qualified source blob,
+so later bounded rollover does not strand the proof. Independent line-based
+section and full contract reconstruction pass. Plain same-volume fixtures use
+the unchanged public read-only checker, with no Git initialization or other
+repository writes. The former graph passes structurally while omitting hidden
+ownership; corrected registration passes. A misplaced node retains identical
+whole-file IDs but rejects; missing node/root reference, duplicate and changed
+complete-contract controls also reject. These test the actual missed mechanism.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S identifies .61/.62/.63 introductions in 0fa7943104a0d684f1974ff7be5eaf9f8b5401be, d5c1806c2bf68af97ff7eff103f723cce8f74173 and 49ef15cba77bdb8572beb079a1a3e81bfa04a85e. Exact source and actual checker extraction place each after the first Task Tree boundary. The current qualification gate's nonexistent .64 child diagnosis exposed this analogous past omission. Whole-file ID comparison in .63 established preservation but did not prove authoritative registration; the old structural graph passes while omitting those unlisted outside records.
+- [x] **ADDRESSED (verified)** — Complete .61-.63 records move inside the first Task Tree and join exact parent references. Independent full predecessor/current node comparisons preserve every original contract field, outcome and status except explicitly owned root references and .65 disposition. All complete IDs now register authoritatively. Actual checker fixtures reject a misplaced node even with equal whole-file IDs, plus missing node/reference and duplicate controls; independent comparison rejects changed contract content. Exact source/blob manifest and tracked verifier retain replay after later rollover.
+- [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl reports all active task-tree invariants hold; actual plain-fixture positive and hostile registration controls pass. Product/test/checker/history and both original/corrected observer Git diffs remain empty. Re-derivation uses exact introduction/predecessor Git objects, independent line-based section/full-field reconstruction and the actual public checker; falsification uses equal-ID misplaced, missing/duplicate/reference and complete-contract mutations; tracked authenticated proof, original node fields, fact/book/task and retained Git objects provide durability. Actual Knowledge Map check reports knowledge-map: OK; the book builds. The full staged doctrine gate remains required before normal commit. No native fixture rerun, feature HDL execution, other Git repository write, full CI or push.
+
+The first standalone gate passes all checks except TASK-ACCEPTANCE: this
+slice's fresh no-regression box omitted a configured evidence signature despite
+the successful map receipt. Add the actual knowledge-map: OK result within that
+box; keep the declaration/gate unchanged and exclude the failed aggregate.
