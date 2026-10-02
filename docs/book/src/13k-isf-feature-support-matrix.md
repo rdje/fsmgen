@@ -132,9 +132,10 @@ preserves JSON primitive kinds (`true` cannot replace numeric `1`) and exact
 canonical numeric forms.
 Actual source-label probes now show why first-line selection is insufficient:
 `Error: no (actor ...) root found` quotes the label, which can contain a wanted
-refusal phrase. Seven constructor assertion sites and the library/file helpers
-need anchored cause contracts; those P2 corrections are tracked before further
-origin qualification. These findings change verification, not public ISF admission.
+refusal phrase. Seven constructor assertion sites now compare their complete independently
+declared first causes, with real comment/label echo regression controls. The
+library/file regex helpers still need their owned P2 anchored-cause corrections
+before further origin qualification. These findings change verification, not public ISF admission.
 
 This observer preserves the existing first-clause behavior, including current
 macro placement defects and inline-procedure `cond` refusals. Imported/reusable

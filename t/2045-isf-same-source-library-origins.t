@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use lib 'perl', 't/lib';
 use Test::More;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use JSON::PP;
 use Digest::SHA qw(sha256_hex);
 use FSM::Adapter::ISF::Parser;
@@ -138,21 +139,21 @@ for my $case (@cases) {
 
 subtest 'unqualified authorities stay explicitly closed' => sub {
     for my $case (
-        ['external', '(actor closed (clock clk) (interface (input start) (output done)) (imports (library missing.lib as lib)) (use lib.worker as child (bind (clock clk) (input start start) (output done done))))', qr/external document authority is not qualified/],
-        ['package', '(actor closed (imports (package pkg)))', qr/package source authority is not qualified/],
-        ['ATL', '(actor closed (instance child of Worker))', qr/ATL source authority is not qualified/],
+        ['external', '(actor closed (clock clk) (interface (input start) (output done)) (imports (library missing.lib as lib)) (use lib.worker as child (bind (clock clk) (input start start) (output done done))))', 'library origin external document authority is not qualified'],
+        ['package', '(actor closed (imports (package pkg)))', 'library origin package source authority is not qualified'],
+        ['ATL', '(actor closed (instance child of Worker))', 'library origin ATL source authority is not qualified'],
     ) {
         my ($name, $source, $reason) = @$case;
         ok(!eval {FSM::Test::SameSourceLibraryOriginParser->new->parse_source($source, 'closed.isf'); 1}, "$name authority remains closed");
-        like($@, $reason, 'precise private boundary');
+        ok(diagnostic_cause_matches($@, $reason), 'precise private boundary');
     }
     ok(!eval {FSM::Test::ConditionalOriginAuthority->from_source(source_for($cases[0]), 'closed.isf'); 1},
         'local reload consumer still refuses imports despite detached producer qualification');
-    like($@, qr/imported source authority is not qualified/, 'no accidental adoption');
+    ok(diagnostic_cause_matches($@, 'conditional origin imported source authority is not qualified'), 'no accidental adoption');
     for my $label ('/foreign/probe.isf', '../probe.isf') {
         ok(!eval {FSM::Test::SameSourceLibraryOriginParser->new->parse_source(source_for($cases[0]), $label); 1},
             'non-repository-relative source identity refuses');
-        like($@, qr/repository-relative source label/, 'precise relative-identity boundary');
+        ok(diagnostic_cause_matches($@, 'library origin requires a repository-relative source label'), 'precise relative-identity boundary');
     }
 };
 subtest 'canonical finalization cannot leave stale root clause origins' => sub {

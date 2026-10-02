@@ -1,0 +1,16 @@
+ram-guard: PID 7270; host 76.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared runtime status kind corruption rejects
+shared cause corruption rejects: source
+shared cause corruption rejects: cause
+shared cause corruption rejects: acceptance
+shared cause corruption rejects: primitive_kind
+shared cause corruption rejects: missing_context
+shared whole-product kind corruption rejects: authority
+independent complete products/kinds qualify: authority 54
+shared whole-product kind corruption rejects: same-source
+independent complete products/kinds qualify: same-source 24
+shared whole-product kind corruption rejects: ATL
+independent complete products/kinds qualify: ATL 26
+whole local-formal kind corruption rejects
+independent complete local-formal products/kinds and declared first causes qualify: 26
+constructor repair: exact archived current predicate/real producer causes, complete source oracles and shared controls qualify

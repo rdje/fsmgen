@@ -1,0 +1,7 @@
+ram-guard: PID 97431; host 74.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared runtime status kind corruption rejects
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/constructor-cause-repair-20261002/verify.py", line 122, in <module>
+    assert label_echo['matched'] == 0, 'exact prior current assertion accepts actual wrong label cause'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact prior current assertion accepts actual wrong label cause

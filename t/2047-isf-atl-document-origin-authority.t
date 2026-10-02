@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use lib 'perl', 't/lib';
 use Test::More;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use JSON::PP;
 use File::Spec;
 use File::Temp qw(tempdir);
@@ -124,10 +125,15 @@ subtest 'unqualified source authorities and the earlier provider remain closed' 
     my $input=$json->decode(read_file($inputs[0]));
     my ($label,$documents,$directory)=documents_for($input);
     ok(!eval{FSM::Test::LibraryDocumentOriginAuthority->from_documents($label,$documents,[$directory]);1},'library-only provider still refuses ATL');
-    like($@,qr/ATL source authority is not qualified/,'unchanged private predecessor boundary');
-    for my $source ('(actor closed (instance child of Worker))','(actor closed (imports (package pkg)))') {
+    ok(diagnostic_cause_matches($@, 'library origin ATL source authority is not qualified'),
+        'unchanged private predecessor boundary');
+    for my $case (
+        ['(actor closed (instance child of Worker))', 'ATL origin unresolved external actor authority is not qualified'],
+        ['(actor closed (imports (package pkg)))', 'library origin package source authority is not qualified'],
+    ) {
+        my ($source, $reason) = @$case;
         ok(!eval{authority_class()->from_documents('closed.isf',{'closed.isf'=>$source},[]);1},'unqualified external/package context refuses');
-        like($@,qr/(?:unresolved external actor authority|package source authority) is not qualified/,'precise private source boundary');
+        ok(diagnostic_cause_matches($@, $reason), 'precise private source boundary');
     }
 };
 done_testing;

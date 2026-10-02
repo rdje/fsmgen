@@ -1,0 +1,114 @@
+ram-guard: PID 8106; host 71.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 1 test of 11.
+
+#   Failed test 'complete constructor cause local_import'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+
+    #   Failed test 'wrong_source_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 2 tests of 11.
+
+#   Failed test 'complete constructor cause same_external'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+
+    #   Failed test 'wrong_source_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 2 tests of 11.
+
+#   Failed test 'complete constructor cause same_package'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+
+    #   Failed test 'wrong_source_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 2 tests of 11.
+
+#   Failed test 'complete constructor cause same_ATL'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 1 test of 11.
+
+#   Failed test 'complete constructor cause local_library'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+
+    #   Failed test 'wrong_source_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 2 tests of 11.
+
+#   Failed test 'complete constructor cause same_absolute'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+
+    #   Failed test 'wrong_source_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 2 tests of 11.
+
+#   Failed test 'complete constructor cause same_escape'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+
+    #   Failed test 'wrong_source_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 2 tests of 11.
+
+#   Failed test 'complete constructor cause library_ATL'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 1 test of 11.
+
+#   Failed test 'complete constructor cause ATL_external'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+
+    #   Failed test 'wrong_source_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 2 tests of 11.
+
+#   Failed test 'complete constructor cause ATL_package'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+
+    #   Failed test 'wrong_source_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+
+    #   Failed test 'wrong_label_echo cannot authenticate the wanted cause'
+    #   at t/2053-isf-constructor-diagnostic-causes.t line 40.
+    # Looks like you failed 2 tests of 11.
+
+#   Failed test 'complete constructor cause formal_residual'
+#   at t/2053-isf-constructor-diagnostic-causes.t line 46.
+# Looks like you failed 11 tests of 13.
+t/2053-isf-constructor-diagnostic-causes.t .. 
+Dubious, test returned 11 (wstat 2816, 0xb00)
+Failed 11/13 subtests 
+
+Test Summary Report
+-------------------
+t/2053-isf-constructor-diagnostic-causes.t (Wstat: 2816 Tests: 13 Failed: 11)
+  Failed tests:  3-13
+  Non-zero exit status: 11
+Files=1, Tests=13,  2 wallclock secs ( 0.01 usr  0.00 sys +  0.73 cusr  0.44 csys =  1.18 CPU)
+Result: FAIL

@@ -17,7 +17,7 @@ evidence: >-
   docs/audits/conditional-origin-documents-20261002/scope.txt;
   docs/audits/library-origin-diagnostic-correction-20261002/scope.txt;
   docs/audits/current-diagnostic-lexical-inventory-20261002/scope.txt;
-  docs/audits/source-origin-constructor-causes-20261002/scope.txt;
+  docs/audits/constructor-cause-repair-20261002/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
@@ -25,8 +25,8 @@ reverify: >-
   t/2045-isf-same-source-library-origins.t
 ---
 
-Independent root/library documents and relative identities/search roots
-authenticate bytes/forms before exports. Registries use each document digest.
+Whole independent documents and relative labels/roots authenticate bytes/forms
+before exports; registries use each document digest.
 This parse_source cohort uses relative FSMLIB;
 [file roots](isf-file-document-origin-authority.md) own portable runtime coordinates.
 
@@ -50,8 +50,8 @@ static clones; file origins own reads/same-source use/ATL associations.
 Preparation/adoption remain later owners. Public activation/refusals apply;
 no new macros, scheduling admission or HDL/macro runtime is proved.
 
-Declared caller echoes qualify. Actual no-actor-root label echo defeats current
-library/file first-line substrings; P2 anchored-cause repairs are owned. Reverify: `python3 docs/audits/source-origin-constructor-causes-20261002/verify.py`.
+Constructor assertions now compare complete first causes and reject real label
+echo. Library/file first-line substrings remain P2 repairs. Reverify: `python3 docs/audits/constructor-cause-repair-20261002/verify.py`.
 The [lexical census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt)
 binds ASCII Perl tokens/calls to Git bytes. Comments/strings/declarations and
 overlaps are candidates, not cause safety. Context/producer/cold controls remain

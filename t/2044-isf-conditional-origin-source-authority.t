@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use lib 'perl', 't/lib';
 use Test::More;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use JSON::PP;
 use FSM::Test::ConditionalOriginAuthority;
 
@@ -95,7 +96,7 @@ subtest 'unqualified imports stay closed at the local authority boundary' => sub
     my $source = '(actor import_probe (imports (library missing.lib as lib)))';
     ok(!eval {FSM::Test::ConditionalOriginAuthority->from_source($source, 'import_probe.isf'); 1},
         'local proof cannot claim imported document authenticity');
-    like($@, qr/conditional origin imported source authority is not qualified/,
+    ok(diagnostic_cause_matches($@, 'conditional origin imported source authority is not qualified'),
         'explicit boundary refuses before external document resolution');
 };
 done_testing;

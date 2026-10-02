@@ -1,0 +1,168 @@
+ram-guard: PID 21348; host 77.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ok 1 - explicit boundary refuses before external document resolution
+not ok 2 - explicit boundary refuses before external document resolution
+#   Failed test 'explicit boundary refuses before external document resolution'
+#   at (eval 25850) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginAuthority::LocalParser=HASH(0x7758deb738), "; conditional origin imported source authority is not qualifi"..., "wrong.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginAuthority::LocalParser=HASH(0x7758deb738), "; conditional origin imported source authority is not qualifi"..., "wrong.isf") called at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 22
+# 	FSM::Test::ConditionalOriginAuthority::from_source("FSM::Test::ConditionalOriginAuthority", "; conditional origin imported source authority is not qualifi"..., "wrong.isf") called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:conditional origin imported source authority is not qualified)'
+not ok 3 - explicit boundary refuses before external document resolution
+#   Failed test 'explicit boundary refuses before external document resolution'
+#   at (eval 25867) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginAuthority::LocalParser=HASH(0x775b6a92e8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginAuthority::LocalParser=HASH(0x775b6a92e8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 22
+# 	FSM::Test::ConditionalOriginAuthority::from_source("FSM::Test::ConditionalOriginAuthority", "(not_actor)", "wrong.isf") called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:conditional origin imported source authority is not qualified)'
+ok 4 - explicit boundary refuses before external document resolution
+ok 5 - precise private boundary
+ok 6 - precise private boundary
+not ok 7 - precise private boundary
+#   Failed test 'precise private boundary'
+#   at (eval 26297) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::SameSourceLibraryOriginParser=HASH(0x775bc73d20), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::SameSourceLibraryOriginParser=HASH(0x775bc73d20), "(not_actor)", "wrong.isf") called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:external document authority is not qualified)'
+ok 8 - precise private boundary
+ok 9 - precise private boundary
+ok 10 - precise private boundary
+not ok 11 - precise private boundary
+#   Failed test 'precise private boundary'
+#   at (eval 26426) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::SameSourceLibraryOriginParser=HASH(0x775bc6fc30), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::SameSourceLibraryOriginParser=HASH(0x775bc6fc30), "(not_actor)", "wrong.isf") called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:package source authority is not qualified)'
+ok 12 - precise private boundary
+ok 13 - precise private boundary
+ok 14 - precise private boundary
+not ok 15 - precise private boundary
+#   Failed test 'precise private boundary'
+#   at (eval 26556) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::SameSourceLibraryOriginParser=HASH(0x775bc6cd98), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::SameSourceLibraryOriginParser=HASH(0x775bc6cd98), "(not_actor)", "wrong.isf") called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:ATL source authority is not qualified)'
+ok 16 - precise private boundary
+ok 17 - no accidental adoption
+ok 18 - no accidental adoption
+not ok 19 - no accidental adoption
+#   Failed test 'no accidental adoption'
+#   at (eval 26705) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginAuthority::LocalParser=HASH(0x775bc66918), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginAuthority::LocalParser=HASH(0x775bc66918), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 22
+# 	FSM::Test::ConditionalOriginAuthority::from_source("FSM::Test::ConditionalOriginAuthority", "(not_actor)", "wrong.isf") called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:imported source authority is not qualified)'
+ok 20 - no accidental adoption
+ok 21 - precise relative-identity boundary
+ok 22 - precise relative-identity boundary
+not ok 23 - precise relative-identity boundary
+#   Failed test 'precise relative-identity boundary'
+#   at (eval 26761) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::SameSourceLibraryOriginParser=HASH(0x775bc5cca8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::SameSourceLibraryOriginParser=HASH(0x775bc5cca8), "(not_actor)", "wrong.isf") called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:repository-relative source label)'
+ok 24 - precise relative-identity boundary
+ok 25 - precise relative-identity boundary
+ok 26 - precise relative-identity boundary
+not ok 27 - precise relative-identity boundary
+#   Failed test 'precise relative-identity boundary'
+#   at (eval 26817) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::SameSourceLibraryOriginParser=HASH(0x775bc70af8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::SameSourceLibraryOriginParser=HASH(0x775bc70af8), "(not_actor)", "wrong.isf") called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:repository-relative source label)'
+ok 28 - precise relative-identity boundary
+ok 29 - unchanged private predecessor boundary
+ok 30 - unchanged private predecessor boundary
+not ok 31 - unchanged private predecessor boundary
+#   Failed test 'unchanged private predecessor boundary'
+#   at (eval 26947) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::LibraryDocumentOriginAuthority::Parser=HASH(0x775bc577b0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::LibraryDocumentOriginAuthority::Parser=HASH(0x775bc577b0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::LibraryDocumentOriginAuthority::Parser=HASH(0x775bc577b0), "wrong.isf", HASH(0x775bc57330)) called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 26
+# 	FSM::Test::LibraryDocumentOriginAuthority::from_documents("FSM::Test::LibraryDocumentOriginAuthority", "wrong.isf", HASH(0x775bc5c618), ARRAY(0x775bc598d0)) called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:ATL source authority is not qualified)'
+ok 32 - unchanged private predecessor boundary
+ok 33 - precise private source boundary
+ok 34 - precise private source boundary
+not ok 35 - precise private source boundary
+#   Failed test 'precise private source boundary'
+#   at (eval 27077) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ATLDocumentOriginAuthority::Parser=HASH(0x775bc64948), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::ATLDocumentOriginAuthority::Parser=HASH(0x775bc64948), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLDocumentOriginAuthority::Parser=HASH(0x775bc64948), "wrong.isf", HASH(0x775bc575d0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+# 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLDocumentOriginAuthority::Parser=HASH(0x775bc64948), "wrong.isf", HASH(0x775bc575d0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 26
+# 	FSM::Test::ATLDocumentOriginAuthority::from_documents("FSM::Test::ATLDocumentOriginAuthority", "wrong.isf", HASH(0x775bc59660), ARRAY(0x775bc5adc8)) called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:(?:unresolved external actor authority|package source authority) is not qualified)'
+ok 36 - precise private source boundary
+ok 37 - precise private source boundary
+ok 38 - precise private source boundary
+not ok 39 - precise private source boundary
+#   Failed test 'precise private source boundary'
+#   at (eval 27206) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ATLDocumentOriginAuthority::Parser=HASH(0x775bc581f8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::ATLDocumentOriginAuthority::Parser=HASH(0x775bc581f8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLDocumentOriginAuthority::Parser=HASH(0x775bc581f8), "wrong.isf", HASH(0x775bc64d68)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+# 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLDocumentOriginAuthority::Parser=HASH(0x775bc581f8), "wrong.isf", HASH(0x775bc64d68)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 26
+# 	FSM::Test::ATLDocumentOriginAuthority::from_documents("FSM::Test::ATLDocumentOriginAuthority", "wrong.isf", HASH(0x775bc74888), ARRAY(0x775bc5c1f8)) called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 43
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:(?:unresolved external actor authority|package source authority) is not qualified)'
+ok 40 - precise private source boundary
+ok 41 - unresolved producer remains explicit
+ok 42 - unresolved producer remains explicit
+not ok 43 - unresolved producer remains explicit
+#   Failed test 'unresolved producer remains explicit'
+#   at (eval 27683) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginAuthority::LocalParser=HASH(0x775bc58b28), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginAuthority::LocalParser=HASH(0x775bc58b28), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 22
+# 	FSM::Test::ConditionalOriginAuthority::from_source("FSM::Test::ConditionalOriginAuthority", "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LocalFormalOriginAuthority.pm line 21
+# 	FSM::Test::LocalFormalOriginAuthority::from_source("FSM::Test::LocalFormalOriginAuthority", "(not_actor)", "wrong.isf") called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 47
+# 	eval {...} called at docs/audits/constructor-cause-repair-20261002/old-consumer.pl line 42
+# '
+#     doesn't match '(?^:residual normalization is not qualified)'
+ok 44 - unresolved producer remains explicit
+1..44
+# Looks like you failed 12 tests of 44.

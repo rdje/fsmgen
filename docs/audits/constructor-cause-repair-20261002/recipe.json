@@ -1,0 +1,29 @@
+{
+  "baseline": "d05f9e79510b69f9e6106d025974f7c639a9ad82",
+  "commands": [
+    [
+      "python3",
+      "docs/audits/constructor-cause-repair-20261002/run.py"
+    ],
+    [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "docs/audits/constructor-cause-repair-20261002/verify.py"
+    ],
+    [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "docs/audits/constructor-cause-repair-20261002/verify.py",
+      "--old-consumer"
+    ]
+  ],
+  "expected_statuses": [
+    0,
+    0,
+    1
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2.1",
+  "scope": "Product portions of exact sealed independent source readers, not historical runtime/admission gates."
+}

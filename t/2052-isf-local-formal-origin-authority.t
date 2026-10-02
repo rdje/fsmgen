@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use lib 'perl', 't/lib';
 use Test::More;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use JSON::PP;
 use Carp qw(confess);
 use File::Path qw(make_path);
@@ -113,7 +114,8 @@ subtest 'first assignment and inline cond keep exact canonical declines' => sub 
         my $observed_error = $@;
         ok(!$observed, 'private authority cannot broaden existing admission');
         if ($body =~ /call/) {
-            like($observed_error,qr/residual normalization is not qualified/,'unresolved producer remains explicit');
+            ok(diagnostic_cause_matches($observed_error, 'local formal origin residual normalization is not qualified'),
+                'unresolved producer remains explicit');
         } else {
             is(first_line($observed_error),first_line($error),'exact canonical diagnostic conserved');
         }
