@@ -1,0 +1,23 @@
+ram-guard: PID 94895; host 62.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'caller echo cannot authenticate a wrong reason'
+    #   at t/2048-isf-file-document-origin-authority.t line 31.
+
+    #   Failed test 'precise actual file authority refusal'
+    #   at t/2048-isf-file-document-origin-authority.t line 255.
+    # Looks like you failed 2 tests of 5.
+
+#   Failed test 'actual file refusal reason excludes the caller expectation'
+#   at t/2048-isf-file-document-origin-authority.t line 38.
+# Looks like you failed 1 test of 28.
+t/2048-isf-file-document-origin-authority.t .. 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/28 subtests 
+
+Test Summary Report
+-------------------
+t/2048-isf-file-document-origin-authority.t (Wstat: 256 Tests: 28 Failed: 1)
+  Failed test:  2
+  Non-zero exit status: 1
+Files=1, Tests=28, 99 wallclock secs ( 0.23 usr  0.05 sys + 85.85 cusr  3.26 csys = 89.39 CPU)
+Result: FAIL

@@ -1,0 +1,15 @@
+ram-guard: PID 94981; host 63.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Can't locate object method "from_files" via package "NoFileSourceComparison" (perhaps you forgot to load "NoFileSourceComparison"?) at t/2048-isf-file-document-origin-authority.t line 63.
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 3.
+t/2048-isf-file-document-origin-authority.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+All 3 subtests passed 
+
+Test Summary Report
+-------------------
+t/2048-isf-file-document-origin-authority.t (Wstat: 65280 Tests: 3 Failed: 0)
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=3,  2 wallclock secs ( 0.01 usr  0.01 sys +  0.81 cusr  0.48 csys =  1.31 CPU)
+Result: FAIL

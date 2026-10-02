@@ -120,9 +120,10 @@ The local formal refusal oracle matches the first diagnostic line: Perl stack tr
 caller’s expected regex. The initial invalid network fixture falsely passed
 a full-stack match; a valid instance fixture and a genuine echoed-regex control
 now qualify that boundary. Earlier evidence remains archived as superseded.
-The current file-origin test helper also accepts a caller-echoed wrong reason;
-its repair and fresh file-boundary qualification are owned before further
-source-intent signoff. Other diagnostic consumers remain under audit.
+The file-origin helper now checks the first diagnostic line too. Its complete
+original actors/proofs and every file-boundary reason are requalified; a real
+wrong-cause caller echo fails both the test and the cold verifier. Other
+diagnostic consumers remain under audit.
 
 This observer preserves the existing first-clause behavior, including current
 macro placement defects and inline-procedure `cond` refusals. Imported/reusable

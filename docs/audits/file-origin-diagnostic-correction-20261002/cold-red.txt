@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/file-origin-diagnostic-correction-20261002/verify.py", line 91, in <module>
+    raise AssertionError('cold consumer accepted the actual wrong reason from a caller echo')
+AssertionError: cold consumer accepted the actual wrong reason from a caller echo

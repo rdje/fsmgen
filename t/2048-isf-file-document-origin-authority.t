@@ -22,6 +22,20 @@ $capture = File::Spec->rel2abs($capture) if defined $capture;
 my @inputs = sort glob 'docs/audits/conditional-origin-atl-20261002/current-bound/*.json';
 @inputs = grep {basename($_) ne 'atl-only.json' && basename($_) ne 'finalization.json'} @inputs;
 is(scalar @inputs, 24, 'complete immutable use/ATL original-source cohort');
+subtest 'actual file refusal reason excludes the caller expectation' => sub {
+    my $pattern = qr/file_reason_only_in_caller_argument/;
+    my $error = file_refusal_with_echo($pattern);
+    is(diagnostic_line($error), 'file origin independent document set required',
+        'actual constructor supplies the first diagnostic reason');
+    like($error, $pattern, 'actual Carp trace echoes the caller regex');
+    ok(!diagnostic_matches($error, $pattern), 'caller echo cannot authenticate a wrong reason');
+    my @controls;
+    refuses('actual-constructor-positive', sub {
+        FSM::Test::FileDocumentOriginAuthority->from_files('missing.isf', {}, []);
+    }, qr/\Afile origin independent document set required\z/, \@controls);
+    capture('diagnostic-echo', {error => $error, expected => 'file_reason_only_in_caller_argument',
+        matched => diagnostic_matches($error, $pattern) ? 1 : 0, controls => \@controls});
+};
 for my $path (@inputs) {
     my $input = $json->decode(read_file($path));
     subtest "file-backed portable origins $input->{case}{name}" => sub {
@@ -69,7 +83,7 @@ for my $path (@inputs) {
                     my $accepted=eval {$authority->validate($bad_actor,$bad_proof);1};
                     my $diagnostic=$@;
                     ok(!$accepted,"actual $name reload refuses");
-                    like($diagnostic,qr/differs from authoritative document set/,'complete independent source authentication');
+                    like(diagnostic_line($diagnostic),qr/differs from authoritative document set/,'complete independent source authentication');
                     is($json->encode([$bad_actor,$bad_proof]),$before,'validation preserves original submitted kinds');
                     push @controls,{name=>$name,actor=>$bad_actor,proof=>$bad_proof,accepted=>$accepted?1:0,
                         diagnostic=>($diagnostic =~ /\A([^\n]*)/ ? $1 : '')};
@@ -237,8 +251,20 @@ sub write_documents {
 sub refuses {
     my ($name,$action,$pattern,$controls)=@_;
     my $accepted=eval {$action->();1};my $diagnostic=$@;
-    ok(!$accepted,"actual $name refuses");like($diagnostic,$pattern,'precise actual file authority refusal');
-    push @$controls,{name=>$name,accepted=>$accepted?1:0,diagnostic=>($diagnostic =~ /\A([^\n]*)/ ? $1 : '')};
+    ok(!$accepted,"actual $name refuses");
+    ok(diagnostic_matches($diagnostic,$pattern),'precise actual file authority refusal');
+    push @$controls,{name=>$name,accepted=>$accepted?1:0,diagnostic=>diagnostic_line($diagnostic)};
+}
+sub diagnostic_line {(split /\n/, $_[0] // '')[0] // ''}
+sub diagnostic_matches {
+    my ($error,$pattern)=@_;
+    my $subject=$ENV{FSMGEN_FILE_DIAGNOSTIC_FULL_STACK} ? $error : diagnostic_line($error);
+    return $subject =~ $pattern ? 1 : 0;
+}
+sub file_refusal_with_echo {
+    my ($expected)=@_;
+    eval {FSM::Test::FileDocumentOriginAuthority->from_files('missing.isf',{},[])};
+    return $@;
 }
 sub read_file {open my $f,'<:raw',$_[0] or die $!;local $/;my $s=<$f>;close $f or die $!;return $s}
 sub write_file {open my $f,'>:raw',$_[0] or die $!;print {$f} $_[1] or die $!;close $f or die $!}

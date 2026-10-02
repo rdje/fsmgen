@@ -1,0 +1,5 @@
+ram-guard: PID 95073; host 63.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2048-isf-file-document-origin-authority.t .. ok
+All tests successful.
+Files=1, Tests=28, 99 wallclock secs ( 0.23 usr  0.04 sys + 86.14 cusr  3.10 csys = 89.51 CPU)
+Result: PASS
