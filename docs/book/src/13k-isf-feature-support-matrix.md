@@ -123,7 +123,8 @@ now qualify that boundary. Earlier evidence remains archived as superseded.
 The file-origin helper now checks the first diagnostic line too. Its complete
 original actors/proofs and every file-boundary reason are requalified; a real
 wrong-cause caller echo fails both the test and the cold verifier. Other
-diagnostic consumers remain under audit.
+diagnostic consumers remain under audit. The library-document helper still
+accepts a caller-echoed wrong reason; its demonstrated matcher repair is next.
 
 This observer preserves the existing first-clause behavior, including current
 macro placement defects and inline-procedure `cond` refusals. Imported/reusable

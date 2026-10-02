@@ -1,0 +1,12 @@
+ok 1 - library-wrong_echo
+ok 2 - precise authority refusal
+ok 3 - library-correct
+ok 4 - precise authority refusal
+ok 5 - actual file-wrong_echo refuses
+not ok 6 - precise actual file authority refusal
+#   Failed test 'precise actual file authority refusal'
+#   at (eval 52) line 6.
+ok 7 - actual file-correct refuses
+ok 8 - precise actual file authority refusal
+1..8
+# Looks like you failed 1 test of 8.

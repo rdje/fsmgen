@@ -1,0 +1,12 @@
+84639 98550 6631168 /Users/richarddje/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rustc
+75616 80090 422048 claude
+30684     1 368064 /Applications/iTerm.app/Contents/MacOS/iTerm2
+17827  9363 353712 claude
+95075 94992 312544 /Applications/Claude.app/Contents/Frameworks/Claude Helper (Renderer).app/Contents/MacOS/Claude Helper (Renderer)
+29920 30812 252656 claude
+55444     1 198912 /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge
+43334 35368 194304 /Users/richarddje/.codex/packages/app-server-daemon/releases/0.160.0-aarch64-apple-darwin/bin/codex
+23790 10894 169760 claude
+67541 55444 165200 /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/154.0.4258.37/Helpers/Microsoft Edge Helper (Renderer).app/Contents/MacOS/Microsoft Edge Helper (Renderer)
+95643     1 155968 /Applications/Kimi Code.app/Contents/MacOS/Kimi Code
+21641     1 146400 /Applications/ChatGPT.app/Contents/MacOS/ChatGPT

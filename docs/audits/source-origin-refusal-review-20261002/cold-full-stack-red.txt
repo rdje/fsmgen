@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-refusal-review-20261002/verify.py", line 59, in <module>
+    assert expected not in subject, 'actual caller echo is not the producer reason'
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual caller echo is not the producer reason

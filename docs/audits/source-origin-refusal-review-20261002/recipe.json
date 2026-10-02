@@ -1,0 +1,20 @@
+{
+  "actual_helper": "perl docs/audits/source-origin-refusal-review-20261002/probe_helpers.pl",
+  "actual_helper_failed": 1,
+  "actual_helper_status": 1,
+  "actual_helper_tests": 8,
+  "baseline": "34b2739f6f2bb013c2c21b3dd68e95db7f5d9d12",
+  "canonical_precedent": "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md",
+  "cold": "python3 docs/audits/source-origin-refusal-review-20261002/verify.py",
+  "cold_red": "python3 docs/audits/source-origin-refusal-review-20261002/verify.py --full-stack",
+  "cold_red_status": 1,
+  "collector": "python3 docs/audits/source-origin-refusal-review-20261002/collect.py",
+  "full_guarded_cohort_status": 137,
+  "narrow_remaining_status": 0,
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.1",
+  "producer_binding": {
+    "t/lib/FSM/Test/FileDocumentOriginAuthority.pm": "1c9bf496397aba61be9a2cf721bdde527eb51c1ba1958075b5edbbf3f1043f93",
+    "t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm": "5c52603962b5d6225b5a20b42ea50278b006695533a553202a87abfe30e063ea"
+  },
+  "replay": "Copy producer instruments and choose new repository-local outputs; never overwrite sealed archives. Cold baseline Git/data checks remain replayable after the separate helper repair."
+}

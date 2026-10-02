@@ -1,0 +1,86 @@
+{
+  "baseline": "34b2739f6f2bb013c2c21b3dd68e95db7f5d9d12",
+  "members": {
+    "book.txt": {
+      "bytes": 194,
+      "sha256": "9a2e58039fc93240d6ef57ca03aaba0b6771414742990d9ea6ebe237de30906f"
+    },
+    "cold-full-stack-red.txt": {
+      "bytes": 344,
+      "sha256": "cf935c5b2c57c49f8506fcf4b03b76a0b81015f40a75547088da42893335bfad"
+    },
+    "collect.py": {
+      "bytes": 1806,
+      "sha256": "2887017c31c1015e9ee56fbb06b0677934dcf7ee7c4ba685d72f3237a4cd07c7"
+    },
+    "collect.txt": {
+      "bytes": 34,
+      "sha256": "ab394bfa2b41ec3bbb1be2b52ce16af1cb37525607305304234ca81c2d558c50"
+    },
+    "draft-locus-verify.py": {
+      "bytes": 3825,
+      "sha256": "580cb15b0edd12656ad89697ead9f6294dd121da3e97243819d6917e46582b66"
+    },
+    "draft-locus-verify.txt": {
+      "bytes": 358,
+      "sha256": "185b6f6b974dd5b4a0b87c48f844398323efd10bc97d9a287d0d6091eec9944e"
+    },
+    "focused.txt": {
+      "bytes": 460,
+      "sha256": "73f05148421aae8e6bf8a95f98d4475cc99aa1b7c3f976d1ef0c51f9fd9ff39c"
+    },
+    "helper-probe.txt": {
+      "bytes": 405,
+      "sha256": "4766948ae80218bee6d999cc960f36d7010bb366018bb40f35588877a338c528"
+    },
+    "helper-products.json": {
+      "bytes": 5034,
+      "sha256": "1529823c3ab2c7c9962120ccd1a3298f1130b8e7494fd1fb23559a3f5f9c3ff6"
+    },
+    "host-headroom.txt": {
+      "bytes": 91,
+      "sha256": "2995cc84c0ccdfa90adf767613357a5d2c0e7f3dad9e3bb1740d0e20d87d7271"
+    },
+    "inventory.json": {
+      "bytes": 113431,
+      "sha256": "ce01e5290f11bd33709ac2f5847c0f7523c061be4c0b205626b0bdfaa0c05b09"
+    },
+    "narrow-retry.txt": {
+      "bytes": 369,
+      "sha256": "84cd902b78c2e84c16c03bf9601e89428fb7b7343da3187bd128ab346861ce7c"
+    },
+    "probe_helpers.pl": {
+      "bytes": 2474,
+      "sha256": "d8266844a800c29823163a047be86dc06240a59e1fdc42dd51c907d41133a6a5"
+    },
+    "process-memory.txt": {
+      "bytes": 961,
+      "sha256": "44627bda3acc0e3231eca6149e796b43374024149acacdcc6889eb40c1a0dd94"
+    },
+    "recipe.json": {
+      "bytes": 1295,
+      "sha256": "8c175537c29af258d68d16157e1e8884f8499b00579bac9146b36386eb1852f4"
+    },
+    "rendered.txt": {
+      "bytes": 119296,
+      "sha256": "8eae36dd6032c9f45a1f4afd752a3f9832e480f333102929ced72f6fbdbcbfe3"
+    },
+    "reviews.json": {
+      "bytes": 6015,
+      "sha256": "1b4d764c601ed4d1ae28a89ce49d8d55050edf23774d45236fbfc6461f7f6c91"
+    },
+    "scope.txt": {
+      "bytes": 3084,
+      "sha256": "979f7a6fe0fceaa768459b2f350b27dee592257d1d5bace2d0120b6f5709b035"
+    },
+    "verify.py": {
+      "bytes": 4789,
+      "sha256": "7fb14f471c58110f5baaafc506f50fd5beb6cdeafd50aa37c7b34187e2008870"
+    },
+    "verify.txt": {
+      "bytes": 493,
+      "sha256": "161777515ef44e0b2d6511e1ec76ea859d79bc133393422578d1b8f86ae5f065"
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.1"
+}

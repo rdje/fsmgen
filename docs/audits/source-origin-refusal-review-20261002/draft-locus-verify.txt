@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-refusal-review-20261002/verify.py", line 43, in <module>
+    assert ' at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 15' in row['error']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

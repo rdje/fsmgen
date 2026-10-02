@@ -3583,9 +3583,39 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2`
-  Status: `in_progress`
+  Status: `active`
   Goal: `Review delegated, structured, anonymous and top-level refusal consumers.`
   Acceptance: `After .1, complete current repository candidate membership beyond the named lexical detector, using independent search/AST where appropriate and exact runtime controls. Read every selected consumer in context; distinguish reason matching from structured codes or permitted trace/locus searches. Confirm vulnerable consumers through their real producer path before scheduling .3.2 repairs. Keep unreviewed candidates owned; no semantic completeness claim from textual census.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.1`
+  Status: `done`
+  Goal: `Review named and delegated source-origin diagnostic consumers as a bounded current family.`
+  Acceptance: `Inspect the complete current T2043/T2044/T2045/T2046/T2047/T2048/T2052 family and all lexical diagnostic predicates with byte/Git bindings. Reconcile named discovery with delegated first-line predicates and anonymous/top-level assertions; distinguish cause from deliberate trace evidence. Reproduce exact current library-document helper via a real public producer callback, with wrong caller-echo and genuine cause positives. Retain whole instruments/products/receipts/source-family membership and a new immutable seal; prioritize any confirmed small correction immediately under .3.2.3 before broader census. No all-repository or all-source future semantic signoff from this bounded family; production/prior archives/native HDL unchanged.`
+  Verification: `Current seven-test source-origin family contains 31 declared lexical/delegated sites: 17 full-trace cause candidates still requiring separate wrong-source controls, one demonstrated T2046 helper vulnerability, 11 first-line cause/default delegated echo controls/captures, and two deliberate trace-evidence assertions. Complete source contexts are reviewed; exact current T2046 helper plus real library constructor falsely accepts an echoed wrong expectation, current T2048 first-line helper rejects it, and both real cause positives pass. Actual TAP status1/Tests8/Failed1 is the intended safe-helper rejection. Cold baseline/byte/site/review reconciliation passes, full-stack-subject counterfactual fails, four shared corruptions reject. No all-repository or raw-candidate safety/defect signoff. Immediate repair .3.2.3.1 is owned; broader current inventory .1.2.2 and remaining source-origin cause runtime under .1.2.3/.3.2.3.2 remain open. Full family run is stopped at guard host88/status137 after T2043-T2047 complete; read-only current headroom and unrelated-process RSS are retained, narrower remaining T2052/book checks PASS Files3/Tests327 under unchanged limits; initial full rollup remains absent. Draft cold locus assumed line15, actual Carp line16; exact draft/receipt retained unqualified.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.2`
+  Status: `pending`
+  Goal: `Reconcile the remaining complete current lexical refusal-consumer populations.`
+  Acceptance: `After the source-origin family and its immediate repairs, census current tracked Perl assertion/exception sites beyond named spans, preserving original bytes and exact Git membership. Include delegation, structured-code and anonymous/top-level consumers with explicit applicability classes; overapproximated discovery is not semantic signoff. Split contextual/runtime review cohorts under .3 before classification and record every uncovered population.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3`
+  Status: `pending`
+  Goal: `Qualify remaining current cause-consumer families in bounded runtime cohorts.`
+  Acceptance: `Use .2 complete declared inventory to split actual producer/helper/context reviews. Reproduce wrong-first-cause and expected echo through real selected producer paths, with genuine positives. Distinguish first-line/structured/multiline/trace and non-cause predicates; syntax alone never proves vulnerability or safety. Route confirmed repairs to .3.2.3 immediately; explicit native admission or access blockers remain owned. No submodule internals or unauthorized HDL work.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.4`
+  Status: `pending`
+  Goal: `Reconcile current consumer qualification and hand off referenced cold readers.`
+  Acceptance: `Join every exact .2 candidate against .1/.3 reviewed contracts, current runtime results, per-owner repairs or explicit unresolved applicability/access. Keep all three quantitative claim legs distinct and archives immutable; commit a bounded honest handoff to .3.1.3 without claiming arbitrary future-source or all semantic refusal coverage.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3620,9 +3650,25 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Resolve the remaining current and cold census repair handoff.`
   Acceptance: `After .1.2/.1.3 classify their complete declared populations, split any newly confirmed cause-consumer repairs into bounded per-owner leaves before edits. Each requires actual producer wrong-reason/positive controls, exact current source/product/cold binding and scoped regressions. If no further repairs apply, independently reconcile that result and close this handoff without inventing defects or promoting syntax-only candidates. Keep historical archives immutable and explicit unresolved access blockers owned.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.1`
+  Status: `in_progress`
+  Goal: `Repair the demonstrated library-document helper cause matcher and qualify its actual boundaries.`
+  Acceptance: `P2 verification risk: exact current T2046 rejected helper plus actual LibraryDocumentOriginAuthority constructor falsely accepts an expected caller regex while the first reason is independent document set required. First-line current T2048 helper rejects the identical wrong cause and both real positive reasons pass. After source-family .1.2.1 commits, prioritize this small correction: first-line matcher and permanent real constructor echo control, exact current captured document boundary reasons, whole original normal source/actor/proof products and primitive kinds. Requalify through genuine actual full-stack/helper/source-comparison counterfactuals and a new immutable cold reader; retain earlier archives without rewriting. Current production/providers/schema/HDL admission unchanged; commit before broader current inventory .1.2.2.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2`
+  Status: `pending`
+  Goal: `Reconcile subsequent current and cold runtime cohorts and repair only confirmed defects.`
+  Acceptance: `After broader current/cold reviews, own per-helper/cohort corrections before edits, including anonymous source-origin full-trace cause candidates left unqualified by .1.2.1. No defect or safety inference from lexical syntax alone. Close only with actual producer/helper positives/wrong reasons, exact current cold evidence or explicit owned access/applicability blockers and all claim legs. If no further repair applies, prove and record the bounded handoff without inventing defects.`
   Verification: `pending`
   Commit: `pending`
 
@@ -5436,3 +5482,9 @@ and exact measurement JSON. No health target or enforcement ceiling changes.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Original output-frame blanket refusal was retained by input admission 25c01f, then whole record outputs were admitted by 008e629 without updating T1986. Actual unchanged Parser accepts that source, causing `output frame source refuses` at docs/audits/record-output-stale-refusal-20261002/stale-test.t line 89 and Files1/Tests10/Failed1. Canonical current source-admission card/physical gates admit declarations/whole copies while output member writes and root-list ports remain closed. The old expectation is wrong; production behavior is current.
 - [x] **ADDRESSED (verified)** — Replace only T1986 final output negative fixture with an authored field writer and its real first-line reason; preserve root-list fixture and every earlier test byte. Current cohort PASS; genuine exact stale-test RED remains. Independent actual parser retains complete whole-output source/actor with literal full interface layout and separate precise field/list errors. Cold stale-expectation predicate RED and four source/layout/acceptance/cause controls falsify. Complete products/source/instrument/test delta/raw receipts/Git producer/history binding and immutable seal retain durability. Canonical card avoids an overbroad predecessor-reconciliation claim; book clarifies accepted unused declarations and undriven values. Production and all prior proof archives remain unchanged.
 - [x] **NO REGRESSION** — RAM-guarded value/context/current output-source/book checks report `All tests successful`, `Files=5, Tests=331`; current T2033 retains strict source and canonical carrier qualification. Cold source/whole output interface kinds and boundary products verify; all bin/perl bytes agree with current committed baseline. Book builds/rendered text passes without browser visual QA. Fresh Knowledge Map/claims, measured live-doc allowances with unchanged baselines/ceilings and staged doctrines precede normal hooks in a separate checks directory. No HDL tools/execution, full CI or push; broader/cold refusal census remains owned next.
+
+## Source-origin consumer review acceptance (.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual `library origin independent document set required at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 16` coexists with a caller-echoed expected wrong regex. Exact current T2046 rejected helper reports ok2 for this wrong reason; exact repaired T2048 first-line helper reports notok6 on the same real public constructor. Both actual reason positives pass. This is a demonstrated helper verification defect, not evidence that existing normal source products are wrong. Full-trace candidate syntax alone establishes neither defect nor safety.
+- [x] **ADDRESSED (verified)** — Complete seven-test source/byte/Git and 31 lexical/delegated sites reconcile: 17 unresolved full-trace cause candidates, one confirmed helper, 11 first-line/default-delegated cause/echo/control/capture sites and two deliberate trace-evidence assertions. Current helper bodies and actual constructor products are preserved. Independent Git/byte/line/closed membership and source-context review re-derive; genuine actual wrong-cause echo, cold full-stack subject RED and four shared source/site/review/family corruptions falsify; full snapshots/instruments/recipes/raw receipts/baseline/seal/task/book retain durability. Immediate P2 library repair is .3.2.3.1; remaining family runtime, broader current and cold populations stay explicitly owned. Initial guessed-line draft is retained unqualified; final matches actual line16. No all-repository or arbitrary future-source semantic qualification is claimed.
+- [x] **NO REGRESSION** — Narrow RAM-guarded remaining local-formal/book checks report `All tests successful`, `Files=3, Tests=327`. Earlier T2043-T2047 individually report ok before host88 guard termination/status137; no full-cohort success or complete initial rollup is claimed. Current read-only memory census and unchanged-limit retry preserve the resource caveat; no unrelated process or threshold change. No production/test/provider or prior archive edits; exact cold baseline and reviewed source bytes authenticate. Book builds/rendered text passes without browser visual QA; measured unchanged live-doc baselines/ceilings, fresh claims and staged doctrines follow separately before normal hooks. No HDL/runtime, full CI or push.

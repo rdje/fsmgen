@@ -1,0 +1,1 @@
+complete sealed members staged; immutable hashes and exact baseline/current producer bindings pass

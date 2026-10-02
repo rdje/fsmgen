@@ -1,0 +1,188 @@
+[
+  {
+    "line": 132,
+    "offset": 8569,
+    "path": "t/2043-isf-conditional-origin-parser.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 174,
+    "offset": 11135,
+    "path": "t/2043-isf-conditional-origin-parser.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 50,
+    "offset": 3180,
+    "path": "t/2044-isf-conditional-origin-source-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 79,
+    "offset": 5190,
+    "path": "t/2044-isf-conditional-origin-source-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 91,
+    "offset": 5925,
+    "path": "t/2044-isf-conditional-origin-source-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 98,
+    "offset": 6355,
+    "path": "t/2044-isf-conditional-origin-source-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 147,
+    "offset": 9861,
+    "path": "t/2045-isf-same-source-library-origins.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 151,
+    "offset": 10121,
+    "path": "t/2045-isf-same-source-library-origins.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 155,
+    "offset": 10450,
+    "path": "t/2045-isf-same-source-library-origins.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 161,
+    "offset": 10814,
+    "path": "t/2045-isf-same-source-library-origins.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 79,
+    "offset": 4233,
+    "path": "t/2046-isf-library-document-origin-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 195,
+    "offset": 12814,
+    "path": "t/2046-isf-library-document-origin-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 269,
+    "offset": 16556,
+    "path": "t/2046-isf-library-document-origin-authority.t",
+    "review": "confirmed full-trace helper cause vulnerability"
+  },
+  {
+    "line": 77,
+    "offset": 4823,
+    "path": "t/2047-isf-atl-document-origin-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 118,
+    "offset": 7565,
+    "path": "t/2047-isf-atl-document-origin-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 127,
+    "offset": 8291,
+    "path": "t/2047-isf-atl-document-origin-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 130,
+    "offset": 8644,
+    "path": "t/2047-isf-atl-document-origin-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 28,
+    "offset": 1057,
+    "path": "t/2048-isf-file-document-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  },
+  {
+    "line": 30,
+    "offset": 1206,
+    "path": "t/2048-isf-file-document-origin-authority.t",
+    "review": "intentional trace echo evidence"
+  },
+  {
+    "line": 31,
+    "offset": 1283,
+    "path": "t/2048-isf-file-document-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  },
+  {
+    "line": 37,
+    "offset": 1716,
+    "path": "t/2048-isf-file-document-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  },
+  {
+    "line": 86,
+    "offset": 5606,
+    "path": "t/2048-isf-file-document-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  },
+  {
+    "line": 255,
+    "offset": 16451,
+    "path": "t/2048-isf-file-document-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  },
+  {
+    "line": 116,
+    "offset": 7003,
+    "path": "t/2052-isf-local-formal-origin-authority.t",
+    "review": "full-trace cause candidate; additional wrong-source runtime control remains owned"
+  },
+  {
+    "line": 118,
+    "offset": 7138,
+    "path": "t/2052-isf-local-formal-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  },
+  {
+    "line": 159,
+    "offset": 9950,
+    "path": "t/2052-isf-local-formal-origin-authority.t",
+    "review": "intentional trace echo evidence"
+  },
+  {
+    "line": 160,
+    "offset": 10043,
+    "path": "t/2052-isf-local-formal-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  },
+  {
+    "line": 161,
+    "offset": 10134,
+    "path": "t/2052-isf-local-formal-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  },
+  {
+    "line": 164,
+    "offset": 10358,
+    "path": "t/2052-isf-local-formal-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  },
+  {
+    "line": 202,
+    "offset": 12818,
+    "path": "t/2052-isf-local-formal-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  },
+  {
+    "line": 229,
+    "offset": 14308,
+    "path": "t/2052-isf-local-formal-origin-authority.t",
+    "review": "first-line cause or delegated echo control/capture (default matcher)"
+  }
+]
