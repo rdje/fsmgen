@@ -1,0 +1,51 @@
+ram-guard: PID 88841; host 77.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at docs/audits/global-origin-20261002/candidate.t line 88.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at docs/audits/global-origin-20261002/candidate.t line 89.
+    #          got: 'fileparse(): need a valid pathname at modules/Global.pm line 21.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at docs/audits/global-origin-20261002/candidate.t line 91.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x784677d9d8)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh relative Global load in first fixture'
+#   at docs/audits/global-origin-20261002/candidate.t line 103.
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at docs/audits/global-origin-20261002/candidate.t line 88.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at docs/audits/global-origin-20261002/candidate.t line 89.
+    #          got: 'fileparse(): need a valid pathname at modules/Global.pm line 21.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at docs/audits/global-origin-20261002/candidate.t line 91.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x784676ed50)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh relative Global load in moved fixture'
+#   at docs/audits/global-origin-20261002/candidate.t line 103.
+# Looks like you failed 2 tests of 6.
+docs/audits/global-origin-20261002/candidate.t .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/6 subtests 
+
+Test Summary Report
+-------------------
+docs/audits/global-origin-20261002/candidate.t (Wstat: 512 Tests: 6 Failed: 2)
+  Failed tests:  2, 4
+  Non-zero exit status: 2
+Files=1, Tests=6,  1 wallclock secs ( 0.01 usr  0.00 sys +  0.82 cusr  0.04 csys =  0.87 CPU)
+Result: FAIL

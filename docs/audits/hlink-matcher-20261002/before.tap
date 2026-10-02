@@ -1,0 +1,252 @@
+ram-guard: PID 74375; host 63.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'static accepts complete valid source'
+    #   at t/2051-hlink-matcher-dispatch.t line 80.
+
+    #   Failed test 'static returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = ARRAY(0x7ce2910648)
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'literal'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'static accepts complete valid source'
+    #   at t/2051-hlink-matcher-dispatch.t line 80.
+
+    #   Failed test 'static returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = ARRAY(0x7ce1bf9d08)
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'spaces'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'static accepts complete valid source'
+    #   at t/2051-hlink-matcher-dispatch.t line 80.
+
+    #   Failed test 'static returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = ARRAY(0x7ce28df750)
+
+    #   Failed test 'warm returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got->[0] = '['
+    #     $expected->[0] = HASH(0x7ce1a70258)
+    # Looks like you failed 3 tests of 9.
+
+#   Failed test 'reference'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'static accepts complete valid source'
+    #   at t/2051-hlink-matcher-dispatch.t line 80.
+
+    #   Failed test 'static returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = ARRAY(0x7ce29c0840)
+
+    #   Failed test 'warm returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got->[1] = '['
+    #     $expected->[1] = HASH(0x7ce1ace030)
+    # Looks like you failed 3 tests of 9.
+
+#   Failed test 'interleaved'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'static accepts complete valid source'
+    #   at t/2051-hlink-matcher-dispatch.t line 80.
+
+    #   Failed test 'static returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = ARRAY(0x7ce2c051b0)
+
+    #   Failed test 'warm returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got->[0] = '['
+    #     $expected->[0] = HASH(0x7ce2c05288)
+    # Looks like you failed 3 tests of 9.
+
+#   Failed test 'adjacent'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'static accepts complete valid source'
+    #   at t/2051-hlink-matcher-dispatch.t line 80.
+
+    #   Failed test 'static returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = ARRAY(0x7ce2c05330)
+
+    #   Failed test 'warm returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got->[0] = '['
+    #     $expected->[0] = HASH(0x7ce2c052e8)
+    # Looks like you failed 3 tests of 9.
+
+#   Failed test 'nested_reference'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'static accepts complete valid source'
+    #   at t/2051-hlink-matcher-dispatch.t line 80.
+
+    #   Failed test 'static returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = ARRAY(0x7ce2c053f0)
+
+    #   Failed test 'warm returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got->[0] = '{'
+    #     $expected->[0] = '{a{b}}'
+    # Looks like you failed 3 tests of 9.
+
+#   Failed test 'braces'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'static accepts complete valid source'
+    #   at t/2051-hlink-matcher-dispatch.t line 80.
+
+    #   Failed test 'static returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = ARRAY(0x7ce2c054f8)
+
+    #   Failed test 'warm returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got->[1] = '{'
+    #     $expected->[1] = '{a}'
+    # Looks like you failed 3 tests of 9.
+
+#   Failed test 'mixed'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'static accepts complete valid source'
+    #   at t/2051-hlink-matcher-dispatch.t line 80.
+
+    #   Failed test 'static returns whole independently declared tokens and reference kinds'
+    #   at t/2051-hlink-matcher-dispatch.t line 81.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = ARRAY(0x7ce2c05600)
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'escaped'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'static retains exact grammar diagnostic'
+    #   at t/2051-hlink-matcher-dispatch.t line 77.
+    #          got: '(HLinkSubst) -E- Unmatched closing bracket
+    # '
+    #     expected: '(HLinkSubst) -E- Dangling closing bracket
+    # '
+
+    #   Failed test 'static retains error exit code'
+    #   at t/2051-hlink-matcher-dispatch.t line 78.
+    #                   ''/usr/bin/perl -Iperl <workspace>/probe.pl static ]' exited with value 2'
+    #     doesn't match '(?^:exited with value 1\z)'
+
+    #   Failed test 'warm rejects malformed source'
+    #   at t/2051-hlink-matcher-dispatch.t line 76.
+
+    #   Failed test 'warm retains exact grammar diagnostic'
+    #   at t/2051-hlink-matcher-dispatch.t line 77.
+    #          got: '["]"]'
+    #     expected: '(HLinkSubst) -E- Dangling closing bracket
+    # '
+
+    #   Failed test 'warm retains error exit code'
+    #   at t/2051-hlink-matcher-dispatch.t line 78.
+    #                   ''
+    #     doesn't match '(?^:exited with value 1\z)'
+    # Looks like you failed 5 tests of 12.
+
+#   Failed test 'dangling'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'warm rejects malformed source'
+    #   at t/2051-hlink-matcher-dispatch.t line 76.
+
+    #   Failed test 'warm retains exact grammar diagnostic'
+    #   at t/2051-hlink-matcher-dispatch.t line 77.
+    #          got: '["[","ROOT"]'
+    #     expected: '(HLinkSubst) -E- Unmatched closing bracket
+    # '
+
+    #   Failed test 'warm retains error exit code'
+    #   at t/2051-hlink-matcher-dispatch.t line 78.
+    #                   ''
+    #     doesn't match '(?^:exited with value 2\z)'
+    # Looks like you failed 3 tests of 12.
+
+#   Failed test 'unclosed_reference'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'static retains exact grammar diagnostic'
+    #   at t/2051-hlink-matcher-dispatch.t line 77.
+    #          got: '(HLinkSubst) -E- Unmatched closing bracket
+    # '
+    #     expected: '(HLinkSubst) -E- Unmatched closing brace
+    # '
+
+    #   Failed test 'warm rejects malformed source'
+    #   at t/2051-hlink-matcher-dispatch.t line 76.
+
+    #   Failed test 'warm retains exact grammar diagnostic'
+    #   at t/2051-hlink-matcher-dispatch.t line 77.
+    #          got: '["{","body"]'
+    #     expected: '(HLinkSubst) -E- Unmatched closing brace
+    # '
+
+    #   Failed test 'warm retains error exit code'
+    #   at t/2051-hlink-matcher-dispatch.t line 78.
+    #                   ''
+    #     doesn't match '(?^:exited with value 2\z)'
+    # Looks like you failed 4 tests of 12.
+
+#   Failed test 'unclosed_brace'
+#   at t/2051-hlink-matcher-dispatch.t line 87.
+
+    #   Failed test 'actual HUtils link succeeds'
+    #   at t/2051-hlink-matcher-dispatch.t line 91.
+
+    #   Failed test 'complete public linked product follows declared source values'
+    #   at t/2051-hlink-matcher-dispatch.t line 93.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x7ce2c44f18)
+    # Looks like you failed 2 tests of 3.
+
+#   Failed test 'whole linked configuration retains literals, references and nested values'
+#   at t/2051-hlink-matcher-dispatch.t line 97.
+# Looks like you failed 13 tests of 14.
+t/2051-hlink-matcher-dispatch.t .. 
+Dubious, test returned 13 (wstat 3328, 0xd00)
+Failed 13/14 subtests 
+
+Test Summary Report
+-------------------
+t/2051-hlink-matcher-dispatch.t (Wstat: 3328 Tests: 14 Failed: 13)
+  Failed tests:  2-14
+  Non-zero exit status: 13
+Files=1, Tests=14,  6 wallclock secs ( 0.01 usr  0.01 sys +  1.85 cusr  4.26 csys =  6.13 CPU)
+Result: FAIL

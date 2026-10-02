@@ -1,0 +1,2 @@
+perl/HLinkSubst.pm syntax OK
+t/2051-hlink-matcher-dispatch.t syntax OK

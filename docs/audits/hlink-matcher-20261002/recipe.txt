@@ -1,0 +1,8 @@
+Historical candidate commands (do not install or adopt automatically):
+FSMGEN_HLINK_CAPTURE=docs/audits/hlink-matcher-20261002/before.json scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2051-hlink-matcher-dispatch.t
+After candidate edit: same command with after.json capture.
+FSMGEN_HLINK_SOURCE=docs/audits/hlink-matcher-20261002/before/HLinkSubst.pm FSMGEN_HLINK_CAPTURE=docs/audits/hlink-matcher-20261002/red-final.json scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2051-hlink-matcher-dispatch.t
+Focused: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2051-hlink-matcher-dispatch.t t/2049-pathsearch-module-origin.t t/01-regression.t t/05-assignment-hdl-snapshots.t t/1352-isf-library-use-package-constants.t
+Independent saved evidence: python3 docs/audits/hlink-matcher-20261002/verify-saved.py
+The original baseline/final-binding JSON and saved test name the actual capture environment and source override. Test snapshots belong here only, outside the live suite.
+Current modern regression/gates are recorded separately under docs/audits/legacy-scope-recovery-checks-20261002; no further legacy candidate execution is authorized by this recipe.

@@ -1,0 +1,11 @@
+{
+  "head": "69eeda3f68b4074cb6376df8a478f5ea2391491c",
+  "inputs": {
+    "perl/HLinkSubst.pm": "2827cbf9841059c2b263569ab4a9d2d6d28008cfb8edaf7b306752d689dca277",
+    "perl/HUtils.pm": "d966a5cc3a4741767851f8a6f61711f921a87a5a74f97af27dd588a4bb897384",
+    "perl/LinkedRE.pm": "f2f0bc0956c2b69a0a353046c01b2b8e718afb6ba3af1167d93f88dd89621031",
+    "perl/LinkedSpec.pm": "6fa2e2f1701a46bc7bdec03599fdaa5728272140cc43145fb0059661ecabc69f",
+    "specs/hlink_substitution.spec": "d55c5d9ac775856384fe6b9ae1b46b65864c3ac2be6677eb3c35bf783d709311",
+    "t/2051-hlink-matcher-dispatch.t": "262d95445b2f5c140f5476b7e3c4ea2cfffd954ffadeacaaa02b4c8a4de8adaa"
+  }
+}

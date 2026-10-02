@@ -7,7 +7,7 @@ answers:
   - "why must same-source ATL rebuilding retain original form identity?"
   - "which file search precedence does private origin qualification cover?"
   - "why does PathSearch survive chdir after a relative module load?"
-  - "why is Global configuration verification blocked on HLinkSubst?"
+  - "why is legacy HUtils work deferred from the FSMGEN frontier?"
 date: 2026-10-02
 status: current
 tags: [isf, atl, source, origins, authority, files, locality]
@@ -50,8 +50,7 @@ Origin providers/parser stay unchanged; packages/groups/unresolved external
 intent refuse. Preparation/adoption/scheduling remain later owners. Fixture includes resolve before chdir. PathSearch now binds its module tree at
 load time, preserving lazy first-search cwd, retained extras, extensions and
 missing-file warnings. Fresh relative/absolute loads in moved roots qualify the
-repair; retained original production gives genuine RED. Global configuration still has a relative-location defect before first new.
-Its HLinkSubst prerequisite also misdispatches: compiled callbacks set the
-caller package index while LinkedRE reads its own missing/stale index. Literal substitution errors; initialized controls can empty values.
-Matcher repair precedes Global origin verification.
+repair; retained original production gives genuine RED. Legacy Global/HUtils defects and an unadopted HLinkSubst candidate are archived.
+They were found by added legacy tests; no current FSMGEN dependency was proved.
+They are deferred outside the modern frontier, not preparation prerequisites.
 No HDL/macro runtime is proved.

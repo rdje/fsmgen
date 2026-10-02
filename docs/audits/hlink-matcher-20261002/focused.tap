@@ -1,0 +1,9 @@
+ram-guard: PID 86279; host 66.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2051-hlink-matcher-dispatch.t ............. ok
+t/2049-pathsearch-module-origin.t ........... ok
+t/01-regression.t ........................... ok
+t/05-assignment-hdl-snapshots.t ............. ok
+t/1352-isf-library-use-package-constants.t .. ok
+All tests successful.
+Files=5, Tests=55, 40 wallclock secs ( 0.02 usr  0.01 sys + 26.62 cusr 12.88 csys = 39.53 CPU)
+Result: PASS

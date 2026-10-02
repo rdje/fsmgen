@@ -1,0 +1,6 @@
+ram-guard: PID 71592; host 68.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2048-isf-file-document-origin-authority.t .. ok
+t/2049-pathsearch-module-origin.t ............ ok
+All tests successful.
+Files=2, Tests=33, 105 wallclock secs ( 0.30 usr  0.05 sys + 91.57 cusr  2.52 csys = 94.44 CPU)
+Result: PASS

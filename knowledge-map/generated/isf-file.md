@@ -9,7 +9,7 @@
 - q="how are file-backed root and library origins authenticated?" · facts=[isf-file-document-origin-authority](../../docs/knowledge/isf-file-document-origin-authority.md)
 - q="which file search precedence does private origin qualification cover?" · facts=[isf-file-document-origin-authority](../../docs/knowledge/isf-file-document-origin-authority.md)
 - q="why does PathSearch survive chdir after a relative module load?" · facts=[isf-file-document-origin-authority](../../docs/knowledge/isf-file-document-origin-authority.md)
-- q="why is Global configuration verification blocked on HLinkSubst?" · facts=[isf-file-document-origin-authority](../../docs/knowledge/isf-file-document-origin-authority.md)
+- q="why is legacy HUtils work deferred from the FSMGEN frontier?" · facts=[isf-file-document-origin-authority](../../docs/knowledge/isf-file-document-origin-authority.md)
 - q="why must same-source ATL rebuilding retain original form identity?" · facts=[isf-file-document-origin-authority](../../docs/knowledge/isf-file-document-origin-authority.md)
 
 ## Facts

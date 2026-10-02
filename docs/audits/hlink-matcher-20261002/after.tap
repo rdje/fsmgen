@@ -1,0 +1,5 @@
+ram-guard: PID 80030; host 64.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2051-hlink-matcher-dispatch.t .. ok
+All tests successful.
+Files=1, Tests=14,  8 wallclock secs ( 0.01 usr  0.01 sys +  1.92 cusr  4.72 csys =  6.66 CPU)
+Result: PASS

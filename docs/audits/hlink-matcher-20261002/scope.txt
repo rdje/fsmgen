@@ -1,0 +1,10 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.6.1
+Disposition: unadopted legacy candidate, not current FSMGEN repair signoff.
+Director identifies HUtils as an old Perl package unrelated to current FSMGEN. Extra legacy Global controls did not establish a modern behavioral dependency; treating their defects as source-preparation prerequisites was an agent scope mistake.
+The actual PathSearch file-origin repair remains committed and has a permanent regression. PathSearch imports Global; loading alone does not prove use of Global initialization or HUtils matcher behavior by modern FSMGEN.
+Production HLinkSubst is restored exactly to baseline Git bytes. The candidate test is removed from the live suite; after.pm and test.t preserve its exact unadopted instruments. Legacy matcher and Global defects remain owned at P4 in .6.2/.5.2, behind modern roadmap work; reactivation requires an explicit legacy scope or demonstrated required current consumer.
+Saved candidate results: unchanged source RED1/14/Failed13; candidate PASS1/14; exact-source counterfactual RED1/14/Failed13. Focused helper/emission/snapshot/package cohort PASS5/55. Global candidate under the unadopted matcher gives RED1/6/Failed2: relative origin defect remains, absolute whole configurations pass. No native compiler, HDL execution, full CI or push.
+Re-derivation: exact original history/source and independent whole literal/grammar/configuration expectations.
+Falsification: retained actual old-source RED and saved-product corruptions rejected by independent verifier.
+Durability: original instruments/products/receipts, archival verifier and full member byte/hash seal. verify.py/verify.txt retain the original candidate-time execution; verify-saved.py checks saved bindings after withdrawal and exact restored production.
+All persisted project paths are relative. Runtime diagnostics/monitor toolchain readings are evidence, not build dependencies.

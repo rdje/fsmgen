@@ -11,11 +11,6 @@ at that time. Explicit extra directories remain available to subsequent searches
 default `.conf` extensions and missing-file warnings keep their existing meaning.
 This does not change ISF library search precedence or introduce a new public API.
 
-`Global` configuration initialization still needs to run before changing away
-from the directory that resolves a relative module include. Its separate repair
-is tracked. Trustworthy configuration preservation also requires the owned legacy
-substitution-matcher repair; directory independence remains unqualified.
-
 ## Capability Manifest Discovery
 
 The machine-readable entrypoint for downstream tools is:
