@@ -14,7 +14,10 @@ evidence: >-
   docs/audits/conditional-macro-intent-20261002/scope.txt;
   docs/audits/conditional-macro-intent-20261002/manifest.json;
   docs/audits/conditional-macro-intent-20261002/verify.py;
+  docs/audits/procedure-cond-normalization-20261002/scope.txt;
+  docs/audits/procedure-cond-normalization-20261002/verify.py;
   t/2041-isf-conditional-macro-intent-qualification.t;
+  t/2042-isf-procedure-cond-normalization.t;
   perl/FSM/Adapter/ISF/Parser.pm;
   perl/FSM/Scheduler/ISF/LoweringIR.pm;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
@@ -46,9 +49,14 @@ for the actual parser producers; no submodule implementation is inspected.
 
 Use explicit activation before conditional shorthand. Keep cond at the
 transaction call site and call ordinary procedures from its branches until
-normalization qualifies. SEM `.60.4.3.3.5.2.1.5.4` owns that P2 repair next,
-before `.5.2` explicit source intent and `.5.3` integration; scalar literal and
-record-output read/write prerequisites follow separately.
+normalization qualifies. SEM `.60.4.3.3.5.2.1.5.4.1` demonstrates why a
+standalone normalization is unsafe: first sample-only procedure cond was
+refused, but the candidate newly admits it as activation with one later branch.
+Complete actual check/semantic/schedule native/API/newline admission and the
+independent desired-branch RED establish the gap. Exact committed production
+is restored and public refusal requalified; `.5.2` explicit source intent is
+now next, then `.5.4.2` safe normalization and `.5.3` branch integration.
+Scalar literal and record-output read/write prerequisites follow separately.
 
 Literal predicates/effects/aliases/roles and complete current products
 re-derive each scoped result. Genuine desired-intent RED and shared-corruption

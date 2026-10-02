@@ -1,0 +1,5 @@
+(actor first_proc_when_sample
+  (clock clk) (reset (rst_n sync active_low))
+  (interface (input request) (input allow) (input datain (width 3)) (input other (width 3)) (output seen (width 3)) (output done))
+  (proc capture (params (v (width 3))) (when allow (sample v as captured)))
+  (transaction main (call capture other) (complete done)))

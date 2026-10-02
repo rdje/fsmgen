@@ -1,0 +1,4 @@
+t/2042-isf-procedure-cond-normalization.t .. ok
+All tests successful.
+Files=1, Tests=27,  2 wallclock secs ( 0.01 usr  0.01 sys +  1.12 cusr  0.42 csys =  1.56 CPU)
+Result: PASS

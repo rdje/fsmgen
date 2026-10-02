@@ -1,0 +1,46 @@
+ram-guard: PID 72294; host 79.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(when ...)' clause in repeat body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x7bf312ec78), "main", "repeat", HASH(0x7bf3156d20), HASH(0x7bedbd6f90), HASH(0x7bf3135510)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6218
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x7bf3a482d0), "main", "transaction", undef, HASH(0x7bedbd6f90), HASH(0x7bf3135510)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x7bf3132c48), HASH(0x7bf312f5d0), HASH(0x7bf3135510), 0, HASH(0x7bedbd6f90), HASH(0x7bee0efeb8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x7bf3132c48), HASH(0x7bf3135510), HASH(0x7bedbd6f90), HASH(0x7bedbd6fd8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x7bf3132c48), HASH(0x7bf3135510)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x7bf313f708), HASH(0x7bf3135510)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7beb03f7e0), "outer_repeat", CODE(0x7bf3afc1c8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_repeat", CODE(0x7bf3afc1c8)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(when ...)' clause in repeat body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x7bf3144420), "main", "repeat", HASH(0x7bf3137d50), HASH(0x7bec2acd68), HASH(0x7bf314a150)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6218
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x7bf314a510), "main", "transaction", undef, HASH(0x7bec2acd68), HASH(0x7bf314a150)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x7bf313f4e0), HASH(0x7bf31375a0), HASH(0x7bf314a150), 0, HASH(0x7bec2acd68), HASH(0x7bf314b498)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x7bf313f4e0), HASH(0x7bf314a150), HASH(0x7bec2acd68), HASH(0x7bf3132e58)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x7bf313f4e0), HASH(0x7bf314a150)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7beb03f7e0), "outer_repeat", CODE(0x7bf3afc1c8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_repeat", CODE(0x7bf3afc1c8)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 2 tests of 7.
+
+#   Failed test 'outer_repeat'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["params",["MODE","1"]],["on","request"],["when","allow",["set","result","value"]],["when",["!","allow"],["set","result","other"]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","allow",["set","result","value"]],["when",["!","allow"],["set","result","other"]],["complete","done"]]'
+    # Looks like you failed 1 test of 7.
+
+#   Failed test 'generated'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+# Looks like you failed 2 tests of 26.

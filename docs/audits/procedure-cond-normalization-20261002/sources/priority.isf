@@ -1,0 +1,5 @@
+(actor priority
+  (interface (input request) (input allow) (input datain (width 3)) (input other (width 3)) (output seen (width 3)) (output done))
+  (proc choose (params (c (width 1)) (d (width 1))) (cond (c (set seen 1)) (d (set seen 2)) (else (set seen 3))))
+  
+  (transaction main (on request) (call choose allow request) (complete done)))

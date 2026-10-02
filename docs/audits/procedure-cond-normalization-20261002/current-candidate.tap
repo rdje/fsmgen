@@ -1,0 +1,11 @@
+t/2042-isf-procedure-cond-normalization.t .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/26 subtests 
+
+Test Summary Report
+-------------------
+t/2042-isf-procedure-cond-normalization.t (Wstat: 512 Tests: 26 Failed: 2)
+  Failed tests:  11, 16
+  Non-zero exit status: 2
+Files=1, Tests=26,  3 wallclock secs ( 0.01 usr  0.01 sys +  1.15 cusr  0.84 csys =  2.01 CPU)
+Result: FAIL

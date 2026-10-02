@@ -1,0 +1,7 @@
+ram-guard: PID 14658; host 81.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Loaded parser perl/FSM/Adapter/ISF/Parser.pm cb94338bf938fdcf8149b8c971918148b620e1b56647a195cff1bd6a281b96fd
+State kinds ['entry', 'branch', 'sequential', 'terminal']
+Branches 1
+check native 0 API error None isError False wire 0
+schedule native 0 API error None isError False wire 0
+semantic native 0 API error None isError False wire 0

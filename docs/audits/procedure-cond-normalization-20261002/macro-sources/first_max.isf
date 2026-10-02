@@ -1,0 +1,5 @@
+(actor first_max
+  (clock clk) (reset (rst_n sync active_low))
+  (interface (input request) (input allow) (input datain (width 3)) (input other (width 3)) (output seen (width 3)) (output done))
+  
+  (transaction main  (max seen datain other) (complete done)))

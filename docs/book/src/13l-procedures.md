@@ -45,8 +45,12 @@ The current conditional-normalization boundary has one tracked exception:
 `cond` inside an inline procedure body reaches the scheduler unexpanded and
 refuses as `unsupported '(cond ...)' clause in transaction body`. Put the `cond`
 at the transaction call site and call an ordinary procedure from its branches
-until the repair qualifies. Other first-operation conditional shorthand can
-also select entry activation; use an explicit `(on start)` before it. An
+until the repair qualifies. Standalone normalization would newly admit a first
+sample-only procedure `cond` as activation rather than an ordinary branch, so
+the explicit source-intent prerequisite must qualify before integration.
+[Procedure safety qualification](../../../docs/audits/procedure-cond-normalization-20261002/scope.txt)
+retains that candidate and the restored current refusal. Other first-operation
+conditional shorthand can also select entry activation; use an explicit `(on start)` before it. An
 authored sample-only `when` retains its documented entry meaning when inlined.
 
 ```lisp

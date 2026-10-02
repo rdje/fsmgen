@@ -1,0 +1,60 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.4.1
+Baseline: 518d99d288b6b1cf4fd2f8f38518d684d37740a6
+
+This is an existing ISF/IAL1 inline-procedure safety qualification. Production
+is restored exactly; no macro language/framework or source widening is added.
+The candidate is retained as diagnosis and must not be integrated standalone.
+
+The fixed corpus contains 26 complete authored sources, with independent
+desired normalized-clause literals. It covers scalar/expression/priority/else
+forms, nesting, outer control flow, nested calls, repeated substitutions,
+direct formal shadows, generated specialization, owning domains, first actions
+and samples, authored sample activation, lazy unused definitions, malformed
+reached cond bodies and direct/transitive recursive calls. Exact old-parser
+preloading gives genuine terminal RED Files=1/Tests=27/Failed23. The four-line
+canonical call-site candidate passes the structural corpus Files=1/Tests=27.
+The complete 43-source native/API/newline/carrier cohort also passes its actual
+candidate classifications Files=1/Tests=44. Neither pass establishes safe new
+source admission or correct first-macro intent.
+
+The candidate runs canonical _expand_conds_in_list on a substituted copy before
+nested-call recursion. It leaves unused definitions untouched. first_samples
+was closed at baseline as unexpanded cond. The candidate newly admits it as an
+entry plus one later branch rather than two ordinary branches. Complete actual
+native check/semantic/schedule all admit, including API isError false and exact
+newline responses. The independent actual-source branch oracle is terminal
+RED Files=1/Tests=2/Failed2. That source/control-flow witness falsifies parity
+and the structural test's expectation of the known wrong entry topology.
+
+After all candidate captures terminate, restore the exact committed parser and
+T2041 expectations. The permanent current-boundary T2042 corpus qualifies the
+restored refusal and authored/unused controls, Files=1/Tests=27. Actual complete
+restored public first_samples phases are captured separately. First macro
+sample defects remain owned by .5.2/.5.3; safe normalization .5.4.2 now depends
+on explicit source intent .5.2. No new unsupported sample source may admit as
+activation. The downstream guide/book/feedback retain the current call-site
+workaround. Source, caller, primitive kinds and definitions remain intact.
+
+Initial fixture assumptions mistakenly promised repeat-body when admission
+and omitted the retained generated params clause. Preserve both failed draft
+products/recipes, correct the literal table and add an authored-cond repeat
+control proving the existing refusal. These are fixture errors, not newly
+discovered production defects. The first restored capture inherits the helper's
+static "live candidate" label; preserve it as an unlabeled draft. Qualified
+restored capture uses an explicit label and before/after loaded-parser hashes;
+actual producer identity and products determine classification.
+The first collector wrongly expects the canonical interface-part warning in
+the standalone Transactions chapter. Preserve its exact failed sealer/receipt,
+inspect the actual chapter and use its existing entry-contract marker; the new
+safety warnings render in Control Flow, Procedures and Downstream Integration.
+No missing book feature or misplaced output is inferred from that recipe error.
+
+Re-derivation uses complete actual source/actor/private/lowered products, exact
+candidate/predecessor code and public phase receipts. Independent desired-branch
+RED, literal source/role/kind witnesses and hostile shared corruptions provide
+falsification. Permanent current-boundary test, complete scripts/raw streams,
+sealed exact member census, immutable predecessors, current facts/docs/tasks
+and Git provide durability. Only exact runtime repository prefixes normalize.
+No HDL/compiler/analyzer/simulation, spent replay, macro execution, handshake
+runtime, record-output route/public widening, full CI/push or browser visual QA
+is claimed. The rejected candidate is not delivered feature support.

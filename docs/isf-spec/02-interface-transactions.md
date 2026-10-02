@@ -720,6 +720,9 @@ activation before these forms until the source-intent repair qualifies.
 `cond` inside an inline procedure body currently remains unexpanded and refuses
 at transaction lowering even after explicit activation; keep that conditional
 at the call site until the separately owned normalization repair qualifies.
+Standalone normalization would newly admit a first sample-only procedure
+`cond` as activation. Explicit source intent must qualify before integrating
+that repair; committed production keeps this source refused.
 Transaction `when`, `while`, and `until` condition expressions may use local
 enum members such as `mode.BUSY`, package enum members such as
 `shared.mode.BUSY`, or scalar aggregate storage leaves such as `frame.flag` as

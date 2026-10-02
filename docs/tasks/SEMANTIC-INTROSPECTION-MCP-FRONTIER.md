@@ -3378,8 +3378,8 @@ For FSMGen, the analogs are:
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2`
   Status: `pending`
   Goal: `Select and qualify explicit normalized conditional-macro source intent.`
-  Acceptance: `After .1, define an explicit source-produced contract distinguishing conditional macro expansion from authored entry when, with retained original operation/context and no generated-name/body-content inference. Qualify propagation through actual rewrite passes, serializable cloning, imports, scopes, formal preparation, generated children and selected domains. Reject malformed/missing/forged association instead of guessing. Keep production scheduling unchanged until a complete contract qualifies; record cross-cutting decisions only when earned. Split implementation further if the safe unit grows.`
-  Verification: `pending actual family qualification`
+  Acceptance: `After .1 and .4.1, define an explicit source-produced contract distinguishing conditional macro expansion from authored entry when, with retained original operation/context and no generated-name/body-content inference. Qualify propagation through actual rewrite passes, serializable cloning, imports, scopes, formal preparation, generated children and selected domains. Reject malformed/missing/forged association instead of guessing. Keep production scheduling unchanged until a complete contract qualifies; record cross-cutting decisions only when earned. Split implementation further if the safe unit grows.`
+  Verification: `Committed .5.1 qualifies family placement; .5.4.1 shows candidate inline normalization newly admits first_samples as activation. This source-intent contract must precede .5.4.2 integration and retain original macro operation/call context through normalization. .5.2 is the next frontier; no admission/parity-only signoff.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.3`
@@ -3390,10 +3390,25 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Repair P2 conditional normalization inside inline procedure bodies.`
-  Acceptance: `Actual first_proc_cond and later_proc_cond define an ordinary cond in a proc body, then inline call it. The parser keeps cond in actual normalized transaction clauses; lowering refuses unsupported '(cond ...)' in transaction body even after explicit on. Preserve source/actor/private/native/API/newline products, root parser pass ordering and inline expansion with tools, then normalize through the canonical producer at the correct scope without creating a parallel macro authority. Qualify first/later/nested/recursive-call/scope/formal/domain interactions relevant to the safe repair and preserve precise activation refusals until .5.3. Do not assume every proc macro family is broken; own further demonstrated cases separately and split if needed. Schedule directly after .5.1 and before .5.2 propagation. No HDL invocation/spent replay.`
-  Verification: `Owned at discovery under .5.1: .artifacts/conditional-macro-intent/private-qualified.json and complete first_proc_cond/later_proc_cond source files retain the actual leftover cond and precise private/public-lower refusals. _expand_cond_loops scans transaction clauses before _expand_procedure_calls inserts the proc body; _expand_one_call recursively expands calls but does not run cond normalization. Actual phase qualification precedes closure. Priority P2; repair is explicitly scheduled next after qualification.`
+  Acceptance: `Actual first_proc_cond and later_proc_cond define an ordinary cond in a proc body, then inline call it. The parser keeps cond in actual normalized transaction clauses; lowering refuses unsupported '(cond ...)' in transaction body even after explicit on. Preserve source/actor/private/native/API/newline products, root parser pass ordering and inline expansion with tools, then normalize through the canonical producer at the correct scope without creating a parallel macro authority. Qualify first/later/nested/recursive-call/scope/formal/domain interactions relevant to the safe repair and preserve precise activation refusals until .5.3. Do not assume every proc macro family is broken; own further demonstrated cases separately and split if needed. Qualify directly after .5.1; integrate only after .5.2 explicit source intent prevents newly unsafe first-sample admission. No HDL invocation/spent replay.`
+  Verification: `Owned at discovery under .5.1: .artifacts/conditional-macro-intent/private-qualified.json and complete first_proc_cond/later_proc_cond source files retain the actual leftover cond and precise private/public-lower refusals. _expand_cond_loops scans transaction clauses before _expand_procedure_calls inserts the proc body; _expand_one_call recursively expands calls but does not run cond normalization. Actual phase qualification precedes closure. Priority P2; .5.4.1 qualifies the unsafe candidate and restores production, while .5.4.2 integration now requires .5.2 explicit source intent.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.4.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.4.1`
+  Status: `done`
+  Goal: `Qualify inline cond normalization and reject newly unsafe first-sample admission before integrating it.`
+  Acceptance: `Retain exact committed/candidate parser, complete fixed source/actor/private/lowered/native/API/newline products, original primitive kinds, actual first_samples safety counterexample and genuine old-parser RED. Qualify lazy substitution, nested calls, recursion, source/formal/generated/domain scope and untouched definitions. Preserve failed fixture drafts honestly. Restore the exact committed parser and T2041 expectations after terminal capture; commit diagnosis with no production widening and a passing permanent current-boundary regression. Split integration after explicit source-intent .5.2, keep book/downstream/feedback aligned, and pivot only from a clean committed tree. No HDL/spent replay.`
+  Verification: `Fixed corpus contains 26 complete sources. Exact committed old-parser preloading gives genuine RED Files=1/Tests=27/Failed23; the canonical four-line candidate passes structural Files=1/Tests=27 and complete 43-source actual native/API/newline/carrier Files=1/Tests=44. Independent first_samples branch oracle is genuine RED Files=1/Tests=2/Failed2: candidate entry plus one later branch newly admits a previously refused source through all real public phases. Every saved candidate carrier strictly checks, so syntax/parity is insufficient. Restore exact committed Parser/T2041; fresh permanent current-boundary capture passes Files=1/Tests=27 and actual first_samples check/semantic failures retain status1 complete machine envelopes, schedule empty stdout/status255 and bounded RPC-32000. Literal/source/kind/full-product verification rejects five shared corruptions and authenticates unchanged bin/perl census plus all immutable predecessors. Focused restored checks pass Files=9/Tests=60, six docs checks Files=6/Tests=622 with 115 complete fixtures lowering; syntax/book and actual rendered text/code/links/canonical includes pass without browser visual QA. Complete source/code/counterfactual/drafts/raw receipts are sealed under docs/audits/procedure-cond-normalization-20261002. Initial repeat-body support/generated-params assumptions and static capture label are corrected with exact failed drafts retained; first render marker incorrectly assumed the canonical part was included in standalone Transactions, so preserve failure and inspect actual independent chapter before correction. .5.2 explicit source intent is next, then .5.4.2 safe normalization and .5.3 branch integration. No production widening, macro/handshake execution, HDL invocation, spent replay, record-output route widening or full CI/push.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.4.2`
+  Status: `pending`
+  Goal: `Integrate canonical inline cond normalization after qualified explicit source intent prevents unsafe entry admission.`
+  Acceptance: `Requires committed .5.4.1 and .5.2. Reuse canonical _expand_conds_in_list on a substituted copy before nested-call recursion, with qualified source-operation/context association and a precise fail-closed first-macro boundary until .5.3 delivers branch intent. Preserve authored sample-only when activation, unused definitions, correct argument scope and entry action refusals. Require exact candidate counterexample to remain refused or become an actual qualified ordinary branch; never newly admit it as activation. Qualify actual source/private/public products and regression, sync book/integration/feedback, then commit before .5.3.`
+  Verification: `Blocked on explicit source-intent contract .5.2; candidate alone is not safe.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.2`
@@ -4885,3 +4900,41 @@ The initial staged doctrine gate passes every check except CLAIM-INVENTORY:
 the final task evidence note follows its earlier census. Refresh the complete
 inventory and measured task pressure after all prose is final, then repeat the
 full gate and normal hooks. This is stale metadata, not an implementation FAIL.
+
+## Acceptance Checklist (enforced) — SEM .60.4.3.3.5.2.1.5.4.1 inline procedure cond safety qualification
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S roots procedure expansion at e680f9670257c6d6e9ad0c46d222e96697ea2304 and cond at 368c42812ff7849a7c6aff78b9a2bec527e58ae9. _expand_one_call inserts substituted bodies after the transaction cond pass. Actual four-line canonical normalization produces first_samples entry plus one later branch, losing ordinary first branch intent at _ir_when_activation. Complete actual native/API/newline check/semantic/schedule admit the candidate; independent desired-source branch oracle is terminal RED, Files=1/Tests=2/Failed2. Thus the structural and 43-source classification passes cannot authorize new sample admission.
+- [x] **ADDRESSED (verified)** — Retain exact candidate, complete 26-source products, original definitions/kinds, genuine committed old-parser RED and full 43-source public capture. Independent safety falsification identifies the newly unsafe source before integration. Restore exact committed Parser/T2041; current-boundary test passes Files=1/Tests=27 and actual public first_samples refusal is requalified. Five shared corruptions reject. Safe normalization .5.4.2 now explicitly requires source intent .5.2; ordinary branch integration .5.3 follows. Book/downstream/feedback/current fact reflect the actual closure and call-site workaround. This is committed diagnosis with production unchanged, not delivered normalization.
+- [x] **NO REGRESSION** — Guarded restored T2042/macro/procedure/activation cohort reports All tests successful, Files=9, Tests=60. Six docs audits report All tests successful, Files=6, Tests=622 with 115 complete fixtures lowering; syntax and mdBook build pass. Actual rendered text/code/links and canonical includes pass without browser visual QA. Exact bin/perl census proves full production restoration, and every predecessor archive authenticates unchanged without replay. Independent saved-product/full-cohort/hostile verification, regenerated Knowledge Map, measured containment and complete claim reconciliation precede staged doctrines and normal hooks. Failed fixture/render/receipt-label attempts remain honest saved evidence. No HDL execution, feature runtime, record routing/public widening or full CI/push is inferred.
+
+The bounded repair normalizes the substituted inline body through the canonical
+_expand_conds_in_list before expanding nested calls; unused definitions stay
+untouched. Qualified exact old-parser preloading gives genuine RED: Files=1,
+Tests=27, Failed=23. Current fixed corpus passes Files=1/Tests=27. The initial
+candidate also exposed two fixture assumptions: repeat-body when remains a
+documented unsupported context (confirmed with an authored-cond control), and
+the generated transaction retains its params clause. Preserve both failed
+draft recipes/products and the corrected independent clauses; neither is a
+new production defect. First sample cond remains activation-misclassified under
+.5.2/.5.3; first action cond still refuses at the sample-only entry guard.
+Complete real source/public phase requalification is now in flight before
+delivery wording or commit. No HDL invocation, handshake runtime or first-macro
+intent repair is claimed by this normalization.
+
+Independent safety review finds a newly unsafe source in the candidate:
+first_samples was refused as unexpanded cond at committed 518d99d, but the
+candidate normalizes it into a sample-only activation entry and admits instead
+of preserving ordinary branch intent. The passing structural test expected the
+known wrong topology, so it cannot sign off new admission. Own this P2 here and
+qualify actual native/API/newline first_samples contracts before classification.
+Do not commit the candidate as a production repair. After terminal captures,
+restore the exact committed parser/test expectations and commit the bounded
+diagnosis; split integration after .5.2's explicit source-intent prerequisite.
+Then pivot only from a clean tree. Existing seven sample-macro defects remain
+.5.2/.5.3; this is a demonstrated additional inline-procedure witness.
+
+The safety qualification corrects integration order based on actual new-source
+admission, not the DBINP discussion. Preserve all failed recipes. Staged
+whitespace exceptions are confined to exact archived sources/raw evidence;
+maintained code/docs are whitespace-clean. Final prose must precede capacity,
+claim census and index gating to avoid the predecessor's stale-census mistake.

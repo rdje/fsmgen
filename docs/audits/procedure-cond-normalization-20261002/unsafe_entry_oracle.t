@@ -1,0 +1,11 @@
+use strict;
+use warnings;
+use lib 'perl';
+use Test::More;
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
+my $actor=FSM::Adapter::ISF->new->parse_file('docs/audits/procedure-cond-normalization-20261002/sources/first_samples.isf');
+my $ir=FSM::Scheduler::ISF->new->{ir}->build_module($actor);
+is($ir->{states}[0]{kind},'branch','ordinary proc cond must retain a first branch rather than an activation gate');
+is(scalar(grep {$_->{kind}eq'branch'} @{$ir->{states}}),2,'both source branches must survive with ordinary decision semantics');
+done_testing;

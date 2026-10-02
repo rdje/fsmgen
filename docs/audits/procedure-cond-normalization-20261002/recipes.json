@@ -1,0 +1,46 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.4.1",
+  "baseline_revision": "518d99d288b6b1cf4fd2f8f38518d684d37740a6",
+  "source_generator": "make_sources.py",
+  "complete_sources": "sources/*.isf",
+  "desired_normalization_test": "desired-normalization-qualified.t",
+  "old_parser_qualification": {
+    "argv": ["prove", "-Iperl", "-It/lib", "t/2042-isf-procedure-cond-normalization.t"],
+    "environment": {"PERL5OPT": "-Iperl -I.artifacts/procedure-cond-normalization/baseline-lib -MFSM::Adapter::ISF::Parser", "FSMGEN_PROC_COND_CAPTURE": ".artifacts/procedure-cond-normalization/baseline-qualified"},
+    "result": "genuine RED, Files=1/Tests=27/Failed23",
+    "exact_preload": "baseline-lib/FSM/Adapter/ISF/Parser.pm copied from Parser-baseline.pm, authenticated to the baseline Git blob"
+  },
+  "candidate_qualification": {
+    "argv": ["prove", "-Iperl", "-It/lib", "t/2042-isf-procedure-cond-normalization.t"],
+    "environment": {"FSMGEN_PROC_COND_CAPTURE": ".artifacts/procedure-cond-normalization/current-qualified"},
+    "result": "structural PASS, Files=1/Tests=27; not safe new admission"
+  },
+  "candidate_macro_transport": {
+    "argv": ["prove", "-Iperl", "-It/lib", "t/2041-isf-conditional-macro-intent-qualification.t"],
+    "environment": {"FSMGEN_MACRO_CAPTURE": ".artifacts/procedure-cond-normalization/macro-current"},
+    "exact_test": "macro-current.t",
+    "result": "actual classification PASS, Files=1/Tests=44; first_samples is separately falsified"
+  },
+  "safety_oracle": {"argv": ["prove", "-Iperl", ".artifacts/procedure-cond-normalization/unsafe_entry_oracle.t"], "result": "genuine candidate RED, Files=1/Tests=2/Failed2"},
+  "first_samples_candidate": ["perl", ".artifacts/procedure-cond-normalization/capture_first_samples.pl"],
+  "first_samples_candidate_exact_recipe": "capture-first-samples-original.pl",
+  "first_samples_restored": ["perl", ".artifacts/procedure-cond-normalization/capture_first_samples.pl", "restored"],
+  "native_phase_argv_suffixes": {
+    "check": ["bin/fsmgen", "--strict", "--check", "--json", "<source>"],
+    "semantic": ["bin/fsmgen", "--strict", "--emit-semantic-json", "<source>"],
+    "schedule": ["bin/fsmgen", "--emit-schedule-json", "<source>"],
+    "newline": ["bin/fsmgen-mcp", "--workspace-root", "."]
+  },
+  "native_stdin": "empty",
+  "newline_stdin": "the exact canonical JSON-RPC tools/call request plus one newline in the saved capture recipe",
+  "saved_candidate_carriers": ["python3", ".artifacts/procedure-cond-normalization/check_saved_carriers.py"],
+  "restored_boundary": {"argv": ["prove", "-Iperl", "-It/lib", "t/2042-isf-procedure-cond-normalization.t"], "environment": {"FSMGEN_PROC_COND_BOUNDARY_CAPTURE": ".artifacts/procedure-cond-normalization/restored-boundary"}, "exact_test": "boundary-test-final.t"},
+  "focused": ["prove", "-Iperl", "-It/lib", "t/2042-isf-procedure-cond-normalization.t", "t/1390-isf-procedures.t", "t/1396-isf-cond.t", "t/1406-isf-select.t", "t/1407-isf-minmax.t", "t/1402-isf-bit-test.t", "t/1404-isf-when-field.t", "t/1206-isf-when-clause-boundary.t", "t/1180-isf-unsupported-transaction-clause-boundary.t"],
+  "docs": ["prove", "-Iperl", "-It/lib", "t/1305-isf-book-feature-matrix-audit.t", "t/1414-docs-relative-paths-audit.t", "t/1303-isf-public-live-book-paths-audit.t", "t/1307-isf-loop-body-doc-truth-audit.t", "t/1332-isf-atl-doc-status-audit.t", "t/1376-isf-book-example-lowering-audit.t"],
+  "book": ["mdbook", "build", "docs/book"],
+  "guard": {"wrapper": "scripts/run_with_ram_guard.sh", "host_cutoff_percent": 88, "descendant_rss_cutoff_mib": 4096, "unchanged": true},
+  "failed_drafts": "baseline-candidate and current-candidate retain the first fixture assumptions; drafts retains the exact old table/generator/test and the first restored capture's misleading default mode label. Corrected source/table and explicitly labeled restored products remain separate.",
+  "normalization": "only exact runtime repository prefix; preserve raw complete streams, JSON kinds, fields, absence and array order",
+  "external_dependency": "the operating-system Perl/Python/mdBook/toolchain is strictly necessary read-only infrastructure; project data and preloads remain repository-local on the repository volume",
+  "scope_exclusions": ["integrated production normalization", "HDL invocation", "spent replay", "macro/handshake execution", "record-output routing/public widening", "full CI/push", "browser visual QA"]
+}

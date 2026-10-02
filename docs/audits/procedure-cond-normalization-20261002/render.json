@@ -1,0 +1,30 @@
+{
+  "canonical_includes": [
+    "10-downstream-readiness-source.md",
+    "11-downstream-actor-transactions.md",
+    "12-downstream-rules-artifacts-reports.md",
+    "13-downstream-diagnostics-conformance.md"
+  ],
+  "chapters": {
+    "13b-transactions": {
+      "sha256": "edb1d3ad0e2d772a50110a3645becfeb78400c5d6e9a2a9a365736b000bb9a4d",
+      "visual_browser_qa": false
+    },
+    "13d-control-flow": {
+      "sha256": "b7d37cf74532d4207933ed92cb585fbd87a0299aa63e0a543f51cbbed8141b04",
+      "visual_browser_qa": false
+    },
+    "13i-downstream-integration": {
+      "sha256": "0b98bb61f2466789c1bccab5ad8e5a41225153d5ab2adb992a2c85e6eabd3852",
+      "visual_browser_qa": false
+    },
+    "13k-isf-feature-support-matrix": {
+      "sha256": "4f8f4652bc0401d89e9838a7688bc4945185b543d0b0116186fad2a98f6eef36",
+      "visual_browser_qa": false
+    },
+    "13l-procedures": {
+      "sha256": "1f076ad8d6133a8c94c48e421aa943d356b46882e99b2c10e0c9afb09f1e269f",
+      "visual_browser_qa": false
+    }
+  }
+}

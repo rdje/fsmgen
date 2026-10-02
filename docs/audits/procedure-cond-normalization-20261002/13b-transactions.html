@@ -1,0 +1,2236 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Transactions - FSMGen Book</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Progressive, example-rich documentation for FSMGen and the .fsm language.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-6a32c811.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-7727513f.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSMGen Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="transactions"><a class="header" href="#transactions">Transactions</a></h1>
+<p>A transaction is a behavioral sequence lowered into scheduled <code>.fsm</code> states
+and associated data-path logic. Declarations alone do not create execution.</p>
+<p>It is useful to think of an ISF transaction as a hardware task: it consumes
+cycles, can declare local ports as formal arguments, and activation sites can
+pass actual signals through explicit bindings.</p>
+<p>The hardware caveat is that the transaction is not a stack-allocated
+software/SV-task call.</p>
+<p>It lowers to static scheduled <code>.fsm</code> states, handoff signals, mux selections,
+and generated top wiring.</p>
+<p><strong>Current direct-controller limitation:</strong> direct sibling transactions can emit
+disconnected state loops inside the same encoded FSM. Independent triggers
+then execute only the first declared loop. Plain local calls also have retained
+reachability failures. Source admission and schedule reports do not qualify
+those runtime combinations; repair is owned by <code>.32.1.3.3.1</code>. Generated-child
+activation has separately qualified controllers, as described in
+<a href="13f-composition.html">Composition</a>.</p>
+<p>The selected repair gives each retained transaction its own logical controller
+while keeping actor storage shared under its existing owner. It preserves
+source state identities and binding timing and must reject unproved competing
+writes. Decision <code>0109</code> defines that implementation contract; it does not mark
+the current reachability failures repaired. Production runtime and public-report
+qualification remain required before the warning above can be removed.</p>
+<p>The shared-writer prerequisite is still open. Strict admission currently accepts
+siblings that write different values to the same actor register or output;
+transaction/transaction priority does not create a grant. The planned check must
+compare physical targets: two <code>set-field</code> operations on disjoint masks still
+perform whole-register read-modify-write, a bank store selects scalar entries,
+and two calls to a named drive can contend on its shared payload helper.
+Private formals remain separate from these shared targets. The retained direct
+writer baseline records these cases without claiming concurrent execution or
+silently selecting a winner.</p>
+<p>A detached prerequisite can now compare resolved packed targets. For a record
+with a two-bit <code>mode</code> followed by a one-bit <code>flag</code>, <code>frame.mode</code> occupies bits
+<code>[2:1]</code> and <code>frame.flag</code> occupies bit <code>[0]</code>: each overlaps <code>frame</code>, but the two
+leaves do not overlap each other. Identical names in different modules remain
+separate. This target calculation is tested in isolation; it does not yet change
+writer admission or controller execution.</p>
+<p>The detached declaration collector now matches the emitted <code>+size</code> entries for
+ports, actor storage, local/helper registers and assembly operands. It retains
+aggregate layouts and private formal widths. A sampled alias can have a known
+width in lowering without an explicit size declaration; such widths remain
+listed separately from explicit declarations. Collection
+also covers actual generated storage/completion handoff modules. It does not
+assert complete writer ownership or enable concurrent execution.</p>
+<p>An implicit assignment such as <code>(set copy captured)</code> now has a detached
+whole-root overlap contract: any other write to <code>copy</code> overlaps, regardless of
+the width later inferred by the <code>.fsm</code> parser. This avoids guessing a width at
+scheduling time. Different roots and modules remain separate. Partial paths
+still need a resolved declaration layout; a missing layout cannot establish
+disjointness. Native and emitted-carrier semantic reports qualify this boundary;
+writer admission and controller execution remain unchanged.</p>
+<p>The lowerer now records private transaction/domain membership, initial states
+and typed state references as a checked shadow model. It adds no public ports
+or controller storage and does not change emitted execution. This prepares
+scoped binding and writer checks; it does not yet make sibling transactions
+concurrent or repair local calls.</p>
+<p>Private source-owner records now also identify the transaction that created a
+latency or monitor DT, the rule that created a rule DT, and the definition behind
+a named drive. State ownership continues to use the explicit transaction field.
+These identities survive source ordering and module/domain realization without
+parsing generated names. A transaction-owned monitor remains a DT with its own
+guards; its source identity alone does not prove state-based mutual exclusion.
+Shared drives retain all callers. Public reports and emitted carriers keep their
+existing contract while complete activation evidence is qualified.</p>
+<p>A detached predicate collector now separates the conditions actually emitted
+for explicit assignments. For <code>(when (&amp; req allow) (sample data as captured))</code>,
+the sample carries the compound predicate while the entry’s <code>can_accept</code>
+bookkeeping remains unconditional within that state. The entry condition stays
+separate from later transaction-body writes. DT writers retain their header
+condition and assignment condition separately; <code>(when 0)</code> remains a false
+header. Rule port guards retain their nested group placement, while latency
+comparisons and monitor expressions retain assignment suffixes.</p>
+<p>Actual repeat-counter decrements have no emitted assignment guard. The collector
+refuses invented guarded-decrement forms instead of using a dropped condition as
+exclusion evidence. It validates raw/structured predicate consistency and returns
+detached records. These helpers remain detached from production admission.
+A resource-grant collector now cross-checks authored resource users against
+module grants and explicitly owned rule-DT grant records. It catches missing
+records even when both lowered copies omit them, preserves resource members and
+priority/round-robin policy, and joins through source identity after a DT rename.
+Priority <code>higher</code> entries describe fixed higher users; round-robin entries name
+potential blocking peers. Neither list alone proves exclusion. The lowerer now
+retains original requests and ordered guard transformations, including unchanged
+highest-priority grants and the actual round-robin pointer/update association.
+A detached validator now checks these requests against authored rules and joins
+every ordered transformation to the actual final header. It independently
+rederives resource priority and circular round-robin permissions and verifies
+actual pointer storage and updates. Target-local assignment suppressors,
+invocation joins and complete generated writer evidence remain separate work.
+The focused carrier and malformed-evidence checks run without HDL simulation:</p>
+<pre><code class="language-sh">scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/1973-isf-writer-activation-predicates.t t/1975-isf-writer-resource-grants.t t/1976-isf-resource-activation-evidence.t t/1977-isf-writer-resource-activation.t
+</code></pre>
+<p>Scope repair now has separately tested expression, clause and binding resolution. It
+keeps caller values distinct from callee formal ports, retains generated-child
+public ports, and preserves state names, point labels and aggregate members.
+Normal compilation now gives each direct formal a private physical identity,
+separate from actor pins, actor storage and sibling formals. It applies the
+qualified resolver and checks actual declarations against prepared module scopes
+before emission. Generated-child ports retain their published names. This scope
+repair does not repair sibling-controller or local-call reachability.</p>
+<p>Reservation preparation now retains the actual products of transaction lowering,
+including state assignments, counters, monitor logic and call records. This matters
+because a generated drive payload can have the same proposed name as a private
+formal: drive <code>isf_port_main</code> with parameter <code>payload</code> produces
+<code>isf_port_main_payload</code>, also the initial candidate for formal <code>main.payload</code>.
+The detached planner avoids that collision when supplied the product inventory,
+including case-only variants. Preparation also retains actual rule payloads,
+generated spawn/do/trigger handoffs and shared-drive products. For example,
+rule <code>isf_port</code> triggering <code>main</code> with input <code>payload</code> produces the same
+<code>isf_port_main_payload</code> candidate even when no transaction body uses that name.
+Detached rewrites now retain the formal’s source identity separately, so the
+rule payload helper keeps its authored name while the destination uses the
+private physical formal. Preparation also runs the actual local-call and external
+activation wiring routines on detached products. Cross-domain calls add ready
+ports and request states after transaction lowering; those names now participate
+in the inventory when preparing an actual projected domain. A generated ready
+port can otherwise collide with a proposed private formal just like a rule
+payload. Preparation also retains the actual active signals generated for
+<code>(at NAME)</code> checks and the actor output defaults added to entry states. Named
+points and activation labels keep their source identities after formal rewriting.
+Potential round-robin pointer names, widths and roles also come from the same
+declaration producer used by normal arbitration. This collection does not prove
+that the resource users, members or grants are valid; actual lowering still
+checks those contracts and rejects physical collisions. Preparation now also
+retains independently built generated-child modules, including their start
+history, storage read/write interfaces, named completion outputs and point-active
+signals. Tests compare complete child modules before and after parent formal
+rewriting, including reused definitions and projected clock domains; child public
+ports keep their own module scope. Parent preparation also retains the real
+completion memory used by generated-child joins: each used instance has an
+explicit record for its start/done handoffs, seen register and ready view. For
+example, <code>(spawn worker as first)</code> followed by <code>(await_all done)</code> retains
+<code>first</code> as the owner even if an authored name forces its completion helper to
+receive a suffix. Renaming a colliding formal may free the helper’s base name;
+its instance identity remains the same. Detached join products include the
+rewritten completion views in dynamic-wait guards, and retain raw done metadata.
+Declaration-name inputs remain separate from unallocated formal widths.
+Preparation also retains independently built reusable-library and resolved ATL
+children, their explicit bindings and origin, and the selected ATL child-interface
+records. The same producer performs module-conflict checks and supported
+composition selection in normal compilation. For example, a FIFO use retains
+its bound parameters and child bank operations, while a resolved ATL data route
+retains the actual child endpoint ports. These modules keep their own scope
+through parent formal rewriting. Production-stage checks now qualify the
+resource/priority boundary: arbitration adds the retained round-robin pointer
+declarations; priority guards reuse existing signals and state identities.
+Finalization checks provenance and conflicts without adding declarations.
+This does not grant resource validity to unallocated source products. Parent
+storage-write planning now retains actual potential data/enable ports, their
+storage widths and types, owner-side write DTs and explicit instance/storage
+links. For example, a worker writing actor storage <code>value_reg</code> keeps that target
+identity even if an authored name forces its parent data handoff to use a
+suffix. Normal compilation applies the same plan only after checking writer
+ownership; a collected plan does not admit competing parent or child writers.
+Existing scalar-writer checks preserve native, API and MCP report agreement.
+Storage-read planning also retains the actual shared owner output, type alias,
+combinational read DT and explicit consumer links. For example, separate worker
+instances reading <code>value_reg</code> share a live view identified by actor and storage;
+its generated name remains distinct from an authored rule with the same desired
+helper name. Reader allocation follows completion and write-handoff allocation,
+so those declarations are reserved too. The retained plan is detached from child
+and write products and preserves scalar, packed aggregate and selected bank
+reads through formal projection. Named-completion plans now retain per-instance
+parent inputs, optional local delayed-pulse storage and the output OR view after
+storage handoffs. For example, a child and parent completing <code>notice</code> keep their
+separate pulse sources while sharing the public output identity. The executable
+connection checks for non-completion writers before installing the plan and
+redirecting local completion assignments. A potential source plan does not
+admit those conflicting writers or merge raw formal storage contracts.
+Independent named-completion runtime and public report checks preserve the
+existing pulse timing, reset and repeated-activation behavior through this
+planning boundary.
+Library readback has been checked to preserve declaration names while adapting
+only the importing FSM’s interface direction and ownership role. Preparation now
+also constructs each actual domain source and retains its independent products.
+For example, an activation crossing introduces <code>worker_start_ready</code> in the caller
+and <code>worker_idle_ext</code> in the callee; a monolithic actor inventory alone misses
+those declarations. Domain products keep the logical domain identity, local
+transaction order and injected crossing contracts, without merging raw formal
+widths into an executable parent. Outer emission preserves the complete domain
+and child IR: module/file names, flat child instances, wiring labels and CDC
+interfaces belong to separate scopes. Detached formal projection preserves
+those outer identities and public ports. Combined domain checks now cover
+same-spelled private formals with different widths, actor-storage shadows,
+declaration-order changes, domain-local arbitration, generated reads/writes,
+named completion and control-only activation crossings. The prepared products
+plus allocated formal identities cover the actual domain declarations in these
+cases; competing storage writers remain rejected. A checked preparation collector
+now requires every product category, even an empty one, and checks live
+transaction, generated-child and domain membership. For example, removing the
+caller domain products is rejected rather than silently producing a smaller
+reservation set. Parent and child modules retain separate typed scope identities;
+the allocation union remains conservative. A separate final-module guard now
+compares actual parent/domain/child declarations with those prepared scopes and
+the canonical private allocation. Removing a real dynamic-wait helper from the
+inventory fails this check, as does adding an unreserved implicit assignment
+target. Private formals must also retain their planned width and ownership and
+cannot alias a fixed port or block. Normal compilation runs these checks before
+emitting the parent or any domain artifacts. Preparation also keeps the canonical authored binding report records:
+for example, caller <code>payload</code> and callee <code>addr</code> retain those source names in this
+snapshot even when executable endpoints receive private physical names. The
+snapshot preserves expression text, widths, timing and domain ownership.
+Public reports use these original records for binding provenance. Wait counts,
+loop conditions, temporal operands and bank-access expressions likewise retain
+authored names in a detached report view; executable operands remain physical.
+Inferred-storage entries identify the actual private storage and its width.</p>
+<p>Source preparation can retain a monitor-name collision with an unallocated
+direct formal as pending physical work. The collision stays recorded with both
+identities; these preparation products are not executable modules. Fixed actor
+names, explicit locals, generated public ports and already renamed declarations
+keep their collision checks. Normal compilation allocates direct formal
+identities first and then requires the resulting modules to pass strict checks.</p>
+<p>Today the task-like port model is shipped for <code>(ports ...)</code> bindings on <code>do</code>,
+<code>spawn</code>, and rule <code>trigger</code> activation sites.</p>
+<p>Transaction port widths may be positive literals, actor-local scalar
+parameter defaults, declared actor constants, or qualified imported package
+scalar constants that resolve to positive integers. Generated child and
+direct/non-generated transactions may also use same-transaction scalar
+parameter defaults as port widths when they resolve to positive integers.
+Omitted widths are one-bit.</p>
+<p>A direct transaction’s own parameters are compile-time inputs for the supported
+count, width and timing positions; they are not emitted as parent HDL parameters.
+These positions have different lookup rules from runtime expressions. For
+example, if a direct transaction has both <code>(params (count 2))</code> and an input formal
+named <code>count</code>, <code>(wait count)</code> uses the parameter default, while
+<code>(set observed count)</code> reads the formal. Inside a dynamic wait expression such as
+<code>(wait (+ count 4'd1))</code>, <code>count</code> is also a runtime operand. Generated children
+emit their parameters in their own module. Actor parameters/constants and
+resolved enum/package symbols retain their existing expression lookup rules.</p>
+<p>Input bindings may pass scalar actor-side signals, numeric/exact-width
+literals, or non-empty list expressions; output bindings still name scalar
+writable actor-side targets.</p>
+<p>Binding validation resolves an explicit caller transaction port before a
+same-named actor pin or storage variable, using the caller port’s width. A
+callee port never supplies a missing caller variable. Rule bindings remain in
+actor scope: actor inputs are read-only and actor output readback is rejected.
+A direct formal may share an actor pin or storage name even when the widths
+differ. Writes address its private storage; the actor declaration keeps its own
+width and ownership. Explicit <code>(local ...)</code> ownership and the controller
+limitations described above remain separate work.</p>
+<p>For example, this private four-bit <code>payload</code> neither drives nor reads the
+eight-bit actor input of the same name. The dynamic wait reads the private value:</p>
+<pre><code class="language-lisp">(actor formal_shadow (clock clk) (reset (rst_n async active_low))
+ (interface (input start) (input payload (width 8)) (input data (width 4))
+  (output observed (width 4)) (output done))
+ (transaction main (ports (input payload (width 4))) (on start)
+  (set payload data) (wait payload) (set observed payload) (complete done)))
+</code></pre>
+<p>The schedule reports <code>payload</code> as the authored wait count source. Its
+<code>inferred_storage</code> table lists the allocated private name at width four.
+Read-only and unused direct formals are explicitly internal too: an unbound
+formal does not become a public input through usage inference. Retaining its
+declaration does not invent an initial value or a driver.</p>
+<p>Generated child formals keep their own width, direction and type when they
+share an actor pin name. Explicit input bindings select the child payload;
+automatic same-name wiring does not add a second driver. The actor pin remains
+separate. See <a href="13f-composition.html#spawn-child-as-name--parallel-fork">Composition</a>
+for a complete example.</p>
+<p>A callee formal name in <code>(bind ...)</code> is an identity, including when it shares an
+actor record input name. The caller actual still follows the admitted scalar
+binding contract. See the <a href="13j-type-enum-aggregate.html">record-input binding example</a>
+for the separate actor and child declarations.</p>
+<p>Local rule triggers bind transaction inputs only. Generated/parameterized rule
+triggers also support scalar output bindings through completion-qualified
+handoffs. <code>do</code> and the shipped spawn path retain their documented output timing.
+Generated trigger inputs retain the per-rule captured payload beyond the start
+pulse, so delayed child reads see that snapshot rather than a gated zero.</p>
+<p>Spawned child transactions and generated blocking <code>do</code> activations support
+per-instance parameter overrides through <code>(params ...)</code>.</p>
+<p>Those parameter overrides are compile-time specialization of a static child
+instance, not runtime payload actuals.</p>
+<p>Parameterized rule triggers now use the same specialization model: they
+elaborate generated child activation instances instead of writing mutable
+parameter signals into a shared transaction body.</p>
+<p>Direct <code>(on ...)</code> entry activation is explicitly not a parameter-override
+site because it is the transaction’s own guard, not a caller-owned generated
+instance.</p>
+<p>Parameter overrides and port bindings must stay separate in authored intent.</p>
+<p>Use <code>(bind (input port expr) ...)</code> for runtime data/control values that can
+change from cycle to cycle. Use <code>(params (NAME value) ...)</code> only for static
+specialization values on activation forms that explicitly support that surface:
+spawned children, blocking <code>do</code> generated child activations, and
+parameterized rule triggers. Use transaction ports and <code>(sample ...)</code> or
+activation-site <code>(bind ...)</code> entries for runtime-varying values.</p>
+<pre><code class="language-lisp">(do read_word
+  (params
+    (WIDTH 16))
+  (bind
+    (input addr (+ base_addr offset))))
+
+(spawn read_word as r0
+  (params
+    (WIDTH 16))
+  (bind
+    (input addr req_addr)))
+
+(trigger read_word
+  (params
+    (WIDTH 16))
+  (bind
+    (input addr req_addr)))
+</code></pre>
+<p>The lowering contract for this surface is specialization, not assignment. A
+parameterized blocking <code>do</code> elaborates a generated child activation instance,
+applies the override in the generated composition top, starts that instance,
+and waits for its <code>done</code> handoff. Two activation sites that pass different
+parameter values to the same transaction must lower to distinct specialized
+transaction instances or cloned scheduled regions. They must not share one
+mutable parameter signal written at runtime.</p>
+<p>Generated child parameters consumed by default-resolved static timing lowering
+have a stricter gate until full per-activation specialization exists.
+Overrides that target repeat counts, wait counts, latency bounds, or
+top-level await-local watchdog limits are accepted only when they resolve to
+the same integer value as the child transaction parameter default; mismatches
+fail closed before scheduled artifacts are emitted.</p>
+<p>For rule triggers, a parameterized trigger also uses distinct generated
+hardware. The generated instance name is
+<code>{rule}_{transaction}_trigger_{ordinal}</code> so repeated lexical trigger sites do
+not collide. The rule still emits the existing one-cycle trigger source and
+payload source timing, then a generated trigger handoff DT drives the child
+instance start and input handoff ports. Generated-child rule-trigger output
+bindings copy the child output handoff into the scalar actor target under that
+trigger instance’s done-observer signal. Direct/local rule-trigger output
+bindings remain rejected because a shared local target has no rule-specific
+completion identity.</p>
+<p>A blocking <code>(do child)</code> whose <code>child</code> runs in a <strong>different clock domain</strong> is not
+a direct activation: it must be owned by a declared activation crossing, which
+routes the start/done handshake through CDC synchronizers. See
+<a href="13a-actor-interface.html#activation-crossing">Activation Crossing</a>. A cross-domain
+<code>(do)</code> without a covering crossing fails closed.</p>
+<p><code>(do ...)</code>, <code>(spawn ...)</code>, <code>(await_all ...)</code>, and <code>(await_any ...)</code> are accepted as
+top-level transaction clauses, inside a <code>repeat</code> body, <strong>and directly inside a
+<code>when</code> body, a <code>switch</code> branch, a <code>while</code> body, and an <code>until</code> body</strong> (conditional /
+loop-conditional activation). A <code>(do child)</code> may be local (plain or with
+<code>(bind ...)</code> port bindings) or generated (a <code>(do child (params ...))</code> parameter
+override); a <code>(spawn child as inst)</code> + <code>(await_all ...)</code>/<code>(await_any ...)</code> drain
+forms a conditional fan-out + join (the done-port accumulator is body-local, so the
+drain belongs in the same body as its spawns). See
+<a href="13d-control-flow.html#where-child-activations-are-allowed">Where Child Activations Are Allowed</a>
+for the full surface and the cross-domain staging.</p>
+<h2 id="how-transactions-become-hardware"><a class="header" href="#how-transactions-become-hardware">How Transactions Become Hardware</a></h2>
+<pre><code class="language-text">(transaction name
+  clause_1     → state_0  (entry)
+  clause_2     → state_1  (1 cycle)
+  clause_3     → state_2  (1 cycle or variable)
+  ...)
+</code></pre>
+<p>Each clause is 1 cycle unless noted. The scheduler links states
+in order, adding transitions between them. There is no optimization,
+no merging — what you write is what you get.</p>
+<h2 id="on-port---entryidle-state"><a class="header" href="#on-port---entryidle-state"><code>(on port ...)</code> — Entry/Idle State</a></h2>
+<p><code>(on ...)</code> is the standard activation form. The guard must be a scalar port
+name. <code>(when ...)</code> can also be used
+as activation with identical semantics — useful for expression conditions:
+<code>(when (&gt; counter 5) ...)</code>.</p>
+<p>The only supported inline body clauses inside <code>(on ...)</code> are
+<code>(sample port as name)</code> forms. Other body forms are rejected instead of being
+silently ignored.</p>
+<p><code>(params ...)</code> is not a legal <code>(on ...)</code> body clause. A direct entry guard has
+no per-call instance to specialize; the lowerer reports that direct
+<code>(on ...)</code> activation is an entry guard, not a generated activation-site
+parameter override. Transaction-local <code>params</code> on that transaction remain
+definition defaults. If an author needs a statically specialized child
+instance, use a generated activation form (<code>spawn</code>, parameterized blocking
+<code>do</code>, or parameterized rule <code>trigger</code>) and pass runtime data through ports or
+bindings. The optional <code>(on SIGNAL as NAME)</code> activation label only names the
+entry state for checks; it still is not a generated activation site.</p>
+<p><strong>Timing</strong>: 0 active cycles (waits). Fires in 1 cycle when condition is met.</p>
+<p><strong>Cycle-by-cycle</strong>:</p>
+<ul>
+<li>Cycle 0..N: <code>can_accept=1</code>, wait for <code>port=1</code></li>
+<li>Cycle N: <code>port &amp;&amp; can_accept</code> → samples captured, transition to state_1</li>
+</ul>
+<p><strong>What happens</strong>:</p>
+<ol>
+<li>The implicit <code>can_accept</code> signal is asserted (combinational, <code>1</code> in idle only)</li>
+<li>Watchdog counter loaded with <code>(watchdog_N - 1)</code></li>
+<li>When <code>port</code> is true AND <code>can_accept</code> is true: samples fire (D-input capture)</li>
+<li>Transition to first body state</li>
+</ol>
+<p><strong>Generated .fsm</strong>:</p>
+<pre><code class="language-lisp">(apb_transfer_idle_0
+  (= (can_accept 1))              ;; implicit ready
+  (&lt;= (apb_transfer_wd 65534))    ;; watchdog: load max-1
+  (&lt;start                         ;; condition guard
+    (&lt;= (addr req_addr))          ;; sample: (sample req_addr as addr)
+    (&lt;= (is_write req_write))     ;; sample: (sample req_write as is_write)
+    (-&gt; apb_transfer_drive_1)))
+</code></pre>
+<p>When the entry activation is written as <code>(when EXPR ...)</code>, the generated
+sample enables and entry transition use the rendered <code>.fsm</code> expression guard,
+not an implementation-internal representation:</p>
+<pre><code class="language-lisp">(&lt;= (hold din) &lt;(&amp; go (! busy)))
+(-&gt; main_done_1 &lt;(&amp; go (! busy)))
+</code></pre>
+<p>Literal entry guards also retain their meaning. With
+<code>(when 0 (sample data as captured))</code>, the sample bypass stays disabled and the
+transaction does not advance into its following body. Changing the guard to
+<code>1</code> allows both. The sample uses register-input (<code>&lt;=</code>) semantics: when enabled,
+its visible value is the input mux value, including while reset holds the
+controller at entry. Reset still clears its underlying register. Entry guards
+control these samples and transitions; they do not guard every bookkeeping
+assignment, such as <code>can_accept</code>.</p>
+<p>An entry <code>when</code> accepts inline samples. Other inline actions now fail with
+<code>when activation body supports only '(sample port as name)' clauses</code>.
+Place those actions after the entry guard:</p>
+<pre><code class="language-lisp">(actor when_activation_samples
+  (clock clk) (reset (rst_n sync active_low))
+  (interface (input request) (input allow) (input datain (width 3))
+             (output seen (width 3)) (output done))
+  (transaction main
+    (when (&amp; request allow) (sample datain as captured))
+    (set seen captured)
+    (complete done)))
+</code></pre>
+<p>For a conditional action after accepting <code>request</code>, use a separate branch:</p>
+<pre><code class="language-lisp">(actor when_branch_actions
+  (clock clk) (reset (rst_n sync active_low))
+  (interface (input request) (input allow) (input datain (width 3))
+             (output seen (width 3)) (output done))
+  (transaction main
+    (on request)
+    (when allow (set seen datain))
+    (complete done)))
+</code></pre>
+<p>Declarations and <code>(wait 0)</code> add no preceding state. A <code>when</code> after them still
+selects entry activation. An initialized local or a positive wait creates a
+state, so a following <code>when</code> has the normal branch behavior. The
+<a href="../../../docs/audits/first-when-activation-body-20261002/scope.txt">entry-body evidence</a>
+preserves actual source, public refusal and unchanged sample/branch controls.</p>
+<p><strong>Implicit signals created</strong>:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Signal</th><th>Width</th><th>Purpose</th></tr>
+</thead>
+<tbody>
+<tr><td><code>can_accept</code></td><td>1</td><td>Ready signal, combinational, <code>1</code> only in idle</td></tr>
+<tr><td><code>{tx}_wd</code></td><td>log2(N)</td><td>Watchdog counter, loaded with <code>limit-1</code></td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>If no <code>(await ...)</code> in transaction</strong>: no watchdog counter created.</p>
+<h2 id="drive-name-args--one-state-per-call"><a class="header" href="#drive-name-args--one-state-per-call"><code>(drive name args...)</code> — One State per Call</a></h2>
+<p><strong>Timing</strong>: exactly 1 cycle. The <code>_start</code> assertion fires in the current cycle.</p>
+<p>The port value changes in the NEXT cycle (flopped).</p>
+<p><strong>Cycle-by-cycle</strong> (for <code>(drive scl 1)</code>):</p>
+<ul>
+<li>Cycle N: <code>scl_start=1</code>, <code>scl_val=1</code> asserted. Non-state DT <code>(-scl)</code> is
+enabled. The DT’s <code>(&lt;- (scl&gt; scl_val))</code> schedules output <code>scl</code> to become <code>1</code>.</li>
+<li>Cycle N+1: <code>scl</code> output port = <code>1</code>. Next state executes.</li>
+</ul>
+<p><strong>What happens</strong>:</p>
+<ol>
+<li><code>_start</code> signal for the drive is asserted (=1)</li>
+<li>Parameter signals are wired to actual values</li>
+<li>The non-state DT <code>(-drive_name ...)</code> is enabled, doing <code>(&lt;- (port&gt; param_val))</code></li>
+<li>Due to <code>&lt;-</code> (flopped), the port output changes NEXT cycle</li>
+<li>State transitions to next</li>
+</ol>
+<p><strong>Generated .fsm</strong> — Drive DT (once per definition):</p>
+<pre><code class="language-lisp">(-scl
+  (&lt;- (scl&gt; scl_val) &lt;scl_start))
+</code></pre>
+<p><strong>Generated .fsm</strong> — Call state (once per call):</p>
+<pre><code class="language-lisp">(i2c_transfer_drive_3
+  (= (scl_start 1))               ;; enable the DT
+  (= (scl_val 1))                 ;; wire actual to parameter
+  (-&gt; i2c_transfer_drive_4))      ;; next state
+</code></pre>
+<p><strong>Consecutive calls</strong>:</p>
+<pre><code class="language-lisp">(drive scl 1)    ;; cycle N:   state_3
+(drive sda 0)    ;; cycle N+1: state_4  (separate state, no merging)
+(drive scl 0)    ;; cycle N+2: state_5
+</code></pre>
+<p><strong>Implicit signals per drive definition</strong>:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Signal</th><th>Width</th><th>Purpose</th></tr>
+</thead>
+<tbody>
+<tr><td><code>{name}_start</code></td><td>1</td><td>Enables the drive’s non-state DT</td></tr>
+<tr><td><code>{name}_{param}</code></td><td>1</td><td>One per formal parameter</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="sample-port-as-name--no-state-piggybacks"><a class="header" href="#sample-port-as-name--no-state-piggybacks"><code>(sample port as name)</code> — No State, Piggybacks</a></h2>
+<p><strong>Timing</strong>: 0 extra cycles. Fires on the transition of the enclosing clause.</p>
+<p>The sample form is exact: <code>(sample port as name)</code>. Both <code>port</code> and <code>name</code> must
+be scalar names. Missing <code>as</code>, nested names, and extra operands are rejected
+before scheduled <code>.fsm</code> emission.</p>
+<p><strong>What happens</strong>:</p>
+<ul>
+<li>Creates a variable. The scheduler infers register if used across phases.</li>
+<li>Inside <code>(on ...)</code>: <code>(&lt;= (name port))</code> fires when guard triggers.</li>
+<li>Before <code>(drive ...)</code> or <code>(await ...)</code>: piggybacked onto that state.</li>
+</ul>
+<p><strong>No implicit signals</strong>. The variable <code>name</code> is tracked internally.</p>
+<p>When a sample is followed by a data operation rather than a drive or await, the
+scheduler emits a sample state first so the data operation reads the captured
+value.</p>
+<h2 id="await-port--conditional-stall"><a class="header" href="#await-port--conditional-stall"><code>(await port)</code> — Conditional Stall</a></h2>
+<pre><code class="language-lisp">(await PREADY)                        ;; default watchdog from actor
+(await PREADY (watchdog 100))         ;; per-await override
+(await PREADY (watchdog WD_LIMIT))    ;; actor constant or actor parameter override
+(await PREADY (watchdog TX_LIMIT))    ;; same-transaction parameter override
+</code></pre>
+<p><strong>Timing</strong>: 1 to watchdog_limit cycles. Self-looping.</p>
+<p>The actor-level <code>(watchdog N)</code> and await-local <code>(watchdog N)</code> limit may use a
+positive decimal literal, a declared actor constant, or an actor-local scalar
+parameter default that resolves to a positive integer. Await-local watchdogs
+on top-level transaction awaits may also use same-transaction scalar parameter
+defaults that resolve to positive integers. Actor-level constants and actor
+parameters resolve in the parser-visible watchdog scalar and still appear in
+<code>actor_constants[]</code> or <code>actor_params[]</code>; await-local constants, actor
+parameters, and top-level transaction parameters resolve before watchdog
+counter injection. Same-transaction watchdog parameters shadow actor-level
+static names and remain local lowering inputs.
+Generated child activation overrides for top-level await-local watchdog
+transaction parameters must preserve the child default value; mismatches fail
+closed until per-activation watchdog specialization is shipped. The
+rejected shape is a parent that activates a child whose
+<code>(params (WD_LIMIT N))</code> default feeds an <code>(await ack (watchdog WD_LIMIT))</code>
+clause, when the activation site passes a different value:</p>
+<pre><code class="language-text">(transaction parent
+  (on start)
+  (spawn worker as w0
+    (params
+      (WD_LIMIT 2)))         ;; &lt;-- override mismatches the default
+  (complete done))
+(transaction worker
+  (params
+    (WD_LIMIT 4))            ;; child default drives the watchdog init
+  (await ack (watchdog WD_LIMIT))
+  (complete done))
+</code></pre>
+<p>The validator emits
+<code>Transaction 'parent': spawn instance 'w0' overrides watchdog-limit parameter 'WD_LIMIT' on child 'worker'; activation-site parameter override-specialized watchdog limits remain deferred</code>. The deferred
+lane is per-activation watchdog specialization, which would
+respecialize the child’s watchdog counter per call site.</p>
+<p>One transaction currently has one watchdog counter. If a transaction contains
+multiple awaits with distinct effective watchdog limits, FSMGen fails closed
+until per-await counter reset semantics are selected.</p>
+<p><strong>Cycle-by-cycle</strong>:</p>
+<ul>
+<li>Cycle N: check <code>port</code> and the current watchdog Q value</li>
+<li>If <code>port=1</code>: transition to next state</li>
+<li>If <code>port=0</code>: self-loop, repeat</li>
+<li>If <code>wd=0</code>: timeout → error state</li>
+<li>If <code>wd&gt;0</code>: schedule the watchdog decrement for the next value</li>
+</ul>
+<p><strong>What happens</strong>:</p>
+<ol>
+<li>The await DT computes port, timeout, and decrement enables in the same cycle</li>
+<li>Guard <code>(&lt;port ...)</code> fires when port is true</li>
+<li>Watchdog check <code>(?wd (=0 ...) (&gt;0 ...))</code> reads the current watchdog Q value</li>
+<li>On timeout: request the delayed <code>done</code> pulse, set <code>last_error=1</code>, return
+to idle</li>
+</ol>
+<p><strong>Generated .fsm</strong>:</p>
+<pre><code class="language-lisp">(apb_transfer_await_3
+  (&lt;PREADY
+    (-&gt; apb_transfer_drive_4))
+  (?apb_transfer_wd
+    (=0 (-&gt; apb_transfer_timeout))
+    (&gt;0 (-- apb_transfer_wd))))
+
+(apb_transfer_timeout
+  (&lt;1 (done&gt; 1))
+  (&lt;- (last_error&gt; 1))
+  (-&gt; apb_transfer_idle_0))
+</code></pre>
+<p>The ordering in the source is not procedural. The <code>?apb_transfer_wd</code> selector
+tests the current counter value in that cycle; <code>(-- apb_transfer_wd)</code> selects
+the next D value for the counter only on the <code>&gt;0</code> branch. The guard also avoids
+describing a zero-to-all-ones next-value underflow for the watchdog. Timeout
+normally exits the await state, so that old side effect does not necessarily
+escape as a system-level failure, but the scheduled artifact should still not
+ask the counter to decrement at zero.</p>
+<h2 id="wait-n--unconditional-exact-cycle-delay"><a class="header" href="#wait-n--unconditional-exact-cycle-delay"><code>(wait N)</code> — Unconditional Exact-Cycle Delay</a></h2>
+<p>A positive static wait with no following statement holds in its final state.
+It does not invent a completion pulse or return to entry. Terminal <code>(point NAME)</code>
+and transaction <code>(phase NAME)</code> marker states likewise hold. Their scheduled
+carriers express an otherwise empty state with an explicit self-loop, preserving
+the source state and its named-point identity. An explicit continuation still
+advances normally; <code>(complete done)</code> supplies completion and return to entry.</p>
+<p>For example, this actor enters the delay after <code>start</code>, then remains there until
+reset. Holding or pulsing <code>start</code> again does not restart it:</p>
+<pre><code class="language-lisp">(actor terminal_wait
+  (clock clk) (reset (rst_n async active_low))
+  (interface (input start))
+  (transaction main (on start) (wait 3)))
+</code></pre>
+<pre><code class="language-lisp">(wait 3)
+(wait shared.WAIT_TWO)
+</code></pre>
+<p><strong>Timing</strong>: exactly <code>N</code> active transaction cycles for static counts, or exactly
+the sampled runtime scalar count for the shipped dynamic subset.</p>
+<p><code>(wait N)</code> is different from <code>(await port)</code>: it does not check a signal, does
+not consume an await watchdog, and does not have an early-exit condition. It
+is also different from <code>(repeat count body...)</code>: it has no body and does not
+iterate any authored actions.</p>
+<p><strong>Cycle-by-cycle</strong>:</p>
+<ul>
+<li><code>wait 0</code>: emit no wait state, consume no active transaction cycle, and
+advance directly to the following transaction clause.</li>
+<li><code>wait 1</code>: occupy one generated wait state for one active cycle, then advance
+on that state’s transition to the next transaction clause.</li>
+<li><code>wait N</code>: emit <code>N</code> generated wait states and advance through them
+unconditionally, one per cycle for static counts.</li>
+<li><code>wait PACKAGE.CONSTANT</code>: resolve the qualified imported package scalar
+constant as a static non-negative count, preserving the authored qualified
+token in <code>transaction_waits[]</code>.</li>
+<li><code>wait count_signal</code>: in shipped runtime contexts, bypass on a runtime zero
+count; otherwise snapshot <code>count_signal</code> on the predecessor edge and consume
+exactly that many active wait cycles with a generated counter. Consecutive
+top-level runtime waits are allowed; a zero bypass from one wait immediately
+evaluates the next wait’s zero/positive split, and the final
+sampled-counter edge of an active wait does the same for the following wait.
+Runtime waits can also follow top-level <code>await</code>, <code>stage</code>, <code>repeat</code> exit
+checks, <code>await_all</code>, <code>await_any</code>, and bank <code>load</code>/<code>store</code> states, where the
+predecessor’s own advance condition is combined with the runtime count split
+and bank states keep their guarded scalarized assignments.</li>
+<li><code>wait (&lt;op&gt; ...)</code>: use the same runtime zero-bypass and predecessor-edge
+snapshot contract as scalar runtime waits when every referenced signal has
+known width and the expression-width helper derives a positive result width.
+The bounded count grammar supports unary <code>!</code>, binary <code>&lt;&lt;</code>/<code>&gt;&gt;</code>, and
+arithmetic <code>+ - * / %</code>, bitwise <code>&amp; | ^</code>, comparisons <code>== != &lt; &lt;= &gt; &gt;=</code>,
+and <code>concat</code> with multiple operands. It rejects <code>~</code>, <code>&amp;&amp;</code>, <code>||</code> and
+single-operand <code>concat</code> during wait validation; these are not translated
+into operators with different meanings.
+Division and modulo count expressions reject numeric or exact-width literal
+zero, actor-constant-zero, actor-parameter-zero, and
+same-transaction-parameter-zero divisors before scheduled <code>.fsm</code> emission;
+dynamic scalar divisors are accepted but are not proven nonzero yet.</li>
+</ul>
+<p>The runtime entry predicate tests whether the entire count is nonzero before
+combining it with the predecessor’s advance condition. It does not test only
+the low bit: an input count of <code>2</code> or <code>4</code> enters the wait just as an odd count
+does. For <code>(wait cycles)</code>, changing <code>cycles</code> after the entry edge does not
+shorten or extend the already sampled wait. Expression counts use the same
+nonzero test, and consecutive waits sample their own counts on their own entry
+edges; an earlier zero bypass does not add a wait cycle.</p>
+<p>Independent SystemVerilog and GHDL tests qualify scalar runtime wait counts,
+including even values and changes to the input after sampling. The VHDL
+counter comparisons retain vector operand types and produce logic-valued
+results; they do not narrow the counter to a scalar.</p>
+<p>Pending samples immediately before a positive static wait piggyback onto the
+first wait state, using the same sample materialization rule as drive/await
+piggybacking.</p>
+<p>Pending samples immediately before <code>(wait 0)</code> are preserved and materialize
+on the next state-producing clause.</p>
+<p>Static waits do not introduce a hidden wait counter; the scheduled <code>.fsm</code>
+review artifact shows the exact fixed state chain for positive waits.
+Static count sources are non-negative integer literals, actor constants,
+actor-local scalar parameter defaults, and qualified imported package scalar
+constants. Package constants must be atomic scalar constants: unqualified
+package constants, aggregate constants, package member/item paths, and package
+constants inside wait-count expressions fail closed.</p>
+<p>Top-level runtime waits preserve pending samples with path-specific
+materialization: the positive path samples in the first active wait state,
+then counts greater than one continue in a generated wait-loop state that
+does not repeat the sample.</p>
+<p>The zero path uses a sample-preserving clone of the following state-producing
+clause so no hidden sample-only cycle is inserted and the original following
+state does not sample again after a positive wait.</p>
+<p>This top-level subset is limited to following states that can carry the
+zero-count sample without changing timing, including completion states that
+preserve the delayed completion pulse and return-to-idle transition plus
+independent scalar <code>set</code>/<code>update</code> states that neither read nor overwrite a
+pending sample alias plus independent shift, assemble, and extract states
+plus independent bank loads and stores plus top-level ready/valid stages plus
+top-level await-all/await-any sync states whose collected done ports are
+independent of pending sample aliases plus top-level spawn states whose
+generated start handoff is independent of pending sample aliases plus
+top-level transaction phase pass-through states plus top-level
+bounded-eventual contract arm states; other successor shapes fail closed
+until their sample materialization is specified.</p>
+<p>Consecutive top-level runtime waits carry pending samples across zero-count
+wait links with generated downstream wait-entry clones for zero-then-positive
+paths and final compatible target clones for all-zero paths.</p>
+<p>Repeat, while, and until loop decision/check states can also carry pending
+samples when their repeat-counter assignment and loop condition are
+independent of the pending sample alias.</p>
+<p>Runtime waits can also follow transaction bank <code>load</code> and <code>store</code> states. The
+bank state keeps its guarded scalarized assignments, and its unconditional
+advance edge splits into positive-count counter load and zero-count bypass
+paths.</p>
+<p>Runtime waits inside <code>when</code> bodies and <code>switch</code> branches now use the same
+one-shot positive sample plus zero-count clone scheme for sample-compatible
+successors, including completion, independent scalar setter, independent
+shift, independent assemble, and independent extract successors, while
+preserving false, other-case, and fallthrough exits. Independent bank-load
+and bank-store successors are also sample-compatible. Setters, shifts,
+assemble states, extract states, bank-load states, and bank-store states that
+read or overwrite a pending sample alias remain fail-closed. Pending samples
+before <code>repeat</code>, <code>while</code>, and <code>until</code> runtime waits use the same scheme when
+the body successor can carry samples; loop-back and loop-exit edges remain
+unchanged. Runtime waits whose selected zero-count successor cannot yet carry
+samples fail closed.</p>
+<p><strong>Generated .fsm</strong> for <code>(wait 2)</code> followed by <code>(drive tick)</code>:</p>
+<pre><code class="language-lisp">(main_wait_1
+  (-&gt; main_wait_2))
+
+(main_wait_2
+  (-&gt; main_drive_3))
+</code></pre>
+<p>Successful schedule reports include <code>transaction_waits[]</code> entries with
+<code>transaction</code>, <code>cycles</code>, <code>count_kind</code>, <code>count_source</code>, <code>entry_state</code>,
+<code>exit_state</code>, <code>counter_signal</code>, and <code>counter_width</code>.</p>
+<p>Only positive static waits and accepted runtime waits create report entries.</p>
+<p>Static waits report the resolved integer in <code>cycles</code> and keep the authored
+literal, actor constant name, actor parameter name, or qualified package
+constant token in <code>count_source</code>;
+runtime scalar and runtime expression waits report <code>cycles</code> as null and
+expose the source/counter metadata instead.</p>
+<p>Expression waits use <code>count_kind</code> <code>runtime_expression</code> and keep the
+normalized expression in <code>count_source</code>.</p>
+<p>Malformed waits such as <code>(wait)</code>, <code>(wait 1 2)</code>, <code>(wait -1)</code>, non-scalar or
+non-integer actor parameter counts, non-scalar or cross-transaction
+transaction parameter counts, unknown package constants, unqualified or
+aggregate package constants, package
+member/item paths, package constants inside wait-count expressions,
+unknown-width dynamic counts, unknown-width or malformed expression counts,
+and unsupported runtime contexts fail closed.
+Generated child activation overrides for wait-count transaction parameters
+must preserve the child default value; mismatches fail closed until
+per-activation wait-state specialization is shipped. The rejected shape is
+a parent transaction that activates a child whose <code>(params (DELAY N))</code>
+default feeds a <code>(wait DELAY)</code> clause, when the activation site passes a
+different value:</p>
+<pre><code class="language-text">(transaction parent
+  (on start)
+  (spawn worker as w0
+    (params
+      (DELAY 2)))            ;; &lt;-- override mismatches the default
+  (complete done))
+(transaction worker
+  (params
+    (DELAY 4))               ;; child default
+  (wait DELAY)
+  (complete done))
+</code></pre>
+<p>The validator emits
+<code>Transaction 'parent': spawn instance 'w0' overrides wait-count parameter 'DELAY' on child 'worker'; activation-site parameter override-specialized wait counts remain deferred</code>. Same-value
+overrides (for example <code>(DELAY 4)</code>) keep working; the deferred lane is
+per-activation wait-state specialization that would respecialize the
+child’s wait expansion per call site.</p>
+<p>Inline dynamic waits are supported in <code>when</code> and <code>repeat</code> bodies, <code>switch</code>
+branches, and <code>while</code>/<code>until</code> bodies for the no-pending-sample subset.</p>
+<p>Pending samples are also supported for <code>when</code> bodies and <code>switch</code> branches
+when the selected zero-count successor can carry samples without changing
+timing, including completion, independent scalar setter, and independent
+shift, assemble, extract, bank-load, and bank-store successors.</p>
+<p>The same pending-sample rule is also supported in <code>repeat</code>, <code>while</code>, and
+<code>until</code> bodies for sample-compatible body successors.</p>
+<p>Consecutive top-level runtime waits also preserve pending samples through
+zero-count links when the final target can carry the sample.</p>
+<p>Top-level stage successors preserve the original ready/valid barrier in their
+sample-preserving zero-count clone.</p>
+<p>Top-level await-all/await-any sync successors preserve the collected
+done-port synchronization behavior.</p>
+<p>Top-level spawn successors preserve the generated child start handoff.</p>
+<p>Top-level transaction phase successors preserve the original pass-through
+transition and apply only to transaction <code>(phase ...)</code> marker states, not
+actor-level phase metadata.</p>
+<p>Top-level contract arm successors preserve the original one-cycle monitor arm
+request.</p>
+<p>Loop decision/check successors preserve the original repeat counter decrement
+or while/until branch decision.</p>
+<p>In a <code>switch</code>, only the selected branch’s runtime wait edge is split; other
+cases remain selectable and implicit fallthrough is guarded by the complement
+of all explicit case values. In loops, the relevant entry, back-edge, or exit
+decision edge is split while the opposite loop branch is preserved. Dynamic
+waits whose selected zero-count successor cannot yet carry samples fail closed
+with diagnostics that name the rejected body context.</p>
+<h2 id="complete-port--terminal-state"><a class="header" href="#complete-port--terminal-state"><code>(complete port)</code> — Terminal State</a></h2>
+<p><strong>Timing</strong>: exactly 1 cycle. Returns to idle.</p>
+<p>The form is exact: <code>(complete port)</code>. The target <code>port</code> must be a scalar name.</p>
+<p>Missing targets, nested targets, and extra operands are rejected before
+scheduled <code>.fsm</code> emission.</p>
+<p><strong>What happens</strong>:</p>
+<ol>
+<li><code>(&lt;1 (port 1))</code> — request a one-cycle delayed completion pulse</li>
+<li>Transition to idle state</li>
+<li>In idle: <code>can_accept=1</code> is asserted</li>
+</ol>
+<p>The current ISF lowering uses the <code>.fsm</code> delayed-pulse operator so the
+completion port rests low except for the generated one-cycle pulse. Hardware
+completion targets are one bit wide, including named bit aliases. A generated
+child completing a noncanonical actor output also emits its activation <code>done</code>
+handshake at the same terminal edge; see <a href="13f-composition.html#named-completion-outputs-in-generated-children">named completion outputs</a>.</p>
+<p><strong>Generated .fsm</strong>:</p>
+<pre><code class="language-lisp">(apb_transfer_done_5
+  (&lt;1 (done&gt; 1))
+  (-&gt; apb_transfer_idle_0))
+</code></pre>
+<h2 id="repeat-n-body--counter--loop"><a class="header" href="#repeat-n-body--counter--loop"><code>(repeat N body...)</code> — Counter + Loop</a></h2>
+<p><strong>Timing</strong> for a positive static count: <code>N × (body_cycles + 1) + 2</code>.
+The extra per-iteration cycle is the check/decrement state: the region visits
+one init state, <code>N</code> body sequences, and the check state <code>N + 1</code> times. Static
+zero counts are compile-time no-ops as described below.</p>
+<p>For <code>(repeat 8 (drive scl 1) (drive scl 0))</code>:</p>
+<ul>
+<li>Body: 2 cycles per iteration (two drive calls)</li>
+<li>Total: <code>8 × (2 + 1) + 2 = 26</code> cycles</li>
+</ul>
+<p>The form is exact: <code>(repeat count body...)</code>, with a scalar non-empty count and
+at least one body clause. Malformed missing or nested counts fail before
+counter construction. <code>count</code> may be a non-negative literal,
+same-transaction scalar parameter default, non-negative actor constant,
+non-negative actor scalar parameter default, qualified package scalar
+constant, or known-width runtime scalar. Positive same-transaction parameter
+counts resolve to a counter width and load that resolved value in the
+scheduled <code>.fsm</code>.
+Static zero counts from literal zero, actor constants, actor scalar
+parameters, same-transaction scalar parameters, or package scalar constants
+lower as transparent no-op regions with no counter, repeat init/check state,
+repeat-body state, or <code>transaction_loops[]</code> entry. Plain <code>(do child)</code> and
+plain <code>(spawn child as inst)</code> clauses inside statically zero repeat bodies are
+pruned with the skipped body: no local child handoff, generated child <code>.fsm</code>,
+generated top, activation instance, or loop report entry is emitted. If the
+target transaction is otherwise live or has an explicit actor-input entry
+guard, that transaction remains available; only the zero-count activation is
+removed. Syntactically valid parameterized, bound, or domain-annotated
+static-zero child activations are pruned the same way after activation
+subclause shape validation; their dead payloads are not validated against
+child parameter, port, or domain declarations.
+Generated child activation overrides for repeat-count transaction parameters
+must preserve the child default value; mismatches fail closed until
+per-activation repeat counter specialization is shipped. The rejected
+shape is a parent that activates a child whose <code>(params (ITER N))</code>
+default feeds a <code>(repeat ITER ...)</code> clause, when the activation site
+passes a different value:</p>
+<pre><code class="language-text">(transaction parent
+  (on start)
+  (do worker
+    (params
+      (ITER 2)))             ;; &lt;-- override mismatches the default
+  (complete done))
+(transaction worker
+  (params
+    (ITER 4))                ;; child default drives the loop count
+  (repeat ITER
+    (wait 1))
+  (complete done))
+</code></pre>
+<p>The validator emits
+<code>Transaction 'parent': do instance 'parent_worker_do_0' overrides repeat-count parameter 'ITER' on child 'worker'; activation-site parameter override-specialized repeat counts remain deferred</code>. The
+deferred lane is per-activation repeat counter specialization, which
+would respecialize the child’s loop counter per call site.</p>
+<p><strong>What happens</strong>:</p>
+<ol>
+<li>Init state: <code>(&lt;= (cnt N))</code> — load counter via D-input</li>
+<li>Body states execute each iteration</li>
+<li>Check state: <code>(&lt;- (cnt (- cnt 1)))</code> — decrement via Q-named</li>
+<li><code>(?cnt (=1 → loop) (=0 → exit))</code> — decision tree</li>
+</ol>
+<p>For a known-width runtime scalar count, the init state also tests the runtime
+source value. A nonzero value enters the body. A zero value bypasses the body
+and repeat check and transitions directly to the state after the repeat
+region.</p>
+<p><strong>Implicit signals</strong>:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Signal</th><th>Width</th><th>Purpose</th></tr>
+</thead>
+<tbody>
+<tr><td><code>{tx}_cnt</code></td><td>inferred</td><td>Repeat counter</td></tr>
+</tbody>
+</table>
+</div>
+<p>Repeat counter width is inferred from the count expression. Positive decimal
+literal counts use the minimum width that can represent the loaded count.
+Declared positive actor constants, actor-local scalar parameter defaults, and
+qualified imported package scalar constants use the resolved integer value as
+width evidence while preserving the authored count token in the scheduled
+<code>.fsm</code> load. Static zero counts from literal zero, actor constants, actor
+scalar parameters, same-transaction scalar parameters, or package scalar
+constants lower as transparent no-op regions with no repeat counter or loop
+report entry when the body contains no activation or contains only child
+activation sites whose valid subclauses can be pruned with the skipped body.
+Named dynamic counts use
+their known interface or sample-derived width and bypass the body when the
+runtime value is zero.
+Unknown names, unqualified package constants, aggregate package constants,
+package member/item paths, non-scalar actor parameters, non-scalar
+transaction parameters, cross-transaction parameters, malformed scalar
+tokens, package constants inside repeat-count expressions, expression-valued
+counts, and malformed static-zero child activation subclause syntax fail
+closed before scheduled <code>.fsm</code> emission.
+Repeats nested in switch branches declare the same transaction counter,
+widened to the largest branch requirement.</p>
+<p>The shipped repeat-body clause surface is named drive calls, <code>await</code>,
+<code>sample</code>, <code>update</code>, <code>set</code>, <code>shift_left</code>, <code>shift_right</code>, <code>assemble</code>,
+<code>extract</code>, actor-owned bank <code>store</code> and <code>load</code>, shipped <code>wait</code> clauses, and
+the top-level local blocking <code>(do child)</code> subset.</p>
+<p>Repeat-body local <code>do</code> asserts the local child <code>start</code>, waits for the child’s
+fresh <code>done</code> pulse, and only then reaches the repeat check back-edge.</p>
+<p>Repeats directly inside a top-level <code>when</code> body accept local <code>(do child)</code>
+under that same parent-module contract, plain generated-child <code>(do child)</code>
+when the target child is already emitted as a generated child by another
+activation site, and generated blocking <code>(do child (params ...))</code> with static
+parameter overrides.</p>
+<p>The generated when-contained forms emit one deterministic
+<code>{parent}_{child}_repeat_do_{ordinal}</code> instance for the lexical nested do
+site and apply parameter overrides once when present.</p>
+<p>All shipped when-contained forms keep samples around the nested do in source
+order and reach the branch-owned repeat check only after a fresh local or
+generated child done handoff.</p>
+<p>Repeats directly inside a top-level <code>switch</code> branch accept the same local,
+plain generated-child <code>(do child)</code>, and static-parameter generated <code>(do child (params ...))</code> forms with the same deterministic generated-instance naming,
+static parameter application once when present, source-order sample timing,
+and done-gated repeat check.</p>
+<p>The when-contained and switch-contained generated nested <code>do</code> subsets also
+accept <code>(bind ...)</code> when static <code>(params ...)</code> overrides are present, wiring
+the input/output binding handoffs once in the generated top for that lexical
+nested do site.</p>
+<p>The when-contained and switch-contained generated nested <code>do</code> subsets also
+accept declared same-domain <code>(domain NAME)</code> metadata when static <code>(params ...)</code> overrides are present.</p>
+<p>A plain local <code>(do child)</code> and a same-domain generated <code>(do child (params ...))</code>
+(with <code>(bind ...)</code>/<code>(domain NAME)</code> when static params are present) inside a
+<code>(repeat ...)</code> that sits directly in a single <code>(while ...)</code> or <code>(until ...)</code>
+body now lower, reusing the proven repeat schedule inside the loop body (see the
+control-flow chapter); a generated <code>do</code> instantiates its child in the <code>_top</code>
+composition. The basic <code>spawn</code> + same-body <code>(await_all done)</code> (or single-pending
+<code>(await_any done)</code>) subset also lowers in a loop-contained repeat (the spawn is
+drained before the repeat check / loop re-entry; lowering + composition parity
+with the top-level repeat-body spawn). An undrained loop-contained spawn fails
+closed (<code>loop-contained repeat-body spawn requires same-body '(await_all done)' or single-pending '(await_any done)'</code>), a multi-pending <code>(await_any done)</code> is
+deferred (<code>loop-contained repeat-body multi-pending '(await_any done)' remains deferred</code>), and a cross-domain generated <code>do</code> fails closed (<code>cross-domain repeat-body do remains deferred</code>). A repeat reached through an extra loop
+ancestor (for example <code>(while c1 (when c2 (repeat ...)))</code>) still emits
+<code>loop-contained repeat-body do remains deferred</code>. A plain local <code>(do child)</code>, a
+same-domain generated <code>(do child (params ...))</code>, and the basic spawn + drain
+subset at deeper branch nesting (<code>when⁺ → repeat</code>, <code>switch → when⁺ → repeat</code>)
+also lower; a deeper-nested cross-domain generated <code>do</code> fails closed with
+<code>cross-domain repeat-body do remains deferred</code> and an undrained deeper-nested
+<code>spawn</code> with <code>deeper-nested repeat-body spawn requires same-body '(await_all done)' or single-pending '(await_any done)'</code>. The original generic “supported only for
+top-level…” message remains as a safety-net fallback for shapes not
+yet classified.</p>
+<p>The shipped repeat-body clause surface also includes generated blocking <code>(do child)</code> when the target child is already emitted as a generated child by
+another activation site, and <code>(do child (params ...) [(bind ...)] [(domain NAME)])</code> with static parameter overrides, optional input/output port
+bindings, and optional declared same-domain ownership metadata: it emits one
+generated do instance for the lexical repeat-body do site, applies the
+parameter override once when present, wires binding handoff ports once when
+present, records same-domain ownership for generated-composition and
+clock-domain report summaries when <code>(domain NAME)</code> is present, and waits for
+that instance’s done handoff before the repeat check.</p>
+<p>Samples may appear before or after repeat-body <code>do</code>; pending samples before
+<code>do</code> materialize before the do state, while pending samples after <code>do</code>
+materialize after the do state’s fresh done guard and before the repeat
+check.</p>
+<p>The shipped repeat-body clause surface also includes the top-level spawn plus
+same-body <code>await_all</code> subset with optional static <code>(params ...)</code> overrides,
+optional <code>(bind ...)</code> port handoffs, and optional declared same-domain
+<code>(domain NAME)</code> ownership metadata.</p>
+<p>Single-pending repeat-body <code>await_any</code> is also shipped when exactly one
+repeat-body spawn is pending.</p>
+<p>Multi-pending repeat-body <code>await_any</code> is shipped only as an observation point
+when a later same-body <code>await_all</code> drains the same outstanding spawned
+children before the repeat check; new repeat-body <code>spawn</code> or <code>do</code> clauses
+before that drain remain rejected.</p>
+<p>A repeat directly inside a top-level <code>when</code> body may also contain one or more
+generated <code>(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])</code>
+sites, provided the same nested repeat body reaches <code>(await_all done)</code> before
+the nested repeat check can loop.</p>
+<p>A repeat directly inside a top-level <code>switch</code> branch may contain the same
+multiple generated-spawn plus same-body <code>await_all</code> subset.</p>
+<p>Both branch-contained paths may use single-pending <code>(await_any done)</code>
+directly when exactly one generated child is pending.</p>
+<p>Both branch-contained paths may also use multi-pending <code>(await_any done)</code> as
+an observation point when a later same-body <code>(await_all done)</code> drains the
+same outstanding generated children before the nested repeat check can loop.</p>
+<p>Those branch-contained nested spawns reuse the static generated-child handoff
+model, preserve source-order samples before the spawn or sync state, and keep
+the nested repeat check gated by the spawned child done handoffs.</p>
+<p>In the top-level <code>when</code> body and top-level <code>switch</code> branch forms, the same
+nested repeat body may also run a local plain <code>(do child)</code> while generated
+nested spawns are pending either before or after a prior multi-pending
+<code>(await_any done)</code> observation, provided a later same-body <code>(await_all done)</code>
+drains every outstanding generated spawn before the nested repeat check can
+loop.</p>
+<p>That local do target remains in the parent scheduled module, waits for its
+own fresh local done pulse, and does not clear the generated-spawn done set.
+The same branch-contained local-do path may then start one or more additional
+generated nested spawns before the mandatory same-body <code>(await_all done)</code>
+drain, either with no active multi-pending <code>(await_any done)</code> before the
+later spawn or after the local <code>do</code> follows a prior multi-pending observation.
+The later spawn joins the outstanding generated child set, and the
+<code>await_all</code> drain observes both the pre-do and post-do generated spawns before
+the nested repeat check can loop. In the prior-observation form, that
+local-do do-then-spawn path may also run a second post-spawn multi-pending
+<code>(await_any done)</code> observation before the mandatory same-body
+<code>(await_all done)</code> drain. Both observations leave the outstanding generated-
+spawn done set live, and the final drain observes both pre-do and post-do
+generated spawns before the nested repeat check can loop. That same local-do
+do-then-spawn path may also run a post-spawn multi-pending <code>(await_any done)</code>
+observation before the final same-body <code>(await_all done)</code> drain when no prior
+multi-pending observation is active before the later spawn. The post-spawn
+observation leaves both pre-do and post-do generated-spawn done handoffs live
+for that final drain.</p>
+<p>The top-level <code>when</code> body and top-level <code>switch</code> branch forms also support
+plain generated-child <code>(do child)</code> in that pending-spawn interval when the
+target child is already emitted as a generated child by another activation
+site. That generated do site owns one deterministic
+<code>{parent}_{child}_repeat_do_{ordinal}</code> instance, waits for that instance’s
+fresh done handoff, and does not clear the pending generated-spawn done set.
+That same plain generated-child do may then start one or more additional
+generated nested spawns before the mandatory same-body <code>(await_all done)</code>
+drain, either with no active multi-pending <code>(await_any done)</code> before the later
+spawn or after the generated-child <code>do</code> follows a prior multi-pending
+observation. The generated do instance must complete before the later spawn
+starts, and the <code>await_all</code> drain observes both pre-do and post-do generated
+spawns before the nested repeat check can loop. In the prior-observation
+form, a second multi-pending <code>(await_any done)</code> after the later spawn remains
+fail-closed. The same
+plain generated-child do-then-spawn shape may also run a post-spawn
+multi-pending <code>(await_any done)</code> observation before that final drain when no
+prior multi-pending observation is active before the later spawn; the
+observation leaves both pre-do and post-do generated-spawn done handoffs live
+for the later same-body <code>await_all</code>.</p>
+<p>The same branch-contained forms support static-parameter generated <code>(do child (params ...))</code> in that pending-spawn interval; the generated do site keeps
+its authored static parameter binding and still leaves the pending
+generated-spawn done set live for the later drain.</p>
+<p>That same static-parameter generated do may then start one or more additional
+generated nested spawns before the mandatory same-body <code>(await_all done)</code>
+drain, either with no active multi-pending <code>(await_any done)</code> observation
+before the later spawn or after the generated do follows a prior multi-
+pending observation. The generated do instance’s fresh done handoff gates the
+later spawn state, and the <code>await_all</code> drain observes both pre-do and post-do
+generated spawns before the nested repeat check can loop. That same
+static-parameter generated-do do-then-spawn shape may also run a post-spawn
+multi-pending <code>(await_any done)</code> observation before the final same-body
+<code>(await_all done)</code> drain in either branch: when no prior multi-pending
+<code>(await_any done)</code> observation is active before the later spawn, or after the
+generated do follows a prior multi-pending observation. Both <code>await_any</code>
+observations leave the outstanding generated-spawn done set live for the
+final drain.</p>
+<p>The top-level <code>when</code> body and top-level <code>switch</code> branch forms also support
+static-parameter generated `(do child (params …)</p>
+<p>(bind …))<code>after a prior multi-pending</code>(await_any done)` observation in
+that interval; the generated do site wires generated-top input/output binding
+handoffs once and still leaves the pending generated-spawn done set live for
+the later drain.</p>
+<p>That same bound generated do may then start one or more additional generated
+nested spawns before the mandatory same-body <code>(await_all done)</code> drain, either
+when no multi-pending <code>(await_any done)</code> observation is active before the
+later spawn or after the generated do follows a prior multi-pending
+observation. The generated do instance’s fresh done handoff gates the later
+spawn state, generated-top binding handoffs stay scoped to the do instance,
+and the <code>await_all</code> drain observes both pre-do and post-do generated spawns
+before the nested repeat check can loop. That same bound generated-do
+do-then-spawn shape may also run a post-spawn multi-pending <code>(await_any done)</code>
+observation before the final same-body <code>(await_all done)</code> drain in either
+branch: when no prior multi-pending <code>(await_any done)</code> observation is active
+before the later spawn, or after the generated do follows a prior
+multi-pending observation. Both <code>await_any</code> observations leave the
+outstanding generated-spawn done set live for the final drain, and
+generated-top binding handoffs remain scoped to the do instance across the
+post-spawn observation.</p>
+<p>The same branch-contained forms also support static-parameter same-domain
+generated <code>(do child (params ...) [(bind ...)] (domain NAME))</code> after a prior
+multi-pending <code>(await_any done)</code> observation, preserving declared ownership
+metadata without implying CDC.</p>
+<p>The top-level <code>when</code> body nested repeat local <code>(do child)</code> subset may also
+place <code>(await_any done)</code> after the local do as a post-do multi-pending
+observation while generated nested spawns remain pending before the mandatory
+later same-body <code>(await_all done)</code> drain.</p>
+<p>The top-level <code>switch</code> branch nested repeat local <code>(do child)</code> subset
+supports the same post-do multi-pending observation and later-drain contract
+while generated nested spawns remain pending before the same-body <code>await_all</code>
+drain.</p>
+<p>The top-level <code>when</code> body nested repeat plain generated-child <code>(do child)</code>
+subset supports the same post-do multi-pending observation and later-drain
+contract while generated nested spawns remain pending before the same-body
+<code>await_all</code> drain; it waits for the deterministic generated do instance’s
+fresh done handoff before the observation.</p>
+<p>The top-level <code>when</code> body and top-level <code>switch</code> branch nested repeat
+static-parameter generated <code>(do child (params ...))</code> subsets support the same
+post-do multi-pending observation and later-drain contract while generated
+nested spawns remain pending before the same-body <code>await_all</code> drain; the
+generated do waits for the deterministic generated do instance’s fresh done
+handoff before the observation and preserves the static generated-top
+parameter override.</p>
+<p>The top-level <code>when</code> body and top-level <code>switch</code> branch nested repeat
+static-parameter bound generated <code>(do child (params ...) (bind ...))</code> subsets
+support the same post-do observation and later-drain contract while also
+wiring generated-top input/output binding handoffs for the generated do
+instance.</p>
+<p>The top-level <code>when</code> body and top-level <code>switch</code> branch nested repeat
+same-domain generated <code>(do child (params ...) [(bind ...)] (domain NAME))</code>
+subsets support the same post-do observation and later-drain contract while
+retaining declared ownership metadata in generated-composition,
+domain-partition, and schedule-report clock-domain summaries. Those
+same-domain generated-do subsets may also start one or more later generated
+nested spawns before the mandatory same-body <code>(await_all done)</code> drain, either
+when no multi-pending <code>(await_any done)</code> observation is active before the
+later spawn or after the generated do follows a prior multi-pending
+observation; the generated do instance’s fresh done handoff gates the later
+spawn state and declared ownership metadata remains scoped to the generated
+do instance. That same same-domain generated-do do-then-spawn shape may also
+run a post-spawn multi-pending <code>(await_any done)</code> observation before the
+final same-body <code>(await_all done)</code> drain in either branch: when no prior
+multi-pending <code>(await_any done)</code> observation is active before the later
+spawn, or after the generated do follows a prior multi-pending observation.
+Both <code>await_any</code> observations leave the pre-do and post-do generated-spawn
+done set live for the final drain while retaining declared ownership metadata
+for the generated do instance.</p>
+<p>The top-level <code>switch</code> branch nested repeat plain generated-child <code>(do child)</code> subset supports the same post-do multi-pending observation and
+later-drain contract while generated nested spawns remain pending before the
+same-body <code>await_all</code> drain; it waits for the deterministic generated do
+instance’s fresh done handoff before the observation.</p>
+<p>Cross-domain repeat-body <code>do</code>, generated or spawned nested activation beyond
+the documented top-level branch-contained generated <code>do</code> cases and these
+branch-contained spawned cases, broader outstanding-child semantics, <code>stage</code>,
+<code>contract</code>, deeper branch nesting, nested <code>while</code>, and nested <code>until</code> remain
+outside the shipped repeat-body subset.</p>
+<p>Samples may appear before or after repeat-body spawn as long as the same
+repeat body reaches same-body <code>await_all</code>, single-pending <code>await_any</code>, or
+multi-pending <code>await_any</code> followed by same-body <code>await_all</code> before the repeat
+check can loop.</p>
+<p>Pending samples materialize in an explicit sample state at their source-order
+timing point: before a later spawn state for sample-before-spawn ordering, or
+before the sync state for sample-after-spawn ordering.</p>
+<p>The same sample timing applies to the documented branch-contained nested
+spawn subsets before their same-body sync.</p>
+<p>The shipped repeat-body child-activation subset is <code>(do child)</code> for local
+child transactions, generated-child <code>(do child)</code> when the target is already
+generated by another activation site, generated <code>(do child (params ...) [(bind ...)] [(domain NAME)])</code> for static parameter overrides, optional
+input/output binding handoffs, and optional same-domain ownership metadata,
+plus <code>(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])</code>
+followed by a same-body <code>(await_all done)</code> before the repeat check can loop,
+including the documented top-level when-body generated-spawn and
+switch-branch nested generated-spawn subsets,</p>
+<p>and the documented top-level when-body nested local or plain generated-child
+<code>do</code> while generated nested spawns are pending before a same-body <code>await_all</code>
+drain, plus the documented top-level switch-branch nested local <code>do</code> while
+generated nested spawns are pending before a same-body <code>await_all</code> drain.</p>
+<p>The lexical spawn name denotes one static generated child instance reused
+across repeat iterations, optional parameter overrides specialize that
+instance once in the generated top, optional input/output bindings create
+generated handoff ports once for that instance, and optional domain
+annotations group the static child with a declared same-domain activation
+owner without implying CDC behavior.</p>
+<p><code>(await_any done)</code> may replace <code>await_all</code> directly when that repeat body has
+exactly one pending spawn.</p>
+<p>With multiple pending spawns, <code>await_any</code> may appear only before a later
+same-body <code>await_all</code> drain that keeps the repeat check unreachable until
+every outstanding child has finished.</p>
+<p>Samples around repeat-body spawn and do lower into explicit source-order
+sample states, so the scheduled <code>.fsm</code> shows capture timing before spawn/do,
+before spawn sync, between multi-pending <code>await_any</code> and its drain, or after
+do completion before the repeat check.</p>
+<p>The local <code>(do child)</code> form is also shipped inside a repeat that is directly
+inside a top-level <code>when</code> body or directly inside a top-level <code>switch</code> branch.</p>
+<p>Those nested repeat forms also accept a plain generated-child <code>(do child)</code>
+target that is already generated elsewhere. The top-level <code>when</code> nested
+repeat form also accepts static <code>(params ...)</code> on generated blocking <code>do</code>.</p>
+<p>That nested generated do site owns one
+<code>{parent}_{child}_repeat_do_{ordinal}</code> instance, applies parameter overrides
+once when present, uses no port binding or domain annotation, and waits for
+the generated instance’s fresh done handoff before the nested repeat check.</p>
+<p>Deeper branch/loop placement remains backlog.</p>
+<p>Example: a parent can spawn <code>worker</code> once, then call the already generated
+<code>worker</code> from a repeat nested inside a top-level <code>when</code> without reintroducing
+a local child body:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (spawn worker as w0)
+  (await_all done)
+  (when cond
+    (repeat loops
+      (sample status as before)
+      (do worker)
+      (sample status as after)))
+  (complete done))
+</code></pre>
+<p>That nested <code>(do worker)</code> emits a generated do instance such as
+<code>parent_worker_repeat_do_0</code> alongside the lexical spawn instance <code>w0</code>. The
+parent scheduled <code>.fsm</code> starts <code>parent_worker_repeat_do_0_start&gt;</code>, waits for
+<code>parent_worker_repeat_do_0_done</code>, then runs the <code>after</code> sample before the
+nested repeat check.</p>
+<p>The top-level <code>when</code> nested repeat also supports static parameter overrides on
+that generated do site:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (sample status as before)
+      (do worker
+        (params
+          (WIDTH 16)))
+      (sample status as after)))
+  (complete done))
+</code></pre>
+<p>The generated top instantiates <code>parent_worker_repeat_do_0</code> once with
+<code>WIDTH 16</code>; each repeat iteration starts that same generated instance and
+waits for its fresh done handoff before the <code>after</code> sample and repeat check.</p>
+<p>The top-level <code>when</code> nested repeat also supports generated spawn sites when
+the same nested repeat body drains them through <code>await_all</code>; the
+single-pending <code>await_any</code> form remains limited to exactly one pending
+generated child:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (sample status as before)
+      (spawn worker as w0
+        (params
+          (WIDTH 16))
+        (bind
+          (input data payload)
+          (output resp result))
+        (domain core))
+      (sample status as after)
+      (await_all done)))
+  (complete done))
+</code></pre>
+<p>The lexical instance name <code>w0</code> denotes one static generated child instance in
+the generated top. <code>WIDTH 16</code>, the input/output binding handoffs, and declared
+same-domain ownership metadata are applied once for that instance. The nested
+repeat can loop only after the sync state observes <code>w0_done</code>; the <code>before</code>
+sample appears before the spawn state and the <code>after</code> sample appears before
+the sync state.</p>
+<p>With two or more generated spawns, the same-body sync must be <code>await_all</code> so
+all generated child done handoffs are observed before the nested repeat can
+re-enter:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (spawn worker as w0
+        (params (WIDTH 16))
+        (bind
+          (input data payload0)
+          (output resp result0))
+        (domain core))
+      (sample status as between)
+      (spawn worker as w1
+        (params (WIDTH 32))
+        (bind
+          (input data payload1)
+          (output resp result1))
+        (domain core))
+      (await_all done)))
+  (complete done))
+</code></pre>
+<p>This emits one generated child instance per lexical spawn name, keeps the
+<code>between</code> sample before the second spawn, and gates the nested repeat check on
+both <code>w0_done</code> and <code>w1_done</code>.</p>
+<p>For the exactly-one-pending nested spawn case, the same <code>when</code> body may use
+<code>await_any</code> directly because it observes the same single child done handoff:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (spawn worker as w0
+        (params (WIDTH 16))
+        (bind
+          (input data payload)
+          (output resp result))
+        (domain core))
+      (await_any done)))
+  (complete done))
+</code></pre>
+<p>With multiple pending nested spawns in a top-level <code>when</code> body, <code>await_any</code>
+may be used as an observation point only when a later same-body <code>await_all</code>
+drains the same outstanding children:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (spawn worker as w0
+        (params (WIDTH 16)))
+      (spawn worker as w1
+        (params (WIDTH 32)))
+      (await_any done)
+      (sample status as after_any)
+      (await_all done)))
+  (complete done))
+</code></pre>
+<p>The <code>await_any</code> state advances after either <code>w0_done</code> or <code>w1_done</code>, but the
+outstanding done set remains live until the mandatory <code>await_all</code> drain. The
+nested repeat check remains unreachable until both done handoffs have been
+observed. After a multi-pending <code>await_any</code> observation, a new nested <code>spawn</code>
+or any generated <code>do</code> before that drain remains fail-closed. A local
+<code>(do child)</code> is shipped only for the top-level <code>when</code> body nested-repeat path
+when the later same-body <code>await_all</code> drain is still present.</p>
+<p>A repeat directly inside a top-level <code>when</code> body may run a local child while
+generated nested spawns remain pending, then drain those generated spawns
+through same-body <code>await_all</code>. The local do may appear either before any
+multi-pending <code>await_any</code> observation or after that observation:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (spawn worker as w0
+        (params (WIDTH 16))
+        (bind
+          (input data payload)
+          (output resp result))
+        (domain core))
+      (do local_worker)
+      (sample status as after_do)
+      (await_all done)))
+  (complete done))
+</code></pre>
+<p>Here <code>local_worker</code> remains a local child transaction in the parent scheduled
+module. The nested do state starts <code>local_worker</code>, waits for its fresh local
+done pulse, and then the <code>after_do</code> sample runs before the <code>await_all</code> state.</p>
+<p>The generated-spawn done set remains live across the local do, so the nested
+repeat check is still gated by <code>w0_done</code> at the same-body <code>await_all</code> drain.</p>
+<p>The same top-level <code>when</code> path may observe any one of multiple generated
+children first and still run a local child before the mandatory drain:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (spawn worker as w0
+        (params (WIDTH 16)))
+      (spawn worker as w1
+        (params (WIDTH 32)))
+      (await_any done)
+      (do local_worker)
+      (await_all done)))
+  (complete done))
+</code></pre>
+<p>In this form <code>await_any</code> only observes <code>w0_done</code> or <code>w1_done</code>; it does not
+remove either generated child from the outstanding set. The local do waits for
+<code>local_worker_done</code>, then <code>await_all</code> still waits for both generated done
+handoffs before the nested repeat check can re-enter.</p>
+<p>The top-level <code>switch</code> branch nested-repeat subset accepts the same
+local-do-after-<code>await_any</code> shape when the later same-body <code>await_all</code> drain
+still gates re-entry:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (switch mode
+    (0
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (await_any done)
+        (do local_worker)
+        (await_all done))))
+  (complete done))
+</code></pre>
+<p>Generated <code>do</code> forms with static parameters, optional binding handoffs, and
+same-domain metadata are documented below as separate shipped subsets.</p>
+<p>Static-parameter generated <code>do</code> after prior multi-pending <code>await_any</code> is
+shipped only for the top-level <code>when</code> body and top-level <code>switch</code> branch
+nested subsets documented below. Static-parameter generated <code>do</code> with bind
+handoffs after prior multi-pending <code>await_any</code> is shipped only for the top-
+level <code>when</code> body and top-level <code>switch</code> branch nested subsets documented
+below. Same-domain generated <code>do</code> after prior multi-pending <code>await_any</code> is
+shipped only for the top-level <code>when</code> body and top-level <code>switch</code> branch
+nested subsets documented below; <code>await_any</code> after the do and new nested
+<code>spawn</code> after the do before the drain remain outside this local do subset.</p>
+<p>The same top-level <code>when</code> body pending-spawn interval may run a plain
+generated-child <code>(do child)</code> when that child already has a generated instance
+elsewhere, for example from another lexical spawn. The generated do instance
+is separate from the pending spawn instance, and the later <code>await_all</code> still
+drains the spawned child:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (sample status as before)
+      (spawn worker as w0)
+      (do worker)
+      (sample status as after_do)
+      (await_all done)))
+  (complete done))
+</code></pre>
+<p>Lowering emits <code>w0</code> for the pending spawn and
+<code>parent_worker_repeat_do_0</code> for the blocking generated-child do site. The do
+state starts <code>parent_worker_repeat_do_0_start&gt;</code>, waits for
+<code>parent_worker_repeat_do_0_done</code>, then runs <code>after_do</code> before the <code>await_all</code>
+state. The nested repeat check is still gated on <code>w0_done</code>, so the spawned
+child cannot be restarted by the loop until the same-body drain observes its
+fresh done handoff. Static <code>(params ...)</code> overrides on that pending generated
+do are shipped for both top-level <code>when</code> and top-level <code>switch</code> branch nested
+repeats. Both top-level branch-contained subsets may also place that static-
+parameter generated do after a prior multi-pending <code>await_any</code> observation
+while a later same-body <code>await_all</code> still drains every pending generated spawn.</p>
+<p>Static
+<code>(params ...)</code> plus <code>(bind ...)</code> handoffs on the pending generated do are
+shipped for both top-level branch-contained subsets, and
+same-domain <code>(domain NAME)</code> metadata on those static generated do sites is
+also shipped. The top-level <code>when</code> body and top-level <code>switch</code> branch forms
+may place the plain generated-child <code>(do child)</code> after a prior multi-pending
+<code>await_any</code> observation while generated nested spawns remain pending; the
+generated do still waits only for <code>parent_worker_repeat_do_0_done</code>, and the
+later same-body <code>await_all</code> still drains every pending generated spawn before
+nested repeat re-entry.</p>
+<p>The bound when-contained form keeps the pending generated spawn and the
+blocking generated <code>do</code> as separate generated instances:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (sample status as before)
+      (spawn worker as w0
+        (params
+          (WIDTH 16))
+        (bind
+          (input addr payload)
+          (output data spawn_resp)))
+      (do worker
+        (params
+          (WIDTH 32))
+        (bind
+          (input addr req_addr)
+          (output data resp)))
+      (sample status as after_do)
+      (await_all done)))
+  (complete done))
+</code></pre>
+<p>Lowering emits <code>w0</code> for the spawn and <code>parent_worker_repeat_do_0</code> for the
+blocking <code>do</code>. The generated top applies <code>(WIDTH 32)</code> and the <code>addr</code>/<code>data</code>
+binding handoffs to <code>parent_worker_repeat_do_0</code> only; <code>w0_done</code> remains live
+until the later same-body <code>await_all</code> drain.</p>
+<p>The direct switch-branch analogue is also shipped. A selected branch may run a
+local plain <code>(do child)</code> while one or more generated nested spawns remain
+pending, and the same branch-contained nested body must drain those generated
+spawns through same-body <code>await_all</code>:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (switch mode
+    (0
+      (repeat loops
+        (sample status as before)
+        (spawn worker as w0
+          (params
+            (WIDTH 16))
+          (bind
+            (input data payload)
+            (output resp result))
+          (domain core))
+        (do local_worker)
+        (sample status as after_do)
+        (await_all done)))
+    (1
+      (sample status as other)))
+  (complete done))
+</code></pre>
+<p>Only the selected branch enters the nested repeat region. The generated top
+still owns one static <code>w0</code> instance, applies the optional parameter/binding
+and same-domain metadata once. The local <code>do</code> starts <code>local_worker</code>, waits for
+the local child’s fresh done pulse, and leaves <code>w0_done</code> pending for the later
+<code>await_all</code> drain. The switch-branch repeat check remains unreachable until
+that same-body <code>await_all</code> observes every outstanding generated child done
+handoff.</p>
+<p>The switch-branch generated-bound form uses the same two-instance proof as the
+when form:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (switch mode
+    (0
+      (repeat loops
+        (spawn worker as w0
+          (params
+            (WIDTH 16))
+          (bind
+            (input addr payload)
+            (output data spawn_resp)))
+        (do worker
+          (params
+            (WIDTH 32))
+          (bind
+            (input addr req_addr)
+            (output data resp)))
+        (await_all done)))))
+  (complete done))
+</code></pre>
+<p>Lowering emits <code>w0</code> for the switch-branch spawn and
+<code>parent_worker_repeat_do_0</code> for the blocking <code>do</code>. The generated top applies
+the do’s <code>(WIDTH 32)</code> override and <code>addr</code>/<code>data</code> binding handoffs to the do
+instance only; <code>w0_done</code> stays pending until the later same-body <code>await_all</code>.</p>
+<p>The selected branch may also run a plain generated-child <code>(do child)</code> while
+the generated spawn remains pending:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (switch mode
+    (0
+      (repeat loops
+        (sample status as before)
+        (spawn worker as w0)
+        (do worker)
+        (sample status as after_do)
+        (await_all done)))
+    (1
+      (sample status as other)))
+  (complete done))
+</code></pre>
+<p>Lowering emits <code>w0</code> for the pending spawn and
+<code>parent_worker_repeat_do_0</code> for the blocking generated-child do site. The do
+state waits for <code>parent_worker_repeat_do_0_done</code> only; <code>w0_done</code> remains
+pending until the later <code>await_all</code> drain gates the switch-branch nested
+repeat check.</p>
+<p>The same selected branch may use static parameter overrides on that generated
+<code>do</code> while the earlier generated spawn remains pending:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (switch mode
+    (0
+      (repeat loops
+        (sample status as before)
+        (spawn worker as w0)
+        (do worker
+          (params
+            (WIDTH 16)))
+        (sample status as after_do)
+        (await_all done)))
+    (1
+      (sample status as other)))
+  (complete done))
+</code></pre>
+<p>The generated top instantiates <code>w0</code> for the spawn and
+<code>parent_worker_repeat_do_0</code> for the blocking <code>do</code>, applying <code>(WIDTH 16)</code> only
+to the generated <code>do</code> instance. The <code>do</code> consumes only
+<code>parent_worker_repeat_do_0_done</code>; <code>w0_done</code> remains live until the later
+same-body <code>await_all</code> drain. Binding or domain subclauses on that pending
+generated <code>do</code>, <code>await_any</code> before or after it, and a new nested <code>spawn</code> after
+it before the drain remain fail-closed.</p>
+<p>When a switch branch contains two generated spawns, <code>await_all</code> is the shipped
+drain. The same mandatory-drain rule also allows multi-pending <code>await_any</code>
+before a later <code>await_all</code>:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (switch mode
+    (0
+      (repeat loops
+        (spawn worker as w0
+          (params (WIDTH 16))
+          (bind
+            (input data payload0)
+            (output resp result0))
+          (domain core))
+        (sample status as between)
+        (spawn worker as w1
+          (params (WIDTH 32))
+          (bind
+            (input data payload1)
+            (output resp result1))
+          (domain core))
+        (await_any done)
+        (sample status as after_any)
+        (await_all done)))))
+  (complete done))
+</code></pre>
+<p>The generated top owns <code>w0</code> and <code>w1</code> as separate static child instances, and
+the nested repeat check is guarded by both done handoffs. <code>await_any</code> observes
+either done handoff first; it does not clear the outstanding set.</p>
+<p>The same generated-child shape is supported for a repeat directly inside a
+top-level <code>switch</code> branch:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (spawn worker as w0)
+  (await_all done)
+  (switch mode
+    (0
+      (repeat loops
+        (sample status as before)
+        (do worker)
+        (sample status as after)))
+    (1
+      (sample status as other)))
+  (complete done))
+</code></pre>
+<p>Only the selected branch enters the generated-child nested repeat region. The
+generated do instance still has deterministic
+<code>{parent}_{child}_repeat_do_{ordinal}</code> naming and the branch-owned repeat
+check is reached only after that instance reports fresh done.</p>
+<p>The repeat count is not an elaboration count. It is loaded into a runtime
+counter. A declared positive actor constant or actor-local scalar parameter
+default gives static counter-width evidence, but FSMGen still emits the
+authored count token as the load value. Static zero counts from literal zero,
+actor constants, actor scalar parameters, same-transaction scalar parameters,
+or package scalar constants lower as transparent no-op regions with no
+counter, repeat init/check state, repeat-body state, or <code>transaction_loops[]</code>
+entry. Plain static-zero repeat-body <code>do</code> and <code>spawn</code> child activations are
+pruned with no generated child/top or local handoff artifact when their
+targets are not otherwise live; syntactically valid specialized child
+activations are pruned the same way after activation subclause shape
+validation. A named count may
+be a dynamic scalar signal when its
+width is known. Dynamic counts make latency data-dependent rather than
+statically fixed; verification and reports need either a known width-derived
+bound or an explicit future bound if tighter proof is required. Known-width
+runtime scalar counts skip the body when the runtime value is zero. Unknown
+names, non-scalar actor parameters, non-scalar transaction parameters,
+cross-transaction parameters, expression-valued counts, and generated-top
+repeat-count specialization remain deferred and fail closed rather than
+falling back to an implicit counter.</p>
+<p>For the shipped repeat-body spawn subset, <code>(spawn child as name)</code> may add
+optional <code>(params ...)</code>, <code>(bind ...)</code>, and <code>(domain NAME)</code> subclauses while
+still reusing one static child instance named <code>name</code>.</p>
+<p>It does not elaborate one child per iteration.</p>
+<p>The same repeat body must reach <code>(await_all done)</code> or a single-pending
+<code>(await_any done)</code> before the repeat check can loop, so a later iteration
+cannot start the static instance again until its fresh completion has been
+observed.</p>
+<p>Multi-pending <code>(await_any done)</code> is accepted only as an observation point
+before a later same-body <code>(await_all done)</code> drains the same outstanding spawn
+set.</p>
+<p>Binding handoff ports are generated once for the lexical instance and wired
+in the generated top just like top-level spawn bindings.</p>
+<p>Domain annotations are accepted only as declared same-domain ownership
+metadata; cross-domain activation remains a CDC/backlog item. The
+rejected shape is a repeat-body generated <code>(do TARGET (domain X))</code>
+where <code>X</code> names a domain different from the calling transaction’s
+domain:</p>
+<pre><code class="language-text">(clock-domains
+  (domain core (clock clk) (reset rst_n) :default)
+  (domain aux (clock aux_clk) (reset aux_rst_n)))
+(transaction parent
+  (domain core)              ;; calling transaction is in core
+  (on start)
+  (repeat loops
+    (do worker
+      (params (ITER 4))
+      (domain aux)))         ;; &lt;-- target is in aux, not core
+  (complete done))
+(transaction worker
+  (domain aux)               ;; target lives in aux
+  (params (ITER 4))
+  (repeat ITER
+    (wait 1))
+  (complete done))
+</code></pre>
+<p>The validator emits
+<code>Transaction 'parent': repeat-body generated do target 'worker' is in a different clock domain than the calling transaction; cross-domain repeat-body do remains deferred</code>. The same diagnostic
+fires with <code>when-body nested repeat</code> or <code>switch-branch nested repeat</code>
+prefixes when the cross-domain <code>do</code> is nested inside a top-level
+<code>when</code> body or <code>switch</code> branch. This is the generated-do <code>(domain ...)</code>
+metadata path, not the explicit activation-crossing path. Top-level,
+top-level-body, and top-level <code>when</code>/<code>switch</code> branch-contained repeat
+cross-domain blocking <code>do</code>, plus direct <code>do</code> inside supported nested <code>when</code>
+chains and repeats under those chains, through <code>(crossings (activation ...))</code> is
+documented in the control-flow and actor interface chapters; deeper-nested
+cross-domain activation and mismatched generated-do domain metadata remain
+deferred.
+A <code>(do TARGET (domain X))</code> clause without a cross-domain mismatch
+(target in the same domain as the calling transaction) keeps working
+as same-domain ownership metadata.</p>
+<p>Samples around repeat-body spawn are accepted only when the same-body sync
+that consumes the spawned done ports still appears before the repeat check.</p>
+<p>Sample-before-spawn materializes before the spawn state; sample-after-spawn
+materializes before the sync state. The branch-contained nested subsets can
+have multiple generated spawns on the same-body <code>await_all</code> path, and may
+observe multi-pending same-body <code>await_any</code> only when a later same-body
+<code>await_all</code> drains those same outstanding generated children. The direct
+single-pending same-body <code>await_any</code> path is still exactly one generated
+spawn. In the top-level <code>when</code> body and top-level <code>switch</code> branch
+nested-repeat subsets, local plain <code>(do child)</code> may appear while generated
+nested spawns are pending before or after a prior multi-pending <code>await_any</code>
+observation, as long as a later same-body <code>await_all</code> drain still follows.</p>
+<p>The local do waits on the local child’s fresh done pulse and leaves
+generated-spawn done handoffs pending for the later drain. Those same
+branch-contained subsets may also run plain generated-child <code>(do child)</code> in
+that interval when the target is already generated elsewhere; that generated
+do waits on its generated do instance’s fresh done handoff and still leaves
+spawned done handoffs pending for the later drain.</p>
+<p>The top-level <code>when</code> body and top-level <code>switch</code> branch nested subsets may
+additionally run static-parameter generated <code>(do child (params ...))</code> in that
+interval; that generated do preserves static generated-top parameter binding,
+waits on its generated do instance’s fresh done handoff, and still leaves
+spawned done handoffs pending for the later drain.</p>
+<p>The top-level <code>when</code> body and top-level <code>switch</code> branch nested subsets may
+additionally run static-parameter generated
+<code>(do child (params ...) (bind ...))</code> in that interval; that generated do wires
+generated-top input/output binding handoffs once and still leaves spawned done
+handoffs pending for the later drain. The top-level <code>when</code> body and top-level
+<code>switch</code> branch nested subsets may additionally carry declared same-domain
+metadata on that generated do:
+<code>(do child (params ...) [(bind ...)] (domain NAME))</code>. The domain annotation is
+metadata for the deterministic generated do instance; it does not imply CDC,
+does not clear pending generated-spawn done handoffs, and still requires the
+later same-body <code>await_all</code> drain. New spawn after that generated do before
+the drain and generated-do await-any-after-do forms remain rejected.</p>
+<p>Example:</p>
+<pre><code class="language-lisp">(transaction parent
+  (domain core)
+  (on start)
+  (when cond
+    (repeat loops
+      (spawn worker as w0
+        (domain core))
+      (do worker
+        (params
+          (WIDTH 32))
+        (bind
+          (input addr req_addr)
+          (output data resp))
+        (domain core))
+      (await_all done)))
+  (complete done))
+</code></pre>
+<p>The generated do instance is <code>parent_worker_repeat_do_0</code>. It keeps its own
+<code>start</code>/<code>done</code> handoff and binding handoff ports, is grouped with <code>core</code> in
+clock-domain child-instance metadata, and the later <code>await_all</code> still waits on
+the pending spawned <code>w0_done</code> before the nested repeat can loop.</p>
+<p>The switch-branch form uses the same generated instance and drain rule inside
+the selected branch:</p>
+<pre><code class="language-lisp">(switch mode
+  (0
+    (repeat loops
+      (spawn worker as w0
+        (domain core))
+      (do worker
+        (params
+          (WIDTH 32))
+        (bind
+          (input addr req_addr)
+          (output data resp))
+        (domain core))
+      (await_all done))))
+</code></pre>
+<p>For the shipped repeat-body local <code>do</code> subset, <code>(do child)</code> remains a local
+child activation when the target child remains in the parent scheduled module.</p>
+<p>If the same target child is already emitted as a generated child by another
+activation site, the plain repeat-body <code>(do child)</code> uses a generated do
+instance for that lexical repeat-body site instead of trying to call a local
+child body that is no longer present in the parent module.</p>
+<p>For the shipped repeat-body generated <code>do</code> subset,
+<code>(do child)</code> may be selected by an already generated child target, while
+<code>(do child (params ...) [(bind ...)] [(domain NAME)])</code> is selected by static
+parameter overrides and may also carry input/output port bindings plus
+same-domain ownership metadata. Binding handoff ports and domain metadata are
+generated once for the deterministic
+<code>{parent}_{child}_repeat_do_{ordinal}</code> instance. Repeat-body generated <code>do</code>
+still rejects cross-domain activation.</p>
+<p>Samples around repeat-body <code>do</code> are explicit timing states. A sample before
+<code>do</code> appears before the child start state; a sample after <code>do</code> appears only
+after the do state observes the child’s fresh done handoff and before the
+repeat counter check.</p>
+<p>Example:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (repeat loops
+    (do worker
+      (params
+        (WIDTH 16))
+      (bind
+        (input addr req_addr)
+        (output data resp))))
+  (complete done))
+</code></pre>
+<p>This emits one generated child instance named
+<code>parent_worker_repeat_do_0</code>. The generated top applies <code>WIDTH=16</code> once and
+wires the input handoff <code>parent_worker_repeat_do_0_addr</code> from <code>req_addr</code> and
+the output handoff <code>parent_worker_repeat_do_0_data</code> back to <code>resp</code>. The parent
+<code>.fsm</code> records those handoffs under <code>-parent_worker_repeat_do_0_port_bindings</code>,
+and schedule JSON exposes <code>transaction_port_bindings[]</code> entries with
+<code>site_kind: "do"</code>, <code>actor_endpoint_kind: "signal"</code>, and
+<code>binding_timing: "generated_live_handoff"</code> for the input handoff,
+<code>binding_timing: "done_guarded"</code> for the output copy, and
+<code>instance: "parent_worker_repeat_do_0"</code>. If the actor declares clock domains,
+the same source may add <code>(domain core)</code> beside the <code>params</code>/<code>bind</code> clauses;
+schedule JSON then groups
+<code>parent_worker_repeat_do_0</code> under the <code>core</code> <code>clock_domains[].child_instances</code>
+summary. The repeat loop still waits for <code>parent_worker_repeat_do_0_done</code>
+before decrementing/checking the repeat counter.</p>
+<h2 id="while-cond-body--until-cond-body--transaction-loops"><a class="header" href="#while-cond-body--until-cond-body--transaction-loops"><code>(while cond body...)</code> / <code>(until cond body...)</code> — Transaction Loops</a></h2>
+<p><code>(while cond body...)</code> is a pre-test loop. The scheduler emits an entry
+decision state that samples <code>cond</code> once before the first possible body
+iteration; false exits to the next transaction clause, so zero iterations are
+possible. After each body iteration, a generated back-edge decision samples
+the same condition again before looping or exiting.</p>
+<p><code>(until cond body...)</code> is a body-first loop. The body executes once, then a
+generated decision state samples <code>cond</code>; true exits and false loops back to
+the body. A pre-test “run while not done” loop should be authored as
+<code>(while (! done) body...)</code> rather than by overloading <code>until</code>.</p>
+<p>The condition uses the same scalar or list-expression guard surface as
+<code>(when ...)</code>. It is sampled only in generated decision states. It is not a
+continuous guard over a multi-cycle body; once a loop body starts, its states
+run according to their own scheduled control flow until they reach the loop
+check or an explicit terminal path.</p>
+<p>The shipped <code>while</code>/<code>until</code> body surface is the same inline transaction subset
+used by <code>when</code>/<code>switch</code>: named drives, <code>await</code>, <code>sample</code>, <code>complete</code>, <code>repeat</code>,
+<code>update</code>, <code>set</code>, shift/assemble/extract data operations, actor-owned bank
+<code>store</code>/<code>load</code>, nested <code>when</code>, and waits. <code>while</code>/<code>until</code> bodies continue to
+reject <code>do</code>, <code>spawn</code>, <code>await_all</code>, <code>await_any</code>, <code>stage</code>, <code>contract</code>, and nested
+loops until their re-entry, child-lifetime, and report semantics are specified.</p>
+<p>The shipped repeat-body spawn plus same-body <code>await_all</code> or single-pending
+same-body <code>await_any</code> subset applies to top-level <code>repeat</code> bodies and, in the
+narrower branch-contained forms documented above, to repeats directly inside
+a top-level <code>when</code> body or top-level <code>switch</code> branch.</p>
+<p>Both branch-contained forms permit multiple generated spawns on same-body
+<code>await_all</code> and multi-pending <code>await_any</code> only as an observation point before
+a mandatory same-body <code>await_all</code> drain.</p>
+<p>The top-level <code>when</code> body and top-level <code>switch</code> branch forms also permit the
+documented local plain <code>(do child)</code> while generated nested spawns are pending
+before a later same-body <code>await_all</code> drain; both branch-contained forms also
+permit that local do after a prior multi-pending <code>await_any</code> observation.
+Both branch-contained forms also permit that local do to be followed by
+additional generated nested <code>spawn</code> sites before the same later <code>await_all</code>
+drain, either when no multi-pending <code>await_any</code> observation is active before
+the later spawn or after the local <code>do</code> follows a prior multi-pending
+observation. In the prior-observation form, a second post-spawn
+multi-pending <code>await_any</code> may run before the mandatory same-body <code>await_all</code>;
+both observations leave the outstanding generated-spawn done set live for the
+final drain.</p>
+<p>Both branch-contained forms also permit the documented plain generated-child
+<code>(do child)</code> while generated nested spawns are pending before that same later
+drain.
+Both branch-contained forms also permit that plain generated-child do to be
+followed by additional generated nested <code>spawn</code> sites before the same later
+<code>await_all</code> drain, either when no multi-pending <code>await_any</code> observation is
+active before the later spawn or after the generated-child <code>do</code> follows a
+prior multi-pending observation. That same plain generated-child do-then-spawn
+shape may also run a post-spawn multi-pending <code>await_any</code> observation before
+the final drain in either branch: when no prior multi-pending observation is
+active before the later spawn, or after the generated-child <code>do</code> follows a
+prior multi-pending observation. Both <code>await_any</code> observations leave the
+outstanding generated-spawn done set live for the final drain.</p>
+<p>The top-level <code>when</code> body and top-level <code>switch</code> branch nested repeat
+generated-child <code>(do child)</code> subsets also permit a prior multi-pending
+<code>await_any</code> observation while generated nested spawns remain pending,
+provided the later same-body <code>await_all</code> drain still gates nested repeat
+re-entry on every outstanding generated child.</p>
+<p>Both branch-contained forms also permit plain generated-child <code>(do child)</code>
+before a post-do multi-pending <code>await_any</code> observation while generated nested
+spawns remain pending, provided that the later same-body <code>await_all</code> drain
+still gates nested repeat re-entry on every outstanding generated child.</p>
+<p>Both branch-contained static-parameter generated <code>(do child (params ...))</code>
+subsets also permit that generated do before a post-do multi-pending
+<code>await_any</code> observation while generated nested spawns remain pending,
+provided that the generated do instance completes before the observation and
+the later same-body <code>await_all</code> drain still gates nested repeat re-entry on
+every outstanding generated child.</p>
+<p>Both branch-contained forms also permit documented static-parameter bound
+generated <code>(do child (params ...) (bind ...))</code> while generated nested spawns
+are pending before that same later drain. Both branch-contained forms also
+permit that bound generated do before a post-do multi-pending <code>await_any</code>
+observation while wiring the generated-top input/output binding handoffs for
+the generated do instance.</p>
+<p>Both branch-contained forms also permit documented static-parameter generated
+<code>(do child (params ...))</code> while generated nested spawns are pending before
+that same later drain.</p>
+<p>Both branch-contained static-parameter generated subsets also permit a prior
+multi-pending <code>await_any</code> observation before that generated do, with the same
+later <code>await_all</code> drain requirement.</p>
+<p>The shipped repeat-body local <code>(do child)</code> subset and the shipped
+when-contained and switch-contained repeat local/generated <code>do</code> exceptions
+apply only to their documented repeat placements, not to repeats nested under
+<code>while</code> or <code>until</code>.</p>
+<p>Body clauses must be non-empty list forms.</p>
+<p>Successful schedule reports expose <code>transaction_loops[]</code> entries with the
+authored transaction, loop kind, normalized condition, generated decision
+states, body start, body states, exit state, and body clause count.</p>
+<h2 id="when-condition-body--decision-state"><a class="header" href="#when-condition-body--decision-state"><code>(when condition body...)</code> — Decision State</a></h2>
+<p><strong>Timing</strong>: 1 cycle. If true, body cycles follow. If false, skip to next clause.</p>
+<p>The form is exact: <code>(when condition body...)</code>, with a scalar or list-form
+condition and at least one list-form body clause.</p>
+<p><strong>What happens</strong>:</p>
+<ol>
+<li><code>(?condition (=1 → body_start) (=0 → skip_target))</code></li>
+<li>Body states execute if true</li>
+<li>Skip target is the next top-level clause after the when block</li>
+</ol>
+<p><strong>Generated .fsm</strong>:</p>
+<pre><code class="language-lisp">(test_tx_when_2
+  (?mode
+    (=1 (-&gt; test_tx_drive_3))
+    (=0 (-&gt; test_tx_when_5))))
+</code></pre>
+<h2 id="switch-signal-val-body--multi-way-decision"><a class="header" href="#switch-signal-val-body--multi-way-decision"><code>(switch signal (val body...)...)</code> — Multi-Way Decision</a></h2>
+<p><strong>Timing</strong>: 1 cycle. Then matching branch body cycles.</p>
+<p>The form is exact: <code>(switch signal (value body...)...)</code>, with a scalar signal
+and one or more list-form branches. Each branch must carry a scalar value and
+at least one list-form body clause.</p>
+<p><strong>What happens</strong>:</p>
+<ol>
+<li><code>(?signal (=val1 -&gt; branch1) (=val2 -&gt; branch2) ... (default -&gt; skip))</code></li>
+<li>Each branch body is expanded inline as sequential states</li>
+<li>Default fallthrough to next clause when no explicit branch predicate matches</li>
+</ol>
+<p><strong>Generated .fsm</strong>:</p>
+<pre><code class="language-lisp">(dispatch_switch_4
+  (?opcode
+    (=0 (-&gt; dispatch_drive_1))
+    (=1 (-&gt; dispatch_drive_2))
+    (default (-&gt; skip))))
+</code></pre>
+<p>The generated <code>.fsm</code> default selector means the logical negation of the OR of
+all explicit sibling branch predicates. For the example above, the skip path is
+taken only when neither <code>opcode == 0</code> nor <code>opcode == 1</code> matched. Authored ISF
+can also provide its own fallback branch with <code>(default body...)</code> or <code>(_ body...)</code>;
+when it does, the scheduler does not add an extra implicit fallthrough branch.</p>
+<h2 id="set-var-expr--update-var-expr--shift_left---shift_right---data-ops"><a class="header" href="#set-var-expr--update-var-expr--shift_left---shift_right---data-ops"><code>(set var expr)</code> / <code>(update var expr)</code> / <code>(shift_left ...)</code> / <code>(shift_right ...)</code> — Data Ops</a></h2>
+<p><strong>Timing</strong>: exactly 1 cycle each.</p>
+<p><code>(set var expr)</code> is the canonical explicit scalar setter. It is exact: <code>var</code> is
+a scalar target and <code>expr</code> is one scalar or list expression payload. In a
+transaction it lowers as one ordered flopped assignment state. <code>(update var expr)</code> remains supported as the older transaction-local spelling for the same
+behavior. Division and modulo inside the RHS reject literal-zero,
+actor-constant-zero, actor-parameter-zero, and
+same-transaction-parameter-zero divisor operands before scheduled <code>.fsm</code>
+emission. Dynamic scalar divisors and nonzero same-transaction parameter
+divisors lower unchanged; full runtime nonzero proof is still backlog.</p>
+<p>Shift operations are also exact scalar forms:
+<code>(shift_left reg bit [(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)])</code> and
+<code>(shift_right reg bit [(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)])</code>.</p>
+<p>The optional width value can be a positive literal, same-transaction scalar
+parameter default on a generated child or direct/non-generated transaction,
+actor-local scalar parameter default, declared actor constant, or qualified
+imported package scalar constant that resolves to a positive integer.
+<code>assemble</code> and <code>extract</code> use the same source set in ordered
+<code>(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)</code> lists. Unrelated or
+cross-transaction parameters remain fail-closed for this data-width surface.</p>
+<p><strong>What happens</strong>:</p>
+<ol>
+<li><code>(&lt;- (var expr))</code> — variable modified, takes effect next cycle (flopped)</li>
+<li>Expression passes through to <code>.fsm</code> directly</li>
+</ol>
+<p><strong>Generated .fsm</strong>:</p>
+<pre><code class="language-lisp">(i2c_transfer_shift_6
+  (&lt;- (rdata&gt; (| (&lt;&lt; rdata 1) sda_in)))
+  (-&gt; next_state))
+</code></pre>
+<h2 id="latency-min-n-max-m--verification"><a class="header" href="#latency-min-n-max-m--verification"><code>(latency (min N) (max M))</code> — Verification</a></h2>
+<p><strong>Timing</strong>: no extra states. Adds counter + comparators.</p>
+<p>The latency clause accepts one or both <code>(min N)</code> and <code>(max N)</code> options. <code>N</code>
+must be a positive integer literal, a declared positive actor constant, an
+actor-local scalar parameter default, a same-transaction scalar parameter
+default, or a qualified imported package scalar constant that resolves to a
+positive integer. Each option may appear at most once, and <code>min</code> must be less
+than or equal to <code>max</code> when both are present. Accepted symbolic bounds resolve
+before counter emission; the generated <code>.fsm</code> guard and timeout checks contain
+the resolved integer. Same-transaction parameters shadow actor-level static
+names and remain local lowering inputs. A valid explicit <code>max</code> bound drives
+the generated counter width and max violation check; omitted bounds use
+scheduler defaults. Unknown or unqualified package constants, aggregate
+package constants, package member/item paths, cross-transaction parameters,
+runtime signals, arbitrary expressions, zero-valued constants, and
+zero-valued or non-scalar actor/transaction parameters fail closed.
+Generated child activation overrides for latency-bound transaction parameters
+must preserve the child default value; mismatches fail closed until
+per-activation latency counter specialization is shipped. The rejected
+shape is a rule-trigger activation whose child default <code>(params (LAT N))</code>
+feeds a <code>(latency (min LAT) (max LAT))</code> clause, when the activation site
+passes a different value:</p>
+<pre><code class="language-text">(transaction worker
+  (params
+    (LAT 4))                 ;; child default drives the latency window
+  (latency (min LAT) (max LAT))
+  (complete done))
+(rule launch fire
+  (trigger worker
+    (params
+      (LAT 2))))             ;; &lt;-- override mismatches the default
+</code></pre>
+<p>The validator emits
+<code>Rule 'launch': trigger instance 'launch_worker_trigger_0' overrides latency-bound parameter 'LAT' on child 'worker'; activation-site parameter override-specialized latency bounds remain deferred</code>. The
+deferred lane is per-activation latency counter specialization.</p>
+<p><strong>What happens</strong>:</p>
+<ol>
+<li>Entry state: <code>(&lt;- (cc 0))</code> — reset counter</li>
+<li>Every active state: <code>(= (inc 1))</code> — assert increment</li>
+<li>Non-state DT: <code>(&lt;- (cc (+ cc 1)) &lt;inc)</code> — increment</li>
+<li>Done state: <code>(?cc (&lt;N (lerr=1)))</code> — min violation check</li>
+<li>Max violation: watchdog timeout</li>
+</ol>
+<p><strong>Implicit signals</strong>: <code>{tx}_cc</code>, <code>{tx}_inc</code>, <code>{tx}_lerr</code> + non-state DT <code>(-cc_inc)</code>.</p>
+<h2 id="local-variables"><a class="header" href="#local-variables">Local Variables</a></h2>
+<p>A transaction can keep named local state with <code>(local NAME (width N) [(default V)])</code>
+(a declared internal register, optionally initialized each run) and name intermediate
+values with <code>(let NAME EXPR)</code> (pure substitution). These are documented in full, with
+examples, in their own chapter: <a href="13m-local-variables.html">Local Variables</a>.</p>
+<h2 id="reusable-procedures"><a class="header" href="#reusable-procedures">Reusable Procedures</a></h2>
+<p>A <code>(proc NAME (params ...) body...)</code> defines a reusable, parameterized block of
+clauses, called with <code>(call NAME actuals...)</code>. A call can <strong>inline</strong> the body at the
+call site (default) or, with a trailing <code>as INST</code>, call the procedure as its own
+one-shot hardware block via the <code>(do)</code> handshake — you pick the convention per call
+site. Procedures are documented in full, with many examples, in their own chapter:
+<a href="13l-procedures.html">Reusable Procedures</a>.</p>
+<h2 id="timing-summary"><a class="header" href="#timing-summary">Timing Summary</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Clause</th><th>Cycles</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td><code>(on port ...)</code></td><td>0+ (wait)</td><td>Fires when condition met</td></tr>
+<tr><td><code>(drive name args...)</code></td><td>1</td><td>One per call</td></tr>
+<tr><td><code>(sample port as name)</code></td><td>0</td><td>Piggybacks</td></tr>
+<tr><td><code>(await port)</code></td><td>1 to N</td><td>Self-looping + watchdog</td></tr>
+<tr><td><code>(complete port)</code></td><td>1</td><td>Returns to idle</td></tr>
+<tr><td><code>(repeat N body...)</code></td><td>N×(body+1)+2</td><td>One init + N body visits + N+1 checks; static zero is removed</td></tr>
+<tr><td><code>(while cond body...)</code></td><td>1 + N×(body+1)</td><td>One pre-test + N body visits + N back-edge checks</td></tr>
+<tr><td><code>(until cond body...)</code></td><td>N×(body+1)</td><td>N body visits + N post-tests; body-first</td></tr>
+<tr><td><code>(when cond body...)</code></td><td>1 + body</td><td>Decision + inline body</td></tr>
+<tr><td><code>(switch sig (v b)... (default b))</code></td><td>1 + body</td><td>Decision + inline branch</td></tr>
+<tr><td><code>(set/update var expr)</code></td><td>1</td><td>Flopped assignment</td></tr>
+<tr><td>`(shift_left reg bit [(width N</td><td>TX_PARAM</td><td>PARAM</td></tr>
+<tr><td><code>(latency (min N) (max M))</code></td><td>0</td><td>Verification logic only</td></tr>
+</tbody>
+</table>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="13a-actor-interface.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="13c-drive-blocks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="13a-actor-interface.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="13c-drive-blocks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

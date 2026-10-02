@@ -336,9 +336,13 @@ The macro work repairs existing ISF/IAL1 parser expansion and transaction
 scheduling. First sample-only bit/field conditionals and `cond` can still be
 admitted as entry gates rather than ordinary branches; use explicit activation
 before conditional shorthand. Inline procedure `cond` remains unexpanded and
-refuses even after activation. Its normalization repair is scheduled before
-explicit macro source intent and production read integration. This qualification
-adds no macro language/framework or record-output routes.
+refuses even after activation. A normalization candidate newly admitted a first
+sample-only procedure `cond` as activation instead of branching; the committed
+parser is restored and that source stays refused. Explicit macro source intent
+must qualify before safe procedure normalization and branch integration, then
+production read integration. This safety qualification adds no macro
+language/framework or record-output routes.
+Procedure safety evidence: `docs/audits/procedure-cond-normalization-20261002/scope.txt`.
 Macro qualification: `docs/audits/conditional-macro-intent-20261002/scope.txt`.
 Evidence: `docs/audits/record-output-owner-read-preparation-20261002/scope.txt`.
 

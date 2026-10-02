@@ -1,0 +1,744 @@
+ram-guard: PID 46282; host 59.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["cond",["allow",["set","seen","datain"]],["else",["set","seen","other"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c3d12c60), "main", "transaction", undef, HASH(0x78c42bcf48), HASH(0x78c919b738)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a22d0), HASH(0x78c33332a0), HASH(0x78c919b738), 0, HASH(0x78c42bcf48), HASH(0x78c43e5918)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a22d0), HASH(0x78c919b738), HASH(0x78c42bcf48), HASH(0x78c42bcf90)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a22d0), HASH(0x78c919b738)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c919b9d8), HASH(0x78c919b738)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "basic", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("basic", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c919c780), "main", "transaction", undef, HASH(0x78c42bd4b0), HASH(0x78c919ebd0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a87b0), HASH(0x78c919c7b0), HASH(0x78c919ebd0), 0, HASH(0x78c42bd4b0), HASH(0x78c457a900)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a87b0), HASH(0x78c919ebd0), HASH(0x78c42bd4b0), HASH(0x78c91a04b0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a87b0), HASH(0x78c919ebd0)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "basic", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("basic", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'basic'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["cond",[["==","datain","other"],["set","seen",["+","datain","1"]]],["else",["set","seen",["^","other","1"]]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when",["==","datain","other"],["set","seen",["+","datain","1"]]],["when",["!",["==","datain","other"]],["set","seen",["^","other","1"]]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c3d11a98), "main", "transaction", undef, HASH(0x78c91958b8), HASH(0x78c919f0d8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9cb9180), HASH(0x78c9199f78), HASH(0x78c919f0d8), 0, HASH(0x78c91958b8), HASH(0x78c9cb91b0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9cb9180), HASH(0x78c919f0d8), HASH(0x78c91958b8), HASH(0x78c91a8840)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9cb9180), HASH(0x78c919f0d8)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9cb99f0), HASH(0x78c919f0d8)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "expression", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("expression", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91a3558), "main", "transaction", undef, HASH(0x78c91a8780), HASH(0x78c91a7cd8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c919a990), HASH(0x78c91a0060), HASH(0x78c91a7cd8), 0, HASH(0x78c91a8780), HASH(0x78c91a88a0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c919a990), HASH(0x78c91a7cd8), HASH(0x78c91a8780), HASH(0x78c91a1fd8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c919a990), HASH(0x78c91a7cd8)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "expression", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("expression", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'expression'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["cond",["allow",["set","seen","1"]],["request",["set","seen","2"]],["else",["set","seen","3"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","allow",["set","seen","1"]],["when",["&",["!","allow"],"request"],["set","seen","2"]],["when",["&",["!","allow"],["!","request"]],["set","seen","3"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c919b828), "main", "transaction", undef, HASH(0x78c9cb9510), HASH(0x78c917abd0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9cb9b88), HASH(0x78c919e1e0), HASH(0x78c917abd0), 0, HASH(0x78c9cb9510), HASH(0x78c91979a8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9cb9b88), HASH(0x78c917abd0), HASH(0x78c9cb9510), HASH(0x78c91a1228)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9cb9b88), HASH(0x78c917abd0)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9195bb8), HASH(0x78c917abd0)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "priority", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("priority", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91a8810), "main", "transaction", undef, HASH(0x78c9de9960), HASH(0x78c919cd20)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a7078), HASH(0x78c919de58), HASH(0x78c919cd20), 0, HASH(0x78c9de9960), HASH(0x78c9cb9450)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a7078), HASH(0x78c919cd20), HASH(0x78c9de9960), HASH(0x78c919c330)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a7078), HASH(0x78c919cd20)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "priority", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("priority", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'priority'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["cond",["allow",["set","seen","datain"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","allow",["set","seen","datain"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c919cbd0), "main", "transaction", undef, HASH(0x78c919dbb8), HASH(0x78c919c4e0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c919c6f0), HASH(0x78c9c5ded0), HASH(0x78c919c4e0), 0, HASH(0x78c919dbb8), HASH(0x78c91a3a38)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c919c6f0), HASH(0x78c919c4e0), HASH(0x78c919dbb8), HASH(0x78c91a07b0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c919c6f0), HASH(0x78c919c4e0)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c91a4360), HASH(0x78c919c4e0)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "no_else", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("no_else", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91a8870), "main", "transaction", undef, HASH(0x78c91a3858), HASH(0x78c9196f60)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c918f768), HASH(0x78c91a70a8), HASH(0x78c9196f60), 0, HASH(0x78c91a3858), HASH(0x78c91a5918)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c918f768), HASH(0x78c9196f60), HASH(0x78c91a3858), HASH(0x78c91a3f18)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c918f768), HASH(0x78c9196f60)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "no_else", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("no_else", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'no_else'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["cond",["else",["set","seen","datain"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when",1,["set","seen","datain"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91a2570), "main", "transaction", undef, HASH(0x78c3c5b990), HASH(0x78c91993d8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9196810), HASH(0x78c91969f0), HASH(0x78c91993d8), 0, HASH(0x78c3c5b990), HASH(0x78c919c300)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9196810), HASH(0x78c91993d8), HASH(0x78c3c5b990), HASH(0x78c91a2ba0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9196810), HASH(0x78c91993d8)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9199168), HASH(0x78c91993d8)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "else_only", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("else_only", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c919d408), "main", "transaction", undef, HASH(0x78c919df48), HASH(0x78c91a7a68)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9196780), HASH(0x78c91a3a08), HASH(0x78c91a7a68), 0, HASH(0x78c919df48), HASH(0x78c9179330)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9196780), HASH(0x78c91a7a68), HASH(0x78c919df48), HASH(0x78c91a3138)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9196780), HASH(0x78c91a7a68)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "else_only", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("else_only", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'else_only'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["cond",["allow",["cond",["request",["set","seen","datain"]],["else",["set","seen","other"]]]],["else",["set","seen","0"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","allow",["when","request",["set","seen","datain"]],["when",["!","request"],["set","seen","other"]]],["when",["!","allow"],["set","seen","0"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c917b108), "main", "transaction", undef, HASH(0x78c91933d8), HASH(0x78c91a0030)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c919bb28), HASH(0x78c9195df8), HASH(0x78c91a0030), 0, HASH(0x78c91933d8), HASH(0x78c3c99648)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c919bb28), HASH(0x78c91a0030), HASH(0x78c91933d8), HASH(0x78c91a4150)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c919bb28), HASH(0x78c91a0030)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9c8a798), HASH(0x78c91a0030)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "nested_cond", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("nested_cond", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c919ec90), "main", "transaction", undef, HASH(0x78c91984b0), HASH(0x78c919cd50)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917b048), HASH(0x78c91969c0), HASH(0x78c919cd50), 0, HASH(0x78c91984b0), HASH(0x78c919de28)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917b048), HASH(0x78c919cd50), HASH(0x78c91984b0), HASH(0x78c919c930)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917b048), HASH(0x78c919cd50)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "nested_cond", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("nested_cond", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'nested_cond'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["when","request",["cond",["allow",["set","seen","datain"]],["else",["set","seen","other"]]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","request",["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in when body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c917c390), "main", "when", HASH(0x78c471e060), HASH(0x78c91984e0), HASH(0x78c919ccf0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6200
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c919c390), "main", "transaction", undef, HASH(0x78c91984e0), HASH(0x78c919ccf0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c906f780), HASH(0x78c919d798), HASH(0x78c919ccf0), 0, HASH(0x78c91984e0), HASH(0x78c91a7438)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c906f780), HASH(0x78c919ccf0), HASH(0x78c91984e0), HASH(0x78c91a2c30)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c906f780), HASH(0x78c919ccf0)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c917b2e8), HASH(0x78c919ccf0)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "outer_when", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_when", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in when body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9184d50), "main", "when", HASH(0x78c9187f78), HASH(0x78c917a318), HASH(0x78c91a56d8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6200
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9186210), "main", "transaction", undef, HASH(0x78c917a318), HASH(0x78c91a56d8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9185738), HASH(0x78c91861e0), HASH(0x78c91a56d8), 0, HASH(0x78c917a318), HASH(0x78c919ca50)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9185738), HASH(0x78c91a56d8), HASH(0x78c917a318), HASH(0x78c91a72b8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9185738), HASH(0x78c91a56d8)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "outer_when", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_when", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'outer_when'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["while","request",["cond",["allow",["set","seen","datain"]],["else",["set","seen","other"]]]],["complete","done"]]'
+    #     expected: '[["on","request"],["while","request",["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in while body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9186d50), "main", "while", HASH(0x78c471e1f8), HASH(0x78c9060348), HASH(0x78c91861e0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6222
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9c253d8), "main", "transaction", undef, HASH(0x78c9060348), HASH(0x78c91861e0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9181fa8), HASH(0x78c919e660), HASH(0x78c91861e0), 0, HASH(0x78c9060348), HASH(0x78c91a3558)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9181fa8), HASH(0x78c91861e0), HASH(0x78c9060348), HASH(0x78c91855b8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9181fa8), HASH(0x78c91861e0)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9199198), HASH(0x78c91861e0)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "outer_while", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_while", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in while body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91984b0), "main", "while", HASH(0x78c9179570), HASH(0x78c91856a8), HASH(0x78c919cc30)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6222
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91a2810), "main", "transaction", undef, HASH(0x78c91856a8), HASH(0x78c919cc30)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91827e0), HASH(0x78c919c630), HASH(0x78c919cc30), 0, HASH(0x78c91856a8), HASH(0x78c9185708)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91827e0), HASH(0x78c919cc30), HASH(0x78c91856a8), HASH(0x78c91a8060)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91827e0), HASH(0x78c919cc30)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "outer_while", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_while", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'outer_while'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["until","request",["cond",["allow",["set","seen","datain"]],["else",["set","seen","other"]]]],["complete","done"]]'
+    #     expected: '[["on","request"],["until","request",["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in until body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9185dc8), "main", "until", HASH(0x78c9182420), HASH(0x78c9182db0), HASH(0x78c919c630)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6222
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9187558), "main", "transaction", undef, HASH(0x78c9182db0), HASH(0x78c919c630)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9182ea0), HASH(0x78c9185df8), HASH(0x78c919c630), 0, HASH(0x78c9182db0), HASH(0x78c91a66f0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9182ea0), HASH(0x78c919c630), HASH(0x78c9182db0), HASH(0x78c918e1b0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9182ea0), HASH(0x78c919c630)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9187588), HASH(0x78c919c630)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "outer_until", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_until", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in until body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91a5558), "main", "until", HASH(0x78c91a7438), HASH(0x78c91841b0), HASH(0x78c91879d8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6222
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9199108), "main", "transaction", undef, HASH(0x78c91841b0), HASH(0x78c91879d8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9187048), HASH(0x78c9185768), HASH(0x78c91879d8), 0, HASH(0x78c91841b0), HASH(0x78c91a88a0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9187048), HASH(0x78c91879d8), HASH(0x78c91841b0), HASH(0x78c91866c0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9187048), HASH(0x78c91879d8)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "outer_until", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_until", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'outer_until'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["repeat","2",["cond",["allow",["set","seen","datain"]],["else",["set","seen","other"]]]],["complete","done"]]'
+    #     expected: '[["on","request"],["repeat","2",["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in repeat body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9195bb8), "main", "repeat", HASH(0x78c91863c0), HASH(0x78c9184ea0), HASH(0x78c9cba300)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6218
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91a6d50), "main", "transaction", undef, HASH(0x78c9184ea0), HASH(0x78c9cba300)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9183be8), HASH(0x78c9183a68), HASH(0x78c9cba300), 0, HASH(0x78c9184ea0), HASH(0x78c9182fc0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9183be8), HASH(0x78c9cba300), HASH(0x78c9184ea0), HASH(0x78c9cb9150)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9183be8), HASH(0x78c9cba300)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9182b70), HASH(0x78c9cba300)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "outer_repeat", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_repeat", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in repeat body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91a8270), "main", "repeat", HASH(0x78c91821b0), HASH(0x78c91a4060), HASH(0x78c9195948)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6218
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9182210), "main", "transaction", undef, HASH(0x78c91a4060), HASH(0x78c9195948)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c918dd98), HASH(0x78c9184270), HASH(0x78c9195948), 0, HASH(0x78c91a4060), HASH(0x78c918e840)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c918dd98), HASH(0x78c9195948), HASH(0x78c91a4060), HASH(0x78c917b6d8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c918dd98), HASH(0x78c9195948)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "outer_repeat", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_repeat", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'outer_repeat'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["switch","allow",["0",["cond",["allow",["set","seen","datain"]],["else",["set","seen","other"]]]],["1",["set","seen","0"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["switch","allow",["0",["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]]],["1",["set","seen","0"]]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in switch branch
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91a1168), "main", "switch", HASH(0x78c471ec00), HASH(0x78c9193438), HASH(0x78c9185858)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6234
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91a6660), "main", "transaction", undef, HASH(0x78c9193438), HASH(0x78c9185858)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9cb9a20), HASH(0x78c9cb9960), HASH(0x78c9185858), 0, HASH(0x78c9193438), HASH(0x78c91a6f90)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9cb9a20), HASH(0x78c9185858), HASH(0x78c9193438), HASH(0x78c9060348)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9cb9a20), HASH(0x78c9185858)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9187198), HASH(0x78c9185858)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "outer_switch", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_switch", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in switch branch
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9184990), "main", "switch", HASH(0x78c9cb9138), HASH(0x78c918dc48), HASH(0x78c91a85d0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6234
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c919c840), "main", "transaction", undef, HASH(0x78c918dc48), HASH(0x78c91a85d0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c918e900), HASH(0x78c9198c00), HASH(0x78c91a85d0), 0, HASH(0x78c918dc48), HASH(0x78c91a0270)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c918e900), HASH(0x78c91a85d0), HASH(0x78c918dc48), HASH(0x78c918eb10)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c918e900), HASH(0x78c91a85d0)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "outer_switch", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("outer_switch", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'outer_switch'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["cond",["allow",["call","assign","datain","seen"]],["else",["call","assign","other","seen"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91824e0), "main", "transaction", undef, HASH(0x78c91822a0), HASH(0x78c919ed80)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9183048), HASH(0x78c9184a20), HASH(0x78c919ed80), 0, HASH(0x78c91822a0), HASH(0x78c9cba1e0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9183048), HASH(0x78c919ed80), HASH(0x78c91822a0), HASH(0x78c91a5b58)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9183048), HASH(0x78c919ed80)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9185df8), HASH(0x78c919ed80)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "nested_call", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("nested_call", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c918dfd8), "main", "transaction", undef, HASH(0x78c9183af8), HASH(0x78c9196b70)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91854f8), HASH(0x78c918e960), HASH(0x78c9196b70), 0, HASH(0x78c9183af8), HASH(0x78c9182180)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91854f8), HASH(0x78c9196b70), HASH(0x78c9183af8), HASH(0x78c919da68)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91854f8), HASH(0x78c9196b70)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "nested_call", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("nested_call", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'nested_call'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["cond",["allow",["set","seen","datain"]],["else",["set","seen","other"]]],["cond",["request",["set","seen","other"]],["else",["set","seen","datain"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]],["when","request",["set","seen","other"]],["when",["!","request"],["set","seen","datain"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c917c2d0), "main", "transaction", undef, HASH(0x78c9186030), HASH(0x78c918e960)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9182330), HASH(0x78c9197b58), HASH(0x78c918e960), 0, HASH(0x78c9186030), HASH(0x78c42bd4b0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9182330), HASH(0x78c918e960), HASH(0x78c9186030), HASH(0x78c91856a8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9182330), HASH(0x78c918e960)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c917c180), HASH(0x78c918e960)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "multiple_calls", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("multiple_calls", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91886f0), "main", "transaction", undef, HASH(0x78c9cb9168), HASH(0x78c91a20f0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91853a8), HASH(0x78c9179540), HASH(0x78c91a20f0), 0, HASH(0x78c9cb9168), HASH(0x78c9183e58)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91853a8), HASH(0x78c91a20f0), HASH(0x78c9cb9168), HASH(0x78c9197348)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91853a8), HASH(0x78c91a20f0)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "multiple_calls", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("multiple_calls", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'multiple_calls'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["cond",["allow",["set","seen","datain"]],["else",["set","seen","other"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c918d318), "main", "transaction", undef, HASH(0x78c91867b0), HASH(0x78c919c390)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a8a80), HASH(0x78c91a5588), HASH(0x78c919c390), 0, HASH(0x78c91867b0), HASH(0x78c42bf0a8), HASH(0x78c917b708)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 212
+    # 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a8a80), HASH(0x78c9182270)) called at perl/FSM/Scheduler/ISF/FormalLowering.pm line 18
+    # 	FSM::Scheduler::ISF::FormalLowering::prepare("FSM::Scheduler::ISF::FormalLowering", FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a8a80), HASH(0x78c9182270)) called at perl/FSM/Scheduler/ISF.pm line 63
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c919d888), HASH(0x78c9182270)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "direct_formal", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("direct_formal", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91992b8), "main", "transaction", undef, HASH(0x78c9186bd0), HASH(0x78c918cb70)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9186570), HASH(0x78c919ad50), HASH(0x78c918cb70), 0, HASH(0x78c9186bd0), HASH(0x78c91a6720), HASH(0x78c919ce70)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 212
+    # 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9186570), HASH(0x78c91a8270)) called at perl/FSM/Scheduler/ISF/FormalLowering.pm line 18
+    # 	FSM::Scheduler::ISF::FormalLowering::prepare("FSM::Scheduler::ISF::FormalLowering", FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9186570), HASH(0x78c91a8270)) called at t/2042-isf-procedure-cond-normalization.t line 48
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "direct_formal", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("direct_formal", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'direct_formal'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["params",["MODE","1"]],["on","request"],["cond",["allow",["set","result","value"]],["else",["set","result","other"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","allow",["set","result","value"]],["when",["!","allow"],["set","result","other"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9184f30), "main", "transaction", undef, HASH(0x78c9c26690), HASH(0x78c9182a50)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917e0c0), HASH(0x78c9183078), HASH(0x78c9182a50), 0, undef, HASH(0x78c42bf870), undef) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 212
+    # 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917e0c0), HASH(0x78c91a7588)) called at perl/FSM/Scheduler/ISF/FormalLowering.pm line 18
+    # 	FSM::Scheduler::ISF::FormalLowering::prepare("FSM::Scheduler::ISF::FormalLowering", FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917e0c0), HASH(0x78c91a7588)) called at perl/FSM/Scheduler/ISF.pm line 63
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9186a50), HASH(0x78c91a7588)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "generated", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("generated", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9070c60), "main", "transaction", undef, HASH(0x78c9179228), HASH(0x78c917a930)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917a330), HASH(0x78c9c90b40), HASH(0x78c917a930), 0, undef, HASH(0x78c9068258), undef) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 212
+    # 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917a330), HASH(0x78c919ef30)) called at perl/FSM/Scheduler/ISF/FormalLowering.pm line 18
+    # 	FSM::Scheduler::ISF::FormalLowering::prepare("FSM::Scheduler::ISF::FormalLowering", FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917a330), HASH(0x78c919ef30)) called at t/2042-isf-procedure-cond-normalization.t line 48
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "generated", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("generated", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'generated'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["on","request"],["cond",["allow",["set","seen","datain"]],["else",["set","seen","other"]]],["complete","done"]]'
+    #     expected: '[["on","request"],["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9185978), "main", "transaction", undef, HASH(0x78c9185e58), HASH(0x78c918ef60)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a3b28), HASH(0x78c91834c8), HASH(0x78c918ef60), 0, HASH(0x78c9185e58), HASH(0x78c9181f18)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a3b28), HASH(0x78c918ef60), HASH(0x78c9185e58), HASH(0x78c91829f0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c91a3b28), HASH(0x78c918ef60)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9182e40), HASH(0x78c918ef60)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "domain", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("domain", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c918efc0), "main", "transaction", undef, HASH(0x78c9182090), HASH(0x78c91a87e0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917aeb8), HASH(0x78c918f0d8), HASH(0x78c91a87e0), 0, HASH(0x78c9182090), HASH(0x78c91852e8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917aeb8), HASH(0x78c91a87e0), HASH(0x78c9182090), HASH(0x78c9183f48)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917aeb8), HASH(0x78c91a87e0)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "domain", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("domain", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'domain'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["cond",["allow",["set","seen","datain"]],["else",["set","seen","other"]]],["complete","done"]]'
+    #     expected: '[["when","allow",["set","seen","datain"]],["when",["!","allow"],["set","seen","other"]],["complete","done"]]'
+
+    #   Failed test 'precise entry action refusal remains'
+    #   at t/2042-isf-procedure-cond-normalization.t line 55.
+    #                   'Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c91855b8), "main", "transaction", undef, HASH(0x78c9c244c8), HASH(0x78c918c390)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9187fd8), HASH(0x78c42bf870), HASH(0x78c918c390), 0, HASH(0x78c9c244c8), HASH(0x78c9c90060)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9187fd8), HASH(0x78c918c390), HASH(0x78c9c244c8), HASH(0x78c9c631b0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c9187fd8), HASH(0x78c918c390)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9cb94c8), HASH(0x78c918c390)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "first_actions", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("first_actions", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # '
+    #     doesn't match '(?^:when\ activation\ body\ supports\ only\ \'\(sample\ port\ as\ name\)\'\ clauses)'
+    # Looks like you failed 2 tests of 8.
+
+#   Failed test 'first_actions'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'complete normalized clauses match independent literal source intent'
+    #   at t/2042-isf-procedure-cond-normalization.t line 36.
+    #          got: '[["cond",["allow",["sample","datain","as","captured"]],["else",["sample","other","as","saved"]]],["complete","done"]]'
+    #     expected: '[["when","allow",["sample","datain","as","captured"]],["when",["!","allow"],["sample","other","as","saved"]],["complete","done"]]'
+
+    #   Failed test 'normalized source lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 58.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c919e420), "main", "transaction", undef, HASH(0x78c917ba68), HASH(0x78c919c330)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c4f9e390), HASH(0x78c91849f0), HASH(0x78c919c330), 0, HASH(0x78c917ba68), HASH(0x78c91a2900)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c4f9e390), HASH(0x78c919c330), HASH(0x78c917ba68), HASH(0x78c919e8d0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c4f9e390), HASH(0x78c919c330)) called at perl/FSM/Scheduler/ISF.pm line 65
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x78c9179798), HASH(0x78c919c330)) called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 43
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "first_samples", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("first_samples", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+
+    #   Failed test 'complete private preparation lowers'
+    #   at t/2042-isf-procedure-cond-normalization.t line 59.
+    # Transaction 'main': unsupported '(cond ...)' clause in transaction body
+    #  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+    # 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x78c9185138), "main", "transaction", undef, HASH(0x78c917b798), HASH(0x78c919deb8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917c7f8), HASH(0x78c917a948), HASH(0x78c919deb8), 0, HASH(0x78c917b798), HASH(0x78c9187a08)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 1610
+    # 	FSM::Scheduler::ISF::LoweringIR::_build_parent_ir(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917c7f8), HASH(0x78c919deb8), HASH(0x78c917b798), HASH(0x78c918cc60)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 114
+    # 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x78c917c7f8), HASH(0x78c919deb8)) called at t/2042-isf-procedure-cond-normalization.t line 50
+    # 	eval {...} called at t/2042-isf-procedure-cond-normalization.t line 45
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x78c101b7e0), "first_samples", CODE(0x78c9cbb180)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("first_samples", CODE(0x78c9cbb180)) called at t/2042-isf-procedure-cond-normalization.t line 82
+    # Looks like you failed 3 tests of 7.
+
+#   Failed test 'first_samples'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'invalid reached cond/call refuses during normalization'
+    #   at t/2042-isf-procedure-cond-normalization.t line 29.
+
+    #   Failed test 'literal canonical producer reason'
+    #   at t/2042-isf-procedure-cond-normalization.t line 30.
+    #                   ''
+    #     doesn't match '(?^:has\ an\ empty\ body)'
+    # Looks like you failed 2 tests of 3.
+
+#   Failed test 'empty_body'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'invalid reached cond/call refuses during normalization'
+    #   at t/2042-isf-procedure-cond-normalization.t line 29.
+
+    #   Failed test 'literal canonical producer reason'
+    #   at t/2042-isf-procedure-cond-normalization.t line 30.
+    #                   ''
+    #     doesn't match '(?^:\'else\'\ must\ be\ the\ last\ branch)'
+    # Looks like you failed 2 tests of 3.
+
+#   Failed test 'else_order'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'invalid reached cond/call refuses during normalization'
+    #   at t/2042-isf-procedure-cond-normalization.t line 29.
+
+    #   Failed test 'literal canonical producer reason'
+    #   at t/2042-isf-procedure-cond-normalization.t line 30.
+    #                   ''
+    #     doesn't match '(?^:branch\ must\ be\ a)'
+    # Looks like you failed 2 tests of 3.
+
+#   Failed test 'non_list'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'invalid reached cond/call refuses during normalization'
+    #   at t/2042-isf-procedure-cond-normalization.t line 29.
+
+    #   Failed test 'literal canonical producer reason'
+    #   at t/2042-isf-procedure-cond-normalization.t line 30.
+    #                   ''
+    #     doesn't match '(?^:recursive\ procedure\ call)'
+    # Looks like you failed 2 tests of 3.
+
+#   Failed test 'direct_recursion'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+
+    #   Failed test 'invalid reached cond/call refuses during normalization'
+    #   at t/2042-isf-procedure-cond-normalization.t line 29.
+
+    #   Failed test 'literal canonical producer reason'
+    #   at t/2042-isf-procedure-cond-normalization.t line 30.
+    #                   ''
+    #     doesn't match '(?^:recursive\ procedure\ call)'
+    # Looks like you failed 2 tests of 3.
+
+#   Failed test 'mutual_recursion'
+#   at t/2042-isf-procedure-cond-normalization.t line 82.
+# Looks like you failed 23 tests of 26.

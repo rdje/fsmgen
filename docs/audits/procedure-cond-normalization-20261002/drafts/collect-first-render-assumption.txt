@@ -1,0 +1,9 @@
+ram-guard: PID 79361; host 70.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "docs/audits/procedure-cond-normalization-20261002/seal.py", line 155, in <module>
+    {'collect':collect,'seal':seal}[sys.argv[1]]()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "docs/audits/procedure-cond-normalization-20261002/seal.py", line 133, in collect
+    assert marker in text, chapter + ' missing maintained text'
+           ^^^^^^^^^^^^^^
+AssertionError: 13b-transactions missing maintained text

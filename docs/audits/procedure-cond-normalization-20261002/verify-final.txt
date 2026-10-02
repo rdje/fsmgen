@@ -1,0 +1,4 @@
+ram-guard: PID 76201; host 55.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS complete fixed 26-source qualification, genuine old-parser/desired-branch RED and restored current boundary
+PASS actual complete candidate admission versus restored native/API/newline refusal; every saved candidate carrier strictly admits
+PASS exact four-line candidate, restored production census, immutable predecessors and independent corruptions: sample_omission, guard_change, fabricated_branch, width_kind, false_restored_admission

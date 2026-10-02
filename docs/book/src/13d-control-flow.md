@@ -146,7 +146,10 @@ nests anywhere a `when` may appear, including inside another `(cond ...)` branch
 An inline procedure body containing `cond` currently retains an unexpanded
 `cond` and refuses during transaction lowering, including after `(on start)`.
 Keep the `cond` at the transaction call site and call an ordinary procedure from
-each branch until that separately tracked normalization repair qualifies.
+each branch until that separately tracked normalization repair qualifies. A normalization candidate would newly admit a first
+sample-only procedure `cond` as an activation gate; it is not integrated.
+Explicit source intent must qualify first, with production keeping this source
+refused.
 
 ## Mixing Control Flow
 

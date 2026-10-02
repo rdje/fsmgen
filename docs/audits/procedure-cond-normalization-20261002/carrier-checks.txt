@@ -1,0 +1,2 @@
+ram-guard: PID 93594; host 72.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS every complete saved candidate carrier strictly admits; source intent remains independently wrong

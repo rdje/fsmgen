@@ -1,0 +1,5 @@
+ram-guard: PID 50290; host 68.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ INFO Book building has started
+ INFO Running the html backend
+ WARN search index is very large (14971958 bytes)
+ INFO HTML book written to `docs/book/book`

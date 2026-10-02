@@ -1,0 +1,2 @@
+ram-guard: PID 89209; host 69.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2042-isf-procedure-cond-normalization.t syntax OK

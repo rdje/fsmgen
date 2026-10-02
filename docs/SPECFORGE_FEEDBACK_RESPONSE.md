@@ -173,9 +173,14 @@ and book.
   refused until that repair qualifies. This work repairs existing **ISF/IAL1**
   parser expansions and transaction scheduling. Qualification also exposes
   first sample-only bit/field/`cond` shorthand admitted as entry gates and
-  unexpanded `cond` in inline procedures; those repairs are owned, with procedure
-  normalization scheduled next. Use explicit activation before conditional
-  shorthand and keep `cond` at the procedure call site for now. No new macro
+  unexpanded `cond` in inline procedures. The normalization candidate would
+  newly admit a first sample-only procedure `cond` as activation, so production
+  stays unchanged and that source stays refused. Explicit source intent (`.5.2`)
+  now precedes safe procedure normalization (`.5.4.2`) and branch integration
+  (`.5.3`). [Safety qualification](audits/procedure-cond-normalization-20261002/scope.txt)
+  retains the complete actual candidate admission and restored refusal.
+  Use explicit activation before conditional shorthand and keep `cond` at the
+  procedure call site for now. No new macro
   language/framework, output execution or X/Z runtime claim follows.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

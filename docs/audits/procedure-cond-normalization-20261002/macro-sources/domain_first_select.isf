@@ -1,0 +1,6 @@
+(actor domain_first_select
+  (clock-domains
+    (domain idle (clock idle_clk) :default)
+    (domain io (clock clk) (reset (rst_n sync active_low))))
+  (interface (input request (domain io)) (input allow (domain io)) (input datain (width 3) (domain io)) (input other (width 3) (domain io)) (output seen (width 3) (domain io)) (output done (domain io)))
+  (transaction main (domain io) (select seen allow datain other) (complete done)))
