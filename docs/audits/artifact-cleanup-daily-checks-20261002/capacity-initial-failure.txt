@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/artifact-cleanup-daily-checks-20261002/refresh_capacity.py", line 23, in <module>
+    assert metrics['bytes_total'] <= (row['baseline']['bytes_total']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                     + row['transition']['max_growth']['bytes_total'])
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

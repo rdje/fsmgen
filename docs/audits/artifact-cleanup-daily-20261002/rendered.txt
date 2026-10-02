@@ -1,0 +1,1 @@
+Completed current book rebuild/rendered text includes fixed cleanup tracked/link/parent safeguards and latest-record guidance; source sources/current output remain available. Browser visual QA unavailable.

@@ -1,0 +1,68 @@
+{
+  "files": {
+    "apply.txt": {
+      "bytes": 193,
+      "sha256": "0dc05801cddb1a7858f99b0870552ae99edbdea28294babd2790cecc310720c3"
+    },
+    "book.txt": {
+      "bytes": 194,
+      "sha256": "4740f36d8d324ddef4cf87a07c60d23b819edbac9dcc3247c57e5ad23b7128c5"
+    },
+    "cleanup.py": {
+      "bytes": 11300,
+      "sha256": "66c5f786c3776c0d2c35a473f60052743339fcbd6359c7e577f405cc1d2a49b0"
+    },
+    "history.txt": {
+      "bytes": 118,
+      "sha256": "f4342f9f1e4403f8a62cf2e5c9d870e2c0cdc4183bb5e8335d54eee4081617aa"
+    },
+    "inspect-bound.txt": {
+      "bytes": 182,
+      "sha256": "c88b270e688ce6a05708b6a039359c272de2bc55cb5b313ccb1ea6ae303cd464"
+    },
+    "inspect-final.txt": {
+      "bytes": 182,
+      "sha256": "20a51a144c72b2a605b4cace3149ad520e734213813cf57e24deb60887002264"
+    },
+    "inspect.txt": {
+      "bytes": 182,
+      "sha256": "ae47b1f50f00b19f7a10fa299b3f52cd41dcf4ffe684b5eed299dbcca1e05634"
+    },
+    "protected.json": {
+      "bytes": 3618138,
+      "sha256": "e7a28131ce05afddd44704ed440468f30151fcc365ffc708201fca17b103823c"
+    },
+    "recipe.json": {
+      "bytes": 748,
+      "sha256": "26142bdc2fa14991b10f30097abfc382855ea3db7082c61fb38cb369e42f4b27"
+    },
+    "references.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "rendered.txt": {
+      "bytes": 206,
+      "sha256": "ac95102076c7d7a5f0da9e1f4f5802846ce48e640e6c70319826c7344e5988c6"
+    },
+    "result.json": {
+      "bytes": 54832,
+      "sha256": "ac34eee19b975b49421a8375f59a1f192f0623ea8d2b5dec5dcff81f8f634b23"
+    },
+    "scope.txt": {
+      "bytes": 2576,
+      "sha256": "142b79e77acfc5c907a5894361ffaffd41aac329976b7ee0e73e09d67e576d7d"
+    },
+    "verify-saved.txt": {
+      "bytes": 73,
+      "sha256": "bb9f904fad4c048329240b240465260c496951cdc2909bd41184fdc887e32fc5"
+    },
+    "verify.py": {
+      "bytes": 5134,
+      "sha256": "d0ffd56577dd805ddf081132273e09d6850c701d06480ed4fc9763c0d89cc8c6"
+    },
+    "verify.txt": {
+      "bytes": 582,
+      "sha256": "de0e3695c1b329d94cada0ae5e4831afcdde364bbe4f1bf6f5dd6f8aa86a7fc1"
+    }
+  }
+}

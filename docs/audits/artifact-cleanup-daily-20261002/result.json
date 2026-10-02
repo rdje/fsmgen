@@ -1,0 +1,1475 @@
+{
+  "cleanup_revision": "6bf1e9b0a2802cf644d35667f35a2f7988e95989",
+  "independent_membership": "os.walk regular-file set equals rg --files --hidden --no-ignore",
+  "limits": [
+    "Deleted render bytes are intentionally not retained.",
+    "The old renders do not bind their original producing Git revision; their byte census is a dated capture, not a reproduced historical build."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.67",
+  "removed": [
+    {
+      "bytes_total": 25839310,
+      "files": [
+        {
+          "bytes": 72,
+          "path": ".artifacts/formal-preallocation-admission/book/.nojekyll",
+          "sha256": "235d4f83c4c71612f43995dbda167720cd0c5384bf9ea64f9328b187c409b51d"
+        },
+        {
+          "bytes": 24901,
+          "path": ".artifacts/formal-preallocation-admission/book/00-introduction.html",
+          "sha256": "2429d8577fbb9ccd1143512b7e8b847c63efb79dfb4194ad81f0a656867a9475"
+        },
+        {
+          "bytes": 25490,
+          "path": ".artifacts/formal-preallocation-admission/book/01-first-fsm.html",
+          "sha256": "fb9ed586473ee56f2b7cdec1aa46bdfee1b51b50ec8353c0f4cc975b41a18657"
+        },
+        {
+          "bytes": 47271,
+          "path": ".artifacts/formal-preallocation-admission/book/02-language-basics.html",
+          "sha256": "873478a7305efac43be71c2483b694f036002a89694cccd99a8ebf7f44189751"
+        },
+        {
+          "bytes": 45911,
+          "path": ".artifacts/formal-preallocation-admission/book/03-decision-trees-and-fsms.html",
+          "sha256": "70fdcceb3bf098d053ede062629623156de876c4db673a7f30483da16f42d2ba"
+        },
+        {
+          "bytes": 44260,
+          "path": ".artifacts/formal-preallocation-admission/book/04-symbols-types-and-imports.html",
+          "sha256": "e9a53debf7ae9a9e5b60a4ce5185bad98ecbcde62b0dd7a8b79370639e07dcc2"
+        },
+        {
+          "bytes": 50832,
+          "path": ".artifacts/formal-preallocation-admission/book/05-composition-basics.html",
+          "sha256": "77453038844b8ccef571461fead51a2b6cdaf158d26133312b8f2ae294ab6881"
+        },
+        {
+          "bytes": 56138,
+          "path": ".artifacts/formal-preallocation-admission/book/06-composition-advanced.html",
+          "sha256": "929b24f6ce1976723ec6fe2af6c4f1dbc8d22ff84a02c91129a3775f51a84178"
+        },
+        {
+          "bytes": 25783,
+          "path": ".artifacts/formal-preallocation-admission/book/07-packages-and-sharing.html",
+          "sha256": "c54e01a71a2c2b6b12cd76da1b28a1805eb882ddc1431b8654066e621a8f5425"
+        },
+        {
+          "bytes": 38510,
+          "path": ".artifacts/formal-preallocation-admission/book/08-type-inference-and-aggregate-data.html",
+          "sha256": "2744462b14fe6fc3be671aa3745882e4d12a4f240c2ac968435748d586363899"
+        },
+        {
+          "bytes": 50759,
+          "path": ".artifacts/formal-preallocation-admission/book/09-generated-hdl-debugging-and-inspection.html",
+          "sha256": "4d8db1bf198b686c135344f2a77cc0e713f545a7ebf6ed58e3bfd8de3161e2db"
+        },
+        {
+          "bytes": 55178,
+          "path": ".artifacts/formal-preallocation-admission/book/10-errors-strict-mode-and-troubleshooting.html",
+          "sha256": "bd62d4da0913e3bb3c68c349904888ddb132855737874327005be4240b978ef7"
+        },
+        {
+          "bytes": 34443,
+          "path": ".artifacts/formal-preallocation-admission/book/10a-downstream-issue-reporting.html",
+          "sha256": "b4ff62f6240ef12be99ea52a4675011c1ef856bec1c71fb8fb9e41e53c50ef98"
+        },
+        {
+          "bytes": 254203,
+          "path": ".artifacts/formal-preallocation-admission/book/11-extensions-and-embedding.html",
+          "sha256": "5813da14d80d8ab8fe14ef8dfd8fbd0d520124d4e2cce6920a8df03f6350a37a"
+        },
+        {
+          "bytes": 35761,
+          "path": ".artifacts/formal-preallocation-admission/book/12-cookbook.html",
+          "sha256": "a20e0f673c48322afea3a7f4f7433a10a0bbde030059de88f3edace1cdb1214d"
+        },
+        {
+          "bytes": 87095,
+          "path": ".artifacts/formal-preallocation-admission/book/13-intent-scheduling.html",
+          "sha256": "349e4eaf0a61ac4cc395fb1b3f8973c11b55b05d5b6cfd4714e211956f1e1e3b"
+        },
+        {
+          "bytes": 67217,
+          "path": ".artifacts/formal-preallocation-admission/book/13a-actor-interface.html",
+          "sha256": "eacf640b3ab5279bbe035db68fe03dc8dc045b422d56ff0653813ba83433f7e2"
+        },
+        {
+          "bytes": 132297,
+          "path": ".artifacts/formal-preallocation-admission/book/13b-transactions.html",
+          "sha256": "e2d768b136f610218d813ffe289471606360df2b896ee5b68c2838208bfdcf95"
+        },
+        {
+          "bytes": 26934,
+          "path": ".artifacts/formal-preallocation-admission/book/13c-drive-blocks.html",
+          "sha256": "f45e0f8709461f65a30ec591607b7dfd4c9cfd77b42fb3d05624f9e07aeed4d3"
+        },
+        {
+          "bytes": 111591,
+          "path": ".artifacts/formal-preallocation-admission/book/13d-control-flow.html",
+          "sha256": "84d26f16df1e6a49d844d509210869184af8a726a506ad18edcc676014e9fa5f"
+        },
+        {
+          "bytes": 63475,
+          "path": ".artifacts/formal-preallocation-admission/book/13e-data-manipulation.html",
+          "sha256": "4535efd790b77b8ea0f67fe990836b3ac18cee4032989a5d0fdd8663d99fa812"
+        },
+        {
+          "bytes": 126363,
+          "path": ".artifacts/formal-preallocation-admission/book/13f-composition.html",
+          "sha256": "e517010c3231c3df6bd3db8cdbe8a3f1d2fbd40753c815b2a985fee69fe8bcc7"
+        },
+        {
+          "bytes": 50899,
+          "path": ".artifacts/formal-preallocation-admission/book/13g-rules.html",
+          "sha256": "6f776cf8e65ff6640c6f6116e811eecdab22ab45f4869c12d0390913b4ef1700"
+        },
+        {
+          "bytes": 136792,
+          "path": ".artifacts/formal-preallocation-admission/book/13h-lowering-reference.html",
+          "sha256": "625ddda40685ebfc9bbccbe9ff668bc12805da9bb542312a856ec3adff3f23b5"
+        },
+        {
+          "bytes": 279277,
+          "path": ".artifacts/formal-preallocation-admission/book/13i-downstream-integration.html",
+          "sha256": "522c292c935239265e23df92c6d98a023af6742f339fc4bc8a8dfcdf738043ed"
+        },
+        {
+          "bytes": 49344,
+          "path": ".artifacts/formal-preallocation-admission/book/13j-type-enum-aggregate.html",
+          "sha256": "41a97df18300d80835badf7686801629e9cc6fad723a37ec6d32a60e866d73d9"
+        },
+        {
+          "bytes": 149033,
+          "path": ".artifacts/formal-preallocation-admission/book/13k-isf-feature-support-matrix.html",
+          "sha256": "61bba56da8d8218a97acb22e3163d8702c9cde17443709ab1f0c20584098b530"
+        },
+        {
+          "bytes": 30485,
+          "path": ".artifacts/formal-preallocation-admission/book/13l-procedures.html",
+          "sha256": "2c08b466e174f5f2eea3bb9b51d072a97bcbfe288ae7e5da0842ab3d971a0168"
+        },
+        {
+          "bytes": 29046,
+          "path": ".artifacts/formal-preallocation-admission/book/13m-local-variables.html",
+          "sha256": "4061eed5458bf929c3a78bc518428809b7e79a16e7696a78e407e108d01ffb54"
+        },
+        {
+          "bytes": 27610,
+          "path": ".artifacts/formal-preallocation-admission/book/14-feature-backlog.html",
+          "sha256": "9a372298245fd5522e30ea111c3d8dde515ee3c84a3eda778d108d972acc5ac6"
+        },
+        {
+          "bytes": 33614,
+          "path": ".artifacts/formal-preallocation-admission/book/14a-language-and-data.html",
+          "sha256": "24e262824af209bdcc5d8f2570bf7e4dfa8a487fcf5ce2204d9d1a26cfe453a0"
+        },
+        {
+          "bytes": 97502,
+          "path": ".artifacts/formal-preallocation-admission/book/14b-composition-backlog.html",
+          "sha256": "f3ddc10d906c3bea9be7c461ef4ef97f013c37e474f8e3e0a3a3d82f4f2f97a9"
+        },
+        {
+          "bytes": 69302,
+          "path": ".artifacts/formal-preallocation-admission/book/14c-actor-network-orchestration.html",
+          "sha256": "420c2aac93c9b96bcd0ce1ee882849ad79e93fe3de0ff8dc7f05ed860b783ba7"
+        },
+        {
+          "bytes": 127905,
+          "path": ".artifacts/formal-preallocation-admission/book/14d-ial2-foundations.html",
+          "sha256": "461f8ff8ad16a8861312bd07ac47c85972e740188aa8dbf94697cefd97d8795b"
+        },
+        {
+          "bytes": 30592,
+          "path": ".artifacts/formal-preallocation-admission/book/14e-hial-vial-verification.html",
+          "sha256": "7f6b166ac2f75e4b710136bf71d402e439ed9e883cce3ebe7d59c9a58696be4e"
+        },
+        {
+          "bytes": 176098,
+          "path": ".artifacts/formal-preallocation-admission/book/14f-axi-manager-core.html",
+          "sha256": "28030d2fe20adf06714fe40f75769fc13e4457e407712e69087f275d03dcfbc3"
+        },
+        {
+          "bytes": 233227,
+          "path": ".artifacts/formal-preallocation-admission/book/14g-axi-dynamic-identity.html",
+          "sha256": "0538c5fb8d13cc5f9e2af3a6f418468307a73f728f590a8525a07b3bb68cb2c2"
+        },
+        {
+          "bytes": 193151,
+          "path": ".artifacts/formal-preallocation-admission/book/14h-protocol-profiles-and-apb.html",
+          "sha256": "b2c48dca77ec0a991f38f33163522dc96b5f7b7b9d7db98052450520a855db3c"
+        },
+        {
+          "bytes": 199527,
+          "path": ".artifacts/formal-preallocation-admission/book/14i-ahb-and-integration.html",
+          "sha256": "2c0a89082961e3016ffec233537354f62960bd9324d6570c98c435049099884b"
+        },
+        {
+          "bytes": 151227,
+          "path": ".artifacts/formal-preallocation-admission/book/14j-extended-axi.html",
+          "sha256": "d91aae7a937af8005b19481f2000c5b5e4b323246911e147f4e6a0710d4ce02a"
+        },
+        {
+          "bytes": 122963,
+          "path": ".artifacts/formal-preallocation-admission/book/14k-isf-language-and-scheduling.html",
+          "sha256": "4dfca9e1c91e326d7a692299fbdcebbd9d74b8d9dfdd5cae84d2790306f152cb"
+        },
+        {
+          "bytes": 95357,
+          "path": ".artifacts/formal-preallocation-admission/book/14l-backends-validation-and-apis.html",
+          "sha256": "605dbd9fba1f068fbdcd1029b49ac924786675106d730d249dff6a32a273a9be"
+        },
+        {
+          "bytes": 29962,
+          "path": ".artifacts/formal-preallocation-admission/book/15-implementation-blueprint.html",
+          "sha256": "1b6a51bbc604860583434650ab7c87d5a4d7fc5cf39cb3f5a93629356d0d3af3"
+        },
+        {
+          "bytes": 25674,
+          "path": ".artifacts/formal-preallocation-admission/book/15a-ial2-new-protocol-support.html",
+          "sha256": "5b22558dcca65cc2d1be88e2bc9470c4c9d33c1e5f2d454c0727bfc249566413"
+        },
+        {
+          "bytes": 30874,
+          "path": ".artifacts/formal-preallocation-admission/book/16-ial2-protocol-platform-intent.html",
+          "sha256": "a4eb7dba6c1d2b5b8d75d9faad59d21b72ea2fe8c0ae5cfe8f417258448baf7a"
+        },
+        {
+          "bytes": 84992,
+          "path": ".artifacts/formal-preallocation-admission/book/16a-ial2-axi.html",
+          "sha256": "02a2aa34337949e11ef3efa336093d448a1d304a9bac5e243cd69b8da682ace9"
+        },
+        {
+          "bytes": 60356,
+          "path": ".artifacts/formal-preallocation-admission/book/16aa-ial2-axi-manager-capacity-status.html",
+          "sha256": "c7a476dee01a43de623ce5885882fac1fedcb1f67c945d2cd40a60f981448aef"
+        },
+        {
+          "bytes": 30397,
+          "path": ".artifacts/formal-preallocation-admission/book/16b-ial2-apb.html",
+          "sha256": "3d870ad456e7883d071c8d8f486936c81e65da5cc585bed38d8e9bf1983b97a2"
+        },
+        {
+          "bytes": 254470,
+          "path": ".artifacts/formal-preallocation-admission/book/16c-ial2-ahb.html",
+          "sha256": "a513280fe32b156a0a2ca51b84f8cdefc89128a698a39ea89040a6a69fb72bf1"
+        },
+        {
+          "bytes": 330700,
+          "path": ".artifacts/formal-preallocation-admission/book/16d-hial-vial-verification-architecture.html",
+          "sha256": "4a272bd240a33126b9bf10cc2b4a7da1484584e0882f2cb34b8de49aa79495eb"
+        },
+        {
+          "bytes": 46770,
+          "path": ".artifacts/formal-preallocation-admission/book/16da-vial-balanced-portable-composition.html",
+          "sha256": "446857fb34145da03484fd11c0ba5c17715a6b0944903f56dd8f946a5d81642b"
+        },
+        {
+          "bytes": 29523,
+          "path": ".artifacts/formal-preallocation-admission/book/16db-vial-structural-backend-emission-matrix.html",
+          "sha256": "3c0fa8490e599ab680a482106ba39c603660eac41a89d0dfef076f16dd1a3118"
+        },
+        {
+          "bytes": 313611,
+          "path": ".artifacts/formal-preallocation-admission/book/16dc-vial-portable-verilator-runtime-measurement.html",
+          "sha256": "b3f11bf31a117bf48e18c345dc216f0530804312e613cd38b2d09f7f963ea2fa"
+        },
+        {
+          "bytes": 62575,
+          "path": ".artifacts/formal-preallocation-admission/book/16dd-vial-portable-vhdl-runtime-measurement.html",
+          "sha256": "b69dc53b649801ea7cec6cdf8bc4159301cfe7da2c2ca806eef88e8936c6f3b3"
+        },
+        {
+          "bytes": 62366,
+          "path": ".artifacts/formal-preallocation-admission/book/16de-vial-osvvm-runtime-execution-plan.html",
+          "sha256": "9dcbad31b7741b91817aceb087a009fe4893763449205dfb3742bb5d4e55b6b2"
+        },
+        {
+          "bytes": 204125,
+          "path": ".artifacts/formal-preallocation-admission/book/16df-vial-architecture-scale-cap-closeout.html",
+          "sha256": "96e1af0f5ce35c7d2c8c14606731584f6e96523448e545b2049bfbbe43180827"
+        },
+        {
+          "bytes": 56938,
+          "path": ".artifacts/formal-preallocation-admission/book/16dg-vial-public-lifecycle-reference.html",
+          "sha256": "7bf7a61efe08b98365b345962bcc2b96f78f70c89cb188ca196f11de3e3ecf4e"
+        },
+        {
+          "bytes": 38420,
+          "path": ".artifacts/formal-preallocation-admission/book/16dh-vial-ahb-end-to-end-tutorial.html",
+          "sha256": "ac9857867557a47685e6086e2ed28f4ebff36faebf242885a60185a88c445e08"
+        },
+        {
+          "bytes": 41447,
+          "path": ".artifacts/formal-preallocation-admission/book/16di-vial-legacy-migration.html",
+          "sha256": "0d8586429d7438ffc9fefc6bcae8a26ba58e75f8472da398bdcdc7522c09b4a1"
+        },
+        {
+          "bytes": 43133,
+          "path": ".artifacts/formal-preallocation-admission/book/16dj-vial-capability-support-reference.html",
+          "sha256": "852f3dd42482685c5009629828f1ab311b28feba2c410024a9903d25e0fd5323"
+        },
+        {
+          "bytes": 127215,
+          "path": ".artifacts/formal-preallocation-admission/book/16dk-inactive-proxy-lifetimes.html",
+          "sha256": "dc23c458db582e99caa3ee59e058a99916fc011ff665f31ce6216e05c37426b0"
+        },
+        {
+          "bytes": 144907,
+          "path": ".artifacts/formal-preallocation-admission/book/16e-nexsim-api-mcp-consumer-requirements.html",
+          "sha256": "c193fa0c4327d094f6ac448b3520405b25cac230b660eae4654ec93103a07409"
+        },
+        {
+          "bytes": 17673,
+          "path": ".artifacts/formal-preallocation-admission/book/404.html",
+          "sha256": "e478947b074f6cf89c936ca5f39e12a8b0ccce8ff08005dd19d71e235e18e8d4"
+        },
+        {
+          "bytes": 60494,
+          "path": ".artifacts/formal-preallocation-admission/book/90-reference-map.html",
+          "sha256": "9f5adc21102c0c23650542ee39a2913aa8a330bdd9f932167a95b00ee1cb368c"
+        },
+        {
+          "bytes": 45608,
+          "path": ".artifacts/formal-preallocation-admission/book/91-live-document-containment-adoption.html",
+          "sha256": "060e28249676d3d904afec8ffb553b3df5a4e2fcde122a397cdb40ebbc5a56ef"
+        },
+        {
+          "bytes": 907,
+          "path": ".artifacts/formal-preallocation-admission/book/ayu-highlight-3fdfc3ac.css",
+          "sha256": "3fdfc3ac5e435e0cef96dafee74da487e4846ffce4dff5973bb45d68b678dd7f"
+        },
+        {
+          "bytes": 30932,
+          "path": ".artifacts/formal-preallocation-admission/book/book-609e4cb8.js",
+          "sha256": "609e4cb80f92aa954a3f48869c751f6f8848433604f1297bb70fde0e3e58a569"
+        },
+        {
+          "bytes": 10754,
+          "path": ".artifacts/formal-preallocation-admission/book/clipboard-1626706a.min.js",
+          "sha256": "1626706afc88d95ebe1173b553ec732c6dc82a576989315fdf5e7779af738a44"
+        },
+        {
+          "bytes": 18032,
+          "path": ".artifacts/formal-preallocation-admission/book/css/chrome-d279d366.css",
+          "sha256": "d279d366359c0d588c9c10cb46afe2b543fc731dea722803639b4e45016d5fe2"
+        },
+        {
+          "bytes": 11478,
+          "path": ".artifacts/formal-preallocation-admission/book/css/general-e96d0476.css",
+          "sha256": "e96d0476741bfcbe8cc0ac02db00187c45a63946834361d0eab846016787c646"
+        },
+        {
+          "bytes": 689,
+          "path": ".artifacts/formal-preallocation-admission/book/css/print-9e4910d8.css",
+          "sha256": "9e4910d8eb508863172430c60d49fd3b442e9e7f5963a18cd1d655c386ffeae9"
+        },
+        {
+          "bytes": 10422,
+          "path": ".artifacts/formal-preallocation-admission/book/css/variables-8adf115d.css",
+          "sha256": "8adf115df892369c90b830767c4651a9e058b79273e219935f7c8a96c6eab9c0"
+        },
+        {
+          "bytes": 18051,
+          "path": ".artifacts/formal-preallocation-admission/book/elasticlunr-ef4e11c1.min.js",
+          "sha256": "ef4e11c157b1e2e89782d30bd726f2d5ff7834ea5e26ad02474325f8b1f126c9"
+        },
+        {
+          "bytes": 5679,
+          "path": ".artifacts/formal-preallocation-admission/book/favicon-8114d1fc.png",
+          "sha256": "8114d1fc74f4b5621ad9afde7746ed9cf7e420be317a6e29023d2298d58aa15b"
+        },
+        {
+          "bytes": 1835,
+          "path": ".artifacts/formal-preallocation-admission/book/favicon-de23e50b.svg",
+          "sha256": "de23e50b1c4dd6e052b3e21d444fcd4b13568b3840ac3c99d9be4e9263c0ef59"
+        },
+        {
+          "bytes": 11358,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/OPEN-SANS-LICENSE.txt",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "bytes": 4528,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/SOURCE-CODE-PRO-LICENSE.txt",
+          "sha256": "d1e6d465a83ba1a3be52db6484868cf5812ae9bbf91abdad3900ba0165afcf93"
+        },
+        {
+          "bytes": 3818,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/fonts-9644e21d.css",
+          "sha256": "94b5131beb9b75a55f9649fcf12de167350feae0fab2bab26c2703cd75c0c781"
+        },
+        {
+          "bytes": 44352,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-300-7736aa35.woff2",
+          "sha256": "7736aa3596c468515c3209f2f9d68cfae96d94c05689bcc11a5dce426a6ee2e8"
+        },
+        {
+          "bytes": 40656,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-300italic-2c7b95c0.woff2",
+          "sha256": "2c7b95c08df0d228caec6d4bfed06da0f7ab6b76ea5cc3f75b5c6ae416bc571b"
+        },
+        {
+          "bytes": 44936,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-600-486c6759.woff2",
+          "sha256": "486c67592731a0b36a89dba1fd0b97aeb73f236bbf60dbf28d7c6b5723c07989"
+        },
+        {
+          "bytes": 42120,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-600italic-1a3e8659.woff2",
+          "sha256": "1a3e865977024f444834a75a1b33b89b93134c93007ae3d6e14f24e6c88d8dfb"
+        },
+        {
+          "bytes": 44988,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-700-c22fe8c7.woff2",
+          "sha256": "c22fe8c70c36f1d862903b772eaed864d3a8fa849473c9caff224fdb852428e4"
+        },
+        {
+          "bytes": 40800,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-700italic-238ae959.woff2",
+          "sha256": "238ae9593944112bee8dd65f8ebc5f3d3862160a8a245fbe1ee3150bc9a2fd81"
+        },
+        {
+          "bytes": 44536,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-800-3d2c812a.woff2",
+          "sha256": "3d2c812adf74deb36fead3ff8469800d3c0b23eb2c858ae49310291f89490146"
+        },
+        {
+          "bytes": 40812,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-800italic-ba1521ec.woff2",
+          "sha256": "ba1521ec219db9bc5bfec0e3e7a897369d98b30d4e853ee4aa525322784428b8"
+        },
+        {
+          "bytes": 41076,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-italic-6c9463f7.woff2",
+          "sha256": "6c9463f7096c0b9d610e095ed248ac1e8a8da7e92d17e9be544f3baced7b62b2"
+        },
+        {
+          "bytes": 43236,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-regular-2e3b1d34.woff2",
+          "sha256": "2e3b1d34ac67763ab50652da19305d4b3694c6b6e6bf35f4b98411ce4af646d2"
+        },
+        {
+          "bytes": 59140,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/source-code-pro-v11-all-charsets-500-2bdd9410.woff2",
+          "sha256": "2bdd9410b0141db3cbbf4cfc3818cc6fad279e8e63940940e06cd6af76ccbfcf"
+        },
+        {
+          "bytes": 1209,
+          "path": ".artifacts/formal-preallocation-admission/book/highlight-493f70e1.css",
+          "sha256": "493f70e1527d895653b5ac7157abba8e2c656e43698da93b6c1997e2855a5059"
+        },
+        {
+          "bytes": 137537,
+          "path": ".artifacts/formal-preallocation-admission/book/highlight-abc7f01d.js",
+          "sha256": "abc7f01d0ce8c64e4ba9e131d651e48ae1a567b2a1254fea8aab03502288de58"
+        },
+        {
+          "bytes": 24901,
+          "path": ".artifacts/formal-preallocation-admission/book/index.html",
+          "sha256": "2429d8577fbb9ccd1143512b7e8b847c63efb79dfb4194ad81f0a656867a9475"
+        },
+        {
+          "bytes": 17320,
+          "path": ".artifacts/formal-preallocation-admission/book/mark-09e88c2c.min.js",
+          "sha256": "09e88c2cfaf23ea8a37b5681433eafea97033af632ecc948c8c1ee9944647743"
+        },
+        {
+          "bytes": 4550616,
+          "path": ".artifacts/formal-preallocation-admission/book/print.html",
+          "sha256": "ca5a26a1c388fbe3389ff82f924a7f91eac78883d7b0b35509266afa781a6100"
+        },
+        {
+          "bytes": 20294,
+          "path": ".artifacts/formal-preallocation-admission/book/searcher-09f2665d.js",
+          "sha256": "3413b31d3cb2e803631981f3c332c7883933b5301546b2aa8900f5c59014265d"
+        },
+        {
+          "bytes": 14594943,
+          "path": ".artifacts/formal-preallocation-admission/book/searchindex-b7f38313.js",
+          "sha256": "b7f383135516cd580c46ef0ffa5871abd76e571165076a0136655abe39566683"
+        },
+        {
+          "bytes": 31354,
+          "path": ".artifacts/formal-preallocation-admission/book/toc-7727513f.js",
+          "sha256": "7727513f2246a8126695b48c218eeb52cf5eadf09d5e1d5c79420916901738e6"
+        },
+        {
+          "bytes": 14642,
+          "path": ".artifacts/formal-preallocation-admission/book/toc.html",
+          "sha256": "c5c2db87908aa220460a64cd3007bf412e8d3a483e01cd543b7ce2d784ba1041"
+        },
+        {
+          "bytes": 1694,
+          "path": ".artifacts/formal-preallocation-admission/book/tomorrow-night-4c0ae647.css",
+          "sha256": "4c0ae647a06ef1699806fb9b4b6d0ef72de026708c6e8581362641c9298cb5f7"
+        }
+      ],
+      "nodes": [
+        {
+          "device": 16777244,
+          "inode": 147857828,
+          "mode": 16877,
+          "mtime_ns": 1790504023666366671,
+          "nlink": 85,
+          "path": ".artifacts/formal-preallocation-admission/book",
+          "size": 2720
+        },
+        {
+          "device": 16777244,
+          "inode": 147857863,
+          "mode": 33188,
+          "mtime_ns": 1790504023634953718,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/.nojekyll",
+          "size": 72
+        },
+        {
+          "device": 16777244,
+          "inode": 147857864,
+          "mode": 33188,
+          "mtime_ns": 1790504023637123211,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/00-introduction.html",
+          "size": 24901
+        },
+        {
+          "device": 16777244,
+          "inode": 147857866,
+          "mode": 33188,
+          "mtime_ns": 1790504023637786959,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/01-first-fsm.html",
+          "size": 25490
+        },
+        {
+          "device": 16777244,
+          "inode": 147857867,
+          "mode": 33188,
+          "mtime_ns": 1790504023638043126,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/02-language-basics.html",
+          "size": 47271
+        },
+        {
+          "device": 16777244,
+          "inode": 147857868,
+          "mode": 33188,
+          "mtime_ns": 1790504023638268583,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/03-decision-trees-and-fsms.html",
+          "size": 45911
+        },
+        {
+          "device": 16777244,
+          "inode": 147857869,
+          "mode": 33188,
+          "mtime_ns": 1790504023638649457,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/04-symbols-types-and-imports.html",
+          "size": 44260
+        },
+        {
+          "device": 16777244,
+          "inode": 147857870,
+          "mode": 33188,
+          "mtime_ns": 1790504023638874873,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/05-composition-basics.html",
+          "size": 50832
+        },
+        {
+          "device": 16777244,
+          "inode": 147857871,
+          "mode": 33188,
+          "mtime_ns": 1790504023639087081,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/06-composition-advanced.html",
+          "size": 56138
+        },
+        {
+          "device": 16777244,
+          "inode": 147857872,
+          "mode": 33188,
+          "mtime_ns": 1790504023639344705,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/07-packages-and-sharing.html",
+          "size": 25783
+        },
+        {
+          "device": 16777244,
+          "inode": 147857873,
+          "mode": 33188,
+          "mtime_ns": 1790504023639543871,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/08-type-inference-and-aggregate-data.html",
+          "size": 38510
+        },
+        {
+          "device": 16777244,
+          "inode": 147857874,
+          "mode": 33188,
+          "mtime_ns": 1790504023639755829,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/09-generated-hdl-debugging-and-inspection.html",
+          "size": 50759
+        },
+        {
+          "device": 16777244,
+          "inode": 147857875,
+          "mode": 33188,
+          "mtime_ns": 1790504023640096661,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/10-errors-strict-mode-and-troubleshooting.html",
+          "size": 55178
+        },
+        {
+          "device": 16777244,
+          "inode": 147857876,
+          "mode": 33188,
+          "mtime_ns": 1790504023640434619,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/10a-downstream-issue-reporting.html",
+          "size": 34443
+        },
+        {
+          "device": 16777244,
+          "inode": 147857877,
+          "mode": 33188,
+          "mtime_ns": 1790504023640874493,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/11-extensions-and-embedding.html",
+          "size": 254203
+        },
+        {
+          "device": 16777244,
+          "inode": 147857878,
+          "mode": 33188,
+          "mtime_ns": 1790504023641294491,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/12-cookbook.html",
+          "size": 35761
+        },
+        {
+          "device": 16777244,
+          "inode": 147857879,
+          "mode": 33188,
+          "mtime_ns": 1790504023641533282,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13-intent-scheduling.html",
+          "size": 87095
+        },
+        {
+          "device": 16777244,
+          "inode": 147857880,
+          "mode": 33188,
+          "mtime_ns": 1790504023641739990,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13a-actor-interface.html",
+          "size": 67217
+        },
+        {
+          "device": 16777244,
+          "inode": 147857881,
+          "mode": 33188,
+          "mtime_ns": 1790504023642016198,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13b-transactions.html",
+          "size": 132297
+        },
+        {
+          "device": 16777244,
+          "inode": 147857882,
+          "mode": 33188,
+          "mtime_ns": 1790504023642360405,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13c-drive-blocks.html",
+          "size": 26934
+        },
+        {
+          "device": 16777244,
+          "inode": 147857883,
+          "mode": 33188,
+          "mtime_ns": 1790504023642633654,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13d-control-flow.html",
+          "size": 111591
+        },
+        {
+          "device": 16777244,
+          "inode": 147857884,
+          "mode": 33188,
+          "mtime_ns": 1790504023642869820,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13e-data-manipulation.html",
+          "size": 63475
+        },
+        {
+          "device": 16777244,
+          "inode": 147857885,
+          "mode": 33188,
+          "mtime_ns": 1790504023643135320,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13f-composition.html",
+          "size": 126363
+        },
+        {
+          "device": 16777244,
+          "inode": 147857886,
+          "mode": 33188,
+          "mtime_ns": 1790504023643319819,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13g-rules.html",
+          "size": 50899
+        },
+        {
+          "device": 16777244,
+          "inode": 147857887,
+          "mode": 33188,
+          "mtime_ns": 1790504023643624568,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13h-lowering-reference.html",
+          "size": 136792
+        },
+        {
+          "device": 16777244,
+          "inode": 147857888,
+          "mode": 33188,
+          "mtime_ns": 1790504023644284608,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13i-downstream-integration.html",
+          "size": 279277
+        },
+        {
+          "device": 16777244,
+          "inode": 147857889,
+          "mode": 33188,
+          "mtime_ns": 1790504023644511524,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13j-type-enum-aggregate.html",
+          "size": 49344
+        },
+        {
+          "device": 16777244,
+          "inode": 147857890,
+          "mode": 33188,
+          "mtime_ns": 1790504023644805148,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13k-isf-feature-support-matrix.html",
+          "size": 149033
+        },
+        {
+          "device": 16777244,
+          "inode": 147857891,
+          "mode": 33188,
+          "mtime_ns": 1790504023645135939,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13l-procedures.html",
+          "size": 30485
+        },
+        {
+          "device": 16777244,
+          "inode": 147857892,
+          "mode": 33188,
+          "mtime_ns": 1790504023645325813,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/13m-local-variables.html",
+          "size": 29046
+        },
+        {
+          "device": 16777244,
+          "inode": 147857893,
+          "mode": 33188,
+          "mtime_ns": 1790504023645487063,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14-feature-backlog.html",
+          "size": 27610
+        },
+        {
+          "device": 16777244,
+          "inode": 147857894,
+          "mode": 33188,
+          "mtime_ns": 1790504023645684854,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14a-language-and-data.html",
+          "size": 33614
+        },
+        {
+          "device": 16777244,
+          "inode": 147857895,
+          "mode": 33188,
+          "mtime_ns": 1790504023645910103,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14b-composition-backlog.html",
+          "size": 97502
+        },
+        {
+          "device": 16777244,
+          "inode": 147857896,
+          "mode": 33188,
+          "mtime_ns": 1790504023646117520,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14c-actor-network-orchestration.html",
+          "size": 69302
+        },
+        {
+          "device": 16777244,
+          "inode": 147857897,
+          "mode": 33188,
+          "mtime_ns": 1790504023646382227,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14d-ial2-foundations.html",
+          "size": 127905
+        },
+        {
+          "device": 16777244,
+          "inode": 147857898,
+          "mode": 33188,
+          "mtime_ns": 1790504023646632435,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14e-hial-vial-verification.html",
+          "size": 30592
+        },
+        {
+          "device": 16777244,
+          "inode": 147857899,
+          "mode": 33188,
+          "mtime_ns": 1790504023646942850,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14f-axi-manager-core.html",
+          "size": 176098
+        },
+        {
+          "device": 16777244,
+          "inode": 147857900,
+          "mode": 33188,
+          "mtime_ns": 1790504023647398266,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14g-axi-dynamic-identity.html",
+          "size": 233227
+        },
+        {
+          "device": 16777244,
+          "inode": 147857901,
+          "mode": 33188,
+          "mtime_ns": 1790504023647744015,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14h-protocol-profiles-and-apb.html",
+          "size": 193151
+        },
+        {
+          "device": 16777244,
+          "inode": 147857902,
+          "mode": 33188,
+          "mtime_ns": 1790504023648100181,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14i-ahb-and-integration.html",
+          "size": 199527
+        },
+        {
+          "device": 16777244,
+          "inode": 147857903,
+          "mode": 33188,
+          "mtime_ns": 1790504023648394305,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14j-extended-axi.html",
+          "size": 151227
+        },
+        {
+          "device": 16777244,
+          "inode": 147857904,
+          "mode": 33188,
+          "mtime_ns": 1790504023648793054,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14k-isf-language-and-scheduling.html",
+          "size": 122963
+        },
+        {
+          "device": 16777244,
+          "inode": 147857905,
+          "mode": 33188,
+          "mtime_ns": 1790504023649033303,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/14l-backends-validation-and-apis.html",
+          "size": 95357
+        },
+        {
+          "device": 16777244,
+          "inode": 147857906,
+          "mode": 33188,
+          "mtime_ns": 1790504023649223636,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/15-implementation-blueprint.html",
+          "size": 29962
+        },
+        {
+          "device": 16777244,
+          "inode": 147857907,
+          "mode": 33188,
+          "mtime_ns": 1790504023649367635,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/15a-ial2-new-protocol-support.html",
+          "size": 25674
+        },
+        {
+          "device": 16777244,
+          "inode": 147857908,
+          "mode": 33188,
+          "mtime_ns": 1790504023649554176,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16-ial2-protocol-platform-intent.html",
+          "size": 30874
+        },
+        {
+          "device": 16777244,
+          "inode": 147857909,
+          "mode": 33188,
+          "mtime_ns": 1790504023649768759,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16a-ial2-axi.html",
+          "size": 84992
+        },
+        {
+          "device": 16777244,
+          "inode": 147857910,
+          "mode": 33188,
+          "mtime_ns": 1790504023649987259,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16aa-ial2-axi-manager-capacity-status.html",
+          "size": 60356
+        },
+        {
+          "device": 16777244,
+          "inode": 147857911,
+          "mode": 33188,
+          "mtime_ns": 1790504023650188008,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16b-ial2-apb.html",
+          "size": 30397
+        },
+        {
+          "device": 16777244,
+          "inode": 147857912,
+          "mode": 33188,
+          "mtime_ns": 1790504023650598882,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16c-ial2-ahb.html",
+          "size": 254470
+        },
+        {
+          "device": 16777244,
+          "inode": 147857913,
+          "mode": 33188,
+          "mtime_ns": 1790504023651259505,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16d-hial-vial-verification-architecture.html",
+          "size": 330700
+        },
+        {
+          "device": 16777244,
+          "inode": 147857918,
+          "mode": 33188,
+          "mtime_ns": 1790504023652703793,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16da-vial-balanced-portable-composition.html",
+          "size": 46770
+        },
+        {
+          "device": 16777244,
+          "inode": 147857919,
+          "mode": 33188,
+          "mtime_ns": 1790504023653002292,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16db-vial-structural-backend-emission-matrix.html",
+          "size": 29523
+        },
+        {
+          "device": 16777244,
+          "inode": 147857920,
+          "mode": 33188,
+          "mtime_ns": 1790504023653495957,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16dc-vial-portable-verilator-runtime-measurement.html",
+          "size": 313611
+        },
+        {
+          "device": 16777244,
+          "inode": 147857922,
+          "mode": 33188,
+          "mtime_ns": 1790504023654055081,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16dd-vial-portable-vhdl-runtime-measurement.html",
+          "size": 62575
+        },
+        {
+          "device": 16777244,
+          "inode": 147857923,
+          "mode": 33188,
+          "mtime_ns": 1790504023654426204,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16de-vial-osvvm-runtime-execution-plan.html",
+          "size": 62366
+        },
+        {
+          "device": 16777244,
+          "inode": 147857924,
+          "mode": 33188,
+          "mtime_ns": 1790504023654803203,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16df-vial-architecture-scale-cap-closeout.html",
+          "size": 204125
+        },
+        {
+          "device": 16777244,
+          "inode": 147857914,
+          "mode": 33188,
+          "mtime_ns": 1790504023651473129,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16dg-vial-public-lifecycle-reference.html",
+          "size": 56938
+        },
+        {
+          "device": 16777244,
+          "inode": 147857915,
+          "mode": 33188,
+          "mtime_ns": 1790504023651951337,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16dh-vial-ahb-end-to-end-tutorial.html",
+          "size": 38420
+        },
+        {
+          "device": 16777244,
+          "inode": 147857916,
+          "mode": 33188,
+          "mtime_ns": 1790504023652234294,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16di-vial-legacy-migration.html",
+          "size": 41447
+        },
+        {
+          "device": 16777244,
+          "inode": 147857917,
+          "mode": 33188,
+          "mtime_ns": 1790504023652466960,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16dj-vial-capability-support-reference.html",
+          "size": 43133
+        },
+        {
+          "device": 16777244,
+          "inode": 147857921,
+          "mode": 33188,
+          "mtime_ns": 1790504023653821998,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16dk-inactive-proxy-lifetimes.html",
+          "size": 127215
+        },
+        {
+          "device": 16777244,
+          "inode": 147857925,
+          "mode": 33188,
+          "mtime_ns": 1790504023655176202,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/16e-nexsim-api-mcp-consumer-requirements.html",
+          "size": 144907
+        },
+        {
+          "device": 16777244,
+          "inode": 147857928,
+          "mode": 33188,
+          "mtime_ns": 1790504023655854451,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/404.html",
+          "size": 17673
+        },
+        {
+          "device": 16777244,
+          "inode": 147857926,
+          "mode": 33188,
+          "mtime_ns": 1790504023655432452,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/90-reference-map.html",
+          "size": 60494
+        },
+        {
+          "device": 16777244,
+          "inode": 147857927,
+          "mode": 33188,
+          "mtime_ns": 1790504023655664493,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/91-live-document-containment-adoption.html",
+          "size": 45608
+        },
+        {
+          "device": 16777244,
+          "inode": 147857839,
+          "mode": 33188,
+          "mtime_ns": 1790504023625625869,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/ayu-highlight-3fdfc3ac.css",
+          "size": 907
+        },
+        {
+          "device": 16777244,
+          "inode": 147857829,
+          "mode": 33188,
+          "mtime_ns": 1790504023624332623,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/book-609e4cb8.js",
+          "size": 30932
+        },
+        {
+          "device": 16777244,
+          "inode": 147857841,
+          "mode": 33188,
+          "mtime_ns": 1790504023626043576,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/clipboard-1626706a.min.js",
+          "size": 10754
+        },
+        {
+          "device": 16777244,
+          "inode": 147857830,
+          "mode": 16877,
+          "mtime_ns": 1790504023625074079,
+          "nlink": 6,
+          "path": ".artifacts/formal-preallocation-admission/book/css",
+          "size": 192
+        },
+        {
+          "device": 16777244,
+          "inode": 147857832,
+          "mode": 33188,
+          "mtime_ns": 1790504023624924454,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/css/chrome-d279d366.css",
+          "size": 18032
+        },
+        {
+          "device": 16777244,
+          "inode": 147857831,
+          "mode": 33188,
+          "mtime_ns": 1790504023624579747,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/css/general-e96d0476.css",
+          "size": 11478
+        },
+        {
+          "device": 16777244,
+          "inode": 147857833,
+          "mode": 33188,
+          "mtime_ns": 1790504023625040412,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/css/print-9e4910d8.css",
+          "size": 689
+        },
+        {
+          "device": 16777244,
+          "inode": 147857834,
+          "mode": 33188,
+          "mtime_ns": 1790504023625102870,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/css/variables-8adf115d.css",
+          "size": 10422
+        },
+        {
+          "device": 16777244,
+          "inode": 147857860,
+          "mode": 33188,
+          "mtime_ns": 1790504023634208428,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/elasticlunr-ef4e11c1.min.js",
+          "size": 18051
+        },
+        {
+          "device": 16777244,
+          "inode": 147857835,
+          "mode": 33188,
+          "mtime_ns": 1790504023625401036,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/favicon-8114d1fc.png",
+          "size": 5679
+        },
+        {
+          "device": 16777244,
+          "inode": 147857836,
+          "mode": 33188,
+          "mtime_ns": 1790504023625469578,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/favicon-de23e50b.svg",
+          "size": 1835
+        },
+        {
+          "device": 16777244,
+          "inode": 147857842,
+          "mode": 16877,
+          "mtime_ns": 1790504023628207320,
+          "nlink": 16,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts",
+          "size": 512
+        },
+        {
+          "device": 16777244,
+          "inode": 147857844,
+          "mode": 33188,
+          "mtime_ns": 1790504023626247701,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/OPEN-SANS-LICENSE.txt",
+          "size": 11358
+        },
+        {
+          "device": 16777244,
+          "inode": 147857845,
+          "mode": 33188,
+          "mtime_ns": 1790504023626306200,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/SOURCE-CODE-PRO-LICENSE.txt",
+          "size": 4528
+        },
+        {
+          "device": 16777244,
+          "inode": 147857843,
+          "mode": 33188,
+          "mtime_ns": 1790504023626176826,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/fonts-9644e21d.css",
+          "size": 3818
+        },
+        {
+          "device": 16777244,
+          "inode": 147857846,
+          "mode": 33188,
+          "mtime_ns": 1790504023626478741,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-300-7736aa35.woff2",
+          "size": 44352
+        },
+        {
+          "device": 16777244,
+          "inode": 147857847,
+          "mode": 33188,
+          "mtime_ns": 1790504023626673324,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-300italic-2c7b95c0.woff2",
+          "size": 40656
+        },
+        {
+          "device": 16777244,
+          "inode": 147857850,
+          "mode": 33188,
+          "mtime_ns": 1790504023627258906,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-600-486c6759.woff2",
+          "size": 44936
+        },
+        {
+          "device": 16777244,
+          "inode": 147857851,
+          "mode": 33188,
+          "mtime_ns": 1790504023627427364,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-600italic-1a3e8659.woff2",
+          "size": 42120
+        },
+        {
+          "device": 16777244,
+          "inode": 147857852,
+          "mode": 33188,
+          "mtime_ns": 1790504023627601655,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-700-c22fe8c7.woff2",
+          "size": 44988
+        },
+        {
+          "device": 16777244,
+          "inode": 147857853,
+          "mode": 33188,
+          "mtime_ns": 1790504023627744405,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-700italic-238ae959.woff2",
+          "size": 40800
+        },
+        {
+          "device": 16777244,
+          "inode": 147857854,
+          "mode": 33188,
+          "mtime_ns": 1790504023627881112,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-800-3d2c812a.woff2",
+          "size": 44536
+        },
+        {
+          "device": 16777244,
+          "inode": 147857855,
+          "mode": 33188,
+          "mtime_ns": 1790504023628178445,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-800italic-ba1521ec.woff2",
+          "size": 40812
+        },
+        {
+          "device": 16777244,
+          "inode": 147857849,
+          "mode": 33188,
+          "mtime_ns": 1790504023627185864,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-italic-6c9463f7.woff2",
+          "size": 41076
+        },
+        {
+          "device": 16777244,
+          "inode": 147857848,
+          "mode": 33188,
+          "mtime_ns": 1790504023626851282,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/open-sans-v17-all-charsets-regular-2e3b1d34.woff2",
+          "size": 43236
+        },
+        {
+          "device": 16777244,
+          "inode": 147857856,
+          "mode": 33188,
+          "mtime_ns": 1790504023628370069,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/fonts/source-code-pro-v11-all-charsets-500-2bdd9410.woff2",
+          "size": 59140
+        },
+        {
+          "device": 16777244,
+          "inode": 147857837,
+          "mode": 33188,
+          "mtime_ns": 1790504023625526452,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/highlight-493f70e1.css",
+          "size": 1209
+        },
+        {
+          "device": 16777244,
+          "inode": 147857840,
+          "mode": 33188,
+          "mtime_ns": 1790504023625687369,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/highlight-abc7f01d.js",
+          "size": 137537
+        },
+        {
+          "device": 16777244,
+          "inode": 147857865,
+          "mode": 33188,
+          "mtime_ns": 1790504023637367961,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/index.html",
+          "size": 24901
+        },
+        {
+          "device": 16777244,
+          "inode": 147857859,
+          "mode": 33188,
+          "mtime_ns": 1790504023634141012,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/mark-09e88c2c.min.js",
+          "size": 17320
+        },
+        {
+          "device": 16777244,
+          "inode": 147857929,
+          "mode": 33188,
+          "mtime_ns": 1790504023666776003,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/print.html",
+          "size": 4550616
+        },
+        {
+          "device": 16777244,
+          "inode": 147857858,
+          "mode": 33188,
+          "mtime_ns": 1790504023634063720,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/searcher-09f2665d.js",
+          "size": 20294
+        },
+        {
+          "device": 16777244,
+          "inode": 147857857,
+          "mode": 33188,
+          "mtime_ns": 1790504023631696268,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/searchindex-b7f38313.js",
+          "size": 14594943
+        },
+        {
+          "device": 16777244,
+          "inode": 147857861,
+          "mode": 33188,
+          "mtime_ns": 1790504023634592135,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/toc-7727513f.js",
+          "size": 31354
+        },
+        {
+          "device": 16777244,
+          "inode": 147857862,
+          "mode": 33188,
+          "mtime_ns": 1790504023634896426,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/toc.html",
+          "size": 14642
+        },
+        {
+          "device": 16777244,
+          "inode": 147857838,
+          "mode": 33188,
+          "mtime_ns": 1790504023625577786,
+          "nlink": 1,
+          "path": ".artifacts/formal-preallocation-admission/book/tomorrow-night-4c0ae647.css",
+          "size": 1694
+        }
+      ],
+      "path": ".artifacts/formal-preallocation-admission/book"
+    }
+  ],
+  "residue": {
+    ".artifacts/formal-preallocation-admission/book": false
+  },
+  "retained": [
+    "all logs",
+    "native/receipt evidence",
+    "spent compiler workspaces",
+    "docs/book/book"
+  ],
+  "rust": [
+    {
+      "path": "target/release",
+      "retained": [],
+      "status": "absent"
+    },
+    {
+      "path": "target/debug/incremental",
+      "retained": [],
+      "status": "absent"
+    },
+    {
+      "path": "target/debug/deps",
+      "retained": [],
+      "status": "absent"
+    },
+    {
+      "path": "rust/target/release",
+      "retained": [],
+      "status": "absent"
+    },
+    {
+      "path": "rust/target/debug/incremental",
+      "retained": [],
+      "status": "censused"
+    },
+    {
+      "path": "rust/target/debug/deps",
+      "retained": [],
+      "status": "censused"
+    }
+  ],
+  "scope": "Fixed obsolete generated mdBook copies from completed local documentation slices; no source, existing nested Git repository, native evidence or shared cache deletion.",
+  "utc": "2026-10-02T22:06:57.570581+00:00"
+}

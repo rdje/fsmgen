@@ -1,0 +1,33 @@
+{
+  "baseline": "6bf1e9b0a2802cf644d35667f35a2f7988e95989",
+  "clock_boundary": "UTC artifact name; Europe/Paris local date October3; roughly-daily sweep",
+  "commands": [
+    [
+      "python3",
+      "docs/audits/artifact-cleanup-daily-20261002/cleanup.py",
+      "--inspect"
+    ],
+    [
+      "python3",
+      "docs/audits/artifact-cleanup-daily-20261002/cleanup.py",
+      "--apply"
+    ],
+    [
+      "python3",
+      "docs/audits/artifact-cleanup-daily-20261002/cleanup.py",
+      "--verify-saved"
+    ],
+    [
+      "python3",
+      "docs/audits/artifact-cleanup-daily-20261002/verify.py"
+    ]
+  ],
+  "expected_statuses": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.67",
+  "reference_grep_status": 1
+}

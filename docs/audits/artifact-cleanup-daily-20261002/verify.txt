@@ -1,0 +1,8 @@
+ram-guard: PID 34920; host 63.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+hostile cleanup corruption rejects: target
+hostile cleanup corruption rejects: allocation
+hostile cleanup corruption rejects: membership
+hostile cleanup corruption rejects: hard_link
+hostile cleanup corruption rejects: retention
+changed protected identity rejects
+daily cleanup: exact member/allocation/node/link/residue and protected identities authenticate; immutable parents/Git bytes reverify; mutable captures are historical; obsolete render bytes/producing revision are not reproduced
