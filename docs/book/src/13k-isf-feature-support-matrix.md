@@ -107,6 +107,12 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 | Schedule report schema and storage roles | shipped bounded surface | Schedule JSON `schema_version: 1`, public `schedule_report_full_schema_stable`, advertised key/value families, and `inferred_storage[].kind`/`role` values. | The version-1 schedule JSON schema is stable through the public contract. Storage roles include dynamic waits, activation handoffs, ATL trigger-start handoffs, scheduler timeout-status latches, rule-trigger sources, transaction ports/bindings, temporal contract monitors, and resource round-robin pointers. Raw parser actor hashes, private `LoweringIR` internals, raw assignment lists, and recursive child report dumps remain private. |
 | Diagnostics and downstream issue reporting | shipped | Fail-closed parser/lowering diagnostics, strict-mode compatibility cuts, `--check --json` / `--check-json` failure payloads, and `bin/fsmgen-issue-bundle`. | Unsupported public forms reject before misleading artifacts are emitted. For `.isf` inputs, parser, lowering, report-building, and semantic check failures emit `success: false` JSON in check mode instead of empty stdout. Downstream consumers can provide a reproducible issue bundle without understanding `.fsm` or `.isf` internals. |
 
+Conditional source-intent qualification is private preparation. The detached
+parser prototype retains original operations and inline call sites while
+leaving complete ordinary actors unchanged. Import/formal/generated/domain
+propagation must qualify before normalization or branch integration; it changes
+no public syntax, schedule-report schema or admission boundary.
+
 Repeat-body activation matrix note: the shipped nested-repeat activation shapes
 under top-level `when` and `switch` branches are described by construction, not
 by an exhaustive list of spellings. The accepted context is a repeat directly

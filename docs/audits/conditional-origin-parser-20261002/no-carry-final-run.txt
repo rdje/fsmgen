@@ -1,0 +1,2 @@
+ram-guard: PID 23231; host 83.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS exact before/after producer/instrument/source identities and terminal fixed no-carry-bound capture

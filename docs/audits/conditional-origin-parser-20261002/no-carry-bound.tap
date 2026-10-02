@@ -1,0 +1,11 @@
+.artifacts/conditional-origin/red_no_carry.t .. 
+Dubious, test returned 43 (wstat 11008, 0x2b00)
+Failed 43/43 subtests 
+
+Test Summary Report
+-------------------
+.artifacts/conditional-origin/red_no_carry.t (Wstat: 11008 Tests: 43 Failed: 43)
+  Failed tests:  1-43
+  Non-zero exit status: 43
+Files=1, Tests=43,  4 wallclock secs ( 0.01 usr  0.00 sys +  1.98 cusr  0.49 csys =  2.48 CPU)
+Result: FAIL

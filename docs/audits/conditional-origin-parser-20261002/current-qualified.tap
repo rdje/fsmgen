@@ -1,0 +1,11 @@
+t/2043-isf-conditional-origin-parser.t .. 
+Dubious, test returned 42 (wstat 10752, 0x2a00)
+Failed 42/54 subtests 
+
+Test Summary Report
+-------------------
+t/2043-isf-conditional-origin-parser.t (Wstat: 10752 Tests: 54 Failed: 42)
+  Failed tests:  2-31, 34-44, 52
+  Non-zero exit status: 42
+Files=1, Tests=54,  4 wallclock secs ( 0.03 usr  0.01 sys +  1.90 cusr  0.80 csys =  2.74 CPU)
+Result: FAIL

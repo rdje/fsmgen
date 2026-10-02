@@ -1,0 +1,4 @@
+t/2043-isf-conditional-origin-parser.t ..... ok
+t/2042-isf-procedure-cond-normalization.t .. ok
+t/1390-isf-procedures.t .................... ok
+t/1396-isf-cond.t .......................... ok

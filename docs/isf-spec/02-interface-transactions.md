@@ -720,6 +720,11 @@ activation before these forms until the source-intent repair qualifies.
 `cond` inside an inline procedure body currently remains unexpanded and refuses
 at transaction lowering even after explicit activation; keep that conditional
 at the call site until the separately owned normalization repair qualifies.
+Detached parser-origin qualification preserves original operations and inline
+call sites without changing ordinary actors. Identical normalized clauses do
+not identify authored intent. Propagation through imports, formal preparation,
+generated children and domains must qualify before scheduling integration; the
+private prototype is not a public parser/report schema.
 Standalone normalization would newly admit a first sample-only procedure
 `cond` as activation. Explicit source intent must qualify before integrating
 that repair; committed production keeps this source refused.

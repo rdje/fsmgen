@@ -1,0 +1,17 @@
+{
+  "after_max_line_bytes": 852,
+  "before_max_line_bytes": 1024,
+  "changed_line": 53,
+  "files": {
+    "capacity-after.json": "8da80089261956af6157c3c459c5db88b41db128e06a28be2ae334b8f3d219bb",
+    "capacity-after.txt": "5bf311a70d433a7f83744ac863d5a8c8c352c22f1a954da38c63a14d31fabb5a",
+    "capacity-before.json": "d5a1f10022ed768cb7340f498cbae44f50585df32da8081821dec9550b9d7b93",
+    "capture-first.py": "f8ad354c5f7af292e8add8299ca678eca32e701eada676dd93474bfedf1b43a1",
+    "doctrines-before.txt": "c9c68d1896f658825a6ba438a20c7cf517937f4dbf05e11a636bd4e38968f2c4",
+    "refresh_capacity.py": "32c94b483937457b6b9b3d9b3e08d77741d4cbdad7b84602095fc1da03788f2c",
+    "task-index-after.txt": "a2d0aced52be474839ff6d692f44ef72c61a9c52595f5a2345fc97d3c5fedf76",
+    "task-index-before.txt": "6bf577f99f1d2d6698708393fadc56699c0873792847a8bd5ab250090143ec9d"
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.1",
+  "scope": "Only duplicate task-index summary shortened; detailed canonical task evidence retained. No production, tests, ceiling, baseline, health target or sealed parser evidence changed."
+}

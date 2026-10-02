@@ -1,0 +1,4 @@
+ram-guard: PID 22213; host 71.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS complete fixed 54-source parser origin membership, original source catalogs, full actors/kinds and actual path/target coverage
+PASS identical normalized twins retain distinct authored intent; exact nested/reused calls and unexpanded first sample cond remain explicit
+PASS genuine no-carry RED, unchanged production/immutable predecessors and independent hostile controls: omission, forged_catalog, shared_target, shared_width_kind, schema_kind

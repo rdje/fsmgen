@@ -1,0 +1,511 @@
+ram-guard: PID 79902; host 59.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+#   Failed test 'required explicit rewrite association first_select'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_select
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9956b58), ARRAY(0x7cc9b505b8), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1099
+# 	FSM::Adapter::ISF::Parser::_expand_selects_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9956b58), ARRAY(0x7cca281798), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1090
+# 	FSM::Adapter::ISF::Parser::_expand_selects(FSM::Test::ConditionalOriginParser=HASH(0x7cc9956b58), HASH(0x7cc9b4d0c0)) called at perl/FSM/Adapter/ISF/Parser.pm line 379
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9956b58), ARRAY(0x7cc9b46fd8), "first_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9956b58), "(actor first_select\x{a}  (clock clk) (reset (rst_n sync active_l"..., "first_select.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9956b58), "(actor first_select\x{a}  (clock clk) (reset (rst_n sync active_l"..., "first_select.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_select'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_select
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b48048), ARRAY(0x7cc9b5ae88), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1099
+# 	FSM::Adapter::ISF::Parser::_expand_selects_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b48048), ARRAY(0x7cc9b47060), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1090
+# 	FSM::Adapter::ISF::Parser::_expand_selects(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b48048), HASH(0x7cc9b574e0)) called at perl/FSM/Adapter/ISF/Parser.pm line 379
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b48048), ARRAY(0x7cc9b4fde0), "later_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b48048), "(actor later_select\x{a}  (clock clk) (reset (rst_n sync active_l"..., "later_select.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b48048), "(actor later_select\x{a}  (clock clk) (reset (rst_n sync active_l"..., "later_select.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_min'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_minmax
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46888), ARRAY(0x7cc9b55e70), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1039
+# 	FSM::Adapter::ISF::Parser::_expand_minmax_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46888), ARRAY(0x7cc9a29630), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1030
+# 	FSM::Adapter::ISF::Parser::_expand_minmax(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46888), HASH(0x7cc9b54fd8)) called at perl/FSM/Adapter/ISF/Parser.pm line 375
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46888), ARRAY(0x7cc9b57bd0), "first_min.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46888), "(actor first_min\x{a}  (clock clk) (reset (rst_n sync active_low)"..., "first_min.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46888), "(actor first_min\x{a}  (clock clk) (reset (rst_n sync active_low)"..., "first_min.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_min'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_minmax
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a38450), ARRAY(0x7cc9b56108), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1039
+# 	FSM::Adapter::ISF::Parser::_expand_minmax_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a38450), ARRAY(0x7cc9b518d0), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1030
+# 	FSM::Adapter::ISF::Parser::_expand_minmax(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a38450), HASH(0x7cc9a41f18)) called at perl/FSM/Adapter/ISF/Parser.pm line 375
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a38450), ARRAY(0x7cc99d10a8), "later_min.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a38450), "(actor later_min\x{a}  (clock clk) (reset (rst_n sync active_low)"..., "later_min.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a38450), "(actor later_min\x{a}  (clock clk) (reset (rst_n sync active_low)"..., "later_min.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_max'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_minmax
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45ae0), ARRAY(0x7cc9b52978), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1039
+# 	FSM::Adapter::ISF::Parser::_expand_minmax_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45ae0), ARRAY(0x7cc9b4ef48), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1030
+# 	FSM::Adapter::ISF::Parser::_expand_minmax(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45ae0), HASH(0x7cc9b5ceb8)) called at perl/FSM/Adapter/ISF/Parser.pm line 375
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45ae0), ARRAY(0x7cc9b55420), "first_max.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45ae0), "(actor first_max\x{a}  (clock clk) (reset (rst_n sync active_low)"..., "first_max.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45ae0), "(actor first_max\x{a}  (clock clk) (reset (rst_n sync active_low)"..., "first_max.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_max'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_minmax
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46048), ARRAY(0x7cc9a411e0), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1039
+# 	FSM::Adapter::ISF::Parser::_expand_minmax_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46048), ARRAY(0x7cc9b44d98), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1030
+# 	FSM::Adapter::ISF::Parser::_expand_minmax(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46048), HASH(0x7ccaa65948)) called at perl/FSM/Adapter/ISF/Parser.pm line 375
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46048), ARRAY(0x7cc9b55c30), "later_max.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46048), "(actor later_max\x{a}  (clock clk) (reset (rst_n sync active_low)"..., "later_max.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46048), "(actor later_max\x{a}  (clock clk) (reset (rst_n sync active_low)"..., "later_max.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_when_bit'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_bit_test
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46f78), ARRAY(0x7cc9b576c0), "transaction 'main'", HASH(0x7cc9b59b40)) called at perl/FSM/Adapter/ISF/Parser.pm line 1165
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46f78), ARRAY(0x7cc9b55d20), "transaction 'main'", HASH(0x7cc9b59b40)) called at perl/FSM/Adapter/ISF/Parser.pm line 1156
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46f78), HASH(0x7cc9b59de0)) called at perl/FSM/Adapter/ISF/Parser.pm line 346
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46f78), ARRAY(0x7cc9957cf0), "first_when_bit.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46f78), "(actor first_when_bit\x{a}  (clock clk) (reset (rst_n sync active"..., "first_when_bit.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46f78), "(actor first_when_bit\x{a}  (clock clk) (reset (rst_n sync active"..., "first_when_bit.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_when_bit'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_bit_test
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b54798), ARRAY(0x7cc9b58d08), "transaction 'main'", HASH(0x7cc9b5b5d0)) called at perl/FSM/Adapter/ISF/Parser.pm line 1165
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b54798), ARRAY(0x7cc9b5a5e8), "transaction 'main'", HASH(0x7cc9b5b5d0)) called at perl/FSM/Adapter/ISF/Parser.pm line 1156
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b54798), HASH(0x7cc9b60168)) called at perl/FSM/Adapter/ISF/Parser.pm line 346
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b54798), ARRAY(0x7cc9b47480), "later_when_bit.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b54798), "(actor later_when_bit\x{a}  (clock clk) (reset (rst_n sync active"..., "later_when_bit.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b54798), "(actor later_when_bit\x{a}  (clock clk) (reset (rst_n sync active"..., "later_when_bit.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_unless_bit'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_bit_test
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b56048), ARRAY(0x7cc9b5edc8), "transaction 'main'", HASH(0x7cc9b5c618)) called at perl/FSM/Adapter/ISF/Parser.pm line 1165
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b56048), ARRAY(0x7cc9b60b58), "transaction 'main'", HASH(0x7cc9b5c618)) called at perl/FSM/Adapter/ISF/Parser.pm line 1156
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b56048), HASH(0x7cc9b52f78)) called at perl/FSM/Adapter/ISF/Parser.pm line 346
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b56048), ARRAY(0x7cc9b5fbd0), "first_unless_bit.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b56048), "(actor first_unless_bit\x{a}  (clock clk) (reset (rst_n sync acti"..., "first_unless_bit.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b56048), "(actor first_unless_bit\x{a}  (clock clk) (reset (rst_n sync acti"..., "first_unless_bit.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_unless_bit'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_bit_test
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b900), ARRAY(0x7cc9b5ebb8), "transaction 'main'", HASH(0x7cc9b638d0)) called at perl/FSM/Adapter/ISF/Parser.pm line 1165
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b900), ARRAY(0x7cc9b61930), "transaction 'main'", HASH(0x7cc9b638d0)) called at perl/FSM/Adapter/ISF/Parser.pm line 1156
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b900), HASH(0x7cc9a36d80)) called at perl/FSM/Adapter/ISF/Parser.pm line 346
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b900), ARRAY(0x7cc9993600), "later_unless_bit.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b900), "(actor later_unless_bit\x{a}  (clock clk) (reset (rst_n sync acti"..., "later_unless_bit.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b900), "(actor later_unless_bit\x{a}  (clock clk) (reset (rst_n sync acti"..., "later_unless_bit.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_when_field'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_when_field
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a738), ARRAY(0x7cc9b57120), "transaction 'main'", HASH(0x7cc9b5dc60)) called at perl/FSM/Adapter/ISF/Parser.pm line 1251
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a738), ARRAY(0x7cc9b4b090), "transaction 'main'", HASH(0x7cc9b5dc60)) called at perl/FSM/Adapter/ISF/Parser.pm line 1242
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a738), HASH(0x7cc9b5a2e8)) called at perl/FSM/Adapter/ISF/Parser.pm line 350
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a738), ARRAY(0x7cc9b5ce28), "first_when_field.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a738), "(actor first_when_field\x{a}  (clock clk) (reset (rst_n sync acti"..., "first_when_field.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a738), "(actor first_when_field\x{a}  (clock clk) (reset (rst_n sync acti"..., "first_when_field.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_when_field'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_when_field
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64498), ARRAY(0x7cc9b605e8), "transaction 'main'", HASH(0x7cc9b57660)) called at perl/FSM/Adapter/ISF/Parser.pm line 1251
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64498), ARRAY(0x7cc9b5f960), "transaction 'main'", HASH(0x7cc9b57660)) called at perl/FSM/Adapter/ISF/Parser.pm line 1242
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64498), HASH(0x7cc9b5dae0)) called at perl/FSM/Adapter/ISF/Parser.pm line 350
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64498), ARRAY(0x7cc9a45510), "later_when_field.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64498), "(actor later_when_field\x{a}  (clock clk) (reset (rst_n sync acti"..., "later_when_field.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64498), "(actor later_when_field\x{a}  (clock clk) (reset (rst_n sync acti"..., "later_when_field.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_unless_field'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_when_field
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a1f8), ARRAY(0x7cc9b61a80), "transaction 'main'", HASH(0x7cc9b62708)) called at perl/FSM/Adapter/ISF/Parser.pm line 1251
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a1f8), ARRAY(0x7cc9b5e7f8), "transaction 'main'", HASH(0x7cc9b62708)) called at perl/FSM/Adapter/ISF/Parser.pm line 1242
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a1f8), HASH(0x7cc9b5e738)) called at perl/FSM/Adapter/ISF/Parser.pm line 350
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a1f8), ARRAY(0x7cc9b61030), "first_unless_field.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a1f8), "(actor first_unless_field\x{a}  (clock clk) (reset (rst_n sync ac"..., "first_unless_field.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5a1f8), "(actor first_unless_field\x{a}  (clock clk) (reset (rst_n sync ac"..., "first_unless_field.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_unless_field'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_when_field
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61c30), ARRAY(0x7cc9b5eaf8), "transaction 'main'", HASH(0x7cc9b5cd08)) called at perl/FSM/Adapter/ISF/Parser.pm line 1251
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61c30), ARRAY(0x7cc9b54528), "transaction 'main'", HASH(0x7cc9b5cd08)) called at perl/FSM/Adapter/ISF/Parser.pm line 1242
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61c30), HASH(0x7cc9b50fd8)) called at perl/FSM/Adapter/ISF/Parser.pm line 350
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61c30), ARRAY(0x7cc9b56eb8), "later_unless_field.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61c30), "(actor later_unless_field\x{a}  (clock clk) (reset (rst_n sync ac"..., "later_unless_field.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61c30), "(actor later_unless_field\x{a}  (clock clk) (reset (rst_n sync ac"..., "later_unless_field.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_cond'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin missing at ["transactions",0,"clauses",0]
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 38.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(ARRAY(0x7cc9b61cc0), ARRAY(0x7cc9a0e198)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 258
+# 	FSM::Test::ConditionalOriginParser::_walk_node(ARRAY(0x7cc9b61cc0), ARRAY(0x7cc9a0e198), CODE(0x7cc9b5b960)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 251
+# 	FSM::Test::ConditionalOriginParser::_walk(ARRAY(0x7cc9b4ef48), ARRAY(0x7cc9b45cf0), CODE(0x7cc9b5b960)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 45
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b59090), "(actor first_cond\x{a}  (clock clk) (reset (rst_n sync active_low"..., "first_cond.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_cond'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin missing at ["transactions",0,"clauses",1]
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 38.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(ARRAY(0x7cc9b58eb8), ARRAY(0x7cc9b58b28)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 258
+# 	FSM::Test::ConditionalOriginParser::_walk_node(ARRAY(0x7cc9b58eb8), ARRAY(0x7cc9b58b28), CODE(0x7cc9b58d68)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 251
+# 	FSM::Test::ConditionalOriginParser::_walk(ARRAY(0x7cc9b5b1e0), ARRAY(0x7cc9b57870), CODE(0x7cc9b58d68)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 45
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b50258), "(actor later_cond\x{a}  (clock clk) (reset (rst_n sync active_low"..., "later_cond.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_when_bit_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_bit_test
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5c858), ARRAY(0x7cc9b60c78), "transaction 'main'", HASH(0x7cc9b54738)) called at perl/FSM/Adapter/ISF/Parser.pm line 1165
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5c858), ARRAY(0x7cc9b66ee8), "transaction 'main'", HASH(0x7cc9b54738)) called at perl/FSM/Adapter/ISF/Parser.pm line 1156
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5c858), HASH(0x7cc9b66078)) called at perl/FSM/Adapter/ISF/Parser.pm line 346
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5c858), ARRAY(0x7cc9b69f30), "first_when_bit_sample.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5c858), "(actor first_when_bit_sample\x{a}  (clock clk) (reset (rst_n sync"..., "first_when_bit_sample.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5c858), "(actor first_when_bit_sample\x{a}  (clock clk) (reset (rst_n sync"..., "first_when_bit_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_when_bit_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_bit_test
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc99d7e88), ARRAY(0x7cc9b660d8), "transaction 'main'", HASH(0x7cc9b5da80)) called at perl/FSM/Adapter/ISF/Parser.pm line 1165
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc99d7e88), ARRAY(0x7cc9b66af8), "transaction 'main'", HASH(0x7cc9b5da80)) called at perl/FSM/Adapter/ISF/Parser.pm line 1156
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests(FSM::Test::ConditionalOriginParser=HASH(0x7cc99d7e88), HASH(0x7cc9b653f0)) called at perl/FSM/Adapter/ISF/Parser.pm line 346
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc99d7e88), ARRAY(0x7cc9b565e8), "later_when_bit_sample.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc99d7e88), "(actor later_when_bit_sample\x{a}  (clock clk) (reset (rst_n sync"..., "later_when_bit_sample.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc99d7e88), "(actor later_when_bit_sample\x{a}  (clock clk) (reset (rst_n sync"..., "later_when_bit_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_unless_bit_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_bit_test
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b50558), ARRAY(0x7cc9b69720), "transaction 'main'", HASH(0x7cc9b61210)) called at perl/FSM/Adapter/ISF/Parser.pm line 1165
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b50558), ARRAY(0x7cc9b64588), "transaction 'main'", HASH(0x7cc9b61210)) called at perl/FSM/Adapter/ISF/Parser.pm line 1156
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b50558), HASH(0x7cc9b6a1c8)) called at perl/FSM/Adapter/ISF/Parser.pm line 346
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b50558), ARRAY(0x7cc9b64198), "first_unless_bit_sample.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b50558), "(actor first_unless_bit_sample\x{a}  (clock clk) (reset (rst_n sy"..., "first_unless_bit_sample.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b50558), "(actor first_unless_bit_sample\x{a}  (clock clk) (reset (rst_n sy"..., "first_unless_bit_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_unless_bit_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_bit_test
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b55bd0), ARRAY(0x7cc9b608e8), "transaction 'main'", HASH(0x7cc9b66258)) called at perl/FSM/Adapter/ISF/Parser.pm line 1165
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b55bd0), ARRAY(0x7cc9b62408), "transaction 'main'", HASH(0x7cc9b66258)) called at perl/FSM/Adapter/ISF/Parser.pm line 1156
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b55bd0), HASH(0x7cc9b453f0)) called at perl/FSM/Adapter/ISF/Parser.pm line 346
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b55bd0), ARRAY(0x7cc9b5b840), "later_unless_bit_sample.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b55bd0), "(actor later_unless_bit_sample\x{a}  (clock clk) (reset (rst_n sy"..., "later_unless_bit_sample.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b55bd0), "(actor later_unless_bit_sample\x{a}  (clock clk) (reset (rst_n sy"..., "later_unless_bit_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_when_field_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_when_field
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b676c0), ARRAY(0x7cc9b52288), "transaction 'main'", HASH(0x7cc9b696f0)) called at perl/FSM/Adapter/ISF/Parser.pm line 1251
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b676c0), ARRAY(0x7cc9959d68), "transaction 'main'", HASH(0x7cc9b696f0)) called at perl/FSM/Adapter/ISF/Parser.pm line 1242
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b676c0), HASH(0x7cc9b64078)) called at perl/FSM/Adapter/ISF/Parser.pm line 350
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b676c0), ARRAY(0x7cc9b62e28), "first_when_field_sample.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b676c0), "(actor first_when_field_sample\x{a}  (clock clk) (reset (rst_n sy"..., "first_when_field_sample.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b676c0), "(actor first_when_field_sample\x{a}  (clock clk) (reset (rst_n sy"..., "first_when_field_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_when_field_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_when_field
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61390), ARRAY(0x7cc9b651b0), "transaction 'main'", HASH(0x7cc9b635a0)) called at perl/FSM/Adapter/ISF/Parser.pm line 1251
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61390), ARRAY(0x7cc9b5d0c0), "transaction 'main'", HASH(0x7cc9b635a0)) called at perl/FSM/Adapter/ISF/Parser.pm line 1242
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61390), HASH(0x7cc9b5ec78)) called at perl/FSM/Adapter/ISF/Parser.pm line 350
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61390), ARRAY(0x7cc9b6ae58), "later_when_field_sample.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61390), "(actor later_when_field_sample\x{a}  (clock clk) (reset (rst_n sy"..., "later_when_field_sample.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61390), "(actor later_when_field_sample\x{a}  (clock clk) (reset (rst_n sy"..., "later_when_field_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_unless_field_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_when_field
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6a3d8), ARRAY(0x7cc9a45510), "transaction 'main'", HASH(0x7cc9b62378)) called at perl/FSM/Adapter/ISF/Parser.pm line 1251
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6a3d8), ARRAY(0x7cc9b66d68), "transaction 'main'", HASH(0x7cc9b62378)) called at perl/FSM/Adapter/ISF/Parser.pm line 1242
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6a3d8), HASH(0x7cc9b69030)) called at perl/FSM/Adapter/ISF/Parser.pm line 350
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6a3d8), ARRAY(0x7cc9b62258), "first_unless_field_sample.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6a3d8), "(actor first_unless_field_sample\x{a}  (clock clk) (reset (rst_n "..., "first_unless_field_sample.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6a3d8), "(actor first_unless_field_sample\x{a}  (clock clk) (reset (rst_n "..., "first_unless_field_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_unless_field_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_when_field
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5fd20), ARRAY(0x7ccaa452e8), "transaction 'main'", HASH(0x7cc9b66438)) called at perl/FSM/Adapter/ISF/Parser.pm line 1251
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5fd20), ARRAY(0x7cc9b576f0), "transaction 'main'", HASH(0x7cc9b66438)) called at perl/FSM/Adapter/ISF/Parser.pm line 1242
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5fd20), HASH(0x7cc9b56978)) called at perl/FSM/Adapter/ISF/Parser.pm line 350
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5fd20), ARRAY(0x7cc9b61870), "later_unless_field_sample.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5fd20), "(actor later_unless_field_sample\x{a}  (clock clk) (reset (rst_n "..., "later_unless_field_sample.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5fd20), "(actor later_unless_field_sample\x{a}  (clock clk) (reset (rst_n "..., "later_unless_field_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_cond_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin missing at ["transactions",0,"clauses",0]
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 38.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(ARRAY(0x7cc9b69a50), ARRAY(0x7cc9b6ad98)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 258
+# 	FSM::Test::ConditionalOriginParser::_walk_node(ARRAY(0x7cc9b69a50), ARRAY(0x7cc9b6ad98), CODE(0x7cc9b56618)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 251
+# 	FSM::Test::ConditionalOriginParser::_walk(ARRAY(0x7cc9b6ab28), ARRAY(0x7cc9a1c378), CODE(0x7cc9b56618)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 45
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b4b5d0), "(actor first_cond_sample\x{a}  (clock clk) (reset (rst_n sync act"..., "first_cond_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_cond_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin missing at ["transactions",0,"clauses",1]
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 38.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(ARRAY(0x7cc9b5f0c0), ARRAY(0x7cc9b604c8)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 258
+# 	FSM::Test::ConditionalOriginParser::_walk_node(ARRAY(0x7cc9b5f0c0), ARRAY(0x7cc9b604c8), CODE(0x7cc9b59e40)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 251
+# 	FSM::Test::ConditionalOriginParser::_walk(ARRAY(0x7cc9b65ae0), ARRAY(0x7cc9b67570), CODE(0x7cc9b59e40)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 45
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b65b40), "(actor later_cond_sample\x{a}  (clock clk) (reset (rst_n sync act"..., "later_cond_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_proc_select'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin call association missing
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 118.
+# 	FSM::Test::ConditionalOriginParser::_expand_one_call(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64948), ARRAY(0x7cc9b68618), HASH(0x7cc9b696c0), ARRAY(0x7cc9b62e28), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 502
+# 	FSM::Adapter::ISF::Parser::_expand_calls_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64948), ARRAY(0x7cc9b5e318), HASH(0x7cc9b696c0), ARRAY(0x7cc9b62e28), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 482
+# 	FSM::Adapter::ISF::Parser::_expand_procedure_calls(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64948), HASH(0x7cc9b5ef18)) called at perl/FSM/Adapter/ISF/Parser.pm line 340
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64948), ARRAY(0x7cc9b50c18), "first_proc_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64948), "(actor first_proc_select\x{a}  (clock clk) (reset (rst_n sync act"..., "first_proc_select.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b64948), "(actor first_proc_select\x{a}  (clock clk) (reset (rst_n sync act"..., "first_proc_select.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_proc_select'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin call association missing
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 118.
+# 	FSM::Test::ConditionalOriginParser::_expand_one_call(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6ad38), ARRAY(0x7cc9b5fd20), HASH(0x7cc9b5e708), ARRAY(0x7cc9b6ceb8), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 502
+# 	FSM::Adapter::ISF::Parser::_expand_calls_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6ad38), ARRAY(0x7cc9b6d780), HASH(0x7cc9b5e708), ARRAY(0x7cc9b6ceb8), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 482
+# 	FSM::Adapter::ISF::Parser::_expand_procedure_calls(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6ad38), HASH(0x7cc9b663d8)) called at perl/FSM/Adapter/ISF/Parser.pm line 340
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6ad38), ARRAY(0x7cc9b5edf8), "later_proc_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6ad38), "(actor later_proc_select\x{a}  (clock clk) (reset (rst_n sync act"..., "later_proc_select.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b6ad38), "(actor later_proc_select\x{a}  (clock clk) (reset (rst_n sync act"..., "later_proc_select.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_proc_when_bit'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin call association missing
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 118.
+# 	FSM::Test::ConditionalOriginParser::_expand_one_call(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b650f0), ARRAY(0x7cc9b515a0), HASH(0x7cc9b6a288), ARRAY(0x7cc9b64ac8), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 502
+# 	FSM::Adapter::ISF::Parser::_expand_calls_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b650f0), ARRAY(0x7cc9b6e4c8), HASH(0x7cc9b6a288), ARRAY(0x7cc9b64ac8), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 482
+# 	FSM::Adapter::ISF::Parser::_expand_procedure_calls(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b650f0), HASH(0x7cc9b649d8)) called at perl/FSM/Adapter/ISF/Parser.pm line 340
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b650f0), ARRAY(0x7cc9b65870), "first_proc_when_bit.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b650f0), "(actor first_proc_when_bit\x{a}  (clock clk) (reset (rst_n sync a"..., "first_proc_when_bit.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b650f0), "(actor first_proc_when_bit\x{a}  (clock clk) (reset (rst_n sync a"..., "first_proc_when_bit.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_proc_when_bit'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin call association missing
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 118.
+# 	FSM::Test::ConditionalOriginParser::_expand_one_call(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68858), ARRAY(0x7cc9b5bb40), HASH(0x7cc9b65540), ARRAY(0x7cc9b6cd08), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 502
+# 	FSM::Adapter::ISF::Parser::_expand_calls_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68858), ARRAY(0x7cc9b65e10), HASH(0x7cc9b65540), ARRAY(0x7cc9b6cd08), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 482
+# 	FSM::Adapter::ISF::Parser::_expand_procedure_calls(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68858), HASH(0x7cc9b611e0)) called at perl/FSM/Adapter/ISF/Parser.pm line 340
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68858), ARRAY(0x7cc9b6e318), "later_proc_when_bit.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68858), "(actor later_proc_when_bit\x{a}  (clock clk) (reset (rst_n sync a"..., "later_proc_when_bit.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68858), "(actor later_proc_when_bit\x{a}  (clock clk) (reset (rst_n sync a"..., "later_proc_when_bit.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_proc_cond'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin call association missing
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 118.
+# 	FSM::Test::ConditionalOriginParser::_expand_one_call(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61690), ARRAY(0x7cc9b68a98), HASH(0x7cc9b59de0), ARRAY(0x7cc9b69cc0), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 502
+# 	FSM::Adapter::ISF::Parser::_expand_calls_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61690), ARRAY(0x7cc9b55450), HASH(0x7cc9b59de0), ARRAY(0x7cc9b69cc0), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 482
+# 	FSM::Adapter::ISF::Parser::_expand_procedure_calls(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61690), HASH(0x7cc9b62138)) called at perl/FSM/Adapter/ISF/Parser.pm line 340
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61690), ARRAY(0x7cc9b6d9f0), "first_proc_cond.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61690), "(actor first_proc_cond\x{a}  (clock clk) (reset (rst_n sync activ"..., "first_proc_cond.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b61690), "(actor first_proc_cond\x{a}  (clock clk) (reset (rst_n sync activ"..., "first_proc_cond.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_proc_cond'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin call association missing
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 118.
+# 	FSM::Test::ConditionalOriginParser::_expand_one_call(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b780), ARRAY(0x7cc9b62df8), HASH(0x7cc9b61b10), ARRAY(0x7cc9b65ba0), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 502
+# 	FSM::Adapter::ISF::Parser::_expand_calls_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b780), ARRAY(0x7cc9b62ca8), HASH(0x7cc9b61b10), ARRAY(0x7cc9b65ba0), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 482
+# 	FSM::Adapter::ISF::Parser::_expand_procedure_calls(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b780), HASH(0x7cc9b5cd38)) called at perl/FSM/Adapter/ISF/Parser.pm line 340
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b780), ARRAY(0x7cc9b65cf0), "later_proc_cond.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b780), "(actor later_proc_cond\x{a}  (clock clk) (reset (rst_n sync activ"..., "later_proc_cond.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b5b780), "(actor later_proc_cond\x{a}  (clock clk) (reset (rst_n sync activ"..., "later_proc_cond.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_proc_when_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin call association missing
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 118.
+# 	FSM::Test::ConditionalOriginParser::_expand_one_call(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46768), ARRAY(0x7cc9b64768), HASH(0x7cc9b67fc0), ARRAY(0x7cc9b60f48), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 502
+# 	FSM::Adapter::ISF::Parser::_expand_calls_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46768), ARRAY(0x7cc9b6e228), HASH(0x7cc9b67fc0), ARRAY(0x7cc9b60f48), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 482
+# 	FSM::Adapter::ISF::Parser::_expand_procedure_calls(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46768), HASH(0x7cc9b67ea0)) called at perl/FSM/Adapter/ISF/Parser.pm line 340
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46768), ARRAY(0x7cc9b65060), "first_proc_when_sample.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46768), "(actor first_proc_when_sample\x{a}  (clock clk) (reset (rst_n syn"..., "first_proc_when_sample.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b46768), "(actor first_proc_when_sample\x{a}  (clock clk) (reset (rst_n syn"..., "first_proc_when_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_when_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin missing at ["transactions",0,"clauses",0]
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 38.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(ARRAY(0x7cc9b5db70), ARRAY(0x7cc9b61540)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 258
+# 	FSM::Test::ConditionalOriginParser::_walk_node(ARRAY(0x7cc9b5db70), ARRAY(0x7cc9b61540), CODE(0x7cc9b6d720)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 251
+# 	FSM::Test::ConditionalOriginParser::_walk(ARRAY(0x7cc9b6ca98), ARRAY(0x7cc9b5c1f8), CODE(0x7cc9b6d720)) called at t/lib/FSM/Test/ConditionalOriginParser.pm line 45
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b608b8), "(actor first_when_sample\x{a}  (clock clk) (reset (rst_n sync act"..., "first_when_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_select_zero'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_select
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68bb8), ARRAY(0x7cc9b5e5b8), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1099
+# 	FSM::Adapter::ISF::Parser::_expand_selects_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68bb8), ARRAY(0x7cc9b641c8), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1090
+# 	FSM::Adapter::ISF::Parser::_expand_selects(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68bb8), HASH(0x7cc9b5e828)) called at perl/FSM/Adapter/ISF/Parser.pm line 379
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68bb8), ARRAY(0x7cc9b68a08), "first_select_zero.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68bb8), "(actor first_select_zero\x{a}  (clock clk) (reset (rst_n sync act"..., "first_select_zero.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68bb8), "(actor first_select_zero\x{a}  (clock clk) (reset (rst_n sync act"..., "first_select_zero.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_bit_sample_zero'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_bit_test
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), ARRAY(0x7cc9b61b10), "transaction 'main'", HASH(0x7cc9b671b0)) called at perl/FSM/Adapter/ISF/Parser.pm line 1165
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), ARRAY(0x7cc9b65360), "transaction 'main'", HASH(0x7cc9b671b0)) called at perl/FSM/Adapter/ISF/Parser.pm line 1156
+# 	FSM::Adapter::ISF::Parser::_expand_bit_tests(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), HASH(0x7cc9b67e70)) called at perl/FSM/Adapter/ISF/Parser.pm line 346
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), ARRAY(0x7cc9b613f0), "first_bit_sample_zero.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), "(actor first_bit_sample_zero\x{a}  (clock clk) (reset (rst_n sync"..., "first_bit_sample_zero.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), "(actor first_bit_sample_zero\x{a}  (clock clk) (reset (rst_n sync"..., "first_bit_sample_zero.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association initialized_select'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_select
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45bd0), ARRAY(0x7cc9b66d38), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1099
+# 	FSM::Adapter::ISF::Parser::_expand_selects_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45bd0), ARRAY(0x7cc9b69f90), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1090
+# 	FSM::Adapter::ISF::Parser::_expand_selects(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45bd0), HASH(0x7cc9b6df30)) called at perl/FSM/Adapter/ISF/Parser.pm line 379
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45bd0), ARRAY(0x7cc9b68f18), "initialized_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45bd0), "(actor initialized_select\x{a}  (clock clk) (reset (rst_n sync ac"..., "initialized_select.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b45bd0), "(actor initialized_select\x{a}  (clock clk) (reset (rst_n sync ac"..., "initialized_select.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association nested_select'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_select
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), ARRAY(0x7cc9b70528), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1099
+# 	FSM::Adapter::ISF::Parser::_expand_selects_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), ARRAY(0x7cc9b6bc60), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1111
+# 	FSM::Adapter::ISF::Parser::_select_rewrite_clause(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), ARRAY(0x7cc9b6d750), "transaction 'main'") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 141
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), ARRAY(0x7cc9b6d750), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1101
+# 	FSM::Adapter::ISF::Parser::_expand_selects_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), ARRAY(0x7cc9b6ac78), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1090
+# 	FSM::Adapter::ISF::Parser::_expand_selects(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), HASH(0x7cc9b6b5a0)) called at perl/FSM/Adapter/ISF/Parser.pm line 379
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), ARRAY(0x7cc9b5f2d0), "nested_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), "(actor nested_select\x{a}  (clock clk) (reset (rst_n sync active_"..., "nested_select.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68648), "(actor nested_select\x{a}  (clock clk) (reset (rst_n sync active_"..., "nested_select.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association domain_first_select'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_select
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc99a2180), ARRAY(0x7cc9a3f300), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1099
+# 	FSM::Adapter::ISF::Parser::_expand_selects_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc99a2180), ARRAY(0x7cc9b3e6f0), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1090
+# 	FSM::Adapter::ISF::Parser::_expand_selects(FSM::Test::ConditionalOriginParser=HASH(0x7cc99a2180), HASH(0x7cc9b718d0)) called at perl/FSM/Adapter/ISF/Parser.pm line 379
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc99a2180), ARRAY(0x7cc9b70768), "domain_first_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc99a2180), "(actor domain_first_select\x{a}  (clock-domains\x{a}    (domain idle "..., "domain_first_select.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc99a2180), "(actor domain_first_select\x{a}  (clock-domains\x{a}    (domain idle "..., "domain_first_select.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association domain_later_select'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_select
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b62048), ARRAY(0x7cc9b4f630), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1099
+# 	FSM::Adapter::ISF::Parser::_expand_selects_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b62048), ARRAY(0x7cc9b6eac8), "transaction 'main'") called at perl/FSM/Adapter/ISF/Parser.pm line 1090
+# 	FSM::Adapter::ISF::Parser::_expand_selects(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b62048), HASH(0x7cc9b67180)) called at perl/FSM/Adapter/ISF/Parser.pm line 379
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b62048), ARRAY(0x7cc9a3e438), "domain_later_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b62048), "(actor domain_later_select\x{a}  (clock-domains\x{a}    (domain idle "..., "domain_later_select.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b62048), "(actor domain_later_select\x{a}  (clock-domains\x{a}    (domain idle "..., "domain_later_select.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association domain_first_sample'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_when_field
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68978), ARRAY(0x7cc9a1cb88), "transaction 'main'", HASH(0x7cc9b6ff60)) called at perl/FSM/Adapter/ISF/Parser.pm line 1251
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68978), ARRAY(0x7cc9b573f0), "transaction 'main'", HASH(0x7cc9b6ff60)) called at perl/FSM/Adapter/ISF/Parser.pm line 1242
+# 	FSM::Adapter::ISF::Parser::_expand_when_fields(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68978), HASH(0x7cc9b5ab88)) called at perl/FSM/Adapter/ISF/Parser.pm line 350
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68978), ARRAY(0x7cc9a2e210), "domain_first_sample.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68978), "(actor domain_first_sample\x{a}  (clock-domains\x{a}    (domain idle "..., "domain_first_sample.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9b68978), "(actor domain_first_sample\x{a}  (clock-domains\x{a}    (domain idle "..., "domain_first_sample.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association first_generated_select'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_select
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a3cd38), ARRAY(0x7cc9b68f78), "transaction 'worker'") called at perl/FSM/Adapter/ISF/Parser.pm line 1099
+# 	FSM::Adapter::ISF::Parser::_expand_selects_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a3cd38), ARRAY(0x7cc9b66048), "transaction 'worker'") called at perl/FSM/Adapter/ISF/Parser.pm line 1090
+# 	FSM::Adapter::ISF::Parser::_expand_selects(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a3cd38), HASH(0x7cc9b70d08)) called at perl/FSM/Adapter/ISF/Parser.pm line 379
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a3cd38), ARRAY(0x7cc9b5b5a0), "first_generated_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a3cd38), "(actor first_generated_select\x{a}  (clock clk) (reset (rst_n syn"..., "first_generated_select.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a3cd38), "(actor first_generated_select\x{a}  (clock clk) (reset (rst_n syn"..., "first_generated_select.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+
+#   Failed test 'required explicit rewrite association later_generated_select'
+#   at .artifacts/conditional-origin/red_no_carry.t line 24.
+# conditional origin producer association missing for _desugar_select
+#  at t/lib/FSM/Test/ConditionalOriginParser.pm line 153.
+# 	FSM::Test::ConditionalOriginParser::__ANON__(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a1e7c8), ARRAY(0x7cc9a0d870), "transaction 'worker'") called at perl/FSM/Adapter/ISF/Parser.pm line 1099
+# 	FSM::Adapter::ISF::Parser::_expand_selects_in_list(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a1e7c8), ARRAY(0x7cc9b70af8), "transaction 'worker'") called at perl/FSM/Adapter/ISF/Parser.pm line 1090
+# 	FSM::Adapter::ISF::Parser::_expand_selects(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a1e7c8), HASH(0x7cc9b6df30)) called at perl/FSM/Adapter/ISF/Parser.pm line 379
+# 	FSM::Adapter::ISF::Parser::_build_actor(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a1e7c8), ARRAY(0x7cc9b70108), "later_generated_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a1e7c8), "(actor later_generated_select\x{a}  (clock clk) (reset (rst_n syn"..., "later_generated_select.isf") called at t/lib/FSM/Test/ConditionalOriginParser.pm line 30
+# 	FSM::Test::ConditionalOriginParser::parse_source(FSM::Test::ConditionalOriginParser=HASH(0x7cc9a1e7c8), "(actor later_generated_select\x{a}  (clock clk) (reset (rst_n syn"..., "later_generated_select.isf") called at .artifacts/conditional-origin/red_no_carry.t line 22
+# 	eval {...} called at .artifacts/conditional-origin/red_no_carry.t line 22
+# Looks like you failed 43 tests of 43.

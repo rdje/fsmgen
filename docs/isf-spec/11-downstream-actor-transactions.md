@@ -342,6 +342,13 @@ parser is restored and that source stays refused. Explicit macro source intent
 must qualify before safe procedure normalization and branch integration, then
 production read integration. This safety qualification adds no macro
 language/framework or record-output routes.
+Detached parser-origin qualification now preserves original operations and
+inline call sites while leaving complete ordinary actors unchanged. Identical
+normalized clauses can have different authored intent, so branch selection
+must use a source-produced association. Import/formal/generated/domain
+propagation and independent-load authenticity remain prerequisites; the
+private prototype is not a public schema or a scheduling repair.
+Origin evidence: `docs/audits/conditional-origin-parser-20261002/scope.txt`.
 Procedure safety evidence: `docs/audits/procedure-cond-normalization-20261002/scope.txt`.
 Macro qualification: `docs/audits/conditional-macro-intent-20261002/scope.txt`.
 Evidence: `docs/audits/record-output-owner-read-preparation-20261002/scope.txt`.

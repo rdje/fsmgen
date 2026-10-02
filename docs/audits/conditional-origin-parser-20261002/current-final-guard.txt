@@ -1,0 +1,12 @@
+ram-guard: PID 81963; host 73.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'each substituted guard remains bound to its own caller'
+    #   at t/2043-isf-conditional-origin-parser.t line 101.
+    #     Structures begin differing at:
+    #          $got->[0] = 'c'
+    #     $expected->[0] = 'allow'
+    # Looks like you failed 1 test of 12.
+
+#   Failed test 'source context reused_calls'
+#   at t/2043-isf-conditional-origin-parser.t line 109.
+# Looks like you failed 1 test of 54.

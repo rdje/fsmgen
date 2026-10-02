@@ -1,0 +1,2 @@
+ram-guard: PID 36236; host 60.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS exact command/status/source-provider recipes and explicit failed-attempt scope retained

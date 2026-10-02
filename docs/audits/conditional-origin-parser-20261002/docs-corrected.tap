@@ -1,0 +1,9 @@
+t/1305-isf-book-feature-matrix-audit.t ..... ok
+t/1414-docs-relative-paths-audit.t ......... ok
+t/1303-isf-public-live-book-paths-audit.t .. ok
+t/1307-isf-loop-body-doc-truth-audit.t ..... ok
+t/1332-isf-atl-doc-status-audit.t .......... ok
+t/1376-isf-book-example-lowering-audit.t ... ok
+All tests successful.
+Files=6, Tests=622, 13 wallclock secs ( 0.04 usr  0.01 sys +  7.80 cusr  1.04 csys =  8.89 CPU)
+Result: PASS

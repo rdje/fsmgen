@@ -1,0 +1,5 @@
+The first capture recipe exited 1 at line 27 with KeyError: 'surface_id'.
+The JSONL header is not a surface row. Use row.get('surface_id') when selecting
+the surface; capture-first.py preserves the failed recipe. This failed receipt
+does not qualify the correction. The corrected recipe and terminal output are
+capture.py and correction.txt.

@@ -1,0 +1,4 @@
+t/2043-isf-conditional-origin-parser.t .. ok
+All tests successful.
+Files=1, Tests=54,  4 wallclock secs ( 0.04 usr  0.01 sys +  2.11 cusr  0.49 csys =  2.65 CPU)
+Result: PASS

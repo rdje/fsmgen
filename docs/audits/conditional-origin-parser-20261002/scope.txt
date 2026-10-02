@@ -1,0 +1,45 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.1
+Boundary: baseline 985e5e9707cd987a7b70a878f0c686ad36e191d6; detached parser-origin proof, not a public contract.
+
+The test-only subclass executes actual canonical parser producers. A transient
+node registry transports explicit authored operation/form/owner and inline call
+context through rewrites/substitution; strong references prevent address reuse.
+The frozen plain ledger covers normalized when paths and unexpanded conditional
+residuals. No refaddr, blessing or generated-name/body heuristic survives in it.
+Ordinary parsed actors are untouched. Production bin/perl remains exact.
+
+Re-derive: final bound capture retains whole supplied sources, complete ordinary
+and observed actors, original JSON primitive kinds, full source catalogs, actual
+normalized targets/paths and ordered nested/reused calls. Fixed membership is
+the complete predecessor macro cohort plus independently authored context and
+identical-normalized-actor controls and the first-sample inline-cond counterexample.
+The latter remains an unexpanded cond and publicly refuses; no new admission.
+
+Falsify: canonical parsed actors for select and authored when pairs are identical
+but source operations differ. Actual association-stripped producer fails every
+predecessor source; never substitute inferred intent for missing association.
+The permanent test executes omitted/duplicate/path/target/forged-source/unknown-
+field/source-identity/schema-kind controls. Independent Python re-parses original
+source lists without desugaring, compares full actual predecessor actors/kinds,
+and rejects shared actor/ledger corruption despite matching pairs.
+
+Durability: complete producer/input before-after fingerprints, executed recipes,
+full products, original sources, raw terminal receipts, independent verifier,
+complete production and immutable-predecessor census and sealed membership.
+No compiler/analyzer/simulation, spent source replay or first-macro delivery.
+Import/formal/generated/domain propagation and independent-load authenticity
+remain owned by .5.2.2. The prototype validates against its retained trusted
+producer result; this does not authenticate an arbitrarily loaded untrusted
+ledger or adopt a public actor/report schema. Scheduling remains unchanged.
+
+Failed drafts are evidence, not successful qualification. Numeric schema ==
+coerced a string before snapshot comparison; the expanded test genuinely failed.
+The repaired validator checks serialized numeric kind and original submitted
+bytes. A new caller-guard assertion exposed fixture (in c), which actually
+declares parameter named in; preserve its failure/products and correct to (c).
+Literal guards now independently qualify every extra source. Two broader test
+commands used nonexistent filenames and stopped incomplete; corrected existing
+paths qualify the final checks. Initial green draft lacks an exact test-source
+pre/post fingerprint and is not the final qualified claim's evidence. The final
+bound run closes that identity gap. No production defect is inferred from the
+miswritten fixture. Exact raw TAP/stacks remain untrimmed.

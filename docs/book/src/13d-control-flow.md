@@ -50,6 +50,13 @@ as an activation gate instead of the intended branch. Put `(on start)` before
 conditional shorthand until its source-intent repair is qualified. First
 shorthand bodies with other actions refuse at the entry-body boundary.
 
+The detached parser-origin qualification preserves original operations and
+inline call sites without changing ordinary parsed actors. Authored `when` and
+macro expansion can produce identical normalized clauses; those clauses alone
+cannot decide entry intent. Propagation through imports and generated
+preparation must qualify before this becomes a scheduling repair. The current
+activation workaround and refusals still apply.
+
 **Lowering**: `?condition` decision state.
 ```lisp
 (test_tx_when_2

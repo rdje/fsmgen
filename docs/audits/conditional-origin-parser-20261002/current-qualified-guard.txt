@@ -1,0 +1,504 @@
+ram-guard: PID 79729; host 60.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin first_select'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin later_select'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin first_min'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin later_min'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin first_max'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin later_max'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_when_bit'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin later_when_bit'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_unless_bit'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin later_unless_bit'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_when_field'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin later_when_field'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_unless_field'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin later_unless_field'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin first_cond'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin later_cond'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_when_bit_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin later_when_bit_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_unless_bit_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin later_unless_bit_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_when_field_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin later_when_field_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_unless_field_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin later_unless_field_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin first_cond_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin later_cond_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin first_proc_select'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin later_proc_select'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_proc_when_bit'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin later_proc_when_bit'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_proc_when_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_when_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin first_select_zero'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin first_bit_sample_zero'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin initialized_select'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 31.
+
+#   Failed test 'explicit actual parser origin nested_select'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin domain_first_select'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin domain_later_select'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 27.
+
+#   Failed test 'explicit actual parser origin domain_first_sample'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin first_generated_select'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'schema_kind is actually rejected'
+    #   at t/2043-isf-conditional-origin-parser.t line 161.
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at t/2043-isf-conditional-origin-parser.t line 162.
+    #                   ''
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 29.
+
+#   Failed test 'explicit actual parser origin later_generated_select'
+#   at t/2043-isf-conditional-origin-parser.t line 54.
+
+    #   Failed test 'each substituted guard remains bound to its own caller'
+    #   at t/2043-isf-conditional-origin-parser.t line 101.
+    #     Structures begin differing at:
+    #          $got->[0] = 'c'
+    #     $expected->[0] = 'allow'
+    # Looks like you failed 1 test of 12.
+
+#   Failed test 'source context reused_calls'
+#   at t/2043-isf-conditional-origin-parser.t line 109.
+# Looks like you failed 42 tests of 54.
