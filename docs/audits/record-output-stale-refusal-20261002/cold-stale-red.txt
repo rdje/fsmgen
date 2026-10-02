@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-output-stale-refusal-20261002/verify.py", line 45, in <module>
+    products(rows)
+    ~~~~~~~~^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-output-stale-refusal-20261002/verify.py", line 29, in products
+    assert rows[0]['accepted'] == (0 if '--stale-expectation' in sys.argv else 1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

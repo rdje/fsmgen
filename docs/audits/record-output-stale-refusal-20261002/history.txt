@@ -1,0 +1,37 @@
+25c01f0127144922ade78951b91439e1d9221c08 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5.2: admit packed record actor inputs
+48da7b698141e13a6c57eddca810a641e0baae9c SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.2: prepare record value contexts
+02827d840254d6cdbfa4020be7910bb7ae9ac4cb SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.2: qualify unwired record value gates
+commit 25c01f0127144922ade78951b91439e1d9221c08
+Author: Richard DJE <richard.dje@gmail.com>
+Date:   Wed Sep 30 13:02:24 2026 +0200
+
+    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.5.2: admit packed record actor inputs
+    
+    Admit only resolved record-kind actor inputs through the integrated contextual,
+    role, exact-copy, domain and sampling gates; keep deferred carriers closed.
+    Qualify actual local/imported sources and strict typed carriers, add the
+    maintained record-input corpus example, and synchronize book/spec/records.
+    
+    Validation: focused cohort 16 files/89 tests; complete public cohort 1/6;
+    source/corpus cohort 2/7201; observed catalog-omission RED; book and syntax.
+    Native runtime/backend/consumer completion retains subsequent task owners.
+
+diff --git a/t/1986-isf-record-port-value-gates.t b/t/1986-isf-record-port-value-gates.t
+index ba07d4a76..326c2f12f 100644
+--- a/t/1986-isf-record-port-value-gates.t
++++ b/t/1986-isf-record-port-value-gates.t
+@@ -281,8 +281,8 @@ subtest 'closed malformed facts fail before comparison or path traversal' => sub
+         'contradictory copy descriptor');
+ };
+ 
+-subtest 'pure preparation does not widen source authoring' => sub {
+-    for my $pair (['input', 'frame'], ['output', 'frame'], ['input', 'lanes']) {
++subtest 'deferred output and list-root source carriers remain closed' => sub {
++    for my $pair (['output', 'frame'], ['input', 'lanes']) {
+         my ($direction, $type) = @$pair;
+         my $source = '(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit)))'
+             . " (interface ($direction value (type $type)) (output done))"
+05469eb51d62d0e1d1511145b58aaee06ecd5010 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.1: gate output-only record source contexts
+COMMAND ['git', 'log', '--format=%H %s', '--', 't/1986-isf-record-port-value-gates.t']
+COMMAND ['git', 'show', '25c01f0127144922ade78951b91439e1d9221c08', '--', 't/1986-isf-record-port-value-gates.t']
+COMMAND ['git', 'log', '-S', 'whole_output_writes_only => 1', '--format=%H %s', '--', 'perl/FSM/Adapter/ISF/Parser.pm']

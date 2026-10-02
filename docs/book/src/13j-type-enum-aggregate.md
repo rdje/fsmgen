@@ -150,7 +150,8 @@ The output keeps the existing type alias and packing. Output-to-storage and
 output-to-output whole copies are also permitted when their complete resolved
 record types match and declared roles allow the read/write. Matching width alone
 is insufficient. Scalar output-field reads and explicit scalar captures retain
-the leaf's exact type. Undriven outputs promise no value. Typed output reset and
+the leaf's exact type. Unused record-output declarations are accepted; undriven
+outputs promise no value. Typed output reset and
 default options, whole-record inferred captures and root-list/formal aggregates
 remain closed. Output member writes retain their separate qualification gate.
 Independent overlapping output writers refuse even with equal values, different

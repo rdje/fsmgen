@@ -3583,7 +3583,7 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2`
-  Status: `pending`
+  Status: `in_progress`
   Goal: `Review delegated, structured, anonymous and top-level refusal consumers.`
   Acceptance: `After .1, complete current repository candidate membership beyond the named lexical detector, using independent search/AST where appropriate and exact runtime controls. Read every selected consumer in context; distinguish reason matching from structured codes or permitted trace/locus searches. Confirm vulnerable consumers through their real producer path before scheduling .3.2 repairs. Keep unreviewed candidates owned; no semantic completeness claim from textual census.`
   Verification: `pending`
@@ -3603,7 +3603,7 @@ For FSMGen, the analogs are:
   Verification: `pending`
   Commit: `pending`
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.2`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.1`
   Status: `done`
@@ -3613,9 +3613,16 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.2`
-  Status: `in_progress`
+  Status: `done`
   Goal: `Reconcile the stale T1986 blanket record-output refusal with current source admission.`
   Acceptance: `P2 current test defect: guarded T1986/T2048/T2052 run reports Files=3/Tests56/Failed1 because T1986 deferred-output subtest still expects an output frame declaration to refuse. Canonical isf-record-output-source-admission records that current Parser admits whole record outputs and earlier blanket tests should cover still-closed fields/captures. After .2.1, bind exact admission history/source and real first-line refusal, replace only the stale boundary with a still-closed authored output field writer, and independently verify the actual whole output positive. Retain complete source/actor/diagnostic products, genuine stale-consumer RED and source preservation controls. Run focused record-input/output predecessors without native HDL, sync book/facts and commit. Do not re-close shipped output admission to satisfy an old test.`
+  Verification: `T1986 now tests still-closed record output member writes and unchanged root-list refusal; no production changes. Guarded T1986/context/current authored-output/book cohort PASS Files5/Tests331. Exact baseline stale test genuinely RED Files1/Tests10/Failed1. Independent actual parser products preserve whole output admission with literal complete one-bit flag metadata, while field/list fixtures refuse at precise first-line boundaries. Cold stale-expectation RED and four source/layout/acceptance/cause corruptions reject. Git history binds input admission 25c01f and whole output admission 008e629; old negative scope was not reconciled there. Immutable record-output-stale-refusal-20261002 retains full source/actor/errors/test delta/instruments/raw receipts/producer hashes/history/seal, and current card/book scope is synchronized. Broader/cold refusal census .1.2/.1.3 remains next, not closed by this repair.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3`
+  Status: `pending`
+  Goal: `Resolve the remaining current and cold census repair handoff.`
+  Acceptance: `After .1.2/.1.3 classify their complete declared populations, split any newly confirmed cause-consumer repairs into bounded per-owner leaves before edits. Each requires actual producer wrong-reason/positive controls, exact current source/product/cold binding and scoped regressions. If no further repairs apply, independently reconcile that result and close this handoff without inventing defects or promoting syntax-only candidates. Keep historical archives immutable and explicit unresolved access blockers owned.`
   Verification: `pending`
   Commit: `pending`
 
@@ -5423,3 +5430,9 @@ and exact measurement JSON. No health target or enforcement ceiling changes.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual `file origin independent document set required at t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 21` is accompanied by a caller-echoed expected regex. T2048 refused helper previously matched the full trace. Byte-bound discovery falsely authenticates the wrong reason with unchanged helper body; the first-line predecessor rejects it. Earlier cold file auxiliary checks accept any nonempty reason, so exact reasons require fresh qualification.
 - [x] **ADDRESSED (verified)** — T2048 now shares a first-line cause predicate across its actual helper/permanent constructor echo control, and reload reason assertions select the same line. PASS Files1/Tests28; real full-stack subject RED Files1/Tests28/Failed1 and inherited source-comparison bypass RED Files1/Tests28/Failed24. Complete original products and primitive kinds exactly agree with prior sealed products; independent source projection and exact boundary reason membership qualify every retained control. Actual wrong-first-reason Carp echo rejects in the new cold reader; restoring its full-stack predicate fails status1, and three shared corruptions reject. Distinct whole source/product and reason re-derivation, genuine consumer/bypass falsification, complete immutable data/instruments/raw receipts/baseline binding/seals and current canonical card/book/task/Git retain all claim legs. Prior evidence is unchanged; this reader owns current diagnostic qualification. Initial unqualified preload failure and corrected inheritance recipe are preserved honestly.
 - [x] **NO REGRESSION** — RAM-guarded PathSearch/local origin/book predecessor run reports `All tests successful`, `Files=4, Tests=333`. Actual file cohort independently passes `Files=1, Tests=28`; original complete current and source-bypass products remain identical to their sealed predecessors. All production/provider bytes equal current committed baseline and fingerprints; no native/HDL or public schema/admission change. Book build/rendered text passes without browser visual QA. Knowledge Map, measured unchanged ceilings/baselines, fresh claims and staged doctrines are separate mandatory commit gates. Stale T1986 repair and broader census remain owned rather than silently counted green.
+
+## Stale record-output refusal acceptance (.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original output-frame blanket refusal was retained by input admission 25c01f, then whole record outputs were admitted by 008e629 without updating T1986. Actual unchanged Parser accepts that source, causing `output frame source refuses` at docs/audits/record-output-stale-refusal-20261002/stale-test.t line 89 and Files1/Tests10/Failed1. Canonical current source-admission card/physical gates admit declarations/whole copies while output member writes and root-list ports remain closed. The old expectation is wrong; production behavior is current.
+- [x] **ADDRESSED (verified)** — Replace only T1986 final output negative fixture with an authored field writer and its real first-line reason; preserve root-list fixture and every earlier test byte. Current cohort PASS; genuine exact stale-test RED remains. Independent actual parser retains complete whole-output source/actor with literal full interface layout and separate precise field/list errors. Cold stale-expectation predicate RED and four source/layout/acceptance/cause controls falsify. Complete products/source/instrument/test delta/raw receipts/Git producer/history binding and immutable seal retain durability. Canonical card avoids an overbroad predecessor-reconciliation claim; book clarifies accepted unused declarations and undriven values. Production and all prior proof archives remain unchanged.
+- [x] **NO REGRESSION** — RAM-guarded value/context/current output-source/book checks report `All tests successful`, `Files=5, Tests=331`; current T2033 retains strict source and canonical carrier qualification. Cold source/whole output interface kinds and boundary products verify; all bin/perl bytes agree with current committed baseline. Book builds/rendered text passes without browser visual QA. Fresh Knowledge Map/claims, measured live-doc allowances with unchanged baselines/ceilings and staged doctrines precede normal hooks in a separate checks directory. No HDL tools/execution, full CI or push; broader/cold refusal census remains owned next.

@@ -1,0 +1,36 @@
+commit 008e629ced1b7d1bd2ff1f56e39ff7e793721179
+Author: Richard DJE <richard.dje@gmail.com>
+Date:   Thu Oct 1 23:06:23 2026 +0200
+
+    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.3: admit guarded whole record outputs
+    
+    Admit record-kind actor output aliases and exact-type whole port/storage copies through the prepared context/domain/profile contracts. Require conservative physical writer admission in public lower/report and every actual bound domain realization before publication; retain private IR inventory probes.
+    
+    Qualify actual local/imported/alias/mixed/unused/reverse sources, scalar captures, native strict checks and direct/domain carriers. Refuse unproved competing writers and deferred field/generated/list/formal/reset forms. Preserve complete baseline/current probes and immutable predecessor evidence.
+    
+    Update living historical refusal controls honestly. Repair the pre-existing scalar-parameter projection assertion traced to ee817042, preserving direct baseline-child RED and literal masking checks. Synchronize book/spec/matrix, feedback and canonical facts with pending complete public and execution qualification.
+    
+    Validation: final output/prepared band (5 files / 30 subtests); broad initial 11/94 retains two stale-test failures, with nine named files passing and repaired tests separately passing 2/11; final docs 3/310; exact book example, book build, syntax, sealed hostile verification and staged doctrines. No HDL execution.
+
+diff --git a/perl/FSM/Adapter/ISF/Parser.pm b/perl/FSM/Adapter/ISF/Parser.pm
+index a5feb76c6..794fb74e9 100644
+--- a/perl/FSM/Adapter/ISF/Parser.pm
++++ b/perl/FSM/Adapter/ISF/Parser.pm
+@@ -2821,7 +2821,7 @@ sub _finalize_actor_type_references($self, $actor) {
+                 $actor,
+                 $port,
+                 "actor '$actor_name' interface port '$port->{name}'",
+-                allow_record => ($direction eq 'inputs' ? 1 : 0),
++                allow_record => 1,
+             );
+         }
+     }
+@@ -2874,7 +2874,7 @@ sub _resolve_typed_width_entry($self, $actor, $entry, $context, %options) {
+     my $kind = $type_spec->{kind} || '';
+     my $is_scalar = $kind eq 'bit' || $kind eq 'bits';
+     my $is_aggregate = _is_aggregate_type_spec($type_spec);
+-    confess "Error: $context references aggregate type '$type_name'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs\n"
++    confess "Error: $context references aggregate type '$type_name'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports\n"
+         if $is_aggregate && !$options{allow_aggregate}
+             && !($options{allow_record} && $kind eq 'record');
+     confess "Error: $context references unsupported type '$type_name' of kind '$kind'\n"

@@ -59,8 +59,8 @@ current code, preserving complete source/actor/IR/inventory/products. Literal
 counts/types and hostile false publication, owner/output omissions and field
 admission falsify broader claims. Full snapshots/receipts, exact Git objects,
 immutable prior evidence, this card/tasks/book/feedback and Git provide durability.
-Living old blanket-refusal tests now exercise still-closed fields or whole
-captures; their original sealed snapshots remain unchanged. Bounded public/
+Selected predecessor refusals cover still-closed fields or whole captures;
+their sealed originals remain unchanged. Bounded public/
 profile/corpus reconciliation .3.4.4 is qualified; see
 [corpus closure](isf-record-output-corpus-closure.md). Generated/backend execution
 .3.5 and field writes .60.4.3.4 remain open. Full aggregate-interface/SPECFORGE feature requests are not complete.

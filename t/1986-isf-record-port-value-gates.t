@@ -281,14 +281,17 @@ subtest 'closed malformed facts fail before comparison or path traversal' => sub
         'contradictory copy descriptor');
 };
 
-subtest 'deferred output and list-root source carriers remain closed' => sub {
-    for my $pair (['output', 'frame'], ['input', 'lanes']) {
-        my ($direction, $type) = @$pair;
+subtest 'output member writes and list-root source carriers remain closed' => sub {
+    for my $pair (
+        ['output', 'frame', '(set value.flag 1)', qr/record output field writes are not yet admitted/],
+        ['input', 'lanes', '(complete done)', qr/interface port 'value' references aggregate type/],
+    ) {
+        my ($direction, $type, $clause, $pattern) = @$pair;
         my $source = '(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit)))'
             . " (interface ($direction value (type $type)) (output done))"
-            . ' (transaction main (complete done)))';
-        refuses(sub { $parser->parse_source($source, 'still-refused.isf') },
-            qr/interface port 'value' references aggregate type/, "$direction $type source");
+            . " (transaction main $clause))";
+        refuses(sub { $parser->parse_source($source, 'still-refused.isf') }, $pattern,
+            "$direction $type source");
     }
 };
 
