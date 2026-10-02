@@ -1,0 +1,4 @@
+t/2040-isf-first-when-activation-body.t .. ok
+All tests successful.
+Files=1, Tests=22, 286 wallclock secs ( 0.04 usr  0.01 sys + 184.16 cusr 84.34 csys = 268.55 CPU)
+Result: PASS

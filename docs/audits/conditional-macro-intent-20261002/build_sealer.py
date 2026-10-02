@@ -1,0 +1,90 @@
+from pathlib import Path
+
+source = Path('docs/audits/first-when-activation-body-20261002/seal.py').read_text()
+prefix = source[:source.index('def collect():')]
+prefix = prefix.replace("Path('.artifacts/first-when-activation')", "Path('.artifacts/conditional-macro-intent')")
+prefix = prefix.replace('43dcfae199ca7d93a88fe047f886fdcc6522c2ec', '9bf0bd4c8af8c8aab5ab6865e66f6729d9583b3c')
+suffix = '''def collect():
+    assert not (BASE / 'manifest.json').exists(), 'sealed archive is immutable'
+    assert (SCRATCH / 'test-current.t').read_bytes() == Path('t/2041-isf-conditional-macro-intent-qualification.t').read_bytes()
+    assert (SCRATCH / 'procedures-current.t').read_bytes() == Path('t/1390-isf-procedures.t').read_bytes()
+    hashes = {}
+    for source in sorted(p for p in SCRATCH.rglob('*') if p.is_file()):
+        assert not source.is_symlink()
+        relative = source.relative_to(SCRATCH)
+        destination = BASE / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        original = source.read_bytes()
+        retained = original.replace(ROOT.encode(), b'')
+        destination.write_bytes(retained)
+        hashes[str(relative)] = dict(original_sha256=sha(original), retained_sha256=sha(retained),
+            normalization='exact runtime repository prefix only')
+    write_json(BASE / 'normalization.json', hashes)
+    raw, entries = tree(BASELINE, ['bin', 'perl'])
+    blobs = read_blobs(entries)
+    additions = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '-z', '--', 'bin', 'perl'])
+    assert not additions
+    members = {}
+    for path, entry in entries.items():
+        now = current_bytes(path)
+        assert now == blobs[path], path + ' production changed in qualification'
+        members[path] = dict(bytes=len(now), sha256=sha(now), **entry)
+    write_json(BASE / 'production-inventory.json', dict(baseline=BASELINE, changed_existing=[], added=[], members=members))
+    (BASE / 'production-inventory.zlist').write_bytes(raw)
+    for path in ['perl/FSM/Adapter/ISF/Parser.pm', 'perl/FSM/Scheduler/ISF/LoweringIR.pm',
+                 'perl/FSM/Scheduler/ISF/FormalLowering.pm']:
+        (BASE / (Path(path).stem + '-baseline.pm')).write_bytes(blobs[path])
+    old = json.loads(Path('docs/audits/first-when-activation-body-20261002/immutable-parents.json').read_text())
+    roots = old['roots'] + ['docs/audits/first-when-activation-body-20261002']
+    raw, entries = tree(BASELINE, roots)
+    blobs = read_blobs(entries)
+    members = {}
+    for path, entry in entries.items():
+        now = current_bytes(path)
+        assert now == blobs[path], path + ' immutable predecessor changed'
+        members[path] = dict(bytes=len(now), sha256=sha(now), **entry)
+    write_json(BASE / 'immutable-parents.json', dict(baseline=BASELINE, roots=roots, members=members))
+    (BASE / 'immutable-parents.zlist').write_bytes(raw)
+    renders = {}
+    markers = {
+        '13d-control-flow': 'an activation guard',
+        '13e-data-manipulation': 'existing parser expansions',
+        '13i-downstream-integration': 'The macro work repairs existing ISF/IAL1',
+        '13l-procedures': 'Execution remains subject to the tracked local',
+        '13k-isf-feature-support-matrix': 'First sample-only conditional bit/field/cond',
+    }
+    for chapter, marker in markers.items():
+        html = Path('docs/book/book/' + chapter + '.html')
+        parser = Render()
+        parser.feed(html.read_text())
+        text = ' '.join(' '.join(parser.parts).split())
+        assert marker in text, chapter + ' missing maintained text'
+        if chapter == '13e-data-manipulation':
+            evidence = '../../../docs/audits/conditional-macro-intent-20261002/scope.txt'
+            assert evidence in parser.links and (html.parent / evidence).resolve() == (BASE / 'scope.txt').resolve()
+            assert '(select o (> x 100) 100 x)' in ''.join(parser.code)
+        if chapter == '13l-procedures':
+            assert '(actor hs_demo' in ''.join(parser.code)
+        (BASE / (chapter + '.html')).write_bytes(html.read_bytes())
+        renders[chapter] = dict(sha256=sha(html.read_bytes()), visual_browser_qa=False)
+    wrapper = Path('docs/book/src/13i-downstream-integration.md').read_text()
+    includes = [line.split('/')[3].split('}')[0] for line in wrapper.splitlines() if line.startswith('{{#include')]
+    assert includes == ['10-downstream-readiness-source.md', '11-downstream-actor-transactions.md',
+        '12-downstream-rules-artifacts-reports.md', '13-downstream-diagnostics-conformance.md']
+    write_json(BASE / 'render.json', dict(chapters=renders, canonical_includes=includes))
+    print('PASS collected complete products/receipts, exact producers, renders and immutable predecessors')
+
+
+def seal():
+    assert not (BASE / 'manifest.json').exists(), 'sealed archive is immutable'
+    entries = {str(p.relative_to(BASE)): dict(bytes=p.stat().st_size, sha256=sha(p.read_bytes()))
+        for p in BASE.rglob('*') if p.is_file() and p.name != 'manifest.json'}
+    write_json(BASE / 'manifest.json', dict(baseline=BASELINE,
+        owner='SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.1', entries=entries))
+    print('PASS sealed exact member census; archive now immutable')
+
+
+if __name__ == '__main__':
+    {'collect': collect, 'seal': seal}[sys.argv[1]]()
+'''
+Path('docs/audits/conditional-macro-intent-20261002/seal.py').write_text(prefix + suffix)

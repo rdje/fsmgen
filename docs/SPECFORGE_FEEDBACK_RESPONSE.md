@@ -170,8 +170,13 @@ and book.
   of a first `select`; its conditional-macro source-intent repair (`.2.1.5`) is
   owned and scheduled next, before the false `x01` literal diagnosis (`.2.1.4`)
   and read integration (`.2.1.2`). First-operation select remains precisely
-  refused until that repair qualifies. No output execution or X/Z runtime claim
-  follows.
+  refused until that repair qualifies. This work repairs existing **ISF/IAL1**
+  parser expansions and transaction scheduling. Qualification also exposes
+  first sample-only bit/field/`cond` shorthand admitted as entry gates and
+  unexpanded `cond` in inline procedures; those repairs are owned, with procedure
+  normalization scheduled next. Use explicit activation before conditional
+  shorthand and keep `cond` at the procedure call site for now. No new macro
+  language/framework, output execution or X/Z runtime claim follows.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.
 

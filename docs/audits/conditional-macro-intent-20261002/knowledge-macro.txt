@@ -1,0 +1,1 @@
+should legacy ?define or ?& template macros be implemented?	generic-fifo-template-boundary	docs/knowledge/generic-fifo-template-boundary.md

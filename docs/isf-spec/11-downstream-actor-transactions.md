@@ -332,6 +332,14 @@ accept only inline samples, and other actions must follow the guard or use a
 later branch after `(on PORT)`. First-operation conditional macro intent and
 the false `x01` operand diagnosis for a canonical X/Z scalar literal remain
 separately owned before read integration.
+The macro work repairs existing ISF/IAL1 parser expansion and transaction
+scheduling. First sample-only bit/field conditionals and `cond` can still be
+admitted as entry gates rather than ordinary branches; use explicit activation
+before conditional shorthand. Inline procedure `cond` remains unexpanded and
+refuses even after activation. Its normalization repair is scheduled before
+explicit macro source intent and production read integration. This qualification
+adds no macro language/framework or record-output routes.
+Macro qualification: `docs/audits/conditional-macro-intent-20261002/scope.txt`.
 Evidence: `docs/audits/record-output-owner-read-preparation-20261002/scope.txt`.
 
 Typed output `(reset ...)` and `(default ...)` metadata remain refused.

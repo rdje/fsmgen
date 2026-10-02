@@ -3,6 +3,10 @@
 ISF provides abstract data manipulation constructs that the scheduler
 lowers to appropriate `.fsm` expressions.
 
+The shorthand here belongs to ISF/IAL1: existing parser expansions feed the
+transaction scheduler. The current repair work preserves their intended
+control flow; it introduces no new macro language or framework.
+
 ## `(update var expr)` — Variable Modification
 
 ```lisp
@@ -59,7 +63,13 @@ Place an explicit activation such as `(on start)` before `select`. A first
 `select` currently expands to an entry `when` containing an unsupported action
 and is refused. Its source-intent repair is owned by SEM `.60.4.3.3.5.2.1.5`;
 this boundary does not establish support for other first-operation conditional
-macros. The example below includes the required activation.
+macros. In particular, sample-only bit/field conditionals and `cond` can still
+be admitted as activation gates instead of ordinary branches. Use explicit
+activation before those forms as well. The example below includes it.
+
+[Macro qualification](../../../docs/audits/conditional-macro-intent-20261002/scope.txt)
+keeps complete source and public products for these boundaries. Procedure
+`cond` normalization and explicit macro branch intent remain tracked repairs.
 
 A runnable upper-clamp (saturate a value at 100):
 

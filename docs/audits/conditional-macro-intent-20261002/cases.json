@@ -1,0 +1,281 @@
+[
+  {
+    "body": "set",
+    "family": "select",
+    "name": "first_select",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "family": "select",
+    "name": "later_select",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "family": "min",
+    "name": "first_min",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "family": "min",
+    "name": "later_min",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "family": "max",
+    "name": "first_max",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "family": "max",
+    "name": "later_max",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "family": "when_bit",
+    "name": "first_when_bit",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "family": "when_bit",
+    "name": "later_when_bit",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "family": "unless_bit",
+    "name": "first_unless_bit",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "family": "unless_bit",
+    "name": "later_unless_bit",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "family": "when_field",
+    "name": "first_when_field",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "family": "when_field",
+    "name": "later_when_field",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "family": "unless_field",
+    "name": "first_unless_field",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "family": "unless_field",
+    "name": "later_unless_field",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "family": "cond",
+    "name": "first_cond",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "family": "cond",
+    "name": "later_cond",
+    "position": "later"
+  },
+  {
+    "body": "sample",
+    "family": "when_bit",
+    "name": "first_when_bit_sample",
+    "position": "first"
+  },
+  {
+    "body": "sample",
+    "family": "when_bit",
+    "name": "later_when_bit_sample",
+    "position": "later"
+  },
+  {
+    "body": "sample",
+    "family": "unless_bit",
+    "name": "first_unless_bit_sample",
+    "position": "first"
+  },
+  {
+    "body": "sample",
+    "family": "unless_bit",
+    "name": "later_unless_bit_sample",
+    "position": "later"
+  },
+  {
+    "body": "sample",
+    "family": "when_field",
+    "name": "first_when_field_sample",
+    "position": "first"
+  },
+  {
+    "body": "sample",
+    "family": "when_field",
+    "name": "later_when_field_sample",
+    "position": "later"
+  },
+  {
+    "body": "sample",
+    "family": "unless_field",
+    "name": "first_unless_field_sample",
+    "position": "first"
+  },
+  {
+    "body": "sample",
+    "family": "unless_field",
+    "name": "later_unless_field_sample",
+    "position": "later"
+  },
+  {
+    "body": "sample",
+    "family": "cond",
+    "name": "first_cond_sample",
+    "position": "first"
+  },
+  {
+    "body": "sample",
+    "family": "cond",
+    "name": "later_cond_sample",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "context": "proc",
+    "family": "select",
+    "name": "first_proc_select",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "context": "proc",
+    "family": "select",
+    "name": "later_proc_select",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "context": "proc",
+    "family": "when_bit",
+    "name": "first_proc_when_bit",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "context": "proc",
+    "family": "when_bit",
+    "name": "later_proc_when_bit",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "context": "proc",
+    "family": "cond",
+    "name": "first_proc_cond",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "context": "proc",
+    "family": "cond",
+    "name": "later_proc_cond",
+    "position": "later"
+  },
+  {
+    "body": "sample",
+    "context": "proc",
+    "family": "authored_when",
+    "name": "first_proc_when_sample",
+    "position": "first"
+  },
+  {
+    "body": "sample",
+    "family": "authored_when",
+    "name": "first_when_sample",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "context": "zero",
+    "family": "select",
+    "name": "first_select_zero",
+    "position": "first"
+  },
+  {
+    "body": "sample",
+    "context": "zero",
+    "family": "when_bit",
+    "name": "first_bit_sample_zero",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "context": "init",
+    "family": "select",
+    "name": "initialized_select",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "context": "nested",
+    "family": "select",
+    "name": "nested_select",
+    "position": "later"
+  },
+  {
+    "body": "set",
+    "context": "domain",
+    "family": "select",
+    "module": "domain_first_select__domain_io",
+    "name": "domain_first_select",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "context": "domain",
+    "family": "select",
+    "module": "domain_later_select__domain_io",
+    "name": "domain_later_select",
+    "position": "later"
+  },
+  {
+    "body": "sample",
+    "context": "domain",
+    "family": "when_field",
+    "module": "domain_first_sample__domain_io",
+    "name": "domain_first_sample",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "context": "generated",
+    "family": "select",
+    "module": "worker",
+    "name": "first_generated_select",
+    "position": "first"
+  },
+  {
+    "body": "set",
+    "context": "generated",
+    "family": "select",
+    "module": "worker",
+    "name": "later_generated_select",
+    "position": "later"
+  }
+]

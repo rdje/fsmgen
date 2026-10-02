@@ -1,0 +1,2 @@
+ram-guard: PID 95535; host 68.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS collected complete products/receipts, exact producers, renders and immutable predecessors

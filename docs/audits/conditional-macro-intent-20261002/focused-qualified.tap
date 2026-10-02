@@ -1,0 +1,6 @@
+t/1406-isf-select.t ...................... ok
+t/1407-isf-minmax.t ...................... ok
+t/1402-isf-bit-test.t .................... ok
+t/1404-isf-when-field.t .................. ok
+t/1396-isf-cond.t ........................ ok
+t/1390-isf-procedures.t .................. ok

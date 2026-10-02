@@ -1,0 +1,4 @@
+t/2041-isf-conditional-macro-intent-qualification.t .. ok
+All tests successful.
+Files=1, Tests=44, 537 wallclock secs ( 0.06 usr  0.02 sys + 357.34 cusr 153.11 csys = 510.53 CPU)
+Result: PASS

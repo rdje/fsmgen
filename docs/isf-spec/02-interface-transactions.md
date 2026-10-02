@@ -712,6 +712,14 @@ after that guard. For conditional actions, put an explicit `(on PORT)` or anothe
 scheduled state before the branching `when`. Declarations and a zero-cycle wait
 do not create a preceding state, so the following `when` still selects entry
 activation. It may also appear later as inline branching.
+Existing ISF/IAL1 conditional shorthand is expanded by the parser before this
+selection. First sample-only bit/field conditionals and `cond` currently lose
+their ordinary branch intent and can become activation gates; other first
+conditional bodies refuse at the sample-only boundary. Use an explicit
+activation before these forms until the source-intent repair qualifies.
+`cond` inside an inline procedure body currently remains unexpanded and refuses
+at transaction lowering even after explicit activation; keep that conditional
+at the call site until the separately owned normalization repair qualifies.
 Transaction `when`, `while`, and `until` condition expressions may use local
 enum members such as `mode.BUSY`, package enum members such as
 `shared.mode.BUSY`, or scalar aggregate storage leaves such as `frame.flag` as

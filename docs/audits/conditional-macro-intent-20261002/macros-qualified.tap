@@ -1,0 +1,9 @@
+t/1406-isf-select.t ...... ok
+t/1407-isf-minmax.t ...... ok
+t/1402-isf-bit-test.t .... ok
+t/1404-isf-when-field.t .. ok
+t/1396-isf-cond.t ........ ok
+t/1390-isf-procedures.t .. ok
+All tests successful.
+Files=6, Tests=28,  7 wallclock secs ( 0.02 usr  0.01 sys +  4.42 cusr  2.37 csys =  6.82 CPU)
+Result: PASS

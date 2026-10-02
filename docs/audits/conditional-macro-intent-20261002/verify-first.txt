@@ -1,0 +1,4 @@
+ram-guard: PID 12241; host 77.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS fixed 43 sources: 13 entry refusals, 2 proc-cond refusals, 7 unsafe sample entries, 2 authored entries, 19 later contexts
+PASS complete literal/private/native/API/newline/carrier products; genuine desired-intent RED; unchanged production and immutable predecessors
+PASS independent shared corruptions: sample_omission, write_omission, predicate_change, width_kind, fabricated_intent

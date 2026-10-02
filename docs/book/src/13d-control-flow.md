@@ -1,8 +1,10 @@
 # Control Flow
 
-This chapter describes transaction-local control flow. In this context,
-`(when condition body...)` always carries a body and lowers to scheduled
-conditional states.
+This chapter describes transaction-local branches and loops. A `when` after
+an explicit activation such as `(on start)`, or another scheduled state, is a
+branch. A first scheduled authored `when` selects an activation guard instead;
+its body supports only inline samples. See [Transactions](13b-transactions.md)
+for that entry contract. Declarations and zero waits create no preceding state.
 
 Rules use a related but different guard form:
 
@@ -40,6 +42,13 @@ See [Rules and Priorities](13g-rules.md) for rule guard lowering.
 
 The form is exact: `(when condition body...)`, with a scalar or list-form
 condition and at least one list-form body clause before branch expansion.
+
+These examples use the branching position described above. Conditional
+shorthand such as `when-bit`, `when-field`, and `cond` currently expands into
+ordinary `when` clauses. A sample-only first shorthand can therefore be admitted
+as an activation gate instead of the intended branch. Put `(on start)` before
+conditional shorthand until its source-intent repair is qualified. First
+shorthand bodies with other actions refuse at the entry-body boundary.
 
 **Lowering**: `?condition` decision state.
 ```lisp
@@ -133,6 +142,11 @@ should be **stable** while the chain runs — sample a volatile input first (as 
 `when`/`switch`). The `(else ...)` branch must be **last** (if present); a branch must have a
 condition (or be `else`) and a non-empty body, or the form **fails closed**. A `(cond ...)`
 nests anywhere a `when` may appear, including inside another `(cond ...)` branch.
+
+An inline procedure body containing `cond` currently retains an unexpanded
+`cond` and refuses during transaction lowering, including after `(on start)`.
+Keep the `cond` at the transaction call site and call an ordinary procedure from
+each branch until that separately tracked normalization repair qualifies.
 
 ## Mixing Control Flow
 

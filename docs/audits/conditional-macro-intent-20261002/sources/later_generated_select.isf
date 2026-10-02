@@ -1,0 +1,9 @@
+(actor later_generated_select
+  (clock clk) (reset (rst_n sync active_low))
+  (interface (input request) (input allow) (input datain (width 3)) (input other (width 3)) (output seen (width 3)) (output done))
+  (transaction worker
+    (ports (input payload (width 3)) (output result (width 3)))
+    (params (MODE 1)) (on request) (select result allow payload other) (complete done))
+  (transaction main (on request)
+    (do worker (params (MODE 1)) (bind (input payload datain) (output result seen)))
+    (complete done)))

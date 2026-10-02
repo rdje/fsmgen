@@ -730,7 +730,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Implement and qualify the selected direct transaction controller contract.`
   Acceptance: `After .1.2 selects the exact contract, split implementation into safe leaves and repair independent trigger and blocking local-call execution. Require simultaneous/separate triggers, declaration-order controls, nested/repeated calls, original binding edges, reset and source/API/MCP parity. Preserve fail-closed writer conflicts and publish any unsupported form precisely; unblock .49.2 only with executable evidence.`
-  Verification: `pending`
+  Verification: `Additional unchanged-source witness from macro qualification: T1390 hs_demo emits scoped inc_into bindings but main_sample_3 is unreachable and local control is disconnected. Complete actual carrier is retained in docs/audits/conditional-macro-intent-20261002/focused.tap, with exact baseline/current test sources. This is the existing execution defect, not closed by correcting the three stale structural regexes. Implement after the existing selected writer/scoped-identity prerequisites; require fresh HIAL admission before runtime.`
   Commit: `pending`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.6`
@@ -3361,10 +3361,39 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Repair P2 first-operation conditional macro intent before live output-read integration.`
   Acceptance: `Actual first (select seen allow datain 0) desugars to two when clauses, but the same first-entry selection drops the true-path set: private IR retains only seen<-0. Preserve complete actual source/parsed/private/public products and root the owned parser desugaring through tools without submodule internals. Qualify first-position select/min/max/conditional-bit/field/cond/procedure expansion applicability individually; preserve authored sample-only when activation semantics and existing later branches. Select an explicit source-intent contract and retain it through preparation, cloning, scopes, domains and generated instances rather than guessing from generated names. Implement only a safely qualified slice at a time; keep unsupported source contexts precisely refused until fixed and verified. Schedule this P2 directly after .3 and before .4/.2 integration, with mdBook/downstream/feedback aligned. No HDL compiler/analyzer/simulation without fresh committed HIAL admission.`
   Verification: `Owned and qualified under .3: docs/audits/first-when-activation-body-20261002/drafts/first-select.isf, first-select-private.json and first-select-public.json retain complete actual source/actor/IR/native/API/newline products. Parsed clauses contain when allow set seen datain then when (! allow) set seen 0; private source writes contain only seen 0, while all three public phases admit at baseline 43dcfae199ca7d93a88fe047f886fdcc6522c2ec. The activation selector originates at 2ca15577c3cc07f38ba49a15efc8955529f39d8b. first-select-closed.json and its exact capture-select.pl show the new safety gate refuses the first placement through complete actual phase contracts. The sealed independent verifier authenticates both results without HDL/spent replay. This is safety, not completed macro delivery. P2 .5 is the precise next frontier before .4/.2.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.1`
+  Status: `done`
+  Goal: `Qualify existing ISF/IAL1 conditional macro source intent, entry placement and repair boundaries; no new macro language/framework.`
+  Acceptance: `From clean 9bf0bd4c8af8c8aab5ab6865e66f6729d9583b3c, preserve actual first and later select/min/max/when-bit/unless-bit/when-field/unless-field/cond/inline-procedure sources, normalized actors, complete private/lowered products and actual phase-specific native/API/newline contracts. Include sample-only bodies, metadata/zero waits, nested source contexts, generated specialization and selected domains. Root owned parser expansion and lowering/history with tools; never inspect submodule implementation. Independently distinguish authored activation from conditional macro intent and preserve caller/source/producer bytes. Determine each family's actual admission and source-intent failure, not inferred family-wide support. Own every new defect and select safely bounded implementation children without widening entry grammar or claiming execution. Write current fact and synchronized downstream/book/feedback with durable full receipts. No HDL invocation/spent replay.`
+  Verification: `T2041 reports All tests successful, Files=1, Tests=44 for 43 actual complete sources. Thirteen first-action expansions refuse at the entry gate; two inline-proc cond sources retain cond and refuse; seven first sample macros admit with wrong activation topology, two authored entries and nineteen later/scheduled contexts admit. Independent desired-intent producer reports genuine terminal RED Files=1/Tests=7/Failed7. Full saved literal/source/private/native/API/newline/carrier verification passes, rejecting five shared corruptions despite parity. Owned parser pickaxe roots select/cond/bit/field/proc producers; pass ordering accounts for unexpanded inline cond. Full bin/perl census proves no production change; all predecessor evidence stays immutable. Initial focused band exposes stale scoped-formal T1390 regexes; exact structural oracle repair passes while the independently owned .32.1.3.3.1.3 local-controller defect remains open. Initial retry hits the unchanged host cutoff and is incomplete; isolated final macro cohort passes Files=6/Tests=28 and activation Files=1/Tests=22. Six docs checks pass Files=6/Tests=622 with all 115 complete fixtures lowering; syntax, book and actual rendered text/code/links pass without browser visual QA. Sealed docs/audits/conditional-macro-intent-20261002 retains all full products, source/code/recipes/history/raw receipts and honest failed drafts. Existing ISF/IAL1 repairs remain the scope: .5.4 inline cond normalization is next, then .5.2/.5.3 explicit intent/integration, before scalar/output prerequisites. No macro delivery, HDL invocation, spent replay or record-output widening.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2`
+  Status: `pending`
+  Goal: `Select and qualify explicit normalized conditional-macro source intent.`
+  Acceptance: `After .1, define an explicit source-produced contract distinguishing conditional macro expansion from authored entry when, with retained original operation/context and no generated-name/body-content inference. Qualify propagation through actual rewrite passes, serializable cloning, imports, scopes, formal preparation, generated children and selected domains. Reject malformed/missing/forged association instead of guessing. Keep production scheduling unchanged until a complete contract qualifies; record cross-cutting decisions only when earned. Split implementation further if the safe unit grows.`
+  Verification: `pending actual family qualification`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.3`
+  Status: `pending`
+  Goal: `Integrate qualified conditional-macro branch intent without changing authored entry semantics.`
+  Acceptance: `After .2, implement actual first-operation macro branching from explicit source intent, with complete private/public products, exact source writes and branch/continuation behavior. Preserve supported authored sample activation, precise unsupported authored-entry refusals, later macro products and documented timing/stability boundaries. Qualify each selected macro family and relevant metadata/nested/generated/domain contexts separately, with independent source/control-flow witnesses and actual hostile omission/role/identity controls. Keep unqualified contexts closed and split safely before changing production. Synchronize canonical book/downstream/feedback and current facts in each committed slice. Any required HDL execution needs fresh committed HIAL admission; no spent replay.`
+  Verification: `pending normalized source-intent contract`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.4`
+  Status: `pending`
+  Goal: `Repair P2 conditional normalization inside inline procedure bodies.`
+  Acceptance: `Actual first_proc_cond and later_proc_cond define an ordinary cond in a proc body, then inline call it. The parser keeps cond in actual normalized transaction clauses; lowering refuses unsupported '(cond ...)' in transaction body even after explicit on. Preserve source/actor/private/native/API/newline products, root parser pass ordering and inline expansion with tools, then normalize through the canonical producer at the correct scope without creating a parallel macro authority. Qualify first/later/nested/recursive-call/scope/formal/domain interactions relevant to the safe repair and preserve precise activation refusals until .5.3. Do not assume every proc macro family is broken; own further demonstrated cases separately and split if needed. Schedule directly after .5.1 and before .5.2 propagation. No HDL invocation/spent replay.`
+  Verification: `Owned at discovery under .5.1: .artifacts/conditional-macro-intent/private-qualified.json and complete first_proc_cond/later_proc_cond source files retain the actual leftover cond and precise private/public-lower refusals. _expand_cond_loops scans transaction clauses before _expand_procedure_calls inserts the proc body; _expand_one_call recursively expands calls but does not run cond normalization. Actual phase qualification precedes closure. Priority P2; repair is explicitly scheduled next after qualification.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.2`
@@ -4817,3 +4846,42 @@ retain durability. Complete applicability is distinct from all-source execution.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub _ir_when_activation' roots first-when entry selection and sample-only payload collection at 2ca15577c3cc07f38ba49a15efc8955529f39d8b. Current private and actual native/API/newline source products retain successful admission while omitting entry-body set/update/wait/drive/nested/repeat actions. Canonical activation section 7.1 defines this placement as an entry guard, with later when as branching. The malformed empty-list fixture already refuses before this path; preserve that initial oracle error and the native schedule stderr/status contract instead of calling it missing JSON.
 - [x] **ADDRESSED (verified)** — The seven-line gate closes unsupported first-when payload admission. Qualified baseline is genuine RED for eleven unsupported entry sources; current T2040 reports All tests successful, Files=1, Tests=22. The independent saved verifier checks fixed membership and unchanged full positive products, literal guards/sample aliases/write order/branch count, every complete strict carrier and complete native/API/newline failure phases. Opposite width kind, shared sample/write omission, guard change and false admission reject independently. first-select-closed.json proves the related macro is safely refused, not delivered; .5 owns its repair next. Exact source/code/recipes/drafts/history/raw receipts are sealed under docs/audits/first-when-activation-body-20261002/.
 - [x] **NO REGRESSION** — Guarded T2039/T1206/T1180/T1973 reports All tests successful, Files=4, Tests=49. Six docs checks report All tests successful, Files=6, Tests=622, with 115 complete fixtures lowering cleanly; syntax and mdBook build pass. Actual HTML text/code/link/include checks pass without browser visual QA. Full bin/perl census proves this exact gate is the sole production delta; removing it recovers baseline43dc. All original archives remain immutable and authenticate without replay. Independent saved-product verification, current Knowledge Map, measured capacity and claim inventory precede staged doctrines and normal commit hooks. Initial metadata checks reject the changed matrix-line claim's stale identity, then a noncanonical owner/order; reconcile the exact identity, preserve general_book authority, and sort before repeating the complete gate. Staged whitespace inspection flags only untrimmed raw TAP/history evidence, which stays exact; maintained source/docs are whitespace-clean. Public output/writer gates, external HDL admission and full CI/push remain separate owned work.
+
+## Acceptance Checklist (enforced) — SEM .60.4.3.3.5.2.1.5.1 macro source-intent qualification
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S roots select at b6204f00bef9bf5b37cb4f1df661bfb528e48ff1, cond at 368c42812ff7849a7c6aff78b9a2bec527e58ae9 and proc calls at e680f9670257c6d6e9ad0c46d222e96697ea2304. The actual parser emits ordinary when lists without branch-intent association; first scheduled when selects activation. _expand_cond_loops scans transactions before procedure insertion, so actual first/later inline cond remains unexpanded and refuses. Complete real native/API/newline products confirm unsafe sample-macro admission and phase-specific action/proc refusals. T1390 expects unscoped formals although qualified physical names are emitted; retain this genuine FAIL and its separate local-controller witness.
+- [x] **ADDRESSED (verified)** — Current T2041 reports All tests successful, Files=1, Tests=44. Complete fixed source/actor/private/lowered/public/carrier products qualify each family/context and original kinds. Independent desired-intent producer is genuine RED for seven unsafe sample entries; five shared product corruptions reject. P2 inline-cond normalization .5.4 is scheduled next, explicit source intent .5.2 and integration .5.3 follow. Small blocking T1390 structural oracle repair checks scoped bindings without a runtime claim; local-call execution stays owned by .32.1.3.3.1.3. Sealed full evidence and synchronized facts/book/integration/feedback establish diagnosis and repair boundaries, not completed macro delivery.
+- [x] **NO REGRESSION** — Final guarded macro cohort reports All tests successful, Files=6, Tests=28, and isolated T2040 Files=1, Tests=22. Six docs gates report All tests successful, Files=6, Tests=622 with 115 complete fixtures lowering; syntax and mdBook build pass. Actual rendered text/code/links and canonical includes pass without browser visual QA. Full bin/perl census proves production unchanged at baseline9bf0; immutable archives authenticate without replay. Independent saved verification, Knowledge Map regeneration, measured containment and claim reconciliation precede staged doctrines and normal hooks. The initial stale-oracle FAIL, unsupported guard option and host-memory cutoff are retained as non-success; recovery uses unchanged limits. No HDL execution, full CI/push, public output widening or broader macro signoff is inferred.
+
+The initial focused band terminates FAIL (Files=7, Tests=50): T1390's handshake
+procedure checks expect unscoped `in`/`r`, despite the qualified physical
+`isf_port_inc_into_in`/`isf_port_inc_into_r` identities. Own this small stale
+structural oracle repair in .5.1; preserve its failed receipt and source. Its
+actual hs_demo carrier also contains an unreachable main_sample_3 and separate
+local controller, so structural binding assertions do not establish runtime
+delivery. That execution defect remains owned by .32.1.3.3.1.3 (decision 0109),
+after its existing scoped-identity/writer prerequisites; retain this additional
+reproducer with the qualification archive. No HDL execution is authorized here.
+
+DBINP discussion (2026-10-02): "no new macro language" describes this repair's
+scope, not a rejection of future ISF metaprogramming. Existing inline proc reuses
+clauses; counted repeat/indexed for executes repeated scheduled work. A future
+bounded, hygienic source template could help generate repeated channel or
+register-handler declarations, transactions, or caller-supplied bodies when
+those cannot be expressed clearly with current facilities. These are hypothetical
+use cases, not demonstrated feature gaps or an adopted implementation. Prefer
+extending existing constructs after concrete downstream evidence. Any future
+template would elaborate into ordinary ISF before validation/scheduling, preserve
+scope/source provenance and explicit activation/branch intent, and use the same
+type/ownership checks. No general programmable macro language, syntax, new leaf
+or roadmap pivot is authorized by this discussion; current .5.1/.5.4 ordering
+continues. This durable idea is available for later user review.
+
+Staged whitespace inspection flags only the sealed exact source/raw TAP/history
+and cutoff evidence. Preserve those bytes rather than trimming the original
+receipts or sources; maintained code/docs pass their scoped whitespace check.
+No archive is edited after its successful seal and saved authentication.
+The initial staged doctrine gate passes every check except CLAIM-INVENTORY:
+the final task evidence note follows its earlier census. Refresh the complete
+inventory and measured task pressure after all prose is final, then repeat the
+full gate and normal hooks. This is stale metadata, not an implementation FAIL.

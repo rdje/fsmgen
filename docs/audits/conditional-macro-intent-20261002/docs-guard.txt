@@ -1,0 +1,2 @@
+ram-guard: PID 28810; host 72.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+# audit summary: 115 complete fixtures lowered cleanly, 275 fragments skipped (did not start with (actor))

@@ -1,0 +1,232 @@
+t/1406-isf-select.t ...................... ok
+t/1407-isf-minmax.t ...................... ok
+t/1402-isf-bit-test.t .................... ok
+t/1404-isf-when-field.t .................. ok
+t/1396-isf-cond.t ........................ ok
+
+    #   Failed test 'the in-argument is bound (in <- s)'
+    #   at t/1390-isf-procedures.t line 165.
+    #                   '(?fsm:hs_demo
+    # 
+    #   (+system
+    #     (clock clk)
+    #     (areset rst_n)
+    #   )
+    # 
+    #   (+interface
+    #     (input start)
+    #     (input din)
+    #     (output done)
+    #     (output result)
+    #     (internal isf_port_inc_into_in)
+    #     (internal isf_port_inc_into_r)
+    #   )
+    # 
+    #   (+size
+    #     (start 1)
+    #     (din 8)
+    #     (done 1)
+    #     (result 8)
+    #     (can_accept 1)
+    #     (inc_into_done 1)
+    #     (inc_into_start 1)
+    #     (isf_port_inc_into_in 8)
+    #     (isf_port_inc_into_r 8)
+    #   )
+    # 
+    #   (main_idle_0
+    #     (= (can_accept 1))
+    #     (<start
+    #       (-> main_do_1)
+    #     )
+    #   )
+    # 
+    #   (main_do_1
+    #     (= (isf_port_inc_into_in s))
+    #     (= (inc_into_start 1))
+    #     (= (result> isf_port_inc_into_r) <inc_into_done)
+    #     (<inc_into_done
+    #       (-> main_done_2)
+    #     )
+    #   )
+    # 
+    #   (main_done_2
+    #     (<1 (done> 1))
+    #     (-> main_idle_0)
+    #   )
+    # 
+    #   (main_sample_3
+    #     (<= (s din))
+    #   )
+    # 
+    #   (inc_into_update_0
+    #     (<- (isf_port_inc_into_r (+ isf_port_inc_into_in 1)))
+    #     (-> inc_into_done_1)
+    #   )
+    # 
+    #   (inc_into_done_1
+    #     (<1 (inc_into_done 1))
+    #     (<1 (inc_into_done 1))
+    #     (-> inc_into_update_0)
+    #   )
+    # 
+    # )
+    # '
+    #     doesn't match '(?^:\(in s\))'
+
+    #   Failed test 'the out-argument is read back (result <- r)'
+    #   at t/1390-isf-procedures.t line 167.
+    #                   '(?fsm:hs_demo
+    # 
+    #   (+system
+    #     (clock clk)
+    #     (areset rst_n)
+    #   )
+    # 
+    #   (+interface
+    #     (input start)
+    #     (input din)
+    #     (output done)
+    #     (output result)
+    #     (internal isf_port_inc_into_in)
+    #     (internal isf_port_inc_into_r)
+    #   )
+    # 
+    #   (+size
+    #     (start 1)
+    #     (din 8)
+    #     (done 1)
+    #     (result 8)
+    #     (can_accept 1)
+    #     (inc_into_done 1)
+    #     (inc_into_start 1)
+    #     (isf_port_inc_into_in 8)
+    #     (isf_port_inc_into_r 8)
+    #   )
+    # 
+    #   (main_idle_0
+    #     (= (can_accept 1))
+    #     (<start
+    #       (-> main_do_1)
+    #     )
+    #   )
+    # 
+    #   (main_do_1
+    #     (= (isf_port_inc_into_in s))
+    #     (= (inc_into_start 1))
+    #     (= (result> isf_port_inc_into_r) <inc_into_done)
+    #     (<inc_into_done
+    #       (-> main_done_2)
+    #     )
+    #   )
+    # 
+    #   (main_done_2
+    #     (<1 (done> 1))
+    #     (-> main_idle_0)
+    #   )
+    # 
+    #   (main_sample_3
+    #     (<= (s din))
+    #   )
+    # 
+    #   (inc_into_update_0
+    #     (<- (isf_port_inc_into_r (+ isf_port_inc_into_in 1)))
+    #     (-> inc_into_done_1)
+    #   )
+    # 
+    #   (inc_into_done_1
+    #     (<1 (inc_into_done 1))
+    #     (<1 (inc_into_done 1))
+    #     (-> inc_into_update_0)
+    #   )
+    # 
+    # )
+    # '
+    #     doesn't match '(?^:\(result>\s*r\))'
+
+    #   Failed test 'the synthesized child computes r = in + 1'
+    #   at t/1390-isf-procedures.t line 170.
+    #                   '(?fsm:hs_demo
+    # 
+    #   (+system
+    #     (clock clk)
+    #     (areset rst_n)
+    #   )
+    # 
+    #   (+interface
+    #     (input start)
+    #     (input din)
+    #     (output done)
+    #     (output result)
+    #     (internal isf_port_inc_into_in)
+    #     (internal isf_port_inc_into_r)
+    #   )
+    # 
+    #   (+size
+    #     (start 1)
+    #     (din 8)
+    #     (done 1)
+    #     (result 8)
+    #     (can_accept 1)
+    #     (inc_into_done 1)
+    #     (inc_into_start 1)
+    #     (isf_port_inc_into_in 8)
+    #     (isf_port_inc_into_r 8)
+    #   )
+    # 
+    #   (main_idle_0
+    #     (= (can_accept 1))
+    #     (<start
+    #       (-> main_do_1)
+    #     )
+    #   )
+    # 
+    #   (main_do_1
+    #     (= (isf_port_inc_into_in s))
+    #     (= (inc_into_start 1))
+    #     (= (result> isf_port_inc_into_r) <inc_into_done)
+    #     (<inc_into_done
+    #       (-> main_done_2)
+    #     )
+    #   )
+    # 
+    #   (main_done_2
+    #     (<1 (done> 1))
+    #     (-> main_idle_0)
+    #   )
+    # 
+    #   (main_sample_3
+    #     (<= (s din))
+    #   )
+    # 
+    #   (inc_into_update_0
+    #     (<- (isf_port_inc_into_r (+ isf_port_inc_into_in 1)))
+    #     (-> inc_into_done_1)
+    #   )
+    # 
+    #   (inc_into_done_1
+    #     (<1 (inc_into_done 1))
+    #     (<1 (inc_into_done 1))
+    #     (-> inc_into_update_0)
+    #   )
+    # 
+    # )
+    # '
+    #     doesn't match '(?^:inc_into_\w+[\s\S]*?\(r\s*\(\+ in 1\)\))'
+    # Looks like you failed 3 tests of 6.
+
+#   Failed test 'a handshake (call ... as INST) calls a synthesized child via the (do) handshake'
+#   at t/1390-isf-procedures.t line 171.
+# Looks like you failed 1 test of 9.
+t/1390-isf-procedures.t .................. 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/9 subtests 
+t/2040-isf-first-when-activation-body.t .. ok
+
+Test Summary Report
+-------------------
+t/1390-isf-procedures.t                (Wstat: 256 Tests: 9 Failed: 1)
+  Failed test:  7
+  Non-zero exit status: 1
+Files=7, Tests=50, 265 wallclock secs ( 0.04 usr  0.02 sys + 179.43 cusr 76.03 csys = 255.52 CPU)
+Result: FAIL

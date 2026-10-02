@@ -1,0 +1,5 @@
+(actor first_proc_cond
+  (clock clk) (reset (rst_n sync active_low))
+  (interface (input request) (input allow) (input datain (width 3)) (input other (width 3)) (output seen (width 3)) (output done))
+  (proc choose (params (v (width 3)) (alt (width 3))) (cond (allow (set seen v)) (else (set seen alt))))
+  (transaction main  (call choose datain other) (complete done)))

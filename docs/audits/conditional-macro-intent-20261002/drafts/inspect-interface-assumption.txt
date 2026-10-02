@@ -1,0 +1,5 @@
+ram-guard: PID 47878; host 54.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File ".artifacts/conditional-macro-intent/inspect.py", line 7, in <module>
+    print(name, 'inputs', ir['interface']['inputs'])
+KeyError: 'interface'

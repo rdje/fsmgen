@@ -1,0 +1,29 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.1",
+  "baseline_revision": "9bf0bd4c8af8c8aab5ab6865e66f6729d9583b3c",
+  "source_generator": "make_sources.py",
+  "sources": "sources/*.isf",
+  "private_probe": ["perl", "private.pl"],
+  "qualification": ["prove", "-Iperl", "-It/lib", "t/2041-isf-conditional-macro-intent-qualification.t"],
+  "capture_environment": {"FSMGEN_MACRO_CAPTURE": ".artifacts/conditional-macro-intent/current"},
+  "executed_qualification": "test-current.t",
+  "desired_intent_falsification": ["prove", "-Iperl", "-It/lib", ".artifacts/conditional-macro-intent/desired-intent.t"],
+  "desired_intent_result": "intentional genuine terminal RED, seven of seven actual source witnesses",
+  "public_phase_argv_suffixes": {
+    "check": ["bin/fsmgen", "--strict", "--check", "--json", "<source>"],
+    "semantic": ["bin/fsmgen", "--strict", "--emit-semantic-json", "<source>"],
+    "schedule": ["bin/fsmgen", "--emit-schedule-json", "<source>"],
+    "newline": ["bin/fsmgen-mcp", "--workspace-root", "."]
+  },
+  "native_stdin": "empty",
+  "newline_stdin": "exact canonical JSON-RPC tools/call request plus one newline in test-current.t",
+  "focused_macro": ["prove", "-Iperl", "-It/lib", "t/1406-isf-select.t", "t/1407-isf-minmax.t", "t/1402-isf-bit-test.t", "t/1404-isf-when-field.t", "t/1396-isf-cond.t", "t/1390-isf-procedures.t"],
+  "focused_activation": ["prove", "-Iperl", "-It/lib", "t/2040-isf-first-when-activation-body.t"],
+  "docs": ["prove", "-Iperl", "-It/lib", "t/1305-isf-book-feature-matrix-audit.t", "t/1414-docs-relative-paths-audit.t", "t/1303-isf-public-live-book-paths-audit.t", "t/1307-isf-loop-body-doc-truth-audit.t", "t/1332-isf-atl-doc-status-audit.t", "t/1376-isf-book-example-lowering-audit.t"],
+  "book": ["mdbook", "build", "docs/book"],
+  "guard": {"wrapper": "scripts/run_with_ram_guard.sh", "host_cutoff_percent": 88, "descendant_rss_cutoff_mib": 4096, "policy_unchanged": true},
+  "failed_recipes": "drafts retains initial generator collision, missing-cases dependent probe, invalid domains grammar, read-only IR interface assumption, unsupported guard --log option and actual host cutoff. focused.tap retains genuine stale procedure-oracle failure. None is a passing gate.",
+  "normalization": "only exact runtime repository prefix; raw transport streams, JSON kinds, arrays, complete fields and absence retained",
+  "toolchain_dependency": "executing Perl/Python/mdBook and OS tools are necessary read-only external dependencies; all project scratch/output remains repository-local",
+  "scope_exclusions": ["production macro repair", "HDL invocation", "spent replay", "macro/output runtime", "record output routes/public widening", "full CI/push", "browser visual QA"]
+}

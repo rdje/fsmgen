@@ -1,0 +1,111 @@
+ram-guard: PID 58960; host 83.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'conditional macro starts with a decision, not an activation gate'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 21.
+    #          got: 'entry'
+    #     expected: 'branch'
+
+    #   Failed test 'complete source conditional branch membership'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 22.
+    #          got: '0'
+    #     expected: '1'
+    # Looks like you failed 2 tests of 2.
+
+#   Failed test 'desired ordinary macro branch: first_when_bit_sample'
+#   at .artifacts/conditional-macro-intent/desired-intent.t line 23.
+
+    #   Failed test 'conditional macro starts with a decision, not an activation gate'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 21.
+    #          got: 'entry'
+    #     expected: 'branch'
+
+    #   Failed test 'complete source conditional branch membership'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 22.
+    #          got: '0'
+    #     expected: '1'
+    # Looks like you failed 2 tests of 2.
+
+#   Failed test 'desired ordinary macro branch: first_unless_bit_sample'
+#   at .artifacts/conditional-macro-intent/desired-intent.t line 23.
+
+    #   Failed test 'conditional macro starts with a decision, not an activation gate'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 21.
+    #          got: 'entry'
+    #     expected: 'branch'
+
+    #   Failed test 'complete source conditional branch membership'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 22.
+    #          got: '0'
+    #     expected: '1'
+    # Looks like you failed 2 tests of 2.
+
+#   Failed test 'desired ordinary macro branch: first_when_field_sample'
+#   at .artifacts/conditional-macro-intent/desired-intent.t line 23.
+
+    #   Failed test 'conditional macro starts with a decision, not an activation gate'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 21.
+    #          got: 'entry'
+    #     expected: 'branch'
+
+    #   Failed test 'complete source conditional branch membership'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 22.
+    #          got: '0'
+    #     expected: '1'
+    # Looks like you failed 2 tests of 2.
+
+#   Failed test 'desired ordinary macro branch: first_unless_field_sample'
+#   at .artifacts/conditional-macro-intent/desired-intent.t line 23.
+
+    #   Failed test 'conditional macro starts with a decision, not an activation gate'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 21.
+    #          got: 'entry'
+    #     expected: 'branch'
+
+    #   Failed test 'complete source conditional branch membership'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 22.
+    #          got: '1'
+    #     expected: '2'
+    # Looks like you failed 2 tests of 2.
+
+#   Failed test 'desired ordinary macro branch: first_cond_sample'
+#   at .artifacts/conditional-macro-intent/desired-intent.t line 23.
+
+    #   Failed test 'conditional macro starts with a decision, not an activation gate'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 21.
+    #          got: 'entry'
+    #     expected: 'branch'
+
+    #   Failed test 'complete source conditional branch membership'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 22.
+    #          got: '0'
+    #     expected: '1'
+    # Looks like you failed 2 tests of 2.
+
+#   Failed test 'desired ordinary macro branch: first_bit_sample_zero'
+#   at .artifacts/conditional-macro-intent/desired-intent.t line 23.
+
+    #   Failed test 'conditional macro starts with a decision, not an activation gate'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 21.
+    #          got: 'entry'
+    #     expected: 'branch'
+
+    #   Failed test 'complete source conditional branch membership'
+    #   at .artifacts/conditional-macro-intent/desired-intent.t line 22.
+    #          got: '0'
+    #     expected: '1'
+    # Looks like you failed 2 tests of 2.
+
+#   Failed test 'desired ordinary macro branch: domain_first_sample'
+#   at .artifacts/conditional-macro-intent/desired-intent.t line 23.
+# Looks like you failed 7 tests of 7.
+.artifacts/conditional-macro-intent/desired-intent.t .. 
+Dubious, test returned 7 (wstat 1792, 0x700)
+Failed 7/7 subtests 
+
+Test Summary Report
+-------------------
+.artifacts/conditional-macro-intent/desired-intent.t (Wstat: 1792 Tests: 7 Failed: 7)
+  Failed tests:  1-7
+  Non-zero exit status: 7
+Files=1, Tests=7,  1 wallclock secs ( 0.01 usr  0.01 sys +  0.72 cusr  0.35 csys =  1.09 CPU)
+Result: FAIL

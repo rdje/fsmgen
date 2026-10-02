@@ -160,14 +160,15 @@ ISF
     };
     ok($lowered, 'a handshake (call ... as INST) lowers') or diag($@);
     my $fsm = $lowered->{files}{'hs_demo.fsm'};
-    # The call site drives the in-arg, asserts start, reads the out-arg on done, and
-    # blocks on the done handshake.
-    like($fsm, qr/\(in s\)/, 'the in-argument is bound (in <- s)');
+    # These are structural binding checks, with the callee's qualified physical
+    # formals. Local-call controller reachability is separately owned under
+    # SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1.3.
+    like($fsm, qr/\(isf_port_inc_into_in s\)/, 'the input binding uses the scoped callee formal');
     like($fsm, qr/\(inc_into_start 1\)/, 'the call asserts the synthesized child start handshake');
-    like($fsm, qr/\(result>\s*r\)/, 'the out-argument is read back (result <- r)');
+    like($fsm, qr/\(result>\s*isf_port_inc_into_r\)/, 'the output binding uses the scoped callee formal');
     like($fsm, qr/<inc_into_done/, 'the call blocks on the synthesized child done handshake');
-    # The synthesized child transaction's body runs r = in + 1.
-    like($fsm, qr/inc_into_\w+[\s\S]*?\(r\s*\(\+ in 1\)\)/, 'the synthesized child computes r = in + 1');
+    like($fsm, qr/inc_into_\w+[\s\S]*?\(isf_port_inc_into_r\s*\(\+ isf_port_inc_into_in 1\)\)/,
+        'the synthesized body preserves the increment with scoped formals');
 };
 
 subtest 'handshake-call misuse fails closed' => sub {
