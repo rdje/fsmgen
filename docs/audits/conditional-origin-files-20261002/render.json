@@ -1,0 +1,23 @@
+{
+  "pages": [
+    {
+      "page": "13d-control-flow.html",
+      "sha256": "3ec0cdad4aedccd50d5a99422d831f9d8bff056edc0c2aaf664fc29951ec1e0d",
+      "markers": [
+        "Separate private file-backed qualification now reads",
+        "prior canonical parse",
+        "no public parser or scheduling behavior"
+      ]
+    },
+    {
+      "page": "13i-downstream-integration.html",
+      "sha256": "cab6d5917afeaa9e1880c866f9bd3383f3e335b1fba13c734dd5588f7f2c50b9",
+      "markers": [
+        "runtime-to-relative document identities",
+        "canonical width-token coercion",
+        "conditional-origin-files-20261002/scope.txt"
+      ]
+    }
+  ],
+  "scope": "actual rendered text and canonical downstream inclusion; no browser visual QA"
+}

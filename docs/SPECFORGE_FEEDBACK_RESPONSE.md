@@ -198,17 +198,24 @@ and book.
   with final whole-edge/target/kind revalidation; the permanent regression and
   [final proof](audits/conditional-origin-documents-finalization-20261002/scope.txt)
   preserve its genuine failure and corrected complete products. Scheduling remains closed.
-  File-backed root/runtime-to-relative document identity qualification remains
-  separately owned before adoption; the current cohort uses a supplied root
-  with a non-file label and relative library search roots.
+  The earlier cohort uses a supplied root with a non-file label and relative
+  library search roots. Separate private file-backed qualification now reads
+  actual roots, authenticates selected source bytes and preserves portable
+  document identities across moved workspace roots and search precedence.
   Separate private ATL provenance now qualifies actual rebuilt library
   constructors and resolved static actor clones, including distinct use/ATL
   identities for identical complete actors. Final target/declaration/coverage
   changes refuse. [ATL proof](audits/conditional-origin-atl-20261002/scope.txt)
   retains complete sources/products, real missing-producer and forged-reload
   failures. The cohort covers one resolved static instance; groups and unresolved
-  external intent remain closed in this authority. File-backed identity and
-  preparation/adoption remain open before scheduling integration.
+  external intent remain closed in this authority. File-backed identity now
+  qualifies through a separate observer, including original same-source intent
+  across actual use/ATL rebuilding and forged-reload refusal.
+  [File-backed proof](audits/conditional-origin-files-20261002/scope.txt) retains
+  complete original bytes, portable products and independent counterfactuals.
+  Preparation/adoption remain open before scheduling integration. The discovered
+  lazy module-location initialization defect has its own repair leaf before
+  preparation; private fixture bootstrap is explicit and does not fix production.
   [Origin qualification](audits/conditional-origin-parser-20261002/scope.txt)
   retains the complete parser evidence; public syntax and admission do not change.
   Use explicit activation before conditional shorthand and keep `cond` at the

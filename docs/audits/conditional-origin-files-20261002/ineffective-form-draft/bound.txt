@@ -1,0 +1,3 @@
+current-bound: complete input/instrument/producer binding and expected terminal result
+red-bound: complete input/instrument/producer binding and expected terminal result
+form-bound: complete input/instrument/producer binding and expected terminal result

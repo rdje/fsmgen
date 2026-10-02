@@ -1,0 +1,24 @@
+ram-guard: PID 81701; host 81.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+    # No tests run!
+
+#   Failed test 'No tests run for subtest "same-source selection and path aliases remain explicit"'
+#   at t/2048-isf-file-document-origin-authority.t line 157.
+file origin actual selected form differs from authority
+ at ./t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 131.
+	FSM::Test::FileDocumentOriginAuthority::Parser::_parse_library_form(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x783ff8c7e0), ARRAY(0x78408456a8), "sources/main.isf") called at ./t/../perl/FSM/Adapter/ISF/Parser.pm line 7799
+	FSM::Adapter::ISF::Parser::_same_source_libraries(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x783ff8c7e0), ARRAY(0x7841685240), "sources/main.isf") called at ./t/../perl/FSM/Adapter/ISF/Parser.pm line 7576
+	FSM::Adapter::ISF::Parser::_resolve_atl_actor_type_metadata(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x783ff8c7e0), HASH(0x78413f2168), ARRAY(0x7841685240), "sources/main.isf") called at ./t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 61
+	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x783ff8c7e0), HASH(0x78413f2168), ARRAY(0x7841685240), "sources/main.isf") called at ./t/../perl/FSM/Adapter/ISF/Parser.pm line 136
+	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x783ff8c7e0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "sources/main.isf") called at ./t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x783ff8c7e0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "sources/main.isf") called at ./t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x783ff8c7e0), "sources/main.isf", HASH(0x78412ee7b0)) called at ./t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x783ff8c7e0), "sources/main.isf", HASH(0x78412ee7b0)) called at ./t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 116
+	FSM::Test::FileDocumentOriginAuthority::Parser::parse_source(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x783ff8c7e0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "sources/main.isf") called at ./t/../perl/FSM/Adapter/ISF/Parser.pm line 100
+	FSM::Adapter::ISF::Parser::parse_file(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x783ff8c7e0), "sources/main.isf") called at ./t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 34
+	FSM::Test::FileDocumentOriginAuthority::from_files("FSM::Test::FileDocumentOriginAuthority", "sources/main.isf", HASH(0x783ff751f8), ARRAY(0x783ffd03c0)) called at t/2048-isf-file-document-origin-authority.t line 147
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x783d259fd8), "same-source selection and path aliases remain explicit", CODE(0x784068f438)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("same-source selection and path aliases remain explicit", CODE(0x784068f438)) called at t/2048-isf-file-document-origin-authority.t line 157
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 27.

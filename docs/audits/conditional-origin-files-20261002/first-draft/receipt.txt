@@ -1,0 +1,5 @@
+Command: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2048-isf-file-document-origin-authority.t
+Terminal tool receipt, no exact input pre/post binding for this draft:
+fileparse(): need a valid pathname at perl/PathSearch.pm line 27.
+Tests=2; no plan; Result: FAIL; guard status1.
+Mechanism: chdir before the first lazy PathSearch lookup invalidates its relative %INC module locator. Public commands require repository-root execution. File tests will load modules through repository-derived runtime absolute include paths before changing only the fixture cwd. General deferred module-locator repair remains separately owned.

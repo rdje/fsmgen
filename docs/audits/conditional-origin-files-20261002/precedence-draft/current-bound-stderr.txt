@@ -1,0 +1,21 @@
+file origin selected document authority missing
+ at ./t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 111.
+	FSM::Test::FileDocumentOriginAuthority::Parser::document_identity(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), "./.artifacts/tmp/tests/RBP"...) called at ./t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 149
+	FSM::Test::FileDocumentOriginAuthority::Parser::_parse_library_form(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), ARRAY(0x78293faaf8), "./.artifacts/tmp/tests/RBP"...) called at ./t/../perl/FSM/Adapter/ISF/Parser.pm line 7837
+	FSM::Adapter::ISF::Parser::_resolve_library(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), "common.choice", HASH(0x78293e17c8), "sources/main.isf", HASH(0x7829228888)) called at ./t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 128
+	FSM::Test::LibraryDocumentOriginAuthority::Parser::_resolve_library(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), "common.choice", HASH(0x78293e17c8), "sources/main.isf", HASH(0x7829228888)) called at ./t/../perl/FSM/Adapter/ISF/Parser.pm line 7514
+	FSM::Adapter::ISF::Parser::_resolve_library_uses(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), HASH(0x7829497348), ARRAY(0x782958d918), "sources/main.isf") called at ./t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 138
+	FSM::Test::LibraryDocumentOriginAuthority::Parser::_resolve_library_uses(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), HASH(0x7829497348), ARRAY(0x782958d918), "sources/main.isf") called at ./t/../perl/FSM/Adapter/ISF/Parser.pm line 135
+	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "sources/main.isf") called at ./t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "sources/main.isf") called at ./t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), "sources/main.isf", HASH(0x7828dc7af8)) called at ./t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), "sources/main.isf", HASH(0x7828dc7af8)) called at ./t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 122
+	FSM::Test::FileDocumentOriginAuthority::Parser::parse_source(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "sources/main.isf") called at ./t/../perl/FSM/Adapter/ISF/Parser.pm line 100
+	FSM::Adapter::ISF::Parser::parse_file(FSM::Test::FileDocumentOriginAuthority::Parser=HASH(0x7829093de0), "sources/main.isf") called at ./t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 36
+	FSM::Test::FileDocumentOriginAuthority::from_files("FSM::Test::FileDocumentOriginAuthority", "sources/main.isf", HASH(0x7828f871e0), ARRAY(0x782906f768)) called at t/2048-isf-file-document-origin-authority.t line 136
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x7825015018), "actual file precedence and independently supplied membership", CODE(0x782837fe58)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("actual file precedence and independently supplied membership", CODE(0x782837fe58)) called at t/2048-isf-file-document-origin-authority.t line 157
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 26.

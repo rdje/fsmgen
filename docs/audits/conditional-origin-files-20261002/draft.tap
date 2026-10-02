@@ -1,0 +1,12 @@
+t/2048-isf-file-document-origin-authority.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+Failed 1/27 subtests 
+
+Test Summary Report
+-------------------
+t/2048-isf-file-document-origin-authority.t (Wstat: 65280 Tests: 27 Failed: 1)
+  Failed test:  27
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=27, 70 wallclock secs ( 0.17 usr  0.03 sys + 67.88 cusr  1.47 csys = 69.55 CPU)
+Result: FAIL

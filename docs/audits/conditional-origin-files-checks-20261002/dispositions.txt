@@ -1,0 +1,1 @@
+claim-dispositions: bounded disposition join holds (candidates=1973, disposed=1973, claim_records=316, gates=1033, reviewed=624, gaps=0, open=0, groups=6)

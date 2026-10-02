@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-atl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **5** facts · **22** uniquely owned question entries.
+> **5** facts · **23** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -18,6 +18,7 @@
 - q="what diagnostic reports ATL group.name endpoints?" · facts=[isf-atl-group-endpoint-boundary](../../docs/knowledge/isf-atl-group-endpoint-boundary.md)
 - q="what diagnostic reports repeated ATL actor-event waits after a trigger batch?" · facts=[isf-atl-trigger-batch-wait-boundary](../../docs/knowledge/isf-atl-trigger-batch-wait-boundary.md)
 - q="what generated_tops kind reports a resolved-child trigger batch?" · facts=[isf-atl-trigger-batch-generated-top](../../docs/knowledge/isf-atl-trigger-batch-generated-top.md)
+- q="what is ATL?" · facts=[isf-atl-document-origin-authority](../../docs/knowledge/isf-atl-document-origin-authority.md)
 - q="what is the ATL trigger-batch generated-top boundary?" · facts=[isf-atl-trigger-batch-generated-top](../../docs/knowledge/isf-atl-trigger-batch-generated-top.md)
 - q="what is the ATL trigger-batch multi-event wait boundary?" · facts=[isf-atl-trigger-batch-wait-boundary](../../docs/knowledge/isf-atl-trigger-batch-wait-boundary.md)
 - q="what remains deferred for resolved-child trigger-batch generated tops?" · facts=[isf-atl-trigger-batch-generated-top](../../docs/knowledge/isf-atl-trigger-batch-generated-top.md)

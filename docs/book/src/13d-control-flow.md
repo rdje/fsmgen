@@ -72,9 +72,14 @@ library constructors into resolved static actor clones, keeping use and ATL
 producer identities distinct even when their complete actors are identical.
 It covers the shipped one-instance subset and rejects stale final targets,
 declarations and coverage. Unresolved external actor intent and groups remain
-closed in this authority. The qualified fixtures use a supplied root with a
-logical non-file label and relative library search roots; file-backed root
-identity qualification is also required before adoption.
+closed in this authority. Separate private file-backed qualification now reads
+actual root files and authenticates selected libraries against independently
+supplied complete bytes. Portable document identities preserve complete actors
+and origins across moved workspace roots, including adjacent-file and library
+search precedence. Same-source ATL rebuilding authenticates the exact source-form state produced
+by the prior canonical parse and preserves original conditional intent. Missing or changed bytes, symlinked source paths and substituted authority
+refuse. This qualification changes no public parser
+or scheduling behavior.
 Formal/generated/domain preparation must also qualify before this becomes a
 scheduling repair. The current activation workaround and refusals still apply.
 

@@ -1,0 +1,3 @@
+ram-guard: PID 88605; host 60.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ram-guard: host memory 88.5% reached cutoff 88%
+ram-guard: terminating PID tree: 88605 88629 

@@ -1,0 +1,1874 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Control Flow - FSMGen Book</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Progressive, example-rich documentation for FSMGen and the .fsm language.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-673707bd.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-7727513f.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSMGen Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="control-flow"><a class="header" href="#control-flow">Control Flow</a></h1>
+<p>This chapter describes transaction-local branches and loops. A <code>when</code> after
+an explicit activation such as <code>(on start)</code>, or another scheduled state, is a
+branch. A first scheduled authored <code>when</code> selects an activation guard instead;
+its body supports only inline samples. See <a href="13b-transactions.html">Transactions</a>
+for that entry contract. Declarations and zero waits create no preceding state.</p>
+<p>Rules use a related but different guard form:</p>
+<pre><code class="language-lisp">(rule always_ready
+  (when ready)
+  (valid 1))
+</code></pre>
+<p>In a rule, <code>(when condition)</code> is a guard clause for the rule’s actions; it is
+not a body-bearing control-flow form. The preferred rule shorthand is:</p>
+<pre><code class="language-lisp">(rule always_ready ready
+  (valid 1))
+</code></pre>
+<p>See <a href="13g-rules.html">Rules and Priorities</a> for rule guard lowering.</p>
+<h2 id="when-condition-body--inline-branching"><a class="header" href="#when-condition-body--inline-branching"><code>(when condition body...)</code> — Inline Branching</a></h2>
+<pre><code class="language-lisp">(when mode
+  (drive write_path)
+  (drive write_done))
+
+(when (&gt; counter 0)
+  (drive inc))
+
+(when (== opcode 3)
+  (drive error_phase))
+</code></pre>
+<p><strong>Condition</strong>: port name, or any <code>.fsm</code> expression.</p>
+<p>The form is exact: <code>(when condition body...)</code>, with a scalar or list-form
+condition and at least one list-form body clause before branch expansion.</p>
+<p>These examples use the branching position described above. Conditional
+shorthand such as <code>when-bit</code>, <code>when-field</code>, and <code>cond</code> currently expands into
+ordinary <code>when</code> clauses. A sample-only first shorthand can therefore be admitted
+as an activation gate instead of the intended branch. Put <code>(on start)</code> before
+conditional shorthand until its source-intent repair is qualified. First
+shorthand bodies with other actions refuse at the entry-body boundary.</p>
+<p>The detached parser-origin qualification preserves original operations and
+inline call sites without changing ordinary parsed actors. Authored <code>when</code> and
+macro expansion can produce identical normalized clauses; those clauses alone
+cannot decide entry intent. A private local-source verifier now reconstructs
+the complete actor and origins from independently supplied source before
+accepting a reloaded ledger. An embedded digest supplies no authority; that
+local verifier refuses imports.
+Separate same-source library producer qualification now follows original
+document, exported actor and use-instance identity through actual cloning.
+Separate private document-set qualification now authenticates complete root
+and external library bytes through canonical file resolution and cloning.
+Reloads must match the complete independently reconstructed actor and proof;
+even consistent embedded digests cannot authorize different original operations
+that produce identical actors. Declared aliases retain their exact constructor
+selections. Packages and ATL remain closed in this private authority.
+Final use coverage and complete edge targets, identities and kinds are checked
+again after canonical finalization before proof publication.
+Separate private ATL qualification now carries origins from the actual rebuilt
+library constructors into resolved static actor clones, keeping use and ATL
+producer identities distinct even when their complete actors are identical.
+It covers the shipped one-instance subset and rejects stale final targets,
+declarations and coverage. Unresolved external actor intent and groups remain
+closed in this authority. Separate private file-backed qualification now reads
+actual root files and authenticates selected libraries against independently
+supplied complete bytes. Portable document identities preserve complete actors
+and origins across moved workspace roots, including adjacent-file and library
+search precedence. Same-source ATL rebuilding authenticates the exact source-form state produced
+by the prior canonical parse and preserves original conditional intent. Missing or changed bytes, symlinked source paths and substituted authority
+refuse. This qualification changes no public parser
+or scheduling behavior.
+Formal/generated/domain preparation must also qualify before this becomes a
+scheduling repair. The current activation workaround and refusals still apply.</p>
+<p><strong>Lowering</strong>: <code>?condition</code> decision state.</p>
+<pre><code class="language-lisp">(test_tx_when_2
+  (?mode
+    (=1 (-&gt; write_body_states))    ;; true: execute body
+    (=0 (-&gt; next_top_level))))     ;; false: skip body
+</code></pre>
+<p>The body tail exits to the same next top-level state, including when the
+<code>when</code> appears inside a switch branch. Current body support includes drive,
+await, sample, complete, nested <code>when</code>, repeat bodies, actor-owned bank
+<code>store</code>/<code>load</code>, shipped <code>wait</code> clauses, and the shipped data-operation family
+(<code>update</code>, <code>set</code>, shifts, <code>assemble</code>, and <code>extract</code>).</p>
+<h2 id="switch-signal-value-body--multi-way-dispatch"><a class="header" href="#switch-signal-value-body--multi-way-dispatch"><code>(switch signal (value body...)...)</code> — Multi-Way Dispatch</a></h2>
+<pre><code class="language-lisp">(switch opcode
+  (0 (drive read_path))
+  (1 (drive write_path))
+  (2 (drive error_path))
+  (3 (drive idle_path)))
+</code></pre>
+<p>Each explicit branch value must be unique. An optional fallback can be
+written as <code>default</code> or <code>_</code>. Body clauses are expanded inline, and each branch
+tail exits to the first state after the whole switch.</p>
+<p>The form is exact: <code>(switch signal (value body...)...)</code>, with a scalar
+non-empty signal and one or more list-form branches. Each branch must carry a
+scalar value and at least one list-form body clause before branch expansion.</p>
+<p><strong>Lowering</strong>: <code>?signal</code> decision tree.</p>
+<pre><code class="language-lisp">(dispatch_switch_4
+  (?opcode
+    (=0 (-&gt; read_body_states))
+    (=1 (-&gt; write_body_states))
+    (=2 (-&gt; error_body_states))
+    (=3 (-&gt; idle_path_states))
+    (default (-&gt; skip))))         ;; default fallthrough
+</code></pre>
+<p>The <code>default</code> selector is semantic, not a copied literal. In <code>.fsm</code>, a
+<code>default</code> branch means “none of the explicit sibling branch predicates matched.”
+For the example above, the default path is equivalent to:</p>
+<pre><code class="language-lisp">(! (| (== opcode 0)
+      (== opcode 1)
+      (== opcode 2)
+      (== opcode 3)))
+</code></pre>
+<p>This is deliberately the logical negation of the OR of all explicit branch
+predicates, not a repeated <code>=0</code> case. If explicit predicates overlap, the
+default branch excludes their union. If the explicit values are exhaustive for
+the signal width, the default branch is unreachable but remains a valid
+fallthrough target in the generated <code>.fsm</code>.</p>
+<h2 id="cond-condition-body-else-body--if--else-if--else"><a class="header" href="#cond-condition-body-else-body--if--else-if--else"><code>(cond (condition body...)... (else body...))</code> — If / Else-If / Else</a></h2>
+<p><code>(cond ...)</code> is the <strong>priority</strong> conditional chain. It tests each branch’s condition in
+order; the <strong>first</strong> branch whose condition holds runs (and only it), and the optional
+final <code>(else ...)</code> runs when none held. Where <code>(switch ...)</code> dispatches on one signal’s
+<em>value</em>, <code>(cond ...)</code> chooses among independent boolean conditions (signals or expressions)
+— the if / else-if / else of a high-level language, without hand-nesting <code>when</code>.</p>
+<pre><code class="language-lisp">(cond
+  ((== mode 0) (drive read))
+  ((== mode 1) (drive write))
+  ((== mode 2) (drive erase))
+  (else        (drive nop)))
+</code></pre>
+<p><code>(cond ...)</code> is pure ISF sugar: the parser desugars it into a <code>when</code>-chain with
+<strong>accumulated negated guards</strong>, so a later branch fires only when every earlier condition
+was false:</p>
+<pre><code class="language-lisp">(when (== mode 0) (drive read))
+(when (&amp; (! (== mode 0)) (== mode 1)) (drive write))
+(when (&amp; (! (== mode 0)) (! (== mode 1)) (== mode 2)) (drive erase))
+(when (&amp; (! (== mode 0)) (! (== mode 1)) (! (== mode 2))) (drive nop))   ;; else
+</code></pre>
+<p>The branch conditions are evaluated across the chain (each <code>when</code> is a decision), so they
+should be <strong>stable</strong> while the chain runs — sample a volatile input first (as you would for
+<code>when</code>/<code>switch</code>). The <code>(else ...)</code> branch must be <strong>last</strong> (if present); a branch must have a
+condition (or be <code>else</code>) and a non-empty body, or the form <strong>fails closed</strong>. A <code>(cond ...)</code>
+nests anywhere a <code>when</code> may appear, including inside another <code>(cond ...)</code> branch.</p>
+<p>An inline procedure body containing <code>cond</code> currently retains an unexpanded
+<code>cond</code> and refuses during transaction lowering, including after <code>(on start)</code>.
+Keep the <code>cond</code> at the transaction call site and call an ordinary procedure from
+each branch until that separately tracked normalization repair qualifies. A normalization candidate would newly admit a first
+sample-only procedure <code>cond</code> as an activation gate; it is not integrated.
+Explicit source intent must qualify first, with production keeping this source
+refused.</p>
+<h2 id="mixing-control-flow"><a class="header" href="#mixing-control-flow">Mixing Control Flow</a></h2>
+<pre><code class="language-lisp">(transaction read_modify_write
+  (on start (sample addr as base))
+
+  ;; Read phase
+  (drive read_cmd)
+  (await done)
+  (sample rdata as old_val)
+
+  ;; Conditional modify
+  (switch old_val
+    (0 (drive set_default))
+    (255 (drive clear_flag))
+    (default (drive increment)))
+
+  ;; Write back
+  (drive write_cmd)
+  (await done)
+  (complete done))
+</code></pre>
+<h2 id="exit-when-condition--mid-loop-early-exit"><a class="header" href="#exit-when-condition--mid-loop-early-exit"><code>(exit-when condition)</code> — Mid-Loop Early Exit</a></h2>
+<p><code>(exit-when condition)</code> leaves the enclosing <code>while</code>/<code>until</code> loop the cycle
+<code>condition</code> holds, instead of waiting for the loop’s own top/bottom condition test.
+It is accepted <strong>directly inside a <code>while</code> body or an <code>until</code> body</strong> and lowers to a
+single decision state: when <code>condition</code> is true the loop’s exit edge is taken
+(the same state the loop’s own condition exits to); otherwise control falls through
+to the next body clause and the loop continues normally.</p>
+<pre><code class="language-lisp">(actor early_exit
+  (interface
+    (input start)
+    (input busy)
+    (input go)
+    (input din (width 8))
+    (output done)
+    (output result (width 8)))
+  (transaction main
+    (on start)
+    (while busy
+      (update result din)
+      (exit-when go)        ;; leave the loop the cycle `go` is high
+      (update result din))
+    (complete done)))
+</code></pre>
+<p>This lowers the <code>(exit-when go)</code> clause to <code>(?go (=1 (-&gt; &lt;loop exit&gt;)) (=0 (-&gt; &lt;next clause&gt;)))</code>. The exit edge reuses the loop’s computed exit target, so an early exit
+behaves exactly like a normal loop exit (the watchdog counts the cycles actually
+spent in the loop).</p>
+<p><code>(exit-when ...)</code> may also appear inside a <code>when</code> body that is itself nested in the
+loop — its true edge still leaves the <strong>whole</strong> loop (not just the <code>when</code>):</p>
+<pre><code class="language-lisp">(while busy
+  (when error
+    (exit-when fatal))   ;; on a fatal error, leave the loop entirely
+  (drive step))
+</code></pre>
+<p><code>(exit-when ...)</code> that is not inside a <code>while</code>/<code>until</code> loop fails closed: at the
+transaction top level or in a <code>repeat</code> body the clause allow-list rejects it
+(<code>unsupported '(exit-when ...)' clause in &lt;context&gt;</code>); in a <code>when</code> that is not nested
+in a loop it fails closed with <code>'(exit-when ...)' is only valid inside a 'while'/'until' loop body</code>.</p>
+<h2 id="continue-when-condition--skip-to-next-iteration"><a class="header" href="#continue-when-condition--skip-to-next-iteration"><code>(continue-when condition)</code> — Skip To Next Iteration</a></h2>
+<p><code>(continue-when condition)</code> is the loop <em>continue</em> primitive — the companion to
+<code>(exit-when)</code>. The cycle <code>condition</code> holds it <strong>skips the rest of the current
+iteration</strong> and jumps to the loop’s tail condition check, which re-evaluates the loop
+condition and either runs another iteration or exits; otherwise control falls through
+to the next body clause.</p>
+<pre><code class="language-lisp">(while busy
+  (sample din as s)
+  (continue-when (== s 0))   ;; skip zero bytes; re-check `busy` and loop again
+  (drive process))
+</code></pre>
+<p>This lowers <code>(continue-when (== s 0))</code> to <code>(?(== s 0) (=1 (-&gt; &lt;loop check&gt;)) (=0 (-&gt; &lt;next clause&gt;)))</code>, where <code>&lt;loop check&gt;</code> is the loop’s tail decision (the <code>while</code>/<code>until</code>
+back-edge check). Like <code>(exit-when)</code>, it is accepted directly in a <code>while</code>/<code>until</code> body
+<strong>and inside a <code>when</code> nested in one</strong> (where it still targets the whole loop’s check),
+and fails closed elsewhere (with a diagnostic naming <code>continue-when</code>). Together
+<code>(exit-when)</code> and <code>(continue-when)</code> are the <em>break</em> / <em>continue</em> pair of a high-level
+loop.</p>
+<h3 id="schedule-report-metadata-loop_early_exits"><a class="header" href="#schedule-report-metadata-loop_early_exits">Schedule-report metadata (<code>loop_early_exits[]</code>)</a></h3>
+<p>Every <code>(exit-when)</code> and <code>(continue-when)</code> site is advertised in the schedule
+report under the bounded <code>loop_early_exits[]</code> array, alongside the
+<code>transaction_loops[]</code> loop summary. Each entry names the authored
+<code>transaction</code>, the <code>kind</code> (<code>exit_when</code> or <code>continue_when</code>), the generated
+decision <code>state</code>, the normalized <code>condition</code>, and the true-edge <code>target</code> — the
+loop <em>exit</em> for an <code>exit_when</code>, the loop <em>tail check</em> for a <code>continue_when</code>.
+For the <code>(while busy (exit-when go) (continue-when busy))</code> body above, the
+report carries two entries:</p>
+<pre><code class="language-json">"loop_early_exits": [
+  { "transaction": "main", "kind": "exit_when",
+    "state": "main_exit_when_3", "condition": "go", "target": "main_done_6" },
+  { "transaction": "main", "kind": "continue_when",
+    "state": "main_continue_when_4", "condition": "busy",
+    "target": "main_while_check_5" }
+]
+</code></pre>
+<p>A transaction with no early-exit sites carries an empty <code>loop_early_exits[]</code>
+array (the bounded key is always present).</p>
+<h2 id="for-i-n-body--indexed-counted-loop"><a class="header" href="#for-i-n-body--indexed-counted-loop"><code>(for (i N) body...)</code> — Indexed Counted Loop</a></h2>
+<p><code>(for (i N) body...)</code> runs <code>body</code> exactly <code>N</code> times while exposing a <strong>loop index</strong> <code>i</code>
+that counts <code>0, 1, … N-1</code> to the body — the ergonomic indexed loop a high-level language
+has. A bare <code>(repeat N body)</code> runs <code>body</code> N times but gives the body no index; <code>(for ...)</code>
+adds one, so the body can do indexed work (per-iteration values, addressing).</p>
+<pre><code class="language-lisp">(transaction sum_first_four
+  (on start)
+  (for (i 4)
+    (update total (+ total i)))   ;; i = 0,1,2,3 across the four iterations -&gt; total += 0+1+2+3
+  (complete done))
+</code></pre>
+<p><code>(for ...)</code> is pure ISF (IAL1) sugar: the parser desugars it — before procedure and
+<code>let</code> expansion — into a declared index local plus a counted <code>(repeat ...)</code> with a tail
+increment, both of which already lower:</p>
+<pre><code class="language-lisp">(local i (width W) (default 0))      ;; W = bits to hold N; i starts at 0
+(repeat N
+  body...
+  (set i (+ i 1)))                    ;; i advances 0 -&gt; 1 -&gt; … at the end of each iteration
+</code></pre>
+<p>Because the index advances at the <em>tail</em> of each iteration, the body reads <code>i</code> as
+<code>0</code> on the first pass, <code>1</code> on the second, … <code>N-1</code> on the last — a 0-based index. The
+counted <code>(repeat ...)</code> it lowers to runs the body exactly <code>N</code> times and then completes
+(see <a href="13b-transactions.html">the counted-repeat schedule</a>).</p>
+<p>To loop a <strong>variable</strong> number of times, give the index an explicit width so the count may
+be a parameter, constant, or runtime signal:</p>
+<pre><code class="language-lisp">(for (i (width 8) n)            ;; n is a parameter/constant/runtime scalar
+  (update total (+ total i)))   ;; runs n times; i = 0 … n-1 (n == 0 runs zero times)
+</code></pre>
+<p><code>(for (i (width W) COUNT) ...)</code> declares the index at width <code>W</code> (a positive integer
+literal — you size it to hold <code>COUNT-1</code>) and accepts any count the counted <code>(repeat ...)</code>
+accepts (literal, actor/transaction parameter, package/actor constant, or known-width
+runtime scalar). The plain <code>(for (i N) ...)</code> form requires a <strong>literal</strong> <code>N &gt;= 1</code> (its
+width auto-sizes); use the explicit-width form for a non-literal count.</p>
+<p>To iterate over a <strong>range</strong> that does not start at zero, use the <code>from … to …</code> form:</p>
+<pre><code class="language-lisp">(for (i from 2 to 5)            ;; i = 2, 3, 4 (the upper bound is exclusive)
+  (update total (+ total i)))
+</code></pre>
+<p><code>(for (i from A to B) ...)</code> counts <code>i = A, A+1, … B-1</code> — <code>B-A</code> iterations starting at <code>A</code>,
+with the upper bound <code>B</code> exclusive. <code>A</code> and <code>B</code> are literal non-negative integers with
+<code>B &gt; A</code> (an upward, non-empty range); the index width auto-sizes to hold <code>B</code>. It desugars
+to <code>(local i (width W) (default A))</code> plus <code>(repeat (B-A) body... (set i (+ i 1)))</code>.</p>
+<p>A trailing <code>step S</code> strides the index by <code>S</code> (default <code>1</code>) — useful for strided access:</p>
+<pre><code class="language-lisp">(for (i from 0 to 10 step 2)    ;; i = 0, 2, 4, 6, 8 (each value &lt; 10)
+  (update total (+ total i)))
+</code></pre>
+<p><code>(for (i from A to B step S) ...)</code> runs <code>ceil((B-A)/S)</code> iterations counting
+<code>i = A, A+S, A+2S, …</code> (each value <code>&lt; B</code>), with <code>S</code> a positive integer literal; it desugars
+with <code>(set i (+ i S))</code> as the tail increment and sizes the width to hold the
+post-final-increment value.</p>
+<p>A <code>(for ...)</code> may be a <strong>top-level transaction clause</strong> or <strong>directly nested inside
+another <code>(for ...)</code> body</strong> — nested loops with independent indices:</p>
+<pre><code class="language-lisp">(for (i 3)
+  (for (j 2)
+    (update grid (+ grid (+ i j)))))   ;; body runs 3 * 2 = 6 times; i = 0..2, j = 0..1
+</code></pre>
+<p>Both index <code>(local …)</code> declarations are hoisted to the transaction top, the inner index
+resets to its start value at the head of each outer iteration, and the loops lower to a
+nested counted <code>(repeat …)</code> (each with its own counter — see <em>Nested Counted Loops</em>). The
+nesting can go arbitrarily deep.</p>
+<p>A <code>(for ...)</code> may also be <strong>embedded in a control-flow body</strong> — inside a
+<code>when</code>/<code>switch</code>/<code>while</code>/<code>until</code>/<code>repeat</code> body. Its index <code>(local …)</code> is hoisted to the
+transaction top and an index reset is prepended in the body, so the loop restarts each time
+its enclosing body is (re-)entered:</p>
+<pre><code class="language-lisp">(while busy
+  (for (i 4)                       ;; each while iteration runs the inner loop afresh (i = 0..3)
+    (update checksum (^ checksum i))))
+</code></pre>
+<p>A zero width, a literal-zero count, an implicit-width non-literal count, a non-upward range
+(<code>B &lt;= A</code>), non-literal range bounds, and an empty body all <strong>fail closed</strong> with a clear
+diagnostic:</p>
+<pre><code class="language-lisp">;; rejected: count must be &gt;= 1
+(for (i 0) (update total (+ total i)))
+</code></pre>
+<h2 id="nested-counted-loops"><a class="header" href="#nested-counted-loops">Nested Counted Loops</a></h2>
+<p>A counted <code>(repeat …)</code> may sit <strong>inside</strong> another <code>(repeat …)</code> body, so the body runs
+<code>outer × inner</code> times:</p>
+<pre><code class="language-lisp">(repeat 3
+  (repeat 2
+    (update count (+ count 1))))   ;; runs 3 * 2 = 6 times
+</code></pre>
+<p>Each repeat instance gets its own counter — the outermost keeps <code>&lt;tx&gt;_cnt</code>, a nested
+repeat uses a unique <code>&lt;tx&gt;_cnt_&lt;n&gt;</code> — so the inner and outer countdowns never collide, and
+the nesting can go arbitrarily deep. Lowering is check-first throughout: the outer check’s
+continue edge enters the inner loop, and the inner check’s exit edge returns to the outer
+check. (A nested indexed <code>(for …)</code> desugars onto exactly this nested-<code>(repeat …)</code> substrate
+— see the <em>Indexed Counted Loop</em> section.)</p>
+<h2 id="where-child-activations-are-allowed"><a class="header" href="#where-child-activations-are-allowed">Where Child Activations Are Allowed</a></h2>
+<p>All four child-activation clauses — <code>(do ...)</code>, <code>(spawn ...)</code>, <code>(await_all ...)</code>,
+and <code>(await_any ...)</code> — are accepted as <strong>top-level transaction clauses</strong>, <strong>inside
+a <code>repeat</code> body</strong>, and <strong>directly inside a <code>when</code> body, a <code>switch</code> branch, a
+<code>while</code> body, and an <code>until</code> body</strong>. Inside a branch/loop body they describe a
+<em>conditional</em> (or loop-conditional) activation: the activation only happens when
+the enclosing branch is taken / on each loop iteration.</p>
+<p>A <strong>local <code>(do child)</code></strong> — plain or with <code>(bind ...)</code> port bindings, no
+<code>(params ...)</code> overrides, target not generated elsewhere — is the simplest form, a
+conditional one-shot activation:</p>
+<pre><code class="language-lisp">(actor conditional_activation
+  (interface
+    (input start)
+    (input cond)
+    (input go)
+    (input din (width 8))
+    (output done)
+    (output result (width 8))
+    (output worker_done))
+  (transaction parent
+    (on start)
+    (when cond
+      (do worker))          ;; accepted: conditional one-shot activation
+    (complete done))
+  (transaction worker
+    (on go)
+    (update result din)
+    (complete worker_done)))
+</code></pre>
+<p>The enclosing branch/loop guards the do-state; when it is entered, the do-state
+asserts the child’s start handshake (driving any <code>(bind (input ...))</code> ports) and
+blocks on its done handshake, exactly like a top-level <code>(do child)</code>.</p>
+<p>A <strong>generated</strong> conditional activation — a <code>(do child (params ...))</code> parameter
+override — is also supported <strong>directly inside all four branch/loop bodies</strong>
+(<code>when</code>, <code>switch</code> branch, <code>while</code>, and <code>until</code>). It elaborates a generated child
+instance (named <code>&lt;owner&gt;_&lt;child&gt;_cond_do_&lt;n&gt;</code>), instantiated and wired in the
+generated composition top, exactly like a top-level generated <code>(do)</code> (and sharing
+the same generated-child composition behavior):</p>
+<pre><code class="language-text">(when c     (do w (params (W 8))))        ;; generated when-body do
+(switch sel (0 (do w (params (W 8)))))    ;; generated switch-branch do
+(while c    (do w (params (W 8))))        ;; generated while-body do
+(until c    (do w (params (W 8))))        ;; generated until-body do
+</code></pre>
+<p>A <strong>non-blocking <code>(spawn child as inst)</code></strong> plus an <code>(await_all ...)</code> / <code>(await_any ...)</code> drain is also accepted in a branch/loop body — a <em>conditional fan-out + join</em>.
+The spawns assert each child’s start handshake without blocking; the drain then
+blocks on the accumulated child done handshakes (<code>await_all</code> = all, <code>await_any</code> =
+any). The done-port accumulator is body-local, so the drain belongs in the same
+branch/loop body as the spawns it joins:</p>
+<pre><code class="language-lisp">(actor conditional_fan_out
+  (interface
+    (input start)
+    (input cond)
+    (input go)
+    (input din (width 8))
+    (output done)
+    (output r1 (width 8))
+    (output r2 (width 8))
+    (output w1done)
+    (output w2done))
+  (transaction parent
+    (on start)
+    (when cond
+      (spawn worker1 as w1)   ;; conditional fan-out: start both children…
+      (spawn worker2 as w2)
+      (await_all done))       ;; …then join on both done handshakes
+    (complete done))
+  (transaction worker1
+    (on go)
+    (update r1 din)
+    (complete w1done))
+  (transaction worker2
+    (on go)
+    (update r2 din)
+    (complete w2done)))
+</code></pre>
+<p>The spawned children are instantiated and wired in the composition top exactly like
+a top-level spawn fan-out (and share the same multi-instance composition behavior).
+Child activation is therefore fully orthogonal across the clause contexts: a <code>(do)</code>
+(local or generated) and a <code>(spawn ...)</code> + drain lower the same way at top level,
+in a <code>repeat</code>, and in any branch/loop body — a <code>(do)</code> is a blocking activation and
+a <code>(spawn ...)</code>/<code>(await ...)</code> pair is a non-blocking fan-out/join, and both kinds of
+construct are allowed in those bodies.</p>
+<p>The full same-domain support matrix (✓ = lowers; the spawn column means
+<code>(spawn ...)</code> together with its <code>(await_all ...)</code> / <code>(await_any ...)</code> drain):</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Context</th><th style="text-align: center">local <code>(do)</code></th><th style="text-align: center">generated <code>(do (params ...))</code></th><th style="text-align: center"><code>(spawn)</code> + drains</th></tr>
+</thead>
+<tbody>
+<tr><td>top-level transaction</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td></tr>
+<tr><td><code>repeat</code> body</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td></tr>
+<tr><td><code>when</code> body</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td></tr>
+<tr><td><code>switch</code> branch</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td></tr>
+<tr><td><code>while</code> body</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td></tr>
+<tr><td><code>until</code> body</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td style="text-align: center">✓</td></tr>
+</tbody>
+</table>
+</div>
+<p>Across clock domains the staging is narrower than the same-domain surface above, but
+it now tracks it for the top-level contexts, branch-contained repeats, supported
+nested <code>when</code> chains, and repeats under those <code>when</code> chains. A cross-domain <code>(do child)</code> through a
+<code>(crossings (activation ...))</code> is supported at the transaction top level, directly
+inside any <strong>top-level body</strong> — a <code>(repeat ...)</code> body or a <code>when</code>/<code>switch</code>/<code>while</code>/
+<code>until</code> branch body — directly inside a <code>(repeat ...)</code> nested in a top-level <code>when</code>
+body or top-level <code>switch</code> branch, and directly inside a nested <code>when</code> chain reached
+from one of those top-level branch bodies, including a <code>(repeat ...)</code> under that
+nested <code>when</code> chain (the dual-CDC handshake runs when the branch is taken and
+re-runs each iteration inside a repeat/loop; see
+<a href="13a-actor-interface.html#activation-crossing">Activation Crossing</a>). Cross-domain
+<code>(do)</code> placements beyond those shipped contexts still fail closed with a
+“deeper nested cross-domain activation remains deferred” diagnostic.</p>
+<h2 id="nested-control-flow"><a class="header" href="#nested-control-flow">Nested Control Flow</a></h2>
+<p>The shipped nested-control subset is explicit.</p>
+<p>A <code>switch</code> branch may contain a <code>when</code> body, a <code>when</code> body may contain
+another <code>when</code>, and <code>repeat</code> bodies are supported inside top-level <code>when</code> and
+<code>switch</code> bodies.</p>
+<p>The shipped repeat-body clause surface is named drive calls, <code>await</code>,
+<code>sample</code>, <code>update</code>, <code>set</code>, <code>shift_left</code>, <code>shift_right</code>, <code>assemble</code>,
+<code>extract</code>, actor-owned bank <code>store</code> and <code>load</code>, shipped <code>wait</code> clauses,
+top-level repeat-body local <code>(do child)</code>, top-level repeat-body generated
+<code>(do child)</code> for already generated child targets, top-level repeat-body
+generated <code>(do child (params ...))</code> with static parameter overrides,
+top-level when-body nested repeat local, generated-child <code>(do child)</code>,
+static-parameter generated <code>(do child (params ...))</code>, or static-parameter
+generated bound `(do child (params …)</p>
+<p>(bind …))<code>, top-level switch-branch nested repeat local, generated-child </code>(do child)<code>, or static-parameter generated </code>(do child (params …))<code>with optional</code>(bind …)<code>handoffs, and top-level repeat-body spawn with optional static</code>(params …)<code>, optional </code>(bind …)<code>, and optional declared same-domain </code>(domain NAME)<code>metadata followed by same-body</code>await_all<code>or by same-body</code>await_any` when exactly one spawn is pending.</p>
+<p>Samples may appear before or after repeat-body spawn before that same-body
+sync; they lower to an explicit sample state before the later spawn state or
+before <code>await_all</code> / single-pending <code>await_any</code>, matching source order.</p>
+<p>Samples may also appear before or after repeat-body <code>do</code>; they lower before
+the do state or after the do state’s fresh done guard and before the repeat
+check.</p>
+<p>Multi-pending repeat-body <code>await_any</code> is shipped only when a later same-body
+<code>await_all</code> drains the same outstanding spawn set before the repeat check;
+new repeat-body <code>spawn</code> or <code>do</code> clauses before that drain remain rejected.</p>
+<p>Repeat-body generated <code>do</code> accepts already generated child targets or static
+<code>(params ...)</code> overrides, optional <code>(bind ...)</code> input/output handoffs, and
+optional same-domain <code>(domain NAME)</code> metadata; those handoffs and domain
+summaries are wired/recorded once for the lexical generated do instance.</p>
+<p>For cross-domain blocking <code>do</code>, the activation-crossing path described above is
+shipped for a top-level repeat body and for a repeat nested directly in a top-level
+<code>when</code> body or top-level <code>switch</code> branch. A direct <code>(do child)</code> inside a nested
+<code>when</code> chain reached from a top-level <code>when</code> body or top-level <code>switch</code> branch is
+also shipped through the explicit activation crossing, and a repeat under that
+nested <code>when</code> chain reuses the same per-iteration handshake. Other deeper-nested
+cross-domain repeat-body <code>do</code> placements still remain deferred, and generated <code>do</code>
+with mismatched <code>(domain ...)</code> metadata is still a fail-closed same-domain-metadata
+error rather than implicit CDC.</p>
+<p>The when-contained nested subset accepts only a repeat directly inside a
+top-level <code>when</code> body and accepts either local plain <code>(do child)</code>, plain
+generated-child <code>(do child)</code> for targets already generated elsewhere,
+static-parameter generated <code>(do child (params ...))</code>, or static-parameter
+generated bound `(do child (params …)</p>
+<p>(bind …))<code>; it may also carry declared same-domain </code>(domain NAME)` metadata
+when static params are present and requires static params whenever bindings
+or domain metadata are present.</p>
+<p>The switch-contained nested subset accepts the same local, plain
+generated-child, static-parameter generated, or static-parameter generated
+bound forms in a repeat directly inside a top-level <code>switch</code> branch, and it
+may also carry declared same-domain <code>(domain NAME)</code> metadata when static
+params are present.</p>
+<p>Both nested subsets keep the nested repeat check gated by the child’s fresh
+done pulse. A repeat directly inside a top-level <code>when</code> body may also contain
+one or more generated
+<code>(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])</code> sites
+when the same nested body reaches <code>(await_all done)</code> before the nested repeat
+check can loop. A repeat directly inside a top-level <code>switch</code> branch may
+contain the same multiple generated-spawn plus same-body <code>await_all</code> subset.</p>
+<p>Both branch-contained paths may use single-pending <code>(await_any done)</code>
+directly when exactly one generated child is pending.</p>
+<p>Both branch-contained paths may also use multi-pending <code>(await_any done)</code> as
+an observation point only when a later same-body <code>(await_all done)</code> drains
+the same outstanding generated children before the nested repeat check can
+loop.</p>
+<p>Those branch-contained nested spawns reuse the static generated-child handoff
+model and preserve source-order samples before the spawn or sync states.</p>
+<h3 id="loop-contained-repeat-body-local-do"><a class="header" href="#loop-contained-repeat-body-local-do">Loop-contained repeat-body local <code>do</code></a></h3>
+<p>A plain local <code>(do child)</code> — a <code>(do ...)</code> with no <code>(params ...)</code>, <code>(bind ...)</code>,
+or <code>(domain ...)</code> and a target that is not a generated child — directly inside
+a <code>(repeat ...)</code> that sits in a single <code>(while ...)</code> or <code>(until ...)</code> body
+lowers cleanly:</p>
+<pre><code class="language-lisp">(actor loop_contained_repeat_do
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (do worker)))
+    (complete done))
+  (transaction worker
+    (complete done)))
+</code></pre>
+<p>The scheduled <code>.fsm</code> reuses the proven repeat structure inside the loop body:
+the loop entry tests <code>cond</code>, <code>repeat_init</code> re-seeds the repeat counter from
+<code>loops</code> on each loop iteration, the blocking-do state asserts <code>worker_start</code>
+and awaits <code>worker_done</code>, and <code>repeat_check</code> decrements the counter and either
+re-runs the repeat block or returns to the loop check. So
+<code>(while cond (repeat N (do worker)))</code> means “while <code>cond</code>, run the worker
+<code>N</code> times per loop iteration”; <code>(until ...)</code> applies the post-test form of the
+same shape.</p>
+<p>This subset is intentionally narrow. The repeat may sit <strong>directly</strong> in a
+single loop body, and the first loop-plus-branch widening also accepts a plain
+local <code>(do child)</code> when one <code>while</code> body contains one nested <code>when</code> body whose
+body contains the repeat:</p>
+<pre><code class="language-text">(while c1
+  (when c2
+    (repeat N
+      (do worker))))        ;; shipped: plain local do only
+</code></pre>
+<p>The <code>while</code> guard enters the nested <code>when</code>; the <code>when</code> guard enters
+<code>repeat_init</code>; the local <code>do</code> waits for the worker’s fresh done pulse before
+<code>repeat_check</code> can either re-run the worker or return to the <code>while</code> re-test.
+Generated <code>do</code>, <code>spawn</code>, cross-domain, <code>(bind ...)</code>, <code>(domain ...)</code>, <code>until</code>
+plus nested <code>when</code>, nested <code>switch</code>, and extra loop nesting stay deferred.</p>
+<h3 id="loop-contained-repeat-body-generated-do"><a class="header" href="#loop-contained-repeat-body-generated-do">Loop-contained repeat-body generated <code>do</code></a></h3>
+<p>A same-domain <strong>generated</strong> <code>do</code> — one carrying static <code>(params ...)</code> (and
+<code>(bind ...)</code>/<code>(domain NAME)</code> when static params are present), or targeting a
+generated child — also lowers inside a single <code>(while ...)</code>/<code>(until ...)</code>
+-contained repeat:</p>
+<pre><code class="language-lisp">(actor loop_contained_repeat_generated_do
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (do worker (params (W 8)))))
+    (complete done))
+  (transaction worker
+    (params (W 4))
+    (complete done)))
+</code></pre>
+<p>One generated child instance is created per lexical <code>do</code> site (named
+<code>&lt;tn&gt;_&lt;child&gt;_repeat_do_&lt;ord&gt;</code>) and re-triggered on each loop iteration — the
+blocking-do state asserts the instance <code>_start</code> and awaits its <code>_done</code>, exactly
+like a top-level repeat-body generated <code>do</code>. The <code>_top</code> composition
+instantiates the child with the resolved parameter overrides.</p>
+<h3 id="loop-contained--deeper-nested-repeat-body-spawn--same-body-drain"><a class="header" href="#loop-contained--deeper-nested-repeat-body-spawn--same-body-drain">Loop-contained / deeper-nested repeat-body <code>spawn</code> (+ same-body drain)</a></h3>
+<p>The basic <code>(spawn child as inst)</code> + same-body <code>(await_all done)</code> (or
+single-pending <code>(await_any done)</code>) subset lowers inside a loop-contained or
+deeper-nested repeat:</p>
+<pre><code class="language-lisp">(actor loop_contained_repeat_spawn
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (await_all done)))     ;; drains w0 before repeat_check / loop re-entry
+    (complete done))
+  (transaction worker
+    (complete done)))
+</code></pre>
+<p>The lowered schedule mirrors the proven top-level repeat-body spawn: the spawn
+asserts the instance <code>_start</code>, the same-body <code>await_all</code> drains the instance
+<code>_done</code> before <code>repeat_check</code> loops (and before the outer loop re-enters at
+<code>repeat_init</code>), and the child is instantiated in the <code>_top</code> composition. (Like
+the top-level repeat-body spawn, this is a lowering + composition-planning
+subset; the full-HDL <code>--check-json</code> path has a pre-existing composition-wiring
+limitation that applies equally to the top-level case — see
+<code>docs/COMPOSITION_SCOPE.md</code>.)</p>
+<p>A <code>while</code>- or <code>until</code>-contained repeat may also keep exactly one generated
+spawn pending across one plain local blocking <code>do</code>, provided the same repeat
+body then reaches <code>(await_all done)</code> before the repeat check can loop:</p>
+<pre><code class="language-lisp">(actor while_repeat_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (do helper)          ;; waits for helper_done; w0 remains pending
+        (await_all done)))   ;; drains w0 before repeat_check / loop re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The matching body-first <code>until</code> form uses the same contract:</p>
+<pre><code class="language-lisp">(actor until_repeat_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (do helper)          ;; waits for helper_done; w0 remains pending
+        (await_all done)))   ;; drains w0 before repeat_check / until re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The loop-contained <code>await_all</code> form also supports exactly two pending
+generated spawns across that local blocking <code>do</code>. The local child must finish
+first, and the later <code>await_all</code> drains both generated children before the
+repeat check and the surrounding loop re-test. The <code>while</code> form is:</p>
+<pre><code class="language-lisp">(actor while_repeat_multi_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (do helper)          ;; waits for helper_done; w0/w1 remain pending
+        (await_all done)))   ;; drains w0_done and w1_done before re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The body-first <code>until</code> form uses the same two-spawn drain contract:</p>
+<pre><code class="language-lisp">(actor until_repeat_multi_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (do helper)          ;; waits for helper_done; w0/w1 remain pending
+        (await_all done)))   ;; drains w0_done and w1_done before re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The <code>while</code> form also supports exactly three pending generated spawns across
+the local blocking <code>do</code>:</p>
+<pre><code class="language-lisp">(actor while_repeat_three_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (spawn worker as w2)
+        (do helper)          ;; waits for helper_done; w0/w1/w2 remain pending
+        (await_all done)))   ;; drains all three before re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The body-first <code>until</code> form supports the same three-spawn drain contract:</p>
+<pre><code class="language-lisp">(actor until_repeat_three_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (spawn worker as w2)
+        (do helper)          ;; waits for helper_done; w0/w1/w2 remain pending
+        (await_all done)))   ;; drains all three before re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The following four-spawn <code>while</code> form is a representative wider fanout: the
+proof rule has no public fanout cap when the later <code>await_all</code> drains the exact
+pending generated-child set.</p>
+<pre><code class="language-lisp">(actor while_repeat_four_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (spawn worker as w2)
+        (spawn worker as w3)
+        (do helper)          ;; waits for helper_done; w0/w1/w2/w3 remain pending
+        (await_all done)))   ;; drains all four before re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The body-first <code>until</code> form supports the same proof-backed drain contract:</p>
+<pre><code class="language-lisp">(actor until_repeat_four_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (spawn worker as w2)
+        (spawn worker as w3)
+        (do helper)          ;; waits for helper_done; w0/w1/w2/w3 remain pending
+        (await_all done)))   ;; drains all four before re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>For the loop-contained form with exactly one pending generated spawn,
+single-pending <code>(await_any done)</code> may also be the post-<code>do</code> sync because it
+observes the only outstanding generated child before repeat and loop re-entry.
+The <code>while</code> form is:</p>
+<pre><code class="language-lisp">(actor while_repeat_spawn_do_await_any
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (do helper)          ;; waits for helper_done; w0 remains pending
+        (await_any done)))   ;; single pending: observes w0_done before repeat_check
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The body-first <code>until</code> form uses the same single-pending observe contract:</p>
+<pre><code class="language-lisp">(actor until_repeat_spawn_do_await_any
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (do helper)          ;; waits for helper_done; w0 remains pending
+        (await_any done)))   ;; single pending: observes w0_done before repeat_check
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The <code>while</code> and body-first <code>until</code> forms also support multi-pending generated
+spawns across the local blocking <code>do</code> when a post-<code>do</code> multi-pending
+<code>(await_any done)</code> observes one generated child and a later same-body
+<code>(await_all done)</code> drains the exact pending set before repeat and loop re-entry.
+The examples below show the two-, three-, and four-spawn spellings; wider sets
+use the same proof rule.</p>
+<pre><code class="language-lisp">(actor while_repeat_multi_spawn_do_await_any_then_all
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (do helper)          ;; waits for helper_done; w0/w1 remain pending
+        (await_any done)     ;; observes either generated child done pulse
+        (await_all done)))   ;; drains both before repeat_check / re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<pre><code class="language-lisp">(actor while_repeat_three_spawn_do_await_any_then_all
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (spawn worker as w2)
+        (do helper)          ;; waits for helper_done; w0/w1/w2 remain pending
+        (await_any done)     ;; observes any generated child done pulse
+        (await_all done)))   ;; drains all three before repeat_check / re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<pre><code class="language-lisp">(actor while_repeat_four_spawn_do_await_any_then_all
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (spawn worker as w2)
+        (spawn worker as w3)
+        (do helper)          ;; waits for helper_done; w0/w1/w2/w3 remain pending
+        (await_any done)     ;; observes any generated child done pulse
+        (await_all done)))   ;; drains all four before repeat_check / re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The body-first <code>until</code> spelling uses the same observation-then-drain contract.
+These examples show the two-, three-, and four-spawn forms:</p>
+<pre><code class="language-lisp">(actor until_repeat_multi_spawn_do_await_any_then_all
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (do helper)          ;; waits for helper_done; w0/w1 remain pending
+        (await_any done)     ;; observes either generated child done pulse
+        (await_all done)))   ;; drains both before repeat_check / re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<pre><code class="language-lisp">(actor until_repeat_three_spawn_do_await_any_then_all
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (spawn worker as w2)
+        (do helper)          ;; waits for helper_done; w0/w1/w2 remain pending
+        (await_any done)     ;; observes any generated child done pulse
+        (await_all done)))   ;; drains all three before repeat_check / re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<pre><code class="language-lisp">(actor until_repeat_four_spawn_do_await_any_then_all
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (spawn worker as w2)
+        (spawn worker as w3)
+        (do helper)          ;; waits for helper_done; w0/w1/w2/w3 remain pending
+        (await_any done)     ;; observes any generated child done pulse
+        (await_all done)))   ;; drains all four before repeat_check / re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+</code></pre>
+<p>The validator accepts the <code>await_all</code> shapes only when the compositional effect
+checker proves each generated spawn has deterministic top wiring, the local
+<code>do</code> waits for its own fresh done pulse, and the later <code>await_all</code> drains the
+exact pending spawned-child set before both the repeat and surrounding loop
+backedges (<code>while_retest</code> or <code>until_retest</code>). The single-pending
+<code>await_any</code> shapes instead require
+<code>await_any_single_pending_completes_outstanding_set</code> for the one pending
+spawned child. The multi-pending local-<code>do</code> variant is proof-generalized for
+<code>while</code> and body-first <code>until</code>: any finite set of generated spawns may remain
+pending across one plain local <code>do</code> when a same-body <code>await_all</code> drains the
+exact set, and post-<code>do</code> multi-pending <code>await_any</code> may observe that set only
+when a later same-body <code>await_all</code> drains the same children before repeat and
+loop re-entry. Generated <code>do</code> while spawned children are pending, missing later
+drains, cross-domain activation, and unrelated deeper placements stay
+fail-closed.</p>
+<p>An <strong>undrained</strong> spawn (no same-body <code>await_all</code>/single-pending <code>await_any</code>
+before the repeat check) stays deferred: <code>Transaction 'parent': loop-contained repeat-body spawn requires same-body '(await_all done)' or single-pending '(await_any done)' before the repeat check can loop</code> (and the <code>deeper-nested ...</code> form). A parent-body <code>(await_all done)</code> or <code>(await_any done)</code> after the
+repeat exits is not a drain for repeat-body spawned children; the diagnostic
+uses <code>repeat-body spawn cannot be drained by parent-body '(await_all done)' after the repeat exits; use same-body '(await_all done)' before the repeat check can loop</code> (with the authored sync form in the message). A
+<strong>multi-pending</strong> <code>(await_any done)</code> (two or more outstanding
+children observed by an <code>await_any</code>) is supported as an observation point when
+a later same-body <code>(await_all done)</code> drains the outstanding children before the
+repeat check — for example <code>(spawn a)(spawn b)(await_any done)(await_all done)</code>
+— matching the top-level / when-body / switch-branch behavior; without the
+later <code>(await_all done)</code>, the diagnostic names the missing proof:
+<code>loop-contained repeat-body multi-pending await_any requires later same-body '(await_all done)' before the repeat check can loop</code> (with <code>repeat-body</code> and
+<code>deeper-nested</code> context variants). A <strong>cross-domain</strong> generated <code>do</code> stays
+deferred (<code>cross-domain repeat-body do remains deferred</code>); bindings or domain metadata without static <code>(params ...)</code>
+emit <code>repeat-body generated do bindings require static '(params ...)' overrides</code>. The only shipped loop-plus-branch repeat-body activation is the
+plain local <code>while -&gt; when -&gt; repeat -&gt; do</code> shape above; generated <code>do</code>,
+spawn, <code>until -&gt; when</code>, nested <code>switch</code>, and extra loop nesting still route
+through the loop-contained/deeper-nested deferral diagnostics.</p>
+<p>The multi-pending observation + later-drain shape lowers like this:</p>
+<pre><code class="language-lisp">(actor loop_contained_repeat_multi_await_any
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (await_any done)       ;; observe the first child to finish
+        (await_all done)))     ;; drain both before repeat_check / loop re-entry
+    (complete done))
+  (transaction worker
+    (complete done)))
+</code></pre>
+<h3 id="deeper-nested-repeat-body-local-do"><a class="header" href="#deeper-nested-repeat-body-local-do">Deeper-nested repeat-body local <code>do</code></a></h3>
+<p>A plain local <code>(do child)</code> inside a <code>(repeat ...)</code> reached through more than one
+branch ancestor — two or more <code>(when ...)</code> clauses (<code>when⁺ → repeat</code>), or a
+<code>(when ...)</code> inside a <code>(switch ...)</code> case (<code>switch → when⁺ → repeat</code>) — also
+lowers:</p>
+<pre><code class="language-lisp">(actor deeper_nested_repeat_do
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond1) (input cond2) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (when cond1
+      (when cond2
+        (repeat loops
+          (do worker))))
+    (complete done))
+  (transaction worker
+    (complete done)))
+</code></pre>
+<p>Each branch guard reaches the repeat block, which reuses the proven
+<code>repeat_init</code> → blocking-do → <code>repeat_check</code> schedule. (A nested <code>(switch ...)</code>
+inside a <code>(when ...)</code> body or another <code>(switch ...)</code> branch is itself an
+unsupported clause, so the reachable deeper-nested shapes are exactly these.)</p>
+<p>A same-domain <strong>generated</strong> <code>do</code> (static <code>(params ...)</code>, with <code>(bind ...)</code>/
+<code>(domain NAME)</code> when params are present) also lowers at deeper branch nesting
+and instantiates its child in the <code>_top</code> composition, exactly like the
+loop-contained and top-level generated-<code>do</code> cases. The basic <code>spawn</code> +
+same-body <code>(await_all done)</code> (or single-pending <code>(await_any done)</code>) subset
+likewise lowers at deeper branch nesting (see the loop-contained spawn section
+above). A deeper-nested <strong>cross-domain</strong> generated <code>do</code> stays deferred and emits
+<code>cross-domain repeat-body do remains deferred</code>; an <strong>undrained</strong> deeper-nested
+<code>spawn</code> emits <code>Transaction 'parent': deeper-nested repeat-body spawn requires same-body '(await_all done)' or single-pending '(await_any done)' before the repeat check can loop</code>. A multi-pending <code>(await_any done)</code> followed by a later
+same-body <code>(await_all done)</code> drain is supported at deeper nesting (as at
+top-level / when-body / switch-branch); without the drain it trips the
+deeper-nested spawn drain requirement. The generic “supported only for
+top-level repeat clauses…” message remains as a safety-net fallback for
+shapes not yet classified.</p>
+<p>The branch-contained shipped subsets accept one multi-pending
+<code>(await_any done)</code> observation that the same body’s later
+<code>(await_all done)</code> drains. They reject a <strong>second</strong> post-spawn
+<code>(await_any done)</code> observation between the first observation and
+the drain. The rejected shape adds a second observation after the
+later spawn:</p>
+<pre><code class="language-text">(transaction parent
+  (on start)
+  (when cond
+    (repeat n
+      (spawn worker as w0)
+      (await_any done)           ;; &lt;-- prior observation; accepted
+      (do helper)
+      (spawn worker as w1)
+      (await_any done)           ;; &lt;-- second observation; fail closed
+      (await_all done))))        ;; (drain still arrives later)
+</code></pre>
+<p>The validator emits <code>Transaction 'parent': when-body nested repeat spawn after local do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the later spawn remains deferred</code>. The diagnostic phrase varies by the
+intervening do kind (<code>local do</code>, <code>generated-child do</code>, <code>generated do with static params</code>, <code>generated do with static params and bindings</code>, <code>generated do with static params and same-domain metadata</code>) and by the outer branch (<code>when-body</code> vs
+<code>switch-branch</code>), but the rejection rule is uniform. The deferred
+lane is the second observation after the later spawn; until it
+ships, authors must end the pending-spawn interval with the
+same-body drain (no intervening second observation).</p>
+<p><code>do</code> while a nested spawn is pending is shipped for a local plain <code>(do child)</code> in a repeat directly inside a top-level <code>when</code> body or a top-level
+<code>switch</code> branch, and for a plain generated-child <code>(do child)</code> in either
+top-level branch-contained repeat when the target child is already emitted as
+a generated child by another activation site.</p>
+<p>The top-level <code>when</code> and <code>switch</code> local-do pending-spawn forms may also
+follow a prior multi-pending <code>await_any</code> observation. The matching plain
+generated-child pending-spawn forms may also follow a prior multi-pending
+<code>await_any</code> observation when the generated do instance completes before the
+later generated spawn.</p>
+<p>Every pending-spawn <code>do</code> form requires a later same-body <code>await_all</code> drain
+before the nested repeat check can loop.</p>
+<p>The local do waits for the local child’s fresh done pulse; the
+generated-child do waits for its deterministic generated do instance’s fresh
+done handoff.</p>
+<p>Neither form clears the generated-spawn done set before the later drain.</p>
+<p>Top-level <code>when</code> body and top-level <code>switch</code> branch nested repeats may also
+run static-parameter generated <code>(do child (params ...))</code> while generated
+nested spawns are pending; that generated do preserves static generated-top
+parameter binding, waits for its deterministic generated do instance’s fresh
+done handoff, and leaves the generated-spawn done set live for the later
+drain.</p>
+<p>Top-level <code>when</code> body and top-level <code>switch</code> branch nested repeats may also
+run static-parameter generated `(do child (params …)</p>
+<p>(bind …))` while generated nested spawns are pending; that generated do
+wires generated-top input/output binding handoffs once and leaves the
+generated-spawn done set live for the later drain.</p>
+<p>A top-level <code>when</code> body or top-level <code>switch</code> branch nested repeat may also
+run static-parameter same-domain generated <code>(do child (params ...) [(bind ...)] (domain NAME))</code> in that interval; the domain annotation is metadata for
+the generated do instance and does not imply CDC.</p>
+<p>Static-parameter generated <code>do</code>, bound generated <code>do</code>, and same-domain
+generated <code>do</code> after prior multi-pending <code>await_any</code> may start a later
+generated spawn, run a second post-spawn <code>await_any</code>, and then advance to
+the mandatory same-body <code>await_all</code> drain. Same-domain generated-do
+prior-observation forms preserve declared ownership metadata on the
+generated do instance across both observations.</p>
+<p>Broader outstanding-child semantics, generated or spawned nested activation
+beyond the documented top-level branch-contained generated do cases,
+branch-contained spawned cases, and the while-contained single-spawn local-do
+plus later-drain shape above, <code>stage</code>, <code>contract</code>, nested <code>while</code>, and nested
+<code>until</code> forms remain outside the
+shipped repeat-body subset.</p>
+<p>Unsupported nested forms now fail closed during lowering instead of
+disappearing from scheduled <code>.fsm</code> output.</p>
+<pre><code class="language-lisp">(switch opcode
+  (0 (drive read)
+     (when error_flag
+       (drive error_phase))))
+</code></pre>
+<h2 id="assert-cond-message--verification-invariant"><a class="header" href="#assert-cond-message--verification-invariant"><code>(assert COND [message])</code> — Verification Invariant</a></h2>
+<pre><code class="language-lisp">(assert (&lt; level depth))
+(assert (&gt;= grant request) "grant must cover the request")
+</code></pre>
+<p>Capture a design-intent <strong>invariant</strong> — a condition that must hold every cycle —
+and project it to a verification-only SystemVerilog assertion. <code>(assert …)</code> is a
+transaction-level clause; <code>COND</code> is any boolean expression over the actor’s
+signals, and the optional trailing string is the failure message.</p>
+<p>It lowers (through the only path there is — ISF → <code>.fsm</code> → SV — as a thin
+<code>+assert</code> carrier) to a <strong>clocked concurrent</strong> SV property, guarded for
+verification only and gated off during reset:</p>
+<pre><code class="language-systemverilog">`ifndef SYNTHESIS
+  assert property (@(posedge clk) disable iff (!rst_n) (level &lt; depth))
+    else $error("...");
+`endif
+</code></pre>
+<p>The clocked property samples at the clock edge (no false fires on combinational
+transients) and <code>disable iff</code> suppresses it during reset — the correct semantic
+for a synchronous FSM. It is <strong>free in synthesis</strong> (<code>yosys</code> skips it) and Verilog
+(non-SV) output stays assertion-free. A signal referenced <em>only</em> by a check (e.g.
+an input used just as a precondition) is kept alive as a port — it is not pruned.</p>
+<p>A runnable example — a saturating value with an in-range invariant:</p>
+<pre><code class="language-lisp">(actor bounded
+  (interface (input start) (input step (width 8)) (output done) (output count (width 8)))
+  (transaction main
+    (on start)
+    (update count step)
+    (assert (&lt; count 200) "count must stay below 200")
+    (complete done)))
+</code></pre>
+<p>Under simulation the assertion stays silent while <code>count &lt; 200</code> and fires (with
+the message) the moment it is violated.</p>
+<p>Nested expressions retain their authored grouping even when FSMGEN factors a
+child into an internal intermediate. For example:</p>
+<pre><code class="language-lisp">(assert (&amp; high (| bit3 bit2)) "nested bitwise semantics")
+</code></pre>
+<p>emits the semantic core <code>high &amp; (bit3 | bit2)</code>, never
+<code>high &amp; bit3 | bit2</code>. The same guarantee applies when the expression is an
+implication leaf or sits beneath <code>next</code>/<code>within</code>: each inlined intermediate is
+kept as one grouped SystemVerilog subexpression. This matters because SV gives
+bitwise AND higher precedence than bitwise OR. See the
+<a href="../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.html">behavior record</a> for
+the generated AXI legal-<code>0x00000004</code> proof and regression split.</p>
+<p>Use <code>(assert …)</code> for “this must always hold.” For “this must eventually happen
+within N cycles,” use the bounded-eventually monitor <code>(assert (monitor (within SIGNAL N)) …)</code> documented below (which checks a property over a bounded number
+of cycles).</p>
+<h3 id="cover--and-assume-"><a class="header" href="#cover--and-assume-"><code>(cover …)</code> and <code>(assume …)</code></a></h3>
+<p><code>(assert …)</code> has two verification-intent siblings, lowered through the same
+carrier and likewise guarded for verification only:</p>
+<pre><code class="language-lisp">(cover  (== state BUSY))            ;; was this condition ever reached?
+(assume (&lt; req_len 256) "bounded")  ;; an assumption / input constraint
+</code></pre>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Form</th><th>Generated SV (clocked, <code>@(posedge clk) disable iff (reset)</code>)</th></tr>
+</thead>
+<tbody>
+<tr><td><code>(assert COND [message])</code></td><td><code>assert property (… (COND)) else $error("message");</code></td></tr>
+<tr><td><code>(assume COND [message])</code></td><td><code>assume property (… (COND)) else $error("message");</code></td></tr>
+<tr><td><code>(cover COND [label])</code></td><td><code>cover property (… (COND));</code></td></tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong><code>(cover …)</code></strong> records <em>coverage</em> — whether <code>COND</code> was ever true. It has no
+failure semantics (no <code>$error</code>).</li>
+<li><strong><code>(assume …)</code></strong> states an <em>assumption</em> (e.g. an input constraint): in
+simulation it reports like an assert on violation; for formal tools it
+constrains the state space.</li>
+</ul>
+<p>All three are the immediate/combinational verification family; choose the kind
+by intent — <code>assert</code> (must always hold), <code>assume</code> (presumed to hold), <code>cover</code>
+(want to observe holding).</p>
+<h3 id="temporal-properties--implication--a-b"><a class="header" href="#temporal-properties--implication--a-b">Temporal properties — implication <code>(=&gt; A B)</code></a></h3>
+<p>A check condition is not limited to a boolean: it may be a <strong>temporal property</strong>.
+The workhorse is implication — “when <code>A</code>, then <code>B</code>”:</p>
+<pre><code class="language-lisp">(assert (=&gt; req ack))               ;; req |-&gt; ack   (overlapping: same cycle)
+(assert (=&gt; (&gt; level hi) overflow)) ;; (level &gt; hi) |-&gt; overflow
+</code></pre>
+<p><code>(=&gt; A B)</code> lowers to the SVA overlapping-implication operator inside the clocked
+property:</p>
+<pre><code class="language-systemverilog">`ifndef SYNTHESIS
+  assert property (@(posedge clk) disable iff (!rst_n) ((req) |-&gt; (ack)))
+    else $error("…");
+`endif
+</code></pre>
+<p>Semantics (verified): when <code>A</code> is false the property is <strong>vacuously true</strong> (no
+check); when <code>A</code> is true, <code>B</code> must hold the same cycle, else it fires. <code>A</code> and <code>B</code>
+are ordinary boolean expressions (each rendered through the normal expression
+path); only the <code>=&gt;</code> combinator is special. Signals referenced only inside the
+implication are kept alive as ports. A malformed <code>(=&gt; A B)</code> (not exactly an
+antecedent and a consequent) fails closed.</p>
+<p><strong>Delayed consequents.</strong> The consequent of an implication may be delayed in time:</p>
+<pre><code class="language-lisp">(assert (=&gt; req (next ack)))         ;; req |-&gt; ##1 (ack)        (ack one cycle later)
+(assert (=&gt; req (within ack 3)))     ;; req |-&gt; ##[1:3] (ack)    (ack within 1..3 cycles)
+(assert (=&gt; req (within ack 2 5)))   ;; req |-&gt; ##[2:5] (ack)    (ack between 2 and 5 cycles later)
+</code></pre>
+<p><code>(next X)</code> lowers to <code>##1 (X)</code> and <code>(within X N)</code> to <code>##[1:N] (X)</code> (<code>N</code> a literal
+<code>&gt;= 1</code>). For a window with a <strong>lower bound greater than 1</strong>, give <code>within</code> two bounds:
+<code>(within X MIN MAX)</code> lowers to <code>##[MIN:MAX] (X)</code> (literal <code>1 &lt;= MIN &lt;= MAX</code>) — the
+consequent holds <em>somewhere between <code>MIN</code> and <code>MAX</code> cycles later</em> (the bounded-eventually
+<code>F[MIN,MAX]</code>). A <code>MIN</code> of <code>0</code> fails closed: a <code>[0,0]</code> same-cycle obligation is just the
+overlapping <code>(=&gt; A B)</code>, and a <code>[0,N]</code> “from here, eventually within N” is the
+synthesizable-monitor form below. These together with an implication express bounded
+liveness — the same intent as the synthesizable-monitor form documented below (which
+replaced the former <code>(contract (eventually S within N))</code> clause).</p>
+<p>A complete, runnable example — a request that must be acknowledged 2 to 5 cycles later:</p>
+<pre><code class="language-lisp">(actor delayed_ack
+  (interface
+    (input start)
+    (input req)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (=&gt; req (within ack 2 5)) "ack arrives 2..5 cycles after req")
+    (complete done)))
+</code></pre>
+<blockquote>
+<p><strong>Checkability split.</strong> verilator cannot simulate an implication with a <em>delayed</em>
+(sequence) consequent — only the same-cycle overlapping <code>|-&gt;</code>. So checks that use
+<code>next</code> / <code>within</code> are <strong>formal-only</strong>: they are emitted under <code>`ifdef FORMAL</code>
+(formal tools such as SymbiYosys/Jasper check them; verilator and <code>yosys</code> skip
+them, so <code>--verify-hdl</code> still passes), whereas boolean and overlapping-implication
+checks stay under <code>`ifndef SYNTHESIS</code> and are verilator-simulable. This is why
+the simulation proofs in this book cover boolean/overlapping properties only.</p>
+</blockquote>
+<h3 id="sampled-value-functions--stable---changed---rose---fell---past-"><a class="header" href="#sampled-value-functions--stable---changed---rose---fell---past-">Sampled-value functions — <code>(stable …)</code> / <code>(changed …)</code> / <code>(rose …)</code> / <code>(fell …)</code> / <code>(past …)</code></a></h3>
+<p>A property leaf may be a <strong>SystemVerilog sampled-value function</strong> — an edge or
+stability fact about a signal, sampled at the clock:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>ISF</th><th>SystemVerilog</th><th>Holds when</th></tr>
+</thead>
+<tbody>
+<tr><td><code>(stable SIG)</code></td><td><code>$stable(SIG)</code></td><td><code>SIG</code> is unchanged from the previous cycle</td></tr>
+<tr><td><code>(changed SIG)</code></td><td><code>$changed(SIG)</code></td><td><code>SIG</code> differs from the previous cycle</td></tr>
+<tr><td><code>(rose SIG)</code></td><td><code>$rose(SIG)</code></td><td><code>SIG</code> went <code>0 → 1</code> this cycle</td></tr>
+<tr><td><code>(fell SIG)</code></td><td><code>$fell(SIG)</code></td><td><code>SIG</code> went <code>1 → 0</code> this cycle</td></tr>
+<tr><td><code>(past SIG)</code></td><td><code>$past(SIG)</code></td><td>the previous sampled value of <code>SIG</code></td></tr>
+<tr><td><code>(past SIG N)</code></td><td><code>$past(SIG, N)</code></td><td>the value sampled <code>N</code> cycles ago (<code>N &gt;= 1</code>)</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>stable</code> / <code>changed</code> / <code>rose</code> / <code>fell</code> each take exactly one signal. They are
+ordinary boolean leaves, so they stand alone or sit on either side of an implication:</p>
+<pre><code class="language-lisp">(assert (stable cfg) "cfg is constant")          ;; $stable(cfg)
+(assert (=&gt; valid (stable data)))                ;; (valid) |-&gt; ($stable(data))   — data steady while valid
+(assert (=&gt; (rose req) ack))                     ;; ($rose(req)) |-&gt; (ack)         — ack on the req edge
+(assert (=&gt; (fell grant) (changed state)))       ;; ($fell(grant)) |-&gt; ($changed(state))
+</code></pre>
+<p>Note <code>(=&gt; (rose req) ack)</code> is exactly what the event anchor <code>(after req ack)</code> (below)
+spells more compactly — <code>after</code> is sugar for a <code>$rose</code> antecedent. And <code>(stable SIG)</code>
+is the everyday “unchanged” obligation (<code>$stable(s)</code> is <code>s == $past(s)</code>).</p>
+<p><code>past</code> is value-returning, so use it inside a boolean property expression:</p>
+<pre><code class="language-lisp">(assert (== data (past data)) "data repeats the previous sample")
+(assume (== data (past data 2)) "data repeats the sample from two cycles ago")
+(cover  (== (past data) data))
+</code></pre>
+<p><code>past</code> accepts a signal, bit/slice, or aggregate leaf plus an optional positive
+literal depth. It is not a boolean predicate by itself; comparisons such as
+<code>(== data (past data))</code> are the normal form.</p>
+<p>A sampled-value leaf is <strong>not</strong> a <code>##</code> delay sequence, so — unlike <code>next</code> / <code>within</code> —
+it stays verilator-<strong>simulable</strong> (emitted under <code>`ifndef SYNTHESIS</code>); a property is
+formal-only only when a <code>next</code> / <code>within</code> sits elsewhere in it. Signals referenced only
+inside one are kept alive as ports. The functions are <strong>property-only</strong>: used in a
+synthesizable expression (a <code>when</code> guard, a data right-hand side) the head is unknown
+and fails closed — they are meaningful only in a clocked assertion.</p>
+<p>A complete, runnable example — a config register that must hold steady while <code>valid</code>:</p>
+<pre><code class="language-lisp">(actor stability_probe
+  (interface
+    (input start)
+    (input valid)
+    (input cfg (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (assert (stable cfg) "cfg must not change")
+    (assert (=&gt; valid (stable cfg)) "cfg holds steady whenever valid is asserted")
+    (complete done)))
+</code></pre>
+<p>And a complete example using the <strong>edge</strong> predicates — a handshake where <code>ack</code> must
+follow the <code>req</code> rising edge and <code>done</code> must pulse when <code>busy</code> releases:</p>
+<pre><code class="language-lisp">(actor edge_handshake
+  (interface
+    (input start)
+    (input req)
+    (input busy)
+    (output ack)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (=&gt; (rose req) ack) "ack on the req rising edge")
+    (assert (=&gt; (fell busy) done) "done when busy releases")
+    (complete done)))
+</code></pre>
+<h3 id="trigger-anchors--after-sig--event-form"><a class="header" href="#trigger-anchors--after-sig--event-form">Trigger anchors — <code>(after SIG …)</code> (event form)</a></h3>
+<p>A bounded-eventually check measures its window <em>from</em> an anchor point. The first
+anchor spelling is the <strong>event</strong> form — anchor to the rising edge of a signal:</p>
+<pre><code class="language-lisp">(assert (after start ack))             ;; $rose(start) |-&gt; (ack)          (ack on the start edge)
+(assert (after start (within ack 3)))  ;; $rose(start) |-&gt; (##[1:3] (ack)) (ack within 3 of the edge)
+</code></pre>
+<p><code>(after SIG CONS)</code> lowers to <code>$rose(SIG) |-&gt; (CONS)</code>. The trigger signal is
+edge-detected (so the window opens only on the <code>0 → 1</code> transition of <code>SIG</code>, not
+while it is held high), and any signal used only inside the trigger is kept alive
+as a port. The checkability split applies to the <em>consequent</em>: <code>(after SIG bool)</code>
+is a same-cycle implication and verilator-simulable; <code>(after SIG (within …))</code> has a
+delayed consequent and is formal-only (under <code>`ifdef FORMAL</code>). A malformed
+<code>(after SIG)</code> (no consequent) fails closed.</p>
+<p>This is the first of three trigger spellings (event, inline-positioned, and named
+<code>(at …)</code>) that let bounded-liveness intent be expressed in the property language;
+together with a synthesizable-monitor output mode they replace the former
+standalone <code>(contract (eventually S within N))</code> clause, which has been removed
+(see <code>docs/decisions/0009</code> and <code>docs/decisions/0008</code>).</p>
+<h3 id="synthesizable-monitor-output-mode--monitor-within-s-n"><a class="header" href="#synthesizable-monitor-output-mode--monitor-within-s-n">Synthesizable-monitor output mode — <code>(monitor (within S N))</code></a></h3>
+<p>A <code>(within …)</code> consequent on its own is <em>formal-only</em> (a <code>##</code> sequence verilator
+cannot simulate). The <strong>monitor</strong> output mode lowers a bounded-eventually to real
+synthesizable hardware instead, so it is verilator-simulable. Written <em>inside</em> a
+transaction body, it anchors to its own position (the <strong>inline</strong> trigger):</p>
+<pre><code class="language-lisp">(transaction main
+  (on start)
+  (assert (monitor (within ack 3)) "ack within 3 of arming")
+  (complete done))
+</code></pre>
+<p>This injects an <strong>arm state</strong> where the clause sits (it pulses for the cycle control
+reaches that point), plus a small monitor (an <code>arm</code>/<code>pending</code>/<code>age</code>/<code>fail</code> register
+set): from the arm pulse, <code>ack</code> must hold within <code>N</code> cycles, else <code>fail</code> latches.
+The check then becomes <code>assert property (… (!(…_fail)))</code> — a <em>same-cycle boolean</em> on
+the fail bit, so the temporal bookkeeping lives in hardware and the assertion itself
+is verilator-simulable. The monitor registers are internal (driven by the generated
+monitor logic); the <code>!fail</code> reference does not turn them into ports.</p>
+<p>The window is measured from the cycle <em>after</em> the arm pulse (same as the former
+<code>(contract …)</code> clause), so <code>S</code> asserted on the arm cycle itself does not count; it
+must hold within the following <code>N</code> cycles. <code>N</code> may be a positive literal <strong>or</strong> a
+transaction/actor scalar parameter, an actor constant, or a qualified package scalar
+constant (the same window sources the former <code>(contract …)</code> clause accepted); <code>S</code>
+must be an actor interface signal, and only <code>(monitor (within S N))</code> is supported —
+other inner forms fail closed. This is the same monitor engine the former
+<code>(contract …)</code> clause lowered to (arm state + <code>arm</code>/<code>pending</code>/<code>age</code>/<code>fail</code> DT), now
+reachable from the property language; the inline/event/named triggers all drive it,
+and the former <code>(contract …)</code> clause has been removed (<code>0009</code>).</p>
+<h3 id="named-anchors--point-name-and-at-name"><a class="header" href="#named-anchors--point-name-and-at-name">Named anchors — <code>(point NAME)</code> and <code>(at NAME)</code></a></h3>
+<p>To anchor a check to a transaction position <em>by name</em>, label the position with a
+<code>(point NAME)</code> marker and reference it with <code>(at NAME)</code>:</p>
+<pre><code class="language-lisp">(transaction main
+  (on start)
+  (point armed)               ;; names this position
+  (drive go)
+  (complete done))
+
+(assert (=&gt; (at armed) (within ack 3)))   ;; "while at `armed`, ack within 3"
+</code></pre>
+<p><code>(point NAME)</code> is a no-op pass-through state that labels its position and drives a
+1-bit <strong>active signal</strong> (high while control is at it — exactly like the monitor’s
+<code>arm</code>); <code>(at NAME)</code> resolves to that signal — “control is at the named point” —
+usable anywhere a boolean is (typically as an implication antecedent). Crucially, the
+ISF-originated assertion references only that <em>signal</em> — the state-to-signal derivation
+stays on the FSM side, so verification never reaches into the FSM’s <code>current_state</code>
+(the ISF↔FSM boundary is respected, the same way the event and monitor forms are
+signal-based). The name → position bindings are <strong>module-wide</strong>, so a check in one
+transaction can anchor to a <code>(point …)</code> declared in another. An <code>(at NAME)</code> whose name
+was never declared fails closed (the diagnostic suggests <code>(point NAME)</code> or <code>(on SIGNAL as NAME)</code>); a duplicate point name fails closed.</p>
+<p>The transaction’s <strong>activation</strong> can be labeled inline with a bare <code>as NAME</code> on the
+<code>(on …)</code> clause — the same <code>as</code> keyword as <code>(sample data as captured)</code> / <code>(spawn worker as w0)</code>, no colon:</p>
+<pre><code class="language-lisp">(transaction main
+  (on start as fired)          ;; `fired` names the accept/entry state
+  (complete done))
+
+(assert (=&gt; (at fired) (! busy)))   ;; "while accepting, not busy"
+</code></pre>
+<p><code>(on SIGNAL as NAME)</code> binds <code>NAME</code> to the transaction’s entry/accept state and
+coexists with <code>(sample … as …)</code> sub-clauses; <code>(point …)</code> and <code>(on … as …)</code> share one
+name space (a collision fails closed). Equivalently, a <code>(point …)</code> placed right after
+<code>(on …)</code> anchors to “just activated” without the inline label.</p>
+<p>A malformed form fails closed before <code>.fsm</code> emission: e.g. <code>(assert)</code> /
+<code>(cover)</code> / <code>(assume)</code> with no condition, or more than a condition + one message
+string.</p>
+<p><strong>Lowering</strong>: a <code>+assert</code> carrier in the <code>.fsm</code> (each entry kind-tagged
+<code>assert</code>/<code>cover</code>/<code>assume</code>) → <code>module_info</code> → the matching clocked concurrent
+<code>&lt;kind&gt; property (@(posedge clk) disable iff (reset) (COND))</code> in the generated SV
+(falling back to an immediate combinational check only if the module has no clock).</p>
+<h3 id="complete-runnable-verification-examples"><a class="header" href="#complete-runnable-verification-examples">Complete, runnable verification examples</a></h3>
+<p>The snippets above show clause-level syntax; the actors below are complete and
+self-contained — copy one, lower it with <code>./bin/fsmgen --verify-hdl &lt;file&gt;.fsm</code>, and
+read the generated SV. They progress from a trivial invariant to named anchors.</p>
+<p><strong>1 — a plain invariant.</strong> “This must always hold,” as a clocked concurrent check:</p>
+<pre><code class="language-lisp">(actor level_guard
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input level (width 8))
+    (input depth (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (assert (&lt; level depth) "level must stay below depth")
+    (complete done)))
+</code></pre>
+<p><strong>2 — the verification family together.</strong> <code>assert</code> / <code>assume</code> / <code>cover</code>, including an
+overlapping implication <code>(=&gt; req ack)</code>:</p>
+<pre><code class="language-lisp">(actor handshake_checks
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input req)
+    (input ack)
+    (input len (width 8))
+    (input data (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (assert (=&gt; req ack) "every req is acked the same cycle")
+    (assert (== data (past data)) "data repeats its previous sample")
+    (assume (&lt; len 256) "len is bounded by the protocol")
+    (cover  (&amp; req ack))
+    (complete done)))
+</code></pre>
+<p><strong>3 — a bounded-eventually monitor (simulable).</strong> From the cycle this clause is
+reached, <code>ack</code> must arrive within 3 cycles, checked by a synthesizable monitor:</p>
+<pre><code class="language-lisp">(actor ack_within
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (monitor (within ack 3)) "ack within 3 cycles of arming")
+    (complete done)))
+</code></pre>
+<p><strong>4 — an event-anchored check.</strong> Anchor to the rising edge of <code>start</code>:</p>
+<pre><code class="language-lisp">(actor on_edge
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (after start ack) "ack must be high on the start edge")
+    (complete done)))
+</code></pre>
+<p><strong>5 — named anchors (Ref).</strong> Label the activation with <code>as accepting</code>, a body
+position with <code>(point armed)</code>, and reference both from checks with <code>(at …)</code>:</p>
+<pre><code class="language-lisp">(actor named_anchors
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (input busy)
+    (output done))
+  (transaction main
+    (on start as accepting)
+    (point armed)
+    (assert (=&gt; (at armed) (within ack 3)) "within 3 cycles of `armed`, ack")
+    (assert (=&gt; (at accepting) (! busy)) "while accepting, never busy")
+    (complete done)))
+</code></pre>
+<p><strong>6 — a parameterized window.</strong> The monitor window <code>N</code> can be a transaction
+parameter (or actor constant / package constant), not just a literal:</p>
+<pre><code class="language-lisp">(actor param_window
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (params (ACK_WINDOW 5))
+    (on start)
+    (assert (monitor (within ack ACK_WINDOW)) "ack within ACK_WINDOW cycles")
+    (complete done)))
+</code></pre>
+<p><strong>7 — cross-transaction anchoring.</strong> Name → position bindings are module-wide, so a
+check in one transaction can anchor to a <code>(point …)</code> declared in another:</p>
+<pre><code class="language-lisp">(actor cross_anchor
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input s1)
+    (input s2)
+    (input ack)
+    (output d1)
+    (output d2))
+  (transaction setup
+    (on s1)
+    (point armed)
+    (complete d1))
+  (transaction check
+    (on s2)
+    (assert (=&gt; (at armed) (within ack 2)) "within 2 cycles of `armed` (declared in `setup`), ack")
+    (complete d2)))
+</code></pre>
+<p>(Each of these is lowered as part of the book’s example-lowering audit, so the
+chapter and the implementation stay in sync.)</p>
+<h2 id="i2c-example-with-switch"><a class="header" href="#i2c-example-with-switch">I2C Example with Switch</a></h2>
+<pre><code class="language-lisp">(transaction i2c_transfer
+  ...
+  (switch is_read
+    (1 (repeat 8
+         (drive scl 1)
+         (shift_left rdata sda_in)
+         (drive scl 0)))
+    (0 (repeat 8
+         (drive sda data[7])
+         (drive scl 1)
+         (drive scl 0)
+         (shift_left data 0))))
+  ...)
+</code></pre>
+<p>Read branch: captures 8 bits via shift register.</p>
+<p>Write branch: drives the sampled data byte MSB-first and shifts the sampled
+byte left after each bit.</p>
+<p>Both branch repeats exit to the same post-switch STOP sequence when their
+repeat checks complete.</p>
+<h2 id="complete-accept-path-examples"><a class="header" href="#complete-accept-path-examples">Complete Accept-Path Examples</a></h2>
+<p>The fragments above show clause-level syntax. The four actors
+below are complete, self-contained fixtures that each illustrate
+one control-flow form end-to-end. Each parses and lowers cleanly,
+so it can be copy-pasted as a starting skeleton.</p>
+<h3 id="when--with-a-body"><a class="header" href="#when--with-a-body"><code>(when ...)</code> with a body</a></h3>
+<pre><code class="language-lisp">(actor when_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input mode)
+    (output done))
+  (transaction tx
+    (on start)
+    (when mode
+      (wait 4))
+    (complete done)))
+</code></pre>
+<p><strong>Walkthrough.</strong> <code>(on start)</code> opens the transaction on the input
+pulse. <code>(when mode (wait 4))</code> introduces a conditional region: the
+schedule branches based on the sampled value of port <code>mode</code>. When
+<code>mode</code> is asserted the schedule sits in the wait region for four
+cycles; otherwise the wait body is skipped and the transaction
+falls straight through to <code>(complete done)</code>. The <code>done</code> output
+pulses one cycle and the transaction returns to idle.</p>
+<h3 id="switch--with-default-"><a class="header" href="#switch--with-default-"><code>(switch ...)</code> with <code>(default ...)</code></a></h3>
+<pre><code class="language-lisp">(actor switch_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input opcode (width 2))
+    (output done))
+  (transaction tx
+    (on start)
+    (switch opcode
+      (0 (wait 2))
+      (1 (wait 4))
+      (default (wait 1)))
+    (complete done)))
+</code></pre>
+<p><strong>Walkthrough.</strong> <code>(input opcode (width 2))</code> adds a two-bit input.
+<code>(switch opcode ...)</code> dispatches on the sampled value: case <code>0</code>
+waits 2 cycles, case <code>1</code> waits 4 cycles, and the <code>default</code> branch
+covers every other value (here <code>2</code> and <code>3</code>) with a 1-cycle wait.
+The lowered decision tree negates the union of the explicit case
+predicates, so the <code>default</code> branch is unreachable only when the
+explicit cases are exhaustive for the signal width. All branches
+exit to the same post-switch state, which here is <code>(complete done)</code>.</p>
+<h3 id="while--pre-test-loop"><a class="header" href="#while--pre-test-loop"><code>(while ...)</code> pre-test loop</a></h3>
+<pre><code class="language-lisp">(actor while_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input cond)
+    (output done))
+  (transaction tx
+    (on start)
+    (while cond
+      (wait 2))
+    (complete done)))
+</code></pre>
+<p><strong>Walkthrough.</strong> <code>(while cond body...)</code> is a pre-test loop: the
+guard <code>cond</code> is evaluated <em>before</em> the first body iteration. If
+<code>cond</code> is zero on entry the body never runs and the schedule
+proceeds to <code>(complete done)</code>. Otherwise each iteration waits two
+cycles, then the guard is re-evaluated. The body runs zero or more
+times. There is no implicit counter; the loop terminates only
+when <code>cond</code> becomes zero.</p>
+<p>For a bare condition wider than one bit, “true” means any nonzero value. For
+example, if <code>cond</code> is three bits wide, <code>3'd4</code>, <code>3'd2</code>, and <code>3'd1</code> all enter or
+repeat the body, while <code>3'd0</code> exits. The reviewable <code>.fsm</code> makes this explicit
+as <code>?(!= cond 3'd0)</code>. A one-bit condition retains the shorter <code>?cond</code> selector.</p>
+<h3 id="until--post-test-loop"><a class="header" href="#until--post-test-loop"><code>(until ...)</code> post-test loop</a></h3>
+<pre><code class="language-lisp">(actor until_demo
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input cond)
+    (output done))
+  (transaction tx
+    (on start)
+    (until cond
+      (wait 2))
+    (complete done)))
+</code></pre>
+<p><strong>Walkthrough.</strong> <code>(until cond body...)</code> is the post-test variant:
+the body runs <em>first</em>, then the guard <code>cond</code> is checked. The body
+therefore runs at least once. Iterations stop when <code>cond</code> is
+asserted at the end of a body iteration. Same shape as <code>while</code>
+otherwise. Bare multi-bit conditions use the same nonzero rule as <code>while</code>:
+zero repeats the body and any nonzero value exits.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="13c-drive-blocks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="13e-data-manipulation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="13c-drive-blocks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="13e-data-manipulation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -3426,7 +3426,7 @@ For FSMGen, the analogs are:
   Acceptance: `After .1, require independently supplied original root and imported source bytes rather than embedded hashes or current file names. Qualify canonical same-source/external resolution, complete source graph coverage, document mutation/missing/alias/export/instance controls and actual resolved ATL actor preparation. Preserve exact producer linkage and source kinds; stale or forged provenance must refuse. Split before broadening if needed, then hand a complete qualified import contract to formal/generated/domain adoption .5.2.2.3. No source/scheduling admission widening before complete qualification.`
   Verification: `Same-source producer linkage is committed at de856cd10c74bc2114076a1d7913e7ca151ec11d. Independent external document-set authentication and exact alias-specific constructor selections qualify in child .1; ATL .2 qualifies; file-backed identity .3 is next. Source preparation/adoption remains closed.`
   Commit: `children below`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.3`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.4`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.1`
   Status: `done`
@@ -3443,10 +3443,17 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify file-backed root resolution with portable independently authenticated document identities before preparation/adoption.`
   Acceptance: `After bounded relative-search authority and ATL, execute canonical parse_file/root-relative and FSMLIB precedence with actual complete source bytes. Root _library_file_candidates derives runtime absolute candidates from an existing source label; independently bind these to repository-relative persisted identities without using an embedded filename/digest as authority. Preserve complete ordinary products and original kinds, exact source/export/use/ATL provenance and same-volume locality. Cover moved-root reconstruction, missing/mutated actual documents, candidate precedence and identical-actor/source-scope controls. Reject stale association, split safely, synchronize source/book/integration/feedback/facts and commit before .5.2.2.3 adoption. No unqualified path/API/admission widening.`
-  Verification: `Explicit coverage boundary, not delivered by the current non-file parse_source root plus relative FSMLIB cohort. Canonical owned _library_file_candidates uses dirname(FileSpec::rel2abs(source_label)) for an existing root file. Priority P2 before preparation/adoption; parent imported provenance remains active until this coverage qualifies.`
+  Verification: `Final bound T2048 passes Files=1/Tests=27 across the complete immutable 24-source use/ATL cohort, three source-file layouts and two moved same-volume roots. Whole ordinary actors, catalogs/calls/constructors/targets/proofs and original kinds match independent immutable predecessor projection. Seven exact opaque mutations per source/layout/root refuse; views and callers detach. Actual missing/changed/aliased/unused/substituted authority and complete search precedence qualify. Complete comparison bypass is genuine RED27/Failed24; missing same-source form association is genuine RED1/Failed1 while the retained standalone witness passes2. Exact canonical source-form diagnostics correct an initial unproved operation-loss explanation: only two width tokens coerce string3 to numeric3, while conditional operations and whole actors stay unchanged. Remove redundant ledger remapping and authenticate the reused exact form by its actual retained reference and prior canonical state. Ineffective when/select ledger-cache controls, host cutoff137, failed leftover pathish-shadow fixture and wrong renderer marker remain retained honestly. Independent source/product/type/selection/control reconstruction rejects five actual shared corruptions; first hostile origin attempt was a no-op when-to-when, corrected with the failed verifier retained. Entire bin/perl and predecessor ATL proof bytes authenticate unchanged. Focused prior cohort passes6/224, docs6/622 with 115 examples lowering; syntax/book and actual rendered text/canonical inclusion pass without browser visual QA. Full source/code/recipe/raw products and drafts are sealed under docs/audits/conditional-origin-files-20261002. PathSearch lazy relative-module locator defect is separately owned by .4 before preparation/adoption. Regenerated Knowledge Map, measured containment, claim reconciliation and staged doctrines precede normal hooks. No production/public/scheduling widening, HDL/spent replay, macro/output runtime or full CI/push.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.4`
+  Status: `pending`
+  Goal: `Bind PathSearch module location before a caller changes cwd and qualify moved-root initialization.`
+  Acceptance: `P2 defect found by file-backed qualification .3: a relative %INC PathSearch.pm locator becomes unreadable after chdir before its first lazy go call, causing fileparse(): need a valid pathname at perl/PathSearch.pm line 27. Reproduce from a repository-local isolated workspace through the owned module interface; capture the module origin while it is resolvable, preserving search behavior and local project storage. Qualify a real failing-before/passing-after control plus focused parser/package regression. Sync canonical facts/book scope and commit this separate production repair before preparation/adoption.`
+  Verification: `Initial T2048 draft fails Files=1/Tests=2 with no plan after changing cwd; exact draft and terminal output are retained under docs/audits/conditional-origin-files-20261002/first-draft. General relative-load cwd behavior remains unqualified. Current file qualification uses repository-derived runtime absolute include paths; this is explicit test bootstrap, not a production fix.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3`
@@ -5071,3 +5078,31 @@ Next .5.2.2.2.2.3 remains pending; no file-backed identity implementation has
 started. PNT direction and all remaining ownership stay intact. Fresh startup
 can recover the next source/path-authentication slice from committed Memory,
 this frontier and the sealed complete proof alone.
+
+## Director clarification — IAL2 and ATL (2026-10-02)
+
+Multi-actor IAL2 lowering should emit IAL1/ISF actor instances, transfers and
+orchestration through ATL where the intent requires them. ATL remains part of
+IAL1, not an extra lowering tier. The mdBook must thoroughly describe its model,
+syntax, scheduling, examples, supported boundaries and intended IAL2 relationship.
+Current file-origin qualification continues without pivot. After its clean commit,
+transfer this accepted direction to a roadmap-aligned explicit owner and inspect
+canonical ATL/book contracts before implementation or documentation expansion.
+Existing source does not by itself prove IAL2-to-ATL support.
+
+## Acceptance Checklist (enforced) — SEM .60.4.3.3.5.2.1.5.2.2.2.2.3 file-backed origins
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Earlier observers refuse runtime absolute file candidates. The actual strict-form draft emits file origin actual selected form differs from authority at t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 131. Complete canonical before/after form diagnostics identify two width-token string-to-number coercions, with original conditional operations preserved. Initial operation-loss explanation and ineffective cache controls are corrected, not published as defects. The first fixture separately exposes fileparse(): need a valid pathname at perl/PathSearch.pm line 27; its P2 production repair is owned by .4.
+- [x] **ADDRESSED (verified)** — Separate private file authority executes actual parse_file, authenticates complete supplied root/selected bytes, retains the explicit reused source-form producer association and projects only declared source identities. Whole immutable predecessor actor/proof/kind products reconstruct for adjacent/search/dotted layouts and moved local roots. Bound T2048 PASS27; actual complete authentication bypass RED27/Failed24 and actual missing-form-association RED1/Failed1. Exact seven mutation families and real source/precedence/alias controls refuse. Independent saved-product verifier rejects five actual shared corruptions; preserve its initial no-op corruption failure and all failed/ineffective drafts. No production metadata or scheduling adoption follows.
+- [x] **NO REGRESSION** — Guarded prior source/parser/library/ATL/procedure cohort reports All tests successful, Files=6, Tests=224. Six docs audits report All tests successful, Files=6, Tests=622 with 115 complete fixtures lowering. Final syntax/mdBook and actual rendered canonical integration pass without browser visual QA. Entire bin/perl, earlier providers and predecessor proof archive remain exact. Full bound sources/instruments/recipes/products, meaningful RED and failed attempts retain an immutable seal. Current Knowledge Map, measured allowances/unchanged ceilings and complete claim reconciliation precede staged doctrines and normal hooks. Preparation/adoption and runtime delivery remain open; full CI/push is gated.
+
+## File-origin commit gate reconciliation (2026-10-02)
+
+The final gate retains its initial focused-document allowance rejection in the
+companion checks directory. Shorten only the duplicated task-index projection
+and update the warning surface's measured byte allowance within its unchanged
+ceiling. Knowledge cards are already in rollover debt: restore their predecessor
+allowance and compact duplicate/superseded authority narration, preserving every
+fact and canonical test/evidence link. Git retains the complete earlier prose.
+No knowledge allowance, baseline, health target or ceiling increases. The main
+file-origin proof remains sealed; gate receipts live separately.

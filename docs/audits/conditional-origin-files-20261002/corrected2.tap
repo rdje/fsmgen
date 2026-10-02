@@ -1,0 +1,4 @@
+t/2048-isf-file-document-origin-authority.t .. ok
+All tests successful.
+Files=1, Tests=27, 100 wallclock secs ( 0.28 usr  0.04 sys + 83.57 cusr  2.73 csys = 86.62 CPU)
+Result: PASS

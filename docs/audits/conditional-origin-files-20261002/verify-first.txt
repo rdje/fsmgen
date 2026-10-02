@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "./docs/audits/conditional-origin-files-20261002/verify.py", line 238, in <module>
+    main()
+    ~~~~^^
+  File "./docs/audits/conditional-origin-files-20261002/verify.py", line 233, in main
+    raise AssertionError('independent verifier accepted shared corruption ' + name)
+AssertionError: independent verifier accepted shared corruption origin

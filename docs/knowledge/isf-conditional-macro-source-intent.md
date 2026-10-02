@@ -66,33 +66,23 @@ is restored and public refusal requalified; `.5.2` explicit source intent is
 now next, then `.5.4.2` safe normalization and `.5.3` branch integration.
 Scalar literal and record-output read/write prerequisites follow separately.
 
-Detached parser-origin qualification observes canonical producers and explicitly
-transports node association through rewrites and inline substitution. Its frozen
-plain ledger retains original operation/form/owner and actual call context;
-min/max keep their original operation through select. Complete ordinary actors
-remain unchanged, including primitive kinds and unexpanded inline cond refusal.
-An authored when pair and select have identical normalized actors but distinct
-source origins, falsifying any inference from final clause shape alone.
-The original observer compares ledgers against its retained producer result;
-a fresh instance performs structural checks only. The private local-source
-authority now reconstructs the complete actor and ledger from independently
-supplied source before accepting JSON reloads. Embedded source digests supply
-no authority, including identical actors with different authored intent. It
-refuses imports before document resolution. Imported provenance and
-formal/generated/domain preparation remain owned by `.5.2.2.2`/`.5.2.2.3`
-before adoption or scheduling integration.
-Same-source library producer linkage is now separately qualified in
-[its canonical fact](isf-same-source-library-conditional-origins.md); this does
-not open the imported consumer-authentication boundary.
-The separate [document-set authority](isf-library-document-origin-authority.md)
-now qualifies complete independently supplied root/library bytes and imported
-consumer reloads through canonical external resolution. A [separate ATL observer](isf-atl-document-origin-authority.md)
-now qualifies exact resolved-static producers and clones. File-backed identity
-and preparation remain closed before production adoption and branch integration.
+Detached parser-origin qualification retains original operation/form/owner and
+actual inline call context through rewrites; min/max retain intent through
+select. Whole actors/kinds and inline cond refusal stay unchanged. Authored when
+and select can yield identical actors with distinct origins, falsifying clause
+shape inference. The original observer compares its retained producer; fresh
+instances only check structure. Independent source authentication and its
+successive boundaries live in [source-bound tests](../../t/2044-isf-conditional-origin-source-authority.t),
+[same-source linkage](isf-same-source-library-conditional-origins.md),
+[document sets](isf-library-document-origin-authority.md),
+[resolved ATL](isf-atl-document-origin-authority.md), and
+[file origins](isf-file-document-origin-authority.md). Local authority refuses
+imports; later observers separately qualify canonical external producers and
+portable actual root/use/ATL reads. Embedded digests cannot authenticate original
+intent. Formal/generated/domain preparation remains .5.2.2.3, before adoption
+and branch integration.
 
-Literal predicates/effects/aliases/roles and complete current products
-re-derive each scoped result. Genuine desired-intent RED and shared-corruption
-rejection falsify admission/parity-only signoff. Permanent tests, full sources,
-producers/recipes/raw receipts, sealed membership and immutable predecessors
-provide durability. This qualification changes no production code and proves
-no HDL execution, macro/output runtime or record-output route/public widening.
+Complete products and literal predicates/effects/aliases/roles re-derive scope;
+desired-intent RED and shared corruption falsify admission/parity signoff. Tests,
+sources, recipes, raw receipts and immutable seals preserve durability. No
+production change, HDL/macro/output runtime or route/public widening is proved.

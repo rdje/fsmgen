@@ -1,0 +1,13 @@
+docs/audits/conditional-origin-files-20261002/red_form.t .. 
+not ok 1 - actual reused canonical form authenticates and publishes
+1..1
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/1 subtests 
+
+Test Summary Report
+-------------------
+docs/audits/conditional-origin-files-20261002/red_form.t (Wstat: 256 Tests: 1 Failed: 1)
+  Failed test:  1
+  Non-zero exit status: 1
+Files=1, Tests=1,  6 wallclock secs ( 0.01 usr  0.01 sys +  4.16 cusr  0.53 csys =  4.71 CPU)
+Result: FAIL

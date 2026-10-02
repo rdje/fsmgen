@@ -1,0 +1,8 @@
+docs/audits/conditional-origin-files-20261002/red_form.t .. 
+ok 1 - actual reused canonical form authenticates and publishes
+ok 2 - actual repeated same-source form retains complete original producer intent
+1..2
+ok
+All tests successful.
+Files=1, Tests=2,  5 wallclock secs ( 0.01 usr  0.01 sys +  4.21 cusr  0.54 csys =  4.77 CPU)
+Result: PASS

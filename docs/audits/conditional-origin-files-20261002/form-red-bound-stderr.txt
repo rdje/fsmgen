@@ -1,0 +1,4 @@
+
+#   Failed test 'actual reused canonical form authenticates and publishes'
+#   at docs/audits/conditional-origin-files-20261002/red_form.t line 31.
+# Looks like you failed 1 test of 1.

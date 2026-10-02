@@ -1,0 +1,7 @@
+{
+  "page": "13d-control-flow.html",
+  "failed_marker": "width-token",
+  "failure": "AssertionError: (13d-control-flow.html, width-token)",
+  "cause": "Wrong marker: standalone Control Flow says prior canonical parse; the canonical downstream include carries the explicit width-token wording.",
+  "binding_gap": "Initial inline render instrument was not fingerprinted; no claim uses that attempt."
+}

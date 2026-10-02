@@ -369,8 +369,9 @@ Final canonical use coverage, targets, identities and parameter kinds are
 revalidated before proof publication; a later clone change cannot leave stale
 provenance in an accepted document proof.
 This bounded cohort uses a supplied root with a logical non-file label and
-relative library search roots. File-backed root resolution and its runtime-to-relative
-document identity boundary remain a separately owned prerequisite before adoption.
+relative library search roots. A separate private file-backed authority now
+qualifies actual root-file reads and runtime-to-relative document identities,
+authenticating selected complete bytes before portable proof publication.
 Separate private ATL qualification observes the actual canonical resolved-static
 actor path, which rebuilds library actors after use resolution. Exact returned
 export references retain distinct use/ATL constructor identities and original
@@ -379,7 +380,16 @@ Whole resolved metadata, declarations and source ledgers survive opaque reloads;
 final target/declaration/coverage changes refuse. This cohort covers one resolved
 static ATL instance; groups and unresolved external intent remain closed in this
 authority. The earlier library-only provider remains unchanged. File-backed
-identity and formal/generated/domain adoption are still prerequisites.
+identity now qualifies separately: complete use/ATL actors, source ledgers and
+primitive kinds reconstruct across moved workspace roots. Adjacent files precede
+ordered library roots and the current directory; dotted-library flat and pathish
+candidates remain distinguishable. Explicit same-source form association authenticates the exact state of a reused
+form after canonical width-token coercion; original conditional intent remains
+preserved through the subsequent canonical actor constructors.
+Missing or changed bytes, symlinked paths, unused or substituted authority refuses.
+Formal/generated/domain preparation and metadata adoption remain prerequisites;
+the public parser, schemas and scheduling behavior remain unchanged.
+File-backed provenance evidence: `docs/audits/conditional-origin-files-20261002/scope.txt`.
 ATL provenance evidence: `docs/audits/conditional-origin-atl-20261002/scope.txt`.
 Document-set evidence: `docs/audits/conditional-origin-documents-20261002/scope.txt`.
 Final publication evidence: `docs/audits/conditional-origin-documents-finalization-20261002/scope.txt`.

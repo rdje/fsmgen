@@ -1,0 +1,7 @@
+docs/audits/conditional-origin-files-20261002/red_form.t .. 
+ok 1 - actual repeated same-source form retains complete original producer intent
+1..1
+ok
+All tests successful.
+Files=1, Tests=1,  2 wallclock secs ( 0.01 usr  0.01 sys +  1.18 cusr  0.49 csys =  1.69 CPU)
+Result: PASS
