@@ -310,6 +310,17 @@ are admitted. Unproved overlap between independent writers, repeated active
 container writes and timed operators refuse. Equal values, entry conditions,
 priority declarations and source order do not establish arbitration. Output
 member writes and generated output handoff mappings retain their separate gates.
+An owning module with any generated child currently refuses declared record
+outputs, including unused outputs and a child-local scalar formal that shadows
+the output name. A plain local `do` without generated children remains accepted.
+The generated-output ingress records missing owner-to-reader inputs and missing
+child-write-to-owner routes; the gate remains until both mappings and complete
+physical writer admission qualify. The scalar sibling controls demonstrate a
+separate phase boundary: schedule preview succeeds, while strict check and
+semantic queries reject unconnected child ports. Schedule success alone does
+not establish realized connectivity. See the
+`docs/audits/record-output-generated-ingress-20261002/scope.txt`.
+
 Typed output `(reset ...)` and `(default ...)` metadata remain refused.
 
 Declaration, exact-type copy, scalar-field and public report behavior is

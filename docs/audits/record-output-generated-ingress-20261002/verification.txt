@@ -1,0 +1,2 @@
+ram-guard: PID 47623; host 83.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+generated-output ingress: complete literal source/IR/domain/transport/refusal/producer witnesses and hostile controls PASS

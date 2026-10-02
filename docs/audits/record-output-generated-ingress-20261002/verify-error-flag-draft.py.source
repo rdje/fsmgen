@@ -1,0 +1,255 @@
+import copy
+import hashlib
+import json
+import re
+import subprocess
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent
+CASES = ['direct', 'local_do', 'spawn_writer', 'blocking_writer', 'spawn_readers',
+         'storage_then_output', 'unused_with_child', 'competing_children', 'formal_shadow',
+         'imported_writer', 'scalar_control', 'scalar_writer', 'scalar_reader', 'input_control',
+         'domain_direct', 'domain_writer', 'domain_readers', 'imported_domain_blocking']
+DIRECT = {'direct', 'local_do', 'domain_direct'}
+SCALAR = {'scalar_control', 'scalar_writer', 'scalar_reader'}
+PUBLIC_PASS = DIRECT | {'scalar_control', 'input_control'}
+GATED = set(CASES) - DIRECT - SCALAR - {'input_control'}
+WRITERS = {'spawn_writer', 'blocking_writer', 'competing_children', 'imported_writer',
+           'domain_writer', 'imported_domain_blocking'}
+READERS = {'spawn_readers', 'domain_readers'}
+TOOLS = {'check': 'fsmgen_check', 'semantic': 'fsmgen_semantic_introspect', 'schedule': 'fsmgen_schedule_preview'}
+FLAGS = {'check': ['--strict', '--check', '--json'], 'semantic': ['--strict', '--emit-semantic-json'],
+         'schedule': ['--emit-schedule-json']}
+SPEC = dict(kind='record', width=5, signed=0, member_order=['tag', 'payload'], members={
+    'tag': dict(kind='bits', width=2, signed=0),
+    'payload': dict(kind='bits', width=3, signed=1, state_model='four_state')})
+FIELDS = [dict(path='tag', width=2, msb=4, lsb=3, signed=0),
+          dict(path='payload', width=3, msb=2, lsb=0, signed=1, state_model='four_state')]
+GATE = 'Invalid record-output writer inventory: generated record-output mappings require separate qualification'
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+
+
+def same(actual, expected, label):
+    assert canonical(actual) == canonical(expected), label
+
+
+def read(name):
+    return json.loads((BASE / 'captures' / name).read_text())
+
+
+def port(name, direction, width, record=False, imported=False):
+    result = dict(name=name, direction=direction, width=width)
+    if record:
+        result.update(type='shared.frame' if imported else 'frame', type_kind='record', fields=copy.deepcopy(FIELDS))
+    return result
+
+
+def ports(name):
+    imported = 'imported' in name
+    rows = [port('start', 'input', 1), port('incoming', 'input', 5, name not in SCALAR, imported)]
+    if name == 'input_control':
+        rows.append(port('packet', 'input', 5, True))
+    if 'domain' in name:
+        rows.append(port('unused', 'input', 1))
+    if name != 'input_control':
+        rows.append(port('packet', 'output', 3 if name == 'scalar_reader' else 5, name not in SCALAR, imported))
+    rows += [port('seen', 'output', 3), port('again', 'output', 3), port('done', 'output', 1)]
+    if 'domain' in name:
+        for row in rows:
+            row['domain'] = 'idle' if row['name'] == 'unused' else 'io'
+    return rows
+
+
+def assignments(ir, target):
+    return [a for b in ir['states'] + ir['dt_blocks'] for a in b['assignments'] if a['lhs'] == target]
+
+
+def private(name, data):
+    source = (BASE / 'sources' / (name + '.isf')).read_text()
+    same(data['source'], source, 'complete source bytes')
+    same(data['source_id'], str(BASE.relative_to(Path.cwd())) + '/sources/' + name + '.isf', 'source identity')
+    same(data['source_sha256'], hashlib.sha256(source.encode()).hexdigest(), 'source digest')
+    same(data['actor_before'], data['actor_after'], 'complete caller primitive kinds and data')
+    same(data['actor_before']['actor_name'], 'generated_output_' + name, 'literal source actor')
+    same(data['actor_before']['interface_port_metadata'], ports(name), 'all literal declared role/type/range/absence facts')
+    same(data['actor_before']['storage'][0]['type_spec'], SPEC, 'entire literal packed type')
+    same(data['ir']['success'], True, 'private build completes')
+    if name in GATED:
+        for key in ['lower', 'report']:
+            same(data[key]['success'], False, 'mandatory public scheduler refusal')
+            assert data[key]['value'] is None
+            assert data[key]['error'].startswith(GATE), 'exact generated gate'
+    else:
+        same(data['lower']['success'], True, 'scheduler control admitted')
+        same(data['report']['success'], True, 'schedule control admitted')
+    ir = data['ir']['value']
+    carriers = data['private_carriers']
+    if 'domain' in name:
+        same(sorted(data['domain_realizations']), ['idle', 'io'], 'complete canonical domain source membership')
+        idle = data['domain_realizations']['idle']
+        same(idle['source']['actor_name'], 'generated_output_' + name + '__domain_idle', 'idle physical module identity')
+        same(idle['source']['interface_port_metadata'], [p for p in ports(name) if p['domain'] == 'idle'], 'idle declarations')
+        same(idle['ir']['value']['children'], {}, 'no foreign child in idle')
+        owned = data['domain_realizations']['io']
+        same(owned['source']['actor_name'], 'generated_output_' + name + '__domain_io', 'owned physical module identity')
+        same(owned['source']['interface_port_metadata'], [p for p in ports(name) if p['domain'] == 'io'], 'owning declarations')
+        same(owned['source']['reset'], dict(name='rst_n', kind='sync', polarity='active_low'), 'owning reset contract')
+        ir = owned['ir']['value']
+        carriers = owned['private_carriers']
+    same(sorted(ir['children']), [] if name in DIRECT else ['worker'], 'complete child definitions')
+    same(sorted(carriers), [ir['actor_name'], 'top'] + ([] if name in DIRECT else ['worker']), 'complete private emitter products')
+    for value in carriers.values():
+        same(value['success'], True, 'private emitter completion does not grant publication')
+    if name in DIRECT:
+        same(ir['spawn_instances'], [], 'direct/local do has no generated instances')
+        return
+    instances = ['main_worker_do_0'] if 'blocking' in name else ['left', 'right'] if name in READERS or name == 'competing_children' else ['one']
+    same([s['instance'] for s in ir['spawn_instances']], instances, 'all literal bound instances')
+    child = ir['children']['worker']
+    same(child['declared_storage'], [], 'child has no duplicate actor storage owner')
+    if name in WRITERS:
+        same(child['ports'], [port('start', 'input', 1), port('done', 'output', 1), port('packet', 'output', 5),
+             dict(name='held', direction='input', width=5, isf_handoff=1)], 'complete current writer ports')
+        same(assignments(child, 'packet'), [dict(lhs='packet', rhs='held', op='<-', source_kind='set')], 'actual original-edge write')
+        same(assignments(ir, 'packet'), [], 'actual absent parent write route')
+        for instance in instances:
+            assert not re.search(r'\(' + re.escape(instance) + r'\.packet\s', carriers['top']['value']), 'child packet currently has no route'
+            assert '(worker_set_0\n    (<- (packet> held))' in carriers['worker']['value'], 'exact emitted child write'
+    elif name in READERS:
+        same(child['ports'], [port('start', 'input', 1), port('done', 'output', 1), port('result', 'output', 3)], 'complete current reader ports')
+        same(assignments(child, 'result'), [dict(lhs='result', rhs='packet.payload', op='<-', source_kind='set')], 'missing owner view required by actual operand')
+        assert '(result> packet.payload)' in carriers['worker']['value']
+        assert '(input packet)' not in carriers['worker']['value'], 'no invented owner-view input'
+    elif name == 'formal_shadow':
+        same(child['ports'], [port('start', 'input', 1), port('done', 'output', 1), port('packet', 'output', 3)], 'nearest scalar formal identity')
+        same(assignments(child, 'packet'), [dict(lhs='packet', rhs='3', op='<-', source_kind='set')], 'scalar shadow write')
+    elif name == 'input_control':
+        same(child['ports'], [port('start', 'input', 1), port('packet', 'input', 5), port('done', 'output', 1), port('result', 'output', 3)], 'accepted real record-input route')
+        assert '(packet one.packet)' in carriers['top']['value']
+    elif name == 'storage_then_output':
+        same(child['actor_storage_writes'], [dict(name='held', width=5, type='frame', type_spec=SPEC,
+            data_port='isf_write_held_data', enable_port='isf_write_held_enable')], 'complete existing storage write contract')
+        assert '(one.isf_write_held_data generated_output_storage_then_output.isf_write_one_held_data)' in carriers['top']['value']
+        same(assignments(ir, 'packet'), [dict(lhs='packet', rhs='held', op='<-', source_kind='set')], 'later owner output copy')
+
+
+def query(name, kind, data):
+    path = 'docs/audits/record-output-generated-ingress-20261002/sources/' + name + '.isf'
+    same(data['source_id'], path, 'query source identity')
+    same(data['query_kind'], kind, 'query kind')
+    same(data['command'][1:], ['bin/fsmgen'] + FLAGS[kind] + [path], 'actual native source request')
+    request = dict(jsonrpc='2.0', id=1, method='tools/call', params=dict(name=TOOLS[kind], arguments=dict(source_id=path)))
+    same(data['request'], request, 'complete public request')
+    same(json.loads(data['wire_input']), request, 'actual wire request')
+    same(data['wire_command'][1:], ['bin/fsmgen-mcp', '--workspace-root', '.'], 'actual newline transport')
+    same(data['source_sha256_before'], hashlib.sha256((BASE / 'sources' / (name + '.isf')).read_bytes()).hexdigest(), 'every source fingerprint')
+    same(data['source_sha256_before'], data['source_sha256_after'], 'source preservation')
+    same(data['producer_sha256_before'], data['producer_sha256_after'], 'named producer preservation')
+    for path, digest in data['producer_sha256_before'].items():
+        same(digest, hashlib.sha256((BASE / 'producers' / (path.replace('/', '__') + '.source')).read_bytes()).hexdigest(), 'actual named producer bytes')
+    wire = data['wire']
+    same([wire['exit_code'], wire['signal'], wire['stderr']], [0, 0, ''], 'newline terminal')
+    assert re.fullmatch(r'[^\n]+\n', wire['stdout']), 'exactly one actual newline envelope'
+    same(json.loads(wire['stdout']), wire['response'], 'entire raw wire product')
+    same(wire['response'], data['api'], 'entire typed API/newline product')
+    native = data['native']
+    same(native['signal'], 0, 'native terminal signal')
+    if name in GATED and kind == 'schedule':
+        same(native['exit_code'], 255, 'schedule command refusal')
+        same(native['stdout'], '', 'no partial schedule JSON')
+        assert native['stderr'].startswith(GATE)
+        same(data['native_json']['success'], False, 'no native JSON report invented')
+        same(data['api'], dict(jsonrpc='2.0', id=1, error=dict(code=-32000,
+            message='FSMGen command failed without a matching public failure report')), 'closed message-only schedule error')
+        return
+    same(data['native_json']['success'], True, 'native report parses')
+    report = data['native_json']['value']
+    same(json.loads(native['stdout']), report, 'entire raw native report')
+    same(sorted(data['api']), ['id', 'jsonrpc', 'result'], 'complete report envelope keys')
+    same(data['api']['result']['isError'], False, 'valid query product JSON boolean')
+    structured = data['api']['result']['structuredContent']
+    same(json.loads(data['api']['result']['content'][0]['text']), structured, 'complete text/structured product')
+    same(structured['report'], report, 'entire native/API report with primitive kinds')
+    success = name in PUBLIC_PASS or kind == 'schedule'
+    same(native['exit_code'], 0 if success else 1, 'actual native exit')
+    same(native['stderr'], '', 'machine report native stderr')
+    if kind != 'schedule':
+        same(report['success'], success, 'exact public success boolean')
+        same(report['generated_output']['emitted'], False, 'read-only query produces no HDL artifact')
+    if success:
+        same(report['interface_ports'] if kind == 'schedule' else report['source']['interface_ports'], ports(name), 'complete literal public declaration/layout')
+    else:
+        assert report['source'].get('interface_ports') is None, 'no successful declarations on refusal'
+        assert 'result' not in report and 'semantic' not in report, 'no successful partial product'
+        same(len(report['diagnostics']), 1, 'one complete primary diagnostic')
+        message = report['diagnostics'][0]['message']
+        if name in GATED:
+            same(message, GATE, 'exact mandatory record mapping refusal')
+        else:
+            assert "leaves child port 'one.packet' unconnected" in message, 'strict scalar composition refusal after successful scheduler'
+
+
+def hostile():
+    # Shared producer parity can retain a lie. Literal scopes must reject it.
+    original = read('spawn_writer-private.json')
+    mutations = [lambda d: d['actor_before']['interface_port_metadata'][2].update(direction='input'),
+                 lambda d: d['actor_before']['storage'][0]['type_spec']['members']['payload'].update(signed='1'),
+                 lambda d: d['ir']['value']['children'].clear(),
+                 lambda d: d['ir']['value']['spawn_instances'].clear(),
+                 lambda d: d['ir']['value']['children']['worker']['ports'].pop(),
+                 lambda d: d['lower'].update(success=True)]
+    for mutation in mutations:
+        bad = copy.deepcopy(original)
+        mutation(bad)
+        bad['actor_after'] = copy.deepcopy(bad['actor_before'])
+        same(bad['actor_before'], bad['actor_after'], 'shared corrupt caller parity')
+        try:
+            private('spawn_writer', bad)
+        except (AssertionError, KeyError):
+            continue
+        raise AssertionError('false declaration/module/instance/port/admission survived literal witness')
+    original = read('direct-check.json')
+    bad = copy.deepcopy(original)
+    report = bad['native_json']['value']
+    report['source']['interface_ports'][2]['fields'][1]['signed'] = '1'
+    bad['native']['stdout'] = canonical(report) + '\n'
+    result = bad['api']['result']
+    result['structuredContent']['report'] = copy.deepcopy(report)
+    result['content'][0]['text'] = canonical(result['structuredContent'])
+    bad['wire']['response'] = copy.deepcopy(bad['api'])
+    bad['wire']['stdout'] = canonical(bad['api']) + '\n'
+    same(json.loads(bad['native']['stdout']), result['structuredContent']['report'], 'shared false native/API report parity')
+    same(json.loads(bad['wire']['stdout']), bad['api'], 'shared false API/wire envelope parity')
+    try:
+        query('direct', 'check', bad)
+    except AssertionError:
+        return
+    raise AssertionError('shared wrong signed JSON kind survived literal public oracle')
+
+
+def verify():
+    same(sorted(p.name for p in (BASE / 'captures').glob('*.json')),
+         sorted(name + '-' + kind + '.json' for name in CASES for kind in ['private', 'check', 'semantic', 'schedule']),
+         'complete finite source/private/native/API/newline membership')
+    same(sorted(p.name for p in (BASE / 'sources').iterdir()), sorted([name + '.isf' for name in CASES] + ['shared.fsm']), 'complete authored fixture membership')
+    for name in CASES:
+        private(name, read(name + '-private.json'))
+        for kind in TOOLS:
+            query(name, kind, read(name + '-' + kind + '.json'))
+    hostile()
+    preservation = json.loads((BASE / 'production-preservation.json').read_text())
+    same([preservation['exit_code'], preservation['stdout'], preservation['stderr']], [0, '', ''], 'complete production preservation receipt')
+    tree = subprocess.check_output(['git', 'ls-tree', '-r', '-z', preservation['baseline'], '--', 'bin', 'perl'])
+    same(tree.hex(), (BASE / 'production-tree.zlist').read_bytes().hex(), 'all baseline production inventory identities')
+    manifest = json.loads((BASE / 'manifest.json').read_text())
+    actual = {str(p.relative_to(BASE)): hashlib.sha256(p.read_bytes()).hexdigest()
+              for p in BASE.rglob('*') if p.is_file() and p.name != 'manifest.json'}
+    same(actual, manifest['files'], 'complete immutable evidence membership and byte identity')
+    print('generated-output ingress: complete literal source/IR/domain/transport/refusal/producer witnesses and hostile controls PASS')
+
+
+if __name__ == '__main__':
+    verify()

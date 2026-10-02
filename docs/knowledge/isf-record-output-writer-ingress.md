@@ -7,7 +7,7 @@ answers:
   - "can empty conflict issues prove record output writer safety?"
   - "where are detached record output writers inventoried?"
   - "which prepared record output writers pass conservative admission?"
-date: 2026-10-01
+date: 2026-10-02
 status: current
 tags: [isf, record, output, writers, imports, ownership]
 evidence: >-
@@ -89,4 +89,8 @@ entry guards, priorities and declaration permutations cannot arbitrate. T2030
 qualifies the private rules; the old declaration-refusal witness now checks
 the still-closed authored field-write boundary. Mandatory public source
 integration under .3.4.3 reuses these rules on every actual bound module; the
-private inventory alone grants no publication or independent runtime reachability. Output-only/mixed context and domain prerequisites are qualified under `.60.4.3.3.4.1`; see [the scoped-source card](isf-record-output-source-contexts.md). Unsupported target profiles are prepared under `.3.4.2`; see [the output-profile card](isf-record-output-hdl-profiles.md). Actual declaration/whole-copy integration `.3.4.3` now admits bounded source and strict carriers; see [source admission](isf-record-output-source-admission.md). Complete public reconciliation remains `.3.4.4`.
+private inventory alone grants no publication or independent runtime reachability. Output-only/mixed context and domain prerequisites are qualified under `.60.4.3.3.4.1`; see [the scoped-source card](isf-record-output-source-contexts.md). Unsupported target profiles are prepared under `.3.4.2`; see [the output-profile card](isf-record-output-hdl-profiles.md). Actual declaration/whole-copy integration `.3.4.3` now admits bounded source and strict carriers; see [source admission](isf-record-output-source-admission.md). Complete bounded source/public/profile/corpus reconciliation `.3.4.4` is
+qualified at `1a50d4f42806651ec247ca95364c000bb52e8919`; see
+[corpus closure](isf-record-output-corpus-closure.md). Generated/public/execution
+`.3.5` remains active; the actual generated read/write mapping prerequisites
+are captured in [generated ingress](isf-record-output-generated-ingress.md).

@@ -8,7 +8,7 @@ answers:
   - "where do generated-top semantic reports retain authored record declarations?"
   - "does ordinary ISF reset provenance omit the domain key?"
   - "is generated and named-domain record-input public qualification complete?"
-date: 2026-10-01
+date: 2026-10-02
 status: current
 tags: [isf, record-ports, domains, composition, storage]
 evidence: t/1985-isf-interface-port-public-qualification.t; t/2017-isf-record-input-frontend-closure.t; t/1981-isf-storage-word-access.t; t/1982-isf-domain-storage-report.t; t/2021-isf-record-input-generated-refusals.t; t/2019-isf-record-input-generated-carriers.t; t/2020-composition-child-embedded-packages.t; isf/record_input_children.isf; isf/record_input_types.fsm; perl/FSM/Scheduler/ISF/DomainSource.pm; perl/FSM/Composition/GeneratedChildRealizer.pm; docs/book/src/13j-type-enum-aggregate.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
@@ -67,5 +67,9 @@ current literal discovery descriptors, complete selected ISF cohort, supplied
 sources/catalog and JSON kinds, preserving unchanged prior evidence. The book
 matrix's stale pending public/runtime prose is repaired. Sealed reconciliation:
 docs/audits/record-input-public-reconciliation-20261001/. Independent input signoff
-.2.5.5.3 and full aggregate consumer delivery remain open.
+.2.5.5.3 is complete at `33de1d53162d7614060dca226c3081ebc3959df1`, with selected
+R1-R3 input requirements and immutable direct/generated execution reconciled in
+docs/audits/record-input-signoff-20261001/. Whole-output, output-field and full
+aggregate consumer delivery remain separately open; input signoff closes none
+of those obligations.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.4.1.

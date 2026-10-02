@@ -1,0 +1,11 @@
+ram-guard: PID 6144; host 83.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1305-isf-book-feature-matrix-audit.t ..... ok
+t/1414-docs-relative-paths-audit.t ......... ok
+t/1303-isf-public-live-book-paths-audit.t .. ok
+t/1307-isf-loop-body-doc-truth-audit.t ..... ok
+t/1332-isf-atl-doc-status-audit.t .......... ok
+# audit summary: 113 complete fixtures lowered cleanly, 275 fragments skipped (did not start with (actor))
+t/1376-isf-book-example-lowering-audit.t ... ok
+All tests successful.
+Files=6, Tests=622,  7 wallclock secs ( 0.03 usr  0.02 sys +  6.10 cusr  0.64 csys =  6.79 CPU)
+Result: PASS

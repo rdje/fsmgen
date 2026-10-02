@@ -1,0 +1,12 @@
+ram-guard: PID 16972; host 65.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+direct complete source/IR/private/public capture
+local_do complete source/IR/private/public capture
+spawn_writer complete source/IR/private/public capture
+blocking_writer complete source/IR/private/public capture
+spawn_readers complete source/IR/private/public capture
+storage_then_output complete source/IR/private/public capture
+unused_with_child complete source/IR/private/public capture
+competing_children complete source/IR/private/public capture
+formal_shadow complete source/IR/private/public capture
+imported_writer complete source/IR/private/public capture
+scalar_control complete source/IR/private/public capture

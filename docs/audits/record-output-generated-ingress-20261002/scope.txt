@@ -1,0 +1,66 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.1
+Baseline: 1a50d4f42806651ec247ca95364c000bb52e8919
+
+Qualify generated record-output ingress without changing production or invoking
+an HDL compiler, analyzer or simulator. The exact authored finite membership is
+fixed independently in T2038 and verify.py. Local/imported/spawned/parameterized
+blocking/owning-domain/reused readers, competing child instances, unused output,
+scalar-formal shadow, existing storage handoffs, direct/plain-local-do and
+accepted input/scalar-storage controls retain complete source, parsed caller,
+formal preparation, private IR/emitter, native/API/actual newline products.
+Canonical domain construction supplies actual selected source/IR; no invented
+flattened module or instance map bypasses admission. Exact recursive five-bit
+record facts have unsigned tag[4:3] and signed four_state payload[2:0].
+Only the exact repository prefix normalizes. Raw streams, optional native JSON,
+full requests/envelopes/text products and source/named producer fingerprints
+remain. JSON primitive kinds and null/absent facts are retained.
+
+Actual child writers retain packet>held but have no parent update route or top
+link. Reused readers retain packet.payload without a packet child input. The
+source mechanisms are LoweringIR::_build_child_ports, storage-only handoffs in
+ChildStorageOwnership and CompositionTop's registered output routing. Git
+pickaxe roots generated pin/top routing at 130bf13aec896f8090a149a6640610eb06d47a96;
+subsequent storage read routes are rooted at 5c0f802646c69108d15995f7e8cd7e29c32ebdf5.
+The active record-output gate refuses every child-bearing owning module before
+publication, including unused outputs and scalar shadows. Direct, plain local
+do and owning-domain direct cases pass. Scalar output read/write siblings pass
+scheduler/report/public schedule, but strict check/semantic catches unconnected
+one.packet ports. This is no silent public miswiring or runtime proof.
+
+A draft capture helper fails Perl syntax before any source run; preserve exact
+source/log and correct its map expression. The corrected first and extension
+captures return terminal 0. An initial independent verifier incorrectly expects
+a failed tool product to have isError:false; retain its exact source/receipt,
+then correct only that oracle expectation to the actual Boolean failure kind.
+The independent verifier then passes complete typed transport/caller/literal
+and hostile shared role/signed-kind/module/instance/port/admission controls.
+Shared parity alone survives corruption; the independent literals reject it.
+
+T2038 plus prior writer inventory/admission and generated input carriers passes
+All tests successful, Files=4/Tests=39. Six documentation audits pass
+Files=6/Tests=622; mdBook builds. Exact canonical includes and new refusal/phase
+prose plus evidence links are checked in retained rendered HTML, without a
+browser visual-review claim. The first staged gate catches a new canonical
+link depth and a pending decomposed-container status. Preserve the full failed
+receipt and sources, then fix those declarations; archive-recovery warnings are
+downstream of the failed link checker, with no missing Git object inferred.
+Complete selected previous input/output archives
+match baseline Git blobs and remain immutable without replay. Complete baseline
+bin/perl inventory and a zero-diff receipt retain unchanged production.
+
+The Knowledge Map's stale input-signoff and output-public-frontier tails are
+reconciled against committed 33de1d53 and 1a50d4f4, preserving dated historical
+observations. Canonical downstream integration, book and SPECFORGE feedback
+reflect the current gates and owned prerequisites. Live owner views are owned
+next by .3.5.2.1; original-edge typed data/enable output writes by .2.2; complete
+physical source/module/instance/type/activation admission by .2.3 before public
+integration .3 and separately fresh HIAL-qualified binary execution .4.
+
+Actual full products and canonical selected source provide re-derivation.
+Independent literal source/type/layout/role/operand/route witnesses, strict
+phase controls and shared hostile corruption provide falsification. Complete
+source/code/history/raw receipts, immutable parents, sealed manifest/verifier,
+permanent watcher, canonical docs/facts/task and Git provide durability.
+No generated output source promotion, field writes, arbitration, payload
+capture, extra clock edge, native execution or full SPECFORGE completion is
+claimed. Existing spent native captures are never replayed.

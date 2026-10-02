@@ -122,7 +122,7 @@ and book.
   independent writers refuse in both lower and report, including domain-local
   writers; equal values/entry guards/priority do not arbitrate. Output member
   writes and generated handoff mappings retain their separate gates. Complete
-  public reconciliation `.3.4.4` is active. Its `.1` qualifies complete native,
+  public reconciliation `.3.4.4` is qualified. Its `.1` qualifies complete native,
   in-process API and actual newline check/semantic/schedule products for local,
   imported, forward aliases, mixed/reverse/unused and owning-domain outputs,
   with literal nested signed/state/list layouts and precise no-partial-product
@@ -146,8 +146,19 @@ and book.
   strict carriers and SystemVerilog/sv text are retained. Canonical downstream
   integration/public parts and rendered book match, including residual stale
   deferral paragraphs. Bounded source/public/profile/corpus `.3.4.4` is complete.
-  Output execution remains `.3.5`; generated output mappings, output field writes
-  and full aggregate-interface delivery are not complete.
+  Generated-output ingress `.3.5.1` qualifies actual local/imported/spawned,
+  parameterized blocking, owning-domain, reused-reader, unused-output and scalar
+  shadow cases against native/API/newline products. The active record-output
+  gate refuses child-bearing owning modules. Actual private products lack an
+  owner-to-reader packet input and a child-write-to-owner route; both repairs
+  are owned under `.3.5.2.1` and `.3.5.2.2`, followed by complete physical mapping
+  admission `.3.5.2.3`. Direct/local `do`, input and scalar-storage controls pass.
+  Scalar output siblings have successful schedules but strict realization
+  rejects their unconnected ports. No HDL tool runs in this ingress slice.
+  [Complete ingress evidence](audits/record-output-generated-ingress-20261002/scope.txt)
+  preserves exact sources, callers, domains, transports, raw refusals and hostile
+  independent controls. Output execution remains `.3.5.4`; generated output
+  mappings, output field writes and full aggregate-interface delivery are open.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.
 

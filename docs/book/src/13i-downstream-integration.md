@@ -16,6 +16,9 @@ public interface contract is described under
 Issue reports follow
 [Downstream Issue Reporting](10a-downstream-issue-reporting.md).
 
+Generated record-output mapping prerequisites are recorded in the
+[ingress evidence](../../../docs/audits/record-output-generated-ingress-20261002/scope.txt).
+
 {{#include ../../isf-spec/10-downstream-readiness-source.md}}
 
 {{#include ../../isf-spec/11-downstream-actor-transactions.md}}

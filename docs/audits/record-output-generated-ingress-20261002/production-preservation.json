@@ -1,0 +1,15 @@
+{
+  "baseline": "1a50d4f42806651ec247ca95364c000bb52e8919",
+  "command": [
+    "git",
+    "diff",
+    "--exit-code",
+    "1a50d4f42806651ec247ca95364c000bb52e8919",
+    "--",
+    "bin",
+    "perl"
+  ],
+  "exit_code": 0,
+  "stderr": "",
+  "stdout": ""
+}

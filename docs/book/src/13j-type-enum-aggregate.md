@@ -155,7 +155,16 @@ default options, whole-record inferred captures and root-list/formal aggregates
 remain closed. Output member writes retain their separate qualification gate.
 Independent overlapping output writers refuse even with equal values, different
 entry guards or a priority declaration. Generated record-output mappings remain
-closed until their handoff qualification. Actual local/imported/alias/mixed,
+closed until their handoff qualification. This gate applies even when the
+record output is unused or the child uses only a scalar formal with the same
+name. Plain local `do` without generated children remains accepted. Actual
+spawned, parameterized blocking and owning-domain captures show that generated
+output reads need live owner views and whole writes need an owner update route.
+Both repairs precede publication; merely removing the gate would expose missing
+wiring. Scalar sibling schedules can succeed while strict check and semantic
+queries reject unconnected child ports. See the
+[generated-output ingress](../../../docs/audits/record-output-generated-ingress-20261002/scope.txt).
+Actual local/imported/alias/mixed,
 reverse-copy and owning-domain carriers strictly replay; this establishes source
 and carrier admission, with execution still pending. See the
 [source-integration evidence](../../../docs/audits/record-output-source-admission-20261001/scope.txt).

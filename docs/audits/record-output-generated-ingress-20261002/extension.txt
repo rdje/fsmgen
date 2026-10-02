@@ -1,0 +1,8 @@
+ram-guard: PID 52463; host 80.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+scalar_writer complete source/IR/private/public capture
+scalar_reader complete source/IR/private/public capture
+input_control complete source/IR/private/public capture
+domain_direct complete source/IR/private/public capture
+domain_writer complete source/IR/private/public capture
+domain_readers complete source/IR/private/public capture
+imported_domain_blocking complete source/IR/private/public capture

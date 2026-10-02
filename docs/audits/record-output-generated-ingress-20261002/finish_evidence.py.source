@@ -1,0 +1,46 @@
+import hashlib,json,subprocess
+from pathlib import Path
+from html.parser import HTMLParser
+b=Path('docs/audits/record-output-generated-ingress-20261002')
+class Text(HTMLParser):
+ def __init__(self): super().__init__(); self.data=[]; self.hrefs=[]
+ def handle_data(self,data): self.data.append(data)
+ def handle_starttag(self,tag,attrs):
+  if tag=='a': self.hrefs.extend(v for k,v in attrs if k=='href')
+def words(value): return ' '.join(value.split())
+parts=['docs/isf-spec/'+n for n in ['10-downstream-compatibility.md','11-downstream-actor-transactions.md','12-downstream-storage-verification.md','13-downstream-status.md']]
+# Derive exact maintained include membership instead of assuming filenames.
+chapter=Path('docs/book/src/13i-downstream-integration.md').read_text() if Path('docs/book/src/13i-downstream-integration.md').exists() else None
+if chapter is None:
+ candidates=[p for p in Path('docs/book/src').glob('13i*.md')]
+ assert len(candidates)==1
+ chapter=candidates[0].read_text(); chapterpath=candidates[0]
+else:chapterpath=Path('docs/book/src/13i-downstream-integration.md')
+import re
+includes=re.findall(r'\{\{#include\s+([^}]+)\}\}',chapter)
+parts=[str((chapterpath.parent/target).resolve().relative_to(Path.cwd())) for target in includes]
+assert len(parts)==4
+records={}
+for chapterpath in [chapterpath,Path('docs/book/src/13j-type-enum-aggregate.md')]:
+ output=Path('docs/book/book')/(chapterpath.stem+'.html'); raw=output.read_bytes(); t=Text();t.feed(raw.decode());visible=words(' '.join(t.data))
+ if chapterpath.name.startswith('13i'):
+  expected='An owning module with any generated child currently refuses declared record outputs, including unused outputs and a child-local scalar formal that shadows the output name. A plain local do without generated children remains accepted.'
+ else:
+  expected='This gate applies even when the record output is unused or the child uses only a scalar formal with the same name. Plain local do without generated children remains accepted.'
+ assert expected in visible
+ assert any('record-output-generated-ingress-20261002/scope.txt' in h for h in t.hrefs)
+ saved=b/(chapterpath.stem+'.html');saved.write_bytes(raw)
+ records[str(chapterpath)]={'render_sha256':hashlib.sha256(raw).hexdigest(),'literal_boundary':expected,'literal_boundary_present':True,'evidence_link_present':True}
+(b/'render.json').write_text(json.dumps(dict(chapters=records,canonical_parts={name:dict(text=Path(name).read_text(),sha256=hashlib.sha256(Path(name).read_bytes()).hexdigest()) for name in parts},browser_visual_review=False),sort_keys=True,indent=2)+'\n')
+for n in ['book.txt','verification.txt']:(b/n).write_bytes((Path('.artifacts/record-output-generated-ingress')/n).read_bytes())
+base='1a50d4f42806651ec247ca95364c000bb52e8919'
+parents=['docs/audits/'+name for name in ['record-input-signoff-20261001','record-output-corpus-20261002','record-output-public-sources-20261001','record-output-target-profiles-20261001','record-output-source-admission-20261001','record-output-predecessors-20261002']]
+raw=subprocess.check_output(['git','ls-tree','-r','-z',base,'--']+parents)
+(b/'immutable-parents.zlist').write_bytes(raw)
+records={}
+for entry in raw.rstrip(b'\0').split(b'\0'):
+ meta,path=entry.split(b'\t');name=path.decode();data=Path(name).read_bytes();oid=meta.decode().split()[2]
+ assert hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()==oid,name
+ records[name]=dict(sha256=hashlib.sha256(data).hexdigest(),git_blob=oid)
+(b/'immutable-parents.json').write_text(json.dumps(dict(baseline=base,roots=parents,members=records),sort_keys=True,indent=2)+'\n')
+print('complete canonical includes/render boundaries and immutable prior Git blobs verified')

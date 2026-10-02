@@ -1,0 +1,2 @@
+ram-guard: PID 50545; host 51.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+complete canonical includes/render boundaries and immutable prior Git blobs verified

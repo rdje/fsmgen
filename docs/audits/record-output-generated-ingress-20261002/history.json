@@ -1,0 +1,46 @@
+[
+  {
+    "command": [
+      "git",
+      "log",
+      "--reverse",
+      "--format=%H %s",
+      "-S",
+      "assigned_public_outputs",
+      "--",
+      "perl/FSM/Scheduler/ISF/LoweringIR.pm"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "130bf13aec896f8090a149a6640610eb06d47a96 ISF-COMPOSITION.4: implement generated top handoff\n"
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "--reverse",
+      "--format=%H %s",
+      "-S",
+      "my $parent_handoff = \"${instance}_${port_name}\";",
+      "--",
+      "perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "130bf13aec896f8090a149a6640610eb06d47a96 ISF-COMPOSITION.4: implement generated top handoff\n"
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-S",
+      "actor_storage_reads",
+      "--",
+      "perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "5c0f802646c69108d15995f7e8cd7e29c32ebdf5 SEMANTIC-INTROSPECTION-MCP-FRONTIER.39.2.2.2.1: route shared scalar storage reads\n"
+  }
+]

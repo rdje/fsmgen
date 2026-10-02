@@ -1,0 +1,15 @@
+ram-guard: PID 28952; host 82.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-output-generated-ingress-20261002/verify.py", line 255, in <module>
+    verify()
+    ~~~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-output-generated-ingress-20261002/verify.py", line 241, in verify
+    query(name, kind, read(name + '-' + kind + '.json'))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-output-generated-ingress-20261002/verify.py", line 172, in query
+    same(data['api']['result']['isError'], False, 'valid query product JSON boolean')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-output-generated-ingress-20261002/verify.py", line 36, in same
+    assert canonical(actual) == canonical(expected), label
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: valid query product JSON boolean
