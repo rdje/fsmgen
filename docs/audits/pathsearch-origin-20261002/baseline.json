@@ -1,0 +1,10 @@
+{
+  "before_status": 1,
+  "head": "a0c8b193131a432ed408be04fc93ec3e6c54a322",
+  "inputs": {
+    "perl/Global.pm": "c38e368ba85ac394733ae74de572a2105b8053d580faec9748f9be395e9670d9",
+    "perl/HUtils.pm": "d966a5cc3a4741767851f8a6f61711f921a87a5a74f97af27dd588a4bb897384",
+    "perl/PathSearch.pm": "efde5b68a4aa5bc849c7f0c886044e88b657ad129dc5322808c10e80935136e6"
+  },
+  "test_sha256": "59692db6eaa898a29e6c94a23dd5b7b741846b4f67baeda6e4a9e729a6b453f0"
+}

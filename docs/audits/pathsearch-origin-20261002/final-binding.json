@@ -1,0 +1,15 @@
+{
+  "inputs": {
+    "perl/Global.pm": "c38e368ba85ac394733ae74de572a2105b8053d580faec9748f9be395e9670d9",
+    "perl/HUtils.pm": "d966a5cc3a4741767851f8a6f61711f921a87a5a74f97af27dd588a4bb897384",
+    "perl/PathSearch.pm": "7668eed86c0a471748e7a9cfe4e7d7215d66f1350d009c05a87c566fbb6c7f32",
+    "t/2049-pathsearch-module-origin.t": "1417623555d8135b0f89bbafa391d607baf28521384d8c8c31c0d831b16b81cf"
+  },
+  "terminal_statuses": {
+    "after": 0,
+    "before": 1,
+    "focused-final": 0,
+    "global-before": 2,
+    "red-final": 1
+  }
+}

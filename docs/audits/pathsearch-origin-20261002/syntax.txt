@@ -1,0 +1,2 @@
+perl/PathSearch.pm syntax OK
+t/2049-pathsearch-module-origin.t syntax OK

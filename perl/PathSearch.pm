@@ -15,6 +15,10 @@ use Cwd;
 
 use Global;
 
+# Bind the loaded module's location while relative include paths still resolve.
+# Keep directory enumeration lazy so the first search retains its caller's cwd.
+my $module_top_dir = Cwd::realpath(File::Spec->catdir(
+    File::Basename::dirname(Cwd::abs_path(__FILE__)), File::Spec->updir()));
 
 sub new {bless {}, ref $_[0] || $_[0]}
 
@@ -24,9 +28,8 @@ my ($this, $basename, $extension, @more_search_dir) = @_;
 return undef unless $basename;
 
 state $search_path = do {
-           my $top_dir    = Cwd::realpath(File::Spec->catdir((File::Basename::fileparse(Cwd::abs_path($INC{__PACKAGE__.'.pm'})))[1], File::Spec->updir()));
-           opendir(my $dir, $top_dir) || die "can't opendir $top_dir: $!";
-	   my @dirs = getcwd (); find(sub {push @dirs, $File::Find::name if -d}, $top_dir);
+           opendir(my $dir, $module_top_dir) || die "can't opendir $module_top_dir: $!";
+	   my @dirs = getcwd (); find(sub {push @dirs, $File::Find::name if -d}, $module_top_dir);
 	   \@dirs
           };
 

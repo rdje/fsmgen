@@ -1,0 +1,51 @@
+ram-guard: PID 63223; host 49.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'load before chdir and first search after chdir succeeds'
+    #   at t/2049-pathsearch-module-origin.t line 85.
+
+    #   Failed test 'successful search has no initialization diagnostic'
+    #   at t/2049-pathsearch-module-origin.t line 86.
+    #          got: 'fileparse(): need a valid pathname at modules/PathSearch.pm line 27.
+    # '
+    #     expected: ''
+
+    #   Failed test 'module-root, first-call cwd, extension, retained extras and missing-file contract'
+    #   at t/2049-pathsearch-module-origin.t line 88.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x79e2144108)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh relative load, moved fixture 1'
+#   at t/2049-pathsearch-module-origin.t line 100.
+
+    #   Failed test 'load before chdir and first search after chdir succeeds'
+    #   at t/2049-pathsearch-module-origin.t line 85.
+
+    #   Failed test 'successful search has no initialization diagnostic'
+    #   at t/2049-pathsearch-module-origin.t line 86.
+    #          got: 'fileparse(): need a valid pathname at modules/PathSearch.pm line 27.
+    # '
+    #     expected: ''
+
+    #   Failed test 'module-root, first-call cwd, extension, retained extras and missing-file contract'
+    #   at t/2049-pathsearch-module-origin.t line 88.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x79e2142c18)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh relative load, moved fixture 2'
+#   at t/2049-pathsearch-module-origin.t line 100.
+# Looks like you failed 2 tests of 6.
+t/2049-pathsearch-module-origin.t .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/6 subtests 
+
+Test Summary Report
+-------------------
+t/2049-pathsearch-module-origin.t (Wstat: 512 Tests: 6 Failed: 2)
+  Failed tests:  2, 4
+  Non-zero exit status: 2
+Files=1, Tests=6,  1 wallclock secs ( 0.01 usr  0.01 sys +  0.13 cusr  0.04 csys =  0.19 CPU)
+Result: FAIL

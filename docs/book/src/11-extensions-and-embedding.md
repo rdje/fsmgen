@@ -2,6 +2,19 @@
 
 This chapter covers the current supported integration seam for tool builders.
 
+## Working directories and legacy search initialization
+
+The legacy `PathSearch` helper retains its installed tree when loaded through a
+relative Perl include path before the caller changes directory. Directory
+enumeration stays lazy: the first nonempty search includes the caller's directory
+at that time. Explicit extra directories remain available to subsequent searches;
+default `.conf` extensions and missing-file warnings keep their existing meaning.
+This does not change ISF library search precedence or introduce a new public API.
+
+`Global` configuration initialization still needs to run before changing away
+from the directory that resolves a relative module include. Its separate repair
+is tracked; the PathSearch repair alone does not establish that broader guarantee.
+
 ## Capability Manifest Discovery
 
 The machine-readable entrypoint for downstream tools is:

@@ -1,0 +1,1 @@
+PASS built embedding chapter contains the complete initialization section; no browser visual audit

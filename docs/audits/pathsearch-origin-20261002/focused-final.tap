@@ -1,0 +1,10 @@
+ram-guard: PID 3659; host 59.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2049-pathsearch-module-origin.t ........................... ok
+t/492-source-path-resolver-defensive-copy-boundary-audit.t .. ok
+t/1351-isf-activation-param-package-constants.t ............. ok
+t/1352-isf-library-use-package-constants.t .................. ok
+t/2046-isf-library-document-origin-authority.t .............. ok
+t/2047-isf-atl-document-origin-authority.t .................. ok
+All tests successful.
+Files=6, Tests=72, 33 wallclock secs ( 0.18 usr  0.04 sys + 26.83 cusr  3.26 csys = 30.31 CPU)
+Result: PASS

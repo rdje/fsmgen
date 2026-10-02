@@ -1,0 +1,11 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.4
+Baseline: derive exact source SHA from baseline.json; before/PathSearch.pm is its exact Git blob.
+Before: FSMGEN_PATHSEARCH_CAPTURE=docs/audits/pathsearch-origin-20261002/before.json scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2049-pathsearch-module-origin.t
+After initial repair: same command with after.json capture (test matches before/test.t).
+Final counterfactual: FSMGEN_PATHSEARCH_SOURCE=docs/audits/pathsearch-origin-20261002/before/PathSearch.pm FSMGEN_PATHSEARCH_CAPTURE=docs/audits/pathsearch-origin-20261002/red-final.json scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2049-pathsearch-module-origin.t
+Final focused cohort: FSMGEN_PATHSEARCH_CAPTURE=docs/audits/pathsearch-origin-20261002/current-final.json scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2049-pathsearch-module-origin.t t/492-source-path-resolver-defensive-copy-boundary-audit.t t/1351-isf-activation-param-package-constants.t t/1352-isf-library-use-package-constants.t t/2046-isf-library-document-origin-authority.t t/2047-isf-atl-document-origin-authority.t
+Separate Global reproduction (status 2): perl -Iperl -MGlobal -e 'chdir "docs/audits/pathsearch-origin-20261002/before" or die $!; Global->new'
+Re-derivation: fresh isolated processes read independently named tree/cwd/extra fixture files, across moved same-volume roots and relative/absolute includes.
+Falsification: exact retained pre-fix production module fails both relative cases while absolute controls pass; independent complete saved-product verifier rejects status/path corruption.
+Durability: permanent regression, exact baseline/source/test snapshots, complete raw products/terminal receipts and archive membership manifest.
+Scope: only module origin moves to load time. Directory enumeration, first-search cwd, retained explicit directories, extensions and missing-file diagnostics retain their contract. No search-order stabilization or general Global/embedding directory guarantee. No HDL/runtime, full CI or push claim.

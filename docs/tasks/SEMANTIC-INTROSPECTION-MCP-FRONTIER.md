@@ -3426,7 +3426,7 @@ For FSMGen, the analogs are:
   Acceptance: `After .1, require independently supplied original root and imported source bytes rather than embedded hashes or current file names. Qualify canonical same-source/external resolution, complete source graph coverage, document mutation/missing/alias/export/instance controls and actual resolved ATL actor preparation. Preserve exact producer linkage and source kinds; stale or forged provenance must refuse. Split before broadening if needed, then hand a complete qualified import contract to formal/generated/domain adoption .5.2.2.3. No source/scheduling admission widening before complete qualification.`
   Verification: `Same-source producer linkage is committed at de856cd10c74bc2114076a1d7913e7ca151ec11d. Independent external document-set authentication and exact alias-specific constructor selections qualify in child .1; ATL .2 qualifies; file-backed identity .3 is next. Source preparation/adoption remains closed.`
   Commit: `children below`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.4`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.5`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.1`
   Status: `done`
@@ -3450,10 +3450,17 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Bind PathSearch module location before a caller changes cwd and qualify moved-root initialization.`
   Acceptance: `P2 defect found by file-backed qualification .3: a relative %INC PathSearch.pm locator becomes unreadable after chdir before its first lazy go call, causing fileparse(): need a valid pathname at perl/PathSearch.pm line 27. Reproduce from a repository-local isolated workspace through the owned module interface; capture the module origin while it is resolvable, preserving search behavior and local project storage. Qualify a real failing-before/passing-after control plus focused parser/package regression. Sync canonical facts/book scope and commit this separate production repair before preparation/adoption.`
-  Verification: `Initial T2048 draft fails Files=1/Tests=2 with no plan after changing cwd; exact draft and terminal output are retained under docs/audits/conditional-origin-files-20261002/first-draft. General relative-load cwd behavior remains unqualified. Current file qualification uses repository-derived runtime absolute include paths; this is explicit test bootstrap, not a production fix.`
+  Verification: `Capture canonical module origin at load time while preserving lazy directory enumeration and first-valid-search cwd. Exact retained pre-fix module gives genuine RED Files=1/Tests=6/Failed2 for relative loads in both moved roots; absolute loads pass. Final permanent T2049 and search/package/source-origin cohort pass Files=6/Tests=72. Complete independent saved-product verification checks paths, bytes, retained explicit dirs, custom/default extensions, missing-file return/warning and moved-root equality; hostile status/path products refuse. Baseline Git blob and before/after source/test snapshots bind actual controls. Syntax, book build and rendered section pass without browser visual audit. Original Global/HUtils remain exact; fresh Global->new separately reproduces its P2 relative-locator defect (exit2, Global.pm line21), owned by .5. Sealed evidence lives in docs/audits/pathsearch-origin-20261002; gate receipts are separate. Book/facts/frontier align; source-authority/scheduling behavior and search-order ambiguity remain unchanged. No general Global embedding guarantee, HDL/runtime, full CI or push.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.5`
+  Status: `pending`
+  Goal: `Bind Global configuration module origin before caller cwd changes.`
+  Acceptance: `P2 confirmed during .4: fresh perl -Iperl -MGlobal followed by chdir before Global->new emits fileparse(): need a valid pathname at perl/Global.pm line 21. Preserve the exact reproduction and own a separate module-load origin repair. Keep Global singleton, configuration bytes/FX_TOP/preload contracts and PathSearch behavior intact; qualify genuine failing-before/passing-after controls and focused parser/package regressions. Stay repository-local and commit before preparation/adoption.`
+  Verification: `Public fresh-process reproduction exits 2 with exact diagnostic retained in docs/audits/pathsearch-origin-20261002/global-before.txt. No Global repair or whole embedding-directory guarantee is claimed by .4.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3`
@@ -5106,3 +5113,9 @@ allowance and compact duplicate/superseded authority narration, preserving every
 fact and canonical test/evidence link. Git retains the complete earlier prose.
 No knowledge allowance, baseline, health target or ceiling increases. The main
 file-origin proof remains sealed; gate receipts live separately.
+
+## Acceptance Checklist (enforced) — SEM .60.4.3.3.5.2.1.5.2.2.2.2.4 PathSearch origin
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Fresh relative module load then chdir before first go produces fileparse(): need a valid pathname at modules/PathSearch.pm line 27. The exact baseline uses lazy abs_path of relative %INC. Genuine pre-fix Files=1, Tests=6, Failed: 2 contrasts with passing absolute-load controls. Separate Global.pm line21 reproduction is owned by .5.
+- [x] **ADDRESSED (verified)** — Resolve the actual module origin at load time; keep search enumeration lazy. Final source/test snapshots and complete saved relative/absolute products qualify tree/cwd bytes, extensions, persistent explicit dirs, missing undef/warning and both moved same-volume roots. Retained actual pre-fix module still gives genuine RED; independent verifier rejects hostile complete products and verifies exact baseline/original dependencies. Sealed manifest/recipes/products/receipts provide durability; no inferred broader directory guarantee.
+- [x] **NO REGRESSION** — Focused search/package/source-authority cohort reports All tests successful, Files=6, Tests=72. Syntax and mdBook build pass; built embedding chapter contains the scoped repair and remaining Global limitation. No browser visual audit, search-order stabilization, HDL/runtime, full CI or push. Canonical facts are compacted within the predecessor knowledge allowance; measured reference/task budgets, current claim inventory and staged doctrines precede normal hooks.

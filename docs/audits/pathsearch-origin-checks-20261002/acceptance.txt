@@ -1,0 +1,1 @@
+[task-acceptance] OK: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md carries fresh evidence-backed acceptance (root=perl_diagnostic, no-regression=prove_summary)
