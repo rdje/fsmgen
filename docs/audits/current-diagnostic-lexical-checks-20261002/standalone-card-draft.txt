@@ -1,0 +1,17 @@
+---
+id: diagnostic-oracle-audit-scope
+title: Discovery does not qualify diagnostic causes
+answers:
+  - "where is the current refusal consumer census?"
+  - "does diagnostic discovery qualify refusal causes?"
+date: 2026-10-02
+status: current
+tags: [diagnostics, verification]
+evidence: docs/audits/current-diagnostic-lexical-inventory-20261002/scope.txt
+reverify: python3 docs/audits/current-diagnostic-lexical-inventory-20261002/verify.py
+---
+
+The census binds ASCII Perl token/call populations to Git bytes. Comments,
+strings, declarations and overlaps are candidates. Actual producer/context
+controls and cold consumers remain owned by the SEMANTIC-INTROSPECTION-MCP-FRONTIER
+task tree; discovery proves no cause safety.

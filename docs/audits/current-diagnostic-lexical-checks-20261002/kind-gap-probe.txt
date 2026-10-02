@@ -1,0 +1,2 @@
+CONFIRMED exact cold predicate accepts line integer -> JSON float with unchanged mathematical value; original artifact is unchanged
+reader sha256: aa881f2ea8601240ec6a81ab7e2a5e934439284e6406b796fea2998c0e395154

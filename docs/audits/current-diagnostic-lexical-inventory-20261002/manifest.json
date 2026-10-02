@@ -1,0 +1,52 @@
+{
+  "files": {
+    "book.txt": {
+      "bytes": 194,
+      "sha256": "cd5869ff34257434578f3bbac8a998d815922607dd8ecfdfa8242b8a8c90049b"
+    },
+    "collect.py": {
+      "bytes": 2270,
+      "sha256": "f48b6b3ebbe43370349277541ae753ed981701a12e267d025702bdc2811d7f24"
+    },
+    "collect.txt": {
+      "bytes": 171,
+      "sha256": "f6ec59bd9aece32e8080f0342411c99cc04421e9a86df30bab015ed248d3a3e6"
+    },
+    "counts.json": {
+      "bytes": 207,
+      "sha256": "35bf854c386cc40f85f3f1191d6b266a8ff816a87a0f4118a610138bc3740500"
+    },
+    "drop-exception-red.txt": {
+      "bytes": 613,
+      "sha256": "37f92bafd5801c087aefec440766807815e283bae4c5c9985e36f7731f10f740"
+    },
+    "history.txt": {
+      "bytes": 136,
+      "sha256": "65864331be87cd9ee9fe5807ea2807177632678c5495f322d11ae68b2ae5b536"
+    },
+    "inventory.json": {
+      "bytes": 36432785,
+      "sha256": "d055ff6c4f47403f644ae4e2429f8e34a19d03a46eb3b610b0d057fb4d50a91e"
+    },
+    "recipe.json": {
+      "bytes": 361928,
+      "sha256": "0657f61ce168c199f1a392a5bf56003dd66c407011dca1d8a0572c03e41baed2"
+    },
+    "rendered.txt": {
+      "bytes": 119497,
+      "sha256": "bd86b8cb53396c313ff5b32864e4fe0b87cfaed2cde1f1d855c1e2b232e59013"
+    },
+    "scope.txt": {
+      "bytes": 1735,
+      "sha256": "e785c13bdd93cb4717e1150d63c7ffa3776c213734504d2aa34d0ce0192ed1e0"
+    },
+    "verify.py": {
+      "bytes": 4628,
+      "sha256": "aa881f2ea8601240ec6a81ab7e2a5e934439284e6406b796fea2998c0e395154"
+    },
+    "verify.txt": {
+      "bytes": 262,
+      "sha256": "fe94f0378705c682ce3c204a9e57ef6380fd8dc2be8969804a35b442c5ca8cee"
+    }
+  }
+}

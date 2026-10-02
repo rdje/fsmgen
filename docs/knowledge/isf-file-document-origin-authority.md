@@ -26,31 +26,27 @@ reverify: >-
   t/2049-pathsearch-module-origin.t
 ---
 
-Private canonical parse_file authenticates whole root/library bytes/forms against
-independent documents before construction. Chosen workspaces project only
-declared actor/proof origins and rebind digests; authored values/forms/kinds stay
-unchanged. Paths, filenames and embedded hashes supply no authority.
+Private canonical parse_file authenticates whole root/library bytes/forms before
+construction. Workspace projection rebinds declared origins/digests, preserving authored
+values/forms/kinds. Paths/names/embedded hashes confer no authority.
 
-Immutable predecessor products independently reconstruct whole actors/catalogs,
-calls, use/ATL constructors and ledgers in adjacent/relative/dotted layouts
-across moved local roots. Adjacent files precede ordered FSMLIB and cwd; flat
-dotted candidates precede pathish ones. Same-source declarations precede external
-shadows. Missing/changed bytes, symlinks and unused/substituted authority refuse.
-Reloads reject forged source/target/producer/scope/coverage/kind; callers stay
-unchanged and views detach. Cause checks use the first diagnostic line.
+Immutable products reconstruct actors/catalogs/calls/use/ATL constructors/ledgers
+in adjacent/relative/dotted layouts across moved local roots.
+Adjacent files precede ordered FSMLIB and cwd; flat dotted precedes pathish;
+same-source precedes external shadows. Missing/changed bytes, symlinks,
+unused/substituted authority and forged source/target/producer/scope/coverage/kind
+refuse. Callers stay intact, views detach, causes match the first diagnostic line.
 
-Canonical same-source ATL rebuilding reuses source forms: first parsing coerces
-two width strings to numbers, preserving actors/conditional operations.
-Strong actual form references authenticate the exact prior producer-mutated
-state. Comparing it afresh to original source falsely refuses; removing retained
-association demonstrates that refusal. Canonical constructors still determine
-whole catalogs/kinds; equal bodies cannot select origins.
+Same-source ATL rebuilding retains exact source-form references: first parsing
+coerces two width strings to numbers without changing actors/operations. Fresh
+original-source comparison falsely refuses that legitimate mutation; loss of
+retained association reproduces refusal. Canonical constructors determine whole
+catalogs/kinds; equal bodies cannot select origins.
 
-Origin providers/parser stay unchanged; packages/groups/unresolved external
-intent refuse. Preparation/adoption/scheduling remain later owners. Fixture includes resolve before chdir. PathSearch now binds its module tree at
-load time, preserving lazy first-search cwd, retained extras, extensions and
-missing-file warnings. Fresh relative/absolute loads in moved roots qualify the
-repair; retained original production gives genuine RED. Legacy Global/HUtils defects and an unadopted HLinkSubst candidate are archived.
-They were found by added legacy tests; no current FSMGEN dependency was proved.
-They are deferred outside the modern frontier, not preparation prerequisites.
-No HDL/macro runtime is proved.
+Providers/parser stay intact; packages/groups/unresolved external intent refuse.
+Preparation/adoption/scheduling remain later owners. Fixture includes resolve
+before chdir. PathSearch binds its module tree at load, retaining lazy first-search
+cwd, extras, extensions and missing-file warnings. Moved relative/absolute loads
+qualify; original production is genuine RED. Legacy Global/HUtils defects and
+unadopted HLinkSubst are archived/deferred outside modern work. Added legacy tests
+did not prove a current FSMGEN dependency. No HDL/macro runtime is proved.

@@ -1,0 +1,12 @@
+{
+  "categories": {
+    "assertion": 78445,
+    "call_like": 280668,
+    "diagnostic_word": 20964,
+    "exception": 20548,
+    "helper_name": 4794,
+    "sub": 29923
+  },
+  "files": 2539,
+  "sites": 435342
+}

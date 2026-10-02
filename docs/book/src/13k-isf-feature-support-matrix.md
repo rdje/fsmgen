@@ -126,6 +126,8 @@ wrong-cause caller echo fails both the test and the cold verifier. Other
 diagnostic consumers remain under audit. The library-document helper also uses
 the first diagnostic line, with its complete original products and boundary
 reasons requalified by genuine caller-echo and source-comparison controls.
+The wider review tracks ordinary, delegated and structured assertions;
+source discovery alone does not qualify their causes.
 
 This observer preserves the existing first-clause behavior, including current
 macro placement defects and inline-procedure `cond` refusals. Imported/reusable

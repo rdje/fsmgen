@@ -3599,16 +3599,60 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.2`
-  Status: `in_progress`
+  Status: `done`
   Goal: `Reconcile the remaining complete current lexical refusal-consumer populations.`
   Acceptance: `After the source-origin family and its immediate repairs, census current tracked Perl assertion/exception sites beyond named spans, preserving original bytes and exact Git membership. Include delegation, structured-code and anonymous/top-level consumers with explicit applicability classes; overapproximated discovery is not semantic signoff. Split contextual/runtime review cohorts under .3 before classification and record every uncovered population.`
+  Verification: `Complete declared ASCII lexical populations bind 2539 tracked Perl suffix/shebang files under t/perl/scripts/bin and 435342 category-overlapping sites: assertion78445, exception20548, diagnostic_word20964, helper_name4794, call_like280668, sub29923. Independent immutable Git blob selection and actual rg byte offsets/line mapping exactly reconcile all rows; five shared membership/digest/site/line/category corruptions reject. Actual drop-exception independent-discovery counterfactual fails status1. This includes comments/strings/declarations, arbitrary non-diagnostic calls and category overlaps; it is not a Perl AST, interpreted helper/assertion count, semantic safety/defect classification or all-language/cold/dynamic-dispatch completeness. Canonical decision0113 and predecessor b18 named-discovery scope supply context. Immutable current-diagnostic-lexical-inventory-20261002 binds declarations/data/instruments/raw receipts/baseline/seal. Exact cold-predicate probe accepts an equal-valued line JSON float; baseline data remains integer-valued and numerical census is valid, but kind falsification is missing. P2 .3.2.3.3 owns its immediate fresh-reader correction after this commit, before contextual source-origin runtime .3.1. No production/provider/test or previous archive changes.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3`
+  Status: `active`
+  Goal: `Qualify remaining current cause-consumer families in bounded runtime cohorts.`
+  Acceptance: `Use .2 complete declared inventory to split actual producer/helper/context reviews. Reproduce wrong-first-cause and expected echo through real selected producer paths, with genuine positives. Distinguish first-line/structured/multiline/trace and non-cause predicates; syntax alone never proves vulnerability or safety. Route confirmed repairs to .3.2.3 immediately; explicit native admission or access blockers remain owned. No submodule internals or unauthorized HDL work.`
   Verification: `pending`
   Commit: `pending`
 
-- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.6`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1`
   Status: `pending`
-  Goal: `Qualify remaining current cause-consumer families in bounded runtime cohorts.`
-  Acceptance: `Use .2 complete declared inventory to split actual producer/helper/context reviews. Reproduce wrong-first-cause and expected echo through real selected producer paths, with genuine positives. Distinguish first-line/structured/multiline/trace and non-cause predicates; syntax alone never proves vulnerability or safety. Route confirmed repairs to .3.2.3 immediately; explicit native admission or access blockers remain owned. No submodule internals or unauthorized HDL work.`
+  Goal: `Qualify the remaining source-origin raw cause assertions.`
+  Acceptance: `Use the exact historical seven-test family review and current repaired sources to reconcile the 17 raw cause candidates before imported qualification. Trace actual producer failures and expected/source echo, with complete wrong-first-cause and positive products. Preserve deliberate trace assertions; only demonstrated cause consumers move to immediate .3.2.3 repairs. Bind source/Git/whole product/cold controls and scoped regressions; no HDL or admission change.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2`
+  Status: `pending`
+  Goal: `Review named refusal helpers and current framework exception contracts.`
+  Acceptance: `Join the immutable named-span census against the current complete lexical declaration. Read exact helper definitions/callers and actual producer contracts, including non-parenthesized/framework variants; separate code/first-line/trace assertions from causes. Split confirmed actual wrong-reason/echo repairs before editing; unmatched or dynamic calls remain explicitly owned.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.3`
+  Status: `pending`
+  Goal: `Review direct and anonymous current diagnostic assertions.`
+  Acceptance: `Reconcile current direct/anonymous exception and assertion populations in bounded file cohorts, excluding only contextually proved non-diagnostic/comment/string/declaration sites. Use actual producer wrong-cause/positive controls before classification and route defects immediately. No semantic signoff from token proximity or lexical counts.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.4`
+  Status: `pending`
+  Goal: `Review delegated and structured current diagnostic consumers.`
+  Acceptance: `Trace delegated matchers, exact first-line captures, structured message/code/reason fields and multiline contracts through their current public producer paths. Independently verify actual representations, preserve deliberate trace/locus tests, and reproduce wrong reasons before calling a predicate vulnerable or safe. Cold readers remain separately owned by .1.3.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.5`
+  Status: `pending`
+  Goal: `Resolve dynamic dispatch and uncovered current-language applicability.`
+  Acceptance: `Explicitly inspect selected dispatch/alias/framework and other-language current diagnostic entrypoints not represented by the ASCII Perl token grammar. Establish documented applicability or owned exact runtime cohorts before complete-current handoff; never claim lexical or four-root membership proves every semantic consumer.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.6`
+  Status: `pending`
+  Goal: `Join current runtime cohort membership and per-owner outcomes.`
+  Acceptance: `Reconcile exact declared populations, contextual exclusions, current actual controls, per-owner verified repairs and explicit unresolved access/applicability. Preserve claim re-derivation/falsification/durability and immutable evidence; close this parent only with an honest current-consumer handoff to .4/cold .1.3.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3656,7 +3700,7 @@ For FSMGen, the analogs are:
   Verification: `pending`
   Commit: `pending`
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.1`
   Status: `done`
@@ -3669,6 +3713,13 @@ For FSMGen, the analogs are:
   Status: `pending`
   Goal: `Reconcile subsequent current and cold runtime cohorts and repair only confirmed defects.`
   Acceptance: `After broader current/cold reviews, own per-helper/cohort corrections before edits, including anonymous source-origin full-trace cause candidates left unqualified by .1.2.1. No defect or safety inference from lexical syntax alone. Close only with actual producer/helper positives/wrong reasons, exact current cold evidence or explicit owned access/applicability blockers and all claim legs. If no further repair applies, prove and record the bounded handoff without inventing defects.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.3`
+  Status: `in_progress`
+  Goal: `Make the current lexical cold guard distinguish JSON primitive kinds.`
+  Acceptance: `P2 private verification defect: exact new inventory verify predicate uses Python equality for rows, so a captured line integer changed to equal-valued JSON float is accepted. The original captured data remains integer-valued and independently agrees with Git/rg; numerical discovery is valid, but primitive-kind falsification is missing. After .1.2.2 commits, keep its sealed archive untouched. Bind a fresh reader applying exact source-derived JSON kind/whole comparisons, permanent shared line/offset/count/boolean controls and actual old-comparison RED. Requalify every original member/census/declared scope and independent source binding, update canonical current reverify/book/frontier and commit before source-origin runtime .1.2.3.1. No producer/test/production, admission or HDL change.`
   Verification: `pending`
   Commit: `pending`
 
@@ -5494,3 +5545,9 @@ and exact measurement JSON. No health target or enforcement ceiling changes.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual `library origin independent document set required at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 16` accompanies the caller-echoed expected regex. Exact old T2046 rejected helper matched that full trace and falsely accepted an unrelated reason; committed source-family diagnosis binds the genuine producer/helper comparison. Current permanent constructor control reaches the same actual producer.
 - [x] **ADDRESSED (verified)** — Current helper shares first-line matching with its permanent real caller-echo and positive controls. PASS Files1/Tests31; genuine full-stack/helper RED Files1/Tests31/Failed1 and actual comparison-bypass RED Files1/Tests31/Failed25. Independent complete original document/actor/proof/kind/alias/finalizer source oracle and exact 11 boundary/all opaque first causes re-derive; actual wrong-cause cold predicate/full-stack RED and three boundary/five whole-product shared corruptions falsify; complete sources/products/instruments/recipes/raw receipts/baseline Git/prior and fresh seals retain durability. Earlier archives remain unchanged and historical; new reader owns current cause qualification. Other anonymous cause candidates remain explicitly unqualified, with broader current/cold review owned.
 - [x] **NO REGRESSION** — Corrected RAM-guarded regression reports `All tests successful`, `Files=6, Tests=388`; current library test separately reports `All tests successful`, `Files=1, Tests=31`. Initial command guessed obsolete filenames and exits2 after two individual tests; exact failed command/TAP retained, not counted PASS. Production/providers match committed baseline hashes; complete ordinary products independently retain equality. Book builds/rendered text qualifies the updated scope without browser visual QA. Knowledge Map, unchanged live-doc ceilings/baselines, fresh claims and staged doctrines follow in separate checks before normal hooks. No HDL/native execution, public schema/admission change, full CI or push.
+
+## Current lexical diagnostic inventory acceptance (.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Named lexical spans with exception text' -- docs/audits/refusal-oracle-census-20261002/collect.py` identifies b18c58d4, whose declared named lexical spans explicitly exclude delegated/anonymous/top-level and cold consumers. Current raw source assertions also use plain tokens and arbitrary call-like delegation; no runtime defect is inferred. Canonical decision0113 owns the real Carp reason/echo mechanism. The next required unit is complete declared discovery, not renewed production investigation.
+- [x] **ADDRESSED (verified)** — Python byte discovery and independent immutable Git/actual rg census reconcile 2539 source files/435342 overlapping lexical sites in six declared populations. Re-derivation uses closed Git/source membership plus independently mapped byte offsets/lines; actual drop-exception discovery RED and five shared membership/digest/site/line/category corruptions falsify; exact declarations/data/instruments/raw receipts/baseline/seal/task/canonical card/book/Git retain durability. No parsed functions, semantic classification, other-language/dynamic/cold completeness or blanket cause safety is claimed. Contextual actual runtime is split and owned, with source-origin raw candidates first.
+- [x] **NO REGRESSION** — Production/provider/test bytes match the committed baseline; previous archives remain unchanged. The fresh Knowledge Map gate reports `knowledge-map: OK`; focused public live-book/matrix audits and completed book build/rendered text qualify the concise current scope. Initial staged gate rejects knowledge-card file1259 against fixed1150+108; retain the unqualified standalone draft and route its exact census answers/evidence into the existing library authority card. A second gate rejects the unstaged regenerated isf-library shard; its raw receipt is retained and exact generated bytes are staged before final requalification. A third gate rejects the raw standalone draft as an uncovered live .md; retain exact bytes as .txt evidence and verify complete controlled-path coverage before final gate. Fixed file/byte allowances are preserved by consolidation and prose concision; maintained-reference/task allowances retain their baselines and ceilings. Fresh claims/staged doctrines and normal hooks are mandatory separate commit gates. No HDL/native, admission/schema change, full CI or push.
