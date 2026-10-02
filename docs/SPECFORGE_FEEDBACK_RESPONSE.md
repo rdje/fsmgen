@@ -187,9 +187,20 @@ and book.
   substituted origin. Imports refuse at this private boundary. Imported
   provenance (`.5.2.2.2`) and formal/generated/domain propagation (`.5.2.2.3`)
   remain open before this becomes a scheduling repair.
-  The same-source library producer slice now preserves document/export/use
-  provenance through actual cloning; external documents, ATL and imported
-  consumer authenticity still require qualification. Scheduling remains closed.
+  The same-source library producer slice preserves document/export/use
+  provenance through actual cloning. Separate private document-set qualification
+  now authenticates independently supplied complete root/external library bytes
+  through canonical resolution and cloning, including exact repeated-alias
+  constructor selection and identical actors with different original intent.
+  [Document-set qualification](audits/conditional-origin-documents-20261002/scope.txt)
+  retains genuine authentication-bypass failures. Packages, ATL and preparation
+  adoption remain open. A reproduced private late-clone publication gap is fixed
+  with final whole-edge/target/kind revalidation; the permanent regression and
+  [final proof](audits/conditional-origin-documents-finalization-20261002/scope.txt)
+  preserve its genuine failure and corrected complete products. Scheduling remains closed.
+  File-backed root/runtime-to-relative document identity qualification remains
+  separately owned before adoption; the current cohort uses a supplied root
+  with a non-file label and relative library search roots.
   [Origin qualification](audits/conditional-origin-parser-20261002/scope.txt)
   retains the complete parser evidence; public syntax and admission do not change.
   Use explicit activation before conditional shorthand and keep `cond` at the

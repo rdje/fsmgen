@@ -349,14 +349,30 @@ must use a source-produced association. The private local-source reload verifier
 requires independently supplied source and reconstructs the complete actor and
 ledger through the canonical parser observer. Matching embedded digests and
 structurally valid records cannot authenticate substituted origins. This local
-authority refuses imports before document resolution; imported provenance and
-formal/generated/domain propagation remain prerequisites. The private proof
+authority refuses imports before document resolution; the separate document-set
+authority qualifies library imports below. Formal/generated/domain propagation
+remains a prerequisite. The private proof
 is not a public schema or a scheduling repair.
 Separate same-source library producer qualification retains the original
 document, declared library/export and distinct use-instance identities through
 actual canonical cloning, including identical exported actors with different
-source intent. External document sets, packages, ATL and imported consumer
-authenticity remain closed before preparation/adoption.
+source intent. A separate private document-set authority requires independently
+supplied complete root/library bytes and repository-relative source identities.
+It executes canonical file resolution, authenticates selected source bytes and
+forms, and requires exact complete actor/proof equality on reload. Same-source
+precedence, reused exports and repeated external import aliases retain exact
+constructor references. Different original operations with identical complete
+actors still refuse when submitted against the original authority, even with
+consistent substituted digests. Packages, ATL and formal/generated/domain
+preparation/adoption remain closed; scheduling behavior is unchanged.
+Final canonical use coverage, targets, identities and parameter kinds are
+revalidated before proof publication; a later clone change cannot leave stale
+provenance in an accepted document proof.
+This bounded cohort uses a supplied root with a logical non-file label and
+relative library search roots. File-backed root resolution and its runtime-to-relative
+document identity boundary remain a separately owned prerequisite before adoption.
+Document-set evidence: `docs/audits/conditional-origin-documents-20261002/scope.txt`.
+Final publication evidence: `docs/audits/conditional-origin-documents-finalization-20261002/scope.txt`.
 Origin evidence: `docs/audits/conditional-origin-parser-20261002/scope.txt`.
 Procedure safety evidence: `docs/audits/procedure-cond-normalization-20261002/scope.txt`.
 Macro qualification: `docs/audits/conditional-macro-intent-20261002/scope.txt`.

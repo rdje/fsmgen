@@ -1,0 +1,1386 @@
+t/2046-isf-library-document-origin-authority.t .. 
+ok 1 - entire immutable source-producer cohort
+# Subtest: independent imported documents first_authored
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 2 - independent imported documents first_authored
+# Subtest: independent imported documents first_cond
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 3 - independent imported documents first_cond
+# Subtest: independent imported documents first_max
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 4 - independent imported documents first_max
+# Subtest: independent imported documents first_min
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 5 - independent imported documents first_min
+# Subtest: independent imported documents first_proc_cond
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 6 - independent imported documents first_proc_cond
+# Subtest: independent imported documents first_proc_select
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 7 - independent imported documents first_proc_select
+# Subtest: independent imported documents first_select
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 8 - independent imported documents first_select
+# Subtest: independent imported documents first_unless-bit
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 9 - independent imported documents first_unless-bit
+# Subtest: independent imported documents first_unless-field
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 10 - independent imported documents first_unless-field
+# Subtest: independent imported documents first_when-bit
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 11 - independent imported documents first_when-bit
+# Subtest: independent imported documents first_when-field
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 12 - independent imported documents first_when-field
+# Subtest: independent imported documents identical_export_twins
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 13 - independent imported documents identical_export_twins
+# Subtest: independent imported documents later_authored
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 14 - independent imported documents later_authored
+# Subtest: independent imported documents later_cond
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 15 - independent imported documents later_cond
+# Subtest: independent imported documents later_max
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 16 - independent imported documents later_max
+# Subtest: independent imported documents later_min
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 17 - independent imported documents later_min
+# Subtest: independent imported documents later_proc_cond
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 18 - independent imported documents later_proc_cond
+# Subtest: independent imported documents later_proc_select
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 19 - independent imported documents later_proc_select
+# Subtest: independent imported documents later_select
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 20 - independent imported documents later_select
+# Subtest: independent imported documents later_unless-bit
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 21 - independent imported documents later_unless-bit
+# Subtest: independent imported documents later_unless-field
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 22 - independent imported documents later_unless-field
+# Subtest: independent imported documents later_when-bit
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 23 - independent imported documents later_when-bit
+# Subtest: independent imported documents later_when-field
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 24 - independent imported documents later_when-field
+# Subtest: independent imported documents reused_export
+    ok 1 - complete canonical ordinary actor and kinds unchanged
+    ok 2 - whole actor/proof opaque reload authenticated against independent bytes
+    ok 3 - complete root and exported source constructors
+    ok 4 - complete actual use clones
+    ok 5 - literal complete document-set coverage
+    ok 6 - original actor registry uses its own complete document bytes
+    ok 7 - original actor registry uses its own complete document bytes
+    ok 8 - original actor registry uses its own complete document bytes
+    ok 9 - original complete cloned private width kinds
+    ok 10 - exact original document edge
+    ok 11 - complete selected producer ledger survives actual clone
+    ok 12 - original complete cloned private width kinds
+    ok 13 - exact original document edge
+    ok 14 - complete selected producer ledger survives actual clone
+    not ok 15 - actual actor_identity mutation refuses
+    not ok 16 - precise independent authentication boundary
+    ok 17 - submitted whole products remain untouched
+    not ok 18 - actual actor_kind mutation refuses
+    not ok 19 - precise independent authentication boundary
+    ok 20 - submitted whole products remain untouched
+    not ok 21 - actual schema_kind mutation refuses
+    not ok 22 - precise independent authentication boundary
+    ok 23 - submitted whole products remain untouched
+    not ok 24 - actual document_hash mutation refuses
+    not ok 25 - precise independent authentication boundary
+    ok 26 - submitted whole products remain untouched
+    not ok 27 - actual producer_kind mutation refuses
+    not ok 28 - precise independent authentication boundary
+    ok 29 - submitted whole products remain untouched
+    not ok 30 - actual source_operation mutation refuses
+    not ok 31 - precise independent authentication boundary
+    ok 32 - submitted whole products remain untouched
+    not ok 33 - actual alias mutation refuses
+    not ok 34 - precise independent authentication boundary
+    ok 35 - submitted whole products remain untouched
+    not ok 36 - actual export mutation refuses
+    not ok 37 - precise independent authentication boundary
+    ok 38 - submitted whole products remain untouched
+    not ok 39 - actual instance mutation refuses
+    not ok 40 - precise independent authentication boundary
+    ok 41 - submitted whole products remain untouched
+    not ok 42 - actual path mutation refuses
+    not ok 43 - precise independent authentication boundary
+    ok 44 - submitted whole products remain untouched
+    not ok 45 - actual coverage mutation refuses
+    not ok 46 - precise independent authentication boundary
+    ok 47 - submitted whole products remain untouched
+    not ok 48 - actual target mutation refuses
+    not ok 49 - precise independent authentication boundary
+    ok 50 - submitted whole products remain untouched
+    ok 51 - returned complete proof is detached
+    ok 52 - independent ordinary original remains untouched
+    1..52
+not ok 25 - independent imported documents reused_export
+# Subtest: actual document authority membership and source failures refuse
+    ok 1 - independently supplied wrong complete bytes
+    ok 2 - precise authority refusal
+    ok 3 - actual selected document missing
+    ok 4 - precise authority refusal
+    ok 5 - unused supplied document is not accepted as a graph member
+    ok 6 - precise authority refusal
+    ok 7 - absent independent source authority
+    ok 8 - precise authority refusal
+    ok 9 - absolute persisted search root
+    ok 10 - precise authority refusal
+    ok 11 - escaping persisted search root
+    ok 12 - precise authority refusal
+    ok 13 - actual producer form mutation cannot forge a selected document
+    ok 14 - precise authority refusal
+    ok 15 - package remains closed
+    ok 16 - precise authority refusal
+    ok 17 - ATL remains closed
+    ok 18 - precise authority refusal
+    1..18
+ok 26 - actual document authority membership and source failures refuse
+# Subtest: same-source resolution takes precedence over a competing external file
+    ok 1 - only actual selected root is authorized
+    ok 2 - canonical same-source clones selected
+    1..2
+ok 27 - same-source resolution takes precedence over a competing external file
+# Subtest: two aliases retain actual distinct external constructor selections
+    ok 1 - whole independently parsed alias product unchanged
+    ok 2 - actual canonical resolver rebuilds both external exported actors for each alias
+    ok 3 - each clone selects its exact constructor reference
+    ok 4 - declared import aliases retain separate actual resolution
+    ok 5 - identical complete bodies do not merge distinct actual constructor selections
+    1..5
+ok 28 - two aliases retain actual distinct external constructor selections
+# Subtest: matching embedded source digests cannot authenticate a different original operation
+    ok 1 - different complete original documents yield identical complete actors
+    ok 2 - fully consistent origins/digests retain different original source operation
+    ok 3 - substituted proof is valid against its own independently supplied bytes
+    not ok 4 - matching embedded digest does not replace original authority
+    not ok 5 - precise authority refusal
+    1..5
+not ok 29 - matching embedded source digests cannot authenticate a different original operation
+# Subtest: final canonical clone changes refuse before document-proof publication
+    ok 1 - actual late target mutation cannot publish provenance
+    ok 2 - precise final whole edge/target/kind publication boundary
+    ok 3 - actual late instance mutation cannot publish provenance
+    ok 4 - precise final whole edge/target/kind publication boundary
+    ok 5 - actual late coverage mutation cannot publish provenance
+    ok 6 - precise final whole edge/target/kind publication boundary
+    ok 7 - actual late parameter_kind mutation cannot publish provenance
+    ok 8 - precise final whole edge/target/kind publication boundary
+    1..8
+ok 30 - final canonical clone changes refuse before document-proof publication
+1..30
+Dubious, test returned 25 (wstat 6400, 0x1900)
+Failed 25/30 subtests 
+
+Test Summary Report
+-------------------
+t/2046-isf-library-document-origin-authority.t (Wstat: 6400 Tests: 30 Failed: 25)
+  Failed tests:  2-25, 29
+  Non-zero exit status: 25
+Files=1, Tests=30, 11 wallclock secs ( 0.07 usr  0.03 sys +  9.57 cusr  0.59 csys = 10.26 CPU)
+Result: FAIL

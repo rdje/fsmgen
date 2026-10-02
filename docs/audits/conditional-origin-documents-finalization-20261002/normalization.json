@@ -1,0 +1,6 @@
+{
+  ".artifacts/conditional-origin-documents/red-lib/FSM/Test/NoDocumentComparison.pm": "docs/audits/conditional-origin-documents-finalization-20261002/NoDocumentComparison.pm",
+  ".artifacts/conditional-origin-documents/run_final.py": "docs/audits/conditional-origin-documents-finalization-20261002/run_final.py",
+  "t/2046-isf-library-document-origin-authority.t": "docs/audits/conditional-origin-documents-finalization-20261002/test-final.t",
+  "t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm": "docs/audits/conditional-origin-documents-finalization-20261002/authority-final.pm"
+}

@@ -1,0 +1,3 @@
+ram-guard: PID 49283; host 66.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+current-bound: complete exact inputs/instruments/producers and terminal receipt bound
+red-bound: complete exact inputs/instruments/producers and terminal receipt bound

@@ -55,11 +55,21 @@ inline call sites without changing ordinary parsed actors. Authored `when` and
 macro expansion can produce identical normalized clauses; those clauses alone
 cannot decide entry intent. A private local-source verifier now reconstructs
 the complete actor and origins from independently supplied source before
-accepting a reloaded ledger. An embedded digest supplies no authority; imports
-refuse at this private boundary until their document provenance qualifies.
+accepting a reloaded ledger. An embedded digest supplies no authority; that
+local verifier refuses imports.
 Separate same-source library producer qualification now follows original
 document, exported actor and use-instance identity through actual cloning.
-Imported consumer authenticity and external document sets remain closed.
+Separate private document-set qualification now authenticates complete root
+and external library bytes through canonical file resolution and cloning.
+Reloads must match the complete independently reconstructed actor and proof;
+even consistent embedded digests cannot authorize different original operations
+that produce identical actors. Declared aliases retain their exact constructor
+selections. Packages and ATL remain closed in this private authority.
+Final use coverage and complete edge targets, identities and kinds are checked
+again after canonical finalization before proof publication.
+The qualified fixture uses a supplied root with a logical non-file label and
+relative library search roots; file-backed root identity qualification is also
+required before adoption.
 Formal/generated/domain preparation must also qualify before this becomes a
 scheduling repair. The current activation workaround and refusals still apply.
 

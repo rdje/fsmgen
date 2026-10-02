@@ -1,0 +1,2 @@
+ram-guard: PID 9065; host 79.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS independent complete source partition/document coverage/actors/types/origins/alias constructors, exact mutation/consistent-digest twins/declined finalizer products, genuine late-target and bypass RED, five shared corruptions and immutable originals; ATL/preparation/adoption remain closed

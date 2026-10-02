@@ -1,0 +1,35 @@
+Owned SEM .60.4.3.3.5.2.1.5.2.2.2.2.1, final source/provider signoff.
+The separately sealed initial document-set proof is immutable intermediate
+evidence. Its canonical current sources and authentication controls passed,
+but an actual later finalizer counterexample exposed a private publication gap:
+changing a cloned guard after use-edge capture published stale provenance.
+Retain exact old provider/test, counterexample source and genuine RED1/1.
+
+The final provider compares complete final use coverage, paths, targets,
+document/library/export/alias/instance/module identities, bindings and parameter
+kinds against each retained edge before publishing the document proof. Fixed
+standalone PASS1/1; permanent actual target/instance/coverage/parameter-kind
+finalizer mutations refuse. Complete rejected intermediate actor/proof products
+are saved and independently reconstructed, rather than crediting a substring.
+
+Fresh final bound source cohort passes Files=1/Tests=30. Actual comparison-bypass
+consumer is genuine RED Files=1/Tests=30/Failed25; canonical producers still run.
+All 24 complete source partitions, 12 exact mutations per source, same-source
+precedence, repeated-alias constructors and consistent-digest source twins are
+retained. Final provider/test/runner before-after identities and complete raw
+receipts are new evidence. Initial sealed test counts are not final signoff.
+
+Re-derivation: independently reconstruct complete original source partition,
+actors, catalogs, bodies, types, call scopes, graph membership, exact controls
+and all declined finalizer products. Falsification: actual late-finalizer RED,
+consumer-bypass RED and shared corruption refusal. Durability: permanent T2046,
+exact providers/recipes/raw terminal receipts and immutable complete member/
+byte/hash seal. Production and predecessor providers/proofs remain unchanged.
+No HDL, compiler, analyzer, simulation, spent replay, full CI/push, browser visual
+QA, production metadata adoption, public schema/grammar/admission widening or
+macro/output runtime is claimed. Packages, ATL and preparation remain closed.
+The qualified cohort uses parse_source with a non-file root label and relative
+FSMLIB search roots. File-backed root resolution's runtime absolute candidates
+and portable persisted identity mapping remain .5.2.2.2.2.3 before adoption;
+parent imported provenance is active. This bound is explicit, not broad API
+coverage inferred from the passing relative-search fixture.

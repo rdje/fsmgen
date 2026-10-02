@@ -1,0 +1,17 @@
+{
+  "13d-control-flow.html": {
+    "markers": [
+      "Separate private document-set qualification",
+      "Packages and ATL remain closed"
+    ],
+    "sha256": "9d66a50bc714b375adf33c124b4c62f3e9b3b009c29740e3bd31fdef3fbba980"
+  },
+  "13i-downstream-integration.html": {
+    "markers": [
+      "A separate private document-set authority",
+      "constructor references",
+      "Document-set evidence"
+    ],
+    "sha256": "90a225cb1c59f0be02f9ca6f01640a423b33b74a33f22e1c96d550e2a10395f5"
+  }
+}

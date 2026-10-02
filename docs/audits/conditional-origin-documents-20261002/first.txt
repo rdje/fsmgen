@@ -1,0 +1,17 @@
+ram-guard: PID 11859; host 80.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+Use of uninitialized value in join or string at t/2046-isf-library-document-origin-authority.t line 158.
+t/2046-isf-library-document-origin-authority.t .. ok
+All tests successful.
+Files=1, Tests=28, 12 wallclock secs ( 0.06 usr  0.01 sys +  9.90 cusr  0.92 csys = 10.89 CPU)
+Result: PASS

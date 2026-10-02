@@ -1,0 +1,9 @@
+ram-guard: PID 67769; host 76.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+# library origin final use target or identity differs
+#  at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 78.
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(LateClone=HASH(0x791a3d5b40), ".artifacts/tmp/tests/WYGkwXoVTt/root.isf", HASH(0x791945d108)) called at .artifacts/conditional-origin-documents/late_clone.t line 28
+# 	eval {...} called at .artifacts/conditional-origin-documents/late_clone.t line 28
+.artifacts/conditional-origin-documents/late_clone.t .. ok
+All tests successful.
+Files=1, Tests=1,  2 wallclock secs ( 0.00 usr  0.00 sys +  0.57 cusr  0.46 csys =  1.03 CPU)
+Result: PASS

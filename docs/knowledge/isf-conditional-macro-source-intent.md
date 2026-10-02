@@ -84,6 +84,10 @@ before adoption or scheduling integration.
 Same-source library producer linkage is now separately qualified in
 [its canonical fact](isf-same-source-library-conditional-origins.md); this does
 not open the imported consumer-authentication boundary.
+The separate [document-set authority](isf-library-document-origin-authority.md)
+now qualifies complete independently supplied root/library bytes and imported
+consumer reloads through canonical external resolution. ATL and preparation
+remain closed before production adoption and branch integration.
 
 Literal predicates/effects/aliases/roles and complete current products
 re-derive each scoped result. Genuine desired-intent RED and shared-corruption
