@@ -117,6 +117,17 @@ qualified resolver and checks actual declarations against prepared module scopes
 before emission. Generated-child ports retain their published names. This scope
 repair does not repair sibling-controller or local-call reachability.
 
+A current reusable-actor defect remains owned for immediate repair: library and
+resolved ATL child constructors currently enter raw module lowering before child
+formal isolation. A worker whose direct `payload` formal shares its actor pin or
+a different-width storage name can compile standalone but fail when selected by
+library use. The public library schedule reports the pin collision or conflicting
+width rather than emitting a misleading module. Ordinary and unused-formal
+library controls still compile. Imported-child formal producer qualification
+awaits the shared constructor repair; parent formal isolation does not prove it.
+The library comparison is reproduced; resolved ATL admission is still being
+checked separately, so no broader child behavior or runtime failure is inferred.
+
 Reservation preparation now retains the actual products of transaction lowering,
 including state assignments, counters, monitor logic and call records. This matters
 because a generated drive payload can have the same proposed name as a private

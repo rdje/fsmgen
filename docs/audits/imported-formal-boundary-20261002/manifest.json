@@ -1,0 +1,138 @@
+{
+  "baseline": "45ab2e961dc74e7197c6daaa7d6d4d9b51d1406f",
+  "members": {
+    "binding.json": {
+      "bytes": 341,
+      "sha256": "d3b632b4c580a4a25675fda55917bac4490e390c9c2e88e886d23117e188f900"
+    },
+    "first-library-products/ordinary.json": {
+      "bytes": 73604,
+      "sha256": "f8657c081ee6ed737200f447cbcb134ff9864b7a1e921b6dc3bc0aaff61f21fe"
+    },
+    "first-library-products/shadow.json": {
+      "bytes": 25068,
+      "sha256": "7f8cff73f3938b1a4618349b6e0150bd2343e30d9355aa59b6d2b28b6d362aad"
+    },
+    "first-library-products/unused.json": {
+      "bytes": 63505,
+      "sha256": "56fcf45f2cc2189070536a36ed33f4d8bb022ce50b5ebb50085dce077307c329"
+    },
+    "probe-final.txt": {
+      "bytes": 3274,
+      "sha256": "7466b799d88775535a2e8c3af4cc341b131bf8a7fdd54b6b6cf9806f1b382033"
+    },
+    "probe-first-library.pl": {
+      "bytes": 4560,
+      "sha256": "a81274885805c8f8a659fad23e358bc64e682ec7321571547f86be9fb984e32a"
+    },
+    "probe-first-library.txt": {
+      "bytes": 857,
+      "sha256": "2d78fcb0709c16f68b4b59491618b8f1268bf167d5c12cd2591a44f0706bfda4"
+    },
+    "probe.pl": {
+      "bytes": 5619,
+      "sha256": "0341d9b784df88bee061bbbc689f7254f467eba85ac8182d760a8860f8e5f5c4"
+    },
+    "probe.txt": {
+      "bytes": 857,
+      "sha256": "2d78fcb0709c16f68b4b59491618b8f1268bf167d5c12cd2591a44f0706bfda4"
+    },
+    "products/library_ordinary.json": {
+      "bytes": 73800,
+      "sha256": "c86773de42343a40424ad2c90fb3aceb20cd170af6189765f06b93c645dbafaf"
+    },
+    "products/library_shadow.json": {
+      "bytes": 25184,
+      "sha256": "7ea5041c51f44db4f0fec486a77d72aecfc68fc359b1d5f34aa8499975ddbc50"
+    },
+    "products/library_storage.json": {
+      "bytes": 24821,
+      "sha256": "61d1d18cc8b52d74867b36e05aa457ec08c4a416742d3097260692f229c3dcdd"
+    },
+    "products/library_unused.json": {
+      "bytes": 63701,
+      "sha256": "8d77c30787b0080d7cbf06f774b525de121f725879adb945144333eab832f39a"
+    },
+    "products/ordinary.json": {
+      "bytes": 73604,
+      "sha256": "f8657c081ee6ed737200f447cbcb134ff9864b7a1e921b6dc3bc0aaff61f21fe"
+    },
+    "products/shadow.json": {
+      "bytes": 25068,
+      "sha256": "7f8cff73f3938b1a4618349b6e0150bd2343e30d9355aa59b6d2b28b6d362aad"
+    },
+    "products/unused.json": {
+      "bytes": 63505,
+      "sha256": "56fcf45f2cc2189070536a36ed33f4d8bb022ce50b5ebb50085dce077307c329"
+    },
+    "scope.txt": {
+      "bytes": 993,
+      "sha256": "894e6e62ad46176a9e53e04c42a9d7e7135c78647cc48129bd445994241ae231"
+    },
+    "sources/atl_ordinary.isf": {
+      "bytes": 578,
+      "sha256": "a3a26c13af401e64fa1803c3c463205d31c0a484fe12c7da1df30f62df9dfb9a"
+    },
+    "sources/library_ordinary.isf": {
+      "bytes": 750,
+      "sha256": "3f345c745c704a520ec413dfc701c884fdeea7132eef3d172bb5301e034f0c22"
+    },
+    "sources/library_shadow.isf": {
+      "bytes": 823,
+      "sha256": "c564316e63b90887ef46c68c1d12653ed7c59fcc76c83b0fa0c4f540e6980106"
+    },
+    "sources/library_storage.isf": {
+      "bytes": 794,
+      "sha256": "adbdfbf356577f4ed0906ad7edf31096245666f6bf743545fdcb1daace1da309"
+    },
+    "sources/library_unused.isf": {
+      "bytes": 728,
+      "sha256": "f5e08d6393dedacc550cf9df4d7857e371ba173b0eff2e45c4b5a52966b951e2"
+    },
+    "sources/ordinary.isf": {
+      "bytes": 749,
+      "sha256": "26e3d2caad9057e7a9e43d8bbd9cc7eac8bbec134d4ff28fcc6060526b7fa8f2"
+    },
+    "sources/shadow.isf": {
+      "bytes": 822,
+      "sha256": "c522eed767fe463bd7d41e2797daa05cc0debb06d136022e89597f249f8a42f8"
+    },
+    "sources/standalone_atl_ordinary.isf": {
+      "bytes": 194,
+      "sha256": "97127699ca9fd62f23ebbc3373627c14b6def65382b6bc6f9903a7adcd446762"
+    },
+    "sources/standalone_library_ordinary.isf": {
+      "bytes": 194,
+      "sha256": "97127699ca9fd62f23ebbc3373627c14b6def65382b6bc6f9903a7adcd446762"
+    },
+    "sources/standalone_library_shadow.isf": {
+      "bytes": 219,
+      "sha256": "2c806bc8b173afb34e083bc993567f66eb596936ef767b2211faadf81a6f17e3"
+    },
+    "sources/standalone_library_storage.isf": {
+      "bytes": 238,
+      "sha256": "20d2788a7afd192fa8558a93d2f57f5ad95fdaba12a10ada7020c62927f59d41"
+    },
+    "sources/standalone_library_unused.isf": {
+      "bytes": 172,
+      "sha256": "eae13b74160bc6edf688b1ab7449db9726f231c65812f6d22c900199ad32d83b"
+    },
+    "sources/standalone_ordinary.isf": {
+      "bytes": 193,
+      "sha256": "cf42ad99e2bff4b4eb7a23353bbd68501a5ece3535a9ad831bbb73e40a817a42"
+    },
+    "sources/standalone_shadow.isf": {
+      "bytes": 218,
+      "sha256": "fa7bb512c7baf86cc6c602cfc9a7bf604a43588bbf1d6195ea239acafb39d84e"
+    },
+    "sources/standalone_unused.isf": {
+      "bytes": 171,
+      "sha256": "47982948836c0d8d67eeee210e2e7437d8d6bcb4ba2a7dfb2fb8cbb0d0d20191"
+    },
+    "sources/unused.isf": {
+      "bytes": 727,
+      "sha256": "8703bd15af48b7cf6649e3b112d6fffffba6be8d28ad665e8b3ae0983da4c79f"
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.1"
+}

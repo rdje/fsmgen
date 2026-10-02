@@ -1,0 +1,4 @@
+ram-guard: PID 47516; host 54.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+{"children":[{"completed":1,"instance":"first"},{"completed":1,"instance":"second"}],"error":null,"formal_calls":[{"actor":"root"}],"kind":"ordinary","public":{"root":0,"standalone":0},"resolver_calls":[{"transaction":"parent"}]}
+{"children":[{"completed":0,"instance":"first"}],"error":"Transaction 'main': formal 'payload' collides with an actor interface port; separate direct formal physical identities are not supported yet","formal_calls":[{"actor":"root"}],"kind":"shadow","public":{"root":255,"standalone":0},"resolver_calls":[]}
+{"children":[{"completed":1,"instance":"first"},{"completed":1,"instance":"second"}],"error":null,"formal_calls":[{"actor":"root"}],"kind":"unused","public":{"root":0,"standalone":0},"resolver_calls":[{"transaction":"parent"}]}

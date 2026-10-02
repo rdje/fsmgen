@@ -3,6 +3,7 @@ use warnings;
 use lib 'perl', 't/lib';
 use Test::More;
 use JSON::PP;
+use Carp qw(confess);
 use File::Path qw(make_path);
 use FSM::Adapter::ISF::Parser;
 use FSM::Scheduler::ISF;
@@ -134,7 +135,7 @@ subtest 'unqualified producer scopes remain explicitly closed' => sub {
         . "(transaction main $ports (on start) (select result allow payload other) (complete done)))";
     refuses(sub {$class->from_source($imports,'imports.isf')},
         qr/imported source authority is not qualified/,'imported producer boundary');
-    my $network = $header . '(actors (instance remote of external.worker))'
+    my $network = $header . '(instance remote of external_worker)'
         . "(transaction main $ports (on start) (select result allow payload other) (complete done)))";
     refuses(sub {$class->from_source($network,'network.isf')},
         qr/reusable\/network scope is not qualified/,'actor network boundary');
@@ -151,6 +152,16 @@ subtest 'unqualified producer scopes remain explicitly closed' => sub {
     my $plain = $header . '(transaction main (on start) (select result allow payload other) (complete done)))';
     refuses(sub {$class->from_source($plain,'plain.isf')},
         qr/requires an unprojected direct formal/,'no formal preparation boundary');
+};
+
+subtest 'caller regex text cannot authenticate an unrelated Carp diagnostic' => sub {
+    my $error = unrelated_refusal(qr/expected_refusal_marker/);
+    like($error,qr/expected_refusal_marker/,'actual Carp stack contains caller regex text');
+    is(first_line($error),'unrelated failure','literal actual first diagnostic line');
+    ok(!diagnostic_matches($error,qr/expected_refusal_marker/),
+        'first-line matcher rejects the echoed caller expectation');
+    capture('diagnostic_echo',{error=>$error,expected=>'expected_refusal_marker',
+        matched=>diagnostic_matches($error,qr/expected_refusal_marker/)?1:0});
 };
 done_testing;
 
@@ -188,7 +199,7 @@ sub qualify {
         my $accepted=eval {$auth->validate($bad_context,$bad_proof);1};
         my $error=$@;
         ok(!$accepted,"actual $kind forgery refused");
-        like($error,qr/differs from authoritative source/,'independent complete source authority');
+        like(first_line($error),qr/differs from authoritative source/,'independent complete source authority');
         is($json->encode([$bad_context,$bad_proof]),$before,'validation leaves submitted kinds untouched');
         push @controls,{kind=>$kind,context=>$bad_context,proof=>$bad_proof,error=>$error,accepted=>$accepted?1:0};
     }
@@ -214,11 +225,22 @@ sub refuses {
     my ($operation,$pattern,$name)=@_;
     my $accepted=eval {$operation->();1};
     my $error=$@;
-    ok(!$accepted,$name);like($error,$pattern,'exact refusal mechanism');
+    ok(!$accepted,$name);
+    ok(diagnostic_matches($error,$pattern),'exact first-line refusal mechanism');
     capture($name,{accepted=>$accepted?1:0,error=>$error});
 }
 sub clone {$json->decode($json->encode($_[0]))}
 sub first_line {$_[0] =~ /\A([^\n]*)/ ? $1 : ''}
+sub diagnostic_matches {
+    my ($error,$pattern)=@_;
+    my $subject=$ENV{FSMGEN_FORMAL_DIAGNOSTIC_FULL_STACK} ? $error : first_line($error);
+    return $subject =~ $pattern ? 1 : 0;
+}
+sub unrelated_refusal {
+    my ($pattern)=@_;
+    eval {confess "unrelated failure\n"};
+    return $@;
+}
 sub capture {
     my ($name,$product)=@_;
     return unless defined $capture;

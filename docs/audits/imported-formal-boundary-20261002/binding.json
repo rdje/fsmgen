@@ -1,0 +1,6 @@
+{
+  "baseline": "45ab2e961dc74e7197c6daaa7d6d4d9b51d1406f",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.1",
+  "probe_sha256": "0341d9b784df88bee061bbbc689f7254f467eba85ac8182d760a8860f8e5f5c4",
+  "state": "intermediate diagnostic; final draft exits25 at invalid actors syntax; no ATL public qualification"
+}

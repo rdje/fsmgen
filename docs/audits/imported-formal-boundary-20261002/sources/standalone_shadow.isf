@@ -1,0 +1,1 @@
+(actor worker (clock clk) (reset rst_n) (interface (input start) (input payload (width 3)) (output done)) (transaction main (ports (input payload (width 3))) (on start) (set payload 1) (wait payload) (complete done)))

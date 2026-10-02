@@ -22,7 +22,7 @@ evidence: >-
   t/2043-isf-conditional-origin-parser.t;
   t/2044-isf-conditional-origin-source-authority.t;
   t/2052-isf-local-formal-origin-authority.t;
-  docs/audits/local-formal-origin-20261002/scope.txt;
+  docs/audits/local-formal-diagnostic-correction-20261002/scope.txt;
   docs/audits/conditional-origin-parser-20261002/scope.txt;
   docs/audits/conditional-origin-authority-20261002/scope.txt;
   perl/FSM/Adapter/ISF/Parser.pm;
@@ -71,7 +71,11 @@ clone references into canonical FormalLowering/ClauseResolver, and binds returne
 formal identities. Literal clauses and whole ordinary products/kinds agree.
 Sibling/pin shadows, locals, nested calls/clauses, equal-body origins, first
 samples and existing declines qualify; opaque forgery, missing clone and
-comparison-bypass controls falsify omissions. Views detach. Imports, networks,
+comparison-bypass controls falsify omissions. Refusal assertions use first lines:
+Carp stacks echo caller regexes. The old invalid actors fixture and full-stack
+matcher falsely qualified a network reason; a valid instance fixture and actual
+echo/full-stack RED supersede that claim without changing prior archives.
+Views detach. Imports, networks,
 generated specialization and domains refuse. Qualification/adoption remain `.5.2.2.3` successors; production/admission unchanged.
 
 Products and literal predicates/effects/aliases/roles re-derive scope; intent

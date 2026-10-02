@@ -1,0 +1,24 @@
+{
+  "baseline": "45ab2e961dc74e7197c6daaa7d6d4d9b51d1406f",
+  "clone_red_classes": [
+    "FSM::Test::LocalFormalOriginAuthority::DropClone",
+    "FSM::Test::LocalFormalOriginAuthority::DropStorable"
+  ],
+  "cold_full_stack_red": "python3 docs/audits/local-formal-diagnostic-correction-20261002/verify.py --full-stack",
+  "full_stack_red": "FSMGEN_FORMAL_DIAGNOSTIC_FULL_STACK=1 scripts/run_with_ram_guard.sh -- prove -v -Iperl -It/lib t/2052-isf-local-formal-origin-authority.t",
+  "green": "FSMGEN_LOCAL_FORMAL_ORIGIN_CAPTURE=.artifacts/local-formal-diagnostic-replay scripts/run_with_ram_guard.sh -- prove -v -Iperl -It/lib t/2052-isf-local-formal-origin-authority.t",
+  "instruments": {
+    "t/2052-isf-local-formal-origin-authority.t": {
+      "bytes": 15925,
+      "sha256": "64d8a67f7726a80c9f0a6ec0f4e077e5d4d096a647f023ffe9b0e71a0f18d479"
+    },
+    "t/lib/FSM/Test/LocalFormalOriginAuthority.pm": {
+      "bytes": 8923,
+      "sha256": "7971597def7b39cb16ec43a8bdfbc5497796285b3a909f81fb5f3bf0bc803fbf"
+    }
+  },
+  "note": "Later replays write only in .artifacts; immutable prior archives are historical, never modified.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.1",
+  "source_comparison_red": "FSMGEN_LOCAL_FORMAL_ORIGIN_CLASS=FSM::Test::LocalFormalOriginAuthority::Bypass scripts/run_with_ram_guard.sh -- prove -v -Iperl -It/lib t/2052-isf-local-formal-origin-authority.t",
+  "verify": "python3 docs/audits/local-formal-diagnostic-correction-20261002/verify.py"
+}

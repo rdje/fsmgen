@@ -1,0 +1,37 @@
+ram-guard: PID 95796; host 68.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+    # No tests run!
+
+#   Failed test 'No tests run for subtest "actual formal origin select"'
+#   at t/2052-isf-local-formal-origin-authority.t line 53.
+local formal origin conditional clone association missing
+ at t/lib/FSM/Test/LocalFormalOriginAuthority.pm line 113.
+	FSM::Test::LocalFormalOriginAuthority::_resolved(FSM::Test::LocalFormalOriginAuthority::DropStorable=HASH(0x7c69e2f840), FSM::Scheduler::ISF::FormalClauseResolver=HASH(0x7c69d32798), ARRAY(0x7c69d2fca8), ARRAY(0x7c69d3a6f0), ARRAY(0x7c69d3a0d8)) called at t/lib/FSM/Test/LocalFormalOriginAuthority.pm line 100
+	FSM::Test::LocalFormalOriginAuthority::__ANON__(FSM::Scheduler::ISF::FormalClauseResolver=HASH(0x7c69d32798), ARRAY(0x7c69d2fca8), ARRAY(0x7c69d3a0d8)) called at perl/FSM/Scheduler/ISF/FormalClauseResolver.pm line 97
+	FSM::Scheduler::ISF::FormalClauseResolver::_sequence(FSM::Scheduler::ISF::FormalClauseResolver=HASH(0x7c69d32798), ARRAY(0x7c69d2fdc8), ARRAY(0x7c69d3a0c0)) called at perl/FSM/Scheduler/ISF/FormalClauseResolver.pm line 35
+	FSM::Scheduler::ISF::FormalClauseResolver::transaction("FSM::Scheduler::ISF::FormalClauseResolver", HASH(0x7c69d2fe28), "plan", HASH(0x7c69e241e0), "static_count_symbols", HASH(0x7c69e25270), "static_symbols", HASH(0x7c69e231b0), ...) called at t/lib/FSM/Test/LocalFormalOriginAuthority.pm line 95
+	FSM::Test::LocalFormalOriginAuthority::__ANON__("FSM::Scheduler::ISF::FormalClauseResolver", HASH(0x7c69d2fe28), "plan", HASH(0x7c69e241e0), "static_count_symbols", HASH(0x7c69e25270), "static_symbols", HASH(0x7c69e231b0), ...) called at perl/FSM/Scheduler/ISF/FormalLowering.pm line 39
+	FSM::Scheduler::ISF::FormalLowering::prepare("FSM::Scheduler::ISF::FormalLowering", FSM::Scheduler::ISF::LoweringIR=HASH(0x7c69e30768), HASH(0x7c69e3f330)) called at t/lib/FSM/Test/LocalFormalOriginAuthority.pm line 106
+	FSM::Test::LocalFormalOriginAuthority::_prepare(FSM::Test::LocalFormalOriginAuthority::DropStorable=HASH(0x7c69e2f840), HASH(0x7c69e3f330)) called at t/lib/FSM/Test/LocalFormalOriginAuthority.pm line 44
+	FSM::Test::LocalFormalOriginAuthority::from_source("FSM::Test::LocalFormalOriginAuthority::DropStorable", "(actor formal_origin (clock clk) (reset rst_n) (interface (in"..., "select.isf") called at t/2052-isf-local-formal-origin-authority.t line 170
+	main::qualify("select", "(actor formal_origin (clock clk) (reset rst_n) (interface (in"..., ARRAY(0x7c6b6c7de0), ARRAY(0x7c6b668528)) called at t/2052-isf-local-formal-origin-authority.t line 51
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x7c6703f840), "actual formal origin select", CODE(0x7c67031fd8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("actual formal origin select", CODE(0x7c67031fd8)) called at t/2052-isf-local-formal-origin-authority.t line 53
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 1.
+t/2052-isf-local-formal-origin-authority.t .. 
+# Subtest: actual formal origin select
+    1..0
+not ok 1 - No tests run for subtest "actual formal origin select"
+Dubious, test returned 255 (wstat 65280, 0xff00)
+Failed 1/1 subtests 
+
+Test Summary Report
+-------------------
+t/2052-isf-local-formal-origin-authority.t (Wstat: 65280 Tests: 1 Failed: 1)
+  Failed test:  1
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=1,  1 wallclock secs ( 0.01 usr  0.01 sys +  0.72 cusr  0.38 csys =  1.12 CPU)
+Result: FAIL
