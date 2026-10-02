@@ -1,0 +1,48 @@
+{
+  "files": {
+    "book.txt": {
+      "bytes": 194,
+      "sha256": "0d818c512c57e28609190e57a17844b7d441006bc60c0022c333980b5935931c"
+    },
+    "draft-numeric-first-verify.py": {
+      "bytes": 4432,
+      "sha256": "9b6aa058b9afdf0f5f8c73e71f55f3dccd39034247595db9bebd0597e3efa0f8"
+    },
+    "history.txt": {
+      "bytes": 159,
+      "sha256": "5e5c79773238df39478e891c66af2e68b71b13c33495d36c273f38f9a9b2444b"
+    },
+    "old-comparison-final-red.txt": {
+      "bytes": 670,
+      "sha256": "4214c5a8cab4930dac36624fc6d6627af3babcef778f4fe25d39740f21e4d021"
+    },
+    "old-comparison-red.txt": {
+      "bytes": 667,
+      "sha256": "b8f7101f399b80c480e26c2c27de126bb55f152d32899a0cae04b57c77bf3325"
+    },
+    "recipe.json": {
+      "bytes": 821,
+      "sha256": "99cadee9afe81922184b7c5a8d8b15f61970baa6b8051db3789ae885dcf652ce"
+    },
+    "rendered.txt": {
+      "bytes": 119619,
+      "sha256": "e0149e578c519480a230f902586f7a8542e15812f1c3a7bd115fa4f3faa34f29"
+    },
+    "scope.txt": {
+      "bytes": 1953,
+      "sha256": "15535f53d8362ccf98c7a8e88f2d5a81f9497dbe1cd5a0e3e85499bd05ba69a2"
+    },
+    "verify-final.txt": {
+      "bytes": 447,
+      "sha256": "0214a4e83009e50dca8388e12704f04015b4a7d31092fb3df1dce5f5224d2c88"
+    },
+    "verify.py": {
+      "bytes": 4318,
+      "sha256": "212bd96d9610e516ba6daf501d18b5e066c4b5fd1ad7383e3c0860441b2cb6ec"
+    },
+    "verify.txt": {
+      "bytes": 433,
+      "sha256": "56e944c1f460e891a525b4f793ada0447fd70d512192ccc543d97f61cd2e0d88"
+    }
+  }
+}

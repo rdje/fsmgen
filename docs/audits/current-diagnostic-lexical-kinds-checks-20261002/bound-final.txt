@@ -1,0 +1,3 @@
+ram-guard: PID 51642; host 45.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+current: PASS exact before/after source/reader/seal binding and expected actual outcome
+old-comparison: PASS exact before/after source/reader/seal binding and expected actual outcome

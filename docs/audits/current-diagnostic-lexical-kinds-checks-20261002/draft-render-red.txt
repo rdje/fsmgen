@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/current-diagnostic-lexical-kinds-checks-20261002/draft-render-prefix.py", line 7, in <module>
+    assert 'preserves JSON primitive kinds (true cannot replace numeric 1)' in text
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

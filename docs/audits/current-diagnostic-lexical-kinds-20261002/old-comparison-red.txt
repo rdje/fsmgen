@@ -1,0 +1,7 @@
+ram-guard: PID 6560; host 49.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS immutable complete Git/source membership, independent ASCII rg token/offset/line census, five shared corruptions and exact derived counts; no semantic classification
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/current-diagnostic-lexical-kinds-20261002/verify.py", line 52, in <module>
+    else:raise AssertionError('shared JSON-kind/shape corruption accepted: '+label)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: shared JSON-kind/shape corruption accepted: line_float

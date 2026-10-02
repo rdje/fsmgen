@@ -1,0 +1,2 @@
+PASS immutable complete Git/source membership, independent ASCII rg token/offset/line census, five shared corruptions and exact derived counts; no semantic classification
+PASS complete immutable Git/rg census and every prior member; exact source-derived inventory/count JSON kinds, seven shared kind/numeric-form/shape controls; no semantic classification

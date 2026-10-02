@@ -1,0 +1,31 @@
+{
+  "baseline": "33af62fbdd4a408c3bb88c900f4293f6a35860fd",
+  "commands": [
+    [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "docs/audits/current-diagnostic-lexical-kinds-20261002/verify.py"
+    ],
+    [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "docs/audits/current-diagnostic-lexical-kinds-20261002/verify.py",
+      "--old-comparison"
+    ],
+    [
+      "mdbook",
+      "build",
+      "docs/book"
+    ]
+  ],
+  "draft_scope": "Numeric-first source/positive/numeric-form RED retained; final Boolean-first RED falsifies primitive-kind weakness.",
+  "expected_statuses": [
+    0,
+    1,
+    0
+  ],
+  "original_archive_commit": "33af62fbdd4a408c3bb88c900f4293f6a35860fd",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.3"
+}

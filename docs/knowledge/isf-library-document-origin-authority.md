@@ -50,8 +50,8 @@ static clones; file origins own root reads/same-source use/ATL form association.
 Preparation/adoption remain later owners. Public activation/refusals apply;
 no new macros, scheduling admission or HDL/macro runtime is proved.
 
-Current [diagnostic census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt)
+The [diagnostic census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt)
 binds ASCII Perl token/call populations to Git bytes. Comments, strings,
-declarations and overlaps remain candidates. Actual context/producer controls
-and cold consumers stay separately owned in the semantic task tree; discovery
-proves no cause safety. Cold reverify: `python3 docs/audits/current-diagnostic-lexical-inventory-20261002/verify.py`.
+declarations and overlaps are candidates; actual context/producer and cold
+controls stay separately owned. Discovery proves no cause safety. The current
+reader preserves exact JSON kinds and numeric forms: `python3 docs/audits/current-diagnostic-lexical-kinds-20261002/verify.py`.
