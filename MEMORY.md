@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1.3` (pending)
-- next_action: Join historical17/current source-origin cause scope and canonical wording under .60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1.3; then resume broader runtime/cold cohorts before imported/source-intent/IAL2-ATL handoff.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2` (pending)
+- next_action: Review named refusal helpers/framework contracts through actual producers under .60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2; split confirmed repairs before editing, then other runtime/cold cohorts and imported/source-intent/IAL2-ATL handoff.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none.
 - blockers: Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

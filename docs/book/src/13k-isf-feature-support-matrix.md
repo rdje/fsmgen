@@ -116,8 +116,10 @@ original catalog and call identities remain distinct. It preserves explicit
 input/output formal identities through sibling and actor-pin shadows, nested
 clauses and inline calls. Complete ordinary preparation, physical actors, plans
 and primitive kinds agree; missing associations and forged reloads refuse.
-The local formal refusal oracle matches the first diagnostic line: Perl stack traces can echo the
-caller’s expected regex. The initial invalid network fixture falsely passed
+The local formal reload helper selects the first diagnostic line; its residual
+constructor assertion compares the complete cause. Perl stacks can echo caller
+patterns, and primary messages can quote input labels. Broader helper and cold
+consumer qualification remains open. The initial invalid network fixture falsely passed
 a full-stack match; a valid instance fixture and a genuine echoed-regex control
 now qualify that boundary. Earlier evidence remains archived as superseded.
 The file-origin and library-document helpers now compare complete declared
@@ -136,13 +138,14 @@ declared first causes, with real comment/label echo regression controls. The
 library/file helpers now use the same complete-cause predicate and permanent
 real-label controls. Actual validator/finalizer probes also reproduce unrelated
 argument failures echoed through Carp and earlier parser failures quoting wanted
-text in source labels. Even the generic origin-category assertion accepts a
+text in source labels. The original generic origin-category assertion accepted a
 Perl type failure quoting that category in its primary message. Those confirmed
 validator/finalizer assertions now compare complete causes, including specific
 reasons for each generic mutation. Permanent real producer controls reject
 argument, comment and label echoes; replaying the exact prior consumers fails
-those controls. Broader current and cold consumers remain under audit. These corrections change verification, not public
-ISF admission.
+those controls. The historical raw source-origin assertion cohort is reconciled;
+other helper/structured/trace sites and wider current/cold consumers remain
+under audit. These corrections change verification, not public ISF admission.
 
 This observer preserves the existing first-clause behavior, including current
 macro placement defects and inline-procedure `cond` refusals. Imported/reusable

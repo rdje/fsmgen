@@ -1,0 +1,10 @@
+ram-guard: PID 96035; host 70.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared source join corruption rejects: omission
+shared source join corruption rejects: line_kind
+shared source join corruption rejects: old_statement
+shared source join corruption rejects: archive
+shared source join corruption rejects: extra_row_field
+sealed current proof replay passes: constructor-cause-repair-20261002
+sealed current proof replay passes: origin-helper-cause-repair-20261002
+sealed current proof replay passes: validator-finalizer-cause-repair-20261003
+historical17 raw/current exact causes joined; other family/current/cold consumers remain owned, with scoped additional helper/test membership

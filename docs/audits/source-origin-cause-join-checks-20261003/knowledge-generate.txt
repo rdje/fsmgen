@@ -1,0 +1,1 @@
+knowledge-map: wrote KNOWLEDGE_MAP.md plus 183 topic shards (1264 facts, 6930 unique questions, 7107 answer occurrences)

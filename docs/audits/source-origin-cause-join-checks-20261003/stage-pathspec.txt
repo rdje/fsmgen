@@ -1,0 +1,1 @@
+Initial staging selected a guessed shard name; Git returned128: fatal: pathspec 'knowledge-map/generated/isf-macros.md' did not match any files. Current diff identifies knowledge-map/generated/isf-conditional.md; stage the actual declared output. No source or seal changes.

@@ -1,0 +1,9 @@
+ram-guard: PID 18892; host 69.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-cause-scope-join-20261003/verify.py", line 39, in <module>
+    bad=copy.deepcopy(record);bad['rows'][0]['current_statement']=bad['rows'][0]['historical_statement'];join(bad)
+                                                                                                         ~~~~^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-cause-scope-join-20261003/verify.py", line 36, in join
+    def join(candidate):assert enc(candidate)==enc(expected_record)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

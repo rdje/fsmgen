@@ -11,7 +11,7 @@ answers:
   - "why must conditional origins have an independent source authority?"
   - "how do local conditional origins survive formal preparation clones?"
   - "does private formal origin qualification change macro admission?"
-date: 2026-10-02
+date: 2026-10-03
 status: current
 tags: [isf, ial1, macros, branch, normalization, procedures]
 evidence: >-
@@ -68,13 +68,13 @@ forgeries and closes imports. Separate qualifications cover
 
 T2052 privately authenticates local source, follows actual LoweringIR/Storable
 clone references into canonical FormalLowering/ClauseResolver, and binds returned clauses to catalog/call/path/ordinal and explicit input/output
-formal identities. Literal clauses and whole ordinary products/kinds agree.
+formal identities; whole literal clauses/products/kinds agree.
 Sibling/pin shadows, locals, nested calls/clauses, equal-body origins, first
 samples and existing declines qualify; opaque forgery, missing clone and
-comparison-bypass controls falsify omissions. Refusal assertions use first lines:
-Carp stacks echo caller regexes. The old invalid actors fixture and full-stack
-matcher falsely qualified a network reason; a valid instance fixture and actual
-echo/full-stack RED supersede that claim without changing prior archives.
+comparison-bypass controls falsify omissions. Reload helpers select first lines;
+the residual constructor now compares its complete cause. Broader helper/cold
+qualification remains open; Carp stacks and input labels can echo wanted text. The old invalid actors fixture/full-stack matcher falsely qualified a network
+reason. A valid instance/actual echo RED supersedes it; prior archives stay intact.
 Views detach. Imports, networks,
 generated specialization and domains refuse. Qualification/adoption remain `.5.2.2.3` successors; production/admission unchanged.
 

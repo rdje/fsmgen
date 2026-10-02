@@ -1,0 +1,45 @@
+{
+  "baseline": "10753245364014be1b23be9023f8d4743cbae826",
+  "files": {
+    "book.txt": {
+      "bytes": 194,
+      "sha256": "384110c0c12dc9329f2e67431a9df4c7a9190f76948f07ee31ab04d15d48f7ab"
+    },
+    "focused.txt": {
+      "bytes": 318,
+      "sha256": "06eef447af760278f67e0a80d98564e0d974dd0c73b4a92fc08b095a9b314a5d"
+    },
+    "historical-as-current-red.txt": {
+      "bytes": 763,
+      "sha256": "e02436ddb725449eba9260f1538dca68db8a13f3ffa76773860a6336fbeb7724"
+    },
+    "history.txt": {
+      "bytes": 136,
+      "sha256": "071f2e187f6ed230b0b06dd64287952482a823ee0ce68a95589120c62465dff8"
+    },
+    "join.json": {
+      "bytes": 130178,
+      "sha256": "6caa4cc1e2511969a95fc123e271dd24b30aaf955936a218efcafe7eca4358b5"
+    },
+    "recipe.json": {
+      "bytes": 362,
+      "sha256": "37c779be3ee7675309c8323d4614dc87abc245f09efa10a32d3c059e1c103786"
+    },
+    "rendered.txt": {
+      "bytes": 225,
+      "sha256": "9100ecd8f1136c12f8de8053e124669765b09853b2886de9c0049976afa88565"
+    },
+    "scope.txt": {
+      "bytes": 3274,
+      "sha256": "fe15d42be19f4a760403a22024a3c34e5f9990fd6e7691088c3ef71710c368e5"
+    },
+    "verify.py": {
+      "bytes": 5875,
+      "sha256": "503b3c8dbc22bbd941366f449f4e6447f4a82ea88cd4292626f62f7e4c26c43b"
+    },
+    "verify.txt": {
+      "bytes": 705,
+      "sha256": "b03e1fca2e140634de7de5a487d4cbb481fb66eda44a9c6785ecc5029cc75dce"
+    }
+  }
+}

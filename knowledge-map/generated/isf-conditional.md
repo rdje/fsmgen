@@ -21,5 +21,5 @@
 
 _Existing ISF macros need explicit branch intent and inline procedure cond normalization_
 
-- **date:** 2026-10-02 · **status:** current
+- **date:** 2026-10-03 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-conditional-macro-source-intent.md`](../../docs/knowledge/isf-conditional-macro-source-intent.md)
