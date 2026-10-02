@@ -1,0 +1,4 @@
+ram-guard: PID 55525; host 59.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+current-bound: complete unchanged-source binding and expected actual terminal outcome
+full-stack-red: complete unchanged-source binding and expected actual terminal outcome
+bypass-red: complete unchanged-source binding and expected actual terminal outcome

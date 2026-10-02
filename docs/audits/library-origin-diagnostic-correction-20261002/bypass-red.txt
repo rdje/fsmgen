@@ -1,0 +1,2422 @@
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_authored'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_cond'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_max'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_min'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_proc_cond'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_proc_select'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_select'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_unless-bit'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_unless-field'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_when-bit'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents first_when-field'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents identical_export_twins'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_authored'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_cond'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_max'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_min'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_proc_cond'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_proc_select'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_select'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_unless-bit'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_unless-field'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_when-bit'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents later_when-field'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'actual actor_identity mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual actor_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual schema_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual document_hash mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual producer_kind mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual source_operation mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual alias mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual export mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual instance mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual path mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual coverage mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual target mutation refuses'
+    #   at t/2046-isf-library-document-origin-authority.t line 94.
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at t/2046-isf-library-document-origin-authority.t line 95.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 52.
+
+#   Failed test 'independent imported documents reused_export'
+#   at t/2046-isf-library-document-origin-authority.t line 110.
+
+    #   Failed test 'matching embedded digest does not replace original authority'
+    #   at t/2046-isf-library-document-origin-authority.t line 292.
+
+    #   Failed test 'precise authority refusal'
+    #   at t/2046-isf-library-document-origin-authority.t line 293.
+    # Looks like you failed 2 tests of 5.
+
+#   Failed test 'matching embedded source digests cannot authenticate a different original operation'
+#   at t/2046-isf-library-document-origin-authority.t line 199.
+# Looks like you failed 25 tests of 31.
+t/2046-isf-library-document-origin-authority.t .. 
+Dubious, test returned 25 (wstat 6400, 0x1900)
+Failed 25/31 subtests 
+
+Test Summary Report
+-------------------
+t/2046-isf-library-document-origin-authority.t (Wstat: 6400 Tests: 31 Failed: 25)
+  Failed tests:  3-26, 30
+  Non-zero exit status: 25
+Files=1, Tests=31, 10 wallclock secs ( 0.05 usr  0.02 sys +  8.89 cusr  0.49 csys =  9.45 CPU)
+Result: FAIL

@@ -13,7 +13,7 @@ evidence: >-
   t/2046-isf-library-document-origin-authority.t;
   t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm;
   docs/audits/conditional-origin-documents-20261002/scope.txt;
-  docs/audits/conditional-origin-documents-finalization-20261002/scope.txt;
+  docs/audits/library-origin-diagnostic-correction-20261002/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
@@ -32,9 +32,8 @@ exports, resolutions, clones and source ledgers. JSON reload requires independen
 whole-product equality, including primitive kinds. Missing/unused documents,
 changed bytes/forms and forged products refuse. Finalization rechecks whole use
 coverage, retained edge targets/identities/parameter kinds. Late mutations refuse;
-a reproduced stale-clone target defect was fixed before commit. The initial seal
-is intermediate; the separate finalization seal binds the corrected provider and
-permanent regression.
+a reproduced stale-clone target defect was fixed before commit. The initial seal is intermediate. Finalization binds the fixed provider; the
+current diagnostic seal qualifies first-line causes and real caller-echo controls.
 
 Identical actors can retain different operations. Forged catalogs/matching hashes
 cannot replace independent bytes. Caller/views detach. Comparison bypass yields

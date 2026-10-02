@@ -1,0 +1,4 @@
+t/2046-isf-library-document-origin-authority.t .. ok
+All tests successful.
+Files=1, Tests=31, 11 wallclock secs ( 0.05 usr  0.01 sys +  9.88 cusr  0.47 csys = 10.41 CPU)
+Result: PASS

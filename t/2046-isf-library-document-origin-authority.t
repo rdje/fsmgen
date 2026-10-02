@@ -38,8 +38,24 @@ use Lispish;
 }
 
 my $json = JSON::PP->new->canonical;
+my @boundaries;
 my @inputs = sort glob 'docs/audits/conditional-origin-library-20261002/current-bound/*.json';
 is(scalar @inputs, 24, 'entire immutable source-producer cohort');
+subtest 'library cause matching excludes the actual caller regex echo' => sub {
+    my $pattern = qr/library_reason_only_in_caller_argument/;
+    my $error = library_refusal_with_echo($pattern);
+    is(first_line($error), 'library origin independent document set required',
+        'actual constructor supplies the independent-document reason');
+    like($error, $pattern, 'real Carp trace echoes the caller expectation');
+    ok(!diagnostic_matches($error, $pattern), 'caller expectation cannot authenticate another cause');
+    rejected(sub {FSM::Test::LibraryDocumentOriginAuthority->from_documents('missing.isf', {}, [])},
+        qr/library origin independent document set required/, 'actual constructor positive');
+    if (my $capture = $ENV{FSMGEN_DOCUMENT_ORIGIN_CAPTURE}) {
+        write_file("$capture/diagnostic-echo.json", $json->encode({error => $error,
+            expected => 'library_reason_only_in_caller_argument',
+            matched => diagnostic_matches($error, $pattern) ? 1 : 0}) . "\n");
+    }
+};
 for my $input (@inputs) {
     my $original = $json->decode(read_file($input));
     subtest "independent imported documents $original->{case}{name}" => sub {
@@ -201,6 +217,9 @@ subtest 'final canonical clone changes refuse before document-proof publication'
             documents => $documents, controls => \@controls}) . "\n");
     }
 };
+if (my $capture = $ENV{FSMGEN_DOCUMENT_ORIGIN_CAPTURE}) {
+    write_file("$capture/boundaries.json", $json->encode(\@boundaries) . "\n");
+}
 done_testing;
 
 sub authority_class { $ENV{FSMGEN_DOCUMENT_ORIGIN_AUTHORITY_CLASS} || 'FSM::Test::LibraryDocumentOriginAuthority' }
@@ -266,4 +285,22 @@ sub source_forms {
 }
 sub read_file {open my $file, '<:raw', $_[0] or die $!; local $/; my $text = <$file>; close $file or die $!; $text}
 sub write_file {open my $file, '>:raw', $_[0] or die $!; print {$file} $_[1] or die $!; close $file or die $!}
-sub rejected {my ($code, $reason, $name) = @_; ok(!eval {$code->(); 1}, $name); like($@, $reason, 'precise authority refusal')}
+sub rejected {
+    my ($code, $reason, $name) = @_;
+    my $accepted = eval {$code->(); 1};
+    my $error = $@;
+    ok(!$accepted, $name);
+    ok(diagnostic_matches($error, $reason), 'precise authority refusal');
+    push @boundaries, {name => $name, accepted => $accepted ? 1 : 0, error => $error};
+}
+sub first_line {(split /\n/, $_[0] // '')[0] // ''}
+sub diagnostic_matches {
+    my ($error, $pattern) = @_;
+    my $subject = $ENV{FSMGEN_LIBRARY_DIAGNOSTIC_FULL_STACK} ? $error : first_line($error);
+    return $subject =~ $pattern ? 1 : 0;
+}
+sub library_refusal_with_echo {
+    my ($pattern) = @_;
+    eval {FSM::Test::LibraryDocumentOriginAuthority->from_documents('missing.isf', {}, [])};
+    return $@;
+}

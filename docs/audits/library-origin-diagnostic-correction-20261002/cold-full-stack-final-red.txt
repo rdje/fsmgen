@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/library-origin-diagnostic-correction-20261002/verify.py", line 101, in <module>
+    raise AssertionError('actual wrong first cause was accepted from a caller echo')
+AssertionError: actual wrong first cause was accepted from a caller echo
