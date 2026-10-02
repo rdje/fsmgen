@@ -3557,12 +3557,74 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Audit repository-owned diagnostic oracles for echoed-expectation false positives.`
   Acceptance: `P2 verification-risk ownership created by .1: Carp::confess may render a caller helper expected regex in the stack, letting an unanchored full-stack reason assertion pass for an unrelated first diagnostic. After .1 commits and before further origin/adoption signoff, census repository-owned Perl refusal helpers/assertions and cold Python diagnostic substring predicates, using Knowledge Map and canonical evidence. Distinguish anchored first-line/exact multiline contracts from vulnerable substring guards; do not infer defect from syntax alone. Reproduce every affected current oracle through its real call path with independent wrong-reason/echo controls. Split corrections and fresh immutable qualification units before editing, keep historical archives untouched, own stale signoff scope explicitly, and verify focused predecessors/complete products. No submodule implementation inspection, production semantic change or native HDL invocation by implication.`
   Verification: `The actual T2052 network boundary and cold verifier were vulnerable and are owned/fixed by .1. Other oracles remain a prioritized audit, not a claim of known failures.`
   Commit: `pending`
 
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1`
+  Status: `active`
+  Goal: `Census current repository-owned refusal consumers and selected cold verification predicates.`
+  Acceptance: `Inventory tracked current Perl source/tests without entering submodules or other repositories. Independently reconcile Git membership with direct file/function/regex census. Inspect each candidate helper/assertion in context, distinguish first-line/anchored/exact multiline, framework/structured diagnostics and full-stack reason predicates; syntax alone identifies candidates, not defects. Read relevant canonical fact/decision/proof records before revisiting durable claims. Trace actual Carp expectation or source echo on a bounded representative and identify current referenced cold consumers; retain independent wrong-reason/positive controls, complete candidate records/instruments/source/Git binding and raw receipts. Schedule per-owner runtime reproduction and safe corrections in .2; earlier archives remain untouched. Sync bounded facts/book task scope without promoting census completeness into semantic signoff.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.1`
+  Status: `done`
+  Goal: `Bind byte-preserving named refusal-consumer discovery and reconcile its exact scope.`
+  Acceptance: `Create a repository-owned tracked-file census and independently reconcile it with filesystem/byte-function discovery. Retain exact source hashes and byte round trips, including non-UTF8 legacy comments without conversion. Discover named lexical exception/regex spans only; explicitly account for delegated/structured/anonymous/top-level predicates and cold consumers as uncovered successor populations. Reproduce a bounded actual FileDocumentOriginAuthority callback through the exact current T2048 helper, and compare the already qualified T1986 first-line precedent from canonical decision0113. Retain actual wrong-reason/echo and positive controls, full discovery data/instruments/raw receipts/source/Git binding and immutable seal. This bounded discovery unit cannot claim all repository refusal consumers inspected or fixed. Schedule confirmed repair and remaining .2/.3 scope before commit; no production/prior-archive/native change.`
+  Verification: `Immutable refusal-oracle-census-20261002 independently reconciles 2601 baseline source blobs and 244 named lexical exception/regex spans (24 named refusal prefixes); all remain discovery candidates rather than complete semantic coverage. Exact current T2048 helper plus actual FileDocumentOriginAuthority callback falsely accepts an echoed wrong expectation; exact T1986 first-line helper rejects it, with both genuine reason positives passing. Actual TAP status1/Tests8/Failed1 is the intentional safe-helper rejection, not a suite success. Cold full-stack-subject counterfactual fails and four shared discovery corruptions reject. Canonical decision0113 already owns the lesson. Confirmed file helper repair is immediate .2.1; broader and referenced-cold populations remain .1.2/.1.3. No production or historical archive change.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2`
+  Status: `pending`
+  Goal: `Review delegated, structured, anonymous and top-level refusal consumers.`
+  Acceptance: `After .1, complete current repository candidate membership beyond the named lexical detector, using independent search/AST where appropriate and exact runtime controls. Read every selected consumer in context; distinguish reason matching from structured codes or permitted trace/locus searches. Confirm vulnerable consumers through their real producer path before scheduling .3.2 repairs. Keep unreviewed candidates owned; no semantic completeness claim from textual census.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.3`
+  Status: `pending`
+  Goal: `Bind current referenced cold diagnostic consumers and close census handoff.`
+  Acceptance: `After named and broader current consumers, inventory canonical reverify/evidence references to cold proof readers. Distinguish historical scripts from current qualification authorities; examine actual diagnostic representation and predicates, including whether first-line capture already removes echo. Run genuine wrong-reason predicates on authenticated retained products, keep archives immutable and own fresh reader/qualification corrections under .3.2. Reconcile every census population before declaring .3.1 complete.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2`
+  Status: `active`
+  Goal: `Reproduce and repair each vulnerable current diagnostic oracle.`
+  Acceptance: `As .1 identifies confirmed defects, prioritize small repairs immediately while its remaining census continues; split actual runtime reproduction and correction into bounded per-helper/cohort leaves with explicit task ownership. Run real producer callbacks and independent wrong-first-reason/echo controls before classification; fix only demonstrated vulnerable reason consumers, preserving their positive whole products/accepted refusals and primitive kinds. Rebind current cold qualification in new immutable archives rather than editing historical data. Log any newly exposed source/test/production issue with priority and verify its repair or specific owned blocker; no native HDL admission by implication.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.1`
+  Status: `in_progress`
+  Goal: `Repair the current file-origin refusal helper and requalify its reason evidence.`
+  Acceptance: `Use the byte-bound .1.1 real file authority echo control to replace T2048 full-stack cause matching with first-line matching. Add a permanent actual helper wrong-reason/echo control and positive reason, preserving complete source/document/file products and existing opaque corruptions. Execute the real corrected test, genuine full-stack-consumer RED and source-comparison RED under RAM limits. Requalify all captured precedence/local boundary reasons in a new immutable cold reader with actual wrong-reason controls; do not edit the historical file-origin archive. Update current canonical reverify scope/book and ownership; broader census .1.2 resumes after this commit. No production metadata or native HDL change.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.2`
+  Status: `pending`
+  Goal: `Reconcile the stale T1986 blanket record-output refusal with current source admission.`
+  Acceptance: `P2 current test defect: guarded T1986/T2048/T2052 run reports Files=3/Tests56/Failed1 because T1986 deferred-output subtest still expects an output frame declaration to refuse. Canonical isf-record-output-source-admission records that current Parser admits whole record outputs and earlier blanket tests should cover still-closed fields/captures. After .2.1, bind exact admission history/source and real first-line refusal, replace only the stale boundary with a still-closed authored output field writer, and independently verify the actual whole output positive. Retain complete source/actor/diagnostic products, genuine stale-consumer RED and source preservation controls. Run focused record-input/output predecessors without native HDL, sync book/facts and commit. Do not re-close shipped output admission to satisfy an old test.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.3`
+  Status: `pending`
+  Goal: `Close refusal-oracle audit scope before imported formal adoption.`
+  Acceptance: `Reconcile every .1 current candidate and referenced cold consumer against fresh outcomes, exact first-line/anchored/structured contracts or owned unresolved blockers. Retain all three distinct claim legs and genuine consumer bypass controls. Keep historical scope superseded explicitly where needed; synchronize current reverify commands, mdBook and task frontiers. Complete appropriate focused regression and staged doctrines; never claim all repository semantic refusals qualified merely because the census or guard passes. Commit before imported invocation census .1.2.1.2 and reusable formal repair .1.2.5.`
+  Verification: `pending`
+  Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.2`
   Status: `pending`
@@ -5349,3 +5411,9 @@ and exact measurement JSON. No health target or enforcement ceiling changes.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The preserved invalid network source gives `Error: unknown actor clause actors in actor formal_origin at perl/FSM/Adapter/ISF/Parser.pm line 316` (exact quotes in raw JSON), while its Carp stack includes the caller `qr(reusable/network scope is not qualified)`. T2052's full-stack reason regex and the prior cold verifier's substring predicate accepted that echoed expectation. Actual invalid ATL probe terminates25 at the same actor-clause locus, exposing the mismatch. A real unrelated Carp callback reproduces caller-regex echo without manufacturing a diagnostic.
 - [x] **ADDRESSED (verified)** — Correct T2052 assertions to first diagnostic lines and use published direct instance syntax. Final PASS Files=1/Tests=19. Restoring the actual full-stack matcher gives RED Files=1/Tests=19/Failed1; cold --full-stack gives status1 on the unchanged prior artifact. Source-comparison bypass and both actual clone-loss RED remain genuine. Independent whole products/literals/kinds and exact boundary reasons re-derive; echo/consumer bypass and shared corruptions falsify; permanent test, full products/source/instruments/recipes/raw receipts and distinct immutable seals retain durability. Prior archive is unchanged and superseded for this diagnostic reason; no silent history rewrite. First render race lacks exact traceback/instrument capture and is not qualification. Repo diagnostic audit and actual reusable isolation repair are separately owned with immediate sequencing.
 - [x] **NO REGRESSION** — RAM-guarded parser/source/file/PathSearch/local-origin regressions report `All tests successful`, `Files=5, Tests=164`; book audits report `All tests successful`, `Files=3, Tests=293` and 115 complete lowered fixtures. Current positive contexts/proofs/source/primitive kinds exactly equal prior sealed products. All original production and earlier providers remain fingerprint-bound; no HDL/native qualification or public schema/admission promotion. Final book build/rendered-text markers pass; Knowledge Map, claims, staged task acceptance and doctrines remain mandatory commit gates in a separate checks directory.
+
+## Named refusal discovery acceptance (.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The actual constructor gives `file origin independent document set required at t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 21`, while Carp echoes the expected wrong regex passed to T2048 refuses. Its actual unchanged helper reports ok2 for this wrong cause; T1986 first-line helper reports not ok6 on the identical actual producer. Canonical decision0113 already documents this mechanism. A separate full T1986 run fails its obsolete output-frame declaration refusal at t/1986-isf-record-port-value-gates.t line 89; current canonical output-source admission permits that source. Both defects are prioritized owned corrections, not production regressions inferred from the census.
+- [x] **ADDRESSED (verified)** — Bind complete byte-preserving discovery with independently reconciled baseline Git blobs, exact helper bodies and real callback/TAP products. Re-derivation reconciles 2601 sources/244 lexical spans/24 refusal-name prefixes and exact bytes; genuine caller-echo/first-line predicates, cold wrong-subject RED and four shared corruptions falsify; complete snapshots/instruments/raw receipts/baseline objects and immutable seal provide durability. These are bounded discovery counts, not all consumer semantic qualification. Delegated/structured/anonymous/top-level and cold populations remain .1.2/.1.3; confirmed file helper and stale T1986 repairs are immediate .2.1/.2.2. Initial unbound UTF8 draft is not qualification; retained anchored-positive and cold lexical drafts explain corrected instrument limits.
+- [x] **NO REGRESSION** — Current file/local origin and book checks report `All tests successful` in focused.txt; both complete origin tests and book matrices pass. The separate T1986 predecessor failure remains explicit with its raw Files=3/Tests56/Failed1 receipt and P2 owner; it is not counted green. Production/prior archives remain unchanged; book build/rendered text passes without browser visual QA. Cold baseline replay and corruption rejection pass. Measured live-doc allowances preserve their baselines/ceilings; fresh claims and staged doctrines follow in the checks directory before normal hooks. No HDL, full CI or push.

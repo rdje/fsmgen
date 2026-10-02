@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/refusal-oracle-census-20261002/verify.py", line 125, in <module>
+    verify_helpers(helpers)
+    ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/refusal-oracle-census-20261002/verify.py", line 114, in verify_helpers
+    assert expected not in subject, 'caller echo is not the actual reason'
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: caller echo is not the actual reason

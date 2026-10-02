@@ -1,0 +1,27 @@
+ram-guard: PID 75352; host 62.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'output frame source refuses'
+    #   at t/1986-isf-record-port-value-gates.t line 89.
+
+    #   Failed test 'output frame source names the cause in its diagnostic line'
+    #   at t/1986-isf-record-port-value-gates.t line 90.
+    #                   ''
+    #     doesn't match '(?^:interface port 'value' references aggregate type)'
+    # Looks like you failed 2 tests of 4.
+
+#   Failed test 'deferred output and list-root source carriers remain closed'
+#   at t/1986-isf-record-port-value-gates.t line 293.
+# Looks like you failed 1 test of 10.
+t/1986-isf-record-port-value-gates.t ......... 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/10 subtests 
+t/2048-isf-file-document-origin-authority.t .. ok
+t/2052-isf-local-formal-origin-authority.t ... ok
+
+Test Summary Report
+-------------------
+t/1986-isf-record-port-value-gates.t       (Wstat: 256 Tests: 10 Failed: 1)
+  Failed test:  10
+  Non-zero exit status: 1
+Files=3, Tests=56, 88 wallclock secs ( 0.24 usr  0.04 sys + 78.08 cusr  2.70 csys = 81.06 CPU)
+Result: FAIL

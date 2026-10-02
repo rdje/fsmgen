@@ -1,0 +1,26 @@
+ram-guard: PID 47232; host 73.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ok 1 - actual file-wrong_echo refuses
+ok 2 - precise actual file authority refusal
+ok 3 - actual file-correct refuses
+not ok 4 - precise actual file authority refusal
+#   Failed test 'precise actual file authority refusal'
+#   at (eval 49) line 5.
+#                   'file origin independent document set required
+#  at t/lib/FSM/Test/FileDocumentOriginAuthority.pm line 21.
+# 	FSM::Test::FileDocumentOriginAuthority::from_files("FSM::Test::FileDocumentOriginAuthority", "missing.isf", HASH(0x74f8016d98), ARRAY(0x74fa0ac648)) called at docs/audits/refusal-oracle-census-20261002/probe_helpers.pl line 38
+# 	eval {...} called at docs/audits/refusal-oracle-census-20261002/probe_helpers.pl line 38
+# 	main::__ANON__() called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	FSM::Census::FileHelper::refuses("file-correct", CODE(0x74f702dee8), qr(\Afile origin independent document set required\z), ARRAY(0x74f8a8a8e8)) called at docs/audits/refusal-oracle-census-20261002/probe_helpers.pl line 42
+# '
+#     doesn't match '(?^:\Afile origin independent document set required\z)'
+ok 5 - value-wrong_echo refuses
+not ok 6 - value-wrong_echo names the cause in its diagnostic line
+#   Failed test 'value-wrong_echo names the cause in its diagnostic line'
+#   at (eval 52) line 7.
+#                   'file origin independent document set required'
+#     doesn't match '(?^:oracle_echo_expected_marker)'
+ok 7 - value-correct refuses
+ok 8 - value-correct names the cause in its diagnostic line
+1..8
+# Looks like you failed 2 tests of 8.

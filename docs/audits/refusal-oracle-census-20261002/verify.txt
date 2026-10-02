@@ -1,0 +1,1 @@
+{"actual_file_helper": "vulnerable; repair separately owned", "actual_value_helper": "first-line precedent rejects caller echo", "files": 2601, "named_refusal_spans": 24, "shared_corruptions_rejected": ["missing-file", "changed-span", "missing-record", "wrong-source-hash"], "spans": 244, "status": "qualified bounded discovery"}

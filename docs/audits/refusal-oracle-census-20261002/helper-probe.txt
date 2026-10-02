@@ -1,0 +1,14 @@
+ok 1 - actual file-wrong_echo refuses
+ok 2 - precise actual file authority refusal
+ok 3 - actual file-correct refuses
+ok 4 - precise actual file authority refusal
+ok 5 - value-wrong_echo refuses
+not ok 6 - value-wrong_echo names the cause in its diagnostic line
+#   Failed test 'value-wrong_echo names the cause in its diagnostic line'
+#   at (eval 52) line 7.
+#                   'file origin independent document set required'
+#     doesn't match '(?^:oracle_echo_expected_marker)'
+ok 7 - value-correct refuses
+ok 8 - value-correct names the cause in its diagnostic line
+1..8
+# Looks like you failed 1 test of 8.

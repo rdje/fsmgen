@@ -1,0 +1,1 @@
+{"candidate_spans": 244, "discovery_files": 2601, "encoding_observations": [{"offset": 4956, "path": "perl/gdcheck.pl", "policy": "ASCII discovery on original bytes; JSON surrogateescape preserves non-UTF8 bytes"}], "named_refusal_spans": 24}

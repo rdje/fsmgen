@@ -116,10 +116,13 @@ original catalog and call identities remain distinct. It preserves explicit
 input/output formal identities through sibling and actor-pin shadows, nested
 clauses and inline calls. Complete ordinary preparation, physical actors, plans
 and primitive kinds agree; missing associations and forged reloads refuse.
-These refusal oracles match the first diagnostic line: Perl stack traces can echo the
+The local formal refusal oracle matches the first diagnostic line: Perl stack traces can echo the
 caller’s expected regex. The initial invalid network fixture falsely passed
 a full-stack match; a valid instance fixture and a genuine echoed-regex control
 now qualify that boundary. Earlier evidence remains archived as superseded.
+The current file-origin test helper also accepts a caller-echoed wrong reason;
+its repair and fresh file-boundary qualification are owned before further
+source-intent signoff. Other diagnostic consumers remain under audit.
 
 This observer preserves the existing first-clause behavior, including current
 macro placement defects and inline-procedure `cond` refusals. Imported/reusable

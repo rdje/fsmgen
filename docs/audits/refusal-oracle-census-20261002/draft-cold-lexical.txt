@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/refusal-oracle-census-20261002/verify.py", line 101, in <module>
+    verify_discovery(discovery)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/refusal-oracle-census-20261002/verify.py", line 58, in verify_discovery
+    assert actual == records
+           ^^^^^^^^^^^^^^^^^
+AssertionError

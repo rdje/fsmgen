@@ -1,0 +1,28 @@
+{
+  "actual_helper_control": "perl docs/audits/refusal-oracle-census-20261002/probe_helpers.pl",
+  "baseline": "2a18b06d98a371103d432529a415c5b58a6ff14c",
+  "canonical_precedent": "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md",
+  "cold": "python3 docs/audits/refusal-oracle-census-20261002/verify.py",
+  "cold_red": "python3 docs/audits/refusal-oracle-census-20261002/verify.py --wrong-subject",
+  "cold_red_status": 1,
+  "discovery": "python3 docs/audits/refusal-oracle-census-20261002/collect.py",
+  "helper_failed": 1,
+  "helper_status": 1,
+  "helper_tests": 8,
+  "instrument_fingerprints": {
+    "collect.py": {
+      "bytes": 2959,
+      "sha256": "9f827e7b99df1ae7410e481388406f9799e58ea4ddb0293afffca65fb89e68cb"
+    },
+    "probe_helpers.pl": {
+      "bytes": 2546,
+      "sha256": "97da8bfc9063296bef4bf68418f5b219674d457087bd91a7ae00f98ac41c567d"
+    },
+    "verify.py": {
+      "bytes": 6761,
+      "sha256": "0915d84606884b6fdf88f10860cb4a50494809fbbd4a9f3d74888b9a767516c8"
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.1",
+  "replay": "Copy instruments to a new .artifacts workspace and redirect their output there; never overwrite this sealed directory. Cold verifier reads immutable baseline Git blobs and saved products."
+}
