@@ -8802,6 +8802,13 @@ sub _ir_on {
 
 sub _ir_when_activation {
     my ($cl, $tn, $i) = @_;
+    for my $body_clause (@{$cl}[2 .. $#$cl]) {
+        confess "Transaction '$tn': when activation body supports only '(sample port as name)' clauses; "
+            . "put actions after the entry guard or use '(on PORT)' followed by a branching '(when ...)'\n"
+            unless ref($body_clause) eq 'ARRAY' && @$body_clause
+                && defined($body_clause->[0]) && !ref($body_clause->[0])
+                && $body_clause->[0] eq 'sample';
+    }
     my $event = $cl->[1];
     my $guard = _entry_activation_guard($event);
     my @assignments = map { +{ %$_, guard => $guard } } _inline_on_samples($cl);

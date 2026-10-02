@@ -1,0 +1,4 @@
+ram-guard: PID 62485; host 80.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2040-isf-first-when-activation-body.t syntax OK
+perl/FSM/Scheduler/ISF/LoweringIR.pm syntax OK
+Python source syntax OK (no cache emitted)

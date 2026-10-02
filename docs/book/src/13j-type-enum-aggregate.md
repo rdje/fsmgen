@@ -168,8 +168,9 @@ queries reject unconnected child ports. See the
 The [detached child read plan](../../../docs/audits/record-output-owner-read-preparation-20261002/scope.txt)
 qualifies private typed data inputs, source-name masking and emitted operand
 rebasing, including record outputs named `start` and `done`. Production owner
-routes and output writer handoffs remain open. The separately owned first-`when`
-action omission and scalar X/Z false-operand diagnosis precede read integration;
+routes and output writer handoffs remain open. Entry `when` bodies now refuse
+unsupported actions rather than dropping them. First-operation conditional macro
+intent and scalar X/Z false-operand diagnosis still precede read integration;
 this preparation does not establish output execution or X/Z behavior.
 Actual local/imported/alias/mixed,
 reverse-copy and owning-domain carriers strictly replay; this establishes source

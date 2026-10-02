@@ -460,6 +460,40 @@ controller at entry. Reset still clears its underlying register. Entry guards
 control these samples and transitions; they do not guard every bookkeeping
 assignment, such as `can_accept`.
 
+An entry `when` accepts inline samples. Other inline actions now fail with
+`when activation body supports only '(sample port as name)' clauses`.
+Place those actions after the entry guard:
+
+```lisp
+(actor when_activation_samples
+  (clock clk) (reset (rst_n sync active_low))
+  (interface (input request) (input allow) (input datain (width 3))
+             (output seen (width 3)) (output done))
+  (transaction main
+    (when (& request allow) (sample datain as captured))
+    (set seen captured)
+    (complete done)))
+```
+
+For a conditional action after accepting `request`, use a separate branch:
+
+```lisp
+(actor when_branch_actions
+  (clock clk) (reset (rst_n sync active_low))
+  (interface (input request) (input allow) (input datain (width 3))
+             (output seen (width 3)) (output done))
+  (transaction main
+    (on request)
+    (when allow (set seen datain))
+    (complete done)))
+```
+
+Declarations and `(wait 0)` add no preceding state. A `when` after them still
+selects entry activation. An initialized local or a positive wait creates a
+state, so a following `when` has the normal branch behavior. The
+[entry-body evidence](../../../docs/audits/first-when-activation-body-20261002/scope.txt)
+preserves actual source, public refusal and unchanged sample/branch controls.
+
 **Implicit signals created**:
 | Signal | Width | Purpose |
 |--------|-------|---------|

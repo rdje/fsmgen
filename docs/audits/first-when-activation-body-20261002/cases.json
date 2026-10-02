@@ -1,0 +1,199 @@
+[
+  {
+    "name": "negative_set",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": []
+  },
+  {
+    "name": "negative_update",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": []
+  },
+  {
+    "name": "negative_wait",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": []
+  },
+  {
+    "name": "negative_complete",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": []
+  },
+  {
+    "name": "negative_drive",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": []
+  },
+  {
+    "name": "negative_nested",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": []
+  },
+  {
+    "name": "negative_repeat",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": []
+  },
+  {
+    "name": "negative_mixed",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": []
+  },
+  {
+    "name": "negative_metadata",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": []
+  },
+  {
+    "name": "negative_domain",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": []
+  },
+  {
+    "name": "positive_on_label",
+    "refuse": false,
+    "guard": "request",
+    "samples": [
+      "captured"
+    ],
+    "writes": [
+      "seen"
+    ]
+  },
+  {
+    "name": "positive_when_zero",
+    "refuse": false,
+    "guard": "0",
+    "samples": [
+      "captured"
+    ],
+    "writes": [
+      "seen"
+    ]
+  },
+  {
+    "name": "positive_when_one",
+    "refuse": false,
+    "guard": "1",
+    "samples": [
+      "captured"
+    ],
+    "writes": [
+      "seen"
+    ]
+  },
+  {
+    "name": "positive_when_expr",
+    "refuse": false,
+    "guard": "(& request allow)",
+    "samples": [
+      "captured",
+      "saved"
+    ],
+    "writes": [
+      "seen"
+    ]
+  },
+  {
+    "name": "positive_metadata",
+    "refuse": false,
+    "guard": "allow",
+    "samples": [
+      "captured"
+    ],
+    "writes": [
+      "seen"
+    ]
+  },
+  {
+    "name": "positive_wait_zero",
+    "refuse": false,
+    "guard": "allow",
+    "samples": [
+      "captured"
+    ],
+    "writes": [
+      "seen"
+    ]
+  },
+  {
+    "name": "positive_branch_on",
+    "refuse": false,
+    "guard": "request",
+    "samples": [],
+    "writes": [
+      "seen"
+    ]
+  },
+  {
+    "name": "positive_branch_wait",
+    "refuse": false,
+    "guard": null,
+    "samples": [],
+    "writes": [
+      "seen"
+    ]
+  },
+  {
+    "name": "positive_branch_local_init",
+    "refuse": false,
+    "guard": null,
+    "samples": [],
+    "writes": [
+      "temp",
+      "seen"
+    ]
+  },
+  {
+    "name": "negative_generated",
+    "refuse": true,
+    "guard": null,
+    "samples": [],
+    "writes": [],
+    "module": "worker"
+  },
+  {
+    "name": "positive_generated",
+    "refuse": false,
+    "guard": null,
+    "samples": [
+      "captured"
+    ],
+    "writes": [
+      "result"
+    ],
+    "module": "worker"
+  },
+  {
+    "name": "positive_domain",
+    "refuse": false,
+    "guard": "allow",
+    "samples": [
+      "captured"
+    ],
+    "writes": [
+      "seen"
+    ],
+    "module": "positive_domain__domain_io"
+  }
+]

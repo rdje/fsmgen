@@ -327,8 +327,11 @@ handshakes. It preserves local/static identities, explicit samples and recursive
 record types, including output names that collide with `start` or `done`.
 This preparation is not connected to production lowering; parent owner routes,
 output writer handoffs and complete physical admission remain prerequisites.
-The first-`when` activation action omission and the false `x01` operand diagnosis
-for a canonical X/Z scalar literal are separately owned before read integration.
+The first-`when` action omission now has a precise source refusal: entry bodies
+accept only inline samples, and other actions must follow the guard or use a
+later branch after `(on PORT)`. First-operation conditional macro intent and
+the false `x01` operand diagnosis for a canonical X/Z scalar literal remain
+separately owned before read integration.
 Evidence: `docs/audits/record-output-owner-read-preparation-20261002/scope.txt`.
 
 Typed output `(reset ...)` and `(default ...)` metadata remain refused.

@@ -1,0 +1,1 @@
+(actor positive_wait_zero (clock clk) (reset (rst_n sync active_low)) (interface (input request) (input allow) (input datain (width 3)) (output seen (width 3)) (output done)) (drive tick (seen datain))  (transaction main (wait 0) (when allow (sample datain as captured)) (set seen captured) (complete done)))

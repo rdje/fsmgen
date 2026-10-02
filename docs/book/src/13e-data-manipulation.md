@@ -55,6 +55,12 @@ false path. (`.fsm` has no ternary operator, so this lowers to two sequential
 decision states rather than a single combinational mux — the two conditional
 writes to `DST` each get their own write-enable.)
 
+Place an explicit activation such as `(on start)` before `select`. A first
+`select` currently expands to an entry `when` containing an unsupported action
+and is refused. Its source-intent repair is owned by SEM `.60.4.3.3.5.2.1.5`;
+this boundary does not establish support for other first-operation conditional
+macros. The example below includes the required activation.
+
 A runnable upper-clamp (saturate a value at 100):
 
 ```lisp

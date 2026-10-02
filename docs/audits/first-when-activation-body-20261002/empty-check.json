@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "perl",
+    "bin/fsmgen",
+    "--strict",
+    "--check",
+    "--json",
+    "docs/audits/first-when-activation-body-20261002/sources/negative_empty.isf"
+  ],
+  "returncode": 1,
+  "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 1,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : true,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {\n         \"error\" : 1\n      },\n      \"success\" : false,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [\n      {\n         \"code\" : null,\n         \"expected_child_source_file\" : null,\n         \"expected_rtl_metadata_file\" : null,\n         \"family\" : \"unclassified\",\n         \"generated_child_source\" : null,\n         \"message\" : \"Transaction 'main': when body clauses must be list forms in transaction body\",\n         \"migration_hint_available\" : false,\n         \"parent_composition_source\" : null,\n         \"rtl_metadata_file\" : null,\n         \"severity\" : \"error\",\n         \"source_file\" : \"docs/audits/first-when-activation-body-20261002/sources/negative_empty.isf\",\n         \"stability\" : \"unclassified\",\n         \"summary\" : \"Unclassified FSMGen failure.\",\n         \"support_accounting\" : {\n            \"matched\" : false\n         }\n      }\n   ],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/first-when-activation-body-20261002/sources/negative_empty.isf\",\n      \"resolved_path\" : \"docs/audits/first-when-activation-body-20261002/sources/negative_empty.isf\"\n   },\n   \"success\" : false\n}\n",
+  "stderr": ""
+}

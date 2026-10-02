@@ -1,0 +1,8 @@
+ram-guard: PID 98169; host 48.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2039-isf-child-output-read-preparation.t ............ ok
+t/1206-isf-when-clause-boundary.t ..................... ok
+t/1180-isf-unsupported-transaction-clause-boundary.t .. ok
+t/1973-isf-writer-activation-predicates.t ............. ok
+All tests successful.
+Files=4, Tests=49, 44 wallclock secs ( 0.04 usr  0.02 sys + 30.65 cusr 12.14 csys = 42.85 CPU)
+Result: PASS

@@ -1,0 +1,1025 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Types, Enums, and Aggregates - FSMGen Book</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Progressive, example-rich documentation for FSMGen and the .fsm language.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-37f8042f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-7727513f.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSMGen Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="isf-types-enums-and-aggregates"><a class="header" href="#isf-types-enums-and-aggregates">ISF Types, Enums, And Aggregates</a></h1>
+<p>This chapter is the review surface for the shipped <code>.isf</code> type, enum, and
+aggregate subset. It describes what authors may write today, what the scheduled
+<code>.fsm</code> review artifact preserves, and what still fails closed.</p>
+<p>The important rule is that ISF does not own a separate type system. Local
+<code>(types ...)</code> and <code>(enums ...)</code> declarations, package imports, scalar aliases,
+enum members, and packed aggregate aliases reuse the same <code>.fsm</code> declaration
+and package machinery that direct <code>.fsm</code> roots already use.</p>
+<h2 id="declarations-and-imports"><a class="header" href="#declarations-and-imports">Declarations And Imports</a></h2>
+<p>Actor-local declarations are written in the actor body. Schematic
+shape (the actor body continues with <code>(interface ...)</code> and one or
+more <code>(transaction ...)</code> clauses):</p>
+<pre><code class="language-text">(actor typed_actor
+  (types
+    (type byte (bits 8))
+    (type frame_t (record (mode (bits 2)) (flag bit)))
+    (type lanes_t (list bit (bits 2))))
+  (enums
+    (mode (IDLE 0) (BUSY 1)))
+  (clock clk)
+  (reset rst)
+  ...)
+</code></pre>
+<p>Existing <code>.fsm</code> package roots can be imported by name:</p>
+<pre><code class="language-text">(actor package_typed_actor
+  (imports
+    (package shared))
+  (clock clk)
+  (reset rst)
+  ...)
+</code></pre>
+<p>The scheduled <code>.fsm</code> preserves these declarations as review artifacts:</p>
+<pre><code class="language-lisp">(+import shared)
+(+types
+  (type byte (bits 8))
+  (type frame_t (record (mode (bits 2)) (flag bit))))
+(+enums
+  (mode (IDLE 0) (BUSY 1)))
+</code></pre>
+<p>Imported package roots are embedded into the scheduled <code>.fsm</code> output so CLI HDL
+generation remains self-contained even when the lowerer uses a temporary
+scheduled <code>.fsm</code> path.</p>
+<h2 id="scalar-type-aliases"><a class="header" href="#scalar-type-aliases">Scalar Type Aliases</a></h2>
+<p>Width-bearing declarations may use <code>(type NAME)</code> instead of <code>(width N)</code> when
+<code>NAME</code> resolves to a scalar alias.</p>
+<pre><code class="language-lisp">(interface
+  (input data (type byte))
+  (output mode_out (type shared.mode_bits)))
+
+(transaction tx
+  (ports
+    (input payload (type byte)))
+  ...)
+
+(storage
+  (var scratch (type byte)))
+</code></pre>
+<p><code>NAME</code> may be actor-local (<code>byte</code>) or package-qualified
+(<code>shared.mode_bits</code>). <code>(width N)</code> and <code>(type NAME)</code> are mutually exclusive on
+the same declaration. Unknown aliases fail before lowering.</p>
+<h2 id="aggregate-storage-carriers"><a class="header" href="#aggregate-storage-carriers">Aggregate Storage Carriers</a></h2>
+<p>Packed <code>list</code> and <code>record</code> aliases are accepted on actor-owned storage variables.
+Packed records also support actor input ports, as described below.</p>
+<p>Record-output declarations and exact-type whole copies are now source-admitted.
+Their complete public/generated/backend execution qualification remains open.
+The mandatory scheduler gate applies the qualified conservative writer rules
+to each actual bound module before publishing a schedule or scheduled <code>.fsm</code>;
+a multi-domain actor is checked through its separate owning domain modules.
+The preparatory inventory matches each resolved output declaration to its actual
+module port and joins every write to its packed range, explicit source owner
+and activation conditions. A whole output overlaps each of its members;
+different members may be disjoint. Repeated states of one controller and
+independent controllers require different admission evidence. Equal values,
+entry conditions and an empty legacy conflict report do not establish exclusion.
+Local/imported nested layouts, rule/drive writers and actual domain modules are
+qualified for inventory. Its private admission consumer now accepts a sole
+writer or ordinary <code>&lt;-</code> assignments in different states of one explicitly owned
+transaction controller, together with disjoint physical targets. Overlapping
+independent writers, duplicate writes in one active state or DT, and timed
+operators have no inferred compatibility or exclusion. Caller-supplied filtered
+writer lists are refused. The private inventory can inspect unresolved writer combinations; public
+scheduling and emission must pass admission.
+Generated output mappings remain closed until their handoff mapping is qualified. See the
+<a href="../../../docs/audits/record-output-writer-inventory-20261001/scope.txt">inventory evidence</a>.
+The <a href="../../../docs/audits/record-output-admission-20261001/scope.txt">admission evidence</a>
+retains the bounded rules and counterexamples. Independent-controller runtime
+reachability remains governed by its separate repair and qualification tasks.</p>
+<p>Output-only and mixed record contexts now have their mandatory preparatory
+source gates. Whole copies require the same resolved record type. Scalar
+samples preserve the leaf’s width, signedness and state model in a private alias;
+they cannot replace an existing declaration. Output record fields retain their
+owning clock domain, so a read in another domain requires an explicit crossing.
+The source policy keeps output member writes closed while preserving scalar
+output slices and the prepared type toolkit’s member facts. These checks now guard authored output declarations and whole copies; they do
+not qualify output execution. See the
+<a href="../../../docs/audits/record-output-source-contexts-20261001/scope.txt">source-context evidence</a>.</p>
+<p>The shared HDL profile guard also applies to authored record outputs.
+Unsupported <code>verilog</code>/<code>v</code> and <code>vhdl</code> requests name the actor, output and authored
+type and recommend <code>systemverilog</code>. Mixed Verilog interfaces preserve the
+existing input diagnostic priority. The old input-only helper retains its
+contract, and target-neutral schedule preview stays available. Actual local,
+imported, aliased, mixed and unused output sources now qualify the same normal
+native/facade refusals, complete machine error products and atomic destinations.
+SystemVerilog and its <code>sv</code> alias retain complete supported native HDL text apart
+from date banners; these generation checks do not establish runtime support.
+See the <a href="../../../docs/audits/record-output-target-profiles-20261001/scope.txt">actual target-profile evidence</a>.
+See the <a href="../../../docs/audits/record-output-hdl-profiles-20261001/scope.txt">profile evidence</a>.</p>
+<p>A whole copy can publish actor-owned storage through a declared record output:</p>
+<pre><code class="language-lisp">(actor record_output_example
+ (clock clk)
+ (types (type frame (record (tag (bits 2)) (payload (bits 3)))))
+ (interface (input start) (output packet (type frame)) (output done))
+ (storage (var held (type frame)))
+ (transaction main
+  (on start)
+  (set held.tag 1)
+  (set held.payload 5)
+  (set packet held)
+  (complete done)))
+</code></pre>
+<p>The output keeps the existing type alias and packing. Output-to-storage and
+output-to-output whole copies are also permitted when their complete resolved
+record types match and declared roles allow the read/write. Matching width alone
+is insufficient. Scalar output-field reads and explicit scalar captures retain
+the leaf’s exact type. Undriven outputs promise no value. Typed output reset and
+default options, whole-record inferred captures and root-list/formal aggregates
+remain closed. Output member writes retain their separate qualification gate.
+Independent overlapping output writers refuse even with equal values, different
+entry guards or a priority declaration. Generated record-output mappings remain
+closed until their handoff qualification. This gate applies even when the
+record output is unused or the child uses only a scalar formal with the same
+name. Plain local <code>do</code> without generated children remains accepted. Actual
+spawned, parameterized blocking and owning-domain captures show that generated
+output reads need live owner views and whole writes need an owner update route.
+Both repairs precede publication; merely removing the gate would expose missing
+wiring. Scalar sibling schedules can succeed while strict check and semantic
+queries reject unconnected child ports. See the
+<a href="../../../docs/audits/record-output-generated-ingress-20261002/scope.txt">generated-output ingress</a>.</p>
+<p>The <a href="../../../docs/audits/record-output-owner-read-preparation-20261002/scope.txt">detached child read plan</a>
+qualifies private typed data inputs, source-name masking and emitted operand
+rebasing, including record outputs named <code>start</code> and <code>done</code>. Production owner
+routes and output writer handoffs remain open. Entry <code>when</code> bodies now refuse
+unsupported actions rather than dropping them. First-operation conditional macro
+intent and scalar X/Z false-operand diagnosis still precede read integration;
+this preparation does not establish output execution or X/Z behavior.
+Actual local/imported/alias/mixed,
+reverse-copy and owning-domain carriers strictly replay; this establishes source
+and carrier admission, with execution still pending. See the
+<a href="../../../docs/audits/record-output-source-admission-20261001/scope.txt">source-integration evidence</a>.</p>
+<p>Native check and semantic reports return the successful authored declarations in
+<code>source.interface_ports</code>; schedule reports return <code>interface_ports</code> and
+<code>clock_domains[].interface_ports</code> for the selected domains. Inputs precede outputs,
+with authored order inside each role. Local, forward and imported aliases, mixed
+interfaces, reverse copies and unused outputs retain complete layouts and types
+through the in-process API and newline MCP tools. Signed and state-model facts
+remain explicit; absent state models stay absent. These public products are
+qualified separately from HDL execution. See the
+<a href="../../../docs/audits/record-output-public-sources-20261001/scope.txt">public-source evidence</a>.</p>
+<p>Save the example above as <code>.artifacts/record-output-example.isf</code>, then query it:</p>
+<pre><code class="language-bash">./bin/fsmgen --strict --check --json .artifacts/record-output-example.isf
+./bin/fsmgen --strict --emit-semantic-json .artifacts/record-output-example.isf
+./bin/fsmgen --emit-schedule-json .artifacts/record-output-example.isf
+</code></pre>
+<p>A failed check or semantic query returns <code>success: false</code> and its contextual
+diagnostic, without successful declaration metadata or a partial semantic result.
+A failed schedule query publishes no schedule JSON; API/MCP retain their existing
+message-only error contract. Target-profile atomic qualification and the finite complete
+predecessor comparison are complete. Existing local/imported/shadowed/unused inputs,
+maintained scalar/storage examples and generated/domain input sources retain their
+complete public reports, strict carriers and SystemVerilog generation products.
+Only qualified repository/generated-lowering directory prefixes and date banners
+are normalized. <a href="../../../docs/audits/record-output-predecessors-20261002/scope.txt">Comparison evidence</a>
+retains the full responses and failed capture controls. The maintained
+<code>isf/record_output.isf</code> now supplies a nested record/list input/storage/output
+example with signed/state metadata, a whole output copy and a scalar output-field
+read. Its <code>feature.isf_record_output</code> supported-smoke owner covers bounded source,
+reports, lowering and SystemVerilog generation. T2037 independently qualifies
+literal declaration/type/layout and corrupt-data refusal. Complete predecessor/
+current catalog, all query cohort applicability and native/API/newline discovery
+are retained in the <a href="../../../docs/audits/record-output-corpus-20261002/scope.txt">corpus receipt</a>.
+Only the new entry and derived accounting change; all prior source hashes and
+metadata remain exact. This does not claim actual execution of every cohort row.
+Generated output mappings, field writes and execution remain separately gated.</p>
+<pre><code class="language-lisp">(storage
+  (var frame (type frame_t))
+  (var lanes (type shared.lanes_t)))
+</code></pre>
+<p>The scheduled <code>.fsm</code> keeps the authored alias in typed <code>+size</code> review entries,
+and schedule reports expose the storage item with its packed <code>width</code>, authored
+<code>type</code>, and resolved <code>type_kind</code> (<code>record</code> or <code>list</code>).</p>
+<p>Packed record actor inputs are admitted with <code>(input NAME (type T))</code>, where
+<code>T</code> is a local or package-qualified alias. Fields are live scalar reads in
+supported transaction conditions, <code>set</code>/<code>update</code> RHS values, rules and drives.
+Nested record members, list items and scalar slices use the existing packed
+layout. The first authored member occupies the most significant bits.</p>
+<pre><code class="language-lisp">(actor record_input
+ (types (type frame (record (flag bit) (data (signed (four_state (bits 5)))))))
+ (interface (input start) (input packet (type frame))
+  (output seen (width 5)) (output done))
+ (storage (var held (type frame)))
+ (transaction main
+  (on start)
+  (set held packet)
+  (set seen packet.data)
+  (complete done)))
+</code></pre>
+<p>The maintained example is <a href="../../../isf/record_input.isf">record_input.isf</a>.
+Run <code>./bin/fsmgen --strict --check --json isf/record_input.isf</code> from the repository root.</p>
+<p>That example uses a local alias to an imported record. Its companion
+<a href="../../../isf/record_input_types.fsm">record_input_types.fsm</a> declares the package:</p>
+<pre><code class="language-lisp">(?pkg:record_input_types
+  (+types
+    (type frame (record (flag bit) (data (signed (four_state (bits 5))))))))
+</code></pre>
+<p>The actor imports it and retains its local spelling:</p>
+<pre><code class="language-lisp">(imports (package record_input_types))
+(types (type frame record_input_types.frame))
+</code></pre>
+<p>Local aliases and nested members may reference declared imported types. Imports
+resolve before local aliases; qualified names remain in their package namespace.
+Forward local aliases also work. Missing types and undeclared packages refuse.
+The scheduled carrier embeds the package root for independent strict replay.
+T2014 qualifies accepted nested/imported/nearest-shadow public sources; T2015
+qualifies scalar and nested imported dependencies. T2016 qualifies contextual
+public refusals. T2017 qualifies the unchanged supplied SPECFORGE whole-copy and
+field-guard sources, the exact earlier storage-only products and complete public
+discovery. The supplied <a href="../../../docs/audits/specforge-aggregate-intake-20260930/record-port.isf">whole-copy source</a>
+uses a sixteen-bit input: subtype occupies bits 15 through 12, payload bits 11
+through 0. Its <a href="../../../docs/audits/specforge-aggregate-intake-20260930/record-port-field-guard.isf">field guard</a>
+reads that same layout. Frontend and generated/domain source, report and replay
+qualification is complete. Supported input backend and binary execution profiles
+are qualified below; complete output-dependent consumer delivery remains open.</p>
+<p>Generated readers retain one typed packed input in their private interface.
+Reused instances receive the live actor input independently; an unread inherited
+input is omitted from the child while the authored top declaration remains.
+An input-to-storage copy keeps the register and its reset in the actor or domain
+owner. A sole generated writer supplies typed private write data and an explicit
+enable to that owner. Carrier checks establish structure and strict replay; the
+separate direct/generated observations below qualify their timing and reset behavior.</p>
+<p>The runnable <a href="../../../isf/record_input_children.isf">record_input_children.isf</a>
+imports the same package and reuses a reader in domain <code>io</code>:</p>
+<pre><code class="language-lisp">(transaction worker (domain io)
+  (ports (output result (width 5)))
+  (wait 2)
+  (set result packet.data)
+  (complete done))
+(transaction main (domain io)
+  (on start)
+  (set held packet)
+  (spawn worker as left (bind (output result seen)))
+  (spawn worker as right (bind (output result again)))
+  (await_all done)
+  (complete done))
+</code></pre>
+<p>Run <code>./bin/fsmgen --strict --check --json isf/record_input_children.isf</code>.
+Its explicit top exposes the declared inputs and outputs, plus each domain’s
+clock and declared reset. <code>unused</code> stays in clock-only domain <code>idle</code>; <code>packet</code>,
+<code>held</code> and the readers belong to <code>io</code>. There is no implicit crossing or child
+register copy. T2019 independently qualifies local/imported nested aliases,
+reused readers, unused inputs and sole generated copies, including blocking
+calls. Ordinary composition children now retain their source’s embedded package
+context through the normal frontend; external children still resolve packages
+beside their own source. T2020 checks both boundaries.</p>
+<p>Accepted generated/domain check, semantic and schedule queries are also
+qualified through the native CLI, adapter API and actual newline MCP. The
+complete products agree, including declared layouts and reset provenance.
+Clock-only siblings retain an absent reset; each realized reader keeps its
+owning clock and explicit reset contract. Contextual generated/domain refusals
+and prior-product closure are also qualified by T2021 and the execution reconciliation.</p>
+<p>The semantic report distinguishes authored declarations from realized wiring:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Public location</th><th>Meaning</th></tr>
+</thead>
+<tbody>
+<tr><td><code>source.interface_ports</code></td><td>Authored record aliases, scalar leaf layout and declared domains.</td></tr>
+<tr><td><code>semantic.forward_ir.intent_hir.signal_analysis</code></td><td>The composition top’s physical vector pins.</td></tr>
+<tr><td><code>semantic.forward_ir.intent_hir.composition_children[].intent_hir.signal_analysis</code></td><td>Each module’s typed input/output declarations, including <code>declared_type_name</code> and the complete <code>declared_type_spec</code>.</td></tr>
+<tr><td><code>semantic.forward_ir.intent_hir.composition_children[].structural_rtl_ir.ports</code></td><td>The corresponding typed structural ports.</td></tr>
+<tr><td>Schedule <code>clock_domains[].interface_ports</code></td><td>The declarations owned by each domain, including unused inputs.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Join children using <code>instance_name</code>, <code>module_name</code> and <code>source_name</code>. Reused
+readers have distinct instance identities and retain the same declared type.
+Private write-data ports carry the target’s complete record type. Their presence
+does not add authored public pins or permit competing writers.</p>
+<p><code>packet</code> is one six-bit input; it does not become separate field pins.
+<code>packet.flag</code> occupies bit 5 and <code>packet.data</code> bits 4 through 0. The copy into
+<code>held</code> requires the same resolved recursive record type. Equivalent local or
+imported aliases may have different spellings; equal packed width alone is
+insufficient. Member names/order, nested shape, scalar kinds, signed properties
+and declared state models must match. An unspecified state model stays
+unspecified for this comparison. Existing storage-only copies keep their prior
+contract.</p>
+<p>Use <code>(sample packet.data as captured)</code> in an already supported sample position
+when a snapshot is needed. The private scalar alias retains the leaf width,
+signed/state properties and existing capture timing. It adds no public port or
+implicit reset. Alias collisions, shared transaction writers and invalid sample
+paths refuse. Repeated captures by one owner preserve their existing rules.</p>
+<p>Inputs cannot be assignment targets. Unknown members, out-of-range items,
+subaggregate scalar operands, whole-record conditions/arithmetic and whole-record
+sampling refuse. A nearest scalar formal or drive parameter masks an outer
+record. A scalar drive parameter cannot read or write record members, even
+while its width is unresolved, including member access after a scalar selector.
+Bare scalar values and scalar slices keep their
+existing width validation; enum/package names retain their namespace meaning. Named-domain
+reads and copies require the declared owning domain or a supported crossing.
+Generated child scalar outputs still require their published explicit bindings.
+Strict width checks require width-aligned scalar assignments.</p>
+<p>A static bit or slice of a named-drive scalar parameter follows that parameter,
+including inside an expression. It does not read a same-named actor record.
+The existing bare-parameter assignment supplies the parameter width; a selector
+alone does not borrow a wider outer declaration. For example, <code>whole</code> establishes
+the five-bit parameter below, while <code>seen</code> receives its low four bits:</p>
+<pre><code class="language-lisp">(actor scalar_drive_selectors
+ (clock clk)
+ (types (type frame (record (flag bit) (data (bits 5)))))
+ (interface (input start) (input value (width 5)) (input packet (type frame))
+  (output whole (width 5)) (output seen (width 4)) (output done))
+ (drive (publish packet) (whole packet) (seen packet[3:0]))
+ (transaction main (on start) (drive publish value) (complete done)))
+</code></pre>
+<p>The drive’s <code>packet</code> is scalar and masks the actor’s six-bit record. Its member
+access such as <code>packet.data</code> still refuses. The same parameter identity applies
+to an explicitly bound generated invocation and to the drive’s owning domain.
+Transaction locals retain their existing interface-name collision refusals.</p>
+<p>A generated child’s scalar formal can share an actor record input name. In a
+binding, the formal name identifies the callee port; the actual value belongs
+to the caller. The binding below sends <code>value</code> to the child’s scalar <code>packet</code>:</p>
+<pre><code class="language-lisp">(actor scalar_record_binding
+ (clock clk) (reset (rst_n async active_low))
+ (types (type frame (record (flag bit) (data (bits 5)))))
+ (interface (input start) (input value (width 3)) (input packet (type frame))
+  (output observed (width 3)) (output done))
+ (transaction worker (ports (input packet (width 3)) (output result (width 3)))
+  (set result packet[2:0]) (complete done))
+ (transaction main (on start)
+  (spawn worker as job (bind (input packet value) (output result observed)))
+  (await_all done) (complete done)))
+</code></pre>
+<p>The child keeps its scalar public port and selector. The actor record keeps its
+own type, width and domain; no automatic record connection is added. Transaction
+targets, instance labels and static parameter/domain/timing names also retain
+their identity roles. Existing endpoint, width, timing and domain checks still
+apply. This does not admit record input roots or field reads as binding actuals:
+<code>(input packet actor_record)</code> and <code>(input packet (+ actor_record.data 0))</code> remain
+refused. Bare slices are outside the existing signal/literal/list-expression
+binding grammar; this repair does not introduce another binding form.</p>
+<p>Rejected check and semantic queries retain their complete failure reports and
+nullable diagnostic codes, without successful declarations or partial semantic
+payloads. Schedule failure emits no schedule JSON. Its API and newline transport
+retain the existing message-only error contract; the compiler diagnostic appears
+in native stderr. None of these queries modifies the source or imported package.</p>
+<p>Schedule preview reports scheduled intent before HDL realization. A later
+composition wiring refusal, such as an unbound generated child output, can
+therefore retain a complete schedule preview while strict check and semantic
+queries refuse. Use those strict queries to qualify the realized composition;
+a schedule preview alone does not prove its ports are connected.</p>
+<p>Public report qualification checks complete JSON primitive kinds, source bytes,
+named producers and fixed scalar/storage controls. Historical compatibility
+comparisons permit only independently qualified additive metadata, exact source
+relocation and emitted date banners. HDL execution remains separately qualified.</p>
+<p>Record output declarations and exact-type whole copies are source-admitted
+under SEM <code>.60.4.3.3.4.3</code>. Output member writes, root-list actor ports,
+transaction-local aggregate ports, aggregate banks and variants remain deferred.
+Bounded output public/profile/corpus reconciliation <code>.3.4.4</code> is complete.
+Generated/backend execution qualification <code>.3.5</code> remains open. Whole-root and
+member writes must be compared by their packed ranges and actual owners; an
+empty conflict report does not establish compatibility. No implicit arbitration
+is added. Output-field admission remains the next separate lane.
+The compiler preserves typed
+<code>+size</code>, explicit <code>+interface</code>, exact declaration metadata and private sample
+carriers. Generated/domain source, carrier and complete public qualification
+includes current catalog declarations, full discovery, contextual refusals and
+fixed scalar/storage compatibility controls. Supported input backend profiles and
+packed binary behavior are independently qualified below. Supplied output-dependent
+consumer signoff remains separate work.
+The direct public-pin behavioral witness is executed and qualified for both
+emitted Verilog families. It checks packed layout, entry sampling, live reads,
+whole-copy timing, held values, idle holds, repeated requests and asynchronous
+reset/abort. Its independently authored
+<a href="../../../t/data/isf_record_input_runtime.isf">source</a> and
+<a href="../../../t/data/isf_record_input_runtime_tb.sv">bench</a> change the input around
+public phase outputs. The data member is signed and five bits wide:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Request</th><th style="text-align: right">Entry-sampled data</th><th style="text-align: right">Whole-copy data</th><th style="text-align: right">Later live data</th><th style="text-align: right">Prior held data</th></tr>
+</thead>
+<tbody>
+<tr><td>First</td><td style="text-align: right">7</td><td style="text-align: right">-13</td><td style="text-align: right">-3</td><td style="text-align: right">-14</td></tr>
+<tr><td>Repeated</td><td style="text-align: right">-2</td><td style="text-align: right">9</td><td style="text-align: right">5</td><td style="text-align: right">-13</td></tr>
+<tr><td>After reset/abort</td><td style="text-align: right">3</td><td style="text-align: right">-8</td><td style="text-align: right">-15</td><td style="text-align: right">-14</td></tr>
+</tbody>
+</table>
+</div>
+<p>These independent literals distinguish each read/copy edge; outputs retain
+their assigned values while idle. An actually compiled source with the same
+width but an unsigned data member reaches the bench’s signed-comparison
+rejection. Complete original stage results, source identities, bounds and
+cleanup are retained in the
+<a href="../../../docs/audits/record-input-direct-observation-20261001/manifest.json">sealed observation</a>.
+Generated/domain public-pin behavior is also qualified for the
+<a href="../../../t/data/isf_record_input_generated_domains_runtime.isf">named-domain source</a>
+and <a href="../../../t/data/isf_record_input_generated_blocking_runtime.isf">ordinary blocking source</a>
+in both emitted Verilog families. Both use the table’s independently literal
+entry/copy/live/prior words, reuse live reader instances and give the packed
+register one generated copier. Parent-owned phase outputs separate input
+changes: the bench requires the copied scalar result during phase 1 before
+phase 2, then checks every copied packed leaf and later live reads. Spawned
+scalar bindings forward the child’s retained output; the parameterized blocking
+binding is valid during child completion and defaults to zero afterward.
+The bench checks that distinction again at parent completion and idle.</p>
+<p>Repeated requests, sampled/prior-held values, owning asynchronous reset/abort
+and idle hold pass. The named source retains an unused clock-only sibling;
+changing its input/clock and stopping/restarting that clock do not disturb
+owned values. This establishes no initial-state guarantee for reset-free
+hardware. The actually compiled unsigned counterexample passes its copied
+result observation, then reaches the expected signed-comparison rejection.
+Complete original results, source/producer identities, stage bounds and cleanup
+are retained in the
+<a href="../../../docs/audits/record-input-generated-observation-complete-20261001/manifest.json">complete generated observation</a>.</p>
+<p>The first compile exposed an illegal typed wire containing two-state members;
+the carrier now preserves the same packed typedef on a variable declaration.
+A subsequent blocking test used the wrong late-retention expectation; its
+completion-window correction preserves all packed-storage predicates. Both
+diagnoses, exact predecessor controls and original partial receipts remain
+tracked. SEM <code>.60.4.3.2.5.4.4</code> completes generated execution reconciliation:
+current public reports, contextual refusals, package integration and prior
+scalar/domain-storage contracts pass, with complete typed native/API/newline
+products and unchanged source/producers. Backend profiles <code>.5.5.1</code> retain the
+precise VHDL refusals below. Final public/corpus reconciliation <code>.5.5.2</code> qualifies
+supplied sources, complete discovery, current catalog and JSON kinds, preserving
+the unchanged full-cohort and prior evidence. Independent input signoff
+<code>.5.5.3.2.3</code> closes the selected input portions of R1–R3 against their exact
+source, public, profile and original native evidence. Record-output execution and
+field writers, complete SPECFORGE aggregate delivery, X/Z behavior and historical
+native causality remain separate obligations.</p>
+<p>Record-input HDL support is qualified separately for each backend. The direct,
+generated and named-domain witnesses above execute in both Verilog families.
+The VHDL scaffold refuses these record-input profiles: the mixed signed/two-state
+fixture identifies an unsupported packed member, the supplied whole-copy and
+field-guard fixtures identify their typed input declaration, and the generated
+tops identify their unsupported composition shape. Failure returns no successful
+pipeline product, creates no new HDL destination and preserves an existing one.
+Scalar VHDL inputs and the previously supported inferred packed-output fixtures
+remain supported. Their file emission does not establish VHDL analyzer or runtime
+qualification; see <a href="14l-backends-validation-and-apis.html">the backend boundary</a>.</p>
+<p>For example, this supplied input is accepted by the frontend but its VHDL
+generation refuses the typed <code>lmp_in</code> input:</p>
+<pre><code class="language-bash">./bin/fsmgen --strict --quiet --language vhdl --output .artifacts/record-input.vhd docs/audits/specforge-aggregate-intake-20260930/record-port.isf
+</code></pre>
+<p>Use <code>systemverilog</code> for the qualified record-input HDL profile. HDL requests for these ISF record inputs now refuse <code>verilog</code> and its <code>v</code> alias,
+naming the actor, input and declared type and recommending <code>systemverilog</code>.
+They preserve an existing destination and publish no new or partial HDL product.
+Source parsing, declaration metadata and schedule preview remain target-neutral.
+The historical <code>verilog</code> emitter observation retained packed SystemVerilog
+typedefs in these fixtures. The
+record-input behavior observations compiled both emitter options as <code>.sv</code>
+sources with Verilator’s default SystemVerilog parser. They establish those
+recorded binary behaviors, but do not qualify IEEE 1364 Verilog-2005 syntax.
+The <a href="https://raw.githubusercontent.com/verilator/verilator/v5.050/docs/guide/exe_verilator.rst">version-matched Verilator contract</a>
+defines the default parser and separate language selectors. SEM <code>.5.5.3.2.2</code>
+qualifies the precise current profile refusal and preserves complete SystemVerilog
+HDL against the predecessor apart from date banners. The historical two-emitter
+native archives remain immutable. Current T2024/T2025 preparation targets
+SystemVerilog; any new native execution requires fresh observer qualification.
+T2027 retains
+the precise CLI/public-pipeline refusals, destination preservation, supported
+controls and false-success/wrong-diagnostic counterexamples.</p>
+<p>Run the authored source checks from the repository root:</p>
+<pre><code class="language-bash">./bin/fsmgen --strict --check --json t/data/isf_record_input_generated_domains_runtime.isf
+./bin/fsmgen --strict --check --json t/data/isf_record_input_generated_blocking_runtime.isf
+</code></pre>
+<p>Binary-valued Verilator execution does not establish four-state X/Z behavior;
+signed/state declarations and execution claims are qualified separately.
+See <a href="../../../docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.html#authored-record-input-admission--2026-09-30">0113</a>
+and <a href="13a-actor-interface.html#declared-interface-metadata">declared interface metadata</a>.
+Existing declaration-collision refusals still apply.</p>
+<p>Single-member records and single-item lists also preserve their aggregate
+identity. Nested forms and forward local aliases work in actor declarations
+and survive the scheduled <code>.fsm</code> replay. For example:</p>
+<pre><code class="language-lisp">(actor single_payload
+  (types
+    (type payload_t (list (record (payload byte_t))))
+    (type byte_t (bits 8)))
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input data (width 8))
+    (output result (width 8)))
+  (storage (var value (type payload_t) (reset 0)))
+  (transaction main
+    (on start)
+    (set value data)
+    (set result value)))
+</code></pre>
+<p>Here the storage keeps its nested list/record shape while whole-value transfers
+use the packed representation. Empty aggregates, missing member types,
+duplicate field names, unknown aliases, and dependency cycles fail during type
+resolution. Generated transaction children in ordinary/single-domain actors
+read these same owner-held values through typed internal connections; they do
+not allocate private copies. Whole-value reads use the packed representation,
+and scalar leaf reads retain their exact leaf width. For example:</p>
+<pre><code class="language-lisp">(actor aggregate_child_read
+  (clock clk) (reset (rst_n async active_low))
+  (types (type status_t (record (payload (bits 7)) (flag bit))))
+  (interface (input start) (input data (width 8))
+             (output observed (width 7)) (output done))
+  (storage (var status (type status_t) (reset 0)))
+  (transaction worker
+    (ports (output result (width 7)))
+    (wait 4) (set result status.payload) (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0 (bind (output result observed)))
+    (wait 1) (set status data)
+    (await_all done) (complete done)))
+</code></pre>
+<p>The worker observes the owner’s later payload value. The public ports stay
+scalar; the generated child receives the aggregate root with its type intact.
+See <a href="13f-composition.html">Composition</a> for reset ownership, live-read timing and
+the remaining domain/write boundaries.</p>
+<h2 id="enum-values"><a class="header" href="#enum-values">Enum Values</a></h2>
+<p>Enum members may be local, such as <code>mode.BUSY</code>, or package-qualified, such as
+<code>shared.mode.BUSY</code>. The parser resolves them before lowering in static
+specialization contexts and preserves authored tokens in review contexts where
+the scheduled <code>.fsm</code> can carry them directly.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Context</th><th>ISF example</th><th>Lowered/reported behavior</th></tr>
+</thead>
+<tbody>
+<tr><td>Actor constant</td><td><code>(constants (DEFAULT mode.BUSY))</code></td><td>Preserved in <code>+constants</code>; resolved integer is available for static waits and existing static activation overrides.</td></tr>
+<tr><td>Actor scalar parameter default</td><td><code>(params (DEFAULT mode.BUSY))</code></td><td>Preserved in actor <code>+params</code> and <code>actor_params[]</code>.</td></tr>
+<tr><td>Actor constant-backed parameter default</td><td><code>(params (WIDTH DEFAULT_WIDTH))</code></td><td>Authored constant token is preserved in actor <code>+params</code> and <code>actor_params[]</code>; resolved literal is used internally by scalar parameter consumers such as widths and counts.</td></tr>
+<tr><td>Actor parameter-backed parameter default</td><td><code>(params (BASE_W 8) (WIDTH BASE_W))</code></td><td>Earlier scalar actor parameter tokens are preserved in actor <code>+params</code> and <code>actor_params[]</code>; resolved literals are used internally by scalar parameter consumers.</td></tr>
+<tr><td>Imported package constant-backed parameter default</td><td><code>(params (WIDTH shared.DEFAULT_WIDTH))</code></td><td>Qualified imported package scalar constant tokens are preserved in actor <code>+params</code> and <code>actor_params[]</code>; resolved scalar numeric or exact-width literals are used internally by scalar parameter consumers.</td></tr>
+<tr><td>Imported package constant-backed interface width</td><td><code>(interface (input data (width shared.DEFAULT_WIDTH)))</code></td><td>Qualified imported package scalar constants resolve to integer parser-handoff widths, scheduled <code>.fsm</code> <code>+size</code> entries, schedule-report evidence, and HDL port ranges.</td></tr>
+<tr><td>Imported package constant-backed scalar storage width</td><td><code>(storage (var count (width shared.DEFAULT_WIDTH)))</code></td><td>Qualified imported package scalar constants resolve to integer parser-handoff storage widths, scheduled <code>.fsm</code> <code>+size</code> entries, <code>inferred_storage[]</code> evidence, width evidence, and HDL register ranges.</td></tr>
+<tr><td>Imported package constant-backed bank storage width</td><td><code>(storage (bank data (width shared.DEFAULT_WIDTH) (depth 2)))</code></td><td>Qualified imported package scalar constants resolve to integer parser-handoff bank widths, scalarized scheduled <code>.fsm</code> <code>+size</code> entries, <code>inferred_storage[]</code> and <code>bank_accesses[]</code> evidence, width evidence, and HDL register ranges.</td></tr>
+<tr><td>Imported package constant-backed bank storage depth</td><td><code>(storage (bank data (width 8) (depth shared.DEFAULT_DEPTH)))</code></td><td>Qualified imported package scalar constants resolve to integer parser-handoff bank depths, deterministic scalarized storage families, scheduled <code>.fsm</code> <code>+size</code> entries, <code>inferred_storage[]</code> and <code>bank_accesses[]</code> depth/scalar-entry evidence, and HDL register declarations.</td></tr>
+<tr><td>Actor aggregate/list parameter default leaf</td><td><code>(params (MODES (mode.BUSY mode.IDLE)))</code></td><td>Scalar enum leaves are preserved in compatible aggregate/list defaults.</td></tr>
+<tr><td>Actor constant/parameter/package-backed aggregate/list parameter leaf</td><td><code>(params (BASE_W 8) (LANES (LANE0 BASE_W shared.LANE1)))</code></td><td>Authored actor constant, earlier scalar actor parameter, and qualified imported package scalar constant leaf tokens are preserved while resolved literals are available internally.</td></tr>
+<tr><td>Generated child transaction scalar parameter default</td><td><code>(transaction worker (params (BASE 8) (WIDTH BASE) (MODE mode.BUSY) (DATA_W shared.DEFAULT_WIDTH)) ...)</code></td><td>Earlier scalar transaction parameter tokens, enum tokens, and qualified imported package scalar constant tokens are preserved in child <code>+params</code>; actor constants and actor scalar parameters used in this position are literalized before child/report publication.</td></tr>
+<tr><td>Generated child transaction aggregate/list parameter default leaf</td><td><code>(transaction worker (params (BASE 8) (LANES (BASE LANE0 BASE_W mode.IDLE shared.LANE1))) ...)</code></td><td>Child-local transaction parameter leaves, scalar enum leaves, and qualified imported package scalar constant leaves are preserved; scalar actor-static leaves are literalized.</td></tr>
+<tr><td>Spawn, blocking <code>do</code>, and rule-trigger scalar parameter override</td><td><code>(spawn worker as w0 (params (MODE mode.BUSY)))</code></td><td>Resolved to a literal value in the generated top <code>?fsmc</code> parameter block and generated-composition report.</td></tr>
+<tr><td>Activation aggregate/list override leaf</td><td><code>(spawn worker as w0 (params (MODES (mode.BUSY mode.IDLE))))</code></td><td>Scalar enum leaves resolve to literal aggregate/list override values.</td></tr>
+<tr><td>Package constant-backed activation override</td><td><code>(spawn worker as w0 (params (WIDTH shared.DEFAULT_WIDTH)))</code></td><td>Qualified imported package scalar constants and compatible aggregate/list leaves resolve to literal generated-top bindings and generated-composition report values.</td></tr>
+<tr><td>Reusable-library use-site override</td><td><code>(use lib.actor as u0 (params (MODE mode.BUSY)) ...)</code> or <code>(use lib.actor as u0 (params (MODE shared.DEFAULT_MODE)) ...)</code></td><td>Enum members, importing-actor constants, importing-actor scalar parameter defaults, and qualified imported package scalar constants resolve to literal generated-top bindings and <code>library_uses[]</code> report values.</td></tr>
+<tr><td>Transaction <code>set</code> RHS scalar value</td><td><code>(set mode_out mode.BUSY)</code></td><td>Authored token is preserved in the scheduled <code>.fsm</code> assignment.</td></tr>
+<tr><td>Transaction <code>set</code> RHS expression operand</td><td>`(set mode_out (</td><td>mode_in mode.BUSY))`</td></tr>
+<tr><td>Transaction condition expression operand</td><td><code>(when (== mode_in mode.BUSY) (set fire 1))</code></td><td>Enum member is valid as a scalar operand.</td></tr>
+<tr><td>Standalone transaction <code>when</code>/<code>while</code>/<code>until</code> condition</td><td><code>(when mode.BUSY (set fire 1))</code></td><td>Dotted condition lowers through computed selector syntax such as <code>?(mode.BUSY)</code>.</td></tr>
+<tr><td>Transaction <code>switch</code> selector</td><td><code>(switch mode.BUSY (1 (set fire 1)))</code></td><td>Dotted selector lowers through computed selector syntax.</td></tr>
+<tr><td>Transaction <code>switch</code> branch value</td><td><code>(switch mode_in (mode.BUSY (set fire 1)))</code></td><td>Authored enum token is preserved as the branch scalar value.</td></tr>
+<tr><td>Rule assignment RHS scalar value</td><td><code>(rule r ready (set mode_out mode.BUSY))</code></td><td>Authored token is preserved under the guarded rule DT.</td></tr>
+<tr><td>Rule assignment RHS expression operand</td><td><code>(rule r ready (set mode_out (^ mode_in mode.BUSY)))</code></td><td>Enum member is valid as a scalar operand.</td></tr>
+<tr><td>Rule guard expression operand</td><td><code>(rule r (== mode_in mode.BUSY) (set fire 1))</code></td><td>Enum member is valid as a scalar operand in the guard expression.</td></tr>
+<tr><td>Standalone rule guard</td><td><code>(rule r mode.BUSY (set fire 1))</code></td><td>Guard lowers as a non-state DT header suffix such as <code>&lt;mode.BUSY</code>.</td></tr>
+<tr><td>Named drive body RHS scalar value</td><td><code>(drive publish (mode_out mode.BUSY))</code></td><td>Authored token is preserved in the generated drive DT assignment.</td></tr>
+<tr><td>Named drive body RHS expression operand</td><td><code>(drive publish (mode_out (^ mode_in mode.BUSY)))</code></td><td>Enum member is valid as a scalar operand.</td></tr>
+<tr><td>Inline drive RHS scalar value</td><td><code>(drive publish (mode_out mode.BUSY))</code> in a transaction body</td><td>Authored token is preserved in the generated state assignment.</td></tr>
+<tr><td>Inline drive RHS expression operand</td><td><code>(drive publish (mode_out (^ mode_in mode.BUSY)))</code> in a transaction body</td><td>Enum member is valid as a scalar operand.</td></tr>
+<tr><td>Named drive-call scalar actual</td><td><code>(drive publish mode.BUSY)</code></td><td>Authored token is preserved in the drive parameter assignment.</td></tr>
+<tr><td>Named drive-call expression operand</td><td><code>(drive publish (^ mode_in mode.BUSY))</code></td><td>Enum member is valid as a scalar operand.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Enum members in expression operator position remain rejected. Enum member
+targets also remain rejected because enum members are constants, not writable
+storage or output names. Unsupported enum references fail before scheduled
+<code>.fsm</code> emission with diagnostics that name the unsupported context.</p>
+<h3 id="enum-names-are-not-type-aliases"><a class="header" href="#enum-names-are-not-type-aliases">Enum names are not type aliases</a></h3>
+<p>An <code>(enums (NAME ...))</code> declaration establishes only the enum member-value
+family <code>NAME</code>. It does <strong>not</strong> also establish a scalar type alias named
+<code>NAME</code>. Writing <code>(type NAME)</code> on a width-bearing interface port, transaction
+port, or storage variable when only <code>(enums (NAME ...))</code> is declared fails
+closed:</p>
+<pre><code class="language-text">(actor enum_not_a_type
+  (enums (mode (IDLE 0) (BUSY 1)))
+  (interface
+    (input start)
+    (output state_out (type mode))   ;; &lt;-- ERROR: unknown type 'mode'
+    (output done))
+  ...)
+</code></pre>
+<blockquote>
+<p><code>Error: actor 'enum_not_a_type' interface port 'state_out' references unknown type 'mode'</code></p>
+</blockquote>
+<p>To use an enum name as a width-bearing type, <strong>co-declare a backing scalar
+type alias</strong> <code>(types (type NAME (bits k)))</code> alongside <code>(enums (NAME ...))</code>.
+Co-declaring the same <code>NAME</code> in both <code>(types ...)</code> and <code>(enums ...)</code> is
+accepted and is the intended mechanism — they are distinct declaration roles
+(the <code>(type)</code> provides the width alias used by <code>(type NAME)</code>; the <code>(enums)</code>
+provides the member values used by <code>mode.BUSY</code>-style references), so this is
+not a redeclaration conflict:</p>
+<pre><code class="language-lisp">(actor enum_with_type
+  (clock clk)
+  (reset rst_n)
+  (types (type mode (bits 1)))
+  (enums (mode (IDLE 0) (BUSY 1)))
+  (interface
+    (input start)
+    (output state_out (type mode))
+    (output done))
+  (transaction tx
+    (on start)
+    (complete done)))
+</code></pre>
+<p>The backing <code>(bits k)</code> width is the author’s assertion and is <strong>not</strong>
+cross-validated against enum member magnitudes — <code>(type mode (bits 1))</code> is
+accepted even with a member value that needs more bits. A downstream emitter
+recovering a dense <code>0..N-1</code> enum should choose <code>k = ceil(log2(member_count))</code>.</p>
+<p>Actor-local <code>(types ...)</code>, <code>(enums ...)</code>, and <code>(constants ...)</code> declarations
+need <strong>not</strong> be referenced to be contract-valid: an unreferenced declaration
+lowers cleanly and is preserved in the corresponding scheduled <code>.fsm</code> review
+section.</p>
+<h2 id="aggregate-leaf-values"><a class="header" href="#aggregate-leaf-values">Aggregate Leaf Values</a></h2>
+<p>Aggregate member and item paths are valid only when the root is a declared
+actor-owned aggregate storage variable and the path resolves to a scalar leaf.</p>
+<pre><code class="language-lisp">(storage
+  (var frame (type frame_t))
+  (var lanes (type lanes_t)))
+</code></pre>
+<p>Valid scalar leaves include record members such as <code>frame.flag</code> and list items
+such as <code>lanes[1]</code>. Unknown record members,
+out-of-range list indexes, malformed paths, and paths that resolve to a whole
+record/list fail before lowering.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Context</th><th>ISF example</th><th>Lowered/reported behavior</th></tr>
+</thead>
+<tbody>
+<tr><td>Transaction <code>set</code> RHS scalar value</td><td><code>(set mode_out frame.mode)</code></td><td>Authored aggregate leaf is preserved in the scheduled assignment.</td></tr>
+<tr><td>Transaction <code>set</code> RHS expression operand</td><td><code>(set mode_out (+ frame.mode mode_in))</code></td><td>Aggregate leaf is valid as a scalar operand.</td></tr>
+<tr><td>Transaction <code>set</code> target</td><td><code>(set frame.flag flag_in)</code></td><td>Scalar aggregate leaf is a writable storage leaf target.</td></tr>
+<tr><td>Standalone transaction <code>when</code>/<code>while</code>/<code>until</code> condition</td><td><code>(when frame.flag (set fire 1))</code></td><td>Direct aggregate condition lowers through computed selector syntax such as <code>?(frame.flag)</code>.</td></tr>
+<tr><td>Transaction condition expression operand</td><td><code>(when (&amp; ready frame.flag) (set fire 1))</code></td><td>Aggregate leaf is valid as a scalar operand.</td></tr>
+<tr><td>Transaction <code>switch</code> selector</td><td><code>(switch frame.mode (1 (set seen 1)))</code></td><td>Selector lowers through computed selector syntax such as <code>?(frame.mode)</code>.</td></tr>
+<tr><td>Transaction <code>switch</code> branch value</td><td><code>(switch mode_in (frame.mode (set seen 1)))</code></td><td>Aggregate leaf is valid as a scalar branch value.</td></tr>
+<tr><td>Rule assignment RHS scalar value</td><td><code>(rule expose ready (set mode_out frame.mode))</code></td><td>Authored aggregate leaf is preserved under the guarded rule DT.</td></tr>
+<tr><td>Rule assignment RHS expression operand</td><td><code>(rule expose ready (set mode_out (+ frame.mode mode_in)))</code></td><td>Aggregate leaf is valid as a scalar operand.</td></tr>
+<tr><td>Rule assignment target</td><td><code>(rule capture ready (set frame.mode mode_in))</code></td><td>Scalar aggregate leaf is a writable rule target.</td></tr>
+<tr><td>Rule guard expression operand</td><td><code>(rule fire (&amp; ready frame.flag) (set seen 1))</code></td><td>Aggregate leaf is valid as a scalar guard operand.</td></tr>
+<tr><td>Standalone rule guard</td><td><code>(rule fire frame.flag (set seen 1))</code></td><td>Guard lowers as a non-state DT header suffix such as <code>&lt;frame.flag</code>.</td></tr>
+<tr><td>Named drive body RHS scalar value</td><td><code>(drive publish (mode_out frame.mode))</code></td><td>Authored aggregate leaf is preserved in the drive DT assignment.</td></tr>
+<tr><td>Named drive body RHS expression operand</td><td><code>(drive publish (mode_out (+ frame.mode mode_in)))</code></td><td>Aggregate leaf is valid as a scalar operand.</td></tr>
+<tr><td>Named drive body target</td><td><code>(drive capture (frame.mode mode_in))</code></td><td>Scalar aggregate leaf is a writable drive target.</td></tr>
+<tr><td>Inline drive RHS scalar value</td><td><code>(drive publish (mode_out frame.mode))</code> in a transaction body</td><td>Authored aggregate leaf is preserved in the generated state assignment.</td></tr>
+<tr><td>Inline drive RHS expression operand</td><td><code>(drive publish (mode_out (+ frame.mode mode_in)))</code> in a transaction body</td><td>Aggregate leaf is valid as a scalar operand.</td></tr>
+<tr><td>Inline drive target</td><td><code>(drive capture (frame.mode mode_in))</code> in a transaction body</td><td>Scalar aggregate leaf is a writable inline-drive target.</td></tr>
+<tr><td>Named drive-call scalar actual</td><td><code>(drive publish frame.mode)</code></td><td>Aggregate leaf is valid as a scalar drive actual.</td></tr>
+<tr><td>Named drive-call expression operand</td><td><code>(drive publish (+ frame.mode mode_in))</code></td><td>Aggregate leaf is valid as a scalar operand.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Aggregate paths in expression operator position remain rejected. Subaggregate
+operands, subaggregate updates, whole-record/whole-list truthiness, record-output member writes and root-list
+interface ports, transaction-local aggregate ports, aggregate storage banks,
+aggregate field/slice/update lowering beyond scalar leaves, and broader shape
+inference remain backlog.</p>
+<h2 id="diagnostics"><a class="header" href="#diagnostics">Diagnostics</a></h2>
+<p>The parser resolves type aliases, enum members, and aggregate paths before
+scheduled <code>.fsm</code> emission. That means these failures are reported in ISF space:</p>
+<ul>
+<li>Unknown local or package type aliases.</li>
+<li><code>(width ...)</code> and <code>(type ...)</code> on the same declaration.</li>
+<li>Aggregate aliases on unsupported carriers.</li>
+<li>Unknown enum families or enum members.</li>
+<li>Enum references in unsupported contexts, including operator position or LHS
+target position.</li>
+<li>Unknown aggregate record members.</li>
+<li>Out-of-range aggregate list indexes.</li>
+<li>Aggregate paths that resolve to whole records or lists where a scalar leaf is
+required.</li>
+<li>Aggregate paths outside the shipped scalar leaf contexts listed above.</li>
+</ul>
+<p>Strict HDL generation is part of the shipped contract for the listed forms.</p>
+<p>When a form is accepted, the scheduled <code>.fsm</code> review artifact is the source of
+truth for how the ISF syntax reached the backend.</p>
+<h2 id="aggregate-package-constants-fail-closed"><a class="header" href="#aggregate-package-constants-fail-closed">Aggregate Package Constants Fail Closed</a></h2>
+<p>A qualified imported package constant <code>pkg.NAME</code> works only when
+<code>NAME</code> is a scalar entry. Aggregate or member paths
+(<code>pkg.AGG.member</code>, <code>pkg.LIST.idx</code>, etc.) fail closed across every
+shipped consumer with a <code>remains deferred</code> diagnostic naming the
+consumer axis. The rejected source shape is a package whose
+constant is an aggregate, paired with an actor that reaches into a
+member path:</p>
+<pre><code class="language-text">;; in a sibling shared.fsm file:
+(?pkg:shared
+  (+constants
+    (CONFIG ((lat 4) (depth 8)))))
+
+;; in the actor:
+(transaction worker
+  (on start)
+  (wait shared.CONFIG.lat)        ;; &lt;-- aggregate/member path
+  (complete done))
+</code></pre>
+<p>The validator emits
+<code>Transaction 'worker': wait count package constant 'shared.CONFIG' aggregate/member path 'shared.CONFIG.lat' remains deferred; wait counts accept only qualified package scalar constants in this slice</code>. The same <code>remains deferred</code> phrase fires from the matching
+axis-specific helper for repeat counts, latency bounds, watchdog
+limits, contract windows, data-operation widths, activation
+parameter overrides, actor parameter defaults, and transaction
+parameter defaults. The deferred lane is aggregate/member-path
+resolution against the constant-symbol table; until it ships,
+authors must pre-resolve the member to a scalar <code>pkg.CONSTANT</code> (for
+example <code>(+constants (CONFIG_LAT 4))</code>) or use a same-transaction
+constant or parameter default instead.</p>
+<h2 id="complete-accept-path-examples"><a class="header" href="#complete-accept-path-examples">Complete Accept-Path Examples</a></h2>
+<p>The chapter so far has shown schematic forms and table entries.
+The actors below are self-contained, copy-pasteable fixtures that
+each exercise one of the shipped type/enum/aggregate axes.</p>
+<h3 id="scalar-type-alias"><a class="header" href="#scalar-type-alias">Scalar type alias</a></h3>
+<pre><code class="language-lisp">(actor type_alias_demo
+  (types
+    (type byte (bits 8)))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input data (type byte))
+    (output done))
+  (transaction tx
+    (on start
+      (sample data as captured))
+    (wait 2)
+    (complete done)))
+</code></pre>
+<p><strong>Walkthrough.</strong> <code>(types (type byte (bits 8)))</code> declares one
+actor-local scalar alias <code>byte</code> resolving to an 8-bit value.
+<code>(input data (type byte))</code> uses that alias in place of <code>(width 8)</code>,
+which keeps the authored intent (<code>byte</code>) visible in the scheduled
+<code>.fsm</code> <code>+size</code> review entries. The transaction samples the input
+into local register <code>captured</code> at entry, waits two cycles, and
+completes. The lowered FSM carries the alias as a typed <code>+size</code>
+entry rather than a raw width.</p>
+<h3 id="local-enum"><a class="header" href="#local-enum">Local enum</a></h3>
+<pre><code class="language-lisp">(actor enum_demo
+  (enums
+    (mode (IDLE 0) (BUSY 1) (DONE 2)))
+  (constants
+    (DEFAULT_STATE mode.IDLE))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output done))
+  (transaction tx
+    (on start)
+    (wait 4)
+    (complete done)))
+</code></pre>
+<p><strong>Walkthrough.</strong> <code>(enums (mode ...))</code> declares one enum family
+<code>mode</code> with three members. Enum members are addressed dot-qualified
+(<code>mode.IDLE</code>, <code>mode.BUSY</code>, <code>mode.DONE</code>). <code>(constants (DEFAULT_STATE mode.IDLE))</code> uses the enum-member token as a constant value: the
+authored <code>mode.IDLE</code> is preserved in the scheduled <code>.fsm</code>
+<code>+constants</code> and <code>actor_constants[]</code> entries while the resolved
+integer is available internally for static comparisons and waits.
+The transaction itself is the minimal on/wait/complete skeleton —
+the enum only contributes review metadata in this example.</p>
+<h3 id="aggregate-storage-carrier"><a class="header" href="#aggregate-storage-carrier">Aggregate storage carrier</a></h3>
+<pre><code class="language-lisp">(actor aggregate_storage_demo
+  (types
+    (type frame_t (record (mode (bits 2)) (flag bit))))
+  (storage
+    (var frame (type frame_t)))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output done))
+  (transaction tx
+    (on start)
+    (wait 2)
+    (complete done)))
+</code></pre>
+<p><strong>Walkthrough.</strong> <code>(type frame_t (record (mode (bits 2)) (flag bit)))</code> declares a packed record alias with two members. <code>(storage (var frame (type frame_t)))</code> declares one actor-owned scalar
+storage <code>frame</code> whose width comes from the packed sum (<code>2 + 1 = 3</code>
+bits). Packed record aliases are also admitted on actor input/output ports under the
+bounded record-port contracts above. Output member writes, root-list actor ports
+and transaction aggregate ports remain deferred. The
+scheduled <code>.fsm</code> keeps the alias <code>frame_t</code> in typed <code>+size</code>
+entries and the schedule report exposes the storage item with its
+packed width, authored type, and resolved <code>type_kind</code> (<code>record</code>).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="13i-downstream-integration.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="13k-isf-feature-support-matrix.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="13i-downstream-integration.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="13k-isf-feature-support-matrix.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

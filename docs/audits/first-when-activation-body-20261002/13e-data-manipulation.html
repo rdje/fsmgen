@@ -1,0 +1,906 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Data Manipulation - FSMGen Book</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Progressive, example-rich documentation for FSMGen and the .fsm language.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-37f8042f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-7727513f.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSMGen Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="data-manipulation"><a class="header" href="#data-manipulation">Data Manipulation</a></h1>
+<p>ISF provides abstract data manipulation constructs that the scheduler
+lowers to appropriate <code>.fsm</code> expressions.</p>
+<h2 id="update-var-expr--variable-modification"><a class="header" href="#update-var-expr--variable-modification"><code>(update var expr)</code> — Variable Modification</a></h2>
+<pre><code class="language-lisp">(update counter (- counter 1))
+(update status BUSY)
+(update rdata (| (&lt;&lt; rdata 1) bit_in))
+</code></pre>
+<p>General-purpose variable assignment. The expression is any <code>.fsm</code>-compatible
+expression, supplied as one scalar or list expression payload. The form is
+exact: <code>(update var expr)</code>, with scalar <code>var</code>. Missing expressions, nested
+targets, and extra operands are rejected before scheduled <code>.fsm</code> emission.</p>
+<p>Division and modulo RHS expressions also fail closed when a divisor operand is
+a numeric/exact-width literal zero, an actor-level constant that resolves to
+zero, or an actor-local scalar parameter default that resolves to zero,
+including nested expressions such as
+<code>(update out (+ mask (% numerator 8'd0)))</code>, <code>(set out (/ numerator ZERO))</code>,
+or <code>(set out (/ numerator ZERO_PARAM))</code>.</p>
+<p>Nonzero literal divisors, nonzero actor-constant divisors, nonzero
+actor-parameter divisors, and dynamic scalar divisors are preserved in the
+scheduled <code>.fsm</code>; FSMGen does not yet prove arbitrary dynamic divisors
+nonzero.</p>
+<p><strong>Lowering</strong>: <code>(&lt;- (var expr))</code> — sequential Q-named assignment.</p>
+<h2 id="select-dst-cond-a-b--conditional-assignment"><a class="header" href="#select-dst-cond-a-b--conditional-assignment"><code>(select DST COND A B)</code> — Conditional Assignment</a></h2>
+<pre><code class="language-lisp">(select out (&gt; level hi) MAX level)   ;; out = (level &gt; hi) ? MAX : level
+(select dst pick a b)                 ;; dst = pick ? a : b
+</code></pre>
+<p>The conditional assignment a high-level language writes as <code>dst = cond ? a : b</code> —
+choose one of two values for a register by a condition. <code>COND</code> is any condition
+expression (a scalar signal or a comparison / logical expression); <code>A</code> and <code>B</code>
+are any value expressions; <code>DST</code> is a register.</p>
+<p>A pure ISF parser desugar into two mutually-exclusive conditional
+<a href="#update-var-expr--variable-modification"><code>(set …)</code></a>s:</p>
+<pre><code class="language-lisp">(select DST COND A B) -&gt; (when COND     (set DST A))
+                         (when (! COND)  (set DST B))
+</code></pre>
+<p>Exactly one branch fires, so <code>DST</code> takes <code>A</code> on the true path and <code>B</code> on the
+false path. (<code>.fsm</code> has no ternary operator, so this lowers to two sequential
+decision states rather than a single combinational mux — the two conditional
+writes to <code>DST</code> each get their own write-enable.)</p>
+<p>Place an explicit activation such as <code>(on start)</code> before <code>select</code>. A first
+<code>select</code> currently expands to an entry <code>when</code> containing an unsupported action
+and is refused. Its source-intent repair is owned by SEM <code>.60.4.3.3.5.2.1.5</code>;
+this boundary does not establish support for other first-operation conditional
+macros. The example below includes the required activation.</p>
+<p>A runnable upper-clamp (saturate a value at 100):</p>
+<pre><code class="language-lisp">(actor clamp
+  (interface (input start) (input x (width 8)) (output done) (output o (width 8)))
+  (transaction main
+    (on start)
+    (select o (&gt; x 100) 100 x)   ;; o = (x &gt; 100) ? 100 : x
+    (complete done)))
+</code></pre>
+<p><code>x = 150</code> yields <code>o == 100</code> (clamped); <code>x = 42</code> yields <code>o == 42</code> (passed through).</p>
+<p>A malformed form fails closed before <code>.fsm</code> emission: a missing register name, or
+anything other than exactly <code>(select DST COND A B)</code> (too few or too many
+operands).</p>
+<p><strong>Lowering</strong>: <code>(?COND (-&gt; …(set DST A)…)) … (?(! COND) (-&gt; …(set DST B)…))</code> — the
+two decision states the <code>(when …)</code> pair produces.</p>
+<h2 id="max-dst-a-b--min-dst-a-b--larger--smaller-of-two"><a class="header" href="#max-dst-a-b--min-dst-a-b--larger--smaller-of-two"><code>(max DST A B)</code> / <code>(min DST A B)</code> — Larger / Smaller Of Two</a></h2>
+<pre><code class="language-lisp">(max peak peak sample)   ;; peak = max(peak, sample)   (running maximum)
+(min floor a b)          ;; floor = min(a, b)
+</code></pre>
+<p>Pick the larger or smaller of two values into a register — running maxima,
+ceilings/floors, priority picks. <code>A</code> and <code>B</code> are any value expressions; <code>DST</code> is
+a register.</p>
+<p>A pure ISF parser desugar onto
+<a href="#select-dst-cond-a-b--conditional-assignment"><code>(select …)</code></a>:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Form</th><th>Desugars to</th></tr>
+</thead>
+<tbody>
+<tr><td><code>(max DST A B)</code></td><td><code>(select DST (&gt;= A B) A B)</code></td></tr>
+<tr><td><code>(min DST A B)</code></td><td><code>(select DST (&lt;= A B) A B)</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>which in turn lowers to two conditional <code>(set …)</code>s.</p>
+<p><strong>A clamp composes</strong> from the two — and because sequential writes to one register
+each get their own write-enable, no temporary is needed:</p>
+<pre><code class="language-lisp">(actor saturate
+  (interface (input start) (input in (width 8)) (output done) (output v (width 8)))
+  (transaction main
+    (on start)
+    (update v in)
+    (max v v 20)     ;; floor at 20
+    (min v v 80)     ;; ceil at 80   =&gt;  v is clamped into [20, 80]
+    (complete done)))
+</code></pre>
+<p><code>in = 150</code> yields <code>v == 80</code>, <code>in = 5</code> yields <code>v == 20</code>, and <code>in = 50</code> passes
+through as <code>50</code>.</p>
+<p>A malformed form fails closed before <code>.fsm</code> emission: a missing register name, or
+anything other than exactly <code>(max DST A B)</code> / <code>(min DST A B)</code>.</p>
+<p><strong>Lowering</strong>: as for <code>(select …)</code> — two decision states, one assigning the picked
+value.</p>
+<h2 id="swap-a-b--exchange-two-registers"><a class="header" href="#swap-a-b--exchange-two-registers"><code>(swap A B)</code> — Exchange Two Registers</a></h2>
+<pre><code class="language-lisp">(swap front back)   ;; front, back = back, front
+</code></pre>
+<p>Exchange the contents of two registers — ping-pong buffers, sort steps, register
+renaming. <code>A</code> and <code>B</code> are two distinct registers.</p>
+<p>A pure ISF parser desugar into the temp-free <strong>XOR swap</strong> — three sequential
+<code>(set …)</code>s, no scratch register:</p>
+<pre><code class="language-lisp">(swap A B) -&gt; (set A (^ A B))   ;; A = A ^ B
+              (set B (^ A B))   ;; B = (A^B) ^ B = original A
+              (set A (^ A B))   ;; A = (A^B) ^ (original A) = original B
+</code></pre>
+<p>After the three states, <code>A</code> holds the original <code>B</code> and <code>B</code> the original <code>A</code>. (The
+first and third steps both write <code>A</code>; since sequential writes to one register each
+get their own write-enable, no temporary is needed.)</p>
+<pre><code class="language-lisp">(actor swapper
+  (interface (input start) (input p (width 8)) (input q (width 8)) (output done)
+             (output a (width 8)) (output b (width 8)))
+  (transaction main
+    (on start)
+    (local x (width 8))
+    (local y (width 8))
+    (update x p)
+    (update y q)
+    (swap x y)       ;; x, y = y, x
+    (update a x)
+    (update b y)
+    (complete done)))
+</code></pre>
+<p>With <code>p = 77</code>, <code>q = 200</code>, the result is <code>a == 200</code> and <code>b == 77</code>.</p>
+<p>A malformed form fails closed before <code>.fsm</code> emission: anything other than exactly
+<code>(swap A B)</code> with two register names, or <code>A</code> and <code>B</code> naming the same register
+(XOR-swapping a register with itself would zero it).</p>
+<p><strong>Lowering</strong>: three <code>(&lt;- (A (^ A B)))</code> / <code>(&lt;- (B (^ A B)))</code> sequential Q-named
+assignments.</p>
+<h2 id="incr-name-by-n--decr-name-by-n--compound-increment--decrement"><a class="header" href="#incr-name-by-n--decr-name-by-n--compound-increment--decrement"><code>(incr NAME [by N])</code> / <code>(decr NAME [by N])</code> — Compound Increment / Decrement</a></h2>
+<pre><code class="language-lisp">(incr count)          ;; count += 1
+(incr total by din)   ;; total += din
+(decr remaining)      ;; remaining -= 1
+(decr level by 2)     ;; level -= 2
+</code></pre>
+<p><code>(incr …)</code> and <code>(decr …)</code> are the compound-assignment sugar a high-level
+language has (<code>x += N</code>, <code>x++</code>). They capture the common counter / accumulator
+intent more directly than spelling out <code>(set NAME (+ NAME N))</code>. The amount is an
+optional <code>by N</code> (the <code>by</code> keyword followed by the amount); <code>N</code> defaults to <code>1</code>
+and may be a literal, a signal, or an expression.</p>
+<p>This is a pure ISF parser desugar into the existing
+<a href="#update-var-expr--variable-modification"><code>(update …)</code> / <code>(set …)</code></a> data op — no
+new lowering machinery:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Form</th><th>Desugars to</th></tr>
+</thead>
+<tbody>
+<tr><td><code>(incr x)</code></td><td><code>(set x (+ x 1))</code></td></tr>
+<tr><td><code>(incr x by N)</code></td><td><code>(set x (+ x N))</code></td></tr>
+<tr><td><code>(decr x)</code></td><td><code>(set x (- x 1))</code></td></tr>
+<tr><td><code>(decr x by N)</code></td><td><code>(set x (- x N))</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>They are valid anywhere a <code>(set …)</code> is — at the transaction top level and inside
+control-flow bodies (<code>when</code>, <code>switch</code>, <code>while</code>, <code>until</code>, <code>repeat</code>, and so the
+<code>for</code> / <code>cond</code> forms that lower to them). The canonical use is a loop
+accumulator:</p>
+<pre><code class="language-lisp">(actor scoreboard
+  (interface
+    (input start)
+    (output done)
+    (output rounds (width 8))
+    (output bonus (width 8)))
+  (transaction run
+    (on start)
+    (incr bonus by 10)        ;; bonus += 10 once  -&gt; 10
+    (for (i 3)
+      (incr rounds))          ;; rounds += 1 per iteration -&gt; 3
+    (complete done)))
+</code></pre>
+<p>After <code>start</code>, <code>bonus</code> reaches <code>10</code> (one <code>+= 10</code>) and <code>rounds</code> reaches <code>3</code> (one
+<code>+= 1</code> executed each of the three loop iterations), then <code>done</code> asserts.</p>
+<p>A malformed form fails closed before <code>.fsm</code> emission: <code>(incr)</code> with no register
+name, or trailing tokens that are not a <code>by N</code> pair (e.g. <code>(incr x foo 2)</code>), is
+rejected with a diagnostic.</p>
+<blockquote>
+<p><strong>Sequential writes accumulate.</strong> Because <code>(incr …)</code> / <code>(decr …)</code> lower to an
+expression <code>(set …)</code>, two in a row (<code>(incr x)</code> then <code>(incr x)</code>) run as two
+sequential states — each with its own write-enable — so <code>x</code> ends up bumped
+twice. (You can also combine them into one <code>(incr x by N)</code>.)</p>
+</blockquote>
+<p><strong>Lowering</strong>: <code>(&lt;- (NAME (+ NAME N)))</code> / <code>(&lt;- (NAME (- NAME N)))</code> — the same
+sequential Q-named assignment <code>(set …)</code> produces.</p>
+<h2 id="set-bit-name-n--clear-bit-name-n--toggle-bit-name-n--single-bit-manipulation"><a class="header" href="#set-bit-name-n--clear-bit-name-n--toggle-bit-name-n--single-bit-manipulation"><code>(set-bit NAME N)</code> / <code>(clear-bit NAME N)</code> / <code>(toggle-bit NAME N)</code> — Single-Bit Manipulation</a></h2>
+<pre><code class="language-lisp">(set-bit    ctrl 0)   ;; ctrl[0] &lt;- 1   (e.g. an enable bit)
+(clear-bit  irq  3)   ;; irq[3]  &lt;- 0   (e.g. acknowledge / clear a flag)
+(toggle-bit mode 7)   ;; mode[7] &lt;- ~mode[7]
+</code></pre>
+<p>The bread-and-butter of control / status / configuration registers — set an
+enable bit, clear an interrupt flag, flip a mode bit — expressed by intent rather
+than by hand-written masks. <code>N</code> is a literal bit index counting from <code>0</code>, and
+must be in range for the register (<code>0 &lt;= N &lt; width</code>).</p>
+<p>This is a pure ISF parser desugar into a single-level masked
+<a href="#update-var-expr--variable-modification"><code>(set …)</code></a>, using only the supported
+<code>.fsm</code> bitwise operators:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Form</th><th>Desugars to</th><th>Mask</th></tr>
+</thead>
+<tbody>
+<tr><td><code>(set-bit x N)</code></td><td><code>(set x (| x M))</code></td><td><code>M = 2^N</code></td></tr>
+<tr><td><code>(toggle-bit x N)</code></td><td><code>(set x (^ x M))</code></td><td><code>M = 2^N</code></td></tr>
+<tr><td><code>(clear-bit x N)</code></td><td><code>(set x (&amp; x INV))</code></td><td><code>INV = (2^width - 1) ^ 2^N</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>The masks are emitted as plain literals (the backend widths them to the register)
+and the expression is single-level — a deliberate choice, because a nested or
+shift-based mask (<code>(&lt;&lt; 1 N)</code>, or <code>(^ x (&amp; x M))</code>) produces an unsized 32-bit
+intermediate that fails the width-clean lint, and bitwise-NOT (<code>~</code>) is not a
+supported <code>.fsm</code> operator. <code>set-bit</code> / <code>toggle-bit</code> masks are width-independent;
+<code>clear-bit</code>’s inverse mask needs the register’s <strong>width</strong>, which is resolved from
+its declaration. Lookup checks transaction <code>(local …)</code> declarations, transaction
+formal ports, actor interface ports and actor storage variables in that order.
+A formal’s declared literal width takes precedence over a same-named actor
+signal. An unresolved formal width also shadows the actor declaration; it does
+not borrow an outer width.</p>
+<p>These helpers expand before symbolic widths and type references are finalized.
+<code>clear-bit</code>, <code>set-field</code>, rotations and field tests therefore require a declared
+literal width at this pass. A <code>(type NAME)</code> placeholder is not width evidence;
+it is rejected for width-dependent helpers instead of producing a wrong mask.
+The width-independent bit masks retain their existing behavior and check the
+index against a literal width when available. Normal lowering gives direct formals private identities after these parser
+checks. Independent controllers and explicit-local ownership remain separate
+limitations.</p>
+<p>For example, a transaction can manipulate its own literal-width formal and
+copy the result to an actor output:</p>
+<pre><code class="language-lisp">(actor formal_flags
+  (clock clk) (reset rst_n)
+  (interface (input start) (output result (width 8)) (output done))
+  (transaction main
+    (ports (output flags (width 8)))
+    (on start)
+    (set flags 255)
+    (clear-bit flags 7)
+    (set result flags)
+    (complete done)))
+</code></pre>
+<p>A complete runnable register-control example (each output reset to a known value,
+one bit op each):</p>
+<pre><code class="language-lisp">(actor csr_ctl
+  (interface (input start) (output done)
+             (output en (width 8)) (output irq (width 8)) (output mode (width 8)))
+  (transaction main
+    (on start)
+    (local e (width 8) (reset 0))
+    (local i (width 8) (reset 255))
+    (local m (width 8) (reset 0))
+    (set-bit e 0)        ;; e:    0   -&gt; 1     (0x01)
+    (clear-bit i 3)      ;; i:    255 -&gt; 247   (0xF7)
+    (toggle-bit m 4)     ;; m:    0   -&gt; 16    (0x10)
+    (update en e)
+    (update irq i)
+    (update mode m)
+    (complete done)))
+</code></pre>
+<p>After <code>start</code>, <code>en == 1</code>, <code>irq == 247</code>, and <code>mode == 16</code>. (The reset-value locals
+rely on a register holding its value between writes — see
+<a href="./13m-local-variables.html">Local Variables</a>.)</p>
+<p>A malformed form fails closed before <code>.fsm</code> emission: a missing register name, a
+missing / non-integer / multiple bit index, a bit index <code>&gt;=</code> the register width,
+or — for <code>clear-bit</code> — a register whose width is not a statically known literal
+(e.g. a parameterized <code>(width W)</code>), since the inverse mask cannot then be formed.</p>
+<blockquote>
+<p><strong>Sequential bit ops compose.</strong> Two bit ops on the same register
+(<code>(set-bit ctrl 0)</code> then <code>(set-bit ctrl 1)</code>) run as two sequential states, each
+with its own write-enable, so both bits end up set. (You can also write the
+combined mask directly with <code>(set ctrl (| ctrl 3))</code>.)</p>
+</blockquote>
+<p><strong>Lowering</strong>: <code>(&lt;- (NAME (| NAME M)))</code> / <code>(&lt;- (NAME (^ NAME M)))</code> /
+<code>(&lt;- (NAME (&amp; NAME INV)))</code> — the sequential Q-named assignment <code>(set …)</code> produces.</p>
+<h2 id="when-bit-name-n-body--unless-bit-name-n-body--branch-on-a-bit"><a class="header" href="#when-bit-name-n-body--unless-bit-name-n-body--branch-on-a-bit"><code>(when-bit NAME N body…)</code> / <code>(unless-bit NAME N body…)</code> — Branch On A Bit</a></h2>
+<pre><code class="language-lisp">(when-bit   ctrl 0  (start-engine))   ;; run body when ctrl[0] == 1
+(unless-bit irq  3  (idle))           ;; run body when irq[3]  == 0
+</code></pre>
+<p>The read side of single-bit register intent — poll a status bit, branch on a
+config / flag bit. <code>(when-bit …)</code> runs its body when bit <code>N</code> is <strong>set</strong>;
+<code>(unless-bit …)</code> runs it when bit <code>N</code> is <strong>clear</strong>. <code>N</code> is a literal bit index,
+<code>0 &lt;= N &lt; width</code>.</p>
+<p>These are a pure ISF parser desugar into a <code>(when …)</code>
+(<a href="./13d-control-flow.html">Control Flow</a>) with a <strong>width-qualified</strong> masked
+comparison:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Form</th><th>Desugars to</th></tr>
+</thead>
+<tbody>
+<tr><td><code>(when-bit x N body…)</code></td><td><code>(when (!= (&amp; x W'dMASK) W'd0) body…)</code></td></tr>
+<tr><td><code>(unless-bit x N body…)</code></td><td><code>(when (== (&amp; x W'dMASK) W'd0) body…)</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>where <code>MASK = 2^N</code> and <code>W</code> is the register’s declared width. The sized literals
+(<code>W'd…</code>) and the explicit <code>!=</code> / <code>==</code> are deliberate: an unsized literal mask
+(<code>(&amp; x 8)</code>) creates a 32-bit intermediate that fails the width-clean lint and a
+multi-bit-truthiness mis-evaluation, while the sized masked comparison is
+verilator-lint + yosys clean and correct. Because the mask is sized, <code>W</code> must be
+a statically known literal (resolved from a <code>(local …)</code>, an interface port, or a
+<code>(storage (var …))</code>) — a symbolic <code>(width W)</code> fails closed.</p>
+<p>The body is a normal clause list, so it nests and composes with every other
+construct (including a nested <code>(when-bit …)</code> and the bit ops above):</p>
+<pre><code class="language-lisp">(actor flag_poll
+  (interface (input start) (input cfg (width 8)) (output done)
+             (output engine (width 8)) (output sleep (width 8)))
+  (transaction main
+    (on start)
+    (when-bit cfg 0          ;; bit 0 set =&gt; enabled
+      (set-bit engine 0))
+    (unless-bit cfg 0        ;; bit 0 clear =&gt; idle
+      (set-bit sleep 0))
+    (complete done)))
+</code></pre>
+<p>When <code>cfg[0]</code> is 1 the engine bit is set; when it is 0 the sleep bit is set.</p>
+<p>A malformed form fails closed before <code>.fsm</code> emission: a missing name; a missing /
+non-integer bit index; an index <code>&gt;=</code> the register width; an empty body; or a
+non-literal / symbolic width.</p>
+<p><strong>Lowering</strong>: <code>(?(!= (&amp; NAME W'dMASK) W'd0) …)</code> /
+<code>(?(== (&amp; NAME W'dMASK) W'd0) …)</code> — the decision state a <code>(when …)</code> produces.</p>
+<h2 id="set-field-name-bits-hi-lo-value--multi-bit-field-write"><a class="header" href="#set-field-name-bits-hi-lo-value--multi-bit-field-write"><code>(set-field NAME (bits HI LO) VALUE)</code> — Multi-Bit Field Write</a></h2>
+<pre><code class="language-lisp">(set-field ctrl (bits 5 3) 5)    ;; ctrl[5:3] &lt;- 3'b101, other bits preserved
+(set-field div  (bits 7 0) 24)   ;; div[7:0]  &lt;- 24
+</code></pre>
+<p>The multi-bit generalisation of <a href="#set-bit-name-n--clear-bit-name-n--toggle-bit-name-n--single-bit-manipulation"><code>set-bit</code></a>
+— write a named register field (a mode, a divider ratio, a priority level) to a
+value, leaving the surrounding bits untouched. <code>HI</code> and <code>LO</code> are the literal
+inclusive bit bounds (<code>HI &gt;= LO</code>), and <code>VALUE</code> is a literal that must fit in the
+<code>HI - LO + 1</code>-bit field.</p>
+<p>This is a pure ISF parser desugar into a width-clean masked read-modify-write
+<code>(set …)</code> built from sized literals:</p>
+<pre><code class="language-lisp">(set-field x (bits HI LO) V) -&gt; (set x (| (&amp; x W'dCLEARMASK) W'dSHIFTED))
+  CLEARMASK = (2^width - 1) ^ (((2^(HI-LO+1)) - 1) &lt;&lt; LO)   ;; field bits zeroed
+  SHIFTED   = V &lt;&lt; LO                                        ;; V placed in the field
+</code></pre>
+<p>The sized literals (<code>W'd…</code>) keep the nested <code>(| (&amp; …) …)</code> verilator-lint + yosys
+clean — an unsized mask would create a 32-bit intermediate that fails the
+width-clean lint — so the register’s <strong>width</strong> must be a statically known literal
+(resolved from a <code>(local …)</code>, an interface port, or a <code>(storage (var …))</code>).</p>
+<p>A complete runnable example (a control register whose <code>[5:3]</code> mode field is set
+while the rest of the register is preserved):</p>
+<pre><code class="language-lisp">(actor mode_set
+  (interface (input start) (output done) (output ctrl (width 8)))
+  (transaction main
+    (on start)
+    (local r (width 8) (reset 255))   ;; 0xFF
+    (set-field r (bits 5 3) 5)        ;; r[5:3] &lt;- 101  =&gt;  0xEF
+    (update ctrl r)
+    (complete done)))
+</code></pre>
+<p>After <code>start</code>, <code>ctrl == 239</code> (<code>0xEF</code>): bits <code>[5:3]</code> hold <code>101</code> and every other bit
+keeps its <code>0xFF</code> value.</p>
+<p>A malformed form fails closed before <code>.fsm</code> emission: a missing name; a malformed
+<code>(bits HI LO)</code> selector; non-literal <code>HI</code> / <code>LO</code> / <code>VALUE</code>; <code>HI &lt; LO</code>; <code>HI &gt;=</code> the
+register width; a <code>VALUE</code> that overflows the field; or a non-literal / symbolic
+width. Two <code>(set-field …)</code> writes to the same register run as two sequential
+read-modify-write states (each with its own write-enable), so writing two
+disjoint fields back to back leaves both set.</p>
+<p><strong>Lowering</strong>: <code>(&lt;- (NAME (| (&amp; NAME W'dCLEARMASK) W'dSHIFTED)))</code> — the sequential
+Q-named assignment <code>(set …)</code> produces.</p>
+<h2 id="when-field-name-bits-hi-lo-value-body--unless-field---branch-on-a-field"><a class="header" href="#when-field-name-bits-hi-lo-value-body--unless-field---branch-on-a-field"><code>(when-field NAME (bits HI LO) VALUE body…)</code> / <code>(unless-field …)</code> — Branch On A Field</a></h2>
+<pre><code class="language-lisp">(when-field   mode (bits 2 0) 3  (enter-turbo))    ;; run body when mode[2:0] == 3
+(unless-field mode (bits 2 0) 3  (enter-normal))   ;; run body when mode[2:0] != 3
+</code></pre>
+<p>The read/compare companion to
+<a href="#set-field-name-bits-hi-lo-value--multi-bit-field-write"><code>set-field</code></a>, and the
+multi-bit generalisation of
+<a href="#when-bit-name-n-body--unless-bit-name-n-body--branch-on-a-bit"><code>when-bit</code></a>:
+dispatch on a register’s mode / level / selector field. <code>(when-field …)</code> runs its
+body when the field equals <code>VALUE</code>; <code>(unless-field …)</code> runs it when it does not.</p>
+<p>A pure ISF parser desugar into a <code>(when …)</code> with a width-qualified masked field
+comparison (only the field’s bits participate — the surrounding bits are masked
+off):</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Form</th><th>Desugars to</th></tr>
+</thead>
+<tbody>
+<tr><td><code>(when-field x (bits HI LO) V body…)</code></td><td><code>(when (== (&amp; x W'dFIELDMASK) W'dSHIFTED) body…)</code></td></tr>
+<tr><td><code>(unless-field x (bits HI LO) V body…)</code></td><td><code>(when (!= (&amp; x W'dFIELDMASK) W'dSHIFTED) body…)</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>where <code>FIELDMASK = ((2^(HI-LO+1)) - 1) &lt;&lt; LO</code> and <code>SHIFTED = V &lt;&lt; LO</code>. As with the
+other field / bit constructs, the sized literals require the register’s width to
+be a statically known literal (resolved from a <code>(local …)</code>, an interface port, or
+a <code>(storage (var …))</code>).</p>
+<pre><code class="language-lisp">(actor mode_dispatch
+  (interface (input start) (input mode (width 8)) (output done)
+             (output turbo (width 8)) (output normal (width 8)))
+  (transaction main
+    (on start)
+    (when-field   mode (bits 2 0) 3  (set-bit turbo 0))    ;; mode[2:0] == 3 -&gt; turbo
+    (unless-field mode (bits 2 0) 3  (set-bit normal 0))   ;; otherwise      -&gt; normal
+    (complete done)))
+</code></pre>
+<p>The comparison looks only at <code>mode[2:0]</code>, so <code>mode = 0xF3</code> (upper nibble set,
+<code>mode[2:0] == 3</code>) still takes the <code>turbo</code> path.</p>
+<p>A malformed form fails closed before <code>.fsm</code> emission: a missing name; a malformed
+<code>(bits HI LO)</code> selector; non-literal <code>HI</code> / <code>LO</code> / <code>VALUE</code>; <code>HI &lt; LO</code>; <code>HI &gt;=</code> the
+register width; a <code>VALUE</code> overflowing the field; an empty body; or a non-literal /
+symbolic width.</p>
+<p><strong>Lowering</strong>: <code>(?(== (&amp; NAME W'dFIELDMASK) W'dSHIFTED) …)</code> /
+<code>(?(!= (&amp; NAME W'dFIELDMASK) W'dSHIFTED) …)</code> — the decision state a <code>(when …)</code>
+produces.</p>
+<h2 id="shift_left-reg-bit-width-n--shift-register-left"><a class="header" href="#shift_left-reg-bit-width-n--shift-register-left"><code>(shift_left reg bit [(width N)])</code> — Shift Register (Left)</a></h2>
+<pre><code class="language-lisp">(shift_left rdata sda_in)
+(shift_left rdata sda_in (width 8))
+</code></pre>
+<p>Shifts <code>reg</code> left by 1 and ORs in <code>bit</code> at LSB.</p>
+<p>The form is exact: <code>(shift_left reg bit)</code> or
+<code>(shift_left reg bit (width N))</code>, with scalar <code>reg</code>, scalar <code>bit</code>, and a
+positive integer width when the option is present.</p>
+<p><strong>Lowering</strong>: <code>(&lt;- (reg (| (&lt;&lt; reg 1) bit)))</code>, or <code>reg&gt;</code> when <code>reg</code> is a
+declared output port.</p>
+<pre><code class="language-lisp">(state
+  (&lt;- (rdata&gt; (| (&lt;&lt; rdata 1) sda_in)))
+  (-&gt; next_state))
+</code></pre>
+<p>The emitted <code>.fsm</code> uses the normal expression surface: <code>&lt;&lt;</code> and <code>&gt;&gt;</code> are
+supported binary operators through SystemVerilog generation, with <code>shl</code> and
+<code>shr</code> as word aliases. When the shifted value is later used to drive a 1-bit
+serial output, select the intended bit explicitly, for example
+<code>(drive mosi tx_byte[7])</code>; FSMGen does not silently truncate an 8-bit word into
+a 1-bit line.</p>
+<p>An explicit <code>(width N)</code> is transaction-local width evidence for <code>reg</code>, not a
+cast or resize. It may fill a missing width fact for later operations such as
+<code>shift_right</code> and for schedule-report storage metadata, but it must match any
+already-known width for the shifted register. Plain <code>(shift_left reg bit)</code>
+remains accepted without width evidence because the left-shift expression does
+not need a computed MSB insertion position.</p>
+<p><strong>Use case</strong>: I2C/SIPO — capturing serial bits into a parallel register.</p>
+<h2 id="shift_right-reg-bit-width-n--shift-register-right"><a class="header" href="#shift_right-reg-bit-width-n--shift-register-right"><code>(shift_right reg bit [(width N)])</code> — Shift Register (Right)</a></h2>
+<pre><code class="language-lisp">(shift_right tx_reg msb_data)
+(shift_right tx_reg msb_data (width 8))
+</code></pre>
+<p>Shifts <code>reg</code> right by 1 and ORs in <code>bit</code> at MSB.</p>
+<p>The form is exact: <code>(shift_right reg bit)</code> or
+<code>(shift_right reg bit (width N))</code>, with scalar <code>reg</code>, scalar <code>bit</code>, and
+positive integer width when the option is present.</p>
+<p><strong>Lowering</strong>: <code>(&lt;- (reg (| (&gt;&gt; reg 1) (&lt;&lt; bit width-1))))</code></p>
+<pre><code class="language-lisp">(state
+  (&lt;- (tx_reg (| (&gt;&gt; tx_reg 1) (&lt;&lt; msb_data 7))))
+  (-&gt; next_state))
+</code></pre>
+<p>Known interface, sampled-source, assemble-inferred, and explicit
+<code>(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)</code> widths use a concrete insert
+position. If the shifted value has no known width and no explicit width
+option, lowering fails before scheduled <code>.fsm</code> emission instead of emitting a
+placeholder <code>WIDTH</code> expression. An explicit
+<code>(width N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT)</code> is an assertion: it may fill
+missing width evidence, but it must match any already-known width for the
+shifted register. <code>TX_PARAM</code> names a same-transaction scalar parameter default
+on a generated child or direct/non-generated transaction and must resolve to a
+positive integer. <code>PARAM</code> names an actor-local scalar parameter default that
+resolves to a positive integer, and <code>CONST</code> names a declared actor constant
+that resolves to a positive integer. Unrelated or cross-transaction
+transaction parameters remain fail-closed for data-operation width evidence.</p>
+<h2 id="rotate-left-reg-by-n--rotate-right-reg-by-n--bit-rotation"><a class="header" href="#rotate-left-reg-by-n--rotate-right-reg-by-n--bit-rotation"><code>(rotate-left REG [by N])</code> / <code>(rotate-right REG [by N])</code> — Bit Rotation</a></h2>
+<pre><code class="language-lisp">(rotate-left  lfsr)        ;; rotate lfsr left  by 1 (MSB wraps to LSB)
+(rotate-right tag by 3)    ;; rotate tag  right by 3
+</code></pre>
+<p>The wrap-around sibling of <code>shift_left</code> / <code>shift_right</code> — the bits that fall off
+one end reappear at the other. The bread-and-butter of LFSRs, CRC, barrel
+shifters, and circular tags. <code>N</code> is the literal rotate amount (default <code>1</code>, with
+<code>0 &lt; N &lt; width</code>).</p>
+<p>A pure ISF parser desugar into a single masked shift-OR <code>(set …)</code>:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Form</th><th>Desugars to</th></tr>
+</thead>
+<tbody>
+<tr><td><code>(rotate-left REG by N)</code></td><td><code>(set REG (| (&lt;&lt; REG N) (&gt;&gt; REG (W-N))))</code></td></tr>
+<tr><td><code>(rotate-right REG by N)</code></td><td><code>(set REG (| (&gt;&gt; REG N) (&lt;&lt; REG (W-N))))</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>The shift <em>amounts</em> (<code>N</code>, <code>W-N</code>) are plain literals — they do not widen the
+result the way a value-operand literal would — so the form is verilator-lint +
+yosys clean. The counter-shift amount <code>W-N</code> needs the register’s <strong>width</strong>, which
+must be a statically known literal (resolved from a <code>(local …)</code>, an interface
+port, or a <code>(storage (var …))</code>).</p>
+<pre><code class="language-lisp">(actor spinner
+  (interface (input start) (output done) (output pattern (width 8)))
+  (transaction main
+    (on start)
+    (local p (width 8) (reset 129))   ;; 0x81 = 1000_0001
+    (rotate-left p)                    ;; -&gt; 0000_0011 = 0x03 (the MSB wrapped to bit 0)
+    (update pattern p)
+    (complete done)))
+</code></pre>
+<p>After <code>start</code>, <code>pattern == 3</code>.</p>
+<p>A malformed form fails closed before <code>.fsm</code> emission: a missing register name; a
+malformed <code>by</code> (not <code>by</code> followed by a literal); an amount with <code>N &lt;= 0</code> or
+<code>N &gt;=</code> the width; or a non-literal / symbolic width.</p>
+<p><strong>Lowering</strong>: <code>(&lt;- (REG (| (&lt;&lt; REG N) (&gt;&gt; REG (W-N)))))</code> (and the mirror for
+rotate-right) — the sequential Q-named assignment <code>(set …)</code> produces.</p>
+<h2 id="assemble-field1-field2--as-var-widths-n--concatenation"><a class="header" href="#assemble-field1-field2--as-var-widths-n--concatenation"><code>(assemble field1 field2 ... as var [(widths N...)])</code> — Concatenation</a></h2>
+<pre><code class="language-lisp">(assemble header payload crc as packet)
+(assemble header payload crc as packet (widths 4 8 4))
+</code></pre>
+<p>Concatenates fields into a single variable.</p>
+<p>The form is exact:
+<code>(assemble part... as var [(widths N|TX_PARAM|PARAM|CONST|PACKAGE.CONSTANT...)])</code>, with one or more
+scalar parts and scalar target <code>var</code>.</p>
+<p>When present, the optional trailing <code>(widths ...)</code> list must contain one
+positive width per part, in the same order as the parts. Entries may be
+positive integer literals, actor-local scalar parameter defaults, or declared
+actor constants that resolve to positive integers.</p>
+<p><strong>Lowering</strong>: <code>(&lt;- (var (concat field1 field2 ...)))</code></p>
+<pre><code class="language-lisp">(state
+  (&lt;- (packet (concat header payload crc)))
+  (-&gt; next_state))
+</code></pre>
+<p><strong>Example — building a SPI frame</strong>:</p>
+<pre><code class="language-lisp">(assemble cmd addr data as spi_frame)
+</code></pre>
+<p>When every part width is known, or the <code>(widths ...)</code> option supplies every
+part width, <code>assemble</code> derives the target width from the part-width sum. If
+exactly one part width is missing and the target width plus all sibling part
+widths are known, FSMGen infers the missing part width as the positive
+remainder. Explicit or inferred part widths remain available as
+transaction-local evidence for later data operations, such as a following
+<code>shift_right</code> on the assembled target or part. Known widths of the assembled
+scalar word and its signal parts are emitted in <code>+size</code>, so a following
+<code>extract</code> reads a packed scalar rather than an inferred concat list. Existing
+declarations and static constants retain their identities. If the target already has a
+known width, the final part-width sum must match it. A zero or negative
+inferred remainder fails closed. Two or more unknown part widths may still
+lower to the reviewable concat expression, but they are not used as width
+evidence unless the <code>(widths ...)</code> option makes them known.</p>
+<h2 id="extract-word-as-field1-field2--widths-n--field-extraction"><a class="header" href="#extract-word-as-field1-field2--widths-n--field-extraction"><code>(extract word as field1 field2 ... [(widths N...)])</code> — Field Extraction</a></h2>
+<pre><code class="language-lisp">(extract packet as header payload crc)
+(extract packet as header payload crc (widths 4 8 4))
+</code></pre>
+<p>Deconstructs <code>word</code> into named fields. The form is exact:
+<code>(extract word as field... [(widths N...)])</code>, with one scalar source word and
+one or more scalar destination fields. The optional <code>(widths N...)</code> payload
+must contain one positive integer width per field.</p>
+<p><strong>Current lowering</strong>: one extraction state is emitted.</p>
+<p>When the source word and destination fields have known widths, or when the
+extract clause supplies an ordered <code>(widths N...)</code> list matching the field
+count, each field is assigned from an exact descending slice.</p>
+<p>If exactly one destination field width is missing and the source word plus
+every sibling field has known positive width, FSMGen infers the missing field
+width as the positive remainder.</p>
+<p>That inferred width remains available as transaction-local evidence for later
+data operations, such as a following <code>shift_right</code> on the extracted field.
+This also covers <code>(extract packet as field)</code>: a single inferred field receives
+the entire known source width.</p>
+<p>Two or more unknown field widths remain ambiguous and fail closed instead of
+placeholder slice bounds.</p>
+<p>Explicit widths must be positive integers and must not conflict with already
+known field widths.</p>
+<p>When the source word width is known, the sum of field widths must match it; a
+zero or negative inferred remainder fails closed.</p>
+<pre><code class="language-lisp">(state
+  (&lt;= (header&gt; packet[15:12]))
+  (&lt;= (payload&gt; packet[11:4]))
+  (&lt;= (crc&gt; packet[3:0]))
+  (-&gt; next_state))
+</code></pre>
+<p>The emitted RHS uses the carrier’s bracketed scalar slice syntax, such as
+<code>packet[15:12]</code>, and preserves the <code>&lt;=</code> field-capture operation. For example,
+extracting <code>16'hA5C3</code> into widths <code>4 8 4</code> produces <code>header = 4'hA</code>,
+<code>payload = 8'h5C</code>, and <code>crc = 4'h3</code> on the extraction capture edge. Once that
+state advances, changing <code>packet</code> does not change the captured fields.
+A preceding <code>assemble</code> state captures its packed word before extraction;
+changes to its original parts afterward do not change that stored word.</p>
+<h3 id="current-width-evidence-boundary"><a class="header" href="#current-width-evidence-boundary">Current Width Evidence Boundary</a></h3>
+<p>Before lowering a transaction, ISF builds one private width map from the whole
+actor and transaction shape. Interface declarations and actor-owned
+<code>(storage ...)</code> declarations seed that map, samples inherit known source
+widths, explicit <code>shift_left</code>, <code>shift_right</code>, <code>assemble</code>, and <code>extract</code> width
+options add local evidence, and <code>assemble</code> can infer its target width when all
+parts are known or infer one missing part width from a known target and known
+siblings.</p>
+<p>This is
+type/shape evidence, not cycle-value evidence, so it is not
+source-order-sensitive inside the transaction.</p>
+<p>Today this evidence is used to avoid <code>WIDTH</code>, <code>HIGH</code>, and <code>LOW</code> placeholders
+for accepted migrated data operations. Schedule reports expose positive
+integer <code>width</code> metadata for inferred scheduler counters and for register
+storage whose ISF width evidence is known. They also expose optional <code>role</code>
+metadata when the lowerer has stable evidence for the storage purpose,
+including declared actor-owned storage, sampled aliases, extracted fields,
+ordinary data registers, completion pulses, watchdog/latency/repeat counters,
+and named-drive request/payload storage.</p>
+<p>The planned precedence for this tree is declaration first: interface and
+actor-owned storage declarations are hard width facts. Then come explicit
+operation-local width options, sampled-alias propagation, structural
+derivation from <code>assemble</code>/<code>extract</code>, and finally existing generated scheduler
+storage for counter families. Explicit width options are assertions, not
+silent casts: they may fill an unknown width, but they must agree with any
+existing width fact for the same name.</p>
+<p>Accepted migrated operation families do not emit <code>WIDTH</code>, <code>HIGH</code>, or <code>LOW</code>
+placeholders. <code>extract</code> fails when field positions cannot be proven after the
+single-missing-field inference rule.</p>
+<p><code>shift_right</code> fails when the shifted register width is missing or
+contradictory. <code>shift_left</code> accepts optional width evidence and rejects
+contradictory explicit widths while still accepting widthless shifts.</p>
+<p><code>assemble</code> accepts optional ordered part-width evidence, rejects known
+target-width mismatches, rejects contradictory explicit part widths, and
+rejects non-positive single-part inferred remainders.</p>
+<h2 id="i2c-shift-register--complete-example"><a class="header" href="#i2c-shift-register--complete-example">I2C Shift Register — Complete Example</a></h2>
+<pre><code class="language-lisp">(transaction i2c_transfer
+  (on start ...)
+  ;; Capture 8 bits via shift register
+  (repeat 8
+    (drive scl 1)
+    (shift_left rdata sda_in)
+    (drive scl 0))
+  (complete done))
+</code></pre>
+<p>Each cycle: SCL high → sample <code>sda_in</code> into <code>rdata</code> LSB → SCL low.</p>
+<p>After 8 cycles: <code>rdata</code> contains the full byte.</p>
+<h2 id="complete-accept-path-examples"><a class="header" href="#complete-accept-path-examples">Complete Accept-Path Examples</a></h2>
+<h3 id="bank-storage-access"><a class="header" href="#bank-storage-access">Bank Storage Access</a></h3>
+<pre><code class="language-lisp">(actor bank_demo
+  (storage
+    (bank ram (width 8) (depth 4)))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input wr_addr (width 2))
+    (input wr_data (width 8))
+    (output rd_data (width 8))
+    (output done))
+  (transaction tx
+    (on start)
+    (store ram wr_addr wr_data)
+    (load ram wr_addr as rd_data)
+    (complete done)))
+</code></pre>
+<p><strong>Walkthrough.</strong> <code>(storage (bank ram (width 8) (depth 4)))</code>
+declares one actor-owned 4-deep, 8-bit bank <code>ram</code>. The transaction
+writes one cell with <code>(store ram wr_addr wr_data)</code> and reads it
+back into the output <code>rd_data</code> with <code>(load ram wr_addr as rd_data)</code>.
+The lowered schedule emits one cycle for the store, one for the
+load, and one for the completion drive. <code>bank_accesses[]</code> in the
+schedule report records both accesses and the scheduled <code>.fsm</code>
+carries a scalarized <code>+size</code> family for the four cells.</p>
+<h3 id="data-assembly-and-extraction"><a class="header" href="#data-assembly-and-extraction">Data Assembly And Extraction</a></h3>
+<pre><code class="language-lisp">(actor dataop_demo
+  (storage
+    (var packed_value (width 8))
+    (var lo (width 4))
+    (var hi (width 4)))
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (output done))
+  (transaction tx
+    (on start)
+    (assemble lo hi as packed_value (widths 4 4))
+    (complete done)))
+</code></pre>
+<p><strong>Walkthrough.</strong> Three storage variables: <code>lo</code> (4-bit), <code>hi</code>
+(4-bit), and <code>packed_value</code> (8-bit). <code>(assemble lo hi as packed_value (widths 4 4))</code> concatenates <code>lo</code> (LSBs) and <code>hi</code> (MSBs) into <code>packed_value</code>. The
+<code>(widths ...)</code> option asserts the per-field widths so the lowerer
+can place each field at a concrete bit position. The transaction
+runs the assembly once and completes. The reverse direction uses
+<code>(extract packed_value (widths 4 4) (as lo hi))</code> — not shown here.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="13d-control-flow.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="13f-composition.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="13d-control-flow.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="13f-composition.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

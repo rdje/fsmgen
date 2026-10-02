@@ -1,0 +1,9 @@
+ram-guard: PID 4003; host 70.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "docs/audits/first-when-activation-body-20261002/verify.py", line 229, in <module>
+    verify()
+    ~~~~~~^^
+  File "docs/audits/first-when-activation-body-20261002/verify.py", line 188, in verify
+    assert len(writes) == 1 and writes[0]['lhs'] == 'seen' and writes[0]['rhs'] == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

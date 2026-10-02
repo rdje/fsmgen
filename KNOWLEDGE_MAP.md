@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1258** facts · **6892** unique questions · **7069** answer occurrences · **179** topic shards.
+> **1259** facts · **6897** unique questions · **7074** answer occurrences · **180** topic shards.
 
 Query first:
 
@@ -118,6 +118,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `isf-empty` | 1 | 3 | [`isf-empty.md`](knowledge-map/generated/isf-empty.md) |
 | `isf-extract` | 1 | 3 | [`isf-extract.md`](knowledge-map/generated/isf-extract.md) |
 | `isf-field` | 3 | 13 | [`isf-field.md`](knowledge-map/generated/isf-field.md) |
+| `isf-first` | 1 | 5 | [`isf-first.md`](knowledge-map/generated/isf-first.md) |
 | `isf-formal` | 14 | 42 | [`isf-formal.md`](knowledge-map/generated/isf-formal.md) |
 | `isf-fsm` | 1 | 5 | [`isf-fsm.md`](knowledge-map/generated/isf-fsm.md) |
 | `isf-full` | 1 | 6 | [`isf-full.md`](knowledge-map/generated/isf-full.md) |

@@ -1,0 +1,27 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.3",
+  "baseline_revision": "43dcfae199ca7d93a88fe047f886fdcc6522c2ec",
+  "root_history_revision": "2ca15577c3cc07f38ba49a15efc8955529f39d8b",
+  "test_invocation": ["prove", "-Iperl", "-It/lib", "t/2040-isf-first-when-activation-body.t"],
+  "baseline_capture_environment": {"FSMGEN_WHEN_CAPTURE": ".artifacts/first-when-activation/baseline-qualified"},
+  "final_capture_environment": {"FSMGEN_WHEN_CAPTURE": ".artifacts/first-when-activation/final-complete"},
+  "executed_tests": {"qualified_baseline": "test-baseline-qualified.t", "first_green": "test-final.t", "complete_carrier_green": "test-final-complete.t"},
+  "complete_supplied_sources": "sources/*.isf",
+  "public_phase_argv_suffixes": {
+    "check": ["bin/fsmgen", "--strict", "--check", "--json", "<source>"],
+    "semantic": ["bin/fsmgen", "--strict", "--emit-semantic-json", "<source>"],
+    "schedule": ["bin/fsmgen", "--emit-schedule-json", "<source>"],
+    "newline": ["bin/fsmgen-mcp", "--workspace-root", "."]
+  },
+  "toolchain_interpreter": "the Perl interpreter executing the exact saved test; the operating-system toolchain is a necessary read-only dependency",
+  "native_stdin": "empty",
+  "newline_stdin": "canonical JSON-RPC tools/call request plus one actual newline, defined in the exact saved test",
+  "focused": ["prove", "-Iperl", "-It/lib", "t/2039-isf-child-output-read-preparation.t", "t/1206-isf-when-clause-boundary.t", "t/1180-isf-unsupported-transaction-clause-boundary.t", "t/1973-isf-writer-activation-predicates.t"],
+  "docs": ["prove", "-Iperl", "-It/lib", "t/1305-isf-book-feature-matrix-audit.t", "t/1414-docs-relative-paths-audit.t", "t/1303-isf-public-live-book-paths-audit.t", "t/1307-isf-loop-body-doc-truth-audit.t", "t/1332-isf-atl-doc-status-audit.t", "t/1376-isf-book-example-lowering-audit.t"],
+  "book": ["mdbook", "build", "docs/book"],
+  "first_select_closed_capture": ["perl", ".artifacts/first-when-activation/capture-select.pl"],
+  "guard": {"wrapper": "scripts/run_with_ram_guard.sh", "host_cutoff_percent": 88, "descendant_rss_cutoff_mib": 4096, "policy_unchanged": true},
+  "known_guard_exception": "Three tiny initial empty-case diagnosis calls were unguarded. Retain those original receipts and the guarded requalification separately; never call the original calls guarded.",
+  "normalization": "only the exact runtime repository prefix; preserve primitive kinds, arrays, absence, raw streams and every product field",
+  "scope_exclusions": ["HDL invocation", "spent input replay", "macro delivery", "record output routing/public widening", "full CI/push", "browser visual QA"]
+}

@@ -65,9 +65,12 @@ static-scope/type-definition/prepared-state corruptions refuse without caller
 mutation. Sealed full sources/products/recipes/receipts and the permanent test
 retain falsification and durability; transport parity alone is not signoff.
 
-P2 `.2.1.3` owns first-`when` activation action loss, traced to
-`_ir_when_activation` retaining only samples. P2 `.2.1.4` owns the false `x01`
-pre-generation operand diagnosis. Both precede production read integration
-`.2.1.2`. Owner writer handoffs and complete physical mapping/public admission
+P2 `.2.1.3` closes first-`when` activation action loss with precise refusal for
+unsupported entry payloads; supported sample entries and later branches remain
+intact. [The activation card](isf-first-when-activation-body.md) records the
+actual phase contracts. The related first-operation conditional macro repair
+`.2.1.5` is next, followed by the false `x01` pre-generation operand diagnosis
+`.2.1.4`, before production read integration `.2.1.2`.
+Owner writer handoffs and complete physical mapping/public admission
 remain open. No output execution, arbitration, field writers or X/Z behavior
 is established here; no HDL compiler/analyzer/simulator is invoked.

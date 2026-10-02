@@ -2454,6 +2454,15 @@ The when-clause boundary is checked by
 [t/1206-isf-when-clause-boundary.t](../../t/1206-isf-when-clause-boundary.t)
 so `(when condition body...)` requires one scalar or list-form condition and at
 least one list-form body clause before branch expansion.
+The entry-body boundary is checked by
+[t/2040-isf-first-when-activation-body.t](../../t/2040-isf-first-when-activation-body.t):
+an entry `when` supports only inline samples; other actions refuse before
+artifact publication. Actual native check/semantic failures retain machine
+reports, while failed native schedule preview retains its stderr/nonzero status
+and the existing bounded schedule RPC failure. Admitted samples, labels,
+zero-wait parameters, generated formals, owning domains and later branches
+retain complete products. First-operation conditional macro intent has a
+separate prioritized owner and is not promoted by this gate.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by

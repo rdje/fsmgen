@@ -1,0 +1,4 @@
+ram-guard: PID 50322; host 63.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS fixed 22-case membership; eleven genuine RED admissions become precise refusals; eleven full positive products unchanged
+PASS strict carrier receipts, phase-specific complete native/API/newline products, exact sole production delta and immutable parents
+PASS independent shared corruptions: sample_omission, write_omission, guard_change, width_kind, false_admission

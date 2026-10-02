@@ -1,0 +1,2 @@
+ram-guard: PID 40359; host 60.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS collected full products/receipts, exact producers, rendered text/code/links and immutable predecessors

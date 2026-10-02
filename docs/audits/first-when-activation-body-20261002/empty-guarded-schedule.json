@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "perl",
+    "bin/fsmgen",
+    "--emit-schedule-json",
+    "docs/audits/first-when-activation-body-20261002/drafts/negative_empty.isf"
+  ],
+  "returncode": 255,
+  "stdout": "",
+  "stderr": "Transaction 'main': when body clauses must be list forms in transaction body\n"
+}

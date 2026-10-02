@@ -1,0 +1,62 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.3
+Baseline: 43dcfae199ca7d93a88fe047f886fdcc6522c2ec
+
+Close unsupported first-when activation payload admission without introducing
+a new activation model. The existing first scheduled when creates an entry
+guard, while later when clauses create branches. Entry collection retained
+only inline samples and silently discarded other actions. The selector and
+sample-only collector originate at 2ca15577c3cc07f38ba49a15efc8955529f39d8b.
+The qualified baseline admits complete actual sources/private/public products
+while omitting their entry actions. The new gate refuses those payloads before
+artifact publication; supported samples, labels, predicates, zero-wait
+parameters, local initialization, later branches, generated formals and owning
+domains retain complete products.
+
+Actual check/semantic source refusals produce normal status 1 and complete
+machine failure reports. Native failed schedule retains normalized stderr and
+status 255, without a successful JSON object. Its public API/newline contract
+remains the bounded -32000 RPC failure, not a fabricated tool success/report.
+Use strict check or semantic export for the primary source diagnostic. These
+are existing phase-specific contracts; no public report/schema/API is widened.
+
+Preserve every failed draft and its exact source recipe. An empty-list fixture
+already failed structural body validation before entry lowering; it is not this
+defect. The first helper assumed all failed schedules had JSON and stopped.
+Unused direct params and an unspecialized do were also invalid controls; the
+qualified correction uses an admitted DELAY=0 wait and MODE-specialized do.
+Initial tiny empty-case probes omitted the RAM guard; that mistake is recorded
+and their diagnosis is requalified under the unchanged guard before use.
+
+The same selector also drops the datain write in a first select expansion;
+private IR retains only the false-path seen<-0, while actual native/API/newline
+check/semantic/schedule admit the source. P2 .2.1.5 owns the source-intent repair
+and is scheduled immediately next, before .2.1.4 literal repair and .2.1.2 read
+integration. The safety gate now refuses first select instead of silently
+publishing that incomplete behavior. No completed conditional-macro delivery
+or execution is inferred. The first query-helper recipe had an invalid leading
+dot source identity; retain its refusal and use the identical durable source
+under drafts/ for the qualified public capture.
+
+Re-derivation: actual authored sources/actors, complete private IR/lowered
+artifacts, literal sample/write/branch witnesses, every strict emitted carrier
+and complete native/API/newline phases. Falsification: genuine qualified RED
+before the gate, precise post-gate refusals and independently checked unchanged
+positive products; shared corruption must not satisfy the saved verifier.
+Durability: permanent T2040, exact recipes/history/producers/full receipts and
+products, sealed member identities and Git. Only the exact runtime repository
+prefix normalizes; numeric kinds, absence, arrays, raw streams and full products
+remain intact. No HDL compiler/analyzer/simulation, spent input replay, output
+route/writer/public widening, full CI/push or browser visual audit is claimed.
+
+The final capture repeats the passing source test only to retain every emitted
+carrier's complete native strict-check receipt. The prior passing capture is
+kept separately. The independent verifier's draft assumptions that parser
+width 3 and first-select RHS 0 were JSON numbers were incorrect: both actual
+authored scalars are strings. They are corrected to literal string witnesses;
+opposite primitive kinds remain a falsification control. Preserve the failed
+first verifier receipt and the source drafts; no positive-product projection
+was relaxed. The first collector used a generic lowercase first- marker that
+did not match the actual capitalized book prose; its assertion failure is
+preserved and the corrected checks name exact rendered code/text/link content.
+The ignored host process survey is excluded from publication because it may
+contain unrelated command lines; no signoff relies on it.

@@ -706,7 +706,12 @@ Samples inside `(on ...)` lower to guarded D-input assignments (`<=`) on the
 entry transition.
 
 `(when condition ...)` may be used as the first transaction clause as an
-activation guard. It may also appear later as inline branching.
+activation guard. Its inline body supports only `(sample port as name)`;
+other actions are refused instead of silently omitted. Place subsequent actions
+after that guard. For conditional actions, put an explicit `(on PORT)` or another
+scheduled state before the branching `when`. Declarations and a zero-cycle wait
+do not create a preceding state, so the following `when` still selects entry
+activation. It may also appear later as inline branching.
 Transaction `when`, `while`, and `until` condition expressions may use local
 enum members such as `mode.BUSY`, package enum members such as
 `shared.mode.BUSY`, or scalar aggregate storage leaves such as `frame.flag` as
@@ -1741,7 +1746,9 @@ as JSON null and expose the generated counter name/width through
 
 `(when condition body...)` is structurally validated with one scalar or
 list-form condition and at least one list-form body clause before branch
-expansion. It creates one decision state plus body states. The true path enters
+expansion. After entry or another scheduled state, it creates one decision state
+plus body states. At entry, the sample-only activation boundary in §7.1 applies.
+The true path enters
 the body, and the false path skips to the first state after the whole `when`
 body. Current body support includes drive, await, sample, wait, complete,
 repeat, update, shift/assemble/extract data operations, and nested `when`. Nested

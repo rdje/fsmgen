@@ -164,10 +164,14 @@ and book.
   record types, samples, write targets and one-bit child handshakes even when
   actor outputs are named `start` or `done`; production is not connected yet.
   [Preparation evidence](audits/record-output-owner-read-preparation-20261002/scope.txt)
-  retains complete products and precise scalar controls. Newly encountered P2
-  first-`when` activation action loss (`.2.1.3`) and false `x01` operand diagnosis
-  for `const_3bx01` (`.2.1.4`) are owned and scheduled before read integration
-  `.2.1.2`. No output execution or X/Z runtime claim follows.
+  retains complete products and precise scalar controls. First-`when` action-loss
+  repair (`.2.1.3`) now rejects unsupported entry actions while preserving inline
+  samples and later branches. The same selector drops the true-path assignment
+  of a first `select`; its conditional-macro source-intent repair (`.2.1.5`) is
+  owned and scheduled next, before the false `x01` literal diagnosis (`.2.1.4`)
+  and read integration (`.2.1.2`). First-operation select remains precisely
+  refused until that repair qualifies. No output execution or X/Z runtime claim
+  follows.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.
 
