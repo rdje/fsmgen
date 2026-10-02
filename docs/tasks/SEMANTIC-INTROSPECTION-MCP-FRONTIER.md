@@ -3426,7 +3426,7 @@ For FSMGen, the analogs are:
   Acceptance: `After .1, require independently supplied original root and imported source bytes rather than embedded hashes or current file names. Qualify canonical same-source/external resolution, complete source graph coverage, document mutation/missing/alias/export/instance controls and actual resolved ATL actor preparation. Preserve exact producer linkage and source kinds; stale or forged provenance must refuse. Split before broadening if needed, then hand a complete qualified import contract to formal/generated/domain adoption .5.2.2.3. No source/scheduling admission widening before complete qualification.`
   Verification: `Same-source producer linkage is committed at de856cd10c74bc2114076a1d7913e7ca151ec11d. Independent external document-set authentication and exact alias-specific constructor selections qualify in child .1; ATL .2 qualifies; file-backed identity .3 is next. Source preparation/adoption remains closed.`
   Commit: `children below`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.5`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.6`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.1`
   Status: `done`
@@ -3457,10 +3457,32 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind Global configuration module origin before caller cwd changes.`
   Acceptance: `P2 confirmed during .4: fresh perl -Iperl -MGlobal followed by chdir before Global->new emits fileparse(): need a valid pathname at perl/Global.pm line 21. Preserve the exact reproduction and own a separate module-load origin repair. Keep Global singleton, configuration bytes/FX_TOP/preload contracts and PathSearch behavior intact; qualify genuine failing-before/passing-after controls and focused parser/package regressions. Stay repository-local and commit before preparation/adoption.`
   Verification: `Public fresh-process reproduction exits 2 with exact diagnostic retained in docs/audits/pathsearch-origin-20261002/global-before.txt. No Global repair or whole embedding-directory guarantee is claimed by .4.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.5.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.5.1`
+  Status: `done`
+  Goal: `Qualify Global initialization controls and own the prerequisite matcher defect.`
+  Acceptance: `Retain exact relative Global locator reproduction, complete candidate fixture and failed controls. Follow the suspicious empty absolute-load configuration to its actual public matcher root cause. Record source bindings and original results, keep a failing candidate outside the live suite, synchronize book/facts/frontier, and commit diagnosis before prerequisite .6. Claim no Global repair or successful configuration preservation.`
+  Verification: `Exact original Global remains unchanged. Incomplete published-spec fixtures give FAIL1/6/Failed5; complete candidate gives FAIL1/6/Failed4: both relative loads reproduce module locator failure, while status0 absolute controls lose configuration values. Direct HLinkSubst literal/configuration commands exit2 with unmatched-closing-bracket text. Independent caller regex sets its index2 and matches literal_value while LinkedRE returns index undef. Source gdata compiles package-specific callbacks, establishing missing/stale dispatch as the prerequisite root. Independent whole defective-product/source binding verification passes; full drafts, original source, recipes and standalone diagnostic are retained under docs/audits/global-origin-20261002. The failing candidate is outside the live suite. Own .6 before Global .5.2; book/facts/pointer reflect the blocker without advertising a repair. No production change, positive complete configuration control, full CI or push.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.5.2`
+  Status: `pending`
+  Goal: `Repair Global module origin after trustworthy substitution is restored.`
+  Acceptance: `After .6, restore the complete archived Global candidate as a permanent test, with required published parser inputs. Capture module origin at load time while keeping configuration read/preloads/singleton lazy. Requalify actual pre-fix relative/absolute control and whole configuration/root/preload/moved products. Sync book/facts and commit before preparation/adoption.`
+  Verification: `Blocked on owned HLinkSubst dispatch-index repair .6, not on director input.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.6`
+  Status: `pending`
+  Goal: `Repair HLinkSubst compiled matcher dispatch-index authority.`
+  Acceptance: `P2 prerequisite exposed by .5.1. HLinkSubst gdata regex callbacks assign HLinkSubst::pos; LinkedRE::or reads LinkedRE::pos, so dispatch is missing or stale. Public literal substitution errors or silently produces empty values; independently compiled caller regex matches the full literal and sets caller index2 while returned index is undef. Qualify matcher branch selection, literals/substitutions/escapes/nesting and malformed-input behavior through its public interface, then choose the smallest owned repair with source/history provenance. Preserve helper APIs and Global initialization contracts; run focused regressions, synchronize docs/facts and commit before .5.2. Do not widen matcher behavior by assumption.`
+  Verification: `Actual direct public matcher and independent caller-regex reproduction qualify the missing-index root. Full exact inputs/outputs will be retained in .5.1. Priority P2, scheduled next.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3`
@@ -5119,3 +5141,25 @@ file-origin proof remains sealed; gate receipts live separately.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Fresh relative module load then chdir before first go produces fileparse(): need a valid pathname at modules/PathSearch.pm line 27. The exact baseline uses lazy abs_path of relative %INC. Genuine pre-fix Files=1, Tests=6, Failed: 2 contrasts with passing absolute-load controls. Separate Global.pm line21 reproduction is owned by .5.
 - [x] **ADDRESSED (verified)** — Resolve the actual module origin at load time; keep search enumeration lazy. Final source/test snapshots and complete saved relative/absolute products qualify tree/cwd bytes, extensions, persistent explicit dirs, missing undef/warning and both moved same-volume roots. Retained actual pre-fix module still gives genuine RED; independent verifier rejects hostile complete products and verifies exact baseline/original dependencies. Sealed manifest/recipes/products/receipts provide durability; no inferred broader directory guarantee.
 - [x] **NO REGRESSION** — Focused search/package/source-authority cohort reports All tests successful, Files=6, Tests=72. Syntax and mdBook build pass; built embedding chapter contains the scoped repair and remaining Global limitation. No browser visual audit, search-order stabilization, HDL/runtime, full CI or push. Canonical facts are compacted within the predecessor knowledge allowance; measured reference/task budgets, current claim inventory and staged doctrines precede normal hooks.
+
+## Global control diagnosis and prerequisite ownership (2026-10-02)
+
+Global's fresh-process directory control grew beyond a safe repair: status0
+absolute controls silently lost configuration values. Two incomplete parser-spec
+fixtures remain invalid, with originals retained. Complete actual output and
+separate HLinkSubst/LinkedRE public reproductions locate the package-specific
+matcher index mismatch. Child .5.1 commits only diagnosis and ownership; .6
+repairs the prerequisite next, then .5.2 resumes Global. Do not credit subprocess
+success or weakened empty-value expectations as correct configuration delivery.
+The complete candidate remains in the audit archive, outside the live test suite.
+
+## Acceptance Checklist (enforced) — SEM .60.4.3.3.5.2.1.5.2.2.2.2.5.1 Global diagnosis
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual relative Global controls emit fileparse(): need a valid pathname at modules/Global.pm line 21. Complete absolute controls exit successfully but silently empty NAME/PATH/FX_TOP/preload targets. Direct matcher commands exit2; independent caller regex returns index undef despite full match and caller index2. HLinkSubst callbacks set their package pos while LinkedRE::or reads its own missing/stale index. Original sources and actual products bind this precise prerequisite.
+- [x] **ADDRESSED (verified)** — Complete original source/candidate/defective products and both invalid dependency drafts are preserved. Independent diagnosis verification passes exact source/instrument and whole-product assertions. The failing candidate stays outside the live suite. Child .6 owns and schedules matcher repair next; .5.2 owns Global repair after it. This is a committed diagnosis/ownership unit, not a repaired product or qualified positive configuration control.
+- [x] **NO REGRESSION** — Production remains byte-identical to baseline for Global, PathSearch, HUtils, HLinkSubst and LinkedRE. knowledge-map: OK verifies synchronized canonical facts and bounded routing. Task integrity and book build/rendered prerequisite prose pass; no browser visual audit. Fresh staged declarations retain predecessor knowledge allowance and unchanged ceilings. Source repairs, positive runtime qualification, full CI and push are not claimed.
+
+The first diagnosis doctrine gate rejects claim-inventory drift after final
+acceptance/capacity declarations. Preserve its full receipt separately; regenerate
+the inventory only after those declarations are final and rerun the staged gate.
+This is declaration reconciliation, with no production or diagnostic change.

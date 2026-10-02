@@ -1,0 +1,51 @@
+{
+  "inputs": {
+    "docs/audits/global-origin-20261002/candidate.t": "57d2fb71f43fc0852788693b974450738a8210858ed3ada47418e37bc925c417",
+    "docs/audits/global-origin-20261002/diagnose-index.pl": "87371e963f077c9bf11982d26edc4654a245c4091b88bd4bb61fb98c50990d28",
+    "perl/Global.pm": "c38e368ba85ac394733ae74de572a2105b8053d580faec9748f9be395e9670d9",
+    "perl/HLinkSubst.pm": "2827cbf9841059c2b263569ab4a9d2d6d28008cfb8edaf7b306752d689dca277",
+    "perl/HUtils.pm": "d966a5cc3a4741767851f8a6f61711f921a87a5a74f97af27dd588a4bb897384",
+    "perl/LinkedRE.pm": "f2f0bc0956c2b69a0a353046c01b2b8e718afb6ba3af1167d93f88dd89621031",
+    "perl/PathSearch.pm": "7668eed86c0a471748e7a9cfe4e7d7215d66f1350d009c05a87c566fbb6c7f32",
+    "specs/Lispish.spec": "00e5f3738d439ed4d04e4d170fe7664047fca7f8ca1bbb10694846905f6d0e6c",
+    "specs/hlink_substitution.spec": "d55c5d9ac775856384fe6b9ae1b46b65864c3ac2be6677eb3c35bf783d709311",
+    "specs/pplugin.spec": "bf38cdf3c208cd9cf5439b3fe7b5e8dbcb5cf4d0ea1f58fe9825538f930136e2"
+  },
+  "results": {
+    "caller-index": {
+      "argv": [
+        "perl",
+        "docs/audits/global-origin-20261002/diagnose-index.pl"
+      ],
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\"caller_index\":2,\"result\":{\"index\":null,\"match\":\"literal_value\",\"match_hash\":{},\"match_list\":[\"literal_value\"]}}"
+    },
+    "configuration": {
+      "argv": [
+        "perl",
+        "-Iperl",
+        "-MHUtils",
+        "-MJSON::PP",
+        "-e",
+        "print JSON::PP->new->canonical->encode(HUtils::Link({NAME=>\"literal_value\",FX_TOP=>\"tree\",PATH=>\"[FX_TOP]/payload\"}))"
+      ],
+      "status": 2,
+      "stderr": "",
+      "stdout": "(HLinkSubst) -E- Unmatched closing bracket\n"
+    },
+    "literal": {
+      "argv": [
+        "perl",
+        "-Iperl",
+        "-MHLinkSubst",
+        "-MJSON::PP",
+        "-e",
+        "my $s=\"literal_value\"; print JSON::PP->new->canonical->encode(HLinkSubst::Get(\\$s))"
+      ],
+      "status": 2,
+      "stderr": "",
+      "stdout": "(HLinkSubst) -E- Unmatched closing bracket\n"
+    }
+  }
+}

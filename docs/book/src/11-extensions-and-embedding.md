@@ -13,7 +13,8 @@ This does not change ISF library search precedence or introduce a new public API
 
 `Global` configuration initialization still needs to run before changing away
 from the directory that resolves a relative module include. Its separate repair
-is tracked; the PathSearch repair alone does not establish that broader guarantee.
+is tracked. Trustworthy configuration preservation also requires the owned legacy
+substitution-matcher repair; directory independence remains unqualified.
 
 ## Capability Manifest Discovery
 

@@ -7,6 +7,7 @@ answers:
   - "why must same-source ATL rebuilding retain original form identity?"
   - "which file search precedence does private origin qualification cover?"
   - "why does PathSearch survive chdir after a relative module load?"
+  - "why is Global configuration verification blocked on HLinkSubst?"
 date: 2026-10-02
 status: current
 tags: [isf, atl, source, origins, authority, files, locality]
@@ -17,6 +18,7 @@ evidence: >-
   docs/audits/conditional-origin-files-20261002/verify.py;
   t/2049-pathsearch-module-origin.t;
   docs/audits/pathsearch-origin-20261002/recipe.txt;
+  docs/audits/global-origin-20261002/diagnostic.json;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
@@ -24,11 +26,10 @@ reverify: >-
   t/2049-pathsearch-module-origin.t
 ---
 
-Private canonical parse_file authenticates actual root
-and selected library bytes/forms against independently supplied whole documents
-before construction. Chosen workspaces supply runtime coordinates; declared actor/proof source fields
-project to relative identities and rebind actor digests. Authored strings,
-identifiers/forms/kinds stay unchanged; paths/filenames/hashes supply no authority.
+Private canonical parse_file authenticates whole root/library bytes/forms against
+independent documents before construction. Chosen workspaces project only
+declared actor/proof origins and rebind digests; authored values/forms/kinds stay
+unchanged. Paths, filenames and embedded hashes supply no authority.
 
 Immutable predecessor products independently reconstruct whole actors/catalogs,
 calls, use/ATL constructors and ledgers in adjacent/relative/dotted layouts
@@ -49,6 +50,8 @@ Origin providers/parser stay unchanged; packages/groups/unresolved external
 intent refuse. Preparation/adoption/scheduling remain later owners. Fixture includes resolve before chdir. PathSearch now binds its module tree at
 load time, preserving lazy first-search cwd, retained extras, extensions and
 missing-file warnings. Fresh relative/absolute loads in moved roots qualify the
-repair; retained original production gives genuine RED. Global configuration
-still has its separately owned relative-location defect before first new.
+repair; retained original production gives genuine RED. Global configuration still has a relative-location defect before first new.
+Its HLinkSubst prerequisite also misdispatches: compiled callbacks set the
+caller package index while LinkedRE reads its own missing/stale index. Literal substitution errors; initialized controls can empty values.
+Matcher repair precedes Global origin verification.
 No HDL/macro runtime is proved.

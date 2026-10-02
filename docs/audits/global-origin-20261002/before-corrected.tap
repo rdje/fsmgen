@@ -1,0 +1,109 @@
+ram-guard: PID 56856; host 55.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at t/2050-global-module-origin.t line 86.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at t/2050-global-module-origin.t line 87.
+    #          got: 'fileparse(): need a valid pathname at modules/Global.pm line 21.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 89.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x7b1c2cb0a8)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh relative Global load in first fixture'
+#   at t/2050-global-module-origin.t line 101.
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at t/2050-global-module-origin.t line 86.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at t/2050-global-module-origin.t line 87.
+    #          got: '
+    # (PathSearch) -W Unable to find file 'Lispish.spec' in 
+    # ** <workspace>/cwd <workspace>/tree/data <workspace>/tree <workspace>/tree/modules **,  at <workspace>/tree/modules/PathSearch.pm line 46, <> line 52.
+    # Can't use an undefined value as a subroutine reference at ./perl/Lispish.pm line 13, <> line 52.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 89.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x7b1cb5d288)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh absolute Global load in first fixture'
+#   at t/2050-global-module-origin.t line 101.
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at t/2050-global-module-origin.t line 86.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at t/2050-global-module-origin.t line 87.
+    #          got: 'fileparse(): need a valid pathname at modules/Global.pm line 21.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 89.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x7b1c2b4cf0)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh relative Global load in moved fixture'
+#   at t/2050-global-module-origin.t line 101.
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at t/2050-global-module-origin.t line 86.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at t/2050-global-module-origin.t line 87.
+    #          got: '
+    # (PathSearch) -W Unable to find file 'Lispish.spec' in 
+    # ** <workspace>/tree <workspace>/tree/data <workspace>/tree/modules <workspace>/cwd **,  at <workspace>/tree/modules/PathSearch.pm line 46, <> line 52.
+    # Can't use an undefined value as a subroutine reference at ./perl/Lispish.pm line 13, <> line 52.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 89.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x7b1c2b6450)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh absolute Global load in moved fixture'
+#   at t/2050-global-module-origin.t line 101.
+
+#   Failed test 'whole configuration products survive moving the fixture root'
+#   at t/2050-global-module-origin.t line 104.
+#     Structures begin differing at:
+#          $got->[1]{stderr} = '
+#     (PathSearch) -W Unable to find file 'Lispish.spec' in 
+#     ** <workspace>/cwd <workspace>/tree/data <workspace>/tree <workspace>/tree/modules **,  at <workspace>/tree/modules/PathSearch.pm line 46, <> line 52.
+#     Can't use an undefined value as a subroutine reference at ./perl/Lispish.pm line 13, <> line 52.
+#     '
+#     $expected->[1]{stderr} = '
+#     (PathSearch) -W Unable to find file 'Lispish.spec' in 
+#     ** <workspace>/tree <workspace>/tree/data <workspace>/tree/modules <workspace>/cwd **,  at <workspace>/tree/modules/PathSearch.pm line 46, <> line 52.
+#     Can't use an undefined value as a subroutine reference at ./perl/Lispish.pm line 13, <> line 52.
+#     '
+# Looks like you failed 5 tests of 6.
+t/2050-global-module-origin.t .. 
+Dubious, test returned 5 (wstat 1280, 0x500)
+Failed 5/6 subtests 
+
+Test Summary Report
+-------------------
+t/2050-global-module-origin.t (Wstat: 1280 Tests: 6 Failed: 5)
+  Failed tests:  2-6
+  Non-zero exit status: 5
+Files=1, Tests=6,  0 wallclock secs ( 0.01 usr  0.00 sys +  0.80 cusr  0.04 csys =  0.85 CPU)
+Result: FAIL

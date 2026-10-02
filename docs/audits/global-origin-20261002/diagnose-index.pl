@@ -1,0 +1,11 @@
+use strict;
+use warnings;
+use lib 'perl';
+use LinkedRE;
+use JSON::PP;
+package CallerRegex;
+our $pos;
+my $source = 'literal_value';
+my $compiled = qr/(literal_value)(?{$pos=2})/;
+my $result = LinkedRE::or(\$source, $compiled);
+print JSON::PP->new->canonical->encode({caller_index=>$pos, result=>$result});

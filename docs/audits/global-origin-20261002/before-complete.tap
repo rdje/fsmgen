@@ -1,0 +1,71 @@
+ram-guard: PID 58044; host 66.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at t/2050-global-module-origin.t line 88.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at t/2050-global-module-origin.t line 89.
+    #          got: 'fileparse(): need a valid pathname at modules/Global.pm line 21.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 91.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x785cec1468)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh relative Global load in first fixture'
+#   at t/2050-global-module-origin.t line 103.
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 91.
+    #     Structures begin differing at:
+    #          $got->{values}{fixture_conf} = Does not exist
+    #     $expected->{values}{fixture_conf} = HASH(0x785cec3258)
+    # Looks like you failed 1 test of 4.
+
+#   Failed test 'fresh absolute Global load in first fixture'
+#   at t/2050-global-module-origin.t line 103.
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at t/2050-global-module-origin.t line 88.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at t/2050-global-module-origin.t line 89.
+    #          got: 'fileparse(): need a valid pathname at modules/Global.pm line 21.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 91.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x785c810600)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh relative Global load in moved fixture'
+#   at t/2050-global-module-origin.t line 103.
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 91.
+    #     Structures begin differing at:
+    #          $got->{values}{NAME} = ''
+    #     $expected->{values}{NAME} = 'late_configuration'
+    # Looks like you failed 1 test of 4.
+
+#   Failed test 'fresh absolute Global load in moved fixture'
+#   at t/2050-global-module-origin.t line 103.
+# Looks like you failed 4 tests of 6.
+t/2050-global-module-origin.t .. 
+Dubious, test returned 4 (wstat 1024, 0x400)
+Failed 4/6 subtests 
+
+Test Summary Report
+-------------------
+t/2050-global-module-origin.t (Wstat: 1024 Tests: 6 Failed: 4)
+  Failed tests:  2-5
+  Non-zero exit status: 4
+Files=1, Tests=6,  1 wallclock secs ( 0.01 usr  0.01 sys +  0.82 cusr  0.05 csys =  0.89 CPU)
+Result: FAIL

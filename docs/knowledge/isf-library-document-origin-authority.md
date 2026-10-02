@@ -36,10 +36,9 @@ a reproduced stale-clone target defect was fixed before commit. The initial seal
 is intermediate; the separate finalization seal binds the corrected provider and
 permanent regression.
 
-Identical actors can retain different original operations. Consistently forged
-catalogs and matching embedded digests cannot replace independent bytes. Caller
-and returned views detach. Bypassing complete comparison yields genuine refusal
-failures while canonical producers run.
+Identical actors can retain different operations. Forged catalogs/matching hashes
+cannot replace independent bytes. Caller/views detach. Comparison bypass yields
+genuine refusal failures while canonical producers run.
 
 Same-source declarations precede external search. Reused exports keep distinct
 use instances; two external aliases construct actors twice and bind their exact
@@ -47,9 +46,9 @@ returned references. Equal bodies never merge constructors. Source partitioning
 uses original tokens: normalized singleton formal lists have undefined tails and
 cannot serialize original source.
 
-Production parser/scheduler is unchanged. The earlier local authority refuses
-imports; this provider refuses packages/ATL. [ATL](isf-atl-document-origin-authority.md)
+Parser/scheduler stays unchanged. Local authority refuses imports; this provider
+refuses packages/ATL. [ATL](isf-atl-document-origin-authority.md)
 separately qualifies resolved static clones; file origins qualify actual root
 reads and same-source use/ATL form association. Preparation/adoption remain
-later owners. Current public activation/refusal contracts apply; no new macro
-language, scheduling admission, HDL or macro runtime is proved.
+later owners. Public activation/refusals apply; no new macros, scheduling admission or
+HDL/macro runtime is proved.

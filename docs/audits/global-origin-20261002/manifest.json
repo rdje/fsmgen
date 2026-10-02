@@ -1,0 +1,78 @@
+{
+  "baseline.json": {
+    "bytes": 454,
+    "sha256": "9a2c4d8c48912bb442ed222d4b11e8ce02c9c5d579e7875590fcb2dcf536fdd2"
+  },
+  "before-complete.json": {
+    "bytes": 1197,
+    "sha256": "49e697086405571540d631e0609d7dbdcfdc02f87845e8e11c0f9f258b70a93f"
+  },
+  "before-complete.tap": {
+    "bytes": 2959,
+    "sha256": "e4718f4fa2f3ff3eb22027da4751ba9299a9bc9a80bc5db5612ac5af2413cbe4"
+  },
+  "before-corrected.json": {
+    "bytes": 1369,
+    "sha256": "b26a57b0bcd56da4896625c3480c796c4531fc83e8446ea819c93e9d416b285c"
+  },
+  "before-corrected.tap": {
+    "bytes": 5013,
+    "sha256": "a75d3c16878c162123e1f63b56fefa45cbf42c4d3de8a9c53c51565bec1b9d2c"
+  },
+  "before.json": {
+    "bytes": 1253,
+    "sha256": "be5cb2c71464f54314035db7ef1d314b575e8e8c69e26bc65afeb33234015423"
+  },
+  "before.tap": {
+    "bytes": 4781,
+    "sha256": "f443ced7a5d938811000d73cef6a072d8f9cd34a117380f94562fa8f7344f332"
+  },
+  "before/Global.pm": {
+    "bytes": 1664,
+    "sha256": "c38e368ba85ac394733ae74de572a2105b8053d580faec9748f9be395e9670d9"
+  },
+  "book.txt": {
+    "bytes": 194,
+    "sha256": "a444ee81cf2b06105cf8e2b9ec7c136d6565bf921d085fb7d028c29d3f9a3a41"
+  },
+  "candidate.t": {
+    "bytes": 5141,
+    "sha256": "57d2fb71f43fc0852788693b974450738a8210858ed3ada47418e37bc925c417"
+  },
+  "diagnose-index.pl": {
+    "bytes": 305,
+    "sha256": "87371e963f077c9bf11982d26edc4654a245c4091b88bd4bb61fb98c50990d28"
+  },
+  "diagnostic.json": {
+    "bytes": 2086,
+    "sha256": "161356e052a227513fc10406fdc1bf7d3643648e6bf7ffca13489bfb191c60c2"
+  },
+  "first-draft/baseline.json": {
+    "bytes": 454,
+    "sha256": "9a2c4d8c48912bb442ed222d4b11e8ce02c9c5d579e7875590fcb2dcf536fdd2"
+  },
+  "first-draft/test.t": {
+    "bytes": 4996,
+    "sha256": "14da31aeeac1af527899e2e34accacd11f0d7af8987667c8602279552c314a25"
+  },
+  "render.txt": {
+    "bytes": 90,
+    "sha256": "c400bb8bc1052f53502b10dcc83c6cd4e895d308e64bfb2f11f9f46b7fa85200"
+  },
+  "scope.txt": {
+    "bytes": 2019,
+    "sha256": "01632b07e219934129e57ab478e8e715878666e97e64c9fad1c70b56aaf9a5f3"
+  },
+  "second-draft/test.t": {
+    "bytes": 5075,
+    "sha256": "fa30f10c073756b350c9c2547daafd7c59947fc4ad29538474dec5b7e473c95d"
+  },
+  "verify-diagnosis.py": {
+    "bytes": 2070,
+    "sha256": "44f87fcaae48e556902dd067b64fb9991cd7d25e097341740a9e9053a381da9e"
+  },
+  "verify.txt": {
+    "bytes": 137,
+    "sha256": "9d51a2492a4882f59696e54f72dcb3a99be992b442ded6205d11ffe9cea03d44"
+  }
+}

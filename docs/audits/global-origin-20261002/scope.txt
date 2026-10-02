@@ -1,0 +1,11 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.2.2.5.1
+This is diagnosis and prerequisite ownership, not Global repair signoff.
+Exact original Global and candidate instruments/fixtures are retained. Source remains unchanged.
+Initial absolute-load controls lack pplugin.spec and fail; the second fixture adds it but lacks Lispish.spec. Both invalid drafts/results remain preserved.
+The complete candidate supplies published pplugin/Lispish inputs (plus harmless hlink_substitution input). Relative controls reproduce Global.pm line21. Absolute processes initialize, but complete values are emptied: NAME/PATH/FX_TOP/preload targets lose meaning. Their subprocess success is not correct configuration delivery.
+Root: HLinkSubst gdata regex callbacks are compiled in HLinkSubst and set its pos; LinkedRE::or reads LinkedRE::pos. Direct literal/linked configuration exits2 with unmatched-closing-bracket text. The independent caller-compiled regex matches the full literal and sets caller index2, while returned index is null. This missing/stale dispatch is owned by .6 and scheduled next before .5.2.
+Re-derivation: full actual controls and separate direct public matcher/configuration commands bind exact source hashes.
+Falsification: desired whole configuration assertions fail even for status0 absolute controls; the separate caller match/index demonstrates why package-dispatch assumption fails.
+Durability: exact baseline Git blob/test snapshots, complete saved products/raw receipts, standalone index producer, diagnostic recipes and membership manifest.
+No production repair, complete positive configuration control, Global directory guarantee, HDL/runtime, full CI or push. A candidate that currently fails lives only in this archive, not the ordinary test suite.
+TAP workspace/repository absolute diagnostic prefixes normalize to <workspace> and . for portability. JSON products were normalized by their original producer. Host readings/OS toolchain paths are read-only monitor/runtime evidence.

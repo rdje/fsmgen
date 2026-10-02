@@ -1,0 +1,109 @@
+ram-guard: PID 55624; host 53.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at t/2050-global-module-origin.t line 85.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at t/2050-global-module-origin.t line 86.
+    #          got: 'fileparse(): need a valid pathname at modules/Global.pm line 21.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 88.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x778c544288)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh relative Global load in first fixture'
+#   at t/2050-global-module-origin.t line 100.
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at t/2050-global-module-origin.t line 85.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at t/2050-global-module-origin.t line 86.
+    #          got: '
+    # (PathSearch) -W Unable to find file 'pplugin.spec' in 
+    # ** <workspace>/tree/modules <workspace>/tree/data <workspace>/tree <workspace>/cwd **,  at <workspace>/tree/modules/PathSearch.pm line 46.
+    # No spec pplugin at ./perl/LinkedSpec.pm line 1223.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 88.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x778c544180)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh absolute Global load in first fixture'
+#   at t/2050-global-module-origin.t line 100.
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at t/2050-global-module-origin.t line 85.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at t/2050-global-module-origin.t line 86.
+    #          got: 'fileparse(): need a valid pathname at modules/Global.pm line 21.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 88.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x778c546018)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh relative Global load in moved fixture'
+#   at t/2050-global-module-origin.t line 100.
+
+    #   Failed test 'first configuration read after cwd change succeeds'
+    #   at t/2050-global-module-origin.t line 85.
+
+    #   Failed test 'configuration/preload initialization has no diagnostic'
+    #   at t/2050-global-module-origin.t line 86.
+    #          got: '
+    # (PathSearch) -W Unable to find file 'pplugin.spec' in 
+    # ** <workspace>/tree/modules <workspace>/tree/data <workspace>/cwd <workspace>/tree **,  at <workspace>/tree/modules/PathSearch.pm line 46.
+    # No spec pplugin at ./perl/LinkedSpec.pm line 1223.
+    # '
+    #     expected: ''
+
+    #   Failed test 'whole lazy configuration, root substitution, preloads and singleton contract'
+    #   at t/2050-global-module-origin.t line 88.
+    #     Structures begin differing at:
+    #          $got = undef
+    #     $expected = HASH(0x778c53ee28)
+    # Looks like you failed 3 tests of 4.
+
+#   Failed test 'fresh absolute Global load in moved fixture'
+#   at t/2050-global-module-origin.t line 100.
+
+#   Failed test 'whole configuration products survive moving the fixture root'
+#   at t/2050-global-module-origin.t line 103.
+#     Structures begin differing at:
+#          $got->[1]{stderr} = '
+#     (PathSearch) -W Unable to find file 'pplugin.spec' in 
+#     ** <workspace>/tree/modules <workspace>/tree/data <workspace>/tree <workspace>/cwd **,  at <workspace>/tree/modules/PathSearch.pm line 46.
+#     No spec pplugin at ./perl/LinkedSpec.pm line 1223.
+#     '
+#     $expected->[1]{stderr} = '
+#     (PathSearch) -W Unable to find file 'pplugin.spec' in 
+#     ** <workspace>/tree/modules <workspace>/tree/data <workspace>/cwd <workspace>/tree **,  at <workspace>/tree/modules/PathSearch.pm line 46.
+#     No spec pplugin at ./perl/LinkedSpec.pm line 1223.
+#     '
+# Looks like you failed 5 tests of 6.
+t/2050-global-module-origin.t .. 
+Dubious, test returned 5 (wstat 1280, 0x500)
+Failed 5/6 subtests 
+
+Test Summary Report
+-------------------
+t/2050-global-module-origin.t (Wstat: 1280 Tests: 6 Failed: 5)
+  Failed tests:  2-6
+  Non-zero exit status: 5
+Files=1, Tests=6,  0 wallclock secs ( 0.01 usr  0.00 sys +  0.11 cusr  0.03 csys =  0.15 CPU)
+Result: FAIL

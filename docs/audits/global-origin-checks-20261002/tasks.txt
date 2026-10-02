@@ -1,0 +1,1 @@
+[task-tree-integrity] all active task-tree invariants hold (trees=7, nodes=2009, segments=3, compact_terminals=46, index_archives=1, migrations=1, acceptance_histories=2)

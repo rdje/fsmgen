@@ -1,0 +1,1 @@
+PASS actual built embedding chapter includes scoped prerequisite; no browser visual audit
