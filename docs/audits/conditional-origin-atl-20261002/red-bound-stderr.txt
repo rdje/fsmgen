@@ -1,0 +1,2401 @@
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_authored'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_cond'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_max'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_min'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_proc_cond'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_proc_select'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_select'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_unless-bit'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_unless-field'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_when-bit'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes first_when-field'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 56.
+
+#   Failed test 'actual use and ATL producer scopes identical_export_twins'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_authored'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_cond'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_max'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_min'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_proc_cond'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_proc_select'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_select'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_unless-bit'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_unless-field'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_when-bit'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes later_when-field'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+
+    #   Failed test 'actual ATL actor_identity mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL actor_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL document mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_kind mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL producer_swap mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL source_operation mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL type mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL instance mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL path mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL coverage mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL scope mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+
+    #   Failed test 'actual ATL target mutation refuses'
+    #   at t/2047-isf-atl-document-origin-authority.t line 76.
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at t/2047-isf-atl-document-origin-authority.t line 77.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 24 tests of 54.
+
+#   Failed test 'actual use and ATL producer scopes reused_export'
+#   at t/2047-isf-atl-document-origin-authority.t line 91.
+# Looks like you failed 24 tests of 28.

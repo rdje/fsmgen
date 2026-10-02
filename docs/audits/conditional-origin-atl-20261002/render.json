@@ -1,0 +1,17 @@
+{
+  "13d-control-flow.html": {
+    "markers": [
+      "Separate private ATL qualification",
+      "one-instance subset"
+    ],
+    "sha256": "3a95d855abf98afd38e20fb1313d0d28339d3651ab7fc67b36ac5fe2474da5be"
+  },
+  "13i-downstream-integration.html": {
+    "markers": [
+      "Separate private ATL qualification",
+      "File-backed",
+      "ATL provenance evidence"
+    ],
+    "sha256": "71e6cb31de23b7d12e93d6e9b816257c950d51e8a6b40f7f1ccae5dbe1c01717"
+  }
+}

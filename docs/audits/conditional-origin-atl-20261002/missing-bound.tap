@@ -1,0 +1,108 @@
+.artifacts/conditional-origin-atl/red_missing_producer.t .. 
+# Subtest: actual missing ATL producer first_authored
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 1 - actual missing ATL producer first_authored
+# Subtest: actual missing ATL producer first_cond
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 2 - actual missing ATL producer first_cond
+# Subtest: actual missing ATL producer first_max
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 3 - actual missing ATL producer first_max
+# Subtest: actual missing ATL producer first_min
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 4 - actual missing ATL producer first_min
+# Subtest: actual missing ATL producer first_proc_cond
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 5 - actual missing ATL producer first_proc_cond
+# Subtest: actual missing ATL producer first_proc_select
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 6 - actual missing ATL producer first_proc_select
+# Subtest: actual missing ATL producer first_select
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 7 - actual missing ATL producer first_select
+# Subtest: actual missing ATL producer first_unless-bit
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 8 - actual missing ATL producer first_unless-bit
+# Subtest: actual missing ATL producer first_unless-field
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 9 - actual missing ATL producer first_unless-field
+# Subtest: actual missing ATL producer first_when-bit
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 10 - actual missing ATL producer first_when-bit
+# Subtest: actual missing ATL producer first_when-field
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 11 - actual missing ATL producer first_when-field
+# Subtest: actual missing ATL producer identical_export_twins
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 12 - actual missing ATL producer identical_export_twins
+# Subtest: actual missing ATL producer later_authored
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 13 - actual missing ATL producer later_authored
+# Subtest: actual missing ATL producer later_cond
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 14 - actual missing ATL producer later_cond
+# Subtest: actual missing ATL producer later_max
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 15 - actual missing ATL producer later_max
+# Subtest: actual missing ATL producer later_min
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 16 - actual missing ATL producer later_min
+# Subtest: actual missing ATL producer later_proc_cond
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 17 - actual missing ATL producer later_proc_cond
+# Subtest: actual missing ATL producer later_proc_select
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 18 - actual missing ATL producer later_proc_select
+# Subtest: actual missing ATL producer later_select
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 19 - actual missing ATL producer later_select
+# Subtest: actual missing ATL producer later_unless-bit
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 20 - actual missing ATL producer later_unless-bit
+# Subtest: actual missing ATL producer later_unless-field
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 21 - actual missing ATL producer later_unless-field
+# Subtest: actual missing ATL producer later_when-bit
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 22 - actual missing ATL producer later_when-bit
+# Subtest: actual missing ATL producer later_when-field
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 23 - actual missing ATL producer later_when-field
+# Subtest: actual missing ATL producer reused_export
+    not ok 1 - canonical producers must retain explicit ATL association
+    1..1
+not ok 24 - actual missing ATL producer reused_export
+1..24
+Dubious, test returned 24 (wstat 6144, 0x1800)
+Failed 24/24 subtests 
+
+Test Summary Report
+-------------------
+.artifacts/conditional-origin-atl/red_missing_producer.t (Wstat: 6144 Tests: 24 Failed: 24)
+  Failed tests:  1-24
+  Non-zero exit status: 24
+Files=1, Tests=24, 10 wallclock secs ( 0.01 usr  0.00 sys +  8.35 cusr  0.58 csys =  8.94 CPU)
+Result: FAIL

@@ -58,7 +58,10 @@ tails and are not a source serialization format.
 
 This is private qualification, with production parser/scheduler unchanged.
 The earlier local-source authority still refuses imports. Packages and ATL
-remain closed here; ATL is next under SEM `.60.4.3.3.5.2.1.5.2.2.2.2.2`.
+remain closed here. A [separate ATL observer](isf-atl-document-origin-authority.md)
+qualifies actual resolved-static producers and source-bound reloads while this
+provider remains unchanged. File-backed identity is next under SEM
+`.60.4.3.3.5.2.1.5.2.2.2.2.3`.
 Formal/generated/domain propagation and metadata adoption remain later owners.
 Current activation workarounds/refusals and public contracts still apply. No
 new macro language, scheduling admission, HDL or macro runtime is proved.

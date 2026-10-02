@@ -1235,6 +1235,9 @@ Focused tests:
 - [t/2046-isf-library-document-origin-authority.t](../../t/2046-isf-library-document-origin-authority.t)
   qualifies independent complete root/library document-set reload authentication;
   packages, ATL and preparation/adoption remain closed in the private authority.
+- [t/2047-isf-atl-document-origin-authority.t](../../t/2047-isf-atl-document-origin-authority.t)
+  qualifies separate actual use/ATL constructors and resolved-static origin
+  reloads; file-backed identity and preparation/adoption remain closed.
 - [t/1397-isf-register-reset-value-surface.t](../../t/1397-isf-register-reset-value-surface.t)
 - [t/1398-isf-storage-reset-value.t](../../t/1398-isf-storage-reset-value.t)
 - [t/1399-isf-compound-assign.t](../../t/1399-isf-compound-assign.t)

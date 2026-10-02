@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-atl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **18** uniquely owned question entries.
+> **5** facts · **22** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -11,6 +11,9 @@
 - q="can await_all join qualified ATL actor events?" · facts=[isf-atl-event-join-boundary](../../docs/knowledge/isf-atl-event-join-boundary.md)
 - q="can await_all or await_any use group.name operands?" · facts=[isf-atl-group-endpoint-boundary](../../docs/knowledge/isf-atl-group-endpoint-boundary.md)
 - q="can await_any join qualified ATL actor events?" · facts=[isf-atl-event-join-boundary](../../docs/knowledge/isf-atl-event-join-boundary.md)
+- q="can identical use and ATL actors have different original source intent?" · facts=[isf-atl-document-origin-authority](../../docs/knowledge/isf-atl-document-origin-authority.md)
+- q="does ATL resolution reuse the same library constructors as use?" · facts=[isf-atl-document-origin-authority](../../docs/knowledge/isf-atl-document-origin-authority.md)
+- q="how do resolved ATL actor clones retain original conditional intent?" · facts=[isf-atl-document-origin-authority](../../docs/knowledge/isf-atl-document-origin-authority.md)
 - q="what diagnostic reports ATL await_all or await_any actor-event joins?" · facts=[isf-atl-event-join-boundary](../../docs/knowledge/isf-atl-event-join-boundary.md)
 - q="what diagnostic reports ATL group.name endpoints?" · facts=[isf-atl-group-endpoint-boundary](../../docs/knowledge/isf-atl-group-endpoint-boundary.md)
 - q="what diagnostic reports repeated ATL actor-event waits after a trigger batch?" · facts=[isf-atl-trigger-batch-wait-boundary](../../docs/knowledge/isf-atl-trigger-batch-wait-boundary.md)
@@ -23,8 +26,16 @@
 - q="where is the ATL sync-clause event-join diagnostic implemented?" · facts=[isf-atl-event-join-boundary](../../docs/knowledge/isf-atl-event-join-boundary.md)
 - q="which ISF fixture ships the resolved-child trigger-batch generated top?" · facts=[isf-atl-trigger-batch-generated-top](../../docs/knowledge/isf-atl-trigger-batch-generated-top.md)
 - q="why do repeated ATL waits after a trigger batch fail closed?" · facts=[isf-atl-trigger-batch-wait-boundary](../../docs/knowledge/isf-atl-trigger-batch-wait-boundary.md)
+- q="why must mutation oracles clone opaque JSON export maps?" · facts=[isf-atl-document-origin-authority](../../docs/knowledge/isf-atl-document-origin-authority.md)
 
 ## Facts
+
+### isf-atl-document-origin-authority
+
+_Resolved ATL origins retain their actual separate constructor identity_
+
+- **date:** 2026-10-02 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-atl-document-origin-authority.md`](../../docs/knowledge/isf-atl-document-origin-authority.md)
 
 ### isf-atl-event-join-boundary
 

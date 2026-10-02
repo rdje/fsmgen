@@ -201,6 +201,14 @@ and book.
   File-backed root/runtime-to-relative document identity qualification remains
   separately owned before adoption; the current cohort uses a supplied root
   with a non-file label and relative library search roots.
+  Separate private ATL provenance now qualifies actual rebuilt library
+  constructors and resolved static actor clones, including distinct use/ATL
+  identities for identical complete actors. Final target/declaration/coverage
+  changes refuse. [ATL proof](audits/conditional-origin-atl-20261002/scope.txt)
+  retains complete sources/products, real missing-producer and forged-reload
+  failures. The cohort covers one resolved static instance; groups and unresolved
+  external intent remain closed in this authority. File-backed identity and
+  preparation/adoption remain open before scheduling integration.
   [Origin qualification](audits/conditional-origin-parser-20261002/scope.txt)
   retains the complete parser evidence; public syntax and admission do not change.
   Use explicit activation before conditional shorthand and keep `cond` at the

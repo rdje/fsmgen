@@ -1,0 +1,29 @@
+ram-guard: PID 9526; host 61.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+    # No tests run!
+
+#   Failed test 'No tests run for subtest "actual use and ATL producer scopes first_authored"'
+#   at t/2047-isf-atl-document-origin-authority.t line 87.
+Error: actor 'library_top' static actor network currently accepts exactly one actor instance unless the selected scalar actor-to-actor data movement subset is present; broader multiple-instance scheduling is deferred
+ at perl/FSM/Adapter/ISF/Parser.pm line 4371.
+	FSM::Adapter::ISF::Parser::_finalize_selected_atl_data_movements(HASH(0x7c476f18b8), ARRAY(0x7c476f5558), ARRAY(0x7c479e6108), ARRAY(0x7c479e6c60), ARRAY(0x7c479e61e0), ARRAY(0x7c479e65d0)) called at perl/FSM/Adapter/ISF/Parser.pm line 3049
+	FSM::Adapter::ISF::Parser::_validate_actor_atl_reserved_qualified_forms(FSM::Adapter::ISF::Parser=HASH(0x7c4813bd20), HASH(0x7c476f18b8)) called at perl/FSM/Adapter/ISF/Parser.pm line 398
+	FSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x7c4813bd20), ARRAY(0x7c476e9bb8), ".artifacts/tmp/tests/BwsmA3hHVQ/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 134
+	FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7c4813bd20), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/BwsmA3hHVQ/authority-root.isf") called at t/2047-isf-atl-document-origin-authority.t line 37
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x7c4503f810), "actual use and ATL producer scopes first_authored", CODE(0x7c4810a5b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("actual use and ATL producer scopes first_authored", CODE(0x7c4810a5b8)) called at t/2047-isf-atl-document-origin-authority.t line 87
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 2.
+t/2047-isf-atl-document-origin-authority.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+Failed 1/2 subtests 
+
+Test Summary Report
+-------------------
+t/2047-isf-atl-document-origin-authority.t (Wstat: 65280 Tests: 2 Failed: 1)
+  Failed test:  2
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=2,  2 wallclock secs ( 0.01 usr  0.01 sys +  0.60 cusr  0.44 csys =  1.06 CPU)
+Result: FAIL

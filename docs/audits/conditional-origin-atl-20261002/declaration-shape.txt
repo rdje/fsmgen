@@ -1,0 +1,36 @@
+ram-guard: PID 38277; host 63.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+{
+  "network": {
+    "association_schedules": [],
+    "data_movements": [],
+    "event_waits": [],
+    "group_schedules": [],
+    "groups": [],
+    "instances": [
+      {
+        "actor_type": "lib.worker",
+        "alias": "lib",
+        "declaration": "actor",
+        "export": "worker",
+        "library": "common.choice",
+        "module": "library_top__first_node",
+        "name": "first_node",
+        "scheduled_fsm": "library_top__first_node.fsm",
+        "type_resolution": "library_actor_export"
+      }
+    ],
+    "kind": "static_declaration",
+    "transaction_triggers": []
+  },
+  "atl": {
+    "actor_type": "lib.worker",
+    "alias": "lib",
+    "declaration": "actor",
+    "export": "worker",
+    "library": "common.choice",
+    "module": "library_top__first_node",
+    "name": "first_node",
+    "scheduled_fsm": "library_top__first_node.fsm",
+    "type_resolution": "library_actor_export"
+  }
+}

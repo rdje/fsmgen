@@ -1,0 +1,9 @@
+ram-guard: PID 62404; host 84.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/conditional-origin-atl-20261002/verify.py", line 126, in <module>
+    verify_products(products)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/conditional-origin-atl-20261002/verify.py", line 102, in verify_products
+    assert encoded(control['actor']) == encoded(bad_actor) and encoded(control['proof']) == encoded(bad_proof)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

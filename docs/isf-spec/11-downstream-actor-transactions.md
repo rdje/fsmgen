@@ -371,6 +371,16 @@ provenance in an accepted document proof.
 This bounded cohort uses a supplied root with a logical non-file label and
 relative library search roots. File-backed root resolution and its runtime-to-relative
 document identity boundary remain a separately owned prerequisite before adoption.
+Separate private ATL qualification observes the actual canonical resolved-static
+actor path, which rebuilds library actors after use resolution. Exact returned
+export references retain distinct use/ATL constructor identities and original
+document, alias, type and instance provenance even for identical complete actors.
+Whole resolved metadata, declarations and source ledgers survive opaque reloads;
+final target/declaration/coverage changes refuse. This cohort covers one resolved
+static ATL instance; groups and unresolved external intent remain closed in this
+authority. The earlier library-only provider remains unchanged. File-backed
+identity and formal/generated/domain adoption are still prerequisites.
+ATL provenance evidence: `docs/audits/conditional-origin-atl-20261002/scope.txt`.
 Document-set evidence: `docs/audits/conditional-origin-documents-20261002/scope.txt`.
 Final publication evidence: `docs/audits/conditional-origin-documents-finalization-20261002/scope.txt`.
 Origin evidence: `docs/audits/conditional-origin-parser-20261002/scope.txt`.

@@ -48,6 +48,8 @@ package imports and ATL refuse explicitly in this private observer. The local
 reload authority still refuses all imports: producer linkage is not imported
 consumer authentication. The separate [document-set authority](isf-library-document-origin-authority.md)
 qualifies independently supplied root/library bytes and complete consumer
-reloads. ATL remains owned by SEM `.60.4.3.3.5.2.1.5.2.2.2.2.2`;
+reloads. A [separate ATL authority](isf-atl-document-origin-authority.md) now
+qualifies resolved-static constructor and clone origins; file-backed identity
+remains owned by SEM `.60.4.3.3.5.2.1.5.2.2.2.2.3`;
 formal/generated/domain propagation and adoption follow. Production parser, scheduler, public schemas and existing
 activation/refusal behavior remain unchanged. No HDL or macro runtime is proved.

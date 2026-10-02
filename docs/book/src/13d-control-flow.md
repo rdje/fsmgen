@@ -67,9 +67,14 @@ that produce identical actors. Declared aliases retain their exact constructor
 selections. Packages and ATL remain closed in this private authority.
 Final use coverage and complete edge targets, identities and kinds are checked
 again after canonical finalization before proof publication.
-The qualified fixture uses a supplied root with a logical non-file label and
-relative library search roots; file-backed root identity qualification is also
-required before adoption.
+Separate private ATL qualification now carries origins from the actual rebuilt
+library constructors into resolved static actor clones, keeping use and ATL
+producer identities distinct even when their complete actors are identical.
+It covers the shipped one-instance subset and rejects stale final targets,
+declarations and coverage. Unresolved external actor intent and groups remain
+closed in this authority. The qualified fixtures use a supplied root with a
+logical non-file label and relative library search roots; file-backed root
+identity qualification is also required before adoption.
 Formal/generated/domain preparation must also qualify before this becomes a
 scheduling repair. The current activation workaround and refusals still apply.
 

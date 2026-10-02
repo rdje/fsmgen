@@ -86,8 +86,9 @@ Same-source library producer linkage is now separately qualified in
 not open the imported consumer-authentication boundary.
 The separate [document-set authority](isf-library-document-origin-authority.md)
 now qualifies complete independently supplied root/library bytes and imported
-consumer reloads through canonical external resolution. ATL and preparation
-remain closed before production adoption and branch integration.
+consumer reloads through canonical external resolution. A [separate ATL observer](isf-atl-document-origin-authority.md)
+now qualifies exact resolved-static producers and clones. File-backed identity
+and preparation remain closed before production adoption and branch integration.
 
 Literal predicates/effects/aliases/roles and complete current products
 re-derive each scoped result. Genuine desired-intent RED and shared-corruption

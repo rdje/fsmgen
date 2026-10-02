@@ -1,0 +1,1408 @@
+t/2047-isf-atl-document-origin-authority.t .. 
+ok 1 - complete immutable conditional producer cohort
+# Subtest: actual use and ATL producer scopes first_authored
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 2 - actual use and ATL producer scopes first_authored
+# Subtest: actual use and ATL producer scopes first_cond
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 3 - actual use and ATL producer scopes first_cond
+# Subtest: actual use and ATL producer scopes first_max
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 4 - actual use and ATL producer scopes first_max
+# Subtest: actual use and ATL producer scopes first_min
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 5 - actual use and ATL producer scopes first_min
+# Subtest: actual use and ATL producer scopes first_proc_cond
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 6 - actual use and ATL producer scopes first_proc_cond
+# Subtest: actual use and ATL producer scopes first_proc_select
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 7 - actual use and ATL producer scopes first_proc_select
+# Subtest: actual use and ATL producer scopes first_select
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 8 - actual use and ATL producer scopes first_select
+# Subtest: actual use and ATL producer scopes first_unless-bit
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 9 - actual use and ATL producer scopes first_unless-bit
+# Subtest: actual use and ATL producer scopes first_unless-field
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 10 - actual use and ATL producer scopes first_unless-field
+# Subtest: actual use and ATL producer scopes first_when-bit
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 11 - actual use and ATL producer scopes first_when-bit
+# Subtest: actual use and ATL producer scopes first_when-field
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 12 - actual use and ATL producer scopes first_when-field
+# Subtest: actual use and ATL producer scopes identical_export_twins
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    ok 55 - literal selected ATL authored source intent
+    ok 56 - literal distinct use source intent despite identical actors
+    1..56
+not ok 13 - actual use and ATL producer scopes identical_export_twins
+# Subtest: actual use and ATL producer scopes later_authored
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 14 - actual use and ATL producer scopes later_authored
+# Subtest: actual use and ATL producer scopes later_cond
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 15 - actual use and ATL producer scopes later_cond
+# Subtest: actual use and ATL producer scopes later_max
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 16 - actual use and ATL producer scopes later_max
+# Subtest: actual use and ATL producer scopes later_min
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 17 - actual use and ATL producer scopes later_min
+# Subtest: actual use and ATL producer scopes later_proc_cond
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 18 - actual use and ATL producer scopes later_proc_cond
+# Subtest: actual use and ATL producer scopes later_proc_select
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 19 - actual use and ATL producer scopes later_proc_select
+# Subtest: actual use and ATL producer scopes later_select
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 20 - actual use and ATL producer scopes later_select
+# Subtest: actual use and ATL producer scopes later_unless-bit
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 21 - actual use and ATL producer scopes later_unless-bit
+# Subtest: actual use and ATL producer scopes later_unless-field
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 22 - actual use and ATL producer scopes later_unless-field
+# Subtest: actual use and ATL producer scopes later_when-bit
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 23 - actual use and ATL producer scopes later_when-bit
+# Subtest: actual use and ATL producer scopes later_when-field
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 24 - actual use and ATL producer scopes later_when-field
+# Subtest: actual use and ATL producer scopes reused_export
+    ok 1 - complete canonical ordinary actors and kinds unchanged
+    ok 2 - complete independently source-bound ATL reload
+    ok 3 - root plus actual separate use and ATL library constructors
+    ok 4 - actual original use producer identities retained
+    ok 5 - ATL actual rebuilt producers retained separately
+    ok 6 - declared static instance identity
+    ok 7 - literal complete canonical resolved actor path
+    ok 8 - authored declaration ordinal
+    ok 9 - whole actual resolved metadata retained
+    ok 10 - whole actual static declaration retained
+    ok 11 - complete original actor matches actual canonical clone
+    ok 12 - whole explicit source ledger follows exact ATL producer
+    ok 13 - exact original document edge
+    ok 14 - identical whole bodies retain distinct actual producer scopes
+    ok 15 - use and ATL constructor identities do not merge
+    ok 16 - literal original complete private width kinds
+    not ok 17 - actual ATL actor_identity mutation refuses
+    not ok 18 - precise independent complete authentication boundary
+    ok 19 - complete submitted products remain detached
+    not ok 20 - actual ATL actor_kind mutation refuses
+    not ok 21 - precise independent complete authentication boundary
+    ok 22 - complete submitted products remain detached
+    not ok 23 - actual ATL document mutation refuses
+    not ok 24 - precise independent complete authentication boundary
+    ok 25 - complete submitted products remain detached
+    not ok 26 - actual ATL producer_kind mutation refuses
+    not ok 27 - precise independent complete authentication boundary
+    ok 28 - complete submitted products remain detached
+    not ok 29 - actual ATL producer_swap mutation refuses
+    not ok 30 - precise independent complete authentication boundary
+    ok 31 - complete submitted products remain detached
+    not ok 32 - actual ATL source_operation mutation refuses
+    not ok 33 - precise independent complete authentication boundary
+    ok 34 - complete submitted products remain detached
+    not ok 35 - actual ATL type mutation refuses
+    not ok 36 - precise independent complete authentication boundary
+    ok 37 - complete submitted products remain detached
+    not ok 38 - actual ATL instance mutation refuses
+    not ok 39 - precise independent complete authentication boundary
+    ok 40 - complete submitted products remain detached
+    not ok 41 - actual ATL path mutation refuses
+    not ok 42 - precise independent complete authentication boundary
+    ok 43 - complete submitted products remain detached
+    not ok 44 - actual ATL coverage mutation refuses
+    not ok 45 - precise independent complete authentication boundary
+    ok 46 - complete submitted products remain detached
+    not ok 47 - actual ATL scope mutation refuses
+    not ok 48 - precise independent complete authentication boundary
+    ok 49 - complete submitted products remain detached
+    not ok 50 - actual ATL target mutation refuses
+    not ok 51 - precise independent complete authentication boundary
+    ok 52 - complete submitted products remain detached
+    ok 53 - returned proof detached
+    ok 54 - complete ordinary original remains untouched
+    1..54
+not ok 25 - actual use and ATL producer scopes reused_export
+# Subtest: ATL alone retains complete canonical producer scopes
+    ok 1 - whole ordinary ATL-only product unchanged
+    ok 2 - root and two actual ATL-only constructors
+    ok 3 - no invented reusable use provenance
+    ok 4 - exact ATL-only export selection
+    1..4
+ok 26 - ATL alone retains complete canonical producer scopes
+# Subtest: canonical late ATL changes cannot publish stale origins
+    ok 1 - actual late ATL target change refuses before publication
+    ok 2 - precise final ATL consistency boundary
+    ok 3 - actual late ATL declaration change refuses before publication
+    ok 4 - precise final ATL consistency boundary
+    ok 5 - actual late ATL coverage change refuses before publication
+    ok 6 - precise final ATL consistency boundary
+    1..6
+ok 27 - canonical late ATL changes cannot publish stale origins
+# Subtest: unqualified source authorities and the earlier provider remain closed
+    ok 1 - library-only provider still refuses ATL
+    ok 2 - unchanged private predecessor boundary
+    ok 3 - unqualified external/package context refuses
+    ok 4 - precise private source boundary
+    ok 5 - unqualified external/package context refuses
+    ok 6 - precise private source boundary
+    1..6
+ok 28 - unqualified source authorities and the earlier provider remain closed
+1..28
+Dubious, test returned 24 (wstat 6144, 0x1800)
+Failed 24/28 subtests 
+
+Test Summary Report
+-------------------
+t/2047-isf-atl-document-origin-authority.t (Wstat: 6144 Tests: 28 Failed: 24)
+  Failed tests:  2-25
+  Non-zero exit status: 24
+Files=1, Tests=28, 15 wallclock secs ( 0.10 usr  0.04 sys + 13.70 cusr  0.65 csys = 14.49 CPU)
+Result: FAIL

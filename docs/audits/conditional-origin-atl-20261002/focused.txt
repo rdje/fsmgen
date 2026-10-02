@@ -1,0 +1,10 @@
+ram-guard: PID 31338; host 65.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2047-isf-atl-document-origin-authority.t ........ ok
+t/2046-isf-library-document-origin-authority.t .... ok
+t/2045-isf-same-source-library-origins.t .......... ok
+t/2044-isf-conditional-origin-source-authority.t .. ok
+t/2043-isf-conditional-origin-parser.t ............ ok
+t/2042-isf-procedure-cond-normalization.t ......... ok
+All tests successful.
+Files=6, Tests=224, 41 wallclock secs ( 0.38 usr  0.07 sys + 33.99 cusr  3.01 csys = 37.45 CPU)
+Result: PASS

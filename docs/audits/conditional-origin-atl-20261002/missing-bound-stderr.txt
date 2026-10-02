@@ -1,0 +1,481 @@
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7556918600), HASH(0x75569189c0), ARRAY(0x75568fea80), ".artifacts/tmp/tests/1ZtPMdCpNH/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7556918600), HASH(0x75569189c0), ARRAY(0x75568fea80), ".artifacts/tmp/tests/1ZtPMdCpNH/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x7556918600), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/1ZtPMdCpNH/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x7556918600), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/1ZtPMdCpNH/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7556918600), ".artifacts/tmp/tests/1ZtPMdCpNH/authority-root.isf", HASH(0x75549bc5b8)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7556918600), ".artifacts/tmp/tests/1ZtPMdCpNH/authority-root.isf", HASH(0x75549bc5b8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_authored", CODE(0x7553031f18)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_authored", CODE(0x7553031f18)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_authored'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7556912798), HASH(0x7556852de0), ARRAY(0x755691f7b0), ".artifacts/tmp/tests/X8mGhTC3ry/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7556912798), HASH(0x7556852de0), ARRAY(0x755691f7b0), ".artifacts/tmp/tests/X8mGhTC3ry/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x7556912798), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/X8mGhTC3ry/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x7556912798), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/X8mGhTC3ry/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7556912798), ".artifacts/tmp/tests/X8mGhTC3ry/authority-root.isf", HASH(0x7556910c18)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7556912798), ".artifacts/tmp/tests/X8mGhTC3ry/authority-root.isf", HASH(0x7556910c18)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_cond", CODE(0x75568fb5b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_cond", CODE(0x75568fb5b8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_cond'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75569118d0), HASH(0x755686c150), ARRAY(0x7556859390), ".artifacts/tmp/tests/70f8YueGtM/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75569118d0), HASH(0x755686c150), ARRAY(0x7556859390), ".artifacts/tmp/tests/70f8YueGtM/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75569118d0), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/70f8YueGtM/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75569118d0), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/70f8YueGtM/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75569118d0), ".artifacts/tmp/tests/70f8YueGtM/authority-root.isf", HASH(0x7556858d20)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75569118d0), ".artifacts/tmp/tests/70f8YueGtM/authority-root.isf", HASH(0x7556858d20)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_max", CODE(0x75568596a8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_max", CODE(0x75568596a8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_max'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x755686f348), HASH(0x75568606c0), ARRAY(0x75568522e8), ".artifacts/tmp/tests/BBBj1vZNHu/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x755686f348), HASH(0x75568606c0), ARRAY(0x75568522e8), ".artifacts/tmp/tests/BBBj1vZNHu/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x755686f348), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/BBBj1vZNHu/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x755686f348), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/BBBj1vZNHu/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x755686f348), ".artifacts/tmp/tests/BBBj1vZNHu/authority-root.isf", HASH(0x7556913b10)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x755686f348), ".artifacts/tmp/tests/BBBj1vZNHu/authority-root.isf", HASH(0x7556913b10)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_min", CODE(0x75568674f8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_min", CODE(0x75568674f8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_min'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7556862ea0), HASH(0x7554b06468), ARRAY(0x7554b06480), ".artifacts/tmp/tests/qoc1yieUUY/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7556862ea0), HASH(0x7554b06468), ARRAY(0x7554b06480), ".artifacts/tmp/tests/qoc1yieUUY/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x7556862ea0), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/qoc1yieUUY/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x7556862ea0), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/qoc1yieUUY/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7556862ea0), ".artifacts/tmp/tests/qoc1yieUUY/authority-root.isf", HASH(0x7556853600)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7556862ea0), ".artifacts/tmp/tests/qoc1yieUUY/authority-root.isf", HASH(0x7556853600)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_proc_cond", CODE(0x755686e9c0)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_proc_cond", CODE(0x755686e9c0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_proc_cond'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75548fe168), HASH(0x755686de58), ARRAY(0x7556862c00), ".artifacts/tmp/tests/bkuuF14GCM/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75548fe168), HASH(0x755686de58), ARRAY(0x7556862c00), ".artifacts/tmp/tests/bkuuF14GCM/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75548fe168), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/bkuuF14GCM/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75548fe168), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/bkuuF14GCM/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75548fe168), ".artifacts/tmp/tests/bkuuF14GCM/authority-root.isf", HASH(0x75548e0ea0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75548fe168), ".artifacts/tmp/tests/bkuuF14GCM/authority-root.isf", HASH(0x75548e0ea0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_proc_select", CODE(0x7554b0e4c8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_proc_select", CODE(0x7554b0e4c8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_proc_select'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75562a8ac8), HASH(0x75562bad98), ARRAY(0x75562bb438), ".artifacts/tmp/tests/Axm44i4qJT/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75562a8ac8), HASH(0x75562bad98), ARRAY(0x75562bb438), ".artifacts/tmp/tests/Axm44i4qJT/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75562a8ac8), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/Axm44i4qJT/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75562a8ac8), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/Axm44i4qJT/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75562a8ac8), ".artifacts/tmp/tests/Axm44i4qJT/authority-root.isf", HASH(0x75562abcf0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75562a8ac8), ".artifacts/tmp/tests/Axm44i4qJT/authority-root.isf", HASH(0x75562abcf0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_select", CODE(0x755691db40)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_select", CODE(0x755691db40)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_select'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75562510d8), HASH(0x75562613d8), ARRAY(0x7556249d80), ".artifacts/tmp/tests/l3Q6KLPL0y/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75562510d8), HASH(0x75562613d8), ARRAY(0x7556249d80), ".artifacts/tmp/tests/l3Q6KLPL0y/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75562510d8), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/l3Q6KLPL0y/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75562510d8), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/l3Q6KLPL0y/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75562510d8), ".artifacts/tmp/tests/l3Q6KLPL0y/authority-root.isf", HASH(0x755625ce70)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75562510d8), ".artifacts/tmp/tests/l3Q6KLPL0y/authority-root.isf", HASH(0x755625ce70)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_unless-bit", CODE(0x755486ed98)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_unless-bit", CODE(0x755486ed98)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_unless-bit'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75548792e8), HASH(0x755486f0f0), ARRAY(0x75562becd8), ".artifacts/tmp/tests/Ci6z6moNOW/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75548792e8), HASH(0x755486f0f0), ARRAY(0x75562becd8), ".artifacts/tmp/tests/Ci6z6moNOW/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75548792e8), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/Ci6z6moNOW/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75548792e8), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/Ci6z6moNOW/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75548792e8), ".artifacts/tmp/tests/Ci6z6moNOW/authority-root.isf", HASH(0x75562b0bd0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75548792e8), ".artifacts/tmp/tests/Ci6z6moNOW/authority-root.isf", HASH(0x75562b0bd0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_unless-field", CODE(0x7556957bd0)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_unless-field", CODE(0x7556957bd0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_unless-field'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75561e3d98), HASH(0x75562693d8), ARRAY(0x75562ab540), ".artifacts/tmp/tests/Wl_8c_VPOu/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75561e3d98), HASH(0x75562693d8), ARRAY(0x75562ab540), ".artifacts/tmp/tests/Wl_8c_VPOu/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75561e3d98), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/Wl_8c_VPOu/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75561e3d98), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/Wl_8c_VPOu/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75561e3d98), ".artifacts/tmp/tests/Wl_8c_VPOu/authority-root.isf", HASH(0x75539fb438)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75561e3d98), ".artifacts/tmp/tests/Wl_8c_VPOu/authority-root.isf", HASH(0x75539fb438)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_when-bit", CODE(0x75562c2a68)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_when-bit", CODE(0x75562c2a68)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_when-bit'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75562bbd50), HASH(0x75562b2360), ARRAY(0x755487b3d8), ".artifacts/tmp/tests/5OXcfZHGH8/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75562bbd50), HASH(0x75562b2360), ARRAY(0x755487b3d8), ".artifacts/tmp/tests/5OXcfZHGH8/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75562bbd50), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/5OXcfZHGH8/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75562bbd50), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/5OXcfZHGH8/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75562bbd50), ".artifacts/tmp/tests/5OXcfZHGH8/authority-root.isf", HASH(0x755629dde0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75562bbd50), ".artifacts/tmp/tests/5OXcfZHGH8/authority-root.isf", HASH(0x755629dde0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer first_when-field", CODE(0x7554906060)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer first_when-field", CODE(0x7554906060)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer first_when-field'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75562ca060), HASH(0x755624e870), ARRAY(0x75562b2a38), ".artifacts/tmp/tests/onq1yLrwbJ/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75562ca060), HASH(0x755624e870), ARRAY(0x75562b2a38), ".artifacts/tmp/tests/onq1yLrwbJ/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75562ca060), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/onq1yLrwbJ/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75562ca060), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/onq1yLrwbJ/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75562ca060), ".artifacts/tmp/tests/onq1yLrwbJ/authority-root.isf", HASH(0x755488e450)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75562ca060), ".artifacts/tmp/tests/onq1yLrwbJ/authority-root.isf", HASH(0x755488e450)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer identical_export_twins", CODE(0x75562bb6f0)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer identical_export_twins", CODE(0x75562bb6f0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer identical_export_twins'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75549883d8), HASH(0x7556116210), ARRAY(0x755611b138), ".artifacts/tmp/tests/e735J0_u0a/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75549883d8), HASH(0x7556116210), ARRAY(0x755611b138), ".artifacts/tmp/tests/e735J0_u0a/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75549883d8), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/e735J0_u0a/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75549883d8), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/e735J0_u0a/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75549883d8), ".artifacts/tmp/tests/e735J0_u0a/authority-root.isf", HASH(0x75549805d0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75549883d8), ".artifacts/tmp/tests/e735J0_u0a/authority-root.isf", HASH(0x75549805d0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_authored", CODE(0x75562d4438)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_authored", CODE(0x75562d4438)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_authored'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7556140ea0), HASH(0x755489ae58), ARRAY(0x755489f600), ".artifacts/tmp/tests/I3qow2nETB/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7556140ea0), HASH(0x755489ae58), ARRAY(0x755489f600), ".artifacts/tmp/tests/I3qow2nETB/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x7556140ea0), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/I3qow2nETB/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x7556140ea0), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/I3qow2nETB/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7556140ea0), ".artifacts/tmp/tests/I3qow2nETB/authority-root.isf", HASH(0x7554893d38)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7556140ea0), ".artifacts/tmp/tests/I3qow2nETB/authority-root.isf", HASH(0x7554893d38)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_cond", CODE(0x7556136b58)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_cond", CODE(0x7556136b58)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_cond'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x755614d828), HASH(0x7556261750), ARRAY(0x7554b11240), ".artifacts/tmp/tests/NVsyVfgfYG/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x755614d828), HASH(0x7556261750), ARRAY(0x7554b11240), ".artifacts/tmp/tests/NVsyVfgfYG/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x755614d828), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/NVsyVfgfYG/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x755614d828), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/NVsyVfgfYG/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x755614d828), ".artifacts/tmp/tests/NVsyVfgfYG/authority-root.isf", HASH(0x755612ee28)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x755614d828), ".artifacts/tmp/tests/NVsyVfgfYG/authority-root.isf", HASH(0x755612ee28)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_max", CODE(0x7554ac96d8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_max", CODE(0x7554ac96d8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_max'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7554adb870), HASH(0x7556875540), ARRAY(0x755487e330), ".artifacts/tmp/tests/2EuaGnV67m/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7554adb870), HASH(0x7556875540), ARRAY(0x755487e330), ".artifacts/tmp/tests/2EuaGnV67m/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x7554adb870), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/2EuaGnV67m/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x7554adb870), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/2EuaGnV67m/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7554adb870), ".artifacts/tmp/tests/2EuaGnV67m/authority-root.isf", HASH(0x75549066c0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7554adb870), ".artifacts/tmp/tests/2EuaGnV67m/authority-root.isf", HASH(0x75549066c0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_min", CODE(0x755694a7e0)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_min", CODE(0x755694a7e0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_min'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75539ff5e8), HASH(0x7556963978), ARRAY(0x755625fb40), ".artifacts/tmp/tests/bveSBt8X9r/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75539ff5e8), HASH(0x7556963978), ARRAY(0x755625fb40), ".artifacts/tmp/tests/bveSBt8X9r/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75539ff5e8), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/bveSBt8X9r/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75539ff5e8), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/bveSBt8X9r/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75539ff5e8), ".artifacts/tmp/tests/bveSBt8X9r/authority-root.isf", HASH(0x7556271a08)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75539ff5e8), ".artifacts/tmp/tests/bveSBt8X9r/authority-root.isf", HASH(0x7556271a08)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_proc_cond", CODE(0x75568774c8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_proc_cond", CODE(0x75568774c8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_proc_cond'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7554952678), HASH(0x7554adb720), ARRAY(0x755696b060), ".artifacts/tmp/tests/gLvFCBW2AN/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7554952678), HASH(0x7554adb720), ARRAY(0x755696b060), ".artifacts/tmp/tests/gLvFCBW2AN/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x7554952678), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/gLvFCBW2AN/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x7554952678), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/gLvFCBW2AN/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7554952678), ".artifacts/tmp/tests/gLvFCBW2AN/authority-root.isf", HASH(0x7554937390)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7554952678), ".artifacts/tmp/tests/gLvFCBW2AN/authority-root.isf", HASH(0x7554937390)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_proc_select", CODE(0x7556952f30)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_proc_select", CODE(0x7556952f30)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_proc_select'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75548a6228), HASH(0x75569189a8), ARRAY(0x75548c2b88), ".artifacts/tmp/tests/6NG9DeUTsk/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75548a6228), HASH(0x75569189a8), ARRAY(0x75548c2b88), ".artifacts/tmp/tests/6NG9DeUTsk/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75548a6228), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/6NG9DeUTsk/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75548a6228), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/6NG9DeUTsk/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75548a6228), ".artifacts/tmp/tests/6NG9DeUTsk/authority-root.isf", HASH(0x75548be9a8)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75548a6228), ".artifacts/tmp/tests/6NG9DeUTsk/authority-root.isf", HASH(0x75548be9a8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_select", CODE(0x75562499c0)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_select", CODE(0x75562499c0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_select'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75562852a0), HASH(0x75548da4b0), ARRAY(0x7556296d98), ".artifacts/tmp/tests/ECc6CmabHr/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75562852a0), HASH(0x75548da4b0), ARRAY(0x7556296d98), ".artifacts/tmp/tests/ECc6CmabHr/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75562852a0), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/ECc6CmabHr/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75562852a0), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/ECc6CmabHr/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75562852a0), ".artifacts/tmp/tests/ECc6CmabHr/authority-root.isf", HASH(0x755628c018)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75562852a0), ".artifacts/tmp/tests/ECc6CmabHr/authority-root.isf", HASH(0x755628c018)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_unless-bit", CODE(0x75548e0738)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_unless-bit", CODE(0x75548e0738)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_unless-bit'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x755687c018), HASH(0x75548d6c78), ARRAY(0x75568590a8), ".artifacts/tmp/tests/EA7huSn8qM/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x755687c018), HASH(0x75548d6c78), ARRAY(0x75568590a8), ".artifacts/tmp/tests/EA7huSn8qM/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x755687c018), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/EA7huSn8qM/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x755687c018), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/EA7huSn8qM/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x755687c018), ".artifacts/tmp/tests/EA7huSn8qM/authority-root.isf", HASH(0x75562c03d8)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x755687c018), ".artifacts/tmp/tests/EA7huSn8qM/authority-root.isf", HASH(0x75562c03d8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_unless-field", CODE(0x755487f078)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_unless-field", CODE(0x755487f078)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_unless-field'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75539fc870), HASH(0x755691c4c8), ARRAY(0x755490c7b0), ".artifacts/tmp/tests/Ymd5bj7g5b/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x75539fc870), HASH(0x755691c4c8), ARRAY(0x755490c7b0), ".artifacts/tmp/tests/Ymd5bj7g5b/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x75539fc870), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/Ymd5bj7g5b/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x75539fc870), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/Ymd5bj7g5b/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75539fc870), ".artifacts/tmp/tests/Ymd5bj7g5b/authority-root.isf", HASH(0x75539fffa8)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x75539fc870), ".artifacts/tmp/tests/Ymd5bj7g5b/authority-root.isf", HASH(0x75539fffa8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_when-bit", CODE(0x75548dcac8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_when-bit", CODE(0x75548dcac8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_when-bit'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7554899c78), HASH(0x7556942e88), ARRAY(0x75548f6a50), ".artifacts/tmp/tests/XjYcb9JI1Q/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7554899c78), HASH(0x7556942e88), ARRAY(0x75548f6a50), ".artifacts/tmp/tests/XjYcb9JI1Q/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x7554899c78), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/XjYcb9JI1Q/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x7554899c78), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/XjYcb9JI1Q/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7554899c78), ".artifacts/tmp/tests/XjYcb9JI1Q/authority-root.isf", HASH(0x75548c26f0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7554899c78), ".artifacts/tmp/tests/XjYcb9JI1Q/authority-root.isf", HASH(0x75548c26f0)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer later_when-field", CODE(0x7556862780)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer later_when-field", CODE(0x7556862780)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer later_when-field'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+
+    #   Failed test 'canonical producers must retain explicit ATL association'
+    #   at .artifacts/conditional-origin-atl/red_missing_producer.t line 44.
+    # ATL origin exact selected export association missing
+    #  at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 80.
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7554ac03c0), HASH(0x755695ae58), ARRAY(0x7554b08780), ".artifacts/tmp/tests/wAQb4tw4zN/authority-root.isf") called at .artifacts/conditional-origin-atl/red_missing_producer.t line 16
+    # 	MissingATLProducer::_resolve_atl_actor_type_metadata(MissingATLProducer=HASH(0x7554ac03c0), HASH(0x755695ae58), ARRAY(0x7554b08780), ".artifacts/tmp/tests/wAQb4tw4zN/authority-root.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 136
+    # 	FSM::Adapter::ISF::Parser::parse_source(MissingATLProducer=HASH(0x7554ac03c0), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/wAQb4tw4zN/authority-root.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(MissingATLProducer=HASH(0x7554ac03c0), "(actor library_top (clock clk) (interface (input start) (inpu"..., ".artifacts/tmp/tests/wAQb4tw4zN/authority-root.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7554ac03c0), ".artifacts/tmp/tests/wAQb4tw4zN/authority-root.isf", HASH(0x755492b510)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(MissingATLProducer=HASH(0x7554ac03c0), ".artifacts/tmp/tests/wAQb4tw4zN/authority-root.isf", HASH(0x755492b510)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	eval {...} called at .artifacts/conditional-origin-atl/red_missing_producer.t line 42
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x755303f810), "actual missing ATL producer reused_export", CODE(0x7554a699d8)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual missing ATL producer reused_export", CODE(0x7554a699d8)) called at .artifacts/conditional-origin-atl/red_missing_producer.t line 50
+    # Looks like you failed 1 test of 1.
+
+#   Failed test 'actual missing ATL producer reused_export'
+#   at .artifacts/conditional-origin-atl/red_missing_producer.t line 50.
+# Looks like you failed 24 tests of 24.
