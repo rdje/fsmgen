@@ -1,0 +1,310 @@
+(?top:apb_tb
+  (?ports:public_io
+    clk
+    rst_n
+    =start
+    =req_write
+    =req_addr<32
+    =req_wdata<32
+    =wait_cycles<4
+    =done>
+    =last_error>
+    =last_read_data>32
+  )
+  (?fsmc:requester apb_requester)
+  (?fsmc:completer apb_completer)
+  (?wiring:apb_bus
+    (requester.PSEL completer.PSEL)
+    (requester.PENABLE completer.PENABLE)
+    (requester.PWRITE completer.PWRITE)
+    (requester.PADDR completer.PADDR)
+    (requester.PWDATA completer.PWDATA)
+    (completer.PREADY requester.PREADY)
+    (completer.PRDATA requester.PRDATA)
+    (completer.PSLVERR requester.PSLVERR)
+  )
+)
+
+(?fsm:apb_requester
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input start)
+    (input req_write)
+    (input req_addr)
+    (input req_wdata)
+    (input PREADY)
+    (input PRDATA)
+    (input PSLVERR)
+    (output done)
+    (output last_read_data)
+    (output last_error)
+    (output PADDR)
+    (output PWRITE)
+    (output PWDATA)
+    (output PSEL)
+    (output PENABLE)
+  )
+
+  (+size
+    (start 1)
+    (req_write 1)
+    (req_addr 32)
+    (req_wdata 32)
+    (PREADY 1)
+    (PRDATA 32)
+    (PSLVERR 1)
+    (done 1)
+    (last_read_data 32)
+    (last_error 1)
+    (PADDR 32)
+    (PWRITE 1)
+    (PWDATA 32)
+    (PSEL 1)
+    (PENABLE 1)
+    (access_phase_start 1)
+    (apb_transfer_cc 5)
+    (apb_transfer_inc 1)
+    (apb_transfer_lerr 1)
+    (apb_transfer_wd 17)
+    (can_accept 1)
+    (done_phase_start 1)
+    (setup_phase_start 1)
+  )
+
+  (apb_transfer_idle_0
+    (= (can_accept 1))
+    (<- (apb_transfer_cc 0))
+    (<= (apb_transfer_wd (- 65536 1)))
+    (<= (addr req_addr) <start)
+    (<= (is_write req_write) <start)
+    (<= (wdata req_wdata) <start)
+    (<start
+      (-> apb_transfer_drive_1)
+    )
+  )
+
+  (apb_transfer_drive_1
+    (= (apb_transfer_inc 1))
+    (= (setup_phase_start 1))
+    (-> apb_transfer_drive_2)
+  )
+
+  (apb_transfer_drive_2
+    (= (apb_transfer_inc 1))
+    (= (access_phase_start 1))
+    (-> apb_transfer_await_3)
+  )
+
+  (apb_transfer_await_3
+    (= (apb_transfer_inc 1))
+    (<PREADY
+      (-> apb_transfer_drive_4)
+    )
+    (?apb_transfer_wd
+      (=0 (-> apb_transfer_timeout))
+      (>0 (-- apb_transfer_wd))
+    )
+  )
+
+  (apb_transfer_drive_4
+    (= (apb_transfer_inc 1))
+    (<= (rdata PRDATA))
+    (<= (slverr PSLVERR))
+    (= (done_phase_start 1))
+    (-> apb_transfer_done_5)
+  )
+
+  (apb_transfer_done_5
+    (<1 (done> 1))
+    (= (apb_transfer_lerr 1) <apb_transfer_cc<2)
+    (-> apb_transfer_idle_0)
+  )
+
+  (apb_transfer_timeout
+    (<1 (done> 1))
+    (<- (last_error> 1))
+    (-> apb_transfer_idle_0)
+  )
+
+  (-apb_transfer_cc_inc
+    (<- (apb_transfer_cc (+ apb_transfer_cc 1)) <apb_transfer_inc)
+  )
+
+  (-access_phase
+    (<- (PENABLE> 1) <access_phase_start)
+  )
+
+  (-done_phase
+    (<- (PSEL> 0) <done_phase_start)
+    (<- (PENABLE> 0) <done_phase_start)
+    (<- (last_read_data> rdata) <done_phase_start)
+    (<- (last_error> slverr) <done_phase_start)
+  )
+
+  (-setup_phase
+    (<- (PADDR> addr) <setup_phase_start)
+    (<- (PWRITE> is_write) <setup_phase_start)
+    (<- (PWDATA> wdata) <setup_phase_start)
+    (<- (PSEL> 1) <setup_phase_start)
+    (<- (PENABLE> 0) <setup_phase_start)
+  )
+
+)
+
+
+(?fsm:apb_completer
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input PSEL)
+    (input PENABLE)
+    (input PWRITE)
+    (input PADDR)
+    (input PWDATA)
+    (input wait_cycles)
+    (output PREADY)
+    (output PRDATA)
+    (output PSLVERR)
+    (internal reg_data_q)
+    (internal apb_complete_done_q)
+  )
+
+  (+size
+    (PSEL 1)
+    (PENABLE 1)
+    (PWRITE 1)
+    (PADDR 32)
+    (PWDATA 32)
+    (wait_cycles 4)
+    (PREADY 1)
+    (PRDATA 32)
+    (PSLVERR 1)
+    (reg_data_q 32 (reset 0))
+    (apb_complete_done_q 1 (reset 0))
+    (apb_complete_wait_2_cnt 4)
+    (can_accept 1)
+    (enter_access_start 1)
+    (error_complete_start 1)
+    (read_hit_start 1)
+    (write_hit_start 1)
+  )
+
+  (apb_complete_idle_0
+    (= (can_accept 1))
+    (<= (addr PADDR) <(& PSEL (! PENABLE)))
+    (<= (write_q PWRITE) <(& PSEL (! PENABLE)))
+    (<= (wdata_q PWDATA) <(& PSEL (! PENABLE)))
+    (<= (wait_n wait_cycles) <(& PSEL (! PENABLE)))
+    (-> apb_complete_drive_1 <(& PSEL (! PENABLE)))
+  )
+
+  (apb_complete_drive_1
+    (= (enter_access_start 1))
+    (<- (apb_complete_wait_2_cnt wait_n) <(!= wait_n 0))
+    (-> apb_complete_wait_2 <(!= wait_n 0))
+    (-> apb_complete_when_3 <(== wait_n 0))
+  )
+
+  (apb_complete_wait_2
+    (-- apb_complete_wait_2_cnt)
+    (?apb_complete_wait_2_cnt
+      (=1 (-> apb_complete_when_3))
+    )
+    (?apb_complete_wait_2_cnt
+      (>1 (-> apb_complete_wait_2))
+    )
+  )
+
+  (apb_complete_when_3
+    (?(& write_q (== addr 0))
+      (=1 (-> apb_complete_set_4))
+      (=0 (-> apb_complete_when_6))
+    )
+  )
+
+  (apb_complete_set_4
+    (<- (reg_data_q wdata_q))
+    (-> apb_complete_drive_5)
+  )
+
+  (apb_complete_drive_5
+    (= (write_hit_start 1))
+    (-> apb_complete_when_6)
+  )
+
+  (apb_complete_when_6
+    (?(& write_q (! (== addr 0)))
+      (=1 (-> apb_complete_drive_7))
+      (=0 (-> apb_complete_when_8))
+    )
+  )
+
+  (apb_complete_drive_7
+    (= (error_complete_start 1))
+    (-> apb_complete_when_8)
+  )
+
+  (apb_complete_when_8
+    (?(& (! write_q) (== addr 0))
+      (=1 (-> apb_complete_drive_9))
+      (=0 (-> apb_complete_when_10))
+    )
+  )
+
+  (apb_complete_drive_9
+    (= (read_hit_start 1))
+    (-> apb_complete_when_10)
+  )
+
+  (apb_complete_when_10
+    (?(& (! write_q) (! (== addr 0)))
+      (=1 (-> apb_complete_drive_11))
+      (=0 (-> apb_complete_done_12))
+    )
+  )
+
+  (apb_complete_drive_11
+    (= (error_complete_start 1))
+    (-> apb_complete_done_12)
+  )
+
+  (apb_complete_done_12
+    (<1 (apb_complete_done_q 1))
+    (-> apb_complete_idle_0)
+  )
+
+  (-enter_access
+    (<- (PREADY> 0) <enter_access_start)
+    (<- (PRDATA> 0) <enter_access_start)
+    (<- (PSLVERR> 0) <enter_access_start)
+  )
+
+  (-error_complete
+    (<- (PREADY> 1) <error_complete_start)
+    (<- (PRDATA> 0) <error_complete_start)
+    (<- (PSLVERR> 1) <error_complete_start)
+  )
+
+  (-read_hit
+    (<- (PREADY> 1) <read_hit_start)
+    (<- (PRDATA> reg_data_q) <read_hit_start)
+    (<- (PSLVERR> 0) <read_hit_start)
+  )
+
+  (-write_hit
+    (<- (PREADY> 1) <write_hit_start)
+    (<- (PRDATA> 0) <write_hit_start)
+    (<- (PSLVERR> 0) <write_hit_start)
+  )
+
+)
+

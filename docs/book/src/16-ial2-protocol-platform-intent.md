@@ -36,6 +36,34 @@ diagnostic/report rules, support accounting, and layered lowering contract.
 Adding a profile extends IAL2's vocabulary; it does not create another language
 or another path to HDL.
 
+## Actor Networks In The Lowering Chain
+
+For multi-actor protocol/platform intent, the required IAL1 output includes
+an [ATL actor network](13f-composition.md#actor-transfer-level-atl), alongside
+its reusable actors. Instances, bindings, activation/events and ordering must
+be visible before canonical IAL1 lowering produces the IAL0 composition.
+ATL is inside IAL1; it adds no tier to the lowering chain.
+
+Current leaf-actor generation and complete ATL-network generation are separate
+claims. For example, run the shipped fixed APB composition:
+
+```bash
+./bin/fsmgen --quiet --outdir .artifacts/ial2-apb-review ppif/apb_composition.ppif
+```
+
+It writes `apb_requester.isf`, `apb_completer.isf`, their scheduled `.fsm`
+files, and structural `apb_tb.fsm`. The top's continuous APB bindings are
+visible in that IAL0 artifact. There is currently no `apb_tb.isf` ATL network
+artifact. This does not advertise a protocol malfunction; it identifies the
+missing IAL1 network review boundary.
+
+[IAL2-ATL-LOWERING-INTEGRATION](../../tasks/IAL2-ATL-LOWERING-INTEGRATION.md)
+owns the complete affected-generator audit, any missing IAL1 binding or
+orchestration prerequisites, and staged migrations with behavior and report
+compatibility. Existing composition behavior remains available while those
+migrations are pending. Persistent handshake wiring cannot acquire one-cycle
+ATL drive semantics merely to fit the currently supported route syntax.
+
 ## Three Authoring Modes
 
 IAL2 documentation uses the same three modes for each protocol:

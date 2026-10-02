@@ -1,0 +1,10 @@
+ram-guard: PID 60658; host 77.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Wrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/ial2-atl-contract-20261002/apb/apb_requester.isf
+Wrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/ial2-atl-contract-20261002/apb/apb_completer.isf
+Wrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/ial2-atl-contract-20261002/apb/apb_completer.fsm
+Wrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/ial2-atl-contract-20261002/apb/apb_requester.fsm
+Wrote: /Volumes/SSD/Documents/github/fsmgen/.artifacts/ial2-atl-contract-20261002/apb/apb_tb.fsm
+=== IAL2 Protocol/Platform Intent ===
+
+Source: fsmgen-apb-composition
+Generated IAL1: apb_requester.isf, apb_completer.isf

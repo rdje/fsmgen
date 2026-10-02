@@ -1,0 +1,58 @@
+(actor apb_completer
+  (clock clk)
+  (reset (rst_n async active_low))
+  (watchdog 65536)
+
+  (interface
+    (input PSEL)
+    (input PENABLE)
+    (input PWRITE)
+    (input PADDR (width 32))
+    (input PWDATA (width 32))
+    (input wait_cycles (width 4))
+    (output PREADY)
+    (output PRDATA (width 32))
+    (output PSLVERR))
+
+  (storage
+    (var reg_data_q (width 32) (reset 0))
+    (var apb_complete_done_q (width 1) (reset 0)))
+
+  (drive enter_access
+    (PREADY 0)
+    (PRDATA 0)
+    (PSLVERR 0))
+
+  (drive read_hit
+    (PREADY 1)
+    (PRDATA reg_data_q)
+    (PSLVERR 0))
+
+  (drive write_hit
+    (PREADY 1)
+    (PRDATA 0)
+    (PSLVERR 0))
+
+  (drive error_complete
+    (PREADY 1)
+    (PRDATA 0)
+    (PSLVERR 1))
+
+  (transaction apb_complete
+    (when (& PSEL (! PENABLE))
+      (sample PADDR as addr)
+      (sample PWRITE as write_q)
+      (sample PWDATA as wdata_q)
+      (sample wait_cycles as wait_n))
+    (drive enter_access)
+    (wait wait_n)
+    (when (& write_q (== addr 0))
+      (set reg_data_q wdata_q)
+      (drive write_hit))
+    (when (& write_q (! (== addr 0)))
+      (drive error_complete))
+    (when (& (! write_q) (== addr 0))
+      (drive read_hit))
+    (when (& (! write_q) (! (== addr 0)))
+      (drive error_complete))
+    (complete apb_complete_done_q)))

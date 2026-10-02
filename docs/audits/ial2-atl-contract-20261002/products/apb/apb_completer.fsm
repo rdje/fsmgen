@@ -1,0 +1,150 @@
+(?fsm:apb_completer
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input PSEL)
+    (input PENABLE)
+    (input PWRITE)
+    (input PADDR)
+    (input PWDATA)
+    (input wait_cycles)
+    (output PREADY)
+    (output PRDATA)
+    (output PSLVERR)
+    (internal reg_data_q)
+    (internal apb_complete_done_q)
+  )
+
+  (+size
+    (PSEL 1)
+    (PENABLE 1)
+    (PWRITE 1)
+    (PADDR 32)
+    (PWDATA 32)
+    (wait_cycles 4)
+    (PREADY 1)
+    (PRDATA 32)
+    (PSLVERR 1)
+    (reg_data_q 32 (reset 0))
+    (apb_complete_done_q 1 (reset 0))
+    (apb_complete_wait_2_cnt 4)
+    (can_accept 1)
+    (enter_access_start 1)
+    (error_complete_start 1)
+    (read_hit_start 1)
+    (write_hit_start 1)
+  )
+
+  (apb_complete_idle_0
+    (= (can_accept 1))
+    (<= (addr PADDR) <(& PSEL (! PENABLE)))
+    (<= (write_q PWRITE) <(& PSEL (! PENABLE)))
+    (<= (wdata_q PWDATA) <(& PSEL (! PENABLE)))
+    (<= (wait_n wait_cycles) <(& PSEL (! PENABLE)))
+    (-> apb_complete_drive_1 <(& PSEL (! PENABLE)))
+  )
+
+  (apb_complete_drive_1
+    (= (enter_access_start 1))
+    (<- (apb_complete_wait_2_cnt wait_n) <(!= wait_n 0))
+    (-> apb_complete_wait_2 <(!= wait_n 0))
+    (-> apb_complete_when_3 <(== wait_n 0))
+  )
+
+  (apb_complete_wait_2
+    (-- apb_complete_wait_2_cnt)
+    (?apb_complete_wait_2_cnt
+      (=1 (-> apb_complete_when_3))
+    )
+    (?apb_complete_wait_2_cnt
+      (>1 (-> apb_complete_wait_2))
+    )
+  )
+
+  (apb_complete_when_3
+    (?(& write_q (== addr 0))
+      (=1 (-> apb_complete_set_4))
+      (=0 (-> apb_complete_when_6))
+    )
+  )
+
+  (apb_complete_set_4
+    (<- (reg_data_q wdata_q))
+    (-> apb_complete_drive_5)
+  )
+
+  (apb_complete_drive_5
+    (= (write_hit_start 1))
+    (-> apb_complete_when_6)
+  )
+
+  (apb_complete_when_6
+    (?(& write_q (! (== addr 0)))
+      (=1 (-> apb_complete_drive_7))
+      (=0 (-> apb_complete_when_8))
+    )
+  )
+
+  (apb_complete_drive_7
+    (= (error_complete_start 1))
+    (-> apb_complete_when_8)
+  )
+
+  (apb_complete_when_8
+    (?(& (! write_q) (== addr 0))
+      (=1 (-> apb_complete_drive_9))
+      (=0 (-> apb_complete_when_10))
+    )
+  )
+
+  (apb_complete_drive_9
+    (= (read_hit_start 1))
+    (-> apb_complete_when_10)
+  )
+
+  (apb_complete_when_10
+    (?(& (! write_q) (! (== addr 0)))
+      (=1 (-> apb_complete_drive_11))
+      (=0 (-> apb_complete_done_12))
+    )
+  )
+
+  (apb_complete_drive_11
+    (= (error_complete_start 1))
+    (-> apb_complete_done_12)
+  )
+
+  (apb_complete_done_12
+    (<1 (apb_complete_done_q 1))
+    (-> apb_complete_idle_0)
+  )
+
+  (-enter_access
+    (<- (PREADY> 0) <enter_access_start)
+    (<- (PRDATA> 0) <enter_access_start)
+    (<- (PSLVERR> 0) <enter_access_start)
+  )
+
+  (-error_complete
+    (<- (PREADY> 1) <error_complete_start)
+    (<- (PRDATA> 0) <error_complete_start)
+    (<- (PSLVERR> 1) <error_complete_start)
+  )
+
+  (-read_hit
+    (<- (PREADY> 1) <read_hit_start)
+    (<- (PRDATA> reg_data_q) <read_hit_start)
+    (<- (PSLVERR> 0) <read_hit_start)
+  )
+
+  (-write_hit
+    (<- (PREADY> 1) <write_hit_start)
+    (<- (PRDATA> 0) <write_hit_start)
+    (<- (PSLVERR> 0) <write_hit_start)
+  )
+
+)

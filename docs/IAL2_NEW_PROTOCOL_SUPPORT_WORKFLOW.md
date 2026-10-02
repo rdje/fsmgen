@@ -81,6 +81,10 @@ Read and record:
   `perl/FSM/IAL2/ProtocolIntent/`;
 - `perl/FSM/Adapter/IAL2/PPIF.pm` parser and profile-alias behavior;
 - existing generated IAL1 and IAL0 artifact shapes;
+- complete actor-network intent at IAL1 for multi-actor objects: child `.isf`
+  files alone do not qualify topology, bindings or orchestration;
+- persistent protocol connections versus cycle-bound ATL drive routes, and
+  the exact IAL1 prerequisite if the selected lifetime cannot be represented;
 - `bin/fsmgen` CLI modes for check JSON, schedule JSON, semantic JSON,
   `--outdir`, HDL generation, and capability manifest;
 - `perl/FSM/Support/RegressionCorpus.pm` support-accounting entries;

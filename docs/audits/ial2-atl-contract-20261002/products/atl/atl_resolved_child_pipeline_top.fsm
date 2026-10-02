@@ -1,0 +1,106 @@
+(?top:atl_resolved_child_pipeline_top
+  (?ports:public_io
+    clk
+    rst_n
+    start
+    done>
+  )
+  (?fsmc:atl_resolved_child_pipeline atl_resolved_child_pipeline)
+  (?fsmc:worker atl_resolved_child_pipeline__worker)
+  (?wiring:isf_wiring
+    (start atl_resolved_child_pipeline.start)
+    (atl_resolved_child_pipeline.done done)
+    (atl_resolved_child_pipeline.worker_process_start worker.process_start)
+    (worker.done atl_resolved_child_pipeline.worker_done)
+  )
+)
+
+(?fsm:atl_resolved_child_pipeline
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input start)
+    (output done)
+  )
+
+  (+size
+    (start 1)
+    (done 1)
+    (worker_done 1)
+    (worker_process_start 1)
+    (can_accept 1)
+    (last_error 1)
+    (run_wd 16)
+  )
+
+  (run_idle_0
+    (= (can_accept 1))
+    (<= (run_wd (- 65535 1)))
+    (<start
+      (-> run_atl_trigger_1)
+    )
+  )
+
+  (run_atl_trigger_1
+    (<1 (worker_process_start> 1))
+    (-> run_await_2)
+  )
+
+  (run_await_2
+    (<worker_done
+      (-> run_done_3)
+    )
+    (?run_wd
+      (=0 (-> run_timeout))
+      (>0 (-- run_wd))
+    )
+  )
+
+  (run_done_3
+    (<1 (done> 1))
+    (-> run_idle_0)
+  )
+
+  (run_timeout
+    (<1 (done> 1))
+    (<- (last_error 1))
+    (-> run_idle_0)
+  )
+
+)
+
+(?fsm:atl_resolved_child_pipeline__worker
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input process_start)
+    (output done)
+  )
+
+  (+size
+    (process_start 1)
+    (done 1)
+    (can_accept 1)
+  )
+
+  (process_idle_0
+    (= (can_accept 1))
+    (<process_start
+      (-> process_done_1)
+    )
+  )
+
+  (process_done_1
+    (<1 (done> 1))
+    (-> process_idle_0)
+  )
+
+)

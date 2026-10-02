@@ -1,0 +1,1 @@
+PASS exact complete source/Git and actual generated artifacts, fixed-APB missing-network boundary, frozen topology/wiring conservation and hostile saved controls, current ATL commands and source/rendered book scope

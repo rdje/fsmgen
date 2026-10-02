@@ -1,0 +1,31 @@
+(?fsm:atl_resolved_child_pipeline__worker
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input process_start)
+    (output done)
+  )
+
+  (+size
+    (process_start 1)
+    (done 1)
+    (can_accept 1)
+  )
+
+  (process_idle_0
+    (= (can_accept 1))
+    (<process_start
+      (-> process_done_1)
+    )
+  )
+
+  (process_done_1
+    (<1 (done> 1))
+    (-> process_idle_0)
+  )
+
+)

@@ -792,6 +792,73 @@ use-site bank-depth specialization, generated-top respecialization,
 memory-array backend emission, standalone transaction or drive exports, and
 nested library imports remain future work.
 
+## Actor Transfer Level (ATL)
+
+ATL describes data and activation transfers among actors. Where RTL names
+registers and the logic between them, ATL names actors, their interfaces,
+transactions and events. FSMGen resolves the supported interactions and emits
+an explicit schedule in IAL0 `.fsm`; authors can inspect its states and reports.
+
+ATL is part of IAL1/ISF. The enclosing `(actor ...)` is the network boundary:
+its interface supplies public pins, direct instance declarations identify
+participants, and its transactions place movement and activation in time.
+There is no `(network ...)` wrapper. Reusable actors retain their own local
+schedules; supported parent orchestration makes their interaction explicit.
+
+A drive body names movement in ordinary `(sink source)` order. Calling that
+drive places the movement in a particular cycle. An actor event is a control
+pulse, not a data payload or an implicit transfer. Static group membership is
+review metadata; the accepted trigger batch is a task-scoped scheduled action.
+Continuous protocol wiring has a different lifetime from these drive routes
+and needs its own explicit binding contract.
+
+Use the following sections to review the current surface:
+
+| Concern | Current review path |
+| --- | --- |
+| Participants and aliases | [Direct instances](#actor-as-network-boundary-and-direct-instances); unresolved declarations can remain external metadata. |
+| Temporal data movement | [Drive-body movement](#drive-body-data-movement); supported endpoint direction, width and route shape are checked. |
+| Activation and events | [Trigger and event pulses](#trigger-and-event-pulses); qualified actor `do`/`spawn` and broader joins remain deferred. |
+| Concurrency | [Groups and task-scoped associations](#static-groups-versus-task-scoped-associations); declared groups and actual trigger batches have distinct report meanings. |
+| Resolved children and wiring | [Generated-child routes](#generated-child-top-data-routes); only the documented ordering and route subsets emit generated ATL tops. |
+| Evidence | [Schedule report projection](#schedule-report-projection) exposes `actor_network` and generated artifacts. |
+
+These checked-in sources exercise different boundaries:
+
+```bash
+./bin/fsmgen --quiet --strict --emit-schedule-json isf/atl_trigger_batch_pipeline.isf
+./bin/fsmgen --quiet --strict --emit-schedule-json isf/atl_data_route_pipeline.isf
+./bin/fsmgen --quiet --outdir .artifacts/atl-review isf/atl_resolved_child_pipeline.isf
+```
+
+The first exposes a temporary trigger association; the second exposes a
+cycle-bound data route with external handoffs. The resolved-child example
+emits the scheduled parent, resolved child and generated top. Inspect the
+reported boundary for each source: metadata or a parent handoff alone does
+not establish child execution or a complete generated network. The examples
+below explain source forms, timing, generated names and fail-closed limits.
+
+### ATL And IAL2 Lowering
+
+IAL2 authors protocol/platform intent. When that intent requires interacting
+actors, the lowering target is generated IAL1 actors **and ATL network intent**,
+then canonical IAL1 scheduling/elaboration to IAL0 and HDL. ATL stays in IAL1
+whether written by a person or produced by an IAL2 generator.
+
+The complete network must be reviewable at IAL1: instances, interfaces and
+bindings, activation/events, ordering and required data movement. Child `.isf`
+files alone do not establish this. A single-actor IAL2 object needs no invented
+network wrapper.
+
+This is an architectural requirement with an implementation gap. Fixed APB
+composition currently emits requester/completer `.isf` actors and constructs
+their structural top in IAL0; it does not emit a corresponding ATL network
+`.isf`. [IAL2 generated-network boundaries](16-ial2-protocol-platform-intent.md#actor-networks-in-the-lowering-chain)
+shows the actual artifacts. The owned migration must preserve continuous bus
+bindings and protocol behavior rather than replacing them with cycle-bound
+drive routes. General groups, route mux/storage, event payloads, ready/backpressure
+and CDC remain governed by their documented support boundaries.
+
 ## Static Actor-Network Metadata
 
 ### Actor-As-Network Boundary And Direct Instances

@@ -1,6 +1,6 @@
 ---
 id: protocol-platform-intent-surface-layered-lowering
-title: Protocol/platform intent surface and layered lowering for future IAL2
+title: Protocol/platform intent lowers through reviewable IAL1
 answers:
   - "what file extension should future IAL2 use?"
   - "should IAL2 use .axi?"
@@ -9,20 +9,20 @@ answers:
   - "what does .ppif mean?"
   - "can IAL2 lower directly to IAL0?"
   - "what is the required IAL2 lowering chain?"
-date: 2026-06-12
+  - "should multi-actor IAL2 lowering generate ATL?"
+  - "does fixed APB composition emit an ATL network ISF?"
+date: 2026-10-02
 status: current
-tags: [ial2, protocol-intent, platform-intent, layering, lowering]
-evidence: docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md; docs/tasks/IAL2-PROTOCOL-PLATFORM-SURFACE-DECISION-CAPTURE.md
-reverify: scripts/decision_records.py read 0014 | rg -n 'Protocol/Platform Intent|Direct IAL2-to-IAL0 lowering is forbidden|.pif|.ppi|.ppif|0015'
+tags: [ial2, protocol-intent, platform-intent, lowering, atl]
+evidence: docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/audits/ial2-atl-contract-20261002/scope.txt
+reverify: scripts/decision_records.py read 0014 0016 0115
 ---
 
-Future IAL2 must use a protocol/platform-generic file surface. Generic
-containers are tracked by decision `0014`; protocol-specific profile aliases
-are refined by decision `0015`.
+`.ppif` (Protocol/Platform Intent Format) is the generic IAL2 suffix selected
+by 0016. Earlier candidates `.pif` (Protocol Intent Format) and `.ppi`
+(Protocol/Platform Intent) remain historical. Profile aliases such as `.axi`
+share this layer (0015); they cannot bypass `IAL2 -> IAL1/.isf -> IAL0/.fsm -> HDL`.
 
-The exact extension name remains open among `.pif` (Protocol Intent Format),
-`.ppi` (Protocol/Platform Intent), `.ppif` (Protocol/Platform Intent Format),
-or a future explicitly accepted generic variant.
-
-The required lowering chain is `IAL2 -> IAL1/.isf -> IAL0/.fsm -> HDL`.
-Direct IAL2-to-IAL0 or direct IAL2-to-`.fsm` lowering is forbidden.
+Multi-actor IAL2 must emit ATL network intent inside IAL1 (0115). Current fixed
+APB emits child ISF only; its structural top is built in IAL0. Integration owns
+that gap. Continuous protocol wiring differs from temporal ATL drive routes.

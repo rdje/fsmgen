@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1264** facts · **6923** unique questions · **7100** answer occurrences · **183** topic shards.
+> **1264** facts · **6925** unique questions · **7102** answer occurrences · **183** topic shards.
 
 Query first:
 
@@ -160,7 +160,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `project-data` | 1 | 7 | [`project-data.md`](knowledge-map/generated/project-data.md) |
 | `project-document` | 1 | 7 | [`project-document.md`](knowledge-map/generated/project-document.md) |
 | `protocol-composition` | 1 | 10 | [`protocol-composition.md`](knowledge-map/generated/protocol-composition.md) |
-| `protocol-platform` | 1 | 7 | [`protocol-platform.md`](knowledge-map/generated/protocol-platform.md) |
+| `protocol-platform` | 1 | 9 | [`protocol-platform.md`](knowledge-map/generated/protocol-platform.md) |
 | `public-regression` | 1 | 4 | [`public-regression.md`](knowledge-map/generated/public-regression.md) |
 | `public-sync` | 1 | 3 | [`public-sync.md`](knowledge-map/generated/public-sync.md) |
 | `push-cadence` | 3 | 5 | [`push-cadence.md`](knowledge-map/generated/push-cadence.md) |

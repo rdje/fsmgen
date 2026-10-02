@@ -1,0 +1,196 @@
+{
+   "actor_constants" : [],
+   "actor_network" : {
+      "association_schedules" : [
+         {
+            "association" : "run_trigger_batch",
+            "context" : "transaction_body",
+            "dependency_policy" : "transaction_body_distinct_instances",
+            "kind" : "temporary_trigger_batch",
+            "lifetime" : "task_scoped",
+            "members" : [
+               "reader",
+               "filter",
+               "writer"
+            ],
+            "owner_transaction" : "run",
+            "schedule" : "same_cycle_external_trigger_batch",
+            "signals" : [
+               "reader_capture_start",
+               "filter_process_start",
+               "writer_emit_start"
+            ],
+            "sink" : "external_handoff",
+            "source" : "parent_trigger_state",
+            "storage" : "none",
+            "target_transactions" : [
+               "capture",
+               "process",
+               "emit"
+            ]
+         }
+      ],
+      "data_movements" : [],
+      "event_waits" : [],
+      "generated_tops" : [],
+      "group_schedules" : [
+         {
+            "context" : "transaction_body",
+            "dependency_policy" : "transaction_body_distinct_instances",
+            "group" : "run_trigger_batch",
+            "members" : [
+               "reader",
+               "filter",
+               "writer"
+            ],
+            "owner_transaction" : "run",
+            "schedule" : "same_cycle_external_trigger_batch",
+            "signals" : [
+               "reader_capture_start",
+               "filter_process_start",
+               "writer_emit_start"
+            ],
+            "sink" : "external_handoff",
+            "source" : "parent_trigger_state",
+            "storage" : "none",
+            "target_transactions" : [
+               "capture",
+               "process",
+               "emit"
+            ]
+         }
+      ],
+      "groups" : [],
+      "instances" : [
+         {
+            "actor_type" : "packet_reader",
+            "declaration" : "actor",
+            "name" : "reader"
+         },
+         {
+            "actor_type" : "packet_filter",
+            "declaration" : "actor",
+            "name" : "filter"
+         },
+         {
+            "actor_type" : "packet_writer",
+            "declaration" : "actor",
+            "name" : "writer"
+         }
+      ],
+      "kind" : "static_declaration",
+      "transaction_triggers" : [
+         {
+            "context" : "transaction_body",
+            "instance" : "reader",
+            "owner_transaction" : "run",
+            "signal" : "reader_capture_start",
+            "sink" : "external_handoff",
+            "target_transaction" : "capture"
+         },
+         {
+            "context" : "transaction_body",
+            "instance" : "filter",
+            "owner_transaction" : "run",
+            "signal" : "filter_process_start",
+            "sink" : "external_handoff",
+            "target_transaction" : "process"
+         },
+         {
+            "context" : "transaction_body",
+            "instance" : "writer",
+            "owner_transaction" : "run",
+            "signal" : "writer_emit_start",
+            "sink" : "external_handoff",
+            "target_transaction" : "emit"
+         }
+      ]
+   },
+   "actor_params" : [],
+   "actor_phases" : [],
+   "actor_stages" : [],
+   "bank_accesses" : [],
+   "clock" : "clk",
+   "clock_domains" : [],
+   "compatible_fanin_groups" : [],
+   "compile_issues" : [],
+   "crossings" : [],
+   "dt_blocks" : [],
+   "generated_composition" : null,
+   "inferred_storage" : [
+      {
+         "kind" : "register",
+         "name" : "reader_capture_start",
+         "role" : "atl_trigger_start_handoff"
+      },
+      {
+         "kind" : "register",
+         "name" : "filter_process_start",
+         "role" : "atl_trigger_start_handoff"
+      },
+      {
+         "kind" : "register",
+         "name" : "writer_emit_start",
+         "role" : "atl_trigger_start_handoff"
+      },
+      {
+         "kind" : "register",
+         "name" : "done",
+         "role" : "completion_pulse",
+         "width" : 1
+      }
+   ],
+   "inputs" : 1,
+   "interface_ports" : [
+      {
+         "direction" : "input",
+         "name" : "start",
+         "width" : 1
+      },
+      {
+         "direction" : "output",
+         "name" : "done",
+         "width" : 1
+      }
+   ],
+   "library_uses" : [],
+   "loop_early_exits" : [],
+   "outputs" : 4,
+   "port_count" : 5,
+   "priority_resolutions" : [],
+   "reset" : {
+      "kind" : "async",
+      "name" : "rst_n",
+      "polarity" : "active_low"
+   },
+   "reset_provenance" : [
+      {
+         "domain" : null,
+         "origin" : "explicit"
+      }
+   ],
+   "resource_arbitration" : [],
+   "scheduled_fsm" : "atl_trigger_batch_pipeline.fsm",
+   "schema_version" : 1,
+   "source" : "atl_trigger_batch_pipeline.isf",
+   "state_count" : 3,
+   "temporal_contracts" : [],
+   "transaction_loops" : [],
+   "transaction_port_bindings" : [],
+   "transaction_stages" : [],
+   "transaction_waits" : [],
+   "transactions" : [
+      {
+         "count" : 3,
+         "name" : "run",
+         "states" : [
+            "run_idle_0",
+            "run_atl_trigger_batch_1",
+            "run_done_2"
+         ]
+      }
+   ],
+   "verification_bridge" : null,
+   "verification_observations" : [],
+   "watchdog" : "65535"
+}

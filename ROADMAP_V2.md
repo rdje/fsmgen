@@ -184,6 +184,10 @@ Direction:
   constraints, scheduling, and generated schedule reports;
 - use IAL2 for higher protocol/platform intent that lowers through IAL1 and
   IAL0 rather than bypassing them;
+- lower multi-actor IAL2 intent into reviewable ATL networks within IAL1,
+  including the required instances, bindings and orchestration before IAL0;
+  `IAL2-ATL-LOWERING-INTEGRATION` owns the current composition gap and
+  preserves continuous protocol wiring separately from temporal ATL drives;
 - develop actor-network/ATL composition, protocol profiles, and HIAL/VIAL
   verification intent, with future exact PGEN parsing and NEXSIM simulation
   profiles, without conflating design and verification semantics or inferring

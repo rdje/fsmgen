@@ -1,0 +1,130 @@
+(?fsm:apb_requester
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input start)
+    (input req_write)
+    (input req_addr)
+    (input req_wdata)
+    (input PREADY)
+    (input PRDATA)
+    (input PSLVERR)
+    (output done)
+    (output last_read_data)
+    (output last_error)
+    (output PADDR)
+    (output PWRITE)
+    (output PWDATA)
+    (output PSEL)
+    (output PENABLE)
+  )
+
+  (+size
+    (start 1)
+    (req_write 1)
+    (req_addr 32)
+    (req_wdata 32)
+    (PREADY 1)
+    (PRDATA 32)
+    (PSLVERR 1)
+    (done 1)
+    (last_read_data 32)
+    (last_error 1)
+    (PADDR 32)
+    (PWRITE 1)
+    (PWDATA 32)
+    (PSEL 1)
+    (PENABLE 1)
+    (access_phase_start 1)
+    (apb_transfer_cc 5)
+    (apb_transfer_inc 1)
+    (apb_transfer_lerr 1)
+    (apb_transfer_wd 17)
+    (can_accept 1)
+    (done_phase_start 1)
+    (setup_phase_start 1)
+  )
+
+  (apb_transfer_idle_0
+    (= (can_accept 1))
+    (<- (apb_transfer_cc 0))
+    (<= (apb_transfer_wd (- 65536 1)))
+    (<= (addr req_addr) <start)
+    (<= (is_write req_write) <start)
+    (<= (wdata req_wdata) <start)
+    (<start
+      (-> apb_transfer_drive_1)
+    )
+  )
+
+  (apb_transfer_drive_1
+    (= (apb_transfer_inc 1))
+    (= (setup_phase_start 1))
+    (-> apb_transfer_drive_2)
+  )
+
+  (apb_transfer_drive_2
+    (= (apb_transfer_inc 1))
+    (= (access_phase_start 1))
+    (-> apb_transfer_await_3)
+  )
+
+  (apb_transfer_await_3
+    (= (apb_transfer_inc 1))
+    (<PREADY
+      (-> apb_transfer_drive_4)
+    )
+    (?apb_transfer_wd
+      (=0 (-> apb_transfer_timeout))
+      (>0 (-- apb_transfer_wd))
+    )
+  )
+
+  (apb_transfer_drive_4
+    (= (apb_transfer_inc 1))
+    (<= (rdata PRDATA))
+    (<= (slverr PSLVERR))
+    (= (done_phase_start 1))
+    (-> apb_transfer_done_5)
+  )
+
+  (apb_transfer_done_5
+    (<1 (done> 1))
+    (= (apb_transfer_lerr 1) <apb_transfer_cc<2)
+    (-> apb_transfer_idle_0)
+  )
+
+  (apb_transfer_timeout
+    (<1 (done> 1))
+    (<- (last_error> 1))
+    (-> apb_transfer_idle_0)
+  )
+
+  (-apb_transfer_cc_inc
+    (<- (apb_transfer_cc (+ apb_transfer_cc 1)) <apb_transfer_inc)
+  )
+
+  (-access_phase
+    (<- (PENABLE> 1) <access_phase_start)
+  )
+
+  (-done_phase
+    (<- (PSEL> 0) <done_phase_start)
+    (<- (PENABLE> 0) <done_phase_start)
+    (<- (last_read_data> rdata) <done_phase_start)
+    (<- (last_error> slverr) <done_phase_start)
+  )
+
+  (-setup_phase
+    (<- (PADDR> addr) <setup_phase_start)
+    (<- (PWRITE> is_write) <setup_phase_start)
+    (<- (PWDATA> wdata) <setup_phase_start)
+    (<- (PSEL> 1) <setup_phase_start)
+    (<- (PENABLE> 0) <setup_phase_start)
+  )
+
+)

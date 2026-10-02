@@ -3678,11 +3678,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.66`
-  Status: `pending`
+  Status: `done`
   Goal: `Bind director IAL2-to-ATL lowering direction to canonical owners and accurate mdBook coverage.`
   Acceptance: `From a clean handoff, review the canonical ATL proposal, relevant IAL2/IAL1 contracts, actual multi-actor generators, existing owners and Composition/layered-intent book sections. Record the director requirement that multi-actor IAL2 lowering produces appropriate ATL inside IAL1/ISF before IAL0. Distinguish required architecture from each shipped bounded path; map missing implementation to exact prioritized task owners and document ATL thoroughly with runnable current examples. Preserve active source-intent work and do not claim unsupported IAL2 generation, groups, CDC or execution. Split planning/docs/code safely and commit each unit.`
-  Verification: `Director clarification retained in this tree; clean handoff from legacy scope recovery .6.1 is the prerequisite.`
-  Commit: `pending`
+  Verification: `From clean 99163bb20, decision 0115 records multi-actor IAL2 -> ATL inside IAL1 -> canonical IAL0. Fixed APB public artifacts/report and exact source/Git bindings prove child ISF only with structural top built at IAL0; the actual required-network predicate rejects missing apb_tb.isf. This is an owned P2 architecture gap, not a protocol malfunction. IAL2-ATL-LOWERING-INTEGRATION .1 owns exhaustive generator/history/readiness audit after the current R13 source-intent contract handoff; .2/.3 own faithful static-binding prerequisites before protocol migrations and actual behavior/public closure. Book overview/navigation, IAL2 relation, examples, workflow and roadmap align current versus required behavior; stale suffix fact and ambiguous ATL layer wording are corrected. Guarded docs PASS3/293, all 115 complete ISF fixtures lower, and the three public ATL commands produce their scoped association/route/child-top products. Independent source/report/membership re-derivation, genuine missing-network control and frozen observed-output conservation controls are distinct from protocol correctness. Full inputs/generated products/recipes/raw receipts and member/hash seal retain evidence. Book source/rendered scope and authenticated decision reader pass; the initial missing-reader command refusal remains retained. Current source-intent work resumes; no generator repair, runtime/backend promotion, full CI/push or browser visual QA.`
+  Commit: `this commit`
 
 
 ## Implementation Notes From `.4`
@@ -5208,3 +5208,23 @@ The first recovery gate rejects pending statuses on the two legacy containers.
 Restore their structurally required active container status; their leaf priority
 and explicit deferral still prevent modern scheduling. Retain the failed receipt
 and recheck the corrected registered tree before the final doctrine gate.
+
+## Acceptance Checklist (enforced) — SEM .66 IAL2/ATL contract and gap ownership
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Public fixed-APB --outdir and --emit-schedule-json list requester/completer IAL1 only, with structural apb_tb.fsm and no apb_tb.isf. ApbComposition::generate collects lowered endpoint products then _build_composition_top constructs only an IAL0 top. The current direct_ial2_to_ial0=false report flag does not authenticate a network-level IAL1 representation. Actual required-network predicate fails on the missing artifact. The old suffix fact also remained open despite decision 0016, and ATL wording ambiguously suggested changing tiers.
+- [x] **ADDRESSED (verified)** — Decision 0115 fixes the required actor-network boundary and distinguishes static protocol binding from temporal drive movement. The complete migration is P2-owned and scheduled by IAL2-ATL-LOWERING-INTEGRATION, with exact census/prerequisite/APB/AHB/AXI/public/signoff leaves. Current book/proposal/roadmap/workflow explain ATL, syntax/timing, review commands, supported limits and actual APB gap; current suffix fact uses selected .ppif. Full saved products and source/Git binding verify current behavior; this unit owns and documents the architecture gap without pretending to repair it.
+- [x] **NO REGRESSION** — Guarded existing book feature/status/example checks report All tests successful, Files=3, Tests=293; all 115 complete ISF examples lower. Documented public ATL commands preserve scoped trigger association, drive-call-cycle route and parent/child/top artifacts. Book builds and exact rendered overview/relationship text passes without browser visual QA; authenticated originals/current decisions/indexes pass. Independent source/report/file membership, genuine missing-network RED and saved-output conservation controls provide scoped evidence, with no native protocol correctness claim. Final sealed evidence, generated Knowledge Map, measured allowances/unchanged ceilings, fresh claim census and staged doctrines precede normal hooks. Source preparation continues next; generator migration, full CI and push remain open.
+
+The first .66 doctrine gate rejects the canonical decision collection's stale
+normal pressure state after adding 0115. Declare warning_debt within unchanged
+per-part/aggregate limits and the existing decision-record workflow owner;
+retain the failed receipt. This is a measured state transition, not a budget
+expansion or decision-store migration. Reconcile the claim census after this
+final declaration before rerunning the staged gate.
+
+The second .66 gate correctly refuses a debt state with a null baseline.
+Establish the first warning baseline from the exact committed predecessor's
+canonical decision roster and bytes; declare measured current delta plus one
+unit in each dimension under the live semantic frontier owner. The collection
+had no predecessor debt baseline, so none is reset. Preserve the failed receipt
+and exact measurement JSON. No health target or enforcement ceiling changes.

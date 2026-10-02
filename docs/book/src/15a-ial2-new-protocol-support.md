@@ -60,6 +60,10 @@ Before a protocol slice changes behavior, the contract must answer:
 - Which top-level object form is accepted?
 - Which clauses are required, optional, duplicate-forbidden, or unsupported?
 - Which generated `.isf` and `.fsm` artifacts appear?
+- If several actors interact, which ATL network `.isf` represents their
+  instances, bindings, activation/events and ordering before IAL0 lowering?
+- Which bindings are persistent physical connections, and which are temporal
+  drive routes? Is every required IAL1 capability already qualified?
 - Which HDL entry is selected?
 - Which report schema and support-accounting IDs are stable?
 - Which malformed and unsupported forms fail closed?

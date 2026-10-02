@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/ial2-atl-contract-20261002/verify.py", line 13, in <module>
+    assert 'apb_tb.isf' in apb, 'missing required IAL1 ATL network artifact: apb_tb.isf'
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: missing required IAL1 ATL network artifact: apb_tb.isf

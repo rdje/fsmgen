@@ -1272,6 +1272,25 @@
       },
       "path": "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md",
       "type": "ISF contextual validation"
+    },
+    {
+      "content": {
+        "bytes": 3503,
+        "line_bytes": 82,
+        "lines": 71,
+        "sha256": "740715ee7f55377c6ff026f9cc0ae1afb3f0bfc3bbbded4b9c199f88790e8320"
+      },
+      "id": "0115",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted target; composition migration pending"
+        ],
+        "knowledge_id": null,
+        "knowledge_status": null,
+        "questions": []
+      },
+      "path": "docs/decisions/current/language-api/0115-multi-actor-ial2-lowers-through-atl-in-ial1.md",
+      "type": "architecture"
     }
   ],
   "schema_version": 1,

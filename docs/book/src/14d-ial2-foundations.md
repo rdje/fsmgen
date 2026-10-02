@@ -12,7 +12,13 @@ Historical task-tree record:
 That tree is closed; future IAL2 behavior changes need a new task-tree leaf
 before implementation.
 
-Active frontier:
+The complete generated actor-network boundary is separately owned by
+[IAL2-ATL-LOWERING-INTEGRATION](../../tasks/IAL2-ATL-LOWERING-INTEGRATION.md).
+Its P2 audit follows the current R13 source-intent contract handoff; existing
+composition generators are not advertised as complete ATL emitters.
+
+Historical feature-completeness sequence (the direct children through .844
+are now terminal):
 [IAL2-FEATURE-COMPLETENESS-FRONTIER](../../tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md)
 owns the next IAL2 feature-completeness work. Its first selector audited the
 shipped `.ppif` Valid-Ready single/bundle surface and moved the frontier to

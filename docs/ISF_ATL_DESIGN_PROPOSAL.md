@@ -24,9 +24,13 @@ actors instead of flops/registers.
   `.fsm`.
 - The generated schedule remains reviewable; ATL does not hide cycles.
 
-This remains `IAL1` while authors write explicit `.isf` actor/network syntax.
-It becomes an `IAL2` candidate only if a later source asks FSMGen to infer the
-actor graph from higher-level protocol or platform intent.
+ATL source and generated ATL remain `IAL1`/ISF. Higher protocol/platform
+intent belongs to IAL2; its multi-actor lowering must generate appropriate
+ATL network intent in IAL1 before canonical lowering to IAL0. This requirement
+does not establish current IAL2-to-ATL implementation. Decision
+[0115](decisions/current/language-api/0115-multi-actor-ial2-lowers-through-atl-in-ial1.md)
+and [IAL2-ATL-LOWERING-INTEGRATION](tasks/IAL2-ATL-LOWERING-INTEGRATION.md)
+own the observed composition gap and faithful staged migration.
 
 ## Source Shape
 
@@ -113,8 +117,9 @@ ATL v0 now has a selected public source direction:
 - Rule-level actor-transaction orchestration uses
   `(trigger actor.transaction)` when that future implementation ships.
 - Actor event synchronization uses `(await actor.event)`. The shipped subset
-  accepts one top-level transaction-body event wait, either alone for a single
-  static actor or after one selected temporary trigger batch; event payloads
+  accepts a single top-level transaction-body event wait or source-ordered
+  sequential waits after a selected temporary trigger batch. Multiple waits
+  retain explicit wait states; they are not an event join, and event payloads
   are not part of ATL v0.
 - Concurrent actor groups may still use
   `(group NAME (members ACTOR...) (mode concurrent))`. The shipped subset is

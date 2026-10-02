@@ -794,8 +794,9 @@ bindings outside the documented generated-child subsets, broader global
 scheduling ownership, and broader fail-closed boundaries remain under
 task-tree ownership.
 
-This direction is still IAL1 if the source remains explicit actor/network
-`.isf` syntax with scheduler-visible events, bindings, and constraints.
-
-It becomes an IAL2 candidate only if the source model moves above explicit
-ISF actor/network syntax into protocol/platform intent inference.
+Authored and generated ATL remain IAL1/ISF. Higher protocol/platform intent
+is IAL2 and must lower multi-actor interactions through reviewable ATL network
+intent before IAL0. The current fixed-APB composition gap and staged migration
+are owned by [IAL2-ATL-LOWERING-INTEGRATION](../../tasks/IAL2-ATL-LOWERING-INTEGRATION.md).
+See [ATL and IAL2](13f-composition.md#atl-and-ial2-lowering) for the required
+boundary and current implementation status.

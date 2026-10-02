@@ -1,0 +1,12 @@
+Current public commands, all under scripts/run_with_ram_guard.sh:
+./bin/fsmgen --quiet --outdir .artifacts/ial2-atl-contract-20261002/apb ppif/apb_composition.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/apb_composition.ppif
+./bin/fsmgen --quiet --strict --emit-schedule-json isf/atl_trigger_batch_pipeline.isf
+./bin/fsmgen --quiet --strict --emit-schedule-json isf/atl_data_route_pipeline.isf
+./bin/fsmgen --quiet --outdir .artifacts/ial2-atl-contract-20261002/atl isf/atl_resolved_child_pipeline.isf
+prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1332-isf-atl-doc-status-audit.t t/1376-isf-book-example-lowering-audit.t
+mdbook build docs/book
+scripts/decision_records.py check
+python3 docs/audits/ial2-atl-contract-20261002/verify.py
+Missing required network, expected status1: python3 docs/audits/ial2-atl-contract-20261002/verify.py --require-network
+Raw stdout/stderr and actual product snapshots are saved here; no generator repair or native HDL runtime is claimed. Later source changes require requalification, not automatic archive edits.

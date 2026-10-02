@@ -1,0 +1,505 @@
+{
+   "children" : [
+      {
+         "bindings" : {
+            "bus" : {
+               "address" : {
+                  "name" : "PADDR",
+                  "width" : 32
+               },
+               "enable" : "PENABLE",
+               "error" : "PSLVERR",
+               "protection" : null,
+               "read_data" : {
+                  "name" : "PRDATA",
+                  "width" : 32
+               },
+               "ready" : "PREADY",
+               "select" : "PSEL",
+               "strobe" : null,
+               "write" : "PWRITE",
+               "write_data" : {
+                  "name" : "PWDATA",
+                  "width" : 32
+               }
+            },
+            "clock" : "clk",
+            "request" : {
+               "address" : {
+                  "name" : "req_addr",
+                  "width" : 32
+               },
+               "protection" : null,
+               "start" : "start",
+               "write" : "req_write",
+               "write_data" : {
+                  "name" : "req_wdata",
+                  "width" : 32
+               },
+               "write_strobe" : null
+            },
+            "reset" : {
+               "active_low" : 1,
+               "async" : 1,
+               "signal" : "rst_n"
+            },
+            "response" : {
+               "done" : "done",
+               "error" : "last_error",
+               "read_data" : {
+                  "name" : "last_read_data",
+                  "width" : 32
+               }
+            }
+         },
+         "generated_artifacts" : {
+            "hdl_entry" : {
+               "entry_artifact" : "apb_requester.fsm",
+               "kind" : "single_generated_fsm",
+               "module" : "apb_requester",
+               "selected" : 1
+            },
+            "ial0" : {
+               "files" : [
+                  "apb_requester.fsm"
+               ],
+               "format" : "fsm"
+            },
+            "ial1" : {
+               "format" : "isf",
+               "name" : "apb_requester.isf"
+            }
+         },
+         "instance_name" : "requester",
+         "object_name" : "apb_requester",
+         "role" : "requester",
+         "source_object" : {
+            "anchors" : [
+               {
+                  "document" : "FSMGEN-APB-REQUESTER-CAPTURE-WORKSHEET",
+                  "page" : "stage-1",
+                  "section" : "requester-completer-composition"
+               }
+            ],
+            "id" : "fsmgen-apb-composition",
+            "intent_name" : "apb_composition"
+         },
+         "target_protocol" : {
+            "object" : "apb-requester",
+            "profile" : "apb",
+            "role" : "requester",
+            "transfer" : "apb_transfer"
+         },
+         "transfer" : {
+            "access" : {
+               "enable" : 1,
+               "select" : 1
+            },
+            "complete_on" : "ready",
+            "latency" : {
+               "max" : 16,
+               "min" : 2
+            },
+            "name" : "apb_transfer",
+            "sample" : [
+               "read-data",
+               "error"
+            ],
+            "setup" : {
+               "enable" : 0,
+               "select" : 1
+            }
+         },
+         "unsupported_residue" : [
+            {
+               "detail" : "Address decode, peripheral selection beyond one PSEL, and multi-peripheral routing remain future APB work.",
+               "id" : "apb_multi_peripheral_decode_deferred"
+            },
+            {
+               "detail" : "PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.",
+               "id" : "apb_protection_and_strobes_deferred"
+            },
+            {
+               "detail" : "The APB requester-transfer public response contract exposes done, read-data, and error; requester busy/status output remains future contract widening.",
+               "id" : "apb_requester_busy_status_deferred"
+            },
+            {
+               "detail" : "The public APB PPIF requester-transfer source fixes address, write-data, and read-data widths to 32 bits.",
+               "id" : "apb_alternate_widths_deferred"
+            },
+            {
+               "detail" : "Back-to-back transfer policy and queued transfer admission remain future exact-owner work.",
+               "id" : "apb_back_to_back_policy_deferred"
+            }
+         ]
+      },
+      {
+         "bindings" : {
+            "bus" : {
+               "address" : {
+                  "name" : "PADDR",
+                  "width" : 32
+               },
+               "enable" : "PENABLE",
+               "error" : "PSLVERR",
+               "protection" : null,
+               "read_data" : {
+                  "name" : "PRDATA",
+                  "width" : 32
+               },
+               "ready" : "PREADY",
+               "select" : "PSEL",
+               "strobe" : null,
+               "write" : "PWRITE",
+               "write_data" : {
+                  "name" : "PWDATA",
+                  "width" : 32
+               }
+            },
+            "clock" : "clk",
+            "control" : {
+               "wait_cycles" : {
+                  "name" : "wait_cycles",
+                  "width" : 4
+               }
+            },
+            "reset" : {
+               "active_low" : 1,
+               "async" : 1,
+               "signal" : "rst_n"
+            },
+            "storage" : {
+               "register" : {
+                  "address" : {
+                     "value" : 0,
+                     "width" : 32
+                  },
+                  "data" : {
+                     "name" : "reg_data_q",
+                     "reset" : 0,
+                     "width" : 32
+                  },
+                  "name" : "reg0"
+               }
+            }
+         },
+         "generated_artifacts" : {
+            "hdl_entry" : {
+               "entry_artifact" : "apb_completer.fsm",
+               "kind" : "single_generated_fsm",
+               "module" : "apb_completer",
+               "selected" : 1
+            },
+            "ial0" : {
+               "files" : [
+                  "apb_completer.fsm"
+               ],
+               "format" : "fsm"
+            },
+            "ial1" : {
+               "format" : "isf",
+               "name" : "apb_completer.isf"
+            }
+         },
+         "instance_name" : "completer",
+         "object_name" : "apb_completer",
+         "role" : "completer",
+         "source_object" : {
+            "anchors" : [
+               {
+                  "document" : "FSMGEN-APB-REQUESTER-CAPTURE-WORKSHEET",
+                  "page" : "stage-1",
+                  "section" : "requester-completer-composition"
+               }
+            ],
+            "id" : "fsmgen-apb-composition",
+            "intent_name" : "apb_composition"
+         },
+         "target_protocol" : {
+            "object" : "apb-completer",
+            "profile" : "apb",
+            "role" : "completer",
+            "transfer" : "apb_complete"
+         },
+         "transfer" : {
+            "name" : "apb_complete",
+            "read" : "register",
+            "register" : "reg0",
+            "setup_detect" : {
+               "enable" : 0,
+               "select" : 1
+            },
+            "unmapped_address" : "error",
+            "wait_cycles" : "wait_cycles",
+            "write" : "register"
+         },
+         "unsupported_residue" : [
+            {
+               "detail" : "The one-requester/one-completer APB composition is support-accounted through generic .ppif; multi-peripheral address decode and routing remain future APB interconnect work.",
+               "id" : "apb_interconnect_multi_peripheral_decode_deferred"
+            },
+            {
+               "detail" : "Additional register locations, range decode, byte lanes, and side effects remain future APB completer work.",
+               "id" : "apb_multi_register_decode_deferred"
+            },
+            {
+               "detail" : "PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.",
+               "id" : "apb_protection_and_strobes_deferred"
+            },
+            {
+               "detail" : "The public APB PPIF completer source fixes address, write-data, read-data, register data, and wait-count widths.",
+               "id" : "apb_alternate_widths_deferred"
+            },
+            {
+               "detail" : "Back-to-back setup admission and queued transfer policy remain future exact-owner work.",
+               "id" : "apb_back_to_back_policy_deferred"
+            }
+         ]
+      }
+   ],
+   "composition" : {
+      "child_instance_count" : 2,
+      "completer" : {
+         "instance_name" : "completer",
+         "object_name" : "apb_completer",
+         "role" : "completer"
+      },
+      "name" : "apb_tb",
+      "requester" : {
+         "instance_name" : "requester",
+         "object_name" : "apb_requester",
+         "role" : "requester"
+      },
+      "top_ports" : [
+         {
+            "direction" : "input",
+            "name" : "clk",
+            "system" : "clock",
+            "width" : 1
+         },
+         {
+            "direction" : "input",
+            "name" : "rst_n",
+            "system" : "reset",
+            "width" : 1
+         },
+         {
+            "direction" : "input",
+            "name" : "start",
+            "width" : 1
+         },
+         {
+            "direction" : "input",
+            "name" : "req_write",
+            "width" : 1
+         },
+         {
+            "direction" : "input",
+            "name" : "req_addr",
+            "width" : "32"
+         },
+         {
+            "direction" : "input",
+            "name" : "req_wdata",
+            "width" : "32"
+         },
+         {
+            "direction" : "input",
+            "name" : "wait_cycles",
+            "width" : "4"
+         },
+         {
+            "direction" : "output",
+            "name" : "done",
+            "width" : 1
+         },
+         {
+            "direction" : "output",
+            "name" : "last_error",
+            "width" : 1
+         },
+         {
+            "direction" : "output",
+            "name" : "last_read_data",
+            "width" : "32"
+         }
+      ],
+      "width_policy" : {
+         "address_map_alignment_bytes" : 4,
+         "address_map_width" : 32,
+         "address_width" : 32,
+         "data_width" : 32,
+         "selected_contract" : "fixed_data32",
+         "supported_data_widths" : [
+            16,
+            32
+         ],
+         "wait_cycles_width" : 4
+      },
+      "wiring" : {
+         "bus" : {
+            "address" : {
+               "name" : "PADDR",
+               "width" : "32"
+            },
+            "enable" : "PENABLE",
+            "error" : "PSLVERR",
+            "read_data" : {
+               "name" : "PRDATA",
+               "width" : "32"
+            },
+            "ready" : "PREADY",
+            "select" : "PSEL",
+            "write" : "PWRITE",
+            "write_data" : {
+               "name" : "PWDATA",
+               "width" : "32"
+            }
+         },
+         "name" : "apb_bus"
+      }
+   },
+   "enforced_static_rules" : [
+      "profile must be apb and the aggregate object must be apb-composition",
+      "source must contain exactly one APB requester, one APB completer, and one APB composition object",
+      "requester, completer, and composition must share clock and reset policy",
+      "composition children must reference the embedded requester and completer objects by name",
+      "composition bus wiring must match requester and completer APB signal names and widths",
+      "APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden"
+   ],
+   "generated_artifacts" : {
+      "hdl_entry" : {
+         "child_artifacts" : [
+            "apb_requester.fsm",
+            "apb_completer.fsm"
+         ],
+         "entry_artifact" : "apb_tb.fsm",
+         "format" : "fsm",
+         "kind" : "generated_composition_top",
+         "module" : "apb_tb",
+         "port_policy" : {
+            "apb_bus_wiring" : "explicit_requester_completer_point_to_point",
+            "shared_system_ports" : {
+               "clock" : "clk",
+               "reset" : {
+                  "active_low" : 1,
+                  "async" : 1,
+                  "signal" : "rst_n"
+               }
+            }
+         },
+         "selected" : 1
+      },
+      "ial0" : {
+         "files" : [
+            "apb_completer.fsm",
+            "apb_requester.fsm",
+            "apb_tb.fsm"
+         ],
+         "format" : "fsm",
+         "items" : [
+            {
+               "entry_artifact" : "apb_requester.fsm",
+               "files" : [
+                  "apb_requester.fsm"
+               ],
+               "format" : "fsm",
+               "kind" : "generated_endpoint",
+               "object_name" : "apb_requester",
+               "role" : "requester"
+            },
+            {
+               "entry_artifact" : "apb_completer.fsm",
+               "files" : [
+                  "apb_completer.fsm"
+               ],
+               "format" : "fsm",
+               "kind" : "generated_endpoint",
+               "object_name" : "apb_completer",
+               "role" : "completer"
+            },
+            {
+               "child_artifacts" : [
+                  "apb_requester.fsm",
+                  "apb_completer.fsm"
+               ],
+               "entry_artifact" : "apb_tb.fsm",
+               "files" : [
+                  "apb_tb.fsm"
+               ],
+               "format" : "fsm",
+               "kind" : "generated_composition_top",
+               "object_name" : "apb_tb",
+               "role" : "composition"
+            }
+         ]
+      },
+      "ial1" : {
+         "format" : "isf",
+         "items" : [
+            {
+               "format" : "isf",
+               "name" : "apb_requester.isf",
+               "object_name" : "apb_requester",
+               "role" : "requester"
+            },
+            {
+               "format" : "isf",
+               "name" : "apb_completer.isf",
+               "object_name" : "apb_completer",
+               "role" : "completer"
+            }
+         ]
+      }
+   },
+   "layering" : {
+      "direct_ial2_to_ial0" : 0,
+      "generated_ial0_format" : "fsm",
+      "generated_ial1_format" : "isf",
+      "source_layer" : "IAL2"
+   },
+   "mode" : "requester-completer-composition",
+   "schema" : "fsmgen.ial2.protocol_intent.apb_composition.v1",
+   "source_object" : {
+      "anchors" : [
+         {
+            "document" : "FSMGEN-APB-REQUESTER-CAPTURE-WORKSHEET",
+            "page" : "stage-1",
+            "section" : "requester-completer-composition"
+         }
+      ],
+      "id" : "fsmgen-apb-composition",
+      "intent_name" : "apb_composition"
+   },
+   "target_protocol" : {
+      "object" : "apb-composition",
+      "profile" : "apb",
+      "role" : "composition"
+   },
+   "unsupported_residue" : [
+      {
+         "detail" : "The first APB composition wires one requester to one completer; multi-peripheral address decode and routing remain future APB interconnect work.",
+         "id" : "apb_interconnect_multi_peripheral_decode_deferred"
+      },
+      {
+         "detail" : "The generated APB composition exposes the shipped requester response keys done, read-data, and error; requester busy/status output remains a future endpoint contract widening.",
+         "id" : "apb_requester_busy_status_deferred"
+      },
+      {
+         "detail" : "The generated completer endpoint still models one address-0 register and leaves broader register decode to future APB work.",
+         "id" : "apb_multi_register_decode_deferred"
+      },
+      {
+         "detail" : "PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.",
+         "id" : "apb_protection_and_strobes_deferred"
+      },
+      {
+         "detail" : "This APB composition fixes address, write-data, and read-data widths to 32 bits and wait-cycle controls to 4 bits.",
+         "id" : "apb_alternate_widths_deferred"
+      },
+      {
+         "detail" : "Back-to-back transfer policy and queued requester admission remain future exact-owner work.",
+         "id" : "apb_back_to_back_policy_deferred"
+      }
+   ]
+}
