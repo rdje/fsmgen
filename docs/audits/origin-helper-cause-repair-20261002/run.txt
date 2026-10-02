@@ -1,0 +1,6 @@
+library current expected terminal status 0
+library full-stack expected terminal status 1
+library bypass expected terminal status 1
+file current expected terminal status 0
+file full-stack expected terminal status 1
+file bypass expected terminal status 1

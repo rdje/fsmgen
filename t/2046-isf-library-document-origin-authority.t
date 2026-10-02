@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use lib 'perl', 't/lib';
 use Test::More;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use JSON::PP;
 use Digest::SHA qw(sha256_hex);
 use File::Spec;
@@ -47,13 +48,32 @@ subtest 'library cause matching excludes the actual caller regex echo' => sub {
     is(first_line($error), 'library origin independent document set required',
         'actual constructor supplies the independent-document reason');
     like($error, $pattern, 'real Carp trace echoes the caller expectation');
-    ok(!diagnostic_matches($error, $pattern), 'caller expectation cannot authenticate another cause');
+    ok(!diagnostic_matches($error, 'library_reason_only_in_caller_argument'), 'caller expectation cannot authenticate another cause');
     rejected(sub {FSM::Test::LibraryDocumentOriginAuthority->from_documents('missing.isf', {}, [])},
-        qr/library origin independent document set required/, 'actual constructor positive');
+        'library origin independent document set required', 'actual constructor positive');
     if (my $capture = $ENV{FSMGEN_DOCUMENT_ORIGIN_CAPTURE}) {
         write_file("$capture/diagnostic-echo.json", $json->encode({error => $error,
             expected => 'library_reason_only_in_caller_argument',
-            matched => diagnostic_matches($error, $pattern) ? 1 : 0}) . "\n");
+            matched => diagnostic_matches($error, 'library_reason_only_in_caller_argument') ? 1 : 0}) . "\n");
+    }
+};
+subtest 'library cause matching excludes primary source-label echo' => sub {
+    my $expected = 'library origin selected source bytes differ from authority';
+    my $label = "$expected.isf";
+    my $source = '(not_actor)';
+    my $accepted = eval {
+        FSM::Test::LibraryDocumentOriginAuthority->from_documents($label, {$label => $source}, []);
+        1;
+    };
+    my $error = $@;
+    ok(!$accepted, 'actual unrelated constructor source refuses');
+    is(first_line($error), "Error: no (actor ...) root found in '$label'", 'real label appears in unrelated primary cause');
+    like(first_line($error), qr/selected source bytes differ from authority/, 'primary message actually echoes wanted text');
+    ok(!diagnostic_matches($error, $expected), 'complete cause cannot be authenticated by label text');
+    if (my $capture = $ENV{FSMGEN_DOCUMENT_ORIGIN_CAPTURE}) {
+        write_file("$capture/diagnostic-label.json", $json->encode({source => $source, label => $label,
+            error => $error, expected => $expected, accepted => $accepted ? 1 : 0,
+            matched => diagnostic_matches($error, $expected)}) . "\n");
     }
 };
 for my $input (@inputs) {
@@ -116,27 +136,27 @@ subtest 'actual document authority membership and source failures refuse' => sub
     my ($external) = grep {$_ ne $label} keys %$documents;
     my $mutated = {%$documents, $external => $documents->{$external} . ' ; changed complete bytes'};
     rejected(sub {authority_class()->from_documents($label, $mutated, [$directory])},
-        qr/selected source bytes differ/, 'independently supplied wrong complete bytes');
+        'library origin selected source bytes differ from authority', 'independently supplied wrong complete bytes');
     my $missing = {%$documents}; delete $missing->{$external};
     rejected(sub {authority_class()->from_documents($label, $missing, [$directory])},
-        qr/selected document authority missing/, 'actual selected document missing');
+        'library origin selected document authority missing', 'actual selected document missing');
     my $extra = {%$documents, "$directory/unused.isf" => '(library unused.lib (exports (actor none)))'};
     rejected(sub {authority_class()->from_documents($label, $extra, [$directory])},
-        qr/document membership differs/, 'unused supplied document is not accepted as a graph member');
+        'library origin authoritative document membership differs', 'unused supplied document is not accepted as a graph member');
     rejected(sub {authority_class()->from_documents($label, undef, [$directory])},
-        qr/independent document set required/, 'absent independent source authority');
+        'library origin independent document set required', 'absent independent source authority');
     rejected(sub {authority_class()->from_documents($label, $documents, ['/foreign'])},
-        qr/repository-relative document identity/, 'absolute persisted search root');
+        'library origin repository-relative document identity required', 'absolute persisted search root');
     rejected(sub {authority_class()->from_documents($label, $documents, ['../foreign'])},
-        qr/repository-relative document identity/, 'escaping persisted search root');
+        'library origin repository-relative document identity required', 'escaping persisted search root');
     {
         local $ENV{FSMLIB} = $directory;
         rejected(sub {FSM::Test::DocumentSelectedFormMutation->new->parse_documents($label, $documents)},
-            qr/actual selected form differs from authority/, 'actual producer form mutation cannot forge a selected document');
+            'library origin actual selected form differs from authority', 'actual producer form mutation cannot forge a selected document');
     }
     for my $closed (
-        ['package', '(actor closed (imports (package pkg)))', qr/package source authority is not qualified/],
-        ['ATL', '(actor closed (instance child of Worker))', qr/ATL source authority is not qualified/],
+        ['package', '(actor closed (imports (package pkg)))', 'library origin package source authority is not qualified'],
+        ['ATL', '(actor closed (instance child of Worker))', 'library origin ATL source authority is not qualified'],
     ) {
         rejected(sub {authority_class()->from_documents('closed.isf', {'closed.isf' => $closed->[1]}, [])},
             $closed->[2], "$closed->[0] remains closed");
@@ -190,7 +210,7 @@ subtest 'matching embedded source digests cannot authenticate a different origin
     isnt($json->encode($other->proof), $json->encode($authority->proof), 'fully consistent origins/digests retain different original source operation');
     ok($other->validate($other->actor, $other->proof), 'substituted proof is valid against its own independently supplied bytes');
     rejected(sub {$authority->validate($other->actor, $other->proof)},
-        qr/proof differs from authoritative document set/, 'matching embedded digest does not replace original authority');
+        'library origin proof differs from authoritative document set', 'matching embedded digest does not replace original authority');
     if (my $capture = $ENV{FSMGEN_DOCUMENT_ORIGIN_CAPTURE}) {
         write_file("$capture/source-twin.json", $json->encode({label => $label, documents => $documents,
             other_documents => $other_documents, actor => $authority->actor, proof => $authority->proof,
@@ -295,9 +315,10 @@ sub rejected {
 }
 sub first_line {(split /\n/, $_[0] // '')[0] // ''}
 sub diagnostic_matches {
-    my ($error, $pattern) = @_;
-    my $subject = $ENV{FSMGEN_LIBRARY_DIAGNOSTIC_FULL_STACK} ? $error : first_line($error);
-    return $subject =~ $pattern ? 1 : 0;
+    my ($error, $expected) = @_;
+    return ($error // '') =~ /\Q$expected\E/ ? 1 : 0
+        if $ENV{FSMGEN_LIBRARY_DIAGNOSTIC_FULL_STACK};
+    return diagnostic_cause_matches($error, $expected);
 }
 sub library_refusal_with_echo {
     my ($pattern) = @_;

@@ -15,7 +15,7 @@ evidence: >-
   t/2048-isf-file-document-origin-authority.t;
   t/lib/FSM/Test/FileDocumentOriginAuthority.pm;
   docs/audits/conditional-origin-files-20261002/scope.txt;
-  docs/audits/file-origin-diagnostic-correction-20261002/verify.py;
+  docs/audits/origin-helper-cause-repair-20261002/verify.py;
   t/2049-pathsearch-module-origin.t;
   docs/audits/pathsearch-origin-20261002/recipe.txt;
   docs/audits/global-origin-20261002/diagnostic.json;
@@ -35,7 +35,8 @@ in adjacent/relative/dotted layouts across moved local roots.
 Adjacent files precede ordered FSMLIB and cwd; flat dotted precedes pathish;
 same-source precedes external shadows. Missing/changed bytes, symlinks,
 unused/substituted authority and forged source/target/producer/scope/coverage/kind
-refuse. Callers stay intact, views detach, causes match the first diagnostic line.
+refuse. Callers stay intact, views detach. Helpers compare complete first causes;
+real caller and primary-label echo controls qualify, with exact boundary reasons.
 
 Same-source ATL rebuilding retains exact source-form references: first parsing
 coerces two width strings to numbers without changing actors/operations. Fresh

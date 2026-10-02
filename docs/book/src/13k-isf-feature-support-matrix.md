@@ -120,12 +120,11 @@ The local formal refusal oracle matches the first diagnostic line: Perl stack tr
 caller’s expected regex. The initial invalid network fixture falsely passed
 a full-stack match; a valid instance fixture and a genuine echoed-regex control
 now qualify that boundary. Earlier evidence remains archived as superseded.
-The file-origin helper now checks the first diagnostic line too. Its complete
-original actors/proofs and every file-boundary reason are requalified; a real
-wrong-cause caller echo fails both the test and the cold verifier. Other
-diagnostic consumers remain under audit. The library-document helper also uses
-the first diagnostic line, with its complete original products and boundary
-reasons requalified by genuine caller-echo and source-comparison controls.
+The file-origin and library-document helpers now compare complete declared
+first causes. Their original actors/proofs, primitive kinds and boundary reasons
+are requalified by independent source oracles and genuine caller-echo,
+source-label echo and source-comparison controls. Other diagnostic consumers
+remain under audit.
 The wider review tracks ordinary, delegated and structured assertions;
 source discovery alone does not qualify their causes. The private inventory
 preserves JSON primitive kinds (`true` cannot replace numeric `1`) and exact
@@ -134,8 +133,10 @@ Actual source-label probes now show why first-line selection is insufficient:
 `Error: no (actor ...) root found` quotes the label, which can contain a wanted
 refusal phrase. Seven constructor assertion sites now compare their complete independently
 declared first causes, with real comment/label echo regression controls. The
-library/file regex helpers still need their owned P2 anchored-cause corrections
-before further origin qualification. These findings change verification, not public ISF admission.
+library/file helpers now use the same complete-cause predicate and permanent
+real-label controls. Remaining source validators/finalizers and broader current
+and cold consumers still require their owned qualification. These corrections
+change verification, not public ISF admission.
 
 This observer preserves the existing first-clause behavior, including current
 macro placement defects and inline-procedure `cond` refusals. Imported/reusable

@@ -1,0 +1,17 @@
+ram-guard: PID 84680; host 81.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+runtime numeric-status kind corruption rejects
+complete independent products, exact causes, kinds and controls qualify: library current 31
+complete independent products, exact causes, kinds and controls qualify: library full-stack 31
+complete independent products, exact causes, kinds and controls qualify: library bypass 31
+complete independent products, exact causes, kinds and controls qualify: file current 28
+complete independent products, exact causes, kinds and controls qualify: file full-stack 28
+complete independent products, exact causes, kinds and controls qualify: file bypass 28
+actual exact old helper accepts label echo; complete current cause rejects: library/file
+shared label control corruption rejects: label
+shared label control corruption rejects: first_cause
+shared label control corruption rejects: acceptance
+shared label control corruption rejects: kind
+shared label control corruption rejects: shape
+shared whole-product kind corruption rejects: library
+shared whole-product kind corruption rejects: file
+helper correction: full immutable sources/products/kinds, literal first causes, real caller/primary-label echo and genuine falsification qualify

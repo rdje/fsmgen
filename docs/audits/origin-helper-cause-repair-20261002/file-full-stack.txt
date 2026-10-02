@@ -1,0 +1,27 @@
+ram-guard: PID 46439; host 79.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'caller echo cannot authenticate a wrong reason'
+    #   at t/2048-isf-file-document-origin-authority.t line 32.
+    # Looks like you failed 1 test of 5.
+
+#   Failed test 'actual file refusal reason excludes the caller expectation'
+#   at t/2048-isf-file-document-origin-authority.t line 39.
+
+    #   Failed test 'complete cause cannot be authenticated by file label text'
+    #   at t/2048-isf-file-document-origin-authority.t line 54.
+    # Looks like you failed 1 test of 4.
+
+#   Failed test 'file cause matching excludes primary source-label echo'
+#   at t/2048-isf-file-document-origin-authority.t line 58.
+# Looks like you failed 2 tests of 29.
+t/2048-isf-file-document-origin-authority.t .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/29 subtests 
+
+Test Summary Report
+-------------------
+t/2048-isf-file-document-origin-authority.t (Wstat: 512 Tests: 29 Failed: 2)
+  Failed tests:  2-3
+  Non-zero exit status: 2
+Files=1, Tests=29, 84 wallclock secs ( 0.24 usr  0.04 sys + 80.54 cusr  1.38 csys = 82.20 CPU)
+Result: FAIL

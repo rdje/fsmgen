@@ -3,6 +3,7 @@ use warnings;
 use FindBin;
 use lib "$FindBin::Bin/../perl", "$FindBin::Bin/lib";
 use Test::More;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use JSON::PP;
 use Cwd qw(getcwd);
 use Digest::SHA qw(sha256_hex);
@@ -28,13 +29,32 @@ subtest 'actual file refusal reason excludes the caller expectation' => sub {
     is(diagnostic_line($error), 'file origin independent document set required',
         'actual constructor supplies the first diagnostic reason');
     like($error, $pattern, 'actual Carp trace echoes the caller regex');
-    ok(!diagnostic_matches($error, $pattern), 'caller echo cannot authenticate a wrong reason');
+    ok(!diagnostic_matches($error, 'file_reason_only_in_caller_argument'), 'caller echo cannot authenticate a wrong reason');
     my @controls;
     refuses('actual-constructor-positive', sub {
         FSM::Test::FileDocumentOriginAuthority->from_files('missing.isf', {}, []);
-    }, qr/\Afile origin independent document set required\z/, \@controls);
+    }, 'file origin independent document set required', \@controls);
     capture('diagnostic-echo', {error => $error, expected => 'file_reason_only_in_caller_argument',
-        matched => diagnostic_matches($error, $pattern) ? 1 : 0, controls => \@controls});
+        matched => diagnostic_matches($error, 'file_reason_only_in_caller_argument') ? 1 : 0, controls => \@controls});
+};
+subtest 'file cause matching excludes primary source-label echo' => sub {
+    my $expected = 'file origin selected source bytes differ from authority';
+    my $workspace = tempdir(CLEANUP => 1);
+    my $label = File::Spec->abs2rel("$workspace/$expected.isf", $repository);
+    my $source = '(not_actor)';
+    write_file($label, $source);
+    my $accepted = eval {
+        FSM::Test::FileDocumentOriginAuthority->from_files($label, {$label => $source}, []);
+        1;
+    };
+    my $error = $@;
+    ok(!$accepted, 'actual unrelated file source refuses');
+    is(diagnostic_line($error), "Error: no (actor ...) root found in '$label'", 'real file label appears in unrelated primary cause');
+    like(diagnostic_line($error), qr/selected source bytes differ from authority/, 'primary message actually echoes wanted text');
+    ok(!diagnostic_matches($error, $expected), 'complete cause cannot be authenticated by file label text');
+    capture('diagnostic-label', {source => $source, label => $label, error => $error,
+        expected => $expected, accepted => $accepted ? 1 : 0,
+        matched => diagnostic_matches($error, $expected)});
 };
 for my $path (@inputs) {
     my $input = $json->decode(read_file($path));
@@ -127,23 +147,23 @@ subtest 'actual file precedence and independently supplied membership' => sub {
     my $shadow=clone($documents);
     my ($selected)=sort grep {$_ ne 'sources/main.isf'} keys %$documents;
     $shadow->{$selected}.="\n ";
-    refuses('selected-byte-substitution',sub {authority_class()->from_files('sources/main.isf',$shadow,['libraries'])},qr/selected source bytes differ/,
+    refuses('selected-byte-substitution',sub {authority_class()->from_files('sources/main.isf',$shadow,['libraries'])},'file origin selected source bytes differ from authority',
         \@controls);
     my $missing=clone($documents);delete $missing->{$selected};
-    refuses('missing-selected-authority',sub {authority_class()->from_files('sources/main.isf',$missing,['libraries'])},qr/selected document authority missing/,
+    refuses('missing-selected-authority',sub {authority_class()->from_files('sources/main.isf',$missing,['libraries'])},'file origin selected document authority missing',
         \@controls);
     my $root_changed=clone($documents);$root_changed->{'sources/main.isf'}.="\n ";
-    refuses('root-byte-substitution',sub {authority_class()->from_files('sources/main.isf',$root_changed,['libraries'])},qr/root bytes differ/,
+    refuses('root-byte-substitution',sub {authority_class()->from_files('sources/main.isf',$root_changed,['libraries'])},'file origin root bytes differ from authority',
         \@controls);
     write_file($selected,$documents->{$selected}."\n ");
-    refuses('actual-file-mutation',sub {authority_class()->from_files('sources/main.isf',$documents,['libraries'])},qr/selected source bytes differ/,
+    refuses('actual-file-mutation',sub {authority_class()->from_files('sources/main.isf',$documents,['libraries'])},'file origin selected source bytes differ from authority',
         \@controls);
     write_file($selected,$documents->{$selected});
     my $unused=clone($documents);$unused->{'libraries/unused.isf'}='(library unused (actor worker))';
-    refuses('unused-authority',sub {authority_class()->from_files('sources/main.isf',$unused,['libraries'])},qr/authoritative document membership differs/,
+    refuses('unused-authority',sub {authority_class()->from_files('sources/main.isf',$unused,['libraries'])},'library origin authoritative document membership differs',
         \@controls);
     unlink $selected or die $!;
-    refuses('deleted-selected-file',sub {authority_class()->from_files('sources/main.isf',$documents,['libraries'])},qr/selected document authority missing/,
+    refuses('deleted-selected-file',sub {authority_class()->from_files('sources/main.isf',$documents,['libraries'])},'file origin selected document authority missing',
         \@controls);
     # A remaining root-relative pathish file still outranks FSMLIB. Remove it
     # explicitly before qualifying the next search coordinate.
@@ -164,7 +184,7 @@ subtest 'actual file precedence and independently supplied membership' => sub {
     my $cwd=authority_class()->from_files('sources/main.isf',$cwd_documents,['libraries','other']);
     ok(grep($_->{source_label} eq basename($selected),@{$cwd->proof->{documents}}),'current directory follows both declared search roots');
     symlink '../'.basename($selected),$selected or die $!;
-    refuses('symlink-library',sub {authority_class()->from_files('sources/main.isf',$documents,['libraries'])},qr/missing or aliased/,\@controls);
+    refuses('symlink-library',sub {authority_class()->from_files('sources/main.isf',$documents,['libraries'])},'file origin selected file is missing or aliased',\@controls);
     capture('precedence',{documents=>$documents,decoys=>\%decoys,proof=>$authority->proof,controls=>\@controls,
         fallback_documents=>$fallback,fallback_proof=>$after->proof,last_documents=>$last,last_proof=>$final->proof,
         cwd_documents=>$cwd_documents,cwd_proof=>$cwd->proof});
@@ -196,10 +216,10 @@ subtest 'same-source selection and path aliases remain explicit' => sub {
     is_deeply([map {$_->{source_label}} @{$authority->proof->{documents}}],['sources/main.isf'],'same-source library forms need no external source authority');
     my @controls;
     for my $identity ('/absolute.isf','../escaped.isf','sources/../main.isf','sources//main.isf','sources/./main.isf') {
-        refuses('path-'.$identity,sub {authority_class()->from_files($identity,{$identity=>$root},[])},qr/canonical relative identity required/,\@controls);
+        refuses('path-'.$identity,sub {authority_class()->from_files($identity,{$identity=>$root},[])},'file origin canonical relative identity required',\@controls);
     }
     symlink 'main.isf','sources/alias.isf' or die $!;
-    refuses('symlink-root',sub {authority_class()->from_files('sources/alias.isf',{'sources/alias.isf'=>$root},[])},qr/missing or aliased/,\@controls);
+    refuses('symlink-root',sub {authority_class()->from_files('sources/alias.isf',{'sources/alias.isf'=>$root},[])},'file origin selected file is missing or aliased',\@controls);
     capture('same-source',{predecessor=>$selected_input,documents=>{'sources/main.isf'=>$root},decoys=>\%decoys,
         actor=>$authority->actor,proof=>$authority->proof,controls=>\@controls});
     chdir $repository or die $!;
@@ -249,17 +269,18 @@ sub write_documents {
     for my $name (keys %$documents) {make_path(dirname("$workspace/$name"));write_file("$workspace/$name",$documents->{$name})}
 }
 sub refuses {
-    my ($name,$action,$pattern,$controls)=@_;
+    my ($name,$action,$expected,$controls)=@_;
     my $accepted=eval {$action->();1};my $diagnostic=$@;
     ok(!$accepted,"actual $name refuses");
-    ok(diagnostic_matches($diagnostic,$pattern),'precise actual file authority refusal');
+    ok(diagnostic_matches($diagnostic,$expected),'precise actual file authority refusal');
     push @$controls,{name=>$name,accepted=>$accepted?1:0,diagnostic=>diagnostic_line($diagnostic)};
 }
 sub diagnostic_line {(split /\n/, $_[0] // '')[0] // ''}
 sub diagnostic_matches {
-    my ($error,$pattern)=@_;
-    my $subject=$ENV{FSMGEN_FILE_DIAGNOSTIC_FULL_STACK} ? $error : diagnostic_line($error);
-    return $subject =~ $pattern ? 1 : 0;
+    my ($error, $expected) = @_;
+    return ($error // '') =~ /\Q$expected\E/ ? 1 : 0
+        if $ENV{FSMGEN_FILE_DIAGNOSTIC_FULL_STACK};
+    return diagnostic_cause_matches($error, $expected);
 }
 sub file_refusal_with_echo {
     my ($expected)=@_;

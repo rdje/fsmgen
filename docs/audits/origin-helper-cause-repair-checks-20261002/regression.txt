@@ -1,0 +1,6 @@
+ram-guard: PID 27144; host 79.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2049-pathsearch-module-origin.t ........... ok
+t/2053-isf-constructor-diagnostic-causes.t .. ok
+All tests successful.
+Files=2, Tests=19,  2 wallclock secs ( 0.01 usr  0.00 sys +  0.79 cusr  0.53 csys =  1.33 CPU)
+Result: PASS

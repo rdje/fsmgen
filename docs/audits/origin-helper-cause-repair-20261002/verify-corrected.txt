@@ -1,0 +1,12 @@
+ram-guard: PID 10410; host 85.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+runtime numeric-status kind corruption rejects
+complete independent products, exact causes, kinds and controls qualify: library current 31
+complete independent products, exact causes, kinds and controls qualify: library full-stack 31
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/origin-helper-cause-repair-20261002/verify.py", line 121, in <module>
+    label_control(values['diagnostic-label.json'], kind, band == 'full-stack')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/origin-helper-cause-repair-20261002/verify.py", line 87, in label_control
+    assert ' at perl/FSM/Adapter/ISF/Parser.pm line 118.' in value['error']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

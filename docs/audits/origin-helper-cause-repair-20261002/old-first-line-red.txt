@@ -1,0 +1,10 @@
+ram-guard: PID 8697; host 82.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+runtime numeric-status kind corruption rejects
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/origin-helper-cause-repair-20261002/verify.py", line 65, in <module>
+    lib = {}; exec(compile(lib_source.read_text().split('\nbands = {}', 1)[0], str(lib_source), 'exec'), lib)
+              ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "docs/audits/library-origin-diagnostic-correction-20261002/verify.py", line 9, in <module>
+    BASE = Path(__file__).parent
+                ^^^^^^^^
+NameError: name '__file__' is not defined. Did you mean: '__name__'?

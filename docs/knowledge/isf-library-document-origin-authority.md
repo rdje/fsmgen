@@ -15,7 +15,7 @@ evidence: >-
   t/2046-isf-library-document-origin-authority.t;
   t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm;
   docs/audits/conditional-origin-documents-20261002/scope.txt;
-  docs/audits/library-origin-diagnostic-correction-20261002/scope.txt;
+  docs/audits/origin-helper-cause-repair-20261002/scope.txt;
   docs/audits/current-diagnostic-lexical-inventory-20261002/scope.txt;
   docs/audits/constructor-cause-repair-20261002/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
@@ -50,8 +50,8 @@ static clones; file origins own reads/same-source use/ATL associations.
 Preparation/adoption remain later owners. Public activation/refusals apply;
 no new macros, scheduling admission or HDL/macro runtime is proved.
 
-Constructor assertions now compare complete first causes and reject real label
-echo. Library/file first-line substrings remain P2 repairs. Reverify: `python3 docs/audits/constructor-cause-repair-20261002/verify.py`.
+Constructor and library/file helpers compare complete first causes, rejecting
+real caller/label echoes. Reverify: `python3 docs/audits/origin-helper-cause-repair-20261002/verify.py`.
 The [lexical census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt)
 binds ASCII Perl tokens/calls to Git bytes. Comments/strings/declarations and
 overlaps are candidates, not cause safety. Context/producer/cold controls remain

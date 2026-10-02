@@ -1,0 +1,29 @@
+{
+  "baseline": "66f3d6a3c6f57e7dfde3ff70dcb472a1cb72b5ed",
+  "commands": [
+    [
+      "python3",
+      "docs/audits/origin-helper-cause-repair-20261002/run.py"
+    ],
+    [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "docs/audits/origin-helper-cause-repair-20261002/verify.py"
+    ],
+    [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "docs/audits/origin-helper-cause-repair-20261002/verify.py",
+      "--old-first-line"
+    ]
+  ],
+  "expected_statuses": [
+    0,
+    0,
+    1
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2.2",
+  "scope": "Literal first causes and full independent product oracle portions; historical runtime/admission gates excluded."
+}

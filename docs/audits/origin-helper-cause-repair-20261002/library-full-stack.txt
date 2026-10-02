@@ -1,0 +1,27 @@
+ram-guard: PID 24193; host 75.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'caller expectation cannot authenticate another cause'
+    #   at t/2046-isf-library-document-origin-authority.t line 51.
+    # Looks like you failed 1 test of 5.
+
+#   Failed test 'library cause matching excludes the actual caller regex echo'
+#   at t/2046-isf-library-document-origin-authority.t line 59.
+
+    #   Failed test 'complete cause cannot be authenticated by label text'
+    #   at t/2046-isf-library-document-origin-authority.t line 72.
+    # Looks like you failed 1 test of 4.
+
+#   Failed test 'library cause matching excludes primary source-label echo'
+#   at t/2046-isf-library-document-origin-authority.t line 78.
+# Looks like you failed 2 tests of 32.
+t/2046-isf-library-document-origin-authority.t .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/32 subtests 
+
+Test Summary Report
+-------------------
+t/2046-isf-library-document-origin-authority.t (Wstat: 512 Tests: 32 Failed: 2)
+  Failed tests:  2-3
+  Non-zero exit status: 2
+Files=1, Tests=32, 10 wallclock secs ( 0.05 usr  0.01 sys +  9.39 cusr  0.48 csys =  9.93 CPU)
+Result: FAIL
