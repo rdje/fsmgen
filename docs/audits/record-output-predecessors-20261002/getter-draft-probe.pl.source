@@ -1,0 +1,135 @@
+use strict;
+use warnings;
+use lib 'perl', 't/lib';
+use Cwd qw(abs_path);
+use Digest::SHA qw(sha256_hex);
+use File::Path qw(make_path);
+use JSON::PP;
+use Scalar::Util qw(blessed);
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
+use FSM::Pipeline::HDLGenerator;
+use FSM::Support::SemanticIntrospectionMCPAdapter;
+use FSM::Test::SourceQueryRunner qw(normalize_repository_paths);
+
+my ($mode, $work, $destination) = @ARGV;
+my $root = abs_path('.');
+die "probe requires an existing project-local workspace\n"
+    unless defined($work) && index(abs_path($work) // '', "$root/") == 0;
+my $json = JSON::PP->new->canonical->utf8;
+my $definition = '(record (kind (bits 2)) (payload (record (data (signed (four_state (bits 5))))'
+    . ' (flags (list bit (two_state (bits 2)))))))';
+my $local = '(types (type frame ' . $definition . ') (type alias frame))';
+my $reads = '(transaction main (on start) (set held packet) (set seen packet.payload.data)'
+    . ' (when mode.ON (set sliced packet.payload.data[3:1]))'
+    . ' (when packet.payload.flags[0] (update tag packet.kind)) (complete done))';
+my @cases = (
+    ['local_nested', $local, 'frame', 'alias', $reads],
+    ['forward_alias', '(types (type alias frame) (type frame ' . $definition . '))', 'alias', 'frame', $reads],
+    ['imported_nested', '(imports (package shared))', 'shared.frame', 'shared.frame', $reads],
+    ['imported_alias', '(imports (package shared)) (types (type alias shared.frame))', 'alias', 'shared.frame', $reads],
+    ['formal_shadow', $local, 'frame', 'alias', '(transaction main (ports (input packet (width 3)))'
+        . ' (on start) (set sliced packet[2:0]) (complete done))'],
+    ['drive_shadow', $local, 'frame', 'alias', '(drive (publish packet) (seen packet))'
+        . ' (transaction main (on start) (drive publish scalar) (complete done))'],
+    ['unused_record', $local, 'frame', 'alias', '(transaction main (on start) (set seen scalar) (complete done))'],
+);
+my @sources = map {[$_->[0], "$work/$_->[0].isf"]} @cases;
+push @sources, map {my $path = $_; my ($name) = $path =~ m{([^/]+)\.isf$}; [$name, $path]} qw(
+    isf/record_input.isf isf/record_input_children.isf isf/storage_fields.isf isf/storage_word_access.isf
+    t/data/isf_record_input_generated_domains_runtime.isf t/data/isf_record_input_generated_blocking_runtime.isf);
+if ($mode eq 'prepare') {
+    write_file("$work/shared.fsm", '(?pkg:shared (+types (type frame ' . $definition . ')))');
+    for my $case (@cases) {
+        my ($name, $types, $input, $storage, $body) = @$case;
+        write_file("$work/$name.isf", '(actor ' . $name . ' ' . $types
+            . ' (enums (packet (OTHER 1)) (mode (ON 1)))'
+            . ' (interface (output done) (input start) (input packet (type ' . $input . '))'
+            . ' (input scalar (width 5)) (input mode) (output seen (width 5))'
+            . ' (output sliced (width 3)) (output tag (width 2)))'
+            . ' (storage (var held (type ' . $storage . '))) ' . $body . ')');
+    }
+    write_file("$work/selection.isf", '(actor predecessor_selection (clock clk)'
+        . ' (types (type frame (record (data (bits 3)))))'
+        . ' (interface (input start) (output packet (type frame)) (output done))'
+        . ' (storage (var held (type frame)))'
+        . ' (transaction main (on start) (set packet held) (complete done)))');
+    print "Finite authored and maintained predecessor inputs prepared.\n";
+    exit 0;
+}
+die "capture requires an output within its workspace\n"
+    unless $mode eq 'capture' && defined($destination) && index($destination, "$work/") == 0;
+my $adapter = FSM::Support::SemanticIntrospectionMCPAdapter->new(repo_root => $root, workspace_root => $root);
+my %loaded = map {$_ => {path => $INC{$_}, sha256 => sha256_hex(read_file($INC{$_}))}}
+    qw(FSM/Adapter/ISF/Parser.pm FSM/Scheduler/ISF.pm);
+my @products;
+for my $source (@sources) {
+    my ($name, $path) = @$source;
+    my $bytes = read_file($path);
+    my $actor = FSM::Adapter::ISF->new->parse_file($path);
+    my $before = $json->encode($actor);
+    my $scheduler = FSM::Scheduler::ISF->new;
+    my $lowered = $scheduler->lower($actor);
+    my $report = $json->decode($scheduler->report($actor));
+    my %queries = map {$_ => query($path, $_)} qw(check semantic schedule);
+    my $dir = "$work/carriers/$name";
+    make_path($dir);
+    my %carriers;
+    for my $file (sort keys %{$lowered->{files}}) {
+        write_file("$dir/$file", $lowered->{files}{$file});
+        $carriers{$file} = capture([$^X, 'bin/fsmgen', '--quiet', '--strict', '--check', '--json', "$dir/$file"], '');
+    }
+    my $hdl_path = "$work/$name.sv";
+    my $native = capture([$^X, 'bin/fsmgen', '--quiet', '--strict', '--language', 'systemverilog', '--output', $hdl_path, $path], '');
+    die "actual HDL generation failed: $native->{stdout}$native->{stderr}" unless $native->{exit_code} == 0 && $native->{signal} == 0;
+    my $facade = FSM::Pipeline::HDLGenerator->new(target_language => 'systemverilog', strict_mode => 1, quiet => 1)
+        ->generate_hdl_from_file($path);
+    push @products, {name => $name, path => $path, source => $bytes, actor => $actor,
+        caller_before => $before, caller_after => $json->encode($actor), lower => $lowered, report => $report,
+        queries => \%queries, carriers => \%carriers, generation => $native, hdl => read_file($hdl_path),
+        facade => {hdl_code => $facade->{hdl_code}, source_info => $facade->{source_info}, result_keys => [sort keys %$facade]},
+        source_before => sha256_hex($bytes), source_after => sha256_hex(read_file($path))};
+}
+my $selection = query("$work/selection.isf", 'check');
+write_file($destination, $json->encode(capture_data({loaded => \%loaded, products => \@products, selection => $selection,
+    packages => {map {$_ => read_file($_)} ("$work/shared.fsm", 'isf/record_input_types.fsm')}})) . "\n");
+print "Complete finite native/API/newline, source, carrier and SystemVerilog generation products captured; no HDL execution.\n";
+
+sub query {
+    my ($path, $kind) = @_;
+    my $relative = abs_path($path) =~ s/^\Q$root\E\///r;
+    my %flags = (check => [qw(--strict --check --json)], semantic => [qw(--strict --emit-semantic-json)], schedule => ['--emit-schedule-json']);
+    my %tools = (check => 'fsmgen_check', semantic => 'fsmgen_semantic_introspect', schedule => 'fsmgen_schedule_preview');
+    my $before = sha256_hex(read_file($path));
+    my $native = capture([$^X, 'bin/fsmgen', @{$flags{$kind}}, $path], '');
+    my $request = {jsonrpc => '2.0', id => 1, method => 'tools/call', params => {name => $tools{$kind}, arguments => {source_id => $relative}}};
+    my $api = $adapter->handle_jsonrpc_request($request);
+    my $wire = capture([$^X, 'bin/fsmgen-mcp', '--workspace-root', '.'], $json->encode($request) . "\n");
+    return {native => $native, native_report => $json->decode($native->{stdout}), api => $api,
+        wire => $wire, wire_response => $json->decode($wire->{stdout}),
+        source_before => $before, source_after => sha256_hex(read_file($path))};
+}
+sub capture {FSM::Test::SourceQueryRunner::_capture($_[0], $_[1])}
+sub capture_data {
+    my ($value) = @_;
+    return $value if !ref($value) || JSON::PP::is_bool($value);
+    if (my $class = blessed($value)) {
+        die "unqualified typed capture class: $class\n" unless $class eq 'FSM::Composition::Spec';
+        my @fields = qw(embedded_dt_sources embedded_fsm_sources embedded_package_sources raw_ast top);
+        die "composition public capture fields no longer cover its complete data\n"
+            unless $json->encode([sort keys %$value]) eq $json->encode(\@fields);
+        my %data;
+        for my $field (@fields) {
+            my $public = $value->$field();
+            die "composition getter changes complete typed field: $field\n"
+                unless $json->encode($public) eq $json->encode($value->{$field});
+            $data{$field} = capture_data($public);
+        }
+        return {capture_class => $class, public_data => \%data};
+    }
+    return {map {$_ => capture_data($value->{$_})} keys %$value} if ref($value) eq 'HASH';
+    return [map {capture_data($_)} @$value] if ref($value) eq 'ARRAY';
+    die "unqualified capture reference: " . ref($value) . "\n";
+}
+sub read_file {open my $fh, '<:raw', $_[0] or die $!; local $/; return <$fh>}
+sub write_file {open my $fh, '>:raw', $_[0] or die $!; print {$fh} $_[1] or die $!; close $fh or die $!}

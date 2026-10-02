@@ -1,0 +1,93 @@
+ram-guard: PID 69619; host 65.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+#   Failed test 'selected Git blobs and prior-current decision identity controls pass'
+#   at t/2003-decision-store-git-continuity.t line 12.
+#          got: '1'
+#     expected: '0'
+# ......EE......
+# ======================================================================
+# ERROR: test_complete_repository_growth_uses_existing_byte_budget (test_decision_store_git.SelectedStoreAccess.test_complete_repository_growth_uses_existing_byte_budget) (selector='index')
+# ----------------------------------------------------------------------
+# Traceback (most recent call last):
+#   File "<repo>/t/python/test_decision_store_git.py", line 124, in test_complete_repository_growth_uses_existing_byte_budget
+#     snapshot = selected.GitSnapshot(self.root, selector)
+#   File "<repo>/scripts/decision_store_git.py", line 37, in __init__
+#     catalog_api.require(records[-1] == b'' and len(records) - 1 <= MAX_TRACKED_PATHS,
+#     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#                         'Git path inventory exceeds bound or is incomplete')
+#                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#   File "<repo>/scripts/decision_catalog.py", line 30, in require
+#     raise ValueError(message)
+# ValueError: Git path inventory exceeds bound or is incomplete
+# 
+# ======================================================================
+# ERROR: test_complete_repository_growth_uses_existing_byte_budget (test_decision_store_git.SelectedStoreAccess.test_complete_repository_growth_uses_existing_byte_budget) (selector='HEAD')
+# ----------------------------------------------------------------------
+# Traceback (most recent call last):
+#   File "<repo>/t/python/test_decision_store_git.py", line 124, in test_complete_repository_growth_uses_existing_byte_budget
+#     snapshot = selected.GitSnapshot(self.root, selector)
+#   File "<repo>/scripts/decision_store_git.py", line 37, in __init__
+#     catalog_api.require(records[-1] == b'' and len(records) - 1 <= MAX_TRACKED_PATHS,
+#     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#                         'Git path inventory exceeds bound or is incomplete')
+#                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#   File "<repo>/scripts/decision_catalog.py", line 30, in require
+#     raise ValueError(message)
+# ValueError: Git path inventory exceeds bound or is incomplete
+# 
+# ----------------------------------------------------------------------
+# Ran 13 tests in 4.232s
+# 
+# FAILED (errors=2)
+
+#   Failed test 'Python controls completed'
+#   at t/2003-decision-store-git-continuity.t line 13.
+#                   '......EE......
+# ======================================================================
+# ERROR: test_complete_repository_growth_uses_existing_byte_budget (test_decision_store_git.SelectedStoreAccess.test_complete_repository_growth_uses_existing_byte_budget) (selector='index')
+# ----------------------------------------------------------------------
+# Traceback (most recent call last):
+#   File "<repo>/t/python/test_decision_store_git.py", line 124, in test_complete_repository_growth_uses_existing_byte_budget
+#     snapshot = selected.GitSnapshot(self.root, selector)
+#   File "<repo>/scripts/decision_store_git.py", line 37, in __init__
+#     catalog_api.require(records[-1] == b'' and len(records) - 1 <= MAX_TRACKED_PATHS,
+#     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#                         'Git path inventory exceeds bound or is incomplete')
+#                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#   File "<repo>/scripts/decision_catalog.py", line 30, in require
+#     raise ValueError(message)
+# ValueError: Git path inventory exceeds bound or is incomplete
+# 
+# ======================================================================
+# ERROR: test_complete_repository_growth_uses_existing_byte_budget (test_decision_store_git.SelectedStoreAccess.test_complete_repository_growth_uses_existing_byte_budget) (selector='HEAD')
+# ----------------------------------------------------------------------
+# Traceback (most recent call last):
+#   File "<repo>/t/python/test_decision_store_git.py", line 124, in test_complete_repository_growth_uses_existing_byte_budget
+#     snapshot = selected.GitSnapshot(self.root, selector)
+#   File "<repo>/scripts/decision_store_git.py", line 37, in __init__
+#     catalog_api.require(records[-1] == b'' and len(records) - 1 <= MAX_TRACKED_PATHS,
+#     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#                         'Git path inventory exceeds bound or is incomplete')
+#                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#   File "<repo>/scripts/decision_catalog.py", line 30, in require
+#     raise ValueError(message)
+# ValueError: Git path inventory exceeds bound or is incomplete
+# 
+# ----------------------------------------------------------------------
+# Ran 13 tests in 4.232s
+# 
+# FAILED (errors=2)
+# '
+#     doesn't match '(?^m:^OK$)'
+# Looks like you failed 2 tests of 2.
+t/2003-decision-store-git-continuity.t .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/2 subtests 
+
+Test Summary Report
+-------------------
+t/2003-decision-store-git-continuity.t (Wstat: 512 Tests: 2 Failed: 2)
+  Failed tests:  1-2
+  Non-zero exit status: 2
+Files=1, Tests=2,  4 wallclock secs ( 0.01 usr  0.00 sys +  2.02 cusr  5.30 csys =  7.33 CPU)
+Result: FAIL

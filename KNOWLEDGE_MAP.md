@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1253** facts · **6870** unique questions · **7047** answer occurrences · **178** topic shards.
+> **1255** facts · **6879** unique questions · **7056** answer occurrences · **179** topic shards.
 
 Query first:
 
@@ -42,6 +42,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `composition-vhdl` | 1 | 68 | [`composition-vhdl.md`](knowledge-map/generated/composition-vhdl.md) |
 | `darwin-inline` | 1 | 8 | [`darwin-inline.md`](knowledge-map/generated/darwin-inline.md) |
 | `decision-record` | 1 | 5 | [`decision-record.md`](knowledge-map/generated/decision-record.md) |
+| `decision-selected` | 1 | 3 | [`decision-selected.md`](knowledge-map/generated/decision-selected.md) |
 | `declarative-aggregate` | 1 | 3 | [`declarative-aggregate.md`](knowledge-map/generated/declarative-aggregate.md) |
 | `direct-hdl` | 1 | 8 | [`direct-hdl.md`](knowledge-map/generated/direct-hdl.md) |
 | `direct-output` | 1 | 3 | [`direct-output.md`](knowledge-map/generated/direct-output.md) |
@@ -50,7 +51,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `direct-vhdl` | 4 | 115 | [`direct-vhdl.md`](knowledge-map/generated/direct-vhdl.md) |
 | `doc-paths` | 1 | 6 | [`doc-paths.md`](knowledge-map/generated/doc-paths.md) |
 | `doctrine-enforcement` | 1 | 6 | [`doctrine-enforcement.md`](knowledge-map/generated/doctrine-enforcement.md) |
-| `downstream-consumer` | 1 | 6 | [`downstream-consumer.md`](knowledge-map/generated/downstream-consumer.md) |
+| `downstream-consumer` | 1 | 7 | [`downstream-consumer.md`](knowledge-map/generated/downstream-consumer.md) |
 | `explicit-system` | 1 | 8 | [`explicit-system.md`](knowledge-map/generated/explicit-system.md) |
 | `flattened-generation` | 1 | 5 | [`flattened-generation.md`](knowledge-map/generated/flattened-generation.md) |
 | `fsmgen-end` | 1 | 4 | [`fsmgen-end.md`](knowledge-map/generated/fsmgen-end.md) |
@@ -131,7 +132,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `isf-prepared` | 1 | 3 | [`isf-prepared.md`](knowledge-map/generated/isf-prepared.md) |
 | `isf-production` | 1 | 3 | [`isf-production.md`](knowledge-map/generated/isf-production.md) |
 | `isf-property` | 1 | 5 | [`isf-property.md`](knowledge-map/generated/isf-property.md) |
-| `isf-record` | 16 | 57 | [`isf-record.md`](knowledge-map/generated/isf-record.md) |
+| `isf-record` | 17 | 62 | [`isf-record.md`](knowledge-map/generated/isf-record.md) |
 | `isf-rule` | 4 | 23 | [`isf-rule.md`](knowledge-map/generated/isf-rule.md) |
 | `isf-sampled` | 2 | 10 | [`isf-sampled.md`](knowledge-map/generated/isf-sampled.md) |
 | `isf-scalar` | 2 | 5 | [`isf-scalar.md`](knowledge-map/generated/isf-scalar.md) |

@@ -1,0 +1,284 @@
+{
+  "cases": [
+    {
+      "bytes": 1045838,
+      "fields": {
+        "actor": 4702,
+        "caller_after": 5618,
+        "caller_before": 5618,
+        "carriers": 1568,
+        "facade": 12119,
+        "generation": 104,
+        "hdl": 11670,
+        "lower": 1427,
+        "name": 14,
+        "path": 87,
+        "queries": 999843,
+        "report": 2119,
+        "source": 642,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "local_nested"
+    },
+    {
+      "bytes": 1046012,
+      "fields": {
+        "actor": 4703,
+        "caller_after": 5619,
+        "caller_before": 5619,
+        "carriers": 1574,
+        "facade": 12129,
+        "generation": 105,
+        "hdl": 11677,
+        "lower": 1429,
+        "name": 15,
+        "path": 88,
+        "queries": 999983,
+        "report": 2121,
+        "source": 643,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "forward_alias"
+    },
+    {
+      "bytes": 1001540,
+      "fields": {
+        "actor": 4320,
+        "caller_after": 5150,
+        "caller_before": 5150,
+        "carriers": 1586,
+        "facade": 11899,
+        "generation": 107,
+        "hdl": 11433,
+        "lower": 1457,
+        "name": 17,
+        "path": 90,
+        "queries": 957361,
+        "report": 2139,
+        "source": 524,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "imported_nested"
+    },
+    {
+      "bytes": 1025366,
+      "fields": {
+        "actor": 4791,
+        "caller_after": 5719,
+        "caller_before": 5719,
+        "carriers": 1580,
+        "facade": 12178,
+        "generation": 106,
+        "hdl": 11715,
+        "lower": 1497,
+        "name": 16,
+        "path": 89,
+        "queries": 978969,
+        "report": 2130,
+        "source": 550,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "imported_alias"
+    },
+    {
+      "bytes": 610578,
+      "fields": {
+        "actor": 4571,
+        "caller_after": 5467,
+        "caller_before": 5467,
+        "carriers": 1574,
+        "facade": 6565,
+        "generation": 105,
+        "hdl": 6113,
+        "lower": 1045,
+        "name": 15,
+        "path": 88,
+        "queries": 576715,
+        "report": 2003,
+        "source": 543,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "formal_shadow"
+    },
+    {
+      "bytes": 685687,
+      "fields": {
+        "actor": 4599,
+        "caller_after": 5501,
+        "caller_before": 5501,
+        "carriers": 1567,
+        "facade": 7689,
+        "generation": 104,
+        "hdl": 7240,
+        "lower": 1109,
+        "name": 14,
+        "path": 87,
+        "queries": 649525,
+        "report": 1898,
+        "source": 546,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "drive_shadow"
+    },
+    {
+      "bytes": 602044,
+      "fields": {
+        "actor": 4537,
+        "caller_after": 5427,
+        "caller_before": 5427,
+        "carriers": 1573,
+        "facade": 6349,
+        "generation": 105,
+        "hdl": 5897,
+        "lower": 957,
+        "name": 15,
+        "path": 88,
+        "queries": 568943,
+        "report": 1916,
+        "source": 503,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "unused_record"
+    },
+    {
+      "bytes": 559536,
+      "fields": {
+        "actor": 2818,
+        "caller_after": 3340,
+        "caller_before": 3340,
+        "carriers": 1567,
+        "facade": 6989,
+        "generation": 104,
+        "hdl": 6585,
+        "lower": 861,
+        "name": 14,
+        "path": 22,
+        "queries": 531635,
+        "report": 1572,
+        "source": 382,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "record_input"
+    },
+    {
+      "bytes": 13193360,
+      "fields": {
+        "actor": 4083,
+        "caller_after": 4889,
+        "caller_before": 4889,
+        "carriers": 6691,
+        "facade": 41560,
+        "generation": 630,
+        "hdl": 30423,
+        "lower": 4591,
+        "name": 23,
+        "path": 31,
+        "queries": 13090181,
+        "report": 4131,
+        "source": 931,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "record_input_children"
+    },
+    {
+      "bytes": 505223,
+      "fields": {
+        "actor": 1681,
+        "caller_after": 1987,
+        "caller_before": 1987,
+        "carriers": 1579,
+        "facade": 6973,
+        "generation": 106,
+        "hdl": 6583,
+        "lower": 685,
+        "name": 16,
+        "path": 24,
+        "queries": 480995,
+        "report": 1692,
+        "source": 608,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "storage_fields"
+    },
+    {
+      "bytes": 608444,
+      "fields": {
+        "actor": 1693,
+        "caller_after": 1993,
+        "caller_before": 1993,
+        "carriers": 1609,
+        "facade": 8821,
+        "generation": 111,
+        "hdl": 8416,
+        "lower": 867,
+        "name": 21,
+        "path": 29,
+        "queries": 580331,
+        "report": 1691,
+        "source": 562,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "storage_word_access"
+    },
+    {
+      "bytes": 63101054,
+      "fields": {
+        "actor": 7778,
+        "caller_after": 9338,
+        "caller_before": 9338,
+        "carriers": 8803,
+        "facade": 96182,
+        "generation": 825,
+        "hdl": 74192,
+        "lower": 9689,
+        "name": 44,
+        "path": 55,
+        "queries": 62874717,
+        "report": 7605,
+        "source": 2181,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "isf_record_input_generated_domains_runtime"
+    },
+    {
+      "bytes": 65485252,
+      "fields": {
+        "actor": 7081,
+        "caller_after": 8455,
+        "caller_before": 8455,
+        "carriers": 6633,
+        "facade": 109268,
+        "generation": 581,
+        "hdl": 69805,
+        "lower": 16220,
+        "name": 45,
+        "path": 56,
+        "queries": 65247461,
+        "report": 9043,
+        "source": 1842,
+        "source_after": 66,
+        "source_before": 66
+      },
+      "name": "isf_record_input_generated_blocking_runtime"
+    }
+  ],
+  "non_product_fields": {
+    "loaded": 283,
+    "packages": 390,
+    "selection": 20040
+  },
+  "raw_bytes": 149490710,
+  "source_sha256": "76ffc222415b0bd6c787fd3b3b55646861dbda92f52841fe2fd81cca3228f76b"
+}

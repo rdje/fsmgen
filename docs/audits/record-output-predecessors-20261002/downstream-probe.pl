@@ -1,0 +1,57 @@
+use strict;
+use warnings;
+use lib 'perl', 't/lib';
+use Cwd qw(abs_path);
+use Digest::SHA qw(sha256_hex);
+use File::Path qw(make_path);
+use JSON::PP;
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
+use FSM::Test::SourceQueryRunner qw(run_source_query normalize_repository_paths);
+my $root=abs_path('.');
+my $path='docs/audits/record-output-predecessors-20261002/downstream-record-ports.isf';
+my $json=JSON::PP->new->canonical->utf8;
+my $source=read_file($path);
+my $actor=FSM::Adapter::ISF->new->parse_file($path);
+my $before=$json->encode($actor);
+my $fields=[{path=>'flag',width=>1,msb=>5,lsb=>5,signed=>0},
+    {path=>'data',width=>5,msb=>4,lsb=>0,signed=>1,state_model=>'four_state'}];
+my $ports=[{name=>'start',direction=>'input',width=>1},
+    {name=>'packet',direction=>'input',width=>6,type=>'frame',type_kind=>'record',fields=>$fields},
+    {name=>'result',direction=>'output',width=>6,type=>'frame',type_kind=>'record',fields=>$fields},
+    {name=>'seen',direction=>'output',width=>5},{name=>'done',direction=>'output',width=>1}];
+die "literal declaration mismatch\n" unless $json->encode($actor->{interface_port_metadata}) eq $json->encode($ports);
+my %queries;
+for my $kind(qw(check semantic schedule)) {
+    my $q=run_source_query({repository_root=>$root,row=>{source_id=>$path,query_kinds=>[qw(check semantic schedule)],search_path_relpaths=>[],strict=>1},query_kind=>$kind});
+    for my $r($q->{native},$q->{stdio}) {
+        die "$kind process failure\n" unless $r->{exit_code}==0 && $r->{signal}==0 && $r->{stderr} eq '';
+    }
+    my $r=$q->{native}{report};
+    die "$kind false check\n" if $kind ne 'schedule' && !$r->{success};
+    my $p=$kind eq 'schedule' ? $r->{interface_ports} : $r->{source}{interface_ports};
+    die "$kind literal metadata mismatch\n" unless $json->encode($p) eq $json->encode($ports);
+    die "$kind typed API/newline mismatch\n" unless $json->encode($q->{adapter_result}) eq $json->encode($q->{stdio}{response}{result});
+    die "$kind full native/public mismatch\n" unless $json->encode(normalize_repository_paths($r,$root)) eq $json->encode($q->{adapter_result}{structuredContent}{report});
+    die "$kind source drift\n" unless $q->{source_sha256_before} eq $q->{source_sha256_after} && $q->{source_sha256_before} eq sha256_hex($source);
+    $queries{$kind}=$q;
+}
+my $lower=FSM::Scheduler::ISF->new->lower($actor);
+make_path('.artifacts/record-output-predecessors/downstream-carriers');
+my %carriers;
+for my $name(sort keys %{$lower->{files}}) {
+    my $target='.artifacts/record-output-predecessors/downstream-carriers/'.$name;
+    write_file($target,$lower->{files}{$name});
+    my $r=FSM::Test::SourceQueryRunner::_capture([$^X,'bin/fsmgen','--strict','--quiet','--check','--json',$target],'');
+    die "strict carrier failure\n" unless $r->{exit_code}==0 && $r->{signal}==0 && $r->{stderr} eq '' && $json->decode($r->{stdout})->{success};
+    $carriers{$name}=$r;
+}
+my $output='.artifacts/record-output-predecessors/downstream-record-ports.sv';
+my $gen=FSM::Test::SourceQueryRunner::_capture([$^X,'bin/fsmgen','--strict','--quiet','--language','systemverilog','--output',$output,$path],'');
+die "SystemVerilog generation failed\n" unless $gen->{exit_code}==0 && $gen->{signal}==0;
+my $after=$json->encode($actor);
+die "caller/source changed\n" unless $after eq $before && read_file($path) eq $source;
+write_file('.artifacts/record-output-predecessors/downstream-products.json',$json->encode({source=>$source,source_sha256=>sha256_hex($source),actor=>$actor,caller_before=>$before,caller_after=>$after,queries=>\%queries,lower=>$lower,carriers=>\%carriers,generation=>$gen,hdl=>read_file($output)}));
+print "Complete documented record input/output example passes literal metadata, actual native/API/newline, strict carriers and SystemVerilog generation; no HDL execution.\n";
+sub read_file {open my $f,'<:raw',$_[0] or die $!;local $/;return <$f>}
+sub write_file {open my $f,'>:raw',$_[0] or die $!;print {$f} $_[1] or die $!;close $f or die $!}

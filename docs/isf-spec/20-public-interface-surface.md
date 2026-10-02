@@ -39,10 +39,14 @@ suffixes, CLI modes, lowering order, and per-suffix status lives in
 `./bin/fsmgen --capability-manifest` under `language_surface.file_surfaces`.
 The public `.ppif` surface is the generic protocol/platform IAL2 container:
 AXI is the first shipped IAL2 profile/example, not the definition of IAL2.
-Future protocol-specific suffixes such as `.axi`, `.chi`, `.ace`, `.ahb`,
-`.apb`, `.atb`, `.smbus`, or `.i2s` are profile aliases over IAL2 rather
-than separate layers. Common IAL2 constructs stay small until compatible reuse
-is proven across multiple profiles.
+The shipped `.axi`, `.apb` and `.ahb` suffixes are bounded protocol-profile
+aliases over `.ppif`, following the same IAL2-to-IAL1-to-IAL0 lowering stack.
+Their available source queries are advertised by `source_query_kinds`; suffix
+availability does not turn catalogued expected failures into supported samples.
+Additional suffixes such as `.chi`, `.ace`, `.atb`, `.smbus` or `.i2s` remain
+future profile aliases, not separate layers. Use `language_surface.file_surfaces`
+for the precise current per-suffix boundary. Common IAL2 constructs stay small
+until compatible reuse is proven across multiple profiles.
 
 Current bounded `.ppif` coverage includes one-channel Valid-Ready sources,
 including the AXI AW first-profile sample and the protocol-neutral
@@ -78,7 +82,7 @@ runtime-validation multi-beat output banks over the generated mixed read
 burst-last queue completion. Broader mixed issue-order queue cardinality
 beyond that selected write `BID` multi-static shape, scoreboards,
 group-local simultaneous enqueue widening, packed
-burst-vector outputs, alternate full burst payload assembly, aliases, platform
+burst-vector outputs, alternate full burst payload assembly, additional aliases, platform
 clauses, full AXI manager behavior, direct backend lowering,
 backend-language variants, and VHDL remain deferred. The first explicit
 verification-output surface now ships as `--emit-verification-output
@@ -1981,11 +1985,19 @@ expression values, non-scalar actor parameters, aggregate shape mismatches,
 and rejects parameter declarations on non-generated transactions without a
 supported same-transaction static use.
 The public ISF surface now accepts the scalar type-alias subset plus one
-aggregate storage-carrier subset: actor-local `(types ...)` declarations,
+aggregate storage-carrier subset and bounded actor record ports: actor-local `(types ...)` declarations,
 `(imports (package NAME) ...)` for existing `.fsm` package roots, `(type
 NAME)` scalar aliases on width-bearing actor interface ports,
 transaction-local ports, and actor-owned storage entries, and packed `list` or
-`record` aliases only on actor-owned storage variables. Transaction `(set
+`record` aliases on actor-owned storage variables. Packed `record` aliases also
+apply to declared actor input/output ports, including imported aliases, under
+the current exact-type whole-copy, scalar-field, physical writer and profile
+contracts. Their complete current source/refusal and qualification boundaries
+are in section 8, Packed Record Actor Ports, of the canonical downstream
+integration contract.
+Root-list actor ports, aggregate transaction ports, input writes, output member
+writes and generated output handoff mappings remain refused. The following
+storage-leaf operations keep their existing storage subset. Transaction `(set
 target aggregate_leaf)` clauses may read scalar member/item leaves from those
 declared storage variables, transaction `set` RHS expressions may use scalar
 member/item leaves as operands, transaction `when`/`while`/`until` condition
@@ -2015,7 +2027,7 @@ operands inside guard expressions. Lowering
 preserves `+types`, `+import`, typed `+size` entries, and embedded imported
 package roots in scheduled `.fsm` review artifacts. Unknown aliases, package
 aliases, `(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
-actor-owned storage variables, unknown aggregate members, out-of-range list
+actor-owned storage variables or the admitted actor record ports, unknown aggregate members, out-of-range list
 indexes, aggregate paths outside direct transaction `set` RHS values, direct
 transaction `set` target tokens, transaction condition scalar values or
 expression operands, transaction `switch` selectors or branch values, rule

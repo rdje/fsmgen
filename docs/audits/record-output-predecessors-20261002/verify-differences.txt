@@ -1,0 +1,21 @@
+ram-guard: PID 95585; host 64.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+[
+  {
+    "path": "products/8/generation/stdout",
+    "kind": "value",
+    "old": "Wrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-OrHacjew/record_input_children__domain_idle.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-OrHacjew/record_input_children__domain_io.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-OrHacjew/record_input_children__domain_io__child_worker.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-OrHacjew/record_input_children_top.fsm\n=== ISF Intent Scheduling ===\n\nActor: record_input_children\n",
+    "current": "Wrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-yzYVcPsI/record_input_children__domain_idle.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-yzYVcPsI/record_input_children__domain_io.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-yzYVcPsI/record_input_children__domain_io__child_worker.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-yzYVcPsI/record_input_children_top.fsm\n=== ISF Intent Scheduling ===\n\nActor: record_input_children\n"
+  },
+  {
+    "path": "products/11/generation/stdout",
+    "kind": "value",
+    "old": "Wrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-NRAdAm1K/packed_input_generated_domains__domain_idle.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-NRAdAm1K/packed_input_generated_domains__domain_io.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-NRAdAm1K/packed_input_generated_domains__domain_io__child_copier.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-NRAdAm1K/packed_input_generated_domains__domain_io__child_reader.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-",
+    "current": "Wrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-w_TbNPK3/packed_input_generated_domains__domain_idle.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-w_TbNPK3/packed_input_generated_domains__domain_io.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-w_TbNPK3/packed_input_generated_domains__domain_io__child_copier.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-w_TbNPK3/packed_input_generated_domains__domain_io__child_reader.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-"
+  },
+  {
+    "path": "products/12/generation/stdout",
+    "kind": "value",
+    "old": "Wrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-19tQlFkW/copier.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-19tQlFkW/packed_input_generated_blocking.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-19tQlFkW/packed_input_generated_blocking_top.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-19tQlFkW/reader.fsm\n=== ISF Intent Scheduling ===\n\nActor: packed_input_generated_blocking\n",
+    "current": "Wrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-YMwoI8T8/copier.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-YMwoI8T8/packed_input_generated_blocking.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-YMwoI8T8/packed_input_generated_blocking_top.fsm\nWrote: <repo>/.artifacts/tmp/ial1-lowering/fsmgen-YMwoI8T8/reader.fsm\n=== ISF Intent Scheduling ===\n\nActor: packed_input_generated_blocking\n"
+  }
+]

@@ -77,7 +77,7 @@ Required fail-closed examples:
   incompatible aggregate/list shapes.
 - Unknown type aliases, `(width ...)` plus `(type ...)` on the same
   declaration, package import aliases, aggregate type aliases outside
-  actor-owned storage variables, unknown aggregate members, out-of-range list
+  actor-owned storage variables or the admitted actor record ports, unknown aggregate members, out-of-range list
   indexes, aggregate storage member/item paths outside direct transaction
   `set` RHS values, direct transaction `set` target tokens, transaction
   condition scalar values or expression operands, transaction `switch`
@@ -105,6 +105,13 @@ Required fail-closed examples:
   drive body RHS scalar/expression operand, inline drive RHS
   scalar/expression operand, and drive-call actual scalar/expression-operand
   contexts.
+- Record input writes, record output member writes, whole inferred record
+  samples or scalar operations on whole records, nonmatching whole-copy types,
+  root-list actor ports and aggregate transaction ports. Mandatory record output
+  admission refuses unproved independent physical writer overlap and currently
+  unqualified generated output mappings. Unsupported record `verilog`/`v` and
+  `vhdl` generation profiles refuse before destination publication; successful
+  target-neutral reports do not imply those backend profiles.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -749,6 +756,11 @@ The following are not public shipped integration surfaces today:
   default, generated activation override, reusable-library use-site override,
   actor interface width, actor-owned scalar storage width, actor-owned bank
   storage width, and actor-owned bank storage depth scalar-constant subsets.
+- Record output member writes, generated whole-output handoff mappings and
+  output native runtime qualification; root-list actor ports and aggregate
+  transaction ports. Selected packed record actor input runtime is qualified
+  in SystemVerilog, but X/Z behavior, reset-free initialization and full
+  aggregate-interface consumer signoff are not established.
 - General memory-array HDL emission for actor-owned banks.
 - Arbitrary CDC, payload CDC, reset CDC, level sampling across domains, or
   FIFO-like cross-domain storage.

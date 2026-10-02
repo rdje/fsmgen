@@ -1,0 +1,2 @@
+scripts/decision_store_git.py: Python syntax valid
+t/python/test_decision_store_git.py: Python syntax valid

@@ -1,0 +1,69 @@
+ram-guard: PID 46189; host 65.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+{
+  "raw_bytes": 149490710,
+  "largest_cases": [
+    {
+      "name": "isf_record_input_generated_blocking_runtime",
+      "bytes": 65485252,
+      "fields": {
+        "actor": 7081,
+        "caller_after": 8455,
+        "caller_before": 8455,
+        "carriers": 6633,
+        "facade": 109268,
+        "generation": 581,
+        "hdl": 69805,
+        "lower": 16220,
+        "name": 45,
+        "path": 56,
+        "queries": 65247461,
+        "report": 9043,
+        "source": 1842,
+        "source_after": 66,
+        "source_before": 66
+      }
+    },
+    {
+      "name": "isf_record_input_generated_domains_runtime",
+      "bytes": 63101054,
+      "fields": {
+        "actor": 7778,
+        "caller_after": 9338,
+        "caller_before": 9338,
+        "carriers": 8803,
+        "facade": 96182,
+        "generation": 825,
+        "hdl": 74192,
+        "lower": 9689,
+        "name": 44,
+        "path": 55,
+        "queries": 62874717,
+        "report": 7605,
+        "source": 2181,
+        "source_after": 66,
+        "source_before": 66
+      }
+    },
+    {
+      "name": "record_input_children",
+      "bytes": 13193360,
+      "fields": {
+        "actor": 4083,
+        "caller_after": 4889,
+        "caller_before": 4889,
+        "carriers": 6691,
+        "facade": 41560,
+        "generation": 630,
+        "hdl": 30423,
+        "lower": 4591,
+        "name": 23,
+        "path": 31,
+        "queries": 13090181,
+        "report": 4131,
+        "source": 931,
+        "source_after": 66,
+        "source_before": 66
+      }
+    }
+  ]
+}

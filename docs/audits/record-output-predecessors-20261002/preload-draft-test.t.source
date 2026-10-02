@@ -1,0 +1,138 @@
+use strict;
+use warnings;
+use lib 'perl', 't/lib';
+use Test::More;
+use Cwd qw(abs_path);
+use Digest::SHA qw(sha256_hex);
+use File::Path qw(make_path);
+use File::Temp qw(tempdir);
+use JSON::PP;
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::SourceQueryRunner qw(normalize_repository_paths);
+
+my $base = '0d4bb1801006235d816ebf519eb437752c303849';
+my $root = abs_path('.');
+my $work = tempdir(CLEANUP => 1);
+my $lib = "$work/baseline";
+my $probe = 't/lib/FSM/Test/RecordOutputPredecessorProbe.pl';
+my $json = JSON::PP->new->canonical->utf8;
+my @modules = qw(FSM/Adapter/ISF/Parser.pm FSM/Scheduler/ISF.pm);
+my %before = map {$_ => sha256_hex(read_file($_))} ('bin/fsmgen', 'bin/fsmgen-mcp', map {"perl/$_"} @modules);
+my $paths = capture(['git', 'diff', '--name-only', $base, '--', 'bin', 'perl']);
+is($paths->{exit_code}, 0, 'exact predecessor production census succeeds');
+is($paths->{stdout}, "perl/FSM/Adapter/ISF/Parser.pm\nperl/FSM/Scheduler/ISF.pm\n", 'only source-admission parser and scheduler differ');
+my %baseline;
+for my $module (@modules) {
+    my $raw = capture(['git', 'show', "$base:perl/$module"]);
+    is($raw->{exit_code}, 0, "$module exact predecessor object retrieves");
+    my $path = "$lib/$module";
+    $path =~ m{^(.*)/[^/]+$}; make_path($1);
+    write_file($path, $raw->{stdout});
+    $baseline{$module} = sha256_hex($raw->{stdout});
+}
+my $prepared = capture([$^X, '-Iperl', '-It/lib', $probe, 'prepare', $work]);
+is($prepared->{exit_code}, 0, 'same finite source population prepared once') or diag($prepared->{stderr});
+my %captures;
+for my $phase (qw(baseline current)) {
+    local %ENV = %ENV;
+    delete @ENV{qw(PERL5LIB PERL5OPT)};
+    if ($phase eq 'baseline') {
+        # The interpreter preloads before bin/fsmgen's own use-lib statement.
+        # Real API/stdio children inherit these exact same old modules.
+        $ENV{PERL5LIB} = "$lib:$root/perl:$root/t/lib";
+        $ENV{PERL5OPT} = '-MFSM::Adapter::ISF::Parser -MFSM::Scheduler::ISF';
+    }
+    my $destination = "$work/$phase.json";
+    my $r = capture([$^X, '-Iperl', '-It/lib', $probe, 'capture', $work, $destination]);
+    preserve("$phase.txt", $r->{stdout} . $r->{stderr});
+    is($r->{exit_code}, 0, "$phase actual complete product probe succeeds") or diag($r->{stderr});
+    is($r->{signal}, 0, "$phase probe ends normally");
+    next unless -f $destination;
+    preserve("$phase.json", read_file($destination));
+    $captures{$phase} = $json->decode(read_file($destination));
+    for my $module (@modules) {
+        is($captures{$phase}{loaded}{$module}{sha256}, $phase eq 'baseline' ? $baseline{$module} : $before{"perl/$module"},
+            "$phase in-process module selection is byte-authenticated");
+    }
+    my $selected = $captures{$phase}{selection};
+    is($json->encode($selected->{native_report}{success}), $phase eq 'baseline' ? 'false' : 'true',
+        "$phase native output sentinel discriminates actual old/current admission");
+    is($json->encode($selected->{api}{result}{structuredContent}{report}{success}), $phase eq 'baseline' ? 'false' : 'true',
+        "$phase real API subprocess discriminates old/current admission");
+    is($json->encode($selected->{wire_response}{result}{structuredContent}{report}{success}), $phase eq 'baseline' ? 'false' : 'true',
+        "$phase actual newline subprocess discriminates old/current admission");
+}
+if ($captures{baseline} && $captures{current}) {
+    my @names = (qw(local_nested forward_alias imported_nested imported_alias formal_shadow drive_shadow unused_record),
+        qw(record_input record_input_children storage_fields storage_word_access isf_record_input_generated_domains_runtime isf_record_input_generated_blocking_runtime));
+    for my $phase (qw(baseline current)) {
+        is_deeply([map {$_->{name}} @{$captures{$phase}{products}}], \@names, "$phase exact finite source membership and order");
+    }
+    for my $index (0 .. $#names) {
+        subtest "complete predecessor preservation $names[$index]" => sub {
+            my $old = $captures{baseline}{products}[$index];
+            my $now = $captures{current}{products}[$index];
+            my ($current_bytes, $old_bytes) = (canonical($now), canonical($old));
+            ok($current_bytes eq $old_bytes,
+                'complete source/actor/lowering/report/carrier/native/API/newline/HDL products agree except qualified root/date prefixes')
+                or diag('Complete captured product digests: current=' . sha256_hex($current_bytes) . ' predecessor=' . sha256_hex($old_bytes));
+            for my $p ($old, $now) {
+                is($p->{caller_after}, $p->{caller_before}, 'full caller JSON kinds unchanged');
+                is($p->{source_after}, $p->{source_before}, 'full authored source bytes unchanged');
+                is($p->{source_before}, sha256_hex($p->{source}), 'source snapshot binds its actual bytes');
+                for my $kind (qw(check semantic schedule)) {
+                    my $q = $p->{queries}{$kind};
+                    is($q->{native}{exit_code}, 0, "$kind native succeeds");
+                    is($q->{native}{signal}, 0, "$kind native has no signal");
+                    is($q->{native}{stderr}, '', "$kind native machine stderr clean");
+                    is($q->{wire}{exit_code}, 0, "$kind actual newline succeeds");
+                    is($q->{wire}{stderr}, '', "$kind newline stderr clean");
+                    is($json->encode($q->{wire_response}), $json->encode($q->{api}), "$kind complete typed API/newline envelope equality");
+                    is($json->encode($q->{api}{result}{structuredContent}{report}),
+                        $json->encode(normalize_repository_paths($q->{native_report}, $root)), "$kind complete typed native/API report equality");
+                    is($q->{source_before}, $p->{source_before}, "$kind before hash selects exact source");
+                    is($q->{source_after}, $p->{source_before}, "$kind query preserves exact source");
+                }
+                for my $file (sort keys %{$p->{carriers}}) {
+                    my $r = $p->{carriers}{$file};
+                    is($r->{exit_code}, 0, "$file complete actual carrier strictly replays");
+                    ok($json->decode($r->{stdout})->{success}, "$file strict replay reports success");
+                }
+                if ($index < 7) {
+                    my ($packet) = grep {$_->{name} eq 'packet'} @{$p->{actor}{interface_port_metadata}};
+                    is($packet->{width}, 10, 'independent rich input width survives');
+                    is($packet->{fields}[1]{signed}, 1, 'independent data leaf remains signed');
+                    is($packet->{fields}[1]{lsb}, 3, 'independent data leaf low offset survives');
+                    is($packet->{fields}[1]{state_model}, 'four_state', 'independent data state model survives');
+                }
+            }
+        };
+    }
+    is(canonical($captures{current}{packages}), canonical($captures{baseline}{packages}), 'all authored package bytes agree');
+    my $good = $captures{current}{products}[0];
+    my $bad = $json->decode($json->encode($good));
+    $bad->{actor}{interface_port_metadata}[1]{width} = '10';
+    isnt(canonical($bad), canonical($good), 'JSON string width substitution defeats complete typed equality');
+    $bad = $json->decode($json->encode($good)); delete $bad->{lower}{files};
+    isnt(canonical($bad), canonical($good), 'lost entire carrier population defeats complete equality');
+}
+is_deeply({map {$_ => sha256_hex(read_file($_))} keys %before}, \%before, 'all named production files remain exact');
+done_testing;
+sub canonical {
+    my $value = normalize_repository_paths($_[0], $root);
+    return $json->encode(normalize_dates($value));
+}
+sub normalize_dates {
+    my ($value) = @_;
+    return {map {$_ => normalize_dates($value->{$_})} keys %$value} if ref($value) eq 'HASH';
+    return [map {normalize_dates($_)} @$value] if ref($value) eq 'ARRAY';
+    return $value if !defined($value) || ref($value);
+    my $text = $value;
+    return $value unless $text =~ /^\/\/ Date:/m;
+    $text =~ s{^// Date:[^\n]*$}{// Date: omitted}mg;
+    return $text;
+}
+sub capture {FSM::Test::SourceQueryRunner::_capture($_[0], '')}
+sub preserve {return unless ($ENV{FSMGEN_RECORD_OUTPUT_PREDECESSOR_CAPTURE} // '') eq '1'; write_file('.artifacts/record-output-predecessors/' . $_[0], $_[1])}
+sub read_file {open my $fh, '<:raw', $_[0] or die $!; local $/; return <$fh>}
+sub write_file {open my $fh, '>:raw', $_[0] or die $!; print {$fh} $_[1] or die $!; close $fh or die $!}

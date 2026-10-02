@@ -1,0 +1,17 @@
+{
+  "head_revision": "cb1e0a515650cf06dc9bd2672003f6565a696a07",
+  "head": {
+    "entries": 19921,
+    "metadata_bytes": 2716951,
+    "sha256": "1d74281424cddc72c9f144a1614e4eb290b7d5f14f2db8907cb068dabaec3553"
+  },
+  "index_before_reader_repair_staging": {
+    "entries": 20003,
+    "metadata_bytes": 2667157,
+    "sha256": "7a317664c248009e774cc023fb90b6f152129ba8f45cdba29f33aa6dfd5753e0",
+    "independent_path_membership_agrees": true
+  },
+  "retired_count_bound": 20000,
+  "unchanged_metadata_byte_bound": 4194304,
+  "minimum_index_record_bytes": 52
+}

@@ -17,7 +17,7 @@ behavior so FSMGen maintainers can reproduce locally.
 
 ## High-Level Response
 
-### Current delivery status — 2026-10-01
+### Current delivery status — 2026-10-02
 
 The requested feature set is not complete. This is the canonical downstream
 response; status answers must be reflected here as well as in the task tree
@@ -129,8 +129,16 @@ and book.
   source/writer refusals. Actual target-profile atomic qualification `.2` now
   covers native/facade Verilog/v/VHDL errors, unchanged existing/absent
   destinations, complete machine failure products, neutral schedules and
-  supported SystemVerilog/sv text. Exact predecessor preservation and maintained
-  corpus closure follow as `.3`–`.4`. Output
+  supported SystemVerilog/sv text. Exact predecessor preservation `.3` now
+  qualifies the finite complete input/scalar/storage/native/API/newline/carrier
+  and SystemVerilog products, retaining all failed capture controls and full
+  responses. Its required selected decision-reader inventory blocker is repaired
+  under child `.3.1`, with complete Git growth/overflow and authority controls
+  inside the existing metadata byte budget. Child `.3.2` reconciles the canonical
+  downstream integration/public contracts and rendered book with current typed
+  actor ports, precise report/profile/writer boundaries and remaining deferrals.
+  Its complete example passes actual public transports and strict carriers.
+  Maintained corpus closure `.4` is next. Output
   execution remains `.3.5`; the full aggregate-interface request is not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.

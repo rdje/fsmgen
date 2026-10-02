@@ -1,0 +1,228 @@
+"""Compare finite captured predecessor/current products without executing HDL."""
+import copy
+import hashlib
+import json
+import re
+import subprocess
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+BASE = '0d4bb1801006235d816ebf519eb437752c303849'
+NAMES = ['local_nested', 'forward_alias', 'imported_nested', 'imported_alias', 'formal_shadow',
+         'drive_shadow', 'unused_record', 'record_input', 'record_input_children',
+         'storage_fields', 'storage_word_access', 'isf_record_input_generated_domains_runtime',
+         'isf_record_input_generated_blocking_runtime']
+FIELDS = [dict(path='kind', width=2, msb=9, lsb=8, signed=0),
+          dict(path='payload.data', width=5, msb=7, lsb=3, signed=1, state_model='four_state'),
+          dict(path='payload.flags[0]', width=1, msb=2, lsb=2, signed=0),
+          dict(path='payload.flags[1]', width=2, msb=1, lsb=0, signed=0, state_model='two_state')]
+CLASSES = {'FSM::Composition::' + name for name in ('Instance', 'Link', 'Port', 'PortsBlock',
+           'Spec', 'Top', 'TopSymbols', 'WiringBlock')} | {'FSM::Package::Symbols'}
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
+
+
+def dates(value):
+    if isinstance(value, dict):
+        return {key: dates(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [dates(item) for item in value]
+    if isinstance(value, str):
+        return re.sub(r'^// Date:[^\n]*$', '// Date: omitted', value, flags=re.M)
+    return value
+
+
+def public_paths(value):
+    if isinstance(value, dict):
+        return {key: public_paths(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [public_paths(item) for item in value]
+    if isinstance(value, str):
+        return '.' if value == '<repo>' else value.replace('<repo>/', '')
+    return value
+
+
+def native_ok(value):
+    assert value['exit_code'] == 0 and value['signal'] == 0 and value['stderr'] == ''
+
+
+def typed_data(value, classes):
+    if isinstance(value, dict):
+        if set(value) == {'capture_class', 'capture_kind', 'capture_data'}:
+            name = value['capture_class']
+            assert name in CLASSES and value['capture_kind'] == 'HASH'
+            assert isinstance(value['capture_data'], dict)
+            classes.add(name)
+            if name == 'FSM::Composition::Spec':
+                assert set(value['capture_data']) == {'embedded_dt_sources', 'embedded_fsm_sources',
+                       'embedded_package_sources', 'raw_ast', 'top'}
+            if name == 'FSM::Composition::Top':
+                assert set(value['capture_data']) == {'instances', 'name', 'package_imports', 'ports_blocks',
+                       'raw_ast', 'top_symbols', 'wiring_blocks'}
+        for item in value.values():
+            typed_data(item, classes)
+    elif isinstance(value, list):
+        for item in value:
+            typed_data(item, classes)
+
+
+def products(value):
+    result = copy.deepcopy(value)
+    for row in result:
+        text = row['generation']['stdout']
+        paths = re.findall(r'^Wrote: (\.artifacts/tmp/ial1-lowering/fsmgen-[A-Za-z0-9_]+/[A-Za-z0-9_.-]+\.fsm)$', text, flags=re.M)
+        if paths:
+            parents = {path.rsplit('/', 1)[0] for path in paths}
+            assert len(parents) == 1
+            assert sorted(path.rsplit('/', 1)[1] for path in paths) == sorted(row['lower']['files'])
+            prefix = next(iter(parents))
+            row['generation']['stdout'] = text.replace(prefix + '/', '<native-lowering>/')
+    return dates(result)
+
+
+def literal(row, index):
+    ports = row['actor']['interface_port_metadata']
+    if index < 7:
+        type_name = ['frame', 'alias', 'shared.frame', 'alias', 'frame', 'frame', 'frame'][index]
+        expected = [dict(name='start', direction='input', width=1),
+                    dict(name='packet', direction='input', width=10, type=type_name, type_kind='record', fields=FIELDS),
+                    dict(name='scalar', direction='input', width=5), dict(name='mode', direction='input', width=1),
+                    dict(name='done', direction='output', width=1), dict(name='seen', direction='output', width=5),
+                    dict(name='sliced', direction='output', width=3), dict(name='tag', direction='output', width=2)]
+        assert canonical(ports) == canonical(expected)
+        packet = next(port for port in row['actor']['interface']['inputs'] if port['name'] == 'packet')
+        assert packet['type_spec']['member_order'] == ['kind', 'payload']
+        data = packet['type_spec']['members']['payload']['members']['data']
+        assert canonical(data) == canonical(dict(kind='bits', width=5, signed=1, state_model='four_state'))
+    elif index in (7, 8):
+        expected_fields = [dict(path='flag', width=1, msb=5, lsb=5, signed=0),
+                           dict(path='data', width=5, msb=4, lsb=0, signed=1, state_model='four_state')]
+        for port in ports:
+            if port['name'] in ('packet', 'unused'):
+                expected = dict(name=port['name'], direction='input', width=6, type='frame', type_kind='record', fields=expected_fields)
+                if index == 8:
+                    expected['domain'] = 'idle' if port['name'] == 'unused' else 'io'
+                assert canonical(port) == canonical(expected)
+    elif index in (9, 10):
+        names = [('start', 'input', 1), ('wdata', 'input', 8), ('done', 'output', 1)]
+        if index == 10:
+            names.append(('status_out', 'output', 8))
+        names.append(('control_out', 'output', 8))
+        assert canonical(ports) == canonical([dict(name=n, direction=d, width=w) for n, d, w in names])
+    else:
+        fields = copy.deepcopy(FIELDS)
+        fields[0]['path'] = 'tag'
+        fields[2]['state_model'] = 'two_state'
+        for port in ports:
+            if port['name'] in ('packet', 'unused'):
+                expected = dict(name=port['name'], direction='input', width=10, type='frame', type_kind='record', fields=fields)
+                if index == 11:
+                    expected['domain'] = 'idle' if port['name'] == 'unused' else 'io'
+                assert canonical(port) == canonical(expected)
+    for kind, query in row['queries'].items():
+        report = query['native_report']
+        if kind != 'schedule':
+            assert report['success'] is True
+        actual = report['interface_ports'] if kind == 'schedule' else report['source']['interface_ports']
+        assert canonical(actual) == canonical(ports)
+
+
+def validate(old, current):
+    for phase, capture in [('baseline', old), ('current', current)]:
+        classes = set()
+        typed_data(capture['products'], classes)
+        assert classes == CLASSES
+        assert [row['name'] for row in capture['products']] == NAMES
+        selection = capture['selection']
+        expected = phase == 'current'
+        for report in (selection['native_report'], selection['api']['result']['structuredContent']['report'],
+                       selection['wire_response']['result']['structuredContent']['report']):
+            assert report['success'] is expected
+        for index, row in enumerate(capture['products']):
+            assert row['caller_before'] == row['caller_after']
+            assert hashlib.sha256(row['source'].encode()).hexdigest() == row['source_before'] == row['source_after']
+            assert row['lower']['files'] and set(row['lower']['files']) == set(row['carriers'])
+            literal(row, index)
+            for kind, query in row['queries'].items():
+                native_ok(query['native']); native_ok(query['wire'])
+                assert query['source_before'] == query['source_after'] == row['source_before']
+                assert canonical(json.loads(query['native']['stdout'])) == canonical(query['native_report'])
+                assert canonical(json.loads(query['wire']['stdout'])) == canonical(query['wire_response'])
+                assert canonical(query['api']) == canonical(query['wire_response'])
+                result = query['api']['result']
+                assert result['isError'] is False
+                assert canonical(json.loads(result['content'][0]['text'])) == canonical(result['structuredContent'])
+                assert canonical(result['structuredContent']['report']) == canonical(public_paths(query['native_report']))
+            for carrier in row['carriers'].values():
+                native_ok(carrier)
+                assert json.loads(carrier['stdout'])['success'] is True
+            native_ok(row['generation'])
+            assert row['hdl'] and row['facade']['hdl_code']
+            assert row['facade']['source_info']['kind'] == 'isf'
+    assert canonical(products(current['products'])) == canonical(products(old['products']))
+    assert canonical(current['packages']) == canonical(old['packages'])
+
+
+def main():
+    manifest = json.loads((HERE / 'manifest.json').read_bytes())
+    assert set(manifest['sha256']) == {p.name for p in HERE.iterdir() if p.is_file() and p.name != 'manifest.json'}
+    for name, digest in manifest['sha256'].items():
+        assert hashlib.sha256((HERE / name).read_bytes()).hexdigest() == digest
+    for revision, sources in manifest['producer_objects'].items():
+        for path, identity in sources.items():
+            blob = subprocess.check_output(['git', 'rev-parse', revision + ':' + path], cwd=ROOT).decode().strip()
+            assert blob == identity['git_blob']
+            assert hashlib.sha256(subprocess.check_output(['git', 'cat-file', 'blob', blob], cwd=ROOT)).hexdigest() == identity['sha256']
+    for dirname, members in manifest['parent_members'].items():
+        parent = ROOT / 'docs/audits' / dirname
+        assert set(members) == {p.name for p in parent.iterdir() if p.is_file()}
+        for name, digest in members.items():
+            assert hashlib.sha256((parent / name).read_bytes()).hexdigest() == digest
+    def phase(name):
+        row = manifest['phase_fragments'][name]
+        parts = [(HERE / filename).read_bytes() for filename in row['members']]
+        assert all(len(part) <= 16 * 1024 * 1024 for part in parts)
+        raw = b''.join(parts)
+        assert len(raw) == row['normalized_bytes']
+        assert hashlib.sha256(raw).hexdigest() == row['normalized_sha256']
+        assert len(raw) == row['raw_bytes'] - row['replacement_count'] * (row['root_prefix_bytes'] - len(b'<repo>'))
+        return json.loads(raw)
+    old = phase('baseline')
+    current = phase('current')
+    validate(old, current)
+    for phase, capture, revision in [('baseline', old, BASE), ('current', current, manifest['current_revision'])]:
+        for module, loaded in capture['loaded'].items():
+            assert loaded['sha256'] == manifest['producer_objects'][revision]['perl/' + module]['sha256']
+    for mutate in (
+        lambda v: v['products'].pop(),
+        lambda v: v['products'][0]['actor']['interface_port_metadata'][1].update(width='10'),
+        lambda v: v['products'][0]['actor']['interface_port_metadata'][1]['fields'][1].update(signed=0),
+        lambda v: v['products'][0]['lower'].update(files={}),
+        lambda v: v['products'][0]['queries']['check']['native'].update(exit_code=1),
+        lambda v: v['selection']['native_report'].update(success=False),
+        lambda v: v['products'][8]['facade']['source_info']['composition_spec'].update(capture_class='counterfeit'),
+    ):
+        bad = copy.deepcopy(current); mutate(bad)
+        try:
+            validate(old, bad)
+        except (AssertionError, KeyError, TypeError):
+            continue
+        raise AssertionError('hostile product mutation accepted')
+    # Shared corrupt old/new parity must still fail the literal declaration oracle.
+    a, b = copy.deepcopy(old), copy.deepcopy(current)
+    for value in (a, b):
+        value['products'][0]['actor']['interface_port_metadata'][1]['fields'][1]['lsb'] = 4
+    try:
+        validate(a, b)
+    except AssertionError:
+        pass
+    else:
+        raise AssertionError('shared wrong layout accepted')
+    print('Finite complete predecessor/current products authenticate exact kinds, all carriers, real transports and source/HDL text with qualified date normalization. Old/current child-selection sentinels and hostile shared layout/loss/kind controls pass; no HDL execution or complete consumer claim.')
+
+
+if __name__ == '__main__':
+    main()

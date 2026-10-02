@@ -1,0 +1,115 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.3
+Source-admission predecessor: 0d4bb1801006235d816ebf519eb437752c303849
+Current boundary: cb1e0a515650cf06dc9bd2672003f6565a696a07
+
+Finite same-input complete predecessor/current preservation, not a whole-repository
+behavioral claim. Independent local/forward/imported/alias/formal-shadow/drive-shadow/
+unused packed inputs join maintained direct/generated-domain/scalar-storage examples
+and both previously qualified generated observation sources. Source bytes, parsed
+actor/caller kinds, entire lowering file set and report, every strict carrier replay,
+complete native/API/actual newline check/semantic/schedule envelopes and full native/
+facade SystemVerilog text/source metadata are retained.
+
+Exactly Parser.pm and Scheduler/ISF.pm differ in production from the named predecessor.
+Load their exact old Git objects before interpreter entry; real API and newline
+children inherit explicit PERL5LIB/PERL5OPT preloading. No public runner is injected.
+Each transport's actual record-output sentinel distinguishes old refusal from current
+admission, while parent loaded module byte identities authenticate direct source and
+facade execution. All other production remains current and byte-identical to that
+source-admission predecessor; this is the controlled producer counterfactual.
+
+Compare complete captured products with exact JSON kinds, preserving all keys and
+array order. Normalize only the exact repository prefix, // Date: HDL banners and each generated
+stdout lowering directory bound to one expected namespace and the complete emitted
+carrier basename set. Original stdout remains in the full capture.
+Facade hdl_code/source_info and all result keys are complete; typed CoreAST/IR object
+serialization/equality is explicitly outside this JSON evidence boundary. No value
+is silently null-substituted or field-stripped. Literal declaration/type/packed leaf
+witnesses and hostile loss/kind/layout mutation checks independently guard parity.
+
+The complete corpus/discovery addition remains next; generated record-output/field
+writers and output execution remain open. Original input native observations and
+spent workspaces remain immutable without replay. Text generation, strict carrier
+checking and public JSON cannot establish new HDL runtime or X/Z behavior. No HDL
+compiler, analyzer, simulation or spent capture is invoked.
+
+Actual same-source old/current probes provide re-derivation. Exact child selection,
+literal declaration/layout witnesses and hostile shared-corruption controls provide
+falsification. Full source/product/TAP/probe/test snapshots, exact producer Git objects,
+immutable original input/output parents, independent saved verifier and task/book/
+facts/feedback/Git retain durability. Final actual T2036 passes Files=1/Tests=38; independent saved verification and
+focused documentation/doctrine checks complete this boundary before commit.
+
+The first paired probe completes all finite source/carrier/HDL generation work
+but whole combined-result JSON rejects typed FSM::Composition::Spec in generated facade source_info.composition_spec in both
+old/current captures. Preserve exact draft test/probe and full terminal FAIL
+(1 file/10 tests, two failed probe-status assertions); do not erase the object.
+The first Spec-getter-only capture repair also rejects nested Composition::Top;
+retain its exact intermediate source and second full paired 1/10 FAIL. A first
+lower-only diagnostic finds no Spec in the selected lower product; a broader
+source/lower/facade diagnostic finds Spec but also exposes typed Top. Retain
+those failed scopes without treating absence as successful type qualification.
+The complete actual generated-data trace now observes composition instances,
+links, ports/blocks, Spec/Top/symbols/wiring and package symbols. Tagged complete
+HASH/ARRAY snapshots retain each class, underlying data kind and every field;
+Spec public getters exactly match those complete data values. No null substitution,
+field selection or type erasure qualifies the products. Cyclic/non-data references
+fail explicitly. Object alias identity/method behavior and facade CoreAST/IR
+object serialization remain outside this data snapshot. The final same-instrument paired run passes, including all exact parent module
+SHAs and real native/API/newline selection sentinels. Its original complete
+products agree with only qualified path/date normalization.
+
+Third tagged-data control retains complete failed envelopes: two parent module
+SHA failures and three generated stdout prefix mismatches (1/38 FAIL, five
+failed assertions). Fresh include reconstruction attributes parent selection to
+explicit -I switches. Corrected no-I entry is independently authenticated before
+final capture. Every complete-product difference is allocated by JSON path;
+only actual Wrote directory prefixes vary, and their complete carrier membership
+binds normalization. Raw captures are not rewritten to hide the mismatch.
+
+Large envelope allocation is re-derived by exact case/field. Repetition comes
+from preserving complete original raw and decoded native/API/wire response
+representations, principally generated semantic queries. Ordered 16-MiB byte
+fragments concatenate to the complete prefix-normalized raw JSON without JSON
+re-encoding. Each phase binds raw and normalized byte identities, replacement
+counts and exact fragment membership/order. Failed phases remain explicitly
+unqualified. No completeness or absence claim about other project queries or
+future data graphs follows from this finite capture.
+
+The first independent saved verifier omits repository-prefix normalization before
+matching the already qualified generated Wrote directory. Exact path allocation
+locates only the same three temporary prefix differences. Retain its full failed
+receipt/source and mismatch allocation; correct the normalization order without
+changing any captured data. Independent receipts, old-module SHA controls and
+unqualified draft parent/child selection are checked separately.
+
+The initial mandatory staged gate is FAIL, exit 1, at the selected decision
+reader's separate global 20000-path cap: the actual HEAD has 19921 entries and
+the staged tree 20003, with metadata inside its existing byte budget. This P1
+commit blocker is owned by child .3.1. Exact Git metadata census and history,
+actual repository-local index/tree RED/current growth and byte-overflow controls,
+reader/gate regression and exact old/final source snapshots qualify the repair.
+The entry bound follows the minimum metadata record within the unchanged byte
+budget; no path filtering or truncation, catalog/pin or live ceiling change.
+This prerequisite changes only selected-reader capacity, not bin/perl source
+admission producers, and makes no unbounded-repository claim.
+
+The director explicitly reiterates downstream integration lockstep. Targeted
+review owns stale generic downstream/public record refusal and storage-only
+statements, plus future classification of already shipped AXI/APB/AHB suffixes,
+under child .3.2. Current canonical parts now describe accepted record source,
+exact-type copies, scalar/sample/writer/domain boundaries, actual typed report
+leaves, atomic target profiles and precise remaining output generated/field/
+runtime/full-consumer limits. The complete documented example passes real
+native/API/newline reports, independent literal signed/four-state layout,
+strict carriers and SystemVerilog text generation. Initial test-side source ID
+refusal is retained and never counted as a public query. Full capability and
+canonical/rendered contract products are retained. Six focused docs/example
+audits pass Files=6/Tests=622; book builds and independent HTML parsing proves
+exact canonical includes and example text render without the old refusal.
+This targets observed drift, not a complete historical audit of all contracts.
+
+The first combined downstream saved verifier incorrectly expects the public
+container status for aliases. Actual complete metadata distinguishes
+shipped_bounded_profile_alias. Retain the failed oracle/source and correct
+only that literal; no producer, captured metadata or support claim changes.

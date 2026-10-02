@@ -1,0 +1,19 @@
+(actor record_ports
+  (clock clk)
+  (reset (rst_n sync active_low))
+  (types
+    (type frame
+      (record (flag bit) (data (signed (four_state (bits 5)))))))
+  (interface
+    (input start)
+    (input packet (type frame))
+    (output result (type frame))
+    (output seen (width 5))
+    (output done))
+  (storage (var held (type frame)))
+  (transaction main
+    (on start)
+    (set held packet)
+    (set result held)
+    (set seen result.data)
+    (complete done)))

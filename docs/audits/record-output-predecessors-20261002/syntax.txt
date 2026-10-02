@@ -1,0 +1,2 @@
+t/2036-isf-record-output-predecessor-products.t syntax OK
+t/lib/FSM/Test/RecordOutputPredecessorProbe.pl syntax OK

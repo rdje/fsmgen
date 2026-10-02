@@ -8,10 +8,11 @@ answers:
   - "is the downstream integration handoff SPECFORGE-specific?"
   - "where is the downstream consumer lockstep doctrine recorded?"
   - "must public source.resolved_path be repository relative?"
-date: 2026-08-11
+  - "where is current packed record port behavior documented for downstream consumers?"
+date: 2026-10-02
 status: current
 tags: [downstream, contracts, mdbook, handoff, integration, manifest, support-accounting]
-evidence: README.md; ROADMAP_V2.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md; docs/ISF_PUBLIC_INTERFACE_CONTRACT.md; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/ReportSourceContract.pm; docs/book/src/11-extensions-and-embedding.md; docs/book/src/13i-downstream-integration.md; docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md
+evidence: docs/audits/record-output-predecessors-20261002/manifest.json; docs/isf-spec/11-downstream-actor-transactions.md; docs/isf-spec/12-downstream-rules-artifacts-reports.md; docs/isf-spec/22-public-interface-reports-evolution.md; README.md; ROADMAP_V2.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md; docs/ISF_PUBLIC_INTERFACE_CONTRACT.md; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/ReportSourceContract.pm; docs/book/src/11-extensions-and-embedding.md; docs/book/src/13i-downstream-integration.md; docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md
 reverify: rg -n 'downstream consumer|downstream-visible|lockstep|language_surface\\.file_surfaces|source\\.resolved_path|GITHUB-PUSH-OUTCOME-ASSURANCE\\.6\\.2\\.1' README.md ROADMAP_V2.md docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md docs/ISF_PUBLIC_INTERFACE_CONTRACT.md perl/FSM/Support/LanguageSurfaceSection.pm perl/FSM/Support/ReportSourceContract.pm docs/book/src/11-extensions-and-embedding.md docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md docs/TASK_TREE.md
 ---
 
@@ -52,3 +53,20 @@ Its part links resolved outside the book, so a book reader did not receive the
 contract. `DOWNSTREAM-BOOK-CONTRACT-INCLUDE` includes the canonical parts in
 that chapter. The landing page remains the GitHub index and keeps its
 repository-relative part links.
+
+The 2026-10-02 targeted actor-port review repairs stale blanket record refusals
+in the canonical source/report parts and public contract, alongside outdated
+future classification for the shipped AXI/APB/AHB suffixes. Downstream section
+8 now gives a complete lowering-clean input/storage/output record example and
+exact copy, field/sample, physical writer, domain and target-profile boundaries.
+The report parts describe current ordered typed leaf metadata. Input binary
+SystemVerilog observations and remaining output generated/field/runtime gates
+are explicit. The complete request remains open.
+
+Actual example native/API/newline, strict carriers, literal metadata and current
+capability entries provide re-derivation. Typed shared-corruption/membership
+controls and exact canonical/rendered source comparisons provide falsification.
+Complete source/report/manifest/render receipts, historical stale-source witness,
+sealed verifier and task/book/feedback/Git retain durability. This targeted
+lockstep repair does not claim a whole-document historical audit or new HDL
+execution. Generic downstream contracts remain canonical for every consumer.

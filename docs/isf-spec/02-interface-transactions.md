@@ -39,7 +39,9 @@ native/API/newline check, semantic and schedule products, including owning-domai
 metadata. Failed products do not publish a successful declaration snapshot. Authored record-output
 Verilog/v/VHDL generation refusals preserve existing destinations and create no
 absent destination; schedule preview remains target-neutral. Mixed Verilog ports
-keep the existing record-input diagnostic priority. Generated domain-top
+keep the existing record-input diagnostic priority. Complete finite predecessor
+comparisons preserve current input/scalar/storage public products, carriers and
+SystemVerilog text, with only qualified path/date prefixes normalized. Generated domain-top
 routes therefore retain their declared endpoints. Width resolution remains
 owned by `+size`; this does not export inferred storage or unrelated generated
 transaction-child inputs. Semantic input analysis reflects the realized

@@ -1,7 +1,7 @@
 # ISF Downstream Integration Specification
 
 Status: `bounded_public`
-Document version: `2026-06-26`
+Document version: `2026-10-02`
 ISF source specification: `.isf` specification v0.6
 Primary audience: downstream tools that emit, validate, inspect, or consume
 FSMGen Intent Scheduling Format sources and reports.
@@ -91,10 +91,14 @@ Intent abstraction levels:
   lowering is not a public contract.
 - The public `.ppif` surface is the generic protocol/platform IAL2 container:
   AXI is the first shipped IAL2 profile/example, not the definition of IAL2.
-  Future protocol-specific suffixes such as `.axi`, `.chi`, `.ace`, `.ahb`,
-  `.apb`, `.atb`, `.smbus`, or `.i2s` are profile aliases over IAL2 rather
-  than separate layers. Common IAL2 constructs stay small until compatible
-  reuse is proven across multiple profiles.
+  The shipped `.axi`, `.apb` and `.ahb` suffixes are bounded protocol-profile
+  aliases over `.ppif`, following the same IAL2-to-IAL1-to-IAL0 lowering stack.
+  Their available source queries are advertised by `source_query_kinds`; suffix
+  availability does not turn catalogued expected failures into supported samples.
+  Additional suffixes such as `.chi`, `.ace`, `.atb`, `.smbus` or `.i2s` remain
+  future profile aliases, not separate layers. Use `language_surface.file_surfaces`
+  for the precise current per-suffix boundary. Common IAL2 constructs stay small
+  until compatible reuse is proven across multiple profiles.
 - Current bounded `.ppif` coverage includes one-channel Valid-Ready sources,
   including the AXI AW first-profile sample and the protocol-neutral
   valid-ready handshake sample, the AXI AW/W multi-channel Valid-Ready bundle,

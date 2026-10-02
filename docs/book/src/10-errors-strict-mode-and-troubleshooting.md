@@ -663,6 +663,14 @@ the captured regular blobs and complete root inventory throughout, including
 legacy sealed-record checks. Later working edits cannot supply missing selected
 bytes or replace selected navigation.
 
+The complete selected path/mode/object inventory is limited by its existing
+4-MiB metadata byte budget. Its entry bound follows the minimum Git record
+size, so unrelated tracked evidence does not hit a separate fixed file-count
+limit. Byte overflow still refuses before any selected product is published;
+conflicting stages, nonregular sources and missing selected blobs also refuse.
+The continuity test exercises actual index and committed-tree growth beyond
+the former count limit, followed by actual byte overflow.
+
 `check-continuity` additionally requires `--prior-snapshot HEAD`, `HEAD^` or an
 exact commit. It returns one bounded JSON product after authenticating both
 selected stores. Optional canonical path arguments return exact bindings,

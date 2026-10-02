@@ -1,0 +1,25 @@
+ram-guard: PID 60798; host 67.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+#   Failed test 'baseline actual complete product probe succeeds'
+#   at t/2036-isf-record-output-predecessor-products.t line 48.
+#          got: '255'
+#     expected: '0'
+# encountered object 'FSM::Composition::Top=HASH(0x7c12757ed0)', but neither allow_blessed, convert_blessed nor allow_tags settings are enabled (or TO_JSON/FREEZE method missing) at t/lib/FSM/Test/RecordOutputPredecessorProbe.pl line 125.
+
+#   Failed test 'current actual complete product probe succeeds'
+#   at t/2036-isf-record-output-predecessor-products.t line 48.
+#          got: '255'
+#     expected: '0'
+# encountered object 'FSM::Composition::Top=HASH(0x78b766cbd0)', but neither allow_blessed, convert_blessed nor allow_tags settings are enabled (or TO_JSON/FREEZE method missing) at t/lib/FSM/Test/RecordOutputPredecessorProbe.pl line 125.
+# Looks like you failed 2 tests of 10.
+t/2036-isf-record-output-predecessor-products.t .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/10 subtests 
+
+Test Summary Report
+-------------------
+t/2036-isf-record-output-predecessor-products.t (Wstat: 512 Tests: 10 Failed: 2)
+  Failed tests:  6, 8
+  Non-zero exit status: 2
+Files=1, Tests=10, 506 wallclock secs ( 0.01 usr  0.01 sys + 393.99 cusr 102.61 csys = 496.62 CPU)
+Result: FAIL

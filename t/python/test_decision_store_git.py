@@ -106,6 +106,40 @@ class SelectedStoreAccess(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'conflicting Git index stages'):
             selected.GitSnapshot(self.root, 'index')
 
+    def test_complete_repository_growth_uses_existing_byte_budget(self):
+        # Actual index/tree products cross the retired arbitrary count, while
+        # independent literal record sizes stay inside the unchanged byte cap.
+        self.assertEqual(selected.MAX_INVENTORY_BYTES, 4_194_304)
+        count = 20_001
+        object_id = self.git('hash-object', '-w', '--stdin', input=b'retained unrelated data\n').decode().strip()
+        paths = [f'unrelated/f{i:05}.bin' for i in range(count)]
+        records = ''.join(f'100644 {object_id}\t{path}\n' for path in paths).encode()
+        self.git('update-index', '--index-info', input=records)
+        self.git('commit', '-q', '-m', 'fixture unrelated repository growth')
+        for selector, command in [('index', ('ls-files', '--stage', '-z')),
+                                  ('HEAD', ('ls-tree', '-r', '--full-tree', '-z', 'HEAD'))]:
+            with self.subTest(selector=selector):
+                listing = self.git(*command)
+                self.assertGreater(len(listing.split(b'\0')) - 1, count)
+                self.assertLess(len(listing), 4_194_304)
+                snapshot = selected.GitSnapshot(self.root, selector)
+                self.assertEqual(set(snapshot.objects), {record.split(b'\t', 1)[1].decode()
+                                  for record in listing.split(b'\0')[:-1]})
+                self.assertEqual(snapshot.read(paths[-1]), b'retained unrelated data\n')
+                self.load(snapshot)
+        # Real Git output, rather than a mocked accessor, crosses the original
+        # byte budget; neither selector may truncate or accept that inventory.
+        long_paths = [f'overflow/{"x" * 160}{i:05}.bin' for i in range(count)]
+        self.git('update-index', '--index-info', input=''.join(
+            f'100644 {object_id}\t{path}\n' for path in long_paths).encode())
+        self.git('commit', '-q', '-m', 'fixture byte overflow')
+        for selector, command in [('index', ('ls-files', '--stage', '-z')),
+                                  ('HEAD', ('ls-tree', '-r', '--full-tree', '-z', 'HEAD'))]:
+            with self.subTest(overflow_selector=selector):
+                self.assertGreater(len(self.git(*command)), 4_194_304)
+                with self.assertRaisesRegex(ValueError, 'Git output exceeds selected snapshot bound'):
+                    selected.GitSnapshot(self.root, selector)
+
     def test_unsafe_missing_unbounded_selectors_paths_and_blobs_refuse(self):
         for selector in ('HEAD:docs/decisions/INDEX.md', '--help', '../HEAD', 'HEAD~99'):
             with self.subTest(selector=selector):

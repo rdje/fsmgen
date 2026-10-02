@@ -1,0 +1,39 @@
+{
+  "expected": {
+    "FSM/Adapter/ISF/Parser.pm": "5157bdb8071a4d8813978eb98305321b08bbeb67838278c4dbef5dc4ffc24c61",
+    "FSM/Scheduler/ISF.pm": "db6864de99864ba5ca82431bf2802af8416aa296cd5189e7de462911e0676754"
+  },
+  "records": [
+    {
+      "flags": [
+        "-Iperl",
+        "-It/lib"
+      ],
+      "loaded": {
+        "FSM/Adapter/ISF/Parser.pm": {
+          "path": "perl/FSM/Adapter/ISF/Parser.pm",
+          "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+        },
+        "FSM/Scheduler/ISF.pm": {
+          "path": "perl/FSM/Scheduler/ISF.pm",
+          "sha256": "d73acba8305bf512985812012aba31c6d293290ab427cfc63ee6d799d82031e3"
+        }
+      },
+      "matches_exact_git": false
+    },
+    {
+      "flags": [],
+      "loaded": {
+        "FSM/Adapter/ISF/Parser.pm": {
+          "path": "<repo>/.artifacts/record-output-predecessors/preload-lib/FSM/Adapter/ISF/Parser.pm",
+          "sha256": "5157bdb8071a4d8813978eb98305321b08bbeb67838278c4dbef5dc4ffc24c61"
+        },
+        "FSM/Scheduler/ISF.pm": {
+          "path": "<repo>/.artifacts/record-output-predecessors/preload-lib/FSM/Scheduler/ISF.pm",
+          "sha256": "db6864de99864ba5ca82431bf2802af8416aa296cd5189e7de462911e0676754"
+        }
+      },
+      "matches_exact_git": true
+    }
+  ]
+}

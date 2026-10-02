@@ -1,0 +1,47 @@
+ram-guard: PID 96609; host 57.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+#   Failed test 'baseline in-process module selection is byte-authenticated'
+#   at t/2036-isf-record-output-predecessor-products.t line 54.
+#          got: 'dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57'
+#     expected: '5157bdb8071a4d8813978eb98305321b08bbeb67838278c4dbef5dc4ffc24c61'
+
+#   Failed test 'baseline in-process module selection is byte-authenticated'
+#   at t/2036-isf-record-output-predecessor-products.t line 54.
+#          got: 'd73acba8305bf512985812012aba31c6d293290ab427cfc63ee6d799d82031e3'
+#     expected: 'db6864de99864ba5ca82431bf2802af8416aa296cd5189e7de462911e0676754'
+
+    #   Failed test 'complete source/actor/lowering/report/carrier/native/API/newline/HDL products agree except qualified root/date prefixes'
+    #   at t/2036-isf-record-output-predecessor-products.t line 76.
+    # Complete captured product digests: current=fb52d01ba025274d1eddfbbb25914e1c0bab4c9d517081244ee1049d9c7ca59b predecessor=0e8fcd3e8c4ab2511c1e204464c7e281b90b87ccd164b4c987e9e9f3600659c2
+    # Looks like you failed 1 test of 77.
+
+#   Failed test 'complete predecessor preservation record_input_children'
+#   at t/2036-isf-record-output-predecessor-products.t line 109.
+
+    #   Failed test 'complete source/actor/lowering/report/carrier/native/API/newline/HDL products agree except qualified root/date prefixes'
+    #   at t/2036-isf-record-output-predecessor-products.t line 76.
+    # Complete captured product digests: current=d92be72533f68e8ae4bc965eb58c90963444d4a8807bb4b1c353f236ab876e0c predecessor=8fc606ce6ac0965bee8529fdf26fb0be038c80b6471ad1d58efcf0ee7a87c07f
+    # Looks like you failed 1 test of 81.
+
+#   Failed test 'complete predecessor preservation isf_record_input_generated_domains_runtime'
+#   at t/2036-isf-record-output-predecessor-products.t line 109.
+
+    #   Failed test 'complete source/actor/lowering/report/carrier/native/API/newline/HDL products agree except qualified root/date prefixes'
+    #   at t/2036-isf-record-output-predecessor-products.t line 76.
+    # Complete captured product digests: current=a79b0ad88223ccd2f5337ebf8460cecaaeaa37369646185e4321d544f53bbd31 predecessor=12c7f60469017abe375dc677dfb037e4915dcc5fabde43582bd6a083a025f72f
+    # Looks like you failed 1 test of 77.
+
+#   Failed test 'complete predecessor preservation isf_record_input_generated_blocking_runtime'
+#   at t/2036-isf-record-output-predecessor-products.t line 109.
+# Looks like you failed 5 tests of 38.
+t/2036-isf-record-output-predecessor-products.t .. 
+Dubious, test returned 5 (wstat 1280, 0x500)
+Failed 5/38 subtests 
+
+Test Summary Report
+-------------------
+t/2036-isf-record-output-predecessor-products.t (Wstat: 1280 Tests: 38 Failed: 5)
+  Failed tests:  8-9, 30, 33-34
+  Non-zero exit status: 5
+Files=1, Tests=38, 590 wallclock secs ( 0.03 usr  0.01 sys + 478.55 cusr 105.00 csys = 583.59 CPU)
+Result: FAIL

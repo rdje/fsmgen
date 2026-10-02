@@ -1,0 +1,1 @@
+encountered object 'FSM::Composition::Top=HASH(0x78b766cbd0)', but neither allow_blessed, convert_blessed nor allow_tags settings are enabled (or TO_JSON/FREEZE method missing) at t/lib/FSM/Test/RecordOutputPredecessorProbe.pl line 125.

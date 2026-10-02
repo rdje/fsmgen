@@ -181,9 +181,14 @@ Save the example above as `.artifacts/record-output-example.isf`, then query it:
 A failed check or semantic query returns `success: false` and its contextual
 diagnostic, without successful declaration metadata or a partial semantic result.
 A failed schedule query publishes no schedule JSON; API/MCP retain their existing
-message-only error contract. Target-profile atomic qualification is complete; exact predecessor products and
-maintained corpus promotion follow in the tracked source-public closure; generated output
-mappings, field writes and execution remain separately gated.
+message-only error contract. Target-profile atomic qualification and the finite complete
+predecessor comparison are complete. Existing local/imported/shadowed/unused inputs,
+maintained scalar/storage examples and generated/domain input sources retain their
+complete public reports, strict carriers and SystemVerilog generation products.
+Only qualified repository/generated-lowering directory prefixes and date banners
+are normalized. [Comparison evidence](../../../docs/audits/record-output-predecessors-20261002/scope.txt)
+retains the full responses and failed capture controls. Maintained corpus promotion
+follows; generated output mappings, field writes and execution remain separately gated.
 
 
 ```lisp

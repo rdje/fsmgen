@@ -1,0 +1,21 @@
+ram-guard: PID 62187; host 74.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+[
+  {
+    "path": "products/8/generation/stdout",
+    "kind": "value",
+    "old": "Wrote: .artifacts/tmp/ial1-lowering/fsmgen-d_j4DtxT/record_input_children__domain_idle.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-d_j4DtxT/record_input_children__domain_io.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-d_j4DtxT/record_input_children__domain_io__child_worker.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-d_j4DtxT/record_input_children_top.fsm\n=== ISF Intent Scheduling ===\n\nActo",
+    "current": "Wrote: .artifacts/tmp/ial1-lowering/fsmgen-dwHQIivP/record_input_children__domain_idle.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-dwHQIivP/record_input_children__domain_io.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-dwHQIivP/record_input_children__domain_io__child_worker.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-dwHQIivP/record_input_children_top.fsm\n=== ISF Intent Scheduling ===\n\nActo"
+  },
+  {
+    "path": "products/11/generation/stdout",
+    "kind": "value",
+    "old": "Wrote: .artifacts/tmp/ial1-lowering/fsmgen-iTePzEyX/packed_input_generated_domains__domain_idle.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-iTePzEyX/packed_input_generated_domains__domain_io.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-iTePzEyX/packed_input_generated_domains__domain_io__child_copier.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-iTePzEyX/packed_input_generated_domains__domain",
+    "current": "Wrote: .artifacts/tmp/ial1-lowering/fsmgen-l9E_D0jp/packed_input_generated_domains__domain_idle.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-l9E_D0jp/packed_input_generated_domains__domain_io.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-l9E_D0jp/packed_input_generated_domains__domain_io__child_copier.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-l9E_D0jp/packed_input_generated_domains__domain"
+  },
+  {
+    "path": "products/12/generation/stdout",
+    "kind": "value",
+    "old": "Wrote: .artifacts/tmp/ial1-lowering/fsmgen-aOe9saN3/copier.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-aOe9saN3/packed_input_generated_blocking.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-aOe9saN3/packed_input_generated_blocking_top.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-aOe9saN3/reader.fsm\n=== ISF Intent Scheduling ===\n\nActor: packed_input_generated_blocking\n",
+    "current": "Wrote: .artifacts/tmp/ial1-lowering/fsmgen-ID0Fp58y/copier.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-ID0Fp58y/packed_input_generated_blocking.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-ID0Fp58y/packed_input_generated_blocking_top.fsm\nWrote: .artifacts/tmp/ial1-lowering/fsmgen-ID0Fp58y/reader.fsm\n=== ISF Intent Scheduling ===\n\nActor: packed_input_generated_blocking\n"
+  }
+]

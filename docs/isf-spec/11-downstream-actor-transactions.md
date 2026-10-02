@@ -219,10 +219,12 @@ Interface:
   (input  name (width N))
   (input  name (width PARAM))
   (input  name (width CONST))
+  (input  name (type ALIAS))
   (output name)
   (output name (width N))
   (output name (width PARAM))
   (output name (width CONST))
+  (output name (type ALIAS))
   (output name (reset V))
   (output name (default V))
   (output name (width N) (reset V) (default V)))
@@ -256,6 +258,73 @@ Rules:
   too-wide values.
 - Malformed directions, duplicate names, nested names, and unsupported widths
   fail closed.
+
+### Packed Record Actor Ports
+
+Actor input/output `(type ALIAS)` declarations accept existing local or imported
+packed record aliases, including aliases to imported types. Scalar aliases keep
+their existing width behavior. Record member names and order, nested shape,
+scalar kinds/widths, signedness and optional state models determine the resolved
+type; equal total width alone does not make two records interchangeable. Nested
+fixed lists inside records contribute ordered scalar leaves. Root-list actor
+ports and aggregate transaction ports remain refused.
+
+A complete accepted source example is:
+
+```lisp
+(actor record_ports
+  (clock clk)
+  (reset (rst_n sync active_low))
+  (types
+    (type frame
+      (record (flag bit) (data (signed (four_state (bits 5)))))))
+  (interface
+    (input start)
+    (input packet (type frame))
+    (output result (type frame))
+    (output seen (width 5))
+    (output done))
+  (storage (var held (type frame)))
+  (transaction main
+    (on start)
+    (set held packet)
+    (set result held)
+    (set seen result.data)
+    (complete done)))
+```
+
+Each `set` uses the existing scheduled assignment edge. Whole copies involving
+actor input/output roots and owned storage require the same resolved recursive
+record type. Inputs cannot be written. Field reads are live scalar values in
+qualified transaction values/expressions/conditions, rules and drives; use an
+explicit scalar `(on start (sample packet.data as captured))` entry when a snapshot
+is required. Whole inferred record samples, whole-record scalar operators,
+subaggregate values and dynamic field/item selectors remain refused. Nearest
+scalar formal/parameter bindings mask same-name actor roots. Named-domain
+ownership is checked before lowering; record payloads do not acquire CDC.
+
+Whole record outputs pass mandatory physical writer admission in every actual
+module and owning domain before schedule/artifact publication. Sole writers,
+disjoint physical targets and ordinary ordered states of one explicit controller
+are admitted. Unproved overlap between independent writers, repeated active
+container writes and timed operators refuse. Equal values, entry conditions,
+priority declarations and source order do not establish arbitration. Output
+member writes and generated output handoff mappings retain their separate gates.
+Typed output `(reset ...)` and `(default ...)` metadata remain refused.
+
+Declaration, exact-type copy, scalar-field and public report behavior is
+qualified by T2014/T2016/T2033/T2034; T2036 preserves complete finite earlier
+input/scalar/storage/generated products. The selected direct/generated input
+runtime evidence is binary SystemVerilog behavior, not X/Z or initialization
+proof. Current whole-output source/public/carrier/profile qualification does not
+claim output runtime, generated output mapping or full consumer completion.
+Use `--language systemverilog` (or `sv`) for these declared records. Native and
+facade generation for `verilog`/`v` or `vhdl` refuses precisely before publishing
+HDL, naming the actor, port role and type; mixed Verilog declarations retain the
+input diagnostic priority. Existing destinations stay unchanged and absent
+ones are not created. Schedule preview remains target-neutral. T2027/T2028 and
+T2035 qualify these profiles; historical `.sv` observations of the old Verilog
+emitter do not qualify IEEE 1364 Verilog-2005.
 
 Constants:
 

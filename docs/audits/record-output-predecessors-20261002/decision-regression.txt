@@ -1,0 +1,8 @@
+ram-guard: PID 20299; host 69.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2004-decision-reader-snapshots.t .... ok
+t/2005-decision-ceiling-stores.t ...... ok
+t/2007-decision-hostile-boundaries.t .. ok
+t/2010-decision-production-growth.t ... ok
+All tests successful.
+Files=4, Tests=8, 176 wallclock secs ( 0.01 usr  0.01 sys + 76.75 cusr 74.07 csys = 150.84 CPU)
+Result: PASS

@@ -1,0 +1,13 @@
+{
+  "baseline_lib": "<repo>/.artifacts/tmp/tests/GySupwv_mO/baseline",
+  "probe_path_was_current": {
+    "FSM/Adapter/ISF/Parser.pm": {
+      "path": "perl/FSM/Adapter/ISF/Parser.pm",
+      "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+    },
+    "FSM/Scheduler/ISF.pm": {
+      "path": "perl/FSM/Scheduler/ISF.pm",
+      "sha256": "d73acba8305bf512985812012aba31c6d293290ab427cfc63ee6d799d82031e3"
+    }
+  }
+}

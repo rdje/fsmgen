@@ -8,7 +8,11 @@ from pathlib import Path
 import decision_catalog as catalog_api
 
 MAX_INVENTORY_BYTES = 4_194_304
-MAX_TRACKED_PATHS = 20_000
+# Every SHA-1 index record needs mode, object ID, stage, tab, a nonempty
+# path and NUL; tree records are longer. The byte cap bounds all entries,
+# including unrelated tracked evidence, without a separate growth cliff.
+MIN_INVENTORY_RECORD_BYTES = len(b'100644 ' + b'0' * 40 + b' 0\ta\0')
+MAX_TRACKED_PATHS = MAX_INVENTORY_BYTES // MIN_INVENTORY_RECORD_BYTES
 REGULAR_MODES = ('100644', '100755')
 
 

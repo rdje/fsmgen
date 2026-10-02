@@ -1,0 +1,1 @@
+Canonical downstream includes, exact complete rendered record-port example and current source/report boundary pass; old blanket record refusal is absent.

@@ -60,12 +60,18 @@ Unrelated formats and failure source reports omit this optional source field.
 Entries require `name`, `direction` and positive `width`; optional `type` keeps
 the authored local/imported alias, `type_kind` its resolved kind, and `domain`
 the named owning domain. Scalar source aliases currently resolve to `bit` or
-`bits`. Future record entries use ordered scalar-leaf `fields`: `path`, `width`,
-`lsb`, `msb`, `signed`, optional `state_model`, with first leaf most significant.
-Record source admission remains refused. The shared closed shape is advertised
-by `schedule_report_interface_ports` and
+`bits`; admitted packed record actor inputs/outputs resolve to `record` and
+carry ordered scalar-leaf `fields`: `path`, `width`, `lsb`, `msb`, `signed`,
+optional `state_model`, with the first leaf most significant. Nested fixed list
+leaves use indexed paths. Widths/ranges are JSON numbers and signed flags retain
+numeric zero/one; absence of a state model does not invent one. The shared
+closed shape is advertised by `schedule_report_interface_ports` and
 `source_optional_fields.interface_ports`. T1983/T1984 qualify detached values,
-invalid shapes, owned declarations and preserved refusal boundaries.
+invalid shapes and declaration ownership; T2014/T2016/T2033/T2034 qualify actual
+record source and full native/API/newline reports. T2035 qualifies atomic HDL
+profile refusal and T2036 finite predecessor preservation. Record metadata is
+not inferred hardware or a writer-safety/runtime certificate; field writers,
+generated outputs and full consumer signoff retain their separate boundaries.
 
 Reset provenance records ISF clause presence separately from resolved hardware:
 `reset_provenance` is an authored-order array of `{domain, origin}` entries,

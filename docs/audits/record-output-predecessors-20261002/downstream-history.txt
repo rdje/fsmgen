@@ -1,0 +1,1 @@
+241fad6b5c2af2ad26d64cf21d93f5d52773e132 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.2: publish declared interface metadata
