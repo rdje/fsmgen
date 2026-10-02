@@ -1,0 +1,5 @@
+ram-guard: PID 2951; host 58.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+packet actual source/private collision capture complete
+start actual source/private collision capture complete
+done actual source/private collision capture complete
+isf_child_start_seen actual source/private collision capture complete

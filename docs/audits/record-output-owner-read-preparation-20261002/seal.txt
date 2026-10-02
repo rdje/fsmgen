@@ -1,0 +1,9 @@
+ram-guard: PID 9748; host 61.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "docs/audits/record-output-owner-read-preparation-20261002/seal.py", line 180, in <module>
+    {'prepare': prepare, 'seal': seal}[sys.argv[1]]()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "docs/audits/record-output-owner-read-preparation-20261002/seal.py", line 123, in seal
+    assert 'first-' in text and 'false' in text and 'x01' in text
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

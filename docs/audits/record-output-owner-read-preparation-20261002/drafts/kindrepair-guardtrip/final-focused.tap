@@ -1,0 +1,18 @@
+ram-guard: PID 70410; host 81.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2039-isf-child-output-read-preparation.t .... ok
+t/2038-isf-record-output-generated-ingress.t .. ok
+t/2029-isf-record-output-writer-inventory.t ... ok
+t/2030-isf-record-output-writer-admission.t ... ok
+Cannot detect source of 't/2019-isf-record-input-output-routing.t'! at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 256.
+	TAP::Parser::IteratorFactory::detect_source(TAP::Parser::IteratorFactory=HASH(0x794f326528), TAP::Parser::Source=HASH(0x794fbbb0a8)) called at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 211
+	TAP::Parser::IteratorFactory::make_iterator(TAP::Parser::IteratorFactory=HASH(0x794f326528), TAP::Parser::Source=HASH(0x794fbbb0a8)) called at /System/Library/Perl/5.34/TAP/Parser.pm line 472
+	TAP::Parser::_initialize(TAP::Parser=HASH(0x7950293918), HASH(0x79501c0f18)) called at /System/Library/Perl/5.34/TAP/Object.pm line 55
+	TAP::Object::new("TAP::Parser", HASH(0x79501c0f18)) called at /System/Library/Perl/5.34/TAP/Object.pm line 130
+	TAP::Object::_construct(TAP::Harness=HASH(0x79500b45d0), "TAP::Parser", HASH(0x79501c0f18)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 856
+	TAP::Harness::make_parser(TAP::Harness=HASH(0x79500b45d0), TAP::Parser::Scheduler::Job=HASH(0x79501c1360)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 655
+	TAP::Harness::_aggregate_single(TAP::Harness=HASH(0x79500b45d0), TAP::Parser::Aggregator=HASH(0x794fb726a8), TAP::Parser::Scheduler=HASH(0x79501c1030)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 747
+	TAP::Harness::aggregate_tests(TAP::Harness=HASH(0x79500b45d0), TAP::Parser::Aggregator=HASH(0x794fb726a8), "t/2039-isf-child-output-read-preparation.t", "t/2038-isf-record-output-generated-ingress.t", "t/2029-isf-record-output-writer-inventory.t", "t/2030-isf-record-output-writer-admission.t", "t/2019-isf-record-input-output-routing.t") called at /System/Library/Perl/5.34/TAP/Harness.pm line 558
+	TAP::Harness::__ANON__() called at /System/Library/Perl/5.34/TAP/Harness.pm line 571
+	TAP::Harness::runtests(TAP::Harness=HASH(0x79500b45d0), "t/2039-isf-child-output-read-preparation.t", "t/2038-isf-record-output-generated-ingress.t", "t/2029-isf-record-output-writer-inventory.t", "t/2030-isf-record-output-writer-admission.t", "t/2019-isf-record-input-output-routing.t") called at /System/Library/Perl/5.34/App/Prove.pm line 548
+	App::Prove::_runtests(App::Prove=HASH(0x794f000948), HASH(0x794fb40048), "t/2039-isf-child-output-read-preparation.t", "t/2038-isf-record-output-generated-ingress.t", "t/2029-isf-record-output-writer-inventory.t", "t/2030-isf-record-output-writer-admission.t", "t/2019-isf-record-input-output-routing.t") called at /System/Library/Perl/5.34/App/Prove.pm line 506
+	App::Prove::run(App::Prove=HASH(0x794f000948)) called at /usr/bin/prove line 13

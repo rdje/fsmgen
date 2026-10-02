@@ -1,0 +1,60 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.1
+Baseline: 851358dd6dca12ba69a2d2491bc70d766dd4dde1
+
+Detached actor-output read preparation only. No production call, parent route,
+writer handoff, public record-output widening or HDL tool invocation. The
+canonical child start/history mechanism is validated before excluding it from
+data rebasing. Full source actor/transaction/IR copies, emitted data roles,
+nearest formal/parameter/static masks, complete source namespace reservation
+and recursive types are independently qualified. A local declaration cannot
+shadow an actor interface name under the existing source contract.
+
+Original ingress fixtures retain local/imported/spawn/blocking/owning-domain,
+reused/unused/formal-shadow/direct/input/scalar/storage controls. New actual
+start/done/helper/unused-source/type/local-helper name collisions, samples,
+slices, guards/assertions, static constants/enums/package parameters and self
+reads retain complete prepared products. State/DT precedence fixtures are
+explicit private operand controls, not authored physical mappings or executable
+topologies. Losing fields, write targets, labels and diagnostics stay opaque.
+Standalone child strict checks do not prove parent connectivity or runtime.
+
+The initial implementation also had real numeric JSON-kind loss: Storable
+cloning changed dual-valued numeric widths/counters/type leaves into strings.
+The test expected product used the same copier, producing a false-positive
+green result. The independent archive verifier rejected the sample counter
+product; a minimal scalar diagnostic reproduced the copy mechanism. Plain
+recursive value copying fixes it here, with independent serialized originals,
+full untouched-field/width checks and a genuine numeric-kind-loss mutant.
+The complete failed uncommitted archive, manifest and first verifier receipt
+are preserved under drafts/kindloss-archive; its green receipts do not qualify
+the fixed implementation. Earlier primitive-kind failures were not merely
+oracle mistakes. No committed predecessor archive was changed.
+
+Two separately scheduled P2 prerequisites are preserved. A first worker when
+activation with nested set loses that action in private lowering because
+_ir_when_activation calls sample-only _inline_on_samples. Its complete failing
+source recipe and actual products precede corrected non-entry branch fixtures.
+Canonical const_3bx01 reaches pre-generation operand validation and reports a
+false internal x01; the temporary precise failure control remains until the
+owned .2.1.4 repair. Earlier 3'bx01 and shared.MAX set recipes retain their
+distinct existing context refusals; qualified controls use admitted constant
+spelling and imported enum operands/static parameter defaults. No four-state
+execution or silently successful public behavior is inferred from these probes.
+
+Re-derivation: permanent T2039 full expected products and literal recursive
+types; actual emitted carriers/strict reports and role precedence witnesses.
+Falsification: hostile handshake/history/path/type/static-scope/type-definition
+or prepared-state inputs, complete first-touch caller equality, shared product
+corruptions rejected by independent literals, and preserved initial failures.
+Durability: tracked implementation/test, exact executed recipes, complete
+sources/raw products/receipts, producer fingerprints, sealed manifest and Git.
+No missing HDL execution leg is hidden: execution is a later HIAL-owned leaf.
+
+Only the exact repository prefix normalizes in retained evidence. Full JSON
+primitive kinds/null/absence, raw streams, emitted text and complete membership
+are retained. Original ingress/input/native evidence is immutable and is not
+replayed. Production delta is the detached module and an unused canonical
+scope provider; every other bin/perl byte remains baseline-identical, and
+removing precisely that new provider recovers the exact old LoweringIR bytes.
+Current downstream contract, mdBook and SPECFORGE feedback remain aligned with
+the unchanged public gate and prioritized next prerequisites.

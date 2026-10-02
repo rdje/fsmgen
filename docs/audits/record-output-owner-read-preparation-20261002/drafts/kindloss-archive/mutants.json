@@ -1,0 +1,35 @@
+{
+  "omitted_reads": {
+    "argv": [
+      "perl",
+      "-MFSM::Scheduler::ISF::ChildOutputReads",
+      "t/2039-isf-child-output-read-preparation.t"
+    ],
+    "exit_zero": false,
+    "perl5lib": ".artifacts/record-output-owner-reads/mutants/omitted_reads:perl:t/lib",
+    "producer_sha256": "299abac7098c3c6d12fb0268b1ffe6e14328a2d48cc7e27b8b6b653200a63649",
+    "returncode": 17
+  },
+  "unmasked_statics": {
+    "argv": [
+      "perl",
+      "-MFSM::Scheduler::ISF::ChildOutputReads",
+      "t/2039-isf-child-output-read-preparation.t"
+    ],
+    "exit_zero": false,
+    "perl5lib": ".artifacts/record-output-owner-reads/mutants/unmasked_statics:perl:t/lib",
+    "producer_sha256": "667c053b772d0f4ca4eda33e3734afc0e8ca2ef3237fac561f3fe4babc214751",
+    "returncode": 255
+  },
+  "weak_history": {
+    "argv": [
+      "perl",
+      "-MFSM::Scheduler::ISF::ChildOutputReads",
+      "t/2039-isf-child-output-read-preparation.t"
+    ],
+    "exit_zero": false,
+    "perl5lib": ".artifacts/record-output-owner-reads/mutants/weak_history:perl:t/lib",
+    "producer_sha256": "d751ce4ab16e36f0d505c490300d10b7b674ba324d3b260d9ec241789653ba96",
+    "returncode": 4
+  }
+}

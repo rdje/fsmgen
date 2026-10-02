@@ -1,0 +1,36 @@
+
+    #   Failed test 'actual emitted source data operand exists'
+    #   at t/2039-isf-child-output-read-preparation.t line 145.
+    # Looks like you failed 1 test of 3.
+
+#   Failed test 'actual data role guard_assert'
+#   at t/2039-isf-child-output-read-preparation.t line 151.
+    # No tests run!
+
+#   Failed test 'No tests run for subtest "actual data role local_shadow"'
+#   at t/2039-isf-child-output-read-preparation.t line 151.
+Transaction 'worker': '(local packet ...)' collides with interface port 'packet'
+ at perl/FSM/Scheduler/ISF/LoweringIR.pm line 13459.
+	FSM::Scheduler::ISF::LoweringIR::_parse_local_decl(ARRAY(0x7c1585aeb8), "worker", HASH(0x7c157a2648), HASH(0x7c15c63ca8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6057
+	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x7c14f4f9d8), HASH(0x7c15c60030), HASH(0x7c157a2648), 0, undef, HASH(0x7c144a3390), undef) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 212
+	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x7c14f4f9d8), HASH(0x7c15839f00)) called at perl/FSM/Scheduler/ISF/FormalLowering.pm line 18
+	FSM::Scheduler::ISF::FormalLowering::prepare("FSM::Scheduler::ISF::FormalLowering", FSM::Scheduler::ISF::LoweringIR=HASH(0x7c14f4f9d8), HASH(0x7c15839f00)) called at t/2039-isf-child-output-read-preparation.t line 203
+	main::actual(".artifacts/tmp/tests/dYH"...) called at t/2039-isf-child-output-read-preparation.t line 125
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x7c1101b7e0), "actual data role local_shadow", CODE(0x7c155c0618)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("actual data role local_shadow", CODE(0x7c155c0618)) called at t/2039-isf-child-output-read-preparation.t line 151
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 27.
+t/2039-isf-child-output-read-preparation.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+Failed 2/27 subtests 
+
+Test Summary Report
+-------------------
+t/2039-isf-child-output-read-preparation.t (Wstat: 65280 Tests: 27 Failed: 2)
+  Failed tests:  24, 27
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=27,  4 wallclock secs ( 0.01 usr  0.00 sys +  1.83 cusr  0.77 csys =  2.61 CPU)
+Result: FAIL

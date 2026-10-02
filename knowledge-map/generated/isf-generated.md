@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-generated`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **11** facts · **39** uniquely owned question entries.
+> **12** facts · **43** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -12,6 +12,7 @@
 - q="can a child transaction input or output share an actor storage name?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
 - q="can a generated child write an entire actor-owned record or list?" · facts=[isf-generated-child-whole-aggregate-writes](../../docs/knowledge/isf-generated-child-whole-aggregate-writes.md)
 - q="can a generated transaction formal shadow an actor input or output pin?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
+- q="can actor outputs named start or done preserve child handshakes?" · facts=[isf-generated-child-output-read-preparation](../../docs/knowledge/isf-generated-child-output-read-preparation.md)
 - q="can an ISF clock domain be named bus or another HDL keyword?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="can case-only ISF domain names overwrite exported files?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="can generated child transactions read actor storage in independent clock domains?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
@@ -24,13 +25,16 @@
 - q="does storage_port arbitrate generated child transaction writes?" · facts=[isf-generated-child-writer-contract-frontier](../../docs/knowledge/isf-generated-child-writer-contract-frontier.md)
 - q="how are child named completion outputs combined with parent completion?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
 - q="how are domain and CDC child naming collisions resolved?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
+- q="how are generated child actor output reads prepared?" · facts=[isf-generated-child-output-read-preparation](../../docs/knowledge/isf-generated-child-output-read-preparation.md)
 - q="how do agents join logical domains to generated children through semantic API and MCP?" · facts=[isf-generated-domain-identities](../../docs/knowledge/isf-generated-domain-identities.md)
 - q="how do child ports differ from same-named actor storage across domains?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
 - q="how do generated child storage reads preserve aggregate types?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
 - q="how does a generated child write the parent actor storage register?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="is generated mixed-state whole-copy runtime qualified?" · facts=[isf-generated-input-first-compile-failure](../../docs/knowledge/isf-generated-input-first-compile-failure.md)
 - q="is set-field a partial child storage write?" · facts=[isf-generated-child-writer-contract-frontier](../../docs/knowledge/isf-generated-child-writer-contract-frontier.md)
+- q="is the generated output read plan connected to production?" · facts=[isf-generated-child-output-read-preparation](../../docs/knowledge/isf-generated-child-output-read-preparation.md)
 - q="what is the next generated child storage writer contract?" · facts=[isf-generated-child-writer-contract-frontier](../../docs/knowledge/isf-generated-child-writer-contract-frontier.md)
+- q="what prerequisites precede generated output read integration?" · facts=[isf-generated-child-output-read-preparation](../../docs/knowledge/isf-generated-child-output-read-preparation.md)
 - q="when is a generated blocking output binding valid?" · facts=[isf-generated-blocking-binding-observation](../../docs/knowledge/isf-generated-blocking-binding-observation.md)
 - q="where do generated child storage resets and registers live?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
 - q="where is the fixed T2025 generated-input observer qualification?" · facts=[isf-generated-input-observer-qualification](../../docs/knowledge/isf-generated-input-observer-qualification.md)
@@ -67,6 +71,13 @@ _Generated child named completion preserves authored pulses and activation hands
 
 - **date:** 2026-09-27 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-generated-child-named-completion.md`](../../docs/knowledge/isf-generated-child-named-completion.md)
+
+### isf-generated-child-output-read-preparation
+
+_Detached child output reads use private typed aliases and emitted operand roles_
+
+- **date:** 2026-10-02 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-generated-child-output-read-preparation.md`](../../docs/knowledge/isf-generated-child-output-read-preparation.md)
 
 ### isf-generated-child-port-storage-shadowing
 

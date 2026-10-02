@@ -70,3 +70,9 @@ then owns complete source/module/instance/target/type/activation admission.
 Public integration and fresh HIAL-qualified binary execution follow separately.
 Independent competing writers remain refused; no arbitration, field writes or
 extra payload capture is inferred.
+
+Detached `.2.1.1` preparation is now separately qualified in
+[the output-read card](isf-generated-child-output-read-preparation.md).
+It has no production call. First-`when` action loss `.2.1.3` and false scalar
+X/Z operand diagnosis `.2.1.4` precede read integration `.2.1.2`; the current
+public generated record-output gate remains intact.

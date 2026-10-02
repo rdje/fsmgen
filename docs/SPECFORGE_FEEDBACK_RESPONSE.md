@@ -159,6 +159,15 @@ and book.
   preserves exact sources, callers, domains, transports, raw refusals and hostile
   independent controls. Output execution remains `.3.5.4`; generated output
   mappings, output field writes and full aggregate-interface delivery are open.
+  Detached read preparation `.3.5.2.1.1` qualifies private typed input aliases,
+  actual emitted operand roles and canonical local/static masking. It preserves
+  record types, samples, write targets and one-bit child handshakes even when
+  actor outputs are named `start` or `done`; production is not connected yet.
+  [Preparation evidence](audits/record-output-owner-read-preparation-20261002/scope.txt)
+  retains complete products and precise scalar controls. Newly encountered P2
+  first-`when` activation action loss (`.2.1.3`) and false `x01` operand diagnosis
+  for `const_3bx01` (`.2.1.4`) are owned and scheduled before read integration
+  `.2.1.2`. No output execution or X/Z runtime claim follows.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.
 

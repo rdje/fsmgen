@@ -1,0 +1,8 @@
+t/2039-isf-child-output-read-preparation.t .... ok
+t/2038-isf-record-output-generated-ingress.t .. ok
+t/2029-isf-record-output-writer-inventory.t ... ok
+t/2030-isf-record-output-writer-admission.t ... ok
+t/2019-isf-record-input-generated-carriers.t .. ok
+All tests successful.
+Files=5, Tests=80, 195 wallclock secs ( 0.05 usr  0.01 sys + 152.94 cusr 38.21 csys = 191.21 CPU)
+Result: PASS

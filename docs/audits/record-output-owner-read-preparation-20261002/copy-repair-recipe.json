@@ -1,0 +1,58 @@
+{
+  "diagnosis": [
+    "perl",
+    ".artifacts/record-output-owner-reads/copy-diagnostic.pl"
+  ],
+  "preparation": [
+    "prove",
+    "-Iperl",
+    "-It/lib",
+    "t/2039-isf-child-output-read-preparation.t"
+  ],
+  "capture_environment": {
+    "FSMGEN_OUTPUT_READ_CAPTURE": ".artifacts/record-output-owner-reads/prepared"
+  },
+  "snapshot_paths": [
+    "perl/FSM/Scheduler/ISF/ChildOutputReads.pm",
+    "perl/FSM/Scheduler/ISF/LoweringIR.pm",
+    "t/2039-isf-child-output-read-preparation.t"
+  ],
+  "superseded_receipts": "drafts/kindloss-archive: real green execution with a shared-corruption oracle; not repaired preparation signoff",
+  "focused": [
+    "prove",
+    "-Iperl",
+    "-It/lib",
+    "t/2039-isf-child-output-read-preparation.t",
+    "t/2038-isf-record-output-generated-ingress.t",
+    "t/2029-isf-record-output-writer-inventory.t",
+    "t/2030-isf-record-output-writer-admission.t",
+    "t/2019-isf-record-input-generated-carriers.t"
+  ],
+  "isolated_controls": [
+    [
+      "python3",
+      "docs/audits/record-output-owner-read-preparation-20261002/seal.py",
+      "prepare",
+      "omitted_reads"
+    ],
+    [
+      "python3",
+      "docs/audits/record-output-owner-read-preparation-20261002/seal.py",
+      "prepare",
+      "unmasked_statics"
+    ],
+    [
+      "python3",
+      "docs/audits/record-output-owner-read-preparation-20261002/seal.py",
+      "prepare",
+      "weak_history"
+    ],
+    [
+      "python3",
+      "docs/audits/record-output-owner-read-preparation-20261002/seal.py",
+      "prepare",
+      "numeric_kind_loss"
+    ]
+  ],
+  "ram_guard": "scripts/run_with_ram_guard.sh with unchanged host 88% and descendant 4096 MiB cutoffs"
+}

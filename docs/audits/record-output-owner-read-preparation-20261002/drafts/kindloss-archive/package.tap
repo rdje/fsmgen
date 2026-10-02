@@ -1,0 +1,4 @@
+t/2039-isf-child-output-read-preparation.t .. ok
+All tests successful.
+Files=1, Tests=37,  4 wallclock secs ( 0.02 usr  0.01 sys +  2.91 cusr  0.47 csys =  3.41 CPU)
+Result: PASS

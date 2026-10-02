@@ -1,0 +1,58 @@
+{
+  "focused_documents": {
+    "bytes_each": 172995,
+    "bytes_total": 8797283,
+    "files": 1010,
+    "line_bytes_each": 789,
+    "lines_each": 2251,
+    "lines_total": 203293
+  },
+  "isf_reference": {
+    "bytes_each": 172370,
+    "bytes_total": 937788,
+    "files": 14,
+    "line_bytes_each": 318,
+    "lines_each": 2465,
+    "lines_total": 15398
+  },
+  "knowledge_cards": {
+    "bytes_each": 31755,
+    "bytes_total": 3852736,
+    "files": 1252,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 52675
+  },
+  "rationale": {
+    "bytes_each": 32771,
+    "bytes_total": 488732,
+    "files": 67,
+    "line_bytes_each": 795,
+    "lines_each": 511,
+    "lines_total": 7998
+  },
+  "root_documents": {
+    "bytes_each": 73413,
+    "bytes_total": 266044,
+    "files": 19,
+    "line_bytes_each": 524,
+    "lines_each": 1200,
+    "lines_total": 4632
+  },
+  "shipped_behavior": {
+    "bytes_each": 282517,
+    "bytes_total": 3709480,
+    "files": 64,
+    "line_bytes_each": 7542,
+    "lines_each": 4681,
+    "lines_total": 67117
+  },
+  "task_evidence": {
+    "bytes_each": 2366453,
+    "bytes_total": 12129323,
+    "files": 595,
+    "line_bytes_each": 6264,
+    "lines_each": 6882,
+    "lines_total": 115817
+  }
+}

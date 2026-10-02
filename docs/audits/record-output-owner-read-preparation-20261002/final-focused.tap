@@ -1,0 +1,9 @@
+ram-guard: PID 83964; host 85.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2039-isf-child-output-read-preparation.t .... ok
+t/2038-isf-record-output-generated-ingress.t .. ok
+t/2029-isf-record-output-writer-inventory.t ... ok
+t/2030-isf-record-output-writer-admission.t ... ok
+t/2019-isf-record-input-generated-carriers.t .. ok
+All tests successful.
+Files=5, Tests=80, 238 wallclock secs ( 0.06 usr  0.02 sys + 169.98 cusr 49.90 csys = 219.96 CPU)
+Result: PASS

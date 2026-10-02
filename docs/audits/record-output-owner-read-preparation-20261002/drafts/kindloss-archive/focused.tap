@@ -1,0 +1,82 @@
+
+    #   Failed test 'actual prepared child strict carrier check (no parent/runtime claim)'
+    #   at t/2039-isf-child-output-read-preparation.t line 299.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : null,
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : null,
+    #          "message" : "Source file: '.artifacts/tmp/tests/oe1cv1zpxS/prepared_static_literal.fsm'\nError generating HDL: Pre-generation operand contract validation failed:\n  - assignment RHS for 'result' references undeclared internal operand 'x01'",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : null,
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : ".artifacts/tmp/tests/oe1cv1zpxS/prepared_static_literal.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : ".artifacts/tmp/tests/oe1cv1zpxS/prepared_static_literal.fsm",
+    #       "resolved_path" : ".artifacts/tmp/tests/oe1cv1zpxS/prepared_static_literal.fsm"
+    #    },
+    #    "success" : false
+    # }
+    # Looks like you failed 1 test of 3.
+
+#   Failed test 'actual static or unused role literal'
+#   at t/2039-isf-child-output-read-preparation.t line 203.
+# Looks like you failed 1 test of 37.
+t/2039-isf-child-output-read-preparation.t .... 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/37 subtests 
+t/2038-isf-record-output-generated-ingress.t .. ok
+t/2029-isf-record-output-writer-inventory.t ... ok
+t/2030-isf-record-output-writer-admission.t ... ok
+t/2019-isf-record-input-generated-carriers.t .. ok
+
+Test Summary Report
+-------------------
+t/2039-isf-child-output-read-preparation.t  (Wstat: 256 Tests: 37 Failed: 1)
+  Failed test:  35
+  Non-zero exit status: 1
+Files=5, Tests=76, 202 wallclock secs ( 0.06 usr  0.02 sys + 155.87 cusr 42.48 csys = 198.43 CPU)
+Result: FAIL

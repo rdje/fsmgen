@@ -321,6 +321,16 @@ semantic queries reject unconnected child ports. Schedule success alone does
 not establish realized connectivity. See the
 `docs/audits/record-output-generated-ingress-20261002/scope.txt`.
 
+Detached output-read preparation now allocates private typed child inputs and
+rebases actual emitted data reads without changing write targets or child
+handshakes. It preserves local/static identities, explicit samples and recursive
+record types, including output names that collide with `start` or `done`.
+This preparation is not connected to production lowering; parent owner routes,
+output writer handoffs and complete physical admission remain prerequisites.
+The first-`when` activation action omission and the false `x01` operand diagnosis
+for a canonical X/Z scalar literal are separately owned before read integration.
+Evidence: `docs/audits/record-output-owner-read-preparation-20261002/scope.txt`.
+
 Typed output `(reset ...)` and `(default ...)` metadata remain refused.
 
 Declaration, exact-type copy, scalar-field and public report behavior is

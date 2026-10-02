@@ -1,0 +1,387 @@
+actual detached mutant unmasked_statics loaded
+# Subtest: actual ingress direct
+    ok 1 - complete actual child definition membership
+    1..1
+ok 1 - actual ingress direct
+# Subtest: actual ingress local_do
+    ok 1 - complete actual child definition membership
+    1..1
+ok 2 - actual ingress local_do
+# Subtest: actual ingress spawn_writer
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 3 - actual ingress spawn_writer
+# Subtest: actual ingress blocking_writer
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 4 - actual ingress blocking_writer
+# Subtest: actual ingress spawn_readers
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 5 - actual ingress spawn_readers
+# Subtest: actual ingress storage_then_output
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 6 - actual ingress storage_then_output
+# Subtest: actual ingress unused_with_child
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 7 - actual ingress unused_with_child
+# Subtest: actual ingress competing_children
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 8 - actual ingress competing_children
+# Subtest: actual ingress formal_shadow
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 9 - actual ingress formal_shadow
+# Subtest: actual ingress imported_writer
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 10 - actual ingress imported_writer
+# Subtest: actual ingress scalar_control
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 11 - actual ingress scalar_control
+# Subtest: actual ingress scalar_writer
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 12 - actual ingress scalar_writer
+# Subtest: actual ingress scalar_reader
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 13 - actual ingress scalar_reader
+# Subtest: actual ingress input_control
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 14 - actual ingress input_control
+# Subtest: actual ingress domain_direct
+    ok 1 - complete actual child definition membership
+    1..1
+ok 15 - actual ingress domain_direct
+# Subtest: actual ingress domain_writer
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 16 - actual ingress domain_writer
+# Subtest: actual ingress domain_readers
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 17 - actual ingress domain_readers
+# Subtest: actual ingress imported_domain_blocking
+    ok 1 - complete actual child definition membership
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 18 - actual ingress imported_domain_blocking
+# Subtest: actual handshake collision packet
+    ok 1 - actual baseline inherited actor type
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    ok 6 - start handshake remains one bit
+    ok 7 - done handshake remains one bit
+    ok 8 - private data view retains its record alias
+    ok 9 - history hostile input refuses
+    ok 10 - precise bounded preparation refusal
+    ok 11 - failed preparation leaves complete caller untouched
+    ok 12 - port hostile input refuses
+    ok 13 - precise bounded preparation refusal
+    ok 14 - failed preparation leaves complete caller untouched
+    ok 15 - entry hostile input refuses
+    ok 16 - precise bounded preparation refusal
+    ok 17 - failed preparation leaves complete caller untouched
+    ok 18 - path hostile input refuses
+    ok 19 - precise bounded preparation refusal
+    ok 20 - failed preparation leaves complete caller untouched
+    ok 21 - prepared hostile input refuses
+    ok 22 - precise bounded preparation refusal
+    ok 23 - failed preparation leaves complete caller untouched
+    ok 24 - type hostile input refuses
+    ok 25 - precise bounded preparation refusal
+    ok 26 - failed preparation leaves complete caller untouched
+    ok 27 - scope hostile input refuses
+    ok 28 - precise bounded preparation refusal
+    ok 29 - failed preparation leaves complete caller untouched
+    ok 30 - type_definition hostile input refuses
+    ok 31 - precise bounded preparation refusal
+    ok 32 - failed preparation leaves complete caller untouched
+    1..32
+ok 19 - actual handshake collision packet
+# Subtest: actual handshake collision start
+    ok 1 - actual baseline inherited actor type
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    ok 6 - start handshake remains one bit
+    ok 7 - done handshake remains one bit
+    ok 8 - private data view retains its record alias
+    ok 9 - history hostile input refuses
+    ok 10 - precise bounded preparation refusal
+    ok 11 - failed preparation leaves complete caller untouched
+    ok 12 - port hostile input refuses
+    ok 13 - precise bounded preparation refusal
+    ok 14 - failed preparation leaves complete caller untouched
+    ok 15 - entry hostile input refuses
+    ok 16 - precise bounded preparation refusal
+    ok 17 - failed preparation leaves complete caller untouched
+    ok 18 - path hostile input refuses
+    ok 19 - precise bounded preparation refusal
+    ok 20 - failed preparation leaves complete caller untouched
+    ok 21 - prepared hostile input refuses
+    ok 22 - precise bounded preparation refusal
+    ok 23 - failed preparation leaves complete caller untouched
+    ok 24 - type hostile input refuses
+    ok 25 - precise bounded preparation refusal
+    ok 26 - failed preparation leaves complete caller untouched
+    ok 27 - scope hostile input refuses
+    ok 28 - precise bounded preparation refusal
+    ok 29 - failed preparation leaves complete caller untouched
+    ok 30 - type_definition hostile input refuses
+    ok 31 - precise bounded preparation refusal
+    ok 32 - failed preparation leaves complete caller untouched
+    1..32
+ok 20 - actual handshake collision start
+# Subtest: actual handshake collision done
+    ok 1 - actual baseline inherited actor type
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    ok 6 - source owner name is retained where actually declared
+    ok 7 - start handshake remains one bit
+    ok 8 - done handshake remains one bit
+    ok 9 - private data view retains its record alias
+    ok 10 - history hostile input refuses
+    ok 11 - precise bounded preparation refusal
+    ok 12 - failed preparation leaves complete caller untouched
+    ok 13 - port hostile input refuses
+    ok 14 - precise bounded preparation refusal
+    ok 15 - failed preparation leaves complete caller untouched
+    ok 16 - entry hostile input refuses
+    ok 17 - precise bounded preparation refusal
+    ok 18 - failed preparation leaves complete caller untouched
+    ok 19 - path hostile input refuses
+    ok 20 - precise bounded preparation refusal
+    ok 21 - failed preparation leaves complete caller untouched
+    ok 22 - prepared hostile input refuses
+    ok 23 - precise bounded preparation refusal
+    ok 24 - failed preparation leaves complete caller untouched
+    ok 25 - type hostile input refuses
+    ok 26 - precise bounded preparation refusal
+    ok 27 - failed preparation leaves complete caller untouched
+    ok 28 - scope hostile input refuses
+    ok 29 - precise bounded preparation refusal
+    ok 30 - failed preparation leaves complete caller untouched
+    ok 31 - type_definition hostile input refuses
+    ok 32 - precise bounded preparation refusal
+    ok 33 - failed preparation leaves complete caller untouched
+    1..33
+ok 21 - actual handshake collision done
+# Subtest: actual handshake collision isf_child_start_seen
+    ok 1 - actual baseline inherited actor type
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    ok 6 - start handshake remains one bit
+    ok 7 - done handshake remains one bit
+    ok 8 - private data view retains its record alias
+    ok 9 - history hostile input refuses
+    ok 10 - precise bounded preparation refusal
+    ok 11 - failed preparation leaves complete caller untouched
+    ok 12 - port hostile input refuses
+    ok 13 - precise bounded preparation refusal
+    ok 14 - failed preparation leaves complete caller untouched
+    ok 15 - entry hostile input refuses
+    ok 16 - precise bounded preparation refusal
+    ok 17 - failed preparation leaves complete caller untouched
+    ok 18 - path hostile input refuses
+    ok 19 - precise bounded preparation refusal
+    ok 20 - failed preparation leaves complete caller untouched
+    ok 21 - prepared hostile input refuses
+    ok 22 - precise bounded preparation refusal
+    ok 23 - failed preparation leaves complete caller untouched
+    ok 24 - type hostile input refuses
+    ok 25 - precise bounded preparation refusal
+    ok 26 - failed preparation leaves complete caller untouched
+    ok 27 - scope hostile input refuses
+    ok 28 - precise bounded preparation refusal
+    ok 29 - failed preparation leaves complete caller untouched
+    ok 30 - type_definition hostile input refuses
+    ok 31 - precise bounded preparation refusal
+    ok 32 - failed preparation leaves complete caller untouched
+    1..32
+ok 22 - actual handshake collision isf_child_start_seen
+# Subtest: actual data role slice
+    ok 1 - actual emitted source data operand exists
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 23 - actual data role slice
+# Subtest: actual data role guard_assert
+    ok 1 - actual emitted source data operand exists
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 24 - actual data role guard_assert
+# Subtest: actual data role alias_collision
+    ok 1 - actual emitted source data operand exists
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 25 - actual data role alias_collision
+# Subtest: actual data role unused_source_collision
+    ok 1 - actual emitted source data operand exists
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 26 - actual data role unused_source_collision
+# Subtest: actual data role type_collision
+    ok 1 - actual emitted source data operand exists
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 27 - actual data role type_collision
+# Subtest: actual data role parameter_shadow
+    not ok 1 - complete independent expected IR, including every absence/unchanged field
+    #   Failed test 'complete independent expected IR, including every absence/unchanged field'
+    #   at t/2039-isf-child-output-read-preparation.t line 333.
+    #          got: '{"actor_completion_outputs":[],"actor_name":"worker","actor_output_reads":[{"input_port":"isf_output_read_packet","name":"packet","width":"3"}],"actor_phases":[],"actor_stages":[],"actor_storage_reads":[],"actor_storage_writes":[],"assignment_provenance":[{"activation":{"assignment_guard":null,"container_kind":"state","container_name":"worker_set_0","state_guard":null,"state_kind":"sequential"},"assignment_index":0,"condition_terms":{},"domain":"data","operator":"<-","owner":"worker","owner_kind":"transaction","priority_suppressed_by":[],"resource_suppressed_by":[],"rhs":"packet","source_kind":"set","target":"result"},{"activation":{"assignment_guard":null,"container_kind":"state","container_name":"worker_done_1","state_guard":null,"state_kind":"terminal"},"assignment_index":0,"condition_terms":{},"domain":"pulse","operator":"<1","owner":"worker","owner_kind":"transaction","priority_suppressed_by":[],"resource_suppressed_by":[],"rhs":1,"source_kind":"complete_pulse","target":"done"},{"activation":{"assignment_guard":null,"container_kind":"dt","container_name":"isf_child_start_seen","dt_kind":"child_activation","dte_guard":null},"assignment_index":0,"condition_terms":{},"domain":"data","operator":"<-","owner":"isf_child_start_seen","owner_kind":"generated","priority_suppressed_by":[],"resource_suppressed_by":[],"rhs":"start","source_kind":"child_start_history","target":"isf_child_start_seen"}],"bank_accesses":[],"children":{},"clock":"clk","compatible_fanin_groups":[],"conflict_issues":[],"constants":[],"counters":{"can_accept":1,"isf_child_start_seen":1,"result":3},"declared_storage":[],"dt_blocks":[{"assignments":[{"lhs":"isf_child_start_seen","op":"<-","rhs":"start","source_kind":"child_start_history"}],"kind":"child_activation","name":"isf_child_start_seen"}],"enum_declarations":[],"explicit_interface_ports":[{"direction":"input","name":"start","width":1},{"direction":"output","name":"done","width":1},{"direction":"output","name":"result","width":3},{"direction":"input","isf_handoff":1,"name":"isf_output_read_packet","width":"3"}],"explicit_internal_signals":["isf_child_start_seen"],"immediate_assertions":[],"interface_port_metadata":null,"logical_controllers":{"controllers":[{"clock":"clk","domain":null,"entries":["worker_idle_0"],"identity":["worker",null,"worker"],"initial_state":"worker_idle_0","reset":{"kind":"sync","name":"rst_n","polarity":"active_low"},"states":[{"kind":"entry","name":"worker_idle_0"},{"kind":"sequential","name":"worker_set_0"},{"kind":"terminal","name":"worker_done_1"}],"transaction":"worker"}],"issues":[],"model":"isf_logical_controllers_shadow_v1","module":"worker","references":[{"field":"transitions[0].target","role":"transition","state":"worker_idle_0","target":"worker_set_0"},{"field":"transitions[0].target","role":"transition","state":"worker_set_0","target":"worker_done_1"},{"field":"transitions[0].target","role":"transition","state":"worker_done_1","target":"worker_idle_0"}],"state_owner":{"worker_done_1":"worker","worker_idle_0":"worker","worker_set_0":"worker"}},"package_imports":[],"package_roots":[],"params":[{"name":"packet","value":"2"}],"ports":[{"direction":"input","name":"start","width":1},{"direction":"output","name":"done","width":1},{"direction":"output","name":"result","width":3},{"direction":"input","isf_handoff":1,"name":"isf_output_read_packet","width":"3"}],"priority_resolution":{"issues":[],"resolutions":[]},"reset":{"kind":"sync","name":"rst_n","polarity":"active_low"},"reset_provenance":[{"domain":null,"origin":"explicit"}],"reset_values":{"isf_child_start_seen":0},"signal_type_refs":{},"signal_widths":{"again":3,"done":1,"incoming":5,"isf_child_start_seen":1,"isf_output_read_packet":"3","packet":3,"result":3,"seen":3,"start":1},"states":[{"assignments":[],"guard":{"expr":"(& start (! isf_child_start_seen))","expr_ast":["&","start",["!","isf_child_start_seen"]]},"kind":"entry","name":"worker_idle_0","transaction":"worker","transitions":[{"condition":{"expr":"(& start (! isf_child_start_seen))","expr_ast":["&","start",["!","isf_child_start_seen"]]},"target":"worker_set_0"}]},{"assignments":[{"lhs":"result","op":"<-","rhs":"isf_output_read_packet","source_kind":"set"}],"kind":"sequential","name":"worker_set_0","transaction":"worker","transitions":[{"target":"worker_done_1"}]},{"assignments":[{"lhs":"done","op":"<1","rhs":1,"source_kind":"complete_pulse"}],"kind":"terminal","name":"worker_done_1","transaction":"worker","transitions":[{"target":"worker_idle_0"}]}],"storage_roles":{"isf_child_start_seen":"child_start_history","result":"transaction_port"},"temporal_contracts":[],"type_declarations":[["type","frame",["record",["tag",["bits","2"]],["payload",["signed",["four_state",["bits","3"]]]]]]],"verification_bridge":null,"verification_observations":[],"watchdog":"65535"}'
+    #     expected: '{"actor_completion_outputs":[],"actor_name":"worker","actor_output_reads":[],"actor_phases":[],"actor_stages":[],"actor_storage_reads":[],"actor_storage_writes":[],"assignment_provenance":[{"activation":{"assignment_guard":null,"container_kind":"state","container_name":"worker_set_0","state_guard":null,"state_kind":"sequential"},"assignment_index":0,"condition_terms":{},"domain":"data","operator":"<-","owner":"worker","owner_kind":"transaction","priority_suppressed_by":[],"resource_suppressed_by":[],"rhs":"packet","source_kind":"set","target":"result"},{"activation":{"assignment_guard":null,"container_kind":"state","container_name":"worker_done_1","state_guard":null,"state_kind":"terminal"},"assignment_index":0,"condition_terms":{},"domain":"pulse","operator":"<1","owner":"worker","owner_kind":"transaction","priority_suppressed_by":[],"resource_suppressed_by":[],"rhs":1,"source_kind":"complete_pulse","target":"done"},{"activation":{"assignment_guard":null,"container_kind":"dt","container_name":"isf_child_start_seen","dt_kind":"child_activation","dte_guard":null},"assignment_index":0,"condition_terms":{},"domain":"data","operator":"<-","owner":"isf_child_start_seen","owner_kind":"generated","priority_suppressed_by":[],"resource_suppressed_by":[],"rhs":"start","source_kind":"child_start_history","target":"isf_child_start_seen"}],"bank_accesses":[],"children":{},"clock":"clk","compatible_fanin_groups":[],"conflict_issues":[],"constants":[],"counters":{"can_accept":1,"isf_child_start_seen":1,"result":3},"declared_storage":[],"dt_blocks":[{"assignments":[{"lhs":"isf_child_start_seen","op":"<-","rhs":"start","source_kind":"child_start_history"}],"kind":"child_activation","name":"isf_child_start_seen"}],"enum_declarations":[],"explicit_interface_ports":[{"direction":"input","name":"start","width":1},{"direction":"output","name":"done","width":1},{"direction":"output","name":"result","width":3}],"explicit_internal_signals":["isf_child_start_seen"],"immediate_assertions":[],"interface_port_metadata":null,"logical_controllers":{"controllers":[{"clock":"clk","domain":null,"entries":["worker_idle_0"],"identity":["worker",null,"worker"],"initial_state":"worker_idle_0","reset":{"kind":"sync","name":"rst_n","polarity":"active_low"},"states":[{"kind":"entry","name":"worker_idle_0"},{"kind":"sequential","name":"worker_set_0"},{"kind":"terminal","name":"worker_done_1"}],"transaction":"worker"}],"issues":[],"model":"isf_logical_controllers_shadow_v1","module":"worker","references":[{"field":"transitions[0].target","role":"transition","state":"worker_idle_0","target":"worker_set_0"},{"field":"transitions[0].target","role":"transition","state":"worker_set_0","target":"worker_done_1"},{"field":"transitions[0].target","role":"transition","state":"worker_done_1","target":"worker_idle_0"}],"state_owner":{"worker_done_1":"worker","worker_idle_0":"worker","worker_set_0":"worker"}},"package_imports":[],"package_roots":[],"params":[{"name":"packet","value":"2"}],"ports":[{"direction":"input","name":"start","width":1},{"direction":"output","name":"done","width":1},{"direction":"output","name":"result","width":3}],"priority_resolution":{"issues":[],"resolutions":[]},"reset":{"kind":"sync","name":"rst_n","polarity":"active_low"},"reset_provenance":[{"domain":null,"origin":"explicit"}],"reset_values":{"isf_child_start_seen":0},"signal_type_refs":{},"signal_widths":{"again":3,"done":1,"incoming":5,"isf_child_start_seen":1,"packet":3,"result":3,"seen":3,"start":1},"states":[{"assignments":[],"guard":{"expr":"(& start (! isf_child_start_seen))","expr_ast":["&","start",["!","isf_child_start_seen"]]},"kind":"entry","name":"worker_idle_0","transaction":"worker","transitions":[{"condition":{"expr":"(& start (! isf_child_start_seen))","expr_ast":["&","start",["!","isf_child_start_seen"]]},"target":"worker_set_0"}]},{"assignments":[{"lhs":"result","op":"<-","rhs":"packet","source_kind":"set"}],"kind":"sequential","name":"worker_set_0","transaction":"worker","transitions":[{"target":"worker_done_1"}]},{"assignments":[{"lhs":"done","op":"<1","rhs":1,"source_kind":"complete_pulse"}],"kind":"terminal","name":"worker_done_1","transaction":"worker","transitions":[{"target":"worker_idle_0"}]}],"storage_roles":{"isf_child_start_seen":"child_start_history","result":"transaction_port"},"temporal_contracts":[],"type_declarations":[["type","frame",["record",["tag",["bits","2"]],["payload",["signed",["four_state",["bits","3"]]]]]]],"verification_bridge":null,"verification_observations":[],"watchdog":"65535"}'
+    ok 2 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 3 - complete source/IR JSON kinds/data unchanged
+    ok 4 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..4
+    # Looks like you failed 1 test of 4.
+not ok 28 - actual data role parameter_shadow
+#   Failed test 'actual data role parameter_shadow'
+#   at t/2039-isf-child-output-read-preparation.t line 173.
+# Subtest: actual data role local_shadow
+    ok 1 - actual local cannot shadow an actor interface name
+    ok 2 - existing precise local declaration refusal
+    1..2
+ok 29 - actual data role local_shadow
+# Subtest: actual data role formal_shadow
+    ok 1 - complete independent expected IR, including every absence/unchanged field
+    ok 2 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 3 - complete source/IR JSON kinds/data unchanged
+    ok 4 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..4
+ok 30 - actual data role formal_shadow
+# Subtest: actual data role self_read
+    ok 1 - actual emitted source data operand exists
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 31 - actual data role self_read
+# Subtest: actual data role sample
+    ok 1 - actual emitted source data operand exists
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    ok 6 - sample remains a distinct captured scalar
+    ok 7 - sample exact signed/four-state type stays intact
+    1..7
+ok 32 - actual data role sample
+# Subtest: actual data role record_self_read
+    ok 1 - actual emitted source data operand exists
+    ok 2 - complete independent expected IR, including every absence/unchanged field
+    ok 3 - unchanged counter/sample values retain original JSON kinds independently of expected product
+    ok 4 - complete source/IR JSON kinds/data unchanged
+    ok 5 - actual prepared child strict carrier check (no parent/runtime claim)
+    1..5
+ok 33 - actual data role record_self_read
+# Subtest: actual static or unused role enum_mask
+    1..0
+    # No tests run!
+not ok 34 - No tests run for subtest "actual static or unused role enum_mask"
+#   Failed test 'No tests run for subtest "actual static or unused role enum_mask"'
+#   at t/2039-isf-child-output-read-preparation.t line 212.
+Invalid child output-read preparation: output 'packet' has invalid read path '.ONE'
+ at .artifacts/record-output-owner-reads/mutants/unmasked_statics/FSM/Scheduler/ISF/ChildOutputReads.pm line 254.
+	FSM::Scheduler::ISF::ChildOutputReads::_require(0, "output 'packet' has invalid read path '.ONE'") called at .artifacts/record-output-owner-reads/mutants/unmasked_statics/FSM/Scheduler/ISF/ChildOutputReads.pm line 93
+	FSM::Scheduler::ISF::ChildOutputReads::__ANON__("packet") called at .artifacts/record-output-owner-reads/mutants/unmasked_statics/FSM/Scheduler/ISF/ChildOutputReads.pm line 179
+	FSM::Scheduler::ISF::ChildOutputReads::_operand("packet.ONE", CODE(0x75062ad618)) called at .artifacts/record-output-owner-reads/mutants/unmasked_statics/FSM/Scheduler/ISF/ChildOutputReads.pm line 104
+	FSM::Scheduler::ISF::ChildOutputReads::__ANON__(HASH(0x75062b2be8), "rhs") called at .artifacts/record-output-owner-reads/mutants/unmasked_statics/FSM/Scheduler/ISF/ChildOutputReads.pm line 220
+	FSM::Scheduler::ISF::ChildOutputReads::_slots(HASH(0x75062d9618), CODE(0x75062ae168)) called at .artifacts/record-output-owner-reads/mutants/unmasked_statics/FSM/Scheduler/ISF/ChildOutputReads.pm line 104
+	FSM::Scheduler::ISF::ChildOutputReads::plan("FSM::Scheduler::ISF::ChildOutputReads", "lowering", FSM::Scheduler::ISF::LoweringIR=HASH(0x75073ff960), "actor", HASH(0x75077d5168), "transaction", HASH(0x750779ae58), "ir", ...) called at t/2039-isf-child-output-read-preparation.t line 331
+	main::qualify("static_enum_mask", FSM::Scheduler::ISF::LoweringIR=HASH(0x75073ff960), HASH(0x75077d5168), HASH(0x750779ae58), HASH(0x750779c798), HASH(0x75077d8408)) called at t/2039-isf-child-output-read-preparation.t line 204
+	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+	Test::Builder::subtest(Test::Builder=HASH(0x7500536930), "actual static or unused role enum_mask", CODE(0x7507444a50)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+	Test::More::subtest("actual static or unused role enum_mask", CODE(0x7507444a50)) called at t/2039-isf-child-output-read-preparation.t line 212
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 34.

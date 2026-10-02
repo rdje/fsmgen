@@ -1,0 +1,78 @@
+
+    #   Failed test 'actual prepared child strict carrier check (no parent/runtime claim)'
+    #   at t/2039-isf-child-output-read-preparation.t line 299.
+    #          got: '1'
+    #     expected: '0'
+    # {
+    #    "check_schema_version" : 1,
+    #    "command" : {
+    #       "json" : true,
+    #       "mode" : "check",
+    #       "strict_mode" : true,
+    #       "target_language" : "systemverilog"
+    #    },
+    #    "diagnostic_summary" : {
+    #       "code_counts" : {},
+    #       "codes" : [],
+    #       "contract_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "diagnostic_count" : 1,
+    #       "diagnostic_summary_schema_version" : 1,
+    #       "has_diagnostics" : true,
+    #       "has_stable_codes" : false,
+    #       "matched_support_accounting" : false,
+    #       "report_source" : "FSM::Support::SerializableDiagnosticSummary",
+    #       "severity_counts" : {
+    #          "error" : 1
+    #       },
+    #       "success" : false,
+    #       "unique_codes" : []
+    #    },
+    #    "diagnostics" : [
+    #       {
+    #          "code" : null,
+    #          "expected_child_source_file" : null,
+    #          "expected_rtl_metadata_file" : null,
+    #          "family" : "unclassified",
+    #          "generated_child_source" : null,
+    #          "message" : "Source file: '.artifacts/tmp/tests/5bm_3OUjOG/prepared_static_literal.fsm'\nError parsing FSM with adapter: Unsupported expression token '3'bx01'. Active expressions must use a literal, a valid signal reference, or a supported operator form. Guard-prefixed tokens belong in condition position, not inside ordinary expressions. See docs/book/src/90-reference-map.md for the current supported boundary and owning chapter map.",
+    #          "migration_hint_available" : false,
+    #          "parent_composition_source" : null,
+    #          "rtl_metadata_file" : null,
+    #          "severity" : "error",
+    #          "source_file" : ".artifacts/tmp/tests/5bm_3OUjOG/prepared_static_literal.fsm",
+    #          "stability" : "unclassified",
+    #          "summary" : "Unclassified FSMGen failure.",
+    #          "support_accounting" : {
+    #             "matched" : false
+    #          }
+    #       }
+    #    ],
+    #    "generated_output" : {
+    #       "emitted" : false
+    #    },
+    #    "producer" : {
+    #       "name" : "FSMGen",
+    #       "report_source" : "FSM::Support::CheckDiagnostics"
+    #    },
+    #    "source" : {
+    #       "input" : ".artifacts/tmp/tests/5bm_3OUjOG/prepared_static_literal.fsm",
+    #       "resolved_path" : ".artifacts/tmp/tests/5bm_3OUjOG/prepared_static_literal.fsm"
+    #    },
+    #    "success" : false
+    # }
+    # Looks like you failed 1 test of 3.
+
+#   Failed test 'actual static or unused role literal'
+#   at t/2039-isf-child-output-read-preparation.t line 203.
+# Looks like you failed 1 test of 37.
+t/2039-isf-child-output-read-preparation.t .. 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/37 subtests 
+
+Test Summary Report
+-------------------
+t/2039-isf-child-output-read-preparation.t (Wstat: 256 Tests: 37 Failed: 1)
+  Failed test:  35
+  Non-zero exit status: 1
+Files=1, Tests=37, 36 wallclock secs ( 0.02 usr  0.01 sys + 23.15 cusr 10.70 csys = 33.88 CPU)
+Result: FAIL

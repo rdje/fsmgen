@@ -1,0 +1,2657 @@
+{
+  "book.txt": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "84d5b5dd08f3197f4024647e2816e0a284b3f1b854cd602b7d66d76cac4e899e",
+    "retained_sha256": "103c7413ae67679afe58d966f2ce92a04bca016d8189215d8d577c80511b514a"
+  },
+  "capacity.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1029736c4bc821c90fca1188edbdfe4ba5a379648f47eeef4d1f4ab55c8edf1f",
+    "retained_sha256": "1029736c4bc821c90fca1188edbdfe4ba5a379648f47eeef4d1f4ab55c8edf1f"
+  },
+  "capacity.txt": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "555798a5b17ee3ce35ffcfd83859625ad2722ff16d37731831771c9c064ca1b5",
+    "retained_sha256": "555798a5b17ee3ce35ffcfd83859625ad2722ff16d37731831771c9c064ca1b5"
+  },
+  "carriers.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "fd7b19830f64629f0954f32fb22a05d2cf205a04dc279fdb47b0f0cba5a7b7ff",
+    "retained_sha256": "f24e34a7423b68882cc9dbc2224d3f45475b81c163ee97c5c16d819ad6e96592"
+  },
+  "claims.txt": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1428da7beb33b4b3ed460ce296daad4755e4718a7a7ca2b20724fec2fe6b2e12",
+    "retained_sha256": "1428da7beb33b4b3ed460ce296daad4755e4718a7a7ca2b20724fec2fe6b2e12"
+  },
+  "collision_probe.pl": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "57883f36bc452958c85b29f416d50ae4239684b89946093e9e73513da4c15edd",
+    "retained_sha256": "57883f36bc452958c85b29f416d50ae4239684b89946093e9e73513da4c15edd"
+  },
+  "collisions.txt": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7e4c8657a25d92b52a681cd58f21c5991da1ccfabe6e1b832ea1e0c0abd220b2",
+    "retained_sha256": "7e4c8657a25d92b52a681cd58f21c5991da1ccfabe6e1b832ea1e0c0abd220b2"
+  },
+  "docs.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "65243c29c616cd0c663c29262c049d402c64c3accdc771024046bd984bac17ee",
+    "retained_sha256": "65243c29c616cd0c663c29262c049d402c64c3accdc771024046bd984bac17ee"
+  },
+  "done.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "40d0630205bb33285b68a4f5afdea4fca416e2212675e89327ca7683420bd53b",
+    "retained_sha256": "40d0630205bb33285b68a4f5afdea4fca416e2212675e89327ca7683420bd53b"
+  },
+  "drafts/planner-carriers.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2ae42d95189f11fe8e0b20dfa8bf8f21bc7b646b24610f3dfa865fe138d225d2",
+    "retained_sha256": "2ae42d95189f11fe8e0b20dfa8bf8f21bc7b646b24610f3dfa865fe138d225d2"
+  },
+  "drafts/planner-extended.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6dcd38d92a61e43c3621b7893d2aafb9de9d4a56fc4dbc6c9329b9c6da114ce6",
+    "retained_sha256": "6dcd38d92a61e43c3621b7893d2aafb9de9d4a56fc4dbc6c9329b9c6da114ce6"
+  },
+  "drafts/planner-focused.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2ae42d95189f11fe8e0b20dfa8bf8f21bc7b646b24610f3dfa865fe138d225d2",
+    "retained_sha256": "2ae42d95189f11fe8e0b20dfa8bf8f21bc7b646b24610f3dfa865fe138d225d2"
+  },
+  "drafts/planner-initial.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4c05b08fb51410b3007f089e896e4d1d37dcfca1359cb343dc0ba53a24d42eaa",
+    "retained_sha256": "4c05b08fb51410b3007f089e896e4d1d37dcfca1359cb343dc0ba53a24d42eaa"
+  },
+  "drafts/planner-package.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2ae42d95189f11fe8e0b20dfa8bf8f21bc7b646b24610f3dfa865fe138d225d2",
+    "retained_sha256": "2ae42d95189f11fe8e0b20dfa8bf8f21bc7b646b24610f3dfa865fe138d225d2"
+  },
+  "drafts/planner-roles.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6dcd38d92a61e43c3621b7893d2aafb9de9d4a56fc4dbc6c9329b9c6da114ce6",
+    "retained_sha256": "6dcd38d92a61e43c3621b7893d2aafb9de9d4a56fc4dbc6c9329b9c6da114ce6"
+  },
+  "drafts/planner-static.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2ae42d95189f11fe8e0b20dfa8bf8f21bc7b646b24610f3dfa865fe138d225d2",
+    "retained_sha256": "2ae42d95189f11fe8e0b20dfa8bf8f21bc7b646b24610f3dfa865fe138d225d2"
+  },
+  "drafts/prepared-carriers/blocking_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "20bda194ba0e46848e3d7b27a24ff3e245e3674da5b5c53d31dbed11b4d0d895",
+    "retained_sha256": "20bda194ba0e46848e3d7b27a24ff3e245e3674da5b5c53d31dbed11b4d0d895"
+  },
+  "drafts/prepared-carriers/blocking_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "f8d8c07418daa4874bd06f951e1c60ea52657711fbc7710be9175580be928f66",
+    "retained_sha256": "f8d8c07418daa4874bd06f951e1c60ea52657711fbc7710be9175580be928f66"
+  },
+  "drafts/prepared-carriers/collision_done.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "874c5df9aeabd16d3786cf80dc2d8f80ca9a2389392e566fef337072da4f9437",
+    "retained_sha256": "874c5df9aeabd16d3786cf80dc2d8f80ca9a2389392e566fef337072da4f9437"
+  },
+  "drafts/prepared-carriers/collision_done.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "10bfae502e48f31ba816eff3b1645b63e125862b0a271731e6f216cbbe38c29c",
+    "retained_sha256": "10bfae502e48f31ba816eff3b1645b63e125862b0a271731e6f216cbbe38c29c"
+  },
+  "drafts/prepared-carriers/collision_isf_child_start_seen.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "74f8a5700731ff1830b2e06df5ce0e764a8a1c449391ac93079ad9f90ab415fe",
+    "retained_sha256": "74f8a5700731ff1830b2e06df5ce0e764a8a1c449391ac93079ad9f90ab415fe"
+  },
+  "drafts/prepared-carriers/collision_isf_child_start_seen.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1a1316e7ed7a0808ca995e93042d8a4ef59646984995e1769c58dcb837b0349d",
+    "retained_sha256": "1a1316e7ed7a0808ca995e93042d8a4ef59646984995e1769c58dcb837b0349d"
+  },
+  "drafts/prepared-carriers/collision_packet.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0d8593f6f841f9e52a24cfa03c9af80f35b8b5c56fa2718ebd39e3f4ead170f8",
+    "retained_sha256": "0d8593f6f841f9e52a24cfa03c9af80f35b8b5c56fa2718ebd39e3f4ead170f8"
+  },
+  "drafts/prepared-carriers/collision_packet.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b736f94fac30b3fda550bf159c1dae39c30dc8341dbebb69b4d3eed3b9f9be5a",
+    "retained_sha256": "b736f94fac30b3fda550bf159c1dae39c30dc8341dbebb69b4d3eed3b9f9be5a"
+  },
+  "drafts/prepared-carriers/collision_start.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "480298c5adfd419babd047e6352bce64044ccbb9cb5146f7626f5220de4fa846",
+    "retained_sha256": "480298c5adfd419babd047e6352bce64044ccbb9cb5146f7626f5220de4fa846"
+  },
+  "drafts/prepared-carriers/collision_start.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ee8ddd55e557d5d303e84d7155f6e624b804b942e4a57016e0158dc92e8ca8d3",
+    "retained_sha256": "ee8ddd55e557d5d303e84d7155f6e624b804b942e4a57016e0158dc92e8ca8d3"
+  },
+  "drafts/prepared-carriers/competing_children.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92",
+    "retained_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92"
+  },
+  "drafts/prepared-carriers/competing_children.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e3abe4b9a3704bc56e277b558684c128481e2d5d98db646e9a42d193c57c1bad",
+    "retained_sha256": "e3abe4b9a3704bc56e277b558684c128481e2d5d98db646e9a42d193c57c1bad"
+  },
+  "drafts/prepared-carriers/domain_readers.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47",
+    "retained_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47"
+  },
+  "drafts/prepared-carriers/domain_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0e0632de8634928b16b6d6bdbe7cd659d570e88bd7dd0a3847b09f8aca6983ce",
+    "retained_sha256": "0e0632de8634928b16b6d6bdbe7cd659d570e88bd7dd0a3847b09f8aca6983ce"
+  },
+  "drafts/prepared-carriers/domain_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92",
+    "retained_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92"
+  },
+  "drafts/prepared-carriers/domain_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "22fc2707efc09087feae742623017f4f21a9901ab8e766b9ce37de545fb1128a",
+    "retained_sha256": "22fc2707efc09087feae742623017f4f21a9901ab8e766b9ce37de545fb1128a"
+  },
+  "drafts/prepared-carriers/formal_shadow.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ce9699c2f245ee6dfc9684d3e91c274eb1a12a148dbaf4d8eb3eab5b5bc55bd1",
+    "retained_sha256": "ce9699c2f245ee6dfc9684d3e91c274eb1a12a148dbaf4d8eb3eab5b5bc55bd1"
+  },
+  "drafts/prepared-carriers/formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c33518b72ae4a20f6ff283846407fd345b6a2da8d4f3efbb1d1c916dec2bd6c3",
+    "retained_sha256": "c33518b72ae4a20f6ff283846407fd345b6a2da8d4f3efbb1d1c916dec2bd6c3"
+  },
+  "drafts/prepared-carriers/imported_domain_blocking.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7a3d74e7b3b7d4652273bfa27530a799ebe5313c4a14314ce5affee2b89033b9",
+    "retained_sha256": "7a3d74e7b3b7d4652273bfa27530a799ebe5313c4a14314ce5affee2b89033b9"
+  },
+  "drafts/prepared-carriers/imported_domain_blocking.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "208861547900017889aca121effd761be56374dde8286b72a5867e1ac3b05cb1",
+    "retained_sha256": "208861547900017889aca121effd761be56374dde8286b72a5867e1ac3b05cb1"
+  },
+  "drafts/prepared-carriers/imported_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3ce8d7db7c060bd9aa61806298b7b3f16f4b8323bec476a760e64d2e153157b3",
+    "retained_sha256": "3ce8d7db7c060bd9aa61806298b7b3f16f4b8323bec476a760e64d2e153157b3"
+  },
+  "drafts/prepared-carriers/imported_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "28ceb8f80d40e559d9a0d2a93b09436dd559415b6a529829c17c584a51bc0915",
+    "retained_sha256": "28ceb8f80d40e559d9a0d2a93b09436dd559415b6a529829c17c584a51bc0915"
+  },
+  "drafts/prepared-carriers/input_control.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "81fd8446207dc1be7e8ee1532a2dcaeb0a9046eef32d0b4fd49e0ac19a433b7e",
+    "retained_sha256": "81fd8446207dc1be7e8ee1532a2dcaeb0a9046eef32d0b4fd49e0ac19a433b7e"
+  },
+  "drafts/prepared-carriers/input_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "17c2e7ff6ab43e691f945644928f7c3d146081b5f1a093d7277f64896fb86dd0",
+    "retained_sha256": "17c2e7ff6ab43e691f945644928f7c3d146081b5f1a093d7277f64896fb86dd0"
+  },
+  "drafts/prepared-carriers/precedence_0.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2ae6e0a3b6a2db5451a259d122ba80c60c8135c21a64d165d21171857dd83cc0",
+    "retained_sha256": "2ae6e0a3b6a2db5451a259d122ba80c60c8135c21a64d165d21171857dd83cc0"
+  },
+  "drafts/prepared-carriers/precedence_0.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a3c30eb94b3a30d16120e9c7976f59d46511652f1ebc0a3308de8886e055f753",
+    "retained_sha256": "a3c30eb94b3a30d16120e9c7976f59d46511652f1ebc0a3308de8886e055f753"
+  },
+  "drafts/prepared-carriers/precedence_1.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8f2effc88a23d2f3ed88fcd83b52e25d71c5de70214938ad3059884dda7b777b",
+    "retained_sha256": "8f2effc88a23d2f3ed88fcd83b52e25d71c5de70214938ad3059884dda7b777b"
+  },
+  "drafts/prepared-carriers/precedence_1.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7a714fd008cb89ffd42ef0e4279b28ac584cfad25c24388823d4a314e52e9b5f",
+    "retained_sha256": "7a714fd008cb89ffd42ef0e4279b28ac584cfad25c24388823d4a314e52e9b5f"
+  },
+  "drafts/prepared-carriers/precedence_10.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "190aaabc3d8bfb0633aafb095504475d268b0e875988caf8173e48a9081f4b2e",
+    "retained_sha256": "190aaabc3d8bfb0633aafb095504475d268b0e875988caf8173e48a9081f4b2e"
+  },
+  "drafts/prepared-carriers/precedence_10.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "201d3b7b58eb102ac4f81aca61861fea4fde1afbe531081ff1b0eb5a423cc528",
+    "retained_sha256": "201d3b7b58eb102ac4f81aca61861fea4fde1afbe531081ff1b0eb5a423cc528"
+  },
+  "drafts/prepared-carriers/precedence_11.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2df71d0cb8e4337d4f357746e6f2b9fefe6d99429a91a05403d367a4b4be2cac",
+    "retained_sha256": "2df71d0cb8e4337d4f357746e6f2b9fefe6d99429a91a05403d367a4b4be2cac"
+  },
+  "drafts/prepared-carriers/precedence_11.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0d563470794fac52967feabe87b825ffa02fc35dca777c45633bf3cb8165e0c9",
+    "retained_sha256": "0d563470794fac52967feabe87b825ffa02fc35dca777c45633bf3cb8165e0c9"
+  },
+  "drafts/prepared-carriers/precedence_12.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7be3f3bd77d2b700717b098ffb523e2b0ac4fa7e7dd2d36d143bc8c8ab975d2f",
+    "retained_sha256": "7be3f3bd77d2b700717b098ffb523e2b0ac4fa7e7dd2d36d143bc8c8ab975d2f"
+  },
+  "drafts/prepared-carriers/precedence_12.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "769f0b131e04383d456a4a52122a078676780e7d8eb0c46c90600b1b7b9b32af",
+    "retained_sha256": "769f0b131e04383d456a4a52122a078676780e7d8eb0c46c90600b1b7b9b32af"
+  },
+  "drafts/prepared-carriers/precedence_13.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5e2fc8833a1c24a7c65fcb911980a9b097bfb837db5edd745407fb24486b5aec",
+    "retained_sha256": "5e2fc8833a1c24a7c65fcb911980a9b097bfb837db5edd745407fb24486b5aec"
+  },
+  "drafts/prepared-carriers/precedence_13.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8a45f979a7941a34f4fa9b1dcac5ec4f00fe57281650ed0e2bb0246c973524d2",
+    "retained_sha256": "8a45f979a7941a34f4fa9b1dcac5ec4f00fe57281650ed0e2bb0246c973524d2"
+  },
+  "drafts/prepared-carriers/precedence_14.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c3c67bc17f8fb5b3537eed6b55f93800b285b8421c35349e7a5cc85c1aae965b",
+    "retained_sha256": "c3c67bc17f8fb5b3537eed6b55f93800b285b8421c35349e7a5cc85c1aae965b"
+  },
+  "drafts/prepared-carriers/precedence_14.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "49e7293effd76d9bd6ee25198f3386b0761ee50b80e852f227d1f246ded71f46",
+    "retained_sha256": "49e7293effd76d9bd6ee25198f3386b0761ee50b80e852f227d1f246ded71f46"
+  },
+  "drafts/prepared-carriers/precedence_15.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2912d01874f409037139ba7671d0fd17a35c438af8b3510ae0d96d367fc1e7f0",
+    "retained_sha256": "2912d01874f409037139ba7671d0fd17a35c438af8b3510ae0d96d367fc1e7f0"
+  },
+  "drafts/prepared-carriers/precedence_15.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d09f5b324e27f05aeebb143464d8a2a43b7dd6e83fd8e72af7ee72355dd34949",
+    "retained_sha256": "d09f5b324e27f05aeebb143464d8a2a43b7dd6e83fd8e72af7ee72355dd34949"
+  },
+  "drafts/prepared-carriers/precedence_16.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "52837460da25e2c915f0331b7ebc91114da26ba0c7fd024cd0f89344118fdb07",
+    "retained_sha256": "52837460da25e2c915f0331b7ebc91114da26ba0c7fd024cd0f89344118fdb07"
+  },
+  "drafts/prepared-carriers/precedence_16.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "84038d12917e5699bd05b14db9187e2ec48a5c0728eaa98d63e610a22455a2c0",
+    "retained_sha256": "84038d12917e5699bd05b14db9187e2ec48a5c0728eaa98d63e610a22455a2c0"
+  },
+  "drafts/prepared-carriers/precedence_2.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "aa226b6af8f109797c2cc6699111a5742ea007400c9af0b7cd05ed21b57039b1",
+    "retained_sha256": "aa226b6af8f109797c2cc6699111a5742ea007400c9af0b7cd05ed21b57039b1"
+  },
+  "drafts/prepared-carriers/precedence_2.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c0aa6e8802cad7db3d5aa439929483d4e30686db38a8658d6ba88468fbbd29fb",
+    "retained_sha256": "c0aa6e8802cad7db3d5aa439929483d4e30686db38a8658d6ba88468fbbd29fb"
+  },
+  "drafts/prepared-carriers/precedence_3.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "eaaffdbe20990fa2ec2413b7a418c1b8bb1d83bd850e35b56c2293846d37c0e4",
+    "retained_sha256": "eaaffdbe20990fa2ec2413b7a418c1b8bb1d83bd850e35b56c2293846d37c0e4"
+  },
+  "drafts/prepared-carriers/precedence_3.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2317a8d85a21c645b458cfd421a2482c94fb09139ecc7c6d5a5f43c5313a7f4e",
+    "retained_sha256": "2317a8d85a21c645b458cfd421a2482c94fb09139ecc7c6d5a5f43c5313a7f4e"
+  },
+  "drafts/prepared-carriers/precedence_4.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "bbc099e2ac3d266342a0f16814ad977e9d0bb611a11561d8fb04bc34ab1167ea",
+    "retained_sha256": "bbc099e2ac3d266342a0f16814ad977e9d0bb611a11561d8fb04bc34ab1167ea"
+  },
+  "drafts/prepared-carriers/precedence_4.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "652f3d023e2a54e9874cef501951ea09061f42041655594e35ed91f698d4bb36",
+    "retained_sha256": "652f3d023e2a54e9874cef501951ea09061f42041655594e35ed91f698d4bb36"
+  },
+  "drafts/prepared-carriers/precedence_5.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "cc6d37ad83bcc121915595664c9d58ee2a37292932f96981a18b7505d4a8e52b",
+    "retained_sha256": "cc6d37ad83bcc121915595664c9d58ee2a37292932f96981a18b7505d4a8e52b"
+  },
+  "drafts/prepared-carriers/precedence_5.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3c5cddf62afb1fd4ee4cbbe46a8548698ed2e2250ee2b65b16b259f950e69712",
+    "retained_sha256": "3c5cddf62afb1fd4ee4cbbe46a8548698ed2e2250ee2b65b16b259f950e69712"
+  },
+  "drafts/prepared-carriers/precedence_6.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0b629be23195faeda9a9ca0245ef456d210ca6990f7c4031033c5b425d0625c7",
+    "retained_sha256": "0b629be23195faeda9a9ca0245ef456d210ca6990f7c4031033c5b425d0625c7"
+  },
+  "drafts/prepared-carriers/precedence_6.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "71a2d312c650f132331720500de704f5d0a7b4865e932643ae879182afa767e9",
+    "retained_sha256": "71a2d312c650f132331720500de704f5d0a7b4865e932643ae879182afa767e9"
+  },
+  "drafts/prepared-carriers/precedence_7.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b484c76a9c285de0c5dea8859b8301f2adf17e73399e7fbf29dd7fe090213cd4",
+    "retained_sha256": "b484c76a9c285de0c5dea8859b8301f2adf17e73399e7fbf29dd7fe090213cd4"
+  },
+  "drafts/prepared-carriers/precedence_7.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e3ddaed053d36c7a3de3237b4790e8e78e0e63d7654fbed6e4a31874aa01aa56",
+    "retained_sha256": "e3ddaed053d36c7a3de3237b4790e8e78e0e63d7654fbed6e4a31874aa01aa56"
+  },
+  "drafts/prepared-carriers/precedence_8.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "75f640f4b83d17567cab43d67af2c50f67242c46e9b9b82c989452c6df321555",
+    "retained_sha256": "75f640f4b83d17567cab43d67af2c50f67242c46e9b9b82c989452c6df321555"
+  },
+  "drafts/prepared-carriers/precedence_8.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4e6a7080d3c58fa6c98e5624ec8651dd28561050975369e64abc5bfe0c7793a5",
+    "retained_sha256": "4e6a7080d3c58fa6c98e5624ec8651dd28561050975369e64abc5bfe0c7793a5"
+  },
+  "drafts/prepared-carriers/precedence_9.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6f2e4551c7abae5c221c8853eaf5e7e3c07000a0a3047116926af142bd7cbd3c",
+    "retained_sha256": "6f2e4551c7abae5c221c8853eaf5e7e3c07000a0a3047116926af142bd7cbd3c"
+  },
+  "drafts/prepared-carriers/precedence_9.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2125ad61a872cf4279e02a19d07c157e69cb6726ec3143537cab6e3f7f0f269a",
+    "retained_sha256": "2125ad61a872cf4279e02a19d07c157e69cb6726ec3143537cab6e3f7f0f269a"
+  },
+  "drafts/prepared-carriers/role_alias_collision.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "583ac9221683d3a50b9e90ba513ae27c58026721b753e6d0a294ccc4effcbfe1",
+    "retained_sha256": "583ac9221683d3a50b9e90ba513ae27c58026721b753e6d0a294ccc4effcbfe1"
+  },
+  "drafts/prepared-carriers/role_alias_collision.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a94a08243f9278b6487090d26fc9bff29f9647a62334ba41be5af47c3ecb9a01",
+    "retained_sha256": "a94a08243f9278b6487090d26fc9bff29f9647a62334ba41be5af47c3ecb9a01"
+  },
+  "drafts/prepared-carriers/role_formal_shadow.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "fb5105daffb5bd4862f3e97941c142f840403268781fad658000c1a0e499f3ca",
+    "retained_sha256": "fb5105daffb5bd4862f3e97941c142f840403268781fad658000c1a0e499f3ca"
+  },
+  "drafts/prepared-carriers/role_formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "27e1369e447558a0f28fe685bc39ef46f3f79169d8a93913eb8a5eeafa9f517d",
+    "retained_sha256": "27e1369e447558a0f28fe685bc39ef46f3f79169d8a93913eb8a5eeafa9f517d"
+  },
+  "drafts/prepared-carriers/role_guard_assert.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "441a6d8efbcae26165dc9039a8bcb6bb6aec8d5c99b41a07527001cd920c6694",
+    "retained_sha256": "441a6d8efbcae26165dc9039a8bcb6bb6aec8d5c99b41a07527001cd920c6694"
+  },
+  "drafts/prepared-carriers/role_guard_assert.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "de9158e640793ffcbc4cce129394527a9289fa326c291a868bb8d4627fb217cd",
+    "retained_sha256": "de9158e640793ffcbc4cce129394527a9289fa326c291a868bb8d4627fb217cd"
+  },
+  "drafts/prepared-carriers/role_parameter_shadow.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6d22d3a390502c4eb75ddc059ed55f07f5a25faea30dc1d2e02c569d1b7ad67c",
+    "retained_sha256": "6d22d3a390502c4eb75ddc059ed55f07f5a25faea30dc1d2e02c569d1b7ad67c"
+  },
+  "drafts/prepared-carriers/role_parameter_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2db54fb9766eb63b8763fab8eb47e7ddc2a192b076cb8555ff4d545bde62af44",
+    "retained_sha256": "2db54fb9766eb63b8763fab8eb47e7ddc2a192b076cb8555ff4d545bde62af44"
+  },
+  "drafts/prepared-carriers/role_record_self_read.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "29a9c2df376f7132d8894f901d9bcf3366978e59766557966cb7aeee457cfe33",
+    "retained_sha256": "29a9c2df376f7132d8894f901d9bcf3366978e59766557966cb7aeee457cfe33"
+  },
+  "drafts/prepared-carriers/role_record_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "591fe116834b9d7f34df01b3281654b5b0a1792577a87f8cbfb868198ac24129",
+    "retained_sha256": "591fe116834b9d7f34df01b3281654b5b0a1792577a87f8cbfb868198ac24129"
+  },
+  "drafts/prepared-carriers/role_sample.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "08896da418338c35dfcc27bfd88a5789728899c142b3ad05904fef30b04d8a51",
+    "retained_sha256": "08896da418338c35dfcc27bfd88a5789728899c142b3ad05904fef30b04d8a51"
+  },
+  "drafts/prepared-carriers/role_sample.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "40259b4708e5ea1e535502a334b642ec290e0b886e3ba474cd25829c476e0eb4",
+    "retained_sha256": "40259b4708e5ea1e535502a334b642ec290e0b886e3ba474cd25829c476e0eb4"
+  },
+  "drafts/prepared-carriers/role_self_read.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7206dc81d19abeeaa913f5cfd64f7328af1e55a5a9667ad17b5dccfce15bc420",
+    "retained_sha256": "7206dc81d19abeeaa913f5cfd64f7328af1e55a5a9667ad17b5dccfce15bc420"
+  },
+  "drafts/prepared-carriers/role_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "70b832c0070cc4c8cb3f79dd94cc6834d35be7cf2940e34fc78f50ff9a760263",
+    "retained_sha256": "70b832c0070cc4c8cb3f79dd94cc6834d35be7cf2940e34fc78f50ff9a760263"
+  },
+  "drafts/prepared-carriers/role_slice.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b3f8924b6e7f9525483cc042712d2023c9f226b364fd32c564b0251727b9706b",
+    "retained_sha256": "b3f8924b6e7f9525483cc042712d2023c9f226b364fd32c564b0251727b9706b"
+  },
+  "drafts/prepared-carriers/role_slice.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6837a051fb275337e3f2f864958daaed79db3ac33054165620c13394b642d5ad",
+    "retained_sha256": "6837a051fb275337e3f2f864958daaed79db3ac33054165620c13394b642d5ad"
+  },
+  "drafts/prepared-carriers/scalar_control.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "bda387c2c4edcca813ac6802a2626ec5ba26658702c05629144fcbc0519d8a42",
+    "retained_sha256": "bda387c2c4edcca813ac6802a2626ec5ba26658702c05629144fcbc0519d8a42"
+  },
+  "drafts/prepared-carriers/scalar_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "97ab41275ade074d419220320e7fa25d2c61ff507f9d3c0877896b932ac7d4fa",
+    "retained_sha256": "97ab41275ade074d419220320e7fa25d2c61ff507f9d3c0877896b932ac7d4fa"
+  },
+  "drafts/prepared-carriers/scalar_reader.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ea7ff7f7875e326ffecb0837536ff166c5c7beb744e2d99093225ee79189e026",
+    "retained_sha256": "ea7ff7f7875e326ffecb0837536ff166c5c7beb744e2d99093225ee79189e026"
+  },
+  "drafts/prepared-carriers/scalar_reader.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "15fdf130ac80b0d3218d111e78410a8263fc2082000e4e62f4699820e06b7dcf",
+    "retained_sha256": "15fdf130ac80b0d3218d111e78410a8263fc2082000e4e62f4699820e06b7dcf"
+  },
+  "drafts/prepared-carriers/scalar_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6b6c6f3cc876b6229a93312423c4de1e65e45dc90d1091c3ca5bd102da8f0f59",
+    "retained_sha256": "6b6c6f3cc876b6229a93312423c4de1e65e45dc90d1091c3ca5bd102da8f0f59"
+  },
+  "drafts/prepared-carriers/scalar_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ec541f1057c2e31decb90a3a3a8777c0ff32b280a07ed8164aa3b149a7949a62",
+    "retained_sha256": "ec541f1057c2e31decb90a3a3a8777c0ff32b280a07ed8164aa3b149a7949a62"
+  },
+  "drafts/prepared-carriers/spawn_readers.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47",
+    "retained_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47"
+  },
+  "drafts/prepared-carriers/spawn_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "248fc9573649907934bd33c10ab87b6250cace5adc18147804b4364b965bcf6c",
+    "retained_sha256": "248fc9573649907934bd33c10ab87b6250cace5adc18147804b4364b965bcf6c"
+  },
+  "drafts/prepared-carriers/spawn_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92",
+    "retained_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92"
+  },
+  "drafts/prepared-carriers/spawn_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "756c5366953c70ed72a8d29fc2f5678891522d5847a358d0e6b452c9aed47dbd",
+    "retained_sha256": "756c5366953c70ed72a8d29fc2f5678891522d5847a358d0e6b452c9aed47dbd"
+  },
+  "drafts/prepared-carriers/static_constant_mask.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "856120d1da907b3edc7f879f5c171966e61b8a8cc9dbb82c755793cc629b6a84",
+    "retained_sha256": "856120d1da907b3edc7f879f5c171966e61b8a8cc9dbb82c755793cc629b6a84"
+  },
+  "drafts/prepared-carriers/static_constant_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d46ae3869e5ff50e4595665a4b877e17f4c9663f2ab75ca5a05a716c948c036a",
+    "retained_sha256": "d46ae3869e5ff50e4595665a4b877e17f4c9663f2ab75ca5a05a716c948c036a"
+  },
+  "drafts/prepared-carriers/static_enum_mask.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9888d5a1db5ed1def129d776438d7dc539a48a678aff612e736763eeb9a7f8e6",
+    "retained_sha256": "9888d5a1db5ed1def129d776438d7dc539a48a678aff612e736763eeb9a7f8e6"
+  },
+  "drafts/prepared-carriers/static_enum_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "65bfc6cab0a1c9de419fc83ecf936a980281098bdf5afc4033ae8eb66c659127",
+    "retained_sha256": "65bfc6cab0a1c9de419fc83ecf936a980281098bdf5afc4033ae8eb66c659127"
+  },
+  "drafts/prepared-carriers/static_literal.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "79e12774e1cee828a4f9ef963c539434fe899dac48a3bf6f35e3a89a0cd90c57",
+    "retained_sha256": "79e12774e1cee828a4f9ef963c539434fe899dac48a3bf6f35e3a89a0cd90c57"
+  },
+  "drafts/prepared-carriers/static_literal.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "00b38da053fba333d4a86ec1552a97c7ca3c1be33a1e2b522dacaed5b78128b3",
+    "retained_sha256": "00b38da053fba333d4a86ec1552a97c7ca3c1be33a1e2b522dacaed5b78128b3"
+  },
+  "drafts/prepared-carriers/static_package_mask.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "fb43fbcd9885a21ced3c35ac6731ca2cff8948796d13d1b544efd31445b4fed1",
+    "retained_sha256": "fb43fbcd9885a21ced3c35ac6731ca2cff8948796d13d1b544efd31445b4fed1"
+  },
+  "drafts/prepared-carriers/static_package_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "dbcf457ddc3d7b26141c21b113970ecb65ca64c793e4172ceb763f21e8ea36ef",
+    "retained_sha256": "dbcf457ddc3d7b26141c21b113970ecb65ca64c793e4172ceb763f21e8ea36ef"
+  },
+  "drafts/prepared-carriers/static_unused_handshake.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "91246d760dfca0cfa56ba064c698d56d063d50d03793751bbc9a01c39827aead",
+    "retained_sha256": "91246d760dfca0cfa56ba064c698d56d063d50d03793751bbc9a01c39827aead"
+  },
+  "drafts/prepared-carriers/static_unused_handshake.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "aef909ab4ca2e2229dd93d3784937431943d8694e05912225076146dd3031c5a",
+    "retained_sha256": "aef909ab4ca2e2229dd93d3784937431943d8694e05912225076146dd3031c5a"
+  },
+  "drafts/prepared-carriers/storage_then_output.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "225fb093096c7012587d7997a63f57c282a54f885c202810497891131dcc0a4f",
+    "retained_sha256": "225fb093096c7012587d7997a63f57c282a54f885c202810497891131dcc0a4f"
+  },
+  "drafts/prepared-carriers/storage_then_output.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c56638994f3d3e85e674c161e6a302f8f889e90234f770aabbb40e97c63dc147",
+    "retained_sha256": "c56638994f3d3e85e674c161e6a302f8f889e90234f770aabbb40e97c63dc147"
+  },
+  "drafts/prepared-carriers/unused_with_child.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3e367ab391310e1bf0ea1d4cf56488f25ad2b3503140916997f7d136abe1e7e3",
+    "retained_sha256": "3e367ab391310e1bf0ea1d4cf56488f25ad2b3503140916997f7d136abe1e7e3"
+  },
+  "drafts/prepared-carriers/unused_with_child.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "70cde0d3ef62714bb91fc9d412918ae31ddc9874d465143637bf9a78da96d20a",
+    "retained_sha256": "70cde0d3ef62714bb91fc9d412918ae31ddc9874d465143637bf9a78da96d20a"
+  },
+  "drafts/prepared-extended/blocking_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4f49b78e863fcbd74e714c13f813aa1969187ae23589fd46de02b48f38bccc99",
+    "retained_sha256": "4f49b78e863fcbd74e714c13f813aa1969187ae23589fd46de02b48f38bccc99"
+  },
+  "drafts/prepared-extended/collision_done.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9712e0f3e4d903cbaca0b0f85bdb91530f5bbc3a34acd57a58e74e42f8dd6cd7",
+    "retained_sha256": "9712e0f3e4d903cbaca0b0f85bdb91530f5bbc3a34acd57a58e74e42f8dd6cd7"
+  },
+  "drafts/prepared-extended/collision_isf_child_start_seen.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "76017bd6a43d0e475a1c2fff1aa3114bfda3f5c2d03b8b6a250514cb9bdf6401",
+    "retained_sha256": "76017bd6a43d0e475a1c2fff1aa3114bfda3f5c2d03b8b6a250514cb9bdf6401"
+  },
+  "drafts/prepared-extended/collision_packet.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9ec57439a1fa706097d574b6ece8f98c0a7fce37d256bdd0e66d504d23fa1492",
+    "retained_sha256": "9ec57439a1fa706097d574b6ece8f98c0a7fce37d256bdd0e66d504d23fa1492"
+  },
+  "drafts/prepared-extended/collision_start.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "57b7e935ae5484eeb7de67481999137c920cc9db8adaa841383248b72b0be0ab",
+    "retained_sha256": "57b7e935ae5484eeb7de67481999137c920cc9db8adaa841383248b72b0be0ab"
+  },
+  "drafts/prepared-extended/competing_children.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d2ded22323bfee9a8c55a3666f51a4c85200a467c345d4e1386b4fbe78c27715",
+    "retained_sha256": "d2ded22323bfee9a8c55a3666f51a4c85200a467c345d4e1386b4fbe78c27715"
+  },
+  "drafts/prepared-extended/domain_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9cb6c1653d36032bf5445ca29d81d6bf7312300fd676efaedcf9a5d4e39a6c8d",
+    "retained_sha256": "9cb6c1653d36032bf5445ca29d81d6bf7312300fd676efaedcf9a5d4e39a6c8d"
+  },
+  "drafts/prepared-extended/domain_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0dd6105c010a99a66f40f826ab392f09f3121a7f7011d02e719d50d249488d0f",
+    "retained_sha256": "0dd6105c010a99a66f40f826ab392f09f3121a7f7011d02e719d50d249488d0f"
+  },
+  "drafts/prepared-extended/formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "851990fbe9743943f267b7f6459fa161e02ce6a07b6858afe8c96a19da1199e5",
+    "retained_sha256": "851990fbe9743943f267b7f6459fa161e02ce6a07b6858afe8c96a19da1199e5"
+  },
+  "drafts/prepared-extended/imported_domain_blocking.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e6231fe149f6ef0f87289013c65f7a24ea7e0f446fe6037322c4d67cbdcf1c9b",
+    "retained_sha256": "e6231fe149f6ef0f87289013c65f7a24ea7e0f446fe6037322c4d67cbdcf1c9b"
+  },
+  "drafts/prepared-extended/imported_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6b52e5d83f9f61f96ddaa36fd2aeaa173c263163b1cdfd40805d85a15c9b2984",
+    "retained_sha256": "6b52e5d83f9f61f96ddaa36fd2aeaa173c263163b1cdfd40805d85a15c9b2984"
+  },
+  "drafts/prepared-extended/input_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c2b331aefe5e92aa9df3545337ac7839357c7d0cbe9e2ba3525f9e5edf0bffe1",
+    "retained_sha256": "c2b331aefe5e92aa9df3545337ac7839357c7d0cbe9e2ba3525f9e5edf0bffe1"
+  },
+  "drafts/prepared-extended/role_alias_collision.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "f799454676b3638d61648cdf0689605d04ed73b78858350727c6dff9ec4a05bd",
+    "retained_sha256": "f799454676b3638d61648cdf0689605d04ed73b78858350727c6dff9ec4a05bd"
+  },
+  "drafts/prepared-extended/role_guard_assert.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b1ee640580c5262ed72bd7bc3af1125027ae2c720b327753ed834d14311fa450",
+    "retained_sha256": "b1ee640580c5262ed72bd7bc3af1125027ae2c720b327753ed834d14311fa450"
+  },
+  "drafts/prepared-extended/role_parameter_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0890309920e2b1d229cad9cc977b0a8f18b5b922fa78a8e185f62f0bbd962d07",
+    "retained_sha256": "0890309920e2b1d229cad9cc977b0a8f18b5b922fa78a8e185f62f0bbd962d07"
+  },
+  "drafts/prepared-extended/role_slice.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "77b677d85c29c1f29d73a9652bf5d92a32e950f8c55a17ce461eb35121213187",
+    "retained_sha256": "77b677d85c29c1f29d73a9652bf5d92a32e950f8c55a17ce461eb35121213187"
+  },
+  "drafts/prepared-extended/scalar_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b2ed65b68d632e258bd3062c45c17b9f77e5640ee032d00b9cc29e40bb84bc60",
+    "retained_sha256": "b2ed65b68d632e258bd3062c45c17b9f77e5640ee032d00b9cc29e40bb84bc60"
+  },
+  "drafts/prepared-extended/scalar_reader.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ca3f796f8cd3319672bb04f4c293ede0d8e530eb75159c817bd5d142cf96ed7c",
+    "retained_sha256": "ca3f796f8cd3319672bb04f4c293ede0d8e530eb75159c817bd5d142cf96ed7c"
+  },
+  "drafts/prepared-extended/scalar_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "abe5d38ce41d992ed96d0377de03f269cf59ece7c33b8eb0601ecc1c7cd72dcf",
+    "retained_sha256": "abe5d38ce41d992ed96d0377de03f269cf59ece7c33b8eb0601ecc1c7cd72dcf"
+  },
+  "drafts/prepared-extended/spawn_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "801bdab7352086f79b1c84894118c6dfa35c69aa580c818da8e827fcc4f75ea7",
+    "retained_sha256": "801bdab7352086f79b1c84894118c6dfa35c69aa580c818da8e827fcc4f75ea7"
+  },
+  "drafts/prepared-extended/spawn_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4590e4380c068ea043d5c6898d8c21de1be13a18a7d4477681d3ece0a1f12256",
+    "retained_sha256": "4590e4380c068ea043d5c6898d8c21de1be13a18a7d4477681d3ece0a1f12256"
+  },
+  "drafts/prepared-extended/storage_then_output.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ba060725bca69ecf4e8ebe8a7e13720ba02960b91e044368ba754b2d78edda3f",
+    "retained_sha256": "ba060725bca69ecf4e8ebe8a7e13720ba02960b91e044368ba754b2d78edda3f"
+  },
+  "drafts/prepared-extended/unused_with_child.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "724077f1e70f18d2e3636eaad9512013fa92db8afab726c6d0ca233ec460b81b",
+    "retained_sha256": "724077f1e70f18d2e3636eaad9512013fa92db8afab726c6d0ca233ec460b81b"
+  },
+  "drafts/prepared-focused/blocking_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "20bda194ba0e46848e3d7b27a24ff3e245e3674da5b5c53d31dbed11b4d0d895",
+    "retained_sha256": "20bda194ba0e46848e3d7b27a24ff3e245e3674da5b5c53d31dbed11b4d0d895"
+  },
+  "drafts/prepared-focused/blocking_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "825fb55cc0170724ad8bbd563b1ae97c6d7b3def31a6c1f344c22a638fb144d4",
+    "retained_sha256": "825fb55cc0170724ad8bbd563b1ae97c6d7b3def31a6c1f344c22a638fb144d4"
+  },
+  "drafts/prepared-focused/collision_done.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "874c5df9aeabd16d3786cf80dc2d8f80ca9a2389392e566fef337072da4f9437",
+    "retained_sha256": "874c5df9aeabd16d3786cf80dc2d8f80ca9a2389392e566fef337072da4f9437"
+  },
+  "drafts/prepared-focused/collision_done.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "23b03de9a3e7a47f5c39dcf66fbf541e6063becd1406615bf16775eddc160194",
+    "retained_sha256": "23b03de9a3e7a47f5c39dcf66fbf541e6063becd1406615bf16775eddc160194"
+  },
+  "drafts/prepared-focused/collision_isf_child_start_seen.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "74f8a5700731ff1830b2e06df5ce0e764a8a1c449391ac93079ad9f90ab415fe",
+    "retained_sha256": "74f8a5700731ff1830b2e06df5ce0e764a8a1c449391ac93079ad9f90ab415fe"
+  },
+  "drafts/prepared-focused/collision_isf_child_start_seen.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "79dfd3118fd26401c0a78c2bf40f1c2d63f852f028ba6b9127de37979d158491",
+    "retained_sha256": "79dfd3118fd26401c0a78c2bf40f1c2d63f852f028ba6b9127de37979d158491"
+  },
+  "drafts/prepared-focused/collision_packet.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0d8593f6f841f9e52a24cfa03c9af80f35b8b5c56fa2718ebd39e3f4ead170f8",
+    "retained_sha256": "0d8593f6f841f9e52a24cfa03c9af80f35b8b5c56fa2718ebd39e3f4ead170f8"
+  },
+  "drafts/prepared-focused/collision_packet.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7e947541092521d4bffd690a123e6c4a528c96fad81ceff6d81a5ab41aeefa7d",
+    "retained_sha256": "7e947541092521d4bffd690a123e6c4a528c96fad81ceff6d81a5ab41aeefa7d"
+  },
+  "drafts/prepared-focused/collision_start.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "480298c5adfd419babd047e6352bce64044ccbb9cb5146f7626f5220de4fa846",
+    "retained_sha256": "480298c5adfd419babd047e6352bce64044ccbb9cb5146f7626f5220de4fa846"
+  },
+  "drafts/prepared-focused/collision_start.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0288f5af654be0b608444a68c4dc5b5df0f3e24d39a1ed16a827eceb5e38ac8b",
+    "retained_sha256": "0288f5af654be0b608444a68c4dc5b5df0f3e24d39a1ed16a827eceb5e38ac8b"
+  },
+  "drafts/prepared-focused/competing_children.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92",
+    "retained_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92"
+  },
+  "drafts/prepared-focused/competing_children.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "907a90a975fc270fc250d71bfa5e37910d52b05f88e7452e99accab0a9d22827",
+    "retained_sha256": "907a90a975fc270fc250d71bfa5e37910d52b05f88e7452e99accab0a9d22827"
+  },
+  "drafts/prepared-focused/domain_readers.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47",
+    "retained_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47"
+  },
+  "drafts/prepared-focused/domain_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e13eba790b5ea3606e0c66a87706719f1cce99f320d67de0cb779429ab1bf8c5",
+    "retained_sha256": "e13eba790b5ea3606e0c66a87706719f1cce99f320d67de0cb779429ab1bf8c5"
+  },
+  "drafts/prepared-focused/domain_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92",
+    "retained_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92"
+  },
+  "drafts/prepared-focused/domain_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8b649ee105b96fad9dcc640a9ff06e0fe0e9095d483621b4f341f381f35def93",
+    "retained_sha256": "8b649ee105b96fad9dcc640a9ff06e0fe0e9095d483621b4f341f381f35def93"
+  },
+  "drafts/prepared-focused/formal_shadow.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ce9699c2f245ee6dfc9684d3e91c274eb1a12a148dbaf4d8eb3eab5b5bc55bd1",
+    "retained_sha256": "ce9699c2f245ee6dfc9684d3e91c274eb1a12a148dbaf4d8eb3eab5b5bc55bd1"
+  },
+  "drafts/prepared-focused/formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "585ebe4de6ab86ec5bafc58a50281fd210fcc07e01f4472e1c176d101d09dfc4",
+    "retained_sha256": "585ebe4de6ab86ec5bafc58a50281fd210fcc07e01f4472e1c176d101d09dfc4"
+  },
+  "drafts/prepared-focused/imported_domain_blocking.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7a3d74e7b3b7d4652273bfa27530a799ebe5313c4a14314ce5affee2b89033b9",
+    "retained_sha256": "7a3d74e7b3b7d4652273bfa27530a799ebe5313c4a14314ce5affee2b89033b9"
+  },
+  "drafts/prepared-focused/imported_domain_blocking.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "607618bdfc5ca6d71744b46f0bcbdea670fd99c6c9acbfa9b5d81c67221afb1e",
+    "retained_sha256": "607618bdfc5ca6d71744b46f0bcbdea670fd99c6c9acbfa9b5d81c67221afb1e"
+  },
+  "drafts/prepared-focused/imported_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3ce8d7db7c060bd9aa61806298b7b3f16f4b8323bec476a760e64d2e153157b3",
+    "retained_sha256": "3ce8d7db7c060bd9aa61806298b7b3f16f4b8323bec476a760e64d2e153157b3"
+  },
+  "drafts/prepared-focused/imported_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e306edf484223b79fa12ab70739c53583046bd0e4c7bc49fd3e0a9d82bdfd371",
+    "retained_sha256": "e306edf484223b79fa12ab70739c53583046bd0e4c7bc49fd3e0a9d82bdfd371"
+  },
+  "drafts/prepared-focused/input_control.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "81fd8446207dc1be7e8ee1532a2dcaeb0a9046eef32d0b4fd49e0ac19a433b7e",
+    "retained_sha256": "81fd8446207dc1be7e8ee1532a2dcaeb0a9046eef32d0b4fd49e0ac19a433b7e"
+  },
+  "drafts/prepared-focused/input_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "769176e8e37a10a59f18d8da34bf4c7e0969f2c31e77318b8285efdcca134456",
+    "retained_sha256": "769176e8e37a10a59f18d8da34bf4c7e0969f2c31e77318b8285efdcca134456"
+  },
+  "drafts/prepared-focused/precedence_0.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2ae6e0a3b6a2db5451a259d122ba80c60c8135c21a64d165d21171857dd83cc0",
+    "retained_sha256": "2ae6e0a3b6a2db5451a259d122ba80c60c8135c21a64d165d21171857dd83cc0"
+  },
+  "drafts/prepared-focused/precedence_0.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a3c30eb94b3a30d16120e9c7976f59d46511652f1ebc0a3308de8886e055f753",
+    "retained_sha256": "a3c30eb94b3a30d16120e9c7976f59d46511652f1ebc0a3308de8886e055f753"
+  },
+  "drafts/prepared-focused/precedence_1.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8f2effc88a23d2f3ed88fcd83b52e25d71c5de70214938ad3059884dda7b777b",
+    "retained_sha256": "8f2effc88a23d2f3ed88fcd83b52e25d71c5de70214938ad3059884dda7b777b"
+  },
+  "drafts/prepared-focused/precedence_1.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7a714fd008cb89ffd42ef0e4279b28ac584cfad25c24388823d4a314e52e9b5f",
+    "retained_sha256": "7a714fd008cb89ffd42ef0e4279b28ac584cfad25c24388823d4a314e52e9b5f"
+  },
+  "drafts/prepared-focused/precedence_10.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "190aaabc3d8bfb0633aafb095504475d268b0e875988caf8173e48a9081f4b2e",
+    "retained_sha256": "190aaabc3d8bfb0633aafb095504475d268b0e875988caf8173e48a9081f4b2e"
+  },
+  "drafts/prepared-focused/precedence_10.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "201d3b7b58eb102ac4f81aca61861fea4fde1afbe531081ff1b0eb5a423cc528",
+    "retained_sha256": "201d3b7b58eb102ac4f81aca61861fea4fde1afbe531081ff1b0eb5a423cc528"
+  },
+  "drafts/prepared-focused/precedence_11.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2df71d0cb8e4337d4f357746e6f2b9fefe6d99429a91a05403d367a4b4be2cac",
+    "retained_sha256": "2df71d0cb8e4337d4f357746e6f2b9fefe6d99429a91a05403d367a4b4be2cac"
+  },
+  "drafts/prepared-focused/precedence_11.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0d563470794fac52967feabe87b825ffa02fc35dca777c45633bf3cb8165e0c9",
+    "retained_sha256": "0d563470794fac52967feabe87b825ffa02fc35dca777c45633bf3cb8165e0c9"
+  },
+  "drafts/prepared-focused/precedence_12.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7be3f3bd77d2b700717b098ffb523e2b0ac4fa7e7dd2d36d143bc8c8ab975d2f",
+    "retained_sha256": "7be3f3bd77d2b700717b098ffb523e2b0ac4fa7e7dd2d36d143bc8c8ab975d2f"
+  },
+  "drafts/prepared-focused/precedence_12.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "769f0b131e04383d456a4a52122a078676780e7d8eb0c46c90600b1b7b9b32af",
+    "retained_sha256": "769f0b131e04383d456a4a52122a078676780e7d8eb0c46c90600b1b7b9b32af"
+  },
+  "drafts/prepared-focused/precedence_13.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5e2fc8833a1c24a7c65fcb911980a9b097bfb837db5edd745407fb24486b5aec",
+    "retained_sha256": "5e2fc8833a1c24a7c65fcb911980a9b097bfb837db5edd745407fb24486b5aec"
+  },
+  "drafts/prepared-focused/precedence_13.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8a45f979a7941a34f4fa9b1dcac5ec4f00fe57281650ed0e2bb0246c973524d2",
+    "retained_sha256": "8a45f979a7941a34f4fa9b1dcac5ec4f00fe57281650ed0e2bb0246c973524d2"
+  },
+  "drafts/prepared-focused/precedence_14.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c3c67bc17f8fb5b3537eed6b55f93800b285b8421c35349e7a5cc85c1aae965b",
+    "retained_sha256": "c3c67bc17f8fb5b3537eed6b55f93800b285b8421c35349e7a5cc85c1aae965b"
+  },
+  "drafts/prepared-focused/precedence_14.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "49e7293effd76d9bd6ee25198f3386b0761ee50b80e852f227d1f246ded71f46",
+    "retained_sha256": "49e7293effd76d9bd6ee25198f3386b0761ee50b80e852f227d1f246ded71f46"
+  },
+  "drafts/prepared-focused/precedence_15.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2912d01874f409037139ba7671d0fd17a35c438af8b3510ae0d96d367fc1e7f0",
+    "retained_sha256": "2912d01874f409037139ba7671d0fd17a35c438af8b3510ae0d96d367fc1e7f0"
+  },
+  "drafts/prepared-focused/precedence_15.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d09f5b324e27f05aeebb143464d8a2a43b7dd6e83fd8e72af7ee72355dd34949",
+    "retained_sha256": "d09f5b324e27f05aeebb143464d8a2a43b7dd6e83fd8e72af7ee72355dd34949"
+  },
+  "drafts/prepared-focused/precedence_16.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "52837460da25e2c915f0331b7ebc91114da26ba0c7fd024cd0f89344118fdb07",
+    "retained_sha256": "52837460da25e2c915f0331b7ebc91114da26ba0c7fd024cd0f89344118fdb07"
+  },
+  "drafts/prepared-focused/precedence_16.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "84038d12917e5699bd05b14db9187e2ec48a5c0728eaa98d63e610a22455a2c0",
+    "retained_sha256": "84038d12917e5699bd05b14db9187e2ec48a5c0728eaa98d63e610a22455a2c0"
+  },
+  "drafts/prepared-focused/precedence_2.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "aa226b6af8f109797c2cc6699111a5742ea007400c9af0b7cd05ed21b57039b1",
+    "retained_sha256": "aa226b6af8f109797c2cc6699111a5742ea007400c9af0b7cd05ed21b57039b1"
+  },
+  "drafts/prepared-focused/precedence_2.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c0aa6e8802cad7db3d5aa439929483d4e30686db38a8658d6ba88468fbbd29fb",
+    "retained_sha256": "c0aa6e8802cad7db3d5aa439929483d4e30686db38a8658d6ba88468fbbd29fb"
+  },
+  "drafts/prepared-focused/precedence_3.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "eaaffdbe20990fa2ec2413b7a418c1b8bb1d83bd850e35b56c2293846d37c0e4",
+    "retained_sha256": "eaaffdbe20990fa2ec2413b7a418c1b8bb1d83bd850e35b56c2293846d37c0e4"
+  },
+  "drafts/prepared-focused/precedence_3.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2317a8d85a21c645b458cfd421a2482c94fb09139ecc7c6d5a5f43c5313a7f4e",
+    "retained_sha256": "2317a8d85a21c645b458cfd421a2482c94fb09139ecc7c6d5a5f43c5313a7f4e"
+  },
+  "drafts/prepared-focused/precedence_4.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "bbc099e2ac3d266342a0f16814ad977e9d0bb611a11561d8fb04bc34ab1167ea",
+    "retained_sha256": "bbc099e2ac3d266342a0f16814ad977e9d0bb611a11561d8fb04bc34ab1167ea"
+  },
+  "drafts/prepared-focused/precedence_4.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "652f3d023e2a54e9874cef501951ea09061f42041655594e35ed91f698d4bb36",
+    "retained_sha256": "652f3d023e2a54e9874cef501951ea09061f42041655594e35ed91f698d4bb36"
+  },
+  "drafts/prepared-focused/precedence_5.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "cc6d37ad83bcc121915595664c9d58ee2a37292932f96981a18b7505d4a8e52b",
+    "retained_sha256": "cc6d37ad83bcc121915595664c9d58ee2a37292932f96981a18b7505d4a8e52b"
+  },
+  "drafts/prepared-focused/precedence_5.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3c5cddf62afb1fd4ee4cbbe46a8548698ed2e2250ee2b65b16b259f950e69712",
+    "retained_sha256": "3c5cddf62afb1fd4ee4cbbe46a8548698ed2e2250ee2b65b16b259f950e69712"
+  },
+  "drafts/prepared-focused/precedence_6.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0b629be23195faeda9a9ca0245ef456d210ca6990f7c4031033c5b425d0625c7",
+    "retained_sha256": "0b629be23195faeda9a9ca0245ef456d210ca6990f7c4031033c5b425d0625c7"
+  },
+  "drafts/prepared-focused/precedence_6.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "71a2d312c650f132331720500de704f5d0a7b4865e932643ae879182afa767e9",
+    "retained_sha256": "71a2d312c650f132331720500de704f5d0a7b4865e932643ae879182afa767e9"
+  },
+  "drafts/prepared-focused/precedence_7.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b484c76a9c285de0c5dea8859b8301f2adf17e73399e7fbf29dd7fe090213cd4",
+    "retained_sha256": "b484c76a9c285de0c5dea8859b8301f2adf17e73399e7fbf29dd7fe090213cd4"
+  },
+  "drafts/prepared-focused/precedence_7.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e3ddaed053d36c7a3de3237b4790e8e78e0e63d7654fbed6e4a31874aa01aa56",
+    "retained_sha256": "e3ddaed053d36c7a3de3237b4790e8e78e0e63d7654fbed6e4a31874aa01aa56"
+  },
+  "drafts/prepared-focused/precedence_8.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "75f640f4b83d17567cab43d67af2c50f67242c46e9b9b82c989452c6df321555",
+    "retained_sha256": "75f640f4b83d17567cab43d67af2c50f67242c46e9b9b82c989452c6df321555"
+  },
+  "drafts/prepared-focused/precedence_8.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4e6a7080d3c58fa6c98e5624ec8651dd28561050975369e64abc5bfe0c7793a5",
+    "retained_sha256": "4e6a7080d3c58fa6c98e5624ec8651dd28561050975369e64abc5bfe0c7793a5"
+  },
+  "drafts/prepared-focused/precedence_9.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6f2e4551c7abae5c221c8853eaf5e7e3c07000a0a3047116926af142bd7cbd3c",
+    "retained_sha256": "6f2e4551c7abae5c221c8853eaf5e7e3c07000a0a3047116926af142bd7cbd3c"
+  },
+  "drafts/prepared-focused/precedence_9.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2125ad61a872cf4279e02a19d07c157e69cb6726ec3143537cab6e3f7f0f269a",
+    "retained_sha256": "2125ad61a872cf4279e02a19d07c157e69cb6726ec3143537cab6e3f7f0f269a"
+  },
+  "drafts/prepared-focused/role_alias_collision.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "583ac9221683d3a50b9e90ba513ae27c58026721b753e6d0a294ccc4effcbfe1",
+    "retained_sha256": "583ac9221683d3a50b9e90ba513ae27c58026721b753e6d0a294ccc4effcbfe1"
+  },
+  "drafts/prepared-focused/role_alias_collision.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "67fd90900e1f3c14394b06f5a6460512bf09d433fcee68c582c754938ab2bffc",
+    "retained_sha256": "67fd90900e1f3c14394b06f5a6460512bf09d433fcee68c582c754938ab2bffc"
+  },
+  "drafts/prepared-focused/role_formal_shadow.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "fb5105daffb5bd4862f3e97941c142f840403268781fad658000c1a0e499f3ca",
+    "retained_sha256": "fb5105daffb5bd4862f3e97941c142f840403268781fad658000c1a0e499f3ca"
+  },
+  "drafts/prepared-focused/role_formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b3c814bbc5de63f4759ee53890517ad56df973b2fa01fcdb108d59da9bc6c3c1",
+    "retained_sha256": "b3c814bbc5de63f4759ee53890517ad56df973b2fa01fcdb108d59da9bc6c3c1"
+  },
+  "drafts/prepared-focused/role_guard_assert.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "441a6d8efbcae26165dc9039a8bcb6bb6aec8d5c99b41a07527001cd920c6694",
+    "retained_sha256": "441a6d8efbcae26165dc9039a8bcb6bb6aec8d5c99b41a07527001cd920c6694"
+  },
+  "drafts/prepared-focused/role_guard_assert.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4a850de56cfdf6c93373feb56b0a76effb1e01b18c1ec6b5acfc6d143bcdd8dc",
+    "retained_sha256": "4a850de56cfdf6c93373feb56b0a76effb1e01b18c1ec6b5acfc6d143bcdd8dc"
+  },
+  "drafts/prepared-focused/role_parameter_shadow.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6d22d3a390502c4eb75ddc059ed55f07f5a25faea30dc1d2e02c569d1b7ad67c",
+    "retained_sha256": "6d22d3a390502c4eb75ddc059ed55f07f5a25faea30dc1d2e02c569d1b7ad67c"
+  },
+  "drafts/prepared-focused/role_parameter_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a93d071b6d75cd657167ab28a4de5370f1542b57c270c3fa3634a448e9a7c7aa",
+    "retained_sha256": "a93d071b6d75cd657167ab28a4de5370f1542b57c270c3fa3634a448e9a7c7aa"
+  },
+  "drafts/prepared-focused/role_record_self_read.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "29a9c2df376f7132d8894f901d9bcf3366978e59766557966cb7aeee457cfe33",
+    "retained_sha256": "29a9c2df376f7132d8894f901d9bcf3366978e59766557966cb7aeee457cfe33"
+  },
+  "drafts/prepared-focused/role_record_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e3583c2e9eadb0a0ef6a43b7f7ddcb9542a940bb7f515bebed14589a19a3e445",
+    "retained_sha256": "e3583c2e9eadb0a0ef6a43b7f7ddcb9542a940bb7f515bebed14589a19a3e445"
+  },
+  "drafts/prepared-focused/role_sample.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "08896da418338c35dfcc27bfd88a5789728899c142b3ad05904fef30b04d8a51",
+    "retained_sha256": "08896da418338c35dfcc27bfd88a5789728899c142b3ad05904fef30b04d8a51"
+  },
+  "drafts/prepared-focused/role_sample.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8629d2f2023ed8d6d4fe04d531c4028619e23239ea9c3668d6ea1414d880f437",
+    "retained_sha256": "8629d2f2023ed8d6d4fe04d531c4028619e23239ea9c3668d6ea1414d880f437"
+  },
+  "drafts/prepared-focused/role_self_read.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7206dc81d19abeeaa913f5cfd64f7328af1e55a5a9667ad17b5dccfce15bc420",
+    "retained_sha256": "7206dc81d19abeeaa913f5cfd64f7328af1e55a5a9667ad17b5dccfce15bc420"
+  },
+  "drafts/prepared-focused/role_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ff92edc3d2a46487e3269922ec6c0502af5b5170cb643785fdb4bfd7c8a6a3be",
+    "retained_sha256": "ff92edc3d2a46487e3269922ec6c0502af5b5170cb643785fdb4bfd7c8a6a3be"
+  },
+  "drafts/prepared-focused/role_slice.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b3f8924b6e7f9525483cc042712d2023c9f226b364fd32c564b0251727b9706b",
+    "retained_sha256": "b3f8924b6e7f9525483cc042712d2023c9f226b364fd32c564b0251727b9706b"
+  },
+  "drafts/prepared-focused/role_slice.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e9c6cfc9d3cd957a77f9c348b2e7001341fe0dbbf84385a0d42d1fcf9b0d87e3",
+    "retained_sha256": "e9c6cfc9d3cd957a77f9c348b2e7001341fe0dbbf84385a0d42d1fcf9b0d87e3"
+  },
+  "drafts/prepared-focused/scalar_control.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "bda387c2c4edcca813ac6802a2626ec5ba26658702c05629144fcbc0519d8a42",
+    "retained_sha256": "bda387c2c4edcca813ac6802a2626ec5ba26658702c05629144fcbc0519d8a42"
+  },
+  "drafts/prepared-focused/scalar_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b6915c927be8d8ed7832d712663db7246a181e88af9c916d872ce3355bce9f44",
+    "retained_sha256": "b6915c927be8d8ed7832d712663db7246a181e88af9c916d872ce3355bce9f44"
+  },
+  "drafts/prepared-focused/scalar_reader.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ea7ff7f7875e326ffecb0837536ff166c5c7beb744e2d99093225ee79189e026",
+    "retained_sha256": "ea7ff7f7875e326ffecb0837536ff166c5c7beb744e2d99093225ee79189e026"
+  },
+  "drafts/prepared-focused/scalar_reader.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "40e611031d6f9621cea16d20b90440688b2abbd509295971acba0ca682ba8496",
+    "retained_sha256": "40e611031d6f9621cea16d20b90440688b2abbd509295971acba0ca682ba8496"
+  },
+  "drafts/prepared-focused/scalar_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6b6c6f3cc876b6229a93312423c4de1e65e45dc90d1091c3ca5bd102da8f0f59",
+    "retained_sha256": "6b6c6f3cc876b6229a93312423c4de1e65e45dc90d1091c3ca5bd102da8f0f59"
+  },
+  "drafts/prepared-focused/scalar_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "200e9808d3e1a830ecaabeb88de0985da3ccb7825bb8014946d0150ee69375d7",
+    "retained_sha256": "200e9808d3e1a830ecaabeb88de0985da3ccb7825bb8014946d0150ee69375d7"
+  },
+  "drafts/prepared-focused/spawn_readers.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47",
+    "retained_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47"
+  },
+  "drafts/prepared-focused/spawn_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8f7ae77f91fcb96e18730007090fbdf95a8b210ef2e23bd4f348641d1a878e95",
+    "retained_sha256": "8f7ae77f91fcb96e18730007090fbdf95a8b210ef2e23bd4f348641d1a878e95"
+  },
+  "drafts/prepared-focused/spawn_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92",
+    "retained_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92"
+  },
+  "drafts/prepared-focused/spawn_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9bad642298720054ee50142855ff4978dcb958e1739c8bb4b088290c2300e4f1",
+    "retained_sha256": "9bad642298720054ee50142855ff4978dcb958e1739c8bb4b088290c2300e4f1"
+  },
+  "drafts/prepared-focused/static_constant_mask.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "856120d1da907b3edc7f879f5c171966e61b8a8cc9dbb82c755793cc629b6a84",
+    "retained_sha256": "856120d1da907b3edc7f879f5c171966e61b8a8cc9dbb82c755793cc629b6a84"
+  },
+  "drafts/prepared-focused/static_constant_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6d440731c4d29cc990927d0c8987211abefff2e4eb02195493b6994073b671b2",
+    "retained_sha256": "6d440731c4d29cc990927d0c8987211abefff2e4eb02195493b6994073b671b2"
+  },
+  "drafts/prepared-focused/static_enum_mask.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9888d5a1db5ed1def129d776438d7dc539a48a678aff612e736763eeb9a7f8e6",
+    "retained_sha256": "9888d5a1db5ed1def129d776438d7dc539a48a678aff612e736763eeb9a7f8e6"
+  },
+  "drafts/prepared-focused/static_enum_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1ac9d75e1c465463d881eac2ea2b9c3fc858e2a5984d2fb42fee946f58a6185c",
+    "retained_sha256": "1ac9d75e1c465463d881eac2ea2b9c3fc858e2a5984d2fb42fee946f58a6185c"
+  },
+  "drafts/prepared-focused/static_literal.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "29915703f13351f559eff342ae4f0af6145eedfe3a74a46c1b89cd24bf3b54cd",
+    "retained_sha256": "29915703f13351f559eff342ae4f0af6145eedfe3a74a46c1b89cd24bf3b54cd"
+  },
+  "drafts/prepared-focused/static_literal.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d17bc9bd59c32b68718a4ea72de48821db17609cccb1759bcbc8e8a546d39516",
+    "retained_sha256": "d17bc9bd59c32b68718a4ea72de48821db17609cccb1759bcbc8e8a546d39516"
+  },
+  "drafts/prepared-focused/static_package_mask.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "fb43fbcd9885a21ced3c35ac6731ca2cff8948796d13d1b544efd31445b4fed1",
+    "retained_sha256": "fb43fbcd9885a21ced3c35ac6731ca2cff8948796d13d1b544efd31445b4fed1"
+  },
+  "drafts/prepared-focused/static_package_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "22ed22f19d72771dbe689c7a563ac068f0aa39ef6dcc02cb9c6938299d07b1ea",
+    "retained_sha256": "22ed22f19d72771dbe689c7a563ac068f0aa39ef6dcc02cb9c6938299d07b1ea"
+  },
+  "drafts/prepared-focused/static_unused_handshake.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "91246d760dfca0cfa56ba064c698d56d063d50d03793751bbc9a01c39827aead",
+    "retained_sha256": "91246d760dfca0cfa56ba064c698d56d063d50d03793751bbc9a01c39827aead"
+  },
+  "drafts/prepared-focused/static_unused_handshake.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2f075aff5140777417cffb48b362d7cd671252bdd619e7a0d99186a03d3888be",
+    "retained_sha256": "2f075aff5140777417cffb48b362d7cd671252bdd619e7a0d99186a03d3888be"
+  },
+  "drafts/prepared-focused/storage_then_output.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "225fb093096c7012587d7997a63f57c282a54f885c202810497891131dcc0a4f",
+    "retained_sha256": "225fb093096c7012587d7997a63f57c282a54f885c202810497891131dcc0a4f"
+  },
+  "drafts/prepared-focused/storage_then_output.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ee30dd4859231115a2717574fcb8d48c1bc1ad9f7fb7db651dd3b288720f78ac",
+    "retained_sha256": "ee30dd4859231115a2717574fcb8d48c1bc1ad9f7fb7db651dd3b288720f78ac"
+  },
+  "drafts/prepared-focused/unused_with_child.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3e367ab391310e1bf0ea1d4cf56488f25ad2b3503140916997f7d136abe1e7e3",
+    "retained_sha256": "3e367ab391310e1bf0ea1d4cf56488f25ad2b3503140916997f7d136abe1e7e3"
+  },
+  "drafts/prepared-focused/unused_with_child.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "85ff47fa346ff5e874ca66332227acd1ce8e42ce83b7d97fd360a2d2663c2a04",
+    "retained_sha256": "85ff47fa346ff5e874ca66332227acd1ce8e42ce83b7d97fd360a2d2663c2a04"
+  },
+  "drafts/prepared-initial/blocking_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4f49b78e863fcbd74e714c13f813aa1969187ae23589fd46de02b48f38bccc99",
+    "retained_sha256": "4f49b78e863fcbd74e714c13f813aa1969187ae23589fd46de02b48f38bccc99"
+  },
+  "drafts/prepared-initial/collision_done.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e1327422f06573efee8133a794b248a054210930919297b4a62f586f9db1cb27",
+    "retained_sha256": "e1327422f06573efee8133a794b248a054210930919297b4a62f586f9db1cb27"
+  },
+  "drafts/prepared-initial/collision_isf_child_start_seen.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7dd05d717338c9a06da984b5b9c874a15b620efa02b3883c60aba2711fd25b9d",
+    "retained_sha256": "7dd05d717338c9a06da984b5b9c874a15b620efa02b3883c60aba2711fd25b9d"
+  },
+  "drafts/prepared-initial/collision_packet.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "f7ce14df628ac390eaf9b324d853d7af21352d65550e10ba7117774ac758418e",
+    "retained_sha256": "f7ce14df628ac390eaf9b324d853d7af21352d65550e10ba7117774ac758418e"
+  },
+  "drafts/prepared-initial/collision_start.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "86410b8d50edc4ca708fe575cdb94c9456489f6a06a428a9992cab5db680feb0",
+    "retained_sha256": "86410b8d50edc4ca708fe575cdb94c9456489f6a06a428a9992cab5db680feb0"
+  },
+  "drafts/prepared-initial/competing_children.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d2ded22323bfee9a8c55a3666f51a4c85200a467c345d4e1386b4fbe78c27715",
+    "retained_sha256": "d2ded22323bfee9a8c55a3666f51a4c85200a467c345d4e1386b4fbe78c27715"
+  },
+  "drafts/prepared-initial/domain_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2c65469b5d0d7cb5d8c998adf461b5ea35b9c27b1c8503fb4c8fea0d0e586f6a",
+    "retained_sha256": "2c65469b5d0d7cb5d8c998adf461b5ea35b9c27b1c8503fb4c8fea0d0e586f6a"
+  },
+  "drafts/prepared-initial/domain_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0dd6105c010a99a66f40f826ab392f09f3121a7f7011d02e719d50d249488d0f",
+    "retained_sha256": "0dd6105c010a99a66f40f826ab392f09f3121a7f7011d02e719d50d249488d0f"
+  },
+  "drafts/prepared-initial/formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "851990fbe9743943f267b7f6459fa161e02ce6a07b6858afe8c96a19da1199e5",
+    "retained_sha256": "851990fbe9743943f267b7f6459fa161e02ce6a07b6858afe8c96a19da1199e5"
+  },
+  "drafts/prepared-initial/imported_domain_blocking.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e6231fe149f6ef0f87289013c65f7a24ea7e0f446fe6037322c4d67cbdcf1c9b",
+    "retained_sha256": "e6231fe149f6ef0f87289013c65f7a24ea7e0f446fe6037322c4d67cbdcf1c9b"
+  },
+  "drafts/prepared-initial/imported_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6b52e5d83f9f61f96ddaa36fd2aeaa173c263163b1cdfd40805d85a15c9b2984",
+    "retained_sha256": "6b52e5d83f9f61f96ddaa36fd2aeaa173c263163b1cdfd40805d85a15c9b2984"
+  },
+  "drafts/prepared-initial/input_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c2b331aefe5e92aa9df3545337ac7839357c7d0cbe9e2ba3525f9e5edf0bffe1",
+    "retained_sha256": "c2b331aefe5e92aa9df3545337ac7839357c7d0cbe9e2ba3525f9e5edf0bffe1"
+  },
+  "drafts/prepared-initial/scalar_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b2ed65b68d632e258bd3062c45c17b9f77e5640ee032d00b9cc29e40bb84bc60",
+    "retained_sha256": "b2ed65b68d632e258bd3062c45c17b9f77e5640ee032d00b9cc29e40bb84bc60"
+  },
+  "drafts/prepared-initial/scalar_reader.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a207c0c6c0b836a668a6bdab58ba752a925b7eb7d8095bda6f7f95253410db00",
+    "retained_sha256": "a207c0c6c0b836a668a6bdab58ba752a925b7eb7d8095bda6f7f95253410db00"
+  },
+  "drafts/prepared-initial/scalar_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "abe5d38ce41d992ed96d0377de03f269cf59ece7c33b8eb0601ecc1c7cd72dcf",
+    "retained_sha256": "abe5d38ce41d992ed96d0377de03f269cf59ece7c33b8eb0601ecc1c7cd72dcf"
+  },
+  "drafts/prepared-initial/spawn_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6e14ee1664e6d5ac5eb961c0ca98751d40638450a5b813648a2b8cc5d153f85b",
+    "retained_sha256": "6e14ee1664e6d5ac5eb961c0ca98751d40638450a5b813648a2b8cc5d153f85b"
+  },
+  "drafts/prepared-initial/spawn_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4590e4380c068ea043d5c6898d8c21de1be13a18a7d4477681d3ece0a1f12256",
+    "retained_sha256": "4590e4380c068ea043d5c6898d8c21de1be13a18a7d4477681d3ece0a1f12256"
+  },
+  "drafts/prepared-initial/storage_then_output.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ba060725bca69ecf4e8ebe8a7e13720ba02960b91e044368ba754b2d78edda3f",
+    "retained_sha256": "ba060725bca69ecf4e8ebe8a7e13720ba02960b91e044368ba754b2d78edda3f"
+  },
+  "drafts/prepared-initial/unused_with_child.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "724077f1e70f18d2e3636eaad9512013fa92db8afab726c6d0ca233ec460b81b",
+    "retained_sha256": "724077f1e70f18d2e3636eaad9512013fa92db8afab726c6d0ca233ec460b81b"
+  },
+  "drafts/prepared-package/blocking_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ddeedb337d798604ccb139f14bf7b85c290a05451e0ae638673231845ec65456",
+    "retained_sha256": "ddeedb337d798604ccb139f14bf7b85c290a05451e0ae638673231845ec65456"
+  },
+  "drafts/prepared-package/collision_done.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a8f84622b48645d0c5f7e10924c1903a8c56ec6774f73124038f14912ebe383d",
+    "retained_sha256": "a8f84622b48645d0c5f7e10924c1903a8c56ec6774f73124038f14912ebe383d"
+  },
+  "drafts/prepared-package/collision_isf_child_start_seen.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e089e276ff1b7879971f93def41a12fe5617714436f5fd64170d7028202bda8f",
+    "retained_sha256": "e089e276ff1b7879971f93def41a12fe5617714436f5fd64170d7028202bda8f"
+  },
+  "drafts/prepared-package/collision_packet.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "dc7530c9c2d941e3ab4cc38c145c2f389312a536b09d33b98e6b50408110e0fe",
+    "retained_sha256": "dc7530c9c2d941e3ab4cc38c145c2f389312a536b09d33b98e6b50408110e0fe"
+  },
+  "drafts/prepared-package/collision_start.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "15b7b32d2cda50cb01994bd640b1f8c9730d03bf27c77d496c4ee51ddbd20496",
+    "retained_sha256": "15b7b32d2cda50cb01994bd640b1f8c9730d03bf27c77d496c4ee51ddbd20496"
+  },
+  "drafts/prepared-package/competing_children.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "767a6842077b9e5c80da3593b04033a875d75b7060f8b470d0a295a275121a38",
+    "retained_sha256": "767a6842077b9e5c80da3593b04033a875d75b7060f8b470d0a295a275121a38"
+  },
+  "drafts/prepared-package/domain_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2d2c2f1b5e20d36b9e0b9e81549f0a94c6e8d36f832c90c770b285bbec30bb0c",
+    "retained_sha256": "2d2c2f1b5e20d36b9e0b9e81549f0a94c6e8d36f832c90c770b285bbec30bb0c"
+  },
+  "drafts/prepared-package/domain_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "79d176b03c4dedf9ca79ffb89bf0070e4753be4841d73890772d18c3ccff9834",
+    "retained_sha256": "79d176b03c4dedf9ca79ffb89bf0070e4753be4841d73890772d18c3ccff9834"
+  },
+  "drafts/prepared-package/formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7e0ffe70c74d769d19e12b6245f26dcf08cd6d5f498ac0057f4d2943875b3df0",
+    "retained_sha256": "7e0ffe70c74d769d19e12b6245f26dcf08cd6d5f498ac0057f4d2943875b3df0"
+  },
+  "drafts/prepared-package/imported_domain_blocking.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "67346cdc1d877e01cd5bb3859895918b8de050759739beca172fe1c3522f3de3",
+    "retained_sha256": "67346cdc1d877e01cd5bb3859895918b8de050759739beca172fe1c3522f3de3"
+  },
+  "drafts/prepared-package/imported_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "327f6c777efb4f63b88ab929c6825b1e45b7254bbd0ec5e7b06a884a74d8f87a",
+    "retained_sha256": "327f6c777efb4f63b88ab929c6825b1e45b7254bbd0ec5e7b06a884a74d8f87a"
+  },
+  "drafts/prepared-package/input_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4b9652bbb611d25f1b649520a5ce9249ad9b782dd737a66ef6c8108f7a6df907",
+    "retained_sha256": "4b9652bbb611d25f1b649520a5ce9249ad9b782dd737a66ef6c8108f7a6df907"
+  },
+  "drafts/prepared-package/precedence_0.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "46a3cef14949909de53206fde6f775041afa23355aa6a39e4cf77b6ac9496d57",
+    "retained_sha256": "46a3cef14949909de53206fde6f775041afa23355aa6a39e4cf77b6ac9496d57"
+  },
+  "drafts/prepared-package/precedence_1.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9b0343aaf50b6c8696e0b604806369a2a17f9c4bce47bbef3b029cb3a1be3de4",
+    "retained_sha256": "9b0343aaf50b6c8696e0b604806369a2a17f9c4bce47bbef3b029cb3a1be3de4"
+  },
+  "drafts/prepared-package/precedence_10.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a3c115f60f420bbb86daab6ca90ee3da6fefab79ad4c985b11ce2d8a74cc249b",
+    "retained_sha256": "a3c115f60f420bbb86daab6ca90ee3da6fefab79ad4c985b11ce2d8a74cc249b"
+  },
+  "drafts/prepared-package/precedence_11.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "75247fc0bbf9b9e9b331f174b21154c7e0d59076299b831c5101be19d9842798",
+    "retained_sha256": "75247fc0bbf9b9e9b331f174b21154c7e0d59076299b831c5101be19d9842798"
+  },
+  "drafts/prepared-package/precedence_12.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a26a2cf7aec953f0122775512a65e4e76b81fef98b8945c8e2790826f83083a9",
+    "retained_sha256": "a26a2cf7aec953f0122775512a65e4e76b81fef98b8945c8e2790826f83083a9"
+  },
+  "drafts/prepared-package/precedence_13.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "68a8db910e6b96c60ae735b1fe6d7c45f3d8a4db83b82eee6105eb9f92499fe1",
+    "retained_sha256": "68a8db910e6b96c60ae735b1fe6d7c45f3d8a4db83b82eee6105eb9f92499fe1"
+  },
+  "drafts/prepared-package/precedence_14.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6837d120188c938a8e12c5c9a76395f6b621f1fce85ec655b056d075e75e5c4c",
+    "retained_sha256": "6837d120188c938a8e12c5c9a76395f6b621f1fce85ec655b056d075e75e5c4c"
+  },
+  "drafts/prepared-package/precedence_15.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "44fc0a37e2c53ae77603e71ff6dd4c629aae80ef8c34f8da91d17a7fc29ee944",
+    "retained_sha256": "44fc0a37e2c53ae77603e71ff6dd4c629aae80ef8c34f8da91d17a7fc29ee944"
+  },
+  "drafts/prepared-package/precedence_16.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c7768166751cf63a5bc7f2bd47e5a95200d2776477864ea4f48d6ea91203b7fb",
+    "retained_sha256": "c7768166751cf63a5bc7f2bd47e5a95200d2776477864ea4f48d6ea91203b7fb"
+  },
+  "drafts/prepared-package/precedence_2.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b893a300fab9d40ec858c9c4e3828b0eb4a347d5ab18854d1ca1c65dddbfb4c8",
+    "retained_sha256": "b893a300fab9d40ec858c9c4e3828b0eb4a347d5ab18854d1ca1c65dddbfb4c8"
+  },
+  "drafts/prepared-package/precedence_3.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "17ab1107e13551b0d4cb61d15ba09a4fab30961f4b6b94bcd40e6d94ef5fd8f6",
+    "retained_sha256": "17ab1107e13551b0d4cb61d15ba09a4fab30961f4b6b94bcd40e6d94ef5fd8f6"
+  },
+  "drafts/prepared-package/precedence_4.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7c4bf8f2ccae8fce9d2703bb536f885f6c4f3dcc1c11ffd4867b1fbb1860edfe",
+    "retained_sha256": "7c4bf8f2ccae8fce9d2703bb536f885f6c4f3dcc1c11ffd4867b1fbb1860edfe"
+  },
+  "drafts/prepared-package/precedence_5.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "94e60458cf93879b7f1b03e31e9811ac7b80f1f071100a873eb5d7f37052611d",
+    "retained_sha256": "94e60458cf93879b7f1b03e31e9811ac7b80f1f071100a873eb5d7f37052611d"
+  },
+  "drafts/prepared-package/precedence_6.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "93b76042bcf291eafc4434d9b37672d85260616fbc210e6eda0f385a65844baa",
+    "retained_sha256": "93b76042bcf291eafc4434d9b37672d85260616fbc210e6eda0f385a65844baa"
+  },
+  "drafts/prepared-package/precedence_7.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "532ae0c8dd8a502f7c7d5d9a335e794da4fc214403c3369885534fc81c7e702e",
+    "retained_sha256": "532ae0c8dd8a502f7c7d5d9a335e794da4fc214403c3369885534fc81c7e702e"
+  },
+  "drafts/prepared-package/precedence_8.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "67bd26493853b04335544e4915b8e28f23d1360fc97292841976a2020aa3d1cb",
+    "retained_sha256": "67bd26493853b04335544e4915b8e28f23d1360fc97292841976a2020aa3d1cb"
+  },
+  "drafts/prepared-package/precedence_9.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6635afba66c575340d82e3a081f3081617838eb1efb7ed5df9ddcc50641f5745",
+    "retained_sha256": "6635afba66c575340d82e3a081f3081617838eb1efb7ed5df9ddcc50641f5745"
+  },
+  "drafts/prepared-package/role_alias_collision.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ed00070d1ac0b68ce78654bef611c3e43417803eb061608a572525c75b1f80c4",
+    "retained_sha256": "ed00070d1ac0b68ce78654bef611c3e43417803eb061608a572525c75b1f80c4"
+  },
+  "drafts/prepared-package/role_formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "07644d9a33d1c8645df02831e5e1294142b35e2e9dfa38d57d299135646cb8a8",
+    "retained_sha256": "07644d9a33d1c8645df02831e5e1294142b35e2e9dfa38d57d299135646cb8a8"
+  },
+  "drafts/prepared-package/role_guard_assert.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "299560c7b5a76f363fe3f947b17b0fca8f4d1bdbac974bcbb06622dc8bbc791c",
+    "retained_sha256": "299560c7b5a76f363fe3f947b17b0fca8f4d1bdbac974bcbb06622dc8bbc791c"
+  },
+  "drafts/prepared-package/role_parameter_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a78eea9eef135b3875d8fb0cf18e5925629ba866545e447587d7e07b7baae320",
+    "retained_sha256": "a78eea9eef135b3875d8fb0cf18e5925629ba866545e447587d7e07b7baae320"
+  },
+  "drafts/prepared-package/role_record_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "66002ea6485af0559db4124a78977518c581287dadc0913568d2a1a65e330266",
+    "retained_sha256": "66002ea6485af0559db4124a78977518c581287dadc0913568d2a1a65e330266"
+  },
+  "drafts/prepared-package/role_sample.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ef93e46fa5dd2cdb06f8d34c3fa6524e6e398ee64bae9ddfa92304348b36b1d8",
+    "retained_sha256": "ef93e46fa5dd2cdb06f8d34c3fa6524e6e398ee64bae9ddfa92304348b36b1d8"
+  },
+  "drafts/prepared-package/role_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1af7097885ab691e229f1677c6f3142cc032216e330ed24a7a0eada71e398fc2",
+    "retained_sha256": "1af7097885ab691e229f1677c6f3142cc032216e330ed24a7a0eada71e398fc2"
+  },
+  "drafts/prepared-package/role_slice.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "591c4078f943158d2c9d3b7fae33a66763dd4129319a722de716f71e1fd9ca6b",
+    "retained_sha256": "591c4078f943158d2c9d3b7fae33a66763dd4129319a722de716f71e1fd9ca6b"
+  },
+  "drafts/prepared-package/scalar_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c0b9c795e8ca48316ef04d6e5bc8f7417acfe8fb04aec6becf80ce585b8f0bed",
+    "retained_sha256": "c0b9c795e8ca48316ef04d6e5bc8f7417acfe8fb04aec6becf80ce585b8f0bed"
+  },
+  "drafts/prepared-package/scalar_reader.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "f5b9843b8e2ac015591e620d17fc6af3f2a24ae8b33a7e15a96df3fef52fc5ac",
+    "retained_sha256": "f5b9843b8e2ac015591e620d17fc6af3f2a24ae8b33a7e15a96df3fef52fc5ac"
+  },
+  "drafts/prepared-package/scalar_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "08bf0154053bd339b7fcb86d9b9f9ae644ecf30a07b734aaf9d3eeb2b7236f0b",
+    "retained_sha256": "08bf0154053bd339b7fcb86d9b9f9ae644ecf30a07b734aaf9d3eeb2b7236f0b"
+  },
+  "drafts/prepared-package/spawn_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2fc63158cf9d3c5d845a29187ade422c1223c6509b764c0318b42753ea2d34fc",
+    "retained_sha256": "2fc63158cf9d3c5d845a29187ade422c1223c6509b764c0318b42753ea2d34fc"
+  },
+  "drafts/prepared-package/spawn_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ae3f0eab22edfb0b743a3ff8604a42fd20517e152e2e9a12c65410d72ea665bc",
+    "retained_sha256": "ae3f0eab22edfb0b743a3ff8604a42fd20517e152e2e9a12c65410d72ea665bc"
+  },
+  "drafts/prepared-package/static_constant_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b41216a731eb415e8a08ce1ec27f21fdd91593e0e728127962ae373e63f54880",
+    "retained_sha256": "b41216a731eb415e8a08ce1ec27f21fdd91593e0e728127962ae373e63f54880"
+  },
+  "drafts/prepared-package/static_enum_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a9ab4774d89e22c03ba14e8fb8c2ac10155beab8fa5e3a941f18b95025ee981d",
+    "retained_sha256": "a9ab4774d89e22c03ba14e8fb8c2ac10155beab8fa5e3a941f18b95025ee981d"
+  },
+  "drafts/prepared-package/static_literal.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b2e0f3570629d66958cef1130d14bd1ab5bf086c8f19488a1dbbc1f81ca4249f",
+    "retained_sha256": "b2e0f3570629d66958cef1130d14bd1ab5bf086c8f19488a1dbbc1f81ca4249f"
+  },
+  "drafts/prepared-package/static_package_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "af4c94ee26dd132688fb7725b404d59354dce94933f818cd37da70ec128279ba",
+    "retained_sha256": "af4c94ee26dd132688fb7725b404d59354dce94933f818cd37da70ec128279ba"
+  },
+  "drafts/prepared-package/static_unused_handshake.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ac042420501780c424af6060b03fc13ebf5fda3c7fa72069867950f6ae9340d2",
+    "retained_sha256": "ac042420501780c424af6060b03fc13ebf5fda3c7fa72069867950f6ae9340d2"
+  },
+  "drafts/prepared-package/storage_then_output.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "dfad569f7e7920c99dd2488ca9c5d9ba606d997fe4ce91ddcf419a8e7e2f1f9b",
+    "retained_sha256": "dfad569f7e7920c99dd2488ca9c5d9ba606d997fe4ce91ddcf419a8e7e2f1f9b"
+  },
+  "drafts/prepared-package/unused_with_child.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1c94e66f8f417c1e393d1de48070f55d6bdd68333afa063519cde3a970274450",
+    "retained_sha256": "1c94e66f8f417c1e393d1de48070f55d6bdd68333afa063519cde3a970274450"
+  },
+  "drafts/prepared-roles/blocking_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4f49b78e863fcbd74e714c13f813aa1969187ae23589fd46de02b48f38bccc99",
+    "retained_sha256": "4f49b78e863fcbd74e714c13f813aa1969187ae23589fd46de02b48f38bccc99"
+  },
+  "drafts/prepared-roles/collision_done.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9712e0f3e4d903cbaca0b0f85bdb91530f5bbc3a34acd57a58e74e42f8dd6cd7",
+    "retained_sha256": "9712e0f3e4d903cbaca0b0f85bdb91530f5bbc3a34acd57a58e74e42f8dd6cd7"
+  },
+  "drafts/prepared-roles/collision_isf_child_start_seen.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "76017bd6a43d0e475a1c2fff1aa3114bfda3f5c2d03b8b6a250514cb9bdf6401",
+    "retained_sha256": "76017bd6a43d0e475a1c2fff1aa3114bfda3f5c2d03b8b6a250514cb9bdf6401"
+  },
+  "drafts/prepared-roles/collision_packet.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9ec57439a1fa706097d574b6ece8f98c0a7fce37d256bdd0e66d504d23fa1492",
+    "retained_sha256": "9ec57439a1fa706097d574b6ece8f98c0a7fce37d256bdd0e66d504d23fa1492"
+  },
+  "drafts/prepared-roles/collision_start.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "57b7e935ae5484eeb7de67481999137c920cc9db8adaa841383248b72b0be0ab",
+    "retained_sha256": "57b7e935ae5484eeb7de67481999137c920cc9db8adaa841383248b72b0be0ab"
+  },
+  "drafts/prepared-roles/competing_children.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d2ded22323bfee9a8c55a3666f51a4c85200a467c345d4e1386b4fbe78c27715",
+    "retained_sha256": "d2ded22323bfee9a8c55a3666f51a4c85200a467c345d4e1386b4fbe78c27715"
+  },
+  "drafts/prepared-roles/domain_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9cb6c1653d36032bf5445ca29d81d6bf7312300fd676efaedcf9a5d4e39a6c8d",
+    "retained_sha256": "9cb6c1653d36032bf5445ca29d81d6bf7312300fd676efaedcf9a5d4e39a6c8d"
+  },
+  "drafts/prepared-roles/domain_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0dd6105c010a99a66f40f826ab392f09f3121a7f7011d02e719d50d249488d0f",
+    "retained_sha256": "0dd6105c010a99a66f40f826ab392f09f3121a7f7011d02e719d50d249488d0f"
+  },
+  "drafts/prepared-roles/formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "851990fbe9743943f267b7f6459fa161e02ce6a07b6858afe8c96a19da1199e5",
+    "retained_sha256": "851990fbe9743943f267b7f6459fa161e02ce6a07b6858afe8c96a19da1199e5"
+  },
+  "drafts/prepared-roles/imported_domain_blocking.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e6231fe149f6ef0f87289013c65f7a24ea7e0f446fe6037322c4d67cbdcf1c9b",
+    "retained_sha256": "e6231fe149f6ef0f87289013c65f7a24ea7e0f446fe6037322c4d67cbdcf1c9b"
+  },
+  "drafts/prepared-roles/imported_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6b52e5d83f9f61f96ddaa36fd2aeaa173c263163b1cdfd40805d85a15c9b2984",
+    "retained_sha256": "6b52e5d83f9f61f96ddaa36fd2aeaa173c263163b1cdfd40805d85a15c9b2984"
+  },
+  "drafts/prepared-roles/input_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c2b331aefe5e92aa9df3545337ac7839357c7d0cbe9e2ba3525f9e5edf0bffe1",
+    "retained_sha256": "c2b331aefe5e92aa9df3545337ac7839357c7d0cbe9e2ba3525f9e5edf0bffe1"
+  },
+  "drafts/prepared-roles/precedence_0.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "73b40617b3f3ad088639376b9b5a896d19eb1ac8cffca504cc61120ea51e21e7",
+    "retained_sha256": "73b40617b3f3ad088639376b9b5a896d19eb1ac8cffca504cc61120ea51e21e7"
+  },
+  "drafts/prepared-roles/precedence_1.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "085792e22acaf6b1ffcbf62ac0a8e638e89f30809a26d65ce8b6b9271e8b3846",
+    "retained_sha256": "085792e22acaf6b1ffcbf62ac0a8e638e89f30809a26d65ce8b6b9271e8b3846"
+  },
+  "drafts/prepared-roles/precedence_10.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "db3e5924aace74e31cd6a502c53107ebeff3b44fb6becacd277d24c7aa23b1f3",
+    "retained_sha256": "db3e5924aace74e31cd6a502c53107ebeff3b44fb6becacd277d24c7aa23b1f3"
+  },
+  "drafts/prepared-roles/precedence_11.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "95253d79c26b9e846f66f331d940c881d2f0c0dbf6306193b962becb065c2359",
+    "retained_sha256": "95253d79c26b9e846f66f331d940c881d2f0c0dbf6306193b962becb065c2359"
+  },
+  "drafts/prepared-roles/precedence_12.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1cd10def7391a9ab88dd47a8822d9c9e1416275f442c95263061b4fe7f73efdf",
+    "retained_sha256": "1cd10def7391a9ab88dd47a8822d9c9e1416275f442c95263061b4fe7f73efdf"
+  },
+  "drafts/prepared-roles/precedence_13.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b1ea0035cbd5bb0b5ca4be89281f09f3eccea0e5445c76b3c4f5f5bd02b222c3",
+    "retained_sha256": "b1ea0035cbd5bb0b5ca4be89281f09f3eccea0e5445c76b3c4f5f5bd02b222c3"
+  },
+  "drafts/prepared-roles/precedence_14.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4e20b4f6331360e91873d991c69e2826b52b9b3f70b7e28db4a002c107d162c6",
+    "retained_sha256": "4e20b4f6331360e91873d991c69e2826b52b9b3f70b7e28db4a002c107d162c6"
+  },
+  "drafts/prepared-roles/precedence_15.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7b480fa2b432ef6e057da30a6af905ca7f4093ba3252cc0bd0cf4c95063b1631",
+    "retained_sha256": "7b480fa2b432ef6e057da30a6af905ca7f4093ba3252cc0bd0cf4c95063b1631"
+  },
+  "drafts/prepared-roles/precedence_16.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ecf5d4d4804627d098448f5a25ba39dfaa2ab48d0549807f4d6a92d22210ae37",
+    "retained_sha256": "ecf5d4d4804627d098448f5a25ba39dfaa2ab48d0549807f4d6a92d22210ae37"
+  },
+  "drafts/prepared-roles/precedence_2.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b7bb41244bc33b3f96747c0eb8dbcaaadff9d2a83aafd2c0054218e80903e127",
+    "retained_sha256": "b7bb41244bc33b3f96747c0eb8dbcaaadff9d2a83aafd2c0054218e80903e127"
+  },
+  "drafts/prepared-roles/precedence_3.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b6ec595e3a2b4658000a12cfbd5a3b21a2959263068154659392f26b77c09581",
+    "retained_sha256": "b6ec595e3a2b4658000a12cfbd5a3b21a2959263068154659392f26b77c09581"
+  },
+  "drafts/prepared-roles/precedence_4.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "925e9018de9a463c0d9f80691d055142acb51ffcc85f4a34996b468cb6519920",
+    "retained_sha256": "925e9018de9a463c0d9f80691d055142acb51ffcc85f4a34996b468cb6519920"
+  },
+  "drafts/prepared-roles/precedence_5.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "bc193c69202443a302111daba65cb5a91d736685f58b92f09c78d2753d5e1254",
+    "retained_sha256": "bc193c69202443a302111daba65cb5a91d736685f58b92f09c78d2753d5e1254"
+  },
+  "drafts/prepared-roles/precedence_6.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "54f49b0ff347e01e04f87db7484e0070fd9c6836bf88173b1b43af6083f6f675",
+    "retained_sha256": "54f49b0ff347e01e04f87db7484e0070fd9c6836bf88173b1b43af6083f6f675"
+  },
+  "drafts/prepared-roles/precedence_7.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5524e244adc1d5f2fc8544c99b76564491e67261de478f1f61151a3b3570d55f",
+    "retained_sha256": "5524e244adc1d5f2fc8544c99b76564491e67261de478f1f61151a3b3570d55f"
+  },
+  "drafts/prepared-roles/precedence_8.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "badc3655358fd1a06b4da9d73eb9f3a7631489a465c96c027daa954f4d87551c",
+    "retained_sha256": "badc3655358fd1a06b4da9d73eb9f3a7631489a465c96c027daa954f4d87551c"
+  },
+  "drafts/prepared-roles/precedence_9.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "312d794c27b0aad9198545920947965c4c92061ad8012d556f562743532d55bc",
+    "retained_sha256": "312d794c27b0aad9198545920947965c4c92061ad8012d556f562743532d55bc"
+  },
+  "drafts/prepared-roles/role_alias_collision.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "f799454676b3638d61648cdf0689605d04ed73b78858350727c6dff9ec4a05bd",
+    "retained_sha256": "f799454676b3638d61648cdf0689605d04ed73b78858350727c6dff9ec4a05bd"
+  },
+  "drafts/prepared-roles/role_formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "603eb1bfb60a26e6f29d75ed55a1132468a1570a8318bbb2f283fde16a26f8db",
+    "retained_sha256": "603eb1bfb60a26e6f29d75ed55a1132468a1570a8318bbb2f283fde16a26f8db"
+  },
+  "drafts/prepared-roles/role_guard_assert.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "391f378cb31567dc85e997287599f46e149d29c3990d6200ca0c6dc58a5465bb",
+    "retained_sha256": "391f378cb31567dc85e997287599f46e149d29c3990d6200ca0c6dc58a5465bb"
+  },
+  "drafts/prepared-roles/role_parameter_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0890309920e2b1d229cad9cc977b0a8f18b5b922fa78a8e185f62f0bbd962d07",
+    "retained_sha256": "0890309920e2b1d229cad9cc977b0a8f18b5b922fa78a8e185f62f0bbd962d07"
+  },
+  "drafts/prepared-roles/role_record_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ab95e7121a76517d20a16a220287e24aab5f47c397863cf2401d8c087c34d9c7",
+    "retained_sha256": "ab95e7121a76517d20a16a220287e24aab5f47c397863cf2401d8c087c34d9c7"
+  },
+  "drafts/prepared-roles/role_sample.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a96502a6898a9e8d8b1231d448290ab92f9997fd30d4d4d47e2e4ea9697289ac",
+    "retained_sha256": "a96502a6898a9e8d8b1231d448290ab92f9997fd30d4d4d47e2e4ea9697289ac"
+  },
+  "drafts/prepared-roles/role_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e70e825bffd263fdbf86547fe832350a56cfd5de660042dcb7c8ad7e41c4e2cd",
+    "retained_sha256": "e70e825bffd263fdbf86547fe832350a56cfd5de660042dcb7c8ad7e41c4e2cd"
+  },
+  "drafts/prepared-roles/role_slice.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "77b677d85c29c1f29d73a9652bf5d92a32e950f8c55a17ce461eb35121213187",
+    "retained_sha256": "77b677d85c29c1f29d73a9652bf5d92a32e950f8c55a17ce461eb35121213187"
+  },
+  "drafts/prepared-roles/scalar_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b2ed65b68d632e258bd3062c45c17b9f77e5640ee032d00b9cc29e40bb84bc60",
+    "retained_sha256": "b2ed65b68d632e258bd3062c45c17b9f77e5640ee032d00b9cc29e40bb84bc60"
+  },
+  "drafts/prepared-roles/scalar_reader.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ca3f796f8cd3319672bb04f4c293ede0d8e530eb75159c817bd5d142cf96ed7c",
+    "retained_sha256": "ca3f796f8cd3319672bb04f4c293ede0d8e530eb75159c817bd5d142cf96ed7c"
+  },
+  "drafts/prepared-roles/scalar_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "abe5d38ce41d992ed96d0377de03f269cf59ece7c33b8eb0601ecc1c7cd72dcf",
+    "retained_sha256": "abe5d38ce41d992ed96d0377de03f269cf59ece7c33b8eb0601ecc1c7cd72dcf"
+  },
+  "drafts/prepared-roles/spawn_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "801bdab7352086f79b1c84894118c6dfa35c69aa580c818da8e827fcc4f75ea7",
+    "retained_sha256": "801bdab7352086f79b1c84894118c6dfa35c69aa580c818da8e827fcc4f75ea7"
+  },
+  "drafts/prepared-roles/spawn_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4590e4380c068ea043d5c6898d8c21de1be13a18a7d4477681d3ece0a1f12256",
+    "retained_sha256": "4590e4380c068ea043d5c6898d8c21de1be13a18a7d4477681d3ece0a1f12256"
+  },
+  "drafts/prepared-roles/storage_then_output.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ba060725bca69ecf4e8ebe8a7e13720ba02960b91e044368ba754b2d78edda3f",
+    "retained_sha256": "ba060725bca69ecf4e8ebe8a7e13720ba02960b91e044368ba754b2d78edda3f"
+  },
+  "drafts/prepared-roles/unused_with_child.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "724077f1e70f18d2e3636eaad9512013fa92db8afab726c6d0ca233ec460b81b",
+    "retained_sha256": "724077f1e70f18d2e3636eaad9512013fa92db8afab726c6d0ca233ec460b81b"
+  },
+  "drafts/prepared-static/blocking_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ddeedb337d798604ccb139f14bf7b85c290a05451e0ae638673231845ec65456",
+    "retained_sha256": "ddeedb337d798604ccb139f14bf7b85c290a05451e0ae638673231845ec65456"
+  },
+  "drafts/prepared-static/collision_done.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a8f84622b48645d0c5f7e10924c1903a8c56ec6774f73124038f14912ebe383d",
+    "retained_sha256": "a8f84622b48645d0c5f7e10924c1903a8c56ec6774f73124038f14912ebe383d"
+  },
+  "drafts/prepared-static/collision_isf_child_start_seen.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e089e276ff1b7879971f93def41a12fe5617714436f5fd64170d7028202bda8f",
+    "retained_sha256": "e089e276ff1b7879971f93def41a12fe5617714436f5fd64170d7028202bda8f"
+  },
+  "drafts/prepared-static/collision_packet.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "dc7530c9c2d941e3ab4cc38c145c2f389312a536b09d33b98e6b50408110e0fe",
+    "retained_sha256": "dc7530c9c2d941e3ab4cc38c145c2f389312a536b09d33b98e6b50408110e0fe"
+  },
+  "drafts/prepared-static/collision_start.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "15b7b32d2cda50cb01994bd640b1f8c9730d03bf27c77d496c4ee51ddbd20496",
+    "retained_sha256": "15b7b32d2cda50cb01994bd640b1f8c9730d03bf27c77d496c4ee51ddbd20496"
+  },
+  "drafts/prepared-static/competing_children.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "767a6842077b9e5c80da3593b04033a875d75b7060f8b470d0a295a275121a38",
+    "retained_sha256": "767a6842077b9e5c80da3593b04033a875d75b7060f8b470d0a295a275121a38"
+  },
+  "drafts/prepared-static/domain_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2d2c2f1b5e20d36b9e0b9e81549f0a94c6e8d36f832c90c770b285bbec30bb0c",
+    "retained_sha256": "2d2c2f1b5e20d36b9e0b9e81549f0a94c6e8d36f832c90c770b285bbec30bb0c"
+  },
+  "drafts/prepared-static/domain_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "79d176b03c4dedf9ca79ffb89bf0070e4753be4841d73890772d18c3ccff9834",
+    "retained_sha256": "79d176b03c4dedf9ca79ffb89bf0070e4753be4841d73890772d18c3ccff9834"
+  },
+  "drafts/prepared-static/formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7e0ffe70c74d769d19e12b6245f26dcf08cd6d5f498ac0057f4d2943875b3df0",
+    "retained_sha256": "7e0ffe70c74d769d19e12b6245f26dcf08cd6d5f498ac0057f4d2943875b3df0"
+  },
+  "drafts/prepared-static/imported_domain_blocking.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "67346cdc1d877e01cd5bb3859895918b8de050759739beca172fe1c3522f3de3",
+    "retained_sha256": "67346cdc1d877e01cd5bb3859895918b8de050759739beca172fe1c3522f3de3"
+  },
+  "drafts/prepared-static/imported_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "327f6c777efb4f63b88ab929c6825b1e45b7254bbd0ec5e7b06a884a74d8f87a",
+    "retained_sha256": "327f6c777efb4f63b88ab929c6825b1e45b7254bbd0ec5e7b06a884a74d8f87a"
+  },
+  "drafts/prepared-static/input_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "08134887297c7d53871e468f52237b7424637ffddd1b388427584c218aa59915",
+    "retained_sha256": "08134887297c7d53871e468f52237b7424637ffddd1b388427584c218aa59915"
+  },
+  "drafts/prepared-static/role_alias_collision.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ed00070d1ac0b68ce78654bef611c3e43417803eb061608a572525c75b1f80c4",
+    "retained_sha256": "ed00070d1ac0b68ce78654bef611c3e43417803eb061608a572525c75b1f80c4"
+  },
+  "drafts/prepared-static/role_formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "07644d9a33d1c8645df02831e5e1294142b35e2e9dfa38d57d299135646cb8a8",
+    "retained_sha256": "07644d9a33d1c8645df02831e5e1294142b35e2e9dfa38d57d299135646cb8a8"
+  },
+  "drafts/prepared-static/role_guard_assert.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "299560c7b5a76f363fe3f947b17b0fca8f4d1bdbac974bcbb06622dc8bbc791c",
+    "retained_sha256": "299560c7b5a76f363fe3f947b17b0fca8f4d1bdbac974bcbb06622dc8bbc791c"
+  },
+  "drafts/prepared-static/role_parameter_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a78eea9eef135b3875d8fb0cf18e5925629ba866545e447587d7e07b7baae320",
+    "retained_sha256": "a78eea9eef135b3875d8fb0cf18e5925629ba866545e447587d7e07b7baae320"
+  },
+  "drafts/prepared-static/role_record_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "66002ea6485af0559db4124a78977518c581287dadc0913568d2a1a65e330266",
+    "retained_sha256": "66002ea6485af0559db4124a78977518c581287dadc0913568d2a1a65e330266"
+  },
+  "drafts/prepared-static/role_sample.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ef93e46fa5dd2cdb06f8d34c3fa6524e6e398ee64bae9ddfa92304348b36b1d8",
+    "retained_sha256": "ef93e46fa5dd2cdb06f8d34c3fa6524e6e398ee64bae9ddfa92304348b36b1d8"
+  },
+  "drafts/prepared-static/role_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1af7097885ab691e229f1677c6f3142cc032216e330ed24a7a0eada71e398fc2",
+    "retained_sha256": "1af7097885ab691e229f1677c6f3142cc032216e330ed24a7a0eada71e398fc2"
+  },
+  "drafts/prepared-static/role_slice.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "591c4078f943158d2c9d3b7fae33a66763dd4129319a722de716f71e1fd9ca6b",
+    "retained_sha256": "591c4078f943158d2c9d3b7fae33a66763dd4129319a722de716f71e1fd9ca6b"
+  },
+  "drafts/prepared-static/scalar_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c0b9c795e8ca48316ef04d6e5bc8f7417acfe8fb04aec6becf80ce585b8f0bed",
+    "retained_sha256": "c0b9c795e8ca48316ef04d6e5bc8f7417acfe8fb04aec6becf80ce585b8f0bed"
+  },
+  "drafts/prepared-static/scalar_reader.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "f5b9843b8e2ac015591e620d17fc6af3f2a24ae8b33a7e15a96df3fef52fc5ac",
+    "retained_sha256": "f5b9843b8e2ac015591e620d17fc6af3f2a24ae8b33a7e15a96df3fef52fc5ac"
+  },
+  "drafts/prepared-static/scalar_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "08bf0154053bd339b7fcb86d9b9f9ae644ecf30a07b734aaf9d3eeb2b7236f0b",
+    "retained_sha256": "08bf0154053bd339b7fcb86d9b9f9ae644ecf30a07b734aaf9d3eeb2b7236f0b"
+  },
+  "drafts/prepared-static/spawn_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2fc63158cf9d3c5d845a29187ade422c1223c6509b764c0318b42753ea2d34fc",
+    "retained_sha256": "2fc63158cf9d3c5d845a29187ade422c1223c6509b764c0318b42753ea2d34fc"
+  },
+  "drafts/prepared-static/spawn_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ae3f0eab22edfb0b743a3ff8604a42fd20517e152e2e9a12c65410d72ea665bc",
+    "retained_sha256": "ae3f0eab22edfb0b743a3ff8604a42fd20517e152e2e9a12c65410d72ea665bc"
+  },
+  "drafts/prepared-static/static_enum_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a9ab4774d89e22c03ba14e8fb8c2ac10155beab8fa5e3a941f18b95025ee981d",
+    "retained_sha256": "a9ab4774d89e22c03ba14e8fb8c2ac10155beab8fa5e3a941f18b95025ee981d"
+  },
+  "drafts/prepared-static/storage_then_output.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "dfad569f7e7920c99dd2488ca9c5d9ba606d997fe4ce91ddcf419a8e7e2f1f9b",
+    "retained_sha256": "dfad569f7e7920c99dd2488ca9c5d9ba606d997fe4ce91ddcf419a8e7e2f1f9b"
+  },
+  "drafts/prepared-static/unused_with_child.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1c94e66f8f417c1e393d1de48070f55d6bdd68333afa063519cde3a970274450",
+    "retained_sha256": "1c94e66f8f417c1e393d1de48070f55d6bdd68333afa063519cde3a970274450"
+  },
+  "drafts/seal-render-first.py.source": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2264dd6337462f0e6f8544dec8a5a104f3bd2cf22bf1f2e08527af955f411da6",
+    "retained_sha256": "2264dd6337462f0e6f8544dec8a5a104f3bd2cf22bf1f2e08527af955f411da6"
+  },
+  "drafts/test-carriers.t": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c37683fb5512de0be5f2e7c66a996a72d9c7146d857eeae30eb3d00cee17686b",
+    "retained_sha256": "c37683fb5512de0be5f2e7c66a996a72d9c7146d857eeae30eb3d00cee17686b"
+  },
+  "drafts/test-extended.t": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "84ee8d8899b70bc07c4a9d39c4f16cc40e30935913076fa5fe6bd79e896d1ecf",
+    "retained_sha256": "84ee8d8899b70bc07c4a9d39c4f16cc40e30935913076fa5fe6bd79e896d1ecf"
+  },
+  "drafts/test-focused.t": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5429290efb423b55aca522948090fa85201ef2db1ffaea9722695721f8bad3a2",
+    "retained_sha256": "5429290efb423b55aca522948090fa85201ef2db1ffaea9722695721f8bad3a2"
+  },
+  "drafts/test-initial.t": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "29c0db433a9acb6126b442fe36aebfe451c122ee4941df2473fb8e2543a05342",
+    "retained_sha256": "29c0db433a9acb6126b442fe36aebfe451c122ee4941df2473fb8e2543a05342"
+  },
+  "drafts/test-package.t": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "19f36da449d22278640ae40bfc7f07677e11970b97a78e943ba267912625d910",
+    "retained_sha256": "19f36da449d22278640ae40bfc7f07677e11970b97a78e943ba267912625d910"
+  },
+  "drafts/test-roles.t": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "798c78433a75da4e64137354a402f6f0beca383b128c250db9b8caa0c948f02e",
+    "retained_sha256": "798c78433a75da4e64137354a402f6f0beca383b128c250db9b8caa0c948f02e"
+  },
+  "drafts/test-static.t": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d12147d0a6d73a7fdbcbf17e8b0cf823dd1bb5e03b21b6c170c2a9af7b33fe81",
+    "retained_sha256": "d12147d0a6d73a7fdbcbf17e8b0cf823dd1bb5e03b21b6c170c2a9af7b33fe81"
+  },
+  "executed/ChildOutputReads.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "107c8f6afab8ffef0727705b563a67f0c02e75287f5d6652ae6d047487b745e9",
+    "retained_sha256": "107c8f6afab8ffef0727705b563a67f0c02e75287f5d6652ae6d047487b745e9"
+  },
+  "executed/LoweringIR.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "58b193919c5266a7f05c141b694cf1422d493060d1cd1c08993a5256c6182e29",
+    "retained_sha256": "58b193919c5266a7f05c141b694cf1422d493060d1cd1c08993a5256c6182e29"
+  },
+  "executed/test.t": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "83bd772be61dd9a20a5b052fce2296a5a7f6bfeb65230c8d2530626ff652ec56",
+    "retained_sha256": "83bd772be61dd9a20a5b052fce2296a5a7f6bfeb65230c8d2530626ff652ec56"
+  },
+  "extended.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "423a73506d467f6d5ff163d839a6efe6988a73938192fff44934dd1b3368c7d3",
+    "retained_sha256": "163dcae8ed80ea837eafe4ffe80ee52b4d10f5766dbb1bc26bf7050d41214602"
+  },
+  "final-focused.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d2a0afc4c651241d3d0ebed838859d2a63f325c201a0e0fefedf4aa82a17fff6",
+    "retained_sha256": "d2a0afc4c651241d3d0ebed838859d2a63f325c201a0e0fefedf4aa82a17fff6"
+  },
+  "final-preparation.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "33e5d12275c00733aaaf8d088158a37619dc52879d44c72560ebb255e4736f99",
+    "retained_sha256": "33e5d12275c00733aaaf8d088158a37619dc52879d44c72560ebb255e4736f99"
+  },
+  "focused.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7fdde38aff984bff436d0087703321e58174791264d10b1da264e602b0e3f264",
+    "retained_sha256": "c1320e69018b4caf6670e78d7ec90f10040239c1ba54204eb8a9473153e08ff3"
+  },
+  "initial.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "50a0095d35a7ebbc3624f0962415a7ba5fa6b84a0260a165ffa2920fca7cd62e",
+    "retained_sha256": "50a0095d35a7ebbc3624f0962415a7ba5fa6b84a0260a165ffa2920fca7cd62e"
+  },
+  "isf_child_start_seen.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d5c03fee0cf08035ffb132a19d1d7de60babfe938396c2acdcb334fa3acbbba5",
+    "retained_sha256": "d5c03fee0cf08035ffb132a19d1d7de60babfe938396c2acdcb334fa3acbbba5"
+  },
+  "knowledge-map.txt": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "12e820b8232f16996b80e8ac5acc8f7d281f4c774765c6c8096cfc7fe2d5512b",
+    "retained_sha256": "12e820b8232f16996b80e8ac5acc8f7d281f4c774765c6c8096cfc7fe2d5512b"
+  },
+  "mutant-qualification.txt": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "616177a1248958db051744af27683fde07af9c8a0d753933c74aa3b39a323e6c",
+    "retained_sha256": "616177a1248958db051744af27683fde07af9c8a0d753933c74aa3b39a323e6c"
+  },
+  "mutants.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e766dd9e457a32da61f4c4e280b97b13edba4f10ac8f61221c2c635a23d9488a",
+    "retained_sha256": "e766dd9e457a32da61f4c4e280b97b13edba4f10ac8f61221c2c635a23d9488a"
+  },
+  "mutants/omitted_reads.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b6c53f1936be18e483cc5ad6bb04569be268ebe8aa70a36947105304313bbeb1",
+    "retained_sha256": "cc36d0647f2f2b5f12044b592f5ae4cfe09cc1331b36a0acfd6de804a044aa39"
+  },
+  "mutants/omitted_reads/FSM/Scheduler/ISF/ChildOutputReads.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "299abac7098c3c6d12fb0268b1ffe6e14328a2d48cc7e27b8b6b653200a63649",
+    "retained_sha256": "299abac7098c3c6d12fb0268b1ffe6e14328a2d48cc7e27b8b6b653200a63649"
+  },
+  "mutants/unmasked_statics.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ce85b906ca12814b14e257b9884a090869d43f633fecdb8446bd53f0fa469678",
+    "retained_sha256": "ce85b906ca12814b14e257b9884a090869d43f633fecdb8446bd53f0fa469678"
+  },
+  "mutants/unmasked_statics/FSM/Scheduler/ISF/ChildOutputReads.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "667c053b772d0f4ca4eda33e3734afc0e8ca2ef3237fac561f3fe4babc214751",
+    "retained_sha256": "667c053b772d0f4ca4eda33e3734afc0e8ca2ef3237fac561f3fe4babc214751"
+  },
+  "mutants/weak_history.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d0c914f6637d25705aa260ad7f54f8f55d4f2a0c18e513fde4c7575e6eb1cfda",
+    "retained_sha256": "d0c914f6637d25705aa260ad7f54f8f55d4f2a0c18e513fde4c7575e6eb1cfda"
+  },
+  "mutants/weak_history/FSM/Scheduler/ISF/ChildOutputReads.pm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d751ce4ab16e36f0d505c490300d10b7b674ba324d3b260d9ec241789653ba96",
+    "retained_sha256": "d751ce4ab16e36f0d505c490300d10b7b674ba324d3b260d9ec241789653ba96"
+  },
+  "package.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e30cbf315b1aa470690e92a19f329f4792b094c3efd3269c295a20bedb0e623f",
+    "retained_sha256": "e30cbf315b1aa470690e92a19f329f4792b094c3efd3269c295a20bedb0e623f"
+  },
+  "packet.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9feaf11c31de026683f918c402778e4b7713e4d4c47c9026c4a945b6675927f6",
+    "retained_sha256": "9feaf11c31de026683f918c402778e4b7713e4d4c47c9026c4a945b6675927f6"
+  },
+  "prepared/blocking_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "20bda194ba0e46848e3d7b27a24ff3e245e3674da5b5c53d31dbed11b4d0d895",
+    "retained_sha256": "20bda194ba0e46848e3d7b27a24ff3e245e3674da5b5c53d31dbed11b4d0d895"
+  },
+  "prepared/blocking_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "71fb6a2f6ffa79851fc1ffb30359e35e2bf8fea5ef1da873eff8cedc30dbc362",
+    "retained_sha256": "71fb6a2f6ffa79851fc1ffb30359e35e2bf8fea5ef1da873eff8cedc30dbc362"
+  },
+  "prepared/collision_done.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "874c5df9aeabd16d3786cf80dc2d8f80ca9a2389392e566fef337072da4f9437",
+    "retained_sha256": "874c5df9aeabd16d3786cf80dc2d8f80ca9a2389392e566fef337072da4f9437"
+  },
+  "prepared/collision_done.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "93aefff91e162ec1875a4b27183b3cf01d8041ee631235bc7bb2777a8c627ba5",
+    "retained_sha256": "93aefff91e162ec1875a4b27183b3cf01d8041ee631235bc7bb2777a8c627ba5"
+  },
+  "prepared/collision_isf_child_start_seen.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "74f8a5700731ff1830b2e06df5ce0e764a8a1c449391ac93079ad9f90ab415fe",
+    "retained_sha256": "74f8a5700731ff1830b2e06df5ce0e764a8a1c449391ac93079ad9f90ab415fe"
+  },
+  "prepared/collision_isf_child_start_seen.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3d0c61d52e7ea53e7c50e0afa54e1c5a5b7dcb6edab2206706f2ed4e615270d8",
+    "retained_sha256": "3d0c61d52e7ea53e7c50e0afa54e1c5a5b7dcb6edab2206706f2ed4e615270d8"
+  },
+  "prepared/collision_packet.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0d8593f6f841f9e52a24cfa03c9af80f35b8b5c56fa2718ebd39e3f4ead170f8",
+    "retained_sha256": "0d8593f6f841f9e52a24cfa03c9af80f35b8b5c56fa2718ebd39e3f4ead170f8"
+  },
+  "prepared/collision_packet.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a5058c3e8d95036177369348f39dc6644aa0cd7af14200feb55ed817c1b42988",
+    "retained_sha256": "a5058c3e8d95036177369348f39dc6644aa0cd7af14200feb55ed817c1b42988"
+  },
+  "prepared/collision_start.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "480298c5adfd419babd047e6352bce64044ccbb9cb5146f7626f5220de4fa846",
+    "retained_sha256": "480298c5adfd419babd047e6352bce64044ccbb9cb5146f7626f5220de4fa846"
+  },
+  "prepared/collision_start.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2929b1f350569cabcc7bae6b9e86262cf49d0c2e8c1ddc8c16096f8df33eaf69",
+    "retained_sha256": "2929b1f350569cabcc7bae6b9e86262cf49d0c2e8c1ddc8c16096f8df33eaf69"
+  },
+  "prepared/competing_children.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92",
+    "retained_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92"
+  },
+  "prepared/competing_children.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ab918b7bdeae4faeebbf35e00717a03ca27c7928e95f418aa542cd6351b1e25b",
+    "retained_sha256": "ab918b7bdeae4faeebbf35e00717a03ca27c7928e95f418aa542cd6351b1e25b"
+  },
+  "prepared/domain_readers.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47",
+    "retained_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47"
+  },
+  "prepared/domain_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1f98c2037e428d91444262dac5e627f1b6dc12f0cf9d8a348c5a953f4d9b113e",
+    "retained_sha256": "1f98c2037e428d91444262dac5e627f1b6dc12f0cf9d8a348c5a953f4d9b113e"
+  },
+  "prepared/domain_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92",
+    "retained_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92"
+  },
+  "prepared/domain_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6b2d92cd20c85e6143bff743e2b1379e07b1dd98ed21592c6f0e8beaa312b35f",
+    "retained_sha256": "6b2d92cd20c85e6143bff743e2b1379e07b1dd98ed21592c6f0e8beaa312b35f"
+  },
+  "prepared/formal_shadow.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ce9699c2f245ee6dfc9684d3e91c274eb1a12a148dbaf4d8eb3eab5b5bc55bd1",
+    "retained_sha256": "ce9699c2f245ee6dfc9684d3e91c274eb1a12a148dbaf4d8eb3eab5b5bc55bd1"
+  },
+  "prepared/formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c72e59c5557c884a3cd1532efef8807aa36f4163d6c3385b90d9614cc66a95fb",
+    "retained_sha256": "c72e59c5557c884a3cd1532efef8807aa36f4163d6c3385b90d9614cc66a95fb"
+  },
+  "prepared/imported_domain_blocking.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7a3d74e7b3b7d4652273bfa27530a799ebe5313c4a14314ce5affee2b89033b9",
+    "retained_sha256": "7a3d74e7b3b7d4652273bfa27530a799ebe5313c4a14314ce5affee2b89033b9"
+  },
+  "prepared/imported_domain_blocking.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "58a0e58b182ac00b254536f3db6b6c628a4761406773e63e492bcfafc9d81388",
+    "retained_sha256": "58a0e58b182ac00b254536f3db6b6c628a4761406773e63e492bcfafc9d81388"
+  },
+  "prepared/imported_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3ce8d7db7c060bd9aa61806298b7b3f16f4b8323bec476a760e64d2e153157b3",
+    "retained_sha256": "3ce8d7db7c060bd9aa61806298b7b3f16f4b8323bec476a760e64d2e153157b3"
+  },
+  "prepared/imported_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "eae037301ee862b27e5bed85473bbb92469af71eed8dc5d84d6a9bdb1def0cfe",
+    "retained_sha256": "eae037301ee862b27e5bed85473bbb92469af71eed8dc5d84d6a9bdb1def0cfe"
+  },
+  "prepared/input_control.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "81fd8446207dc1be7e8ee1532a2dcaeb0a9046eef32d0b4fd49e0ac19a433b7e",
+    "retained_sha256": "81fd8446207dc1be7e8ee1532a2dcaeb0a9046eef32d0b4fd49e0ac19a433b7e"
+  },
+  "prepared/input_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7794f9ab09e55185b3c8b649d90500c8fc1be7158b55510653696768a5f3efb6",
+    "retained_sha256": "7794f9ab09e55185b3c8b649d90500c8fc1be7158b55510653696768a5f3efb6"
+  },
+  "prepared/precedence_0.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2ae6e0a3b6a2db5451a259d122ba80c60c8135c21a64d165d21171857dd83cc0",
+    "retained_sha256": "2ae6e0a3b6a2db5451a259d122ba80c60c8135c21a64d165d21171857dd83cc0"
+  },
+  "prepared/precedence_0.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a3c30eb94b3a30d16120e9c7976f59d46511652f1ebc0a3308de8886e055f753",
+    "retained_sha256": "a3c30eb94b3a30d16120e9c7976f59d46511652f1ebc0a3308de8886e055f753"
+  },
+  "prepared/precedence_1.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8f2effc88a23d2f3ed88fcd83b52e25d71c5de70214938ad3059884dda7b777b",
+    "retained_sha256": "8f2effc88a23d2f3ed88fcd83b52e25d71c5de70214938ad3059884dda7b777b"
+  },
+  "prepared/precedence_1.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7a714fd008cb89ffd42ef0e4279b28ac584cfad25c24388823d4a314e52e9b5f",
+    "retained_sha256": "7a714fd008cb89ffd42ef0e4279b28ac584cfad25c24388823d4a314e52e9b5f"
+  },
+  "prepared/precedence_10.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "190aaabc3d8bfb0633aafb095504475d268b0e875988caf8173e48a9081f4b2e",
+    "retained_sha256": "190aaabc3d8bfb0633aafb095504475d268b0e875988caf8173e48a9081f4b2e"
+  },
+  "prepared/precedence_10.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "201d3b7b58eb102ac4f81aca61861fea4fde1afbe531081ff1b0eb5a423cc528",
+    "retained_sha256": "201d3b7b58eb102ac4f81aca61861fea4fde1afbe531081ff1b0eb5a423cc528"
+  },
+  "prepared/precedence_11.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2df71d0cb8e4337d4f357746e6f2b9fefe6d99429a91a05403d367a4b4be2cac",
+    "retained_sha256": "2df71d0cb8e4337d4f357746e6f2b9fefe6d99429a91a05403d367a4b4be2cac"
+  },
+  "prepared/precedence_11.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0d563470794fac52967feabe87b825ffa02fc35dca777c45633bf3cb8165e0c9",
+    "retained_sha256": "0d563470794fac52967feabe87b825ffa02fc35dca777c45633bf3cb8165e0c9"
+  },
+  "prepared/precedence_12.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7be3f3bd77d2b700717b098ffb523e2b0ac4fa7e7dd2d36d143bc8c8ab975d2f",
+    "retained_sha256": "7be3f3bd77d2b700717b098ffb523e2b0ac4fa7e7dd2d36d143bc8c8ab975d2f"
+  },
+  "prepared/precedence_12.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "769f0b131e04383d456a4a52122a078676780e7d8eb0c46c90600b1b7b9b32af",
+    "retained_sha256": "769f0b131e04383d456a4a52122a078676780e7d8eb0c46c90600b1b7b9b32af"
+  },
+  "prepared/precedence_13.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5e2fc8833a1c24a7c65fcb911980a9b097bfb837db5edd745407fb24486b5aec",
+    "retained_sha256": "5e2fc8833a1c24a7c65fcb911980a9b097bfb837db5edd745407fb24486b5aec"
+  },
+  "prepared/precedence_13.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8a45f979a7941a34f4fa9b1dcac5ec4f00fe57281650ed0e2bb0246c973524d2",
+    "retained_sha256": "8a45f979a7941a34f4fa9b1dcac5ec4f00fe57281650ed0e2bb0246c973524d2"
+  },
+  "prepared/precedence_14.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c3c67bc17f8fb5b3537eed6b55f93800b285b8421c35349e7a5cc85c1aae965b",
+    "retained_sha256": "c3c67bc17f8fb5b3537eed6b55f93800b285b8421c35349e7a5cc85c1aae965b"
+  },
+  "prepared/precedence_14.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "49e7293effd76d9bd6ee25198f3386b0761ee50b80e852f227d1f246ded71f46",
+    "retained_sha256": "49e7293effd76d9bd6ee25198f3386b0761ee50b80e852f227d1f246ded71f46"
+  },
+  "prepared/precedence_15.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2912d01874f409037139ba7671d0fd17a35c438af8b3510ae0d96d367fc1e7f0",
+    "retained_sha256": "2912d01874f409037139ba7671d0fd17a35c438af8b3510ae0d96d367fc1e7f0"
+  },
+  "prepared/precedence_15.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d09f5b324e27f05aeebb143464d8a2a43b7dd6e83fd8e72af7ee72355dd34949",
+    "retained_sha256": "d09f5b324e27f05aeebb143464d8a2a43b7dd6e83fd8e72af7ee72355dd34949"
+  },
+  "prepared/precedence_16.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "52837460da25e2c915f0331b7ebc91114da26ba0c7fd024cd0f89344118fdb07",
+    "retained_sha256": "52837460da25e2c915f0331b7ebc91114da26ba0c7fd024cd0f89344118fdb07"
+  },
+  "prepared/precedence_16.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "84038d12917e5699bd05b14db9187e2ec48a5c0728eaa98d63e610a22455a2c0",
+    "retained_sha256": "84038d12917e5699bd05b14db9187e2ec48a5c0728eaa98d63e610a22455a2c0"
+  },
+  "prepared/precedence_2.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "aa226b6af8f109797c2cc6699111a5742ea007400c9af0b7cd05ed21b57039b1",
+    "retained_sha256": "aa226b6af8f109797c2cc6699111a5742ea007400c9af0b7cd05ed21b57039b1"
+  },
+  "prepared/precedence_2.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c0aa6e8802cad7db3d5aa439929483d4e30686db38a8658d6ba88468fbbd29fb",
+    "retained_sha256": "c0aa6e8802cad7db3d5aa439929483d4e30686db38a8658d6ba88468fbbd29fb"
+  },
+  "prepared/precedence_3.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "eaaffdbe20990fa2ec2413b7a418c1b8bb1d83bd850e35b56c2293846d37c0e4",
+    "retained_sha256": "eaaffdbe20990fa2ec2413b7a418c1b8bb1d83bd850e35b56c2293846d37c0e4"
+  },
+  "prepared/precedence_3.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2317a8d85a21c645b458cfd421a2482c94fb09139ecc7c6d5a5f43c5313a7f4e",
+    "retained_sha256": "2317a8d85a21c645b458cfd421a2482c94fb09139ecc7c6d5a5f43c5313a7f4e"
+  },
+  "prepared/precedence_4.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "bbc099e2ac3d266342a0f16814ad977e9d0bb611a11561d8fb04bc34ab1167ea",
+    "retained_sha256": "bbc099e2ac3d266342a0f16814ad977e9d0bb611a11561d8fb04bc34ab1167ea"
+  },
+  "prepared/precedence_4.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "652f3d023e2a54e9874cef501951ea09061f42041655594e35ed91f698d4bb36",
+    "retained_sha256": "652f3d023e2a54e9874cef501951ea09061f42041655594e35ed91f698d4bb36"
+  },
+  "prepared/precedence_5.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "cc6d37ad83bcc121915595664c9d58ee2a37292932f96981a18b7505d4a8e52b",
+    "retained_sha256": "cc6d37ad83bcc121915595664c9d58ee2a37292932f96981a18b7505d4a8e52b"
+  },
+  "prepared/precedence_5.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3c5cddf62afb1fd4ee4cbbe46a8548698ed2e2250ee2b65b16b259f950e69712",
+    "retained_sha256": "3c5cddf62afb1fd4ee4cbbe46a8548698ed2e2250ee2b65b16b259f950e69712"
+  },
+  "prepared/precedence_6.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "0b629be23195faeda9a9ca0245ef456d210ca6990f7c4031033c5b425d0625c7",
+    "retained_sha256": "0b629be23195faeda9a9ca0245ef456d210ca6990f7c4031033c5b425d0625c7"
+  },
+  "prepared/precedence_6.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "71a2d312c650f132331720500de704f5d0a7b4865e932643ae879182afa767e9",
+    "retained_sha256": "71a2d312c650f132331720500de704f5d0a7b4865e932643ae879182afa767e9"
+  },
+  "prepared/precedence_7.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b484c76a9c285de0c5dea8859b8301f2adf17e73399e7fbf29dd7fe090213cd4",
+    "retained_sha256": "b484c76a9c285de0c5dea8859b8301f2adf17e73399e7fbf29dd7fe090213cd4"
+  },
+  "prepared/precedence_7.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e3ddaed053d36c7a3de3237b4790e8e78e0e63d7654fbed6e4a31874aa01aa56",
+    "retained_sha256": "e3ddaed053d36c7a3de3237b4790e8e78e0e63d7654fbed6e4a31874aa01aa56"
+  },
+  "prepared/precedence_8.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "75f640f4b83d17567cab43d67af2c50f67242c46e9b9b82c989452c6df321555",
+    "retained_sha256": "75f640f4b83d17567cab43d67af2c50f67242c46e9b9b82c989452c6df321555"
+  },
+  "prepared/precedence_8.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4e6a7080d3c58fa6c98e5624ec8651dd28561050975369e64abc5bfe0c7793a5",
+    "retained_sha256": "4e6a7080d3c58fa6c98e5624ec8651dd28561050975369e64abc5bfe0c7793a5"
+  },
+  "prepared/precedence_9.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6f2e4551c7abae5c221c8853eaf5e7e3c07000a0a3047116926af142bd7cbd3c",
+    "retained_sha256": "6f2e4551c7abae5c221c8853eaf5e7e3c07000a0a3047116926af142bd7cbd3c"
+  },
+  "prepared/precedence_9.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2125ad61a872cf4279e02a19d07c157e69cb6726ec3143537cab6e3f7f0f269a",
+    "retained_sha256": "2125ad61a872cf4279e02a19d07c157e69cb6726ec3143537cab6e3f7f0f269a"
+  },
+  "prepared/precedence_dt_0.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e6ac7ff4e4b5fd538a75e108d1df06bed59909facbb0a462f00438239c9b5e6f",
+    "retained_sha256": "e6ac7ff4e4b5fd538a75e108d1df06bed59909facbb0a462f00438239c9b5e6f"
+  },
+  "prepared/precedence_dt_0.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "395f30c2f3ec54865128e336faca87d30a4bd772f981d7a2c3fa914f587c9d2e",
+    "retained_sha256": "395f30c2f3ec54865128e336faca87d30a4bd772f981d7a2c3fa914f587c9d2e"
+  },
+  "prepared/precedence_dt_1.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a3b5160af4e88dced8bd3a3bad3b09eb8119aa76a1c215a6882036c9b4791955",
+    "retained_sha256": "a3b5160af4e88dced8bd3a3bad3b09eb8119aa76a1c215a6882036c9b4791955"
+  },
+  "prepared/precedence_dt_1.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "cf6133a5a617f04e177fbdf62899fa4b6f6d207965e0e7a5ee7f04047d2d6b24",
+    "retained_sha256": "cf6133a5a617f04e177fbdf62899fa4b6f6d207965e0e7a5ee7f04047d2d6b24"
+  },
+  "prepared/precedence_dt_2.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4c9c21d01d693944a48259f5319714510bbdca96cffb0184f658dbca055968a1",
+    "retained_sha256": "4c9c21d01d693944a48259f5319714510bbdca96cffb0184f658dbca055968a1"
+  },
+  "prepared/precedence_dt_2.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "024ebe85ffedbe77f5baf1d5649258e05086fcbd985e1763ca4586837aa31a90",
+    "retained_sha256": "024ebe85ffedbe77f5baf1d5649258e05086fcbd985e1763ca4586837aa31a90"
+  },
+  "prepared/precedence_dt_3.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "941b3f0695069ec8861ebf62067a42199096b2a238948a928526790673625f9a",
+    "retained_sha256": "941b3f0695069ec8861ebf62067a42199096b2a238948a928526790673625f9a"
+  },
+  "prepared/precedence_dt_3.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d265635692304c2890d7e8e9a284b5936b06977c41d91502da15c449dfef62dc",
+    "retained_sha256": "d265635692304c2890d7e8e9a284b5936b06977c41d91502da15c449dfef62dc"
+  },
+  "prepared/precedence_dt_4.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7b1a718015316900e4aa3741b09955bf894010a1c0266a42fc24138b12b57062",
+    "retained_sha256": "7b1a718015316900e4aa3741b09955bf894010a1c0266a42fc24138b12b57062"
+  },
+  "prepared/precedence_dt_4.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4436ab41a93fd2696a02713acf2bc1e0c85cfccf6f6f4809d38149cdd6625704",
+    "retained_sha256": "4436ab41a93fd2696a02713acf2bc1e0c85cfccf6f6f4809d38149cdd6625704"
+  },
+  "prepared/precedence_dt_5.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3d94fe8b5a8a83b7f94bfa3ade0a37fcc14a30a1d877f4749a5927ea2afc48d1",
+    "retained_sha256": "3d94fe8b5a8a83b7f94bfa3ade0a37fcc14a30a1d877f4749a5927ea2afc48d1"
+  },
+  "prepared/precedence_dt_5.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6c45e5da543839fd7dd7c47a9131a7d0ccc7b94750e5148be23795ccca8a5611",
+    "retained_sha256": "6c45e5da543839fd7dd7c47a9131a7d0ccc7b94750e5148be23795ccca8a5611"
+  },
+  "prepared/role_alias_collision.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "583ac9221683d3a50b9e90ba513ae27c58026721b753e6d0a294ccc4effcbfe1",
+    "retained_sha256": "583ac9221683d3a50b9e90ba513ae27c58026721b753e6d0a294ccc4effcbfe1"
+  },
+  "prepared/role_alias_collision.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d1f9a5fc05aba3177e4113e3ecdebbf932491091ee17d2f30d114ab31b65de36",
+    "retained_sha256": "d1f9a5fc05aba3177e4113e3ecdebbf932491091ee17d2f30d114ab31b65de36"
+  },
+  "prepared/role_formal_shadow.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "fb5105daffb5bd4862f3e97941c142f840403268781fad658000c1a0e499f3ca",
+    "retained_sha256": "fb5105daffb5bd4862f3e97941c142f840403268781fad658000c1a0e499f3ca"
+  },
+  "prepared/role_formal_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6ffd1ddf1f88de44b823ced1275f831d3690bbf497fd532bfeb785d49d18915c",
+    "retained_sha256": "6ffd1ddf1f88de44b823ced1275f831d3690bbf497fd532bfeb785d49d18915c"
+  },
+  "prepared/role_guard_assert.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "441a6d8efbcae26165dc9039a8bcb6bb6aec8d5c99b41a07527001cd920c6694",
+    "retained_sha256": "441a6d8efbcae26165dc9039a8bcb6bb6aec8d5c99b41a07527001cd920c6694"
+  },
+  "prepared/role_guard_assert.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1544fc4469eea5c9a1056e0c5aaaf21d56e99527c87f17ef6ba0ef27e9434e8b",
+    "retained_sha256": "1544fc4469eea5c9a1056e0c5aaaf21d56e99527c87f17ef6ba0ef27e9434e8b"
+  },
+  "prepared/role_parameter_shadow.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6d22d3a390502c4eb75ddc059ed55f07f5a25faea30dc1d2e02c569d1b7ad67c",
+    "retained_sha256": "6d22d3a390502c4eb75ddc059ed55f07f5a25faea30dc1d2e02c569d1b7ad67c"
+  },
+  "prepared/role_parameter_shadow.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "23433cc77191b39e5e22922cb5d9a8559752288b3aa35d7a2004077f75cc7767",
+    "retained_sha256": "23433cc77191b39e5e22922cb5d9a8559752288b3aa35d7a2004077f75cc7767"
+  },
+  "prepared/role_record_self_read.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "29a9c2df376f7132d8894f901d9bcf3366978e59766557966cb7aeee457cfe33",
+    "retained_sha256": "29a9c2df376f7132d8894f901d9bcf3366978e59766557966cb7aeee457cfe33"
+  },
+  "prepared/role_record_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "573ea631c3b4b7646eea4e1cbf8a45f18a904dc87a51b0484b0890c8921113d8",
+    "retained_sha256": "573ea631c3b4b7646eea4e1cbf8a45f18a904dc87a51b0484b0890c8921113d8"
+  },
+  "prepared/role_sample.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "08896da418338c35dfcc27bfd88a5789728899c142b3ad05904fef30b04d8a51",
+    "retained_sha256": "08896da418338c35dfcc27bfd88a5789728899c142b3ad05904fef30b04d8a51"
+  },
+  "prepared/role_sample.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "441f5ff65009df1d0aa39b9f122d2393cff3a3f260a6037f9502178c89498f9d",
+    "retained_sha256": "441f5ff65009df1d0aa39b9f122d2393cff3a3f260a6037f9502178c89498f9d"
+  },
+  "prepared/role_self_read.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "7206dc81d19abeeaa913f5cfd64f7328af1e55a5a9667ad17b5dccfce15bc420",
+    "retained_sha256": "7206dc81d19abeeaa913f5cfd64f7328af1e55a5a9667ad17b5dccfce15bc420"
+  },
+  "prepared/role_self_read.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ae664c995d7d4b829d3daf61dd5e1bd987385af8992f5618b5aea87f40a95e06",
+    "retained_sha256": "ae664c995d7d4b829d3daf61dd5e1bd987385af8992f5618b5aea87f40a95e06"
+  },
+  "prepared/role_slice.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "b3f8924b6e7f9525483cc042712d2023c9f226b364fd32c564b0251727b9706b",
+    "retained_sha256": "b3f8924b6e7f9525483cc042712d2023c9f226b364fd32c564b0251727b9706b"
+  },
+  "prepared/role_slice.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "12b1b3923aaa38f9027b0fcee6151581f39373a8e290312d39b49cb7f22776ad",
+    "retained_sha256": "12b1b3923aaa38f9027b0fcee6151581f39373a8e290312d39b49cb7f22776ad"
+  },
+  "prepared/role_type_collision.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "247b897421d52c6ef01b940b828bccd679860b20e0bf22e6adbb6cd284edcd47",
+    "retained_sha256": "247b897421d52c6ef01b940b828bccd679860b20e0bf22e6adbb6cd284edcd47"
+  },
+  "prepared/role_type_collision.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "dee74fa4f8ab342437791d169a35c54a8ca05eac37a84b9b3ce7733463c46873",
+    "retained_sha256": "dee74fa4f8ab342437791d169a35c54a8ca05eac37a84b9b3ce7733463c46873"
+  },
+  "prepared/role_unused_source_collision.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "49f62456825de311893ee21c93214d98f66eedae04f8414027ec7ae5dfeafc8f",
+    "retained_sha256": "49f62456825de311893ee21c93214d98f66eedae04f8414027ec7ae5dfeafc8f"
+  },
+  "prepared/role_unused_source_collision.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8d3a00ec0cddc6bc97a72e7ac35a50eaa2c6ba1e36ea666b059154f7db8a4e22",
+    "retained_sha256": "8d3a00ec0cddc6bc97a72e7ac35a50eaa2c6ba1e36ea666b059154f7db8a4e22"
+  },
+  "prepared/scalar_control.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "bda387c2c4edcca813ac6802a2626ec5ba26658702c05629144fcbc0519d8a42",
+    "retained_sha256": "bda387c2c4edcca813ac6802a2626ec5ba26658702c05629144fcbc0519d8a42"
+  },
+  "prepared/scalar_control.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "55f6d0ace7cb887e2d421877331ced6d09e115b5fac95010498bf1685d8f7638",
+    "retained_sha256": "55f6d0ace7cb887e2d421877331ced6d09e115b5fac95010498bf1685d8f7638"
+  },
+  "prepared/scalar_reader.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "ea7ff7f7875e326ffecb0837536ff166c5c7beb744e2d99093225ee79189e026",
+    "retained_sha256": "ea7ff7f7875e326ffecb0837536ff166c5c7beb744e2d99093225ee79189e026"
+  },
+  "prepared/scalar_reader.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "59248d408be29ff2dc7c3d0b6355141eed5624063a630341719f07b4a7eea642",
+    "retained_sha256": "59248d408be29ff2dc7c3d0b6355141eed5624063a630341719f07b4a7eea642"
+  },
+  "prepared/scalar_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "6b6c6f3cc876b6229a93312423c4de1e65e45dc90d1091c3ca5bd102da8f0f59",
+    "retained_sha256": "6b6c6f3cc876b6229a93312423c4de1e65e45dc90d1091c3ca5bd102da8f0f59"
+  },
+  "prepared/scalar_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "bb7dbd021548664871866e87ab6cdb107ae134d7dbca15d9a69ab25c8e6ec81f",
+    "retained_sha256": "bb7dbd021548664871866e87ab6cdb107ae134d7dbca15d9a69ab25c8e6ec81f"
+  },
+  "prepared/spawn_readers.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47",
+    "retained_sha256": "d1178cb43fb721777f9349382571719347a675007d60e6363467c40084078c47"
+  },
+  "prepared/spawn_readers.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "33881d15346a5958ae87dcc13ce249d63f216085b65ba74f0a28f554754a85ce",
+    "retained_sha256": "33881d15346a5958ae87dcc13ce249d63f216085b65ba74f0a28f554754a85ce"
+  },
+  "prepared/spawn_writer.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92",
+    "retained_sha256": "5aa74762d5993b8c5e34bf0a00954918faf0cfbab35a7928e2da9d2462b83f92"
+  },
+  "prepared/spawn_writer.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c4053ff40afdf5e5ed45e52a909dce845e73bd266b1a526780bf062d8678c938",
+    "retained_sha256": "c4053ff40afdf5e5ed45e52a909dce845e73bd266b1a526780bf062d8678c938"
+  },
+  "prepared/static_constant_mask.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "856120d1da907b3edc7f879f5c171966e61b8a8cc9dbb82c755793cc629b6a84",
+    "retained_sha256": "856120d1da907b3edc7f879f5c171966e61b8a8cc9dbb82c755793cc629b6a84"
+  },
+  "prepared/static_constant_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "78b01f2aad8c9a05c3cb3e76887d9807c8ce957007cdacb90316d5c92a6c45de",
+    "retained_sha256": "78b01f2aad8c9a05c3cb3e76887d9807c8ce957007cdacb90316d5c92a6c45de"
+  },
+  "prepared/static_enum_mask.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9888d5a1db5ed1def129d776438d7dc539a48a678aff612e736763eeb9a7f8e6",
+    "retained_sha256": "9888d5a1db5ed1def129d776438d7dc539a48a678aff612e736763eeb9a7f8e6"
+  },
+  "prepared/static_enum_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9dd82b1f54286be6e9bb6b64bd9835c3610db10509556fbcb514f65021fdd706",
+    "retained_sha256": "9dd82b1f54286be6e9bb6b64bd9835c3610db10509556fbcb514f65021fdd706"
+  },
+  "prepared/static_literal.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "fa7ac652bff32986b948cdd95a868d8050b5155a1d5dc3700dcbbf1fad2ac9fa",
+    "retained_sha256": "fa7ac652bff32986b948cdd95a868d8050b5155a1d5dc3700dcbbf1fad2ac9fa"
+  },
+  "prepared/static_literal.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "23f05f5a45aeea76f6015c7c8010059bc6ca679c41a108e72adcdd432e98dabc",
+    "retained_sha256": "23f05f5a45aeea76f6015c7c8010059bc6ca679c41a108e72adcdd432e98dabc"
+  },
+  "prepared/static_package_mask.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "fb43fbcd9885a21ced3c35ac6731ca2cff8948796d13d1b544efd31445b4fed1",
+    "retained_sha256": "fb43fbcd9885a21ced3c35ac6731ca2cff8948796d13d1b544efd31445b4fed1"
+  },
+  "prepared/static_package_mask.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "fa11c5f30fa5970b436eeddd506fe9199c8ead351dae340a25c4aac2857d58e9",
+    "retained_sha256": "fa11c5f30fa5970b436eeddd506fe9199c8ead351dae340a25c4aac2857d58e9"
+  },
+  "prepared/static_unused_handshake.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "91246d760dfca0cfa56ba064c698d56d063d50d03793751bbc9a01c39827aead",
+    "retained_sha256": "91246d760dfca0cfa56ba064c698d56d063d50d03793751bbc9a01c39827aead"
+  },
+  "prepared/static_unused_handshake.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3ea78f76a00b884b02062e2f13351ed34338311c28077bd01aff9d0993144f25",
+    "retained_sha256": "3ea78f76a00b884b02062e2f13351ed34338311c28077bd01aff9d0993144f25"
+  },
+  "prepared/static_xz_refusal.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "29915703f13351f559eff342ae4f0af6145eedfe3a74a46c1b89cd24bf3b54cd",
+    "retained_sha256": "29915703f13351f559eff342ae4f0af6145eedfe3a74a46c1b89cd24bf3b54cd"
+  },
+  "prepared/static_xz_refusal.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "50e8f558de529c1497ed21589c5513aa07ebd1197b2b6d810cf8fd25f220fff0",
+    "retained_sha256": "50e8f558de529c1497ed21589c5513aa07ebd1197b2b6d810cf8fd25f220fff0"
+  },
+  "prepared/storage_then_output.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "225fb093096c7012587d7997a63f57c282a54f885c202810497891131dcc0a4f",
+    "retained_sha256": "225fb093096c7012587d7997a63f57c282a54f885c202810497891131dcc0a4f"
+  },
+  "prepared/storage_then_output.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "613decbab735ae17bc42310e7c9949bcc0ba0960096cf08abcc2e88cba759b13",
+    "retained_sha256": "613decbab735ae17bc42310e7c9949bcc0ba0960096cf08abcc2e88cba759b13"
+  },
+  "prepared/unused_with_child.fsm": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3e367ab391310e1bf0ea1d4cf56488f25ad2b3503140916997f7d136abe1e7e3",
+    "retained_sha256": "3e367ab391310e1bf0ea1d4cf56488f25ad2b3503140916997f7d136abe1e7e3"
+  },
+  "prepared/unused_with_child.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "bbf3f8229d65cabf6c92c5428f6e16f461515baa7c75a71c2e1ce43b487df182",
+    "retained_sha256": "bbf3f8229d65cabf6c92c5428f6e16f461515baa7c75a71c2e1ce43b487df182"
+  },
+  "refresh.py": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a417aac4a73e5174e24d797e9723b66d1f4e412fabc1deb917025fcebdc991d9",
+    "retained_sha256": "a417aac4a73e5174e24d797e9723b66d1f4e412fabc1deb917025fcebdc991d9"
+  },
+  "roles.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "1b81e476753e78afc83301b4a2a3c9975c06b1f764c6a4611e87135d3d4f0aad",
+    "retained_sha256": "1b81e476753e78afc83301b4a2a3c9975c06b1f764c6a4611e87135d3d4f0aad"
+  },
+  "seal.txt": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "e4f652fd3b6c10beae42be23c7dcdae1165df7308c75811cf4833de6bac868fb",
+    "retained_sha256": "55b43869c2adf96522a86d6331609f437d281918f60e83a0f4362a7e13bbcc71"
+  },
+  "sources/done.isf": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "675ba87f607e6f9cd61b14ee482c822b32b655f9237f2680f4a6b760b2c81e38",
+    "retained_sha256": "675ba87f607e6f9cd61b14ee482c822b32b655f9237f2680f4a6b760b2c81e38"
+  },
+  "sources/isf_child_start_seen.isf": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "c529397bb17c36a451ed47461711add90dc14d8ba30bff2f4421662ba785b09f",
+    "retained_sha256": "c529397bb17c36a451ed47461711add90dc14d8ba30bff2f4421662ba785b09f"
+  },
+  "sources/packet.isf": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "8e56b0672ea97b0f400fc369bb209b657cdc6f6693d77440cf0eea5d4e5ed520",
+    "retained_sha256": "8e56b0672ea97b0f400fc369bb209b657cdc6f6693d77440cf0eea5d4e5ed520"
+  },
+  "sources/start.isf": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "4888923706479a68643573623e2b78c698655beeb9b76999e6bfc99dd34238c9",
+    "retained_sha256": "4888923706479a68643573623e2b78c698655beeb9b76999e6bfc99dd34238c9"
+  },
+  "start.json": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "2b5c1f79a6590633398bbc95c16bc24e6f0243dce9ac8200dfce20e2ceb21b74",
+    "retained_sha256": "2b5c1f79a6590633398bbc95c16bc24e6f0243dce9ac8200dfce20e2ceb21b74"
+  },
+  "static.tap": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "a7219f2100db3ef927c22c817103bc3ce34fdb390c166e8835ee287994a1a855",
+    "retained_sha256": "db77b075a4ec6a730f724e4fec5a32ae317afbee36e63346cefc8627976da541"
+  },
+  "syntax.txt": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "3f6e0d30d07e2fc84a5b85ae7d2ba338ae41a88e74276e30f0985bedc94ec9e2",
+    "retained_sha256": "3f6e0d30d07e2fc84a5b85ae7d2ba338ae41a88e74276e30f0985bedc94ec9e2"
+  },
+  "type-inheritance-history.diff": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "004b48a8680929e6b02d2c6d7b8a92e6b9b681e248fb89569ee512e77480159f",
+    "retained_sha256": "004b48a8680929e6b02d2c6d7b8a92e6b9b681e248fb89569ee512e77480159f"
+  },
+  "type-inheritance-pickaxe.txt": {
+    "normalization": "exact runtime repository prefix only",
+    "original_sha256": "9fcb5b587ceb064c9a60db09b8a2197b4b25f46b1a495b50a6d54b38ae656e5b",
+    "retained_sha256": "9fcb5b587ceb064c9a60db09b8a2197b4b25f46b1a495b50a6d54b38ae656e5b"
+  }
+}

@@ -1,0 +1,62 @@
+(?fsm:worker
+
+  (+types
+    (type frame (record (tag (bits 2)) (payload (signed (four_state (bits 3))))))
+    (type _isf_sample_saved (four_state (signed (bits 3))))
+  )
+
+  (+params
+    (MODE 0)
+  )
+
+  (+system
+    (clock clk)
+    (sreset rst_n active_low)
+  )
+
+  (+interface
+    (output ack)
+    (output result)
+    (input start)
+    (output done)
+    (input isf_output_read_packet)
+    (internal isf_child_start_seen)
+    (internal saved)
+  )
+
+  (+size
+    (ack 1)
+    (result 3)
+    (start 1)
+    (done 1)
+    (isf_output_read_packet frame)
+    (can_accept 1)
+    (isf_child_start_seen 1 (reset 0))
+    (saved _isf_sample_saved)
+  )
+
+  (worker_idle_0
+    (-> worker_sample_0 <(& start (! isf_child_start_seen)))
+  )
+
+  (worker_sample_0
+    (<= (saved isf_output_read_packet.payload))
+    (-> worker_set_1)
+  )
+
+  (worker_set_1
+    (<- (result> saved))
+    (-> worker_done_2)
+  )
+
+  (worker_done_2
+    (<1 (ack> 1))
+    (<1 (done> 1))
+    (-> worker_idle_0)
+  )
+
+  (-isf_child_start_seen
+    (<- (isf_child_start_seen start))
+  )
+
+)

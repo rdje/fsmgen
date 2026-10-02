@@ -18,6 +18,8 @@ Issue reports follow
 
 Generated record-output mapping prerequisites are recorded in the
 [ingress evidence](../../../docs/audits/record-output-generated-ingress-20261002/scope.txt).
+The detached read plan has separate
+[preparation evidence](../../../docs/audits/record-output-owner-read-preparation-20261002/scope.txt).
 
 {{#include ../../isf-spec/10-downstream-readiness-source.md}}
 

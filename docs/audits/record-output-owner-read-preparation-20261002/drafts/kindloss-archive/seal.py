@@ -1,0 +1,181 @@
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import sys
+from html.parser import HTMLParser
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent
+SCRATCH = Path('.artifacts/record-output-owner-reads')
+BASELINE = '851358dd6dca12ba69a2d2491bc70d766dd4dde1'
+ROOT = str(Path('.').resolve()) + '/'
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def write_json(path, value):
+    path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n')
+
+
+def normalize(raw):
+    return raw.replace(ROOT.encode(), b'')
+
+
+def prepare():
+    assert not (BASE / 'manifest.json').exists(), 'sealed archive is immutable'
+    original = (SCRATCH / 'drafts' / 'test-carriers.t').read_bytes()
+    assert original.count(b"(set result 3'bx01)") == 1
+    (SCRATCH / 'drafts' / 'test-focused.t').write_bytes(original.replace(b"(set result 3'bx01)", b'(set result const_3bx01)'))
+    shutil.copyfile(SCRATCH / 'drafts' / 'planner-package.pm', SCRATCH / 'drafts' / 'planner-focused.pm')
+    source = Path('perl/FSM/Scheduler/ISF/ChildOutputReads.pm').read_text()
+    assert (SCRATCH / 'executed' / 'ChildOutputReads.pm').read_text() == source
+    scope = Path('perl/FSM/Scheduler/ISF/LoweringIR.pm').read_bytes()
+    assert (SCRATCH / 'executed' / 'LoweringIR.pm').read_bytes() == scope
+    assert (SCRATCH / 'executed' / 'test.t').read_bytes() == Path('t/2039-isf-child-output-read-preparation.t').read_bytes()
+    variants = {}
+    needle = "    _slots($ir, sub {my ($container, $key) = @_; $container->{$key} = _operand($container->{$key}, $resolve)});"
+    assert source.count(needle) == 1
+    variants['omitted_reads'] = source.replace(needle, '    # Known-bad control: omit emitted read rebasing.')
+    variants['weak_history'] = source.replace('    _handshake($ir, $tx);', '    # Known-bad control: skip canonical handshake admission.')
+    variants['unmasked_statics'] = source.replace('        return $token if $scope->{static_symbols}{$token};',
+        '        # Known-bad control: do not mask resolved static paths.').replace(
+        '            && !$scope->{locals}{$root} && !$scope->{static_symbols}{$root};',
+        '            && !$scope->{locals}{$root};')
+    outcomes = {}
+    for name, variant in variants.items():
+        assert variant != source
+        directory = SCRATCH / 'mutants' / name
+        module = directory / 'FSM/Scheduler/ISF/ChildOutputReads.pm'
+        module.parent.mkdir(parents=True, exist_ok=True)
+        variant = variant.replace('use strict;', "BEGIN { warn \"actual detached mutant " + name + " loaded\\n\"; }\nuse strict;", 1)
+        module.write_text(variant)
+        argv = ['perl', '-MFSM::Scheduler::ISF::ChildOutputReads', 't/2039-isf-child-output-read-preparation.t']
+        env = dict(os.environ, PERL5LIB=str(directory) + ':perl:t/lib')
+        env.pop('FSMGEN_OUTPUT_READ_CAPTURE', None)
+        receipt = SCRATCH / 'mutants' / (name + '.tap')
+        with receipt.open('wb') as out:
+            result = subprocess.run(argv, env=env, stdout=out, stderr=subprocess.STDOUT, check=False)
+        raw = receipt.read_bytes()
+        assert ('actual detached mutant ' + name + ' loaded').encode() in raw
+        outcomes[name] = dict(returncode=result.returncode, exit_zero=result.returncode == 0,
+            argv=argv, perl5lib=env['PERL5LIB'], producer_sha256=sha(module.read_bytes()))
+        assert result.returncode != 0 and b'not ok' in raw, name + ' must be genuine RED'
+    write_json(SCRATCH / 'mutants.json', outcomes)
+    print('PASS isolated omitted-read, unmasked-static and weak-history controls are terminal RED')
+
+
+def tree(revision, roots):
+    raw = subprocess.check_output(['git', 'ls-tree', '-r', '-z', revision, '--'] + roots)
+    entries = {}
+    for record in raw.split(b'\0'):
+        if not record:
+            continue
+        meta, path = record.split(b'\t')
+        mode, kind, identity = meta.decode().split(' ')
+        assert kind == 'blob', 'never cross a Git/submodule boundary on source census'
+        entries[path.decode()] = dict(mode=mode, blob=identity)
+    return raw, entries
+
+
+def read_blobs(entries):
+    names = list(entries)
+    query = ''.join(entries[name]['blob'] + '\n' for name in names).encode()
+    raw = subprocess.check_output(['git', 'cat-file', '--batch'], input=query)
+    offset = 0
+    result = {}
+    for name in names:
+        end = raw.index(b'\n', offset)
+        identity, kind, size = raw[offset:end].decode().split(' ')
+        assert identity == entries[name]['blob'] and kind == 'blob'
+        size = int(size)
+        result[name] = raw[end + 1:end + 1 + size]
+        offset = end + 2 + size
+    assert offset == len(raw)
+    return result
+
+
+def current_bytes(path):
+    p = Path(path)
+    return os.readlink(p).encode() if p.is_symlink() else p.read_bytes()
+
+
+def seal():
+    assert not (BASE / 'manifest.json').exists(), 'sealed archive is immutable'
+    class Render(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.parts, self.links = [], []
+        def handle_data(self, data):
+            self.parts.append(data)
+        def handle_starttag(self, tag, attrs):
+            if tag == 'a':
+                self.links += [value for key, value in attrs if key == 'href']
+    renders = {}
+    for chapter in ['13i-downstream-integration', '13j-type-enum-aggregate']:
+        html = Path('docs/book/book/' + chapter + '.html')
+        parsed = Render()
+        parsed.feed(html.read_text())
+        text = ' '.join(' '.join(parsed.parts).split())
+        assert 'first-' in text and 'false' in text
+        assert 'x01' in text if chapter.startswith('13i') else 'scalar X/Z false-operand diagnosis' in text
+        assert 'Production owner routes' in text if chapter.startswith('13j') else 'This preparation is not connected to production lowering' in text
+        evidence = '../../../docs/audits/record-output-owner-read-preparation-20261002/scope.txt'
+        assert evidence in parsed.links and (html.parent / evidence).resolve() == (BASE / 'scope.txt').resolve()
+        renders[chapter] = dict(source_sha256=sha(html.read_bytes()), evidence_href=evidence,
+            visual_browser_qa=False)
+        (BASE / (chapter + '.html')).write_bytes(html.read_bytes())
+    expected_includes = ['10-downstream-readiness-source.md', '11-downstream-actor-transactions.md',
+        '12-downstream-rules-artifacts-reports.md', '13-downstream-diagnostics-conformance.md']
+    wrapper = Path('docs/book/src/13i-downstream-integration.md').read_text()
+    actual_includes = [line.split('/')[3].split('}')[0] for line in wrapper.splitlines() if line.startswith('{{#include')]
+    assert actual_includes == expected_includes
+    write_json(BASE / 'render.json', dict(chapters=renders, canonical_includes=actual_includes))
+    raw, before = tree(BASELINE, ['bin', 'perl'])
+    blobs = read_blobs(before)
+    additions = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '-z', '--', 'bin', 'perl']).split(b'\0')
+    additions = sorted(path.decode() for path in additions if path)
+    assert additions == ['perl/FSM/Scheduler/ISF/ChildOutputReads.pm']
+    members = {path: dict(before_sha256=sha(blobs[path]), after_sha256=sha(current_bytes(path)),
+        before_bytes=len(blobs[path]), after_bytes=len(current_bytes(path)), **before[path]) for path in before}
+    changed = sorted(path for path, data in members.items() if data['before_sha256'] != data['after_sha256'])
+    write_json(BASE / 'production-inventory.json', dict(baseline=BASELINE, changed_existing=changed,
+        added=additions, members=members, addition_sha256=sha(current_bytes(additions[0]))))
+    (BASE / 'production-inventory.zlist').write_bytes(raw)
+    old = json.loads(Path('docs/audits/record-output-generated-ingress-20261002/immutable-parents.json').read_text())
+    roots = old['roots'] + ['docs/audits/record-output-generated-ingress-20261002']
+    raw, prior = tree(BASELINE, roots)
+    blobs = read_blobs(prior)
+    preserved = {}
+    for path, entry in prior.items():
+        now = current_bytes(path)
+        assert now == blobs[path], path + ' immutable evidence changed'
+        preserved[path] = dict(bytes=len(now), sha256=sha(now), **entry)
+    write_json(BASE / 'immutable-parents.json', dict(baseline=BASELINE, roots=roots, members=preserved))
+    (BASE / 'immutable-parents.zlist').write_bytes(raw)
+    source_files = sorted(p for p in SCRATCH.rglob('*') if p.is_file())
+    hashes = {}
+    for source in source_files:
+        assert not source.is_symlink()
+        relative = source.relative_to(SCRATCH)
+        destination = BASE / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        original = source.read_bytes()
+        retained = normalize(original)
+        destination.write_bytes(retained)
+        hashes[str(relative)] = dict(original_sha256=sha(original), retained_sha256=sha(retained),
+            normalization='exact runtime repository prefix only')
+    write_json(BASE / 'normalization.json', hashes)
+    outcomes = json.loads((BASE / 'mutants.json').read_text())
+    entries = {str(p.relative_to(BASE)): dict(bytes=p.stat().st_size, sha256=sha(p.read_bytes()))
+        for p in BASE.rglob('*') if p.is_file() and p.name != 'manifest.json'}
+    write_json(BASE / 'manifest.json', dict(baseline=BASELINE,
+        owner='SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.1', entries=entries, mutants=outcomes))
+    print('PASS complete raw products/recipes/receipts and production/prior-evidence identities are sealed')
+
+
+if __name__ == '__main__':
+    {'prepare': prepare, 'seal': seal}[sys.argv[1]]()

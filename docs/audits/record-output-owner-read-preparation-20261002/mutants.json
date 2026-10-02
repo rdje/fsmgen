@@ -1,0 +1,50 @@
+{
+  "numeric_kind_loss": {
+    "argv": [
+      "perl",
+      "-MFSM::Scheduler::ISF::ChildOutputReads",
+      "t/2039-isf-child-output-read-preparation.t"
+    ],
+    "exit_zero": false,
+    "perl5lib": ".artifacts/record-output-owner-reads/mutants/numeric_kind_loss:perl:t/lib",
+    "producer_sha256": "c9e0288a561d72ea7b4e8e3ee31f0f7cc6f4c749fcf27e000aa24a813b7fe440",
+    "receipt_sha256": "27ebc997447e7c2892e523ea536d5f3ac2a40211077fe151d7fe180b7daa6032",
+    "returncode": 35
+  },
+  "omitted_reads": {
+    "argv": [
+      "perl",
+      "-MFSM::Scheduler::ISF::ChildOutputReads",
+      "t/2039-isf-child-output-read-preparation.t"
+    ],
+    "exit_zero": false,
+    "perl5lib": ".artifacts/record-output-owner-reads/mutants/omitted_reads:perl:t/lib",
+    "producer_sha256": "e2d46e27e0b973f355d38339ad2b2e051100076ba4fecacb9e9e80c62f2f7ab5",
+    "receipt_sha256": "546b7d022d77b3a07d7c6d4562e3aa1e1c2a29829450cf5b765e38c75459d2b6",
+    "returncode": 17
+  },
+  "unmasked_statics": {
+    "argv": [
+      "perl",
+      "-MFSM::Scheduler::ISF::ChildOutputReads",
+      "t/2039-isf-child-output-read-preparation.t"
+    ],
+    "exit_zero": false,
+    "perl5lib": ".artifacts/record-output-owner-reads/mutants/unmasked_statics:perl:t/lib",
+    "producer_sha256": "cf6a00140077c0172da9d3bcdefbc289a433215e1fc624a2e8153b76198cacd8",
+    "receipt_sha256": "bbab5b3287569b357963275dd96dc1ab600a711d5a1d89106d37022487a8c085",
+    "returncode": 255
+  },
+  "weak_history": {
+    "argv": [
+      "perl",
+      "-MFSM::Scheduler::ISF::ChildOutputReads",
+      "t/2039-isf-child-output-read-preparation.t"
+    ],
+    "exit_zero": false,
+    "perl5lib": ".artifacts/record-output-owner-reads/mutants/weak_history:perl:t/lib",
+    "producer_sha256": "487c067747200e29befb20d5b86ba6973e04242bf11209f559c305d825b8b463",
+    "receipt_sha256": "826473c2da7ec38d28c91c91caad558b4fd0ee993109bfdb718753bf691815d2",
+    "returncode": 4
+  }
+}

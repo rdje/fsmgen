@@ -1,0 +1,15 @@
+ram-guard: PID 34231; host 60.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "docs/audits/record-output-owner-read-preparation-20261002/verify.py", line 154, in <module>
+    verify()
+    ~~~~~~^^
+  File "docs/audits/record-output-owner-read-preparation-20261002/verify.py", line 115, in verify
+    facts(name, value)
+    ~~~~~^^^^^^^^^^^^^
+  File "docs/audits/record-output-owner-read-preparation-20261002/verify.py", line 45, in facts
+    same(plan['counters'], child['counters'], name + ' no new register/counter')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "docs/audits/record-output-owner-read-preparation-20261002/verify.py", line 34, in same
+    assert encoded(left) == encoded(right), label
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: role_sample no new register/counter

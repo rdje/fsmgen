@@ -164,6 +164,13 @@ Both repairs precede publication; merely removing the gate would expose missing
 wiring. Scalar sibling schedules can succeed while strict check and semantic
 queries reject unconnected child ports. See the
 [generated-output ingress](../../../docs/audits/record-output-generated-ingress-20261002/scope.txt).
+
+The [detached child read plan](../../../docs/audits/record-output-owner-read-preparation-20261002/scope.txt)
+qualifies private typed data inputs, source-name masking and emitted operand
+rebasing, including record outputs named `start` and `done`. Production owner
+routes and output writer handoffs remain open. The separately owned first-`when`
+action omission and scalar X/Z false-operand diagnosis precede read integration;
+this preparation does not establish output execution or X/Z behavior.
 Actual local/imported/alias/mixed,
 reverse-copy and owning-domain carriers strictly replay; this establishes source
 and carrier admission, with execution still pending. See the

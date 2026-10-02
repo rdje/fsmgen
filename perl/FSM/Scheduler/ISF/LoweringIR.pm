@@ -523,6 +523,34 @@ sub _formal_expression_static_symbols {
     return \%names;
 }
 
+# The detached output-view planner uses the same resolved static namespace as
+# formal lowering. Do not reconstruct imported constants or enum paths there.
+sub child_output_read_scope($self, $actor, $tx) {
+    confess "Child output reads require an actual source transaction\n"
+        unless ref($actor) eq 'HASH' && ref($tx) eq 'HASH'
+            && grep { refaddr($_) == refaddr($tx) } @{$actor->{transactions} || []};
+    my ($index) = grep {refaddr($actor->{transactions}[$_]) == refaddr($tx)}
+        0 .. $#{$actor->{transactions}};
+    $actor = _clone_isf_value($actor);
+    $tx = $actor->{transactions}[$index];
+    my %locals = map { $_->[1] => 1 }
+        grep { ref($_) eq 'ARRAY' && @$_ && $_->[0] eq 'local' }
+        @{$tx->{clauses} || []};
+    my %ports = _transaction_port_map($tx);
+    $locals{$_} = 1 for keys %ports, map { $_->{source_name} } values %ports;
+    my %static = (%{_formal_expression_static_symbols($actor)},
+        map { $_->{name} => 1 } @{_transaction_param_declarations($tx, $actor)});
+    return {
+        locals => \%locals, static_symbols => \%static,
+        constants => _actor_constant_declarations($actor),
+        params => _transaction_param_declarations($tx, $actor),
+        enum_declarations => _actor_enum_declarations($actor),
+        type_declarations => _actor_type_declarations($actor),
+        package_imports => _actor_package_imports($actor),
+        package_roots => _actor_package_roots($actor),
+    };
+}
+
 sub _formal_pruned_repeat_paths {
     my ($clauses, $path, $actor, $owner, $pruned, $start) = @_;
     $start //= 0;
