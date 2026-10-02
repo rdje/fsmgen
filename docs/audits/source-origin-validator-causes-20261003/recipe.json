@@ -1,0 +1,12 @@
+{
+  "actual_probe_status": 58,
+  "baseline": "a530a94d542a0b1aca8e79d2509548bfbcca6356",
+  "book_status": 0,
+  "cold_status": 0,
+  "current_consumer_red_status": 1,
+  "focused_status": 0,
+  "initial_sandbox_guard_status": 2,
+  "intermediate_drafts": "unbound literal, before whole products, first-loop reader, absolute reader/recorder command; not qualification",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1.2",
+  "run_status": 0
+}

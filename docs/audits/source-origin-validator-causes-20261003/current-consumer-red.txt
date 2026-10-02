@@ -1,0 +1,6 @@
+ram-guard: PID 43073; host 64.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/verify.py", line 117, in <module>
+    assert all(r['matched']==(1 if r['band']=='positive' else 0) for r in data['products']), 'actual current assertions accept unrelated echoed causes'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual current assertions accept unrelated echoed causes

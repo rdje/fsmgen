@@ -1,0 +1,446 @@
+ok 1 - same precise committed source refusal
+ok 2 - scheduler positive cause classification
+ok 3 - same precise committed source refusal
+not ok 4 - scheduler wrong_argument_echo cause classification
+#   Failed test 'scheduler wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 5 - same precise committed source refusal
+#   Failed test 'same precise committed source refusal'
+#   at (eval 43611) line 1.
+#                   'FSM::Scheduler::ISF->lower argument 1 must be a scheduler-consumable actor hash reference
+#  at perl/FSM/Scheduler/ISF.pm line 121.
+# 	FSM::Scheduler::ISF::_validate_actor_arg("lower", "unrelated argument") called at perl/FSM/Scheduler/ISF.pm line 60
+# 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x748bb03a38), "unrelated argument") called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 110
+# 	main::invoke("scheduler", HASH(0x748bb03780)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:unsupported '\(cond \.\.\.\)' clause)'
+ok 6 - scheduler wrong_argument_plain cause classification
+ok 7 - bounded explicit-association diagnostic
+ok 8 - generic_changed_target positive cause classification
+ok 9 - bounded explicit-association diagnostic
+not ok 10 - generic_changed_target wrong_argument_echo cause classification
+#   Failed test 'generic_changed_target wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 11 - bounded explicit-association diagnostic
+#   Failed test 'bounded explicit-association diagnostic'
+#   at (eval 43620) line 1.
+#                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+# '
+#     doesn't match '(?^:conditional origin)'
+ok 12 - generic_changed_target wrong_argument_plain cause classification
+ok 13 - bounded explicit-association diagnostic
+ok 14 - generic_duplicate positive cause classification
+ok 15 - bounded explicit-association diagnostic
+not ok 16 - generic_duplicate wrong_argument_echo cause classification
+#   Failed test 'generic_duplicate wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 17 - bounded explicit-association diagnostic
+#   Failed test 'bounded explicit-association diagnostic'
+#   at (eval 43629) line 1.
+#                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+# '
+#     doesn't match '(?^:conditional origin)'
+ok 18 - generic_duplicate wrong_argument_plain cause classification
+ok 19 - bounded explicit-association diagnostic
+ok 20 - generic_forged_origin positive cause classification
+ok 21 - bounded explicit-association diagnostic
+not ok 22 - generic_forged_origin wrong_argument_echo cause classification
+#   Failed test 'generic_forged_origin wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 23 - bounded explicit-association diagnostic
+#   Failed test 'bounded explicit-association diagnostic'
+#   at (eval 43638) line 1.
+#                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+# '
+#     doesn't match '(?^:conditional origin)'
+ok 24 - generic_forged_origin wrong_argument_plain cause classification
+ok 25 - bounded explicit-association diagnostic
+ok 26 - generic_omission positive cause classification
+ok 27 - bounded explicit-association diagnostic
+not ok 28 - generic_omission wrong_argument_echo cause classification
+#   Failed test 'generic_omission wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 29 - bounded explicit-association diagnostic
+#   Failed test 'bounded explicit-association diagnostic'
+#   at (eval 43647) line 1.
+#                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+# '
+#     doesn't match '(?^:conditional origin)'
+ok 30 - generic_omission wrong_argument_plain cause classification
+ok 31 - bounded explicit-association diagnostic
+ok 32 - generic_schema_kind positive cause classification
+ok 33 - bounded explicit-association diagnostic
+not ok 34 - generic_schema_kind wrong_argument_echo cause classification
+#   Failed test 'generic_schema_kind wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 35 - bounded explicit-association diagnostic
+#   Failed test 'bounded explicit-association diagnostic'
+#   at (eval 43656) line 1.
+#                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+# '
+#     doesn't match '(?^:conditional origin)'
+ok 36 - generic_schema_kind wrong_argument_plain cause classification
+ok 37 - bounded explicit-association diagnostic
+ok 38 - generic_source_identity positive cause classification
+ok 39 - bounded explicit-association diagnostic
+not ok 40 - generic_source_identity wrong_argument_echo cause classification
+#   Failed test 'generic_source_identity wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 41 - bounded explicit-association diagnostic
+#   Failed test 'bounded explicit-association diagnostic'
+#   at (eval 43665) line 1.
+#                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+# '
+#     doesn't match '(?^:conditional origin)'
+ok 42 - generic_source_identity wrong_argument_plain cause classification
+ok 43 - bounded explicit-association diagnostic
+ok 44 - generic_unknown_field positive cause classification
+ok 45 - bounded explicit-association diagnostic
+not ok 46 - generic_unknown_field wrong_argument_echo cause classification
+#   Failed test 'generic_unknown_field wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 47 - bounded explicit-association diagnostic
+#   Failed test 'bounded explicit-association diagnostic'
+#   at (eval 43674) line 1.
+#                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+# '
+#     doesn't match '(?^:conditional origin)'
+ok 48 - generic_unknown_field wrong_argument_plain cause classification
+ok 49 - bounded explicit-association diagnostic
+ok 50 - generic_wrong_path positive cause classification
+ok 51 - bounded explicit-association diagnostic
+not ok 52 - generic_wrong_path wrong_argument_echo cause classification
+#   Failed test 'generic_wrong_path wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 53 - bounded explicit-association diagnostic
+#   Failed test 'bounded explicit-association diagnostic'
+#   at (eval 43683) line 1.
+#                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+# '
+#     doesn't match '(?^:conditional origin)'
+ok 54 - generic_wrong_path wrong_argument_plain cause classification
+ok 55 - precise source-bound diagnostic
+ok 56 - local_actor positive cause classification
+ok 57 - precise source-bound diagnostic
+not ok 58 - local_actor wrong_argument_echo cause classification
+#   Failed test 'local_actor wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 59 - precise source-bound diagnostic
+#   Failed test 'precise source-bound diagnostic'
+#   at (eval 43692) line 1.
+#                   'conditional origin independent source authority required
+#  at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 32.
+# 	FSM::Test::ConditionalOriginAuthority::validate(FSM::Test::ConditionalOriginAuthority=HASH(0x748ed5c4c8), "unrelated argument", HASH(0x748ed5c6c0)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 116
+# 	main::invoke("local", HASH(0x748ed5c420)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:conditional origin (?:actor|ledger) differs from authoritative source)'
+ok 60 - local_actor wrong_argument_plain cause classification
+ok 61 - precise source-bound diagnostic
+ok 62 - local_ledger positive cause classification
+ok 63 - precise source-bound diagnostic
+not ok 64 - local_ledger wrong_argument_echo cause classification
+#   Failed test 'local_ledger wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 65 - precise source-bound diagnostic
+#   Failed test 'precise source-bound diagnostic'
+#   at (eval 43701) line 1.
+#                   'conditional origin independent source authority required
+#  at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 32.
+# 	FSM::Test::ConditionalOriginAuthority::validate(FSM::Test::ConditionalOriginAuthority=HASH(0x748ed5f828), "unrelated argument", HASH(0x748ed5fcd8)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 116
+# 	main::invoke("local", HASH(0x748ed5f690)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:conditional origin (?:actor|ledger) differs from authoritative source)'
+ok 66 - local_ledger wrong_argument_plain cause classification
+ok 67 - source operation authenticates independently of target shape
+ok 68 - twins positive cause classification
+ok 69 - source operation authenticates independently of target shape
+not ok 70 - twins wrong_argument_echo cause classification
+#   Failed test 'twins wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 71 - source operation authenticates independently of target shape
+#   Failed test 'source operation authenticates independently of target shape'
+#   at (eval 43710) line 1.
+#                   'conditional origin independent source authority required
+#  at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 32.
+# 	FSM::Test::ConditionalOriginAuthority::validate(FSM::Test::ConditionalOriginAuthority=HASH(0x748ed64c18), "unrelated argument", HASH(0x748ed65390)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 116
+# 	main::invoke("twins", HASH(0x748ed64e70)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:ledger differs from authoritative source)'
+ok 72 - twins wrong_argument_plain cause classification
+ok 73 - bounded absent-authority diagnostic
+ok 74 - missing positive cause classification
+ok 75 - bounded absent-authority diagnostic
+not ok 76 - missing wrong_argument_echo cause classification
+#   Failed test 'missing wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 77 - bounded absent-authority diagnostic
+#   Failed test 'bounded absent-authority diagnostic'
+#   at (eval 43719) line 1.
+#                   'conditional origin actor differs from authoritative source
+#  at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 34.
+# 	FSM::Test::ConditionalOriginAuthority::validate(FSM::Test::ConditionalOriginAuthority=HASH(0x748ec44798), "unrelated argument", HASH(0x748ed6c1b0)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 117
+# 	main::invoke("missing", HASH(0x748ed6c420)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:independent source authority required)'
+ok 78 - missing wrong_argument_plain cause classification
+ok 79 - precise independent authentication boundary
+ok 80 - library_actor positive cause classification
+ok 81 - precise independent authentication boundary
+not ok 82 - library_actor wrong_argument_echo cause classification
+#   Failed test 'library_actor wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 83 - precise independent authentication boundary
+#   Failed test 'precise independent authentication boundary'
+#   at (eval 43728) line 1.
+#                   'library origin independent document set required
+#  at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 33.
+# 	FSM::Test::LibraryDocumentOriginAuthority::validate(FSM::Test::LibraryDocumentOriginAuthority=HASH(0x748ed9a1b0), "unrelated argument", HASH(0x748ed9a978)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 118
+# 	main::invoke("library", HASH(0x748ed9a690)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:differs from authoritative document set)'
+ok 84 - library_actor wrong_argument_plain cause classification
+ok 85 - precise independent authentication boundary
+ok 86 - library_proof positive cause classification
+ok 87 - precise independent authentication boundary
+not ok 88 - library_proof wrong_argument_echo cause classification
+#   Failed test 'library_proof wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 89 - precise independent authentication boundary
+#   Failed test 'precise independent authentication boundary'
+#   at (eval 43737) line 1.
+#                   'library origin independent document set required
+#  at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 33.
+# 	FSM::Test::LibraryDocumentOriginAuthority::validate(FSM::Test::LibraryDocumentOriginAuthority=HASH(0x748edc2e40), "unrelated argument", HASH(0x748edc26c0)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 118
+# 	main::invoke("library", HASH(0x748edc22e8)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:differs from authoritative document set)'
+ok 90 - library_proof wrong_argument_plain cause classification
+ok 91 - precise independent complete authentication boundary
+ok 92 - ATL_actor positive cause classification
+ok 93 - precise independent complete authentication boundary
+not ok 94 - ATL_actor wrong_argument_echo cause classification
+#   Failed test 'ATL_actor wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 95 - precise independent complete authentication boundary
+#   Failed test 'precise independent complete authentication boundary'
+#   at (eval 43746) line 1.
+#                   'library origin independent document set required
+#  at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 33.
+# 	FSM::Test::LibraryDocumentOriginAuthority::validate(FSM::Test::ATLDocumentOriginAuthority=HASH(0x748ee0d9c0), "unrelated argument", HASH(0x748ee0f1e0)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 118
+# 	main::invoke("ATL", HASH(0x748ee0f588)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:differs from authoritative document set)'
+ok 96 - ATL_actor wrong_argument_plain cause classification
+ok 97 - precise independent complete authentication boundary
+ok 98 - ATL_proof positive cause classification
+ok 99 - precise independent complete authentication boundary
+not ok 100 - ATL_proof wrong_argument_echo cause classification
+#   Failed test 'ATL_proof wrong_argument_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 101 - precise independent complete authentication boundary
+#   Failed test 'precise independent complete authentication boundary'
+#   at (eval 43755) line 1.
+#                   'library origin independent document set required
+#  at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 33.
+# 	FSM::Test::LibraryDocumentOriginAuthority::validate(FSM::Test::ATLDocumentOriginAuthority=HASH(0x748ee4e8d0), "unrelated argument", HASH(0x748ee4e108)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 118
+# 	main::invoke("ATL", HASH(0x748ee4efc0)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:differs from authoritative document set)'
+ok 102 - ATL_proof wrong_argument_plain cause classification
+ok 103 - precise complete target identity boundary
+ok 104 - same_late positive cause classification
+ok 105 - precise complete target identity boundary
+not ok 106 - same_late wrong_source_echo cause classification
+#   Failed test 'same_late wrong_source_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 107 - precise complete target identity boundary
+#   Failed test 'precise complete target identity boundary'
+#   at (eval 46159) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::LibraryLateTargetMutation=HASH(0x748ee68600), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::LibraryLateTargetMutation=HASH(0x748ee68600), "(not_actor)", "wrong.isf") called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 119
+# 	main::invoke("same_late", HASH(0x748ee76060)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:conditional origin target identity mismatch)'
+ok 108 - same_late wrong_source_plain cause classification
+ok 109 - precise complete target identity boundary
+not ok 110 - same_late wrong_label_echo cause classification
+#   Failed test 'same_late wrong_label_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+ok 111 - precise final whole edge/target/kind publication boundary
+ok 112 - library_late_target positive cause classification
+ok 113 - precise final whole edge/target/kind publication boundary
+not ok 114 - library_late_target wrong_source_echo cause classification
+#   Failed test 'library_late_target wrong_source_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 115 - precise final whole edge/target/kind publication boundary
+#   Failed test 'precise final whole edge/target/kind publication boundary'
+#   at (eval 49729) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x748ee61168), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x748ee61168), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::DocumentLateCloneMutation=HASH(0x748ee61168), "wrong.isf", HASH(0x748eeaed20)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 121
+# 	main::invoke("library_late", HASH(0x748eeae1b0)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:library origin final use (?:target or identity|coverage) differs)'
+ok 116 - library_late_target wrong_source_plain cause classification
+ok 117 - precise final whole edge/target/kind publication boundary
+not ok 118 - library_late_target wrong_label_echo cause classification
+#   Failed test 'library_late_target wrong_label_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+ok 119 - precise final whole edge/target/kind publication boundary
+ok 120 - library_late_instance positive cause classification
+ok 121 - precise final whole edge/target/kind publication boundary
+not ok 122 - library_late_instance wrong_source_echo cause classification
+#   Failed test 'library_late_instance wrong_source_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 123 - precise final whole edge/target/kind publication boundary
+#   Failed test 'precise final whole edge/target/kind publication boundary'
+#   at (eval 53299) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x748ee9baf8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x748ee9baf8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::DocumentLateCloneMutation=HASH(0x748ee9baf8), "wrong.isf", HASH(0x748baf2e10)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 121
+# 	main::invoke("library_late", HASH(0x748ee63ae0)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:library origin final use (?:target or identity|coverage) differs)'
+ok 124 - library_late_instance wrong_source_plain cause classification
+ok 125 - precise final whole edge/target/kind publication boundary
+not ok 126 - library_late_instance wrong_label_echo cause classification
+#   Failed test 'library_late_instance wrong_label_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+ok 127 - precise final whole edge/target/kind publication boundary
+ok 128 - library_late_coverage positive cause classification
+ok 129 - precise final whole edge/target/kind publication boundary
+not ok 130 - library_late_coverage wrong_source_echo cause classification
+#   Failed test 'library_late_coverage wrong_source_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 131 - precise final whole edge/target/kind publication boundary
+#   Failed test 'precise final whole edge/target/kind publication boundary'
+#   at (eval 56869) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x748ee8b6f0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x748ee8b6f0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::DocumentLateCloneMutation=HASH(0x748ee8b6f0), "wrong.isf", HASH(0x748ee4fbb8)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 121
+# 	main::invoke("library_late", HASH(0x748ee63c00)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:library origin final use (?:target or identity|coverage) differs)'
+ok 132 - library_late_coverage wrong_source_plain cause classification
+ok 133 - precise final whole edge/target/kind publication boundary
+not ok 134 - library_late_coverage wrong_label_echo cause classification
+#   Failed test 'library_late_coverage wrong_label_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+ok 135 - precise final whole edge/target/kind publication boundary
+ok 136 - library_late_parameter_kind positive cause classification
+ok 137 - precise final whole edge/target/kind publication boundary
+not ok 138 - library_late_parameter_kind wrong_source_echo cause classification
+#   Failed test 'library_late_parameter_kind wrong_source_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 139 - precise final whole edge/target/kind publication boundary
+#   Failed test 'precise final whole edge/target/kind publication boundary'
+#   at (eval 60439) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x748eea5cf0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x748eea5cf0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::DocumentLateCloneMutation=HASH(0x748eea5cf0), "wrong.isf", HASH(0x748ee615d0)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 121
+# 	main::invoke("library_late", HASH(0x748eeb50c0)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:library origin final use (?:target or identity|coverage) differs)'
+ok 140 - library_late_parameter_kind wrong_source_plain cause classification
+ok 141 - precise final whole edge/target/kind publication boundary
+not ok 142 - library_late_parameter_kind wrong_label_echo cause classification
+#   Failed test 'library_late_parameter_kind wrong_label_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+ok 143 - precise final ATL consistency boundary
+ok 144 - ATL_late_target positive cause classification
+ok 145 - precise final ATL consistency boundary
+not ok 146 - ATL_late_target wrong_source_echo cause classification
+#   Failed test 'ATL_late_target wrong_source_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 147 - precise final ATL consistency boundary
+#   Failed test 'precise final ATL consistency boundary'
+#   at (eval 66350) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x748eee6738), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x748eee6738), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x748eee6738), "wrong.isf", HASH(0x748eee79d8)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+# 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x748eee6738), "wrong.isf", HASH(0x748eee79d8)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 121
+# 	main::invoke("ATL_late", HASH(0x748eee7408)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:ATL origin final (?:target or instance identity|resolved actor coverage) differs)'
+ok 148 - ATL_late_target wrong_source_plain cause classification
+ok 149 - precise final ATL consistency boundary
+not ok 150 - ATL_late_target wrong_label_echo cause classification
+#   Failed test 'ATL_late_target wrong_label_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+ok 151 - precise final ATL consistency boundary
+ok 152 - ATL_late_declaration positive cause classification
+ok 153 - precise final ATL consistency boundary
+not ok 154 - ATL_late_declaration wrong_source_echo cause classification
+#   Failed test 'ATL_late_declaration wrong_source_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 155 - precise final ATL consistency boundary
+#   Failed test 'precise final ATL consistency boundary'
+#   at (eval 72261) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x748eeb6768), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x748eeb6768), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x748eeb6768), "wrong.isf", HASH(0x748ee8ba80)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+# 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x748eeb6768), "wrong.isf", HASH(0x748ee8ba80)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 121
+# 	main::invoke("ATL_late", HASH(0x748ee85bd0)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:ATL origin final (?:target or instance identity|resolved actor coverage) differs)'
+ok 156 - ATL_late_declaration wrong_source_plain cause classification
+ok 157 - precise final ATL consistency boundary
+not ok 158 - ATL_late_declaration wrong_label_echo cause classification
+#   Failed test 'ATL_late_declaration wrong_label_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+ok 159 - precise final ATL consistency boundary
+ok 160 - ATL_late_coverage positive cause classification
+ok 161 - precise final ATL consistency boundary
+not ok 162 - ATL_late_coverage wrong_source_echo cause classification
+#   Failed test 'ATL_late_coverage wrong_source_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+not ok 163 - precise final ATL consistency boundary
+#   Failed test 'precise final ATL consistency boundary'
+#   at (eval 78172) line 1.
+#                   'Error: no (actor ...) root found in 'wrong.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x748eea50d8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x748eea50d8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+# 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x748eea50d8), "wrong.isf", HASH(0x748ee4f240)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+# 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x748eea50d8), "wrong.isf", HASH(0x748ee4f240)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 121
+# 	main::invoke("ATL_late", HASH(0x748eeae618)) called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# 	eval {...} called at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 66
+# '
+#     doesn't match '(?^:ATL origin final (?:target or instance identity|resolved actor coverage) differs)'
+ok 164 - ATL_late_coverage wrong_source_plain cause classification
+ok 165 - precise final ATL consistency boundary
+not ok 166 - ATL_late_coverage wrong_label_echo cause classification
+#   Failed test 'ATL_late_coverage wrong_label_echo cause classification'
+#   at /Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/probe.pl line 76.
+1..166
+# Looks like you failed 58 tests of 166.

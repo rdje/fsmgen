@@ -1,0 +1,6 @@
+ram-guard: PID 6235; host 60.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/verify.py", line 42, in <module>
+    assert enc(json.loads((B/'runtime.json').read_text()))==enc({'status':58,'baseline':revision,'command':['perl',str(B/'probe.pl')]})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

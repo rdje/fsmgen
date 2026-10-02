@@ -21,7 +21,7 @@
 
 _Library origin reloads require an independent complete document set_
 
-- **date:** 2026-10-02 · **status:** current
+- **date:** 2026-10-03 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-library-document-origin-authority.md`](../../docs/knowledge/isf-library-document-origin-authority.md)
 
 ### isf-library-parent-port-ownership

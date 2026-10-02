@@ -1,0 +1,9 @@
+ram-guard: PID 74144; host 67.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/verify.py", line 83, in <module>
+    causes(data)
+    ~~~~~~^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/verify.py", line 76, in causes
+    assert r['first_line']==f'Can\'t use string ("{value}") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line {line}.'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

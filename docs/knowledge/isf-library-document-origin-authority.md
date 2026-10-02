@@ -8,7 +8,7 @@ answers:
   - "does the private document authority qualify ATL or preparation?"
   - "where is the current refusal consumer census?"
   - "does diagnostic discovery qualify refusal causes?"
-date: 2026-10-02
+date: 2026-10-03
 status: current
 tags: [isf, library, source, origins, authority, imports, diagnostics]
 evidence: >-
@@ -18,6 +18,7 @@ evidence: >-
   docs/audits/origin-helper-cause-repair-20261002/scope.txt;
   docs/audits/current-diagnostic-lexical-inventory-20261002/scope.txt;
   docs/audits/constructor-cause-repair-20261002/scope.txt;
+  docs/audits/source-origin-validator-causes-20261003/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
@@ -25,34 +26,35 @@ reverify: >-
   t/2045-isf-same-source-library-origins.t
 ---
 
-Whole independent documents and relative labels/roots authenticate bytes/forms
-before exports; registries use each document digest.
-This parse_source cohort uses relative FSMLIB;
-[file roots](isf-file-document-origin-authority.md) own portable runtime coordinates.
+Independent complete documents, relative identities/roots and source bytes/forms
+authenticate exports before reload; registries use document digests. This
+parse_source provider uses relative FSMLIB; [files](isf-file-document-origin-authority.md)
+own portable runtime coordinates.
 
-Proofs bind whole selected documents, actors/exports/resolutions/clones and
-source ledgers. Reload compares products and primitive kinds against independent
-bytes. Missing/unused/changed documents/forms and forged products refuse.
-Finalization rechecks use coverage, retained targets/identities/parameter kinds;
-late mutations refuse. The stale-clone defect was fixed. Initial seal is
-intermediate; finalization binds that fix. Callers/views detach; comparison
-bypass fails refusals while canonical producers run.
+Whole actors, exports, resolutions, clones and ledgers bind selected documents.
+Missing/unused/changed documents/forms and forged products refuse. Finalization
+rechecks use coverage, targets, identities and parameter kinds; late mutations
+refuse. The stale-clone fix is finalization-bound; initial seal is intermediate.
+Views detach; real comparison bypass fails refusals while canonical producers run.
 
-Same-source precedes external search; reused exports retain distinct uses. Two
-external aliases bind separate constructors; equal bodies never merge constructor
-or operation identities. Forged catalogs/matching hashes cannot replace bytes.
-Original tokens partition sources; normalized singleton formal tails are
-undefined and cannot serialize original source.
+Same-source precedes external search. Reused exports retain distinct uses;
+two external aliases have separate constructors. Equal bodies cannot merge
+constructor/operation identities. Catalogs/hashes cannot replace bytes. Original
+tokens partition sources; undefined normalized singleton tails cannot serialize them.
 
-Parser/scheduler stay intact. Local authority refuses imports; this provider
-refuses packages/ATL. [ATL](isf-atl-document-origin-authority.md) owns resolved
-static clones; file origins own reads/same-source use/ATL associations.
-Preparation/adoption remain later owners. Public activation/refusals apply;
-no new macros, scheduling admission or HDL/macro runtime is proved.
+Parser/scheduler stay intact. Local authority closes imports; this provider
+closes packages/ATL. [ATL](isf-atl-document-origin-authority.md) owns resolved
+static clones. Preparation/adoption remain later; public activation/refusals
+apply. No new macros, scheduling admission or HDL/macro runtime is proved.
 
-Constructor and library/file helpers compare complete first causes, rejecting
-real caller/label echoes. Reverify: `python3 docs/audits/origin-helper-cause-repair-20261002/verify.py`.
-The [lexical census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt)
-binds ASCII Perl tokens/calls to Git bytes. Comments/strings/declarations and
-overlaps are candidates, not cause safety. Context/producer/cold controls remain
-owned. Exact kinds/numeric forms: `python3 docs/audits/current-diagnostic-lexical-kinds-20261002/verify.py`.
+Constructors and library/file helpers compare complete causes and reject actual
+caller/label echoes. Reverify: `python3 docs/audits/origin-helper-cause-repair-20261002/verify.py`.
+Remaining ten validator/finalizer sites accept unrelated argument/source failures
+carrying wanted text, including a generic category inside a primary type error.
+Immediate P2 repair is owned; diagnosis:
+`python3 docs/audits/source-origin-validator-causes-20261003/verify.py`.
+Broader current/cold consumer controls remain open. The
+[lexical census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt)
+is ASCII Perl discovery, including overlapping comments/strings/declarations,
+not cause safety. Kinds/numeric forms:
+`python3 docs/audits/current-diagnostic-lexical-kinds-20261002/verify.py`.

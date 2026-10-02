@@ -1,0 +1,15 @@
+ram-guard: PID 86994; host 63.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared cause corruption rejects: first_cause
+shared cause corruption rejects: flag_kind
+shared cause corruption rejects: flag_value
+shared cause corruption rejects: missing_context
+shared cause corruption rejects: source
+shared cause corruption rejects: unknown_root
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/verify.py", line 114, in <module>
+    whole(data)
+    ~~~~~^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-validator-causes-20261003/verify.py", line 109, in whole
+    label,docs,roots=candidate['documents'][kind];assert roots==[str(B/'fixtures'/kind)]
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

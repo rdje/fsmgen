@@ -134,9 +134,13 @@ Actual source-label probes now show why first-line selection is insufficient:
 refusal phrase. Seven constructor assertion sites now compare their complete independently
 declared first causes, with real comment/label echo regression controls. The
 library/file helpers now use the same complete-cause predicate and permanent
-real-label controls. Remaining source validators/finalizers and broader current
-and cold consumers still require their owned qualification. These corrections
-change verification, not public ISF admission.
+real-label controls. Actual validator/finalizer probes also reproduce unrelated
+argument failures echoed through Carp and earlier parser failures quoting wanted
+text in source labels. Even the generic origin-category assertion accepts a
+Perl type failure quoting that category in its primary message. Those confirmed
+consumers are scheduled for complete cause contracts; broader current and cold
+consumers remain under audit. These corrections change verification, not public
+ISF admission.
 
 This observer preserves the existing first-clause behavior, including current
 macro placement defects and inline-procedure `cond` refusals. Imported/reusable
