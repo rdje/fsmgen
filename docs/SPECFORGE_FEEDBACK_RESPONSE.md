@@ -181,9 +181,12 @@ and book.
   retains the complete actual candidate admission and restored refusal.
   Detached parser-origin qualification (`.5.2.1`) preserves original operations
   and inline call sites with ordinary actors unchanged. Identical normalized
-  clauses cannot identify authored intent. Import/formal/generated/domain
-  propagation (`.5.2.2`) and independent-load authenticity remain open before
-  this becomes a scheduling repair.
+  clauses cannot identify authored intent. Local-source reload authenticity
+  (`.5.2.2.1`) now requires independently supplied source and reconstructs the
+  complete actor and ledger; a matching embedded digest cannot authenticate a
+  substituted origin. Imports refuse at this private boundary. Imported
+  provenance (`.5.2.2.2`) and formal/generated/domain propagation (`.5.2.2.3`)
+  remain open before this becomes a scheduling repair.
   [Origin qualification](audits/conditional-origin-parser-20261002/scope.txt)
   retains the complete parser evidence; public syntax and admission do not change.
   Use explicit activation before conditional shorthand and keep `cond` at the

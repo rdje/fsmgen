@@ -1,0 +1,2 @@
+ram-guard: PID 90474; host 75.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS complete actual recipes/products/drafts, immutable original census and rendered canonical inclusion retained

@@ -1,0 +1,17 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.1
+Baseline: cb2a156df5a3c8169ad9ca1cfaa9c05046e33bf8
+Private local-source reload authority; independently supplied source produces
+complete actor and ledger through the real parser observer. Imported documents
+refuse before resolution. Production parser/scheduler/public schemas unchanged.
+Final bound positive: Files=1/Tests=58 PASS, complete original 54-source cohort.
+Actual fresh structural verifier: Files=1/Tests=54/Failed54 genuine RED.
+First green draft uses nonexistent name/inputs actor keys in identity/kind
+controls. Independent review catches that false oracle; preserve complete draft
+products/test and correct to actor_name/interface.inputs with kind/key assertions.
+That first draft does not qualify original-kind or existing-identity mutation.
+Independent verifier compares whole products and independently constructs every
+exact mutation against immutable predecessor authority; shared corruptions fail.
+Docs/book terminal receipts and complete bound parser proof retained. The
+separate broader focused job must be consumed before its receipt is accepted.
+No HDL/compiler/analyzer/simulation, spent replay, macro/output runtime, public
+widening, preparation/adoption, browser visual QA, full CI or push is claimed.

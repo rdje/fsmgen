@@ -1,0 +1,1702 @@
+ram-guard: PID 71843; host 70.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2044-isf-conditional-origin-source-authority.t .. 
+ok 1 - complete qualified predecessor membership
+# Subtest: independently supplied source authority domain_first_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 2 - independently supplied source authority domain_first_sample
+# Subtest: independently supplied source authority domain_first_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 3 - independently supplied source authority domain_first_select
+# Subtest: independently supplied source authority domain_later_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 4 - independently supplied source authority domain_later_select
+# Subtest: independently supplied source authority first_bit_sample_zero
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 5 - independently supplied source authority first_bit_sample_zero
+# Subtest: independently supplied source authority first_cond
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 6 - independently supplied source authority first_cond
+# Subtest: independently supplied source authority first_cond_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 7 - independently supplied source authority first_cond_sample
+# Subtest: independently supplied source authority first_generated_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 8 - independently supplied source authority first_generated_select
+# Subtest: independently supplied source authority first_max
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 9 - independently supplied source authority first_max
+# Subtest: independently supplied source authority first_min
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 10 - independently supplied source authority first_min
+# Subtest: independently supplied source authority first_proc_cond
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 11 - independently supplied source authority first_proc_cond
+# Subtest: independently supplied source authority first_proc_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 12 - independently supplied source authority first_proc_select
+# Subtest: independently supplied source authority first_proc_when_bit
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 13 - independently supplied source authority first_proc_when_bit
+# Subtest: independently supplied source authority first_proc_when_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 14 - independently supplied source authority first_proc_when_sample
+# Subtest: independently supplied source authority first_samples
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 15 - independently supplied source authority first_samples
+# Subtest: independently supplied source authority first_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 16 - independently supplied source authority first_select
+# Subtest: independently supplied source authority first_select_zero
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 17 - independently supplied source authority first_select_zero
+# Subtest: independently supplied source authority first_unless_bit
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 18 - independently supplied source authority first_unless_bit
+# Subtest: independently supplied source authority first_unless_bit_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 19 - independently supplied source authority first_unless_bit_sample
+# Subtest: independently supplied source authority first_unless_field
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 20 - independently supplied source authority first_unless_field
+# Subtest: independently supplied source authority first_unless_field_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 21 - independently supplied source authority first_unless_field_sample
+# Subtest: independently supplied source authority first_when_bit
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 22 - independently supplied source authority first_when_bit
+# Subtest: independently supplied source authority first_when_bit_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 23 - independently supplied source authority first_when_bit_sample
+# Subtest: independently supplied source authority first_when_field
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 24 - independently supplied source authority first_when_field
+# Subtest: independently supplied source authority first_when_field_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 25 - independently supplied source authority first_when_field_sample
+# Subtest: independently supplied source authority first_when_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 26 - independently supplied source authority first_when_sample
+# Subtest: independently supplied source authority for_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 27 - independently supplied source authority for_select
+# Subtest: independently supplied source authority initialized_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 28 - independently supplied source authority initialized_select
+# Subtest: independently supplied source authority later_cond
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 29 - independently supplied source authority later_cond
+# Subtest: independently supplied source authority later_cond_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 30 - independently supplied source authority later_cond_sample
+# Subtest: independently supplied source authority later_generated_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 31 - independently supplied source authority later_generated_select
+# Subtest: independently supplied source authority later_max
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 32 - independently supplied source authority later_max
+# Subtest: independently supplied source authority later_min
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 33 - independently supplied source authority later_min
+# Subtest: independently supplied source authority later_proc_cond
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 34 - independently supplied source authority later_proc_cond
+# Subtest: independently supplied source authority later_proc_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 35 - independently supplied source authority later_proc_select
+# Subtest: independently supplied source authority later_proc_when_bit
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 36 - independently supplied source authority later_proc_when_bit
+# Subtest: independently supplied source authority later_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 37 - independently supplied source authority later_select
+# Subtest: independently supplied source authority later_unless_bit
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 38 - independently supplied source authority later_unless_bit
+# Subtest: independently supplied source authority later_unless_bit_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 39 - independently supplied source authority later_unless_bit_sample
+# Subtest: independently supplied source authority later_unless_field
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 40 - independently supplied source authority later_unless_field
+# Subtest: independently supplied source authority later_unless_field_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 41 - independently supplied source authority later_unless_field_sample
+# Subtest: independently supplied source authority later_when_bit
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 42 - independently supplied source authority later_when_bit
+# Subtest: independently supplied source authority later_when_bit_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 43 - independently supplied source authority later_when_bit_sample
+# Subtest: independently supplied source authority later_when_field
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 44 - independently supplied source authority later_when_field
+# Subtest: independently supplied source authority later_when_field_sample
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 45 - independently supplied source authority later_when_field_sample
+# Subtest: independently supplied source authority let_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 46 - independently supplied source authority let_select
+# Subtest: independently supplied source authority nested_calls
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 47 - independently supplied source authority nested_calls
+# Subtest: independently supplied source authority nested_cond
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 48 - independently supplied source authority nested_cond
+# Subtest: independently supplied source authority nested_select
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 49 - independently supplied source authority nested_select
+# Subtest: independently supplied source authority repeat_bit
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 50 - independently supplied source authority repeat_bit
+# Subtest: independently supplied source authority reused_calls
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 51 - independently supplied source authority reused_calls
+# Subtest: independently supplied source authority switch_cond
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 52 - independently supplied source authority switch_cond
+# Subtest: independently supplied source authority twin_authored
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 53 - independently supplied source authority twin_authored
+# Subtest: independently supplied source authority twin_macro
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 54 - independently supplied source authority twin_macro
+# Subtest: independently supplied source authority while_field
+    ok 1 - complete actual actor and original primitive kinds match immutable independent product
+    ok 2 - complete reconstructed origins match immutable qualified product
+    ok 3 - opaque actor and ledger JSON reload authenticates against caller source
+    ok 4 - source_identity actually refuses
+    ok 5 - precise source-bound diagnostic
+    ok 6 - catalog_owner actually refuses
+    ok 7 - precise source-bound diagnostic
+    ok 8 - catalog_form actually refuses
+    ok 9 - precise source-bound diagnostic
+    ok 10 - target actually refuses
+    ok 11 - precise source-bound diagnostic
+    ok 12 - omission actually refuses
+    ok 13 - precise source-bound diagnostic
+    ok 14 - duplicate actually refuses
+    ok 15 - precise source-bound diagnostic
+    ok 16 - schema_kind actually refuses
+    ok 17 - precise source-bound diagnostic
+    ok 18 - extra_field actually refuses
+    ok 19 - precise source-bound diagnostic
+    ok 20 - actor_identity actually refuses
+    ok 21 - precise source-bound diagnostic
+    ok 22 - actual existing input width changes original JSON kind
+    ok 23 - kind mutation fabricates no actor field
+    ok 24 - actor_kind actually refuses
+    ok 25 - precise source-bound diagnostic
+    ok 26 - verification preserves complete submitted actor
+    ok 27 - verification preserves complete submitted ledger
+    ok 28 - returned views are detached from source authority
+    1..28
+ok 55 - independently supplied source authority while_field
+# Subtest: identical complete actors require the independently supplied source intent
+    ok 1 - whole actors are identical
+    ok 2 - valid authored-when catalog plus matching embedded digest cannot replace select intent
+    ok 3 - source operation authenticates independently of target shape
+    1..3
+ok 56 - identical complete actors require the independently supplied source intent
+# Subtest: missing independent source authority refuses
+    ok 1 - missing, malformed or digest-only input cannot create source authority
+    ok 2 - missing, malformed or digest-only input cannot create source authority
+    ok 3 - missing, malformed or digest-only input cannot create source authority
+    ok 4 - missing, malformed or digest-only input cannot create source authority
+    ok 5 - uninitialized verifier refuses even a valid complete ledger
+    ok 6 - bounded absent-authority diagnostic
+    1..6
+ok 57 - missing independent source authority refuses
+# Subtest: unqualified imports stay closed at the local authority boundary
+    ok 1 - local proof cannot claim imported document authenticity
+    ok 2 - explicit boundary refuses before external document resolution
+    1..2
+ok 58 - unqualified imports stay closed at the local authority boundary
+1..58
+ok
+All tests successful.
+Files=1, Tests=58,  3 wallclock secs ( 0.04 usr  0.01 sys +  2.05 cusr  0.42 csys =  2.52 CPU)
+Result: PASS

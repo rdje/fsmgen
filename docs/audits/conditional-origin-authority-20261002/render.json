@@ -1,0 +1,26 @@
+{
+  "13d-control-flow.html": {
+    "literal_markers": [
+      "private local-source verifier",
+      "An embedded digest supplies no authority"
+    ],
+    "scope": "Actual rendered text and canonical downstream inclusion; no browser visual QA.",
+    "sha256": "0fc06d194da8b17e0bd475c0448bb4c9aa563cd14d8f90af8815289d235e1f31"
+  },
+  "13i-downstream-integration.html": {
+    "literal_markers": [
+      "private local-source reload verifier",
+      "Matching embedded digests"
+    ],
+    "scope": "Actual rendered text and canonical downstream inclusion; no browser visual QA.",
+    "sha256": "ca365a683d596326282e8019aa1ab8f534925158449cf9ed17bb6f4fe815a868"
+  },
+  "13k-isf-feature-support-matrix.html": {
+    "literal_markers": [
+      "Local-source reload verification",
+      "imports remain closed"
+    ],
+    "scope": "Actual rendered text and canonical downstream inclusion; no browser visual QA.",
+    "sha256": "4d5b5c321e6cc61aee0e8d0fe3d9618493697e299039ab3701ec4bf5b0b7d076"
+  }
+}

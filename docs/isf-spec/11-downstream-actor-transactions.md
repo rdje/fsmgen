@@ -345,9 +345,13 @@ language/framework or record-output routes.
 Detached parser-origin qualification now preserves original operations and
 inline call sites while leaving complete ordinary actors unchanged. Identical
 normalized clauses can have different authored intent, so branch selection
-must use a source-produced association. Import/formal/generated/domain
-propagation and independent-load authenticity remain prerequisites; the
-private prototype is not a public schema or a scheduling repair.
+must use a source-produced association. The private local-source reload verifier
+requires independently supplied source and reconstructs the complete actor and
+ledger through the canonical parser observer. Matching embedded digests and
+structurally valid records cannot authenticate substituted origins. This local
+authority refuses imports before document resolution; imported provenance and
+formal/generated/domain propagation remain prerequisites. The private proof
+is not a public schema or a scheduling repair.
 Origin evidence: `docs/audits/conditional-origin-parser-20261002/scope.txt`.
 Procedure safety evidence: `docs/audits/procedure-cond-normalization-20261002/scope.txt`.
 Macro qualification: `docs/audits/conditional-macro-intent-20261002/scope.txt`.

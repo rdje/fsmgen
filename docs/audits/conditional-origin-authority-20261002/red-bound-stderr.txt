@@ -1,0 +1,163 @@
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/domain_first_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/domain_first_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/domain_later_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_bit_sample_zero.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_cond.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_cond_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_generated_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_max.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_min.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_proc_cond.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_proc_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_proc_when_bit.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_proc_when_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_samples.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_select_zero.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_unless_bit.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_unless_bit_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_unless_field.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_unless_field_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_when_bit.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_when_bit_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_when_field.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_when_field_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_when_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/for_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/initialized_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_cond.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_cond_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_generated_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_max.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_min.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_proc_cond.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_proc_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_proc_when_bit.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_unless_bit.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_unless_bit_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_unless_field.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_unless_field_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_when_bit.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_when_bit_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_when_field.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_when_field_sample.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/let_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/nested_calls.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/nested_cond.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/nested_select.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/repeat_bit.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/reused_calls.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/switch_cond.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/twin_authored.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/twin_macro.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+
+#   Failed test 'fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/while_field.json'
+#   at .artifacts/conditional-origin-authority/red_unbound.t line 20.
+# Looks like you failed 54 tests of 54.

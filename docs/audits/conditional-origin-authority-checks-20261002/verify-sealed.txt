@@ -1,0 +1,2 @@
+ram-guard: PID 6354; host 62.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS complete source-bound reload products, exact control mutations, original kinds, twin intent, genuine unbound RED, five shared corruptions, bound recipes and immutable originals; no HDL/runtime/public widening

@@ -53,9 +53,12 @@ shorthand bodies with other actions refuse at the entry-body boundary.
 The detached parser-origin qualification preserves original operations and
 inline call sites without changing ordinary parsed actors. Authored `when` and
 macro expansion can produce identical normalized clauses; those clauses alone
-cannot decide entry intent. Propagation through imports and generated
-preparation must qualify before this becomes a scheduling repair. The current
-activation workaround and refusals still apply.
+cannot decide entry intent. A private local-source verifier now reconstructs
+the complete actor and origins from independently supplied source before
+accepting a reloaded ledger. An embedded digest supplies no authority; imports
+refuse at this private boundary until their document provenance qualifies.
+Formal/generated/domain preparation must also qualify before this becomes a
+scheduling repair. The current activation workaround and refusals still apply.
 
 **Lowering**: `?condition` decision state.
 ```lisp

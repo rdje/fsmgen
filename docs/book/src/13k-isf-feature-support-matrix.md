@@ -109,9 +109,11 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 
 Conditional source-intent qualification is private preparation. The detached
 parser prototype retains original operations and inline call sites while
-leaving complete ordinary actors unchanged. Import/formal/generated/domain
-propagation must qualify before normalization or branch integration; it changes
-no public syntax, schedule-report schema or admission boundary.
+leaving complete ordinary actors unchanged. Local-source reload verification
+requires independently supplied source and complete reconstructed actor/ledger
+equality; imports remain closed at this private boundary. Imported provenance
+and formal/generated/domain propagation must qualify before normalization or
+branch integration. No public syntax, report schema or admission changes.
 
 Repeat-body activation matrix note: the shipped nested-repeat activation shapes
 under top-level `when` and `switch` branches are described by construction, not

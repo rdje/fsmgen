@@ -1228,6 +1228,8 @@ Focused tests:
 - [t/1396-isf-cond.t](../../t/1396-isf-cond.t)
 - [t/2043-isf-conditional-origin-parser.t](../../t/2043-isf-conditional-origin-parser.t)
   qualifies detached explicit parser origins without changing production scheduling.
+- [t/2044-isf-conditional-origin-source-authority.t](../../t/2044-isf-conditional-origin-source-authority.t)
+  qualifies local-source reload authenticity; imported provenance remains closed.
 - [t/1397-isf-register-reset-value-surface.t](../../t/1397-isf-register-reset-value-surface.t)
 - [t/1398-isf-storage-reset-value.t](../../t/1398-isf-storage-reset-value.t)
 - [t/1399-isf-compound-assign.t](../../t/1399-isf-compound-assign.t)

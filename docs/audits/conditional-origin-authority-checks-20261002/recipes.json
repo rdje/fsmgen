@@ -1,0 +1,62 @@
+{
+  "book": {
+    "argv": [
+      "mdbook",
+      "build",
+      "docs/book"
+    ],
+    "receipt": "../conditional-origin-authority-20261002/book.txt",
+    "status": 0
+  },
+  "docs": {
+    "argv": [
+      "prove",
+      "-Iperl",
+      "t/1305-isf-book-feature-matrix-audit.t",
+      "t/1414-docs-relative-paths-audit.t",
+      "t/1303-isf-public-live-book-paths-audit.t",
+      "t/1307-isf-loop-body-doc-truth-audit.t",
+      "t/1332-isf-atl-doc-status-audit.t",
+      "t/1376-isf-book-example-lowering-audit.t"
+    ],
+    "receipt": "../conditional-origin-authority-20261002/docs.txt",
+    "status": 0
+  },
+  "focused": {
+    "argv": [
+      "prove",
+      "-Iperl",
+      "-It/lib",
+      "t/2044-isf-conditional-origin-source-authority.t",
+      "t/2043-isf-conditional-origin-parser.t",
+      "t/2042-isf-procedure-cond-normalization.t",
+      "t/2041-isf-conditional-macro-intent-qualification.t",
+      "t/1407-isf-minmax.t"
+    ],
+    "receipt": "focused.txt",
+    "scope": "Complete terminal broader confirmation; input hashes below are post-run identities, not fabricated before/after captures.",
+    "status": 0
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.1",
+  "post_run_input_sha256": {
+    "t/1303-isf-public-live-book-paths-audit.t": "81612f9a721bcedf8b5311fd0e6081601b189f060f94210c8794a11efd44d956",
+    "t/1305-isf-book-feature-matrix-audit.t": "09a570c4d2f963ba4d4f9e48394398305b455bc0a561bd39a6b44e05ad6a6189",
+    "t/1307-isf-loop-body-doc-truth-audit.t": "01c96431dc02b844c00e7fd4b1606247cdc03793260098e1057967f611ad25c3",
+    "t/1332-isf-atl-doc-status-audit.t": "cb051c077867130405bb098cace0a9d5e4ded47bfbafb0798049dcd7ddec33a8",
+    "t/1376-isf-book-example-lowering-audit.t": "db0e94f1c70152d9b1de06c31a89269eeea6a2a870be6a862bb53e0662e4bc98",
+    "t/1407-isf-minmax.t": "9ba81f513be477ffb07bd774896abd92cfcb3aa58b677aa56591cf1b11836c3c",
+    "t/1414-docs-relative-paths-audit.t": "a7366a7c3a5f8f37d77662299202bb41722e4d2d6d4f3aaafc4eecafff25f926",
+    "t/2041-isf-conditional-macro-intent-qualification.t": "19c2bb2a354d51b656e4027b64b2e69ce945112d96e406968e1163b1aa2120a1",
+    "t/2042-isf-procedure-cond-normalization.t": "f29f2046d179fd52ecb51b925a0b98d690aac7fa247382035f5dab25b9955f19",
+    "t/2043-isf-conditional-origin-parser.t": "7c7f4bc4b812c30742679bb9b4736e69c0f32339fd412aca297fcb4606931c38",
+    "t/2044-isf-conditional-origin-source-authority.t": "b27aefcf86081b14b382a6bb5b5f5f34ffba5425af1feb44253f828e385ced82"
+  },
+  "post_seal": {
+    "argv": [
+      "python3",
+      "docs/audits/conditional-origin-authority-20261002/verify.py"
+    ],
+    "receipt": "verify-sealed.txt",
+    "status": 0
+  }
+}

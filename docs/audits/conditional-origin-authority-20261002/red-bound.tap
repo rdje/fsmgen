@@ -1,0 +1,66 @@
+.artifacts/conditional-origin-authority/red_unbound.t .. 
+not ok 1 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/domain_first_sample.json
+not ok 2 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/domain_first_select.json
+not ok 3 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/domain_later_select.json
+not ok 4 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_bit_sample_zero.json
+not ok 5 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_cond.json
+not ok 6 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_cond_sample.json
+not ok 7 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_generated_select.json
+not ok 8 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_max.json
+not ok 9 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_min.json
+not ok 10 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_proc_cond.json
+not ok 11 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_proc_select.json
+not ok 12 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_proc_when_bit.json
+not ok 13 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_proc_when_sample.json
+not ok 14 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_samples.json
+not ok 15 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_select.json
+not ok 16 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_select_zero.json
+not ok 17 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_unless_bit.json
+not ok 18 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_unless_bit_sample.json
+not ok 19 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_unless_field.json
+not ok 20 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_unless_field_sample.json
+not ok 21 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_when_bit.json
+not ok 22 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_when_bit_sample.json
+not ok 23 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_when_field.json
+not ok 24 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_when_field_sample.json
+not ok 25 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/first_when_sample.json
+not ok 26 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/for_select.json
+not ok 27 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/initialized_select.json
+not ok 28 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_cond.json
+not ok 29 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_cond_sample.json
+not ok 30 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_generated_select.json
+not ok 31 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_max.json
+not ok 32 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_min.json
+not ok 33 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_proc_cond.json
+not ok 34 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_proc_select.json
+not ok 35 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_proc_when_bit.json
+not ok 36 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_select.json
+not ok 37 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_unless_bit.json
+not ok 38 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_unless_bit_sample.json
+not ok 39 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_unless_field.json
+not ok 40 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_unless_field_sample.json
+not ok 41 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_when_bit.json
+not ok 42 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_when_bit_sample.json
+not ok 43 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_when_field.json
+not ok 44 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/later_when_field_sample.json
+not ok 45 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/let_select.json
+not ok 46 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/nested_calls.json
+not ok 47 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/nested_cond.json
+not ok 48 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/nested_select.json
+not ok 49 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/repeat_bit.json
+not ok 50 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/reused_calls.json
+not ok 51 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/switch_cond.json
+not ok 52 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/twin_authored.json
+not ok 53 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/twin_macro.json
+not ok 54 - fresh structural verifier must refuse forgery: docs/audits/conditional-origin-parser-20261002/current-corrected/while_field.json
+1..54
+Dubious, test returned 54 (wstat 13824, 0x3600)
+Failed 54/54 subtests 
+
+Test Summary Report
+-------------------
+.artifacts/conditional-origin-authority/red_unbound.t (Wstat: 13824 Tests: 54 Failed: 54)
+  Failed tests:  1-54
+  Non-zero exit status: 54
+Files=1, Tests=54,  2 wallclock secs ( 0.01 usr  0.01 sys +  1.13 cusr  0.30 csys =  1.45 CPU)
+Result: FAIL

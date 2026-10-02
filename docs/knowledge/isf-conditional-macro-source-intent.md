@@ -7,6 +7,8 @@ answers:
   - "does successful source checking prove correct macro branch intent?"
   - "why does cond inside an inline procedure refuse?"
   - "which macro repair precedes generated output reads?"
+  - "how are independently loaded conditional origins authenticated?"
+  - "why must conditional origins have an independent source authority?"
 date: 2026-10-02
 status: current
 tags: [isf, ial1, macros, branch, normalization, procedures]
@@ -19,7 +21,9 @@ evidence: >-
   t/2041-isf-conditional-macro-intent-qualification.t;
   t/2042-isf-procedure-cond-normalization.t;
   t/2043-isf-conditional-origin-parser.t;
+  t/2044-isf-conditional-origin-source-authority.t;
   docs/audits/conditional-origin-parser-20261002/scope.txt;
+  docs/audits/conditional-origin-authority-20261002/scope.txt;
   perl/FSM/Adapter/ISF/Parser.pm;
   perl/FSM/Scheduler/ISF/LoweringIR.pm;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
@@ -27,6 +31,7 @@ reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/2041-isf-conditional-macro-intent-qualification.t
   t/2043-isf-conditional-origin-parser.t
+  t/2044-isf-conditional-origin-source-authority.t
 ---
 
 This repairs existing ISF/IAL1 shorthand expansion and transaction scheduling.
@@ -68,9 +73,14 @@ min/max keep their original operation through select. Complete ordinary actors
 remain unchanged, including primitive kinds and unexpanded inline cond refusal.
 An authored when pair and select have identical normalized actors but distinct
 source origins, falsifying any inference from final clause shape alone.
-The private prototype authenticates ledgers against its retained producer result.
-Independent-load authenticity, imports, formal/generated preparation and selected
-domains remain owned by `.5.2.2` before adoption or scheduling integration.
+The original observer compares ledgers against its retained producer result;
+a fresh instance performs structural checks only. The private local-source
+authority now reconstructs the complete actor and ledger from independently
+supplied source before accepting JSON reloads. Embedded source digests supply
+no authority, including identical actors with different authored intent. It
+refuses imports before document resolution. Imported provenance and
+formal/generated/domain preparation remain owned by `.5.2.2.2`/`.5.2.2.3`
+before adoption or scheduling integration.
 
 Literal predicates/effects/aliases/roles and complete current products
 re-derive each scoped result. Genuine desired-intent RED and shared-corruption
