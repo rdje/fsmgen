@@ -187,6 +187,9 @@ and book.
   substituted origin. Imports refuse at this private boundary. Imported
   provenance (`.5.2.2.2`) and formal/generated/domain propagation (`.5.2.2.3`)
   remain open before this becomes a scheduling repair.
+  The same-source library producer slice now preserves document/export/use
+  provenance through actual cloning; external documents, ATL and imported
+  consumer authenticity still require qualification. Scheduling remains closed.
   [Origin qualification](audits/conditional-origin-parser-20261002/scope.txt)
   retains the complete parser evidence; public syntax and admission do not change.
   Use explicit activation before conditional shorthand and keep `cond` at the

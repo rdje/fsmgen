@@ -57,6 +57,9 @@ cannot decide entry intent. A private local-source verifier now reconstructs
 the complete actor and origins from independently supplied source before
 accepting a reloaded ledger. An embedded digest supplies no authority; imports
 refuse at this private boundary until their document provenance qualifies.
+Separate same-source library producer qualification now follows original
+document, exported actor and use-instance identity through actual cloning.
+Imported consumer authenticity and external document sets remain closed.
 Formal/generated/domain preparation must also qualify before this becomes a
 scheduling repair. The current activation workaround and refusals still apply.
 

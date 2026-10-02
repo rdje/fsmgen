@@ -81,6 +81,9 @@ no authority, including identical actors with different authored intent. It
 refuses imports before document resolution. Imported provenance and
 formal/generated/domain preparation remain owned by `.5.2.2.2`/`.5.2.2.3`
 before adoption or scheduling integration.
+Same-source library producer linkage is now separately qualified in
+[its canonical fact](isf-same-source-library-conditional-origins.md); this does
+not open the imported consumer-authentication boundary.
 
 Literal predicates/effects/aliases/roles and complete current products
 re-derive each scoped result. Genuine desired-intent RED and shared-corruption

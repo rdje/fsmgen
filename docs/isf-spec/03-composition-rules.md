@@ -890,7 +890,7 @@ library-backed form:
     (complete done)))
 ```
 
-In that future surface, `ALIAS` must come from the enclosing actor's explicit
+In this shipped surface, `ALIAS` must come from the enclosing actor's explicit
 `(imports (library LIBRARY as ALIAS))` clause, and `EXPORT` must name an actor
 export from that imported library. Same-source `(library ...)` roots and
 external library files are the selected resolver inputs, reusing the existing

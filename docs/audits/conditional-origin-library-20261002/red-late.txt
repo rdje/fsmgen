@@ -1,0 +1,18 @@
+ram-guard: PID 31165; host 61.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+#   Failed test 'canonical late target mutation must refuse stale source association'
+#   at .artifacts/conditional-origin-library/red_late_target.t line 20.
+# Looks like you failed 1 test of 1.
+.artifacts/conditional-origin-library/red_late_target.t .. 
+not ok 1 - canonical late target mutation must refuse stale source association
+1..1
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/1 subtests 
+
+Test Summary Report
+-------------------
+.artifacts/conditional-origin-library/red_late_target.t (Wstat: 256 Tests: 1 Failed: 1)
+  Failed test:  1
+  Non-zero exit status: 1
+Files=1, Tests=1,  2 wallclock secs ( 0.01 usr  0.00 sys +  0.65 cusr  0.92 csys =  1.58 CPU)
+Result: FAIL

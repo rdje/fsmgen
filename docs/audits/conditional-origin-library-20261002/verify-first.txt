@@ -1,0 +1,9 @@
+ram-guard: PID 70477; host 60.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/conditional-origin-library-20261002/verify.py", line 144, in <module>
+    verify_products(products)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/conditional-origin-library-20261002/verify.py", line 100, in verify_products
+    assert [p['width'] for p in inputs] == [1,1,3,3] and all(type(p['width']) is int for p in inputs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,1965 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Composition - FSMGen Book</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Progressive, example-rich documentation for FSMGen and the .fsm language.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-5292fdca.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-7727513f.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSMGen Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="composition"><a class="header" href="#composition">Composition</a></h1>
+<p>Composition lets transactions call other transactions.</p>
+<h2 id="do-child--blocking-call"><a class="header" href="#do-child--blocking-call"><code>(do child)</code> — Blocking Call</a></h2>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (do read_phase)
+  (do write_phase)
+  (complete done))
+</code></pre>
+<p>Sequential, blocking. One instance of each child is intended to be reused by
+the parent transaction.</p>
+<p>The base form is exact: <code>(do child)</code>, with one scalar child transaction
+operand. The parameterized/bound form accepts nested subclauses:
+<code>(do child (domain NAME) (params (NAME value) ...) (bind ...))</code>. At most one
+<code>domain</code> block, one <code>params</code> block, and one <code>bind</code> block may appear. Malformed
+missing, nested, duplicate, or unsupported operands fail before child-target
+resolution.</p>
+<p><strong>Current local lowering</strong>:</p>
+<ol>
+<li>Parent asserts <code>child_start</code> and awaits <code>child_done</code></li>
+<li>Child’s idle state is rewired to watch <code>child_start</code></li>
+<li>Child’s terminal state pulses <code>child_done</code> with <code>&lt;1</code></li>
+</ol>
+<p>The child target must name a declared transaction in the same actor. Forward
+references are accepted because lowering validates after the full actor body
+is parsed; missing targets fail before scheduled <code>.fsm</code> emission.</p>
+<p>The rewired child idle state enters the first non-entry child state; the child
+body may start with a drive, await, data operation, or other scheduled state.</p>
+<pre><code class="language-lisp">(parent_do_1
+  (= (read_phase_start 1))
+  (&lt;read_phase_done
+    (-&gt; parent_do_2)))
+
+(read_phase_idle_0
+  (&lt;read_phase_start
+    (-&gt; read_phase_drive_0)))
+
+(read_phase_done_5
+  (&lt;1 (done&gt; 1))
+  (&lt;1 (read_phase_done 1))
+  (-&gt; read_phase_idle_0))
+</code></pre>
+<p>The internal child-done signal is a one-cycle delayed pulse. This matters when
+the parent invokes the same child more than once: each <code>(do child)</code> waits for a
+fresh completion instead of seeing a sticky done bit left from the previous
+call.</p>
+<p>Top-level repeat bodies may also use the plain local <code>(do child)</code> form. In
+that repeat-body subset, the child remains in the parent scheduled module, the
+repeat-body <code>do</code> state waits for <code>child_done</code>, and the repeat check back-edge
+is reachable only after that fresh done pulse. Repeat-body generated <code>do</code> may
+use static <code>(params ...)</code>, optional <code>(bind ...)</code>, and optional same-domain
+<code>(domain NAME)</code> metadata for one lexical generated instance. Cross-domain
+repeat-body <code>do</code>, repeat-body <code>do</code> targeting an already generated child, and
+sample-before/after-do timing are still backlog.</p>
+<p>Parameterized blocking <code>do</code> uses the generated child activation path instead
+of rewiring a local child body. The child is emitted as its own scheduled
+module, the generated top instantiates a deterministic child instance named
+<code>{parent}_{child}_do_{ordinal}</code>, and the parent asserts that instance’s
+<code>start</code> handoff while awaiting its <code>done</code> handoff. Parameter overrides are
+applied in the generated top <code>?fsmc</code> <code>(params ...)</code> block:</p>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (do worker
+    (params
+      (WIDTH 16))
+    (bind
+      (input addr req_addr)
+      (output data resp)))
+  (complete done))
+</code></pre>
+<p>Representative scheduled parent artifacts:</p>
+<pre><code class="language-lisp">(parent_do_1
+  (= (parent_worker_do_0_start&gt; 1))
+  (&lt;parent_worker_do_0_done
+    (-&gt; parent_complete_2)))
+
+(-parent_worker_do_0_port_bindings
+  (= (parent_worker_do_0_addr&gt; req_addr))
+  (= (resp&gt; parent_worker_do_0_data) &lt;parent_worker_do_0_done))
+</code></pre>
+<p>Input bindings may use scalar signals, numeric/exact-width literals, or
+non-empty list expressions as the parent-owned payload source. Spawned child
+input-binding source signals are consumed by the explicit parent handoff and
+are not also same-name wired into the child instance.</p>
+<p>Representative generated top instance:</p>
+<pre><code class="language-lisp">(?fsmc:parent_worker_do_0 worker
+  (params
+    (WIDTH 16)))
+</code></pre>
+<p>Input bindings are same-cycle handoff assignments owned by the parent. Output
+bindings are guarded by the generated child instance’s <code>done</code> pulse so the
+bound value is valid during that completion pulse. This combinational binding
+does not itself retain the value until the parent later finishes; use an
+explicit owned register when retention is required. A plain
+<code>(do child)</code> remains local when the child is not otherwise generated. If the
+same child transaction is already emitted as a generated child because of
+spawn or a parameterized <code>do</code>, a plain <code>do</code> to that child also uses a generated
+activation instance so the parent never targets a skipped local child body.</p>
+<p>Generated <code>do</code> also wires inherited actor inputs that the child actually reads.
+An explicit input binding takes precedence over the same-name inherited input;
+for example, binding a local bank index to <code>(! index)</code> does not also connect
+the actor’s uninverted index. Storage reads use their owner handoffs separately.</p>
+<p>Direct sibling transactions currently emit disconnected state loops inside the
+same encoded FSM. Independent-trigger probes execute only the first declared
+transaction; reversing declarations reverses which transaction can run. Plain
+local-<code>do</code> probes also fail: an untriggered callee before its caller runs without
+the call, while placing the caller first leaves it waiting for an unreachable
+callee. These scheduling defects are owned by <code>.32.1.3.3.1</code>; generated-call
+qualification does not close direct-call or independent-transaction reachability.
+Direct transaction formals now receive separate private storage identities even
+when they share names with actor pins, actor storage or sibling formals. Caller
+bindings resolve the caller’s own formal before an actor declaration; generated
+children keep their public port names. This storage separation does not establish
+direct-call execution or repair the reachability failures above.</p>
+<h3 id="named-completion-outputs-in-generated-children"><a class="header" href="#named-completion-outputs-in-generated-children">Named completion outputs in generated children</a></h3>
+<p>A generated worker may complete a public actor output other than <code>done</code>:</p>
+<pre><code class="language-lisp">(actor named_completion
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (output notice) (output done))
+  (transaction worker (wait 2) (complete notice))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (await_all done)
+    (complete done)))
+</code></pre>
+<p>The worker emits its authored <code>notice</code> pulse and its canonical activation
+<code>done</code> pulse from the same terminal state. The parent receives the handshake
+for its join and forwards <code>notice</code> through a private completion input, without
+adding a register stage. Generated blocking <code>do</code> uses the same contract.</p>
+<p>If several generated instances complete the same actor output, their delayed
+pulses are OR-combined. Coincident pulses appear as one asserted cycle;
+adjacent pulses can keep the output high across adjacent cycles. If the parent
+also completes that output, its own delayed pulse joins the same view. Mixing
+these completions with a non-completion writer is rejected rather than given
+an implicit priority. Canonical child <code>done</code> remains a private activation
+handshake. Transaction-local named
+completion ports use explicit output bindings instead of automatic actor-output
+forwarding. A transaction-local port shadows a same-name actor output.
+An unrelated public input resembling an old generated handoff name remains
+independent; its spelling does not create another completion connection. Completion targets must be one-bit signals; named bit aliases work.</p>
+<p>The same routing applies within an owning clock domain: pulses retain that
+domain’s clock and reset. Inferred shared-datapath lifting excludes delayed
+pulse families, so equal local port names cannot merge independent event
+channels into a shared holding register or impose exclusivity on them.</p>
+<h2 id="spawn-child-as-name--parallel-fork"><a class="header" href="#spawn-child-as-name--parallel-fork"><code>(spawn child as name)</code> — Parallel Fork</a></h2>
+<pre><code class="language-lisp">(transaction parent
+  (on start)
+  (spawn worker as w0)
+  (spawn worker as w1)
+  (spawn worker as w2)
+  (await_all done)
+  (complete done))
+</code></pre>
+<p>Non-blocking. Each spawn declares a separate intended instance.</p>
+<p><code>spawn</code> is an elaboration construct with runtime activation semantics. The
+generated hardware instance is static: it exists for the lifetime of the
+generated module. Executing the spawn state at runtime asserts that instance’s
+start path; completing the child transaction returns the same static instance
+to its start-gated idle state. Completion never destroys the instance, and a
+later activation reuses the same child hardware.</p>
+<p>This matters for loops. In the shipped repeat-body subset, <code>(spawn ...)</code> does
+not mean “create N child instances.” It means “activate the same lexically
+named child instance once per loop iteration.” A design that needs parallel
+workers should author distinct spawn instance names, or use a future
+static-generation surface if one is added. The shipped repeat-body subset
+requires same-body <code>(await_all done)</code>, or same-body <code>(await_any done)</code> when
+exactly one spawn is pending, before the repeat check can loop. The scheduler
+rejects paths that could start the static child instance again before its
+fresh <code>done</code> pulse has been observed.</p>
+<p>The base form is exact: <code>(spawn child as name)</code>. Optional nested subclauses add
+static parameter overrides, explicit port bindings, or declared same-domain
+ownership metadata: <code>(spawn child as name (domain NAME) (params (NAME value) ...) (bind ...))</code>. The child, instance, and domain names must be scalar, and
+the literal <code>as</code> separator is required. Malformed spawn forms fail before
+spawned child collection, so the scheduler does not invent a default instance
+name for an invalid clause.</p>
+<p>An explicit transaction port belongs to the child interface. It can share an
+actor pin name while retaining a different width, direction or type. A binding
+supplies that formal; the top does not also connect the same-named actor pin.
+Inherited actor inputs without a matching formal retain their existing wiring.
+For example, this worker reads the bound <code>data</code>, not the actor’s wider <code>value</code>:</p>
+<pre><code class="language-lisp">(actor pin_shadow_example
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input value (width 8))
+    (input data (width 4))
+    (output result (width 4))
+    (output done))
+  (transaction worker
+    (ports (input value (width 4)) (output response (width 4)))
+    (wait 2)
+    (set response value)
+    (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0
+      (bind (input value data) (output response result)))
+    (await_all done)
+    (complete done)))
+</code></pre>
+<p>The same declaration precedence applies to generated blocking calls and
+parameterized rule triggers. Their documented binding timing still applies:
+spawn payloads are live, while generated rule triggers retain their captured
+payload. Actor output reset values do not become child formal reset values.
+Direct transactions remain subject to the separate scope limitation above.</p>
+<p><strong>Lowering</strong>:</p>
+<ul>
+<li>One <code>.fsm</code> per unique child module</li>
+<li>Spawn targets must name declared transactions in the same actor</li>
+<li>Parent <code>.fsm</code> declares per-instance <code>name_start</code>/<code>name_done</code> signals</li>
+<li>Each spawn state asserts its matching <code>name_start</code> signal</li>
+<li>The parent remembers each joined child’s completion until that child’s next
+start; a live <code>done</code> pulse also satisfies the join on its current edge.</li>
+<li><code>(await_all done)</code> → one transition guarded by the logical AND of all
+current-activation completion views.</li>
+<li><code>(await_any done)</code> → one guard per completion view, advancing when any child
+has completed. With multiple pending children, a later <code>await_all</code> still
+waits for the entire outstanding set.
+Both synchronization forms have independent runtime regressions, including
+non-overlapping pulses, completion before join entry, and repeated activation.</li>
+</ul>
+<p>Composition-top instantiation is shipped for the covered generated-child
+fixture set. Spawn parameter declaration, blocking <code>do</code> parameter declaration,
+validation, scheduled child <code>+params</code> emission, per-instance override
+preservation, and generated-top application now flow through the existing
+composition pipeline:</p>
+<ul>
+<li>Multi-file generated-child actors use an explicit generated top over the
+scheduled parent module and child modules.</li>
+<li>The scheduled parent keeps the actor name; the generated top uses a distinct
+deterministic name, initially <code>{actor}_top</code>.</li>
+<li>The top re-exports the actor public interface.</li>
+<li>Per-instance <code>name_start</code> and <code>name_done</code> are internal top handoff links, not
+public top ports.</li>
+<li>The scheduled parent exposes <code>name_start</code> as an output and <code>name_done</code> as an
+input for each spawned instance.</li>
+<li>Each generated child exposes <code>start</code> as an input and <code>done</code> as an output.</li>
+<li>Named drive calls in spawned children expose per-drive handoff outputs that
+the top wires back into parent per-instance handoff inputs.</li>
+<li>After completion, a generated child returns to its idle state. Private start
+history accepts an assertion of <code>start</code> only once and rearms after <code>start</code>
+goes low. This handles both pulse starts and generated <code>do</code> starts held until
+completion, without accepting the held request again before delayed <code>done</code>
+reaches the parent. The history uses the child’s own reset when present.
+Idle accepts the new assertion; a start pulse during execution is not queued.</li>
+</ul>
+<p>Actor <code>(storage ...)</code> reads in a separately generated transaction child use
+explicit internal top wiring from the owning actor or clock-domain module. These
+are live reads: a parent update after spawn is visible when the child later
+reads it. Only referenced storage is carried into the child interface;
+storage resets and actual registers remain in the owner. Scalar, named scalar
+type, scalarized bank-element and packed aggregate reads follow this rule. Aggregate handoffs retain their authored record/list
+aliases, including nested shapes and scalar leaf reads. These generated internal
+ports do not extend the authored aggregate-port surface. Authored transaction
+ports remain present even when unused; unread inherited actor inputs are omitted, keeping
+emitted interfaces consistent with wiring.</p>
+<p>A packed Verilog-family carrier containing explicitly two-state members uses
+its packed typedef as a variable declaration, preserving each member’s declared
+state model. Its existing source drives the connection directly, with the same
+fanout and owning registers. All-four-state aggregate carriers retain their
+wire declarations. This selection also preserves bit variables for explicitly
+two-state scalar carrier metadata.</p>
+<p>Read handoff names also reserve existing state and rule/DT names, including
+case-folded collisions. For example, a rule named
+<code>isf_storage_read_value_reg</code> may guard <code>(flag 1)</code> with <code>fire</code> while a spawned
+worker reads actor storage <code>value_reg</code>. The generated read view receives a
+distinct internal name; the authored rule still runs only when <code>fire</code> is true.
+Multiple children reading that storage share the same live owner view. Independent
+HDL qualification covers the colliding rule guard, read value and reset; the
+existing scalar and aggregate storage-read regressions also pass.</p>
+<p>For example, this worker reads the parent’s later value, without a public
+<code>status</code> input or a private <code>status</code> register in the worker:</p>
+<pre><code class="language-lisp">(actor live_child_read
+  (clock clk) (reset (rst_n async active_low))
+  (interface (input start) (input wdata (width 8))
+             (output observed (width 8)) (output done))
+  (storage (var status (width 8) (reset 19)))
+  (transaction worker
+    (ports (output result (width 8)))
+    (wait 4) (set result status) (complete done))
+  (transaction parent
+    (on start) (set status 53)
+    (spawn worker as w0 (bind (output result observed)))
+    (wait 1) (set status wdata)
+    (await_all done) (complete done)))
+</code></pre>
+<p>The same live-read contract applies inside a declared clock domain. Storage and
+its reader must belong to the same domain; no handoff acts as an implicit CDC
+primitive. For example, <code>status</code> below belongs to nondefault domain <code>io</code>. A write
+after the worker starts is visible at its later read:</p>
+<pre><code class="language-lisp">(actor domain_live_read
+  (clock-domains
+    (domain idle (clock aux_clk) :default)
+    (domain io (clock clk) (reset (rst_n async active_low))))
+  (interface
+    (input start (domain io)) (input write (domain io))
+    (input data (width 8) (domain io))
+    (output observed (width 8) (domain io)) (output done (domain io)))
+  (storage (var status (width 8) (reset 19) (domain io)))
+  (rule update_status (domain io) write (status data))
+  (transaction worker (domain io) (ports (output result (width 8)))
+    (wait 4) (set result status) (complete done))
+  (transaction parent (domain io) (on start)
+    (spawn worker as reader (bind (output result observed)))
+    (await_all done) (complete done)))
+</code></pre>
+<p>Only the <code>io</code> owner stores and resets <code>status</code>; the worker receives a live input.
+Stopping or resetting a sibling domain does not advance or reset that state.
+Scalar aliases, packed aggregates and scalarized bank-element reads use the
+same internal routing. Direct reads from a sibling domain are rejected with a
+clock-domain ownership diagnostic.
+Actor and domain owners also support full-width scalar or packed record/list
+writes from one generated child instance per register. The child sends combinational write
+data and an enable while executing the authored assignment. The parent owns
+the register and applies the write on that same clock edge. No payload register,
+extra state, or wait until child completion is introduced. Later child reads
+observe the shared updated value. <code>set</code>, <code>update</code>, conditional writes and
+full-word read-modify-write expressions use this path. Scalar type aliases and
+field metadata remain attached to the owning storage.</p>
+<pre><code class="language-lisp">(actor shared_writer
+  (clock clk) (reset (rst_n async active_low))
+  (interface (input start) (input enable) (input data (width 8))
+    (output done) (output observed (width 8)))
+  (storage (var status (width 8) (reset 19)))
+  (rule observe 1 (observed status))
+  (transaction worker
+    (wait 2) (when enable (set status data)) (complete done))
+  (transaction parent (on start)
+    (spawn worker as writer)
+    (await_all done) (complete done)))
+</code></pre>
+<p>Here the rule sees the old <code>status</code> on the write edge and the new value on its
+next clock, as ordinary sequential logic does. When <code>enable</code> is false, the
+register holds its value. Reset remains owned by the parent. The handoff also
+works for a parameterized generated <code>do</code>; it does not change that call’s
+completion-gated output binding semantics.</p>
+<p>The ownership check rejects a parent writer or another generated instance
+writing the same register, even if the author expects them to be exclusive.
+Multiple register targets are permitted when each has one writer. Bank and
+partial/member writes remain unqualified and fail explicitly. Source operations that lower to a full-width
+scalar assignment retain that whole-register meaning; this does not introduce
+partial-write arbitration. Decision <code>0107</code> owns the remaining competing-writer
+and broader storage contracts. Transaction-local variables and explicit port bindings retain
+their existing semantics.</p>
+<p>An explicit generated-child transaction port can reuse an actor-storage name.
+Inside that child, the explicit port supplies the name’s width, type and role;
+it does not read or write the actor register or inherit its reset. The actor
+register remains with its original owner. Explicit bindings select the local
+port’s payload, even when the actor register belongs to another domain:</p>
+<pre><code class="language-lisp">(actor local_port_name
+  (clock clk) (reset (rst_n async active_low))
+  (interface (input start) (input data (width 4))
+    (output child_seen (width 4)) (output owner_seen (width 8)) (output done))
+  (storage (var status (width 8) (reset 19)))
+  (rule observe 1 (owner_seen status))
+  (transaction worker
+    (ports (input status (width 4)) (output result (width 4)))
+    (wait 2) (set result status) (complete done))
+  (transaction parent (on start)
+    (spawn worker as reader (bind (input status data) (output result child_seen)))
+    (await_all done) (complete done)))
+</code></pre>
+<p>Here the child sees the bound 4-bit <code>data</code>, while <code>owner_seen</code> observes the
+separate 8-bit actor register. A local output likewise keeps its own reset
+behavior instead of inheriting the actor-storage reset. This scope rule also
+covers generated blocking <code>do</code> and generated rule-trigger ports, retaining their
+respective live/snapshot input and completion-qualified output timing.
+Direct/non-generated transaction-port collisions
+remain owned by <code>.49.2</code>; same-named explicit <code>(local ...)</code> declarations require
+the separate <code>.49.3</code> qualification. Explicit ports retain their own domain.</p>
+<p>A trailing <code>await_all</code> or <code>await_any</code> has an explicit self-loop and holds in
+that state, including when its pending set is empty. Completion pulses do not
+return the parent to its entry state. Follow the join with <code>(complete PORT)</code>
+when the parent should pulse completion and accept another activation. Reset
+still restores the entry state. For example, this actor accepts a request once
+per reset and holds after the worker finishes:</p>
+<pre><code class="language-lisp">(actor terminal_join
+  (clock clk) (reset rst_n)
+  (interface (input start) (input data (width 8))
+             (output result (width 8)))
+  (transaction worker
+    (ports (output value (width 8)))
+    (set value data) (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0 (bind (output value result)))
+    (await_all done)))
+</code></pre>
+<p>Whole aggregate writes preserve the storage’s declared alias and packed layout
+on the private child output and owner input. Local, nested and imported aliases
+use the same owner-only register/reset contract. For example:</p>
+<pre><code class="language-lisp">(actor aggregate_shared_writer
+  (clock clk) (reset (rst_n async active_low))
+  (types (type pair_t (record (high (bits 4)) (low (bits 4)))))
+  (interface (input start) (input data (width 8))
+    (output observed (width 8)) (output done))
+  (storage (var value (type pair_t) (reset 19)))
+  (rule observe 1 (observed value))
+  (transaction worker
+    (wait 2) (set value data) (complete done))
+  (transaction parent (on start)
+    (spawn worker as writer) (await_all done) (complete done)))
+</code></pre>
+<p>Here <code>data</code> replaces the whole packed value on the authored write edge. This
+does not yet permit child <code>(set value.high ...)</code> member updates. A parent rule
+or another child writing any part of the same register is also rejected until
+an explicit merge/arbitration contract is qualified. Aggregate interface and
+transaction ports remain separate from these private generated handoffs.</p>
+<p>In a multi-domain actor, the generated writer and its storage must belong to
+the same domain. Only that owner’s clock advances the register, and only that
+domain’s reset applies. The handoff introduces no implicit crossing. For example,
+this nondefault <code>io</code> writer updates its domain-owned register while <code>idle</code> has
+an independent clock:</p>
+<pre><code class="language-lisp">(actor domain_shared_writer
+  (clock-domains
+    (domain idle (clock aux_clk) :default)
+    (domain io (clock clk) (reset (rst_n async active_low))))
+  (interface (input start (domain io)) (output done (domain io))
+    (output observed (width 8) (domain io)))
+  (storage (var status (width 8) (reset 19) (domain io)))
+  (rule observe (domain io) 1 (observed status))
+  (transaction worker (domain io)
+    (wait 2) (set status 37) (complete done))
+  (transaction parent (domain io) (on start)
+    (spawn worker as writer)
+    (await_all done) (complete done)))
+</code></pre>
+<p>Repeated assignments can read the same owner’s updated value. Resetting or
+stopping a sibling domain neither resets nor advances this register. Direct
+reads/writes of sibling-domain storage remain rejected.</p>
+<p>Generated-composition VHDL
+support remains limited to its documented composition shapes; separately
+generated parent/child VHDL modules can be explicitly wired by the caller.</p>
+<p>Parameterized spawn and parameterized blocking <code>do</code> use one optional nested
+<code>params</code> block:</p>
+<pre><code class="language-lisp">(transaction worker
+  (params
+    (WIDTH 8))
+  ...)
+
+(transaction parent
+  (on start)
+  (spawn worker as w0
+    (params
+      (WIDTH 16)))
+  (await_all done)
+  (complete done))
+</code></pre>
+<p>The shipped activation-parameter surface covers spawned child instances and
+blocking <code>do</code> generated child activations. Override names must match child
+transaction parameters, duplicate instance/parameter names fail, scalar
+literal overrides are width-flexible, and aggregate defaults require
+compatible aggregate overrides. Actor-local constants, actor-local scalar
+parameter defaults, local or package-qualified enum members, and qualified
+imported package scalar constants may be used as scalar override values, or as
+scalar leaves inside aggregate/list override values. These static override
+sources resolve to literal values before generated-top emission; package
+constants must be qualified scalar package <code>+constants</code> entries, and
+unqualified, aggregate, or package member/item paths fail closed.</p>
+<p>A generated child <code>.fsm</code> emits the child transaction defaults in <code>+params</code>;
+parameter declarations on non-generated transactions without a supported
+same-transaction static use fail closed; the parent lowerer IR preserves
+per-instance override lists, and the generated top applies those overrides
+through <code>?fsmc</code> <code>(params ...)</code> blocks.</p>
+<pre><code class="language-lisp">(parent_main_await_all_4
+  (-&gt; parent_main_done_5 &lt;(&amp; isf_completion_w0_ready isf_completion_w1_ready isf_completion_w2_ready))
+)
+</code></pre>
+<p>The scheduled transition uses a direct conjunction of private completion
+views. Each view is the child’s live <code>done</code> OR its retained completion bit.
+Generated names avoid authored identifiers; public start/done handoff ports
+and schedule provenance continue to name the original child signals. The
+schedule report identifies the added private logic as <code>child_completion</code>
+blocks in <code>dt_blocks</code>.</p>
+<h2 id="await_all-port--await_any-port"><a class="header" href="#await_all-port--await_any-port"><code>(await_all port)</code> / <code>(await_any port)</code></a></h2>
+<pre><code class="language-lisp">(await_all done)     ;; wait for ALL spawned children
+(await_any done)     ;; wait for ANY spawned child
+</code></pre>
+<p>The forms are exact: <code>(await_all done_port)</code> and <code>(await_any done_port)</code>, with
+one scalar done-port operand. Malformed missing, nested, or extra operands fail
+before sync-state emission.</p>
+<p>For example, if <code>w0</code> completes while the parent is still executing a wait and
+<code>w1</code> completes after the parent enters <code>await_all</code>, the join retains <code>w0</code>’s
+completion and advances on the edge that observes <code>w1</code>’s live pulse. The
+children’s <code>done</code> outputs remain pulses. Reset clears the retained bits;
+each child’s next start clears its own bit before the next join can consume
+it. This reset behavior does not promise power-up initialization.</p>
+<p>A join followed by a dynamic wait snapshots the runtime count on the join’s
+advance edge. A zero count bypasses the wait; positive counts, including even
+counts, enter the wait and consume the sampled number of active wait cycles.
+For example, <code>(await_all done)</code> followed by <code>(wait cycles)</code> with <code>cycles=4</code>
+waits for every child and then runs the wait for the sampled count, even if
+<code>cycles</code> changes afterward. See <a href="13b-transactions.html">runtime waits</a>.</p>
+<h2 id="composition-architecture"><a class="header" href="#composition-architecture">Composition Architecture</a></h2>
+<pre><code class="language-text">spawn_parent.isf
+    │
+    ▼ LoweringIR
+    │
+    ├── child_worker.fsm       (child module with start/done ports)
+    ├── spawn_parent.fsm       (parent with per-instance handoff signals)
+    └── spawn_parent_top.fsm   (generated composition top wiring parent and children)
+</code></pre>
+<p>The <code>--outdir DIR</code> flag writes all generated <code>.fsm</code> files:</p>
+<pre><code class="language-bash">./bin/fsmgen --strict --outdir .artifacts/ial1/spawn-parent isf/spawn_parent.isf
+# Writes: .artifacts/ial1/spawn-parent/child_worker.fsm,
+#         .artifacts/ial1/spawn-parent/spawn_parent.fsm, and
+#         .artifacts/ial1/spawn-parent/spawn_parent_top.fsm.
+# If --output is also provided, HDL generation uses spawn_parent_top.fsm.
+</code></pre>
+<h2 id="portable-instance-identifiers"><a class="header" href="#portable-instance-identifiers">Portable Instance Identifiers</a></h2>
+<p>Every composition child label uses the simple unescaped spelling
+<code>[A-Za-z_][A-Za-z0-9_]*</code> and must be non-reserved across the shipped HDL
+targets. FSMGen applies SystemVerilog/Verilog keyword matching case-sensitively
+and VHDL-2008 keyword matching case-insensitively. The portable union means a
+label is rejected even when it is a keyword only in a backend other than the
+one selected for the current command; backend-neutral intent therefore keeps
+one stable structural identity.</p>
+<p>The rule applies at the nearest authored boundary for:</p>
+<ul>
+<li>direct <code>?fsmc</code>, <code>?dtc</code>, and <code>?rtl</code> child labels;</li>
+<li><code>(spawn child as instance)</code> labels;</li>
+<li>reusable-library <code>(use alias.actor as instance ...)</code> labels;</li>
+<li>ATL static actor-instance labels; and</li>
+<li>authored APB/AHB protocol child labels.</li>
+</ul>
+<p>For example, this direct child fails during composition parsing because
+<code>interconnect</code> is reserved by SystemVerilog:</p>
+<pre><code class="language-text">(?fsmc:interconnect child_module)
+</code></pre>
+<p>Similarly, <code>process</code>, <code>PROCESS</code>, or any other case variant fails as a VHDL
+keyword. FSMGen reports the source origin, rejected label, and reserving target
+family, then asks the author to choose a non-keyword simple identifier. It does
+not silently rename an authored identity and does not use target-specific
+escaped/extended identifiers.</p>
+<p>Generator-owned labels use one deterministic allocator:</p>
+<ul>
+<li>a legal non-colliding label is preserved byte-for-byte;</li>
+<li>a keyword seed gains <code>_instance</code>;</li>
+<li>an ordinary top-port or sibling collision gains <code>_&lt;role&gt;</code>; and</li>
+<li>a further collision gains <code>_2</code>, <code>_3</code>, and so on.</li>
+</ul>
+<p>Collision lookup is case-insensitive so generated identities are also unique
+under VHDL rules. The APB multi-peripheral generator therefore emits and
+reports its interconnect as <code>interconnect_instance</code>:</p>
+<pre><code class="language-text">(?fsmc:interconnect_instance apb_interconnect)
+</code></pre>
+<p>All wiring uses that same generated identity. AHB’s legal <code>fabric</code> label and
+the shipped fixed AXI labels remain unchanged. Both structural emitters repeat
+the portable validation as defense in depth for callers that construct
+<code>StructuralRTLIR</code> directly.</p>
+<p>This contract covers child <em>instance labels</em>. Module/top names, ports, nets,
+parameters, and other identifier families remain separate contracts.</p>
+<h2 id="reusable-isf-libraries"><a class="header" href="#reusable-isf-libraries">Reusable ISF Libraries</a></h2>
+<p>ISF libraries are reusable source-intent roots. They are not textual includes:
+an imported definition still lowers to scheduled <code>.fsm</code> review artifacts before
+HDL generation.</p>
+<p>The first shipped root shape is:</p>
+<pre><code class="language-lisp">(library common.fifo
+  (exports
+    (actor fifo))
+
+  (actor fifo
+    ... reusable actor body ...))
+</code></pre>
+<p>Actor roots import libraries with <code>(imports (library name as alias) ...)</code> and
+instantiate exported actors with <code>(use alias.actor as instance ...)</code>. Use-site
+parameter overrides are instance-local, and bindings are explicit
+(the example assumes the sibling <code>isf/common/fifo.isf</code> library is on
+the search path):</p>
+<pre><code class="language-text">(actor fifo_library_use
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input write_req)
+    (input data_in (width 8))
+    (input read_req)
+    (output full)
+    (output empty)
+    (output data_out (width 8)))
+  (imports
+    (library common.fifo as fifo_lib))
+  (use fifo_lib.fifo as u_fifo
+    (params
+      (DATA_WIDTH 8)
+      (DEPTH 4)
+      (PTR_WIDTH 2)
+      (OCC_WIDTH 3))
+    (bind
+      (clock clk)
+      (reset rst_n)
+      (input write_req write_req)
+      (input data_in data_in)
+      (input read_req read_req)
+      (output full full)
+      (output empty empty)
+      (output data_out data_out))))
+</code></pre>
+<p>Library-bound inputs remain connected to both the library and the importing
+actor, so parent logic can read them too. A library-bound output has one writer:
+the library actor. The generated top forwards it to the public output and to
+an input on the importing FSM. Parent rules and transactions can read that
+value without an added register stage. Actor-facing schedule counts and public
+port directions remain unchanged; only the importing FSM’s component interface
+uses an input for that readback. The readback keeps the public signal’s name,
+width and type. This connection step creates no helper declaration or reset
+copy, including when the actor also contains generated-child completion logic.</p>
+<p>A parent assignment, generated-child completion, reset value, or default on a
+library-owned output is rejected. Put output reset/default behavior on the
+library actor itself. Binding another library instance to the same output is
+also rejected; the compiler does not choose an arbitration policy.</p>
+<p>A library instance selects its timing with <code>(domain NAME)</code>; omission selects
+the importing actor’s default domain. Its clock/reset bindings must name that
+domain’s declared system signals. A sibling clock or an ordinary input cannot
+substitute for the selected domain clock. No crossing is inferred.</p>
+<p>Same-name clock bindings can be omitted. Reset inference also requires the
+library’s reset kind and polarity to match the selected domain, as well as its
+name. Explicit reset binding remaps the signal name and preserves the library’s
+own reset kind and polarity; it does not override them. A domain without a reset
+does not inherit the default domain’s reset.</p>
+<p>For example, this FIFO runs in <code>io</code> while the default domain uses <code>aux_clk</code>.
+The same sibling library search path as the preceding example applies. The
+system bindings are inferred from <code>io</code>, not from the default domain:</p>
+<pre><code class="language-text">(actor domain_fifo
+  (clock-domains
+    (domain idle (clock aux_clk) :default)
+    (domain io (clock clk) (reset (rst_n async active_low))))
+  (interface
+    (input write_req (domain io))
+    (input read_req (domain io))
+    (input data_in (width 8) (domain io))
+    (output full (domain io))
+    (output empty (domain io))
+    (output data_out (width 8) (domain io)))
+  (imports (library common.fifo as fifo_lib))
+  (use fifo_lib.fifo as u_fifo (domain io)
+    (bind
+      (input write_req write_req)
+      (input read_req read_req)
+      (input data_in data_in)
+      (output full full)
+      (output empty empty)
+      (output data_out data_out))))
+</code></pre>
+<p>If the library instead declares <code>lib_clk</code> and <code>lib_rst_n</code>, add <code>(clock clk)</code>
+and <code>(reset rst_n)</code> inside <code>bind</code>. The generated top links those signals to the
+renamed child pins. Selecting <code>(clock aux_clk)</code> for this <code>io</code> instance fails
+with a domain-specific diagnostic. A reset declared by a sibling domain is
+likewise rejected.</p>
+<p>The first shipped reusable definition is
+<a href="../../isf/common/fifo.isf">isf/common/fifo.isf</a>, exported as
+<code>common.fifo.fifo</code>, with
+<a href="../../isf/fifo_library_use.isf">isf/fifo_library_use.isf</a> as the file-backed
+import/use fixture. It is a fixed-shape <code>DATA_WIDTH=8</code>, <code>DEPTH=4</code>,
+<code>PTR_WIDTH=2</code>, <code>OCC_WIDTH=3</code> FIFO actor. The actor owns write and read
+pointers, occupancy, full/empty flags, and a four-entry data bank. It models
+idle, push-only, pop-only, and push-plus-pop cases every cycle, with
+read-before-write bank semantics for same-cycle store/load.</p>
+<p>The shipped catalog is
+<a href="../../ISF_LIBRARY_CATALOG.html">docs/ISF_LIBRARY_CATALOG.md</a>. The public ISF
+contract advertises the catalog through <code>library_catalog_paths</code>, the bounded
+entry fields through <code>library_catalog_entry_keys</code>, and the current shipped
+entries through <code>shipped_library_definitions</code>. Actor top-level interface width
+parameters, actor-owned scalar storage width parameters, actor-owned bank
+width parameters, and actor-owned bank depth parameters are shipped for
+positive actor-local scalar defaults, but use-site FIFO interface shape,
+use-site bank-depth specialization, generated-top respecialization,
+memory-array backend emission, standalone transaction or drive exports, and
+nested library imports remain future work.</p>
+<h2 id="static-actor-network-metadata"><a class="header" href="#static-actor-network-metadata">Static Actor-Network Metadata</a></h2>
+<h3 id="actor-as-network-boundary-and-direct-instances"><a class="header" href="#actor-as-network-boundary-and-direct-instances">Actor-As-Network Boundary And Direct Instances</a></h3>
+<p>The first Actor Transfer Level (<code>ATL</code>) implementation slice is intentionally
+small: a top-level actor may declare one static actor instance, and FSMGen
+preserves that declaration in the parser shell and schedule report. The
+shipped source surface accepts the verbose <code>(instance NAME of ACTOR_TYPE)</code>
+form and the compact <code>(NAME : ACTOR_TYPE)</code> readability alias.</p>
+<p>Accepted form:</p>
+<pre><code class="language-lisp">(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+</code></pre>
+<p>Compact equivalent:</p>
+<pre><code class="language-lisp">(actor packet_pipe_compact
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (reader : packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+</code></pre>
+<p>The enclosing actor is the network boundary; there is no <code>(network ...)</code>
+wrapper in the shipped ATL static-instance surface.</p>
+<p>The report field is <code>actor_network</code>:</p>
+<pre><code class="language-json">{
+  "kind": "static_declaration",
+  "instances": [
+    {
+      "name": "reader",
+      "actor_type": "packet_reader",
+      "declaration": "actor"
+    }
+  ],
+  "groups": [],
+  "association_schedules": [],
+  "group_schedules": [],
+  "data_movements": [],
+  "event_waits": [],
+  "transaction_triggers": []
+}
+</code></pre>
+<p>Verbose instances report <code>declaration: "actor"</code>. Compact instance aliases
+report <code>declaration: "instance_alias"</code> so downstream reviewers can recover
+the source spelling. Both forms share the same validation and scheduling
+boundary.</p>
+<p>This is not generated-child composition yet. FSMGen does not resolve
+<code>packet_reader</code>, emit a child <code>.fsm</code>, build an ATL top, or wire <code>reader</code>
+transactions/events to child artifacts in this slice. Broader multiple
+instances outside the shipped scalar handoff and group metadata subsets,
+broader group scheduling outside the exact trigger-batch subset, pin
+movement, event fan-in/fan-out, trigger fan-in/fan-out, and generated ATL
+wiring remain backlog under the actor-network task tree.</p>
+<p>The broader ATL v0 contract is selected for later slices.</p>
+<p>The source root stays <code>(actor ...)</code>, and future ATL declarations remain
+direct actor-body clauses rather than a <code>(network ...)</code> section.</p>
+<h3 id="drive-body-data-movement"><a class="header" href="#drive-body-data-movement">Drive-Body Data Movement</a></h3>
+<p>Actor-to-actor and scalar top-level pin movement reuse the existing
+drive-body pair shape in <code>(sink source)</code> order plus ordinary drive-call
+timing points.</p>
+<p><code>connect</code>, <code>transfer</code>, and <code>move</code> are not part of ATL v0 movement syntax.</p>
+<p>The first endpoint-movement implementation sequence first shipped fail-closed
+reservation for unsupported endpoint drive-body pairs, then shipped the
+generated actor-to-actor handoff subset for one-bit scalar and exact-width
+vector generated-child routes.</p>
+<p>The accepted subset is intentionally narrow: exactly two direct static actor
+instances, one named drive body with one <code>(sink_actor.endpoint source_actor.endpoint)</code> pair, matching source-output and sink-input endpoint
+widths, and one top-level transaction drive call.</p>
+<p>The generated parent <code>.fsm</code> exposes an external source input named
+<code>source_actor_source_endpoint</code> and an external sink output named
+<code>sink_actor_sink_endpoint</code>. Their width is one for scalar one-bit routes or
+the exact matching child endpoint width for vector routes. The route lasts for
+the drive-call cycle and does not imply storage, a mux, pin movement in that
+actor-to-actor route, fan-in/fan-out, groups, CDC, or trigger/await coupling
+beyond the selected generated-child top sequence.</p>
+<pre><code class="language-lisp">(actor atl_scalar_data_movement
+  (clock clk)
+  (interface (input start) (output done))
+  (instance producer of packet_reader)
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+</code></pre>
+<p>FSMGen rewrites the drive body to generated parent handoff signals before
+lowering. The scheduled parent <code>.fsm</code> exposes <code>producer_payload</code> as the
+source input and <code>consumer_payload</code> as the sink output, then the named drive
+request drives <code>consumer_payload</code> from <code>producer_payload</code> for that call cycle.</p>
+<p>The schedule report records the movement in <code>actor_network.data_movements[]</code>
+with source/sink instance, endpoint, generated signal, width, route lifetime,
+and storage fields.</p>
+<p>The next selected ATL pin-movement subset reuses the same drive-body timing
+model for one top-level input pin feeding one actor endpoint:</p>
+<pre><code class="language-lisp">(actor pin_feed
+  (clock clk)
+  (interface (input start) (input in_bit) (output done))
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload pins.in_bit))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+</code></pre>
+<p>This pin-to-actor subset is shipped. The source is the existing one-bit
+top-level input pin, and the sink is a generated scalar external actor
+handoff output named <code>consumer_payload</code>.</p>
+<p>The inverse actor-to-top-level output pin direction is also shipped:</p>
+<pre><code class="language-lisp">(actor pin_publish
+  (clock clk)
+  (interface (input start) (output out_bit) (output done))
+  (instance producer of packet_reader)
+  (drive publish_result
+    (pins.out_bit producer.payload))
+  (transaction run
+    (on start)
+    (drive publish_result)
+    (complete done)))
+</code></pre>
+<p>FSMGen exposes <code>producer.payload</code> as a generated scalar external parent input
+named <code>producer_payload</code>, drives the existing one-bit top-level output pin
+<code>out_bit</code> for the drive-call cycle, and reports kind
+<code>scalar_actor_to_pin_handoff</code>. Wider pins, storage, muxing, generated
+children, group scheduling combined with pin movement, CDC, and
+trigger/await coupling remain deferred.</p>
+<h3 id="trigger-and-event-pulses"><a class="header" href="#trigger-and-event-pulses">Trigger And Event Pulses</a></h3>
+<p>ATL orchestration spellings are <code>(do actor.transaction)</code>,
+<code>(spawn actor.transaction as NAME)</code>, <code>(trigger actor.transaction)</code>, and
+<code>(await actor.event)</code>, with only the bounded transaction-body trigger and
+event-wait parent-handoff subsets shipped today. Events are one-cycle control
+pulses with no payloads in ATL v0.</p>
+<h3 id="static-groups-versus-task-scoped-associations"><a class="header" href="#static-groups-versus-task-scoped-associations">Static Groups Versus Task-Scoped Associations</a></h3>
+<p>Concurrent groups may still use
+<code>(group NAME (members ACTOR...) (mode concurrent))</code> or the compact
+<code>(concurrent NAME ACTOR...)</code> alias, but each declaration is static review metadata, not a permanent runtime association, and not a way to bypass
+fan-in, ordering, width, lifetime, or CDC safety.</p>
+<p>The first multi-actor trigger scheduling leaf is shipped as a same-cycle
+external trigger batch. It uses only existing transaction-body
+<code>(trigger actor.transaction)</code> clauses: a contiguous batch may target distinct
+static actor instances, lower to one parent state that pulses all selected
+trigger outputs, and report canonical evidence through
+<code>actor_network.association_schedules[]</code>. The compatibility
+<code>actor_network.group_schedules[]</code> array remains present for schedule JSON
+<code>schema_version: 1</code>. The association exists for that scheduled trigger state;
+it is not permanent group membership.</p>
+<p>Report-only static group metadata is now shipped for the verbose form:</p>
+<pre><code class="language-lisp">(actor grouped_pipeline
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline
+    (members reader writer)
+    (mode concurrent))
+  (transaction run
+    (on start)
+    (complete done)))
+</code></pre>
+<p>The compact alias is equivalent for scheduling purposes:</p>
+<pre><code class="language-lisp">(actor grouped_pipeline_compact
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (concurrent pipeline reader writer)
+  (transaction run
+    (on start)
+    (complete done)))
+</code></pre>
+<p>The group appears in <code>actor_network.groups[]</code> with <code>scheduling: "metadata_only"</code>. Verbose groups report <code>declaration: "group"</code>; compact
+aliases report <code>declaration: "concurrent_alias"</code> so downstream reviewers can
+recover the source spelling. By itself, either declaration names a static
+review set; it does not run actors concurrently, infer dependencies, insert
+storage or muxes, emit child artifacts, or cross clock domains.</p>
+<p>Source-authored group endpoints remain fail-closed. If <code>pipeline</code> names a
+static group, forms such as <code>(trigger pipeline.capture)</code>, <code>(await pipeline.done)</code>, <code>(await_all pipeline.done)</code>, <code>(await_any pipeline.done)</code>, or
+a rule action <code>(trigger pipeline.capture)</code> fail before scheduled <code>.fsm</code>
+emission with the ATL group-endpoint diagnostic. The missing contract is
+group-level trigger arbitration/fanout, event aggregation, storage/lifetime,
+and generated-child wiring semantics.</p>
+<p>The accepted temporary trigger batch does not require a group declaration:</p>
+<pre><code class="language-lisp">(actor trigger_batch_pipeline
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (trigger writer.emit)
+    (complete done)))
+</code></pre>
+<p>FSMGen emits one trigger-batch state in the scheduled parent and pulses both
+generated outputs in the same cycle. The report keeps individual entries in
+<code>actor_network.transaction_triggers[]</code> and adds one
+<code>actor_network.association_schedules[]</code> entry with a transaction-scoped
+association name such as <code>run_trigger_batch</code>, kind
+<code>temporary_trigger_batch</code>, lifetime <code>task_scoped</code>, owner transaction,
+members, target transactions, generated signals, same-cycle schedule,
+no-storage policy, and external handoff boundary. The compatibility
+<code>actor_network.group_schedules[]</code> entry carries the same timing evidence for
+schema-version-1 consumers; if the same trigger set also matches one declared
+static group, that compatibility entry may name the group instead.</p>
+<p>The first realistic ATL fixture is shipped as
+<code>isf/atl_trigger_batch_pipeline.isf</code>. It uses only that shipped temporary
+trigger-batch surface: three direct static actor instances and one contiguous
+transaction-body trigger batch. The fixture proves scheduled parent <code>.fsm</code>,
+strict schedule JSON, and HDL reachability for the bounded task-scoped
+orchestration surface. It is not a claim for peer event
+synchronization, endpoint data movement, generated ATL child <code>.fsm</code> artifacts,
+generated ATL tops, group endpoints, route mux/storage, CDC, payloads,
+ready/backpressure, or permanent actor grouping.</p>
+<p>The scalar data-route ATL fixture is shipped as
+<code>isf/atl_data_route_pipeline.isf</code>. It uses the existing drive-body
+<code>(sink source)</code> movement syntax with two direct static actors:</p>
+<pre><code class="language-lisp">(drive feed_consumer
+  (consumer.payload producer.payload))
+</code></pre>
+<p>One transaction drive call activates the route for that drive-call cycle. The
+scheduled parent exposes <code>producer_payload</code> as the generated source handoff
+input and <code>consumer_payload</code> as the generated sink handoff output. Schedule
+JSON reports the route in <code>actor_network.data_movements[]</code> with
+<code>route_lifetime: "drive_call_cycle"</code> and <code>storage: "none"</code>. The fixture keeps
+<code>association_schedules[]</code> and <code>group_schedules[]</code> empty because it is a
+drive-activated data route, not a trigger-batch association. It does not claim
+generated ATL child <code>.fsm</code> artifacts, generated ATL tops, route mux/storage,
+trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure,
+compact movement aliases, or permanent actor grouping.</p>
+<p>Two-child data routes have two fail-closed shapes that the current
+subset rejects with targeted diagnostics. The first is <strong>repeated
+activation</strong>: the parent transaction triggers the source or sink
+child more than once across the route segment, so the route’s
+exactly-one-trigger requirement no longer holds.</p>
+<pre><code class="language-text">(transaction parent
+  (on start)
+  (trigger producer.run)
+  (await producer.done)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (trigger producer.run)             ;; &lt;-- second activation of the source
+  (complete done))
+</code></pre>
+<p>The validator emits <code>parent two-child data route requires exactly one transaction trigger per source and sink child in the current subset; repeated activation remains deferred</code>. The deferred lane is
+multi-activation routes; until it ships, each source/sink child
+must be triggered exactly once within the route segment.</p>
+<p>The second is <strong>pre/post route parent work</strong>: the parent does
+other transaction-body work either before or after the route
+segment in the same transaction, so the route segment is no longer
+the only executable parent work.</p>
+<pre><code class="language-text">(transaction parent
+  (on start)
+  (wait 4)                          ;; &lt;-- pre-route parent work
+  (trigger producer.run)
+  (await producer.done)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (trigger consumer.run)
+  (await consumer.done)
+  (complete done))
+</code></pre>
+<p>The validator emits <code>parent two-child data route requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred</code>.
+The deferred lane is broader parent-transaction integration; until
+it ships, the route segment must be the only executable
+transaction body content (the entry guard plus completion are
+allowed because they are not transaction-body work).</p>
+<p>The scalar pin-ingress ATL fixture is shipped as
+<code>isf/atl_pin_ingress_pipeline.isf</code>. It uses the same drive-body movement
+syntax to move a top-level actor input into an actor in the network:</p>
+<pre><code class="language-lisp">(drive feed_consumer
+  (consumer.payload pins.payload))
+</code></pre>
+<p>One transaction drive call activates the route for that drive-call cycle. The
+scheduled parent preserves <code>payload</code> as the existing top-level input source and
+exposes <code>consumer_payload</code> as the generated actor handoff output. Schedule
+JSON reports the route in <code>actor_network.data_movements[]</code> with kind
+<code>scalar_pin_to_actor_handoff</code>, <code>source: "top_level_pin"</code>, <code>sink: "external_handoff"</code>, <code>route_lifetime: "drive_call_cycle"</code>, and <code>storage: "none"</code>. The fixture keeps <code>association_schedules[]</code> and <code>group_schedules[]</code>
+empty because it is a drive-activated data route, not a trigger-batch
+association. It does not claim generated ATL child <code>.fsm</code> artifacts, generated
+ATL tops, actor-to-pin egress, bidirectional pin movement, route mux/storage,
+trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure,
+compact movement aliases, or permanent actor grouping.</p>
+<p>The scalar pin-egress ATL fixture is shipped as
+<code>isf/atl_pin_egress_pipeline.isf</code>. It uses the same drive-body movement syntax
+to move an actor endpoint value to a top-level actor output:</p>
+<pre><code class="language-lisp">(drive publish_result
+  (pins.result producer.payload))
+</code></pre>
+<p>One transaction drive call activates the route for that drive-call cycle. The
+scheduled parent exposes <code>producer_payload</code> as the generated actor source
+handoff input and preserves <code>result</code> as the existing top-level output sink.</p>
+<p>Schedule JSON reports the route in <code>actor_network.data_movements[]</code> with kind
+<code>scalar_actor_to_pin_handoff</code>, <code>source: "external_handoff"</code>, <code>sink: "top_level_pin"</code>, <code>route_lifetime: "drive_call_cycle"</code>, and <code>storage: "none"</code>.</p>
+<p>The fixture keeps <code>association_schedules[]</code> and <code>group_schedules[]</code> empty
+because it is a drive-activated data route, not a trigger-batch association.</p>
+<p>It does not claim generated ATL child <code>.fsm</code> artifacts, generated ATL tops,
+bidirectional pin movement, route mux/storage, trigger/data coupling, wider
+payloads, fan-in/fan-out, CDC, ready/backpressure, compact movement aliases, or
+permanent actor grouping.</p>
+<p>The ATL trigger-wait fixture is shipped as
+<code>isf/atl_trigger_wait_pipeline.isf</code>. It uses one static actor instance and one
+parent transaction that emits <code>(trigger worker.process)</code>, then waits on
+<code>(await worker.done)</code>, then completes. The fixture proves parent-level
+trigger/event sequencing with generated handoff ports <code>worker_process_start</code>
+and <code>worker_done</code>, one <code>transaction_triggers[]</code> entry, one <code>event_waits[]</code>
+entry, strict schedule JSON parity, scheduled <code>.fsm</code> structure with the
+default await timeout state, and plain plus strict HDL generation. It does not
+claim temporary trigger-batch plus event coupling, generated ATL child <code>.fsm</code>
+artifacts, generated ATL tops, actor type resolution, HDL child wiring, event
+payloads, data movement coupling, fan-in/fan-out, CDC, ready/backpressure,
+compact movement aliases, or permanent actor grouping.</p>
+<p>The ATL trigger-batch wait fixture is shipped as
+<code>isf/atl_trigger_batch_wait_pipeline.isf</code>. It couples one same-cycle temporary
+trigger batch to one following actor event wait. The parent transaction
+triggers reader, filter, and writer in one state, waits on <code>writer.done</code>, then
+completes. The fixture proves <code>association_schedules[]</code> temporary-association
+metadata, <code>group_schedules[]</code> compatibility metadata, one <code>event_waits[]</code>
+entry, strict schedule JSON parity, scheduled <code>.fsm</code> structure with the
+default await timeout state, and plain plus strict HDL generation. It remains
+parent-handoff orchestration: it does not claim generated ATL child <code>.fsm</code>
+artifacts, generated ATL tops, actor type resolution, HDL child wiring,
+hidden actor-event fan-in, data movement coupling, CDC, ready/backpressure,
+compact movement aliases, or permanent actor grouping.</p>
+<p>The ATL trigger-batch multi-event wait fixture is shipped as
+<code>isf/atl_trigger_batch_multi_wait_pipeline.isf</code>. It uses the same task-scoped
+trigger batch, then waits on <code>reader.done</code>, <code>filter.done</code>, and <code>writer.done</code>
+as three explicit source-ordered wait states before completion. The fixture
+proves three generated event handoff inputs, three <code>event_waits[]</code> entries,
+strict schedule JSON parity, scheduled <code>.fsm</code> structure with the default
+await timeout state, and plain plus strict HDL generation. This is sequential
+parent-handoff orchestration, not a hidden same-cycle join. Repeated waits,
+non-batch waits, interleaved parent work, event payloads, generated child
+completion joins, data movement coupling, CDC, ready/backpressure, compact
+aliases, and permanent actor grouping remain outside the shipped subset.
+When repeated waits target the same triggered actor after a trigger batch,
+FSMGen fails before <code>.fsm</code> emission and names the missing event re-arm or
+per-event generation/lifetime contract.</p>
+<p>The shipped ATL source-root safety boundary rejects a second top-level
+<code>(actor ...)</code> root in the same <code>.isf</code> file. That sibling root is not yet a
+resolved actor type for <code>(instance name of ActorType)</code> or the compact
+<code>(name : ActorType)</code> alias. One actor root plus <code>(library ...)</code> roots remains
+accepted, and the shipped library-qualified ATL subsets now emit generated
+child <code>.fsm</code> artifacts and generated ATL tops.</p>
+<p>Sibling-root child type resolution remains deferred.</p>
+<p>The shipped ATL actor type-resolution contract uses explicit library
+qualification. This example assumes a sibling <code>common.packet</code> library on the
+search path exporting <code>packet_reader</code> with a <code>capture</code> transaction and <code>done</code>
+event:</p>
+<pre><code class="language-text">(actor packet_system
+  (clock clk)
+  (interface (input start) (output done))
+  (imports
+    (library common.packet as pkt_lib))
+  (instance reader of pkt_lib.packet_reader)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (await reader.done)
+    (complete done)))
+</code></pre>
+<p>The alias before the dot must come from the enclosing actor’s explicit library
+imports, and the name after the dot must be an actor export from that library.</p>
+<p>The compact <code>(reader : pkt_lib.packet_reader)</code> spelling shares the same
+library-qualified type-resolution rules. Unqualified
+<code>(instance name of ActorType)</code> and compact <code>(name : ActorType)</code> remain
+metadata-only external intent for now, not an implicit search through sibling
+actor roots or files.</p>
+<p>Existing <code>(use alias.actor as instance ...)</code> remains the separate reusable
+library generated-top path with explicit bindings. Qualified ATL resolution
+rejects missing imports, non-explicit import aliases, unknown aliases and
+unknown actor exports before scheduled <code>.fsm</code> emission with ATL-specific
+diagnostics.</p>
+<p>Resolved qualified entries add <code>type_resolution</code>, <code>library</code>, <code>alias</code>, <code>export</code>,
+<code>module</code>, and <code>scheduled_fsm</code>, with
+<code>type_resolution: "library_actor_export"</code> and deterministic child
+names <code>&lt;parent_actor&gt;__&lt;instance&gt;</code> / <code>&lt;parent_actor&gt;__&lt;instance&gt;.fsm</code> under
+<code>actor_network.instances[]</code>. Lowering now emits those resolved child <code>.fsm</code>
+files. Generated ATL tops support the documented resolved-child trigger/event,
+same-child pin-route, two-child sequential handoff, trigger-batch and
+actor-to-actor route subsets described below. Each subset keeps its explicit
+ordering, endpoint and width constraints; arbitrary instance networks and
+interface binding inference remain deferred.</p>
+<p>The shipped resolved-child fixture is
+<code>isf/atl_resolved_child_pipeline.isf</code>. It uses one same-source library actor
+export, one resolved <code>(instance worker of pkt_lib.packet_worker)</code>, one parent
+trigger handoff, and one parent event wait. Lowering emits exactly
+<code>atl_resolved_child_pipeline.fsm</code>,
+<code>atl_resolved_child_pipeline__worker.fsm</code>, and
+<code>atl_resolved_child_pipeline_top.fsm</code>. The generated top wires public pins to
+the parent, parent <code>worker_process_start</code> to child <code>process_start</code>, and child
+<code>done</code> to parent <code>worker_done</code>, then reports the top under
+<code>actor_network.generated_tops[]</code>.</p>
+<p>HDL promotion for that same resolved-child shape is shipped. The source and
+report schema stay unchanged; focused coverage proves plain and strict CLI
+SystemVerilog generation contains the generated top, scheduled parent,
+resolved child, and selected internal trigger/event links. The following
+sections cover the separately qualified pin routes and two-child tops. CDC,
+event payload protocols, ready/backpressure, route mux/storage, recursive actor
+networks and executable group scheduling remain deferred.</p>
+<h3 id="generated-child-top-data-routes"><a class="header" href="#generated-child-top-data-routes">Generated-Child Top Data Routes</a></h3>
+<p>The first generated-child data route is also shipped for one scalar top-level
+input-pin route into one resolved child through that generated top.</p>
+<p>The source shape is a named drive body with <code>(worker.payload pins.payload)</code>,
+activated by the same parent transaction that triggers <code>worker.process</code> and
+awaits <code>worker.done</code>.</p>
+<p>The fixture <code>isf/atl_resolved_child_pin_ingress_pipeline.isf</code> emits parent,
+child, and top <code>.fsm</code> artifacts; the generated top wires top <code>payload</code> to the
+parent, parent <code>worker_payload</code> to child input <code>payload</code>, parent
+<code>worker_process_start</code> to child <code>process_start</code>, and child <code>done</code> to parent
+<code>worker_done</code>.</p>
+<p>The child <code>.fsm</code> includes generated <code>+interface</code> role metadata for the
+selected child input so the HDL backend preserves <code>payload</code> as a child module
+port.</p>
+<p>The exact-width vector form of that one-child pin-ingress route is shipped as
+<code>isf/atl_resolved_child_pin_ingress_vector_pipeline.isf</code>.</p>
+<p>It uses the same <code>(sink source)</code> movement surface:</p>
+<pre><code class="language-lisp">(drive feed_worker
+  (worker.payload pins.payload))
+</code></pre>
+<p>The top-level actor declares <code>payload</code> as an 8-bit input, and the resolved
+child declares its <code>payload</code> input at the same width. Lowering emits the
+parent, child, and top <code>.fsm</code> artifacts, keeps parent handoff
+<code>worker_payload</code> at width 8, preserves the child <code>payload</code> input as an 8-bit
+module port, and wires public top <code>payload</code> through the parent into child
+<code>payload</code>.</p>
+<p>Schedule JSON keeps the existing public route entry shape and reports
+<code>kind: "vector_pin_to_actor_handoff"</code>, <code>width: 8</code>, and
+<code>width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"</code>.</p>
+<p>If the top-level input width and child input width differ, lowering fails
+before scheduled <code>.fsm</code> emission. FSMGen does not infer width adaptation,
+packing, truncation, extension, slicing, route mux/storage,
+fan-in/fan-out, ready/backpressure, or a payload protocol for the route.</p>
+<p>The exact-width vector multi-route form of that same one-child pin-ingress
+path is shipped as
+<code>isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf</code>.</p>
+<p>It keeps the same <code>(sink source)</code> movement surface and uses adjacent route
+drive calls before the child trigger:</p>
+<pre><code class="language-lisp">(drive feed_payload
+  (worker.payload pins.payload))
+
+(drive feed_sideband
+  (worker.sideband pins.sideband))
+</code></pre>
+<p>The fixture proves route-local widths. Top <code>payload</code> and child <code>payload</code> are
+8 bits; top <code>sideband</code> and child <code>sideband</code> are 4 bits. Lowering emits two
+drive-call states, two generated parent-to-child handoff outputs, child
+<code>+interface</code> roles for both vector inputs, and generated-top wiring at each
+route’s exact width.</p>
+<p>Schedule JSON reports both routes as <code>vector_pin_to_actor_handoff</code> entries
+with <code>width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"</code>.</p>
+<p>This vector multi-route subset is still not a route fabric. All accepted
+routes must target the same resolved child, live in the same parent
+transaction, use unique top-level input pins and child input endpoints, and be
+activated by adjacent argument-free drive calls before the child trigger and
+event wait. Broader mixed scalar/vector route sets outside the bounded
+pin-ingress subset below, width adaptation, route mux/storage, fan-in/fan-out,
+ready/backpressure, and payload protocols remain deferred.</p>
+<p>The mixed scalar/vector form of that same one-child pin-ingress path is shipped
+as <code>isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf</code>.</p>
+<p>It keeps the same <code>(sink source)</code> movement surface and uses adjacent route
+drive calls before the child trigger:</p>
+<pre><code class="language-lisp">(drive feed_payload
+  (worker.payload pins.payload))
+
+(drive feed_valid
+  (worker.valid pins.valid))
+</code></pre>
+<p>The fixture proves one exact-width vector route and one scalar route in the
+same route set. Top <code>payload</code> and child <code>payload</code> are 8 bits. Top <code>valid</code> and
+child <code>valid</code> are one-bit scalar pins. Lowering emits two drive-call states,
+two generated parent-to-child handoff outputs, child <code>+interface</code> roles for
+both inputs, and generated-top wiring at each route’s own width.</p>
+<p>Schedule JSON reports the payload route as <code>vector_pin_to_actor_handoff</code> with
+<code>width_source: "top_level_input_pin_resolved_child_endpoint_exact_width"</code> and
+the valid route as <code>scalar_pin_to_actor_handoff</code> with
+<code>width_source: "top_level_pin_scalar_one_bit"</code>.</p>
+<p>This mixed subset is still not a route fabric. All accepted routes must target
+the same resolved child, live in the same parent transaction, use unique
+top-level input pins and child input endpoints, and be activated by adjacent
+argument-free drive calls before the child trigger and event wait. Width
+adaptation, route mux/storage, fan-in/fan-out, ready/backpressure, and payload
+protocols remain deferred.</p>
+<p>The bounded multi-route extension of that same one-child pin-ingress shape is
+also shipped as <code>isf/atl_resolved_child_pin_ingress_multi_pipeline.isf</code>.</p>
+<p>It still uses the existing <code>(sink source)</code> drive-body movement surface. The
+parent has two route drives:</p>
+<pre><code class="language-lisp">(drive feed_payload
+  (worker.payload pins.payload))
+
+(drive feed_sideband
+  (worker.sideband pins.sideband))
+</code></pre>
+<p>The parent transaction calls both route drives in adjacent transaction-body
+clauses, triggers <code>worker.process</code>, waits on <code>worker.done</code>, and completes.</p>
+<p>Lowering emits two drive-call states, two generated drive request signals, two
+parent-to-child handoff outputs (<code>worker_payload</code>, <code>worker_sideband</code>), and
+child <code>+interface</code> roles for both routed inputs. The generated top wires top
+<code>payload</code> and top <code>sideband</code> into the scheduled parent, then wires the parent
+handoffs to child <code>payload</code> and <code>sideband</code>.</p>
+<p>Schedule JSON reports each scalar path as its own
+<code>actor_network.data_movements[]</code> entry with
+<code>kind: "scalar_pin_to_actor_handoff"</code>. The generated-top discovery still uses
+<code>actor_network.generated_tops[]</code>; the internal generated-top data-link list
+remains private.</p>
+<p>This extension is not a route fabric. All accepted pin-ingress routes must
+target the same resolved child, live in the same parent transaction, use one
+scalar <code>(child.endpoint pins.input_pin)</code> pair per drive body, use unique
+top-level input pins and unique child input endpoints, and be activated by
+adjacent argument-free top-level drive calls before the child trigger and event
+wait.</p>
+<p>These one-child pin-ingress routes do not include actor-to-actor
+generated-child routing, multi-child data wiring, broader mixed
+scalar/vector route sets outside the bounded same-child pin-ingress subset,
+width adaptation, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+ready/backpressure, or payload protocols.</p>
+<p>The inverse generated-child data route is also shipped for one scalar
+resolved-child output route to one top-level output pin through that
+generated top.</p>
+<p>The source shape is a named drive body with <code>(pins.result worker.payload)</code>,
+activated after the parent transaction triggers <code>worker.process</code> and awaits
+<code>worker.done</code>.</p>
+<p>The fixture <code>isf/atl_resolved_child_pin_egress_pipeline.isf</code> emits parent,
+child, and top <code>.fsm</code> artifacts; the generated top wires child <code>payload</code> to
+parent <code>worker_payload</code>, parent <code>result</code> to top <code>result</code>, parent
+<code>worker_process_start</code> to child <code>process_start</code>, and child <code>done</code> to parent
+<code>worker_done</code>.</p>
+<p>The child <code>.fsm</code> includes generated <code>+interface</code> role metadata for the
+selected child output so the HDL backend preserves <code>payload</code> as a child
+module port.</p>
+<p>This one-child pin-egress route does not include actor-to-actor
+generated-child routing, multi-child data wiring, route mux/storage,
+CDC/reset remapping, ready/backpressure, or payload protocols.</p>
+<p>The exact-width vector form of that one-child pin-egress route is shipped as
+<code>isf/atl_resolved_child_pin_egress_vector_pipeline.isf</code>.</p>
+<p>It uses the same <code>(sink source)</code> movement surface:</p>
+<pre><code class="language-lisp">(drive publish_result
+  (pins.result worker.payload))
+</code></pre>
+<p>The top-level actor declares <code>result</code> as an 8-bit output, and the resolved
+child declares its <code>payload</code> output at the same width. Lowering emits the
+parent, child, and top <code>.fsm</code> artifacts, keeps parent handoff <code>worker_payload</code>
+at width 8, preserves the child <code>payload</code> output as an 8-bit module port, and
+wires child <code>payload</code> through the parent to public top <code>result</code>.</p>
+<p>Schedule JSON keeps the existing public route entry shape and reports
+<code>kind: "vector_actor_to_pin_handoff"</code>, <code>width: 8</code>, and
+<code>width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"</code>.</p>
+<p>If the child output width and top-level output width differ, lowering fails
+before scheduled <code>.fsm</code> emission. FSMGen does not infer width adaptation,
+packing, truncation, extension, slicing, route mux/storage,
+fan-in/fan-out, ready/backpressure, or a payload protocol for the route.</p>
+<p>The exact-width vector multi-route form of that same one-child pin-egress path
+is shipped as <code>isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf</code>.</p>
+<p>It routes both child outputs to top-level output pins after the child event
+wait:</p>
+<pre><code class="language-lisp">(drive publish_result
+  (pins.result worker.payload))
+(drive publish_status
+  (pins.status worker.status))
+</code></pre>
+<p>In that fixture, the result route is 8 bits and the status route is 4 bits.
+Each route reports <code>kind: "vector_actor_to_pin_handoff"</code> with
+<code>width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"</code>.
+The route set keeps the same one-child, same-parent-transaction,
+unique-child-output, unique-top-output, contiguous post-event drive-call rules
+as the scalar pin-egress multi-route subset. A route-local child-output to
+top-output width mismatch fails closed before scheduled <code>.fsm</code> emission.</p>
+<p>This vector multi-route subset is still not a route fabric. Broader mixed
+scalar/vector route sets outside the bounded same-child pin-egress subset
+below, width adaptation, storage, muxing, fan-in/fan-out, CDC/reset remapping,
+ready/backpressure, and payload protocols remain deferred.</p>
+<p>The mixed scalar/vector form of that same one-child pin-egress path is shipped
+as <code>isf/atl_resolved_child_pin_egress_mixed_pipeline.isf</code>.</p>
+<p>It keeps the same <code>(sink source)</code> movement surface and uses adjacent route
+drive calls after the child event wait:</p>
+<pre><code class="language-lisp">(drive publish_result
+  (pins.result worker.payload))
+
+(drive publish_valid
+  (pins.valid worker.valid))
+</code></pre>
+<p>The fixture proves one exact-width vector route and one scalar route in the
+same route set. Child <code>payload</code> and top <code>result</code> are 8 bits. Child <code>valid</code> and
+top <code>valid</code> are one-bit scalar pins. Lowering emits two post-event drive-call
+states, two generated child-to-parent handoff inputs, child <code>+interface</code> roles
+for both outputs, and generated-top wiring at each route’s own width.</p>
+<p>Schedule JSON reports the result route as <code>vector_actor_to_pin_handoff</code> with
+<code>width_source: "top_level_output_pin_resolved_child_endpoint_exact_width"</code> and
+the valid route as <code>scalar_actor_to_pin_handoff</code> with
+<code>width_source: "top_level_output_pin_scalar_one_bit"</code>.</p>
+<p>This mixed subset is still not a route fabric. All accepted routes must source
+the same resolved child, live in the same parent transaction, use unique child
+output endpoints and top-level output pins, and be activated by adjacent
+argument-free drive calls after the child event wait. Width adaptation,
+route mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure,
+and payload protocols remain deferred.</p>
+<p>The bounded multi-route extension of that one-child pin-egress path is shipped
+as <code>isf/atl_resolved_child_pin_egress_multi_pipeline.isf</code>.</p>
+<p>It routes <code>(pins.result worker.payload)</code> and
+<code>(pins.status worker.status)</code> with adjacent argument-free drive calls after the
+child event wait. The generated top wires both child output pins through
+separate parent source handoffs to separate top-level output pins, and the
+public report keeps both routes in <code>actor_network.data_movements[]</code> with
+<code>kind: "scalar_actor_to_pin_handoff"</code>.</p>
+<p>This is still a one-child one-to-one scalar route set. It does not include
+width adaptation, fan-in/fan-out, route mux/storage, CDC/reset remapping,
+ready/backpressure, or payload protocols.</p>
+<p>The selected generated-child actor-to-actor data-route shape across two
+resolved children reuses the existing <code>(sink source)</code> drive-body movement
+surface and is shipped only for the two-child same-source/same-sink scalar or
+exact-width vector data routes described below. Malformed or mismatched-width
+actor-to-actor route shapes still fail closed before FSMGen infers remapping,
+storage, muxing, fan-in/fan-out, payload adaptation, or backpressure behavior.</p>
+<p>The first control-only two-child generated top is now shipped.</p>
+<p>The fixture <code>isf/atl_two_child_pipeline.isf</code> declares resolved <code>reader</code> and
+<code>writer</code> children, triggers <code>reader.capture</code>, waits on <code>reader.done</code>,
+triggers <code>writer.emit</code>, waits on <code>writer.done</code>, and completes.</p>
+<p>Lowering emits parent, reader, writer, and generated top <code>.fsm</code> artifacts.</p>
+<p>The generated top instantiates all three modules, exposes only the parent
+public pins plus clock/reset, wires <code>reader_capture_start</code> to
+<code>reader.capture_start</code>, <code>reader.done</code> to <code>reader_done</code>, <code>writer_emit_start</code>
+to <code>writer.emit_start</code>, and <code>writer.done</code> to <code>writer_done</code>.</p>
+<p>Schedule JSON keeps the same actor-network families and uses
+<code>actor_network.generated_tops[].children[]</code> for the per-child generated-top
+wiring records.</p>
+<p>The first resolved-child trigger-batch generated top is also shipped as
+<code>isf/atl_two_child_trigger_batch_pipeline.isf</code>.</p>
+<p>It keeps the same resolved <code>reader</code> and <code>writer</code> child modules, but the
+parent transaction emits contiguous <code>(trigger reader.capture)</code> and <code>(trigger writer.emit)</code> clauses before waiting on <code>reader.done</code> and then <code>writer.done</code>.
+Lowering emits parent, reader, writer, and generated top <code>.fsm</code> artifacts.
+The parent uses one <code>run_atl_trigger_batch_1</code> state that pulses both
+<code>reader_capture_start</code> and <code>writer_emit_start</code> in the same cycle, then
+preserves the authored waits as source-ordered sequential wait states.</p>
+<p>Schedule JSON records the same individual <code>transaction_triggers[]</code> and
+<code>event_waits[]</code> entries as parent-handoff trigger-batch sources, keeps the
+task-scoped temporary association in <code>association_schedules[]</code>, keeps the
+schema-version-1 compatibility evidence in <code>group_schedules[]</code>, and advertises
+the generated top with <code>kind: "resolved_children_trigger_batch_event_sequence"</code> under
+<code>actor_network.generated_tops[]</code>. Static group declarations, data movement
+coupled to the trigger batch, repeated child activations or waits,
+non-source-ordered waits, nested waits/triggers, CDC, payload protocols,
+ready/backpressure, route mux/storage, recursive actor networks, and permanent
+actor grouping remain outside this generated-top subset.</p>
+<p>The first one-bit generated-child actor-to-actor route through that two-child
+top is also shipped as <code>isf/atl_two_child_data_pipeline.isf</code>.</p>
+<p>It reuses a named drive body with <code>(writer.payload reader.payload)</code> and calls
+it after <code>reader.done</code> and before <code>writer.emit</code>. The scheduled parent exposes
+<code>reader_payload</code> as the source handoff input and <code>writer_payload</code> as the sink
+handoff output, drives <code>writer_payload</code> from <code>reader_payload</code> only for the
+<code>forward_payload</code> drive-call cycle, and the generated top wires
+<code>reader.payload</code> to parent <code>reader_payload</code> plus parent <code>writer_payload</code> to
+<code>writer.payload</code>. Schedule JSON records the route in
+<code>actor_network.data_movements[]</code> and the generated top in
+<code>actor_network.generated_tops[]</code> with <code>children[]</code>. Fan-in/fan-out, broader
+route data wiring, route mux/storage, CDC/reset remapping, ready/backpressure,
+payload protocols beyond exact-width handoff wiring, repeated triggers,
+trigger-batch plus data movement coupling, groups, recursive actor networks,
+and permanent actor grouping remain unavailable.</p>
+<p>The exact-width vector extension of the same route is shipped as
+<code>isf/atl_two_child_vector_data_pipeline.isf</code>.</p>
+<p>It keeps the same <code>(writer.payload reader.payload)</code> drive-body pair and the
+same trigger/await/drive/trigger/await transaction order. The reader
+<code>payload</code> output and writer <code>payload</code> input are both declared with width 8,
+so FSMGen emits 8-bit parent handoff ports <code>reader_payload</code> and
+<code>writer_payload</code>, preserves the 8-bit child ports as generated <code>+interface</code>
+roles, wires both 8-bit generated-top links, and emits vector HDL links.
+Schedule JSON records this route with <code>kind: "vector_actor_handoff"</code>,
+<code>width: 8</code>, and
+<code>width_source: "resolved_child_endpoint_exact_width"</code>.</p>
+<p>The bounded multi-route extension of that same shape is now shipped as
+<code>isf/atl_two_child_multi_data_pipeline.isf</code>.</p>
+<p>It still uses the same <code>(sink source)</code> drive-body movement surface. The parent
+has two route drives:</p>
+<pre><code class="language-lisp">(drive forward_payload
+  (writer.payload reader.payload))
+
+(drive forward_sideband
+  (writer.sideband reader.sideband))
+</code></pre>
+<p>The parent transaction triggers <code>reader.capture</code>, waits on <code>reader.done</code>, calls
+both route drives in adjacent transaction-body clauses, triggers <code>writer.emit</code>,
+waits on <code>writer.done</code>, and completes.</p>
+<p>Lowering emits two drive-call states, two generated drive request signals, two
+reader-to-parent handoff inputs (<code>reader_payload</code>, <code>reader_sideband</code>), and two
+parent-to-writer handoff outputs (<code>writer_payload</code>, <code>writer_sideband</code>). The
+generated top wires <code>reader.payload</code> and <code>reader.sideband</code> into the parent
+handoffs, and wires the parent handoffs to <code>writer.payload</code> and
+<code>writer.sideband</code>.</p>
+<p>Schedule JSON reports each path as its own
+<code>actor_network.data_movements[]</code> entry. One-bit paths use
+<code>kind: "scalar_actor_handoff"</code> and exact-width vector paths use
+<code>kind: "vector_actor_handoff"</code>. The generated-top discovery still uses
+<code>actor_network.generated_tops[]</code> with <code>children[]</code>; the internal generated-top
+data-link list remains private.</p>
+<p>This extension is not general muxing. All accepted routes must share the same
+source child, the same sink child, the same parent transaction, one direct
+endpoint pair with matching source/sink endpoint widths per drive body, and
+one top-level drive call per route. The route segment must stay contiguous:
+source trigger, source event wait, all route drive calls, sink trigger, and
+sink event wait.</p>
+<p>The shipped hardening around this route surface locks the nearby fail-closed
+rules: every source endpoint must be an output on the source child, every sink
+endpoint must be an input on the sink child, and each route drive body may
+contribute exactly one endpoint pair activated by exactly one top-level drive
+call.</p>
+<p>The shipped width hardening accepts exact-width generated-child
+actor-to-actor routes when the resolved source child output and sink child
+input declare the same positive width. Width mismatches fail closed until a
+later payload-width protocol defines packing, truncation, extension, slicing,
+storage, or muxing behavior.</p>
+<p>The shipped clock/reset hardening keeps the same route in one parent
+clock/reset policy. Source or sink child clock/reset mismatches fail closed
+until a later CDC or reset-remap contract is selected; the generated top does
+not insert async crossing logic, system-port remapping, route storage, muxing,
+or backpressure.</p>
+<p>The shipped self-route hardening keeps the route between two distinct
+resolved children. Same-child source/sink route pairs fail closed until a
+later contract selects self-route, loopback, child-internal bypass, storage,
+muxing, fan-in/fan-out, or payload behavior.</p>
+<p>The shipped repeated-trigger hardening keeps the route sequence to one
+source-child trigger and one sink-child trigger. Extra route-child triggers
+fail closed until a later contract selects repeated activation, restart,
+pending-request merging, trigger fan-in/fan-out, or multi-activation
+scheduling.</p>
+<p>The shipped repeated-wait hardening keeps the same route sequence to one
+source-child event wait and one sink-child event wait. Extra route-child
+waits fail closed until a later contract selects event fan-in/fan-out,
+repeated wait sequencing, route-level wait storage, muxing, backpressure, or
+payload behavior.</p>
+<p>The shipped same-parent-transaction hardening keeps that same route inside
+one parent transaction. Route clauses split across multiple parent
+transactions stay fail-closed until a later contract selects route
+continuation, pending handoff storage, transaction rendezvous,
+cross-transaction scheduling, muxing, backpressure, or payload behavior.</p>
+<p>The shipped sink-trigger ordering hardening keeps the data drive call before
+the sink child trigger. Sink-before-drive route sequences stay fail-closed
+until a later contract selects speculative sink activation, delayed payload
+delivery, route storage, muxing, backpressure, or payload behavior.</p>
+<p>The shipped sink-event-wait ordering hardening keeps the sink child event
+wait after the sink child trigger. Sink-wait-before-trigger route sequences
+stay fail-closed until a later contract selects pre-trigger acknowledgement,
+sticky event sampling, event replay, route storage, muxing, backpressure, or
+payload behavior.</p>
+<p>The shipped source-event-wait ordering hardening keeps the source child
+event wait after the source child trigger. Source-wait-before-trigger route
+sequences stay fail-closed until a later contract selects pre-trigger
+acknowledgement, sticky event sampling, event replay, route storage, muxing,
+backpressure, or payload behavior.</p>
+<p>The shipped route-contiguity hardening keeps that route as one contiguous
+transaction-body segment. Interleaved parent clauses between the source
+trigger, source event wait, data drive call, sink trigger, and sink event
+wait stay fail-closed until a later contract selects interleaved parent work,
+local side effects, pre/post route sampling, route continuation, storage,
+muxing, backpressure, or payload behavior.</p>
+<p>The shipped route-isolation hardening keeps that route segment as the only
+executable parent transaction-body work between the transaction start
+condition and completion. Parent-local clauses before the source trigger or
+after the sink event wait stay fail-closed until a later contract selects
+pre-route setup, post-route sampling, local side effects, cleanup work, route
+continuation, storage, muxing, backpressure, or payload behavior.</p>
+<p>The shipped route-boundary cardinality hardening keeps that isolated route
+bounded by exactly one simple start condition and one simple completion
+pulse. Extra start or completion boundaries stay fail-closed until a later
+contract selects activation fan-in, completion fan-out, start-condition
+arbitration, setup/cleanup, continuation, storage, muxing, backpressure, or
+payload behavior.</p>
+<p>The shipped boundary-simplicity hardening keeps those boundaries body-free.</p>
+<p>Activation-body samples in <code>(on ...)</code> and extra payload operands in
+<code>(complete ...)</code> stay fail-closed until a later contract selects
+activation-body sampling, completion payload/fan-out, setup/cleanup,
+continuation, storage, muxing, backpressure, or payload behavior.</p>
+<p>The shipped boundary-role hardening keeps those route boundaries tied to
+parent interface direction. The start boundary remains a scalar top-level
+input and the completion boundary remains a scalar top-level output;
+output-as-start, input-as-completion, undeclared, and wider boundary pins
+fail closed until a later contract selects interface remapping, activation
+fan-in, completion fan-out, boundary expressions, storage, muxing,
+backpressure, or payload behavior.</p>
+<p>The shipped generated-handoff collision hardening keeps generated parent
+handoff names exclusive. Parent-declared interface or storage signals that
+collide with the selected route’s trigger, event, data, or named-drive
+request handoffs fail closed before generated-top wiring can silently reuse
+or suppress those ports. This does not select handoff remapping, route
+muxing, route storage, fan-in/fan-out, ready/backpressure, or payload
+behavior.</p>
+<p>The shipped lowerer defensive backstop protects the same generated-handoff
+names after parsing. Normal <code>.isf</code> source still fails in the parser, but
+programmatic or mutated actor metadata also fails closed in lowering before
+generated-top wiring can reuse, suppress, or shadow those handoffs. This does
+not add syntax, remapping, muxing, storage, ready/backpressure,
+fan-in/fan-out, or payload behavior.</p>
+<h4 id="generated-child-route-terms"><a class="header" href="#generated-child-route-terms">Generated-Child Route Terms</a></h4>
+<p>The current generated-child actor-to-actor route set is intentionally small.
+Each route means one child output reaches one child input through fixed
+generated parent handoffs for exactly that route’s named drive-call cycle.
+The route width is one for scalar endpoints or the exact matching child
+endpoint width for vector endpoints.</p>
+<p>This terminology is part of the user-facing contract and is kept in this
+dedicated section so route support, explicit non-support, and diagnostic
+ownership stay reviewable in the book.</p>
+<h5 id="route-lifetime-and-value-boundary"><a class="header" href="#route-lifetime-and-value-boundary">Route Lifetime And Value Boundary</a></h5>
+<p>The shipped route lifetime is one named drive-call cycle per route. In
+<code>atl_two_child_data_pipeline</code>, that cycle is the parent transaction’s
+<code>(drive forward_payload)</code> clause between <code>await reader.done</code> and
+<code>trigger writer.emit</code>. In <code>atl_two_child_multi_data_pipeline</code>, the payload and
+sideband paths each have their own adjacent drive-call cycle in that same route
+segment.</p>
+<p>The shipped data value for each route is exactly the resolved child endpoint
+width. The generated top presents the payload value as <code>reader.payload</code> to
+parent handoff <code>reader_payload</code>, then parent handoff <code>writer_payload</code> to
+<code>writer.payload</code>. The multi-route fixture adds the same pattern for
+<code>reader.sideband</code>, <code>reader_sideband</code>, <code>writer_sideband</code>, and
+<code>writer.sideband</code>. The vector fixture uses the same path at width 8. FSMGen
+transfers each value during its named drive-call cycle and does not define a
+multi-cycle route lifetime.</p>
+<p>Structured payloads, replayed payloads, delayed delivery, or width adaptation
+remain deferred until a later task tree selects and verifies a wider protocol.</p>
+<p>Parameterized route drive definitions and drive-call actual arguments are
+also outside the shipped ATL route families. <code>(drive (forward_payload value) ...)</code> and <code>(drive forward_payload value)</code> fail closed in the generated-child
+actor-to-actor, pin-ingress, and pin-egress route subsets before drive actual
+binding, expression movement, route mux/storage, or payload protocols can be
+inferred.</p>
+<p>Route endpoint expressions are also outside this route. The source half of
+the drive-body pair must be the direct endpoint <code>reader.payload</code>; a source
+expression such as <code>(+ reader.payload 1)</code> fails closed before FSMGen infers
+expression movement, value transformation, width conversion, storage, or a
+payload protocol.</p>
+<p>The sink half of the drive-body pair must likewise be the direct endpoint
+<code>writer.payload</code>. A sink expression such as <code>(+ writer.payload 1)</code> fails
+closed before FSMGen infers expression destinations, route-side transforms,
+width conversion, storage, or a payload protocol.</p>
+<p>That ATL sink-expression diagnostic is source-order independent for
+endpoint-looking route sinks. If a drive body appears before the corresponding
+<code>(instance ...)</code> clauses, FSMGen defers that ATL-looking sink expression until
+the actor instance set is known, then reports the same sink-expression
+diagnostic. Ordinary malformed local drive targets such as <code>((out) 1)</code> keep
+the generic drive-body scalar-head diagnostic.</p>
+<p>The source-expression diagnostic is source-order independent too. If a drive
+body appears before the corresponding <code>(instance ...)</code> clauses, FSMGen defers
+that ATL-looking source expression until the actor instance set is known, then
+reports the same source-expression diagnostic. Expression movement itself
+remains outside the shipped contract.</p>
+<p>The accepted actor-to-actor route is source-order independent too. The named
+<code>forward_payload</code> drive may appear before or after the <code>reader</code> and <code>writer</code>
+instance declarations; after the full actor body is parsed, FSMGen resolves
+the same <code>reader.payload</code> to <code>writer.payload</code> route, emits the same generated
+top handoffs, and records the same <code>actor_network.data_movements[]</code> metadata.</p>
+<h5 id="generated-handoffs"><a class="header" href="#generated-handoffs">Generated Handoffs</a></h5>
+<p>Generated handoffs are the parent-visible signals that FSMGen creates for
+the route.</p>
+<p>In the shipped fixture, <code>reader_payload</code> carries the source child payload
+into the parent, <code>writer_payload</code> carries the parent value out to the sink
+child, <code>reader_capture_start</code> and <code>writer_emit_start</code> are one-cycle
+child-start pulses, <code>reader_done</code> and <code>writer_done</code> are child completion
+event inputs, and <code>forward_payload_start</code> is the named-drive request signal.</p>
+<p>These generated names are deterministic. They are part of the current
+support boundary and can be inspected in the scheduled <code>.fsm</code>, generated top
+artifact, and schedule JSON route evidence.</p>
+<h5 id="handoff-remapping"><a class="header" href="#handoff-remapping">Handoff Remapping</a></h5>
+<p>Handoff remapping would let the author choose different generated parent
+handoff names or map the generated handoffs onto existing parent interface
+or storage signals.</p>
+<p>That is not shipped for this route. The current contract uses deterministic
+generated names and rejects collisions with authored parent interface or
+actor-owned storage names before generated-top wiring.</p>
+<p>Downstream producers should not rely on aliasing, overriding, suppressing,
+or reusing generated handoff names until an explicit remapping contract is
+published.</p>
+<h5 id="diagnostic-ownership"><a class="header" href="#diagnostic-ownership">Diagnostic Ownership</a></h5>
+<p>Parser-owned diagnostics reject normal <code>.isf</code> source that declares parent
+interface or storage names matching the generated handoffs. This is the
+normal downstream failure surface for authored source.</p>
+<p>The lowerer repeats the safety check for scheduler-facing metadata and also
+rejects already registered generated handoff duplicates before generated-top
+wiring. That lowerer check is a defensive backstop for malformed or mutated
+metadata, not a new author-facing feature.</p>
+<h5 id="route-muxing-and-route-storage"><a class="header" href="#route-muxing-and-route-storage">Route Muxing And Route Storage</a></h5>
+<p>Route muxing would let several possible sources feed the same sink endpoint,
+with a selector deciding which source is active in a given cycle.</p>
+<p>Route storage would hold route data across cycles before the sink consumes
+it.</p>
+<p>The current route set has neither. It has one source child, one sink child,
+one named drive call per route, no route-local storage, and no route-local
+selector.</p>
+<h5 id="fan-in-and-fan-out"><a class="header" href="#fan-in-and-fan-out">Fan-In And Fan-Out</a></h5>
+<p>Fan-in would let multiple triggers, events, or data sources converge onto one
+generated handoff or child endpoint.</p>
+<p>Fan-out would let one trigger, event, or data source drive multiple generated
+handoffs or child endpoints.</p>
+<p>The current route set has one source child, one sink child, one trigger and
+event per child, and one or more data movements only when those movements
+share the same source/sink child pair, have matching endpoint widths per
+route, and occupy the same contiguous route segment.
+Multi-source, multi-sink, multi-event, and multi-trigger route structures
+remain fail-closed or deferred according to the surrounding diagnostics.</p>
+<h5 id="readybackpressure"><a class="header" href="#readybackpressure">Ready/Backpressure</a></h5>
+<p>Ready/backpressure would let the sink child or generated top say “not ready”
+so the parent stalls, retries, buffers, or replays the transfer.</p>
+<p>The current route has no ready signal and no retry contract. The source
+event wait, drive-call cycle, sink trigger, and sink event wait are fixed in
+order.</p>
+<p>Ready/valid-style route transfer, stall insertion, retry, buffering, and
+replay are not part of this route.</p>
+<h5 id="payload-protocols"><a class="header" href="#payload-protocols">Payload Protocols</a></h5>
+<p>Payload protocols would define data movement richer than the current exact
+child-endpoint drive-call-cycle value, such as structured payloads,
+valid/ready payload transfer, width adaptation, or multi-cycle packet
+movement.</p>
+<p>The current route preserves matching scalar or vector child endpoint widths
+only. FSMGen does not truncate, extend, pack, unpack, buffer, or handshake
+route payloads in this subset.</p>
+<p>The current actor-event wait behavior is a narrow parent-handoff subset. One
+top-level transaction-body <code>(await actor.event)</code> may target a declared direct
+static actor instance. The wait may stand alone for a single static actor, or
+follow one selected same-cycle temporary trigger batch. FSMGen lowers it to a
+generated one-bit parent event input named <code>actor_event</code>; for example,
+<code>reader.done</code> becomes <code>reader_done</code>. The scheduled parent <code>.fsm</code> exposes and
+waits on that input, and schedule JSON records the wait under
+<code>actor_network.event_waits[]</code>.</p>
+<p>The event producer is external in this subset. FSMGen still does not resolve
+the actor type, emit an ATL child <code>.fsm</code>, generate an ATL top, trigger actor
+transactions, carry event payloads, or support fan-in/fan-out, unselected
+multi-wait forms, repeated waits to one triggered actor, nested waits,
+cross-clock actor events, or concurrent group events. Source-authored
+<code>group.name</code> event waits fail closed with the ATL group-endpoint diagnostic.
+Repeated trigger-batch waits fail closed with the event re-arm/lifetime
+diagnostic.
+<code>await_all</code> and <code>await_any</code> remain generated-child completion sync forms in
+this surface; source that tries to use them as actor-event all-of/any-of joins
+with operands such as <code>reader.done</code> and <code>writer.done</code> fails closed with the
+ATL event-join diagnostic.</p>
+<p>Unqualified local forms keep their existing meaning: <code>(await signal)</code> waits
+on a local transaction signal, and rule-level <code>(trigger transaction)</code> triggers
+a local transaction. Dotted enum-looking names that do not name a static
+actor instance or static group keep their prior diagnostics.</p>
+<p>The current qualified trigger behavior is the matching parent-handoff subset.</p>
+<p>A top-level transaction-body <code>(trigger actor.transaction)</code> may target a
+static actor instance either as a single handoff or as part of the temporary
+trigger-batch subset. FSMGen lowers it to a generated one-cycle parent output
+named <code>actor_transaction_start</code>; for example,
+<code>reader.capture</code> becomes <code>reader_capture_start</code>. The scheduled parent <code>.fsm</code>
+exposes and pulses that output at the trigger point, and schedule JSON records
+the trigger under <code>actor_network.transaction_triggers[]</code>.</p>
+<p>The trigger sink is external in this subset. FSMGen still does not resolve
+the actor type, emit an ATL child <code>.fsm</code>, generate an ATL top, connect the
+start pulse to an actor instance, add ready/backpressure, carry trigger
+payloads, or support rule-level qualified triggers, nested triggers, repeated
+triggers to the same actor instance, generated handoff signal conflicts,
+fan-in/fan-out, cross-clock actor triggers, or broader concurrent group
+behavior. Source-authored <code>group.name</code> triggers, including rule-action group
+triggers, fail closed with the ATL group-endpoint diagnostic.</p>
+<p>Until those later leaves ship, <code>actor_network</code> remains discovery metadata
+plus selected event-wait, transaction-trigger, and exact trigger-batch
+handoff metadata. It does not imply generated ATL child artifacts, generated
+ATL top names, route muxes,
+internal handoff storage, or HDL event wiring.</p>
+<h2 id="schedule-report-projection"><a class="header" href="#schedule-report-projection">Schedule Report Projection</a></h2>
+<p>The generated-composition schedule-report projection is a live bounded
+downstream-discovery field. Successful reports keep ordinary transaction,
+storage, and DT summaries parent-scoped, while the top-level
+<code>generated_composition</code> field reports generated-top structure. For actors with
+no generated composition top, that field is <code>null</code>. For generated-child
+actors, it is an object with only review-facing composition facts:</p>
+<pre><code class="language-json">{
+  "kind": "spawn_generated_top",
+  "top_module": "spawn_parent_top",
+  "top_fsm": "spawn_parent_top.fsm",
+  "parent": {
+    "module": "spawn_parent",
+    "scheduled_fsm": "spawn_parent.fsm"
+  },
+  "children": [
+    {
+      "transaction": "child_worker",
+      "module": "child_worker",
+      "scheduled_fsm": "child_worker.fsm",
+      "parameters": [
+        { "name": "WIDTH", "default": "8" }
+      ]
+    }
+  ],
+  "instances": [
+    {
+      "instance": "w0",
+      "child": "child_worker",
+      "activation_kind": "spawn",
+      "start": { "parent_port": "w0_start", "child_port": "start" },
+      "done": { "child_port": "done", "parent_port": "w0_done" },
+      "parameter_bindings": [
+        { "name": "WIDTH", "source": "override", "value": "16" }
+      ],
+      "drive_handoffs": [
+        {
+          "drive": "rdata",
+          "request": {
+            "child_port": "rdata_start",
+            "parent_port": "w0_rdata_start"
+          },
+          "payloads": [
+            {
+              "parameter": "val",
+              "child_port": "rdata_val",
+              "parent_port": "w0_rdata_val",
+              "width": 32
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<p>The projection is intentionally not a raw <code>LoweringIR</code> dump and not a parsed
+<code>?wiring</code> dump. It reports the current bounded names that downstream
+consumers can use to discover the generated top, parent, child modules,
+instance identity, activation kind, start and done handoff, named-drive
+handoff, and per-instance parameter binding. The <code>kind</code> value is
+<code>spawn_generated_top</code> for spawn-only generated tops and
+<code>activation_generated_top</code> when another activation kind such as blocking <code>do</code>
+participates. This is live public discovery metadata, not a frozen schema for
+all future ISF releases.</p>
+<p>Generated handoff names are reserved by the generated composition boundary. If
+an actor interface already declares a would-be generated start/done handoff,
+port-binding handoff, named-drive request handoff, or named-drive payload
+handoff, lowering fails before emitting the generated top. The diagnostic names
+the transaction, generated instance, and the handoff role; named-drive
+diagnostics also name the drive and payload parameter when relevant.</p>
+<h2 id="complete-example"><a class="header" href="#complete-example">Complete Example</a></h2>
+<pre><code class="language-lisp">(actor bus_controller
+  (clock clk)
+  (reset (rst_n async active_low))
+
+  (interface
+    (input  start)
+    (output done)
+    (output rdata (width 32)))
+
+  ;; Worker transaction
+  (transaction read_word
+    (sample rdata as val)
+    (drive work (rdata val))
+    (complete done))
+
+  ;; Parent: three parallel reads
+  (transaction scatter_read
+    (on start)
+    (spawn read_word as r0)
+    (spawn read_word as r1)
+    (spawn read_word as r2)
+    (await_all done)
+    (complete done)))
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="13e-data-manipulation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="13g-rules.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="13e-data-manipulation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="13g-rules.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

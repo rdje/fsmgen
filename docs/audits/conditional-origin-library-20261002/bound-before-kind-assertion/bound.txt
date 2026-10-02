@@ -1,0 +1,3 @@
+ram-guard: PID 20165; host 81.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+current-bound: exact complete caller/source/instrument/producer identity and terminal result verified
+red-bound: exact complete caller/source/instrument/producer identity and terminal result verified

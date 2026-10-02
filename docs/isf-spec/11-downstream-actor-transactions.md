@@ -352,6 +352,11 @@ structurally valid records cannot authenticate substituted origins. This local
 authority refuses imports before document resolution; imported provenance and
 formal/generated/domain propagation remain prerequisites. The private proof
 is not a public schema or a scheduling repair.
+Separate same-source library producer qualification retains the original
+document, declared library/export and distinct use-instance identities through
+actual canonical cloning, including identical exported actors with different
+source intent. External document sets, packages, ATL and imported consumer
+authenticity remain closed before preparation/adoption.
 Origin evidence: `docs/audits/conditional-origin-parser-20261002/scope.txt`.
 Procedure safety evidence: `docs/audits/procedure-cond-normalization-20261002/scope.txt`.
 Macro qualification: `docs/audits/conditional-macro-intent-20261002/scope.txt`.

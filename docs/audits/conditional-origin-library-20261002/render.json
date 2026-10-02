@@ -1,0 +1,26 @@
+{
+  "13d-control-flow.html": {
+    "literal_markers": [
+      "Separate same-source library producer qualification",
+      "Imported consumer authenticity"
+    ],
+    "scope": "Actual rendered text and canonical inclusion; no browser visual QA.",
+    "sha256": "082da2eba5a08aa43685f5be0ff3aef0684a9f55e9a5be1d2357d879ab28bf2e"
+  },
+  "13f-composition.html": {
+    "literal_markers": [
+      "The alias before the dot must come from",
+      "Resolved qualified entries add"
+    ],
+    "scope": "Actual rendered text and canonical inclusion; no browser visual QA.",
+    "sha256": "3ae3abd2c6c1b9089ec73d0bb83667c21fca3fdf2aef49f6062d63aad57e3b3b"
+  },
+  "13i-downstream-integration.html": {
+    "literal_markers": [
+      "Separate same-source library producer qualification",
+      "distinct use-instance identities"
+    ],
+    "scope": "Actual rendered text and canonical inclusion; no browser visual QA.",
+    "sha256": "8560fa0addb5a36ac6d7b9477dcb1d539f46f769983c46857e7b2285db329eeb"
+  }
+}

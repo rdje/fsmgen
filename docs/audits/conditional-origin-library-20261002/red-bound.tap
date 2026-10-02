@@ -1,0 +1,36 @@
+.artifacts/conditional-origin-library/red_missing_export.t .. 
+not ok 1 - canonical export association must survive actual cloning: first_authored
+not ok 2 - canonical export association must survive actual cloning: first_cond
+not ok 3 - canonical export association must survive actual cloning: first_max
+not ok 4 - canonical export association must survive actual cloning: first_min
+not ok 5 - canonical export association must survive actual cloning: first_proc_cond
+not ok 6 - canonical export association must survive actual cloning: first_proc_select
+not ok 7 - canonical export association must survive actual cloning: first_select
+not ok 8 - canonical export association must survive actual cloning: first_unless-bit
+not ok 9 - canonical export association must survive actual cloning: first_unless-field
+not ok 10 - canonical export association must survive actual cloning: first_when-bit
+not ok 11 - canonical export association must survive actual cloning: first_when-field
+not ok 12 - canonical export association must survive actual cloning: identical_export_twins
+not ok 13 - canonical export association must survive actual cloning: later_authored
+not ok 14 - canonical export association must survive actual cloning: later_cond
+not ok 15 - canonical export association must survive actual cloning: later_max
+not ok 16 - canonical export association must survive actual cloning: later_min
+not ok 17 - canonical export association must survive actual cloning: later_proc_cond
+not ok 18 - canonical export association must survive actual cloning: later_proc_select
+not ok 19 - canonical export association must survive actual cloning: later_select
+not ok 20 - canonical export association must survive actual cloning: later_unless-bit
+not ok 21 - canonical export association must survive actual cloning: later_unless-field
+not ok 22 - canonical export association must survive actual cloning: later_when-bit
+not ok 23 - canonical export association must survive actual cloning: later_when-field
+not ok 24 - canonical export association must survive actual cloning: reused_export
+1..24
+Dubious, test returned 24 (wstat 6144, 0x1800)
+Failed 24/24 subtests 
+
+Test Summary Report
+-------------------
+.artifacts/conditional-origin-library/red_missing_export.t (Wstat: 6144 Tests: 24 Failed: 24)
+  Failed tests:  1-24
+  Non-zero exit status: 24
+Files=1, Tests=24,  2 wallclock secs ( 0.01 usr  0.00 sys +  1.61 cusr  0.27 csys =  1.89 CPU)
+Result: FAIL

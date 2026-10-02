@@ -1,0 +1,1199 @@
+t/2045-isf-same-source-library-origins.t .. 
+ok 1 - fixed complete same-source producer cohort
+# Subtest: canonical library origin first_select
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - returned proof detached from producer
+    ok 47 - full proof survives opaque JSON cloning
+    ok 48 - original complete ordinary product untouched
+    1..48
+ok 2 - canonical library origin first_select
+# Subtest: canonical library origin later_select
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - returned proof detached from producer
+    ok 47 - full proof survives opaque JSON cloning
+    ok 48 - original complete ordinary product untouched
+    1..48
+ok 3 - canonical library origin later_select
+# Subtest: canonical library origin first_min
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - returned proof detached from producer
+    ok 47 - full proof survives opaque JSON cloning
+    ok 48 - original complete ordinary product untouched
+    1..48
+ok 4 - canonical library origin first_min
+# Subtest: canonical library origin later_min
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - returned proof detached from producer
+    ok 47 - full proof survives opaque JSON cloning
+    ok 48 - original complete ordinary product untouched
+    1..48
+ok 5 - canonical library origin later_min
+# Subtest: canonical library origin first_max
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - returned proof detached from producer
+    ok 47 - full proof survives opaque JSON cloning
+    ok 48 - original complete ordinary product untouched
+    1..48
+ok 6 - canonical library origin first_max
+# Subtest: canonical library origin later_max
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - returned proof detached from producer
+    ok 47 - full proof survives opaque JSON cloning
+    ok 48 - original complete ordinary product untouched
+    1..48
+ok 7 - canonical library origin later_max
+# Subtest: canonical library origin first_when-bit
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 28 - literal actual whole-clone path
+    ok 29 - canonical selected library retains original document
+    ok 30 - original actor producer document matches selected export
+    ok 31 - canonical export reference retains declared library
+    ok 32 - canonical export reference retains declared actor
+    ok 33 - whole actual clone retained
+    ok 34 - complete original actor survives canonical cloning
+    ok 35 - whole plain source ledger follows selected export
+    ok 36 - independent original source family, not normalized-body inference
+    ok 37 - literal original owner kind
+    ok 38 - independent complete literal normalized guards
+    ok 39 - complete actual cloned conditional target resolves
+    ok 40 - literal real inline call depth
+    ok 41 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 42 - returned proof detached from producer
+    ok 43 - full proof survives opaque JSON cloning
+    ok 44 - original complete ordinary product untouched
+    1..44
+ok 8 - canonical library origin first_when-bit
+# Subtest: canonical library origin later_when-bit
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 28 - literal actual whole-clone path
+    ok 29 - canonical selected library retains original document
+    ok 30 - original actor producer document matches selected export
+    ok 31 - canonical export reference retains declared library
+    ok 32 - canonical export reference retains declared actor
+    ok 33 - whole actual clone retained
+    ok 34 - complete original actor survives canonical cloning
+    ok 35 - whole plain source ledger follows selected export
+    ok 36 - independent original source family, not normalized-body inference
+    ok 37 - literal original owner kind
+    ok 38 - independent complete literal normalized guards
+    ok 39 - complete actual cloned conditional target resolves
+    ok 40 - literal real inline call depth
+    ok 41 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 42 - returned proof detached from producer
+    ok 43 - full proof survives opaque JSON cloning
+    ok 44 - original complete ordinary product untouched
+    1..44
+ok 9 - canonical library origin later_when-bit
+# Subtest: canonical library origin first_unless-bit
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 28 - literal actual whole-clone path
+    ok 29 - canonical selected library retains original document
+    ok 30 - original actor producer document matches selected export
+    ok 31 - canonical export reference retains declared library
+    ok 32 - canonical export reference retains declared actor
+    ok 33 - whole actual clone retained
+    ok 34 - complete original actor survives canonical cloning
+    ok 35 - whole plain source ledger follows selected export
+    ok 36 - independent original source family, not normalized-body inference
+    ok 37 - literal original owner kind
+    ok 38 - independent complete literal normalized guards
+    ok 39 - complete actual cloned conditional target resolves
+    ok 40 - literal real inline call depth
+    ok 41 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 42 - returned proof detached from producer
+    ok 43 - full proof survives opaque JSON cloning
+    ok 44 - original complete ordinary product untouched
+    1..44
+ok 10 - canonical library origin first_unless-bit
+# Subtest: canonical library origin later_unless-bit
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 28 - literal actual whole-clone path
+    ok 29 - canonical selected library retains original document
+    ok 30 - original actor producer document matches selected export
+    ok 31 - canonical export reference retains declared library
+    ok 32 - canonical export reference retains declared actor
+    ok 33 - whole actual clone retained
+    ok 34 - complete original actor survives canonical cloning
+    ok 35 - whole plain source ledger follows selected export
+    ok 36 - independent original source family, not normalized-body inference
+    ok 37 - literal original owner kind
+    ok 38 - independent complete literal normalized guards
+    ok 39 - complete actual cloned conditional target resolves
+    ok 40 - literal real inline call depth
+    ok 41 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 42 - returned proof detached from producer
+    ok 43 - full proof survives opaque JSON cloning
+    ok 44 - original complete ordinary product untouched
+    1..44
+ok 11 - canonical library origin later_unless-bit
+# Subtest: canonical library origin first_when-field
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 28 - literal actual whole-clone path
+    ok 29 - canonical selected library retains original document
+    ok 30 - original actor producer document matches selected export
+    ok 31 - canonical export reference retains declared library
+    ok 32 - canonical export reference retains declared actor
+    ok 33 - whole actual clone retained
+    ok 34 - complete original actor survives canonical cloning
+    ok 35 - whole plain source ledger follows selected export
+    ok 36 - independent original source family, not normalized-body inference
+    ok 37 - literal original owner kind
+    ok 38 - independent complete literal normalized guards
+    ok 39 - complete actual cloned conditional target resolves
+    ok 40 - literal real inline call depth
+    ok 41 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 42 - returned proof detached from producer
+    ok 43 - full proof survives opaque JSON cloning
+    ok 44 - original complete ordinary product untouched
+    1..44
+ok 12 - canonical library origin first_when-field
+# Subtest: canonical library origin later_when-field
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 28 - literal actual whole-clone path
+    ok 29 - canonical selected library retains original document
+    ok 30 - original actor producer document matches selected export
+    ok 31 - canonical export reference retains declared library
+    ok 32 - canonical export reference retains declared actor
+    ok 33 - whole actual clone retained
+    ok 34 - complete original actor survives canonical cloning
+    ok 35 - whole plain source ledger follows selected export
+    ok 36 - independent original source family, not normalized-body inference
+    ok 37 - literal original owner kind
+    ok 38 - independent complete literal normalized guards
+    ok 39 - complete actual cloned conditional target resolves
+    ok 40 - literal real inline call depth
+    ok 41 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 42 - returned proof detached from producer
+    ok 43 - full proof survives opaque JSON cloning
+    ok 44 - original complete ordinary product untouched
+    1..44
+ok 13 - canonical library origin later_when-field
+# Subtest: canonical library origin first_unless-field
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 28 - literal actual whole-clone path
+    ok 29 - canonical selected library retains original document
+    ok 30 - original actor producer document matches selected export
+    ok 31 - canonical export reference retains declared library
+    ok 32 - canonical export reference retains declared actor
+    ok 33 - whole actual clone retained
+    ok 34 - complete original actor survives canonical cloning
+    ok 35 - whole plain source ledger follows selected export
+    ok 36 - independent original source family, not normalized-body inference
+    ok 37 - literal original owner kind
+    ok 38 - independent complete literal normalized guards
+    ok 39 - complete actual cloned conditional target resolves
+    ok 40 - literal real inline call depth
+    ok 41 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 42 - returned proof detached from producer
+    ok 43 - full proof survives opaque JSON cloning
+    ok 44 - original complete ordinary product untouched
+    1..44
+ok 14 - canonical library origin first_unless-field
+# Subtest: canonical library origin later_unless-field
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 28 - literal actual whole-clone path
+    ok 29 - canonical selected library retains original document
+    ok 30 - original actor producer document matches selected export
+    ok 31 - canonical export reference retains declared library
+    ok 32 - canonical export reference retains declared actor
+    ok 33 - whole actual clone retained
+    ok 34 - complete original actor survives canonical cloning
+    ok 35 - whole plain source ledger follows selected export
+    ok 36 - independent original source family, not normalized-body inference
+    ok 37 - literal original owner kind
+    ok 38 - independent complete literal normalized guards
+    ok 39 - complete actual cloned conditional target resolves
+    ok 40 - literal real inline call depth
+    ok 41 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 42 - returned proof detached from producer
+    ok 43 - full proof survives opaque JSON cloning
+    ok 44 - original complete ordinary product untouched
+    1..44
+ok 15 - canonical library origin later_unless-field
+# Subtest: canonical library origin first_cond
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - returned proof detached from producer
+    ok 47 - full proof survives opaque JSON cloning
+    ok 48 - original complete ordinary product untouched
+    1..48
+ok 16 - canonical library origin first_cond
+# Subtest: canonical library origin later_cond
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - returned proof detached from producer
+    ok 47 - full proof survives opaque JSON cloning
+    ok 48 - original complete ordinary product untouched
+    1..48
+ok 17 - canonical library origin later_cond
+# Subtest: canonical library origin first_authored
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 28 - literal actual whole-clone path
+    ok 29 - canonical selected library retains original document
+    ok 30 - original actor producer document matches selected export
+    ok 31 - canonical export reference retains declared library
+    ok 32 - canonical export reference retains declared actor
+    ok 33 - whole actual clone retained
+    ok 34 - complete original actor survives canonical cloning
+    ok 35 - whole plain source ledger follows selected export
+    ok 36 - independent original source family, not normalized-body inference
+    ok 37 - literal original owner kind
+    ok 38 - independent complete literal normalized guards
+    ok 39 - complete actual cloned conditional target resolves
+    ok 40 - literal real inline call depth
+    ok 41 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 42 - returned proof detached from producer
+    ok 43 - full proof survives opaque JSON cloning
+    ok 44 - original complete ordinary product untouched
+    1..44
+ok 18 - canonical library origin first_authored
+# Subtest: canonical library origin later_authored
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 28 - literal actual whole-clone path
+    ok 29 - canonical selected library retains original document
+    ok 30 - original actor producer document matches selected export
+    ok 31 - canonical export reference retains declared library
+    ok 32 - canonical export reference retains declared actor
+    ok 33 - whole actual clone retained
+    ok 34 - complete original actor survives canonical cloning
+    ok 35 - whole plain source ledger follows selected export
+    ok 36 - independent original source family, not normalized-body inference
+    ok 37 - literal original owner kind
+    ok 38 - independent complete literal normalized guards
+    ok 39 - complete actual cloned conditional target resolves
+    ok 40 - literal real inline call depth
+    ok 41 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 42 - returned proof detached from producer
+    ok 43 - full proof survives opaque JSON cloning
+    ok 44 - original complete ordinary product untouched
+    1..44
+ok 19 - canonical library origin later_authored
+# Subtest: canonical library origin first_proc_select
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - returned proof detached from producer
+    ok 47 - full proof survives opaque JSON cloning
+    ok 48 - original complete ordinary product untouched
+    1..48
+ok 20 - canonical library origin first_proc_select
+# Subtest: canonical library origin later_proc_select
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - returned proof detached from producer
+    ok 47 - full proof survives opaque JSON cloning
+    ok 48 - original complete ordinary product untouched
+    1..48
+ok 21 - canonical library origin later_proc_select
+# Subtest: canonical library origin first_proc_cond
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - complete actual cloned conditional target resolves
+    ok 25 - literal real inline call depth
+    ok 26 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 27 - literal actual whole-clone path
+    ok 28 - canonical selected library retains original document
+    ok 29 - original actor producer document matches selected export
+    ok 30 - canonical export reference retains declared library
+    ok 31 - canonical export reference retains declared actor
+    ok 32 - whole actual clone retained
+    ok 33 - complete original actor survives canonical cloning
+    ok 34 - whole plain source ledger follows selected export
+    ok 35 - independent original source family, not normalized-body inference
+    ok 36 - literal original owner kind
+    ok 37 - complete actual cloned conditional target resolves
+    ok 38 - literal real inline call depth
+    ok 39 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 40 - returned proof detached from producer
+    ok 41 - full proof survives opaque JSON cloning
+    ok 42 - original complete ordinary product untouched
+    1..42
+ok 22 - canonical library origin first_proc_cond
+# Subtest: canonical library origin later_proc_cond
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - complete actual cloned conditional target resolves
+    ok 25 - literal real inline call depth
+    ok 26 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 27 - literal actual whole-clone path
+    ok 28 - canonical selected library retains original document
+    ok 29 - original actor producer document matches selected export
+    ok 30 - canonical export reference retains declared library
+    ok 31 - canonical export reference retains declared actor
+    ok 32 - whole actual clone retained
+    ok 33 - complete original actor survives canonical cloning
+    ok 34 - whole plain source ledger follows selected export
+    ok 35 - independent original source family, not normalized-body inference
+    ok 36 - literal original owner kind
+    ok 37 - complete actual cloned conditional target resolves
+    ok 38 - literal real inline call depth
+    ok 39 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 40 - returned proof detached from producer
+    ok 41 - full proof survives opaque JSON cloning
+    ok 42 - original complete ordinary product untouched
+    1..42
+ok 23 - canonical library origin later_proc_cond
+# Subtest: canonical library origin reused_export
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - two actual clones select one original export producer
+    ok 47 - reused export preserves distinct actual instances
+    ok 48 - returned proof detached from producer
+    ok 49 - full proof survives opaque JSON cloning
+    ok 50 - original complete ordinary product untouched
+    1..50
+ok 24 - canonical library origin reused_export
+# Subtest: canonical library origin identical_export_twins
+    ok 1 - complete real ordinary actor and original JSON kinds unchanged
+    ok 2 - whole original document identity
+    ok 3 - original relative source label
+    ok 4 - complete final actor identity
+    ok 5 - actual root producer precedes library constructors
+    ok 6 - literal complete root plus two actual actor products
+    ok 7 - authored root identity
+    ok 8 - root has no invented library namespace
+    ok 9 - root authored when remains separate from child macros
+    ok 10 - literal complete canonical clone edges
+    ok 11 - authored distinct use identities
+    ok 12 - literal canonical clone modules retained without interpreting names
+    ok 13 - actual independent use parameters
+    ok 14 - literal actual whole-clone path
+    ok 15 - canonical selected library retains original document
+    ok 16 - original actor producer document matches selected export
+    ok 17 - canonical export reference retains declared library
+    ok 18 - canonical export reference retains declared actor
+    ok 19 - whole actual clone retained
+    ok 20 - complete original actor survives canonical cloning
+    ok 21 - whole plain source ledger follows selected export
+    ok 22 - independent original source family, not normalized-body inference
+    ok 23 - literal original owner kind
+    ok 24 - independent complete literal normalized guards
+    ok 25 - complete actual cloned conditional target resolves
+    ok 26 - literal real inline call depth
+    ok 27 - complete actual cloned conditional target resolves
+    ok 28 - literal real inline call depth
+    ok 29 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 30 - literal actual whole-clone path
+    ok 31 - canonical selected library retains original document
+    ok 32 - original actor producer document matches selected export
+    ok 33 - canonical export reference retains declared library
+    ok 34 - canonical export reference retains declared actor
+    ok 35 - whole actual clone retained
+    ok 36 - complete original actor survives canonical cloning
+    ok 37 - whole plain source ledger follows selected export
+    ok 38 - independent original source family, not normalized-body inference
+    ok 39 - literal original owner kind
+    ok 40 - independent complete literal normalized guards
+    ok 41 - complete actual cloned conditional target resolves
+    ok 42 - literal real inline call depth
+    ok 43 - complete actual cloned conditional target resolves
+    ok 44 - literal real inline call depth
+    ok 45 - complete cloned normalized path coverage validates structurally, without authentication claim
+    ok 46 - distinct libraries have identical complete exported actors
+    ok 47 - declared libraries retain distinct producer namespaces
+    ok 48 - identical names/bodies cannot merge actual source producers
+    ok 49 - returned proof detached from producer
+    ok 50 - full proof survives opaque JSON cloning
+    ok 51 - original complete ordinary product untouched
+    1..51
+ok 25 - canonical library origin identical_export_twins
+# Subtest: unqualified authorities stay explicitly closed
+    ok 1 - external authority remains closed
+    ok 2 - precise private boundary
+    ok 3 - package authority remains closed
+    ok 4 - precise private boundary
+    ok 5 - ATL authority remains closed
+    ok 6 - precise private boundary
+    ok 7 - local reload consumer still refuses imports despite detached producer qualification
+    ok 8 - no accidental adoption
+    ok 9 - non-repository-relative source identity refuses
+    ok 10 - precise relative-identity boundary
+    ok 11 - non-repository-relative source identity refuses
+    ok 12 - precise relative-identity boundary
+    1..12
+ok 26 - unqualified authorities stay explicitly closed
+1..26
+ok
+All tests successful.
+Files=1, Tests=26,  7 wallclock secs ( 0.05 usr  0.01 sys +  3.75 cusr  1.00 csys =  4.81 CPU)
+Result: PASS

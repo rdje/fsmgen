@@ -1,0 +1,254 @@
+ram-guard: PID 71789; host 60.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+#   Failed test 'canonical export association must survive actual cloning: first_authored'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ef4e0), HASH(0x7a1e2c99d8), ARRAY(0x7a1ca239c0), "first_authored.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ef4e0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_authored.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ef4e0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_authored.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: first_cond'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e293d50), HASH(0x7a1e2a1b40), ARRAY(0x7a1e2d1b28), "first_cond.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e293d50), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_cond.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e293d50), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_cond.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: first_max'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2c5d38), HASH(0x7a1e2ae9d8), ARRAY(0x7a1d978ca8), "first_max.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2c5d38), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_max.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2c5d38), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_max.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: first_min'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e11cd98), HASH(0x7a1e2a1618), ARRAY(0x7a1e2cd378), "first_min.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e11cd98), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_min.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e11cd98), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_min.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: first_proc_cond'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2bf438), HASH(0x7a1e2b9c30), ARRAY(0x7a1e2b6408), "first_proc_cond.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2bf438), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_proc_cond.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2bf438), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_proc_cond.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: first_proc_select'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2ac5a0), HASH(0x7a1e2bef30), ARRAY(0x7a1e2a07f8), "first_proc_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2ac5a0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_proc_select.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2ac5a0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_proc_select.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: first_select'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ec9f0), HASH(0x7a1e2c8150), ARRAY(0x7a1e2a0108), "first_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ec9f0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_select.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ec9f0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_select.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: first_unless-bit'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1d3624e0), HASH(0x7a1e2bd1b0), ARRAY(0x7a1e2c2fc0), "first_unless-bit.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1d3624e0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_unless-bit.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1d3624e0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_unless-bit.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: first_unless-field'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2b4858), HASH(0x7a1e2ac4f8), ARRAY(0x7a1e2c5438), "first_unless-field.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2b4858), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_unless-field.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2b4858), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_unless-field.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: first_when-bit'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e0eac30), HASH(0x7a1d356198), ARRAY(0x7a1e2a14f8), "first_when-bit.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0eac30), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_when-bit.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0eac30), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_when-bit.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: first_when-field'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2b5210), HASH(0x7a1e2b50f0), ARRAY(0x7a1e2b5450), "first_when-field.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2b5210), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_when-field.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2b5210), "(actor library_top (clock clk) (interface (input start) (inpu"..., "first_when-field.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: identical_export_twins'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2d6420), HASH(0x7a1e2b1630), ARRAY(0x7a1e2d4ed0), "identical_export_twins.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2d6420), "(actor library_top (clock clk) (interface (input start) (inpu"..., "identical_export_twins.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2d6420), "(actor library_top (clock clk) (interface (input start) (inpu"..., "identical_export_twins.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_authored'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ef078), HASH(0x7a1e2ca2d0), ARRAY(0x7a1e2b1c90), "later_authored.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ef078), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_authored.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ef078), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_authored.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_cond'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2b6258), HASH(0x7a1e2c7948), ARRAY(0x7a1e2cca50), "later_cond.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2b6258), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_cond.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2b6258), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_cond.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_max'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2d0c90), HASH(0x7a1e2a3e40), ARRAY(0x7a1e2a2048), "later_max.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2d0c90), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_max.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2d0c90), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_max.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_min'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2cccf0), HASH(0x7a1e2c2fd8), ARRAY(0x7a1e2caea0), "later_min.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2cccf0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_min.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2cccf0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_min.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_proc_cond'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2c7e28), HASH(0x7a1e2b5300), ARRAY(0x7a1e2c8e10), "later_proc_cond.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2c7e28), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_proc_cond.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2c7e28), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_proc_cond.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_proc_select'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2bc198), HASH(0x7a1e0e10a8), ARRAY(0x7a1e2cb1c8), "later_proc_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2bc198), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_proc_select.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2bc198), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_proc_select.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_select'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e0cbf90), HASH(0x7a1e2ca5a0), ARRAY(0x7a1e2a1cf0), "later_select.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0cbf90), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_select.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0cbf90), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_select.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_unless-bit'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2a3930), HASH(0x7a1e2aed38), ARRAY(0x7a1e2beab0), "later_unless-bit.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2a3930), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_unless-bit.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2a3930), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_unless-bit.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_unless-field'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1de70fc0), HASH(0x7a1e2bd0f0), ARRAY(0x7a1e2c2138), "later_unless-field.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1de70fc0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_unless-field.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1de70fc0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_unless-field.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_when-bit'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ea8a0), HASH(0x7a1e2d4810), ARRAY(0x7a1e2ac480), "later_when-bit.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ea8a0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_when-bit.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e0ea8a0), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_when-bit.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: later_when-field'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2d3918), HASH(0x7a1e2d5e58), ARRAY(0x7a1e0e1d20), "later_when-field.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2d3918), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_when-field.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2d3918), "(actor library_top (clock clk) (interface (input start) (inpu"..., "later_when-field.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+
+#   Failed test 'canonical export association must survive actual cloning: reused_export'
+#   at .artifacts/conditional-origin-library/red_missing_export.t line 26.
+# library origin selected export association missing
+#  at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 127, <$file> line 1.
+# 	FSM::Test::SameSourceLibraryOriginParser::_resolve_library_uses(FSM::Test::MissingExportAssociation=HASH(0x7a1e2a2f60), HASH(0x7a1e2c23f0), ARRAY(0x7a1e2bc348), "reused_export.isf") called at perl/FSM/Adapter/ISF/Parser.pm line 135
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2a2f60), "(actor library_top (clock clk) (interface (input start) (inpu"..., "reused_export.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+# 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::MissingExportAssociation=HASH(0x7a1e2a2f60), "(actor library_top (clock clk) (interface (input start) (inpu"..., "reused_export.isf") called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# 	eval {...} called at .artifacts/conditional-origin-library/red_missing_export.t line 24
+# Looks like you failed 24 tests of 24.
+.artifacts/conditional-origin-library/red_missing_export.t .. 
+not ok 1 - canonical export association must survive actual cloning: first_authored
+not ok 2 - canonical export association must survive actual cloning: first_cond
+not ok 3 - canonical export association must survive actual cloning: first_max
+not ok 4 - canonical export association must survive actual cloning: first_min
+not ok 5 - canonical export association must survive actual cloning: first_proc_cond
+not ok 6 - canonical export association must survive actual cloning: first_proc_select
+not ok 7 - canonical export association must survive actual cloning: first_select
+not ok 8 - canonical export association must survive actual cloning: first_unless-bit
+not ok 9 - canonical export association must survive actual cloning: first_unless-field
+not ok 10 - canonical export association must survive actual cloning: first_when-bit
+not ok 11 - canonical export association must survive actual cloning: first_when-field
+not ok 12 - canonical export association must survive actual cloning: identical_export_twins
+not ok 13 - canonical export association must survive actual cloning: later_authored
+not ok 14 - canonical export association must survive actual cloning: later_cond
+not ok 15 - canonical export association must survive actual cloning: later_max
+not ok 16 - canonical export association must survive actual cloning: later_min
+not ok 17 - canonical export association must survive actual cloning: later_proc_cond
+not ok 18 - canonical export association must survive actual cloning: later_proc_select
+not ok 19 - canonical export association must survive actual cloning: later_select
+not ok 20 - canonical export association must survive actual cloning: later_unless-bit
+not ok 21 - canonical export association must survive actual cloning: later_unless-field
+not ok 22 - canonical export association must survive actual cloning: later_when-bit
+not ok 23 - canonical export association must survive actual cloning: later_when-field
+not ok 24 - canonical export association must survive actual cloning: reused_export
+1..24
+Dubious, test returned 24 (wstat 6144, 0x1800)
+Failed 24/24 subtests 
+
+Test Summary Report
+-------------------
+.artifacts/conditional-origin-library/red_missing_export.t (Wstat: 6144 Tests: 24 Failed: 24)
+  Failed tests:  1-24
+  Non-zero exit status: 24
+Files=1, Tests=24,  2 wallclock secs ( 0.02 usr  0.00 sys +  1.91 cusr  0.32 csys =  2.25 CPU)
+Result: FAIL
