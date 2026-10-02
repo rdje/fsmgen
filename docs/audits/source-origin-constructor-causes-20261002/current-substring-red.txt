@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-constructor-causes-20261002/verify.py", line 112, in <module>
+    verify(data)
+    ~~~~~~^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/source-origin-constructor-causes-20261002/verify.py", line 95, in verify
+    assert observed_cause_acceptance == 0, identity
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('local_import', 'wrong_label_echo')

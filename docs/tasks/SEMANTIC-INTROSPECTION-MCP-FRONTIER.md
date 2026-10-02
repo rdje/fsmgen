@@ -3615,9 +3615,32 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.6`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1`
-  Status: `in_progress`
+  Status: `active`
   Goal: `Qualify the remaining source-origin raw cause assertions.`
   Acceptance: `Use the exact historical seven-test family review and current repaired sources to reconcile the 17 raw cause candidates before imported qualification. Trace actual producer failures and expected/source echo, with complete wrong-first-cause and positive products. Preserve deliberate trace assertions; only demonstrated cause consumers move to immediate .3.2.3 repairs. Bind source/Git/whole product/cold controls and scoped regressions; no HDL or admission change.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1.1`
+  Status: `done`
+  Goal: `Probe constructor-source and label echo through current source-origin consumers.`
+  Acceptance: `Bound the seven raw constructor sites in T2044/T2045/T2047/T2052 against their exact current statements and historical family rows. Use actual producer calls at top level, with independent real positives, unrelated first causes and source-with/without-echo controls; do not introduce a pattern argument into the failing call stack. Probe current helper leading-line label echo separately with explicit additional membership. Record runtime classification and confirmed per-owner repairs before edits, and retain byte/Git/whole source/error/instrument/cold/raw/seal evidence. No all-family semantic signoff or production/native change.`
+  Verification: `Bound e640 whole current sources/actual producers and exact seven statements cover eleven contexts/four bands. All real positives match; ten stack-comment echoes falsely accept (long T2044 comment truncates), eleven primary-label echoes falsely accept both current full-trace and first-line predicates, and eleven no-echo controls reject. Separate current library/file helpers each falsely accept the real quoted-label no-actor-root cause. Actual TAP intentionally RED44/Failed12/status12; bound before/after whole bin/perl/t and instrument hashes remain unchanged. Independent immutable Git/closed cause/roster replay passes, actual-current substring counterfactual RED/status1 and six shared corruptions reject. Initial source-only/unbound receipts remain intermediate; fresh complete seal retains all instruments/products/inputs/first causes/traces. Immediate P2 repairs .3.2.3.2.1/.2 own all confirmed sites/helper gaps; remaining ten source candidates/broader runtime/cold review stay open. No production/test/provider/native change or blanket semantic signoff.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1.2`
+  Status: `pending`
+  Goal: `Probe remaining source-origin validators and late-finalizer consumers.`
+  Acceptance: `After .1 and its immediate repairs commit, qualify the remaining ten raw sites, including scheduler cond, generic origin category, opaque validators and late source/clone finalizers. Rehost exact current instruments/public calls; distinguish class assertions from precise reasons and actual primary-message input echo from stack echo. Bind genuine positives/wrong causes, whole products and any precise first-line/namespace contracts; no defect or safety inference from syntax.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1.3`
+  Status: `pending`
+  Goal: `Join source-origin cause scope and correct canonical assertion wording.`
+  Acceptance: `Reconcile all historical17/current sites and separately added helper controls against real outcomes/verified repairs. Correct the existing local-formal card generalized refusal-first-line wording: its residual direct assertion remains raw until qualified. Keep old archives immutable, source/actor/kind/cause claims scoped, and current canonical reverify/book/frontier accurate before broader named/direct/delegated runtime or imported preparation handoff.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3710,9 +3733,25 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Reconcile subsequent current and cold runtime cohorts and repair only confirmed defects.`
   Acceptance: `After broader current/cold reviews, own per-helper/cohort corrections before edits, including anonymous source-origin full-trace cause candidates left unqualified by .1.2.1. No defect or safety inference from lexical syntax alone. Close only with actual producer/helper positives/wrong reasons, exact current cold evidence or explicit owned access/applicability blockers and all claim legs. If no further repair applies, prove and record the bounded handoff without inventing defects.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2.1`
+  Status: `in_progress`
+  Goal: `Anchor confirmed current constructor reason assertions to their actual first causes.`
+  Acceptance: `P2 verification defect: actual unrelated no-actor-root source with a wanted phrase in an ignored comment falsely satisfies six of seven constructor lexical sites; all real positives match their primary causes. The long T2044 full-namespace comment is truncated by current Carp and remains unqualified by that draft. Completed label probes confirm all seven lexical sites/eleven contexts, including the truncated-comment T2044 site. Match anchored independently declared actual first causes, including full templates for dynamic alternatives; protect against both stack and primary-message input echo. Retain actual source/label controls, full old/current product identity/kinds and genuine old-consumer RED in fresh archives. Earlier evidence stays immutable; no production/provider/schema/HDL change.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2.2`
+  Status: `pending`
+  Goal: `Reject primary-message input echo in the current library and file helpers.`
+  Acceptance: `P2 current verification defect: actual LibraryDocumentOriginAuthority/FileDocumentOriginAuthority parses a no-actor-root input whose relative source label contains selected source bytes differ from authority. Parser.pm line118 interpolates that label into the unrelated Error first line. Exact current default first-line diagnostic_matches in T2046/T2048 returns1 for the echoed label phrase. Actual fixtures and producer/private API calls are legitimate; no expectation argument is inserted into the failing stack. After bounded diagnosis commits, require independently verified primary cause contracts/namespace instead of accepting input text, with permanent real positive/wrong-cause controls and every original source/product/kind/cold reason requalified. No historical archive edit or public behavior change.`
   Verification: `pending`
   Commit: `pending`
 
@@ -5557,3 +5596,9 @@ and exact measurement JSON. No health target or enforcement ceiling changes.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S "candidate['sites']==expected" -- docs/audits/current-diagnostic-lexical-inventory-20261002/verify.py` locates 33af62fb. Its exact verify predicate compares Python lists/dicts, permitting true==1 and equal-valued numeric forms. Actual original line-one row changed to JSON true passes the exact old predicate; final --old-comparison receipt reports `shared JSON-kind/shape corruption accepted: line_boolean`. Original emitted rows remain integers and agree with immutable Git/rg; this is a private proof-guard defect, not wrong numerical discovery or a production wire bug.
 - [x] **ADDRESSED (verified)** — Fresh reader authenticates the committed immutable original and replays its complete independent Git/rg/source census, then compares complete independently derived inventory/count JSON. Exact kinds, private numeric forms and closed root shape are retained. Seven shared controls reject, with actual bool/int old-consumer RED/status1; numeric-first draft and its distinct form RED remain honestly retained. Re-derivation is source-derived whole typed metadata/counts; falsification is exact original predicate/count assertion and seven shared substitutions; durability is immutable predecessor/Git object, fresh instruments/recipes/raw receipts/seal and current task/card/book/Git. No old archive or canonical producer changes, future arbitrary semantic cause signoff or public schema admission.
 - [x] **NO REGRESSION** — Original complete census/closed declarations/members and numerical discovery reverify unchanged, and `git diff --exit-code -- bin perl t` is clean. Fresh public live-book/matrix audit reports `All tests successful`; Knowledge Map reports `knowledge-map: OK`. Completed book build/rendered text qualifies current scope without browser visual QA. Fixed Knowledge Map allowances/ceilings remain intact, measured task/reference authority and fresh claims/staged doctrines remain separate mandatory commit gates. No HDL/native compiler/analyzer/simulator, production/provider/test changes, full CI or push.
+
+## Constructor cause diagnosis acceptance (.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.1.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual unrelated error `Error: no (actor ...) root found` at perl/FSM/Adapter/ISF/Parser.pm line 118 quotes the legitimate source label. Exact current seven constructor sites accept labels containing their wanted phrases; even current first-line predicates and separately rehosted library/file helpers accept that wrong cause. Source comments also echo through Carp; long T2044 comment truncates and is explicitly not its proof. Real label control confirms it. No expected-pattern parameter is introduced into the failing stack.
+- [x] **ADDRESSED (verified)** — Diagnose and schedule every confirmed verification defect under immediate P2 .3.2.3.2.1/.2; this slice changes no consumer. Independent immutable Git/whole bytes/cause contracts and closed seven-site/eleven-context/four-band membership re-derive; actual current substring results fail the desired cause check/status1 and six shared corruptions reject; full instruments/products/inputs/first causes/raw TAP/before-after hashes/baseline and immutable seal retain durability. Additional two helpers are separately declared. Actual TAP RED44/Failed12/status12 is intentional diagnostic evidence, not regression success. Remaining source/runtime/cold cohorts stay owned; no blanket signoff.
+- [x] **NO REGRESSION** — Complete bin/perl/t plus instruments have identical before/after hashes and independently reconcile immutable Git baseline; current controlled source/test paths remain unchanged. Focused public-book checks and rendered text qualify the new bounded explanation. Knowledge Map reports `knowledge-map: OK`; initial capacity check exceeds fixed knowledge-byte allowance by132, retained raw failure is corrected by concise same-card wording with no allowance/ceiling change. Fresh claims/staged doctrines and hooks are required separate commit checks. No earlier archive changes, HDL/native execution, public schema/admission change, full CI or push. Browser visual QA remains unavailable.

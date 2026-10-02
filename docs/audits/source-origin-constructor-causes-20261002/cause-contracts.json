@@ -1,0 +1,13 @@
+{
+  "ATL_external": "ATL origin unresolved external actor authority is not qualified",
+  "ATL_package": "library origin package source authority is not qualified",
+  "formal_residual": "local formal origin residual normalization is not qualified",
+  "library_ATL": "library origin ATL source authority is not qualified",
+  "local_import": "conditional origin imported source authority is not qualified",
+  "local_library": "conditional origin imported source authority is not qualified",
+  "same_ATL": "library origin ATL source authority is not qualified",
+  "same_absolute": "library origin requires a repository-relative source label",
+  "same_escape": "library origin requires a repository-relative source label",
+  "same_external": "library origin external document authority is not qualified",
+  "same_package": "library origin package source authority is not qualified"
+}

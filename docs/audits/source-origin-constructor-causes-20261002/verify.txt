@@ -1,0 +1,7 @@
+shared corruption rejects: wrong_cause
+shared corruption rejects: acceptance
+shared corruption rejects: label
+shared corruption rejects: primitive_kind
+shared corruption rejects: omission
+shared corruption rejects: helper
+constructor causes: Git/whole bytes, 7 sites/11 contexts/4 bands, additional 2 helpers, exact cause contracts and 6 shared controls qualify
