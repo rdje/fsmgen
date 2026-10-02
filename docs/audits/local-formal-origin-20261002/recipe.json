@@ -1,0 +1,23 @@
+{
+  "baseline": "828691e567f2f8d7b7541566303c195e63ffbf90",
+  "green": "FSMGEN_LOCAL_FORMAL_ORIGIN_CAPTURE=.artifacts/local-formal-origin-replay scripts/run_with_ram_guard.sh -- prove -v -Iperl -It/lib t/2052-isf-local-formal-origin-authority.t",
+  "instruments": {
+    "t/2052-isf-local-formal-origin-authority.t": {
+      "bytes": 14947,
+      "sha256": "c9c8c0442a5ef7e7b927fdc342f077ae8f229c8490cc74ba46253ae97c171688"
+    },
+    "t/lib/FSM/Test/LocalFormalOriginAuthority.pm": {
+      "bytes": 8923,
+      "sha256": "7971597def7b39cb16ec43a8bdfbc5497796285b3a909f81fb5f3bf0bc803fbf"
+    }
+  },
+  "note": "Generate replay outputs only in repository-local .artifacts; never append to the sealed archive.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.1",
+  "red_classes": {
+    "FSM::Test::LocalFormalOriginAuthority::Bypass": 14,
+    "FSM::Test::LocalFormalOriginAuthority::DropClone": 1,
+    "FSM::Test::LocalFormalOriginAuthority::DropStorable": 1
+  },
+  "red_recipe": "FSMGEN_LOCAL_FORMAL_ORIGIN_CLASS=CLASS scripts/run_with_ram_guard.sh -- prove -v -Iperl -It/lib t/2052-isf-local-formal-origin-authority.t",
+  "verification": "python3 docs/audits/local-formal-origin-20261002/verify.py"
+}

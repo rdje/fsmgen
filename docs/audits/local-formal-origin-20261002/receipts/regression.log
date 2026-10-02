@@ -1,0 +1,11 @@
+ram-guard: PID 153; host 58.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1945-isf-formal-child-products.t ................ ok
+t/1947-isf-formal-reusable-products.t ............. ok
+t/2043-isf-conditional-origin-parser.t ............ ok
+t/2044-isf-conditional-origin-source-authority.t .. ok
+t/2048-isf-file-document-origin-authority.t ....... ok
+t/2049-pathsearch-module-origin.t ................. ok
+t/2052-isf-local-formal-origin-authority.t ........ ok
+All tests successful.
+Files=7, Tests=170, 176 wallclock secs ( 0.50 usr  0.09 sys + 126.98 cusr 16.30 csys = 143.87 CPU)
+Result: PASS

@@ -9,19 +9,20 @@ answers:
   - "which macro repair precedes generated output reads?"
   - "how are independently loaded conditional origins authenticated?"
   - "why must conditional origins have an independent source authority?"
+  - "how do local conditional origins survive formal preparation clones?"
+  - "does private formal origin qualification change macro admission?"
 date: 2026-10-02
 status: current
 tags: [isf, ial1, macros, branch, normalization, procedures]
 evidence: >-
   docs/audits/conditional-macro-intent-20261002/scope.txt;
-  docs/audits/conditional-macro-intent-20261002/manifest.json;
-  docs/audits/conditional-macro-intent-20261002/verify.py;
   docs/audits/procedure-cond-normalization-20261002/scope.txt;
-  docs/audits/procedure-cond-normalization-20261002/verify.py;
   t/2041-isf-conditional-macro-intent-qualification.t;
   t/2042-isf-procedure-cond-normalization.t;
   t/2043-isf-conditional-origin-parser.t;
   t/2044-isf-conditional-origin-source-authority.t;
+  t/2052-isf-local-formal-origin-authority.t;
+  docs/audits/local-formal-origin-20261002/scope.txt;
   docs/audits/conditional-origin-parser-20261002/scope.txt;
   docs/audits/conditional-origin-authority-20261002/scope.txt;
   perl/FSM/Adapter/ISF/Parser.pm;
@@ -32,50 +33,47 @@ reverify: >-
   t/2041-isf-conditional-macro-intent-qualification.t
   t/2043-isf-conditional-origin-parser.t
   t/2044-isf-conditional-origin-source-authority.t
+  t/2052-isf-local-formal-origin-authority.t
 ---
 
-Existing ISF/IAL1 shorthand/scheduling is being repaired; `.fsm`/IAL0 stays the
-target, with no new macro language.
-Baseline `9bf0bd4c8af8c8aab5ab6865e66f6729d9583b3c` retains the precise first-when
-sample-only entry gate, but conditional expansion still loses source intent.
+Repair existing ISF/IAL1 shorthand; `.fsm`/IAL0 remains the target.
+Baseline `9bf0bd4c8af8c8aab5ab6865e66f6729d9583b3c` retains the first-when
+sample-only entry gate while expansions lose branch intent.
 
-Select/min/max, bit/field tests and cond become when lists. First action bodies
-refuse; sample-only bit/field/cond can still enter as activation, including
-zero-wait and owning-domain cases. Complete native/API/newline phases admit them,
-but desired-branch RED disproves delivery. Authored sample-only first when, also
-inline, retains its distinct documented activation meaning.
+Select/min/max, bit/field tests and cond become when lists. First assignments
+refuse; first sample-only bit/field/cond can become activation, including
+zero-wait/domain cases. Native/API/newline admission fails desired-branch RED. Authored sample-only
+first when, also inline, retains documented activation meaning. Use explicit activation
+before shorthand; keep cond at the transaction call site and call procedures
+from its branches until normalization qualifies.
 
-Cond scans precede procedure insertion: inline cond stays unexpanded and refuses
-in first and explicitly activated later positions. Inline select/bit-test expand
-after insertion with their own placement results; this is not every procedure
-macro. Actual parser root history is retained without submodule inspection.
+Cond scans precede procedure insertion: first/later inline cond stays unexpanded
+and refuses. Later inline select/bit tests expand; their placement results are not universal.
+Parser history is retained without submodule inspection. `.60.4.3.3.5.2.1.5.4.1` proved standalone cond normalization unsafe: refused first sample-only procedure
+cond newly became activation with one later branch. Check/semantic/schedule
+native/API/newline admission fails desired-branch RED. Production/refusal restored. Explicit intent `.5.2` precedes safe
+normalization `.5.4.2` and branch integration `.5.3`; scalar literal and record
+output read/write prerequisites follow.
 
-Use explicit activation before conditional shorthand. Keep cond at the
-transaction call site and call ordinary procedures from its branches until
-normalization qualifies. SEM `.60.4.3.3.5.2.1.5.4.1` demonstrates why a
-standalone normalization is unsafe: first sample-only procedure cond was
-refused, but the candidate newly admits it as activation with one later branch.
-Complete actual check/semantic/schedule native/API/newline admission and the
-independent desired-branch RED establish the gap. Exact committed production
-is restored and public refusal requalified; `.5.2` explicit source intent is
-now next, then `.5.4.2` safe normalization and `.5.3` branch integration.
-Scalar literal and record-output read/write prerequisites follow separately.
-
-Parser-origin observation carries operation/form/owner and inline call context
-through rewrites; min/max retain intent through select. Whole actors/kinds and
-inline cond refusal stay unchanged. Authored when and select can yield identical
-actors with distinct origins, disproving clause-shape inference. The original
-observer trusts its retained producer; fresh instances only check structure.
-[Source-bound tests](../../t/2044-isf-conditional-origin-source-authority.t)
-independently reconstruct actor/ledger from source, reject embedded-digest intent
-forgeries and refuse imports. Later canonical qualifications have separate facts:
+The detached parser carries form/operation/owner/calls through actual rewrites,
+including min/max through select. Whole actors/kinds
+and inline-cond refusal stay unchanged. Equal authored-when/select actors disprove shape inference. Retained producers
+authenticate origin; fresh observers check structure only. T2044
+reconstructs complete actor/ledger from independent source, rejects digest
+forgeries and closes imports. Separate qualifications cover
 [same-source](isf-same-source-library-conditional-origins.md),
-[document sets](isf-library-document-origin-authority.md),
-[ATL](isf-atl-document-origin-authority.md), and
-[file roots](isf-file-document-origin-authority.md). Preparation .5.2.2.3 still
-precedes adoption/branch integration.
+[documents](isf-library-document-origin-authority.md),
+[ATL](isf-atl-document-origin-authority.md) and
+[files](isf-file-document-origin-authority.md).
 
-Complete products and literal predicates/effects/aliases/roles re-derive scope;
-desired-intent RED and shared corruption falsify admission/parity signoff. Tests,
-sources, recipes, raw receipts and immutable seals preserve durability. No
-production change, HDL/macro/output runtime or route/public widening is proved.
+T2052 privately authenticates local source, follows actual LoweringIR/Storable
+clone references into canonical FormalLowering/ClauseResolver, and binds returned clauses to catalog/call/path/ordinal and explicit input/output
+formal identities. Literal clauses and whole ordinary products/kinds agree.
+Sibling/pin shadows, locals, nested calls/clauses, equal-body origins, first
+samples and existing declines qualify; opaque forgery, missing clone and
+comparison-bypass controls falsify omissions. Views detach. Imports, networks,
+generated specialization and domains refuse. Qualification/adoption remain `.5.2.2.3` successors; production/admission unchanged.
+
+Products and literal predicates/effects/aliases/roles re-derive scope; intent
+RED/shared corruption falsify parity. Tests/source/recipes/receipts/seals endure. No new language,
+HDL/macro/output runtime, public route widening or completed delivery is proved.

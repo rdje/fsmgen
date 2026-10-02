@@ -3501,11 +3501,57 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify canonical formal/generated/domain provenance and adopt the complete source-intent contract.`
   Acceptance: `After .1/.2, explicitly rebind changed source operands/paths through canonical formal resolution, generated child preparation and selected-domain construction. Retain whole source/target/scope identities and independently verify first/later and nested products. Reject stale or missing association and split into safe children if needed. Adopt only fully qualified production metadata with scheduling unchanged, then earn a cross-cutting decision and synchronized integration/book/feedback/facts. Safe normalization .5.4.2 and branching .5.3 remain closed until this complete contract qualifies.`
-  Verification: `Local and bounded relative-search library document-set reloads qualify; file-backed runtime/relative identity qualification remains the prerequisite before preparation/adoption. No preparation or adoption claim.`
+  Verification: `Local, library, resolved ATL and portable file-backed authorities qualify under .1/.2. Canonical formal preparation, generated specialization, selected-domain construction and production adoption remain open, split below. No preparation/adoption or scheduling claim.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1`
+  Status: `active`
+  Goal: `Qualify canonical formal clause producer association before metadata adoption.`
+  Acceptance: `After the committed parser/document authorities, create a separate private observer over actual prepare_formal_source, FormalLowering and FormalClauseResolver producer calls. Authenticate complete independently supplied source/documents and actual selected input transaction/clause identities; record explicit before/after source, path, lexical scope, target and physical operand identities without selecting by equal bodies or generated names. Cover direct/sibling/shadowed formals, nested clauses, unchanged actor scope, generated/public formals, first/later conditional placement and exact existing preparation refusals. Retain whole ordinary preparation/physical actor/plan products and original primitive kinds; independently reconstruct admitted source/formal results and distinguish declined products. Opaque reloads must refuse stale/missing/forged associations; caller/returned products detach. Genuine missing-producer/comparison controls, source/Git bindings, full recipes/products/raw receipts and immutable proof earn this private unit. Keep earlier providers unchanged. No production metadata/scheduling/schema/admission or HDL invocation; split further before widening generated/library/domain provenance.`
+  Verification: `pending`
   Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.1`
+  Status: `done`
+  Goal: `Qualify private local-source formal clone and resolver associations.`
+  Acceptance: `Execute canonical FormalLowering::prepare with independently authenticated complete local source and actual formal preparation. Trace exact normalized conditional-node references through real LoweringIR and Storable clones into actual FormalClauseResolver calls and returned physical clauses. Preserve original catalog/source/call/path/ordinal plus explicit formal input/output identity; do not match equal bodies or infer origin from physical names. Whole ordinary prepared/physical actor/plan products and source kinds must agree; caller/returned views detach. Cover direct/sibling/shadowed/nested formals, first/later macro and authored-entry distinctions, exact existing declines and opaque association/target/scope/coverage forgery controls. Drop actual clone association and bypass actual final comparisons as genuine RED controls, preserving canonical calls. Retain independent literals, whole products/source/instruments/recipes/raw receipts and immutable seal. No imports, generated children, actor networks or domains are qualified here; refuse them precisely. Earlier providers and all production code remain unchanged. No production adoption, scheduling, public schema, HDL or spent replay.`
+  Verification: `Private T2052 follows canonical LoweringIR and Storable clone references into actual FormalLowering/ClauseResolver input/output nodes. Independent source and literal physical clauses cover eight families, authored equal-body twins, sibling/pin shadows, nested clauses/calls, locals and first samples; existing first-assignment/inline-cond declines and unsupported imports/network/generated/domain/no-formal boundaries remain explicit. Complete ordinary context/actor/plan/kinds and detached views agree. Final PASS Files=1/Tests=18; actual comparison bypass RED Files=1/Tests=18/Failed14, separate actual LoweringIR/Storable association loss RED Files=1/Tests=1/Failed1. Cold verifier rejects shared guard/operation/scope/coverage/kind corruption. Prior source/file/PathSearch/canonical-child checks PASS Files=7/Tests=170; docs PASS Files=3/Tests=293 including 115 complete lowered fixtures; mdBook/rendered-text markers pass without visual QA. Complete sources/literals/products/control products, exact final instruments, production/Git bindings, recipes/raw receipts and immutable seal live in docs/audits/local-formal-origin-20261002. Initial plain-do generated-scope fixture was misclassified; corrected to actual parameter-specialized do, with the failed receipt retained. Initial drafts lack exact instrument fingerprints and do not earn qualification. Book/fact scope sync; gates live separately in docs/audits/local-formal-origin-checks-20261002. No production/prior-provider changes, scheduling/schema/admission widening, HDL/native runtime, full CI or push. Imported/reusable qualification follows under .1.2 before generated/domain/adoption.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2`
+  Status: `pending`
+  Goal: `Extend formal producer qualification to authenticated imported/reusable actors.`
+  Acceptance: `After local .1 commits, bind complete independent document authorities and actual selected use/ATL input actor producers to formal preparation where canonically invoked. Preserve original document/export/instance/formal and physical scope identities, complete real products and all admitted/refused boundaries. Handle producer mutations only through actual retained associations, not reparsed or equal-body guessing. Qualify exact selected actors, same-body/different-origin and stale/missing/changed-document controls. Keep generated specialization and domain construction under .3.2/.3.3; do not widen unsupported groups or recursion. Split library/ATL/file cases safely before implementation, and commit before adoption.`
+  Verification: `pending`
+  Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.2`
+  Status: `pending`
+  Goal: `Qualify generated transaction and reusable child specialization origins.`
+  Acceptance: `After formal qualification .1, observe the actual canonical generated-transaction and library/ATL child producers and static parameter specialization. Preserve original document/export/transaction/instance/call/argument identities, explicit operand/path changes and child module scope. Reuse independently authenticated source authorities; whole products or equal bodies alone cannot select an original constructor. Qualify ordinary complete children, first/later/nested/static-override and same-body/different-origin witnesses plus existing refusals and missing/forged actual association controls. Keep formals and parent products intact; no native HDL or production adoption. Split safe parameter/library/ATL slices before implementation.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.3`
+  Status: `pending`
+  Goal: `Qualify selected-domain source constructor origin association.`
+  Acceptance: `After .1/.2, observe actual _domain_actor_for_scheduled_artifact and recursive formal preparation. Bind selected source transactions/clauses/drives, domain identity, external activation and original source operations explicitly before paths or operands change. Qualify complete per-domain source/child/formal products, default/named domain and nested generated controls, caller isolation and opaque forgery/refusal tests with independent source/type/scope literals. Preserve existing domain namespace and explicit crossing contracts; do not infer CDC or metadata from generated module names. No production scheduling, HDL or adoption until complete qualification.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.4`
+  Status: `pending`
+  Goal: `Adopt the complete qualified conditional source-intent metadata contract.`
+  Acceptance: `Only after all source/parser/document/formal/generated/domain units qualify, select and record an implementation-neutral source metadata contract and canonical producer/consumer ownership. Split adoption into safe committed parser, clone/transform and preparation/domain integration children. Keep ordinary source products, public schema and scheduling/admission unchanged while retaining/authenticating explicit origin association; report any necessarily selected public change separately. Verify meaningful pre-fix controls, complete ordinary products/native/API/newline compatibility, hostile association/reload tests and synced spec/downstream/book/feedback/facts. Safe normalization .5.4.2 and branch repair .5.3 remain closed until this whole contract is verified.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.3`
   Status: `pending`
@@ -5228,3 +5274,9 @@ canonical decision roster and bytes; declare measured current delta plus one
 unit in each dimension under the live semantic frontier owner. The collection
 had no predecessor debt baseline, so none is reset. Preserve the failed receipt
 and exact measurement JSON. No health target or enforcement ceiling changes.
+
+## Local formal origin qualification acceptance (.60.4.3.3.5.2.1.5.2.2.3.1.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Canonical FormalLowering prepares a cloned actor, then invokes actual FormalClauseResolver on a Storable clone. A parser-only origin association cannot authenticate those new node identities. Removing either actual clone callback gives `local formal origin conditional clone association missing at t/lib/FSM/Test/LocalFormalOriginAuthority.pm line 113`; the raw stack passes through `perl/FSM/Scheduler/ISF/FormalClauseResolver.pm` and `FormalLowering.pm`. Final bound clone/storable RED receipts identify the actual locus; equal-body select/authored actors demonstrate that text/name matching cannot repair lost origin.
+- [x] **ADDRESSED (verified)** — The separate private provider seeds complete independently authenticated source references, transports associations through actual canonical clone outputs, records actual resolver context/return references, and verifies final complete coverage before freezing detached products. T2052 final PASS Files=1/Tests=18 with independent literal whole clauses and primitive kinds. Actual comparison bypass accepts forged products and gives RED Files=1/Tests=18/Failed14; each actual clone-association loss gives RED Files=1/Tests=1/Failed1. Re-derivation is independent source/literal/formal identity plus whole ordinary products; falsification is actual callback/comparison RED and cold shared corruption; durability is permanent instruments, complete sources/products/receipts and the exact immutable archive seal. No missing qualification leg is hidden: initial diagnostic drafts lack instrument fingerprints, browser visual QA and imported/generated/domain/adoption/native runtime are absent.
+- [x] **NO REGRESSION** — Required RAM-guarded predecessor/parser/source/file/PathSearch/canonical-child cohort reports `All tests successful`, `Files=7, Tests=170`. Bound book audits report `All tests successful`, `Files=3, Tests=293`; all 115 complete ISF examples lower cleanly. Final mdBook build and rendered-text markers pass. Production bin/perl and previous origin providers remain byte/hash-bound to committed baseline 828691e567f2f8d7b7541566303c195e63ffbf90. Staged doctrines/claim/Knowledge Map/capacity are commit gates recorded in the separate checks archive, never appended to the sealed producer proof.

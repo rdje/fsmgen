@@ -1,0 +1,561 @@
+ram-guard: PID 71982; host 53.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2052-isf-local-formal-origin-authority.t .. 
+# Subtest: actual formal origin select
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - actual selected LoweringIR then Storable clone lineage
+    ok 9 - literal original formal identity remains explicit
+    ok 10 - literal private formal endpoint
+    ok 11 - complete opaque reconstruction authenticates
+    ok 12 - actual origin forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual path forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual scope forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual target forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual coverage forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual scalar_kind forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual plan forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - actual extra forgery refused
+    ok 34 - independent complete source authority
+    ok 35 - validation leaves submitted kinds untouched
+    ok 36 - returned complete views detach
+    1..36
+ok 1 - actual formal origin select
+# Subtest: actual formal origin min
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - actual selected LoweringIR then Storable clone lineage
+    ok 9 - literal original formal identity remains explicit
+    ok 10 - literal private formal endpoint
+    ok 11 - complete opaque reconstruction authenticates
+    ok 12 - actual origin forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual path forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual scope forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual target forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual coverage forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual scalar_kind forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual plan forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - actual extra forgery refused
+    ok 34 - independent complete source authority
+    ok 35 - validation leaves submitted kinds untouched
+    ok 36 - returned complete views detach
+    1..36
+ok 2 - actual formal origin min
+# Subtest: actual formal origin max
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - actual selected LoweringIR then Storable clone lineage
+    ok 9 - literal original formal identity remains explicit
+    ok 10 - literal private formal endpoint
+    ok 11 - complete opaque reconstruction authenticates
+    ok 12 - actual origin forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual path forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual scope forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual target forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual coverage forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual scalar_kind forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual plan forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - actual extra forgery refused
+    ok 34 - independent complete source authority
+    ok 35 - validation leaves submitted kinds untouched
+    ok 36 - returned complete views detach
+    1..36
+ok 3 - actual formal origin max
+# Subtest: actual formal origin cond
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - actual selected LoweringIR then Storable clone lineage
+    ok 9 - literal original formal identity remains explicit
+    ok 10 - literal private formal endpoint
+    ok 11 - complete opaque reconstruction authenticates
+    ok 12 - actual origin forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual path forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual scope forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual target forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual coverage forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual scalar_kind forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual plan forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - actual extra forgery refused
+    ok 34 - independent complete source authority
+    ok 35 - validation leaves submitted kinds untouched
+    ok 36 - returned complete views detach
+    1..36
+ok 4 - actual formal origin cond
+# Subtest: actual formal origin when-bit
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - complete opaque reconstruction authenticates
+    ok 9 - actual origin forgery refused
+    ok 10 - independent complete source authority
+    ok 11 - validation leaves submitted kinds untouched
+    ok 12 - actual path forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual scope forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual target forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual coverage forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual scalar_kind forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual plan forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual extra forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - returned complete views detach
+    1..33
+ok 5 - actual formal origin when-bit
+# Subtest: actual formal origin unless-bit
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - complete opaque reconstruction authenticates
+    ok 9 - actual origin forgery refused
+    ok 10 - independent complete source authority
+    ok 11 - validation leaves submitted kinds untouched
+    ok 12 - actual path forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual scope forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual target forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual coverage forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual scalar_kind forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual plan forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual extra forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - returned complete views detach
+    1..33
+ok 6 - actual formal origin unless-bit
+# Subtest: actual formal origin when-field
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - complete opaque reconstruction authenticates
+    ok 9 - actual origin forgery refused
+    ok 10 - independent complete source authority
+    ok 11 - validation leaves submitted kinds untouched
+    ok 12 - actual path forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual scope forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual target forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual coverage forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual scalar_kind forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual plan forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual extra forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - returned complete views detach
+    1..33
+ok 7 - actual formal origin when-field
+# Subtest: actual formal origin unless-field
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - complete opaque reconstruction authenticates
+    ok 9 - actual origin forgery refused
+    ok 10 - independent complete source authority
+    ok 11 - validation leaves submitted kinds untouched
+    ok 12 - actual path forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual scope forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual target forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual coverage forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual scalar_kind forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual plan forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual extra forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - returned complete views detach
+    1..33
+ok 8 - actual formal origin unless-field
+# Subtest: actual formal origin authored
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - actual selected LoweringIR then Storable clone lineage
+    ok 9 - literal original formal identity remains explicit
+    ok 10 - literal private formal endpoint
+    ok 11 - complete opaque reconstruction authenticates
+    ok 12 - actual origin forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual path forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual scope forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual target forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual coverage forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual scalar_kind forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual plan forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - actual extra forgery refused
+    ok 34 - independent complete source authority
+    ok 35 - validation leaves submitted kinds untouched
+    ok 36 - returned complete views detach
+    1..36
+ok 9 - actual formal origin authored
+# Subtest: actual formal origin nested
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - actual selected LoweringIR then Storable clone lineage
+    ok 9 - literal original formal identity remains explicit
+    ok 10 - literal private formal endpoint
+    ok 11 - actual selected LoweringIR then Storable clone lineage
+    ok 12 - literal original formal identity remains explicit
+    ok 13 - literal private formal endpoint
+    ok 14 - complete opaque reconstruction authenticates
+    ok 15 - actual origin forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual path forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual scope forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual target forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual coverage forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual scalar_kind forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - actual plan forgery refused
+    ok 34 - independent complete source authority
+    ok 35 - validation leaves submitted kinds untouched
+    ok 36 - actual extra forgery refused
+    ok 37 - independent complete source authority
+    ok 38 - validation leaves submitted kinds untouched
+    ok 39 - returned complete views detach
+    1..39
+ok 10 - actual formal origin nested
+# Subtest: actual formal origin local
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - complete opaque reconstruction authenticates
+    ok 9 - actual origin forgery refused
+    ok 10 - independent complete source authority
+    ok 11 - validation leaves submitted kinds untouched
+    ok 12 - actual path forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual scope forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual target forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual coverage forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual scalar_kind forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual plan forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual extra forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - returned complete views detach
+    1..33
+ok 11 - actual formal origin local
+# Subtest: equal physical actors do not authorize a different original operation
+    ok 1 - whole prepared/physical actor/plan products are identical
+    ok 2 - original operations and source/catalog identities remain different
+    ok 3 - equal-body origin transplant
+    ok 4 - exact refusal mechanism
+    1..4
+ok 12 - equal physical actors do not authorize a different original operation
+# Subtest: sibling formal ownership is explicit even with equal source spelling
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - actual transaction input reference selects each lexical owner
+    ok 4 - literal sibling physical clauses use only sibling endpoints
+    1..4
+ok 13 - sibling formal ownership is explicit even with equal source spelling
+# Subtest: actual nested inline calls retain the original producer and call frames
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - actual selected LoweringIR then Storable clone lineage
+    ok 9 - literal original formal identity remains explicit
+    ok 10 - literal private formal endpoint
+    ok 11 - complete opaque reconstruction authenticates
+    ok 12 - actual origin forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual path forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual scope forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual target forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual coverage forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual scalar_kind forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual plan forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - actual extra forgery refused
+    ok 34 - independent complete source authority
+    ok 35 - validation leaves submitted kinds untouched
+    ok 36 - returned complete views detach
+    ok 37 - literal nested call association remains ordered
+    1..37
+ok 14 - actual nested inline calls retain the original producer and call frames
+# Subtest: first authored activation and macro sample conserve existing behavior
+    ok 1 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 2 - complete canonical caller remains unchanged
+    ok 3 - independently written whole physical clause oracle including primitive kinds
+    ok 4 - literal source operation identity
+    ok 5 - actual selected LoweringIR then Storable clone lineage
+    ok 6 - literal original formal identity remains explicit
+    ok 7 - literal private formal endpoint
+    ok 8 - complete opaque reconstruction authenticates
+    ok 9 - actual origin forgery refused
+    ok 10 - independent complete source authority
+    ok 11 - validation leaves submitted kinds untouched
+    ok 12 - actual path forgery refused
+    ok 13 - independent complete source authority
+    ok 14 - validation leaves submitted kinds untouched
+    ok 15 - actual scope forgery refused
+    ok 16 - independent complete source authority
+    ok 17 - validation leaves submitted kinds untouched
+    ok 18 - actual target forgery refused
+    ok 19 - independent complete source authority
+    ok 20 - validation leaves submitted kinds untouched
+    ok 21 - actual coverage forgery refused
+    ok 22 - independent complete source authority
+    ok 23 - validation leaves submitted kinds untouched
+    ok 24 - actual scalar_kind forgery refused
+    ok 25 - independent complete source authority
+    ok 26 - validation leaves submitted kinds untouched
+    ok 27 - actual plan forgery refused
+    ok 28 - independent complete source authority
+    ok 29 - validation leaves submitted kinds untouched
+    ok 30 - actual extra forgery refused
+    ok 31 - independent complete source authority
+    ok 32 - validation leaves submitted kinds untouched
+    ok 33 - returned complete views detach
+    ok 34 - complete ordinary preparation/physical actor/plan and kinds conserved
+    ok 35 - complete canonical caller remains unchanged
+    ok 36 - independently written whole physical clause oracle including primitive kinds
+    ok 37 - literal source operation identity
+    ok 38 - actual selected LoweringIR then Storable clone lineage
+    ok 39 - literal original formal identity remains explicit
+    ok 40 - literal private formal endpoint
+    ok 41 - complete opaque reconstruction authenticates
+    ok 42 - actual origin forgery refused
+    ok 43 - independent complete source authority
+    ok 44 - validation leaves submitted kinds untouched
+    ok 45 - actual path forgery refused
+    ok 46 - independent complete source authority
+    ok 47 - validation leaves submitted kinds untouched
+    ok 48 - actual scope forgery refused
+    ok 49 - independent complete source authority
+    ok 50 - validation leaves submitted kinds untouched
+    ok 51 - actual target forgery refused
+    ok 52 - independent complete source authority
+    ok 53 - validation leaves submitted kinds untouched
+    ok 54 - actual coverage forgery refused
+    ok 55 - independent complete source authority
+    ok 56 - validation leaves submitted kinds untouched
+    ok 57 - actual scalar_kind forgery refused
+    ok 58 - independent complete source authority
+    ok 59 - validation leaves submitted kinds untouched
+    ok 60 - actual plan forgery refused
+    ok 61 - independent complete source authority
+    ok 62 - validation leaves submitted kinds untouched
+    ok 63 - actual extra forgery refused
+    ok 64 - independent complete source authority
+    ok 65 - validation leaves submitted kinds untouched
+    ok 66 - returned complete views detach
+    1..66
+ok 15 - first authored activation and macro sample conserve existing behavior
+# Subtest: first assignment and inline cond keep exact canonical declines
+    ok 1 - existing real formal preparation declines
+    ok 2 - private authority cannot broaden existing admission
+    ok 3 - exact canonical diagnostic conserved
+    ok 4 - existing real formal preparation declines
+    ok 5 - private authority cannot broaden existing admission
+    ok 6 - unresolved producer remains explicit
+    1..6
+ok 16 - first assignment and inline cond keep exact canonical declines
+# Subtest: actual missing clone association fails before a proof is frozen
+    ok 1 - actual clone callback lost
+    ok 2 - exact refusal mechanism
+    1..2
+ok 17 - actual missing clone association fails before a proof is frozen
+1..17
+ok
+All tests successful.
+Files=1, Tests=17,  7 wallclock secs ( 0.03 usr  0.01 sys +  3.35 cusr  1.58 csys =  4.97 CPU)
+Result: PASS
