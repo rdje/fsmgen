@@ -1,0 +1,26 @@
+ram-guard: PID 70669; host 78.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2037-isf-record-output-corpus-closure.t ......... ok
+t/1985-isf-interface-port-public-qualification.t .. ok
+t/1883-semantic-source-query-cohort.t ............. ok
+
+#   Failed test 'catalog retains the independently recounted supported-smoke entries including storage-word access, declared-interface metadata and packed record inputs'
+#   at t/248-regression-corpus-accounting.t line 1527.
+#          got: '388'
+#     expected: '387'
+
+#   Failed test 'catalog retains the independently recounted positive strict-mode acceptance entries'
+#   at t/248-regression-corpus-accounting.t line 1542.
+#          got: '378'
+#     expected: '377'
+# Looks like you failed 2 tests of 7215.
+t/248-regression-corpus-accounting.t .............. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/7215 subtests 
+
+Test Summary Report
+-------------------
+t/248-regression-corpus-accounting.t            (Wstat: 512 Tests: 7215 Failed: 2)
+  Failed tests:  6368, 6371
+  Non-zero exit status: 2
+Files=4, Tests=7233, 346 wallclock secs ( 0.28 usr  0.03 sys + 241.71 cusr 87.89 csys = 329.91 CPU)
+Result: FAIL

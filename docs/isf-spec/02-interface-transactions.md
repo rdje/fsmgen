@@ -106,9 +106,9 @@ writers, disjoint physical targets and ordinary ordered states of one explicit
 controller admit; unproved independent overlap refuses without arbitration.
 Output member writes, generated output mappings, root-list actor ports and
 transaction aggregate ports remain deferred. Typed output reset/default forms
-keep their existing explicit refusal. Complete output public/backend execution
-qualification remains separately owned; source/carrier admission is not runtime
-qualification. Unsupported verilog/v and vhdl record-output HDL requests name
+keep their existing explicit refusal. Bounded output source/public/profile/corpus
+qualification is complete; generated output/backend execution qualification remains
+separately owned. Source/carrier admission is not runtime qualification. Unsupported verilog/v and vhdl record-output HDL requests name
 actor/output/type/target and recommend SystemVerilog before publication.
 Record-input source acceptance is target-neutral. The qualified direct/generated
 HDL profile is SystemVerilog. Saved behavior observations exercise both emitter

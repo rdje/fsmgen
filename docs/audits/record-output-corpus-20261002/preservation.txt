@@ -1,0 +1,8 @@
+ram-guard: PID 85290; host 63.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2037-isf-record-output-corpus-closure.t ... ok
+t/248-regression-corpus-accounting.t ........ ok
+t/1885-semantic-source-query-oracles.t ...... ok
+t/2017-isf-record-input-frontend-closure.t .. ok
+All tests successful.
+Files=4, Tests=7230, 84 wallclock secs ( 0.18 usr  0.02 sys + 62.23 cusr 19.45 csys = 81.88 CPU)
+Result: PASS

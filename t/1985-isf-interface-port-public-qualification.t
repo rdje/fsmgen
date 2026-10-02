@@ -55,6 +55,20 @@ my %supported = (
         p('done','output',1), p('last_read_data','output',32), p('last_error','output',1),
         p('PADDR','output',32), p('PWRITE','output',1), p('PWDATA','output',32), p('PSEL','output',1), p('PENABLE','output',1),
     ],
+    'isf/record_output.isf' => [
+        p('start','input',1),
+        {name=>'incoming',direction=>'input',width=>10,type=>'frame',type_kind=>'record',fields=>[
+            {path=>'kind',width=>2,lsb=>8,msb=>9,signed=>0},
+            {path=>'payload.data',width=>5,lsb=>3,msb=>7,signed=>1,state_model=>'four_state'},
+            {path=>'payload.flags[0]',width=>1,lsb=>2,msb=>2,signed=>0},
+            {path=>'payload.flags[1]',width=>2,lsb=>0,msb=>1,signed=>0,state_model=>'two_state'}]},
+        {name=>'packet',direction=>'output',width=>10,type=>'frame',type_kind=>'record',fields=>[
+            {path=>'kind',width=>2,lsb=>8,msb=>9,signed=>0},
+            {path=>'payload.data',width=>5,lsb=>3,msb=>7,signed=>1,state_model=>'four_state'},
+            {path=>'payload.flags[0]',width=>1,lsb=>2,msb=>2,signed=>0},
+            {path=>'payload.flags[1]',width=>2,lsb=>0,msb=>1,signed=>0,state_model=>'two_state'}]},
+        p('seen','output',5), p('done','output',1),
+    ],
     'isf/verification_observation_metadata.isf' => [
         p('valid','input',1), p('data','input',8), p('ready','output',1), p('done','output',1),
     ],

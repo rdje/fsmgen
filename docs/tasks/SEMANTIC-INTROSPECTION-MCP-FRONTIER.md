@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-10-01`
+- Last updated: `2026-10-02`
 - Owner: repo-local workflow
 
 ## Goal
@@ -3217,11 +3217,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4`
-  Status: `active`
+  Status: `done`
   Goal: `Admit qualified record outputs and exact-type whole copies.`
   Acceptance: `After .3, wire mandatory output-only and mixed input/output type/role/context/domain gates before allowing packed output aliases. Reuse strict resolved whole-copy identity and physical writer admission for storage/input-to-output and permitted reverse reads; preserve scalar/storage/input contracts, lexical shadows and source ordering. Extend the shared unsupported Verilog/v record profile guard to authored outputs before any HDL publication, preserving precise input reasons and target-neutral schedules. Keep output-member writes owned by .60.4.3.4, unsupported transaction/root-list carriers closed and output reset/default forms at their existing explicit boundary. Qualify local/imported/nested/unused declarations, exact public metadata and strict IAL0 replay. Split bounded admission before edits as necessary.`
-  Verification: `Context/sample/domain preparation .1, precise unsupported profiles .2 and actual declaration/whole-copy writer integration .3 are qualified. Parser admits bounded record output aliases through mandatory source checks; Scheduler gates every actual module before public schedule/FSM publication. Complete public/source/profile reconciliation .4 is next. Field writes and generated mappings retain their separate gates, and output execution remains .3.5. Whole-copy type/role, scalar samples, namespaces/shadows and domain ownership stay mandatory.`
-  Commit: `pending`
+  Verification: `Context/sample/domain preparation .1, precise unsupported profiles .2, actual declaration/whole-copy writer integration .3 and complete bounded public/source/profile/predecessor/corpus reconciliation .4 are qualified. Parser admits bounded output aliases through mandatory source checks; Scheduler gates every actual module before public schedule/FSM publication. Whole-copy type/role, scalar samples, namespaces/shadows and domain ownership remain mandatory. Canonical downstream integration/public/spec/book/feedback match current phases and nonclaims. Field writes and generated mappings retain separate gates; generated/public/output execution .3.5 is next.`
+  Commit: `this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4`
 
@@ -3247,11 +3247,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify complete public record-output source/profile products and baseline preservation.`
   Acceptance: `After .3 commits, independently qualify complete native/API/actual newline check/semantic/schedule products, source metadata/layout order, corpus discovery and target-profile errors with atomic destinations. Preserve complete current input/scalar/storage products and exact prior generated/native evidence without replay. Synchronize spec/book/feedback/facts to source admission with executable/generated/field/full-consumer qualification still owned by .3.5 and .60.4.3.4-.5. Refuse unsupported source/writer/backend combinations precisely; do not promote emission text to runtime qualification.`
-  Verification: `Actual source integration .3 is committed. Public source responses .1, actual target-profile atomic checks .2 and finite complete predecessor products .3 are qualified; catalog/cohort closure .4 is next before parent signoff.`
-  Commit: `pending`
+  Verification: `Actual source integration .3 and all public reconciliation children are qualified: complete source transports/types/domain/refusals .1; actual atomic target profiles .2; exact finite full predecessor products with bound normalization .3; complete maintained corpus/catalog/cohort/discovery and canonical downstream lockstep .4. Complete immutable evidence and independent hostile/literal controls preserve scope. No generated output mapping, output field writer, output execution or full consumer signoff is claimed; .3.5 is next.`
+  Commit: `this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.4`
 
@@ -3294,11 +3294,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Promote the bounded record-output example into complete public corpus discovery.`
-  Acceptance: `Add a lowering-clean maintained whole-output fixture only after public/profile checks. Update the supported catalog with precise phases/nonclaims and independent literal metadata/semantic oracles. Account complete all-section native/API/newline discovery and all current query cohorts, preserve existing source membership/contract products except the owned addition, then synchronize spec/book/feedback/facts and sign off .3.4 before execution .3.5.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `Add a lowering-clean maintained whole-output fixture only after public/profile checks. Update the supported catalog with precise phases/nonclaims and independent literal metadata/semantic oracles. Account complete all-section native/API/newline discovery and all current query cohorts, preserve existing source membership/contract products except the owned addition, then synchronize canonical downstream integration/public contracts, spec/book/feedback/facts and sign off .3.4 before execution .3.5.`
+  Verification: `Maintained isf/record_output.isf is owned by the exact supported-smoke phase/nonclaim entry. Full baseline/current private catalog, all seven source query cohort applicability and every supported source byte identity preserve existing records/order; all-section native/in-process/API/actual newline discovery differs only in the owned entry and derived accounting. Actual public fixture products, independent recursive ten-bit signed/state/list layout, source/caller/producer preservation, ordered copy/read carrier and all strict replays plus full SystemVerilog/sv text qualify the representative. Initial four-file focused FAIL is exactly two old T248 census literals; T2037/T1985/T1883 pass. Complete membership earns the two corrected literals; final T2037/T248/T1885/T2017 passes Files=4/Tests=7230. Preserve the verifier missing-source dependency and guessed docs-path exit-2 controls, then fix only evidence setup/paths. Six docs audits pass Files=6/Tests=622; book/syntax and canonical include/example/commands/literal table render pass. Residual P2 downstream/source whole-output deferrals are owned, Git-rooted and fixed. Complete prior archive bytes match baseline Git blobs without replay. Sealed full source/products/receipts, independent shared-corruption/membership verifier and permanent watchers qualify bounded source/public/profile/corpus closure. No HDL invocation, output generated mappings/fields/runtime or full consumer completion; generated/public/execution .3.5 remains next.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5`
   Status: `pending`
@@ -4688,3 +4688,18 @@ drift, without a whole-document historical or new HDL execution claim.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Record source admission remains refused.' -- docs/isf-spec/12-downstream-rules-artifacts-reports.md` locates the old metadata contract. Current downstream/public report parts still refuse all records and source prose allows aggregates only in storage, despite actual source/public admission. Both readiness/public suffix lists also call shipped .axi/.apb/.ahb future. Current exact capability entries and literal source witnesses contradict those statements. The first witness runner refuses only its .artifacts-leading test identity before query; retain the failed draft and use the safe retained archive identity.
 - [x] **ADDRESSED (verified)** — Canonical downstream section 8 now gives the complete accepted typed input/storage/output example and exact whole-copy/scalar/sample/writer/domain/profile boundaries. Downstream/public report parts match the unchanged machine schema and actual ordered primitive leaf kinds. Diagnostics and deferrals preserve input writes, output fields, generated outputs, root lists, transaction aggregates, unsupported backends and unproved runtime limits. Readiness/public alias status matches the actual complete manifest, without promoting expected-failure samples. The example passes complete actual native/API/newline reports, literal metadata, every strict carrier, caller/source isolation and SystemVerilog generation.
 - [x] **NO REGRESSION** — T1305/T1414/T1303/T1307/T1332/T1376 reports All tests successful, Files=6, Tests=622; mdBook builds. Independent HTML parsing verifies exact canonical includes, complete rendered example, section anchor and absence of the old refusal. Source/public production, schema, original archive members and spent evidence remain unchanged; the separately qualified decision-reader prerequisite stays isolated. Exact shared-corruption/current metadata/source/render verification and updated Knowledge Map/capacity/claims precede final staged doctrines and normal hooks. Corpus .4, output generated/fields/runtime and full consumer completion remain open.
+
+## Acceptance — maintained record-output corpus and downstream closure (2026-10-02)
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.4`.
+Actual full catalog/cohort/discovery and maintained source/carrier/text products
+re-derive the bounded behavior. Independent recursive type/packing/copy literals,
+complete before/after allocation and shared hostile membership/kind/layout/role/
+state corruption provide falsification. Full successful/failed source/products/
+receipts, exact baseline producer Git objects and immutable parent identities,
+sealed verifier, permanent tests, canonical docs/book/feedback/facts/task and Git
+retain durability. Complete applicability is distinct from all-source execution.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual `--check --json`, `--emit-semantic-json`, `--emit-schedule-json` and full capability discovery need an owned maintained whole-output representative after source/public/profile qualification. Complete pre-change catalog/cohort/discovery capture authenticates existing membership. The first focused run passes output/interface/cohort tests but retains FAIL for two T248 old census literals at lines 1527/1542; full one-entry allocation earns only their correction. `git log -S 'subaggregate operands/updates; record output and root-list interface ports;' -- docs/isf-spec/11-downstream-actor-transactions.md` roots residual P2 stale downstream refusal at 25c01f0127144922ade78951b91439e1d9221c08; the purpose/source part also still refuses outputs despite qualified production. Own and repair both in this corpus/docs leaf.
+- [x] **ADDRESSED (verified)** — Add only feature.isf_record_output and its lowering-clean nested record/list direct example, exact bounded phases and explicit nonclaims. Complete all-seven cohort applicability and full all-section actual native/API/newline discovery preserve every prior record, order, source hash and contract field after exactly allocating the addition and derived accounting. Independent literal recursive types, role order, JSON kinds, signed/state/absence/range leaves and whole-copy/scalar-read edges qualify complete actual public products, caller/source/producer isolation, every strict carrier and full SystemVerilog/sv text. Shared omission/kind/layout/role/state corruptions refuse. Canonical downstream/public/source parts, matrix/type book, feedback and facts match; residual blanket output deferrals are fixed. The first archive verifier lacks its retained source dependency and the first docs command guesses missing paths; both failed receipts are retained, then only evidence setup/paths are corrected. Complete previous input/native/output archive members match baseline Git blobs without replay.
+- [x] **NO REGRESSION** — T2037/T248/T1885/T2017 reports All tests successful, Files=4, Tests=7230. The initial T2037/T1985/T1883 successes remain distinct from that run's old-census FAIL; no all-four green result is invented. T1305/T1414/T1303/T1307/T1332/T1376 reports All tests successful, Files=6, Tests=622; mdBook builds and test syntax passes. Exact canonical includes, complete accepted example, maintained commands and literal packing table render correctly in HTML. Production admission/writer/adapter/schema/backend code and original evidence remain unchanged; only the catalog entry is added. Independent saved-product/hostile/receipt verification, refreshed Knowledge Map/capacity/claim inventory and staged doctrines precede normal hooks. Source/public/profile/corpus parents close; generated/public/execution .3.5, fields, X/Z/reset-free and full consumer completion remain open. No HDL invocation or spent replay.

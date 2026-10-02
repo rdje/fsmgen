@@ -70,3 +70,10 @@ Complete source/report/manifest/render receipts, historical stale-source witness
 sealed verifier and task/book/feedback/Git retain durability. This targeted
 lockstep repair does not claim a whole-document historical audit or new HDL
 execution. Generic downstream contracts remain canonical for every consumer.
+
+Maintained record-output corpus promotion also updates these canonical parts in
+the same slice. The current direct representative, literal layout, bounded
+phases/nonclaims and complete discovery/cohort applicability are documented;
+residual old output deferrals are repaired against current source/public facts.
+See [corpus closure](isf-record-output-corpus-closure.md). Generated output
+handoff, field writes and runtime remain separately owned.

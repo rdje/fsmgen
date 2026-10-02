@@ -1,0 +1,230 @@
+import copy
+import hashlib
+import json
+import re
+import subprocess
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent
+SOURCE = 'isf/record_output.isf'
+ENTRY = 'feature.isf_record_output'
+PHASES = ['parse', 'typecheck', 'lowering', 'check', 'semantic_report', 'schedule_report', 'systemverilog_generation']
+NONCLAIMS = ['output_simulation', 'generated_output_mapping', 'output_member_writes',
+             'verilog', 'vhdl', 'xz_execution', 'reset_free_initialization', 'full_consumer_delivery']
+CATALOG = dict(id=ENTRY, relpath=SOURCE, family='language_feature_fixture',
+               classification='supported_smoke', coverage='isf_pipeline_cli', source_kind='isf',
+               strict_supported=1, expected_module_name='record_output', expected_semantic_source_root_kind='fsm',
+               supported_phases=PHASES, explicit_nonclaims=NONCLAIMS)
+QUERIES = {k: ['check', 'semantic', 'schedule'] for k in ['isf', 'ppif', 'axi', 'apb', 'ahb']}
+QUERIES.update(fsm=['check', 'semantic'], vial=['check', 'semantic', 'inspection'])
+FIELDS = [dict(path='kind', width=2, msb=9, lsb=8, signed=0),
+          dict(path='payload.data', width=5, msb=7, lsb=3, signed=1, state_model='four_state'),
+          dict(path='payload.flags[0]', width=1, msb=2, lsb=2, signed=0),
+          dict(path='payload.flags[1]', width=2, msb=1, lsb=0, signed=0, state_model='two_state')]
+TYPE = dict(kind='record', width=10, signed=0, member_order=['kind', 'payload'], members={
+    'kind': dict(kind='bits', width=2, signed=0),
+    'payload': dict(kind='record', width=8, signed=0, member_order=['data', 'flags'], members={
+        'data': dict(kind='bits', width=5, signed=1, state_model='four_state'),
+        'flags': dict(kind='list', width=3, signed=0, items=[dict(kind='bit', width=1, signed=0),
+            dict(kind='bits', width=2, signed=0, state_model='two_state')])})})
+PORTS = [dict(name='start', direction='input', width=1),
+         dict(name='incoming', direction='input', width=10, type='frame', type_kind='record', fields=FIELDS),
+         dict(name='packet', direction='output', width=10, type='frame', type_kind='record', fields=FIELDS),
+         dict(name='seen', direction='output', width=5), dict(name='done', direction='output', width=1)]
+
+def read(name):
+    return json.loads((BASE / name).read_text())
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+
+def same(actual, expected, label):
+    assert canonical(actual) == canonical(expected), label
+
+def one(rows, key, value):
+    found = [r for r in rows if r[key] == value]
+    assert len(found) == 1, (key, value, 'exact occurrence')
+    return found[0]
+
+def terminal(receipt, label):
+    same([receipt['exit_code'], receipt['signal'], receipt['stderr']], [0, 0, ''], label)
+
+def discovery(snapshot):
+    d = snapshot['discovery']
+    terminal(d['native'], 'native discovery terminal')
+    terminal(d['newline'], 'newline discovery terminal')
+    m = d['in_process']
+    same(json.loads(d['native']['stdout']), m, 'every native manifest section')
+    same(d['request'], dict(jsonrpc='2.0', id=1, method='tools/call', params={
+        'name': 'fsmgen_capability_query', 'arguments': {'section': 'all'}}), 'actual all-section request')
+    api = d['api']
+    assert set(api) == {'jsonrpc', 'id', 'result'}
+    same(api['result']['isError'], False, 'API discovery success kind')
+    same(api['result']['structuredContent'], m, 'every API manifest section')
+    same(json.loads(api['result']['content'][0]['text']), m, 'every discovery text section')
+    assert re.fullmatch(r'[^\n]+\n', d['newline']['stdout']), 'actual one newline discovery response'
+    same(json.loads(d['newline']['stdout']), api, 'complete discovery newline envelope')
+    return m
+
+def accounting(snapshot):
+    same(snapshot['query_kinds'], QUERIES, 'complete literal query applicability')
+    catalog = snapshot['catalog']
+    ids = [r['id'] for r in catalog]
+    assert len(ids) == len(set(ids)), 'catalog duplicate ID'
+    supported = [r for r in catalog if r['classification'] == 'supported_smoke']
+    order = list(dict.fromkeys(r['relpath'] for r in supported))
+    cohort = snapshot['cohort']
+    same([r['source_id'] for r in cohort], order, 'all supported sources and exact first occurrence order')
+    for row in cohort:
+        source = row['source_id']
+        suffix = source.rsplit('.', 1)[1]
+        same(row['file_kind'], suffix, 'literal suffix ownership')
+        same(row['query_kinds'], QUERIES[suffix], 'every applicable query')
+        entries = [r for r in supported if r['relpath'] == source]
+        expected = [dict(id=r['id'], family=r['family'], coverage=r['coverage'],
+            required_capabilities=r.get('required_capabilities', []),
+            supported_phases=r.get('supported_phases', []), explicit_nonclaims=r.get('explicit_nonclaims', [])) for r in entries]
+        same(row['catalog_entries'], expected, 'every source ID/family/coverage/phase/nonclaim retained')
+        same(row['coverage_buckets'], sorted(set(r['coverage'] for r in entries)), 'all source coverage buckets')
+        assert source in snapshot['source_sha256'], 'missing supported source identity'
+    same(sorted(snapshot['source_sha256']), sorted(order), 'complete source byte membership')
+
+def preservation(before, after):
+    accounting(before)
+    accounting(after)
+    same(one(after['catalog'], 'id', ENTRY), CATALOG, 'complete literal added catalog entry')
+    assert all(r['id'] != ENTRY for r in before['catalog']), 'already present baseline owner'
+    same([r for r in after['catalog'] if r['id'] != ENTRY], before['catalog'], 'every original full catalog record and order')
+    same([r for r in after['cohort'] if r['source_id'] != SOURCE], before['cohort'], 'every original full cohort record and order')
+    hashes = copy.deepcopy(after['source_sha256'])
+    added_hash = hashes.pop(SOURCE)
+    same(hashes, before['source_sha256'], 'all original source identities and bytes')
+    same(added_hash, hashlib.sha256((BASE / 'record_output.isf.source').read_bytes()).hexdigest(), 'added fixture bytes')
+    row = one(after['cohort'], 'source_id', SOURCE)
+    same(row, dict(source_id=SOURCE, source_kind='isf', file_kind='isf', strict=True, language_version=None,
+        query_kinds=QUERIES['isf'], search_path_relpaths=[], coverage_buckets=['isf_pipeline_cli'],
+        expectations={'expected_module_name': 'record_output', 'expected_semantic_source_root_kind': 'fsm'},
+        catalog_entries=[dict(id=ENTRY, family='language_feature_fixture', coverage='isf_pipeline_cli',
+            required_capabilities=[], supported_phases=PHASES, explicit_nonclaims=NONCLAIMS)]), 'complete literal added cohort')
+    b, a = discovery(before), discovery(after)
+    allocation = copy.deepcopy(a)
+    s = allocation['support_accounting']
+    public = one(s['catalog_entries'], 'id', ENTRY)
+    same(public, {**{k: CATALOG[k] for k in ['id', 'relpath', 'family', 'classification', 'coverage', 'source_kind', 'expected_module_name']},
+        'strict_supported': True, 'has_expected_error_pattern': False, 'has_expected_hint_pattern': False}, 'unchanged sanitized public schema')
+    s['catalog_entries'] = [r for r in s['catalog_entries'] if r['id'] != ENTRY]
+    for key in ['supported_smoke_ids', 'strict_supported_ids']:
+        assert s[key].count(ENTRY) == 1
+        s[key].remove(ENTRY)
+    s['entry_count'] -= 1
+    for key, bucket in [('classifications', 'supported_smoke'), ('families', 'language_feature_fixture'),
+                        ('coverage_buckets', 'isf_pipeline_cli'), ('source_kinds', 'isf')]:
+        assert type(s[key][bucket]) is int
+        s[key][bucket] -= 1
+    same(allocation, b, 'every full manifest field except exactly allocated addition')
+
+def declarations(report, kind):
+    same(report['interface_ports'] if kind == 'schedule' else report['source']['interface_ports'], PORTS, 'literal typed complete ports')
+    if kind != 'schedule':
+        same(report['success'], True, 'success must be JSON boolean')
+    if kind == 'semantic':
+        output = one(report['semantic']['forward_ir']['intent_hir']['signal_analysis']['outputs'], 'name', 'packet')
+        same(output['declared_type_name'], 'frame', 'semantic alias spelling')
+        same(output['declared_type_spec'], TYPE, 'complete recursive semantic output')
+
+def fixture():
+    for kind in QUERIES['isf']:
+        r = read('after/' + kind + '.json')
+        terminal(r['native'], kind + ' native')
+        terminal(r['stdio'], kind + ' newline')
+        same(r['source_id'], SOURCE, 'source identity')
+        same(r['query_kind'], kind, 'query identity')
+        same(r['source_sha256_before'], r['source_sha256_after'], 'exact source preservation')
+        same(r['producer_sha256_before'], r['producer_sha256_after'], 'all producer preservation')
+        report = r['native']['report']
+        same(json.loads(r['native']['stdout']), report, 'full native raw report')
+        declarations(report, kind)
+        api = r['adapter_result']
+        same(api['isError'], False, 'tool error boolean')
+        same(api['structuredContent']['report'], report, 'complete native/API typed report')
+        same(json.loads(api['content'][0]['text']), api['structuredContent'], 'complete text/structured envelope')
+        assert re.fullmatch(r'[^\n]+\n', r['stdio']['stdout'])
+        same(json.loads(r['stdio']['stdout']), r['stdio']['response'], 'complete raw newline product')
+        same(r['stdio']['response'], dict(jsonrpc='2.0', id=1, result=api), 'complete actual newline/API envelope')
+    c = read('after/carriers.json')
+    same(c['actor_before'], c['actor_after'], 'complete caller actor kinds/data')
+    same(c['actor_before']['interface_port_metadata'], PORTS, 'first-touch authored declarations')
+    output = one(c['actor_before']['interface']['outputs'], 'name', 'packet')
+    same(output['type_spec'], TYPE, 'complete parsed recursive output')
+    same(c['report']['interface_ports'], PORTS, 'direct schedule metadata')
+    same(list(c['lower']['files']), ['record_output.fsm'], 'complete independently expected carrier membership')
+    same(list(c['carriers']), ['record_output.fsm'], 'every carrier was checked')
+    text = c['lower']['files']['record_output.fsm']
+    for block in ['(main_set_1\n    (<- (held incoming))\n    (-> main_set_2)',
+                  '(main_set_2\n    (<- (packet> held))\n    (-> main_set_3)',
+                  '(main_set_3\n    (<- (seen> packet.payload.data))\n    (-> main_done_4)']:
+        assert block in text, 'explicit ordered whole copy/scalar read carrier'
+    for receipt in c['carriers'].values():
+        terminal(receipt, 'strict carrier')
+        same(json.loads(receipt['stdout'])['success'], True, 'actual strict carrier success')
+    same(c['source'], (BASE / 'record_output.isf.source').read_text(), 'retained exact source')
+    hdl = []
+    for language in ['systemverilog', 'sv']:
+        g = c['generation'][language]
+        terminal(g['receipt'], 'SystemVerilog text generation')
+        for assignment in ['held_next = incoming;', 'packet_next = held;', 'seen_next = packet.payload.data;']:
+            assert assignment in g['hdl'], 'actual typed generated copy/read assignment'
+        hdl.append(re.sub(r'(?m)^// Date:.*$', '// Date: <normalized>', g['hdl']))
+    same(*hdl, 'complete SystemVerilog/sv text except Date banners')
+
+def hostile(before, after):
+    changes = [lambda s: s['catalog'].pop(0), lambda s: s['cohort'].pop(0),
+               lambda s: s['cohort'][0]['catalog_entries'][0].update(coverage='wrong'),
+               lambda s: s['source_sha256'].pop(next(iter(s['source_sha256']))),
+               lambda s: s['discovery']['in_process'].update(manifest_schema_version='1')]
+    for mutate in changes:
+        bad = copy.deepcopy(after)
+        mutate(bad)
+        try:
+            preservation(before, bad)
+        except (AssertionError, KeyError):
+            continue
+        raise AssertionError('lost membership/shared metadata accepted')
+    for kind in QUERIES['isf']:
+        report = read('after/' + kind + '.json')['native']['report']
+        for change in [lambda p: p.pop(), lambda p: p[2].update(direction='input'),
+                       lambda p: p[2]['fields'][1].update(signed='1'),
+                       lambda p: p[2]['fields'][1].update(lsb=2),
+                       lambda p: p[2]['fields'][2].update(state_model='two_state')]:
+            bad = copy.deepcopy(report)
+            change(bad['interface_ports'] if kind == 'schedule' else bad['source']['interface_ports'])
+            shared = [copy.deepcopy(bad) for _ in range(3)]
+            same(shared[0], shared[1], 'shared corrupt parity')
+            same(shared[1], shared[2], 'shared corrupt parity')
+            try:
+                declarations(shared[0], kind)
+            except AssertionError:
+                continue
+            raise AssertionError('shared declaration corruption accepted')
+
+def authenticate():
+    manifest = read('manifest.json')
+    for name, digest in manifest['sha256'].items():
+        assert hashlib.sha256((BASE / name).read_bytes()).hexdigest() == digest, name
+    for path, digest in manifest['immutable_parents'].items():
+        assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == digest, path
+    for path, pin in manifest['producer_objects'].items():
+        old = subprocess.check_output(['git', 'show', manifest['baseline_revision'] + ':' + path])
+        assert hashlib.sha256(old).hexdigest() == pin['sha256'], path
+        assert subprocess.check_output(['git', 'rev-parse', manifest['baseline_revision'] + ':' + path]).decode().strip() == pin['git_blob']
+    for name, value in manifest['terminal_exit_codes'].items():
+        same(value, 0, name + ' terminal receipt')
+
+if __name__ == '__main__':
+    before, after = read('before/snapshot.json'), read('after/snapshot.json')
+    preservation(before, after)
+    fixture()
+    hostile(before, after)
+    if (BASE / 'manifest.json').exists():
+        authenticate()
+    print('record-output corpus: complete preserved catalog/cohorts/discovery, literal products and hostile controls PASS')

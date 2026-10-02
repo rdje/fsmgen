@@ -326,6 +326,41 @@ ones are not created. Schedule preview remains target-neutral. T2027/T2028 and
 T2035 qualify these profiles; historical `.sv` observations of the old Verilog
 emitter do not qualify IEEE 1364 Verilog-2005.
 
+The maintained `isf/record_output.isf` representative copies `incoming` into
+owned `held` storage, publishes the whole value through `packet`, then reads
+`packet.payload.data` into scalar `seen`. Its authored interface interleaves
+directions; reports still put inputs first. The local recursive `frame` contains
+a nested record and fixed list. The literal output leaf layout is:
+
+| Path | Width | Packed range | Signed | State model |
+| --- | --- | --- | --- | --- |
+| `kind` | 2 | 9:8 | 0 | absent |
+| `payload.data` | 5 | 7:3 | 1 | `four_state` |
+| `payload.flags[0]` | 1 | 2:2 | 0 | absent |
+| `payload.flags[1]` | 2 | 1:0 | 0 | `two_state` |
+
+```sh
+./bin/fsmgen --strict --check --json isf/record_output.isf
+./bin/fsmgen --strict --emit-semantic-json isf/record_output.isf
+./bin/fsmgen --emit-schedule-json isf/record_output.isf
+mkdir -p .artifacts
+./bin/fsmgen --strict --language systemverilog -o .artifacts/record_output.sv isf/record_output.isf
+```
+
+The `feature.isf_record_output` supported-smoke catalog entry qualifies parse,
+typecheck, lowering, check, semantic/schedule reports and SystemVerilog generation.
+Its internal phase/nonclaim arrays are retained by source-query selection; the
+manifest keeps its existing sanitized catalog-entry schema. Complete current
+all-section native/API/newline discovery differs from the captured predecessor
+only by this entry and derived support-accounting buckets/lists. Every existing
+catalog/cohort record and source hash is preserved. This is complete cohort
+applicability accounting, not execution of every source query. T2037 supplies
+independent literal declarations, recursive semantic types and hostile corruption
+controls; the sealed corpus receipt retains complete public responses, strict
+carriers and SystemVerilog/sv text. Output simulation, generated output mappings,
+member writes, Verilog/VHDL, X/Z execution, reset-free initialization and full
+consumer delivery remain explicit nonclaims.
+
 Constants:
 
 ```lisp
@@ -1822,14 +1857,15 @@ body RHS scalar values/expression operands, inline drive target tokens,
 inline drive assignment RHS scalar values/expression operands, or drive-call
 actual scalar values/expression operands; aggregate paths in drive body RHS,
 inline drive RHS, or drive-call actual expression operator position;
-subaggregate operands/updates; record output and root-list interface ports;
+subaggregate operands/updates; record output member writes and root-list interface ports;
 transaction aggregate ports; and aggregate storage banks remain deferred.
-Packed record actor inputs use existing local/imported aliases, selected scalar
-leaf contexts, explicit scalar sampling and strict same-type input-to-storage
-copies. Input targets, whole-record scalar operations and invalid paths refuse;
+Packed record actor inputs/outputs use existing local/imported aliases, selected
+scalar leaf contexts, explicit scalar sampling and strict same-type permitted
+port/storage copies. Whole outputs also require per-module physical writer
+admission. Input targets, whole-record scalar operations and invalid paths refuse;
 nearest bindings and declared domains retain their ownership.
 
-Beyond actor-owned storage variables and selected packed record inputs,
+Beyond actor-owned storage variables and selected packed actor record ports,
 aggregate support remains limited to compatible aggregate/list literal
 parameter values and scalarized actor-owned bank/storage lowering.
 

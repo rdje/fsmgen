@@ -6,7 +6,7 @@ answers:
   - "what does a failed record output schedule query publish?"
   - "do record output domain reports retain the complete declared layout?"
   - "does public record output source qualification establish execution support?"
-date: 2026-10-01
+date: 2026-10-02
 status: current
 tags: [isf, record, output, public, mcp, semantic, domains, specforge]
 evidence: >-
@@ -52,5 +52,6 @@ exact unchanged predecessor producer objects, immutable input/source evidence,
 sealed verifier, tasks/book/feedback and Git provide durability. Initial draft
 oracle failures are retained; correcting them does not change production code.
 Actual target-profile atomic qualification, exact complete predecessor product
-comparisons and maintained corpus closure remain .3.4.4.2-.4. Generated mappings,
+comparisons and maintained corpus closure are qualified under .3.4.4.2-.4; see
+[corpus closure](isf-record-output-corpus-closure.md). Generated mappings,
 output field writes, output execution and full SPECFORGE delivery remain open.

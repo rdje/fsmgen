@@ -1,0 +1,17 @@
+ram-guard: PID 55836; host 80.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1305-isf-book-feature-matrix-audit.t .......... ok
+t/1414-docs-relative-paths-audit.t .............. ok
+t/1303-isf-public-live-book-paths-audit.t ....... ok
+Cannot detect source of 't/1307-isf-downstream-integration-spec-audit.t'! at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 256.
+	TAP::Parser::IteratorFactory::detect_source(TAP::Parser::IteratorFactory=HASH(0x781aebcf78), TAP::Parser::Source=HASH(0x781af28960)) called at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 211
+	TAP::Parser::IteratorFactory::make_iterator(TAP::Parser::IteratorFactory=HASH(0x781aebcf78), TAP::Parser::Source=HASH(0x781af28960)) called at /System/Library/Perl/5.34/TAP/Parser.pm line 472
+	TAP::Parser::_initialize(TAP::Parser=HASH(0x781a515480), HASH(0x781aebcb70)) called at /System/Library/Perl/5.34/TAP/Object.pm line 55
+	TAP::Object::new("TAP::Parser", HASH(0x781aebcb70)) called at /System/Library/Perl/5.34/TAP/Object.pm line 130
+	TAP::Object::_construct(TAP::Harness=HASH(0x781a50c6c0), "TAP::Parser", HASH(0x781aebcb70)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 856
+	TAP::Harness::make_parser(TAP::Harness=HASH(0x781a50c6c0), TAP::Parser::Scheduler::Job=HASH(0x781aebd390)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 655
+	TAP::Harness::_aggregate_single(TAP::Harness=HASH(0x781a50c6c0), TAP::Parser::Aggregator=HASH(0x781a8405d0), TAP::Parser::Scheduler=HASH(0x781aebd198)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 747
+	TAP::Harness::aggregate_tests(TAP::Harness=HASH(0x781a50c6c0), TAP::Parser::Aggregator=HASH(0x781a8405d0), "t/1305-isf-book-feature-matrix-audit.t", "t/1414-docs-relative-paths-audit.t", "t/1303-isf-public-live-book-paths-audit.t", "t/1307-isf-downstream-integration-spec-audit.t", "t/1332-isf-public-interface-contract-audit.t", "t/1376-isf-downstream-data-op-width-audit.t") called at /System/Library/Perl/5.34/TAP/Harness.pm line 558
+	TAP::Harness::__ANON__() called at /System/Library/Perl/5.34/TAP/Harness.pm line 571
+	TAP::Harness::runtests(TAP::Harness=HASH(0x781a50c6c0), "t/1305-isf-book-feature-matrix-audit.t", "t/1414-docs-relative-paths-audit.t", "t/1303-isf-public-live-book-paths-audit.t", "t/1307-isf-downstream-integration-spec-audit.t", "t/1332-isf-public-interface-contract-audit.t", "t/1376-isf-downstream-data-op-width-audit.t") called at /System/Library/Perl/5.34/App/Prove.pm line 548
+	App::Prove::_runtests(App::Prove=HASH(0x781ac08948), HASH(0x781ad98060), "t/1305-isf-book-feature-matrix-audit.t", "t/1414-docs-relative-paths-audit.t", "t/1303-isf-public-live-book-paths-audit.t", "t/1307-isf-downstream-integration-spec-audit.t", "t/1332-isf-public-interface-contract-audit.t", "t/1376-isf-downstream-data-op-width-audit.t") called at /System/Library/Perl/5.34/App/Prove.pm line 506
+	App::Prove::run(App::Prove=HASH(0x781ac08948)) called at /usr/bin/prove line 13

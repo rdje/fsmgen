@@ -187,8 +187,17 @@ maintained scalar/storage examples and generated/domain input sources retain the
 complete public reports, strict carriers and SystemVerilog generation products.
 Only qualified repository/generated-lowering directory prefixes and date banners
 are normalized. [Comparison evidence](../../../docs/audits/record-output-predecessors-20261002/scope.txt)
-retains the full responses and failed capture controls. Maintained corpus promotion
-follows; generated output mappings, field writes and execution remain separately gated.
+retains the full responses and failed capture controls. The maintained
+`isf/record_output.isf` now supplies a nested record/list input/storage/output
+example with signed/state metadata, a whole output copy and a scalar output-field
+read. Its `feature.isf_record_output` supported-smoke owner covers bounded source,
+reports, lowering and SystemVerilog generation. T2037 independently qualifies
+literal declaration/type/layout and corrupt-data refusal. Complete predecessor/
+current catalog, all query cohort applicability and native/API/newline discovery
+are retained in the [corpus receipt](../../../docs/audits/record-output-corpus-20261002/scope.txt).
+Only the new entry and derived accounting change; all prior source hashes and
+metadata remain exact. This does not claim actual execution of every cohort row.
+Generated output mappings, field writes and execution remain separately gated.
 
 
 ```lisp
@@ -405,8 +414,8 @@ relocation and emitted date banners. HDL execution remains separately qualified.
 Record output declarations and exact-type whole copies are source-admitted
 under SEM `.60.4.3.3.4.3`. Output member writes, root-list actor ports,
 transaction-local aggregate ports, aggregate banks and variants remain deferred.
-Complete output public reconciliation `.3.4.4` and generated/backend execution
-qualification `.3.5` remain open. Whole-root and
+Bounded output public/profile/corpus reconciliation `.3.4.4` is complete.
+Generated/backend execution qualification `.3.5` remains open. Whole-root and
 member writes must be compared by their packed ranges and actual owners; an
 empty conflict report does not establish compatibility. No implicit arbitration
 is added. Output-field admission remains the next separate lane.

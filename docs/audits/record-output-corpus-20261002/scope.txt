@@ -1,0 +1,52 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.4
+Predecessor: f9329c41c4e6831a9ca45b745df91e0056568198
+
+Promote only the maintained direct isf/record_output.isf whole-output example.
+The production difference is one RegressionCorpus entry. Parser, scheduler,
+writer policy, public schema, adapter and target profiles stay unchanged.
+Complete original/current private catalog data, all seven source query cohort
+applicability records, every supported source byte identity and all-section
+native/in-process/API/actual newline discovery are retained, with exact JSON
+primitive kinds and order. Private Regexp fields retain full pattern/flag strings
+in explicit tagged data. The manifest keeps its existing sanitized public shape.
+Only the owned addition and derived accounting bucket/list changes are accepted.
+This is complete applicability accounting, not execution of every source query.
+
+Actual maintained check/semantic/schedule products retain full raw streams,
+reports, API and newline envelopes, producer/source fingerprints and text/data
+parity. The independent literal oracle fixes recursive type, ten-bit leaf layout,
+signed/state/absence properties and input/output role order. Parsed caller JSON
+is preserved. All emitted carriers strictly replay. The explicit input/storage/
+whole-output/scalar-field-read edge order and complete SystemVerilog/sv text are
+retained. Comparison normalizes only exact repository prefixes and HDL Date
+banners; no report keys, arrays, types or fields are dropped.
+
+The first focused run passes T2037/T1985/T1883 but fails two fixed T248 catalog
+census literals. Complete membership allocation independently earns only the
+new supported and strict entry. Corrected T2037/T248/T1885/T2017 passes
+Files=4/Tests=7230. The first verifier omits its retained source dependency and
+fails FileNotFoundError; preserve the recipe and complete receipt, add that
+source snapshot and rerun. An initial docs command guesses three nonexistent
+test paths after the first three actual audits pass; retain the full exit-2
+receipt and correct paths from the repository file inventory. Final six docs
+audits pass Files=6/Tests=622; mdBook builds and syntax passes.
+
+Canonical downstream integration/public parts, source spec, type chapter, matrix,
+feedback and facts match bounded source/public/profile/corpus closure. Exact
+canonical includes, the complete earlier record-port example, maintained commands
+and literal packing table are verified in rendered HTML. This is source/render
+qualification, not browser visual review. Residual stale whole-output deferrals
+are rooted in Git history and corrected; no whole-document historical audit is
+claimed. Full previous input/native/output archives match baseline Git blobs and
+remain immutable, without replaying spent captures.
+
+Actual full products provide re-derivation. Independently authored literal
+type/layout/copy expectations, complete before/after membership/all-section
+allocation, shared hostile corruption and permanent tests provide falsification.
+Complete raw/data/source/receipt snapshots, exact Git objects, sealed verifier,
+canonical docs/book/feedback/facts/task and Git provide durability.
+
+Output simulation, generated output mappings, output member writes, Verilog/VHDL,
+X/Z execution, reset-free initialization and full consumer completion are not
+qualified. No compiler/analyzer/simulation was invoked. Generated output/public
+and execution remain SEM .60.4.3.3.5; field writes remain .60.4.3.4.

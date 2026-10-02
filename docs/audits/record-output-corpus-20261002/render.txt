@@ -1,0 +1,2 @@
+ram-guard: PID 94234; host 62.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Canonical downstream includes, full example, literal output packing and maintained commands render; residual old whole-output refusals are absent.

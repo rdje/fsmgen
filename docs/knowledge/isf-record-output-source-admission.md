@@ -6,7 +6,7 @@ answers:
   - "where does mandatory record output physical writer admission run?"
   - "can equal values or priority admit overlapping record output writers?"
   - "does record output source admission establish execution support?"
-date: 2026-10-01
+date: 2026-10-02
 status: current
 tags: [isf, record, output, source, writers, domains, specforge]
 evidence: >-
@@ -60,6 +60,7 @@ counts/types and hostile false publication, owner/output omissions and field
 admission falsify broader claims. Full snapshots/receipts, exact Git objects,
 immutable prior evidence, this card/tasks/book/feedback and Git provide durability.
 Living old blanket-refusal tests now exercise still-closed fields or whole
-captures; their original sealed snapshots remain unchanged. Complete public
-reconciliation .3.4.4 precedes generated/backend execution .3.5 and field writes
-.60.4.3.4. Full aggregate-interface/SPECFORGE feature requests are not complete.
+captures; their original sealed snapshots remain unchanged. Bounded public/
+profile/corpus reconciliation .3.4.4 is qualified; see
+[corpus closure](isf-record-output-corpus-closure.md). Generated/backend execution
+.3.5 and field writes .60.4.3.4 remain open. Full aggregate-interface/SPECFORGE feature requests are not complete.

@@ -69,7 +69,10 @@ closed shape is advertised by `schedule_report_interface_ports` and
 `source_optional_fields.interface_ports`. T1983/T1984 qualify detached values,
 invalid shapes and declaration ownership; T2014/T2016/T2033/T2034 qualify actual
 record source and full native/API/newline reports. T2035 qualifies atomic HDL
-profile refusal and T2036 finite predecessor preservation. Record metadata is
+profile refusal, T2036 finite predecessor preservation and T2037 the maintained
+record-output catalog/public/literal witnesses. Full captured corpus discovery
+preserves every existing section and cohort, accounting only the owned fixture
+addition; this is applicability, not every-source runtime qualification. Record metadata is
 not inferred hardware or a writer-safety/runtime certificate; field writers,
 generated outputs and full consumer signoff retain their separate boundaries.
 

@@ -4617,6 +4617,22 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'feature.isf_record_output',
+        relpath => 'isf/record_output.isf',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'isf_pipeline_cli',
+        source_kind => 'isf',
+        strict_supported => 1,
+        expected_module_name => 'record_output',
+        expected_semantic_source_root_kind => 'fsm',
+        supported_phases => [qw(parse typecheck lowering check semantic_report schedule_report systemverilog_generation)],
+        explicit_nonclaims => [qw(
+            output_simulation generated_output_mapping output_member_writes
+            verilog vhdl xz_execution reset_free_initialization full_consumer_delivery
+        )],
+    },
+    {
         id => 'feature.isf_record_input_children',
         relpath => 'isf/record_input_children.isf',
         family => 'language_feature_fixture',

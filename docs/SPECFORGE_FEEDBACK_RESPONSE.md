@@ -138,8 +138,16 @@ and book.
   downstream integration/public contracts and rendered book with current typed
   actor ports, precise report/profile/writer boundaries and remaining deferrals.
   Its complete example passes actual public transports and strict carriers.
-  Maintained corpus closure `.4` is next. Output
-  execution remains `.3.5`; the full aggregate-interface request is not complete.
+  Maintained corpus closure `.4` adds `isf/record_output.isf` with its precise
+  supported phases and explicit nonclaims. Complete predecessor/current catalog,
+  all query cohort applicability and all-section actual public discovery preserve
+  existing records and account only that addition. T2037 qualifies independent
+  literal recursive types, packing/kinds and shared-corruption refusal; actual
+  strict carriers and SystemVerilog/sv text are retained. Canonical downstream
+  integration/public parts and rendered book match, including residual stale
+  deferral paragraphs. Bounded source/public/profile/corpus `.3.4.4` is complete.
+  Output execution remains `.3.5`; generated output mappings, output field writes
+  and full aggregate-interface delivery are not complete.
 - **Physical-time durations and named timers:** baselines are qualified;
   the requested implementations remain open under SEM `.60.1` and `.60.2`.
 

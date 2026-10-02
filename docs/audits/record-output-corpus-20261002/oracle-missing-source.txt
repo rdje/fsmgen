@@ -1,0 +1,15 @@
+ram-guard: PID 60635; host 78.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "<repo>/.artifacts/record-output-corpus/verify.py", line 225, in <module>
+    preservation(before, after)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<repo>/.artifacts/record-output-corpus/verify.py", line 102, in preservation
+    same(added_hash, hashlib.sha256((BASE / 'record_output.isf.source').read_bytes()).hexdigest(), 'added fixture bytes')
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<repo>/.artifacts/record-output-corpus/record_output.isf.source'

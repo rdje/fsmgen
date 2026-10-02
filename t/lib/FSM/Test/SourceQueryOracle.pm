@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Test::RecordOutputCorpusOracle qw(record_output_ports record_output_type);
 
 our @EXPORT_OK = qw(source_query_semantic_errors source_query_envelope_errors);
 my $json = JSON::PP->new->canonical->allow_nonref;
@@ -21,6 +22,20 @@ sub source_query_semantic_errors {
         && grep {$_ eq $kind} @{$queries{$row->{file_kind}}};
     my $failed = exists $args->{expected_diagnostic};
     my $checked = $report;
+    if (!$failed && $row->{source_id} eq 'isf/record_output.isf') {
+        _check(\@errors, $report, $kind eq 'schedule' ? '/interface_ports' : '/source/interface_ports',
+            record_output_ports());
+        if ($kind eq 'semantic') {
+            my ($found, $outputs) = _lookup($report, '/semantic/forward_ir/intent_hir/signal_analysis/outputs');
+            my @packet = $found && ref($outputs) eq 'ARRAY'
+                ? grep {ref($_) eq 'HASH' && ($_->{name} // '') eq 'packet'} @$outputs : ();
+            if (@packet != 1) {push @errors, 'semantic packet output must occur exactly once'}
+            else {
+                _check(\@errors, $packet[0], '/declared_type_name', 'frame');
+                _check(\@errors, $packet[0], '/declared_type_spec', record_output_type());
+            }
+        }
+    }
     if ($row->{file_kind} eq 'vial') {
         my $version = $row->{language_version};
         return ['unregistered VIAL language version']

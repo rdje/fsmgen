@@ -1,0 +1,24 @@
+(actor record_output
+  (clock clk)
+  (reset (rst_n sync active_low))
+  (types
+    (type frame
+      (record
+        (kind (bits 2))
+        (payload
+          (record
+            (data (signed (four_state (bits 5))))
+            (flags (list bit (two_state (bits 2)))))))))
+  (interface
+    (output packet (type frame))
+    (input start)
+    (input incoming (type frame))
+    (output seen (width 5))
+    (output done))
+  (storage (var held (type frame)))
+  (transaction main
+    (on start)
+    (set held incoming)
+    (set packet held)
+    (set seen packet.payload.data)
+    (complete done)))

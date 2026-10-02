@@ -386,9 +386,11 @@ as `(input packet (type frame_t))`; the alias must resolve to a
 positive packed width through the existing `.fsm` `+types` machinery. Generated
 transaction children in ordinary/single-domain actors read these owner-held
 values through typed internal handoffs, including packed whole values and scalar
-leaves; see the composition contract. Record outputs, root-list inputs,
-transaction aggregate ports, storage banks and other aggregate declarations
-remain closed. Record inputs use the contextual role/type/copy/sample gate,
+leaves; see the composition contract. Packed actor record outputs and exact-type
+whole port/storage copies also pass the contextual gate plus mandatory per-module
+physical writer admission. Output member writes, generated output mappings,
+root-list inputs, transaction aggregate ports and aggregate storage banks remain
+closed. Record ports use the contextual role/type/copy/sample gate,
 canonical nearest declaration roots and existing declared-domain checks. Actor-local
 `(enums ...)` declarations are accepted and preserved into scheduled `.fsm` as
 `+enums`. Actor parameter defaults consume declared actor constants and earlier
@@ -480,8 +482,9 @@ member writes or root-list interface ports, transaction aggregate ports and
 aggregate storage banks remain deferred. Record actor input/output declarations,
 scalar reads/captures and strict same-type permitted port/storage copies use
 their selected contextual contract. Whole outputs additionally require mandatory
-physical writer admission per actual realized module; complete output public/
-generated/execution qualification remains separately owned.
+physical writer admission per actual realized module. Bounded output source/public/
+profile/corpus qualification is complete; generated output mappings and execution
+remain separately owned.
 Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values

@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **17** facts · **62** uniquely owned question entries.
+> **18** facts · **66** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -24,12 +24,14 @@
 - q="does ordinary ISF reset provenance omit the domain key?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="does public record output source qualification establish execution support?" · facts=[isf-record-output-public-sources](../../docs/knowledge/isf-record-output-public-sources.md)
 - q="does record output backend preparation open source declarations?" · facts=[isf-record-output-hdl-profiles](../../docs/knowledge/isf-record-output-hdl-profiles.md)
+- q="does record output corpus promotion preserve existing source query memberships?" · facts=[isf-record-output-corpus-closure](../../docs/knowledge/isf-record-output-corpus-closure.md)
 - q="does record output source admission establish execution support?" · facts=[isf-record-output-source-admission](../../docs/knowledge/isf-record-output-source-admission.md)
 - q="does record-input runtime establish four-state behavior or native EPERM causality?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="does the binding identity repair admit record field actuals?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 - q="does the generic record port profile guard preserve input diagnostics?" · facts=[isf-record-output-hdl-profiles](../../docs/knowledge/isf-record-output-hdl-profiles.md)
 - q="does the physical write collector accept imported type tokens?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="does the prepared direct record-input bench establish native behavior?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
+- q="does the record output catalog claim generated mappings or simulation?" · facts=[isf-record-output-corpus-closure](../../docs/knowledge/isf-record-output-corpus-closure.md)
 - q="does unsupported record input VHDL generation replace an existing output?" · facts=[isf-record-input-backend-profiles](../../docs/knowledge/isf-record-input-backend-profiles.md)
 - q="how are complete input scalar and storage products preserved after record output admission?" · facts=[isf-record-output-predecessor-products](../../docs/knowledge/isf-record-output-predecessor-products.md)
 - q="how are generated and named-domain record-input carriers qualified?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
@@ -38,6 +40,7 @@
 - q="how does fixed record-input admission preserve caller JSON primitive kinds?" · facts=[isf-record-input-observer-preparation](../../docs/knowledge/isf-record-input-observer-preparation.md)
 - q="how does the packed-input witness separate live sample and whole-copy values?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 - q="how is the exact source-admission predecessor selected in real public subprocesses?" · facts=[isf-record-output-predecessor-products](../../docs/knowledge/isf-record-output-predecessor-products.md)
+- q="is bounded record output source and public qualification complete?" · facts=[isf-record-output-corpus-closure](../../docs/knowledge/isf-record-output-corpus-closure.md)
 - q="is generated and named-domain record-input public qualification complete?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="is generated record-input native behavior qualified?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
 - q="is selected packed record input delivery complete?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
@@ -58,6 +61,7 @@
 - q="which diagnostic wins for mixed record input and output target profiles?" · facts=[isf-record-output-target-profiles](../../docs/knowledge/isf-record-output-target-profiles.md)
 - q="which direct record-input runtime behavior is qualified?" · facts=[isf-record-input-direct-runtime](../../docs/knowledge/isf-record-input-direct-runtime.md)
 - q="which generated record-input storage and binding behaviors pass?" · facts=[isf-record-input-generated-runtime](../../docs/knowledge/isf-record-input-generated-runtime.md)
+- q="which maintained example demonstrates packed record output copies?" · facts=[isf-record-output-corpus-closure](../../docs/knowledge/isf-record-output-corpus-closure.md)
 - q="which native generation temporary prefixes can be normalized in predecessor comparisons?" · facts=[isf-record-output-predecessor-products](../../docs/knowledge/isf-record-output-predecessor-products.md)
 - q="which parser mode did record-input native behavior qualify?" · facts=[isf-record-input-parser-mode](../../docs/knowledge/isf-record-input-parser-mode.md)
 - q="which prepared record output writers pass conservative admission?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
@@ -140,6 +144,13 @@ _Both record-input emitter observations use the SystemVerilog parser_
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-input-parser-mode.md`](../../docs/knowledge/isf-record-input-parser-mode.md)
 
+### isf-record-output-corpus-closure
+
+_Maintained record output corpus preserves complete discovery and cohort applicability_
+
+- **date:** 2026-10-02 · **status:** current
+- **source and verification:** [`docs/knowledge/isf-record-output-corpus-closure.md`](../../docs/knowledge/isf-record-output-corpus-closure.md)
+
 ### isf-record-output-hdl-profiles
 
 _Prepared record outputs require precise unsupported HDL profile refusals_
@@ -158,14 +169,14 @@ _Record output source admission preserves complete finite input scalar and stora
 
 _Bounded record output public source responses retain complete types and refusals_
 
-- **date:** 2026-10-01 · **status:** current
+- **date:** 2026-10-02 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-output-public-sources.md`](../../docs/knowledge/isf-record-output-public-sources.md)
 
 ### isf-record-output-source-admission
 
 _Whole record outputs require exact types and mandatory realized-module writers_
 
-- **date:** 2026-10-01 · **status:** current
+- **date:** 2026-10-02 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-output-source-admission.md`](../../docs/knowledge/isf-record-output-source-admission.md)
 
 ### isf-record-output-source-contexts
