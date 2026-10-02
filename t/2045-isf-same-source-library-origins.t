@@ -159,7 +159,7 @@ subtest 'unqualified authorities stay explicitly closed' => sub {
 subtest 'canonical finalization cannot leave stale root clause origins' => sub {
     ok(!eval {FSM::Test::LibraryLateTargetMutation->new->parse_source(source_for($cases[0]), 'late.isf'); 1},
         'actual changed target refuses before frozen proof publication');
-    like($@, qr/conditional origin target identity mismatch/, 'precise complete target identity boundary');
+    ok(diagnostic_cause_matches($@, 'conditional origin target identity mismatch'), 'precise complete target identity boundary');
 };
 done_testing;
 

@@ -75,7 +75,10 @@ for my $path (@inputs) {
             my $accepted = eval {$authority->validate($bad_actor,$bad_proof);1};
             my $diagnostic = $@;
             ok(!$accepted,"actual ATL $name mutation refuses");
-            like($diagnostic,qr/differs from authoritative document set/,'precise independent complete authentication boundary');
+            ok(diagnostic_cause_matches($diagnostic, $name =~ /\Aactor_(?:identity|kind)\z/
+                ? 'library origin actor differs from authoritative document set'
+                : 'library origin proof differs from authoritative document set'),
+                'precise independent complete authentication boundary');
             is($json->encode([$bad_actor,$bad_proof]),$submitted,'complete submitted products remain detached');
             push @controls,{name=>$name,actor=>$bad_actor,proof=>$bad_proof,accepted=>$accepted?1:0,diagnostic=>$diagnostic};
         }
@@ -116,7 +119,10 @@ subtest 'canonical late ATL changes cannot publish stale origins' => sub {
         my $actor=eval{$parser->parse_documents($label,$documents)};
         my $diagnostic=$@;
         ok(!defined($actor),"actual late ATL $name change refuses before publication");
-        like($diagnostic,qr/ATL origin final (?:target or instance identity|resolved actor coverage) differs/,'precise final ATL consistency boundary');
+        ok(diagnostic_cause_matches($diagnostic, $name eq 'coverage'
+            ? 'ATL origin final resolved actor coverage differs'
+            : 'ATL origin final target or instance identity differs'),
+            'precise final ATL consistency boundary');
         push @controls,{name=>$name,actor=>$actor,declined_proof=>$parser->proof,diagnostic=>$diagnostic};
     }
     capture('finalization',{case=>$input->{case},label=>$label,documents=>$documents,controls=>\@controls});

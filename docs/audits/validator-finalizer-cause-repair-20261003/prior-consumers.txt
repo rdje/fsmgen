@@ -1,0 +1,582 @@
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'same precise committed source refusal'
+    #   at (eval 43614) line 1.
+    #                   'FSM::Scheduler::ISF->lower argument 1 must be a scheduler-consumable actor hash reference
+    #  at perl/FSM/Scheduler/ISF.pm line 121.
+    # 	FSM::Scheduler::ISF::_validate_actor_arg("lower", "unrelated argument") called at perl/FSM/Scheduler/ISF.pm line 60
+    # 	FSM::Scheduler::ISF::lower(FSM::Scheduler::ISF=HASH(0x778d2508e8), "unrelated argument") called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 159
+    # 	main::invoke("scheduler", HASH(0x778cc096d8)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause scheduler", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause scheduler", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:unsupported '\(cond \.\.\.\)' clause)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause scheduler'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at (eval 43623) line 1.
+    #                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+    # '
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause generic_changed_target'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at (eval 43632) line 1.
+    #                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+    # '
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause generic_duplicate'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at (eval 43641) line 1.
+    #                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+    # '
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause generic_forged_origin'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at (eval 43650) line 1.
+    #                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+    # '
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause generic_omission'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at (eval 43659) line 1.
+    #                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+    # '
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause generic_schema_kind'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at (eval 43668) line 1.
+    #                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+    # '
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause generic_source_identity'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at (eval 43677) line 1.
+    #                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+    # '
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause generic_unknown_field'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'bounded explicit-association diagnostic'
+    #   at (eval 43686) line 1.
+    #                   'Can't use string ("unrelated argument") as a HASH ref while "strict refs" in use at t/lib/FSM/Test/ConditionalOriginParser.pm line 196.
+    # '
+    #     doesn't match '(?^:conditional origin)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause generic_wrong_path'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise source-bound diagnostic'
+    #   at (eval 43695) line 1.
+    #                   'conditional origin independent source authority required
+    #  at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 32.
+    # 	FSM::Test::ConditionalOriginAuthority::validate(FSM::Test::ConditionalOriginAuthority=HASH(0x778ce27390), "unrelated argument", HASH(0x778ce21d08)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 173
+    # 	main::invoke("local", HASH(0x778ce21d50)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause local_actor", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause local_actor", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:conditional origin (?:actor|ledger) differs from authoritative source)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause local_actor'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise source-bound diagnostic'
+    #   at (eval 43704) line 1.
+    #                   'conditional origin independent source authority required
+    #  at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 32.
+    # 	FSM::Test::ConditionalOriginAuthority::validate(FSM::Test::ConditionalOriginAuthority=HASH(0x778d39d360), "unrelated argument", HASH(0x778ce23828)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 173
+    # 	main::invoke("local", HASH(0x778ce249c0)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause local_ledger", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause local_ledger", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:conditional origin (?:actor|ledger) differs from authoritative source)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause local_ledger'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'source operation authenticates independently of target shape'
+    #   at (eval 43713) line 1.
+    #                   'conditional origin independent source authority required
+    #  at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 32.
+    # 	FSM::Test::ConditionalOriginAuthority::validate(FSM::Test::ConditionalOriginAuthority=HASH(0x778d39f198), "unrelated argument", HASH(0x778ce26768)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 173
+    # 	main::invoke("twins", HASH(0x778ce26558)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause twins", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause twins", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:ledger differs from authoritative source)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause twins'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'bounded absent-authority diagnostic'
+    #   at (eval 43722) line 1.
+    #                   'conditional origin actor differs from authoritative source
+    #  at t/lib/FSM/Test/ConditionalOriginAuthority.pm line 34.
+    # 	FSM::Test::ConditionalOriginAuthority::validate(FSM::Test::ConditionalOriginAuthority=HASH(0x778dfed330), "unrelated argument", HASH(0x778ce29618)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 177
+    # 	main::invoke("missing", HASH(0x778d39d600)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause missing", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause missing", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:independent source authority required)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause missing'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at (eval 43731) line 1.
+    #                   'library origin independent document set required
+    #  at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 33.
+    # 	FSM::Test::LibraryDocumentOriginAuthority::validate(FSM::Test::LibraryDocumentOriginAuthority=HASH(0x778ce3e390), "unrelated argument", HASH(0x778ce3ccf0)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 182
+    # 	main::invoke("library", HASH(0x778ce3c918)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause library_actor", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause library_actor", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause library_actor'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise independent authentication boundary'
+    #   at (eval 43740) line 1.
+    #                   'library origin independent document set required
+    #  at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 33.
+    # 	FSM::Test::LibraryDocumentOriginAuthority::validate(FSM::Test::LibraryDocumentOriginAuthority=HASH(0x778d3aded0), "unrelated argument", HASH(0x778d3ad810)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 182
+    # 	main::invoke("library", HASH(0x778d3ad480)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause library_proof", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause library_proof", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause library_proof'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at (eval 43749) line 1.
+    #                   'library origin independent document set required
+    #  at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 33.
+    # 	FSM::Test::LibraryDocumentOriginAuthority::validate(FSM::Test::ATLDocumentOriginAuthority=HASH(0x778ce69498), "unrelated argument", HASH(0x778ce68df8)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 182
+    # 	main::invoke("ATL", HASH(0x778ce68a20)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause ATL_actor", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause ATL_actor", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause ATL_actor'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_argument_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise independent complete authentication boundary'
+    #   at (eval 43758) line 1.
+    #                   'library origin independent document set required
+    #  at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 33.
+    # 	FSM::Test::LibraryDocumentOriginAuthority::validate(FSM::Test::ATLDocumentOriginAuthority=HASH(0x778ce9b9c0), "unrelated argument", HASH(0x778ce9b330)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 182
+    # 	main::invoke("ATL", HASH(0x778ce99f48)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause ATL_proof", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause ATL_proof", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:differs from authoritative document set)'
+    # Looks like you failed 2 tests of 9.
+
+#   Failed test 'complete validator/finalizer cause ATL_proof'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_source_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise complete target identity boundary'
+    #   at (eval 46162) line 1.
+    #                   'Error: no (actor ...) root found in 'wrong.isf'
+    #  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+    # 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::LibraryLateTargetMutation=HASH(0x778cea65d0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::LibraryLateTargetMutation=HASH(0x778cea65d0), "(not_actor)", "wrong.isf") called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 185
+    # 	main::invoke("same_late", HASH(0x778cea23d8)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause same_late", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause same_late", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:conditional origin target identity mismatch)'
+
+    #   Failed test 'wrong_label_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+    # Looks like you failed 3 tests of 12.
+
+#   Failed test 'complete validator/finalizer cause same_late'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_source_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise final whole edge/target/kind publication boundary'
+    #   at (eval 49732) line 1.
+    #                   'Error: no (actor ...) root found in 'wrong.isf'
+    #  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+    # 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x778cea2de0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x778cea2de0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::DocumentLateCloneMutation=HASH(0x778cea2de0), "wrong.isf", HASH(0x778cedd648)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 190
+    # 	main::invoke("library_late", HASH(0x778cea0408)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause library_late_target", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause library_late_target", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:library origin final use (?:target or identity|coverage) differs)'
+
+    #   Failed test 'wrong_label_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+    # Looks like you failed 3 tests of 12.
+
+#   Failed test 'complete validator/finalizer cause library_late_target'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_source_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise final whole edge/target/kind publication boundary'
+    #   at (eval 53302) line 1.
+    #                   'Error: no (actor ...) root found in 'wrong.isf'
+    #  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+    # 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x778ced5b58), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x778ced5b58), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::DocumentLateCloneMutation=HASH(0x778ced5b58), "wrong.isf", HASH(0x778ce9e9d8)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 190
+    # 	main::invoke("library_late", HASH(0x778ceae9d8)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause library_late_instance", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause library_late_instance", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:library origin final use (?:target or identity|coverage) differs)'
+
+    #   Failed test 'wrong_label_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+    # Looks like you failed 3 tests of 12.
+
+#   Failed test 'complete validator/finalizer cause library_late_instance'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_source_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise final whole edge/target/kind publication boundary'
+    #   at (eval 56872) line 1.
+    #                   'Error: no (actor ...) root found in 'wrong.isf'
+    #  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+    # 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x778ce9ce40), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x778ce9ce40), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::DocumentLateCloneMutation=HASH(0x778ce9ce40), "wrong.isf", HASH(0x778ced9090)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 190
+    # 	main::invoke("library_late", HASH(0x778cee3198)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause library_late_coverage", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause library_late_coverage", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:library origin final use (?:target or identity|coverage) differs)'
+
+    #   Failed test 'wrong_label_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+    # Looks like you failed 3 tests of 12.
+
+#   Failed test 'complete validator/finalizer cause library_late_coverage'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_source_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise final whole edge/target/kind publication boundary'
+    #   at (eval 60442) line 1.
+    #                   'Error: no (actor ...) root found in 'wrong.isf'
+    #  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+    # 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x778d2af7c8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::DocumentLateCloneMutation=HASH(0x778d2af7c8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::DocumentLateCloneMutation=HASH(0x778d2af7c8), "wrong.isf", HASH(0x778cebc690)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 190
+    # 	main::invoke("library_late", HASH(0x778cea6450)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause library_late_parameter_kind", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause library_late_parameter_kind", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:library origin final use (?:target or identity|coverage) differs)'
+
+    #   Failed test 'wrong_label_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+    # Looks like you failed 3 tests of 12.
+
+#   Failed test 'complete validator/finalizer cause library_late_parameter_kind'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_source_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise final ATL consistency boundary'
+    #   at (eval 66353) line 1.
+    #                   'Error: no (actor ...) root found in 'wrong.isf'
+    #  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+    # 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x778cf074b0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x778cf074b0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x778cf074b0), "wrong.isf", HASH(0x778cf064e0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x778cf074b0), "wrong.isf", HASH(0x778cf064e0)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 190
+    # 	main::invoke("ATL_late", HASH(0x778cf073a8)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause ATL_late_target", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause ATL_late_target", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:ATL origin final (?:target or instance identity|resolved actor coverage) differs)'
+
+    #   Failed test 'wrong_label_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+    # Looks like you failed 3 tests of 12.
+
+#   Failed test 'complete validator/finalizer cause ATL_late_target'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_source_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise final ATL consistency boundary'
+    #   at (eval 72264) line 1.
+    #                   'Error: no (actor ...) root found in 'wrong.isf'
+    #  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+    # 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x778ce99fa8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x778ce99fa8), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x778ce99fa8), "wrong.isf", HASH(0x778ceb35a0)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x778ce99fa8), "wrong.isf", HASH(0x778ceb35a0)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 190
+    # 	main::invoke("ATL_late", HASH(0x778ceae6f0)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause ATL_late_declaration", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause ATL_late_declaration", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:ATL origin final (?:target or instance identity|resolved actor coverage) differs)'
+
+    #   Failed test 'wrong_label_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+    # Looks like you failed 3 tests of 12.
+
+#   Failed test 'complete validator/finalizer cause ATL_late_declaration'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+
+    #   Failed test 'wrong_source_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+
+    #   Failed test 'precise final ATL consistency boundary'
+    #   at (eval 78175) line 1.
+    #                   'Error: no (actor ...) root found in 'wrong.isf'
+    #  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+    # 	FSM::Adapter::ISF::Parser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x778cf004b0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/SameSourceLibraryOriginParser.pm line 34
+    # 	FSM::Test::SameSourceLibraryOriginParser::parse_source(FSM::Test::ATLLateOriginMutation=HASH(0x778cf004b0), "(not_actor)", "wrong.isf") called at t/lib/FSM/Test/LibraryDocumentOriginAuthority.pm line 62
+    # 	FSM::Test::LibraryDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x778cf004b0), "wrong.isf", HASH(0x778ceb5648)) called at t/lib/FSM/Test/ATLDocumentOriginAuthority.pm line 38
+    # 	FSM::Test::ATLDocumentOriginAuthority::Parser::parse_documents(FSM::Test::ATLLateOriginMutation=HASH(0x778cf004b0), "wrong.isf", HASH(0x778ceb5648)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 190
+    # 	main::invoke("ATL_late", HASH(0x778cefc858)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	eval {...} called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 73
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x778ec5b828), "complete validator/finalizer cause ATL_late_coverage", CODE(0x778d25b720)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("complete validator/finalizer cause ATL_late_coverage", CODE(0x778d25b720)) called at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93
+    # '
+    #     doesn't match '(?^:ATL origin final (?:target or instance identity|resolved actor coverage) differs)'
+
+    #   Failed test 'wrong_label_echo authenticates only its complete cause'
+    #   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 85.
+    #          got: '1'
+    #     expected: '0'
+    # Looks like you failed 3 tests of 12.
+
+#   Failed test 'complete validator/finalizer cause ATL_late_coverage'
+#   at t/2054-isf-validator-finalizer-diagnostic-causes.t line 93.
+# Looks like you failed 25 tests of 26.
+t/2054-isf-validator-finalizer-diagnostic-causes.t .. 
+Dubious, test returned 25 (wstat 6400, 0x1900)
+Failed 25/26 subtests 
+
+Test Summary Report
+-------------------
+t/2054-isf-validator-finalizer-diagnostic-causes.t (Wstat: 6400 Tests: 26 Failed: 25)
+  Failed tests:  2-26
+  Non-zero exit status: 25
+Files=1, Tests=26,  3 wallclock secs ( 0.01 usr  0.01 sys +  2.40 cusr  0.34 csys =  2.76 CPU)
+Result: FAIL

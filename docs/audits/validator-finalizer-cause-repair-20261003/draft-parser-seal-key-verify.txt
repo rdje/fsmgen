@@ -1,0 +1,31 @@
+ram-guard: PID 10940; host 75.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared cause corruption rejects: first_cause
+shared cause corruption rejects: flag_kind
+shared cause corruption rejects: flag_value
+shared cause corruption rejects: missing_context
+shared cause corruption rejects: source
+shared cause corruption rejects: positive_payload
+shared cause corruption rejects: site
+shared cause corruption rejects: unknown_root
+whole product kind corruption rejects: library
+whole product kind corruption rejects: ATL
+complete ten-site/25-context/83-capture causes, independent whole products/kinds, Git/fingerprints and hostile controls pass; broader consumers remain open
+shared current cause/product corruption rejects: cause
+shared current cause/product corruption rejects: flag_kind
+shared current cause/product corruption rejects: flag_value
+shared current cause/product corruption rejects: omission
+shared current cause/product corruption rejects: source
+shared current cause/product corruption rejects: site
+shared current cause/product corruption rejects: unknown_row
+shared current cause/product corruption rejects: whole_kind
+complete cohort kind corruption rejects: authority
+complete cohort kind corruption rejects: same
+complete cohort kind corruption rejects: ATL
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/validator-finalizer-cause-repair-20261003/verify.py", line 143, in <module>
+    root=Path('docs/audits/conditional-origin-parser-20261002');sealed(root);assert (root/'verify.py').read_bytes()==blob(root/'verify.py')
+                                                                ~~~~~~^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/validator-finalizer-cause-repair-20261003/verify.py", line 13, in sealed
+    members=json.loads((path/'manifest.json').read_text())['files']
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'files'

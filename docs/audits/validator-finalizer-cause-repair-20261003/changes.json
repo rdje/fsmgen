@@ -1,0 +1,27 @@
+{
+  "baseline": "8a128dad244b6888597f37defb14bfe77b451535",
+  "new": {
+    "t/2043-isf-conditional-origin-parser.t:132": "ok(diagnostic_cause_matches($@, \"Transaction 'main': unsupported '(cond ...)' clause in transaction body\"), 'same precise committed source refusal');",
+    "t/2043-isf-conditional-origin-parser.t:174": "ok(diagnostic_cause_matches($@, $expected{$name}), 'complete mutation-specific association cause');",
+    "t/2044-isf-conditional-origin-source-authority.t:50": "ok(diagnostic_cause_matches($diagnostic, $mutation =~ /\\Aactor_(?:identity|kind)\\z/\n                ? 'conditional origin actor differs from authoritative source'\n                : 'conditional origin ledger differs from authoritative source'),\n                'precise source-bound diagnostic');",
+    "t/2044-isf-conditional-origin-source-authority.t:79": "ok(diagnostic_cause_matches($@, 'conditional origin ledger differs from authoritative source'), 'source operation authenticates independently of target shape');",
+    "t/2044-isf-conditional-origin-source-authority.t:91": "ok(diagnostic_cause_matches($@, 'conditional origin independent source authority required'), 'bounded absent-authority diagnostic');",
+    "t/2045-isf-same-source-library-origins.t:161": "ok(diagnostic_cause_matches($@, 'conditional origin target identity mismatch'), 'precise complete target identity boundary');",
+    "t/2046-isf-library-document-origin-authority.t:195": "ok(diagnostic_cause_matches($diagnostic, $name eq 'coverage'\n            ? 'library origin final use coverage differs'\n            : 'library origin final use target or identity differs'),\n            'precise final whole edge/target/kind publication boundary');",
+    "t/2046-isf-library-document-origin-authority.t:79": "ok(diagnostic_cause_matches($diagnostic, $name =~ /\\Aactor_(?:identity|kind)\\z/\n                ? 'library origin actor differs from authoritative document set'\n                : 'library origin proof differs from authoritative document set'),\n                'precise independent authentication boundary');",
+    "t/2047-isf-atl-document-origin-authority.t:118": "ok(diagnostic_cause_matches($diagnostic, $name eq 'coverage'\n            ? 'ATL origin final resolved actor coverage differs'\n            : 'ATL origin final target or instance identity differs'),\n            'precise final ATL consistency boundary');",
+    "t/2047-isf-atl-document-origin-authority.t:77": "ok(diagnostic_cause_matches($diagnostic, $name =~ /\\Aactor_(?:identity|kind)\\z/\n                ? 'library origin actor differs from authoritative document set'\n                : 'library origin proof differs from authoritative document set'),\n                'precise independent complete authentication boundary');"
+  },
+  "old": {
+    "t/2043-isf-conditional-origin-parser.t:132": "like($@, qr/unsupported '\\(cond \\.\\.\\.\\)' clause/, 'same precise committed source refusal');",
+    "t/2043-isf-conditional-origin-parser.t:174": "like($@, qr/conditional origin/, 'bounded explicit-association diagnostic');",
+    "t/2044-isf-conditional-origin-source-authority.t:50": "like($diagnostic, qr/conditional origin (?:actor|ledger) differs from authoritative source/,\n                'precise source-bound diagnostic');",
+    "t/2044-isf-conditional-origin-source-authority.t:79": "like($@, qr/ledger differs from authoritative source/, 'source operation authenticates independently of target shape');",
+    "t/2044-isf-conditional-origin-source-authority.t:91": "like($@, qr/independent source authority required/, 'bounded absent-authority diagnostic');",
+    "t/2045-isf-same-source-library-origins.t:161": "like($@, qr/conditional origin target identity mismatch/, 'precise complete target identity boundary');",
+    "t/2046-isf-library-document-origin-authority.t:195": "like($diagnostic, qr/library origin final use (?:target or identity|coverage) differs/,\n            'precise final whole edge/target/kind publication boundary');",
+    "t/2046-isf-library-document-origin-authority.t:79": "like($diagnostic, qr/differs from authoritative document set/, 'precise independent authentication boundary');",
+    "t/2047-isf-atl-document-origin-authority.t:118": "like($diagnostic,qr/ATL origin final (?:target or instance identity|resolved actor coverage) differs/,'precise final ATL consistency boundary');",
+    "t/2047-isf-atl-document-origin-authority.t:77": "like($diagnostic,qr/differs from authoritative document set/,'precise independent complete authentication boundary');"
+  }
+}

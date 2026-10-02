@@ -1,0 +1,25 @@
+{
+  "baseline": "8a128dad244b6888597f37defb14bfe77b451535",
+  "current_command": [
+    "prove",
+    "-Iperl",
+    "-It/lib",
+    "t/2043-isf-conditional-origin-parser.t",
+    "t/2044-isf-conditional-origin-source-authority.t",
+    "t/2045-isf-same-source-library-origins.t",
+    "t/2046-isf-library-document-origin-authority.t",
+    "t/2047-isf-atl-document-origin-authority.t",
+    "t/2054-isf-validator-finalizer-diagnostic-causes.t",
+    "t/2049-pathsearch-module-origin.t"
+  ],
+  "prior_command": [
+    "prove",
+    "-Iperl",
+    "-It/lib",
+    "t/2054-isf-validator-finalizer-diagnostic-causes.t"
+  ],
+  "statuses": {
+    "current": 0,
+    "prior": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "baseline": "8a128dad244b6888597f37defb14bfe77b451535",
+  "book_status": 0,
+  "cold_status": 0,
+  "current_status": 0,
+  "focused_book_status": 0,
+  "intermediate_readers": [
+    "mixed ATL opaque/finalizer template",
+    "historical parser seal key",
+    "auxiliary label member name"
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.4",
+  "prior_cold_status": 1,
+  "prior_process_status": 25,
+  "prior_prove_status": 1,
+  "run_status": 0
+}

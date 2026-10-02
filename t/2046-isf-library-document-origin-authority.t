@@ -112,7 +112,10 @@ for my $input (@inputs) {
             my $accepted = eval {$authority->validate($bad_actor, $bad_proof); 1};
             my $diagnostic = $@;
             ok(!$accepted, "actual $name mutation refuses");
-            like($diagnostic, qr/differs from authoritative document set/, 'precise independent authentication boundary');
+            ok(diagnostic_cause_matches($diagnostic, $name =~ /\Aactor_(?:identity|kind)\z/
+                ? 'library origin actor differs from authoritative document set'
+                : 'library origin proof differs from authoritative document set'),
+                'precise independent authentication boundary');
             is($json->encode([$bad_actor, $bad_proof]), $before, 'submitted whole products remain untouched');
             push @controls, {name => $name, actor => $bad_actor, proof => $bad_proof,
                 accepted => $accepted ? 1 : 0, diagnostic => $diagnostic};
@@ -228,7 +231,9 @@ subtest 'final canonical clone changes refuse before document-proof publication'
         my $actor = eval {$parser->parse_documents($label, $documents)};
         my $diagnostic = $@;
         ok(!defined($actor), "actual late $name mutation cannot publish provenance");
-        like($diagnostic, qr/library origin final use (?:target or identity|coverage) differs/,
+        ok(diagnostic_cause_matches($diagnostic, $name eq 'coverage'
+            ? 'library origin final use coverage differs'
+            : 'library origin final use target or identity differs'),
             'precise final whole edge/target/kind publication boundary');
         push @controls, {name => $name, actor => $actor, declined_proof => $parser->proof, diagnostic => $diagnostic};
     }

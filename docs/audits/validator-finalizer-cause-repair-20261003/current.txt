@@ -1,0 +1,10 @@
+t/2043-isf-conditional-origin-parser.t .............. ok
+t/2044-isf-conditional-origin-source-authority.t .... ok
+t/2045-isf-same-source-library-origins.t ............ ok
+t/2046-isf-library-document-origin-authority.t ...... ok
+t/2047-isf-atl-document-origin-authority.t .......... ok
+t/2054-isf-validator-finalizer-diagnostic-causes.t .. ok
+t/2049-pathsearch-module-origin.t ................... ok
+All tests successful.
+Files=7, Tests=231, 36 wallclock secs ( 0.18 usr  0.04 sys + 32.20 cusr  2.46 csys = 34.88 CPU)
+Result: PASS

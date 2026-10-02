@@ -18,12 +18,13 @@ evidence: >-
   docs/audits/origin-helper-cause-repair-20261002/scope.txt;
   docs/audits/current-diagnostic-lexical-inventory-20261002/scope.txt;
   docs/audits/constructor-cause-repair-20261002/scope.txt;
-  docs/audits/source-origin-validator-causes-20261003/scope.txt;
+  docs/audits/validator-finalizer-cause-repair-20261003/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/2046-isf-library-document-origin-authority.t
   t/2045-isf-same-source-library-origins.t
+  t/2054-isf-validator-finalizer-diagnostic-causes.t
 ---
 
 Independent complete documents, relative identities/roots and source bytes/forms
@@ -49,10 +50,10 @@ apply. No new macros, scheduling admission or HDL/macro runtime is proved.
 
 Constructors and library/file helpers compare complete causes and reject actual
 caller/label echoes. Reverify: `python3 docs/audits/origin-helper-cause-repair-20261002/verify.py`.
-Remaining ten validator/finalizer sites accept unrelated argument/source failures
-carrying wanted text, including a generic category inside a primary type error.
-Immediate P2 repair is owned; diagnosis:
-`python3 docs/audits/source-origin-validator-causes-20261003/verify.py`.
+Ten validator/finalizer sites now use complete causes, including specific
+generic mutation reasons. Actual argument/source/label echoes reject; exact
+prior consumers give RED. Whole products/kinds and causes reverify:
+`python3 docs/audits/validator-finalizer-cause-repair-20261003/verify.py`.
 Broader current/cold consumer controls remain open. The
 [lexical census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt)
 is ASCII Perl discovery, including overlapping comments/strings/declarations,

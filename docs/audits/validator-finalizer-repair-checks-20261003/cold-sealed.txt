@@ -1,0 +1,25 @@
+ram-guard: PID 7379; host 80.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared cause corruption rejects: first_cause
+shared cause corruption rejects: flag_kind
+shared cause corruption rejects: flag_value
+shared cause corruption rejects: missing_context
+shared cause corruption rejects: source
+shared cause corruption rejects: positive_payload
+shared cause corruption rejects: site
+shared cause corruption rejects: unknown_root
+whole product kind corruption rejects: library
+whole product kind corruption rejects: ATL
+complete ten-site/25-context/83-capture causes, independent whole products/kinds, Git/fingerprints and hostile controls pass; broader consumers remain open
+runtime status primitive-kind corruption rejects
+shared current cause/product corruption rejects: cause
+shared current cause/product corruption rejects: flag_kind
+shared current cause/product corruption rejects: flag_value
+shared current cause/product corruption rejects: omission
+shared current cause/product corruption rejects: source
+shared current cause/product corruption rejects: site
+shared current cause/product corruption rejects: unknown_row
+shared current cause/product corruption rejects: whole_kind
+complete cohort kind corruption rejects: authority
+complete cohort kind corruption rejects: same
+complete cohort kind corruption rejects: ATL
+current complete causes reject actual prior echoes; whole parser/authority/same-source/library/ATL products and kinds re-derive; scoped runtime/source/fingerprints and hostile controls pass

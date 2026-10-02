@@ -138,8 +138,10 @@ real-label controls. Actual validator/finalizer probes also reproduce unrelated
 argument failures echoed through Carp and earlier parser failures quoting wanted
 text in source labels. Even the generic origin-category assertion accepts a
 Perl type failure quoting that category in its primary message. Those confirmed
-consumers are scheduled for complete cause contracts; broader current and cold
-consumers remain under audit. These corrections change verification, not public
+validator/finalizer assertions now compare complete causes, including specific
+reasons for each generic mutation. Permanent real producer controls reject
+argument, comment and label echoes; replaying the exact prior consumers fails
+those controls. Broader current and cold consumers remain under audit. These corrections change verification, not public
 ISF admission.
 
 This observer preserves the existing first-clause behavior, including current

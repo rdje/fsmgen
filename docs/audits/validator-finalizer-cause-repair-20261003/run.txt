@@ -1,0 +1,2 @@
+ram-guard: PID 67035; host 79.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+current cohort PASS; exact prior-consumer counterfactual RED; all producer and instrument bytes unchanged

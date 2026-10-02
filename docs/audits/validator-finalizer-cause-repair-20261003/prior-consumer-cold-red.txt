@@ -1,0 +1,21 @@
+ram-guard: PID 83070; host 79.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared cause corruption rejects: first_cause
+shared cause corruption rejects: flag_kind
+shared cause corruption rejects: flag_value
+shared cause corruption rejects: missing_context
+shared cause corruption rejects: source
+shared cause corruption rejects: positive_payload
+shared cause corruption rejects: site
+shared cause corruption rejects: unknown_root
+whole product kind corruption rejects: library
+whole product kind corruption rejects: ATL
+complete ten-site/25-context/83-capture causes, independent whole products/kinds, Git/fingerprints and hostile controls pass; broader consumers remain open
+runtime status primitive-kind corruption rejects
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/validator-finalizer-cause-repair-20261003/verify.py", line 113, in <module>
+    if '--prior-consumer' in sys.argv:causes(prior)
+                                      ~~~~~~^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/validator-finalizer-cause-repair-20261003/verify.py", line 90, in causes
+    assert r['matched']==expected, ('actual consumer fails complete-cause classification',r['id'],r['band'])
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('actual consumer fails complete-cause classification', 'scheduler', 'wrong_argument_echo')

@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use lib 'perl', 't/lib';
 use Test::More;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use JSON::PP;
 use Digest::SHA qw(sha256_hex);
 use FSM::Adapter::ISF::Parser;
@@ -129,7 +130,7 @@ subtest 'first sample-procedure cond stays publicly closed' => sub {
     my $before = $json->encode($actor);
     my $result = eval {FSM::Scheduler::ISF->new->lower($actor)};
     ok(!defined($result), 'detached ledger creates no public admission');
-    like($@, qr/unsupported '\(cond \.\.\.\)' clause/, 'same precise committed source refusal');
+    ok(diagnostic_cause_matches($@, "Transaction 'main': unsupported '(cond ...)' clause in transaction body"), 'same precise committed source refusal');
     is($json->encode($actor), $before, 'failed lower preserves full actual actor');
 };
 done_testing;
@@ -159,6 +160,16 @@ sub qualify {
 }
 sub mutation_controls {
     my ($actor, $ledger, $parser) = @_;
+    my %expected = (
+        omission => 'conditional origin incomplete coverage',
+        duplicate => 'conditional origin missing, extra or duplicate path',
+        wrong_path => 'conditional origin missing, extra or duplicate path',
+        changed_target => 'conditional origin target identity mismatch',
+        forged_origin => 'conditional origin differs from the actual producer result',
+        source_identity => 'conditional origin differs from the actual producer result',
+        unknown_field => 'conditional origin unknown or missing fields',
+        schema_kind => 'conditional origin schema mismatch',
+    );
     for my $name (qw(omission duplicate wrong_path changed_target forged_origin source_identity unknown_field schema_kind)) {
         my $bad = $json->decode($json->encode($ledger));
         if ($name eq 'omission') {shift @{$bad->{entries}}}
@@ -171,7 +182,7 @@ sub mutation_controls {
         elsif ($name eq 'unknown_field') {$bad->{entries}[0]{extra} = 1}
         else {$bad->{schema_version} = '1'}
         ok(!eval {$parser->validate($actor, $bad); 1}, "$name is actually rejected");
-        like($@, qr/conditional origin/, 'bounded explicit-association diagnostic');
+        ok(diagnostic_cause_matches($@, $expected{$name}), 'complete mutation-specific association cause');
     }
 }
 sub read_file {open my $f, '<:raw', $_[0] or die $!; local $/; return <$f>}

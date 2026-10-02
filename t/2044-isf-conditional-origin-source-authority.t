@@ -48,7 +48,9 @@ for my $path (@paths) {
             my $accepted = eval {$authority->validate($bad_actor, $bad_ledger); 1};
             my $diagnostic = $@;
             ok(!$accepted, "$mutation actually refuses");
-            like($diagnostic, qr/conditional origin (?:actor|ledger) differs from authoritative source/,
+            ok(diagnostic_cause_matches($diagnostic, $mutation =~ /\Aactor_(?:identity|kind)\z/
+                ? 'conditional origin actor differs from authoritative source'
+                : 'conditional origin ledger differs from authoritative source'),
                 'precise source-bound diagnostic');
             push @controls, {name => $mutation, actor => $bad_actor, ledger => $bad_ledger,
                 accepted => $accepted ? JSON::PP::true : JSON::PP::false, diagnostic => $diagnostic};
@@ -77,7 +79,7 @@ subtest 'identical complete actors require the independently supplied source int
     $forged->{source_sha256} = $macro->{ledger}{source_sha256};
     ok(!eval {$authority->validate($authored->{instrumented}, $forged); 1},
         'valid authored-when catalog plus matching embedded digest cannot replace select intent');
-    like($@, qr/ledger differs from authoritative source/, 'source operation authenticates independently of target shape');
+    ok(diagnostic_cause_matches($@, 'conditional origin ledger differs from authoritative source'), 'source operation authenticates independently of target shape');
 };
 
 subtest 'missing independent source authority refuses' => sub {
@@ -89,7 +91,7 @@ subtest 'missing independent source authority refuses' => sub {
     my $empty = bless {}, 'FSM::Test::ConditionalOriginAuthority';
     ok(!eval {$empty->validate($saved->{instrumented}, $saved->{ledger}); 1},
         'uninitialized verifier refuses even a valid complete ledger');
-    like($@, qr/independent source authority required/, 'bounded absent-authority diagnostic');
+    ok(diagnostic_cause_matches($@, 'conditional origin independent source authority required'), 'bounded absent-authority diagnostic');
 };
 
 subtest 'unqualified imports stay closed at the local authority boundary' => sub {
