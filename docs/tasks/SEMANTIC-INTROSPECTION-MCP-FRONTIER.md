@@ -3782,9 +3782,53 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify actual captured module copies and ordinary result/carrier conservation.`
   Acceptance: `After source cohort, bind every actual build_module capture before and after copy. Model changed scalar assignment/provenance, signal/port/data-link widths by source-owned contracts and actual complete emitted carriers; compare genuine ordinary originals and pure copies. Independently close all module field differences or split finite semantic cohorts; do not promote cold controller/constructor meanings.`
+  Verification: `pending`
+  Commit: `children below`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.6`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.1`
+  Status: `done`
+  Goal: `Split module-copy source semantics into bounded capture, generated, reusable and ATL cohorts.`
+  Acceptance: `Use current exact test module-capture site and authenticated prior full products to declare complete per-family ownership before fresh module-mode probes. No semantic promotion of retained module differences and no repair before the final join.`
+  Verification: `Actor qualification de28362fb is committed clean. Current exact build_module capture at T1960 line51 contains generated-child/storage, case-fold/permuted, FIFO/storage-fields, resolved/vector/trigger-batch ATL, rule and monitor products. Authenticated initial profile retains complete originals/copies and their differences without field-meaning signoff. .2 owns fresh original/pure-module capture and conservation; .3/.4/.5 independently qualify generated, reusable and ATL fields; .6 joins source preparation propagation and every module difference before snapshots .4. Task integrity/staged doctrines pass; no source/provider/test/predicate/book behavior or historical archive change.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.2`
+  Status: `pending`
+  Goal: `Capture exact current modules and genuine module-only pure-copy counterfactuals.`
+  Acceptance: `Run unchanged current T1960 with first-touch complete module-original/copy graphs at the exact build_module capture. Compare genuine ordinary versus pure copies only at that site, retain complete public coverage callers/results and ordinary lowering/carriers, prove original/kind/topology/isolation preservation and bind current source plus prior membership. Declare every actual field-difference roster by family as observation only; no field meaning or repair signoff.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.3`
+  Status: `pending`
+  Goal: `Qualify generated, case-folded, permuted, rule and monitor module-copy fields.`
+  Acceptance: `Use authenticated capture to independently bind each changed assignment/provenance RHS and signal/port width to its complete source, actual generated producer and emitted carrier/semantic contract. Preserve physical/private/source identities, genuine original/pure controls and exact causes; qualify every actual changed field for this family or split further. Whole controller/constructor semantics remain separately cold.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.4`
+  Status: `pending`
+  Goal: `Qualify reusable FIFO and storage module-copy fields.`
+  Acceptance: `Independently bind all actual FIFO/storage-fields module scalar-kind differences and inherited source-copy preparation propagation to complete bank/storage/interface/rule/use contracts and emitted carriers. Retain complete product schemas/kinds and real original/pure controls, no source-value-only or count-based signoff. Broader controller/type/backend semantics remain cold; no repair before join.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.5`
+  Status: `pending`
+  Goal: `Qualify resolved/vector/trigger-batch ATL module-copy fields.`
+  Acceptance: `Independently bind all actual child/parent assignments, port/signal/data-link widths and inherited activation/wiring preparation differences to complete resolved source and current published integration contracts plus emitted carriers. Preserve endpoints, identities, topology and genuine original/pure controls; do not infer wider ATL mapping/controller semantics from equal bytes.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.6`
+  Status: `pending`
+  Goal: `Join all module-copy field contracts and source preparation propagation.`
+  Acceptance: `Reconcile every actual current/initial module capture, changed field and ordinary result/carrier with the family models and actual controls. Independently close retained actor-only preparation kind propagation from source .2 under these models or own an exact further cohort. Commit complete bounded module handoff before snapshot/mutation-seed .4 and eventual P2 .13 repair; preserve wider cold limitations.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6095,3 +6139,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Exact native original/pure actors and the independent source-field reader locate kind loss in T1960 authored HASH dclone at line 30; physical actor dclone at line 34 preserves incoming kinds. git log -S identifies the original authored-copy construction; actual Storable source-authority control fails at numeric FIFO slot 0. Complete source/profile and literals separate numeric indexes/binding/route widths from other retained scalar spellings.
 - [x] **ADDRESSED (verified)** — Source qualification closes every actual authored/physical actor-copy difference without changing the test. Genuine scalar-preserving copies retain complete kinds/topology/deep isolation and exactly equal ordinary lowering/carrier/scope results. Module and snapshot meanings remain owned .3/.4; P2 .13 repair waits for the final join.
 - [x] **NO REGRESSION** — Focused reusable/coverage/cause regressions report All tests successful, Files=3, Tests=242; public-book audits pass Files=2, Tests=308. Book build, rendered source-field/open-boundary checks, Knowledge Map and staged doctrines pass. Historical evidence and hot source/provider/predicate boundaries remain unchanged; visual QA stays explicitly pending.
+
+## Acceptance Checklist — coverage module cohort split
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated initial module graphs contain several source/product families under the exact T1960 build_module capture; the original git log -S authored-copy construction and source-bound module data establish why one whole-field leaf is too broad. Field differences remain observations until independent family models close.
+- [x] **ADDRESSED (verified)** — Declare fresh module-only original/pure capture, generated/rule/monitor, reusable/storage, ATL and complete propagation-join leaves before runtime work. Preserve snapshot and P2 repair ownership and every existing cold limitation.
+- [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl and the staged gate require [doctrine] all doctrine checks passed. This split changes task ownership and its measured allowance only; the book and verified source/cause results remain unchanged.
