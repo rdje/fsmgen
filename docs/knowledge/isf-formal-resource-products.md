@@ -19,6 +19,6 @@ Inventory is not admission/grant proof. It may return potential declarations des
 
 T1944 compares counters/roles/grant-update targets, independent width boundaries, permutation identities, detachment, raw alias projection, strict carriers and genuine invalid-resource fixtures. Prior native schedule comparison preserves executable grants/metadata. [Namespace qualification](isf-formal-arbitration-namespace.md) observes grants, priority and finalization; only pointers extend the namespace. Historical parent/domain reservation/rewrite closure follows that stage, not this inventory.
 
-Cause safety remains open. The code-regex helper and adjacent preparation assertion accept real unrelated statement errors through stack/primary echoes. [Diagnosis](../audits/formal-resource-helper-causes-20261003/scope.txt) owns .2.3.8 complete-cause repair. Active eval-source observers can echo expectations; only the corrected compiled direct consumer qualifies. Finite whole actor/pointer/schema models pass; other internals remain cold-owned.
+Complete resource/context/reason comparisons now reject earlier statement errors and primary-code echoes. [Repair](../audits/formal-resource-cause-repair-20261003/scope.txt) retains exact prior false matches, real bypass failures and conserved whole products. Compile consumers before calls to avoid active eval-source echoes. Finite actor/pointer/schema models qualify; wider internals remain cold-owned.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.1.

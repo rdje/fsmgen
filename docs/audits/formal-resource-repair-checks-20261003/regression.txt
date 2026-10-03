@@ -1,0 +1,6 @@
+t/1218-isf-rule-slot-resource-arbitration.t .. ok
+t/1943-isf-formal-point-products.t ........... ok
+t/1948-isf-formal-arbitration-namespace.t .... ok
+All tests successful.
+Files=3, Tests=22, 40 wallclock secs ( 0.03 usr  0.01 sys + 20.50 cusr  8.83 csys = 29.37 CPU)
+Result: PASS

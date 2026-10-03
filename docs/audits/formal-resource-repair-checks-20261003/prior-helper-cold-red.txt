@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-resource-cause-repair-20261003/verify.py", line 60, in <module>
+    if '--prior-helper' in sys.argv:assert all(r['matched']==int(r['band']=='current_fixture') for r in ph['rows']),'real prior helper accepts twelve wrong causes'
+                                           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: real prior helper accepts twelve wrong causes

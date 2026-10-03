@@ -7,6 +7,7 @@ use File::Temp qw(tempdir);
 use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::FormalIdentityPlan;
@@ -67,10 +68,12 @@ sub strict_carrier {
     is($r->{exit_code}, 0, "$label strict carrier") or diag($r->{stdout}, $r->{stderr});
 }
 sub rejected {
-    my ($actor, $pattern, $label) = @_;
+    my ($actor, $expected_cause, $label) = @_;
     my $ok = eval {$lowerer->build_module($actor); 1};
+    my $error = $@;
     ok(!$ok, "$label still refused by executable arbitration");
-    like($@, $pattern, "$label retains canonical diagnostic");
+    ok(diagnostic_cause_matches($error, $expected_cause), "$label retains canonical diagnostic")
+        or diag($error);
 }
 
 subtest 'shared declaration producer agrees with actual selected resource kinds' => sub {
@@ -119,7 +122,9 @@ subtest 'raw formal pointer aliases remain distinct from generated declarations'
     my $decl = $p->{resource_signal_products}[0]{declaration};
     is($decl->{width}, 2, 'actual pointer width independent of raw formal');
     is($p->{transaction_products}{main}{counters}{$helper}, 4, 'raw formal width remains in its own product');
-    rejected($p->{actor}, qr/isf_resource_round_robin_pointer_collision/, 'raw formal alias');
+    rejected($p->{actor}, "ISF resource arbitration 'isf_resource_round_robin_pointer_collision' "
+                . "on resource 'shared_bus': "
+                . "generated round_robin pointer '$helper' collides with an existing actor symbol", 'raw formal alias');
     my ($physical, $plan) = project($p);
     my $private = $plan->{formals}{main}{$helper}{physical_name};
     isnt(lc($private), lc($helper), 'formal gets a distinct portable identity');
@@ -134,35 +139,50 @@ subtest 'declaration collection does not replace resource admission' => sub {
     my $helper = $lowerer->prepare_formal_source($actor)->{resource_signal_products}[0]{declaration}{name};
     for my $kind (qw(fixed unknown_user overlap)) {
         my $bad = dclone($actor);
-        my $pattern;
+        my $expected_cause;
         if ($kind eq 'fixed') {
             push @{$bad->{storage}[0]{signals}}, {name => $helper, width => 2};
-            $pattern = qr/isf_resource_round_robin_pointer_collision/;
+            $expected_cause = "ISF resource arbitration 'isf_resource_round_robin_pointer_collision' "
+                . "on resource 'shared_bus': "
+                . "generated round_robin pointer '$helper' collides with an existing actor symbol";
         } elsif ($kind eq 'unknown_user') {
             $bad->{resources}[0]{users}[0] = 'missing';
-            $pattern = qr/isf_resource_unknown_user/;
+            $expected_cause = "ISF resource arbitration 'isf_resource_unknown_user' "
+                . "on resource 'shared_bus': "
+                . "user 'missing' is not a lowered rule";
         } else {
             my $extra = dclone($bad->{resources}[0]);$extra->{name} = 'other';
             push @{$bad->{resources}}, $extra;
-            $pattern = qr/isf_resource_round_robin_user_overlap/;
+            $expected_cause = "ISF resource arbitration 'isf_resource_round_robin_user_overlap' "
+                . "on resource 'other': "
+                . "rule user 'user0' is already bound to round_robin resource 'shared_bus'";
             my $reversed = dclone($bad);@{$reversed->{resources}} = reverse @{$reversed->{resources}};
             is_deeply($lowerer->prepare_formal_source($reversed)->{resource_signal_products},
                 $lowerer->prepare_formal_source($bad)->{resource_signal_products}, 'potential declarations sorted independently of resource order');
         }
         ok(@{$lowerer->prepare_formal_source($bad)->{resource_signal_products}}, "$kind still has potential declarations");
-        rejected($bad, $pattern, $kind);
+        rejected($bad, $expected_cause, $kind);
     }
     my $bad_name = dclone($actor);$bad_name->{resources}[0]{name} = 'shared-bus';
-    eval {$lowerer->prepare_formal_source($bad_name)};
-    like($@, qr/isf_resource_round_robin_name_shape/, 'shared declaration producer rejects malformed generated name');
-    rejected($bad_name, qr/isf_resource_round_robin_name_shape/, 'malformed name');
+    my $bad_name_ok = eval {$lowerer->prepare_formal_source($bad_name); 1};
+    my $bad_name_error = $@;
+    ok(!$bad_name_ok, 'shared declaration producer rejects malformed generated name');
+    ok(diagnostic_cause_matches($bad_name_error, "ISF resource arbitration 'isf_resource_round_robin_name_shape' "
+                . "on resource 'shared-bus': "
+                . "round_robin resource names must be HDL identifiers because FSMGen generates pointer storage from the resource name"),
+        'shared declaration producer retains complete malformed-name cause') or diag($bad_name_error);
+    rejected($bad_name, "ISF resource arbitration 'isf_resource_round_robin_name_shape' "
+                . "on resource 'shared-bus': "
+                . "round_robin resource names must be HDL identifiers because FSMGen generates pointer storage from the resource name", 'malformed name');
     for my $kind (qw(priority empty_users unsupported_kind)) {
         my $other = dclone($actor);
         $other->{resources}[0]{arbiter} = 'priority' if $kind eq 'priority';
         $other->{resources}[0]{users} = [] if $kind eq 'empty_users';
         $other->{resources}[0]{kind} = 'backlog_kind' if $kind eq 'unsupported_kind';
         is_deeply($lowerer->prepare_formal_source($other)->{resource_signal_products}, [], "$kind invents no pointer product");
-        rejected($other, qr/isf_resource_unsupported_kind/, 'unsupported kind') if $kind eq 'unsupported_kind';
+        rejected($other, "ISF resource arbitration 'isf_resource_unsupported_kind' "
+                . "on resource 'shared_bus': "
+                . "resource kind 'backlog_kind' is not enforced yet", 'unsupported kind') if $kind eq 'unsupported_kind';
     }
 };
 done_testing;

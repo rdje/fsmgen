@@ -1,0 +1,5 @@
+t/1944-isf-formal-resource-products.t ........... ok
+t/2058-isf-formal-resource-diagnostic-causes.t .. ok
+All tests successful.
+Files=2, Tests=66, 10 wallclock secs ( 0.02 usr  0.01 sys +  5.87 cusr  2.86 csys =  8.76 CPU)
+Result: PASS

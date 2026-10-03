@@ -1,0 +1,2 @@
+ram-guard: PID 42898; host 63.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS actual current-test resource validation bypass RED and whole native input/output capture.

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-resource-cause-repair-20261003/verify.py", line 61, in <module>
+    if '--prior-direct' in sys.argv:assert all(r['matched']==int(r['band']=='current_fixture') for r in pd['rows']),'real prior direct assertion accepts a primary code echo'
+                                           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: real prior direct assertion accepts a primary code echo

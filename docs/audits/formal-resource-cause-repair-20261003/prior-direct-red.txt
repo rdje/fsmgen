@@ -1,0 +1,26 @@
+ok 1 - shared declaration producer rejects malformed generated name
+ok 2 - current_fixture direct resource cause safety
+ok 3 - current_fixture direct actor unchanged
+not ok 4 - shared declaration producer rejects malformed generated name
+#   Failed test 'shared declaration producer rejects malformed generated name'
+#   at docs/audits/formal-resource-cause-repair-20261003/prior_direct.pl line 26.
+#                   'Transaction 'main': unsupported '(unsupported_clause ...)' clause in transaction body
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x792ddb21f8), "main", "transaction", undef, HASH(0x792e770888), HASH(0x792ddb2b28)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+# 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x792ec55dc8), HASH(0x792ddb2390), HASH(0x792ddb2b28), 0, HASH(0x792e770888), HASH(0x792e136540), HASH(0x792dda8b70)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 212
+# 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x792ec55dc8), HASH(0x792dda7348)) called at (eval 49) line 1
+# 	eval {...} called at (eval 49) line 1
+# 	main::direct_consumer() called at docs/audits/formal-resource-cause-repair-20261003/prior_direct.pl line 35
+# '
+#     doesn't match '(?^:isf_resource_round_robin_name_shape)'
+ok 5 - wrong_body direct resource cause safety
+ok 6 - wrong_body direct actor unchanged
+ok 7 - shared declaration producer rejects malformed generated name
+not ok 8 - primary_body_echo direct resource cause safety
+#   Failed test 'primary_body_echo direct resource cause safety'
+#   at docs/audits/formal-resource-cause-repair-20261003/prior_direct.pl line 36.
+#          got: '1'
+#     expected: '0'
+ok 9 - primary_body_echo direct actor unchanged
+1..9
+# Looks like you failed 2 tests of 9.

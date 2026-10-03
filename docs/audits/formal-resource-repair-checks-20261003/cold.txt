@@ -1,0 +1,10 @@
+shared corruption rejects: cause
+shared corruption rejects: source
+shared corruption rejects: expectation
+shared corruption rejects: kind
+shared corruption rejects: field
+shared corruption rejects: member
+whole corruption rejects: whole_kind
+whole corruption rejects: whole_pointer
+whole corruption rejects: whole_field
+PASS current21 complete cause rows, exact prior helper/direct false matches, real guard bypass and full ordinary conservation; finite source/pointer/schema/kind proof, wider internals open.

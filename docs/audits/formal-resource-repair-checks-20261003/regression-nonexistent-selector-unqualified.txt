@@ -1,0 +1,15 @@
+t/1218-isf-rule-slot-resource-arbitration.t .. ok
+t/1943-isf-formal-point-products.t ........... ok
+Cannot detect source of 't/1950-isf-formal-arbitration-namespace.t'! at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 256.
+	TAP::Parser::IteratorFactory::detect_source(TAP::Parser::IteratorFactory=HASH(0x76d7e96f30), TAP::Parser::Source=HASH(0x76d7e958d0)) called at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 211
+	TAP::Parser::IteratorFactory::make_iterator(TAP::Parser::IteratorFactory=HASH(0x76d7e96f30), TAP::Parser::Source=HASH(0x76d7e958d0)) called at /System/Library/Perl/5.34/TAP/Parser.pm line 472
+	TAP::Parser::_initialize(TAP::Parser=HASH(0x76d831ca98), HASH(0x76d82a8e40)) called at /System/Library/Perl/5.34/TAP/Object.pm line 55
+	TAP::Object::new("TAP::Parser", HASH(0x76d82a8e40)) called at /System/Library/Perl/5.34/TAP/Object.pm line 130
+	TAP::Object::_construct(TAP::Harness=HASH(0x76d80f45a0), "TAP::Parser", HASH(0x76d82a8e40)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 856
+	TAP::Harness::make_parser(TAP::Harness=HASH(0x76d80f45a0), TAP::Parser::Scheduler::Job=HASH(0x76d8298eb8)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 655
+	TAP::Harness::_aggregate_single(TAP::Harness=HASH(0x76d80f45a0), TAP::Parser::Aggregator=HASH(0x76d80f44e0), TAP::Parser::Scheduler=HASH(0x76d8298d38)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 747
+	TAP::Harness::aggregate_tests(TAP::Harness=HASH(0x76d80f45a0), TAP::Parser::Aggregator=HASH(0x76d80f44e0), "t/1218-isf-rule-slot-resource-arbitration.t", "t/1943-isf-formal-point-products.t", "t/1950-isf-formal-arbitration-namespace.t") called at /System/Library/Perl/5.34/TAP/Harness.pm line 558
+	TAP::Harness::__ANON__() called at /System/Library/Perl/5.34/TAP/Harness.pm line 571
+	TAP::Harness::runtests(TAP::Harness=HASH(0x76d80f45a0), "t/1218-isf-rule-slot-resource-arbitration.t", "t/1943-isf-formal-point-products.t", "t/1950-isf-formal-arbitration-namespace.t") called at /System/Library/Perl/5.34/App/Prove.pm line 548
+	App::Prove::_runtests(App::Prove=HASH(0x76d7000948), HASH(0x76d7308018), "t/1218-isf-rule-slot-resource-arbitration.t", "t/1943-isf-formal-point-products.t", "t/1950-isf-formal-arbitration-namespace.t") called at /System/Library/Perl/5.34/App/Prove.pm line 506
+	App::Prove::run(App::Prove=HASH(0x76d7000948)) called at /usr/bin/prove line 13

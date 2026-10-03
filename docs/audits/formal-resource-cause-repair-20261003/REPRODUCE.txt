@@ -1,0 +1,8 @@
+Readback (run from repository root under the required RAM guard):
+  python3 docs/audits/formal-resource-cause-repair-20261003/verify.py
+  python3 docs/audits/formal-resource-cause-repair-20261003/verify.py --prior-helper
+  python3 docs/audits/formal-resource-cause-repair-20261003/verify.py --prior-direct
+  python3 docs/audits/formal-resource-cause-repair-20261003/verify.py --resource-bypass
+Normal readback exits0; each real counterfactual safety promotion exits1. Manifest binds all archive members. Retained prior diagnosis and its corrected direct observer are separate sealed inputs. Old active-eval drafts qualify no current result.
+Do not overwrite this sealed archive. To reproduce producers, copy instruments to a new repository-local task-owned evidence directory and adapt output paths there, then independently review the adapters. run.sh binds current source, executes T1944/T2058, exact prior helper/direct and ordinary producer; bypass.sh executes real runtime collision/overlap bypass and captures complete invalid actor/module. Baseline source read is immutable Git0dd4aea7ae402cf57ac3924e8d443a3d9b6b8749. Source closure permits only the recorded T1944 delta and new T2058. Later source changes require new evidence, not weakening this closure.
+Sibling check.sh runs cold/readback/three counterfactuals/focused regression. docs.sh generates Knowledge Map, builds book, checks rendered text and public-book tests. All project-owned temporary/cache/log outputs stay repository-local; no native compiler/simulator needed. Finite models and wider cold limits are declared in scope.txt.
