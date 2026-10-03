@@ -1,0 +1,7 @@
+(actor zero_context (constants (ZERO 0))
+  (interface (input start) (output done))
+  (transaction main (on start)
+    (when start (repeat 1 (do worker (params (COUNT 1)) (bind (input missing unknown)))))
+    (switch start (1 (repeat 0 (spawn worker as dead (bind (input missing unknown))))))
+    (complete done))
+  (transaction worker (ports (input data (width 4))) (params (COUNT 1)) (local bad (width 0))))

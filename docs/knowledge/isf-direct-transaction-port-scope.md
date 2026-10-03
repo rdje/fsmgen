@@ -9,7 +9,7 @@ answers:
   - "how are private direct formal identities planned without changing execution?"
   - "how does detached expression resolution distinguish caller and callee formal names?"
   - "why do bit helpers use an actor width instead of a shadowing formal width?"
-date: 2026-09-27
+date: 2026-10-03
 status: current
 tags: [isf, transactions, ports, scope, storage, bindings, control-flow]
 evidence: t/1939-isf-formal-helper-identity.t; t/1938-isf-formal-parent-products.t; t/1937-isf-formal-reservation-products.t; t/1936-isf-formal-source-context.t; t/1935-isf-local-declaration-admission.t; t/1933-isf-caller-formal-binding-scope.t; perl/FSM/Scheduler/ISF/FormalClauseResolver.pm; t/1928-isf-formal-clause-resolver.t; perl/FSM/Scheduler/ISF/FormalOperandResolver.pm; t/1927-isf-formal-operand-resolver.t; perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm; t/1925-isf-formal-identity-plan.t; docs/audits/direct-formal-bit-width-scope-20260927.json; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/1241-isf-transaction-port-bindings.t; t/1243-isf-port-binding-schedule-report.t
@@ -22,9 +22,7 @@ checks actual module reservations, and restores authored report provenance.
 Same-named actor pins/storage and sibling formals remain distinct. Independent
 controller execution and explicit-local ownership are still separately gated.
 
-The following records the investigation and successive prerequisite boundaries;
-its descriptions of the old production collision and pending integration refer
-to those earlier slices, superseded by the current integration above.
+History below is superseded by the current integration above.
 
 Generated children have separately qualified local port metadata under .49.1.
 Direct transactions still merge into the actor module under raw formal names.
@@ -234,7 +232,7 @@ carrier shapes now fail before serialization. The canonical
 [wait card](isf-dynamic-wait-count-predicates.md) owns that grammar and its audit.
 Quoted-division diagnostics .52, wait examples .49.2.2.6 and extract replay .53
 are qualified. .49.2.2.3 connects the resolvers and must still prove complete
-physical reservations and source-report preservation. Source preparation is
-qualified by T1936; .3.2 owns complete physical reservations next.
+physical reservations and source-report preservation. T1936's live-binding fixture and whole-trace helper falsely qualify earlier causes.
+[Diagnosis](../audits/formal-source-context-helper-causes-20261003/scope.txt) owns immediate repair; ordinary context products stay scoped.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2.

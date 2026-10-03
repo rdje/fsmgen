@@ -1,0 +1,131 @@
+Prototype mismatch: sub main::like ($$;$) vs none at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 27.
+ok 1 - live binding / current_fixture rejected before rewriting
+ok 2 - live binding / current_fixture source diagnostic
+not ok 3 - live binding / current_fixture has its declared primary cause
+#   Failed test 'live binding / current_fixture has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 4 - live binding / wrong_parser rejected before rewriting
+ok 5 - live binding / wrong_parser source diagnostic
+not ok 6 - live binding / wrong_parser has its declared primary cause
+#   Failed test 'live binding / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 7 - live binding / isolated actually refuses
+ok 8 - live binding / isolated actual primary cause
+ok 9 - live binding / wrong_parser_isolated has its declared primary cause
+ok 10 - live binding / isolated actually refuses
+ok 11 - live binding / isolated actual primary cause
+not ok 12 - live binding / source_echo_isolated has its declared primary cause
+#   Failed test 'live binding / source_echo_isolated has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 13 - malformed dead binding / current_fixture rejected before rewriting
+ok 14 - malformed dead binding / current_fixture source diagnostic
+ok 15 - malformed dead binding / current_fixture has its declared primary cause
+ok 16 - malformed dead binding / wrong_parser rejected before rewriting
+ok 17 - malformed dead binding / wrong_parser source diagnostic
+not ok 18 - malformed dead binding / wrong_parser has its declared primary cause
+#   Failed test 'malformed dead binding / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 19 - malformed dead binding / isolated actually refuses
+ok 20 - malformed dead binding / isolated actual primary cause
+ok 21 - malformed dead binding / wrong_parser_isolated has its declared primary cause
+ok 22 - malformed dead binding / isolated actually refuses
+ok 23 - malformed dead binding / isolated actual primary cause
+not ok 24 - malformed dead binding / source_echo_isolated has its declared primary cause
+#   Failed test 'malformed dead binding / source_echo_isolated has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 25 - unknown dead target / current_fixture rejected before rewriting
+ok 26 - unknown dead target / current_fixture source diagnostic
+ok 27 - unknown dead target / current_fixture has its declared primary cause
+ok 28 - unknown dead target / wrong_parser rejected before rewriting
+ok 29 - unknown dead target / wrong_parser source diagnostic
+not ok 30 - unknown dead target / wrong_parser has its declared primary cause
+#   Failed test 'unknown dead target / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 31 - unknown dead target / isolated actually refuses
+ok 32 - unknown dead target / isolated actual primary cause
+ok 33 - unknown dead target / wrong_parser_isolated has its declared primary cause
+ok 34 - unknown dead target / isolated actually refuses
+ok 35 - unknown dead target / isolated actual primary cause
+not ok 36 - unknown dead target / source_echo_isolated has its declared primary cause
+#   Failed test 'unknown dead target / source_echo_isolated has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 37 - local option / current_fixture rejected before rewriting
+ok 38 - local option / current_fixture source diagnostic
+ok 39 - local option / current_fixture has its declared primary cause
+ok 40 - local option / wrong_parser rejected before rewriting
+ok 41 - local option / wrong_parser source diagnostic
+not ok 42 - local option / wrong_parser has its declared primary cause
+#   Failed test 'local option / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 43 - local option / isolated actually refuses
+ok 44 - local option / isolated actual primary cause
+ok 45 - local option / wrong_parser_isolated has its declared primary cause
+ok 46 - local option / isolated actually refuses
+ok 47 - local option / isolated actual primary cause
+not ok 48 - local option / source_echo_isolated has its declared primary cause
+#   Failed test 'local option / source_echo_isolated has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 49 - wait operator / current_fixture rejected before rewriting
+ok 50 - wait operator / current_fixture source diagnostic
+ok 51 - wait operator / current_fixture has its declared primary cause
+ok 52 - wait operator / wrong_parser rejected before rewriting
+ok 53 - wait operator / wrong_parser source diagnostic
+not ok 54 - wait operator / wrong_parser has its declared primary cause
+#   Failed test 'wait operator / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 55 - wait operator / isolated actually refuses
+ok 56 - wait operator / isolated actual primary cause
+ok 57 - wait operator / wrong_parser_isolated has its declared primary cause
+ok 58 - wait operator / isolated actually refuses
+ok 59 - wait operator / isolated actual primary cause
+not ok 60 - wait operator / source_echo_isolated has its declared primary cause
+#   Failed test 'wait operator / source_echo_isolated has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 61 - nested local / current_fixture rejected before rewriting
+ok 62 - nested local / current_fixture source diagnostic
+ok 63 - nested local / current_fixture has its declared primary cause
+ok 64 - nested local / wrong_parser rejected before rewriting
+ok 65 - nested local / wrong_parser source diagnostic
+not ok 66 - nested local / wrong_parser has its declared primary cause
+#   Failed test 'nested local / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 67 - nested local / isolated actually refuses
+ok 68 - nested local / isolated actual primary cause
+ok 69 - nested local / wrong_parser_isolated has its declared primary cause
+ok 70 - nested local / isolated actually refuses
+ok 71 - nested local / isolated actual primary cause
+not ok 72 - nested local / source_echo_isolated has its declared primary cause
+#   Failed test 'nested local / source_echo_isolated has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 56.
+#          got: '1'
+#     expected: '0'
+ok 73 - direct ordinary source remains unchanged
+ok 74 - direct complete prepared actor equals source
+ok 75 - zero ordinary source remains unchanged
+ok 76 - zero complete prepared actor equals source
+1..76
+# Looks like you failed 13 tests of 76.

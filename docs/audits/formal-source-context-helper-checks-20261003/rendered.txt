@@ -1,0 +1,1 @@
+PASS rendered source-context helper diagnosis; visual QA not performed.

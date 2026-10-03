@@ -1,0 +1,85 @@
+Prototype mismatch: sub main::like ($$;$) vs none at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 27.
+ok 1 - live binding / positive rejected before rewriting
+ok 2 - live binding / positive source diagnostic
+ok 3 - live binding / positive has its declared primary cause
+ok 4 - live binding / wrong_parser rejected before rewriting
+ok 5 - live binding / wrong_parser source diagnostic
+not ok 6 - live binding / wrong_parser has its declared primary cause
+#   Failed test 'live binding / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 55.
+#          got: '1'
+#     expected: '0'
+ok 7 - live binding / isolated actually refuses
+ok 8 - live binding / isolated rejects unrelated cause
+ok 9 - live binding / wrong_parser_isolated has its declared primary cause
+ok 10 - malformed dead binding / positive rejected before rewriting
+ok 11 - malformed dead binding / positive source diagnostic
+ok 12 - malformed dead binding / positive has its declared primary cause
+ok 13 - malformed dead binding / wrong_parser rejected before rewriting
+ok 14 - malformed dead binding / wrong_parser source diagnostic
+not ok 15 - malformed dead binding / wrong_parser has its declared primary cause
+#   Failed test 'malformed dead binding / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 55.
+#          got: '1'
+#     expected: '0'
+ok 16 - malformed dead binding / isolated actually refuses
+ok 17 - malformed dead binding / isolated rejects unrelated cause
+ok 18 - malformed dead binding / wrong_parser_isolated has its declared primary cause
+ok 19 - unknown dead target / positive rejected before rewriting
+ok 20 - unknown dead target / positive source diagnostic
+ok 21 - unknown dead target / positive has its declared primary cause
+ok 22 - unknown dead target / wrong_parser rejected before rewriting
+ok 23 - unknown dead target / wrong_parser source diagnostic
+not ok 24 - unknown dead target / wrong_parser has its declared primary cause
+#   Failed test 'unknown dead target / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 55.
+#          got: '1'
+#     expected: '0'
+ok 25 - unknown dead target / isolated actually refuses
+ok 26 - unknown dead target / isolated rejects unrelated cause
+ok 27 - unknown dead target / wrong_parser_isolated has its declared primary cause
+ok 28 - local option / positive rejected before rewriting
+ok 29 - local option / positive source diagnostic
+ok 30 - local option / positive has its declared primary cause
+ok 31 - local option / wrong_parser rejected before rewriting
+ok 32 - local option / wrong_parser source diagnostic
+not ok 33 - local option / wrong_parser has its declared primary cause
+#   Failed test 'local option / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 55.
+#          got: '1'
+#     expected: '0'
+ok 34 - local option / isolated actually refuses
+ok 35 - local option / isolated rejects unrelated cause
+ok 36 - local option / wrong_parser_isolated has its declared primary cause
+ok 37 - wait operator / positive rejected before rewriting
+ok 38 - wait operator / positive source diagnostic
+ok 39 - wait operator / positive has its declared primary cause
+ok 40 - wait operator / wrong_parser rejected before rewriting
+ok 41 - wait operator / wrong_parser source diagnostic
+not ok 42 - wait operator / wrong_parser has its declared primary cause
+#   Failed test 'wait operator / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 55.
+#          got: '1'
+#     expected: '0'
+ok 43 - wait operator / isolated actually refuses
+ok 44 - wait operator / isolated rejects unrelated cause
+ok 45 - wait operator / wrong_parser_isolated has its declared primary cause
+ok 46 - nested local / positive rejected before rewriting
+ok 47 - nested local / positive source diagnostic
+ok 48 - nested local / positive has its declared primary cause
+ok 49 - nested local / wrong_parser rejected before rewriting
+ok 50 - nested local / wrong_parser source diagnostic
+not ok 51 - nested local / wrong_parser has its declared primary cause
+#   Failed test 'nested local / wrong_parser has its declared primary cause'
+#   at docs/audits/formal-source-context-helper-causes-20261003/probe.pl line 55.
+#          got: '1'
+#     expected: '0'
+ok 52 - nested local / isolated actually refuses
+ok 53 - nested local / isolated rejects unrelated cause
+ok 54 - nested local / wrong_parser_isolated has its declared primary cause
+ok 55 - direct ordinary source remains unchanged
+ok 56 - direct complete prepared actor equals source
+ok 57 - zero ordinary source remains unchanged
+ok 58 - zero complete prepared actor equals source
+1..58
+# Looks like you failed 6 tests of 58.

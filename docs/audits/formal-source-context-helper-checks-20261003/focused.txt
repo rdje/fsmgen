@@ -1,0 +1,5 @@
+t/1303-isf-public-live-book-paths-audit.t .. ok
+t/1305-isf-book-feature-matrix-audit.t ..... ok
+All tests successful.
+Files=2, Tests=308,  2 wallclock secs ( 0.02 usr  0.01 sys +  1.40 cusr  0.13 csys =  1.56 CPU)
+Result: PASS

@@ -1,0 +1,8 @@
+ram-guard: PID 44800; host 79.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Transaction 'main': repeat-body do target 'worker' binds unknown transaction port 'missing' on 'worker'
+ at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7145.
+	FSM::Scheduler::ISF::LoweringIR::_validate_activation_bindings(HASH(0x7998ce8d38), HASH(0x7998ce2c18), HASH(0x7998ce3c00), ARRAY(0x79952bd3f0), "Transaction 'main': repeat-body do target 'worker'", HASH(0x7998ce7bd0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x7995290ed0), HASH(0x7998ce8d38)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 99
+	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x7995290ed0), HASH(0x7998ce8d38)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 187
+	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x7995290ed0), HASH(0x7998cddab0)) called at docs/audits/formal-source-context-helper-causes-20261003/corrected_live.pl line 22
+	eval {...} called at docs/audits/formal-source-context-helper-causes-20261003/corrected_live.pl line 22

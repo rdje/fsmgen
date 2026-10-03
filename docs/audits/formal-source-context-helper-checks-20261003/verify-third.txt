@@ -1,0 +1,8 @@
+ram-guard: PID 80327; host 64.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared corruption rejects: cause
+shared corruption rejects: input
+shared corruption rejects: matched_kind
+shared corruption rejects: primary_kind
+shared corruption rejects: extra_field
+shared corruption rejects: membership
+PASS six current inputs/four bands: five genuine primary matches, thirteen wrong primary matches, six isolated rejects; exact current consumer, corrected live fixture and finite source/product/kind closure. Wider semantics remain open.

@@ -41,7 +41,7 @@ _Direct transaction runtime depends on declaration order until controller repair
 
 _Direct transaction formal identity plan and remaining scope integration_
 
-- **date:** 2026-09-27 · **status:** current
+- **date:** 2026-10-03 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-direct-transaction-port-scope.md`](../../docs/knowledge/isf-direct-transaction-port-scope.md)
 
 ### isf-direct-writer-admission-boundary

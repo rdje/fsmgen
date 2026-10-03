@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3` (pending)
-- next_action: Split the remaining named-helper/framework membership into bounded actual producer cohorts under .60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3 before changes; preserve structured/trace and native/legacy boundaries, then qualify each before the wider/imported handoff.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.6` (pending)
+- next_action: Repair T1936 complete first-cause checks and its verified invalid live-binding fixture under .60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.6; preserve the static-params subset refusal separately and qualify real producer/prior/bypass/whole source-product-kind controls before caller-binding handoff.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none.
 - blockers: Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
-  Historical startup/parent qualification and full CI/push remain gated. mdBook visual audit still lacks browser discovery access.
+  Historical startup/parent qualification and full CI/push remain gated. Visual mdBook QA remains pending.

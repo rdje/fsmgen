@@ -1,0 +1,12 @@
+ram-guard: PID 67388; host 53.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-source-context-helper-causes-20261003/verify.py", line 52, in <module>
+    verify_rows(data)
+    ~~~~~~~~~~~^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-source-context-helper-causes-20261003/verify.py", line 45, in verify_rows
+    desired.append((identity,band,replace(source,before,after) if band=='current_fixture' else '; '+echo+'\n(not_actor)' if band=='source_echo_isolated' else '(not_actor)',pattern))
+                                  ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-source-context-helper-causes-20261003/verify.py", line 23, in replace
+    def replace(source,before,after):assert source.count(before)==1;return source.replace(before,after)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

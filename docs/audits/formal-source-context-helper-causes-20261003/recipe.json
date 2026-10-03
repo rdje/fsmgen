@@ -1,0 +1,21 @@
+{
+  "baseline": "09c9dcbaea274020207dc0f4d8d6c43623dcae62",
+  "commands": {
+    "actual_consumer_red": "scripts/run_with_ram_guard.sh -- python3 docs/audits/formal-source-context-helper-causes-20261003/verify.py --trust-current",
+    "book": "mdbook build docs/book",
+    "cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/formal-source-context-helper-causes-20261003/verify.py",
+    "corrected_candidate": "scripts/run_with_ram_guard.sh -- perl docs/audits/formal-source-context-helper-causes-20261003/corrected_live.pl",
+    "focused": "scripts/run_with_ram_guard.sh -- bash docs/audits/formal-source-context-helper-checks-20261003/check.sh",
+    "producer": "scripts/run_with_ram_guard.sh -- bash docs/audits/formal-source-context-helper-causes-20261003/run.sh",
+    "rendered": "python3 docs/audits/formal-source-context-helper-causes-20261003/rendered_verify.py"
+  },
+  "native": "not invoked",
+  "scope": "finite six-input/four-band diagnosis; returned internal lowering-product semantics outside declared literal context/clone/schema checks remain unqualified",
+  "statuses": {
+    "actual_consumer_red": 1,
+    "cold": 0,
+    "current": 0,
+    "desired_cause_probe": 13
+  },
+  "visual_qa": "not performed"
+}

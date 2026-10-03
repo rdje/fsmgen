@@ -1,0 +1,4 @@
+t/1936-isf-formal-source-context.t .. ok
+All tests successful.
+Files=1, Tests=6,  5 wallclock secs ( 0.01 usr  0.01 sys +  2.44 cusr  1.65 csys =  4.11 CPU)
+Result: PASS

@@ -1,0 +1,9 @@
+ram-guard: PID 71399; host 77.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-source-context-helper-causes-20261003/verify.py", line 62, in <module>
+    same(tx['clauses'],[['on','start'],['local','scratch',['width','4'],['init','1']],['sample','payload','as','count'],['sample','payload','as','inferred'],['wait','count'],['wait',['+','count',"4'd1"]],['repeat','count',['set','value','count']],['set','scratch','count'],['set','observed','value'],['complete','done']])
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-source-context-helper-causes-20261003/verify.py", line 7, in same
+    def same(a,b):assert enc(a)==enc(b),'whole typed mismatch'
+                         ^^^^^^^^^^^^^^
+AssertionError: whole typed mismatch
