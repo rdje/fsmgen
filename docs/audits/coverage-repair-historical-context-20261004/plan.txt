@@ -1,0 +1,15 @@
+Owner SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.1.
+Pin direct whole repaired coverage qualification to Git3951 before unrelated hot
+T1983 test edits. Adapt the previous sealed context driver only for direct reader,
+revision/workspace binding, actual T1983 comment decoy and complete published
+separate-index before/after membership/fingerprint. Use the same primary Git
+object store and a repository-derived same-volume separate index/projection;
+no new repository/worktree registration or primary source/config/index edits.
+Selected roots remain bin/perl/t/scripts/isf, all reservation-coverage audit
+records and the owning task file. Never run the mutable canonical wrapper inside
+its own historical projection: invoke the exact immutable direct repair reader.
+It independently checks prior context records without recursive canonical replay.
+Ordinary replay must close full real repaired coverage; sole real T1983 comment
+drift must fail its complete public-source identity. Independently authenticate
+all source/audit/task/index members and retained control outputs before changing
+only the mutable primary canonical reverify wrapper. No old sealed bytes change.

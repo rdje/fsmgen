@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/coverage-repair-historical-context-20261004/verify.py", line 70, in <module>
+    assert index_before == record['index_public_after'] == index_expected, 'complete published separate-index identities'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete published separate-index identities

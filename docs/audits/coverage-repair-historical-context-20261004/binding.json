@@ -1,0 +1,7 @@
+{
+  "reader": "docs/audits/reservation-coverage-copy-repair-20261003/verify.py",
+  "reader_bytes": 15604,
+  "reader_sha256": "d217c1dca23dc4c31703690986f1cb7a445db72876087347e4085e86f741e5a6",
+  "revision": "3951ccbc6eb95612adb6db00f3b4af559d05325b",
+  "workspace": ".artifacts/coverage-repair-historical-context-20261004"
+}

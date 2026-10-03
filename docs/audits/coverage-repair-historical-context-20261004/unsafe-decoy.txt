@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/coverage-repair-historical-context-20261004/verify.py", line 83, in <module>
+    assert record['mismatches'] == [], 'actual unrelated source decoy cannot authenticate original repaired coverage'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual unrelated source decoy cannot authenticate original repaired coverage

@@ -3999,9 +3999,39 @@ For FSMGen, the analogs are:
   Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify complete T1983 metadata source/product/copy field meanings and assurance.`
   Acceptance: `Join complete .2 observations to original resolved scalar/record/list/member/type/domain sources, packed paths/ranges/order/signed/state-model facts, intentional numeric output projection and unchanged-source isolation. Copies and value-only comparisons are not kind authority. Split bounded semantic cohorts/native referent/topology/counterfactual controls before execution when needed; qualify every changed field and mandatory unchanged control. Freeze preceding coverage qualification before any new hot public-source changes, without rewriting sealed evidence.`
+  Verification: `pending`
+  Commit: `children below`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.1`
+  Status: `done`
+  Goal: `Freeze preceding coverage source qualification before new hot metadata/test edits.`
+  Acceptance: `Authenticate exact coverage-repair Git3951 reader/body and every selected source/audit/task member in a same-volume primary-store/separate-index projection. Reproduce full direct repaired coverage qualification at its pinned state, and a sole projected T1983 source decoy that fails complete current-source identity. Independently close full membership/index/reader/Git protection and actual decoy authority controls; update only the mutable canonical reverify wrapper. Preserve sealed readers/bindings/archive bytes, no primary hot source/submodule/other repo/config/index changes. Commit with scoped book/fact/task and ordinary gates before field probes.`
+  Verification: `Sealed docs/audits/coverage-repair-historical-context-20261004 pins exact whole original repaired-coverage reader at Git3951ccbc6e before unrelated T1983 hot changes. Re-derivation: complete independent Git object/prefix census authenticates3577 selected source/audit/task members /280851907 logical bytes and all26985 published separate-index entries; whole bytes/hashes/modes/blobs and before/after index rows/fingerprints join. Same-volume projection uses primary object store and explicit separate index; primary index/config/HEAD and resolved revision conserve within ordinary/decoy invocations. No new repo/worktree registration, primary hot source/config/index, other repo/submodule implementation/pin change or HDL/native compiler/macro/proxy execution. Ordinary direct immutable reader closes full repaired coverage source/kind/sharing/isolation/product/cause/native controls, including original saved earlier context. Falsification: actual sole projected T1983 comment fails unchanged original complete source identity; unsafe-decoy promotion RED1, complete member omission RED1 and forged published T1983 index-object view RED1 independently reject. Durability: full sources/member/index rows/reader bindings/replay driver/real ordinary-decoy receipts/independent controls/statuses/canonical before-after bodies/manifest/task/card/book/Git. Only mutable primary canonical reverify wrapper changes: complete repaired3951 and original93ff qualifications replay in separate pinned contexts, avoiding recursive canonical execution inside projection. Actual complete canonical guarded replay passes both; no old sealed evidence changes or hot-source currency claim. Reconstructible caches may regenerate; dated proof has no permanent existence/absence contract. Public-book All tests successful2/308 and rendered build/sealed independent readback checked; fixed capacity/fresh claims/staged doctrines/hooks close before .2 field/source ownership and later test repairs. General native access, startup/parent and visual QA remain with original owners.`
+  Commit: `this slice; resolve with work-unit Git subject`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.2`
+  Status: `pending`
+  Goal: `Bind complete T1983 source/product/copy changed-field semantic owners.`
+  Acceptance: `Derive every typed difference from the sealed full native capture and original source copies, independently close unchanged controls and whole original sources/callers/products. Separate raw scalar/actor declarations, nested record/list resolved leaves and private numeric rebuilding, including actual parser/record-value callers. Names/counts/value-only comparisons are no semantic authority. Qualify native plain/cycle/reference limits and create bounded field/control cohorts as needed; own gaps with reproducible priority/repair leaves before code changes.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3`
+  Status: `pending`
+  Goal: `Qualify actual copy/kind/topology and producer-consumer counterfactual assurance.`
+  Acceptance: `Under complete .2 source meanings, replay exact original and source-kind-preserving test-only copy variants through real providers; join every original/copy/API/caller/result/error/warning/assertion graph. Use genuine same-valued kind, alias/copy and native supported cycle controls; prove each actual changed field and unchanged seed. Do not change intentional provider private numeric projection. Own and repair any evidenced test-copy/snapshot gap in a separately bounded leaf after source qualification; no undocumented native/class capability or public behavior expansion.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.4`
+  Status: `pending`
+  Goal: `Join complete metadata source/product/copy assurance and owned repairs.`
+  Acceptance: `Close all original field/native/plain/cycle/copy identities and actual candidate controls with independent complete membership/semantic readback and any completed repair owners. Public/source/primitive kind conservation and intentional private projection must remain explicit; no generic observer pass can stand in for semantics. Sync book/fact/frontier and commit cleanly before parent .5 diagnostic repair, then .4 outcome join.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6518,3 +6548,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub rejects' -- t/1983-isf-interface-port-metadata.t binds the unchanged generic-prefix helper; full original/native streams locate its real Storable file-coordinate false positive and the adjacent writer-fragment public-parser filename echo. Original helper/copy/API contracts and native imported aliases close before classification.
 - [x] **ADDRESSED (diagnosis complete; repair owned)** — Whole native44 helper/105 API/145 copy/166 consumer membership and independently declared ordinary causes reconcile; actual unsafe location/primary authority and copy-omission controls are RED1. Both P2 defects have .5 reproduction/impact/repair ownership; .3 owns complete source/product/copy meanings and source-context freeze before hot edits.
 - [x] **NO REGRESSION** — scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1983-isf-interface-port-metadata.t: All tests successful; Files=1, Tests=7. Complete observed ordinary166 leaves pass, original caller kinds/graphs conserve, public-book2/308 and rendered build checked. No hot test/provider or public admission changes; fixed capacity/fresh claims/staged doctrine/hooks close before commit.
+
+## Acceptance Checklist — repaired coverage qualification historical context
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'after = path.read_bytes()' -- docs/audits/reservation-coverage-copy-repair-20261003/verify.py locates complete repaired-source byte enforcement. Actual sole projected T1983 comment fails that exact source identity; unrelated hot helper edits require preserving the original full qualification at its pinned revision.
+- [x] **ADDRESSED (verified)** — Complete direct Git3951 ordinary replay and independent source/audit/task/full-index readback pass; real decoy reader RED1 and unsafe-decoy/member/index-view controls RED1 close the context boundary. Mutable canonical replay passes separate repaired3951 and original93ff contexts; all sealed bytes and primary source/Git state remain intact.
+- [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308, rendered build and complete actual canonical cold replay pass. Historical ordinary full kinds/sharing/isolation/products/causes/native controls retain their original scope; no hot source/native/compiler behavior changes. Source-owned metadata field/copy review stays next before diagnostic repairs.

@@ -1,0 +1,41 @@
+Owner SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.1.
+
+The repaired coverage reader binds all original public source bytes as well as
+its exact repaired tests. An unrelated hot T1983 change would correctly fail that
+dated current-source contract. Before metadata field/copy and diagnostic repairs,
+pin the complete direct repaired coverage qualification at its Git3951 state.
+The original earlier cause/copy qualification remains independently pinned at
+Git93ff. The mutable primary canonical wrapper runs both direct contexts without
+changing any old sealed reader, source, binding, receipt or manifest.
+
+Re-derivation: published Git object/index APIs select complete bin/perl/t/scripts/
+isf sources, reservation-coverage audit records and the original owning task file.
+The exact original direct reader (whole bytes/hash) and all 3577 selected regular
+Git members /280851907 logical source bytes authenticate in a repository-local
+same-volume projection with a separate generated index and primary object store.
+Both complete published index views authenticate all 26985 pinned namespace
+entries; Gitlink entries are identities only, never submodule implementations.
+Binary separate-index fingerprints and public rows remain unchanged during the
+reader. Primary index/config/HEAD hashes and resolved revision remain unchanged
+within each invocation. No repository/worktree registration, primary source,
+configuration/index or other repository write occurs. Whole direct repaired
+coverage source/kind/sharing/isolation/product/cause/native controls pass.
+
+Falsification: the actual owned decoy appends only a comment to projected T1983.
+All other selected bytes and the pinned separate index remain identical. The
+unchanged original coverage reader fails at that exact public source identity.
+Promoting this actual decoy as original is independently RED1; complete member
+omission and forged published T1983 index-object view are RED1 at their own
+membership/index contracts. These controls establish context qualification, not
+new production behavior or current hot-source currency.
+
+Durability: whole source membership/blobs/bytes/hashes and complete before/after
+index rows/fingerprints, exact reader/binding and replay driver, real ordinary/
+decoy direct-reader receipts, independent reader/control outputs/statuses, full
+canonical before/after bodies and binding, sealed manifest/task/fact/book/Git.
+The primary canonical wrapper passes both complete pinned contexts. Replays are
+reconstructible caches and may legitimately be regenerated; saved dated context
+proof does not require permanent cache presence or absence. Future hot edits
+retain their own source/native validation obligation. No HDL/native compiler,
+macro/proxy runtime or submodule implementation is invoked here. General native
+access, startup/parent and visual QA owners remain unchanged.

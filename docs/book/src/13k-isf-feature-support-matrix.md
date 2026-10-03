@@ -304,7 +304,12 @@ the intended complete cause stays unchanged. Complete preparations, lowerings,
 exported carriers, scope results and refusal causes are conserved against the
 qualified prior recipe. The [historical replay context](../../../docs/audits/reservation-coverage-historical-context-20261003/scope.txt)
 keeps this complete qualification bound to its original sources when later test
-helpers change; separate native checks qualify the repaired behavior.
+helpers change; separate native checks qualify the repaired behavior. The
+[repaired-source context](../../../docs/audits/coverage-repair-historical-context-20261004/scope.txt)
+also pins the complete repaired coverage proof before unrelated metadata test
+edits. A sole projected metadata-test comment fails the original source identity
+check. Both complete contexts replay through the primary canonical reader;
+future hot changes keep their own validation obligation.
 These controls do not establish a production defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when

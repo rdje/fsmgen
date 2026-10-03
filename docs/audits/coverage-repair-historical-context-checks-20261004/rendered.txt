@@ -1,0 +1,1 @@
+PASS rendered original/repaired pinned qualification and independent future hot-source validation boundary; visual QA remains pending.

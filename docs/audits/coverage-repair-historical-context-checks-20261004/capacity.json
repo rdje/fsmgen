@@ -1,0 +1,17 @@
+{
+  "knowledge_cards": {
+    "bytes_total": 3873522,
+    "files": 1258,
+    "lines_total": 52954
+  },
+  "shipped_behavior": {
+    "bytes_total": 3743899,
+    "files": 64,
+    "lines_total": 67594
+  },
+  "task_evidence": {
+    "bytes_total": 12559717,
+    "files": 596,
+    "lines_total": 117685
+  }
+}

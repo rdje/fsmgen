@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-formal`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **14** facts · **45** uniquely owned question entries.
+> **14** facts · **46** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -46,6 +46,7 @@
 - q="what does reusable_child_products include in source preparation?" · facts=[isf-formal-reusable-products](../../docs/knowledge/isf-formal-reusable-products.md)
 - q="what qualifies T1960 copy kinds, plain sharing and native marker identity?" · facts=[isf-formal-reservation-coverage](../../docs/knowledge/isf-formal-reservation-coverage.md)
 - q="what qualifies the resource priority namespace boundary?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
+- q="where is the coverage historical context?" · facts=[isf-formal-reservation-coverage](../../docs/knowledge/isf-formal-reservation-coverage.md)
 - q="which actual module scopes are checked before formal rewrite integration?" · facts=[isf-formal-reservation-coverage](../../docs/knowledge/isf-formal-reservation-coverage.md)
 - q="why can a generated ready port collide with a private direct formal?" · facts=[isf-formal-wiring-products](../../docs/knowledge/isf-formal-wiring-products.md)
 - q="why did preparing a direct formal fail on a generated monitor name before allocation?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)
@@ -120,7 +121,7 @@ _Source preparation retains narrowly deferred direct-formal monitor collisions_
 
 _Detached final module guard checks prepared reservations and private formal ownership_
 
-- **date:** 2026-10-03 · **status:** current
+- **date:** 2026-10-04 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-formal-reservation-coverage.md`](../../docs/knowledge/isf-formal-reservation-coverage.md)
 
 ### isf-formal-resource-products
