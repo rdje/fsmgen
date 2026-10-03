@@ -1,0 +1,1 @@
+PASS complete producer-removal snapshot field roster; independent source/producer semantic reader is required.

@@ -1,0 +1,5 @@
+t/1244-isf-wait-clause-lowering.t .......... ok
+t/1959-isf-prepared-formal-reservations.t .. ok
+All tests successful.
+Files=2, Tests=43, 13 wallclock secs ( 0.03 usr  0.01 sys +  9.90 cusr  1.27 csys = 11.21 CPU)
+Result: PASS

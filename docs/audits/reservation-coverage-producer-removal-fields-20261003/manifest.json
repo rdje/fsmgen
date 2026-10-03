@@ -1,0 +1,46 @@
+{
+  "REPRODUCE.txt": {
+    "bytes": 713,
+    "sha256": "3a1109d1f8b62ca96d78652ad67b6191fb9a12f8ef7f769fe2190641668c1a5c"
+  },
+  "derive-roster.txt": {
+    "bytes": 111,
+    "sha256": "c95036899070ee9bcda6fa12fb463483b1154e8f2aa3b968980b142513e17d84"
+  },
+  "derive_roster.py": {
+    "bytes": 1268,
+    "sha256": "a6e4572d0a9d4c790a3a045aa5f93f2aebd26d07f027e5dd7f5887ddad98925f"
+  },
+  "initial-reader.txt": {
+    "bytes": 6392,
+    "sha256": "32fd720089385fb490380e5d149e7c87a0c4dee6a8a7a7835376d8eabcc62d61"
+  },
+  "qualified-fields.json": {
+    "bytes": 16952,
+    "sha256": "65dc2acbfc93f4506c3b1184d597903a311b274aaecdf70990c397ca211882e4"
+  },
+  "scope.txt": {
+    "bytes": 4012,
+    "sha256": "94555b04e1f5f5bacffc5ee6015271211d191b5578b93502b6069b1954f654c2"
+  },
+  "second-reader.txt": {
+    "bytes": 6148,
+    "sha256": "ecfe47bf5b7fc7d0cb3b88d110067ab21a787b84bf8f956a93ba876ee90f505b"
+  },
+  "source-contracts.json": {
+    "bytes": 16667,
+    "sha256": "f5deab0c81b7fab79f073983e2d0eb9326591b1973bdec308c7bddc6b097cdc5"
+  },
+  "trust-storable.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "trust-storable.txt": {
+    "bytes": 6155,
+    "sha256": "c7299820fcb99f28ae266b6aafcefaa3f265c5b35629b5cdd08a59eed9d37cc7"
+  },
+  "verify.py": {
+    "bytes": 23200,
+    "sha256": "cad1618216d50de074bf010e046641b7e19b53b8b34c493bc2c85675dab06805"
+  }
+}

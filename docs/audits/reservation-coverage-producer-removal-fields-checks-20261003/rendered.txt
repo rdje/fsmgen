@@ -1,0 +1,1 @@
+PASS rendered rebuilt-input field contracts and open complete join/real assertion boundary; visual QA remains pending.

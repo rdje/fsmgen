@@ -3865,11 +3865,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify every producer-removal prepared snapshot field.`
   Acceptance: `Bind actual substitute_token transformation and selected helper to the ordinary source. Independently close all ordinal35 snapshot fields: authored widths, numeric producers/provenance, declaration memberships, handshake/wait metadata and canonical plan/module widths. Retain full graph/kind/topology and emitted carrier/source contracts; no generic numeric coercion oracle or complete-constructor promotion.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Sealed docs/audits/reservation-coverage-producer-removal-fields-20261003 closes every producer-removal snapshot ordinal35 field: 228 (copy ordinal,typed pointer) instances, prepared222/plan2/module4. Re-derivation is whole actual helper transformation plus independent literal source/metadata/storage/formal, producer/provenance ordinal, membership, handshake/wait contracts against a separate recursive roster. Falsification: actual Storable authority RED1 at authored interface kinds; metadata width, membership-versus-width, provenance index, wait threshold and numeric-looking string corruptions reject. Durability: complete authenticated prior native/source/normal/module corpora, full Git-bound completion/metadata producers, immutable manifest and cold replay. Pure kinds and original/caller/result/cause/carrier conservation qualify; initial narrow assignment-list model stays unqualified, corrected model keeps drive parameter and guarded dynamic loads. Focused wait/prepared reservations Files=2/Tests=43; public-book Files=2/Tests=308, build/rendered pass. Field join .3 and real assertion/native controls remain open before P2; full constructors/controllers/moved-root/visual QA stay cold.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.3`
   Status: `pending`
@@ -6235,3 +6235,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone([$p, $allocation, $actual]);' binds capture introduction98f0cc146; complete actual snapshots and module seeds locate primitive-kind loss at T1960 exact copy sites. Native first-touch child/provenance/width graphs and full source/producer bodies explain every normal-cohort changed field without normalizing numeric-looking strings.
 - [x] **ADDRESSED (verified)** — Independently constructed semantic paths equal separately derived complete normal field membership, including empty controls. Actual lossy snapshot/seed authority RED1 and every changed copy reject; pulse-target/guard, private-width and vector-endpoint corruptions reject. Pure copies pass all contracts. Producer-removal fields, field join and actual value-only/native controls retain exact successor ownership before repair.
 - [x] **NO REGRESSION** — Actual T1960/T2063 All tests successful, Files=2, Tests=239; public-book Files=2, Tests=308, rendered build and Knowledge Map readback pass. Complete ordinary products/causes/carriers conserve; hot source/test/provider unchanged. Fixed capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.
+
+## Acceptance Checklist — producer-removal snapshot field contracts
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone([$p, $allocation, $actual]);' binds capture introduction98f0cc146; actual ordinal35 Storable snapshot changes independently bound prepared/product/plan/module primitive kinds. Exact substitute_token rebuild and full producer bodies identify source widths, memberships, handoff/wait flags and assignment ordinal meanings; completion string constants retain distinct kinds.
+- [x] **ADDRESSED (verified)** — Whole actual token transformation and every constructed semantic field path reconcile with the separate complete native delta roster. Pure copies pass; actual lossy-copy authority RED1 and metadata, membership/width, provenance, threshold and string-kind corruptions reject. Final field reconciliation and real value-only/native controls retain .3/.4.3 ownership before P2 repair; broader constructors/controllers remain cold.
+- [x] **NO REGRESSION** — Focused wait/prepared reservation All tests successful, Files=2, Tests=43; public-book Files=2, Tests=308, rendered build and Knowledge Map readback pass. Complete ordinary callers/products/refusal causes/carriers conserve; hot source/test/provider unchanged. Exact capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.

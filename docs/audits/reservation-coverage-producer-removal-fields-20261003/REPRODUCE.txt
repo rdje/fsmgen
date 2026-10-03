@@ -1,0 +1,9 @@
+Run from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-producer-removal-fields-20261003/verify.py
+  python3 -B docs/audits/reservation-coverage-producer-removal-fields-20261003/derive_roster.py
+The --trust-storable variant must exit1 at authored interface numeric/string
+kinds using the actual retained lossy snapshot, not a manifest/import failure.
+Semantic corruptions are required to reject, including width mistaken for a
+membership value and string '0' mistaken for numeric0. Never rerun producers
+into this sealed directory; fresh observations require an owned sibling.
+Whole field reconciliation and real value-only/native-marker controls remain open.
