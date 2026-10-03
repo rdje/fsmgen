@@ -195,11 +195,12 @@ The [reusable-product diagnosis](../../../docs/audits/reusable-product-helper-ca
 finds the same cause gap in library/ATL admission helpers and one adjacent
 parent-width assertion. Complete declared-cause repair is owned. Its ordinary
 products also expose two distinct primitive-kind gaps: the test projection's
-Storable copy loses some FIFO numeric JSON kinds, and the private ATL output-width
-check numerically inspects caller-owned widths. Actual detached-value controls
-preserve the caller and retain identical preparation/module outputs. These small
-repairs precede further cohort review; they add no composition or HDL runtime
-support. Whole constructor and child-internal semantic qualification remains open.
+Storable copy loses some FIFO numeric JSON kinds. The private ATL output-width
+check now compares a detached scalar, preserving the complete caller on both
+accepted and refused routes. The [width-kind repair](../../../docs/audits/atl-source-width-kind-repair-20261003/scope.txt)
+retains identical preparation/module outputs and exact prior failure controls.
+The remaining cause and test-copy repairs precede further cohort review; they
+add no composition or HDL runtime support. Whole constructor and child-internal semantic qualification remains open.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.
 

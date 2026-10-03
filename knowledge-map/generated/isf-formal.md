@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-formal`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **14** facts · **42** uniquely owned question entries.
+> **14** facts · **43** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -19,6 +19,7 @@
 - q="can real child products be collected while raw parent formal declarations conflict?" · facts=[isf-formal-child-products](../../docs/knowledge/isf-formal-child-products.md)
 - q="do output defaults keep actor ownership when a formal shadows the output?" · facts=[isf-formal-point-products](../../docs/knowledge/isf-formal-point-products.md)
 - q="do rule grants and priority create additional formal reservation names?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
+- q="does ATL output admission preserve caller width kinds?" · facts=[isf-formal-reusable-products](../../docs/knowledge/isf-formal-reusable-products.md)
 - q="does collecting binding report products switch production formal naming?" · facts=[isf-formal-source-binding-reports](../../docs/knowledge/isf-formal-source-binding-reports.md)
 - q="does collecting parent write handoffs admit competing storage writers?" · facts=[isf-formal-parent-write-products](../../docs/knowledge/isf-formal-parent-write-products.md)
 - q="does formal preparation bypass production monitor collision checks?" · facts=[isf-formal-preallocation-admission](../../docs/knowledge/isf-formal-preallocation-admission.md)

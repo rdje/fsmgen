@@ -1,0 +1,10 @@
+input corruption rejects: cause
+input corruption rejects: source
+input corruption rejects: kind
+input corruption rejects: actor
+input corruption rejects: field
+input corruption rejects: member
+output corruption rejects: origin
+output corruption rejects: schema
+output corruption rejects: kind
+PASS exact source delta/closure, complete caller-kind preservation, prior real failures, admission causes and whole output conservation; wider child semantics remain cold-owned.

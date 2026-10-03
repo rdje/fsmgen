@@ -1,0 +1,5 @@
+t/1947-isf-formal-reusable-products.t ............. ok
+t/1330-isf-atl-resolved-child-fixture-coverage.t .. ok
+All tests successful.
+Files=2, Tests=69, 87 wallclock secs ( 0.04 usr  0.01 sys + 63.40 cusr 23.19 csys = 86.64 CPU)
+Result: PASS

@@ -1,0 +1,1 @@
+Bound complete source closure after the detached-scalar repair.

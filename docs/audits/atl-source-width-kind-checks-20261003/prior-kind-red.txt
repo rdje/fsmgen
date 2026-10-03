@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/atl-source-width-kind-repair-20261003/verify.py", line 132, in <module>
+    assert all(r['actor'] == r['original'] for r in prior['rows']), 'exact prior guard changes four actual caller-kind observations'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact prior guard changes four actual caller-kind observations

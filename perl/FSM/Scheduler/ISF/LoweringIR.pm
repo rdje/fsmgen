@@ -1322,9 +1322,13 @@ sub _ensure_atl_child_data_source_ports {
                 || _is_atl_actor_to_pin_handoff_kind($movement->{kind} // '')) && $width > 1
             ? 'child output port'
             : 'scalar child output port';
+        # Numeric inspection must not change the caller's scalar flags.
+        my $declared_width = ref($declared) eq 'HASH'
+            ? $declared->{width}
+            : undef;
         confess "$context data movement '$movement->{drive}' requires a $port_label '$port_name' on $instance_role '$instance'\n"
             unless ref($declared) eq 'HASH'
-                && ($declared->{width} || 1) == $width
+                && ($declared_width || 1) == $width
                 && $width > 0;
 
         _push_port($child_ir->{ports}, \%seen, $port_name, 'output', $width)

@@ -1,0 +1,5 @@
+ram-guard: PID 53040; host 70.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2059-isf-atl-source-width-kind-preservation.t .. ok
+All tests successful.
+Files=1, Tests=48,  2 wallclock secs ( 0.01 usr  0.00 sys +  0.85 cusr  0.43 csys =  1.29 CPU)
+Result: PASS
