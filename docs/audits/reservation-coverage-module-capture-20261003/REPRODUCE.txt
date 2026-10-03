@@ -1,0 +1,20 @@
+Cold, non-mutating readback from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-module-capture-20261003/verify.py
+  python3 -B docs/audits/reservation-coverage-module-capture-20261003/derive_fields.py
+The genuine competing-authority mode must exit 1 at module zero:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-module-capture-20261003/verify.py --trust-storable
+
+For fresh observations, own a new task leaf and sibling on the repository volume.
+Retain this sealed directory unchanged. Authenticate the complete source boundary
+in bindings.json. Copy observe.pl to the sibling, changing only its explicit
+output base. Run under the RAM guard in original mode and with
+FSMGEN_COVERAGE_MODULE_COPY_MODE=pure. Retain TAP/status and complete native graphs
+before comparison. Apply portable.py's exact FIFO-coordinate encoding to the
+sibling, retaining its complete ledger; do not coerce other fields/kinds. Rebind
+all source/provider and instrument identities, derive the full owned field roster,
+apply independent complete graph readback and genuine Storable counterauthority,
+and seal after verification. Changed sources require new qualification.
+
+Historical Git objects authenticate source bodies, not a mutable claim about
+current HEAD. This capture has no field-meaning signoff; generated/reusable/ATL
+models and actor-only preparation propagation follow before snapshot qualification.

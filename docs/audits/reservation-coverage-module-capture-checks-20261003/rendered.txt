@@ -1,0 +1,1 @@
+PASS rendered module-capture scope, retained actor result and open semantic/snapshot boundary; visual QA remains pending.

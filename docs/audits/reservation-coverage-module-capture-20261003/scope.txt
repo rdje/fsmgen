@@ -1,0 +1,45 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.2.
+Source boundary: 66924fd50 (full Git identity and complete source membership in bindings.json).
+
+Unchanged T1960 executes actual public preparation/lowering/coverage and strict
+exported-carrier checks. Original and genuine pure modes differ only at the
+exact captured build_module copy. Every complete module original, caller,
+copy, returned product, emitted carrier and real error is retained. All ten
+module originals preserve values, primitive kinds and plain sharing. Copies
+are deeply isolated; pure copies preserve complete kinds/topology. Original
+Storable changes only primitive kinds in nine module captures; the ten-row
+field-roster enumerates every actual per-module/path difference and assigns
+its generated/rule/monitor, reusable/storage or ATL owner. These are field
+observations, not independent field-meaning or controller qualification.
+
+Module-only modes have identical complete preparations, lowering results,
+emitted carriers, coverage acceptance and returned scope records. Coverage
+prepared/allocation operands conserve across modes; only copied module operand
+kinds differ. Both preserve each actual caller including successful/refused
+inputs. All twenty-three scope observations retain the initial profile's
+acceptance, ordinary results and actual primary refusals. Native stack addresses
+are retained observations, not a cross-run identity contract. No HDL compiler,
+simulator, native collector or submodule is invoked.
+
+Re-derivation: independent stack-based typed traversal authenticates complete
+Git/source identities, selected full source bodies, prior profile membership,
+current copy sites, complete graphs and field-roster ownership. It does not
+import the producer's comparison/classifier. Falsification: treating the actual
+lossy Storable copy as kind-preserving authority fails at original module zero;
+roster omission, wrong owner and module-identity corruption reject. Durability:
+full native original/copy/API/result/error graphs, TAP/status, source/Git bodies,
+coordinate ledger, original/strengthened reader and real RED trace, producer,
+roster derivation, reader, recipe, manifest, task/card/book and Git. Digests
+bind recorded bytes; independent complete source and graph comparisons supply
+the narrow conservation evidence. Independent semantic field-meaning legs are
+explicitly missing and owned by module children .3/.4/.5; actor-only preparation
+propagation and complete module join are .6-owned. Successful/refused snapshots
+and mutation seeds remain the next coverage cohort before P2 .13 repair.
+
+Only exact FIFO library_source coordinates are encoded as literal
+${REPO_ROOT}/isf/common/fifo.isf with a complete coordinate ledger. Python
+trace source coordinates use the same root marker. Other values/kinds/topology
+remain untouched; this is current-root evidence, not moved-root qualification.
+Complete constructors/controllers, arbitrary native referents and source CLI/API
+mapping remain cold. No provider/test/predicate/public syntax/schema/admission,
+native/submodule/legacy or prior sealed archive changes.

@@ -25,7 +25,7 @@ formals may extend it with planned names; they retain counters/signal_widths,
 transaction_port ownership and separation from fixed ports/storage/blocks/types.
 Children receive no parent allowance. Returned scope identities are detached.
 
-T1960 observes public lowering modules/exported carriers, removes actual wait
+T1960 checks public modules/carriers, removes wait
 reservations while preserving allocation, and injects late register/assignment,
 module membership/identity/nesting, stale-plan and formal width/role/block-alias
 controls. Its fixtures include case-fold conflicts, permutations, generated/FIFO/
@@ -40,13 +40,14 @@ binds lost numeric FIFO indexes/binding widths and ATL route width to source.
 Pure actor copies retain kinds/sharing; complete lowering/carriers/scope results
 agree. The [cause repair](../audits/reservation-coverage-cause-repair-20261003/scope.txt)
 uses complete causes and saved native errors; wrong-cause, exact-prior and actual
-declaration-guard bypass controls qualify. The verifier rejects correctly.
-Internal module/snapshot semantics remain .4.3-open; P2 .13 owns repair afterward.
-Wider constructors/moved-root work stays cold.
+declaration-guard bypass controls qualify.
+[Module capture](../audits/reservation-coverage-module-capture-20261003/scope.txt)
+binds full originals/pure copies; field meanings/snapshots remain open before P2 .13.
+Constructors/moved-root stay cold.
 
 This detached guard establishes the final declaration check for the prepared
 ISF-to-FSM module boundary. It does not replace source or executable admission,
-prove arbitrary edited IR behavior, or cover new producer/emitter boundaries
+prove arbitrary edited IR, or cover new producer/emitter boundaries
 without extending qualification. [Production formal lowering](isf-production-formal-scope.md) now invokes this
 guard after actual module construction and before emission, with authored
 report provenance restored in a detached view. Independent controller/local-call runtime

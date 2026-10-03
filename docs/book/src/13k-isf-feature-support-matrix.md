@@ -238,7 +238,10 @@ detached test copy. The [actor-copy qualification](../../../docs/audits/reservat
 binds changed FIFO bank indexes/binding widths and vector ATL route width to
 source declarations. Scalar-preserving actor copies retain complete source
 kinds and sharing; complete ordinary lowering results, emitted carriers and
-coverage scope records agree with the original test. Internal module propagation
+coverage scope records agree with the original test. The [module capture](../../../docs/audits/reservation-coverage-module-capture-20261003/scope.txt)
+binds complete module originals and deeply isolated pure copies to the source
+and original coverage profile. Ordinary lowering/carrier/scope results agree;
+generated, reusable and ATL field meanings, source preparation propagation,
 and successful/refused snapshots remain open. The test-copy repair follows
 those cohorts; this profile does not establish a production coverage defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)

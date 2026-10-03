@@ -3798,11 +3798,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Capture exact current modules and genuine module-only pure-copy counterfactuals.`
   Acceptance: `Run unchanged current T1960 with first-touch complete module-original/copy graphs at the exact build_module capture. Compare genuine ordinary versus pure copies only at that site, retain complete public coverage callers/results and ordinary lowering/carriers, prove original/kind/topology/isolation preservation and bind current source plus prior membership. Declare every actual field-difference roster by family as observation only; no field meaning or repair signoff.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete current T1960 original/module-only pure observations each All tests successful1/5; all10 original module/caller graphs conserve values/kinds/sharing, copies deeply isolate, pure copies preserve complete kinds/topology. Nine actual Storable copies change primitive kinds only; the complete per-instance/path roster binds every difference to generated/rule/monitor .3, reusable/storage .4 or ATL .5. Independent stack traversal closes immutable Git/source membership, full selected bodies, exact current sites and initial-profile graphs without importing producer comparison/classification. Complete preparations/lowering/carriers and23 coverage acceptance/ordinary scope results/primaries agree across modes and prior; prepared/allocation operands agree while copied module kinds can differ. Actual Storable-as-kind-authority RED1 at module0 and roster omission/wrong-owner/module-identity corruptions reject. Native full inputs/copies/API/results/errors/TAP/status, source-history, complete coordinate ledger, initial/strengthened readers and actual RED traces, producer/derivation/reader/recipe/seal/task/card/book/Git retain narrow re-derivation, falsification and durability legs. No independent field-meaning promotion: .3/.4/.5 own semantics, .6 owns actor-only preparation propagation and module join; snapshots precede P2 .13. Only observed FIFO source/reader root coordinates encoded; moved-root/constructors/controllers/arbitrary native/source-API semantics remain cold. Focused coverage/cause All tests successful2/239, rendered book/build/public-book2/308/KM/staged doctrines/hooks close capture. Provider/test/predicate/public admission/schema/native/submodule/legacy and prior sealed archives unchanged; visual QA pending.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.3`
   Status: `pending`
@@ -6145,3 +6145,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated initial module graphs contain several source/product families under the exact T1960 build_module capture; the original git log -S authored-copy construction and source-bound module data establish why one whole-field leaf is too broad. Field differences remain observations until independent family models close.
 - [x] **ADDRESSED (verified)** — Declare fresh module-only original/pure capture, generated/rule/monitor, reusable/storage, ATL and complete propagation-join leaves before runtime work. Preserve snapshot and P2 repair ownership and every existing cold limitation.
 - [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl and the staged gate require [doctrine] all doctrine checks passed. This split changes task ownership and its measured allowance only; the book and verified source/cause results remain unchanged.
+
+## Acceptance Checklist — complete module capture
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '$modules{$ir->{actor_name}} = dclone($ir)' binds the actual capture introduction98f0cc146; complete current and prior native module graphs locate primitive-kind loss at T1960 line51. Field meanings remain separately owned rather than inferred from copy counts.
+- [x] **ADDRESSED (verified)** — Independent typed stack traversal authenticates complete source/profile/current module/caller/result closure and full per-field owner roster. Genuine pure copies preserve kinds/topology/deep isolation; actual Storable-as-kind-authority RED1 and omission/owner/identity corruptions reject. This closes capture only; semantic successors remain pending before snapshots and repair.
+- [x] **NO REGRESSION** — Focused coverage/cause All tests successful, Files=2, Tests=239; public-book Files=2, Tests=308, rendered book/build and current Knowledge Map readback pass. Fixed capacity/fresh inventory/staged [doctrine] all doctrine checks passed and normal hooks complete before commit. Source/provider/test/predicate and historical evidence remain unchanged; visual QA pending.
