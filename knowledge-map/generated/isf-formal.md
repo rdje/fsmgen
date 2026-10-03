@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-formal`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **14** facts · **44** uniquely owned question entries.
+> **14** facts · **45** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -44,6 +44,7 @@
 - q="what does parent_wiring_products contain in formal source preparation?" · facts=[isf-formal-wiring-products](../../docs/knowledge/isf-formal-wiring-products.md)
 - q="what does resource_signal_products prove about resource arbitration?" · facts=[isf-formal-resource-products](../../docs/knowledge/isf-formal-resource-products.md)
 - q="what does reusable_child_products include in source preparation?" · facts=[isf-formal-reusable-products](../../docs/knowledge/isf-formal-reusable-products.md)
+- q="what qualifies T1960 copy kinds, plain sharing and native marker identity?" · facts=[isf-formal-reservation-coverage](../../docs/knowledge/isf-formal-reservation-coverage.md)
 - q="what qualifies the resource priority namespace boundary?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
 - q="which actual module scopes are checked before formal rewrite integration?" · facts=[isf-formal-reservation-coverage](../../docs/knowledge/isf-formal-reservation-coverage.md)
 - q="why can a generated ready port collide with a private direct formal?" · facts=[isf-formal-wiring-products](../../docs/knowledge/isf-formal-wiring-products.md)

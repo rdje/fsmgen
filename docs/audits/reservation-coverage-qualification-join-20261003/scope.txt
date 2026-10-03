@@ -1,0 +1,55 @@
+Owned by SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.5.
+
+This completes the finite T1960 copy/source/module/snapshot qualification and
+hands off immediately to P2 .13 test repair. It changes no production/provider,
+current test, public interface, submodule or previous sealed evidence.
+
+Population and units: every actual initial-profile clone observation and every
+exact current dclone source site in T1960. Eight source sites produce 62 complete
+copy observations: authored actors6, physical actors10, captured modules10,
+success snapshots10, refusal snapshots13, extra-module seed1, module seeds11,
+allocation seed1. Actor16/module10/snapshot36 are disjoint cohort memberships.
+There are 41 observations with 548 integer-to-string kind differences, counted
+as (copy ordinal, field coordinate) pairs, not distinct semantic or production
+defects. Actor fields7/module149/snapshot392 all have independently qualified
+source/product meanings. Unchanged physical copies and extra/allocation seeds
+remain mandatory controls, never silently dropped from the population.
+
+Re-derivation: complete immutable initial/current Git source bytes, exact current
+and initial source-site maps, full original/current before/copy/after graphs and
+completed owning task bytes are authenticated. A recursive handoff producer and
+separate expression-level source mapper/iterative typed graph stack agree on
+every observed ordinal/field. Every graph joins the exact actor/module/snapshot
+cohort observation and completed semantic owner/reader, not a numerical subtotal.
+Whole original caller graphs and ordinary preparations/lowering/carriers/scope
+results/intended causes stay authenticated through the preceding complete joins.
+The prospective scalar-preserving copy recipe and first-touch/native snapshot
+boundary are qualified within their explicit finite contracts; original hidden
+Perl flags and arbitrary constructor meanings are not reconstructed from JSON.
+
+Falsification: actual first changed Storable copy (ordinal1, captured module) is
+promoted as a primitive-kind authority and fails RED1 at the complete original/
+copy contradiction. Copy omission, field omission, unchanged allocation omission
+and unqualified owner controls reject. Independently retained real success/
+refusal value-only caller-kind mutations, actual alias/root-cycle breaks, deep
+copy mutation isolation, actual native-marker replacement and finite wrong-
+shape/class/referent refusals remain separately authenticated. Numeric-looking
+string completion constants stay strings; no blanket numeric coercion is used.
+Durability: full Git/source/owner bindings, complete handoff/field membership,
+producer/cold reader/controls/receipts, immutable manifest, task/fact/book and Git.
+Cold checks use the owned sibling; sealed producers never run in place. Trace
+root prefixes alone use ${REPO_ROOT}, not semantic input normalization.
+
+The initial draft guessed an allocation-seed spelling and failed closed; the
+next draft missed the exact prior single-line extra-module layout and also
+failed. Source reads corrected both. The initial reader expected snapshot
+ordinal2's RED receipt, while the complete join's first changed module is1;
+that expectation was corrected. All failed draft receipts remain explicitly
+unqualified; corrected full derivation and reader pass before sealing.
+
+Immediate successor: P2 .13 replaces evidenced lossy test copies and value-only
+kind assurance while preserving full source/projection/module/caller semantics,
+actual complete diagnostic causes and genuine prior/mutation controls. General
+native referents, constructor/report/controller/runtime meanings, moved-root
+execution and visual book QA keep their existing cold owners. Current source
+qualification is evidence for this repair, never public admission expansion.

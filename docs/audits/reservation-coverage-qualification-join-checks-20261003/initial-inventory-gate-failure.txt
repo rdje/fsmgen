@@ -1,0 +1,5 @@
+[doctrine] RUN:  CLAIM-INVENTORY - Producer-derived current-surface claims and repository constants remain completely partitioned, independently censused, bounded, and task-owned
+claim-inventory: inventory drift; run scripts/check_claim_verification_inventory.pl --write
+[doctrine] FAIL: CLAIM-INVENTORY
+
+Cause: Knowledge Map FAQ generation changed its numeric projection after the earlier inventory scan. Regenerate after the map, restage, and rerun the full staged gate.

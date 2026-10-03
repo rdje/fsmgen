@@ -1,0 +1,9 @@
+Run from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-qualification-join-20261003/verify.py
+The --trust-storable variant must exit1 at actual captured module ordinal1's
+complete primitive-kind contradiction, never a source/manifest/import failure.
+No producer reruns in the sealed directory. A new owned sibling may adapt the
+output BASE, derive its full handoff from the same immutable bindings/corpora,
+and compare every ordinal/site/field/owner. Never omit unchanged allocation or
+other empty controls, or infer semantic completeness from totals alone.
+P2 .13 test copy/snapshot repair is the immediate successor.

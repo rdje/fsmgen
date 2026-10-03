@@ -1,0 +1,1 @@
+PASS complete initial/current copy-site and typed-difference handoff derived; semantic owners are independently qualified by the cold join reader.

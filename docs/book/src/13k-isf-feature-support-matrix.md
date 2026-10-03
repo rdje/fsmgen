@@ -273,8 +273,11 @@ The [actual native snapshot join](../../../docs/audits/reservation-coverage-snap
 replays all intended and wrong-cause cases with their original marker identities,
 classes and empty shapes. Replacing one marker after a real refusal fails the
 existing identity assertion while complete causes and value graphs stay unchanged.
-Snapshot assurance is joined; final coverage qualification still precedes the
-test-copy repair. These controls do not establish a production defect.
+The [complete coverage qualification](../../../docs/audits/reservation-coverage-qualification-join-20261003/scope.txt)
+now joins every initial/current copy site and observed field with its actor,
+module or snapshot semantic owner. Unchanged seeds remain required controls.
+The test-copy repair follows this completed qualification; the current copies
+remain unrepaired. These controls do not establish a production defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when
 the wanted phrase appears in its caller stack or an unrelated failure path. For

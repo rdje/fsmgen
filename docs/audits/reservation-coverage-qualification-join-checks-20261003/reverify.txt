@@ -1,0 +1,102 @@
+ram-guard: PID 11911; host 75.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS complete-cause correction/source/graph closure, conserved whole ordinary products and original clone drift; genuine prior and declaration-only bypass fail, typed corruptions reject.
+Complete source/copy-field/module/carrier meanings remain .4.3/cold .1.3; original Storable/value-only assurance is not promoted. Moved-root/native/visual QA stays explicit.
+PASS immutable complete source/prior membership, exact current module captures and typed field-instance roster with per-family owners.
+PASS original/caller kind/topology/deep-isolation conservation, genuine pure module copies and complete preparation/lowering/carrier/scope result equality.
+PASS actual lossy module-copy kind counterfactual and roster omission/owner/identity corruptions reject.
+OPEN: generated/reusable/ATL field meanings, actor-only preparation propagation and snapshot assurance remain .3-.6/.4-owned; constructors/controllers/moved-root stay cold.
+PASS complete generated/case-fold/permuted/rule/monitor field roster, literal source/producer assignments, provenance and declared-width contracts.
+PASS structured emitted-carrier constants/guards/widths and genuine pure copies; every actual lossy module copy and semantic/identity/carrier corruptions reject.
+OPEN: reusable/ATL fields, actor-only preparation propagation and snapshots retain their owners; complete controllers/constructors/native/moved-root stay cold.
+PASS authenticated complete source actors and original profile; all authored/physical copy sites retained.
+PASS independent FIFO bank/binding and ATL route field contracts, genuine pure-copy preservation/deep isolation and exact ordinary lowering/carrier/scope results.
+PASS real Storable competing authority and retained kind/value/route corruptions reject.
+OPEN: preparation/internal module propagation semantics, snapshot/mutation seed assurance, full constructors/controllers and moved-root qualification remain owned successors.
+PASS immutable complete source/prior membership, exact current module captures and typed field-instance roster with per-family owners.
+PASS original/caller kind/topology/deep-isolation conservation, genuine pure module copies and complete preparation/lowering/carrier/scope result equality.
+PASS actual lossy module-copy kind counterfactual and roster omission/owner/identity corruptions reject.
+OPEN: generated/reusable/ATL field meanings, actor-only preparation propagation and snapshot assurance remain .3-.6/.4-owned; constructors/controllers/moved-root stay cold.
+PASS complete storage-module and inherited FIFO preparation field sets against independent source, bank/binding/guard/provenance and structured-carrier contracts.
+PASS original/pure preservation; actual captured and inherited Storable authorities plus endpoint/index/target/carrier corruptions reject.
+OPEN: ATL fields, full module join and snapshots retain their owners; complete controllers/constructors/native/moved-root stay cold.
+PASS authenticated complete source actors and original profile; all authored/physical copy sites retained.
+PASS independent FIFO bank/binding and ATL route field contracts, genuine pure-copy preservation/deep isolation and exact ordinary lowering/carrier/scope results.
+PASS real Storable competing authority and retained kind/value/route corruptions reject.
+OPEN: preparation/internal module propagation semantics, snapshot/mutation seed assurance, full constructors/controllers and moved-root qualification remain owned successors.
+PASS immutable complete source/prior membership, exact current module captures and typed field-instance roster with per-family owners.
+PASS original/caller kind/topology/deep-isolation conservation, genuine pure module copies and complete preparation/lowering/carrier/scope result equality.
+PASS actual lossy module-copy kind counterfactual and roster omission/owner/identity corruptions reject.
+OPEN: generated/reusable/ATL field meanings, actor-only preparation propagation and snapshot assurance remain .3-.6/.4-owned; constructors/controllers/moved-root stay cold.
+PASS complete resolved/vector/trigger-batch module field sets, numeric assignments/provenance/fan-in and source-owned child/link width contracts.
+PASS structured carrier constants/sizes/endpoint wiring and complete inherited vector activation/wiring width field set; real Storable authorities and semantic/endpoint/carrier corruptions reject.
+OPEN: full module reconciliation and snapshots retain their owners; complete controllers/constructors/native/moved-root stay cold.
+PASS full source-bound original/current module membership and every field contract through independently completed generated/reusable/ATL readers.
+PASS complete actor-only preparation difference set reconciles only to qualified FIFO and vector paths; original/pure graph and ordinary product conservation remains authenticated.
+PASS module/field/preparation omissions and wrong owners reject; actual lossy Storable kind authority remains a real competing model.
+OPEN: successful/refused snapshots, mutation seeds and final coverage join precede P2 repair; wider controllers/constructors/native/moved-root stay cold.
+PASS complete initial/current copy-site closure and independently derived remaining snapshot/seed typed roster.
+PASS actual originals/API callers, pure copies, plain topology/deep isolation and whole ordinary lowering/carrier/scope/cause conservation.
+PASS omitted site/field and caller corruptions reject; field meanings and real value-only assertions remain separately owned, not promoted by this capture.
+PASS complete normal snapshot/seed RHS/provenance, source-owned child/vector widths and private formal identity/width contracts, with separate derived roster.
+PASS source/producer/carrier literals and pure kinds; real Storable snapshot/seed authorities and pulse/width/endpoint corruptions reject.
+OPEN: producer-removal fields, full field join and actual value-only/native-marker controls precede P2 repair; wider controllers/constructors/moved-root stay cold.
+PASS immutable complete source/prior membership, exact current module captures and typed field-instance roster with per-family owners.
+PASS original/caller kind/topology/deep-isolation conservation, genuine pure module copies and complete preparation/lowering/carrier/scope result equality.
+PASS actual lossy module-copy kind counterfactual and roster omission/owner/identity corruptions reject.
+OPEN: generated/reusable/ATL field meanings, actor-only preparation propagation and snapshot assurance remain .3-.6/.4-owned; constructors/controllers/moved-root stay cold.
+PASS complete generated/case-fold/permuted/rule/monitor field roster, literal source/producer assignments, provenance and declared-width contracts.
+PASS structured emitted-carrier constants/guards/widths and genuine pure copies; every actual lossy module copy and semantic/identity/carrier corruptions reject.
+OPEN: reusable/ATL fields, actor-only preparation propagation and snapshots retain their owners; complete controllers/constructors/native/moved-root stay cold.
+PASS authenticated complete source actors and original profile; all authored/physical copy sites retained.
+PASS independent FIFO bank/binding and ATL route field contracts, genuine pure-copy preservation/deep isolation and exact ordinary lowering/carrier/scope results.
+PASS real Storable competing authority and retained kind/value/route corruptions reject.
+OPEN: preparation/internal module propagation semantics, snapshot/mutation seed assurance, full constructors/controllers and moved-root qualification remain owned successors.
+PASS immutable complete source/prior membership, exact current module captures and typed field-instance roster with per-family owners.
+PASS original/caller kind/topology/deep-isolation conservation, genuine pure module copies and complete preparation/lowering/carrier/scope result equality.
+PASS actual lossy module-copy kind counterfactual and roster omission/owner/identity corruptions reject.
+OPEN: generated/reusable/ATL field meanings, actor-only preparation propagation and snapshot assurance remain .3-.6/.4-owned; constructors/controllers/moved-root stay cold.
+PASS complete storage-module and inherited FIFO preparation field sets against independent source, bank/binding/guard/provenance and structured-carrier contracts.
+PASS original/pure preservation; actual captured and inherited Storable authorities plus endpoint/index/target/carrier corruptions reject.
+OPEN: ATL fields, full module join and snapshots retain their owners; complete controllers/constructors/native/moved-root stay cold.
+PASS authenticated complete source actors and original profile; all authored/physical copy sites retained.
+PASS independent FIFO bank/binding and ATL route field contracts, genuine pure-copy preservation/deep isolation and exact ordinary lowering/carrier/scope results.
+PASS real Storable competing authority and retained kind/value/route corruptions reject.
+OPEN: preparation/internal module propagation semantics, snapshot/mutation seed assurance, full constructors/controllers and moved-root qualification remain owned successors.
+PASS immutable complete source/prior membership, exact current module captures and typed field-instance roster with per-family owners.
+PASS original/caller kind/topology/deep-isolation conservation, genuine pure module copies and complete preparation/lowering/carrier/scope result equality.
+PASS actual lossy module-copy kind counterfactual and roster omission/owner/identity corruptions reject.
+OPEN: generated/reusable/ATL field meanings, actor-only preparation propagation and snapshot assurance remain .3-.6/.4-owned; constructors/controllers/moved-root stay cold.
+PASS complete resolved/vector/trigger-batch module field sets, numeric assignments/provenance/fan-in and source-owned child/link width contracts.
+PASS structured carrier constants/sizes/endpoint wiring and complete inherited vector activation/wiring width field set; real Storable authorities and semantic/endpoint/carrier corruptions reject.
+OPEN: full module reconciliation and snapshots retain their owners; complete controllers/constructors/native/moved-root stay cold.
+PASS full source-bound original/current module membership and every field contract through independently completed generated/reusable/ATL readers.
+PASS complete actor-only preparation difference set reconciles only to qualified FIFO and vector paths; original/pure graph and ordinary product conservation remains authenticated.
+PASS module/field/preparation omissions and wrong owners reject; actual lossy Storable kind authority remains a real competing model.
+OPEN: successful/refused snapshots, mutation seeds and final coverage join precede P2 repair; wider controllers/constructors/native/moved-root stay cold.
+PASS complete initial/current copy-site closure and independently derived remaining snapshot/seed typed roster.
+PASS actual originals/API callers, pure copies, plain topology/deep isolation and whole ordinary lowering/carrier/scope/cause conservation.
+PASS omitted site/field and caller corruptions reject; field meanings and real value-only assertions remain separately owned, not promoted by this capture.
+PASS complete normal snapshot/seed RHS/provenance, source-owned child/vector widths and private formal identity/width contracts, with separate derived roster.
+PASS source/producer/carrier literals and pure kinds; real Storable snapshot/seed authorities and pulse/width/endpoint corruptions reject.
+OPEN: producer-removal fields, full field join and actual value-only/native-marker controls precede P2 repair; wider controllers/constructors/moved-root stay cold.
+PASS complete actual token-removal transformation and independent authored/metadata/storage/formal, producer/provenance, membership and handshake/wait field contracts.
+PASS every retained field reconciles with a separate recursive roster; pure kinds and typed string constants preserve, actual lossy authority and semantic corruptions reject.
+OPEN: full snapshot field join and real value-only/native-marker controls precede P2 repair; complete constructors/controllers/moved-root and visual QA remain cold.
+PASS complete snapshot/seed membership, every semantic field and unchanged-copy control reconcile with authenticated completed cohorts.
+PASS independent whole typed paths, pure/original topology/deep-isolation and ordinary source/product/cause/carrier conservation through immutable readers.
+PASS omitted copy/field/empty allocation and wrong-owner controls reject; actual Storable authority remains a genuine counterfactual.
+OPEN: real value-only assertion and native-marker controls, then final coverage join, precede P2 repair; wider constructor/controller/moved-root and visual QA remain cold.
+PASS every exact native call/consumer/current source, original caller graph and whole ordinary lowering/carrier/scope/cause outcome authenticated.
+PASS genuine success/refusal numeric1-to-string1 caller mutations each violate one first-touch field while actual current Test::More assertions and full test remain green; all subsequent propagation is exact.
+PASS isolated source-owned pulse target, complete kind-only delta and value/consumer omission controls; actual competing consumer authorities are genuine unsafe models.
+OPEN: finite plain/native controls and snapshot/final joins precede P2 repair; current unmodified provider mutation is not alleged, and wider constructor/controller/native/moved-root meanings stay cold.
+PASS exact Git-bound T1959 helper and single class adaptation; all62 reconstructed native plain graphs conserve kinds/sharing and independently counted deep-isolated references.
+PASS actual candidate/Storable alias-cycle fixture, actual copy mutation isolation, actual broken alias/root backedge and empty marker identity replacement; unsupported shape/class/referents refuse with complete helper causes.
+SCOPE: native reconstruction validates captured descriptors, not hidden original Perl scalar flags or arbitrary constructors. Storable topology does not establish its general kind authority. Actual coverage native replay/full snapshot and final joins precede P2 repair.
+PASS full Git-bound current T2063 helper/source and completed snapshot capture/fields/real-consumer/candidate owners; whole39 native cases conserve complete causes/results/plain graphs and ordinary original marker identities/classes/empty shapes.
+PASS actual one-marker replacement after real refusal preserves every intended cause/value-only graph/helper bit; existing original-identity assertion alone fails RED1/234. Whole first-touch graph detects only the actual ID change.
+PASS complete snapshot assurance joins authenticated capture/fields/value-only/plain topology/isolation and finite actual native identity; final coverage join precedes P2 repair. General native/constructor/controller/moved-root meanings stay cold.
+PASS complete initial/current Git/source and done semantic/control owners; every8 copy site and all62 observations close across actor16/module10/snapshot36 cohorts, including unchanged and empty seeds.
+PASS every actual primitive-kind difference joins source-owned semantics: changed41 observations/548 ordinal-field pairs (actor7/module149/snapshot392), never distinct production defects; whole callers/ordinary products/causes and cold limits remain authenticated.
+PASS genuine Storable unsafe authority and copy/field/empty-seed/owner controls; complete cause, value-only kind, alias/cycle/isolation/native controls qualify the finite prospective helper. P2 .13 is the immediate test-copy/snapshot repair; arbitrary native/constructor/controller/moved-root meanings remain cold.
+PASS complete current coverage cause/copy-site/field/source/product qualification with real kind, plain topology and native controls; immediate test repair remains owned; all readers leave retained evidence unchanged.
