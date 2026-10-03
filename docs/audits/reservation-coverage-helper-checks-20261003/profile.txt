@@ -1,0 +1,2 @@
+PASS bounded source/profile counts, actual original/API kind preservation and source-declared genuine causes; sample omission/caller corruption reject.
+UNQUALIFIED: wrong-cause behavior and whole clone-field/projection/result/carrier semantics; .4.2/.4.3 own these missing legs, P2 .2.3.13 owns repair after qualification.

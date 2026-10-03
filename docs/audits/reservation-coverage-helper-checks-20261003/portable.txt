@@ -1,0 +1,1 @@
+PASS only native error/rooted FIFO source coordinates portable-encoded; scalar kinds and graph topology untouched. Current-root spelling does not qualify moved-root behavior.

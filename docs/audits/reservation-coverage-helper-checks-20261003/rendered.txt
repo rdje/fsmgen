@@ -1,0 +1,1 @@
+PASS rendered bounded coverage profile and explicit qualification gaps; visual QA not performed.

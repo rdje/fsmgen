@@ -1,0 +1,46 @@
+{
+  "REPRODUCE.txt": {
+    "bytes": 1068,
+    "sha256": "c91dc8365063125f3631cc441d13d21a289e5d36c8ecaa3598f15b6c5752bb83"
+  },
+  "bind.py": {
+    "bytes": 1367,
+    "sha256": "b32b3de46bdb5d447593e970ae4eba2398b0d78de17d41146e540b52cbef2789"
+  },
+  "bind.txt": {
+    "bytes": 78,
+    "sha256": "454cdb237761d8dcc40705e7cb1dc910786dad9b651b932895fae431a65c03d1"
+  },
+  "bindings.json": {
+    "bytes": 1379845,
+    "sha256": "229338f4f4d343d50e19fe9a5869d3f3ee6ae6f0537aa703d24cd8fba9b3b561"
+  },
+  "contracts.py": {
+    "bytes": 1822,
+    "sha256": "8edde7039af005e15c5148d6fb5f9c0ccb4d7d2b0efcbabb0d07714363023ee6"
+  },
+  "declared-causes.json": {
+    "bytes": 1663,
+    "sha256": "390eb8d71442c8c9e74036b8594c19c87778d29f5616fd554ed65ef6415722b6"
+  },
+  "initial-observations-unqualified.json": {
+    "bytes": 8272794,
+    "sha256": "0d94ec606a6dd24a3a64b5a94d87591bee457368cfc5bca3bad69c540c97499a"
+  },
+  "initial-observed-unqualified.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "initial-observed-unqualified.txt": {
+    "bytes": 202,
+    "sha256": "669f566f9fb4599f1fbb833bb3d544d4cb5925d925fe9bfece2ff7fe341a9b9e"
+  },
+  "observe.pl": {
+    "bytes": 2822,
+    "sha256": "2248b0e7bdfef85516d7d82db0c942d7208e8db2f058d0be4ef81c3975e16d0e"
+  },
+  "scope.txt": {
+    "bytes": 2202,
+    "sha256": "7c43821f52209c0cb894fd1770b7abee16a3f21032a60d93364c4f33d663263c"
+  }
+}

@@ -5,41 +5,40 @@ answers:
   - "how does final formal reservation coverage detect an omitted producer name?"
   - "which actual module scopes are checked before formal rewrite integration?"
   - "does reservation coverage enable automatic production formal renaming?"
-date: 2026-09-27
+date: 2026-10-03
 status: current
 tags: [isf, formals, reservations, declarations, scope, ownership]
 evidence: perl/FSM/Scheduler/ISF/FormalReservationCoverage.pm; perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm; t/1960-isf-formal-reservation-coverage.t; t/1957-isf-formal-domain-reservation-integration.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1960-isf-formal-reservation-coverage.t t/1957-isf-formal-domain-reservation-integration.t t/1959-isf-prepared-formal-reservations.t
+reverify: scripts/run_with_ram_guard.sh -- python3 docs/audits/reservation-coverage-helper-checks-20261003/verify_profile.py
 ---
 
-FormalReservationCoverage::verify accepts original prepared source, its canonical
-complete FormalIdentityPlan, and actual admitted parent/domain LoweringIR modules
-keyed by physical actor_name. It rebuilds the checked input inventory and allocation
-plan, rejecting stale or incomplete allocations. The module set must match the
-ordinary parent or actual independently emitted domains. Each parent's children
-must match the prepared generated/reusable child set and physical child identity;
-unplanned nested child modules fail closed.
+FormalReservationCoverage::verify takes original prepared source, its canonical
+FormalIdentityPlan and actual parent/domain LoweringIR modules keyed by physical
+actor_name. It rebuilds checked reservations and allocation, rejects stale plans,
+requires exactly the parent/emitted domains and prepared generated/reusable
+children with matching physical identities, and refuses nested child scopes.
 
-Every scope checks actual signal maps, ports, constants, parameters, states, DTs,
-internal and storage declarations, system signals, enum/type value tokens and
-implicit assignment targets against its own prepared inventory. Only direct
-formals belonging to a live transaction in that parent/domain may extend the
-inventory with planned physical names. Each such formal must retain its width
-in counters and signal_widths, its transaction_port role, and separation from
-fixed ports, storage, blocks and system/type declarations. Child scopes receive
-no parent-formal allowance. The verifier returns detached verified scope identities
-and never modifies the prepared products, allocation or executable IR.
+Each scope checks signal maps, ports, constants, parameters, states, DTs,
+internal/storage/system declarations, enum/type tokens and implicit assignment
+targets against its own inventory. Only live direct parent/domain transaction
+formals may extend it with planned names; they retain counters/signal_widths,
+transaction_port ownership and separation from fixed ports/storage/blocks/types.
+Children receive no parent allowance. Returned scope identities are detached.
 
-T1960 observes modules from actual public lowering, checks final exported carriers,
-and falsifies coverage by removing every reservation for an actual dynamic-wait
-helper while preserving allocation. It also injects late registers and implicit
-assignment targets, missing/extra/wrong modules, nested children, stale plans,
-wrong formal width/role and a block aliasing a formal. Case-folded helper conflicts,
-declaration permutations, generated children, FIFO, resolved ATL/vector/batch
-children, storage metadata, rule payload identity and a real monitor-helper formal
-are qualified. T1957 applies the guard to its combined domain/resource/storage/
-completion and crossing cases. The preceding outer-scope qualification remains
-[the generated-domain identity record](isf-generated-domain-identities.md).
+T1960 observes public lowering modules/exported carriers, removes actual wait
+reservations while preserving allocation, and injects late register/assignment,
+module membership/identity/nesting, stale-plan and formal width/role/block-alias
+controls. Its fixtures include case-fold conflicts, permutations, generated/FIFO/
+ATL/vector/batch children, storage, rule payload and monitor formals. T1957 adds
+combined domain/resource/storage/completion/crossing cases; see
+[generated-domain identities](isf-generated-domain-identities.md).
+
+The [bounded current profile](../audits/reservation-coverage-helper-causes-20261003/scope.txt)
+retains native calls, original QR consumers and copies. Actual API inputs preserve
+values/kinds/sharing; some test Storable copies change numbers to strings.
+Wrong-cause behavior and complete clone-field/product semantics remain .4.2/.4.3
+unqualified. P2 .2.3.13 owns copy/snapshot repair after qualification. This is not
+a production coverage defect claim; wider constructors/moved-root work stays cold.
 
 This detached guard establishes the final declaration check for the prepared
 ISF-to-FSM module boundary. It does not replace source or executable admission,

@@ -230,6 +230,13 @@ The empty native marker control has only an identity/empty-shape contract;
 arbitrary unsupported referents remain unqualified. Whole ordinary scope/token
 inventories have independent finite models, while wider constructor semantics
 and moved-root qualification remain open.
+The [bounded coverage profile](../../../docs/audits/reservation-coverage-helper-causes-20261003/scope.txt)
+preserves the actual final-coverage calls and refusal consumers. The verifier
+preserves its actual inputs; some test Storable copies change numeric scalars
+into strings. For example, a numeric assignment value can become `"1"` in a
+detached test copy. Wrong-cause controls and complete source/module field
+qualification remain open. The test-copy repair is owned and scheduled after
+that qualification; this profile does not establish a production coverage defect.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.
 

@@ -1,0 +1,6 @@
+ram-guard: PID 30123; host 68.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-helper-checks-20261003/portable.py", line 17, in <module>
+    assert root not in sample.read_text()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

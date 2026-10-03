@@ -1,0 +1,14 @@
+ram-guard: PID 31126; host 79.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+late register diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+implicit assignment declaration diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+missing parent diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+unexpected module diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+missing child diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+unexpected nested child diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+wrong child identity diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+parent private name leaked into child diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+wrong formal width diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+wrong formal role diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+formal aliases a late block diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}
+stale or incomplete allocation diagnosed {"payload_physical": "isf_port_main_payload", "prepared_worker": "worker", "source_actor": "coverage"}
+omitted real producer declaration diagnosed {"payload_physical": "isf_port_main_payload_formal", "prepared_worker": "worker", "source_actor": "coverage"}

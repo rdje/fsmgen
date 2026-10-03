@@ -1,0 +1,20 @@
+The first independent reader compared Python tuple differences directly to their
+JSON array encoding. Its retained draft failed at that representation comparison.
+The second run reached the deliberate value corruption, which the equality
+reader rejects by raising AssertionError; the draft incorrectly expected a
+returned difference. The final reader catches and verifies the exact rejection
+locus. Neither failure demonstrates a provider or test regression. The raw failed
+receipts remain unqualified. Complete wrong-cause behavior and clone field
+semantics remain separate .4.2/.4.3 obligations.
+The first portability pass handled error coordinates but its whole-sample check
+also found rooted FIFO library_source metadata. The exact FIFO source prefix is
+now representation-encoded with a field ledger, preserving graph kinds/topology.
+The rejected portability receipt is retained. Moved-root behavior is unqualified.
+The first seal attempt rejected a producer-owned contracts bytecode cache before
+writing the manifest. That exact generated cache was removed; declaration reading
+now uses literal AST data instead of importing the contract module. The final
+seal requires exact file membership and permits no generated subdirectories.
+The first staged doctrine run rejected the missing parent Children entry for the
+new P2 .2.3.13 owner and a stale claim inventory after final document edits.
+The exact parent membership is repaired and fresh capacity/inventory are measured
+after final edits. The rejected gate receipt is retained unqualified.

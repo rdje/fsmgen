@@ -1,0 +1,31 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.1
+Baseline: f0e2ddc90aa78b6ce2f1c0097f47bb2fa3f5956a
+
+This bounded profile executes unchanged T1960 through real Test::More and public
+coverage verification. It retains 23 real API observations (10 accepted, 13
+refused), the 13 actual reject consumers and 62 original Storable calls before
+comparison. Complete caller/original graphs preserve values, scalar kinds and
+plain sharing topology. The detached copies differ in 41 calls: original lines
+29/50/55/94/114 contribute 2/9/6/13/11 respectively. These observations establish
+kind drift in test copies, not field meaning or downstream runtime correctness.
+Literal complete causes are independently declared from provider guard clauses
+and literal input identities; genuine primaries agree, but wrong-cause controls
+have not run. No false regex match is claimed by this slice.
+
+Re-derivation: independent verify_profile.py closes immutable Git membership,
+current raw source bytes, complete actual samples, type-aware differences and
+source-declared genuine primary associations. Falsification: sample omission and
+actual caller-value corruption are rejected by that reader. Durability: complete
+sources, native graphs/errors/QR spellings, TAP/status, recipe, hashes, task,
+card, book and Git. Those narrow legs do not substitute for behavioral cause
+controls (.4.2) or whole copy-field/source/module/result/carrier semantics (.4.3).
+P2 .2.3.13 owns the evidenced test-copy/snapshot repair immediately after .4.3.
+Wider constructor/controller meanings and moved-root behavior remain cold.
+
+Recorded error root coordinates and the exact FIFO library_source root prefix
+are spelled ${REPO_ROOT}; all other graph values, kinds and topology are untouched.
+The explicit field ledger is in sibling checks; this representation does not
+qualify moved-root behavior. Toolchain paths in native traces are read-only operating-system
+dependencies. Reader/prototype drafts remain explicitly unqualified in sibling
+checks. Production/test/shared predicate/schema/native/submodule/legacy sources
+and prior sealed archives are unchanged. No native HDL execution or visual QA.

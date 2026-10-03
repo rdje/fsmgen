@@ -119,7 +119,7 @@ _Source preparation retains narrowly deferred direct-formal monitor collisions_
 
 _Detached final module guard checks prepared reservations and private formal ownership_
 
-- **date:** 2026-09-27 · **status:** current
+- **date:** 2026-10-03 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-formal-reservation-coverage.md`](../../docs/knowledge/isf-formal-reservation-coverage.md)
 
 ### isf-formal-resource-products

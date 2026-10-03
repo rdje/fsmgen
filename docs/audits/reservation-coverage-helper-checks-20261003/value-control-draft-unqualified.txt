@@ -1,0 +1,19 @@
+ram-guard: PID 28487; host 68.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-helper-checks-20261003/verify_profile.py", line 47, in <module>
+    assert diffs(rows['api'][0]['before'],corrupt)
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 8, in diffs
+  File "<string>", line 8, in <genexpr>
+  File "<string>", line 8, in diffs
+  File "<string>", line 8, in <genexpr>
+  File "<string>", line 8, in diffs
+  File "<string>", line 8, in <genexpr>
+  File "<string>", line 5, in diffs
+  File "<string>", line 5, in <genexpr>
+  File "<string>", line 8, in diffs
+  File "<string>", line 8, in <genexpr>
+  File "<string>", line 5, in diffs
+  File "<string>", line 5, in <genexpr>
+  File "<string>", line 9, in diffs
+AssertionError: /1/0/1/actor/1/actor_name

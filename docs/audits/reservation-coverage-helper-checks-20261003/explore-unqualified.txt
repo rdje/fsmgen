@@ -1,0 +1,15 @@
+ram-guard: PID 23612; host 79.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Observed API calls: 23 refusal consumers: 13
+3 late register diagnosed (?^:unreserved declarations:.*late_unreserved_helper)
+4 implicit assignment declaration diagnosed (?^:unreserved declarations:.*implicit_late_helper)
+5 missing parent diagnosed (?^:incomplete parent/domain modules)
+6 unexpected module diagnosed (?^:incomplete parent/domain modules)
+7 missing child diagnosed (?^:incomplete children)
+8 unexpected nested child diagnosed (?^:unplanned nested child scope)
+9 wrong child identity diagnosed (?^:mismatched module)
+10 parent private name leaked into child diagnosed (?^:unreserved declarations)
+11 wrong formal width diagnosed (?^:wrong width or ownership)
+12 wrong formal role diagnosed (?^:wrong width or ownership)
+13 formal aliases a late block diagnosed (?^:wrong width or ownership)
+14 stale or incomplete allocation diagnosed (?^:canonical complete allocation plan)
+15 omitted real producer declaration diagnosed (?^:unreserved declarations:.*main_wait_4_cnt)

@@ -1,0 +1,14 @@
+From the repository root, independently read the committed sample:
+scripts/run_with_ram_guard.sh -- python3 docs/audits/reservation-coverage-helper-checks-20261003/verify_profile.py
+
+For a fresh native sample, create a task-owned repository-local directory and set
+FSMGEN_COVERAGE_PROFILE_DIR to that relative directory before running:
+scripts/run_with_ram_guard.sh -- prove -Iperl docs/audits/reservation-coverage-helper-causes-20261003/observe.pl
+Retain native TAP and actual exit status. Do not overwrite the sealed envelope.
+Bind unchanged source identities; portable-encode native error root coordinates
+and the exact FIFO library_source root prefix, preserving scalar kinds/topology.
+Compare plain graph values/kinds/sharing independently. The source
+observer preserves original public prototypes and compiles the original test
+before calls. Original QR strings are samples, not recompiled controls.
+The source baseline is f0e2ddc; independent complete causes live in contracts.py.
+Behavioral cause controls and full copy-field semantics remain .4.2/.4.3-owned.
