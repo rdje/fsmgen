@@ -36,13 +36,12 @@ combined domain/resource/storage/completion/crossing cases; see
 The [profile](../audits/reservation-coverage-helper-causes-20261003/scope.txt)
 binds native calls/copies; API inputs preserve kinds/sharing. [Actor-copy qualification](../audits/reservation-coverage-source-copies-20261003/scope.txt)
 binds lost numeric FIFO indexes/binding widths and ATL route width to source.
-Pure actor copies retain kinds/sharing; complete lowering/carriers/scope results
-agree. The [cause repair](../audits/reservation-coverage-cause-repair-20261003/scope.txt)
+Pure actor copies retain kinds/sharing and ordinary products. The [cause repair](../audits/reservation-coverage-cause-repair-20261003/scope.txt)
 uses complete causes and saved native errors; wrong-cause, exact-prior and actual
 declaration-guard bypass controls qualify.
 [Module join](../audits/reservation-coverage-module-join-20261003/scope.txt) closes field cohorts and FIFO/vector propagation.
 [Snapshot capture](../audits/reservation-coverage-snapshot-capture-20261003/scope.txt) binds remaining copies.
-[Snapshot join](../audits/reservation-coverage-snapshot-field-join-20261003/scope.txt) closes ordinary/rebuilt fields; real controls precede P2 .13.
+[Consumer controls](../audits/reservation-coverage-value-only-controls-20261003/scope.txt) bind fields and real kind counterexamples; plain/native controls precede P2 .13.
 Constructors/moved-root stay cold.
 
 This guard checks final declarations at the prepared ISF-to-FSM boundary. It does not replace source or executable admission,

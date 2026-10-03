@@ -1,0 +1,6 @@
+Prototype mismatch: sub main::is_deeply: none vs ($$;$) at /System/Library/Perl/5.34/Exporter.pm line 63.
+ at ./t/1960-isf-formal-reservation-coverage.t line 4.
+docs/audits/reservation-coverage-value-only-controls-20261003/observe.pl .. ok
+All tests successful.
+Files=1, Tests=5, 16 wallclock secs ( 0.01 usr  0.00 sys + 10.73 cusr  3.87 csys = 14.61 CPU)
+Result: PASS

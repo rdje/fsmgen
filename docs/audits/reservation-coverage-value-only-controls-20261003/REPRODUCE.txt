@@ -1,0 +1,10 @@
+Run from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-value-only-controls-20261003/verify.py
+Both --trust-success and --trust-refusal variants must exit1 at their declared
+actual native PASS/caller-kind contradiction (calls0/3), not a manifest/import
+failure. All native intervention receipts are expected GREEN: that is the real
+current assurance defect, not correct caller immutability. Never rerun producers
+into the sealed directory. A fresh owned sibling may adapt base paths and run
+observe.pl in explicit ordinary/success/refusal modes under the RAM guard, then
+apply its exact FIFO-only coordinate encoder and compare complete typed results.
+Finite plain/native and final coverage qualification still precede repair.

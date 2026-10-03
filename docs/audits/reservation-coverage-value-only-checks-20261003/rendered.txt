@@ -1,0 +1,1 @@
+PASS rendered actual value-only kind counterexamples and finite plain/native successor boundary; visual QA remains pending.

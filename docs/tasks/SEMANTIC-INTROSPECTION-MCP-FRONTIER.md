@@ -3880,9 +3880,26 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Demonstrate actual value-only insufficiency and join snapshot qualification.`
   Acceptance: `Run genuine kind-only caller mutations after successful and refused coverage calls against the actual current T1960 assertions, with complete caller graphs and ordinary result/cause conservation. Exercise plain sharing/isolation and finite native-marker identity/shape boundary. Join complete snapshot/seed semantics before .5 and P2 .13 repair; broader native/constructor/moved-root limits remain explicit.`
+  Verification: `Real success/refusal value-only mutation controls and finite plain/native topology controls have separate children, followed by the snapshot assurance join; no copy repair before final .5.`
+  Commit: `children below`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3.1`
+  Status: `done`
+  Goal: `Falsify actual value-only success/refusal assertions with genuine caller-kind mutations.`
+  Acceptance: `Run exact current T1960 unchanged in ordinary and separately selected success/refusal mutation modes. Change one declared numeric child provenance RHS to equal-spelling string after the real API returns or refuses, before the actual Test::More assertion. Retain every call/consumer/source/product/cause and exact allowed kind propagation; prove current assertions remain green despite the real caller violation. Actual competing consumer authorities must fail independent safety readers. No test/provider repair.`
+  Verification: `Sealed docs/audits/reservation-coverage-value-only-controls-20261003 runs exact current T1960 unchanged in ordinary/success/refusal modes. Two genuine interventions change source-owned worker notice provenance RHS numeric1 to string1 after real accepted/refused calls0/3; actual Test::More assertions and all native runs stay GREEN Files=1/Tests=5 each. Units are two selected counterexample cases, not distinct production defects or exhaustive API kinds. Re-derivation: complete source/Git, every 23-call/consumer stream, original graph, source pulse identity and exact one-field mutation/propagation; ten whole lowering/carrier and scope/cause outcomes conserve. Falsification: actual success/refusal PASS authorities each RED1 against genuine changed callers; value corruption and consumer omission reject. Durability: complete native caller/consumer/result graphs, exact source/TAP/exit and coordinate ledger, immutable manifest and cold replay. Public-book Files=2/Tests=308, build/rendered pass. Finite plain/native controls .2, snapshot/final joins and P2 .13 repair remain; unmodified provider mutation is not alleged and wider constructors/controllers/native/moved-root/visual QA stay cold.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3.2`
+  Status: `pending`
+  Goal: `Qualify finite plain/native snapshot controls and join full snapshot assurance.`
+  Acceptance: `Bind actual plain alias/cycle/deep-isolation and finite empty CoverageCauseSentinel identity/class/shape controls to current source/contracts and complete causes. Require genuine known-bad kind/back-edge/native identity or shape controls, preserve unsupported referent cold limits, and join complete capture/field/real-consumer qualification. Commit bounded snapshot handoff before final .5 and P2 .13 repair.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6247,3 +6264,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone([$p, $allocation, $actual]);' binds capture introduction98f0cc146; complete actual current/initial copy graphs locate primitive-kind loss at exact T1960 snapshot/seed sites. Source-bound completed normal/rebuilt-input models explain every changed field while empty sites remain explicit controls.
 - [x] **ADDRESSED (verified)** — Every selected native copy and field reconciles with exact authenticated completed task owners and independent semantic readers. Actual Storable kind-authority RED1 and missing copy/field/empty allocation/wrong-owner controls reject. Source/pure/caller/product/cause/carrier conservation remains complete; real value-only/native-marker controls and final join retain successors before repair.
 - [x] **NO REGRESSION** — Public-book All tests successful, Files=2, Tests=308, rendered build and Knowledge Map readback pass. Underlying native coverage/cause and wait/prepared regressions remain authenticated; no new provider/test edits justify repeating them. Exact capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.
+
+## Acceptance Checklist — actual value-only caller-kind counterexamples
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone([$p, $allocation, $actual]);' binds capture introduction98f0cc146; current T1960 value-only input comparisons at exact qualify/reject source sites accept equal-spelling numeric/string caller changes. Full actual native success/refusal mutations at source-owned worker notice provenance RHS remain green, with lossy snapshot expected string1 and unchanged actual intended causes.
+- [x] **ADDRESSED (diagnosis verified; repair owned)** — Complete native current source/call/consumer/kind streams and allowed propagation prove both isolated unsafe PASS outcomes. Actual success/refusal consumer-authority promotions genuinely RED1; value and omission controls reject. Pure/field and ordinary product/cause/carrier conservation stay authenticated. Finite plain/native controls, final joins and immediate P2 .13 own the remaining assurance/repair work.
+- [x] **NO REGRESSION** — Actual current T1960 ordinary/success/refusal All tests successful, Files=1, Tests=5 each; public-book Files=2, Tests=308, rendered build and Knowledge Map readback pass. Mutation modes are intentionally unsafe-assurance demonstrations, not caller-purity passes. Hot provider/test unchanged; exact capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.
