@@ -1,0 +1,5 @@
+t/1947-isf-formal-reusable-products.t .... ok
+t/2060-isf-reusable-diagnostic-causes.t .. ok
+All tests successful.
+Files=2, Tests=102, 11 wallclock secs ( 0.01 usr  0.00 sys +  7.65 cusr  3.13 csys = 10.79 CPU)
+Result: PASS

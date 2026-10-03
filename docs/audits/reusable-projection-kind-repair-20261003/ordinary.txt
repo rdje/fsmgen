@@ -1,0 +1,1 @@
+PASS nine complete reusable source/preparation/physical/module observations with complete source/product primitive-kind equality.

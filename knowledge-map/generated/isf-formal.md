@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-formal`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **14** facts · **43** uniquely owned question entries.
+> **14** facts · **44** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -28,6 +28,7 @@
 - q="does parent IR finalization add declarations before child storage connections?" · facts=[isf-formal-arbitration-namespace](../../docs/knowledge/isf-formal-arbitration-namespace.md)
 - q="does planning named completion admit mixed parent writers?" · facts=[isf-formal-named-completion-products](../../docs/knowledge/isf-formal-named-completion-products.md)
 - q="does reservation coverage enable automatic production formal renaming?" · facts=[isf-formal-reservation-coverage](../../docs/knowledge/isf-formal-reservation-coverage.md)
+- q="does test formal projection preserve JSON primitive kinds?" · facts=[isf-formal-reusable-products](../../docs/knowledge/isf-formal-reusable-products.md)
 - q="how are authored binding names retained before formal physical projection?" · facts=[isf-formal-source-binding-reports](../../docs/knowledge/isf-formal-source-binding-reports.md)
 - q="how are completion seen and ready names owned before formal allocation?" · facts=[isf-formal-completion-products](../../docs/knowledge/isf-formal-completion-products.md)
 - q="how does final formal reservation coverage detect an omitted producer name?" · facts=[isf-formal-reservation-coverage](../../docs/knowledge/isf-formal-reservation-coverage.md)

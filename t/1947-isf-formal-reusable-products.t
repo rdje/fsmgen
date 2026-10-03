@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Test::More;
 use Storable qw(dclone);
+use JSON::PP;
 use File::Temp qw(tempdir);
 use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
@@ -17,12 +18,21 @@ use FSM::Scheduler::ISF::FormalReservationInventory;
 my $s = FSM::Scheduler::ISF->new;
 my $l = $s->{ir};
 my $work = tempdir(CLEANUP => 1);
+my $json = JSON::PP->new->canonical;
+sub source_value_copy {
+    my ($value) = @_;
+    return {map {$_ => source_value_copy($value->{$_})} keys %$value}
+        if ref($value) eq 'HASH';
+    return [map {source_value_copy($_)} @$value] if ref($value) eq 'ARRAY';
+    die 'unexpected source reference' if ref($value);
+    return $value;
+}
 sub parse {FSM::Adapter::ISF->new->parse_source($_[0], 'reusable_products.isf')}
 sub file_actor {FSM::Adapter::ISF->new->parse_file($_[0])}
 sub inventory {FSM::Scheduler::ISF::FormalReservationInventory->collect($_[0])->{reserved_names}}
 sub project {
     my ($p) = @_;
-    my $a = dclone($p->{actor});
+    my $a = source_value_copy($p->{actor});
     my $plan = FSM::Scheduler::ISF::FormalIdentityPlan->build($a,
         generated_children => $p->{generated_children}, reserved_names => inventory({map {$_ => $p->{$_}}
             qw(transaction_products parent_activation_products parent_wiring_products parent_point_products
@@ -50,20 +60,23 @@ sub actual_products {
 }
 sub qualify {
     my ($actor, $label) = @_;
-    my $before = dclone($actor);
+    my $before = $json->encode($actor);
     my $p = $l->prepare_formal_source($actor);
     my $r = $p->{reusable_child_products};
-    is_deeply($r, actual_products($l->build_module($actor), $p->{generated_children}), "$label complete real child and composition products agree");
+    is($json->encode($r), $json->encode(actual_products($l->build_module($actor), $p->{generated_children})), "$label complete real child and composition products agree");
     my $physical = project($p);
-    is_deeply(actual_products($l->build_module($physical), $p->{generated_children}), $r, "$label formal projection preserves reusable modules and bindings");
-    is_deeply($l->prepare_formal_source($physical)->{reusable_child_products}, $r, "$label re-preparation retains actual reusable products");
+    is($json->encode([map {$physical->{$_}} qw(library_uses actor_network _atl_actor_type_resolutions)]),
+        $json->encode([map {$p->{actor}{$_}} qw(library_uses actor_network _atl_actor_type_resolutions)]),
+        "$label projection preserves complete reusable source metadata and kinds");
+    is($json->encode(actual_products($l->build_module($physical), $p->{generated_children})), $json->encode($r), "$label formal projection preserves reusable modules and bindings");
+    is($json->encode($l->prepare_formal_source($physical)->{reusable_child_products}), $json->encode($r), "$label re-preparation retains actual reusable products");
     for my $module (sort keys %{$r->{children}}) {
         strict_child($r->{children}{$module}, "${label}_$module");
         is($r->{children}{$module}{actor_name}, $module, 'actual generated module identity retained');
         is($r->{children}{$module}{library_origin}{parent_actor}, $actor->{actor_name}, 'real importing actor origin retained');
     }
-    is_deeply($p->{actor}, $before, "$label prepared source unchanged");
-    is_deeply($actor, $before, "$label authored source unchanged");
+    is($json->encode($p->{actor}), $before, "$label prepared source unchanged");
+    is($json->encode($actor), $before, "$label authored source unchanged");
     return $p;
 }
 
@@ -94,11 +107,11 @@ subtest 'file-backed reusable and ATL child composition products' => sub {
                 is($child->{library_origin}{usage}, 'atl_static_instance', 'resolved ATL origin stays explicit');
             }
         }
-        my $prior = dclone($p->{actor});
+        my $prior = $json->encode($p->{actor});
         my ($module) = sort keys %{$r->{children}};
         $r->{children}{$module}{actor_name} = 'changed';
         $r->{children}{$module}{ports}[0]{name} = 'changed';
-        is_deeply($p->{actor}, $prior, 'product mutation cannot edit resolved actor shells');
+        is($json->encode($p->{actor}), $prior, 'product mutation cannot edit resolved actor shells');
     }
 };
 
@@ -121,9 +134,9 @@ subtest 'generated and reusable modules remain separate through raw parent confl
     my $p = qualify(parse($mixed), 'mixed');
     is_deeply([sort keys %{$p->{generated_child_products}}], ['worker'], 'generated child scope remains separate');
     is_deeply([sort keys %{$p->{reusable_child_products}{children}}], ['mixed_children__rx'], 'reusable module scope remains separate');
-    my $before = dclone($p->{generated_child_products});
+    my $before = $json->encode($p->{generated_child_products});
     $p->{reusable_child_products}{children}{mixed_children__rx}{states}[0]{name} = 'changed';
-    is_deeply($p->{generated_child_products}, $before, 'reusable edits cannot reach generated child products');
+    is($json->encode($p->{generated_child_products}), $before, 'reusable edits cannot reach generated child products');
     (my $text = $mixed) =~ s/\(transaction worker/(storage (var payload (width 8))) (transaction worker/;
     my $a = parse($text);
     my $q = $l->prepare_formal_source($a);
@@ -135,7 +148,7 @@ subtest 'generated and reusable modules remain separate through raw parent confl
         "signal width for 'payload' conflicts across transactions while merging 'main'"),
         'raw parent conflict retains complete width cause') or diag($width_error);
     my $physical = project($q);
-    is_deeply(actual_products($l->build_module($physical), $q->{generated_children}), $q->{reusable_child_products}, 'physical parent passes with real reusable modules unchanged');
+    is($json->encode(actual_products($l->build_module($physical), $q->{generated_children})), $json->encode($q->{reusable_child_products}), 'physical parent passes with real reusable modules unchanged');
 };
 
 sub refused {

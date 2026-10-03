@@ -1,0 +1,1 @@
+9f9fc38802f0cc516077628756fc171a15e9e22b SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.1: retain reusable library and ATL child products

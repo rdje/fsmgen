@@ -1,0 +1,1 @@
+PASS rendered private projection scalar-kind repair; visual QA not performed.

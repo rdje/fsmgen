@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reusable-projection-kind-repair-20261003/verify.py", line 100, in <module>
+    verify_conservation(current)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "${REPO_ROOT}/docs/audits/reusable-projection-kind-repair-20261003/verify.py", line 84, in verify_conservation
+    if row['id']!='fifo_library_use':same(row,old);continue
+                                     ~~~~^^^^^^^^^
+  File "${REPO_ROOT}/docs/audits/reusable-projection-kind-repair-20261003/verify.py", line 10, in same
+    assert json.dumps(a,sort_keys=True,separators=(',',':'))==json.dumps(b,sort_keys=True,separators=(',',':')),'value/kind/field mismatch'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: value/kind/field mismatch

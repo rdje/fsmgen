@@ -198,11 +198,16 @@ now rejects real earlier unknown-child causes and primary echoes, while retainin
 the full library/ATL and parent-width reasons. Exact prior checks and a genuine
 library collision bypass fail; ordinary products are conserved. Its ordinary
 products also expose two distinct primitive-kind gaps: the test projection's
-Storable copy loses some FIFO numeric JSON kinds. The private ATL output-width
+Storable copy lost numeric JSON kinds in FIFO indexes/bindings and ATL movement
+widths. The [projection-copy repair](../../../docs/audits/reusable-projection-kind-repair-20261003/scope.txt)
+uses a scalar-preserving source copy and first-touch JSON snapshots. Whole
+source metadata and reusable-product checks now distinguish strings from numbers;
+restoring the exact old copier makes the strengthened checks fail. The private ATL output-width
 check now compares a detached scalar, preserving the complete caller on both
 accepted and refused routes. The [width-kind repair](../../../docs/audits/atl-source-width-kind-repair-20261003/scope.txt)
 retains identical preparation/module outputs and exact prior failure controls.
-The remaining test-copy repair precedes further cohort review; these repairs
+The cause and test-copy repairs are complete; reservation and remaining cohorts
+still require review. These repairs
 add no composition or HDL runtime support. Whole constructor and child-internal semantic qualification remains open.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.

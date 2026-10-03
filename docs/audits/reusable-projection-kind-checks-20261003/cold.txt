@@ -1,0 +1,8 @@
+whole corruption rejects: source
+whole corruption rejects: actor-kind
+whole corruption rejects: product-kind
+whole corruption rejects: movement-kind
+whole corruption rejects: origin
+whole corruption rejects: schema
+whole corruption rejects: member
+PASS complete projection source/kinds/conservation and real prior failure; wider child internals remain cold-owned.

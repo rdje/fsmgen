@@ -1,0 +1,3 @@
+ram-guard: PID 63913; host 56.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Encoded observed root coordinates as ${REPO_ROOT}; paths remain repository-derived.
+PASS projection finite cold/source/kind models, exact prior RED and focused regressions.

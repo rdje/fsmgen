@@ -1,0 +1,1 @@
+knowledge-map: docs/knowledge/isf-formal-reusable-products.md: card line width 824 exceeds 819

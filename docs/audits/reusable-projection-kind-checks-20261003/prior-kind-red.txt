@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/reusable-projection-kind-repair-20261003/verify.py", line 137, in <module>
+    if '--trust-prior-kinds' in sys.argv:verify_conservation(prior)
+                                         ~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/reusable-projection-kind-repair-20261003/verify.py", line 87, in verify_conservation
+    verify_products(data,True)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/reusable-projection-kind-repair-20261003/models.py", line 51, in verify_products
+    same(row['physical_equal'], physical_equal); same(row['reprepared_equal'], reprepared_equal)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/reusable-projection-kind-repair-20261003/verify.py", line 10, in same
+    assert json.dumps(a,sort_keys=True,separators=(',',':'))==json.dumps(b,sort_keys=True,separators=(',',':')),'value/kind/field mismatch'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: value/kind/field mismatch
