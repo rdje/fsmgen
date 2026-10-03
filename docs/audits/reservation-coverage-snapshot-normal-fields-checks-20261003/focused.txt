@@ -1,0 +1,5 @@
+t/1960-isf-formal-reservation-coverage.t .. ok
+t/2063-isf-coverage-diagnostic-causes.t ... ok
+All tests successful.
+Files=2, Tests=239, 16 wallclock secs ( 0.01 usr  0.01 sys + 12.30 cusr  3.64 csys = 15.96 CPU)
+Result: PASS

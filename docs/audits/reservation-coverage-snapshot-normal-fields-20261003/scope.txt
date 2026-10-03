@@ -1,0 +1,46 @@
+Owned by SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.1.
+
+This field cohort covers every selected snapshot and mutation seed except the
+producer-removal refusal (captured ordinal35), which remains .4.2.2-owned.
+Units are selected native copy observations and changed (copy ordinal,pointer)
+fields. Its 35 observations contain 164 changed fields across 29 copies, including
+unchanged FIFO/storage/rule/monitor snapshots, extra-module and allocation seeds.
+Field counts are finite membership, not semantic breadth or distinct defects.
+
+Independent contracts: generated worker notice completion and activation done
+pulses are numeric1, their operators/targets, terminal context and provenance
+must match actual source and child completion producer bodies. Resolved/vector/
+batch child readiness and authored done pulses match source transaction names,
+entry/terminal guard context and structured emitted assignments. Provenance
+indexes refer to the actual independently matched assignment and keep source
+kind/domain/owner/activation identity. Unused inherited worker data/result width
+lookups remain4 from parent interface source, separate from emitted child ports.
+Vector payload widths are8 from library input/output declarations, with exact
+child/map/top-link roles and endpoint identity; structured actual carriers retain
+those widths. Private formal module counter/signal maps remain4 from the two
+source transaction inputs, canonical identities and physical projection; private
+roles/internal-signal classification and public-port exclusion must agree.
+No numeric-looking string is normalized into the semantic model.
+
+Re-derivation: complete recursive actual typed-delta roster versus independently
+constructed semantic path sets, source literals/full producer bodies and complete
+structured native carriers. Complete captured membership includes empty rows.
+Falsification: actual ordinary first snapshot as kind-preserving authority is
+RED1 at worker notice; actual module mutation-seed copy authority is RED1 at its
+private formal counter width. Every changed actual lossy copy rejects the model;
+real graph pulse-target/guard, private-width and vector-endpoint corruptions
+reject. Initial failed block-label model is retained unqualified; the corrected
+reader uses published actual FSM container labels/output markers and adds guards.
+Durability: authenticated complete prior snapshot/source/module/producer corpora,
+additional full Git-bound FormalIdentityPlan/ClauseResolver bodies, immutable
+manifest and replay receipts; post-seal checks are kept in the sibling directory.
+Cold readers neither rerun producers nor rewrite retained evidence. All data is
+repository-relative and only observed traceback roots use ${REPO_ROOT}.
+
+Actual before and deeply isolated pure copies both satisfy all contracts; complete
+original/caller topology and ordinary products, causes, strict carriers and
+verified scope results conserve under the authenticated capture. This changes
+no test/provider/production. Producer-removal fields, complete field join, genuine
+value-only assertion/native-marker controls and final coverage join still precede
+P2 .13. Complete child/controller constructors, unsupported native referents,
+moved-root execution and visual book QA remain cold-owned.

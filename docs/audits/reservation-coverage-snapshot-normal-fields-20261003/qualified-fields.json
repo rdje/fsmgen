@@ -1,0 +1,370 @@
+[
+  {
+    "ordinal": 2,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "success_snapshot"
+  },
+  {
+    "ordinal": 5,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "success_snapshot"
+  },
+  {
+    "ordinal": 9,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "success_snapshot"
+  },
+  {
+    "ordinal": 10,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 11,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 12,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 13,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 14,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 15,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 16,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 17,
+    "paths": [],
+    "site": "unexpected_module_seed"
+  },
+  {
+    "ordinal": 18,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 19,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 20,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 21,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 22,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 23,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 24,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 25,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 26,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 27,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 28,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 29,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 30,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 31,
+    "paths": [
+      "/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "module_mutation_seed"
+  },
+  {
+    "ordinal": 32,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 33,
+    "paths": [],
+    "site": "allocation_mutation_seed"
+  },
+  {
+    "ordinal": 34,
+    "paths": [
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/data",
+      "/1/0/1/generated_child_products/1/worker/1/signal_widths/1/result",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/generated_child_products/1/worker/1/states/1/2/1/assignments/1/1/1/rhs",
+      "/1/2/1/coverage/1/counters/1/isf_port_main_payload_formal",
+      "/1/2/1/coverage/1/counters/1/isf_port_main_value_reg",
+      "/1/2/1/coverage/1/signal_widths/1/isf_port_main_payload_formal",
+      "/1/2/1/coverage/1/signal_widths/1/isf_port_main_value_reg"
+    ],
+    "site": "refusal_snapshot"
+  },
+  {
+    "ordinal": 39,
+    "paths": [],
+    "site": "success_snapshot"
+  },
+  {
+    "ordinal": 43,
+    "paths": [],
+    "site": "success_snapshot"
+  },
+  {
+    "ordinal": 47,
+    "paths": [
+      "/1/0/1/reusable_child_products/1/children/1/atl_resolved_child_pipeline__worker/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_resolved_child_pipeline__worker/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_resolved_child_pipeline__worker/1/states/1/0/1/assignments/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_resolved_child_pipeline__worker/1/states/1/1/1/assignments/1/0/1/rhs"
+    ],
+    "site": "success_snapshot"
+  },
+  {
+    "ordinal": 51,
+    "paths": [
+      "/1/0/1/reusable_child_products/1/atl_top_instances/1/0/1/children/1/0/1/data_links/1/0/1/width",
+      "/1/0/1/reusable_child_products/1/atl_top_instances/1/0/1/children/1/1/1/data_links/1/0/1/width",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__reader/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__reader/1/assignment_provenance/1/2/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__reader/1/ports/1/1/1/width",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__reader/1/signal_widths/1/payload",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__reader/1/states/1/0/1/assignments/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__reader/1/states/1/2/1/assignments/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__writer/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__writer/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__writer/1/ports/1/1/1/width",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__writer/1/signal_widths/1/payload",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__writer/1/states/1/0/1/assignments/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_vector_data_pipeline__writer/1/states/1/1/1/assignments/1/0/1/rhs"
+    ],
+    "site": "success_snapshot"
+  },
+  {
+    "ordinal": 55,
+    "paths": [
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_trigger_batch_pipeline__reader/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_trigger_batch_pipeline__reader/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_trigger_batch_pipeline__reader/1/states/1/0/1/assignments/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_trigger_batch_pipeline__reader/1/states/1/1/1/assignments/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_trigger_batch_pipeline__writer/1/assignment_provenance/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_trigger_batch_pipeline__writer/1/assignment_provenance/1/1/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_trigger_batch_pipeline__writer/1/states/1/0/1/assignments/1/0/1/rhs",
+      "/1/0/1/reusable_child_products/1/children/1/atl_two_child_trigger_batch_pipeline__writer/1/states/1/1/1/assignments/1/0/1/rhs"
+    ],
+    "site": "success_snapshot"
+  },
+  {
+    "ordinal": 58,
+    "paths": [],
+    "site": "success_snapshot"
+  },
+  {
+    "ordinal": 61,
+    "paths": [],
+    "site": "success_snapshot"
+  }
+]

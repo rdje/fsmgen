@@ -3849,11 +3849,35 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify every snapshot and mutation-seed field contract.`
   Acceptance: `Against complete .1 captures, independently map every changed prepared/module/plan field to source-owned literal producer/product semantics and completed source/module cohorts. Retain changed and unchanged site controls and exact causes; split further only if a genuine new semantic family requires it.`
+  Verification: `The complete capture separates ordinary snapshot/seed fields from the genuine producer-removal input rebuilt by substitute_token. Finite family readers precede a complete field join; real assertion controls remain .4.3-owned.`
+  Commit: `children below`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.1`
+  Status: `done`
+  Goal: `Qualify ordinary snapshot RHS/provenance/child widths and formal mutation-seed widths.`
+  Acceptance: `Close every selected copy except the producer-removal refusal (captured ordinal35), using independently declared source/producer/child assignment/provenance/vector endpoint and private formal identity/width contracts. Validate every retained field path and exact unchanged site controls; actual Storable authorities and semantic/identity corruptions must reject.`
+  Verification: `Sealed docs/audits/reservation-coverage-snapshot-normal-fields-20261003 closes every selected observation except producer-removal ordinal35: 35 copies, 29 changed, 164 (copy ordinal,typed pointer) fields. Re-derivation is independent recursive actual roster versus literal source/producer/child pulse/provenance, inherited/vector endpoint and private formal width/identity/carrier models. Falsification: actual Storable snapshot and seed authorities RED1 at worker notice and private counter width; every changed actual copy plus pulse-target/guard, private-width and endpoint corruptions reject. Durability: complete authenticated snapshot/source/module corpora, full additional Git-bound formal producers, immutable manifest and cold replay. Pure graphs satisfy contracts; original/caller/result/cause/carrier conservation remains authenticated. Initial wrong block-label draft stays unqualified; corrected published syntax/guard model passes. Native T1960/T2063 Files=2/Tests=239; public-book Files=2/Tests=308, build/rendered pass. Rebuilt input .2, field join .3 and real assertion/native controls remain open before P2 repair; wider constructors/controllers/moved-root/visual QA stay cold.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.2`
+  Status: `pending`
+  Goal: `Qualify every producer-removal prepared snapshot field.`
+  Acceptance: `Bind actual substitute_token transformation and selected helper to the ordinary source. Independently close all ordinal35 snapshot fields: authored widths, numeric producers/provenance, declaration memberships, handshake/wait metadata and canonical plan/module widths. Retain full graph/kind/topology and emitted carrier/source contracts; no generic numeric coercion oracle or complete-constructor promotion.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.3`
+  Status: `pending`
+  Goal: `Join all snapshot and mutation-seed field contracts.`
+  Acceptance: `Reconcile complete .4.1 remaining typed roster with both completed independent field cohorts, including empty extra-module/allocation controls. Require exact native causes and ordinary conservation, actual copy authorities and omission/owner corruptions; commit before real assertion/native-marker controls .4.3.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3`
   Status: `pending`
@@ -6205,3 +6229,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone([$p, $allocation, $actual]);' authenticates capture introduction98f0cc146 in retained initial source history. Actual current success/refusal snapshot and mutation-seed graphs reproduce primitive-kind loss at exact T1960 copy sites; all originals and API callers conserve.
 - [x] **ADDRESSED (capture verified)** — Complete initial/current site membership and independent whole typed roster pass. Genuine pure-copy kinds/topology/deep isolation conserve, actual Storable authority RED1 and site/field/caller corruptions reject. Field meanings and actual value-only assertion controls retain explicit .2/.3 owners before repair; no semantic or production signoff is inferred from counts or equal outputs.
 - [x] **NO REGRESSION** — Actual native T1960 ordinary/pure All tests successful, Files=1, Tests=5 each; public-book Files=2, Tests=308, rendered build and Knowledge Map readback pass. Whole lowering/carrier/scope/cause results conserve. Exact capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.
+
+## Acceptance Checklist — ordinary snapshot and mutation-seed field contracts
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone([$p, $allocation, $actual]);' binds capture introduction98f0cc146; complete actual snapshots and module seeds locate primitive-kind loss at T1960 exact copy sites. Native first-touch child/provenance/width graphs and full source/producer bodies explain every normal-cohort changed field without normalizing numeric-looking strings.
+- [x] **ADDRESSED (verified)** — Independently constructed semantic paths equal separately derived complete normal field membership, including empty controls. Actual lossy snapshot/seed authority RED1 and every changed copy reject; pulse-target/guard, private-width and vector-endpoint corruptions reject. Pure copies pass all contracts. Producer-removal fields, field join and actual value-only/native controls retain exact successor ownership before repair.
+- [x] **NO REGRESSION** — Actual T1960/T2063 All tests successful, Files=2, Tests=239; public-book Files=2, Tests=308, rendered build and Knowledge Map readback pass. Complete ordinary products/causes/carriers conserve; hot source/test/provider unchanged. Fixed capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.

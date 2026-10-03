@@ -253,8 +253,10 @@ endpoint widths through child ports, top links and prepared wiring. The
 reconciles every captured module field and actor-only preparation difference
 with those models. The [snapshot capture](../../../docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt)
 binds every successful/refused snapshot and module/allocation mutation seed to
-actual original and pure-copy graphs. Their field meanings and real value-only
-assertion controls remain open. The test-copy repair follows those cohorts; this profile does not establish a production coverage defect.
+actual original and pure-copy graphs. [Ordinary snapshot fields](../../../docs/audits/reservation-coverage-snapshot-normal-fields-20261003/scope.txt)
+qualify child pulse/provenance, inherited and vector endpoint widths, and private
+formal mutation-seed widths against source and actual carriers. The rebuilt
+producer-removal input fields and real value-only assertion controls remain open. The test-copy repair follows those cohorts; this profile does not establish a production coverage defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when
 the wanted phrase appears in its caller stack or an unrelated failure path. For

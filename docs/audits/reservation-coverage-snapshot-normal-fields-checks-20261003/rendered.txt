@@ -1,0 +1,1 @@
+PASS rendered ordinary snapshot/seed contracts and explicit rebuilt-input/assertion successors; visual QA remains pending.
