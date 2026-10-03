@@ -1,0 +1,48 @@
+
+    #   Failed test 'late register refused'
+    #   at docs/audits/reservation-coverage-cause-repair-20261003/observe.pl line 90.
+
+    #   Failed test 'late register diagnosed'
+    #   at docs/audits/reservation-coverage-cause-repair-20261003/observe.pl line 90.
+    # 
+
+    #   Failed test 'implicit assignment declaration refused'
+    #   at docs/audits/reservation-coverage-cause-repair-20261003/observe.pl line 90.
+
+    #   Failed test 'implicit assignment declaration diagnosed'
+    #   at docs/audits/reservation-coverage-cause-repair-20261003/observe.pl line 90.
+    # 
+
+    #   Failed test 'parent private name leaked into child refused'
+    #   at docs/audits/reservation-coverage-cause-repair-20261003/observe.pl line 90.
+
+    #   Failed test 'parent private name leaked into child diagnosed'
+    #   at docs/audits/reservation-coverage-cause-repair-20261003/observe.pl line 90.
+    # 
+    # Looks like you failed 6 tests of 36.
+
+#   Failed test 'missing declarations, module sets and private ownership fail closed'
+#   at ./t/1960-isf-formal-reservation-coverage.t line 146.
+
+    #   Failed test 'omitted real producer declaration refused'
+    #   at docs/audits/reservation-coverage-cause-repair-20261003/observe.pl line 90.
+
+    #   Failed test 'omitted real producer declaration diagnosed'
+    #   at docs/audits/reservation-coverage-cause-repair-20261003/observe.pl line 90.
+    # 
+    # Looks like you failed 2 tests of 6.
+
+#   Failed test 'removing a real producer name is detected against independently lowered output'
+#   at ./t/1960-isf-formal-reservation-coverage.t line 170.
+# Looks like you failed 2 tests of 5.
+docs/audits/reservation-coverage-cause-repair-20261003/observe.pl .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/5 subtests 
+
+Test Summary Report
+-------------------
+docs/audits/reservation-coverage-cause-repair-20261003/observe.pl (Wstat: 512 Tests: 5 Failed: 2)
+  Failed tests:  2-3
+  Non-zero exit status: 2
+Files=1, Tests=5, 15 wallclock secs ( 0.01 usr  0.00 sys + 11.61 cusr  3.26 csys = 14.88 CPU)
+Result: FAIL

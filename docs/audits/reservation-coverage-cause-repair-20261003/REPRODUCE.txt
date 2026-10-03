@@ -1,0 +1,15 @@
+From the repository root with project-local data and the default RAM guard:
+FSMGEN_COVERAGE_CAUSE_CAPTURE=docs/audits/reservation-coverage-cause-repair-20261003/current.json scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1960-isf-formal-reservation-coverage.t t/2063-isf-coverage-diagnostic-causes.t
+scripts/run_with_ram_guard.sh -- bash docs/audits/reservation-coverage-cause-repair-checks-20261003/check.sh
+scripts/run_with_ram_guard.sh -- bash docs/audits/reservation-coverage-cause-repair-checks-20261003/docs.sh
+
+Reproduce producer captures only in a task-owned repository-local sibling; never
+overwrite this sealed envelope. produce.sh retains exact Git prior desired-safety
+RED195/26 and declaration-only bypass RED5/2. Observe.pl executes unchanged actual
+current test source; its only runtime provider bypass is the missing-declaration
+conditional. Bind exact source delta and selected complete sources/instruments,
+portable-encode only recorded trace/FIFO root coordinates, then independently
+compare full native graphs/causes/products and original clone differences.
+Current baseline is edb671c. Immutable diagnosis/profile contracts supply literal
+expected causes and source inputs. Whole copy-field/constructor/carrier/moved-root
+legs remain explicit; no production admission/schema or native HDL execution.

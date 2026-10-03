@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-cause-repair-checks-20261003/verify.py", line 165, in <module>
+    assert all(row['matched'] == 0 for row in prior if row['band'] != 'current_fixture'), 'real prior accepts wrong native causes'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: real prior accepts wrong native causes

@@ -13,6 +13,7 @@ use FSM::Scheduler::ISF::FormalClauseResolver;
 use FSM::Scheduler::ISF::FormalIdentityPlan;
 use FSM::Scheduler::ISF::PreparedFormalReservations;
 use FSM::Scheduler::ISF::FormalReservationCoverage;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 
 my $scheduler = FSM::Scheduler::ISF->new;
 my $work = tempdir(CLEANUP => 1);
@@ -90,32 +91,58 @@ subtest 'actual parent and generated child declarations pass independently' => s
 };
 
 sub reject {
-    my ($p, $allocation, $actual, $pattern, $label) = @_;
+    my ($p, $allocation, $actual, $expected, $label) = @_;
     my $before = dclone([$p, $allocation, $actual]);
     my $ok = eval {verify($p, $allocation, $actual); 1};
-    ok(!$ok, "$label refused"); like($@, $pattern, "$label diagnosed");
+    my $error = $@;
+    ok(!$ok, "$label refused");
+    ok(diagnostic_cause_matches($error, $expected), "$label diagnosed") or diag($error);
     is_deeply([$p, $allocation, $actual], $before, "$label refusal preserves inputs");
 }
 subtest 'missing declarations, module sets and private ownership fail closed' => sub {
     my $private = $plan->{formals}{main}{payload}{physical_name};
     for my $case (
-        [sub {$_[0]{coverage}{counters}{late_unreserved_helper} = 1}, qr/unreserved declarations:.*late_unreserved_helper/, 'late register'],
-        [sub {push @{$_[0]{coverage}{states}[0]{assignments}}, {lhs => 'implicit_late_helper', rhs => '0', op => '<='}}, qr/unreserved declarations:.*implicit_late_helper/, 'implicit assignment declaration'],
-        [sub {delete $_[0]{coverage}}, qr/incomplete parent\/domain modules/, 'missing parent'],
-        [sub {$_[0]{extra} = dclone($_[0]{coverage})}, qr/incomplete parent\/domain modules/, 'unexpected module'],
-        [sub {delete $_[0]{coverage}{children}{worker}}, qr/incomplete children/, 'missing child'],
-        [sub {$_[0]{coverage}{children}{worker}{children}{nested} = {}}, qr/unplanned nested child scope/, 'unexpected nested child'],
-        [sub {$_[0]{coverage}{children}{worker}{actor_name} = 'other'}, qr/mismatched module/, 'wrong child identity'],
-        [sub {$_[0]{coverage}{children}{worker}{counters}{$private} = 4}, qr/unreserved declarations/, 'parent private name leaked into child'],
-        [sub {$_[0]{coverage}{counters}{$private} = 9}, qr/wrong width or ownership/, 'wrong formal width'],
-        [sub {$_[0]{coverage}{storage_roles}{$private} = 'drive_payload'}, qr/wrong width or ownership/, 'wrong formal role'],
-        [sub {push @{$_[0]{coverage}{dt_blocks}}, {name => $private, assignments => []}}, qr/wrong width or ownership/, 'formal aliases a late block'],
+        [sub {$_[0]{coverage}{counters}{late_unreserved_helper} = 1},
+            "Formal reservation coverage: module 'coverage' has unreserved declarations: late_unreserved_helper",
+            'late register'],
+        [sub {push @{$_[0]{coverage}{states}[0]{assignments}},
+                {lhs => 'implicit_late_helper', rhs => '0', op => '<='}},
+            "Formal reservation coverage: module 'coverage' has unreserved declarations: implicit_late_helper",
+            'implicit assignment declaration'],
+        [sub {delete $_[0]{coverage}},
+            'Formal reservation coverage has incomplete parent/domain modules (missing: coverage; unexpected: )',
+            'missing parent'],
+        [sub {$_[0]{extra} = dclone($_[0]{coverage})},
+            'Formal reservation coverage has incomplete parent/domain modules (missing: ; unexpected: extra)',
+            'unexpected module'],
+        [sub {delete $_[0]{coverage}{children}{worker}},
+            "Formal reservation coverage has incomplete children of 'coverage' (missing: worker; unexpected: )",
+            'missing child'],
+        [sub {$_[0]{coverage}{children}{worker}{children}{nested} = {}},
+            'Formal reservation coverage has an unplanned nested child scope',
+            'unexpected nested child'],
+        [sub {$_[0]{coverage}{children}{worker}{actor_name} = 'other'},
+            "Formal reservation coverage has a missing or mismatched module 'worker'",
+            'wrong child identity'],
+        [sub {$_[0]{coverage}{children}{worker}{counters}{$private} = 4},
+            "Formal reservation coverage: module 'worker' has unreserved declarations: $private",
+            'parent private name leaked into child'],
+        [sub {$_[0]{coverage}{counters}{$private} = 9},
+            "Formal reservation coverage: private formal '$private' has wrong width or ownership in 'coverage'",
+            'wrong formal width'],
+        [sub {$_[0]{coverage}{storage_roles}{$private} = 'drive_payload'},
+            "Formal reservation coverage: private formal '$private' has wrong width or ownership in 'coverage'",
+            'wrong formal role'],
+        [sub {push @{$_[0]{coverage}{dt_blocks}}, {name => $private, assignments => []}},
+            "Formal reservation coverage: private formal '$private' has wrong width or ownership in 'coverage'",
+            'formal aliases a late block'],
     ) {
         my $actual = dclone($modules); $case->[0]->($actual);
         reject($prepared, $plan, $actual, $case->[1], $case->[2]);
     }
     my $bad_plan = dclone($plan); $bad_plan->{formals}{main}{payload}{physical_name} = 'isf_port_main_payload';
-    reject($prepared, $bad_plan, $modules, qr/canonical complete allocation plan/, 'stale or incomplete allocation');
+    reject($prepared, $bad_plan, $modules,
+        'Formal reservation coverage requires the canonical complete allocation plan', 'stale or incomplete allocation');
 };
 
 sub substitute_token {
@@ -138,7 +165,8 @@ subtest 'removing a real producer name is detected against independently lowered
     ok(!$inventory->{reserved_names}{$helper}, 'mutation really removed every reservation for the actual helper');
     my $same_plan = allocation($incomplete);
     is_deeply($same_plan, $plan, 'omission does not change the planned private names');
-    reject($incomplete, $same_plan, $modules, qr/unreserved declarations:.*\Q$helper\E/, 'omitted real producer declaration');
+    reject($incomplete, $same_plan, $modules,
+        "Formal reservation coverage: module 'coverage' has unreserved declarations: $helper", 'omitted real producer declaration');
 };
 
 subtest 'reusable children and rule payload source identities retain their own coverage' => sub {

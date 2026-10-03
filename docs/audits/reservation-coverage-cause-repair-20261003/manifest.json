@@ -1,0 +1,82 @@
+{
+  "REPRODUCE.txt": {
+    "bytes": 1330,
+    "sha256": "c1f491d349c18d177f31c0c93cfcd3a94541a945187e53dd56cc7ec2a1edb761"
+  },
+  "bind.py": {
+    "bytes": 2914,
+    "sha256": "e16c70e76cafcb334550ea4bcdd35e77d5747e4c4d7c7543b58880d369ee2f9e"
+  },
+  "bind.txt": {
+    "bytes": 212,
+    "sha256": "2d811c65089f05c5a0ae5764853f09dbf86513232f056cf4ab6251ccf3e8ae17"
+  },
+  "bindings.json": {
+    "bytes": 2334085,
+    "sha256": "a6409efe504efd9bfcd8823c1705322c07f90599dba570fa4bbf4acccba9c06a"
+  },
+  "bypass-body.pl": {
+    "bytes": 1142,
+    "sha256": "0563d2a17c7717468540352efa6417af54c1036969fc5b1b205d87f9dc76bcf4"
+  },
+  "bypass.json": {
+    "bytes": 8258827,
+    "sha256": "ed548bc2c2cca924df1b024d6ac67353d21bf1a9ae0a0874e8020c4937db8c24"
+  },
+  "bypass.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "bypass.txt": {
+    "bytes": 2064,
+    "sha256": "eb2e5b7a793144c986d510a83ed270b048675c34e9baf358a73c63f20c0211ef"
+  },
+  "current.json": {
+    "bytes": 4239065,
+    "sha256": "f453201bfe52945bc2dd9c73a474a0b10574c892c1edaa93ae80fc81b01d1ba5"
+  },
+  "current.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "current.txt": {
+    "bytes": 225,
+    "sha256": "78f4b99eff1eb47f057980243f965c3aec9a98c25baf15fdfe39e8c26f425352"
+  },
+  "observe.pl": {
+    "bytes": 4355,
+    "sha256": "1f811836a47f399b22c4541b2076934452aee620698b85a3548d9a06f716a72d"
+  },
+  "ordinary.json": {
+    "bytes": 8274621,
+    "sha256": "a4bb2f05cd7622b387d633b712c68e10ec46ce0a95a1ef6a951b703bace40bb4"
+  },
+  "ordinary.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "ordinary.txt": {
+    "bytes": 201,
+    "sha256": "b41b5b89024f3f0703ec235495278ffa8301e3cf2e31599df1383d02fbb070e0"
+  },
+  "prior.json": {
+    "bytes": 6298992,
+    "sha256": "6f0710dc23cbc2351d424a53a5de155d3c28a3ace5d340d9e0802f8afd89412c"
+  },
+  "prior.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "prior.txt": {
+    "bytes": 6929,
+    "sha256": "0c1b91c1ac0a8cf7e47966440658252096ca256b29b03e5c914d0a4b05960f47"
+  },
+  "scope.txt": {
+    "bytes": 3248,
+    "sha256": "3b2eecbd397437365a808b3516ec6e3293989cd40f3674ba4756111a1c530b7f"
+  },
+  "source-delta.patch": {
+    "bytes": 13111,
+    "sha256": "19c9baccf0efceec5623ce299d78dce7ef8a62d38d133edd76798bce2a3f3301"
+  }
+}

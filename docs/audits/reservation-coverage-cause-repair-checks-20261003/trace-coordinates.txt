@@ -1,0 +1,1 @@
+PASS reader/build root coordinates encoded; actual statuses/reasons unchanged.

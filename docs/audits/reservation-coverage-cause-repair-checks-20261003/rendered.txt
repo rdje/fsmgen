@@ -1,0 +1,1 @@
+PASS rendered coverage cause repair and real controls with explicit remaining copy/cold boundaries; visual QA not performed.

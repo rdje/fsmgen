@@ -1,0 +1,144 @@
+
+#   Failed test 'late register / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'late register / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'implicit assignment declaration / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'implicit assignment declaration / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'missing parent / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'missing parent / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'unexpected module / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'unexpected module / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'missing child / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'missing child / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'unexpected nested child / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'unexpected nested child / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'wrong child identity / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'wrong child identity / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'parent private name leaked into child / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'parent private name leaked into child / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'wrong formal width / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'wrong formal width / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'wrong formal role / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'wrong formal role / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'formal aliases a late block / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'formal aliases a late block / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'stale or incomplete allocation / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'stale or incomplete allocation / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'omitted real producer declaration / earlier_reference diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'omitted real producer declaration / primary_path_echo diagnosed: matches only the intended cause'
+#   at docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl line 112.
+#          got: '1'
+#     expected: '0'
+# Looks like you failed 26 tests of 195.
+docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl .. 
+Dubious, test returned 26 (wstat 6656, 0x1a00)
+Failed 26/195 subtests 
+
+Test Summary Report
+-------------------
+docs/audits/reservation-coverage-cause-repair-checks-20261003/prior-desired.pl (Wstat: 6656 Tests: 195 Failed: 26)
+  Failed tests:  7, 12, 22, 27, 37, 42, 52, 57, 67, 72, 82
+                87, 97, 102, 112, 117, 127, 132, 142, 147
+                157, 162, 172, 177, 187, 192
+  Non-zero exit status: 26
+Files=1, Tests=195,  3 wallclock secs ( 0.01 usr  0.00 sys +  3.57 cusr  0.03 csys =  3.61 CPU)
+Result: FAIL

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-cause-repair-checks-20261003/verify.py", line 167, in <module>
+    assert all(bypass['api'][index]['accepted'] == 0 for index in accepted), 'real bypass admits omitted/unreserved declarations'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: real bypass admits omitted/unreserved declarations

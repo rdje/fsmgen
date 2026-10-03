@@ -1,0 +1,6 @@
+Native prior/bypass TAP retains Test::More's empty diagnostics and prove's raw
+summary spaces. source-delta.patch retains raw Git context markers, including
+blank context lines. bypass-body.pl retains the exact selected provider function
+body and its boundary blank line, required by independent source comparison.
+Only these four exact raw evidence paths are excluded from the source whitespace
+check; production code, both changed tests and all other artifacts remain checked.

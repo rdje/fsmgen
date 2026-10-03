@@ -1,0 +1,47 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.14
+Baseline: edb671c716b987414f81cb367605b9aa54841f10
+
+T1960 saves native errors immediately and compares independently complete reasons
+through the unchanged DiagnosticCause predicate. All thirteen expected reasons
+declare complete module membership, child identity/nesting, canonical plan,
+unreserved declarations or private width/ownership boundaries. Mutation logic
+and positive fixture/source/module constructor code are unchanged. The readable
+case table replaces only failure regex fragments with complete causes.
+
+Current T1960/T2063 PASS2/239. Thirty-nine genuine and earlier/primary-path native
+cases retain complete inputs, causes and results. Exact current helper decisions
+are [1,1,1] for thirteen genuine causes and [1,0,1] for twenty-six wrong causes.
+Native errors saved immediately agree. External complete graph comparisons retain
+primitive values/kinds/plain sharing; known empty native marker identities/classes/
+shapes retain. The original value-only snapshot decision is observed separately,
+not promoted as primitive-kind assurance. Arbitrary native meanings remain cold.
+
+Exact Git prior consumer through real Test::More is RED195/Failed26/Perl26.
+A genuine runtime replacement changes only the actual missing-declaration
+conditional to false, retaining every adjacent private/schema/membership guard.
+The real repaired T1960 is RED5/Failed2/Perl2 (prove1), and four actual otherwise
+refused late register/implicit assignment/child leak/omitted producer inputs admit.
+Their complete returned scopes equal the ordinary coverage parent/child scopes;
+every remaining acceptance/cause/result and all original caller kinds conserve.
+
+All23 ordinary API calls, complete native inputs/results and all62 original
+Storable copies conserve authenticated profile values/kinds/sharing. The same41
+copy differences remain; source/projection/module/snapshot field meaning stays
+.4.3-owned before P2 .13 copy/snapshot repair. No copy fix is hidden in this unit.
+
+Re-derivation: independent complete Git/current bytes/selected before-after source/
+exact delta and prior instrument closure, literal declared causes, native graph/
+kind/control inputs, complete ordinary products and unchanged clone observations.
+Falsification: genuine prior and declaration-only bypass failures, safety promotion
+RED1 and cause/assertion/native-error corruptions reject. Durability: complete
+sources/graphs/native errors/results/TAP/statuses/instruments/recipe/seal/task/card/
+book/Git. Coverage constructor/controller and complete clone-field/module/carrier
+meanings remain .4.3/cold .1.3. Current-root spelling does not qualify moved-root
+behavior; native HDL and visual QA remain separate.
+
+Only trace/FIFO library root coordinates are spelled ${REPO_ROOT}; other graph
+values/kinds/topology remain untouched. External OS toolchain trace paths are
+read-only dependencies. Only T1960 and new T2063 change in hot code paths; provider,
+shared predicate, public schema, native/submodule/legacy and sealed archives do not.
+Focused reservation/domain and book build/rendered/public-book/KM, fixed capacity,
+fresh claims, staged doctrines and normal hooks complete in sibling checks.

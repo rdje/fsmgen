@@ -1,0 +1,240 @@
+diff --git a/t/1960-isf-formal-reservation-coverage.t b/t/1960-isf-formal-reservation-coverage.t
+index cf6df30be..0b9c9a6de 100644
+--- a/t/1960-isf-formal-reservation-coverage.t
++++ b/t/1960-isf-formal-reservation-coverage.t
+@@ -13,6 +13,7 @@ use FSM::Scheduler::ISF::FormalClauseResolver;
+ use FSM::Scheduler::ISF::FormalIdentityPlan;
+ use FSM::Scheduler::ISF::PreparedFormalReservations;
+ use FSM::Scheduler::ISF::FormalReservationCoverage;
++use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
+ 
+ my $scheduler = FSM::Scheduler::ISF->new;
+ my $work = tempdir(CLEANUP => 1);
+@@ -90,32 +91,58 @@ subtest 'actual parent and generated child declarations pass independently' => s
+ };
+ 
+ sub reject {
+-    my ($p, $allocation, $actual, $pattern, $label) = @_;
++    my ($p, $allocation, $actual, $expected, $label) = @_;
+     my $before = dclone([$p, $allocation, $actual]);
+     my $ok = eval {verify($p, $allocation, $actual); 1};
+-    ok(!$ok, "$label refused"); like($@, $pattern, "$label diagnosed");
++    my $error = $@;
++    ok(!$ok, "$label refused");
++    ok(diagnostic_cause_matches($error, $expected), "$label diagnosed") or diag($error);
+     is_deeply([$p, $allocation, $actual], $before, "$label refusal preserves inputs");
+ }
+ subtest 'missing declarations, module sets and private ownership fail closed' => sub {
+     my $private = $plan->{formals}{main}{payload}{physical_name};
+     for my $case (
+-        [sub {$_[0]{coverage}{counters}{late_unreserved_helper} = 1}, qr/unreserved declarations:.*late_unreserved_helper/, 'late register'],
+-        [sub {push @{$_[0]{coverage}{states}[0]{assignments}}, {lhs => 'implicit_late_helper', rhs => '0', op => '<='}}, qr/unreserved declarations:.*implicit_late_helper/, 'implicit assignment declaration'],
+-        [sub {delete $_[0]{coverage}}, qr/incomplete parent\/domain modules/, 'missing parent'],
+-        [sub {$_[0]{extra} = dclone($_[0]{coverage})}, qr/incomplete parent\/domain modules/, 'unexpected module'],
+-        [sub {delete $_[0]{coverage}{children}{worker}}, qr/incomplete children/, 'missing child'],
+-        [sub {$_[0]{coverage}{children}{worker}{children}{nested} = {}}, qr/unplanned nested child scope/, 'unexpected nested child'],
+-        [sub {$_[0]{coverage}{children}{worker}{actor_name} = 'other'}, qr/mismatched module/, 'wrong child identity'],
+-        [sub {$_[0]{coverage}{children}{worker}{counters}{$private} = 4}, qr/unreserved declarations/, 'parent private name leaked into child'],
+-        [sub {$_[0]{coverage}{counters}{$private} = 9}, qr/wrong width or ownership/, 'wrong formal width'],
+-        [sub {$_[0]{coverage}{storage_roles}{$private} = 'drive_payload'}, qr/wrong width or ownership/, 'wrong formal role'],
+-        [sub {push @{$_[0]{coverage}{dt_blocks}}, {name => $private, assignments => []}}, qr/wrong width or ownership/, 'formal aliases a late block'],
++        [sub {$_[0]{coverage}{counters}{late_unreserved_helper} = 1},
++            "Formal reservation coverage: module 'coverage' has unreserved declarations: late_unreserved_helper",
++            'late register'],
++        [sub {push @{$_[0]{coverage}{states}[0]{assignments}},
++                {lhs => 'implicit_late_helper', rhs => '0', op => '<='}},
++            "Formal reservation coverage: module 'coverage' has unreserved declarations: implicit_late_helper",
++            'implicit assignment declaration'],
++        [sub {delete $_[0]{coverage}},
++            'Formal reservation coverage has incomplete parent/domain modules (missing: coverage; unexpected: )',
++            'missing parent'],
++        [sub {$_[0]{extra} = dclone($_[0]{coverage})},
++            'Formal reservation coverage has incomplete parent/domain modules (missing: ; unexpected: extra)',
++            'unexpected module'],
++        [sub {delete $_[0]{coverage}{children}{worker}},
++            "Formal reservation coverage has incomplete children of 'coverage' (missing: worker; unexpected: )",
++            'missing child'],
++        [sub {$_[0]{coverage}{children}{worker}{children}{nested} = {}},
++            'Formal reservation coverage has an unplanned nested child scope',
++            'unexpected nested child'],
++        [sub {$_[0]{coverage}{children}{worker}{actor_name} = 'other'},
++            "Formal reservation coverage has a missing or mismatched module 'worker'",
++            'wrong child identity'],
++        [sub {$_[0]{coverage}{children}{worker}{counters}{$private} = 4},
++            "Formal reservation coverage: module 'worker' has unreserved declarations: $private",
++            'parent private name leaked into child'],
++        [sub {$_[0]{coverage}{counters}{$private} = 9},
++            "Formal reservation coverage: private formal '$private' has wrong width or ownership in 'coverage'",
++            'wrong formal width'],
++        [sub {$_[0]{coverage}{storage_roles}{$private} = 'drive_payload'},
++            "Formal reservation coverage: private formal '$private' has wrong width or ownership in 'coverage'",
++            'wrong formal role'],
++        [sub {push @{$_[0]{coverage}{dt_blocks}}, {name => $private, assignments => []}},
++            "Formal reservation coverage: private formal '$private' has wrong width or ownership in 'coverage'",
++            'formal aliases a late block'],
+     ) {
+         my $actual = dclone($modules); $case->[0]->($actual);
+         reject($prepared, $plan, $actual, $case->[1], $case->[2]);
+     }
+     my $bad_plan = dclone($plan); $bad_plan->{formals}{main}{payload}{physical_name} = 'isf_port_main_payload';
+-    reject($prepared, $bad_plan, $modules, qr/canonical complete allocation plan/, 'stale or incomplete allocation');
++    reject($prepared, $bad_plan, $modules,
++        'Formal reservation coverage requires the canonical complete allocation plan', 'stale or incomplete allocation');
+ };
+ 
+ sub substitute_token {
+@@ -138,7 +165,8 @@ subtest 'removing a real producer name is detected against independently lowered
+     ok(!$inventory->{reserved_names}{$helper}, 'mutation really removed every reservation for the actual helper');
+     my $same_plan = allocation($incomplete);
+     is_deeply($same_plan, $plan, 'omission does not change the planned private names');
+-    reject($incomplete, $same_plan, $modules, qr/unreserved declarations:.*\Q$helper\E/, 'omitted real producer declaration');
++    reject($incomplete, $same_plan, $modules,
++        "Formal reservation coverage: module 'coverage' has unreserved declarations: $helper", 'omitted real producer declaration');
+ };
+ 
+ subtest 'reusable children and rule payload source identities retain their own coverage' => sub {
+--- absent
++++ t/2063-isf-coverage-diagnostic-causes.t
+@@ -0,0 +1,142 @@
++use strict;
++use warnings;
++use lib 'perl', 't/lib';
++use Test::More;
++use JSON::PP;
++use Scalar::Util qw(refaddr blessed reftype);
++use FSM::Scheduler::ISF::FormalReservationCoverage;
++use FSM::Test::DiagnosticCause;
++
++my $json = JSON::PP->new->canonical;
++open my $file, '<:raw', 'docs/audits/reservation-coverage-cause-diagnosis-20261003/observations-unqualified.json' or die $!;
++my $fixtures = $json->decode(do {local $/; <$file>}); close $file or die $!;
++
++sub pointer_key {
++    my ($key) = @_;
++    $key =~ s/~/~0/g; $key =~ s{/}{~1}g;
++    return $key;
++}
++sub materialize {
++    my ($node, $memo, $path) = @_;
++    return $node unless ref($node);
++    $memo ||= {}; $path //= '';
++    die 'unknown descriptor' unless ref($node) eq 'ARRAY' && @$node == 2;
++    my ($kind, $body) = @$node;
++    if ($kind eq 'reference') {
++        die 'reference precedes identity' unless exists $memo->{$body};
++        return $memo->{$body};
++    }
++    my $value;
++    if ($kind eq 'blessed') {
++        die 'unknown native marker' unless $body eq 'CoverageCauseSentinel';
++        $value = bless {}, 'CoverageCauseSentinel';
++    } elsif ($kind eq 'hash') {
++        die 'unknown hash body' unless ref($body) eq 'HASH';
++        $value = {};
++    } elsif ($kind eq 'array') {
++        die 'unknown array body' unless ref($body) eq 'ARRAY';
++        $value = [];
++    } else {die 'unknown descriptor tag'}
++    $memo->{$path} = $value;
++    if ($kind eq 'hash') {
++        for my $key (sort keys %$body) {
++            $value->{$key} = materialize($body->{$key}, $memo, "$path/" . pointer_key($key));
++        }
++    } elsif ($kind eq 'array') {
++        push @$value, materialize($body->[$_], $memo, "$path/$_") for 0..$#$body;
++    }
++    return $value;
++}
++sub snapshot {
++    my ($value, $memo, $path) = @_;
++    return $value unless ref($value);
++    $memo ||= {}; $path //= '';
++    my $identity = refaddr($value);
++    return ['reference', $memo->{$identity}] if exists $memo->{$identity};
++    $memo->{$identity} = $path;
++    if (blessed($value)) {
++        die 'native marker changed' unless blessed($value) eq 'CoverageCauseSentinel'
++            && reftype($value) eq 'HASH' && !keys %$value;
++        return ['blessed', 'CoverageCauseSentinel'];
++    }
++    if (ref($value) eq 'ARRAY') {
++        return ['array', [map {snapshot($value->[$_], $memo, "$path/$_")} 0..$#$value]];
++    }
++    die 'unknown native reference' unless ref($value) eq 'HASH';
++    return ['hash', {map {$_ => snapshot($value->{$_}, $memo,
++        "$path/" . pointer_key($_))} sort keys %$value}];
++}
++sub marker_identity {
++    my ($input, $row) = @_;
++    return undef if $row->{band} eq 'current_fixture';
++    my $marker = $input->[0]{_early_reference};
++    if ($row->{band} eq 'primary_path_echo') {
++        $marker = $marker->{$_} for split m{/}, $row->{expected_cause}, -1;
++    }
++    die 'native marker shape changed' unless blessed($marker) eq 'CoverageCauseSentinel'
++        && reftype($marker) eq 'HASH' && !keys %$marker;
++    return refaddr($marker);
++}
++
++open $file, '<:raw', 't/1960-isf-formal-reservation-coverage.t' or die $!;
++my $source = do {local $/; <$file>}; close $file or die $!;
++my $start = index($source, 'sub reject {');
++my $end = index($source, "subtest 'missing declarations", $start);
++die 'exact current coverage helper missing' unless $start >= 0 && $end > $start;
++my $helper = substr($source, $start, $end - $start);
++{
++    package CurrentCoverageCauseSubject;
++    use Storable qw(dclone);
++    our (@bits, @errors, $api_error, $api_accepted, $api_result);
++    sub verify {
++        my $ok = eval {
++            $api_result = FSM::Scheduler::ISF::FormalReservationCoverage->verify(@_);
++            1;
++        };
++        $api_error = $@; $api_accepted = $ok ? 1 : 0;
++        die $api_error unless $ok;
++        return $api_result;
++    }
++    sub ok {push @bits, $_[0] ? 1 : 0; return $_[0]}
++    sub diag {}
++    sub is_deeply {
++        my $same = Test::More::is_deeply(@_);
++        push @bits, $same ? 1 : 0;
++        return $same;
++    }
++    sub diagnostic_cause_matches {
++        push @errors, $_[0];
++        return FSM::Test::DiagnosticCause::diagnostic_cause_matches(@_);
++    }
++}
++# Compile before native calls; no active source eval can echo a reason.
++eval 'package CurrentCoverageCauseSubject;' . $helper; die $@ if $@;
++my @captures;
++for my $row (@{$fixtures->{rows}}) {
++    my $input = materialize($row->{before});
++    my $before = snapshot($input);
++    my $identity = marker_identity($input, $row);
++    @CurrentCoverageCauseSubject::bits = (); @CurrentCoverageCauseSubject::errors = ();
++    $CurrentCoverageCauseSubject::api_result = undef;
++    CurrentCoverageCauseSubject::reject(@$input, $row->{expected_cause}, "$row->{label} / $row->{band}");
++    is_deeply(\@CurrentCoverageCauseSubject::bits, [1, $row->{band} eq 'current_fixture' ? 1 : 0, 1],
++        "$row->{label} / $row->{band}: exact helper accepts only the complete intended cause");
++    is((split /\n/, $CurrentCoverageCauseSubject::api_error)[0], (split /\n/, $row->{error})[0],
++        "$row->{label} / $row->{band}: actual primary conserved");
++    is($CurrentCoverageCauseSubject::errors[0], $CurrentCoverageCauseSubject::api_error,
++        "$row->{label} / $row->{band}: native error saved immediately");
++    my $after = snapshot($input);
++    is($json->encode($after), $json->encode($before),
++        "$row->{label} / $row->{band}: complete caller primitive kinds/sharing retained");
++    is(marker_identity($input, $row), $identity, "$row->{label} / $row->{band}: empty native marker identity retained");
++    push @captures, {label => $row->{label}, band => $row->{band}, expected_cause => $row->{expected_cause},
++        before => $before, after => $after, error => $CurrentCoverageCauseSubject::api_error,
++        incoming_error => $CurrentCoverageCauseSubject::errors[0], assertions => [@CurrentCoverageCauseSubject::bits],
++        accepted => $CurrentCoverageCauseSubject::api_accepted,
++        result => $CurrentCoverageCauseSubject::api_accepted ? snapshot($CurrentCoverageCauseSubject::api_result) : undef};
++}
++if (defined $ENV{FSMGEN_COVERAGE_CAUSE_CAPTURE}) {
++    open $file, '>:raw', $ENV{FSMGEN_COVERAGE_CAUSE_CAPTURE} or die $!;
++    print {$file} $json->encode({rows => \@captures}), "\n" or die $!; close $file or die $!;
++}
++done_testing;

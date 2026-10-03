@@ -242,9 +242,13 @@ finds that the test helper accepts unrelated unsupported-reference failures when
 the wanted phrase appears in its caller stack or an unrelated failure path. For
 example, a path containing `incomplete parent/domain modules` fools the fragment
 check even though the actual cause is an unsupported reference. The verifier
-rejects those inputs correctly. Exact native controls fail the desired safety
-checks; complete-cause test repair is scheduled next. Copy-field and wider
-constructor qualification remains separate.
+rejects those inputs correctly. The [coverage cause repair](../../../docs/audits/reservation-coverage-cause-repair-20261003/scope.txt)
+now saves native errors immediately and compares independently declared complete
+causes. Permanent native controls reject both unrelated failure forms. Exact prior
+checks still fail the desired safety controls, and the actual declaration guard
+bypass fails the repaired test. Complete ordinary inputs/results conserve; the
+original test-copy kind drift remains owned. Copy-field and wider constructor
+qualification remains separate.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.
 

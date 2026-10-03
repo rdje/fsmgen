@@ -1,0 +1,2 @@
+ram-guard: PID 49400; host 75.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS exact prior desired-safety RED, current whole observations and actual declaration-only bypass RED captured.
