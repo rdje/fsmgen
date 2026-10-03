@@ -1,0 +1,5 @@
+From repository root, with required RAM monitoring and repository-local caches/temp:
+scripts/run_with_ram_guard.sh -- bash docs/audits/prepared-reservation-snapshot-checks-20261003/produce.sh
+scripts/run_with_ram_guard.sh -- python3 docs/audits/prepared-reservation-snapshot-checks-20261003/portable.py
+scripts/run_with_ram_guard.sh -- bash docs/audits/prepared-reservation-snapshot-checks-20261003/check.sh
+Read complete outputs/statuses. Existing sealed diagnosis must never be overwritten; run producers in a task-owned copy with declared paths, then authenticate against this envelope. Source bindings refer to exact immutable baseline3193b92 and selected historical introduction, not a rewritten predecessor. Missing wider native/cold/moved-root legs remain explicit. No native HDL execution.

@@ -1,0 +1,2 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12.2.1
+The first staged doctrine run rejected the regenerated Knowledge Map root and prepared-topic shard because they were not staged. No size ceiling, capacity, task integrity, claim, or acceptance check failed. Retained the failed receipt and staged exactly the derived map outputs. Repeat the full staged doctrine gate before commit; hooks alone do not substitute for this check.

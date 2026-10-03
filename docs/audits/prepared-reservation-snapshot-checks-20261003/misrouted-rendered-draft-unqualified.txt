@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/prepared-reservation-cause-repair-20261003/rendered_verify.py", line 7, in <module>
+    for phrase in ('complete-cause repair now rejects those unrelated causes','membership bypass fail','snapshot strengthening is the next owned step'):assert phrase in text,phrase
+                                                                                                                                                               ^^^^^^^^^^^^^^
+AssertionError: snapshot strengthening is the next owned step

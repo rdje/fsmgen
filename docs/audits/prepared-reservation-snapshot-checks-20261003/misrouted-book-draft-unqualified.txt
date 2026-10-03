@@ -1,0 +1,4 @@
+ INFO Book building has started
+ INFO Running the html backend
+ WARN search index is very large (15038083 bytes)
+ INFO HTML book written to `${REPO_ROOT}/docs/book/book`

@@ -1,0 +1,73 @@
+{
+  "baseline": "3193b92c3669daec5d0a6f2053ed471e015087b0",
+  "members": {
+    "REPRODUCE.txt": {
+      "bytes": 798,
+      "sha256": "7a0a00c23a1aa4b96c1139ad1211663355734e1c6a3e0d1f8669dbc75cc0e805"
+    },
+    "bind.py": {
+      "bytes": 1155,
+      "sha256": "f78c99d1acd91745f00bc4f775dbce4f37ebac05353b21ff0a6a4a57f47545ca"
+    },
+    "bind.txt": {
+      "bytes": 83,
+      "sha256": "bbe8a64632aaca575ea72eca91b3bb8f962de31c382980c5fbe495f1ec8bb982"
+    },
+    "bindings.json": {
+      "bytes": 1673548,
+      "sha256": "95ec147f21feb730ebf222d7f591418f2d0d946c6cdbc5e88a1399a42aded7ed"
+    },
+    "finding.txt": {
+      "bytes": 874,
+      "sha256": "72fc1429348684b2e7e406d4253c8fcc08432fbc2f4177d69f13a0821664a287"
+    },
+    "introduction-source.txt": {
+      "bytes": 8837,
+      "sha256": "42f2522eef6c167808493e3567d57f512a29d51fd13ab622030255a7f1412a94"
+    },
+    "introduction.txt": {
+      "bytes": 140,
+      "sha256": "e4da3d4100029a5b958e460aa9215fe824798630bc265ef51a8a451e770e9d63"
+    },
+    "mutate.status": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "mutate.txt": {
+      "bytes": 207,
+      "sha256": "45c29369392cceef95404ce3307878f33f13c6cab18335b5411ed621f5094b56"
+    },
+    "observations-mutate.json": {
+      "bytes": 13098021,
+      "sha256": "40f79ad06b7ac2dac38da950c604109ce40f787af76879e5279f766969604869"
+    },
+    "observations-ordinary.json": {
+      "bytes": 13097421,
+      "sha256": "8f1bfed501e2d5894ed872608db4af1047cb18e47f1356990d1f03ad4ca694bc"
+    },
+    "observe.pl": {
+      "bytes": 3680,
+      "sha256": "07e9a1cc6a10ee6d5ba9a9b142e1795c9ecd8faa8e523cff4a4e1271dbb88235"
+    },
+    "ordinary.status": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "ordinary.txt": {
+      "bytes": 207,
+      "sha256": "7138029cbf20124a7be61849b7617cc670b4839b6667fbf501000d3e66e9462b"
+    },
+    "rendered_verify.py": {
+      "bytes": 659,
+      "sha256": "a219b250d6e4cbd7b8ebb356d2b7ed4a8dc90b1fc4b83883357e25930649f179"
+    },
+    "scope.txt": {
+      "bytes": 3851,
+      "sha256": "e6f4d3722b65968b16345ba6c9026b0015826d0ab3505364a04e20be62cd79b0"
+    },
+    "verify.py": {
+      "bytes": 7720,
+      "sha256": "de245e4d45a8e26cbba358fa7fb994f9c80b240b38522234cdedf3b0daa6a963"
+    }
+  }
+}

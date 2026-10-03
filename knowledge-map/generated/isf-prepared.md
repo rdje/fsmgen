@@ -1,13 +1,14 @@
 # Knowledge Map: `isf-prepared`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **3** uniquely owned question entries.
+> **1** facts · **4** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="does the checked reservation collector prove final emitted completeness?" · facts=[isf-prepared-formal-reservations](../../docs/knowledge/isf-prepared-formal-reservations.md)
 - q="how are missing prepared formal reservation categories rejected?" · facts=[isf-prepared-formal-reservations](../../docs/knowledge/isf-prepared-formal-reservations.md)
 - q="how are parent child and domain reservation scopes represented?" · facts=[isf-prepared-formal-reservations](../../docs/knowledge/isf-prepared-formal-reservations.md)
+- q="why do prepared reservation test snapshots lose scalar kinds?" · facts=[isf-prepared-formal-reservations](../../docs/knowledge/isf-prepared-formal-reservations.md)
 
 ## Facts
 

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/prepared-reservation-snapshot-diagnosis-20261003/verify.py", line 107, in <module>
+    for i,row in enumerate(mutated['calls']):assert equal(row['before'],row['after']),('false kind conservation',i)
+                                                    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('false kind conservation', 51)

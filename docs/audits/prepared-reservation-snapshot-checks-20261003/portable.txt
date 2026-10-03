@@ -1,0 +1,1 @@
+Encoded only recorded root-coordinate spelling; scalar and reference kinds are unchanged.

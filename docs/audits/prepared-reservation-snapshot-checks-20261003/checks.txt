@@ -1,0 +1,2 @@
+ram-guard: PID 22522; host 68.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS cold snapshot diagnosis, real mutation-conservation RED and unchanged checked-reservation regressions.

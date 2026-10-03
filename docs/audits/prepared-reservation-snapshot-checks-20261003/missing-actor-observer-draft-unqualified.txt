@@ -1,0 +1,28 @@
+Prototype mismatch: sub main::dclone ($) vs none at /System/Library/Perl/5.34/Exporter.pm line 63.
+ at ./t/1959-isf-prepared-formal-reservations.t line 5.
+
+    #   Failed test 'missing actor validation does not mutate input'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 31.
+    #     Structures begin differing at:
+    #          $got->{actor} = HASH(0x7520c135a0)
+    #     $expected->{actor} = Does not exist
+
+    #   Failed test 'malformed actor has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 29.
+    # Can't use string ("wrong shape") as a HASH ref while "strict refs" in use at docs/audits/prepared-reservation-snapshot-diagnosis-20261003/observe.pl line 60.
+    # Looks like you failed 2 tests of 146.
+
+#   Failed test 'every top-level category is required even when empty'
+#   at ./t/1959-isf-prepared-formal-reservations.t line 88.
+# Looks like you failed 1 test of 4.
+docs/audits/prepared-reservation-snapshot-diagnosis-20261003/observe.pl .. 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/4 subtests 
+
+Test Summary Report
+-------------------
+docs/audits/prepared-reservation-snapshot-diagnosis-20261003/observe.pl (Wstat: 256 Tests: 4 Failed: 1)
+  Failed test:  2
+  Non-zero exit status: 1
+Files=1, Tests=4,  5 wallclock secs ( 0.01 usr  0.00 sys +  3.72 cusr  0.41 csys =  4.14 CPU)
+Result: FAIL

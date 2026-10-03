@@ -215,8 +215,12 @@ adjacent cycle assertion. Primary paths containing the expected phrase also fool
 fragment checks. The production collector rejects those inputs correctly;
 the [complete-cause repair](../../../docs/audits/prepared-reservation-cause-repair-20261003/scope.txt)
 now rejects those unrelated causes. Exact old checks and a genuine preparation
-membership bypass fail. Ordinary scope products conserve; first-touch snapshot
-strengthening is the next owned step. Whole ordinary scope/token
+membership bypass fail. Ordinary scope products conserve. The
+[snapshot diagnosis](../../../docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt)
+shows that existing test clones change generated child assignment numbers to
+strings, while value-only assertions miss a deliberately injected kind-only
+input mutation. The actual collector preserves its complete inputs. Snapshot
+and comparison repair is owned by .12.2.2 and comes next. Whole ordinary scope/token
 inventories have independent finite models, while wider constructor semantics
 and moved-root qualification remain open.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)

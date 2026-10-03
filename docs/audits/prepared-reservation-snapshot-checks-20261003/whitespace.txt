@@ -1,0 +1,2 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12.2.1
+Staged whitespace inspection identifies only native prove's trailing spaces on its failed file-summary lines in missing-actor-observer-draft-unqualified.txt. Preserve that full rejected draft output unchanged. The source/maintained-doc whitespace check excludes only this raw receipt; all other staged paths pass.
