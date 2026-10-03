@@ -1,0 +1,9 @@
+Run from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-snapshot-capture-20261003/verify.py
+  python3 -B docs/audits/reservation-coverage-snapshot-capture-20261003/derive_fields.py
+The --trust-storable variant must exit1 with the declared first real ordinary
+snapshot kind-authority assertion, not a missing file/import/manifest failure.
+Never rerun producers into this sealed directory. A fresh native replay needs an
+owned sibling and base-path adaptation of observe.pl/portable.py; use the two
+explicit ordinary/pure environment modes and require actual TAP/exit conservation.
+This capture does not close field meanings or real value-only mutation controls.

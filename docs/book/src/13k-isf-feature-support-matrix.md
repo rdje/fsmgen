@@ -251,8 +251,10 @@ checks trigger/completion/timeout constants, copied fan-in source RHS and vector
 endpoint widths through child ports, top links and prepared wiring. The
 [module join](../../../docs/audits/reservation-coverage-module-join-20261003/scope.txt)
 reconciles every captured module field and actor-only preparation difference
-with those models. Successful/refused snapshots and mutation seeds remain open. The test-copy repair follows
-those cohorts; this profile does not establish a production coverage defect.
+with those models. The [snapshot capture](../../../docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt)
+binds every successful/refused snapshot and module/allocation mutation seed to
+actual original and pure-copy graphs. Their field meanings and real value-only
+assertion controls remain open. The test-copy repair follows those cohorts; this profile does not establish a production coverage defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when
 the wanted phrase appears in its caller stack or an unrelated failure path. For

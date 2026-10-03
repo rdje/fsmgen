@@ -1,0 +1,1 @@
+PASS rendered complete snapshot/seed capture and explicit open field/assertion boundary; visual QA remains pending.

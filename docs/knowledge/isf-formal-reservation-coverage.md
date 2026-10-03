@@ -41,10 +41,9 @@ Pure actor copies retain kinds/sharing; complete lowering/carriers/scope results
 agree. The [cause repair](../audits/reservation-coverage-cause-repair-20261003/scope.txt)
 uses complete causes and saved native errors; wrong-cause, exact-prior and actual
 declaration-guard bypass controls qualify.
-Field-family evidence remains separately sealed.
-[Module join](../audits/reservation-coverage-module-join-20261003/scope.txt)
-closes recorded generated/reusable/ATL fields and FIFO/vector propagation.
-Snapshots/mutation seeds stay open before P2 .13; constructors/moved-root stay cold.
+[Module join](../audits/reservation-coverage-module-join-20261003/scope.txt) closes field cohorts and FIFO/vector propagation.
+[Snapshot capture](../audits/reservation-coverage-snapshot-capture-20261003/scope.txt) binds all remaining copies; field meanings/real assertion controls precede P2 .13.
+Constructors/moved-root stay cold.
 
 This guard checks final declarations at the prepared ISF-to-FSM boundary. It does not replace source or executable admission,
 prove arbitrary edited IR, or cover new producer/emitter boundaries

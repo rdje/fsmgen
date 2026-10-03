@@ -1,0 +1,4 @@
+docs/audits/reservation-coverage-snapshot-capture-20261003/observe.pl .. ok
+All tests successful.
+Files=1, Tests=5, 17 wallclock secs ( 0.01 usr  0.00 sys + 11.78 cusr  3.86 csys = 15.65 CPU)
+Result: PASS
