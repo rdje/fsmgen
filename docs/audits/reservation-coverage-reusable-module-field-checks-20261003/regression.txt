@@ -1,0 +1,5 @@
+t/1237-isf-fifo-library-fixture.t .... ok
+t/1453-isf-storage-field-metadata.t .. ok
+All tests successful.
+Files=2, Tests=6,  3 wallclock secs ( 0.01 usr  0.01 sys +  1.51 cusr  1.00 csys =  2.53 CPU)
+Result: PASS

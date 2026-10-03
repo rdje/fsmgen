@@ -244,8 +244,10 @@ and original coverage profile. Ordinary lowering/carrier/scope results agree.
 The [generated-field qualification](../../../docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt)
 checks readiness/request/completion RHS, monitor set/clear/reset constants,
 provenance and declared widths. Unused worker width metadata stays separate
-from emitted port declarations. Reusable and ATL fields, source preparation
-propagation, and successful/refused snapshots remain open. The test-copy repair follows
+from emitted port declarations. The [reusable-field qualification](../../../docs/audits/reservation-coverage-reusable-module-fields-20261003/scope.txt)
+checks storage RHS/widths and FIFO slot indexes, binding widths, selection guards
+and provenance carried through preparation. ATL fields, the complete propagation
+join, and successful/refused snapshots remain open. The test-copy repair follows
 those cohorts; this profile does not establish a production coverage defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when

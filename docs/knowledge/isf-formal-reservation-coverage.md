@@ -42,19 +42,19 @@ agree. The [cause repair](../audits/reservation-coverage-cause-repair-20261003/s
 uses complete causes and saved native errors; wrong-cause, exact-prior and actual
 declaration-guard bypass controls qualify.
 [Generated fields](../audits/reservation-coverage-generated-module-fields-20261003/scope.txt)
-bind originals/pure copies and RHS/provenance/widths. Reusable/ATL/snapshots
-remain open before P2 .13; constructors/moved-root stay cold.
+bind originals/pure copies and RHS/provenance/widths.
+[Reusable fields](../audits/reservation-coverage-reusable-module-fields-20261003/scope.txt)
+bind storage/FIFO kinds and propagation. ATL/snapshots stay open before P2 .13;
+constructors/moved-root stay cold.
 
-This detached guard establishes the final declaration check for the prepared
-ISF-to-FSM module boundary. It does not replace source or executable admission,
+This guard checks final declarations at the prepared ISF-to-FSM boundary. It does not replace source or executable admission,
 prove arbitrary edited IR, or cover new producer/emitter boundaries
 without extending qualification. [Production formal lowering](isf-production-formal-scope.md) now invokes this
 guard after actual module construction and before emission, with authored
 report provenance restored in a detached view. Independent controller/local-call runtime
 qualification remains separately owned.
-Production family qualification additionally requires every private formal in
-explicit_internal_signals. A width/role record alone does not stop the carrier
-from inferring a public input for an unassigned read. T1963 removes that explicit
-classification as a negative control and verifies exclusion of private formals from public ports.
+Private formals must stay in explicit_internal_signals; width/role alone can
+infer an unassigned read as a public input. T1963 removes that classification
+and checks private-formal exclusion from public ports.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.2.

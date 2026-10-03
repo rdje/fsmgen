@@ -1,0 +1,1 @@
+PASS rendered reusable/storage field and propagation scope, open ATL/join/snapshot boundary and qualification link; visual QA remains pending.

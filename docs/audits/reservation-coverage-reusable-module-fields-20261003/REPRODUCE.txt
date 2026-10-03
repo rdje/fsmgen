@@ -1,0 +1,17 @@
+Cold, non-mutating commands from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-reusable-module-fields-20261003/verify.py
+  python3 -B docs/audits/reservation-coverage-reusable-module-fields-20261003/derive_roster.py
+Both real competing-authority modes must exit1 at their declared kind contract:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-reusable-module-fields-20261003/verify.py --trust-storable
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-reusable-module-fields-20261003/verify.py --trust-inherited
+
+The reader first authenticates the complete sealed source and module corpora,
+then derives this finite cohort's field meanings from independent literal
+source/product/carrier contracts. The recursive roster producer is separate
+from the semantic reader's stack-based difference reconciliation. Neither
+imports the production mapper/guard/collector as its expected-value oracle.
+
+New source/provider observations need their own task and sibling on this
+repository volume, following the source/module capture recipes. Preserve all
+sealed records unchanged. Changed sources require fresh complete field closure;
+this qualification does not close remaining ATL/constructor/controller work.

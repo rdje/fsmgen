@@ -1,0 +1,1 @@
+PASS complete storage-module and FIFO preparation field-instance roster; semantic verification is independent.

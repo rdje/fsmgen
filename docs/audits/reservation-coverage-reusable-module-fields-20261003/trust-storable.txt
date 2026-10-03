@@ -1,0 +1,16 @@
+PASS authenticated complete source actors and original profile; all authored/physical copy sites retained.
+PASS independent FIFO bank/binding and ATL route field contracts, genuine pure-copy preservation/deep isolation and exact ordinary lowering/carrier/scope results.
+PASS real Storable competing authority and retained kind/value/route corruptions reject.
+OPEN: preparation/internal module propagation semantics, snapshot/mutation seed assurance, full constructors/controllers and moved-root qualification remain owned successors.
+PASS immutable complete source/prior membership, exact current module captures and typed field-instance roster with per-family owners.
+PASS original/caller kind/topology/deep-isolation conservation, genuine pure module copies and complete preparation/lowering/carrier/scope result equality.
+PASS actual lossy module-copy kind counterfactual and roster omission/owner/identity corruptions reject.
+OPEN: generated/reusable/ATL field meanings, actor-only preparation propagation and snapshot assurance remain .3-.6/.4-owned; constructors/controllers/moved-root stay cold.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-reusable-module-fields-20261003/verify.py", line 214, in <module>
+    storage_fields(ordinary['copies'][4]['copy'] if options.trust_storable else ordinary['copies'][4]['before'], storage_files)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-reusable-module-fields-20261003/verify.py", line 128, in storage_fields
+    assert same(state['assignments'], [expected]), ('storage numeric assignment', state_name)
+           ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('storage numeric assignment', 'main_idle_0')
