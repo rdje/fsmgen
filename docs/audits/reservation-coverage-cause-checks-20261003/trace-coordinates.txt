@@ -1,0 +1,1 @@
+PASS reader/build trace root coordinates encoded; statuses and reasons untouched.

@@ -1,0 +1,16 @@
+From the repository root:
+scripts/run_with_ram_guard.sh -- bash docs/audits/reservation-coverage-cause-checks-20261003/check.sh
+scripts/run_with_ram_guard.sh -- bash docs/audits/reservation-coverage-cause-checks-20261003/docs.sh
+
+Native producer commands are prove -Iperl desired.pl (expected prove1, Perl26,
+195 assertions/26 wrong-cause failures) and prove -Iperl replay.pl (PASS1/234).
+Paths for both instruments are within this envelope. Reproduce producers only
+in a task-owned repository-local sibling, changing their output base and binding
+the exact current source identities. Never overwrite sealed native samples.
+Read the immutable profile contracts and graphs; compile the complete original
+helper and QR source before calls. Preserve exact flags and native caller inputs.
+Retain all actual complete errors, native statuses, empty marker identities/shapes
+and full before/after graphs. Portable-encode only native trace root coordinates.
+The independent reader reconstructs actual input transformations and literal
+guard reasons, while native direct replay distinguishes stack/path echoes.
+Whole clone-field/module/carrier/constructor and moved-root legs remain explicit.

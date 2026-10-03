@@ -1,0 +1,6 @@
+t/1937-isf-formal-reservation-products.t ............ ok
+t/1957-isf-formal-domain-reservation-integration.t .. ok
+t/1960-isf-formal-reservation-coverage.t ............ ok
+All tests successful.
+Files=3, Tests=12, 33 wallclock secs ( 0.02 usr  0.01 sys + 22.96 cusr  7.95 csys = 30.94 CPU)
+Result: PASS

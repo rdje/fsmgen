@@ -1,0 +1,1 @@
+PASS bounded native cause diagnosis sealed; reproduce into a task-owned sibling.

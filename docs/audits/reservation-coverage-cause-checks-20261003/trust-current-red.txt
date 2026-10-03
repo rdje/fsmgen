@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-cause-checks-20261003/verify.py", line 131, in <module>
+    assert all(row['matched'] == 0 for row in data['rows'] if row['band'] != 'current_fixture'), \
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual current consumer falsely accepts unrelated native failures

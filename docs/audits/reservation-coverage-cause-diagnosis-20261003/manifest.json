@@ -1,0 +1,54 @@
+{
+  "REPRODUCE.txt": {
+    "bytes": 1184,
+    "sha256": "c39128eb721bd8a97c1bde6e0c2b374c6b7c5fad83bc195095157c1f5d346914"
+  },
+  "bind.py": {
+    "bytes": 1433,
+    "sha256": "1c2a4e4e9d40796e10e38ed11aaf850d576babc1d551d8f8e84c6c5b13661efc"
+  },
+  "bind.txt": {
+    "bytes": 78,
+    "sha256": "454cdb237761d8dcc40705e7cb1dc910786dad9b651b932895fae431a65c03d1"
+  },
+  "bindings.json": {
+    "bytes": 1381911,
+    "sha256": "6c0070db696c0fb75ee597dd68031e8681872d66ae42f548d2bc99ea5f60d9dc"
+  },
+  "desired-unqualified.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "desired-unqualified.txt": {
+    "bytes": 6649,
+    "sha256": "700d8012644524825e2285721d008e95021f4b5d7e18483d2643136dd0f37a2c"
+  },
+  "desired.pl": {
+    "bytes": 8566,
+    "sha256": "e52b15c91dbc96f9a3bdd8e21a7a44a8cb631aab7c6a9188e347cdb8f89d8c70"
+  },
+  "direct-replay-unqualified.json": {
+    "bytes": 4155283,
+    "sha256": "d5132eff5d6db198a4e8a1bef5f453f455e7c61cfd142fdf74d8fba13b673a34"
+  },
+  "direct-replay-unqualified.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "direct-replay-unqualified.txt": {
+    "bytes": 205,
+    "sha256": "3b5c0654e52170415be1118e7c736af60974c2eda36e77361085f550ccf9eeb2"
+  },
+  "observations-unqualified.json": {
+    "bytes": 6296652,
+    "sha256": "e6c62ee3cfd747e87182f840988e13167174b389d1ab33caa94291af463e3aac"
+  },
+  "replay.pl": {
+    "bytes": 4682,
+    "sha256": "3937f699398e1d5280bc4283a53ddf78763878b45cd608871f29c4a37a5b832d"
+  },
+  "scope.txt": {
+    "bytes": 2943,
+    "sha256": "e3061d5a840e9258c90f8cef157ff9b8b7e2e5a58bca94470c462a0f8f393c15"
+  }
+}

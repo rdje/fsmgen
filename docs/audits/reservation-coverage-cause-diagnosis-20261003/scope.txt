@@ -1,0 +1,43 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.2
+Baseline: d404427cb03f420ff03aa3d49f921cb42020b0ed
+
+The exact unchanged T1960 reject helper and original QR declarations are compiled
+before actual API calls. No active string eval or manufactured error can supply
+the expected reason. Complete source-declared genuine causes come from the sealed
+profile contracts and provider guards, literal coverage/worker identities,
+canonical payload allocation and source dynamic-wait ordinal.
+
+Thirteen genuine fixtures and thirteen each of earlier unsupported-reference and
+primary-path echo controls execute: 39 actual native refusals. Every original
+regex matches, yielding real Test::More desired-safety RED195/Failed26/Perl26
+(prove1). Full caller graphs preserve primitive values/kinds/plain sharing;
+known empty native markers retain actual identity/class/shape. Arbitrary native
+references remain unqualified. Native errors are saved immediately; exact old
+consumer incoming errors agree. Original value-only snapshots are observed but
+not promoted as primitive-kind assurance; .4.3 owns their full meaning.
+
+Independent direct native replay PASS1/234 reconstructs complete inputs with its
+own graph materializer. Exact original QR flags/spellings are conserved. Genuine
+primaries agree with complete literals. Earlier direct native exceptions no
+longer match: the old helper stack supplied the phrase. Primary-path controls
+still match in direct exceptions because the actual unsupported-reference path
+contains the complete wanted phrase. Nested keys preserve real slash separators.
+Matching only the first line with fragments would still accept those wrong causes.
+
+Re-derivation: independent whole Git/source closure, actual input/kind/identity/
+literal-cause/control transformations and direct native replay isolate the finite
+mechanism. Falsification: real desired-safety RED, current-consumer safety promotion
+RED1, and cause/match/QR/kind/native-identity corruptions reject. Durability:
+complete sources/graphs/native errors/QR program/TAP/statuses/instruments/recipe/
+seal/task/card/book/Git. Complete coverage constructor and clone-field/module/
+carrier meanings remain .4.3/cold .1.3; current root coordinates do not prove
+moved-root behavior. P2 .2.3.14 owns immediate cause repair before .4.3; P2 .13
+owns copy/snapshot repair after .4.3. The production verifier rejects correctly.
+
+Only native trace root-coordinate spelling is ${REPO_ROOT}; graph values and
+kinds are untouched. External paths in traces identify read-only OS toolchain
+dependencies. Initial source/receipt with the narrower marker capture remains
+unqualified in sibling checks. Focused final-coverage/reservation/domain and
+book build/rendered/public-book/KM gates run in sibling checks; visual QA pending.
+No production/test/shared predicate/public schema/native/submodule/legacy source
+or prior sealed archive changes.

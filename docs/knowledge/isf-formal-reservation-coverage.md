@@ -9,7 +9,7 @@ date: 2026-10-03
 status: current
 tags: [isf, formals, reservations, declarations, scope, ownership]
 evidence: perl/FSM/Scheduler/ISF/FormalReservationCoverage.pm; perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm; t/1960-isf-formal-reservation-coverage.t; t/1957-isf-formal-domain-reservation-integration.t
-reverify: scripts/run_with_ram_guard.sh -- python3 docs/audits/reservation-coverage-helper-checks-20261003/verify_profile.py
+reverify: scripts/run_with_ram_guard.sh -- bash docs/audits/reservation-coverage-cause-checks-20261003/check.sh
 ---
 
 FormalReservationCoverage::verify takes original prepared source, its canonical
@@ -36,9 +36,11 @@ combined domain/resource/storage/completion/crossing cases; see
 The [bounded current profile](../audits/reservation-coverage-helper-causes-20261003/scope.txt)
 retains native calls, original QR consumers and copies. Actual API inputs preserve
 values/kinds/sharing; some test Storable copies change numbers to strings.
-Wrong-cause behavior and complete clone-field/product semantics remain .4.2/.4.3
-unqualified. P2 .2.3.13 owns copy/snapshot repair after qualification. This is not
-a production coverage defect claim; wider constructors/moved-root work stays cold.
+The [cause diagnosis](../audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
+proves unrelated native stack/path phrases fool every original regex; complete
+causes are required. P2 .2.3.14 owns immediate test repair. Complete clone-field/
+product semantics remain .4.3-unqualified; P2 .13 owns repair afterward. The
+verifier rejects correctly. Wider constructors/moved-root work stays cold.
 
 This detached guard establishes the final declaration check for the prepared
 ISF-to-FSM module boundary. It does not replace source or executable admission,

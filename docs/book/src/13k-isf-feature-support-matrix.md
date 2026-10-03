@@ -234,9 +234,17 @@ The [bounded coverage profile](../../../docs/audits/reservation-coverage-helper-
 preserves the actual final-coverage calls and refusal consumers. The verifier
 preserves its actual inputs; some test Storable copies change numeric scalars
 into strings. For example, a numeric assignment value can become `"1"` in a
-detached test copy. Wrong-cause controls and complete source/module field
-qualification remain open. The test-copy repair is owned and scheduled after
+detached test copy. Complete source/module field qualification remains open.
+The test-copy repair is owned and scheduled after
 that qualification; this profile does not establish a production coverage defect.
+The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
+finds that the test helper accepts unrelated unsupported-reference failures when
+the wanted phrase appears in its caller stack or an unrelated failure path. For
+example, a path containing `incomplete parent/domain modules` fools the fragment
+check even though the actual cause is an unsupported reference. The verifier
+rejects those inputs correctly. Exact native controls fail the desired safety
+checks; complete-cause test repair is scheduled next. Copy-field and wider
+constructor qualification remains separate.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.
 

@@ -1,0 +1,4 @@
+docs/audits/reservation-coverage-cause-diagnosis-20261003/replay.pl .. ok
+All tests successful.
+Files=1, Tests=234,  3 wallclock secs ( 0.01 usr  0.01 sys +  2.80 cusr  0.03 csys =  2.85 CPU)
+Result: PASS

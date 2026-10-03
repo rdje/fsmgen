@@ -1,0 +1,1 @@
+PASS native trace root coordinates encoded; native inputs/kinds/topology unchanged.

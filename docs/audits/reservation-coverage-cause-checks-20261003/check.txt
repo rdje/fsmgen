@@ -1,0 +1,1 @@
+PASS native cause/source closure, real consumer safety falsification and focused final-coverage/reservation/domain regressions.
