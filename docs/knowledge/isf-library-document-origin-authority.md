@@ -27,9 +27,9 @@ reverify: >-
   t/2054-isf-validator-finalizer-diagnostic-causes.t
 ---
 
-Independent complete documents, relative identities/roots and source bytes/forms
-authenticate exports before reload; registries use document digests. This
-parse_source provider uses relative FSMLIB; [files](isf-file-document-origin-authority.md)
+Complete documents, relative identities/roots and source bytes/forms authenticate
+exports before reload; registries use document digests. parse_source uses relative
+FSMLIB; [files](isf-file-document-origin-authority.md)
 own portable runtime coordinates.
 
 Whole actors, exports, resolutions, clones and ledgers bind selected documents.
@@ -45,17 +45,17 @@ tokens partition sources; undefined normalized singleton tails cannot serialize 
 
 Parser/scheduler stay intact. Local authority closes imports; this provider
 closes packages/ATL. [ATL](isf-atl-document-origin-authority.md) owns resolved
-static clones. Preparation/adoption remain later; public activation/refusals
-apply. No new macros, scheduling admission or HDL/macro runtime is proved.
+static clones. Preparation/adoption remain later; public gates apply. No new macros, scheduling
+admission or HDL/macro runtime is proved.
 
-Constructors and library/file helpers compare complete causes and reject actual
-caller/label echoes. Reverify: `python3 docs/audits/origin-helper-cause-repair-20261002/verify.py`.
-Ten validator/finalizer sites now use complete causes, including specific
-generic mutation reasons. Actual argument/source/label echoes reject; exact
-prior consumers give RED. Whole products/kinds and causes reverify:
+Constructors and library/file helpers compare complete causes; caller/label
+echoes reject. Reverify: `python3 docs/audits/origin-helper-cause-repair-20261002/verify.py`.
+Ten validator/finalizer sites compare complete causes, including generic mutation
+reasons. Argument/source/label echoes reject; prior consumers give RED. Products,
+kinds and causes reverify:
 `python3 docs/audits/validator-finalizer-cause-repair-20261003/verify.py`.
-Broader current/cold consumer controls remain open. The
-[lexical census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt)
-is ASCII Perl discovery, including overlapping comments/strings/declarations,
-not cause safety. Kinds/numeric forms:
+Named units/current tokens: [membership](../audits/named-helper-membership-20261003/scope.txt).
+Broader current/cold qualification is open. The [lexical census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt)
+is ASCII Perl discovery with overlapping comments/strings/declarations; cause
+safety is unproved. Kinds/numeric forms:
 `python3 docs/audits/current-diagnostic-lexical-kinds-20261002/verify.py`.

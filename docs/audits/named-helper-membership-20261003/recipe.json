@@ -1,0 +1,23 @@
+{
+  "baseline": "fe8c412afd02507cbdcdd4ca756ce5421af1aed7",
+  "commands": {
+    "book": "mdbook build docs/book",
+    "collect": "scripts/run_with_ram_guard.sh -- python3 docs/audits/named-helper-membership-20261003/collect.py",
+    "focused": "scripts/run_with_ram_guard.sh -- prove -Iperl t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t",
+    "history": "git log -1 --format='%H %s' -S '24 named refusal prefixes' -- docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+    "independent": "scripts/run_with_ram_guard.sh -- python3 docs/audits/named-helper-membership-20261003/verify.py",
+    "rendered": "python3 docs/audits/named-helper-membership-20261003/rendered_verify.py",
+    "unit_counterfactual": "scripts/run_with_ram_guard.sh -- python3 docs/audits/named-helper-membership-20261003/verify.py --span-as-name-count"
+  },
+  "intermediate": "initial inline collector unguarded; first independent adapter lacked __file__ binding (NameError/status1). Neither is qualified.",
+  "native_runtime": "not run",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.1",
+  "statuses": {
+    "book": 0,
+    "collect": 0,
+    "focused": 0,
+    "span-as-name-count-red": 1,
+    "verify": 0
+  },
+  "visual_audit": "rendered text only; browser discovery unavailable"
+}

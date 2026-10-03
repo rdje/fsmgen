@@ -1,0 +1,7 @@
+ram-guard: PID 71283; host 73.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/named-helper-membership-20261003/verify.py", line 24, in <module>
+    namespace={};exec(reader.split('discovery = json.loads',1)[0],namespace)
+                 ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 10, in <module>
+NameError: name '__file__' is not defined. Did you mean: '__name__'?

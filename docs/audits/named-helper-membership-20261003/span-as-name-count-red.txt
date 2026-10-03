@@ -1,0 +1,6 @@
+ram-guard: PID 8977; host 71.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/named-helper-membership-20261003/verify.py", line 68, in <module>
+    assert record['units']['historical_named_span_instances']==len(record['units']['historical_distinct_named_functions']),'old span/name unit conflation rejects'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: old span/name unit conflation rejects

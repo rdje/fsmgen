@@ -1,0 +1,7 @@
+claim-dispositions: bounded disposition join holds (candidates=1976, disposed=1976, claim_records=316, gates=1036, reviewed=624, gaps=0, open=0, groups=6)
+claim-dispositions: group general_book disposed=292 total=292 open=0 required_complete=1
+claim-dispositions: group ial2_ahb disposed=232 total=232 open=0 required_complete=1
+claim-dispositions: group inactive_proxy disposed=5 total=5 open=0 required_complete=1
+claim-dispositions: group protocol disposed=557 total=557 open=0 required_complete=1
+claim-dispositions: group root_documents disposed=92 total=92 open=0 required_complete=1
+claim-dispositions: group verification_architecture disposed=798 total=798 open=0 required_complete=1

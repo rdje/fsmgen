@@ -1,0 +1,4 @@
+ INFO Book building has started
+ INFO Running the html backend
+ WARN search index is very large (15029086 bytes)
+ INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/docs/book/book`

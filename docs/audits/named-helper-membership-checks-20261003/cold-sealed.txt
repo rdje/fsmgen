@@ -1,0 +1,9 @@
+ram-guard: PID 71440; host 75.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared membership corruption rejects: span_unit
+shared membership corruption rejects: flag_kind
+shared membership corruption rejects: line_kind
+shared membership corruption rejects: source_omission
+shared membership corruption rejects: definition_omission
+shared membership corruption rejects: identifier_offset
+shared membership corruption rejects: unknown_field
+{"current_definition_tokens": 57, "current_perl_files": 2542, "distinct_function_names": 9, "historical_spans": 244, "historical_unique_locators": 244, "named_span_instances": 24, "scope": "declaration only; runtime/framework/dynamic/current-all-source semantic review remains open"}

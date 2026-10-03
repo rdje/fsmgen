@@ -1,0 +1,90 @@
+{
+  "baseline": "fe8c412afd02507cbdcdd4ca756ce5421af1aed7",
+  "files": {
+    "book.status": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "book.txt": {
+      "bytes": 194,
+      "sha256": "c5985a1c6588e43adfbded6aefc1c5b88b271e27857b399203beab41455f3a06"
+    },
+    "collect.py": {
+      "bytes": 4349,
+      "sha256": "afc7f2b29bac89586cae5eff7f1fe342ad469675f8a95dbf9d6a27dac5379d12"
+    },
+    "collect.status": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collect.txt": {
+      "bytes": 556,
+      "sha256": "bc2f1c8ef27ee3ed31a34b12220b1ad7651608e25b6761380a435ad2d72375ff"
+    },
+    "focused.status": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "focused.txt": {
+      "bytes": 318,
+      "sha256": "8c31f169e8469b9f76e1327c4db288134de5374e6a7d8ee3966656485264f4f7"
+    },
+    "history.txt": {
+      "bytes": 136,
+      "sha256": "65864331be87cd9ee9fe5807ea2807177632678c5495f322d11ae68b2ae5b536"
+    },
+    "initial-unbound-membership.json": {
+      "bytes": 4421163,
+      "sha256": "57bcbc2127bc0f61548f357ac165effd2a687eee99df30a14d038b42bc622f42"
+    },
+    "membership.json": {
+      "bytes": 4471950,
+      "sha256": "df73905e13c7504b7d655e3ea139164bbe2a534558f04709ca88f2949a1e858b"
+    },
+    "recipe.json": {
+      "bytes": 1329,
+      "sha256": "c0171a84c296d99c9621269d74bb9d72148b5e363e27c5c83df488ba2fc9dcdc"
+    },
+    "rendered.txt": {
+      "bytes": 79,
+      "sha256": "88073e5a2ea03979fa06be0049edccdbf6b6957e8f6848bdc7318dc2c5d1e5d7"
+    },
+    "rendered_verify.py": {
+      "bytes": 685,
+      "sha256": "937be4342d0dbf7f15f7ccd340145c18af807c047dac1a60f758bee55ad7b3d2"
+    },
+    "scope.txt": {
+      "bytes": 3990,
+      "sha256": "5dec581f70bd9c8860408e1299111ad2c499c5abaeca190e2fe5ae26c652ee0b"
+    },
+    "span-as-name-count-red.status": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "span-as-name-count-red.txt": {
+      "bytes": 588,
+      "sha256": "b826cdce5bfc6fb1c1ce7d0901ad09325e967558d1126a738aa7dd6d70e3c2da"
+    },
+    "verify-initial-adapter.py": {
+      "bytes": 7104,
+      "sha256": "bdd82bf6bc028956118fe5070e32998e90ea7d54b429f2bc38bf43b7a8dc0532"
+    },
+    "verify-initial-adapter.txt": {
+      "bytes": 512,
+      "sha256": "225d8781f303984298c09a22dcc36c7e7fc0ee504af350f1145402c9a7778762"
+    },
+    "verify.py": {
+      "bytes": 7169,
+      "sha256": "8e2b43e6582779f09bdc5717a22f92617341a0575a55b803fa68cfc9bc76f00b"
+    },
+    "verify.status": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "verify.txt": {
+      "bytes": 739,
+      "sha256": "e3c148598856a7f0fd509419f4aa7ac20bbdc2c4f69c8f4a612865156f207976"
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.1"
+}

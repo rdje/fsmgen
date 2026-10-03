@@ -1,0 +1,6 @@
+ram-guard: PID 27535; host 81.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+book claim corruption rejects: span_count
+book claim corruption rejects: span_name_unit
+book claim corruption rejects: current_token_count
+book claim corruption rejects: revision
+Git-bound historical/current capture quantities and book units agree; observations stay bound to fe8c412a, not future current sources.

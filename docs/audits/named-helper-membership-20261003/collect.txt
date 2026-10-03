@@ -1,0 +1,2 @@
+ram-guard: PID 66668; host 65.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+{"added": ["t/2053-isf-constructor-diagnostic-causes.t", "t/2054-isf-validator-finalizer-diagnostic-causes.t", "t/lib/FSM/Test/DiagnosticCause.pm"], "current_named_tokens": 57, "current_perl_files": 2542, "removed": [], "units": {"historical_distinct_named_functions": ["fails_like", "failure_controls", "failure_is", "refused", "refuses", "reject", "reject_current", "rejected", "rejects"], "historical_lexical_spans": 244, "historical_named_span_instances": 24}}

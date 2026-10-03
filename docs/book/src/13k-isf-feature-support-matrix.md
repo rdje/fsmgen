@@ -147,6 +147,19 @@ those controls. The historical raw source-origin assertion cohort is reconciled;
 other helper/structured/trace sites and wider current/cold consumers remain
 under audit. These corrections change verification, not public ISF admission.
 
+The historical named discovery contains 244 lexical spans, including 24 named
+span instances across nine distinct function names. Its original “24 prefixes”
+label conflated units; that archive remains immutable. At revision `fe8c412a`, the map
+binds 2,542 current Perl source files and 57 line-anchored named-definition tokens,
+plus same-file identifier occurrences and whole source contexts. All historical
+span names have one current definition locator in their respective files.
+These are lexical tokens, including possible strings/comments; they do not count
+parsed functions or calls and establish no semantic safety. The local-formal
+helper delegates its diagnostic predicate and was outside the old filtered named
+cohort. Its runtime review is separate, followed by other named/framework cohorts.
+See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
+for exact units, source boundaries and remaining review ownership.
+
 This observer preserves the existing first-clause behavior, including current
 macro placement defects and inline-procedure `cond` refusals. Imported/reusable
 formal propagation, generated specialization, domain construction and production
