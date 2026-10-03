@@ -1,0 +1,1 @@
+PASS rendered coverage repair link, kind-preservation example and reference/isolation contract; visual QA remains separately pending.

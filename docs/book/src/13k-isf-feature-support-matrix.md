@@ -263,7 +263,7 @@ completion constants stay strings. The [snapshot field join](../../../docs/audit
 reconciles every changed field and unchanged-copy control with the completed
 models. [Real value-only controls](../../../docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt)
 change numeric `1` to string `"1"` in a caller provenance field after an actual
-successful or refused call. The current test stays green in both cases, so its
+successful or refused call. The pre-repair test stays green in both cases, so its
 value comparison does not prove caller-kind preservation. The prospective
 [plain/native helper boundary](../../../docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt)
 preserves captured primitive kinds, aliases, cycles and deep copy isolation.
@@ -276,10 +276,18 @@ existing identity assertion while complete causes and value graphs stay unchange
 The [complete coverage qualification](../../../docs/audits/reservation-coverage-qualification-join-20261003/scope.txt)
 now joins every initial/current copy site and observed field with its actor,
 module or snapshot semantic owner. Unchanged seeds remain required controls.
-The test-copy repair follows this completed qualification; the current copies
-remain unrepaired. The [historical replay context](../../../docs/audits/reservation-coverage-historical-context-20261003/scope.txt)
+The [live coverage copy repair](../../../docs/audits/reservation-coverage-copy-repair-20261003/scope.txt)
+now uses scalar-preserving copies and snapshots. For example, numeric `1` remains
+numeric in a copied provenance field, and replacing it with string `"1"` after a
+real call fails the read-only assertion. Each copy checks complete kinds/sharing,
+reference population and source isolation. Returning an equal aliased module
+fails isolation; restoring the lossy copier fails kind preservation. Replacing
+an empty native marker fails the helper snapshot and identity assertions while
+the intended complete cause stays unchanged. Complete preparations, lowerings,
+exported carriers, scope results and refusal causes are conserved against the
+qualified prior recipe. The [historical replay context](../../../docs/audits/reservation-coverage-historical-context-20261003/scope.txt)
 keeps this complete qualification bound to its original sources when later test
-helpers change; live repaired behavior requires its own native checks.
+helpers change; separate native checks qualify the repaired behavior.
 These controls do not establish a production defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when

@@ -40,7 +40,7 @@ uses complete causes and saved native errors; wrong-cause, exact-prior and actua
 declaration-guard bypass controls qualify.
 [Module join](../audits/reservation-coverage-module-join-20261003/scope.txt) closes field cohorts and FIFO/vector propagation.
 [Snapshot capture](../audits/reservation-coverage-snapshot-capture-20261003/scope.txt) binds remaining copies.
-[Coverage qualification](../audits/reservation-coverage-qualification-join-20261003/scope.txt) closes copy semantics, real kind/topology/native controls and pinned replay; P2 .13.2 repairs the test next.
+[Copy repair](../audits/reservation-coverage-copy-repair-20261003/scope.txt) preserves kinds/sharing/isolation and native identity, with real prior/mutation controls and pinned historical replay.
 Constructors/moved-root stay cold.
 
 This guard checks final declarations at the prepared ISF-to-FSM boundary. It does not replace source or executable admission,

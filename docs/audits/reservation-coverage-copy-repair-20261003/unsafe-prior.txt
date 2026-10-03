@@ -1,0 +1,8 @@
+PASS exact pinned canonical cause/copy qualification and owning task context: all3472 selected Git source/audit files /162992888 bytes independently authenticate; primary index/config/HEAD and revision remain unchanged within both captured invocations.
+PASS actual projected T1960 source-only decoy fails original complete source identity; ordinary pinned replay closes full qualified semantics/controls without rewriting archives or claiming hot-source currency.
+SCOPE: replay projects into repository-owned same-volume data with an explicitly separate Git index and the primary object store; no new repository, worktree registration or primary config/index change. Live helper repair remains .13.2-owned.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-copy-repair-20261003/verify.py", line 184, in <module>
+    assert versions['prior-' + mode]['consumers'][target]['passed'] == 0, 'prior value-only kind authority is unsafe'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: prior value-only kind authority is unsafe

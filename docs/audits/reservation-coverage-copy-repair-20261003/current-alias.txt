@@ -1,0 +1,259 @@
+Name "main::source_value_copy" used only once: possible typo at docs/audits/reservation-coverage-copy-repair-20261003/observe.pl line 73.
+Name "main::source_copy" used only once: possible typo at docs/audits/reservation-coverage-copy-repair-20261003/observe.pl line 82.
+Prototype mismatch: sub main::is_deeply: none vs ($$;$) at /System/Library/Perl/5.34/Exporter.pm line 63.
+ at ./t/1960-isf-formal-reservation-coverage.t line 4.
+# Subtest: actual parent and generated child declarations pass independently
+    ok 1 - generated child and storage shadow physical actor copy preserves original kinds and sharing
+    ok 2 - generated child and storage shadow physical actor copy preserves kinds and sharing
+    ok 3 - generated child and storage shadow physical actor copy preserves reference population
+    ok 4 - generated child and storage shadow physical actor copy is isolated from source
+    ok 5 - generated child and storage shadow captured module coverage copy preserves original kinds and sharing
+    ok 6 - generated child and storage shadow captured module coverage copy preserves kinds and sharing
+    ok 7 - generated child and storage shadow captured module coverage copy preserves reference population
+    not ok 8 - generated child and storage shadow captured module coverage copy is isolated from source
+    #   Failed test 'generated child and storage shadow captured module coverage copy is isolated from source'
+    #   at docs/audits/reservation-coverage-copy-repair-20261003/observe.pl line 101.
+    #          got: '353'
+    #     expected: '0'
+    ok 9 - generated child and storage shadow verifies actual lowered scopes
+    ok 10 - generated child and storage shadow verification is read-only
+    ok 11 - generated child and storage shadow final exported carrier strict-checks
+    ok 12 - case-folded helper collision physical actor copy preserves original kinds and sharing
+    ok 13 - case-folded helper collision physical actor copy preserves kinds and sharing
+    ok 14 - case-folded helper collision physical actor copy preserves reference population
+    ok 15 - case-folded helper collision physical actor copy is isolated from source
+    ok 16 - case-folded helper collision captured module coverage copy preserves original kinds and sharing
+    ok 17 - case-folded helper collision captured module coverage copy preserves kinds and sharing
+    ok 18 - case-folded helper collision captured module coverage copy preserves reference population
+    ok 19 - case-folded helper collision captured module coverage copy is isolated from source
+    ok 20 - case-folded helper collision verifies actual lowered scopes
+    ok 21 - case-folded helper collision verification is read-only
+    ok 22 - case-folded helper collision final exported carrier strict-checks
+    ok 23 - source declaration permutation preserves allocation
+    ok 24 - permuted actual declarations authored actor copy preserves original kinds and sharing
+    ok 25 - permuted actual declarations authored actor copy preserves kinds and sharing
+    ok 26 - permuted actual declarations authored actor copy preserves reference population
+    ok 27 - permuted actual declarations authored actor copy is isolated from source
+    ok 28 - permuted actual declarations physical actor copy preserves original kinds and sharing
+    ok 29 - permuted actual declarations physical actor copy preserves kinds and sharing
+    ok 30 - permuted actual declarations physical actor copy preserves reference population
+    ok 31 - permuted actual declarations physical actor copy is isolated from source
+    ok 32 - permuted actual declarations captured module coverage copy preserves original kinds and sharing
+    ok 33 - permuted actual declarations captured module coverage copy preserves kinds and sharing
+    ok 34 - permuted actual declarations captured module coverage copy preserves reference population
+    ok 35 - permuted actual declarations captured module coverage copy is isolated from source
+    ok 36 - permuted actual declarations verifies actual lowered scopes
+    ok 37 - permuted actual declarations verification is read-only
+    ok 38 - permuted actual declarations final exported carrier strict-checks
+    1..38
+    # Looks like you failed 1 test of 38.
+not ok 1 - actual parent and generated child declarations pass independently
+#   Failed test 'actual parent and generated child declarations pass independently'
+#   at docs/audits/reservation-coverage-copy-repair-20261003/observe.pl line 97.
+# Subtest: missing declarations, module sets and private ownership fail closed
+    ok 1 - late register module mutation seed copy preserves original kinds and sharing
+    ok 2 - late register module mutation seed copy preserves kinds and sharing
+    ok 3 - late register module mutation seed copy preserves reference population
+    ok 4 - late register module mutation seed copy is isolated from source
+    ok 5 - late register refused
+    ok 6 - late register diagnosed
+    ok 7 - late register refusal preserves inputs
+    ok 8 - implicit assignment declaration module mutation seed copy preserves original kinds and sharing
+    ok 9 - implicit assignment declaration module mutation seed copy preserves kinds and sharing
+    ok 10 - implicit assignment declaration module mutation seed copy preserves reference population
+    ok 11 - implicit assignment declaration module mutation seed copy is isolated from source
+    ok 12 - implicit assignment declaration refused
+    ok 13 - implicit assignment declaration diagnosed
+    ok 14 - implicit assignment declaration refusal preserves inputs
+    ok 15 - missing parent module mutation seed copy preserves original kinds and sharing
+    ok 16 - missing parent module mutation seed copy preserves kinds and sharing
+    ok 17 - missing parent module mutation seed copy preserves reference population
+    ok 18 - missing parent module mutation seed copy is isolated from source
+    ok 19 - missing parent refused
+    ok 20 - missing parent diagnosed
+    ok 21 - missing parent refusal preserves inputs
+    ok 22 - unexpected module module mutation seed copy preserves original kinds and sharing
+    ok 23 - unexpected module module mutation seed copy preserves kinds and sharing
+    ok 24 - unexpected module module mutation seed copy preserves reference population
+    ok 25 - unexpected module module mutation seed copy is isolated from source
+    ok 26 - unexpected module seed copy preserves original kinds and sharing
+    ok 27 - unexpected module seed copy preserves kinds and sharing
+    ok 28 - unexpected module seed copy preserves reference population
+    ok 29 - unexpected module seed copy is isolated from source
+    ok 30 - unexpected module refused
+    ok 31 - unexpected module diagnosed
+    ok 32 - unexpected module refusal preserves inputs
+    ok 33 - missing child module mutation seed copy preserves original kinds and sharing
+    ok 34 - missing child module mutation seed copy preserves kinds and sharing
+    ok 35 - missing child module mutation seed copy preserves reference population
+    ok 36 - missing child module mutation seed copy is isolated from source
+    ok 37 - missing child refused
+    ok 38 - missing child diagnosed
+    ok 39 - missing child refusal preserves inputs
+    ok 40 - unexpected nested child module mutation seed copy preserves original kinds and sharing
+    ok 41 - unexpected nested child module mutation seed copy preserves kinds and sharing
+    ok 42 - unexpected nested child module mutation seed copy preserves reference population
+    ok 43 - unexpected nested child module mutation seed copy is isolated from source
+    ok 44 - unexpected nested child refused
+    ok 45 - unexpected nested child diagnosed
+    ok 46 - unexpected nested child refusal preserves inputs
+    ok 47 - wrong child identity module mutation seed copy preserves original kinds and sharing
+    ok 48 - wrong child identity module mutation seed copy preserves kinds and sharing
+    ok 49 - wrong child identity module mutation seed copy preserves reference population
+    ok 50 - wrong child identity module mutation seed copy is isolated from source
+    ok 51 - wrong child identity refused
+    ok 52 - wrong child identity diagnosed
+    ok 53 - wrong child identity refusal preserves inputs
+    ok 54 - parent private name leaked into child module mutation seed copy preserves original kinds and sharing
+    ok 55 - parent private name leaked into child module mutation seed copy preserves kinds and sharing
+    ok 56 - parent private name leaked into child module mutation seed copy preserves reference population
+    ok 57 - parent private name leaked into child module mutation seed copy is isolated from source
+    ok 58 - parent private name leaked into child refused
+    ok 59 - parent private name leaked into child diagnosed
+    ok 60 - parent private name leaked into child refusal preserves inputs
+    ok 61 - wrong formal width module mutation seed copy preserves original kinds and sharing
+    ok 62 - wrong formal width module mutation seed copy preserves kinds and sharing
+    ok 63 - wrong formal width module mutation seed copy preserves reference population
+    ok 64 - wrong formal width module mutation seed copy is isolated from source
+    ok 65 - wrong formal width refused
+    ok 66 - wrong formal width diagnosed
+    ok 67 - wrong formal width refusal preserves inputs
+    ok 68 - wrong formal role module mutation seed copy preserves original kinds and sharing
+    ok 69 - wrong formal role module mutation seed copy preserves kinds and sharing
+    ok 70 - wrong formal role module mutation seed copy preserves reference population
+    ok 71 - wrong formal role module mutation seed copy is isolated from source
+    ok 72 - wrong formal role refused
+    ok 73 - wrong formal role diagnosed
+    ok 74 - wrong formal role refusal preserves inputs
+    ok 75 - formal aliases a late block module mutation seed copy preserves original kinds and sharing
+    ok 76 - formal aliases a late block module mutation seed copy preserves kinds and sharing
+    ok 77 - formal aliases a late block module mutation seed copy preserves reference population
+    ok 78 - formal aliases a late block module mutation seed copy is isolated from source
+    ok 79 - formal aliases a late block refused
+    ok 80 - formal aliases a late block diagnosed
+    ok 81 - formal aliases a late block refusal preserves inputs
+    ok 82 - allocation mutation seed copy preserves original kinds and sharing
+    ok 83 - allocation mutation seed copy preserves kinds and sharing
+    ok 84 - allocation mutation seed copy preserves reference population
+    ok 85 - allocation mutation seed copy is isolated from source
+    ok 86 - stale or incomplete allocation refused
+    ok 87 - stale or incomplete allocation diagnosed
+    ok 88 - stale or incomplete allocation refusal preserves inputs
+    1..88
+ok 2 - missing declarations, module sets and private ownership fail closed
+# Subtest: removing a real producer name is detected against independently lowered output
+    ok 1 - actual dynamic-wait producer selected
+    ok 2 - mutation really removed every reservation for the actual helper
+    ok 3 - omission does not change the planned private names
+    ok 4 - omitted real producer declaration refused
+    ok 5 - omitted real producer declaration diagnosed
+    ok 6 - omitted real producer declaration refusal preserves inputs
+    1..6
+ok 3 - removing a real producer name is detected against independently lowered output
+# Subtest: reusable children and rule payload source identities retain their own coverage
+    ok 1 - fifo_library_use authored actor copy preserves original kinds and sharing
+    ok 2 - fifo_library_use authored actor copy preserves kinds and sharing
+    ok 3 - fifo_library_use authored actor copy preserves reference population
+    ok 4 - fifo_library_use authored actor copy is isolated from source
+    ok 5 - fifo_library_use physical actor copy preserves original kinds and sharing
+    ok 6 - fifo_library_use physical actor copy preserves kinds and sharing
+    ok 7 - fifo_library_use physical actor copy preserves reference population
+    ok 8 - fifo_library_use physical actor copy is isolated from source
+    ok 9 - fifo_library_use captured module fifo_library_use copy preserves original kinds and sharing
+    ok 10 - fifo_library_use captured module fifo_library_use copy preserves kinds and sharing
+    ok 11 - fifo_library_use captured module fifo_library_use copy preserves reference population
+    ok 12 - fifo_library_use captured module fifo_library_use copy is isolated from source
+    ok 13 - fifo_library_use verifies actual lowered scopes
+    ok 14 - fifo_library_use verification is read-only
+    ok 15 - fifo_library_use final exported carrier strict-checks
+    ok 16 - storage_fields authored actor copy preserves original kinds and sharing
+    ok 17 - storage_fields authored actor copy preserves kinds and sharing
+    ok 18 - storage_fields authored actor copy preserves reference population
+    ok 19 - storage_fields authored actor copy is isolated from source
+    ok 20 - storage_fields physical actor copy preserves original kinds and sharing
+    ok 21 - storage_fields physical actor copy preserves kinds and sharing
+    ok 22 - storage_fields physical actor copy preserves reference population
+    ok 23 - storage_fields physical actor copy is isolated from source
+    ok 24 - storage_fields captured module storage_fields copy preserves original kinds and sharing
+    ok 25 - storage_fields captured module storage_fields copy preserves kinds and sharing
+    ok 26 - storage_fields captured module storage_fields copy preserves reference population
+    ok 27 - storage_fields captured module storage_fields copy is isolated from source
+    ok 28 - storage_fields verifies actual lowered scopes
+    ok 29 - storage_fields verification is read-only
+    ok 30 - storage_fields final exported carrier strict-checks
+    ok 31 - atl_resolved_child_pipeline authored actor copy preserves original kinds and sharing
+    ok 32 - atl_resolved_child_pipeline authored actor copy preserves kinds and sharing
+    ok 33 - atl_resolved_child_pipeline authored actor copy preserves reference population
+    ok 34 - atl_resolved_child_pipeline authored actor copy is isolated from source
+    ok 35 - atl_resolved_child_pipeline physical actor copy preserves original kinds and sharing
+    ok 36 - atl_resolved_child_pipeline physical actor copy preserves kinds and sharing
+    ok 37 - atl_resolved_child_pipeline physical actor copy preserves reference population
+    ok 38 - atl_resolved_child_pipeline physical actor copy is isolated from source
+    ok 39 - atl_resolved_child_pipeline captured module atl_resolved_child_pipeline copy preserves original kinds and sharing
+    ok 40 - atl_resolved_child_pipeline captured module atl_resolved_child_pipeline copy preserves kinds and sharing
+    ok 41 - atl_resolved_child_pipeline captured module atl_resolved_child_pipeline copy preserves reference population
+    ok 42 - atl_resolved_child_pipeline captured module atl_resolved_child_pipeline copy is isolated from source
+    ok 43 - atl_resolved_child_pipeline verifies actual lowered scopes
+    ok 44 - atl_resolved_child_pipeline verification is read-only
+    ok 45 - atl_resolved_child_pipeline final exported carrier strict-checks
+    ok 46 - atl_two_child_vector_data_pipeline authored actor copy preserves original kinds and sharing
+    ok 47 - atl_two_child_vector_data_pipeline authored actor copy preserves kinds and sharing
+    ok 48 - atl_two_child_vector_data_pipeline authored actor copy preserves reference population
+    ok 49 - atl_two_child_vector_data_pipeline authored actor copy is isolated from source
+    ok 50 - atl_two_child_vector_data_pipeline physical actor copy preserves original kinds and sharing
+    ok 51 - atl_two_child_vector_data_pipeline physical actor copy preserves kinds and sharing
+    ok 52 - atl_two_child_vector_data_pipeline physical actor copy preserves reference population
+    ok 53 - atl_two_child_vector_data_pipeline physical actor copy is isolated from source
+    ok 54 - atl_two_child_vector_data_pipeline captured module atl_two_child_vector_data_pipeline copy preserves original kinds and sharing
+    ok 55 - atl_two_child_vector_data_pipeline captured module atl_two_child_vector_data_pipeline copy preserves kinds and sharing
+    ok 56 - atl_two_child_vector_data_pipeline captured module atl_two_child_vector_data_pipeline copy preserves reference population
+    ok 57 - atl_two_child_vector_data_pipeline captured module atl_two_child_vector_data_pipeline copy is isolated from source
+    ok 58 - atl_two_child_vector_data_pipeline verifies actual lowered scopes
+    ok 59 - atl_two_child_vector_data_pipeline verification is read-only
+    ok 60 - atl_two_child_vector_data_pipeline final exported carrier strict-checks
+    ok 61 - atl_two_child_trigger_batch_pipeline authored actor copy preserves original kinds and sharing
+    ok 62 - atl_two_child_trigger_batch_pipeline authored actor copy preserves kinds and sharing
+    ok 63 - atl_two_child_trigger_batch_pipeline authored actor copy preserves reference population
+    ok 64 - atl_two_child_trigger_batch_pipeline authored actor copy is isolated from source
+    ok 65 - atl_two_child_trigger_batch_pipeline physical actor copy preserves original kinds and sharing
+    ok 66 - atl_two_child_trigger_batch_pipeline physical actor copy preserves kinds and sharing
+    ok 67 - atl_two_child_trigger_batch_pipeline physical actor copy preserves reference population
+    ok 68 - atl_two_child_trigger_batch_pipeline physical actor copy is isolated from source
+    ok 69 - atl_two_child_trigger_batch_pipeline captured module atl_two_child_trigger_batch_pipeline copy preserves original kinds and sharing
+    ok 70 - atl_two_child_trigger_batch_pipeline captured module atl_two_child_trigger_batch_pipeline copy preserves kinds and sharing
+    ok 71 - atl_two_child_trigger_batch_pipeline captured module atl_two_child_trigger_batch_pipeline copy preserves reference population
+    ok 72 - atl_two_child_trigger_batch_pipeline captured module atl_two_child_trigger_batch_pipeline copy is isolated from source
+    ok 73 - atl_two_child_trigger_batch_pipeline verifies actual lowered scopes
+    ok 74 - atl_two_child_trigger_batch_pipeline verification is read-only
+    ok 75 - atl_two_child_trigger_batch_pipeline final exported carrier strict-checks
+    ok 76 - rule payload source identity physical actor copy preserves original kinds and sharing
+    ok 77 - rule payload source identity physical actor copy preserves kinds and sharing
+    ok 78 - rule payload source identity physical actor copy preserves reference population
+    ok 79 - rule payload source identity physical actor copy is isolated from source
+    ok 80 - rule payload source identity captured module rule_coverage copy preserves original kinds and sharing
+    ok 81 - rule payload source identity captured module rule_coverage copy preserves kinds and sharing
+    ok 82 - rule payload source identity captured module rule_coverage copy preserves reference population
+    ok 83 - rule payload source identity captured module rule_coverage copy is isolated from source
+    ok 84 - rule payload source identity verifies actual lowered scopes
+    ok 85 - rule payload source identity verification is read-only
+    ok 86 - rule payload source identity final exported carrier strict-checks
+    1..86
+ok 4 - reusable children and rule payload source identities retain their own coverage
+# Subtest: a real helper-looking formal is separated before final admission
+    ok 1 - actual monitor failure producer observed
+    ok 2 - monitor helper formal physical actor copy preserves original kinds and sharing
+    ok 3 - monitor helper formal physical actor copy preserves kinds and sharing
+    ok 4 - monitor helper formal physical actor copy preserves reference population
+    ok 5 - monitor helper formal physical actor copy is isolated from source
+    ok 6 - monitor helper formal captured module monitor_coverage copy preserves original kinds and sharing
+    ok 7 - monitor helper formal captured module monitor_coverage copy preserves kinds and sharing
+    ok 8 - monitor helper formal captured module monitor_coverage copy preserves reference population
+    ok 9 - monitor helper formal captured module monitor_coverage copy is isolated from source
+    ok 10 - monitor helper formal verifies actual lowered scopes
+    ok 11 - monitor helper formal verification is read-only
+    ok 12 - monitor helper formal final exported carrier strict-checks
+    ok 13 - source-only collision deferral remains distinct from executable verification
+    1..13
+ok 5 - a real helper-looking formal is separated before final admission
+1..5
+# Looks like you failed 1 test of 5.

@@ -1,0 +1,6 @@
+PASS exact pinned canonical cause/copy qualification and owning task context: all3472 selected Git source/audit files /162992888 bytes independently authenticate; primary index/config/HEAD and revision remain unchanged within both captured invocations.
+PASS actual projected T1960 source-only decoy fails original complete source identity; ordinary pinned replay closes full qualified semantics/controls without rewriting archives or claiming hot-source currency.
+SCOPE: replay projects into repository-owned same-volume data with an explicitly separate Git index and the primary object store; no new repository, worktree registration or primary config/index change. Live helper repair remains .13.2-owned.
+PASS live 39-copy/23-snapshot repair, 12 preparations/10 complete lowerings/carriers, 39 native cause cases, exact prior and genuine kind/copy/native failures; historical qualification stays pinned.
+PASS pinned historical cold context
+PASS current repaired coverage kinds/sharing/isolation, complete causes and native identity controls; original full qualification replays at its pinned revision; retained evidence unchanged.

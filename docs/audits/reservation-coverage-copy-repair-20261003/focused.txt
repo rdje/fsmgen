@@ -1,0 +1,7 @@
+ram-guard: PID 92991; host 72.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1959-isf-prepared-formal-reservations.t .. ok
+t/1960-isf-formal-reservation-coverage.t ... ok
+t/2063-isf-coverage-diagnostic-causes.t .... ok
+All tests successful.
+Files=3, Tests=243, 20 wallclock secs ( 0.02 usr  0.01 sys + 14.14 cusr  4.50 csys = 18.67 CPU)
+Result: PASS

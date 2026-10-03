@@ -1,0 +1,95 @@
+Name "main::source_value_copy" used only once: possible typo at docs/audits/reservation-coverage-copy-repair-20261003/observe.pl line 73.
+Name "main::source_copy" used only once: possible typo at docs/audits/reservation-coverage-copy-repair-20261003/observe.pl line 82.
+Prototype mismatch: sub main::is_deeply: none vs ($$;$) at /System/Library/Perl/5.34/Exporter.pm line 63.
+ at ./docs/audits/reservation-coverage-copy-repair-20261003/prior-T1960.t line 4.
+# Subtest: actual parent and generated child declarations pass independently
+    ok 1 - generated child and storage shadow verifies actual lowered scopes
+    ok 2 - generated child and storage shadow verification is read-only
+    ok 3 - generated child and storage shadow final exported carrier strict-checks
+    ok 4 - case-folded helper collision verifies actual lowered scopes
+    ok 5 - case-folded helper collision verification is read-only
+    ok 6 - case-folded helper collision final exported carrier strict-checks
+    ok 7 - source declaration permutation preserves allocation
+    ok 8 - permuted actual declarations verifies actual lowered scopes
+    ok 9 - permuted actual declarations verification is read-only
+    ok 10 - permuted actual declarations final exported carrier strict-checks
+    1..10
+ok 1 - actual parent and generated child declarations pass independently
+# Subtest: missing declarations, module sets and private ownership fail closed
+    ok 1 - late register refused
+    ok 2 - late register diagnosed
+    ok 3 - late register refusal preserves inputs
+    ok 4 - implicit assignment declaration refused
+    ok 5 - implicit assignment declaration diagnosed
+    ok 6 - implicit assignment declaration refusal preserves inputs
+    ok 7 - missing parent refused
+    ok 8 - missing parent diagnosed
+    ok 9 - missing parent refusal preserves inputs
+    ok 10 - unexpected module refused
+    ok 11 - unexpected module diagnosed
+    ok 12 - unexpected module refusal preserves inputs
+    ok 13 - missing child refused
+    ok 14 - missing child diagnosed
+    ok 15 - missing child refusal preserves inputs
+    ok 16 - unexpected nested child refused
+    ok 17 - unexpected nested child diagnosed
+    ok 18 - unexpected nested child refusal preserves inputs
+    ok 19 - wrong child identity refused
+    ok 20 - wrong child identity diagnosed
+    ok 21 - wrong child identity refusal preserves inputs
+    ok 22 - parent private name leaked into child refused
+    ok 23 - parent private name leaked into child diagnosed
+    ok 24 - parent private name leaked into child refusal preserves inputs
+    ok 25 - wrong formal width refused
+    ok 26 - wrong formal width diagnosed
+    ok 27 - wrong formal width refusal preserves inputs
+    ok 28 - wrong formal role refused
+    ok 29 - wrong formal role diagnosed
+    ok 30 - wrong formal role refusal preserves inputs
+    ok 31 - formal aliases a late block refused
+    ok 32 - formal aliases a late block diagnosed
+    ok 33 - formal aliases a late block refusal preserves inputs
+    ok 34 - stale or incomplete allocation refused
+    ok 35 - stale or incomplete allocation diagnosed
+    ok 36 - stale or incomplete allocation refusal preserves inputs
+    1..36
+ok 2 - missing declarations, module sets and private ownership fail closed
+# Subtest: removing a real producer name is detected against independently lowered output
+    ok 1 - actual dynamic-wait producer selected
+    ok 2 - mutation really removed every reservation for the actual helper
+    ok 3 - omission does not change the planned private names
+    ok 4 - omitted real producer declaration refused
+    ok 5 - omitted real producer declaration diagnosed
+    ok 6 - omitted real producer declaration refusal preserves inputs
+    1..6
+ok 3 - removing a real producer name is detected against independently lowered output
+# Subtest: reusable children and rule payload source identities retain their own coverage
+    ok 1 - fifo_library_use verifies actual lowered scopes
+    ok 2 - fifo_library_use verification is read-only
+    ok 3 - fifo_library_use final exported carrier strict-checks
+    ok 4 - storage_fields verifies actual lowered scopes
+    ok 5 - storage_fields verification is read-only
+    ok 6 - storage_fields final exported carrier strict-checks
+    ok 7 - atl_resolved_child_pipeline verifies actual lowered scopes
+    ok 8 - atl_resolved_child_pipeline verification is read-only
+    ok 9 - atl_resolved_child_pipeline final exported carrier strict-checks
+    ok 10 - atl_two_child_vector_data_pipeline verifies actual lowered scopes
+    ok 11 - atl_two_child_vector_data_pipeline verification is read-only
+    ok 12 - atl_two_child_vector_data_pipeline final exported carrier strict-checks
+    ok 13 - atl_two_child_trigger_batch_pipeline verifies actual lowered scopes
+    ok 14 - atl_two_child_trigger_batch_pipeline verification is read-only
+    ok 15 - atl_two_child_trigger_batch_pipeline final exported carrier strict-checks
+    ok 16 - rule payload source identity verifies actual lowered scopes
+    ok 17 - rule payload source identity verification is read-only
+    ok 18 - rule payload source identity final exported carrier strict-checks
+    1..18
+ok 4 - reusable children and rule payload source identities retain their own coverage
+# Subtest: a real helper-looking formal is separated before final admission
+    ok 1 - actual monitor failure producer observed
+    ok 2 - monitor helper formal verifies actual lowered scopes
+    ok 3 - monitor helper formal verification is read-only
+    ok 4 - monitor helper formal final exported carrier strict-checks
+    ok 5 - source-only collision deferral remains distinct from executable verification
+    1..5
+ok 5 - a real helper-looking formal is separated before final admission
+1..5

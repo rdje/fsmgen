@@ -1,0 +1,2 @@
+Not enough arguments for Test::More::is at t/2063-isf-coverage-diagnostic-causes.t line 108, near "@_)"
+t/2063-isf-coverage-diagnostic-causes.t had compilation errors.

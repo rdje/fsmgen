@@ -1,0 +1,66 @@
+Owned by SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.13.2.
+
+The live coverage test now uses the qualified scalar-preserving plain HASH/ARRAY
+copy and first-touch snapshot recipe. Copies preserve primitive kinds, repeated
+references and cycles while remaining isolated from their source. Snapshots also
+retain the class, empty HASH shape and identity of the finite CoverageCauseSentinel
+marker. Unsupported native referents still fail closed. Complete cause matching
+and immediate native error capture remain intact in both real test consumers.
+Only T1960 and T2063 hot test files change; the provider, public schema/admission,
+submodules, existing cause predicate and sealed historical evidence stay unchanged.
+
+Population and units: the exact prior test has eight source clone sites and
+62 runtime copies. The repaired test has six source copy sites with 39 runtime
+copies and two snapshot sites with 23 actual API snapshot consumers. Four actual
+assertions per copy separately check original preservation, copy kinds/sharing,
+reference population and source isolation. All 156 copy assertions pass. The
+complete ordinary run includes 12 preparations, ten lowerings with complete
+exported carriers and 23 API input/result/error records. The separate exact-helper
+native run includes 39 intended/earlier-reference/primary-path cause cases and
+234 assertions. These are finite test observations, not production defect counts.
+
+Re-derivation: complete before/after bodies for the changed tests and selected
+helpers plus every public source member are bound to Git9b2f4e5b54. A separately
+implemented typed iterative graph reader authenticates all 2964 public source
+members and the exact two-test delta. Actual ordinary prior copies reproduce the
+sealed qualification, including 41 changed copies and 548 ordinal/field kind
+differences. Actual prior source with the independently qualified pure-copy
+recipe produces exactly the repaired complete copy/source/preparation/lowering/
+carrier/API graphs, acceptance and returned scope results. Full native traces
+are retained; source line/observer stack differences are not claimed identical.
+Complete primary causes, saved native errors and all caller graphs are checked.
+Only declared FIFO library_source coordinates replace the runtime root prefix;
+the exact coordinate ledger is checked, with no scalar coercion or path rewriting.
+
+Falsification: actual numeric1-to-string1 caller mutations after the first real
+success and first real refusal leave the exact prior Test::More test GREEN, but
+each repaired test is RED1 at the corresponding read-only consumer. Whole input
+graphs establish the single changed field and its exact shared-prepared propagation;
+lowerings/carriers, API decisions, returned scopes and complete primary causes
+conserve. Substituting the real Storable copier for the first captured module
+fails its kind/sharing assertion; returning that original module instead fails
+the source-isolation assertion even with an equal value graph. Each actual test
+is RED1 at its single declared copy proof. Replacing one empty native marker
+after a real refusal is RED3/234 at the helper snapshot, helper-bits and native
+identity assertions; all complete primary causes, value graphs and marker class/
+shape otherwise conserve. Cold unsafe-prior, alias-authority and copy-omission
+controls also reject. Existing topology/shape/class controls remain authenticated
+through the exact qualified recipe and committed historical replay.
+
+Durability: complete source/copy/caller/product/carrier/native captures, actual
+prior/current/control TAP and statuses, source/coordinate bindings, independent
+cold reader, controlled failure receipts, immutable manifest, task/fact/book and
+Git. Original qualification actually replays through .13.1's same-repository,
+same-volume projection and separate generated Git index at its pinned revision;
+the primary Git state is unchanged within that invocation. The canonical cold
+route replays that context afresh into an owned generated output directory.
+Sealed producers are never rerun in place. The initial T2063 wrapper prototype
+compile failure and exact initial source remain unqualified; explicit forwarding
+of three arguments corrects compilation before the passing native captures.
+
+Focused native suite: All tests successful, Files=3, Tests=243. Book syntax/public
+contract checks and rendered build qualify the synchronized prose separately.
+This closes the reservation helper and formal resource/reusable/reservation cohort.
+Aggregate-record named consumers are the next frontier. General native referents,
+constructor/controller/report/runtime/moved-root and visual book QA remain under
+their existing owners; no public admission expansion follows from this repair.

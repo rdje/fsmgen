@@ -1,0 +1,235 @@
+ok 1 - late register / current_fixture refusal preserves inputs
+ok 2 - late register / current_fixture: exact helper accepts only the complete intended cause
+ok 3 - late register / current_fixture: actual primary conserved
+ok 4 - late register / current_fixture: native error saved immediately
+ok 5 - late register / current_fixture: complete caller primitive kinds/sharing retained
+ok 6 - late register / current_fixture: empty native marker identity retained
+ok 7 - late register / earlier_reference refusal preserves inputs
+ok 8 - late register / earlier_reference: exact helper accepts only the complete intended cause
+ok 9 - late register / earlier_reference: actual primary conserved
+ok 10 - late register / earlier_reference: native error saved immediately
+ok 11 - late register / earlier_reference: complete caller primitive kinds/sharing retained
+ok 12 - late register / earlier_reference: empty native marker identity retained
+ok 13 - late register / primary_path_echo refusal preserves inputs
+ok 14 - late register / primary_path_echo: exact helper accepts only the complete intended cause
+ok 15 - late register / primary_path_echo: actual primary conserved
+ok 16 - late register / primary_path_echo: native error saved immediately
+ok 17 - late register / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 18 - late register / primary_path_echo: empty native marker identity retained
+ok 19 - implicit assignment declaration / current_fixture refusal preserves inputs
+ok 20 - implicit assignment declaration / current_fixture: exact helper accepts only the complete intended cause
+ok 21 - implicit assignment declaration / current_fixture: actual primary conserved
+ok 22 - implicit assignment declaration / current_fixture: native error saved immediately
+ok 23 - implicit assignment declaration / current_fixture: complete caller primitive kinds/sharing retained
+ok 24 - implicit assignment declaration / current_fixture: empty native marker identity retained
+ok 25 - implicit assignment declaration / earlier_reference refusal preserves inputs
+ok 26 - implicit assignment declaration / earlier_reference: exact helper accepts only the complete intended cause
+ok 27 - implicit assignment declaration / earlier_reference: actual primary conserved
+ok 28 - implicit assignment declaration / earlier_reference: native error saved immediately
+ok 29 - implicit assignment declaration / earlier_reference: complete caller primitive kinds/sharing retained
+ok 30 - implicit assignment declaration / earlier_reference: empty native marker identity retained
+ok 31 - implicit assignment declaration / primary_path_echo refusal preserves inputs
+ok 32 - implicit assignment declaration / primary_path_echo: exact helper accepts only the complete intended cause
+ok 33 - implicit assignment declaration / primary_path_echo: actual primary conserved
+ok 34 - implicit assignment declaration / primary_path_echo: native error saved immediately
+ok 35 - implicit assignment declaration / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 36 - implicit assignment declaration / primary_path_echo: empty native marker identity retained
+ok 37 - missing parent / current_fixture refusal preserves inputs
+ok 38 - missing parent / current_fixture: exact helper accepts only the complete intended cause
+ok 39 - missing parent / current_fixture: actual primary conserved
+ok 40 - missing parent / current_fixture: native error saved immediately
+ok 41 - missing parent / current_fixture: complete caller primitive kinds/sharing retained
+ok 42 - missing parent / current_fixture: empty native marker identity retained
+ok 43 - missing parent / earlier_reference refusal preserves inputs
+ok 44 - missing parent / earlier_reference: exact helper accepts only the complete intended cause
+ok 45 - missing parent / earlier_reference: actual primary conserved
+ok 46 - missing parent / earlier_reference: native error saved immediately
+ok 47 - missing parent / earlier_reference: complete caller primitive kinds/sharing retained
+ok 48 - missing parent / earlier_reference: empty native marker identity retained
+ok 49 - missing parent / primary_path_echo refusal preserves inputs
+ok 50 - missing parent / primary_path_echo: exact helper accepts only the complete intended cause
+ok 51 - missing parent / primary_path_echo: actual primary conserved
+ok 52 - missing parent / primary_path_echo: native error saved immediately
+ok 53 - missing parent / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 54 - missing parent / primary_path_echo: empty native marker identity retained
+ok 55 - unexpected module / current_fixture refusal preserves inputs
+ok 56 - unexpected module / current_fixture: exact helper accepts only the complete intended cause
+ok 57 - unexpected module / current_fixture: actual primary conserved
+ok 58 - unexpected module / current_fixture: native error saved immediately
+ok 59 - unexpected module / current_fixture: complete caller primitive kinds/sharing retained
+ok 60 - unexpected module / current_fixture: empty native marker identity retained
+ok 61 - unexpected module / earlier_reference refusal preserves inputs
+ok 62 - unexpected module / earlier_reference: exact helper accepts only the complete intended cause
+ok 63 - unexpected module / earlier_reference: actual primary conserved
+ok 64 - unexpected module / earlier_reference: native error saved immediately
+ok 65 - unexpected module / earlier_reference: complete caller primitive kinds/sharing retained
+ok 66 - unexpected module / earlier_reference: empty native marker identity retained
+ok 67 - unexpected module / primary_path_echo refusal preserves inputs
+ok 68 - unexpected module / primary_path_echo: exact helper accepts only the complete intended cause
+ok 69 - unexpected module / primary_path_echo: actual primary conserved
+ok 70 - unexpected module / primary_path_echo: native error saved immediately
+ok 71 - unexpected module / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 72 - unexpected module / primary_path_echo: empty native marker identity retained
+ok 73 - missing child / current_fixture refusal preserves inputs
+ok 74 - missing child / current_fixture: exact helper accepts only the complete intended cause
+ok 75 - missing child / current_fixture: actual primary conserved
+ok 76 - missing child / current_fixture: native error saved immediately
+ok 77 - missing child / current_fixture: complete caller primitive kinds/sharing retained
+ok 78 - missing child / current_fixture: empty native marker identity retained
+ok 79 - missing child / earlier_reference refusal preserves inputs
+ok 80 - missing child / earlier_reference: exact helper accepts only the complete intended cause
+ok 81 - missing child / earlier_reference: actual primary conserved
+ok 82 - missing child / earlier_reference: native error saved immediately
+ok 83 - missing child / earlier_reference: complete caller primitive kinds/sharing retained
+ok 84 - missing child / earlier_reference: empty native marker identity retained
+ok 85 - missing child / primary_path_echo refusal preserves inputs
+ok 86 - missing child / primary_path_echo: exact helper accepts only the complete intended cause
+ok 87 - missing child / primary_path_echo: actual primary conserved
+ok 88 - missing child / primary_path_echo: native error saved immediately
+ok 89 - missing child / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 90 - missing child / primary_path_echo: empty native marker identity retained
+ok 91 - unexpected nested child / current_fixture refusal preserves inputs
+ok 92 - unexpected nested child / current_fixture: exact helper accepts only the complete intended cause
+ok 93 - unexpected nested child / current_fixture: actual primary conserved
+ok 94 - unexpected nested child / current_fixture: native error saved immediately
+ok 95 - unexpected nested child / current_fixture: complete caller primitive kinds/sharing retained
+ok 96 - unexpected nested child / current_fixture: empty native marker identity retained
+ok 97 - unexpected nested child / earlier_reference refusal preserves inputs
+ok 98 - unexpected nested child / earlier_reference: exact helper accepts only the complete intended cause
+ok 99 - unexpected nested child / earlier_reference: actual primary conserved
+ok 100 - unexpected nested child / earlier_reference: native error saved immediately
+ok 101 - unexpected nested child / earlier_reference: complete caller primitive kinds/sharing retained
+ok 102 - unexpected nested child / earlier_reference: empty native marker identity retained
+ok 103 - unexpected nested child / primary_path_echo refusal preserves inputs
+ok 104 - unexpected nested child / primary_path_echo: exact helper accepts only the complete intended cause
+ok 105 - unexpected nested child / primary_path_echo: actual primary conserved
+ok 106 - unexpected nested child / primary_path_echo: native error saved immediately
+ok 107 - unexpected nested child / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 108 - unexpected nested child / primary_path_echo: empty native marker identity retained
+ok 109 - wrong child identity / current_fixture refusal preserves inputs
+ok 110 - wrong child identity / current_fixture: exact helper accepts only the complete intended cause
+ok 111 - wrong child identity / current_fixture: actual primary conserved
+ok 112 - wrong child identity / current_fixture: native error saved immediately
+ok 113 - wrong child identity / current_fixture: complete caller primitive kinds/sharing retained
+ok 114 - wrong child identity / current_fixture: empty native marker identity retained
+ok 115 - wrong child identity / earlier_reference refusal preserves inputs
+ok 116 - wrong child identity / earlier_reference: exact helper accepts only the complete intended cause
+ok 117 - wrong child identity / earlier_reference: actual primary conserved
+ok 118 - wrong child identity / earlier_reference: native error saved immediately
+ok 119 - wrong child identity / earlier_reference: complete caller primitive kinds/sharing retained
+ok 120 - wrong child identity / earlier_reference: empty native marker identity retained
+ok 121 - wrong child identity / primary_path_echo refusal preserves inputs
+ok 122 - wrong child identity / primary_path_echo: exact helper accepts only the complete intended cause
+ok 123 - wrong child identity / primary_path_echo: actual primary conserved
+ok 124 - wrong child identity / primary_path_echo: native error saved immediately
+ok 125 - wrong child identity / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 126 - wrong child identity / primary_path_echo: empty native marker identity retained
+ok 127 - parent private name leaked into child / current_fixture refusal preserves inputs
+ok 128 - parent private name leaked into child / current_fixture: exact helper accepts only the complete intended cause
+ok 129 - parent private name leaked into child / current_fixture: actual primary conserved
+ok 130 - parent private name leaked into child / current_fixture: native error saved immediately
+ok 131 - parent private name leaked into child / current_fixture: complete caller primitive kinds/sharing retained
+ok 132 - parent private name leaked into child / current_fixture: empty native marker identity retained
+ok 133 - parent private name leaked into child / earlier_reference refusal preserves inputs
+ok 134 - parent private name leaked into child / earlier_reference: exact helper accepts only the complete intended cause
+ok 135 - parent private name leaked into child / earlier_reference: actual primary conserved
+ok 136 - parent private name leaked into child / earlier_reference: native error saved immediately
+ok 137 - parent private name leaked into child / earlier_reference: complete caller primitive kinds/sharing retained
+ok 138 - parent private name leaked into child / earlier_reference: empty native marker identity retained
+ok 139 - parent private name leaked into child / primary_path_echo refusal preserves inputs
+ok 140 - parent private name leaked into child / primary_path_echo: exact helper accepts only the complete intended cause
+ok 141 - parent private name leaked into child / primary_path_echo: actual primary conserved
+ok 142 - parent private name leaked into child / primary_path_echo: native error saved immediately
+ok 143 - parent private name leaked into child / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 144 - parent private name leaked into child / primary_path_echo: empty native marker identity retained
+ok 145 - wrong formal width / current_fixture refusal preserves inputs
+ok 146 - wrong formal width / current_fixture: exact helper accepts only the complete intended cause
+ok 147 - wrong formal width / current_fixture: actual primary conserved
+ok 148 - wrong formal width / current_fixture: native error saved immediately
+ok 149 - wrong formal width / current_fixture: complete caller primitive kinds/sharing retained
+ok 150 - wrong formal width / current_fixture: empty native marker identity retained
+ok 151 - wrong formal width / earlier_reference refusal preserves inputs
+ok 152 - wrong formal width / earlier_reference: exact helper accepts only the complete intended cause
+ok 153 - wrong formal width / earlier_reference: actual primary conserved
+ok 154 - wrong formal width / earlier_reference: native error saved immediately
+ok 155 - wrong formal width / earlier_reference: complete caller primitive kinds/sharing retained
+ok 156 - wrong formal width / earlier_reference: empty native marker identity retained
+ok 157 - wrong formal width / primary_path_echo refusal preserves inputs
+ok 158 - wrong formal width / primary_path_echo: exact helper accepts only the complete intended cause
+ok 159 - wrong formal width / primary_path_echo: actual primary conserved
+ok 160 - wrong formal width / primary_path_echo: native error saved immediately
+ok 161 - wrong formal width / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 162 - wrong formal width / primary_path_echo: empty native marker identity retained
+ok 163 - wrong formal role / current_fixture refusal preserves inputs
+ok 164 - wrong formal role / current_fixture: exact helper accepts only the complete intended cause
+ok 165 - wrong formal role / current_fixture: actual primary conserved
+ok 166 - wrong formal role / current_fixture: native error saved immediately
+ok 167 - wrong formal role / current_fixture: complete caller primitive kinds/sharing retained
+ok 168 - wrong formal role / current_fixture: empty native marker identity retained
+ok 169 - wrong formal role / earlier_reference refusal preserves inputs
+ok 170 - wrong formal role / earlier_reference: exact helper accepts only the complete intended cause
+ok 171 - wrong formal role / earlier_reference: actual primary conserved
+ok 172 - wrong formal role / earlier_reference: native error saved immediately
+ok 173 - wrong formal role / earlier_reference: complete caller primitive kinds/sharing retained
+ok 174 - wrong formal role / earlier_reference: empty native marker identity retained
+ok 175 - wrong formal role / primary_path_echo refusal preserves inputs
+ok 176 - wrong formal role / primary_path_echo: exact helper accepts only the complete intended cause
+ok 177 - wrong formal role / primary_path_echo: actual primary conserved
+ok 178 - wrong formal role / primary_path_echo: native error saved immediately
+ok 179 - wrong formal role / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 180 - wrong formal role / primary_path_echo: empty native marker identity retained
+ok 181 - formal aliases a late block / current_fixture refusal preserves inputs
+ok 182 - formal aliases a late block / current_fixture: exact helper accepts only the complete intended cause
+ok 183 - formal aliases a late block / current_fixture: actual primary conserved
+ok 184 - formal aliases a late block / current_fixture: native error saved immediately
+ok 185 - formal aliases a late block / current_fixture: complete caller primitive kinds/sharing retained
+ok 186 - formal aliases a late block / current_fixture: empty native marker identity retained
+ok 187 - formal aliases a late block / earlier_reference refusal preserves inputs
+ok 188 - formal aliases a late block / earlier_reference: exact helper accepts only the complete intended cause
+ok 189 - formal aliases a late block / earlier_reference: actual primary conserved
+ok 190 - formal aliases a late block / earlier_reference: native error saved immediately
+ok 191 - formal aliases a late block / earlier_reference: complete caller primitive kinds/sharing retained
+ok 192 - formal aliases a late block / earlier_reference: empty native marker identity retained
+ok 193 - formal aliases a late block / primary_path_echo refusal preserves inputs
+ok 194 - formal aliases a late block / primary_path_echo: exact helper accepts only the complete intended cause
+ok 195 - formal aliases a late block / primary_path_echo: actual primary conserved
+ok 196 - formal aliases a late block / primary_path_echo: native error saved immediately
+ok 197 - formal aliases a late block / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 198 - formal aliases a late block / primary_path_echo: empty native marker identity retained
+ok 199 - stale or incomplete allocation / current_fixture refusal preserves inputs
+ok 200 - stale or incomplete allocation / current_fixture: exact helper accepts only the complete intended cause
+ok 201 - stale or incomplete allocation / current_fixture: actual primary conserved
+ok 202 - stale or incomplete allocation / current_fixture: native error saved immediately
+ok 203 - stale or incomplete allocation / current_fixture: complete caller primitive kinds/sharing retained
+ok 204 - stale or incomplete allocation / current_fixture: empty native marker identity retained
+ok 205 - stale or incomplete allocation / earlier_reference refusal preserves inputs
+ok 206 - stale or incomplete allocation / earlier_reference: exact helper accepts only the complete intended cause
+ok 207 - stale or incomplete allocation / earlier_reference: actual primary conserved
+ok 208 - stale or incomplete allocation / earlier_reference: native error saved immediately
+ok 209 - stale or incomplete allocation / earlier_reference: complete caller primitive kinds/sharing retained
+ok 210 - stale or incomplete allocation / earlier_reference: empty native marker identity retained
+ok 211 - stale or incomplete allocation / primary_path_echo refusal preserves inputs
+ok 212 - stale or incomplete allocation / primary_path_echo: exact helper accepts only the complete intended cause
+ok 213 - stale or incomplete allocation / primary_path_echo: actual primary conserved
+ok 214 - stale or incomplete allocation / primary_path_echo: native error saved immediately
+ok 215 - stale or incomplete allocation / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 216 - stale or incomplete allocation / primary_path_echo: empty native marker identity retained
+ok 217 - omitted real producer declaration / current_fixture refusal preserves inputs
+ok 218 - omitted real producer declaration / current_fixture: exact helper accepts only the complete intended cause
+ok 219 - omitted real producer declaration / current_fixture: actual primary conserved
+ok 220 - omitted real producer declaration / current_fixture: native error saved immediately
+ok 221 - omitted real producer declaration / current_fixture: complete caller primitive kinds/sharing retained
+ok 222 - omitted real producer declaration / current_fixture: empty native marker identity retained
+ok 223 - omitted real producer declaration / earlier_reference refusal preserves inputs
+ok 224 - omitted real producer declaration / earlier_reference: exact helper accepts only the complete intended cause
+ok 225 - omitted real producer declaration / earlier_reference: actual primary conserved
+ok 226 - omitted real producer declaration / earlier_reference: native error saved immediately
+ok 227 - omitted real producer declaration / earlier_reference: complete caller primitive kinds/sharing retained
+ok 228 - omitted real producer declaration / earlier_reference: empty native marker identity retained
+ok 229 - omitted real producer declaration / primary_path_echo refusal preserves inputs
+ok 230 - omitted real producer declaration / primary_path_echo: exact helper accepts only the complete intended cause
+ok 231 - omitted real producer declaration / primary_path_echo: actual primary conserved
+ok 232 - omitted real producer declaration / primary_path_echo: native error saved immediately
+ok 233 - omitted real producer declaration / primary_path_echo: complete caller primitive kinds/sharing retained
+ok 234 - omitted real producer declaration / primary_path_echo: empty native marker identity retained
+1..234

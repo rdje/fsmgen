@@ -84,9 +84,14 @@ my $start = index($source, 'sub reject {');
 my $end = index($source, "subtest 'missing declarations", $start);
 die 'exact current coverage helper missing' unless $start >= 0 && $end > $start;
 my $helper = substr($source, $start, $end - $start);
+my $graph_start = index($source, 'sub source_value_copy {');
+my $graph_end = index($source, 'my $scheduler =', $graph_start);
+die 'exact current coverage snapshot helpers missing' unless $graph_start >= 0 && $graph_end > $graph_start;
+my $graph_helpers = substr($source, $graph_start, $graph_end - $graph_start);
 {
     package CurrentCoverageCauseSubject;
-    use Storable qw(dclone);
+    use JSON::PP;
+    use Scalar::Util qw(refaddr blessed reftype);
     our (@bits, @errors, $api_error, $api_accepted, $api_result);
     sub verify {
         my $ok = eval {
@@ -99,8 +104,8 @@ my $helper = substr($source, $start, $end - $start);
     }
     sub ok {push @bits, $_[0] ? 1 : 0; return $_[0]}
     sub diag {}
-    sub is_deeply {
-        my $same = Test::More::is_deeply(@_);
+    sub is {
+        my $same = Test::More::is($_[0], $_[1], $_[2]);
         push @bits, $same ? 1 : 0;
         return $same;
     }
@@ -110,7 +115,7 @@ my $helper = substr($source, $start, $end - $start);
     }
 }
 # Compile before native calls; no active source eval can echo a reason.
-eval 'package CurrentCoverageCauseSubject;' . $helper; die $@ if $@;
+eval 'package CurrentCoverageCauseSubject;' . $graph_helpers . $helper; die $@ if $@;
 my @captures;
 for my $row (@{$fixtures->{rows}}) {
     my $input = materialize($row->{before});

@@ -3707,11 +3707,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify formal resource, reusable and reservation named consumers.`
   Acceptance: `Read exact current T1944/T1947/T1959/T1960 helpers/callers and public/source-owned producer contracts; split each safe source slice before runtime probes, preserve whole products/kinds and cold limits, own confirmed complete-cause repairs before edits.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `All four exact formal resource/reusable/prepared-reservation/coverage consumers qualify through completed children, separately owned complete-cause and copy repairs, full source/product/caller/native control evidence and retained finite cold limits. T1960 final native3/243 and exact current/prior/control cold joins close the last child; aggregate-record cohort .3.3.3 is the next pending frontier.`
+  Commit: `this slice; resolve with work-unit Git subject`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4`
 
@@ -3737,12 +3737,12 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify T1960 reservation-coverage reject helper.`
   Acceptance: `Read exact caller/coverage contracts and distinguish structured coverage failures from full exception matching. Qualify actual producer controls and finite cold semantics, own repairs before edits, then hand off to record cohort .3.3.3.`
-  Verification: `pending`
+  Verification: `All three qualification children close with complete cause repair .3.2.3.14 and live copy repair .3.2.3.13.2. Full native current/prior/cause/copy/source/product/carrier/control evidence and independent readers are sealed under reservation-coverage-*; final exact-source/body and real-strengthened-test checks preserve finite contracts. Handoff to aggregate-record cohort .3.3.3; no all-caller/native/moved-root claim.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3`
-  Commit: `children below`
+  Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.1`
   Status: `done`
@@ -3929,11 +3929,11 @@ For FSMGen, the analogs are:
   Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.13`
-  Status: `active`
+  Status: `done`
   Goal: `Repair actual T1960 test copy and primitive-kind assurance gaps.`
   Acceptance: `P2 owned actual Storable kind differences observed under .1.2.3.2.3.3.2.4.1, with complete field/source/result qualification required under .4.3 before code changes. Replace only evidenced lossy test copies and value-only assurance, retain full source/projection/module/caller semantics and genuine prior/mutation controls, keep public admission/native/submodule boundaries intact, sync book/card and commit with focused checks. Schedule immediately after .4.3; cause repair has its own owner if .4.2 establishes false matches.`
-  Verification: `Full coverage qualification closes at93ff524834; historical readers bind old live source bytes, so a finite same-repository projection/index context precedes changing those sources. No sealed reader/evidence rewrite, extra repository, submodule inspection or primary index/config change.`
-  Commit: `children below`
+  Verification: `Both owned children complete: pinned original qualification replay .1 and actual live copy/snapshot/native repair .2. Complete source/product/cause/current/prior/mutation legs close in docs/audits/reservation-coverage-copy-repair-20261003; historical cold qualifications remain immutable and all broader native/access/moved-root limits retain owners.`
+  Commit: `this slice; resolve with work-unit Git subject`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.13.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.13.2`
 
@@ -3945,11 +3945,12 @@ For FSMGen, the analogs are:
   Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.13.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair qualified coverage copy/snapshot helpers and prove complete native conservation.`
   Acceptance: `Adopt only qualified plain scalar-preserving copy/first-touch graph and finite empty-native contracts in current T1960, strengthen real copy/caller kind/sharing/isolation assurance and adapt T2063 exact helper compilation without weakening complete causes/native identity/shape checks. Require real prior/current source/copy/API/product/carrier/cause conservation, exact prior unsafe-assurance and genuine strengthened-test kind/native/copy controls. Authenticate historical qualification through .1, sync book/card/frontier and commit focused signoff before successors; no public/provider/submodule/schema admission changes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Sealed docs/audits/reservation-coverage-copy-repair-20261003 closes actual scalar-preserving copies/first-touch snapshots and exact T2063 compilation; qualified helper body unchanged. Re-derivation: full Git9b2f4e5b54 before/current bodies and independently enumerated2964 public sources prove exact two-test delta, unchanged provider/predicate and source contracts. Actual current39 copies/six sites retain whole original/copy kinds/sharing, reference population and deep isolation through156 assertions;23 real success/refusal snapshots preserve whole caller kinds/topology. Exact prior62 clone observations reproduce41 changed/548 ordinal-field kind differences; independently qualified prior-pure run exactly joins all current39 copy graphs,12 preparations,10 whole lowerings/carriers and23 API caller/result/acceptance/complete-primary records. Complete traces retained, line/observer stack differences not claimed identical. Falsification: actual prior success/refusal numeric1-to-string1 controls GREEN; each actual repaired test RED1 at its exact read-only consumer, with complete sole-field/shared-prepared propagation and conserved source/products/carriers/results/causes. Actual first-module Storable substitution RED1 at kind proof; value-equal alias RED1 at isolation proof. Native ordinary39/234 GREEN; real marker replacement RED3 at helper snapshot/bits/native identity, all complete causes/value graphs/classes/empty shapes otherwise conserve. Cold unsafe-prior/alias-authority/copy-omission controls reject. Durability: complete source/native/copier/input/output/TAP/status/coordinate bindings, producer/independent reader/controls/manifest/task/card/book/Git; only declared FIFO library-source coordinates portable, no scalar coercion. Committed .1 original full qualification actually replays in pinned same-repository/source-volume context with primary Git state unchanged; canonical route now checks live repair and replays old context afresh without archive writes. Initial wrapper prototype syntax failure/source retained unqualified; explicit three-argument forwarding corrects it before native signoff. Focused All tests successful, Files=3, Tests=243; syntax OK and public-book All tests successful2/308, build/rendered/KM/final staged doctrines/hooks close. Public/provider/native/submodule/schema admission untouched. General native/constructor/controller/report/runtime/moved-root/visual QA stay separately cold. Formal cohort closes; aggregate-record named consumers follow. Initial acceptance heading inside the authoritative Task Tree hid later nodes; the public gate rejected it. Checklist moved outside that section, rejected receipt retained in checks and structural gate passes.`
+  Commit: `this slice; resolve with work-unit Git subject`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.14`
   Status: `done`
@@ -6327,3 +6328,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone([$p, $allocation, $actual]);' binds T1960 test-copy introduction98f0cc146; complete cause-repair readers explicitly read historical live source bytes and module qualification reads its owning task directly. Future hot helper edits require an exact pinned source/task context, not changes to sealed qualification.
 - [x] **ADDRESSED (verified)** — Complete ordinary pinned canonical cause/copy replay passes with independently authenticated source/audit/task members and unchanged primary Git fingerprints. Actual owned T1960 source decoy genuinely fails original source byte identity; independent decoy authority promotion RED1. No primary source/index/config, other repo or archive changes; .2 owns live repair signoff.
 - [x] **NO REGRESSION** — Public-book All tests successful, Files=2, Tests=308; build/rendered and complete historical cold qualification pass. Live T1960/T2063/provider/public interfaces remain unchanged. Fixed capacity/fresh claims/KM/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.
+
+## Acceptance Checklist (enforced) — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.13.2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'dclone' -- t/1960-isf-formal-reservation-coverage.t and sealed history.txt identify original lossy-copy introduction; complete prior captures reproduce41/548 typed differences and real success/refusal kind controls remain GREEN. Full source/field qualifications bind each difference; actual marker replacement exposes native identity assurance.
+- [x] **ADDRESSED (verified)** — Actual live39 copies and23 whole-kind snapshots pass; exact prior-pure/current source/preparation/module/caller/carrier/scope/cause graphs join. Actual strengthened kind controls RED1 each, Storable/alias copy controls RED1 each and native replacement RED3/234 at declared consumers; full cold reader plus unsafe-authority/omission controls pass qualification.
+- [x] **NO REGRESSION** — scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1959-isf-prepared-formal-reservations.t t/1960-isf-formal-reservation-coverage.t t/2063-isf-coverage-diagnostic-causes.t: All tests successful; Files=3, Tests=243. Native39 complete causes/classes/shapes and ordinary caller/result graphs conserve; repaired syntax OK, public-book2/308 and rendered build checked.
