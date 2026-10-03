@@ -1,0 +1,38 @@
+Owned by SEMANTIC-INTROSPECTION-MCP-FRONTIER.68 (local October4).
+
+Daily cleanup is due from the latest-only UTC record. The fixed candidates are
+the two completed ordinary/decoy historical Git replay caches at revision
+93ff524834, each consisting only of its selected source tree and independently
+generated Git index. Complete cache membership/bytes equal immutable Git sources;
+the one decoy comment is explicitly declared. No log/bin, symlink, hard-link,
+foreign-volume, tracked-cache or nested-Git member qualifies for deletion.
+Original source/audits, current book and all native/compiler/log/receipt evidence
+are retained. No arbitrary caller path is accepted by the deletion driver.
+
+Population/units: two source/index cache directories contain 6946 regular files:
+3472 selected Git source copies and one derived index per directory. These are
+duplicate cache members, not native execution products or unique evidence.
+Published Git index membership and exact source bytes can be reconstructed from
+the pinned revision and committed replay recipe. Binary index bytes, inode/link/
+mtime observations and byte totals are dated captures, not promises of identical
+future allocation or hidden Git index encoding. Legitimate future replay may
+regenerate these caches; saved verification does not claim eternal absence.
+
+Re-derivation: exact regular-node/parent/volume/link/nested-repository checks,
+independent rg/os.walk whole membership, complete Git source bodies/hash/size,
+actual published separate-index entries and fresh identity reinspection precede
+fixed deletion. Fresh selected residue and complete protected original source/
+current book/native logs/reservation audit/primary Git bytes are captured after.
+Rust release/deps/incremental locations are absent or fully censused; no ambiguous
+log/bin artifact is deleted. A separate saved reader authenticates the complete
+file allocation, Git sources/index membership, declared decoy, dated residue,
+protected before/after equality and daily threshold without deleting again.
+
+Falsification: promoting the actual decoy as original Git source fails its byte
+contract; full member omission and protected-primary-index corruption reject.
+Durability: complete cache/node/index/source/protection/Rust/date/residue captures,
+fixed driver and independent saved reader, actual controls/receipts/manifest,
+task/fact/book/latest-only record and Git. The initial inspection and producer
+version lack full retained index rows; both remain explicitly unqualified. Final
+full inspection and immediate apply reinspection qualify the actual deletion.
+Existing compiler/native workspaces and other generated caches remain untouched.

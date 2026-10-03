@@ -1,3 +1,3 @@
 # Latest artifact cleanup
 
-2026-10-02T22:06:57.570581+00:00 — Removed only the obsolete formal-preallocation mdBook render; exact member/residue and protected-byte checks pass. Preserved current book, all logs, source/native/receipt evidence and spent compiler workspaces; Rust release/deps/incremental log/bin census retained.
+2026-10-03T22:22:49.632221+00:00 — Removed only two authenticated duplicate historical source/index caches; exact residue and protected-byte checks pass. Current book, logs, native/compiler/audit evidence retained; Rust log/bin census preserved.

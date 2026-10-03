@@ -1,0 +1,1 @@
+a530a94d542a0b1aca8e79d2509548bfbcca6356 SEMANTIC-INTROSPECTION-MCP-FRONTIER.67: remove obsolete preallocation book

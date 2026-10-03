@@ -13,7 +13,7 @@
 
 ### artifact-cleanup-evidence-boundary
 
-_Daily cleanup removes only independently identified obsolete generated renders_
+_Daily cleanup removes only authenticated obsolete generated artifacts_
 
-- **date:** 2026-10-03 · **status:** current
+- **date:** 2026-10-04 · **status:** current
 - **source and verification:** [`docs/knowledge/artifact-cleanup-evidence-boundary.md`](../../docs/knowledge/artifact-cleanup-evidence-boundary.md)

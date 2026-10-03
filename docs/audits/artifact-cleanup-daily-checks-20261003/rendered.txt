@@ -1,0 +1,1 @@
+PASS rendered fixed replay-cache discardability, retained native evidence and dated-regeneration limits; visual QA remains pending.

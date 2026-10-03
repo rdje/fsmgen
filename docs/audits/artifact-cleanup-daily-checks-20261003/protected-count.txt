@@ -1,0 +1,1 @@
+PASS independent saved protected membership census: 8857 distinct before/after byte/hash rows agree; primary Git equality is dated within cleanup.

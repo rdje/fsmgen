@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/artifact-cleanup-daily-20261003/verify.py", line 77, in <module>
+    assert protected['before'] == protected['after'], 'protected source/book/native/Git bytes conserve'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: protected source/book/native/Git bytes conserve

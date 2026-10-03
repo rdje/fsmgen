@@ -1,0 +1,2 @@
+ram-guard: PID 97106; host 70.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS fixed complete Git source/index cache inspection [('.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary', 3473, 167033143), ('.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/decoy', 3473, 167033179)]

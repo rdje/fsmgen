@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/artifact-cleanup-daily-20261003/verify.py", line 57, in <module>
+    assert captured['bytes'] == len(raw) and captured['sha256'] == hashlib.sha256(raw).hexdigest(), 'exact Git source/declared decoy bytes'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact Git source/declared decoy bytes
