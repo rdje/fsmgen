@@ -1,0 +1,10 @@
+cause corruption rejects: cause
+cause corruption rejects: graph-kind
+cause corruption rejects: marker
+cause corruption rejects: field
+cause corruption rejects: member
+cause corruption rejects: expected
+whole corruption rejects: scope
+whole corruption rejects: token
+whole corruption rejects: kind
+PASS complete cause repair/graph and ordinary scope conservation with exact prior/bypass failures; snapshots and wider semantics remain owned.

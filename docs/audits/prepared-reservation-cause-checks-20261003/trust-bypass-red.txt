@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/prepared-reservation-cause-repair-20261003/verify.py", line 79, in <module>
+    assert all(r['accepted']==0 for r in bypass['rows']),'actual checked membership bypass admits invalid schema'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual checked membership bypass admits invalid schema

@@ -1,0 +1,3 @@
+ram-guard: PID 24859; host 62.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+bash: docs/audits/prepared-reservation-cause-checks-20261003/check.sh: No such file or directory
+Inline producer failed with SyntaxError from nested triple quotes before creating the reader/check script; this is not qualification.

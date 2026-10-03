@@ -3,7 +3,8 @@ use strict;
 use warnings;
 use Test::More;
 use Storable qw(dclone);
-use lib 'perl';
+use lib 'perl', 't/lib';
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF::LoweringIR;
 use FSM::Scheduler::ISF::PreparedFormalReservations;
@@ -20,11 +21,13 @@ sub prepare {
 }
 sub collect {FSM::Scheduler::ISF::PreparedFormalReservations->collect($_[0])}
 sub rejected {
-    my ($prepared, $pattern, $label) = @_;
+    my ($prepared, $expected_cause, $label) = @_;
     my $before = dclone($prepared);
     my $ok = eval {collect($prepared); 1};
+    my $error = $@;
     ok(!$ok, "$label rejected");
-    like($@, $pattern, "$label has a focused diagnostic");
+    ok(diagnostic_cause_matches($error, $expected_cause), "$label has a focused diagnostic")
+        or diag($error);
     is_deeply($prepared, $before, "$label validation does not mutate input");
 }
 my $simple = prepare(<<'ISF');
@@ -59,26 +62,29 @@ subtest 'checked inputs retain complete conservative product provenance without 
 subtest 'every top-level category is required even when empty' => sub {
     for my $field (sort keys %$simple) {
         my $bad = dclone($simple); delete $bad->{$field};
-        rejected($bad, qr/incomplete preparation.*missing: \Q$field\E/, "missing $field");
+        rejected($bad, "Prepared formal reservations have incomplete preparation (missing: $field; unexpected: )", "missing $field");
         $bad = dclone($simple); $bad->{$field} = 'wrong shape';
-        rejected($bad, qr/malformed preparation field '\Q$field\E'/, "malformed $field");
+        rejected($bad, "Prepared formal reservations have malformed preparation field '$field'", "malformed $field");
     }
     my $bad = dclone($simple); $bad->{new_producer_products} = {};
-    rejected($bad, qr/incomplete preparation.*unexpected: new_producer_products/, 'unknown producer must be classified');
+    rejected($bad, "Prepared formal reservations have incomplete preparation (missing: ; unexpected: new_producer_products)", 'unknown producer must be classified');
     $bad = dclone($simple); delete $bad->{transaction_products}{main};
-    rejected($bad, qr/incomplete transaction products.*main/, 'missing live transaction producer');
+    rejected($bad, "Prepared formal reservations have incomplete transaction products (missing: main; unexpected: )", 'missing live transaction producer');
     $bad = dclone($simple); $bad->{transactions}{ghost} = {};
-    rejected($bad, qr/incomplete transaction contexts.*ghost/, 'unknown context');
+    rejected($bad, "Prepared formal reservations have incomplete transaction contexts (missing: ; unexpected: ghost)", 'unknown context');
     $bad = dclone($simple); $bad->{generated_children}{ghost} = 1;
-    rejected($bad, qr/unknown generated_children membership/, 'unknown generated child');
+    rejected($bad, "Prepared formal reservations have unknown generated_children membership", 'unknown generated child');
     $bad = dclone($simple); $bad->{domain_partition} = {kind => 'future_partition'};
-    rejected($bad, qr/unknown domain partition kind/, 'unknown partition');
+    rejected($bad, "Prepared formal reservations have an unknown domain partition kind", 'unknown partition');
     $bad = dclone($simple); $bad->{reusable_child_products}{unclassified} = {};
-    rejected($bad, qr/incomplete reusable children/, 'unclassified reusable product');
+    rejected($bad, "Prepared formal reservations have incomplete reusable children (missing: ; unexpected: unclassified)", 'unclassified reusable product');
     $bad = dclone($simple); $bad->{actor_context}{cycle} = $bad;
     my $ok = eval {collect($bad); 1};
+    my $error = $@;
     ok(!$ok, 'cyclic preparation rejected before recursive validation');
-    like($@, qr/has a cycle/, 'cycle diagnostic retained');
+    ok(diagnostic_cause_matches($error,
+        "Formal reservation inventory has a cycle at '/actor_context/cycle'"),
+        'cycle diagnostic retained') or diag($error);
 };
 
 my $domains = prepare(<<'ISF');
@@ -104,15 +110,15 @@ subtest 'actual independent domains and child modules keep separate typed scopes
     ok($aux->{reserved_names}{remote_idle_ext}, 'callee scope contains external idle state');
     ok(!$child->{reserved_names}{remote_start_ready}, 'child retains its independent module inventory');
     for my $mutation (
-        [sub {delete $_[0]{domain_source_products}{aux}}, qr/incomplete domain products/, 'missing domain'],
-        [sub {$_[0]{domain_source_products}{aux}{identity}[2] = 'core'}, qr/mismatched domain identity/, 'wrong domain owner'],
-        [sub {delete $_[0]{domain_source_products}{aux}{preparation}{actor}}, qr/incomplete preparation/, 'missing nested actor'],
-        [sub {delete $_[0]{domain_source_products}{core}{preparation}{generated_child_products}{worker}}, qr/incomplete generated children/, 'missing child module'],
-        [sub {delete $_[0]{domain_source_products}{core}{preparation}{parent_completion_products}}, qr/incomplete preparation/, 'missing nested producer'],
-        [sub {pop @{$_[0]{domain_partition}{domains}}; delete $_[0]{domain_source_products}{aux}}, qr/incomplete source domain membership/, 'erased domain in both product maps'],
-        [sub {$_[0]{domain_partition}{kind} = 'single_domain'}, qr/mismatched domain partition kind/, 'wrong partition realization'],
-        [sub {$_[0]{domain_source_products}{core}{preparation}{generated_child_products}{worker} = {}}, qr/malformed child scope/, 'erased child IR'],
-        [sub {$_[0]{domain_partition} = undef; $_[0]{domain_source_products} = {}}, qr/missing the source domain partition/, 'erased partition'],
+        [sub {delete $_[0]{domain_source_products}{aux}}, "Prepared formal reservations have incomplete domain products (missing: aux; unexpected: )", 'missing domain'],
+        [sub {$_[0]{domain_source_products}{aux}{identity}[2] = 'core'}, "Prepared formal reservations have mismatched domain identity", 'wrong domain owner'],
+        [sub {delete $_[0]{domain_source_products}{aux}{preparation}{actor}}, "Prepared formal reservations have incomplete preparation (missing: actor; unexpected: )", 'missing nested actor'],
+        [sub {delete $_[0]{domain_source_products}{core}{preparation}{generated_child_products}{worker}}, "Prepared formal reservations have incomplete generated children (missing: worker; unexpected: )", 'missing child module'],
+        [sub {delete $_[0]{domain_source_products}{core}{preparation}{parent_completion_products}}, "Prepared formal reservations have incomplete preparation (missing: parent_completion_products; unexpected: )", 'missing nested producer'],
+        [sub {pop @{$_[0]{domain_partition}{domains}}; delete $_[0]{domain_source_products}{aux}}, "Prepared formal reservations have incomplete source domain membership (missing: aux; unexpected: )", 'erased domain in both product maps'],
+        [sub {$_[0]{domain_partition}{kind} = 'single_domain'}, "Prepared formal reservations have mismatched domain partition kind", 'wrong partition realization'],
+        [sub {$_[0]{domain_source_products}{core}{preparation}{generated_child_products}{worker} = {}}, "Prepared formal reservations have malformed child scope 'worker'", 'erased child IR'],
+        [sub {$_[0]{domain_partition} = undef; $_[0]{domain_source_products} = {}}, "Prepared formal reservations are missing the source domain partition", 'erased partition'],
     ) {
         my $bad = dclone($domains); $mutation->[0]->($bad); rejected($bad, $mutation->[1], $mutation->[2]);
     }

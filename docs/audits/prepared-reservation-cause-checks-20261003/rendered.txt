@@ -1,0 +1,1 @@
+PASS rendered checked-reservation complete-cause repair; visual QA not performed.

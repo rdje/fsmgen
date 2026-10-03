@@ -1,0 +1,5 @@
+t/1959-isf-prepared-formal-reservations.t ............ ok
+t/2062-isf-prepared-reservation-diagnostic-causes.t .. ok
+All tests successful.
+Files=2, Tests=526,  6 wallclock secs ( 0.03 usr  0.01 sys +  4.15 cusr  0.87 csys =  5.06 CPU)
+Result: PASS

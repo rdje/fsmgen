@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/prepared-reservation-cause-repair-20261003/verify.py", line 60, in <module>
+    assert all(r['assertions'][1]==int(r['band']=='current_fixture') for r in prior['rows']),'exact prior accepts111 wrong causes'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact prior accepts111 wrong causes

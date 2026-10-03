@@ -8,8 +8,8 @@ answers:
 date: 2026-10-03
 status: current
 tags: [isf, formals, reservations, preparation, scope]
-evidence: perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1959-isf-prepared-formal-reservations.t; t/1957-isf-formal-domain-reservation-integration.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1959-isf-prepared-formal-reservations.t t/1957-isf-formal-domain-reservation-integration.t t/1937-isf-formal-reservation-products.t
+evidence: t/2062-isf-prepared-reservation-diagnostic-causes.t; perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1959-isf-prepared-formal-reservations.t; t/1957-isf-formal-domain-reservation-integration.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/2062-isf-prepared-reservation-diagnostic-causes.t t/1959-isf-prepared-formal-reservations.t t/1957-isf-formal-domain-reservation-integration.t t/1937-isf-formal-reservation-products.t
 ---
 
 PreparedFormalReservations::collect accepts the complete prepare_formal_source
@@ -38,6 +38,6 @@ inputs to actual admitted module scopes and detects omitted declarations.
 [Production formal lowering](isf-production-formal-scope.md) consumes the checked
 inventory before allocating private names. The generic partial collector remains available for individual producer
 qualification. Existing controller, local-call and runtime limitations remain.
-[Cause diagnosis](../audits/prepared-reservation-helper-causes-20261003/scope.txt) finds real earlier/primary false matches in the test helper and adjacent cycle assertion; .2.3.12 owns immediate complete-cause repair. Collector admission remains correct. Complete source/graph and conservative scope/token models pass; wider constructors/moved-root semantics stay separately owned.
+[Cause repair](../audits/prepared-reservation-cause-repair-20261003/scope.txt) rejects real earlier/primary echoes with complete declared reasons. Exact prior and schema-bypass controls fail; ordinary scope/token outputs conserve. .12.2 owns first-touch snapshot strengthening. Wider constructor/moved-root semantics stay owned.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.1.

@@ -1,0 +1,3 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12.1
+The initial staged doctrine run rejected the newly split parent's in_progress status: containers require active or done. Corrected the parent to active; retained the failed receipt as container-status-draft-unqualified.txt. This is task metadata correction, with no implementation change.
+Staged whitespace inspection found only native TAP's blank diagnostic comment lines in sealed bypass-red.txt. Preserve that actual raw receipt and its authenticated manifest unchanged. Source and maintained-document whitespace checks exclude only that sealed raw output; no source whitespace exemption is introduced.

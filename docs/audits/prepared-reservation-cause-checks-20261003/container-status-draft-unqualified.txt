@@ -1,0 +1,393 @@
+ram-guard: PID 19819; host 73.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+[doctrine] registered checks: 12
+[doctrine] RUN:  DOCTRINE-BOOTSTRAP - Doctrine and toolbox docs, bootstrap pointers, hook, and CI driver wiring exist
+[doctrine-bootstrap] ok:   README.md present
+[doctrine-bootstrap] ok:   COMMIT.md present
+[doctrine-bootstrap] ok:   MEMORY_ARCHITECTURE.md present
+[doctrine-bootstrap] ok:   LIVE_DOCUMENT_SIZE_CONTAINMENT.md present
+[doctrine-bootstrap] ok:   CLAIM_VERIFICATION.md present
+[doctrine-bootstrap] ok:   DOCTRINE_ENFORCEMENT.md present
+[doctrine-bootstrap] ok:   TASK_ACCEPTANCE.md present
+[doctrine-bootstrap] ok:   TOOLBOX.md present
+[doctrine-bootstrap] ok:   AGENTS.md points at TASK_ACCEPTANCE.md
+[doctrine-bootstrap] ok:   COMMIT.md points at TASK_ACCEPTANCE.md
+[doctrine-bootstrap] ok:   DOCTRINE_ENFORCEMENT.md points at TASK_ACCEPTANCE.md
+[doctrine-bootstrap] ok:   TOOLBOX.md points at TASK_ACCEPTANCE.md
+[doctrine-bootstrap] ok:   AGENTS.md points at CLAIM_VERIFICATION.md
+[doctrine-bootstrap] ok:   COMMIT.md points at CLAIM_VERIFICATION.md
+[doctrine-bootstrap] ok:   DOCTRINE_ENFORCEMENT.md points at CLAIM_VERIFICATION.md
+[doctrine-bootstrap] ok:   TOOLBOX.md points at CLAIM_VERIFICATION.md
+[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: ## Mandatory post-push GitHub qualification
+[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: git ls-remote
+[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: gh run list --commit <full-sha>
+[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: gh run watch <run-id> --compact
+[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: gh run view <run-id> --log-failed
+[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: Accept only `status=completed` and `conclusion=success`
+[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: does not silently authorize an early push
+[doctrine-bootstrap] ok:   doctrine registry includes TASK-ACCEPTANCE
+[doctrine-bootstrap] ok:   doctrine registry includes TASK-TREE-INTEGRITY
+[doctrine-bootstrap] ok:   doctrine registry includes LIVE-DOCUMENT-SIZE
+[doctrine-bootstrap] ok:   doctrine registry includes CLAIM-VERIFICATION
+[doctrine-bootstrap] ok:   doctrine/claim_verification/claim_registries.jsonl present
+[doctrine-bootstrap] ok:   doctrine/claim_verification/claims-0002.jsonl present
+[doctrine-bootstrap] ok:   doctrine/claim_verification/claims.jsonl present
+[doctrine-bootstrap] ok:   doctrine/claim_verification/disposition_groups.jsonl present
+[doctrine-bootstrap] ok:   doctrine/claim_verification/dispositions.jsonl present
+[doctrine-bootstrap] ok:   doctrine/claim_verification/fixtures/positive.txt present
+[doctrine-bootstrap] ok:   doctrine/claim_verification/inventory.jsonl present
+[doctrine-bootstrap] ok:   doctrine/claim_verification/inventory_scope.json present
+[doctrine-bootstrap] ok:   scripts/check_claim_verification.pl present
+[doctrine-bootstrap] ok:   scripts/check_claim_verification_dispositions.pl present
+[doctrine-bootstrap] ok:   scripts/check_claim_verification_inventory.pl present
+[doctrine-bootstrap] ok:   t/1636-claim-verification-doctrine.t present
+[doctrine-bootstrap] ok:   t/1637-claim-verification-inventory.t present
+[doctrine-bootstrap] ok:   t/1638-claim-verification-dispositions.t present
+[doctrine-bootstrap] ok:   t/1750-claim-verification-registry-set.t present
+[doctrine-bootstrap] ok:   scripts/check_claim_verification.pl executable
+[doctrine-bootstrap] ok:   scripts/check_claim_verification_inventory.pl executable
+[doctrine-bootstrap] ok:   scripts/check_claim_verification_dispositions.pl executable
+[doctrine-bootstrap] ok:   doctrine registry includes CLAIM-INVENTORY
+[doctrine-bootstrap] ok:   doctrine registry includes CLAIM-DISPOSITIONS
+[doctrine-bootstrap] ok:   live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md present
+[doctrine-bootstrap] ok:   live-document-size/scripts/check_live_document_size.pl present
+[doctrine-bootstrap] ok:   doctrine/live_document_size/surfaces.jsonl present
+[doctrine-bootstrap] ok:   doctrine/live_document_size/ceiling_increase_authorities.jsonl present
+[doctrine-bootstrap] ok:   doctrine/live_document_size/archive_descriptors.jsonl present
+[doctrine-bootstrap] ok:   doctrine/live_document_size/ledger_manifests.jsonl present
+[doctrine-bootstrap] ok:   doctrine/live_document_size/evidence_maps.jsonl present
+[doctrine-bootstrap] ok:   doctrine/live_document_size/version_retention_contracts.jsonl present
+[doctrine-bootstrap] ok:   doctrine/live_document_size/derived_state_contracts.jsonl present
+[doctrine-bootstrap] ok:   doctrine/live_document_size/isf_reference_partitions.jsonl present
+[doctrine-bootstrap] ok:   doctrine/readme_entrypoint/routed_destinations.jsonl present
+[doctrine-bootstrap] ok:   doctrine/task_tree/index_archives.jsonl present
+[doctrine-bootstrap] ok:   scripts/check_live_document_size.sh present
+[doctrine-bootstrap] ok:   scripts/check_live_document_ceiling_authority.pl present
+[doctrine-bootstrap] ok:   scripts/check_live_document_reference_authority.pl present
+[doctrine-bootstrap] ok:   scripts/check_live_document_route_candidates.pl present
+[doctrine-bootstrap] ok:   scripts/check_live_document_resulting_tree.pl present
+[doctrine-bootstrap] ok:   scripts/run_live_document_adapter_verifiers.pl present
+[doctrine-bootstrap] ok:   scripts/check_isf_reference_partitions.pl present
+[doctrine-bootstrap] ok:   scripts/focused_document_index.pl present
+[doctrine-bootstrap] ok:   KNOWLEDGE_MAP.md present
+[doctrine-bootstrap] ok:   knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md present
+[doctrine-bootstrap] ok:   knowledge-map/scripts/knowledge_map.pl present
+[doctrine-bootstrap] ok:   knowledge-map/scripts/gen_knowledge_map.sh present
+[doctrine-bootstrap] ok:   knowledge-map/scripts/check_knowledge_map.sh present
+[doctrine-bootstrap] ok:   knowledge-map/scripts/query_knowledge_map.sh present
+[doctrine-bootstrap] ok:   scripts/check_isf_reference_partitions.pl executable
+[doctrine-bootstrap] ok:   scripts/focused_document_index.pl executable
+[doctrine-bootstrap] ok:   knowledge-map/scripts/knowledge_map.pl executable
+[doctrine-bootstrap] ok:   knowledge-map/scripts/gen_knowledge_map.sh executable
+[doctrine-bootstrap] ok:   knowledge-map/scripts/check_knowledge_map.sh executable
+[doctrine-bootstrap] ok:   knowledge-map/scripts/query_knowledge_map.sh executable
+[doctrine-bootstrap] ok:   .githooks/pre-commit refreshes the focused-document index
+[doctrine-bootstrap] ok:   doctrine registry includes bounded Knowledge Map verification
+[doctrine-bootstrap] ok:   live-document adapter invokes its verifier runner
+[doctrine-bootstrap] ok:   live-document adapter invokes its route-candidate scanner
+[doctrine-bootstrap] ok:   live-document adapter checks staged/resulting-tree agreement
+[doctrine-bootstrap] ok:   live-document adapter checks maintained-reference aggregate authority
+[doctrine-bootstrap] ok:   live-document adapter and neutral core require retention contracts
+[doctrine-bootstrap] ok:   live-document adapter and neutral core require ledger manifests
+[doctrine-bootstrap] ok:   live-document adapter/core require derived-state contracts
+[doctrine-bootstrap] ok:   hosted CI invokes the doctrine driver without re-enumerating live-document checks
+[doctrine-bootstrap] ok:   AGENTS.md points at README.md
+[doctrine-bootstrap] ok:   AGENTS.md points at MEMORY_ARCHITECTURE.md
+[doctrine-bootstrap] ok:   AGENTS.md points at DOCTRINE_ENFORCEMENT.md
+[doctrine-bootstrap] ok:   AGENTS.md points at TOOLBOX.md
+[doctrine-bootstrap] ok:   CLAUDE.md points at README.md
+[doctrine-bootstrap] ok:   CLAUDE.md points at MEMORY_ARCHITECTURE.md
+[doctrine-bootstrap] ok:   CLAUDE.md points at DOCTRINE_ENFORCEMENT.md
+[doctrine-bootstrap] ok:   CLAUDE.md points at TOOLBOX.md
+[doctrine-bootstrap] ok:   GEMINI.md points at README.md
+[doctrine-bootstrap] ok:   GEMINI.md points at MEMORY_ARCHITECTURE.md
+[doctrine-bootstrap] ok:   GEMINI.md points at DOCTRINE_ENFORCEMENT.md
+[doctrine-bootstrap] ok:   GEMINI.md points at TOOLBOX.md
+[doctrine-bootstrap] ok:   .cursorrules points at README.md
+[doctrine-bootstrap] ok:   .cursorrules points at MEMORY_ARCHITECTURE.md
+[doctrine-bootstrap] ok:   .cursorrules points at DOCTRINE_ENFORCEMENT.md
+[doctrine-bootstrap] ok:   .cursorrules points at TOOLBOX.md
+[doctrine-bootstrap] ok:   .windsurfrules points at README.md
+[doctrine-bootstrap] ok:   .windsurfrules points at MEMORY_ARCHITECTURE.md
+[doctrine-bootstrap] ok:   .windsurfrules points at DOCTRINE_ENFORCEMENT.md
+[doctrine-bootstrap] ok:   .windsurfrules points at TOOLBOX.md
+[doctrine-bootstrap] ok:   .github/copilot-instructions.md points at README.md
+[doctrine-bootstrap] ok:   .github/copilot-instructions.md points at MEMORY_ARCHITECTURE.md
+[doctrine-bootstrap] ok:   .github/copilot-instructions.md points at DOCTRINE_ENFORCEMENT.md
+[doctrine-bootstrap] ok:   .github/copilot-instructions.md points at TOOLBOX.md
+[doctrine-bootstrap] ok:   CHANGES.md retired and absent
+[doctrine-bootstrap] ok:   LIVE_ACHIEVEMENT_STATUS.md retired and absent
+[doctrine-bootstrap] ok:   ROADMAP_STATUS.md retired and absent
+[doctrine-bootstrap] ok:   WARP.md retired and absent
+[doctrine-bootstrap] ok:   .githooks/pre-commit runs scripts/check_doctrines.sh
+[doctrine-bootstrap] ok:   .github/workflows/regression.yml runs scripts/check_doctrines.sh
+[doctrine-bootstrap] all doctrine bootstrap invariants hold
+[doctrine] PASS: DOCTRINE-BOOTSTRAP
+[doctrine] RUN:  MEMORY-ARCH - Durable memory architecture, bounded MEMORY.md, bootstrap pointers, task-tree and decision stores
+[memory-arch] ok:   MEMORY_ARCHITECTURE.md present
+[memory-arch] ok:   MEMORY.md is 14 lines (<= cap 120)
+[memory-arch] ok:   MEMORY.md resume fields are each <= 5 lines
+[memory-arch] ok:   AGENTS.md points at MEMORY_ARCHITECTURE.md
+[memory-arch] ok:   CLAUDE.md points at MEMORY_ARCHITECTURE.md
+[memory-arch] ok:   docs/decisions/ + INDEX.md present
+[memory-arch] ok:   docs/tasks/ + docs/TASK_TREE.md present
+[memory-arch] all memory-architecture invariants hold
+[doctrine] PASS: MEMORY-ARCH
+[doctrine] RUN:  KNOWLEDGE-MAP - Knowledge Map cards, bounded root/shards, freshness, coverage, and query parity hold
+knowledge-map: OK (1264 facts, 6932 unique questions, 7109 answer occurrences, 183 bounded topic shards; query parity verified)
+[doctrine] PASS: KNOWLEDGE-MAP
+[doctrine] RUN:  DOC-PATHS - Live docs and Knowledge Map avoid machine-local absolute paths
+t/1414-docs-relative-paths-audit.t .. ok
+All tests successful.
+Files=1, Tests=2,  1 wallclock secs ( 0.00 usr  0.01 sys +  0.15 cusr  0.19 csys =  0.35 CPU)
+Result: PASS
+[doctrine] PASS: DOC-PATHS
+[doctrine] RUN:  LIVE-DOCUMENT-SIZE - Every declared live-document surface stays local, covered, lifecycle-valid, and within owned pressure controls
+decision-records: authenticated originals, current records, compatibility and indexes verified
+decision-records: authenticated originals, current records, compatibility and indexes verified
+retired-changes-history: exact 329d7cf1b09319899fb59cc9863cdfffddfa40dc:CHANGES.md recovery and zero live consumers verified
+retired-achievement-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:LIVE_ACHIEVEMENT_STATUS.md recovery and zero live consumers verified
+retired-roadmap-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:ROADMAP_STATUS.md recovery and zero live consumers verified
+roadmap-history: exact activation source recovery and bounded live direction verified
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+live-doc-route-candidates: all emitted author-overflow routes are declared (4 hints)
+live-doc-resulting-tree: staged result and checked worktree agree on controlled paths
+live-doc-size: ok:   derived-state contract active_resume_repository_head derives repository_head on read from repository HEAD
+live-doc-size: ok:   derived-state contract memory_architecture_repository_head derives repository_head on read from repository HEAD
+[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12 has non-container status in_progress
+[task-tree-integrity] active task-tree invariants failed
+live-doc-size: derived-state contract active_task_index_frontier core verifier failed (exit 1): scripts/check_task_tree_integrity.pl
+live-doc-size: ok:   surface readme_entrypoint: actual files=1, lines_each=240, bytes_each=9922, line_bytes_each=121, lines_total=240, bytes_total=9922; health target files=1, lines_each=275, bytes_each=12288, line_bytes_each=512, lines_total=275, bytes_total=12288; inclusive enforcement ceiling files=1, lines_each=245, bytes_each=9931, line_bytes_each=512, lines_total=245, bytes_total=9931; target peak 87.3%, ceiling peak 99.9% (warning_debt, pinned_deferred)
+live-doc-size: ok:   surface root_documents: actual files=19, lines_each=1200, bytes_each=73413, line_bytes_each=524, lines_total=4640, bytes_total=266615; health target files=24, lines_each=1200, bytes_each=81920, line_bytes_each=1024, lines_total=8000, bytes_total=524288; inclusive enforcement ceiling files=24, lines_each=1200, bytes_each=81920, line_bytes_each=1024, lines_total=8000, bytes_total=524288; target peak 100.0%, ceiling peak 100.0% (rollover_debt, pinned_deferred)
+live-doc-size: ok:   surface root_documents collection index declares complete registry-target query
+live-doc-size: ok:   surface focused_documents: actual files=1010, lines_each=2251, bytes_each=172995, line_bytes_each=789, lines_total=203356, bytes_total=8802519; health target files=1280, lines_each=5000, bytes_each=262144, line_bytes_each=1024, lines_total=250000, bytes_total=12582912; inclusive enforcement ceiling files=1280, lines_each=5000, bytes_each=262144, line_bytes_each=1024, lines_total=210000, bytes_total=9000000; target peak 81.3%, ceiling peak 97.8% (warning_debt, migrated)
+live-doc-size: ok:   surface ancillary_documents: actual files=16, lines_each=502, bytes_each=21728, line_bytes_each=780, lines_total=1811, bytes_total=93084; health target files=32, lines_each=640, bytes_each=32768, line_bytes_each=1024, lines_total=2000, bytes_total=131072; inclusive enforcement ceiling files=32, lines_each=640, bytes_each=32768, line_bytes_each=1024, lines_total=2000, bytes_total=131072; target peak 90.5%, ceiling peak 90.5% (rollover_debt, steady)
+focused-document-index: current (1026 members; 1101 lines; 150305 bytes)
+live-doc-size: ok:   surface focused_document_index freshness core verifier executed: scripts/focused_document_index.pl
+live-doc-size: ok:   surface focused_document_index: actual files=1, lines_each=1101, bytes_each=150305, line_bytes_each=271, lines_total=1101, bytes_total=150305; health target files=1, lines_each=1400, bytes_each=196608, line_bytes_each=1024, lines_total=1400, bytes_total=196608; inclusive enforcement ceiling files=1, lines_each=1400, bytes_each=196608, line_bytes_each=1024, lines_total=1400, bytes_total=196608; target peak 78.6%, ceiling peak 78.6% (normal, migrated)
+live-doc-size: ok:   surface isf_reference mandatory read docs/ISF_SPEC.md is 27 lines/1981 bytes; navigation depth 1
+live-doc-size: ok:   surface isf_reference: maintained reference actual files=14, lines_each=2474, bytes_each=173009, line_bytes_each=318, lines_total=15512, bytes_total=946468; per-part health target lines_each=5000, bytes_each=425984, line_bytes_each=1024; inclusive per-part ceiling lines_each=5000, bytes_each=425984, line_bytes_each=1024; aggregate authority CONDITIONAL-ORIGIN-FILES-20261002-ISF-REFERENCE; target peak 49.5%, ceiling peak 49.5% (normal, migrated)
+live-doc-size: ok:   surface isf_reference collection index membership checked
+live-doc-size: ok:   surface shipped_behavior mandatory read docs/book/src/SUMMARY.md is 64 lines/3988 bytes; navigation depth 1
+live-doc-size: ok:   surface shipped_behavior: maintained reference actual files=64, lines_each=4681, bytes_each=282517, line_bytes_each=7542, lines_total=67484, bytes_total=3734689; per-part health target lines_each=5000, bytes_each=409600, line_bytes_each=1024; inclusive per-part ceiling lines_each=5000, bytes_each=409600, line_bytes_each=8566; aggregate authority PREPARED-RESERVATION-CAUSE-REPAIR-20261003-SHIPPED-BEHAVIOR; target peak 736.5%, ceiling peak 93.6% (rollover_debt, pinned_deferred)
+live-doc-size: ok:   surface shipped_behavior collection index membership checked
+live-doc-size: ok:   surface reported_capabilities: query terminal bin/fsmgen
+live-doc-size: ok:   surface high_level_direction: actual files=1, lines_each=332, bytes_each=15745, line_bytes_each=182, lines_total=332, bytes_total=15745; health target files=1, lines_each=640, bytes_each=32768, line_bytes_each=512, lines_total=640, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=640, bytes_each=32768, line_bytes_each=512, lines_total=640, bytes_total=32768; target peak 51.9%, ceiling peak 51.9% (normal, migrated)
+live-doc-size: ok:   surface active_resume: actual files=1, lines_each=14, bytes_each=1071, line_bytes_each=224, lines_total=14, bytes_total=1071; health target files=1, lines_each=150, bytes_each=32768, line_bytes_each=512, lines_total=150, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=150, bytes_each=32768, line_bytes_each=512, lines_total=150, bytes_total=32768; target peak 43.8%, ceiling peak 43.8% (normal, steady)
+live-doc-size: ok:   surface active_index: actual files=1, lines_each=586, bytes_each=40078, line_bytes_each=768, lines_total=586, bytes_total=40078; health target files=1, lines_each=1200, bytes_each=81920, line_bytes_each=2048, lines_total=1200, bytes_total=81920; inclusive enforcement ceiling files=1, lines_each=1200, bytes_each=81920, line_bytes_each=2048, lines_total=1200, bytes_total=81920; target peak 48.9%, ceiling peak 48.9% (normal, migrated)
+[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12 has non-container status in_progress
+[task-tree-integrity] active task-tree invariants failed
+live-doc-size: surface active_index currency active_task_tree_alignment core verifier failed (exit 1): scripts/check_task_tree_integrity.pl
+live-doc-size: ok:   surface task_evidence: actual files=596, lines_each=6882, bytes_each=2366453, line_bytes_each=6264, lines_total=117096, bytes_total=12416991; health target files=768, lines_each=8000, bytes_each=4194304, line_bytes_each=8192, lines_total=150000, bytes_total=16777216; inclusive enforcement ceiling files=768, lines_each=8000, bytes_each=4194304, line_bytes_each=8192, lines_total=150000, bytes_total=16777216; target peak 86.0%, ceiling peak 86.0% (warning_debt, migrated)
+live-doc-size: ok:   surface task_evidence collection index declares complete registry-target query
+live-doc-size: ok:   surface rationale: actual files=68, lines_each=511, bytes_each=32771, line_bytes_each=795, lines_total=8070, bytes_total=492527; health target files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; inclusive enforcement ceiling files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; target peak 80.7%, ceiling peak 80.7% (warning_debt, migrated)
+live-doc-size: ok:   surface rationale collection index membership checked
+live-doc-size: ok:   surface engineering_rationale: actual files=1, lines_each=1200, bytes_each=73413, line_bytes_each=115, lines_total=1200, bytes_total=73413; health target files=1, lines_each=2000, bytes_each=131072, line_bytes_each=1024, lines_total=2000, bytes_total=131072; inclusive enforcement ceiling files=1, lines_each=2000, bytes_each=131072, line_bytes_each=1024, lines_total=2000, bytes_total=131072; target peak 60.0%, ceiling peak 60.0% (normal, migrated)
+live-doc-size: ok:   surface knowledge_cards: actual files=1258, lines_each=422, bytes_each=31755, line_bytes_each=819, lines_total=52957, bytes_total=3873317; health target files=1536, lines_each=512, bytes_each=32768, line_bytes_each=1024, lines_total=65536, bytes_total=4194304; inclusive enforcement ceiling files=1536, lines_each=512, bytes_each=32768, line_bytes_each=1024, lines_total=65536, bytes_total=4194304; target peak 96.9%, ceiling peak 96.9% (rollover_debt, migrated)
+knowledge-map: OK (1264 facts, 6932 unique questions, 7109 answer occurrences, 183 bounded topic shards; query parity verified)
+live-doc-size: ok:   surface fact_index freshness core verifier executed: knowledge-map/scripts/check_knowledge_map.sh
+live-doc-size: ok:   surface fact_index: actual files=1, lines_each=201, bytes_each=17405, line_bytes_each=141, lines_total=201, bytes_total=17405; health target files=1, lines_each=512, bytes_each=45056, line_bytes_each=1024, lines_total=512, bytes_total=45056; inclusive enforcement ceiling files=1, lines_each=512, bytes_each=45056, line_bytes_each=1024, lines_total=512, bytes_total=45056; target peak 39.3%, ceiling peak 39.3% (normal, migrated)
+knowledge-map: OK (1264 facts, 6932 unique questions, 7109 answer occurrences, 183 bounded topic shards; query parity verified)
+live-doc-size: ok:   surface fact_index_shards freshness core verifier executed: knowledge-map/scripts/check_knowledge_map.sh
+live-doc-size: ok:   surface fact_index_shards: actual files=183, lines_each=2583, bytes_each=317593, line_bytes_each=625, lines_total=17427, bytes_total=1946969; health target files=256, lines_each=4096, bytes_each=524288, line_bytes_each=1024, lines_total=50000, bytes_total=4194304; inclusive enforcement ceiling files=256, lines_each=4096, bytes_each=524288, line_bytes_each=1024, lines_total=50000, bytes_total=8388608; target peak 71.5%, ceiling peak 71.5% (normal, migrated)
+live-doc-size: ok:   surface fact_index_shards collection index membership checked
+live-doc-size: ok:   surface exact_history: archive terminal .git
+live-doc-size: ok:   surface diagnostics: actual files=1, lines_each=331, bytes_each=15265, line_bytes_each=506, lines_total=331, bytes_total=15265; health target files=1, lines_each=768, bytes_each=32768, line_bytes_each=1024, lines_total=768, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=768, bytes_each=32768, line_bytes_each=1024, lines_total=768, bytes_total=32768; target peak 49.4%, ceiling peak 49.4% (normal, steady)
+live-doc-size: ok:   surface enforced_rules: actual files=1, lines_each=277, bytes_each=17041, line_bytes_each=524, lines_total=277, bytes_total=17041; health target files=1, lines_each=576, bytes_each=32768, line_bytes_each=1024, lines_total=576, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=576, bytes_each=32768, line_bytes_each=1024, lines_total=576, bytes_total=32768; target peak 52.0%, ceiling peak 52.0% (normal, steady)
+live-doc-size: ok:   surface live_document_review: actual files=1, lines_each=76, bytes_each=3997, line_bytes_each=235, lines_total=76, bytes_total=3997; health target files=1, lines_each=100, bytes_each=5120, line_bytes_each=512, lines_total=100, bytes_total=5120; inclusive enforcement ceiling files=1, lines_each=100, bytes_each=5120, line_bytes_each=512, lines_total=100, bytes_total=5120; target peak 78.1%, ceiling peak 78.1% (normal, steady)
+live-doc-size: ok:   surface external_review_packet: frozen identity checked
+live-doc-size: ok:   surface vial_reference mandatory read docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md is 18 lines/1156 bytes; navigation depth 1
+live-doc-size: ok:   surface vial_reference: maintained reference actual files=5, lines_each=456, bytes_each=25114, line_bytes_each=188, lines_total=1512, bytes_total=77724; per-part health target lines_each=512, bytes_each=32768, line_bytes_each=512; inclusive per-part ceiling lines_each=532, bytes_each=34816, line_bytes_each=640; aggregate authority VIAL-EMPTY-READINESS-20260924-SPEC; target peak 89.1%, ceiling peak 85.7% (warning_debt, steady)
+live-doc-size: ok:   surface vial_reference collection index membership checked
+live-doc-size: ok:   surface release_readback_plan: actual files=1, lines_each=109, bytes_each=6964, line_bytes_each=237, lines_total=109, bytes_total=6964; health target files=1, lines_each=160, bytes_each=10240, line_bytes_each=512, lines_total=160, bytes_total=10240; inclusive enforcement ceiling files=1, lines_each=160, bytes_each=10240, line_bytes_each=512, lines_total=160, bytes_total=10240; target peak 68.1%, ceiling peak 68.1% (normal, steady)
+live-doc-size: ok:   surface compiler_census_procedure: actual files=1, lines_each=79, bytes_each=4945, line_bytes_each=147, lines_total=79, bytes_total=4945; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 61.7%, ceiling peak 61.7% (normal, steady)
+live-doc-size: ok:   surface isf_rule_admission_replay: actual files=1, lines_each=102, bytes_each=6508, line_bytes_each=150, lines_total=102, bytes_total=6508; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 79.7%, ceiling peak 79.7% (normal, steady)
+live-doc-size: ok:   surface decision_originals: archive terminal docs/decisions/history
+live-doc-size: ok:   surface decision_archive_view freshness adapter verifier execution proved: surface:decision_archive_view
+live-doc-size: ok:   surface decision_archive_view: actual files=1, lines_each=3644, bytes_each=180920, line_bytes_each=365, lines_total=3644, bytes_total=180920; health target files=1, lines_each=5120, bytes_each=262144, line_bytes_each=1024, lines_total=5120, bytes_total=262144; inclusive enforcement ceiling files=1, lines_each=5120, bytes_each=262144, line_bytes_each=1024, lines_total=5120, bytes_total=262144; target peak 71.2%, ceiling peak 71.2% (normal, steady)
+live-doc-size: ok:   surface native_group_discriminator_procedure: actual files=1, lines_each=50, bytes_each=2845, line_bytes_each=121, lines_total=50, bytes_total=2845; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 39.1%, ceiling peak 39.1% (normal, steady)
+live-doc-size: ok:   surface native_group_witness_procedure: actual files=1, lines_each=102, bytes_each=5882, line_bytes_each=91, lines_total=102, bytes_total=5882; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 79.7%, ceiling peak 79.7% (normal, steady)
+live-doc-size: ok:   surface decision_compatibility freshness adapter verifier execution proved: surface:decision_compatibility
+live-doc-size: ok:   surface decision_compatibility: actual files=115, lines_each=130, bytes_each=42915, line_bytes_each=530, lines_total=3270, bytes_total=146284; health target files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; inclusive enforcement ceiling files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; target peak 89.8%, ceiling peak 89.8% (warning_debt, migrated)
+live-doc-size: ok:   surface decision_compatibility collection index declares complete registry-target query
+live-doc-size: ok:   surface decision_transition_index: frozen identity checked
+live-doc-size: ok:   containment pressure migrated: 12 surface(s), target peak 96.9%, ceiling peak 97.8% [active_index,decision_compatibility,engineering_rationale,fact_index,fact_index_shards,focused_document_index,focused_documents,high_level_direction,isf_reference,knowledge_cards,rationale,task_evidence]
+live-doc-size: ok:   containment pressure pinned_deferred: 3 surface(s), target peak 736.5%, ceiling peak 100.0% [readme_entrypoint,root_documents,shipped_behavior]
+live-doc-size: ok:   containment pressure steady: 12 surface(s), target peak 90.5%, ceiling peak 90.5% [active_resume,ancillary_documents,compiler_census_procedure,decision_archive_view,diagnostics,enforced_rules,isf_rule_admission_replay,live_document_review,native_group_discriminator_procedure,native_group_witness_procedure,release_readback_plan,vial_reference]
+live-doc-size: ok:   surface focused_documents collection index is generated by surface focused_document_index
+live-doc-size: ok:   surface ancillary_documents collection index is generated by surface focused_document_index
+live-doc-size: ok:   surface knowledge_cards collection index is generated by surface fact_index
+live-doc-size: ok:   evidence map external_review_packet resolves 17 path(s)
+live-doc-size: ok:   evidence map external_review_disposition resolves 5 path(s)
+live-doc-size: ok:   archive descriptor changes-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:changes-retired-2026-08-01
+live-doc-size: ok:   archive descriptor achievement-status-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:achievement-status-retired-2026-08-01
+live-doc-size: ok:   archive descriptor roadmap-status-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:roadmap-status-retired-2026-08-01
+live-doc-size: ok:   archive descriptor roadmap-v2-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:roadmap-v2-pre-containment-2026-08-01
+live-doc-size: ok:   archive descriptor engineering-rationale-source-2026-08-01 version retrieval adapter verifier execution proved: archive:engineering-rationale-source-2026-08-01
+live-doc-size: ok:   archive descriptor engineering-rationale-range-0001 version retrieval adapter verifier execution proved: archive:engineering-rationale-range-0001
+live-doc-size: ok:   archive descriptor knowledge-ial2-priority-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-ial2-priority-pre-containment-2026-08-01
+live-doc-size: ok:   archive descriptor knowledge-ial2-next-slice-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-ial2-next-slice-pre-containment-2026-08-01
+live-doc-size: ok:   archive descriptor knowledge-direct-vhdl-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-direct-vhdl-pre-containment-2026-08-01
+live-doc-size: ok:   archive descriptor knowledge-vial-execution-scale-reachability-pre-partition-2026-08-20 version retrieval adapter verifier execution proved: archive:knowledge-vial-execution-scale-reachability-pre-partition-2026-08-20
+live-doc-size: ok:   archive descriptor isf-spec-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-spec-pre-partition-2026-08-01
+live-doc-size: ok:   archive descriptor isf-downstream-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-downstream-pre-partition-2026-08-01
+live-doc-size: ok:   archive descriptor isf-public-interface-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-public-interface-pre-partition-2026-08-01
+live-doc-size: ok:   ledger engineering_rationale reconstruction adapter verifier execution proved: ledger:engineering_rationale
+live-doc-size: ok:   ledger engineering_rationale: 2907 ordered whole entries reconstructed across 2 range(s); live sealed 0/0/0
+live-doc-size: ok:   coverage: 3352/3352 declared document path(s)
+live-doc-reference-authority: all maintained-reference aggregate invariants hold (3 reference(s), 1 changed, mode staged)
+live-doc-ceiling-authority: all ceiling-change invariants hold (0 increase(s), mode staged)
+[doctrine] FAIL: LIVE-DOCUMENT-SIZE
+[doctrine] RUN:  README-ENTRYPOINT - README.md and every routed destination stay pressure-controlled discovery surfaces
+readme-entrypoint: ok:   README.md is 240 lines (<= cap 245)
+readme-entrypoint: ok:   README.md is 9922 bytes (<= cap 9931)
+readme-entrypoint: ok:   no line enumerates more than 1 narrated work-unit leaf reference(s)
+readme-entrypoint: ok:   route shipped_behavior: reader_navigation README.md marker -> shipped_behavior
+readme-entrypoint: ok:   route reported_capabilities: reader_navigation README.md marker -> reported_capabilities
+readme-entrypoint: ok:   route high_level_direction: reader_navigation README.md marker -> high_level_direction
+readme-entrypoint: ok:   route active_resume: reader_navigation README.md marker -> active_resume
+readme-entrypoint: ok:   route active_index: reader_navigation README.md marker -> active_index
+readme-entrypoint: ok:   route task_evidence: reader_navigation README.md marker -> task_evidence
+readme-entrypoint: ok:   route rationale: reader_navigation README.md marker -> rationale
+readme-entrypoint: ok:   route engineering_rationale: reader_navigation README.md marker -> engineering_rationale
+readme-entrypoint: ok:   route fact_index: reader_navigation README.md marker -> fact_index
+readme-entrypoint: ok:   route exact_history: reader_navigation README.md marker -> exact_history
+readme-entrypoint: ok:   route diagnostics: reader_navigation README.md marker -> diagnostics
+readme-entrypoint: ok:   route enforced_rules: reader_navigation README.md marker -> enforced_rules
+readme-entrypoint: ok:   route author_task_evidence: author_overflow scripts/check_readme_entrypoint.sh marker -> task_evidence
+readme-entrypoint: ok:   route author_rationale: author_overflow scripts/check_readme_entrypoint.sh marker -> rationale
+readme-entrypoint: ok:   route author_shipped_behavior: author_overflow scripts/check_readme_entrypoint.sh marker -> shipped_behavior
+readme-entrypoint: ok:   route author_exact_history: author_overflow scripts/check_readme_entrypoint.sh marker -> exact_history
+decision-records: authenticated originals, current records, compatibility and indexes verified
+decision-records: authenticated originals, current records, compatibility and indexes verified
+retired-changes-history: exact 329d7cf1b09319899fb59cc9863cdfffddfa40dc:CHANGES.md recovery and zero live consumers verified
+retired-achievement-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:LIVE_ACHIEVEMENT_STATUS.md recovery and zero live consumers verified
+retired-roadmap-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:ROADMAP_STATUS.md recovery and zero live consumers verified
+roadmap-history: exact activation source recovery and bounded live direction verified
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+live-doc-route-candidates: all emitted author-overflow routes are declared (4 hints)
+live-doc-resulting-tree: staged result and checked worktree agree on controlled paths
+live-doc-size: ok:   derived-state contract active_resume_repository_head derives repository_head on read from repository HEAD
+live-doc-size: ok:   derived-state contract memory_architecture_repository_head derives repository_head on read from repository HEAD
+[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12 has non-container status in_progress
+[task-tree-integrity] active task-tree invariants failed
+live-doc-size: derived-state contract active_task_index_frontier core verifier failed (exit 1): scripts/check_task_tree_integrity.pl
+live-doc-size: ok:   surface readme_entrypoint: actual files=1, lines_each=240, bytes_each=9922, line_bytes_each=121, lines_total=240, bytes_total=9922; health target files=1, lines_each=275, bytes_each=12288, line_bytes_each=512, lines_total=275, bytes_total=12288; inclusive enforcement ceiling files=1, lines_each=245, bytes_each=9931, line_bytes_each=512, lines_total=245, bytes_total=9931; target peak 87.3%, ceiling peak 99.9% (warning_debt, pinned_deferred)
+live-doc-size: ok:   surface root_documents: actual files=19, lines_each=1200, bytes_each=73413, line_bytes_each=524, lines_total=4640, bytes_total=266615; health target files=24, lines_each=1200, bytes_each=81920, line_bytes_each=1024, lines_total=8000, bytes_total=524288; inclusive enforcement ceiling files=24, lines_each=1200, bytes_each=81920, line_bytes_each=1024, lines_total=8000, bytes_total=524288; target peak 100.0%, ceiling peak 100.0% (rollover_debt, pinned_deferred)
+live-doc-size: ok:   surface root_documents collection index declares complete registry-target query
+live-doc-size: ok:   surface focused_documents: actual files=1010, lines_each=2251, bytes_each=172995, line_bytes_each=789, lines_total=203356, bytes_total=8802519; health target files=1280, lines_each=5000, bytes_each=262144, line_bytes_each=1024, lines_total=250000, bytes_total=12582912; inclusive enforcement ceiling files=1280, lines_each=5000, bytes_each=262144, line_bytes_each=1024, lines_total=210000, bytes_total=9000000; target peak 81.3%, ceiling peak 97.8% (warning_debt, migrated)
+live-doc-size: ok:   surface ancillary_documents: actual files=16, lines_each=502, bytes_each=21728, line_bytes_each=780, lines_total=1811, bytes_total=93084; health target files=32, lines_each=640, bytes_each=32768, line_bytes_each=1024, lines_total=2000, bytes_total=131072; inclusive enforcement ceiling files=32, lines_each=640, bytes_each=32768, line_bytes_each=1024, lines_total=2000, bytes_total=131072; target peak 90.5%, ceiling peak 90.5% (rollover_debt, steady)
+focused-document-index: current (1026 members; 1101 lines; 150305 bytes)
+live-doc-size: ok:   surface focused_document_index freshness core verifier executed: scripts/focused_document_index.pl
+live-doc-size: ok:   surface focused_document_index: actual files=1, lines_each=1101, bytes_each=150305, line_bytes_each=271, lines_total=1101, bytes_total=150305; health target files=1, lines_each=1400, bytes_each=196608, line_bytes_each=1024, lines_total=1400, bytes_total=196608; inclusive enforcement ceiling files=1, lines_each=1400, bytes_each=196608, line_bytes_each=1024, lines_total=1400, bytes_total=196608; target peak 78.6%, ceiling peak 78.6% (normal, migrated)
+live-doc-size: ok:   surface isf_reference mandatory read docs/ISF_SPEC.md is 27 lines/1981 bytes; navigation depth 1
+live-doc-size: ok:   surface isf_reference: maintained reference actual files=14, lines_each=2474, bytes_each=173009, line_bytes_each=318, lines_total=15512, bytes_total=946468; per-part health target lines_each=5000, bytes_each=425984, line_bytes_each=1024; inclusive per-part ceiling lines_each=5000, bytes_each=425984, line_bytes_each=1024; aggregate authority CONDITIONAL-ORIGIN-FILES-20261002-ISF-REFERENCE; target peak 49.5%, ceiling peak 49.5% (normal, migrated)
+live-doc-size: ok:   surface isf_reference collection index membership checked
+live-doc-size: ok:   surface shipped_behavior mandatory read docs/book/src/SUMMARY.md is 64 lines/3988 bytes; navigation depth 1
+live-doc-size: ok:   surface shipped_behavior: maintained reference actual files=64, lines_each=4681, bytes_each=282517, line_bytes_each=7542, lines_total=67484, bytes_total=3734689; per-part health target lines_each=5000, bytes_each=409600, line_bytes_each=1024; inclusive per-part ceiling lines_each=5000, bytes_each=409600, line_bytes_each=8566; aggregate authority PREPARED-RESERVATION-CAUSE-REPAIR-20261003-SHIPPED-BEHAVIOR; target peak 736.5%, ceiling peak 93.6% (rollover_debt, pinned_deferred)
+live-doc-size: ok:   surface shipped_behavior collection index membership checked
+live-doc-size: ok:   surface reported_capabilities: query terminal bin/fsmgen
+live-doc-size: ok:   surface high_level_direction: actual files=1, lines_each=332, bytes_each=15745, line_bytes_each=182, lines_total=332, bytes_total=15745; health target files=1, lines_each=640, bytes_each=32768, line_bytes_each=512, lines_total=640, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=640, bytes_each=32768, line_bytes_each=512, lines_total=640, bytes_total=32768; target peak 51.9%, ceiling peak 51.9% (normal, migrated)
+live-doc-size: ok:   surface active_resume: actual files=1, lines_each=14, bytes_each=1071, line_bytes_each=224, lines_total=14, bytes_total=1071; health target files=1, lines_each=150, bytes_each=32768, line_bytes_each=512, lines_total=150, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=150, bytes_each=32768, line_bytes_each=512, lines_total=150, bytes_total=32768; target peak 43.8%, ceiling peak 43.8% (normal, steady)
+live-doc-size: ok:   surface active_index: actual files=1, lines_each=586, bytes_each=40078, line_bytes_each=768, lines_total=586, bytes_total=40078; health target files=1, lines_each=1200, bytes_each=81920, line_bytes_each=2048, lines_total=1200, bytes_total=81920; inclusive enforcement ceiling files=1, lines_each=1200, bytes_each=81920, line_bytes_each=2048, lines_total=1200, bytes_total=81920; target peak 48.9%, ceiling peak 48.9% (normal, migrated)
+[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12 has non-container status in_progress
+[task-tree-integrity] active task-tree invariants failed
+live-doc-size: surface active_index currency active_task_tree_alignment core verifier failed (exit 1): scripts/check_task_tree_integrity.pl
+live-doc-size: ok:   surface task_evidence: actual files=596, lines_each=6882, bytes_each=2366453, line_bytes_each=6264, lines_total=117096, bytes_total=12416991; health target files=768, lines_each=8000, bytes_each=4194304, line_bytes_each=8192, lines_total=150000, bytes_total=16777216; inclusive enforcement ceiling files=768, lines_each=8000, bytes_each=4194304, line_bytes_each=8192, lines_total=150000, bytes_total=16777216; target peak 86.0%, ceiling peak 86.0% (warning_debt, migrated)
+live-doc-size: ok:   surface task_evidence collection index declares complete registry-target query
+live-doc-size: ok:   surface rationale: actual files=68, lines_each=511, bytes_each=32771, line_bytes_each=795, lines_total=8070, bytes_total=492527; health target files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; inclusive enforcement ceiling files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; target peak 80.7%, ceiling peak 80.7% (warning_debt, migrated)
+live-doc-size: ok:   surface rationale collection index membership checked
+live-doc-size: ok:   surface engineering_rationale: actual files=1, lines_each=1200, bytes_each=73413, line_bytes_each=115, lines_total=1200, bytes_total=73413; health target files=1, lines_each=2000, bytes_each=131072, line_bytes_each=1024, lines_total=2000, bytes_total=131072; inclusive enforcement ceiling files=1, lines_each=2000, bytes_each=131072, line_bytes_each=1024, lines_total=2000, bytes_total=131072; target peak 60.0%, ceiling peak 60.0% (normal, migrated)
+live-doc-size: ok:   surface knowledge_cards: actual files=1258, lines_each=422, bytes_each=31755, line_bytes_each=819, lines_total=52957, bytes_total=3873317; health target files=1536, lines_each=512, bytes_each=32768, line_bytes_each=1024, lines_total=65536, bytes_total=4194304; inclusive enforcement ceiling files=1536, lines_each=512, bytes_each=32768, line_bytes_each=1024, lines_total=65536, bytes_total=4194304; target peak 96.9%, ceiling peak 96.9% (rollover_debt, migrated)
+knowledge-map: OK (1264 facts, 6932 unique questions, 7109 answer occurrences, 183 bounded topic shards; query parity verified)
+live-doc-size: ok:   surface fact_index freshness core verifier executed: knowledge-map/scripts/check_knowledge_map.sh
+live-doc-size: ok:   surface fact_index: actual files=1, lines_each=201, bytes_each=17405, line_bytes_each=141, lines_total=201, bytes_total=17405; health target files=1, lines_each=512, bytes_each=45056, line_bytes_each=1024, lines_total=512, bytes_total=45056; inclusive enforcement ceiling files=1, lines_each=512, bytes_each=45056, line_bytes_each=1024, lines_total=512, bytes_total=45056; target peak 39.3%, ceiling peak 39.3% (normal, migrated)
+knowledge-map: OK (1264 facts, 6932 unique questions, 7109 answer occurrences, 183 bounded topic shards; query parity verified)
+live-doc-size: ok:   surface fact_index_shards freshness core verifier executed: knowledge-map/scripts/check_knowledge_map.sh
+live-doc-size: ok:   surface fact_index_shards: actual files=183, lines_each=2583, bytes_each=317593, line_bytes_each=625, lines_total=17427, bytes_total=1946969; health target files=256, lines_each=4096, bytes_each=524288, line_bytes_each=1024, lines_total=50000, bytes_total=4194304; inclusive enforcement ceiling files=256, lines_each=4096, bytes_each=524288, line_bytes_each=1024, lines_total=50000, bytes_total=8388608; target peak 71.5%, ceiling peak 71.5% (normal, migrated)
+live-doc-size: ok:   surface fact_index_shards collection index membership checked
+live-doc-size: ok:   surface exact_history: archive terminal .git
+live-doc-size: ok:   surface diagnostics: actual files=1, lines_each=331, bytes_each=15265, line_bytes_each=506, lines_total=331, bytes_total=15265; health target files=1, lines_each=768, bytes_each=32768, line_bytes_each=1024, lines_total=768, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=768, bytes_each=32768, line_bytes_each=1024, lines_total=768, bytes_total=32768; target peak 49.4%, ceiling peak 49.4% (normal, steady)
+live-doc-size: ok:   surface enforced_rules: actual files=1, lines_each=277, bytes_each=17041, line_bytes_each=524, lines_total=277, bytes_total=17041; health target files=1, lines_each=576, bytes_each=32768, line_bytes_each=1024, lines_total=576, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=576, bytes_each=32768, line_bytes_each=1024, lines_total=576, bytes_total=32768; target peak 52.0%, ceiling peak 52.0% (normal, steady)
+live-doc-size: ok:   surface live_document_review: actual files=1, lines_each=76, bytes_each=3997, line_bytes_each=235, lines_total=76, bytes_total=3997; health target files=1, lines_each=100, bytes_each=5120, line_bytes_each=512, lines_total=100, bytes_total=5120; inclusive enforcement ceiling files=1, lines_each=100, bytes_each=5120, line_bytes_each=512, lines_total=100, bytes_total=5120; target peak 78.1%, ceiling peak 78.1% (normal, steady)
+live-doc-size: ok:   surface external_review_packet: frozen identity checked
+live-doc-size: ok:   surface vial_reference mandatory read docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md is 18 lines/1156 bytes; navigation depth 1
+live-doc-size: ok:   surface vial_reference: maintained reference actual files=5, lines_each=456, bytes_each=25114, line_bytes_each=188, lines_total=1512, bytes_total=77724; per-part health target lines_each=512, bytes_each=32768, line_bytes_each=512; inclusive per-part ceiling lines_each=532, bytes_each=34816, line_bytes_each=640; aggregate authority VIAL-EMPTY-READINESS-20260924-SPEC; target peak 89.1%, ceiling peak 85.7% (warning_debt, steady)
+live-doc-size: ok:   surface vial_reference collection index membership checked
+live-doc-size: ok:   surface release_readback_plan: actual files=1, lines_each=109, bytes_each=6964, line_bytes_each=237, lines_total=109, bytes_total=6964; health target files=1, lines_each=160, bytes_each=10240, line_bytes_each=512, lines_total=160, bytes_total=10240; inclusive enforcement ceiling files=1, lines_each=160, bytes_each=10240, line_bytes_each=512, lines_total=160, bytes_total=10240; target peak 68.1%, ceiling peak 68.1% (normal, steady)
+live-doc-size: ok:   surface compiler_census_procedure: actual files=1, lines_each=79, bytes_each=4945, line_bytes_each=147, lines_total=79, bytes_total=4945; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 61.7%, ceiling peak 61.7% (normal, steady)
+live-doc-size: ok:   surface isf_rule_admission_replay: actual files=1, lines_each=102, bytes_each=6508, line_bytes_each=150, lines_total=102, bytes_total=6508; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 79.7%, ceiling peak 79.7% (normal, steady)
+live-doc-size: ok:   surface decision_originals: archive terminal docs/decisions/history
+live-doc-size: ok:   surface decision_archive_view freshness adapter verifier execution proved: surface:decision_archive_view
+live-doc-size: ok:   surface decision_archive_view: actual files=1, lines_each=3644, bytes_each=180920, line_bytes_each=365, lines_total=3644, bytes_total=180920; health target files=1, lines_each=5120, bytes_each=262144, line_bytes_each=1024, lines_total=5120, bytes_total=262144; inclusive enforcement ceiling files=1, lines_each=5120, bytes_each=262144, line_bytes_each=1024, lines_total=5120, bytes_total=262144; target peak 71.2%, ceiling peak 71.2% (normal, steady)
+live-doc-size: ok:   surface native_group_discriminator_procedure: actual files=1, lines_each=50, bytes_each=2845, line_bytes_each=121, lines_total=50, bytes_total=2845; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 39.1%, ceiling peak 39.1% (normal, steady)
+live-doc-size: ok:   surface native_group_witness_procedure: actual files=1, lines_each=102, bytes_each=5882, line_bytes_each=91, lines_total=102, bytes_total=5882; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 79.7%, ceiling peak 79.7% (normal, steady)
+live-doc-size: ok:   surface decision_compatibility freshness adapter verifier execution proved: surface:decision_compatibility
+live-doc-size: ok:   surface decision_compatibility: actual files=115, lines_each=130, bytes_each=42915, line_bytes_each=530, lines_total=3270, bytes_total=146284; health target files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; inclusive enforcement ceiling files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; target peak 89.8%, ceiling peak 89.8% (warning_debt, migrated)
+live-doc-size: ok:   surface decision_compatibility collection index declares complete registry-target query
+live-doc-size: ok:   surface decision_transition_index: frozen identity checked
+live-doc-size: ok:   containment pressure migrated: 12 surface(s), target peak 96.9%, ceiling peak 97.8% [active_index,decision_compatibility,engineering_rationale,fact_index,fact_index_shards,focused_document_index,focused_documents,high_level_direction,isf_reference,knowledge_cards,rationale,task_evidence]
+live-doc-size: ok:   containment pressure pinned_deferred: 3 surface(s), target peak 736.5%, ceiling peak 100.0% [readme_entrypoint,root_documents,shipped_behavior]
+live-doc-size: ok:   containment pressure steady: 12 surface(s), target peak 90.5%, ceiling peak 90.5% [active_resume,ancillary_documents,compiler_census_procedure,decision_archive_view,diagnostics,enforced_rules,isf_rule_admission_replay,live_document_review,native_group_discriminator_procedure,native_group_witness_procedure,release_readback_plan,vial_reference]
+live-doc-size: ok:   surface focused_documents collection index is generated by surface focused_document_index
+live-doc-size: ok:   surface ancillary_documents collection index is generated by surface focused_document_index
+live-doc-size: ok:   surface knowledge_cards collection index is generated by surface fact_index
+live-doc-size: ok:   evidence map external_review_packet resolves 17 path(s)
+live-doc-size: ok:   evidence map external_review_disposition resolves 5 path(s)
+live-doc-size: ok:   archive descriptor changes-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:changes-retired-2026-08-01
+live-doc-size: ok:   archive descriptor achievement-status-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:achievement-status-retired-2026-08-01
+live-doc-size: ok:   archive descriptor roadmap-status-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:roadmap-status-retired-2026-08-01
+live-doc-size: ok:   archive descriptor roadmap-v2-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:roadmap-v2-pre-containment-2026-08-01
+live-doc-size: ok:   archive descriptor engineering-rationale-source-2026-08-01 version retrieval adapter verifier execution proved: archive:engineering-rationale-source-2026-08-01
+live-doc-size: ok:   archive descriptor engineering-rationale-range-0001 version retrieval adapter verifier execution proved: archive:engineering-rationale-range-0001
+live-doc-size: ok:   archive descriptor knowledge-ial2-priority-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-ial2-priority-pre-containment-2026-08-01
+live-doc-size: ok:   archive descriptor knowledge-ial2-next-slice-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-ial2-next-slice-pre-containment-2026-08-01
+live-doc-size: ok:   archive descriptor knowledge-direct-vhdl-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-direct-vhdl-pre-containment-2026-08-01
+live-doc-size: ok:   archive descriptor knowledge-vial-execution-scale-reachability-pre-partition-2026-08-20 version retrieval adapter verifier execution proved: archive:knowledge-vial-execution-scale-reachability-pre-partition-2026-08-20
+live-doc-size: ok:   archive descriptor isf-spec-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-spec-pre-partition-2026-08-01
+live-doc-size: ok:   archive descriptor isf-downstream-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-downstream-pre-partition-2026-08-01
+live-doc-size: ok:   archive descriptor isf-public-interface-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-public-interface-pre-partition-2026-08-01
+live-doc-size: ok:   ledger engineering_rationale reconstruction adapter verifier execution proved: ledger:engineering_rationale
+live-doc-size: ok:   ledger engineering_rationale: 2907 ordered whole entries reconstructed across 2 range(s); live sealed 0/0/0
+live-doc-size: ok:   coverage: 3352/3352 declared document path(s)
+live-doc-reference-authority: all maintained-reference aggregate invariants hold (3 reference(s), 1 changed, mode staged)
+live-doc-ceiling-authority: all ceiling-change invariants hold (0 increase(s), mode staged)
+readme-entrypoint: common live-document size-containment check failed
+[doctrine] FAIL: README-ENTRYPOINT
+[doctrine] RUN:  PROJECT-DATA-LOCALITY - Project-owned data stays on repository-derived same-volume roots
+[project-data-locality] OK: runtime, test, config, and active public paths are repository-local
+[doctrine] PASS: PROJECT-DATA-LOCALITY
+[doctrine] RUN:  TASK-TREE-INTEGRITY - Active task-tree roots, live and sealed nodes, compact terminals, bounded completed-index archives, child references, statuses, and evidence stay structurally complete and retrievable
+[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12 has non-container status in_progress
+[task-tree-integrity] active task-tree invariants failed
+[doctrine] FAIL: TASK-TREE-INTEGRITY
+[doctrine] RUN:  CLAIM-VERIFICATION - Bounded claim records name exact source markers, three non-aliased evidence legs or owned gaps, and tracked local producers, oracles, and watchers
+claim-verification: all bounded registry-set and record invariants hold (shards=3, records=53, published=52, fixtures=1)
+[doctrine] PASS: CLAIM-VERIFICATION
+[doctrine] RUN:  CLAIM-INVENTORY - Producer-derived current-surface claims and repository constants remain completely partitioned, independently censused, bounded, and task-owned
+claim-inventory: current-surface census and independent census agree (numeric_lines=13236, candidates=1976, quantified=963, conservative=1013, constants=2891, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1976)
+[doctrine] PASS: CLAIM-INVENTORY
+[doctrine] RUN:  CLAIM-DISPOSITIONS - Every reviewed candidate joins a current inventory identity and one bounded evidence-bearing outcome; required groups cannot retain open candidates
+claim-dispositions: bounded disposition join holds (candidates=1976, disposed=1976, claim_records=316, gates=1036, reviewed=624, gaps=0, open=0, groups=6)
+[doctrine] PASS: CLAIM-DISPOSITIONS
+[doctrine] RUN:  TASK-ACCEPTANCE - Staged implementation changes carry fresh box-scoped task diagnosis and regression evidence
+[task-acceptance] OK: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md carries fresh evidence-backed acceptance (root=perl_diagnostic, no-regression=prove_summary)
+[doctrine] PASS: TASK-ACCEPTANCE
+[doctrine] one or more doctrine checks failed

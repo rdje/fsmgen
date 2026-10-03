@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/prepared-reservation-cause-repair-20261003/verify.py", line 67, in <module>
+    verify_successes([r for r in api['rows'] if r['accepted']])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/prepared-reservation-cause-repair-20261003/models.py", line 59, in verify_successes
+    same(result,{'model':'isf_prepared_formal_reservations_v1',**inventory(selected),'scopes':expected_scopes(row['before'])})
+                                                                 ~~~~~~~~~^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/prepared-reservation-cause-repair-20261003/models.py", line 41, in inventory
+    walk(value,'')
+    ~~~~^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/prepared-reservation-cause-repair-20261003/models.py", line 35, in walk
+    child=path+'/'+key.replace('~','~0').replace('/','~1');add(key,child,'key');walk(value[key],child)
+                                                           ~~~^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/prepared-reservation-cause-repair-20261003/models.py", line 30, in add
+    for token in sorted(set(re.findall('[A-Za-z_][A-Za-z0-9_]*',text))):
+                            ^^
+NameError: name 're' is not defined. Did you forget to import 're'?

@@ -213,7 +213,10 @@ The [prepared-reservation diagnosis](../../../docs/audits/prepared-reservation-h
 finds unrelated unsupported-reference causes accepted by the test helper and an
 adjacent cycle assertion. Primary paths containing the expected phrase also fool
 fragment checks. The production collector rejects those inputs correctly;
-complete-cause test repair is the next owned step. Whole ordinary scope/token
+the [complete-cause repair](../../../docs/audits/prepared-reservation-cause-repair-20261003/scope.txt)
+now rejects those unrelated causes. Exact old checks and a genuine preparation
+membership bypass fail. Ordinary scope products conserve; first-touch snapshot
+strengthening is the next owned step. Whole ordinary scope/token
 inventories have independent finite models, while wider constructor semantics
 and moved-root qualification remain open.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
