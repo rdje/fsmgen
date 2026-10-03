@@ -1,0 +1,1 @@
+PASS complete snapshot/seed field membership and cohort roster; independent completed semantic readers are required.

@@ -259,8 +259,9 @@ formal mutation-seed widths against source and actual carriers. The
 [producer-removal fields](../../../docs/audits/reservation-coverage-producer-removal-fields-20261003/scope.txt)
 qualify the rebuilt input: widths, assignment ordinals, declaration membership,
 handshake/wait metadata and numeric producers retain distinct meanings. String
-completion constants stay strings. Complete field reconciliation and real
-value-only assertion controls remain open. The test-copy repair follows those cohorts; this profile does not establish a production coverage defect.
+completion constants stay strings. The [snapshot field join](../../../docs/audits/reservation-coverage-snapshot-field-join-20261003/scope.txt)
+reconciles every changed field and unchanged-copy control with the completed
+models. Real value-only assertion and native-marker controls remain open. The test-copy repair follows those cohorts; this profile does not establish a production coverage defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when
 the wanted phrase appears in its caller stack or an unrelated failure path. For

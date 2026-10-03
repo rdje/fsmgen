@@ -1,0 +1,1 @@
+PASS rendered complete snapshot field join and open real assertion/native-marker boundary; visual QA remains pending.

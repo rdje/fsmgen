@@ -3849,11 +3849,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify every snapshot and mutation-seed field contract.`
   Acceptance: `Against complete .1 captures, independently map every changed prepared/module/plan field to source-owned literal producer/product semantics and completed source/module cohorts. Retain changed and unchanged site controls and exact causes; split further only if a genuine new semantic family requires it.`
-  Verification: `The complete capture separates ordinary snapshot/seed fields from the genuine producer-removal input rebuilt by substitute_token. Finite family readers precede a complete field join; real assertion controls remain .4.3-owned.`
-  Commit: `children below`
+  Verification: `All three completed children close ordinary and rebuilt-input snapshot/seed meanings and exact full field membership through independent source/producer/metadata/width/provenance/membership/handshake/wait/carrier models. Actual lossy copy authorities, semantic and join corruptions reject. Immutable source/owner/replay evidence and complete ordinary conservation qualify finite field contracts only. Actual value-only/native-marker controls remain .4.3-owned before final .5 and P2 .13; wider cold semantics persist.`
+  Commit: `this commit; completed children`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.3`
 
@@ -3872,11 +3872,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Join all snapshot and mutation-seed field contracts.`
   Acceptance: `Reconcile complete .4.1 remaining typed roster with both completed independent field cohorts, including empty extra-module/allocation controls. Require exact native causes and ordinary conservation, actual copy authorities and omission/owner corruptions; commit before real assertion/native-marker controls .4.3.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Sealed docs/audits/reservation-coverage-snapshot-field-join-20261003 authenticates both completed field owners and every selected native copy. Re-derivation: recursive complete typed deltas versus independent stack, source/Git/copy membership and separately completed semantic family models. Units: 36 copy observations, 30 changed and 392 (copy ordinal,pointer) fields, normal164/rebuilt228; unchanged extra-module/allocation rows remain required. Falsification: actual Storable kind authority RED1 at ordinal2; missing copy/field/empty allocation and wrong-owner controls reject. Durability: frozen full task bytes/hash, immutable complete corpora/manifest and cold replay. Whole pure/original topology/deep isolation and ordinary source/product/cause/carrier results conserve. Public-book Files=2/Tests=308, build/rendered pass; staged doctrines/hooks required. Real value-only/native-marker controls .4.3 and final .5 precede P2 repair; wider constructors/controllers/native/moved-root/visual QA stay cold.`
+  Commit: `this commit`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3`
@@ -6241,3 +6241,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone([$p, $allocation, $actual]);' binds capture introduction98f0cc146; actual ordinal35 Storable snapshot changes independently bound prepared/product/plan/module primitive kinds. Exact substitute_token rebuild and full producer bodies identify source widths, memberships, handoff/wait flags and assignment ordinal meanings; completion string constants retain distinct kinds.
 - [x] **ADDRESSED (verified)** — Whole actual token transformation and every constructed semantic field path reconcile with the separate complete native delta roster. Pure copies pass; actual lossy-copy authority RED1 and metadata, membership/width, provenance, threshold and string-kind corruptions reject. Final field reconciliation and real value-only/native controls retain .3/.4.3 ownership before P2 repair; broader constructors/controllers remain cold.
 - [x] **NO REGRESSION** — Focused wait/prepared reservation All tests successful, Files=2, Tests=43; public-book Files=2, Tests=308, rendered build and Knowledge Map readback pass. Complete ordinary callers/products/refusal causes/carriers conserve; hot source/test/provider unchanged. Exact capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.
+
+## Acceptance Checklist — complete snapshot and seed field join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone([$p, $allocation, $actual]);' binds capture introduction98f0cc146; complete actual current/initial copy graphs locate primitive-kind loss at exact T1960 snapshot/seed sites. Source-bound completed normal/rebuilt-input models explain every changed field while empty sites remain explicit controls.
+- [x] **ADDRESSED (verified)** — Every selected native copy and field reconciles with exact authenticated completed task owners and independent semantic readers. Actual Storable kind-authority RED1 and missing copy/field/empty allocation/wrong-owner controls reject. Source/pure/caller/product/cause/carrier conservation remains complete; real value-only/native-marker controls and final join retain successors before repair.
+- [x] **NO REGRESSION** — Public-book All tests successful, Files=2, Tests=308, rendered build and Knowledge Map readback pass. Underlying native coverage/cause and wait/prepared regressions remain authenticated; no new provider/test edits justify repeating them. Exact capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.
