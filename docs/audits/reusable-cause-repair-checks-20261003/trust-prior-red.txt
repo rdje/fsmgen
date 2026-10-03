@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/reusable-cause-repair-20261003/verify.py", line 83, in <module>
+    assert all(r['matched']==int(r['band']=='current_fixture') for r in prior['rows']),'exact prior accepts twenty helper and one direct wrong causes'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact prior accepts twenty helper and one direct wrong causes

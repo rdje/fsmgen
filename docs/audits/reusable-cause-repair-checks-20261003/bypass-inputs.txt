@@ -1,0 +1,2 @@
+ram-guard: PID 24347; host 60.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Captured complete actual collision-bypass inputs and results.

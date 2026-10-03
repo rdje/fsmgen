@@ -1,0 +1,150 @@
+ram-guard: PID 14000; host 62.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+# Subtest: file-backed reusable and ATL child composition products
+    ok 1 - fifo_library_use complete real child and composition products agree
+    ok 2 - fifo_library_use formal projection preserves reusable modules and bindings
+    ok 3 - fifo_library_use re-preparation retains actual reusable products
+    ok 4 - fifo_library_use_fifo_library_use__u_fifo strict child carrier
+    ok 5 - actual generated module identity retained
+    ok 6 - real importing actor origin retained
+    ok 7 - fifo_library_use prepared source unchanged
+    ok 8 - fifo_library_use authored source unchanged
+    ok 9 - actual independent children retained
+    ok 10 - reusable modules do not enter generated transaction scope
+    ok 11 - source library instance identity retained
+    ok 12 - bound parameter provenance retained
+    ok 13 - instance-local parameter value retained
+    ok 14 - actual library storage declaration retained
+    ok 15 - actual library bank operations retained
+    ok 16 - product mutation cannot edit resolved actor shells
+    ok 17 - atl_resolved_child_pipeline complete real child and composition products agree
+    ok 18 - atl_resolved_child_pipeline formal projection preserves reusable modules and bindings
+    ok 19 - atl_resolved_child_pipeline re-preparation retains actual reusable products
+    ok 20 - atl_resolved_child_pipeline_atl_resolved_child_pipeline__worker strict child carrier
+    ok 21 - actual generated module identity retained
+    ok 22 - real importing actor origin retained
+    ok 23 - atl_resolved_child_pipeline prepared source unchanged
+    ok 24 - atl_resolved_child_pipeline authored source unchanged
+    ok 25 - actual independent children retained
+    ok 26 - reusable modules do not enter generated transaction scope
+    ok 27 - actual supported composition selection retained
+    ok 28 - resolved ATL origin stays explicit
+    ok 29 - product mutation cannot edit resolved actor shells
+    ok 30 - atl_resolved_child_pin_ingress_vector_multi_pipeline complete real child and composition products agree
+    ok 31 - atl_resolved_child_pin_ingress_vector_multi_pipeline formal projection preserves reusable modules and bindings
+    ok 32 - atl_resolved_child_pin_ingress_vector_multi_pipeline re-preparation retains actual reusable products
+    ok 33 - atl_resolved_child_pin_ingress_vector_multi_pipeline_atl_resolved_child_pin_ingress_vector_multi_pipeline__worker strict child carrier
+    ok 34 - actual generated module identity retained
+    ok 35 - real importing actor origin retained
+    ok 36 - atl_resolved_child_pin_ingress_vector_multi_pipeline prepared source unchanged
+    ok 37 - atl_resolved_child_pin_ingress_vector_multi_pipeline authored source unchanged
+    ok 38 - actual independent children retained
+    ok 39 - reusable modules do not enter generated transaction scope
+    ok 40 - actual supported composition selection retained
+    ok 41 - resolved ATL origin stays explicit
+    ok 42 - product mutation cannot edit resolved actor shells
+    ok 43 - atl_resolved_child_pin_egress_vector_multi_pipeline complete real child and composition products agree
+    ok 44 - atl_resolved_child_pin_egress_vector_multi_pipeline formal projection preserves reusable modules and bindings
+    ok 45 - atl_resolved_child_pin_egress_vector_multi_pipeline re-preparation retains actual reusable products
+    ok 46 - atl_resolved_child_pin_egress_vector_multi_pipeline_atl_resolved_child_pin_egress_vector_multi_pipeline__worker strict child carrier
+    ok 47 - actual generated module identity retained
+    ok 48 - real importing actor origin retained
+    ok 49 - atl_resolved_child_pin_egress_vector_multi_pipeline prepared source unchanged
+    ok 50 - atl_resolved_child_pin_egress_vector_multi_pipeline authored source unchanged
+    ok 51 - actual independent children retained
+    ok 52 - reusable modules do not enter generated transaction scope
+    ok 53 - actual supported composition selection retained
+    ok 54 - resolved ATL origin stays explicit
+    ok 55 - product mutation cannot edit resolved actor shells
+    ok 56 - atl_two_child_vector_data_pipeline complete real child and composition products agree
+    ok 57 - atl_two_child_vector_data_pipeline formal projection preserves reusable modules and bindings
+    ok 58 - atl_two_child_vector_data_pipeline re-preparation retains actual reusable products
+    ok 59 - atl_two_child_vector_data_pipeline_atl_two_child_vector_data_pipeline__reader strict child carrier
+    ok 60 - actual generated module identity retained
+    ok 61 - real importing actor origin retained
+    ok 62 - atl_two_child_vector_data_pipeline_atl_two_child_vector_data_pipeline__writer strict child carrier
+    ok 63 - actual generated module identity retained
+    ok 64 - real importing actor origin retained
+    ok 65 - atl_two_child_vector_data_pipeline prepared source unchanged
+    ok 66 - atl_two_child_vector_data_pipeline authored source unchanged
+    ok 67 - actual independent children retained
+    ok 68 - reusable modules do not enter generated transaction scope
+    ok 69 - actual supported composition selection retained
+    ok 70 - resolved ATL origin stays explicit
+    ok 71 - resolved ATL origin stays explicit
+    ok 72 - product mutation cannot edit resolved actor shells
+    ok 73 - atl_two_child_trigger_batch_pipeline complete real child and composition products agree
+    ok 74 - atl_two_child_trigger_batch_pipeline formal projection preserves reusable modules and bindings
+    ok 75 - atl_two_child_trigger_batch_pipeline re-preparation retains actual reusable products
+    ok 76 - atl_two_child_trigger_batch_pipeline_atl_two_child_trigger_batch_pipeline__reader strict child carrier
+    ok 77 - actual generated module identity retained
+    ok 78 - real importing actor origin retained
+    ok 79 - atl_two_child_trigger_batch_pipeline_atl_two_child_trigger_batch_pipeline__writer strict child carrier
+    ok 80 - actual generated module identity retained
+    ok 81 - real importing actor origin retained
+    ok 82 - atl_two_child_trigger_batch_pipeline prepared source unchanged
+    ok 83 - atl_two_child_trigger_batch_pipeline authored source unchanged
+    ok 84 - actual independent children retained
+    ok 85 - reusable modules do not enter generated transaction scope
+    ok 86 - actual supported composition selection retained
+    ok 87 - resolved ATL origin stays explicit
+    ok 88 - resolved ATL origin stays explicit
+    ok 89 - product mutation cannot edit resolved actor shells
+    1..89
+ok 1 - file-backed reusable and ATL child composition products
+# Subtest: generated and reusable modules remain separate through raw parent conflicts
+    ok 1 - mixed complete real child and composition products agree
+    ok 2 - mixed formal projection preserves reusable modules and bindings
+    ok 3 - mixed re-preparation retains actual reusable products
+    ok 4 - mixed_mixed_children__rx strict child carrier
+    ok 5 - actual generated module identity retained
+    ok 6 - real importing actor origin retained
+    ok 7 - mixed prepared source unchanged
+    ok 8 - mixed authored source unchanged
+    ok 9 - generated child scope remains separate
+    ok 10 - reusable module scope remains separate
+    ok 11 - reusable edits cannot reach generated child products
+    ok 12 - raw parent width conflict leaves independent child products unchanged
+    ok 13 - real parent still refuses raw conflicting declarations
+    ok 14 - raw parent conflict retains complete width cause
+    ok 15 - physical parent passes with real reusable modules unchanged
+    1..15
+ok 2 - generated and reusable modules remain separate through raw parent conflicts
+# Subtest: same module and composition admission remains mandatory
+    ok 1 - missing library module refused by prepare_formal_source
+    ok 2 - missing library module canonical diagnosis in prepare_formal_source
+    ok 3 - missing library module refused by build_module
+    ok 4 - missing library module canonical diagnosis in build_module
+    not ok 5 - library versus generated module collision refused by prepare_formal_source
+    #   Failed test 'library versus generated module collision refused by prepare_formal_source'
+    #   at ./t/1947-isf-formal-reusable-products.t line 146.
+    not ok 6 - library versus generated module collision canonical diagnosis in prepare_formal_source
+    #   Failed test 'library versus generated module collision canonical diagnosis in prepare_formal_source'
+    #   at ./t/1947-isf-formal-reusable-products.t line 147.
+    # 
+    not ok 7 - library versus generated module collision refused by build_module
+    #   Failed test 'library versus generated module collision refused by build_module'
+    #   at ./t/1947-isf-formal-reusable-products.t line 146.
+    not ok 8 - library versus generated module collision canonical diagnosis in build_module
+    #   Failed test 'library versus generated module collision canonical diagnosis in build_module'
+    #   at ./t/1947-isf-formal-reusable-products.t line 147.
+    # 
+    ok 9 - missing library actor refused by prepare_formal_source
+    ok 10 - missing library actor canonical diagnosis in prepare_formal_source
+    ok 11 - missing library actor refused by build_module
+    ok 12 - missing library actor canonical diagnosis in build_module
+    ok 13 - missing resolved ATL module refused by prepare_formal_source
+    ok 14 - missing resolved ATL module canonical diagnosis in prepare_formal_source
+    ok 15 - missing resolved ATL module refused by build_module
+    ok 16 - missing resolved ATL module canonical diagnosis in build_module
+    ok 17 - unsupported ATL group composition refused by prepare_formal_source
+    ok 18 - unsupported ATL group composition canonical diagnosis in prepare_formal_source
+    ok 19 - unsupported ATL group composition refused by build_module
+    ok 20 - unsupported ATL group composition canonical diagnosis in build_module
+    ok 21 - unresolved external intent fabricates no child module
+    1..21
+    # Looks like you failed 4 tests of 21.
+not ok 3 - same module and composition admission remains mandatory
+#   Failed test 'same module and composition admission remains mandatory'
+#   at ./t/1947-isf-formal-reusable-products.t line 172.
+1..3
+# Looks like you failed 1 test of 3.

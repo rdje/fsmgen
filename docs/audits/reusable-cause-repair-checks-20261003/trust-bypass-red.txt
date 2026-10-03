@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/reusable-cause-repair-20261003/verify.py", line 95, in <module>
+    assert all(r['accepted']==0 for r in bypass['rows']),'actual collision guard bypass admits invalid namespace inputs'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual collision guard bypass admits invalid namespace inputs

@@ -1,0 +1,10 @@
+cause corruption rejects: cause
+cause corruption rejects: source
+cause corruption rejects: kind
+cause corruption rejects: actor
+cause corruption rejects: field
+cause corruption rejects: member
+whole corruption rejects: origin
+whole corruption rejects: kind
+whole corruption rejects: field
+PASS complete current causes, exact prior/bypass failures, whole ordinary conservation and finite models; FIFO test-copy kinds and wider internals remain owned.

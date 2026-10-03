@@ -9,8 +9,8 @@ answers:
 date: 2026-10-03
 status: current
 tags: [isf, formals, reservations, library, atl, children, scope]
-evidence: t/2059-isf-atl-source-width-kind-preservation.t; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1947-isf-formal-reusable-products.t; t/1945-isf-formal-child-products.t; t/1231-isf-library-generated-top.t; t/1330-isf-atl-resolved-child-fixture-coverage.t
-reverify: scripts/run_with_ram_guard.sh prove -Iperl t/2059-isf-atl-source-width-kind-preservation.t t/1947-isf-formal-reusable-products.t t/1945-isf-formal-child-products.t t/1231-isf-library-generated-top.t
+evidence: t/2060-isf-reusable-diagnostic-causes.t; t/2059-isf-atl-source-width-kind-preservation.t; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1947-isf-formal-reusable-products.t; t/1945-isf-formal-child-products.t; t/1231-isf-library-generated-top.t; t/1330-isf-atl-resolved-child-fixture-coverage.t
+reverify: scripts/run_with_ram_guard.sh prove -Iperl -It/lib t/2060-isf-reusable-diagnostic-causes.t t/2059-isf-atl-source-width-kind-preservation.t t/1947-isf-formal-reusable-products.t t/1945-isf-formal-child-products.t t/1231-isf-library-generated-top.t
 ---
 Current integration: [production formal scope](isf-production-formal-scope.md) consumes preparation products. Independent-controller/local-call execution and the separately owned reusable formal exception remain gated.
 
@@ -18,7 +18,7 @@ _build_module_child_products shares generated children, library uses, resolved A
 
 Missing module/shell, cross-kind module collisions and ATL composition admission apply to preparation. External unresolved intent fabricates no module. Parameter/binding/origin/storage/bank/public-port/data-endpoint products remain actual producer outputs; child finalization is independent of the parent. T1947 covers FIFO, trigger/event, vector ingress/egress, actor routes and trigger batches, mixed generated/library scopes, detachment, raw parent conflicts and strict carriers. Its local_delay control avoids an existing public payload pin.
 
-[Diagnosis](../audits/reusable-product-helper-causes-20261003/scope.txt) qualifies actual helper/direct false causes; .2.3.9 owns complete reasons. First-line fragments still accept primary echoes. .2.3.10 owns test Storable projection kind loss; pure copying restores FIFO products. .2.3.11 [repair](../audits/atl-source-width-kind-repair-20261003/scope.txt) detaches the width scalar. T2059 preserves callers on acceptance/refusal; exact prior fails and complete outputs conserve. Original/prepared FIFO JSON stays intact; misleading Storable snapshots remain unqualified. Finite source/clause/mutation/schema/origin/kind models pass; wider constructors/child internals remain cold observations, not whole-kind signoff. Runtime origin coordinates are portable-encoded; moved-root proof remains .1.2.4-owned.
+[Cause repair](../audits/reusable-cause-repair-20261003/scope.txt) compares complete declared reasons, rejecting real earlier/primary echoes in helper and direct consumers; exact prior and collision-bypass controls fail. Whole ordinary products conserve; .2.3.10 still owns FIFO test Storable projection kind loss. Original/prepared FIFO JSON stays intact; misleading Storable snapshots remain unqualified. ATL [width repair](../audits/atl-source-width-kind-repair-20261003/scope.txt) detaches the scalar: T2059 preserves callers on acceptance/refusal and complete outputs conserve. Finite source/clause/mutation/schema/origin/kind models pass; wider child internals remain cold-owned. Runtime origins are portable-encoded; moved-root proof remains .1.2.4-owned.
 
 [Grant/priority/finalization](isf-formal-arbitration-namespace.md) and [library readback](isf-library-parent-port-ownership.md) own adjacent boundaries. Historical parent/domain closure is separate; no new HDL runtime claim.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.1.

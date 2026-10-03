@@ -7,6 +7,7 @@ use File::Temp qw(tempdir);
 use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::FormalIdentityPlan;
@@ -127,34 +128,44 @@ subtest 'generated and reusable modules remain separate through raw parent confl
     my $a = parse($text);
     my $q = $l->prepare_formal_source($a);
     is_deeply($q->{reusable_child_products}, $l->prepare_formal_source(parse($mixed))->{reusable_child_products}, 'raw parent width conflict leaves independent child products unchanged');
-    eval {$l->build_module($a)};
-    like($@, qr/(?:width|Width).*payload|payload.*(?:width|Width)/s, 'real parent still refuses raw conflicting declarations');
+    my $width_ok = eval {$l->build_module($a); 1};
+    my $width_error = $@;
+    ok(!$width_ok, 'real parent still refuses raw conflicting declarations');
+    ok(diagnostic_cause_matches($width_error,
+        "signal width for 'payload' conflicts across transactions while merging 'main'"),
+        'raw parent conflict retains complete width cause') or diag($width_error);
     my $physical = project($q);
     is_deeply(actual_products($l->build_module($physical), $q->{generated_children}), $q->{reusable_child_products}, 'physical parent passes with real reusable modules unchanged');
 };
 
 sub refused {
-    my ($actor, $pattern, $label) = @_;
+    my ($actor, $expected_cause, $label) = @_;
     for my $method (qw(prepare_formal_source build_module)) {
         my $ok = eval {$l->$method(dclone($actor)); 1};
+        my $error = $@;
         ok(!$ok, "$label refused by $method");
-        like($@, $pattern, "$label canonical diagnosis in $method");
+        ok(diagnostic_cause_matches($error, $expected_cause), "$label canonical diagnosis in $method")
+            or diag($error);
     }
 }
 subtest 'same module and composition admission remains mandatory' => sub {
     my $a = parse($mixed);
     my $missing = dclone($a);delete $missing->{library_uses}[0]{module};
-    refused($missing, qr/missing a generated module name/, 'missing library module');
+    refused($missing, "Library use 'rx' is missing a generated module name", 'missing library module');
     my $collision = dclone($a);$collision->{library_uses}[0]{module} = 'worker';
-    refused($collision, qr/conflicts with another generated child/, 'library versus generated module collision');
+    refused($collision, "Library use 'rx' generated module 'worker' conflicts with another generated child",
+        'library versus generated module collision');
     my $broken = dclone($a);delete $broken->{library_uses}[0]{actor};
-    refused($broken, qr/does not carry a reusable actor shell/, 'missing library actor');
+    refused($broken, "Library use 'rx' does not carry a reusable actor shell", 'missing library actor');
     my $atl = file_actor('isf/atl_resolved_child_pipeline.isf');
     my ($key) = keys %{$atl->{_atl_actor_type_resolutions}};
     my $missing_atl = dclone($atl);delete $missing_atl->{_atl_actor_type_resolutions}{$key}{module};
-    refused($missing_atl, qr/missing a generated module name/, 'missing resolved ATL module');
+    refused($missing_atl, "ATL static actor instance 'worker' is missing a generated module name",
+        'missing resolved ATL module');
     my $groups = dclone($atl);$groups->{actor_network}{groups} = [{name => 'grouped'}];
-    refused($groups, qr/cannot combine generated child wiring with static group metadata/, 'unsupported ATL group composition');
+    refused($groups, "ATL generated top for actor 'atl_resolved_child_pipeline' "
+        . "cannot combine generated child wiring with static group metadata in the current subset",
+        'unsupported ATL group composition');
     my $external = parse('(actor external (instance reader of packet_reader) (transaction main (wait 1)))');
     my $r = $l->prepare_formal_source($external)->{reusable_child_products};
     is_deeply($r, {children => {}, library_uses => [], atl_top_instances => []}, 'unresolved external intent fabricates no child module');

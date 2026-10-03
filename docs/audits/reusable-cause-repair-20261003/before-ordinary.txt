@@ -1,0 +1,2 @@
+ram-guard: PID 36097; host 61.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS nine complete reusable source/preparation/physical/module observations with recorded source/projection primitive-kind gaps.

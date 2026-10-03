@@ -1,0 +1,2 @@
+ram-guard: PID 67088; host 61.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS independent cause repair, actual prior/bypass RED and focused child/caller-kind regressions.

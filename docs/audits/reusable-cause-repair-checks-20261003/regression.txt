@@ -1,0 +1,5 @@
+t/1945-isf-formal-child-products.t ............... ok
+t/2059-isf-atl-source-width-kind-preservation.t .. ok
+All tests successful.
+Files=2, Tests=52, 13 wallclock secs ( 0.01 usr  0.01 sys +  8.68 cusr  3.74 csys = 12.44 CPU)
+Result: PASS

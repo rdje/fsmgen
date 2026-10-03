@@ -1,0 +1,2 @@
+ram-guard: PID 13328; host 61.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS exact prior mixed consumer RED and whole current ordinary observations.

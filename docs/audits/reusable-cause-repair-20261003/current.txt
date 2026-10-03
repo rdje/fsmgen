@@ -1,0 +1,6 @@
+ram-guard: PID 8242; host 62.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1947-isf-formal-reusable-products.t .... ok
+t/2060-isf-reusable-diagnostic-causes.t .. ok
+All tests successful.
+Files=2, Tests=102, 11 wallclock secs ( 0.01 usr  0.01 sys +  7.66 cusr  3.15 csys = 10.83 CPU)
+Result: PASS

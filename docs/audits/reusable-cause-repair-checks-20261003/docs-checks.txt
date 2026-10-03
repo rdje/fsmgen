@@ -1,0 +1,13 @@
+ram-guard: PID 24181; host 62.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS whole sealed prior archive/member closure and exact Git-bound cause/model/producer inputs.
+cause corruption rejects: cause
+cause corruption rejects: source
+cause corruption rejects: kind
+cause corruption rejects: actor
+cause corruption rejects: field
+cause corruption rejects: member
+whole corruption rejects: origin
+whole corruption rejects: kind
+whole corruption rejects: field
+PASS complete current causes, exact prior/bypass failures, whole ordinary conservation and finite models; FIFO test-copy kinds and wider internals remain owned.
+PASS book build, rendered text, focused public-book checks and Knowledge Map.

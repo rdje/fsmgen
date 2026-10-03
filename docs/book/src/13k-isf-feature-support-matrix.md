@@ -193,13 +193,16 @@ semantics remain under cold review. Reusable/reservation and remaining
 named/framework cohorts stay open.
 The [reusable-product diagnosis](../../../docs/audits/reusable-product-helper-causes-20261003/scope.txt)
 finds the same cause gap in library/ATL admission helpers and one adjacent
-parent-width assertion. Complete declared-cause repair is owned. Its ordinary
+parent-width assertion. The [complete-cause repair](../../../docs/audits/reusable-cause-repair-20261003/scope.txt)
+now rejects real earlier unknown-child causes and primary echoes, while retaining
+the full library/ATL and parent-width reasons. Exact prior checks and a genuine
+library collision bypass fail; ordinary products are conserved. Its ordinary
 products also expose two distinct primitive-kind gaps: the test projection's
 Storable copy loses some FIFO numeric JSON kinds. The private ATL output-width
 check now compares a detached scalar, preserving the complete caller on both
 accepted and refused routes. The [width-kind repair](../../../docs/audits/atl-source-width-kind-repair-20261003/scope.txt)
 retains identical preparation/module outputs and exact prior failure controls.
-The remaining cause and test-copy repairs precede further cohort review; they
+The remaining test-copy repair precedes further cohort review; these repairs
 add no composition or HDL runtime support. Whole constructor and child-internal semantic qualification remains open.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.
